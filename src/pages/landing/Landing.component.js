@@ -1,7 +1,13 @@
 import React from 'react';
+import { Header } from '../../components/Header';
 
 export default class Landing extends React.Component {
   render() {
-    return <p>This is landing</p>
+    return (
+      <div>
+        <Header />
+        <p>This is landing Page </p>
+      </div>
+    );
   }
 };

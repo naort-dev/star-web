@@ -11,7 +11,6 @@ import {
   protectRoute,
   allUserRoles,
 } from './services/protectRoute';
-import { Header } from './components/Header';
 import { Footer } from './components/Footer';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
@@ -60,7 +59,6 @@ class App extends React.Component {
 
     return (
       <div>
-        <Header />
         <div id="content-wrapper">
           {
             showLoading && <ComponentLoading timedOut={this.state.timedOut} />
