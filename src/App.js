@@ -11,7 +11,6 @@ import {
   protectRoute,
   allUserRoles,
 } from './services/protectRoute';
-import { Footer } from './components/Footer';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -108,7 +107,6 @@ class App extends React.Component {
             )
           }
         </div>
-        <Footer />
       </div>
     );
   }
