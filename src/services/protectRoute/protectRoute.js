@@ -11,23 +11,21 @@ export const protectRoute = ({
   roles = [],
 }) => {
   const ProtectedRoute = (props) => {
-    const isProtectedRoute = protectedRoutes.includes(props.location.pathname);
-    const isLoggedIn = props.isLoggedIn && isProtectedRoute;
-    const hasRole = roles.length ? roles.includes(props.role) : true;
+    const {
+      location,
+      role,
+      isLoggedIn,
+    } = props;
+    const isProtectedRoute = protectedRoutes.includes(location.pathname);
+    const hasRole = roles.length ? roles.includes(role) : true;
 
-    const allowAcceess = isLoggedIn && hasRole;
-    const accessDenied = isLoggedIn && !hasRole;
+    const allowAcceess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
+    const unAuthorized = isLoggedIn && !hasRole;
+    const shouldAuthenticate = isProtectedRoute && !isLoggedIn;
 
-    if (!isLoggedIn) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/login',
-            state: { from: props.location },
-          }}
-        />
-      );
-    } else if (accessDenied) {
+    if (allowAcceess) {
+      return <RouteComponent {...props} />;
+    } else if (unAuthorized) {
       return (
         <Redirect
           to={{
@@ -35,8 +33,15 @@ export const protectRoute = ({
           }}
         />
       );
-    } else if (allowAcceess) {
-      return <RouteComponent {...props} />;
+    } else if (shouldAuthenticate) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/login',
+            state: { from: location },
+          }}
+        />
+      );
     }
 
     return <Page404 {...props} />;
