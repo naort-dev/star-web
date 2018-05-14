@@ -4,9 +4,16 @@ import { Header } from '../../components/Header';
 export default class Landing extends React.Component {
   render() {
     return (
-      <div>
+      <div className="container-fluid">
         <Header />
-        <p>This is landing Page </p>
+        <div class="row">
+          <div class="col col-lg-4">
+            sidebar
+          </div>
+          <div class="col col-lg-8">
+            main content
+          </div>
+        </div>
       </div>
     );
   }
