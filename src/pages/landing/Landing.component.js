@@ -6,11 +6,11 @@ export default class Landing extends React.Component {
     return (
       <div className="container-fluid">
         <Header />
-        <div class="row">
-          <div class="col col-lg-4">
+        <div className="row">
+          <div className="col col-lg-4">
             sidebar
           </div>
-          <div class="col col-lg-8">
+          <div className="col col-lg-8">
             main content
           </div>
         </div>
