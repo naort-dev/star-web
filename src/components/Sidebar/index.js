@@ -1,23 +1,39 @@
 import React from 'react';
-import { SectionHeading, SidebarWrapper, ListWrapper, ListItem } from './styled';
+import { SidebarStyled } from './styled';
+import { Footer } from '../Footer';
 
 export default class Sidebar extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: '',
+    };
+  }
+
   render() {
+    console.log(this.state.name);
     return (
-      <SidebarWrapper>
-        <SectionHeading>Find a Star </SectionHeading>
-		<ListWrapper>
-			<ListItem>Featured</ListItem>
-			<ListItem>Sports</ListItem>
-			<ListItem>Music</ListItem>
-			<ListItem>Movies / TV</ListItem>
-			<ListItem>Radio / Podcasts</ListItem>
-			<ListItem>Social / Youtube</ListItem>
-			<ListItem>Comedians</ListItem>
-			<ListItem>Everyday Stars</ListItem>
-			<ListItem>Impersonators</ListItem>
-		</ListWrapper>
-      </SidebarWrapper>
+      <SidebarStyled>
+        <SidebarStyled.FilterWrapper>
+          <SidebarStyled.Filter>
+            <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
+            <SidebarStyled.Separator />
+            <SidebarStyled.ListWrapper>
+              <SidebarStyled.ListItem>Featured</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Sports</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Music</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Movies / TV</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Radio / Podcasts</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Social / Youtube</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Comedians</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Everyday Stars</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Impersonators</SidebarStyled.ListItem>
+            </SidebarStyled.ListWrapper>
+          </SidebarStyled.Filter>
+        </SidebarStyled.FilterWrapper>
+        <Footer />
+      </SidebarStyled>
     );
   }
 }

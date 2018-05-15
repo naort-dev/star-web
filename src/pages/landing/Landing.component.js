@@ -5,10 +5,10 @@ import Sidebar from '../../components/Sidebar';
 export default class Landing extends React.Component {
   render() {
     return (
-      <div className="container-fluid">
+      <div>
         <Header />
-        <div className="row">
-          <div className="col col-md-4">
+        <div>
+          <div>
             <Sidebar />
           </div>
           {/* <div className="col col-lg-8">
