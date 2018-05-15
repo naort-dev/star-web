@@ -6,3 +6,4 @@ dist/
 .chrome
 .DS_Store
 env.js
+.idea/
