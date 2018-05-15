@@ -45,6 +45,7 @@ const List = styled.ul`
 const ListItem = styled.li`
   padding: 0 40px;
   font-size: 14px;
+  cursor: pointer;
   &:hover {
     color: #FF6C58;
     background-color: #F8F8F8;
@@ -99,6 +100,7 @@ const shareIconWrapper = styled.div`
 `;
 
 const shareIcon = styled.img`
+  cursor: pointer;
   width: 24px;
   height: 24px;
   margin: 10px;
@@ -121,6 +123,7 @@ const StoreIconWrapper = styled.div`
 `;
 
 const StoreIcon = styled.img`
+  cursor: pointer;
   width: 117px;
   height: 40px;
   margin: 10px;
