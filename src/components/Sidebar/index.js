@@ -14,8 +14,17 @@ export default class Sidebar extends React.Component {
   render() {
     console.log(this.state.name);
     return (
-      <SidebarStyled>
+      <SidebarStyled menuActive={this.props.menuActive}>
         <SidebarStyled.FilterWrapper>
+          <SidebarStyled.Filter>
+            <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
+            <SidebarStyled.Separator />
+            <SidebarStyled.ListWrapper>
+              <SidebarStyled.ListItem>Requests</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>Earnings</SidebarStyled.ListItem>
+              <SidebarStyled.ListItem>My Star Page</SidebarStyled.ListItem>
+            </SidebarStyled.ListWrapper>
+          </SidebarStyled.Filter>
           <SidebarStyled.Filter>
             <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
             <SidebarStyled.Separator />

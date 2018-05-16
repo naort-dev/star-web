@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderDiv } from './styled';
 
 
-export const Header = () => (
+export const Header = props => (
   <header>
     <HeaderDiv >
       <HeaderDiv.Left>
@@ -10,7 +10,7 @@ export const Header = () => (
           src="assets/images/logo_starsona.png"
           alt=""
         />
-        <HeaderDiv.MenuButton />
+        <HeaderDiv.MenuButton menuActive={props.menuActive} onClick={() => props.enableMenu()} />
       </HeaderDiv.Left>
       <HeaderDiv.SearchBar>
         <HeaderDiv.SearchIcon

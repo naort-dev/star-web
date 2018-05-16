@@ -29,7 +29,7 @@ const Separator = styled.span`
 
 const List = styled.ul`
   padding: 20px 0;
-  line-height: 42px;
+  line-height: 30px;
   @media(min-width: 768px) and (max-width: 1024px) {
     padding: 10px 0;
     line-height: 42px;
@@ -44,14 +44,21 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 0 40px;
+  font-family: 'Ubuntu-Regular';
   font-size: 14px;
   cursor: pointer;
   &:hover {
     color: #FF6C58;
+    opacity: 1;
     background-color: #F8F8F8;
   }
   @media(min-width: 768px) and (max-width: 1024px) {
+    opacity: 0.5;
     padding: 0 10px;
+  }
+  @media(min-width: 1025px) {
+    opacity: 0.5;
+    font-size: 12px;
   }
 `;
 
@@ -59,6 +66,8 @@ const DownloadLabel = styled.div`
   display: none;
   @media(min-width: 1025px) {
     display: block;
+    font-family: 'Ubuntu-Bold';
+    color: #333333;
     font-size: 12px;
     margin: 0;
     margin: 0 20px;
