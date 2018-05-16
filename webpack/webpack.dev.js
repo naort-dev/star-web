@@ -4,9 +4,9 @@ const commonPaths = require('./commonPaths');
 
 module.exports = {
   mode: 'development',
-  entry: {
-    app: `${commonPaths.appEntry}/index.js`
-  },
+  entry: [
+    "babel-polyfill", `${commonPaths.appEntry}/index.js`
+  ],
   output: {
     filename: '[name].[hash].js'
   },
