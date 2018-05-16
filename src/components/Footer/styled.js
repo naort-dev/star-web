@@ -44,7 +44,7 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 0 40px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Ubuntu-Regular';
   font-size: 14px;
   cursor: pointer;
   &:hover {
@@ -52,6 +52,7 @@ const ListItem = styled.li`
     background-color: #F8F8F8;
   }
   @media(min-width: 768px) and (max-width: 1024px) {
+    opacity: 0.5;
     padding: 0 10px;
   }
   @media(min-width: 1025px) {

@@ -1,8 +1,30 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const menuEnter = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const menuLeave = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const SidebarStyled = styled.div`
   padding: 20px 0;
   overflow: auto;
+  display: ${props => (props.menuActive ? 'block' : 'none')};
+  animation: ${props => (props.menuActive ? menuEnter : menuLeave)} 0.4s linear;
   @media(min-width: 768px) {
     padding: 0;
     margin-top: 40px;

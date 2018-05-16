@@ -14,7 +14,7 @@ export default class Sidebar extends React.Component {
   render() {
     console.log(this.state.name);
     return (
-      <SidebarStyled>
+      <SidebarStyled menuActive={this.props.menuActive}>
         <SidebarStyled.FilterWrapper>
           <SidebarStyled.Filter>
             <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
