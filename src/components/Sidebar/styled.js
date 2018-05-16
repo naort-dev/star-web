@@ -2,11 +2,18 @@ import styled from 'styled-components';
 
 const SidebarStyled = styled.div`
   padding: 20px 0;
+  overflow: auto;
   @media(min-width: 768px) {
     padding: 0;
     margin-top: 40px;
   }
   @media(min-width: 1025px) {
+    margin: 0;
+    padding-top: 40px;
+    position: fixed;
+    top: 54px;
+    bottom: 0;
+    left:0;
     width: 25%;
     max-width: 310px;
     display: inline-block;
@@ -42,6 +49,7 @@ const ListWrapper = styled.ul`
 `;
 
 const ListItem = styled.li`
+  font-family: 'Ubuntu-Light';
   padding: 0 40px;
   font-size: 18px;
   &:hover {
@@ -58,8 +66,8 @@ const ListItem = styled.li`
 `;
 
 const SectionHeading = styled.h3`
+  font-family: 'Ubuntu-Bold';
   font-size: 18px;
-  font-weight: bold;
   color: #333333;
   padding: 10px 0;
   margin: 0 40px;
