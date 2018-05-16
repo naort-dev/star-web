@@ -45,16 +45,29 @@ const SearchButton = styled.button`
   }
 
 `;
+const SignInButtonMobile = styled.button`
+background-image: url( 'assets/images/icon_profile_40a.png' );
+background-repeat:no-repeat;
+background-position: center;
+border:none;
+padding:18px;
+background-size: 35px;
+background-color:white;
+@media(min-width:767px){
+ display: none;
+}
+`;
 const ProfileButton = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
   border:none;
   padding:18px;
-  background-size: 35px;
+  background-size: 23px;
   background-color:white;
-  @media(min-width:767px){
-    background-size: 23px;
+  @media(max-width:767px){
+   background-size: 23px; 
+   display: none;
   }
   
 `;
@@ -99,6 +112,7 @@ const Input = styled.input`
   width: 426px;
   height: 28px;
   outline:none;
+  font-family: 'Ubuntu-Light';
   background: #fcfcfc;
   border: none;
   border-radius: 5px;
@@ -111,11 +125,13 @@ const SignIn = styled.button`
     background-color: #fff; 
     margin-right: 5px;
     color: black;
-    padding: 0px 13px;
+    padding: 6px 13px;
     text-align: center;
     text-decoration: none;
+	font-size: 16px;
+	font-family: 'Ubuntu-Bold';
     display: inline-block;
-    font-size: 16px;
+    font-size: 13px;
     border: none;
     @media(max-width:767px){
       display:none;
@@ -126,11 +142,12 @@ const Join = styled.button`
   background-color: #fff; 
   border-color: #FF6C58;
   color: #FF6C58;
-  padding: 0px 13px;
+  padding: 6px 13px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 13px;
+  font-family: 'Ubuntu-Bold';
   border-radius:5px;
   @media(max-width:767px){
     display:none;
@@ -144,6 +161,7 @@ HeaderDiv.SearchButton = SearchButton;
 HeaderDiv.ProfileButton = ProfileButton;
 HeaderDiv.FavoriteButton = FavoriteButton;
 HeaderDiv.MyvideoButton = MyvideoButton;
+HeaderDiv.SignInButtonMobile = SignInButtonMobile;
 HeaderDiv.SearchBar = SearchBar;
 HeaderDiv.Input = Input;
 HeaderDiv.SearchIcon = SearchIcon;
