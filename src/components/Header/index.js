@@ -21,11 +21,12 @@ export const Header = props => (
       </HeaderDiv.SearchBar>
       <HeaderDiv.Right>
         <HeaderDiv.SearchButton />
-        <HeaderDiv.FavoriteButton />
+       { /*<HeaderDiv.FavoriteButton />
         <HeaderDiv.MyvideoButton />
-        <HeaderDiv.ProfileButton />
-        {/* <HeaderDiv.SignIn>Sign In</HeaderDiv.SignIn>
-        <HeaderDiv.Join>Join Free</HeaderDiv.Join> */}
+	   <HeaderDiv.ProfileButton /> */}
+        <HeaderDiv.SignInButtonMobile />
+        <HeaderDiv.SignIn>Sign In</HeaderDiv.SignIn>
+        <HeaderDiv.Join>Join Free!</HeaderDiv.Join>
       </HeaderDiv.Right>
     </HeaderDiv>
   </header>
