@@ -50,14 +50,14 @@ const ListItem = styled.li`
   &:hover {
     color: #FF6C58;
     opacity: 1;
-    background-color: #F8F8F8;
+  }
+  @media(minw-width: 768px) {
+    opacity: 0.5;
   }
   @media(min-width: 768px) and (max-width: 1024px) {
-    opacity: 0.5;
     padding: 0 10px;
   }
   @media(min-width: 1025px) {
-    opacity: 0.5;
     font-size: 12px;
   }
 `;

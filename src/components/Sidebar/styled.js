@@ -22,7 +22,6 @@ const menuLeave = keyframes`
 
 const SidebarStyled = styled.div`
   padding: 20px 0;
-  overflow: auto;
   display: ${props => (props.menuActive ? 'block' : 'none')};
   animation: ${props => (props.menuActive ? menuEnter : menuLeave)} 0.4s linear;
   @media(min-width: 768px) {
@@ -32,10 +31,6 @@ const SidebarStyled = styled.div`
   @media(min-width: 1025px) {
     margin: 0;
     padding-top: 40px;
-    position: fixed;
-    top: 54px;
-    bottom: 0;
-    left:0;
     width: 25%;
     max-width: 310px;
     display: inline-block;
@@ -63,7 +58,7 @@ const Filter = styled.div`
 
 const ListWrapper = styled.ul`
   padding: 20px 0;
-  line-height: 42px;
+  line-height: 33px;
   cursor: pointer;
   @media(min-width: 768px) {
     margin: 0 30px;
@@ -73,7 +68,7 @@ const ListWrapper = styled.ul`
 const ListItem = styled.li`
   font-family: 'Ubuntu-Light';
   padding: 0 40px;
-  font-size: 18px;
+  font-size: 16px;
   &:hover {
     color: #FF6C58;
     background-color: #F8F8F8;

@@ -17,12 +17,16 @@ export default class Landing extends React.Component {
       <div>
         <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
         <div>
-          <div>
+          <section>
             <Sidebar menuActive={this.state.menuActive} />
-          </div>
-          {/* <div className="col col-lg-8">
-            main content
-          </div> */}
+          </section>
+          {
+            !this.state.menuActive ?
+              <section>
+              main content
+              </section>
+            : null
+          }
         </div>
       </div>
     );
