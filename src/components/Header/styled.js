@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 const HeaderDiv = styled.div`
-  margin-top: 1%;
   display:flex;
-  padding: 0px 16px;
+  padding: 10px 30px;
   box-shadow: 0px 4px 8px 0px #cccccc;
   justify-content: space-between;
   
@@ -24,9 +23,14 @@ const MenuButton = styled.button`
   background-image: url( 'assets/images/icon_menu_16a.png' );
   background-repeat:no-repeat;
   padding: 8px;
-  margin-left:5px;
+  margin-left:10px;
+  vertical-align: top;
+  margin-top: 10px;
   border:none;
   background-color:white;
+  @media(min-width : 1024px){
+    display:none;
+  }
 `;
 const SearchButton = styled.button` 
   background-image: url( 'assets/images/icon_search_40a.png' );
@@ -44,9 +48,10 @@ const SearchButton = styled.button`
 const ProfileButton = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
+  background-position: center;
   border:none;
-  padding:20px;
-  background-size: 40px;
+  padding:18px;
+  background-size: 35px;
   background-color:white;
   @media(min-width:767px){
     background-size: 23px;
@@ -56,8 +61,9 @@ const ProfileButton = styled.button`
 const FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40a.png' );
   background-repeat:no-repeat;
+  background-position: center;
   border:none;
-  padding:20px;
+  padding:18px;
   background-size: 23px;
   background-color:white;
   @media(max-width:767px){
@@ -67,8 +73,9 @@ const FavoriteButton = styled.button`
 const MyvideoButton = styled.button`
   background-image: url( 'assets/images/icon_myVids_40a.png' );
   background-repeat:no-repeat;
+  background-position: center;
   border:none;
-  padding:20px;
+  padding:18px;
   background-size: 23px;
   background-color:white;
   @media(max-width:767px){
@@ -84,16 +91,21 @@ const SearchBar = styled.div`
 `;
 const SearchIcon = styled.img`
   position: absolute;
+  width: 30px;
+  height: 30px;
 `;
 const Input = styled.input`
   margin-left: 10px;
-  width: 454px;
-  height: 41px;
+  width: 426px;
+  height: 28px;
   outline:none;
   background: #fcfcfc;
   border: none;
   border-radius: 5px;
   text-indent: 32px;
+  @media(min-width : 768px){
+    width: 319px;
+  }
 `;
 const SignIn = styled.button`
     background-color: #fff; 
