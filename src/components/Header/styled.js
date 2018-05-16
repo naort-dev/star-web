@@ -87,7 +87,7 @@ const SearchIcon = styled.img`
 `;
 const Input = styled.input`
   margin-left: 10px;
-  width: 454  px;
+  width: 454px;
   height: 41px;
   outline:none;
   background: #fcfcfc;
