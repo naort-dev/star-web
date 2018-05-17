@@ -10,6 +10,9 @@ const HeaderDiv = styled.div`
   @media (min-width: 1025px) {
     padding: 10px 50px;
   }
+  @media (max-width:767px){
+    padding: 3px 16px;
+  }
 `;
 HeaderDiv.HeaderRight = styled.div`
   

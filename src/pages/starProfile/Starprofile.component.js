@@ -1,5 +1,6 @@
 import React from 'react';
 import { Header } from '../../components/Header';
+import { ImageRender } from '../../components/ImageRender';
 import { Detail } from '../starProfile/styled';
 
 export default class Starprofile extends React.Component {
@@ -17,7 +18,9 @@ export default class Starprofile extends React.Component {
       <div>
         <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
         <Detail>
-          <Detail.LeftSection>A</Detail.LeftSection>
+          <Detail.LeftSection>
+            <ImageRender />
+          </Detail.LeftSection>
           <Detail.RightSection>B</Detail.RightSection>
         </Detail>
       </div>

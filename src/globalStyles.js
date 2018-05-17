@@ -1,5 +1,5 @@
 import { injectGlobal } from 'styled-components';
-
+/* eslint-disable */
 injectGlobal`
   html, body {
     height: 100%;
@@ -24,14 +24,15 @@ injectGlobal`
     font-family: 'Ubuntu-Bold';
     src: url("/assets/fonts/Ubuntu/Ubuntu-Bold.ttf") format("truetype");
   }
-	ul{
+	ul,li{
 		list-style-type: none;
 		padding: 0;
 		margin: 0;
 	}
 
-	h1,h2,h3,h4,h5,h6 {
-		margin: 0;
+	h1,h2,h3,h4,h5,h6,p {
+    margin: 0;
+    padding:0
 	}
 
 	a {
