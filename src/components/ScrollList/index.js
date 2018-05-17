@@ -35,7 +35,6 @@ export default class ScrollList extends React.Component {
     return (
       <ListStyled>
         <Scrollbars
-          autoHide
           renderView={props => <div {...props} className="view" id="scrollable-target" />}
         >
           <InfiniteScroll

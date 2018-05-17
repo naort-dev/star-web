@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { Header } from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
@@ -21,7 +22,12 @@ export default class Landing extends React.Component {
         <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection>
-            <Sidebar menuActive={this.state.menuActive} />
+            <Scrollbars
+              autoHide
+              renderView={props => <div {...props} className="view" />}
+            >
+              <Sidebar menuActive={this.state.menuActive} />
+            </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
             <Tabs />

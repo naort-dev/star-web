@@ -19,6 +19,7 @@ LandingStyled.sideSection = styled.section`
     left: 0;
     top: 60px;
     bottom: 0;
+    overflow: auto;
   }
 `;
 
