@@ -30,8 +30,7 @@ const SidebarStyled = styled.div`
   }
   @media(min-width: 1025px) {
     margin: 0;
-    padding-top: 40px;
-    width: 25%;
+    padding-top: 60px;
     max-width: 310px;
     display: inline-block;
     float: left;

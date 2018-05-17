@@ -1,6 +1,8 @@
 import React from 'react';
 import { Header } from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
+import Tabs from '../../components/Tabs';
+import LandingStyled from './styled';
 
 export default class Landing extends React.Component {
   constructor(props) {
@@ -17,14 +19,15 @@ export default class Landing extends React.Component {
       <div>
         <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
         <div>
-          <section>
+          <LandingStyled.sideSection>
             <Sidebar menuActive={this.state.menuActive} />
-          </section>
+          </LandingStyled.sideSection>
           {
             !this.state.menuActive ?
-              <section>
-              main content
-              </section>
+              <LandingStyled.mainSection>
+                <Tabs />
+                main content
+              </LandingStyled.mainSection>
             : null
           }
         </div>

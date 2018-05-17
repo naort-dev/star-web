@@ -2,10 +2,14 @@ import styled from 'styled-components';
 
 const HeaderDiv = styled.div`
   display:flex;
-  padding: 10px 30px;
+  padding: 10px 16px;
   box-shadow: 0px 4px 8px 0px #cccccc;
   justify-content: space-between;
+  align-items: center;
   
+  @media (min-width: 1025px) {
+    padding: 10px 50px;
+  }
 `;
 const HeaderRight = styled.div`
   
@@ -20,7 +24,7 @@ const ImgLogo = styled.img`
   height:30.27px
 `;
 const MenuButton = styled.button`
-  background-image: ${props => props.menuActive?"url( 'assets/images/icon_menu_-1.png' )": "url( 'assets/images/icon_menu_16a.png' )"};
+  background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
   background-repeat:no-repeat;
   padding: 8px;
   margin-left:10px;
