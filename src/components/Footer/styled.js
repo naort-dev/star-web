@@ -15,6 +15,8 @@ const FooterStyled = styled.footer`
   @media(min-width: 1025px) {
     display: flex;
     flex-direction: column;
+    position: absolute;
+    bottom: 0;
   }
 `;
 

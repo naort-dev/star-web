@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
-const HeaderDiv = styled.div`
+const HeaderSection = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: white;
+  height: 60px;
+`;
+
+HeaderSection.HeaderDiv = styled.div`
   display:flex;
   padding: 10px 16px;
   box-shadow: 0px 4px 8px 0px #cccccc;
@@ -14,19 +23,19 @@ const HeaderDiv = styled.div`
     padding: 3px 16px;
   }
 `;
-HeaderDiv.HeaderRight = styled.div`
+HeaderSection.HeaderRight = styled.div`
   
   display:inline-block;
 `;
-HeaderDiv.HeaderLeft = styled.div`
+HeaderSection.HeaderLeft = styled.div`
   display:inline-block;
 `;
 
-HeaderDiv.ImgLogo = styled.img`
+HeaderSection.ImgLogo = styled.img`
   width:117.61px;
   height:30.27px
 `;
-HeaderDiv.MenuButton = styled.button`
+HeaderSection.MenuButton = styled.button`
   background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
   background-repeat:no-repeat;
   padding: 8px;
@@ -39,7 +48,7 @@ HeaderDiv.MenuButton = styled.button`
     display:none;
   }
 `;
-HeaderDiv.SearchButton = styled.button` 
+HeaderSection.SearchButton = styled.button` 
   background-image: url( 'assets/images/icon_search_40a.png' );
   background-repeat: no-repeat;
   background-position: center;
@@ -52,7 +61,7 @@ HeaderDiv.SearchButton = styled.button`
   }
 
 `;
-HeaderDiv.SignInButtonMobile = styled.button`
+HeaderSection.SignInButtonMobile = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -64,7 +73,7 @@ HeaderDiv.SignInButtonMobile = styled.button`
    display: none;
   }
 `;
-HeaderDiv.ProfileButton = styled.button`
+HeaderSection.ProfileButton = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -78,7 +87,7 @@ HeaderDiv.ProfileButton = styled.button`
   }
   
 `;
-HeaderDiv.FavoriteButton = styled.button`
+HeaderSection.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -90,7 +99,7 @@ HeaderDiv.FavoriteButton = styled.button`
     display:none;
   }
 `;
-HeaderDiv.MyvideoButton = styled.button`
+HeaderSection.MyvideoButton = styled.button`
   background-image: url( 'assets/images/icon_myVids_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -102,19 +111,19 @@ HeaderDiv.MyvideoButton = styled.button`
     display:none;
   }
 `;
-HeaderDiv.SearchBar = styled.div`
+HeaderSection.SearchBar = styled.div`
   position:relative;
   display:inline-block;
   @media(max-width : 767px){
     display:none;
   }
 `;
-HeaderDiv.SearchIcon = styled.img`
+HeaderSection.SearchIcon = styled.img`
   position: absolute;
   width: 30px;
   height: 30px;
 `;
-HeaderDiv.Input = styled.input`
+HeaderSection.Input = styled.input`
   margin-left: 10px;
   width: 426px;
   height: 28px;
@@ -128,7 +137,7 @@ HeaderDiv.Input = styled.input`
     width: 319px;
   }
 `;
-HeaderDiv.SignIn = styled.button`
+HeaderSection.SignIn = styled.button`
   background-color: #fff; 
   margin-right: 5px;
   color: black;
@@ -144,7 +153,7 @@ HeaderDiv.SignIn = styled.button`
     display:none;
   }
 `;
-HeaderDiv.Join = styled.button`
+HeaderSection.Join = styled.button`
   background-color: #fff; 
   border-color: #FF6C58;
   color: #FF6C58;
@@ -160,4 +169,4 @@ HeaderDiv.Join = styled.button`
   }
 `;
 
-export default HeaderDiv;
+export default HeaderSection;

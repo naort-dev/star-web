@@ -17,22 +17,18 @@ export default class Landing extends React.Component {
   }
   render() {
     return (
-      <div>
+      <LandingStyled>
         <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
-        <div>
+        <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection>
             <Sidebar menuActive={this.state.menuActive} />
           </LandingStyled.sideSection>
-          {
-            !this.state.menuActive ?
-              <LandingStyled.mainSection>
-                <Tabs />
-                <ScrollList />
-              </LandingStyled.mainSection>
-            : null
-          }
-        </div>
-      </div>
+          <LandingStyled.mainSection menuActive={this.state.menuActive}>
+            <Tabs />
+            <ScrollList />
+          </LandingStyled.mainSection>
+        </LandingStyled.sectionWrapper>
+      </LandingStyled>
     );
   }
 };

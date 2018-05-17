@@ -1,33 +1,33 @@
 import React from 'react';
-import HeaderDiv from './styled';
+import HeaderSection from './styled';
 
 
 export const Header = props => (
-  <header>
-    <HeaderDiv >
-      <HeaderDiv.HeaderLeft>
-        <HeaderDiv.ImgLogo
+  <HeaderSection>
+    <HeaderSection.HeaderDiv >
+      <HeaderSection.HeaderLeft>
+        <HeaderSection.ImgLogo
           src="assets/images/logo_starsona.png"
           alt=""
         />
-        <HeaderDiv.MenuButton menuActive={props.menuActive} onClick={() => props.enableMenu()} />
-      </HeaderDiv.HeaderLeft>
-      <HeaderDiv.SearchBar>
-        <HeaderDiv.SearchIcon
+        <HeaderSection.MenuButton menuActive={props.menuActive} onClick={() => props.enableMenu()} />
+      </HeaderSection.HeaderLeft>
+      <HeaderSection.SearchBar>
+        <HeaderSection.SearchIcon
           src="assets/images/icon_search_40a.png"
           alt=""
         />
-        <HeaderDiv.Input placeholder="Let's search the Star's" />
-      </HeaderDiv.SearchBar>
-      <HeaderDiv.HeaderRight>
-        <HeaderDiv.SearchButton />
-       { /*<HeaderDiv.FavoriteButton />
-        <HeaderDiv.MyvideoButton />
-	   <HeaderDiv.ProfileButton /> */}
-        <HeaderDiv.SignInButtonMobile />
-        <HeaderDiv.SignIn>Sign In</HeaderDiv.SignIn>
-        <HeaderDiv.Join>Join Free!</HeaderDiv.Join>
-      </HeaderDiv.HeaderRight>
-    </HeaderDiv>
-  </header>
+        <HeaderSection.Input placeholder="Let's search the Star's" />
+      </HeaderSection.SearchBar>
+      <HeaderSection.HeaderRight>
+        <HeaderSection.SearchButton />
+       { /*<HeaderSection.FavoriteButton />
+        <HeaderSection.MyvideoButton />
+	   <HeaderSection.ProfileButton /> */}
+        <HeaderSection.SignInButtonMobile />
+        <HeaderSection.SignIn>Sign In</HeaderSection.SignIn>
+        <HeaderSection.Join>Join Free!</HeaderSection.Join>
+      </HeaderSection.HeaderRight>
+    </HeaderSection.HeaderDiv>
+  </HeaderSection>
 );

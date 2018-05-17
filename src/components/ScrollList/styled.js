@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const ListStyled = styled.section`
-  padding: 22px 16px 0;
-  height: 50%;
+  padding: 0 16px;
+  height: calc(100% - 95px);
   overflow: auto;
+  margin: 20px 0;
 `;
 
 export default ListStyled;
