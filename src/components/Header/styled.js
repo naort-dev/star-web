@@ -135,8 +135,8 @@ HeaderDiv.SignIn = styled.button`
   padding: 6px 13px;
   text-align: center;
   text-decoration: none;
-	font-size: 16px;
-	font-family: 'Ubuntu-Bold';
+  font-size: 16px;
+  font-family: 'Ubuntu-Bold';
   display: inline-block;
   font-size: 13px;
   border: none;
