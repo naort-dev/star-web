@@ -17,6 +17,7 @@ import { Login } from './pages/login';
 import { Dashboard } from './pages/dashboard';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
+import { Starprofile } from './pages/starProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -69,6 +70,7 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
+                <Route path="/starProfile" component={Starprofile} />
 
                 {/* logged in areas */}
 
