@@ -24,7 +24,7 @@ const ImgLogo = styled.img`
   height:30.27px
 `;
 const MenuButton = styled.button`
-  background-image: ${props => props.menuActive?"url( 'assets/images/icon_menu_-1.png' )": "url( 'assets/images/icon_menu_16a.png' )"};
+  background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
   background-repeat:no-repeat;
   padding: 8px;
   margin-left:10px;

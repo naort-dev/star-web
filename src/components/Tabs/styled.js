@@ -8,11 +8,10 @@ const TabStyled = styled.div`
     clear: both;
   }
   @media(min-width: 768px) {
+    padding-top: 0;
     text-align: center;
-    padding-top: 40px;
   }
   @media(min-width: 1025px) {
-    padding-top: 60px;
     border: none;
   }
 `;
