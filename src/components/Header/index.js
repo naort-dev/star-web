@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderDiv } from './styled';
+import HeaderDiv from './styled';
 
 
 export const Header = props => (

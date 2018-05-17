@@ -49,6 +49,18 @@ HeaderDiv.SearchButton = styled.button`
   }
 
 `;
+HeaderDiv.SignInButtonMobile = styled.button`
+  background-image: url( 'assets/images/icon_profile_40a.png' );
+  background-repeat:no-repeat;
+  background-position: center;
+  border:none;
+  padding:18px;
+  background-size: 35px;
+  background-color:white;
+  @media(min-width:767px){
+   display: none;
+  }
+`;
 HeaderDiv.ProfileButton = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
@@ -114,21 +126,20 @@ HeaderDiv.Input = styled.input`
   }
 `;
 HeaderDiv.SignIn = styled.button`
-    background-color: #fff; 
-    margin-right: 5px;
-    color: black;
-    padding: 6px 13px;
-    text-align: center;
-    text-decoration: none;
-	  font-size: 16px;
-	  font-family: 'Ubuntu-Bold';
-    display: inline-block;
-    font-size: 13px;
-    border: none;
-    @media(max-width:767px){
-      display:none;
-    }
-
+  background-color: #fff; 
+  margin-right: 5px;
+  color: black;
+  padding: 6px 13px;
+  text-align: center;
+  text-decoration: none;
+	font-size: 16px;
+	font-family: 'Ubuntu-Bold';
+  display: inline-block;
+  font-size: 13px;
+  border: none;
+  @media(max-width:767px){
+    display:none;
+  }
 `;
 HeaderDiv.Join = styled.button`
   background-color: #fff; 
@@ -145,4 +156,5 @@ HeaderDiv.Join = styled.button`
     display:none;
   }
 `;
-export { HeaderDiv };
+
+export default HeaderDiv;
