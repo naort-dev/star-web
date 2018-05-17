@@ -11,7 +11,7 @@ export const ImageRender = () => (
       />
       <ImageRenderDiv.ProfileImageWrapper>
         <ImageRenderDiv.ProfileImage
-          src="assets/images/profile.jpg"
+          src="assets/images/profile.png"
           alt=""
         />
       </ImageRenderDiv.ProfileImageWrapper>
