@@ -11,19 +11,19 @@ const HeaderDiv = styled.div`
     padding: 10px 50px;
   }
 `;
-const HeaderRight = styled.div`
+HeaderDiv.HeaderRight = styled.div`
   
   display:inline-block;
 `;
-const HeaderLeft = styled.div`
+HeaderDiv.HeaderLeft = styled.div`
   display:inline-block;
 `;
 
-const ImgLogo = styled.img`
+HeaderDiv.ImgLogo = styled.img`
   width:117.61px;
   height:30.27px
 `;
-const MenuButton = styled.button`
+HeaderDiv.MenuButton = styled.button`
   background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
   background-repeat:no-repeat;
   padding: 8px;
@@ -36,7 +36,7 @@ const MenuButton = styled.button`
     display:none;
   }
 `;
-const SearchButton = styled.button` 
+HeaderDiv.SearchButton = styled.button` 
   background-image: url( 'assets/images/icon_search_40a.png' );
   background-repeat: no-repeat;
   background-position: center;
@@ -49,19 +49,7 @@ const SearchButton = styled.button`
   }
 
 `;
-const SignInButtonMobile = styled.button`
-background-image: url( 'assets/images/icon_profile_40a.png' );
-background-repeat:no-repeat;
-background-position: center;
-border:none;
-padding:18px;
-background-size: 35px;
-background-color:white;
-@media(min-width:767px){
- display: none;
-}
-`;
-const ProfileButton = styled.button`
+HeaderDiv.ProfileButton = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -75,7 +63,7 @@ const ProfileButton = styled.button`
   }
   
 `;
-const FavoriteButton = styled.button`
+HeaderDiv.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -87,7 +75,7 @@ const FavoriteButton = styled.button`
     display:none;
   }
 `;
-const MyvideoButton = styled.button`
+HeaderDiv.MyvideoButton = styled.button`
   background-image: url( 'assets/images/icon_myVids_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -99,19 +87,19 @@ const MyvideoButton = styled.button`
     display:none;
   }
 `;
-const SearchBar = styled.div`
+HeaderDiv.SearchBar = styled.div`
   position:relative;
   display:inline-block;
   @media(max-width : 767px){
     display:none;
   }
 `;
-const SearchIcon = styled.img`
+HeaderDiv.SearchIcon = styled.img`
   position: absolute;
   width: 30px;
   height: 30px;
 `;
-const Input = styled.input`
+HeaderDiv.Input = styled.input`
   margin-left: 10px;
   width: 426px;
   height: 28px;
@@ -125,15 +113,15 @@ const Input = styled.input`
     width: 319px;
   }
 `;
-const SignIn = styled.button`
+HeaderDiv.SignIn = styled.button`
     background-color: #fff; 
     margin-right: 5px;
     color: black;
     padding: 6px 13px;
     text-align: center;
     text-decoration: none;
-	font-size: 16px;
-	font-family: 'Ubuntu-Bold';
+	  font-size: 16px;
+	  font-family: 'Ubuntu-Bold';
     display: inline-block;
     font-size: 13px;
     border: none;
@@ -142,7 +130,7 @@ const SignIn = styled.button`
     }
 
 `;
-const Join = styled.button`
+HeaderDiv.Join = styled.button`
   background-color: #fff; 
   border-color: #FF6C58;
   color: #FF6C58;
@@ -157,20 +145,4 @@ const Join = styled.button`
     display:none;
   }
 `;
-HeaderDiv.Right = HeaderRight;
-HeaderDiv.Left = HeaderLeft;
-HeaderDiv.Logo = ImgLogo;
-HeaderDiv.MenuButton = MenuButton;
-HeaderDiv.SearchButton = SearchButton;
-HeaderDiv.ProfileButton = ProfileButton;
-HeaderDiv.FavoriteButton = FavoriteButton;
-HeaderDiv.MyvideoButton = MyvideoButton;
-HeaderDiv.SignInButtonMobile = SignInButtonMobile;
-HeaderDiv.SearchBar = SearchBar;
-HeaderDiv.Input = Input;
-HeaderDiv.SearchIcon = SearchIcon;
-HeaderDiv.SignIn = SignIn;
-HeaderDiv.Join = Join;
-
-
 export { HeaderDiv };

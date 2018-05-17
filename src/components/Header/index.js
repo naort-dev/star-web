@@ -5,13 +5,13 @@ import { HeaderDiv } from './styled';
 export const Header = props => (
   <header>
     <HeaderDiv >
-      <HeaderDiv.Left>
-        <HeaderDiv.Logo
+      <HeaderDiv.HeaderLeft>
+        <HeaderDiv.ImgLogo
           src="assets/images/logo_starsona.png"
           alt=""
         />
         <HeaderDiv.MenuButton menuActive={props.menuActive} onClick={() => props.enableMenu()} />
-      </HeaderDiv.Left>
+      </HeaderDiv.HeaderLeft>
       <HeaderDiv.SearchBar>
         <HeaderDiv.SearchIcon
           src="assets/images/icon_search_40a.png"
@@ -19,7 +19,7 @@ export const Header = props => (
         />
         <HeaderDiv.Input placeholder="Let's search the Star's" />
       </HeaderDiv.SearchBar>
-      <HeaderDiv.Right>
+      <HeaderDiv.HeaderRight>
         <HeaderDiv.SearchButton />
        { /*<HeaderDiv.FavoriteButton />
         <HeaderDiv.MyvideoButton />
@@ -27,7 +27,7 @@ export const Header = props => (
         <HeaderDiv.SignInButtonMobile />
         <HeaderDiv.SignIn>Sign In</HeaderDiv.SignIn>
         <HeaderDiv.Join>Join Free!</HeaderDiv.Join>
-      </HeaderDiv.Right>
+      </HeaderDiv.HeaderRight>
     </HeaderDiv>
   </header>
 );
