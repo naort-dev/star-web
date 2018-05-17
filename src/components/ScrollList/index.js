@@ -1,5 +1,6 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
 
 const style = {
@@ -32,30 +33,35 @@ export default class ScrollList extends React.Component {
 
   render() {
     return (
-      <ListStyled id="scrollable-target">
-        <InfiniteScroll
-          dataLength={this.state.items.length}
-          next={this.fetchMoreData}
-          scrollableTarget="scrollable-target"
-          hasMore={this.state.hasMore}
-          loader={<h4>Loading...</h4>}
-
-          endMessage={
-            <p style={{ textAlign: 'center' }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
+      <ListStyled>
+        <Scrollbars
+          autoHide
+          renderView={props => <div {...props} className="view" id="scrollable-target" />}
         >
-          {this.state.items.map((i, index) => (
-            <div style={style} key={index}>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
-                <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
-                <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
+          <InfiniteScroll
+            dataLength={this.state.items.length}
+            next={this.fetchMoreData}
+            scrollableTarget="scrollable-target"
+            hasMore={this.state.hasMore}
+            loader={<h4>Loading...</h4>}
+
+            endMessage={
+              <p style={{ textAlign: 'center' }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {this.state.items.map((i, index) => (
+              <div style={style} key={index}>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
+                  <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
+                  <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
+                </div>
               </div>
-            </div>
-          ))}
-        </InfiniteScroll>
+            ))}
+          </InfiniteScroll>
+        </Scrollbars>
       </ListStyled>
     );
   }
