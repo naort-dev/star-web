@@ -15,6 +15,7 @@ LandingStyled.sideSection = styled.section`
   height: ${props => props.menuActive && '100%'};
   @media(min-width: 1025px) {
     width:25%;
+    max-width: 310px;
     display: inline-block;
     position: fixed;
     left: 0;
