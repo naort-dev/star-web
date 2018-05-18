@@ -20,6 +20,7 @@ LandingStyled.sideSection = styled.section`
     position: fixed;
     left: 0;
     top: 53px;
+    box-shadow: 0px 3px 7px 0px #cccccc inset;
     bottom: 0;
     overflow: auto;
   }
