@@ -1,6 +1,7 @@
 import React from 'react';
 import { Header } from '../../components/Header';
 import { ImageRender } from '../../components/ImageRender';
+import Tabs from '../../components/Tabs';
 import { Detail } from '../starProfile/styled';
 
 export default class Starprofile extends React.Component {
@@ -21,7 +22,9 @@ export default class Starprofile extends React.Component {
           <Detail.LeftSection>
             <ImageRender />
           </Detail.LeftSection>
-          <Detail.RightSection>B</Detail.RightSection>
+          <Detail.RightSection>
+            <Tabs />
+          </Detail.RightSection>
         </Detail>
       </div>
     );
