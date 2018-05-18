@@ -13,6 +13,7 @@ const TabStyled = styled.div`
   }
   @media(min-width: 1025px) {
     border: none;
+    padding: 0;
   }
 `;
 

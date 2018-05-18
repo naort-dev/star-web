@@ -30,10 +30,10 @@ const SidebarStyled = styled.div`
   }
   @media(min-width: 1025px) {
     margin: 0;
-    padding-top: 60px;
-    max-width: 310px;
+    padding-top: 50px;
     display: inline-block;
     float: left;
+    width: 100%;
   }
 `;
 
