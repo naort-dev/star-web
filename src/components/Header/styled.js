@@ -155,7 +155,6 @@ HeaderSection.SignIn = styled.button`
 `;
 HeaderSection.Join = styled.button`
   background-color: #fff; 
-  border-color: #FF6C58;
   color: #FF6C58;
   padding: 6px 13px;
   text-align: center;
@@ -163,7 +162,9 @@ HeaderSection.Join = styled.button`
   display: inline-block;
   font-size: 13px;
   font-family: 'Ubuntu-Bold';
+  outline:none;
   border-radius:5px;
+  border: 2px solid #FF6C58;
   @media(max-width:767px){
     display:none;
   }
