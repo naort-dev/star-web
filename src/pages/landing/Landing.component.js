@@ -30,7 +30,7 @@ export default class Landing extends React.Component {
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <Tabs labels={['All', 'Stars', 'Videos']} selected="All" />
+            <Tabs labels={['All', 'Stars', 'Videos']} selected="Stars" />
             <ScrollList />
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>
