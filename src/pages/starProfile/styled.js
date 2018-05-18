@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const Detail = styled.section`
  display:flex;
- padding: 0px 0px;
+ padding: 67px 0px;
  @media(max-width:768px){
   flex-direction: column;
  }

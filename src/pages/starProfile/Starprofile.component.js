@@ -33,7 +33,7 @@ export default class Starprofile extends React.Component {
             </Detail.RequestControllerWrapper>
           </Detail.LeftSection>
           <Detail.RightSection>
-            <Tabs />
+            <Tabs labels={['All', 'Stars', 'Videos']} selected="Stars" />
           </Detail.RightSection>
         </Detail>
       </div>
