@@ -2,11 +2,7 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
-
-const style = {
-  margin: 6,
-  padding: 8,
-};
+import ImageCollection from '../ImageCollection';
 
 export default class ScrollList extends React.Component {
   constructor(props) {
@@ -15,6 +11,10 @@ export default class ScrollList extends React.Component {
       items: Array.from({ length: 20 }),
       hasMore: true,
     };
+  }
+
+  refresh = () => {
+    this.setState({ items: Array.from({ length: 20 }) });
   }
 
   fetchMoreData = () => {
@@ -41,9 +41,10 @@ export default class ScrollList extends React.Component {
             dataLength={this.state.items.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
+            refreshFunction={this.refresh}
+            pullDownToRefresh
             hasMore={this.state.hasMore}
             loader={<h4>Loading...</h4>}
-
             endMessage={
               <p style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>
@@ -51,12 +52,8 @@ export default class ScrollList extends React.Component {
             }
           >
             {this.state.items.map((i, index) => (
-              <div style={style} key={index}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
-                  <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
-                  <img alt="" width="200px" height="200px" src="https://media.istockphoto.com/photos/plant-growing-picture-id510222832?k=6&m=510222832&s=612x612&w=0&h=Pzjkj2hf9IZiLAiXcgVE1FbCNFVmKzhdcT98dcHSdSk=" />
-                </div>
+              <div key={index}>
+                <ImageCollection />
               </div>
             ))}
           </InfiniteScroll>

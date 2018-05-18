@@ -21,7 +21,7 @@ export default class Landing extends React.Component {
       <LandingStyled>
         <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
         <LandingStyled.sectionWrapper>
-          <LandingStyled.sideSection>
+          <LandingStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
               autoHide
               renderView={props => <div {...props} className="view" />}
@@ -30,7 +30,7 @@ export default class Landing extends React.Component {
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <Tabs />
+            <Tabs labels={['All', 'Stars', 'Videos']} selected="All" />
             <ScrollList />
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>

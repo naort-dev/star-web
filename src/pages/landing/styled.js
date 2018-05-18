@@ -12,12 +12,13 @@ LandingStyled.sectionWrapper = styled.div`
 
 LandingStyled.sideSection = styled.section`
   background-color: #fff;
+  height: ${props => props.menuActive && '100%'};
   @media(min-width: 1025px) {
     width:25%;
     display: inline-block;
     position: fixed;
     left: 0;
-    top: 60px;
+    top: 53px;
     bottom: 0;
     overflow: auto;
   }
@@ -34,7 +35,7 @@ LandingStyled.mainSection = styled.section`
     display: inline-block;
     vertical-align: top;
     padding-right: 50px;
-    padding-top: 60px;
+    padding-top: 50px;
     float: right;
   }
 `;

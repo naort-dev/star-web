@@ -12,9 +12,11 @@ export default class Tabs extends React.Component {
     return (
       <TabStyled>
         <TabStyled.tabList>
-          <TabStyled.tabListItem>All</TabStyled.tabListItem>
-          <TabStyled.tabListItem selected>Stars</TabStyled.tabListItem>
-          <TabStyled.tabListItem>Videos</TabStyled.tabListItem>
+          {
+            this.props.labels.map((item, index) => (
+              <TabStyled.tabListItem key={index} selected={this.props.selected === item}>{item}</TabStyled.tabListItem>
+            ))
+          }
         </TabStyled.tabList>
         <TabStyled.FilterControl>
           <TabStyled.FilterLabel>Filter</TabStyled.FilterLabel>
