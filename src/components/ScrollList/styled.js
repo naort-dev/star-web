@@ -5,6 +5,9 @@ const ListStyled = styled.section`
   height: calc(100% - 95px);
   overflow: auto;
   margin: 20px 0;
+  @media(min-width: 1025px) {
+    padding: 0;
+  }
 `;
 
 export default ListStyled;
