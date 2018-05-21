@@ -120,8 +120,8 @@ HeaderSection.SearchBar = styled.div`
 `;
 HeaderSection.SearchIcon = styled.img`
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
 `;
 HeaderSection.Input = styled.input`
   margin-left: 10px;
@@ -129,10 +129,11 @@ HeaderSection.Input = styled.input`
   height: 28px;
   outline:none;
   font-family: 'Ubuntu-Light';
+  font-size: 16px;
   background: #fcfcfc;
   border: none;
   border-radius: 5px;
-  text-indent: 32px;
+  text-indent: 78px;
   @media(min-width : 768px){
     width: 319px;
   }
