@@ -50,8 +50,8 @@ export default class ScrollList extends React.Component {
             dataLength={this.state.items.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
-            refreshFunction={this.refresh}
-            pullDownToRefresh
+            // refreshFunction={this.refresh}
+            // pullDownToRefresh
             hasMore={this.state.hasMore}
             loader={<h4>Loading...</h4>}
             endMessage={
