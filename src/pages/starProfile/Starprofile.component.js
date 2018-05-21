@@ -5,6 +5,7 @@ import Tabs from '../../components/Tabs';
 import { Detail } from '../starProfile/styled';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
+import ScrollList from '../../components/ScrollList';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -33,7 +34,8 @@ export default class Starprofile extends React.Component {
             </Detail.RequestControllerWrapper>
           </Detail.LeftSection>
           <Detail.RightSection>
-            <Tabs labels={['All', 'Stars', 'Videos']} selected="Stars" />
+            <Tabs labels={['All', 'Q&A', 'Events']} selected="Q&A" disableFilter />
+            <ScrollList />
           </Detail.RightSection>
         </Detail>
       </div>
