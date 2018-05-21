@@ -7,6 +7,9 @@
     "parserOptions": {
       "ecmaVersion": 8
     },
+    "globals": {
+      "env": true
+    },
     "extends": "airbnb",
     "rules": {
       "linebreak-style": "off",
