@@ -142,7 +142,7 @@ HeaderSection.SignIn = styled.button`
   background-color: #fff; 
   margin-right: 5px;
   color: black;
-  padding: 6px 13px;
+  padding: 6px 33px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
@@ -169,6 +169,13 @@ HeaderSection.Join = styled.button`
   @media(max-width:767px){
     display:none;
   }
+`;
+HeaderSection.SignInIcon = styled.img`
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  top: 14px;
+  margin-left: 3px;
 `;
 
 export default HeaderSection;
