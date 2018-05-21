@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const FooterDiv = styled.div`
   display:flex;
   justify-content: space-between;
+ 
 `;
 FooterDiv.BookingLeft = styled.div`
   font-size:14px;
