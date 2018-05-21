@@ -2,7 +2,8 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
-import ImageCollection from '../ImageCollection';
+// import ImageCollection from '../ImageCollection';
+import { ImageRender } from '../ImageRender';
 
 export default class ScrollList extends React.Component {
   constructor(props) {
@@ -31,6 +32,14 @@ export default class ScrollList extends React.Component {
     }, 3000);
   };
 
+  renderList() {
+    return this.state.items.map((i, index) => (
+      <ListStyled.listItem key={index}>
+        <ImageRender />
+      </ListStyled.listItem>
+    ));
+  }
+
   render() {
     return (
       <ListStyled>
@@ -41,8 +50,8 @@ export default class ScrollList extends React.Component {
             dataLength={this.state.items.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
-            refreshFunction={this.refresh}
-            pullDownToRefresh
+            // refreshFunction={this.refresh}
+            // pullDownToRefresh
             hasMore={this.state.hasMore}
             loader={<h4>Loading...</h4>}
             endMessage={
@@ -51,11 +60,9 @@ export default class ScrollList extends React.Component {
               </p>
             }
           >
-            {this.state.items.map((i, index) => (
-              <div key={index}>
-                <ImageCollection />
-              </div>
-            ))}
+            <ListStyled.listWrapper>
+              {this.renderList()}
+            </ListStyled.listWrapper>
           </InfiniteScroll>
         </Scrollbars>
       </ListStyled>
