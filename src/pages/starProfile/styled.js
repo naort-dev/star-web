@@ -21,15 +21,26 @@ width:100%;
 `;
 Detail.RightSection = styled.div`
 width:100%
+height: 50vh;
+padding: 0px 0px;
 @media(min-width: 1025px){
   width:68%;
+  height:90vh;
+  padding: 0px 35px;
 }
 `;
 Detail.SmallScreenLayout = styled.div`
+width:100%;
+
+@media(min-width: 768px){
+  height:330px;
+}
 @media(min-width:1025px){
   display:none;
 }
 `;
+
+
 Detail.LargeScreenLayout = styled.div`
 display: none;
 @media(min-width:1025px){
@@ -47,5 +58,6 @@ Detail.RequestControllerWrapper = styled.div`
     position:relative;
   }
 `;
+
 
 export { Detail };

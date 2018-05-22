@@ -6,7 +6,7 @@ export const AboutContent = () => (
   <AboutContentDiv>
     <AboutContentDiv.ProfileMainContent>
       <AboutContentDiv.ProfileImage
-        src="assets/images/profile.png"
+        src="assets/images/try.jpg"
         alt=""
       />
       <AboutContentDiv.ProfileName>Lauren Mayberry</AboutContentDiv.ProfileName>

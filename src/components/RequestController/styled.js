@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const FooterDiv = styled.div`
   display:flex;
   justify-content: space-between;
+  background-color:white;
+  z-index:1000;
  
 `;
 FooterDiv.BookingLeft = styled.div`

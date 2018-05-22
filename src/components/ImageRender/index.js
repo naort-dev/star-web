@@ -2,13 +2,9 @@ import React from 'react';
 import ImageRenderDiv from './styled';
 
 
-export const ImageRender = () => (
+export const ImageRender = props => (
   <ImageRenderDiv>
-    <ImageRenderDiv.ImageSection>
-      <ImageRenderDiv.BannerImage
-        src="assets/images/check.jpg"
-        alt=""
-      />
+    <ImageRenderDiv.ImageSection height={props.imageHeight}>
       <ImageRenderDiv.ProfileImageWrapper>
         <ImageRenderDiv.ProfileImage
           src="assets/images/profile.png"

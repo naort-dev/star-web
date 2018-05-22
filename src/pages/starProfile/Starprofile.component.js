@@ -24,7 +24,7 @@ export default class Starprofile extends React.Component {
         <Detail>
           <Detail.LeftSection>
             <Detail.SmallScreenLayout>
-              <ImageRender />
+              <ImageRender imageHeight="270" />
             </Detail.SmallScreenLayout>
             <Detail.LargeScreenLayout>
               <AboutContent />
@@ -34,8 +34,8 @@ export default class Starprofile extends React.Component {
             </Detail.RequestControllerWrapper>
           </Detail.LeftSection>
           <Detail.RightSection>
-            <Tabs labels={['All', 'Q&A', 'Events']} selected="Q&A" disableFilter />
-            <ScrollList />
+            <Tabs labels={['All', 'Q&A', 'Events']} selected="Q&A" disableFilter /> 
+            <ScrollList />   
           </Detail.RightSection>
         </Detail>
       </div>
