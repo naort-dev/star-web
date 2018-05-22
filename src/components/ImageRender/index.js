@@ -7,7 +7,7 @@ export const ImageRender = props => (
     <ImageRenderDiv.ImageSection height={props.imageHeight}>
       <ImageRenderDiv.ProfileImageWrapper>
         <ImageRenderDiv.ProfileImage
-          src="assets/images/profile.png"
+          src={props.data.avatar_photo.thumbnail_url}
           alt=""
         />
       </ImageRenderDiv.ProfileImageWrapper>

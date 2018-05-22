@@ -68,12 +68,16 @@ const ListItem = styled.li`
   font-family: 'Ubuntu-Light';
   padding: 0 40px;
   font-size: 16px;
+  color: ${props => props.selected && '#FF6C58'};
+  background-color: ${props => props.selected && '#F8F8F8'};
   &:hover {
     color: #FF6C58;
     background-color: #F8F8F8;
   }
   @media(min-width: 768px) {
     padding: 0 10px;
+    border-left: ${props => props.selected && '4px solid #FF6C58'};
+    margin-left: ${props => props.selected && '-4px'}; 
     &:hover {
       margin-left: -4px; 
       border-left: 4px solid #FF6C58;

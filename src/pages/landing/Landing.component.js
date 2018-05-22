@@ -13,6 +13,9 @@ export default class Landing extends React.Component {
       menuActive: false,
     };
   }
+  componentWillMount() {
+    this.props.fetchProfessionsList();
+  }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
@@ -26,12 +29,15 @@ export default class Landing extends React.Component {
               autoHide
               renderView={props => <div {...props} className="view" />}
             >
-              <Sidebar menuActive={this.state.menuActive} />
+              <Sidebar list={this.props.professionsList} menuActive={this.state.menuActive} />
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
             <Tabs labels={['All', 'Stars', 'Videos']} selected="Stars" />
-            <ScrollList />
+            <ScrollList
+              dataList={this.props.celebList}
+              fetchData={offset => this.props.fetchCelebrityList(offset)} 
+            />
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>
       </LandingStyled>

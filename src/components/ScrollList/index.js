@@ -9,33 +9,43 @@ export default class ScrollList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: Array.from({ length: 20 }),
       hasMore: true,
+      page: 0,
     };
+  }
+  componentWillMount() {
+    if (!this.props.dataList.data.length) {
+      this.props.fetchData(this.state.page);
+      this.setState({ page: this.state.page + 1 });
+    }
   }
 
   refresh = () => {
-    this.setState({ items: Array.from({ length: 20 }) });
+    // this.setState({ items: Array.from({ length: 20 }) });
   }
 
   fetchMoreData = () => {
-    if (this.state.items.length >= 500) {
+    if (this.props.dataList.data.length >= 100) {
       this.setState({ hasMore: false });
       return;
     }
+    if(!this.props.dataList.loading) {
+      this.props.fetchData(this.state.page);
+      this.setState({ page: this.state.page + 1 });
+    }
     // a fake async api call like which sends
     // 20 more records in .5 secs
-    setTimeout(() => {
-      this.setState({
-        items: this.state.items.concat(Array.from({ length: 20 })),
-      });
-    }, 3000);
+    // setTimeout(() => {
+    //   this.setState({
+    //     items: this.state.items.concat(Array.from({ length: 20 })),
+    //   });
+    // }, 3000);
   };
 
   renderList() {
-    return this.state.items.map((i, index) => (
+    return this.props.dataList.data.map((item, index) => (
       <ListStyled.listItem key={index}>
-        <ImageRender />
+        <ImageRender data={item} />
       </ListStyled.listItem>
     ));
   }
@@ -47,7 +57,7 @@ export default class ScrollList extends React.Component {
           renderView={props => <div {...props} className="view" id="scrollable-target" />}
         >
           <InfiniteScroll
-            dataLength={this.state.items.length}
+            dataLength={this.props.dataList.data.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
             // refreshFunction={this.refresh}
