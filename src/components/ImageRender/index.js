@@ -4,7 +4,7 @@ import ImageRenderDiv from './styled';
 
 export const ImageRender = props => (
   <ImageRenderDiv>
-    <ImageRenderDiv.ImageSection height={props.imageHeight}>
+    <ImageRenderDiv.ImageSection height={props.imageHeight} imageUrl={props.data.avatar_photo.image_url}>
       <ImageRenderDiv.ProfileImageWrapper>
         <ImageRenderDiv.ProfileImage
           src={props.data.avatar_photo.thumbnail_url}
