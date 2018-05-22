@@ -18,10 +18,13 @@ export default class Tabs extends React.Component {
             ))
           }
         </TabStyled.tabList>
-        <TabStyled.FilterControl>
-          <TabStyled.FilterLabel>Filter</TabStyled.FilterLabel>
-          <TabStyled.FilterIcon />
-        </TabStyled.FilterControl>
+        {
+          !this.props.disableFilter &&
+          <TabStyled.FilterControl>
+            <TabStyled.FilterLabel>Filter</TabStyled.FilterLabel>
+            <TabStyled.FilterIcon />
+          </TabStyled.FilterControl>
+        }
       </TabStyled>
     );
   }

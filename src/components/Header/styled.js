@@ -44,7 +44,7 @@ HeaderSection.MenuButton = styled.button`
   margin-top: 10px;
   border:none;
   background-color:white;
-  @media(min-width : 1024px){
+  @media(min-width : 1025px){
     display:none;
   }
 `;

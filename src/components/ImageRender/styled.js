@@ -6,6 +6,17 @@ const ImageRenderDiv = styled.div`
 ImageRenderDiv.ImageSection = styled.div`
   right:0;
   position:relative;
+  background-image: url( 'assets/images/try.jpg' );
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  width:100%;
+  height:167px;
+  @media(min-width: 768px) {
+    height:${props => (props.height ? props.height : '177')}px;
+  }
+  
+  
 `;
 ImageRenderDiv.BannerImage = styled.img`
   width:100%;
