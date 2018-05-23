@@ -16,13 +16,12 @@ HeaderSection.HeaderDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   max-width: 1920px;
-  
+  height: 100%;  
   @media (min-width: 1025px) {
     padding: 10px 50px;
   }
   @media (max-width:767px){
     padding: 3px 16px;
-    height: 100%;
   }
 `;
 HeaderSection.HeaderRight = styled.div`
@@ -178,6 +177,9 @@ HeaderSection.SignInIcon = styled.img`
   height: 25px;
   top: 14px;
   margin-left: 3px;
+  @media(min-width: 768px) {
+    top: 18px;
+  }
 `;
 
 export default HeaderSection;
