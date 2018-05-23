@@ -14,7 +14,7 @@ export const ImageRender = props => (
           alt=""
         />
       </ImageRenderDiv.ProfileImageWrapper>
-      <ImageRenderDiv.FavoriteButton />
+      {/* <ImageRenderDiv.FavoriteButton /> */}
     </ImageRenderDiv.ImageSection>
     <ImageRenderDiv.ProfileContent>
       <ImageRenderDiv.Span>
