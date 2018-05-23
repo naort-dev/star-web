@@ -18,12 +18,12 @@ export const celebListFetchEnd = () => ({
   type: CELEB_LIST.end,
 });
 
-export const celebListFetchSuccess = (list, page, count) => {
+export const celebListFetchSuccess = (list, offset, count) => {
   return (
     {
       type: CELEB_LIST.success,
       list,
-      page,
+      offset,
       count,
     });
 };
@@ -48,7 +48,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
       else {
         list=[...list, ...resp.data.data.celebrity_list]
       }
-      dispatch(celebListFetchSuccess(list, page, count));
+      dispatch(celebListFetchSuccess(list, offset, count));
     }
     else {
       dispatch(celebListFetchEnd());

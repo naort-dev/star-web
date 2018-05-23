@@ -3,7 +3,7 @@ import { CELEB_LIST } from '../actions/getCelebList';
 const initalState = {
   data: [],
   loading: false,
-  page: -1,
+  offset: -1,
   count: 0,
 };
 
@@ -26,7 +26,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        page: action.page,
+        offset: action.offset,
         data: action.list,
         count: action.count,
       };

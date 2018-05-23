@@ -13,7 +13,9 @@ export default class Sidebar extends React.Component {
 
   selectCategory = (id) => {
     this.setState({ selectedId: id });
-    this.props.toggleMenu();
+    if(window.outerWidth<=1024) {
+      this.props.toggleMenu();
+    }
     this.props.updateCategory(id);
   }
 
