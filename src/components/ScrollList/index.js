@@ -80,7 +80,7 @@ export default class ScrollList extends React.Component {
             loader={<h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>}
             endMessage={
               <p style={{ textAlign: 'center' }}>
-                <b>Yay! You have seen it all</b>
+                <b>End of list</b>
               </p>
             }
           >
