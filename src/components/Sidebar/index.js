@@ -11,8 +11,9 @@ export default class Sidebar extends React.Component {
     };
   }
 
-  selectCategory = (item) => {
-    this.setState({selectedId: item.id})
+  selectCategory = (id) => {
+    this.setState({ selectedId: id });
+    this.props.updateCategory(id);
   }
 
   renderCategoryList = () => (
@@ -20,7 +21,7 @@ export default class Sidebar extends React.Component {
       <SidebarStyled.ListItem
         key={item.id}
         selected={this.state.selectedId === item.id ? true : false}
-        onClick={() => this.selectCategory(item)}
+        onClick={() => this.selectCategory(item.id)}
       >
         {item.title}
       </SidebarStyled.ListItem>
@@ -44,6 +45,12 @@ export default class Sidebar extends React.Component {
             <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
             <SidebarStyled.Separator />
             <SidebarStyled.ListWrapper>
+              <SidebarStyled.ListItem
+                selected={this.state.selectedId === '' ? true : false}
+                onClick={() => this.selectCategory('')}
+              >
+                Featured
+              </SidebarStyled.ListItem>
               {
                 this.renderCategoryList()
               }

@@ -10,13 +10,21 @@ export default class ScrollList extends React.Component {
     super(props);
     this.state = {
       hasMore: true,
-      page: 0,
     };
   }
   componentWillMount() {
     if (!this.props.dataList.data.length) {
-      this.props.fetchData(this.state.page);
-      this.setState({ page: this.state.page + 1 });
+      this.props.fetchData(this.props.dataList.page+1);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const endOfList = nextProps.dataList.data.length!=0 && nextProps.dataList.data.length >= nextProps.dataList.count
+    if(endOfList) {
+      this.setState({ hasMore: false });
+    }
+    else {
+      this.setState({ hasMore: true });
     }
   }
 
@@ -25,13 +33,12 @@ export default class ScrollList extends React.Component {
   }
 
   fetchMoreData = () => {
-    if (this.props.dataList.data.length >= 100) {
+    if (this.props.dataList.data.length >= this.props.dataList.count) {
       this.setState({ hasMore: false });
       return;
     }
     if(!this.props.dataList.loading) {
-      this.props.fetchData(this.state.page);
-      this.setState({ page: this.state.page + 1 });
+      this.props.fetchData(this.props.dataList.page+1);
     }
     // a fake async api call like which sends
     // 20 more records in .5 secs
@@ -51,6 +58,7 @@ export default class ScrollList extends React.Component {
   }
 
   render() {
+    console.log(this.props.dataList.data)
     return (
       <ListStyled>
         <Scrollbars
@@ -63,7 +71,7 @@ export default class ScrollList extends React.Component {
             // refreshFunction={this.refresh}
             // pullDownToRefresh
             hasMore={this.state.hasMore}
-            loader={<h4>Loading...</h4>}
+            loader={<h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>}
             endMessage={
               <p style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>

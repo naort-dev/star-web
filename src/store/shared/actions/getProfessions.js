@@ -32,7 +32,7 @@ export const professionsListtFetchFailed = error => ({
 
 export const fetchProfessionsList = () => (dispatch, getState) => {
   dispatch(professionsListFetchStart());
-  return fetch(Api.getProfessionsList).then(resp => {
+  return fetch.get(Api.getProfessionsList).then(resp => {
     if (resp.data && resp.data.success) {
       dispatch(professionsListtFetchEnd());
       dispatch(professionsListtFetchSuccess(resp.data.data));

@@ -9,19 +9,22 @@ export const CELEB_LIST = {
   failed: 'fetch_failed/celeb_list',
 }
 
-export const celebListFetchStart = () => ({
+export const celebListFetchStart = refresh => ({
   type: CELEB_LIST.start,
+  refresh,
 });
 
 export const celebListFetchEnd = () => ({
   type: CELEB_LIST.end,
 });
 
-export const celebListFetchSuccess = (data) => {
+export const celebListFetchSuccess = (list, page, count) => {
   return (
     {
       type: CELEB_LIST.success,
-      data,
+      list,
+      page,
+      count,
     });
 };
 
@@ -30,12 +33,22 @@ export const celebListFetchFailed = error => ({
   error,
 });
 
-export const fetchCelebrityList = offset => (dispatch, getState) => {
-  dispatch(celebListFetchStart());
-  return fetch(Api.getCelebList+offset).then(resp => {
+export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
+  dispatch(celebListFetchStart(refresh));
+  const profession = getState().filters.category;
+  return fetch.get(Api.getCelebList+'?offset='+offset+'&profession='+profession).then(resp => {
     if (resp.data && resp.data.success) {
       dispatch(celebListFetchEnd());
-      dispatch(celebListFetchSuccess(resp.data.data));
+      let list = getState().celebList.data;
+      let page = offset;
+      let count = resp.data.data.count
+      if(refresh) {
+        list=resp.data.data.celebrity_list
+      }
+      else {
+        list=[...list, ...resp.data.data.celebrity_list]
+      }
+      dispatch(celebListFetchSuccess(list, page, count));
     }
     else {
       dispatch(celebListFetchEnd());
@@ -45,3 +58,4 @@ export const fetchCelebrityList = offset => (dispatch, getState) => {
     dispatch(celebListFetchFailed(exception));
   });
 };
+

@@ -1,5 +1,5 @@
 class Api {
-  static getCelebList = 'user/fan/celebrity_list/get_list?offset=';
+  static getCelebList = 'user/fan/celebrity_list/get_list/';
   static getProfessionsList = 'user/professions/';
 }
 

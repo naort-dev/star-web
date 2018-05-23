@@ -10,6 +10,8 @@ import {
 const fetch = axios.create({
   baseURL: env('API_URL'),
   headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
     'device': 'ios',
     'version': '3.0',
   },

@@ -3,6 +3,8 @@ import { CELEB_LIST } from '../actions/getCelebList';
 const initalState = {
   data: [],
   loading: false,
+  page: -1,
+  count: 0,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -11,6 +13,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: true,
+        data: action.refresh ? [] : state.data,
       };
 
     case CELEB_LIST.end:
@@ -23,8 +26,9 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        data: [...state.data, ...action.data.celebrity_list],
-        count: action.data.count,
+        page: action.page,
+        data: action.list,
+        count: action.count,
       };
 
     case CELEB_LIST.failed:
