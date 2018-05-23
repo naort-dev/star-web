@@ -22,6 +22,7 @@ HeaderSection.HeaderDiv = styled.div`
   }
   @media (max-width:767px){
     padding: 3px 16px;
+    height: 100%;
   }
 `;
 HeaderSection.HeaderRight = styled.div`
