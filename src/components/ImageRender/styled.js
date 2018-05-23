@@ -6,7 +6,7 @@ const ImageRenderDiv = styled.div`
 ImageRenderDiv.ImageSection = styled.div`
   right:0;
   position:relative;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/try.jpg)'};
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/default-cover.jpg)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;

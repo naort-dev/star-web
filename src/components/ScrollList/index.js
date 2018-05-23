@@ -55,8 +55,8 @@ export default class ScrollList extends React.Component {
       <ListStyled.listItem key={index}>
         <ImageRender 
           data={item}
-          cover={item.avatar_photo.image_url}
-          profile={item.avatar_photo.thumbnail_url}
+          cover={item.avatar_photo && item.avatar_photo.image_url}
+          profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
           starName={`${item.first_name} ${item.last_name}`}
           details={this.renderStarProfessions(item.celebrity_profession)}
         />
