@@ -125,7 +125,7 @@ HeaderSection.SearchIcon = styled.img`
   height: 35px;
 `;
 HeaderSection.Input = styled.input`
-  margin-left: 10px;
+  padding-left: 48px;
   width: 426px;
   height: 28px;
   outline:none;
