@@ -39,7 +39,7 @@ ListStyled.listItem = styled.li`
   @media(min-width: 1025px) {
     width: 33.33%;
     padding-left: 24px;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
   }
 `;
 
