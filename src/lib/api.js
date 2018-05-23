@@ -1,5 +1,5 @@
 class Api {
-  static getCelebList = 'user/fan/celebrity_list/get_list/';
+  static getCelebList = 'user/fan/celebrity_list/get_list/?limit=20';
   static getProfessionsList = 'user/professions/';
 }
 

@@ -6,15 +6,16 @@ const HeaderSection = styled.header`
   left: 0;
   right: 0;
   background: white;
+  box-shadow: 0px 4px 8px 0px #cccccc;
   height: 60px;
 `;
 
 HeaderSection.HeaderDiv = styled.div`
   display:flex;
   padding: 10px 16px;
-  box-shadow: 0px 4px 8px 0px #cccccc;
   justify-content: space-between;
   align-items: center;
+  max-width: 1920px;
   
   @media (min-width: 1025px) {
     padding: 10px 50px;
