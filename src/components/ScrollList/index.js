@@ -14,7 +14,7 @@ export default class ScrollList extends React.Component {
   }
   componentWillMount() {
     if (!this.props.dataList.data.length) {
-      this.props.fetchData(this.props.dataList.page+1);
+      this.props.fetchData(this.props.dataList.offset+1);
     }
   }
 
@@ -38,7 +38,7 @@ export default class ScrollList extends React.Component {
       return;
     }
     if(!this.props.dataList.loading) {
-      this.props.fetchData(this.props.dataList.page+1);
+      this.props.fetchData(this.props.dataList.offset+20);
     }
   };
 

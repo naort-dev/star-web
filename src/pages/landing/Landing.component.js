@@ -38,6 +38,7 @@ export default class Landing extends React.Component {
               <Sidebar
                 list={this.props.professionsList}
                 menuActive={this.state.menuActive}
+                toggleMenu={() => this.activateMenu()}
                 updateCategory={value => this.props.updateCategory(value)}
               />
             </Scrollbars>

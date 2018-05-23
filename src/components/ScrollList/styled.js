@@ -5,8 +5,14 @@ const ListStyled = styled.section`
   height: calc(100% - 95px);
   overflow: auto;
   margin: 20px 0;
+  @media(min-width: 768px) {
+    margin: 30px 0;
+    height: calc(100% - 99px);
+  }
   @media(min-width: 1025px) {
     padding: 0;
+    margin: 20px 0;
+    height: calc(100% - 79px);
   }
 `;
 
@@ -19,14 +25,14 @@ ListStyled.listWrapper = styled.ul`
     flex-wrap: wrap;
   }
   @media(min-width: 1025px) {
-    margin-right: 10px;
+    margin-right: 15px;
   }
 `;
 
 ListStyled.listItem = styled.li`
   width: 100%;
   display: inline-block;
-  margin: 10px 0;
+  margin-bottom: 10px;
   @media(min-width: 768px) {
     width: 50%;
     padding-left: 24px;
@@ -39,7 +45,7 @@ ListStyled.listItem = styled.li`
   @media(min-width: 1025px) {
     width: 33.33%;
     padding-left: 24px;
-    margin: 20px 0;
+    margin-bottom: 40px;
   }
 `;
 
