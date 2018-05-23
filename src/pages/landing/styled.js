@@ -7,6 +7,7 @@ const LandingStyled = styled.div`
 `;
 
 LandingStyled.sectionWrapper = styled.div`
+  max-width: 1920px;
   height:100%;
 `;
 
@@ -19,7 +20,7 @@ LandingStyled.sideSection = styled.section`
     display: inline-block;
     position: fixed;
     left: 0;
-    top: 53px;
+    top: 60px;
     box-shadow: 0px 3px 7px 0px #cccccc inset;
     bottom: 0;
     overflow: auto;
@@ -39,6 +40,9 @@ LandingStyled.mainSection = styled.section`
     padding-right: 50px;
     padding-top: 50px;
     float: right;
+  }
+  @media(min-width: 1241px) {
+    width: calc(100% - 310px);
   }
 `;
 

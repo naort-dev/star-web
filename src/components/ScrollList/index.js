@@ -9,51 +9,69 @@ export default class ScrollList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: Array.from({ length: 20 }),
       hasMore: true,
     };
   }
+  componentWillMount() {
+    if (!this.props.dataList.data.length) {
+      this.props.fetchData(this.props.dataList.page+1);
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const endOfList = nextProps.dataList.data.length!=0 && nextProps.dataList.data.length >= nextProps.dataList.count
+    if(endOfList) {
+      this.setState({ hasMore: false });
+    }
+    else {
+      this.setState({ hasMore: true });
+    }
+  }
 
   refresh = () => {
-    this.setState({ items: Array.from({ length: 20 }) });
+    // this.setState({ items: Array.from({ length: 20 }) });
   }
 
   fetchMoreData = () => {
-    if (this.state.items.length >= 500) {
+    if (this.props.dataList.data.length >= this.props.dataList.count) {
       this.setState({ hasMore: false });
       return;
     }
+    if(!this.props.dataList.loading) {
+      this.props.fetchData(this.props.dataList.page+1);
+    }
     // a fake async api call like which sends
     // 20 more records in .5 secs
-    setTimeout(() => {
-      this.setState({
-        items: this.state.items.concat(Array.from({ length: 20 })),
-      });
-    }, 3000);
+    // setTimeout(() => {
+    //   this.setState({
+    //     items: this.state.items.concat(Array.from({ length: 20 })),
+    //   });
+    // }, 3000);
   };
 
   renderList() {
-    return this.state.items.map((i, index) => (
+    return this.props.dataList.data.map((item, index) => (
       <ListStyled.listItem key={index}>
-        <ImageRender />
+        <ImageRender data={item} />
       </ListStyled.listItem>
     ));
   }
 
   render() {
+    console.log(this.props.dataList.data)
     return (
       <ListStyled>
         <Scrollbars
           renderView={props => <div {...props} className="view" id="scrollable-target" />}
         >
           <InfiniteScroll
-            dataLength={this.state.items.length}
+            dataLength={this.props.dataList.data.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
             // refreshFunction={this.refresh}
             // pullDownToRefresh
             hasMore={this.state.hasMore}
-            loader={<h4>Loading...</h4>}
+            loader={<h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>}
             endMessage={
               <p style={{ textAlign: 'center' }}>
                 <b>Yay! You have seen it all</b>

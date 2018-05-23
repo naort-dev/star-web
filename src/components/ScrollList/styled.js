@@ -10,26 +10,35 @@ const ListStyled = styled.section`
   }
 `;
 
-ListStyled.listWrapper = styled.div`
+ListStyled.listWrapper = styled.ul`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   align-items: center;
   @media(min-width: 768px) {
     flex-direction: row;
     flex-wrap: wrap;
   }
+  @media(min-width: 1025px) {
+    margin-right: 10px;
+  }
 `;
 
-ListStyled.listItem = styled.div`
+ListStyled.listItem = styled.li`
   width: 100%;
   display: inline-block;
   margin: 10px 0;
   @media(min-width: 768px) {
-    width: 320px;
+    width: 50%;
+    padding-left: 24px;
+  }
+  @media(min-width: 768px) and (max-width: 1024px) {
+    &:nth-child(odd) {
+      padding-left: 0;
+    } 
   }
   @media(min-width: 1025px) {
-    width: 28.33%;
+    width: 33.33%;
+    padding-left: 24px;
     margin: 20px 0;
   }
 `;
