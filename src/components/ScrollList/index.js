@@ -13,14 +13,14 @@ export default class ScrollList extends React.Component {
     };
   }
   componentWillMount() {
-    if (!this.props.dataList.data.length) {
-      this.props.fetchData(this.props.dataList.offset+1);
+    if (!this.props.dataList.length) {
+      this.props.fetchData(this.props.offset+1);
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const endOfList = nextProps.dataList.data.length!=0 && nextProps.dataList.data.length >= nextProps.dataList.count
-    if(endOfList) {
+    const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.count;
+    if (endOfList) {
       this.setState({ hasMore: false });
     }
     else {
@@ -33,12 +33,12 @@ export default class ScrollList extends React.Component {
   }
 
   fetchMoreData = () => {
-    if (this.props.dataList.data.length >= this.props.dataList.count) {
+    if (this.props.dataList.length >= this.props.count) {
       this.setState({ hasMore: false });
       return;
     }
-    if(!this.props.dataList.loading) {
-      this.props.fetchData(this.props.dataList.offset+20);
+    if (!this.props.loading) {
+      this.props.fetchData(this.props.offset + 20);
     }
   };
 
@@ -51,9 +51,9 @@ export default class ScrollList extends React.Component {
   }
 
   renderList() {
-    return this.props.dataList.data.map((item, index) => (
+    return this.props.dataList.map((item, index) => (
       <ListStyled.listItem key={index}>
-        <ImageRender 
+        <ImageRender
           data={item}
           cover={item.avatar_photo && item.avatar_photo.image_url}
           profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
@@ -71,7 +71,7 @@ export default class ScrollList extends React.Component {
           renderView={props => <div {...props} className="view" id="scrollable-target" />}
         >
           <InfiniteScroll
-            dataLength={this.props.dataList.data.length}
+            dataLength={this.props.dataList.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
             // refreshFunction={this.refresh}
