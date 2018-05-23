@@ -40,25 +40,31 @@ export default class ScrollList extends React.Component {
     if(!this.props.dataList.loading) {
       this.props.fetchData(this.props.dataList.page+1);
     }
-    // a fake async api call like which sends
-    // 20 more records in .5 secs
-    // setTimeout(() => {
-    //   this.setState({
-    //     items: this.state.items.concat(Array.from({ length: 20 })),
-    //   });
-    // }, 3000);
   };
+
+  renderStarProfessions = (list) => {
+    let string = '';
+    list.forEach((professions) => {
+      string += `${professions.title}\xa0\xa0\xa0`;
+    });
+    return string;
+  }
 
   renderList() {
     return this.props.dataList.data.map((item, index) => (
       <ListStyled.listItem key={index}>
-        <ImageRender data={item} />
+        <ImageRender 
+          data={item}
+          cover={item.avatar_photo.image_url}
+          profile={item.avatar_photo.thumbnail_url}
+          starName={`${item.first_name} ${item.last_name}`}
+          details={this.renderStarProfessions(item.celebrity_profession)}
+        />
       </ListStyled.listItem>
     ));
   }
 
   render() {
-    console.log(this.props.dataList.data)
     return (
       <ListStyled>
         <Scrollbars
