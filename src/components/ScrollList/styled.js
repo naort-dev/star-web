@@ -7,10 +7,12 @@ const ListStyled = styled.section`
   margin: 20px 0;
   @media(min-width: 768px) {
     margin: 30px 0;
+    height: calc(100% - 99px);
   }
   @media(min-width: 1025px) {
     padding: 0;
     margin: 20px 0;
+    height: calc(100% - 79px);
   }
 `;
 
