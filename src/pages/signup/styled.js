@@ -126,6 +126,19 @@ LoginContainer.Line = styled.hr`
 LoginContainer.InputFieldsWrapper = styled.div`
   padding: 0px 15px;
 `;
-
+LoginContainer.Label = styled.div`
+  color:#333333;
+  font-family: 'Ubuntu-Bold';
+  font-size:16px;
+  text-align:left;
+`;
+LoginContainer.Input = styled.input`
+  font-family: 'Ubuntu-Regular';
+  color: #333333;
+  font-size:16px;
+  text-align:left;
+  border: 2px solid #333333;
+  width: 100%;
+`;
 
 export default LoginContainer;

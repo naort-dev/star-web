@@ -31,7 +31,8 @@ export default class SignUp extends React.Component {
               <LoginContainer.Line />
             </LoginContainer.SocialMediaSignup>
             <LoginContainer.InputFieldsWrapper>
-              <p>Name</p>
+              <LoginContainer.Label>Name</LoginContainer.Label>
+              <LoginContainer.Input placeholder="Enter your first name" />
             </LoginContainer.InputFieldsWrapper>
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
