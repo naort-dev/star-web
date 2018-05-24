@@ -55,7 +55,7 @@ ImageRenderDiv.FavoriteButton = styled.button`
   right: 8px;
 `;
 ImageRenderDiv.ProfileContent = styled.div`
-  margin-top:2%;
+  margin-top: 10px;
 `;
 ImageRenderDiv.Span = styled.span`
   text-align:center;
