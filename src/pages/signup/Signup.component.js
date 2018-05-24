@@ -18,13 +18,21 @@ export default class SignUp extends React.Component {
             <LoginContainer.SocialMediaSignup>
               <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
               <LoginContainer.Button>
-                <LoginContainer.ButtonIcon
-                  src="assets/images/fb-icon.svg"
-                  alt=""
-                />
-                Continue with Facebook
+                <LoginContainer.FacebookContent>Continue with Facebook
+                </LoginContainer.FacebookContent>
               </LoginContainer.Button>
+              <LoginContainer.Button>
+                <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
+              </LoginContainer.Button>
+              <LoginContainer.Button>
+                <LoginContainer.InstagramContent>Continue with Instagram
+                </LoginContainer.InstagramContent>
+              </LoginContainer.Button>
+              <LoginContainer.Line />
             </LoginContainer.SocialMediaSignup>
+            <LoginContainer.InputFieldsWrapper>
+              <p>Name</p>
+            </LoginContainer.InputFieldsWrapper>
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
             Image card layout updated Soon

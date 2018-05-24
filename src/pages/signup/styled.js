@@ -28,7 +28,8 @@ LoginContainer.RightSection = styled.div`
   }
 `;
 LoginContainer.SocialMediaSignup = styled.div`
-  padding: 41px 33px;
+  padding: 41px 29px;
+  text-align:center;
 `;
 LoginContainer.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
@@ -43,16 +44,16 @@ LoginContainer.ButtonIcon = styled.img`
   
 `;
 LoginContainer.Button = styled.button`
-  padding: 10px 10px;
+  padding: 12px 10px;
   outline:none;
   border: 2px solid #333333; 
   background-color: white;
-  border-radius: 13px;
+  border-radius: 24px;
   margin-top: 6%;
   font-family: 'Ubuntu-Medium';
   font-size:16px;
   color: #333333;
-  width: 100%;
+  width: 272px;
   text-align:center;
   cursor: pointer;
   
@@ -68,6 +69,62 @@ LoginContainer.Button = styled.button`
     font-size: 15px;
     width: 256px;
   }
+`;
+LoginContainer.FacebookContent = styled.span`
+  position:relative;
+  padding-left: 32px;
+  &:before{
+    content:'';
+    position:absolute;
+    left:-15px;
+    right:0;
+    top:-4px;
+    bottom:0;
+    background: url( 'assets/images/fb-icon.svg' ) no-repeat left;
+    padding: 10px;  
+    height: 4px;
+    
+  }
+`;
+LoginContainer.GoogleContent = styled.span`
+  position:relative;
+  padding-left: 32px;
+  &:before{
+    content:'';
+    position:absolute;
+    left:-25px;
+    right:0;
+    top:-4px;
+    bottom:0;
+    background: url( 'assets/images/icon_social_G_24a.svg' ) no-repeat left;
+    padding: 10px;  
+    height: 4px;
+    
+  }
+`;
+LoginContainer.InstagramContent = styled.span`
+  position:relative;
+  padding-left: 32px;
+  &:before{
+    content:'';
+    position:absolute;
+    left:-15px;
+    right:0;
+    top:-4px;
+    bottom:0;
+    background: url( 'assets/images/insta-icon.svg' ) no-repeat left;
+    padding: 10px;  
+    height: 4px;
+    
+  }
+`;
+LoginContainer.Line = styled.hr`
+  width:230px;
+  margin-top:11%;
+  background-color:#CCCCCC;
+`;
+LoginContainer.InputFieldsWrapper = styled.div`
+  padding: 0px 15px;
 `;
 
 
