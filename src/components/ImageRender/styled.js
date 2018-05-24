@@ -28,8 +28,13 @@ ImageRenderDiv.ProfileImageWrapper = styled.div`
   bottom: -12px;
   text-align:center;
 `;
-ImageRenderDiv.ProfileImage = styled.img`
+ImageRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => 'url('+props.imageUrl+')' };
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
   height:30px;
   width:30px;
   @media(min-width: 768px) {
@@ -50,7 +55,7 @@ ImageRenderDiv.FavoriteButton = styled.button`
   right: 8px;
 `;
 ImageRenderDiv.ProfileContent = styled.div`
-  margin-top:2%;
+  margin-top: 10px;
 `;
 ImageRenderDiv.Span = styled.span`
   text-align:center;

@@ -44,9 +44,15 @@ export default class Landing extends React.Component {
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <Tabs labels={['All', 'Stars', 'Videos']} selected="Stars" />
+            <Tabs
+              labels={['Stars', 'Videos']}
+              selected="Stars"
+            />
             <ScrollList
-              dataList={this.props.celebList}
+              dataList={this.props.celebList.data}
+              totalCount={this.props.celebList.count}
+              offset={this.props.celebList.offset}
+              loading={this.props.celebList.loading}
               fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh)}
             />
           </LandingStyled.mainSection>

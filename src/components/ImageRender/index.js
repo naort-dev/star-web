@@ -10,8 +10,7 @@ export const ImageRender = props => (
     >
       <ImageRenderDiv.ProfileImageWrapper>
         <ImageRenderDiv.ProfileImage
-          src={props.profile?props.profile:'assets/images/profile.png'}
-          alt=""
+          imageUrl={props.profile ? props.profile : 'assets/images/profile.png'}
         />
       </ImageRenderDiv.ProfileImageWrapper>
       {/* <ImageRenderDiv.FavoriteButton /> */}
