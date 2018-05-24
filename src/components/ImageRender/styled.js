@@ -28,8 +28,13 @@ ImageRenderDiv.ProfileImageWrapper = styled.div`
   bottom: -12px;
   text-align:center;
 `;
-ImageRenderDiv.ProfileImage = styled.img`
+ImageRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => 'url('+props.imageUrl+')' };
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
   height:30px;
   width:30px;
   @media(min-width: 768px) {
