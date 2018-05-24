@@ -36,6 +36,8 @@ ImageRenderDiv.ProfileImage = styled.span`
   background-position: center;
   background-size:cover;
   height:30px;
+  border: solid 2px #FFFFFF;
+  box-shadow: 6px 2px 9px #222222;
   width:30px;
   @media(min-width: 768px) {
     width: 48px;
@@ -62,12 +64,12 @@ ImageRenderDiv.Span = styled.span`
 `;
 ImageRenderDiv.StarName = styled.h4`
   font-size: 16px;
-  color:#FF6C58;
+  color:#333333;
   font-family: 'Ubuntu-Bold';
 `;
 ImageRenderDiv.StarDetails = styled.p`
   font-size: 12px;
-  color:#222222;
+  color:#333333;
   font-family: 'Ubuntu-Light';
 `;
 

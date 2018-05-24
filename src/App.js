@@ -14,6 +14,8 @@ import {
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
+import { SignupType } from './pages/signuptype';
+import { SignUp } from './pages/signup';
 import { Dashboard } from './pages/dashboard';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
@@ -70,7 +72,10 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
-                <Route path="/starProfile" component={Starprofile} />
+                <Route path="/detail" component={Starprofile} />
+                <Route path="/signuptype" component={SignupType} />
+                <Route path="/signup" component={SignUp} />
+                
 
                 {/* logged in areas */}
 

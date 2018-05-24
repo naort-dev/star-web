@@ -17,7 +17,7 @@ export const Header = props => (
           src="assets/images/icon_search_40a.png"
           alt=""
         />
-        <HeaderSection.Input placeholder="Let's search the Star's" />
+        <HeaderSection.Input placeholder="Let’s search the Stars!" />
       </HeaderSection.SearchBar>
       <HeaderSection.HeaderRight>
         <HeaderSection.SearchButton />

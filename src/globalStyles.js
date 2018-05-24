@@ -23,6 +23,10 @@ injectGlobal`
     font-family: 'Ubuntu-Bold';
     src: url("/assets/fonts/Ubuntu/Ubuntu-Bold.ttf") format("truetype");
   }
+  @font-face {
+    font-family: 'Ubuntu-Medium';
+    src: url("/assets/fonts/Ubuntu/Ubuntu-Medium.ttf") format("truetype");
+  }
 	ul,li{
 		list-style-type: none;
 		padding: 0;
