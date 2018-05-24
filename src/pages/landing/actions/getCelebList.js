@@ -54,7 +54,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
     dispatch(celebListSwapCacheStart(refresh));
     setTimeout(() => {
       dispatch(celebListSwapCacheEnd(category.label));
-    }, 100);
+    }, 0)
   }
   else {
     dispatch(celebListFetchStart(refresh));
