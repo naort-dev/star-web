@@ -39,7 +39,7 @@ export default class Landing extends React.Component {
                 list={this.props.professionsList}
                 menuActive={this.state.menuActive}
                 toggleMenu={() => this.activateMenu()}
-                updateCategory={value => this.props.updateCategory(value)}
+                updateCategory={(label, value) => this.props.updateCategory(label, value)}
               />
             </Scrollbars>
           </LandingStyled.sideSection>

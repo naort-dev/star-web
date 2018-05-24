@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchCelebrityList } from '../../store/shared/actions/getCelebList';
+import { fetchCelebrityList } from './actions/getCelebList';
 import { fetchProfessionsList } from '../../store/shared/actions/getProfessions';
 import { updateCategory } from './actions/updateFilters';
 
@@ -14,7 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCelebrityList: (offset, refresh) => dispatch(fetchCelebrityList(offset, refresh)),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
-  updateCategory: value => dispatch(updateCategory(value)),
+  updateCategory: (label, value) => dispatch(updateCategory(label, value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

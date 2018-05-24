@@ -26,7 +26,11 @@ const SidebarStyled = styled.div`
   animation: ${props => (props.menuActive ? menuEnter : menuLeave)} 0.4s linear;
   @media(min-width: 768px) {
     padding: 0;
-    margin-top: 40px;
+    padding-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
   }
   @media(min-width: 1025px) {
     margin: 0;

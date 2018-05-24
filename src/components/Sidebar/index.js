@@ -11,12 +11,12 @@ export default class Sidebar extends React.Component {
     };
   }
 
-  selectCategory = (id) => {
+  selectCategory = (label, id) => {
     this.setState({ selectedId: id });
     if(window.outerWidth<=1024) {
       this.props.toggleMenu();
     }
-    this.props.updateCategory(id);
+    this.props.updateCategory(label, id);
   }
 
   renderCategoryList = () => (
@@ -24,7 +24,7 @@ export default class Sidebar extends React.Component {
       <SidebarStyled.ListItem
         key={item.id}
         selected={this.state.selectedId === item.id ? true : false}
-        onClick={() => this.selectCategory(item.id)}
+        onClick={() => this.selectCategory(item.title, item.id)}
       >
         {item.title}
       </SidebarStyled.ListItem>
@@ -50,7 +50,7 @@ export default class Sidebar extends React.Component {
             <SidebarStyled.ListWrapper>
               <SidebarStyled.ListItem
                 selected={this.state.selectedId === '' ? true : false}
-                onClick={() => this.selectCategory('')}
+                onClick={() => this.selectCategory('featured', '')}
               >
                 Featured
               </SidebarStyled.ListItem>

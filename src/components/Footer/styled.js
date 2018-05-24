@@ -5,11 +5,7 @@ const FooterStyled = styled.footer`
   @media(min-width: 768px) and (max-width: 1024px) {
     display: flex;
     justify-content: space-between;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: 0 40px;
+    padding: 0 40px;
     border-top: 1px solid #CCCCCC;
   }
   @media(min-width: 1025px) {
@@ -143,6 +139,7 @@ FooterStyled.Anchor = styled.a`
   &:visited{
     color:#333333;
   }
+  color: #333333;
 `;
 
 FooterStyled.list = List;
