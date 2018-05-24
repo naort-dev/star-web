@@ -36,7 +36,7 @@ export const celebListFetchFailed = error => ({
 export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   dispatch(celebListFetchStart(refresh));
   const profession = getState().filters.category;
-  return fetch.get(Api.getCelebList+'&offset='+offset+'&profession='+profession).then(resp => {
+  return fetch.get(Api.getCelebList + '&offset=' + offset + '&profession=' + profession).then(resp => {
     if (resp.data && resp.data.success) {
       dispatch(celebListFetchEnd());
       let list = getState().celebList.data;
