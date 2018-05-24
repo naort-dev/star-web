@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { fetchCelebrityList } from '../../store/shared/actions/getCelebList';
+import { fetchCelebrityList } from './actions/getCelebList';
 import { fetchProfessionsList } from '../../store/shared/actions/getProfessions';
 import { updateCategory } from './actions/updateFilters';
 

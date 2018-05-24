@@ -83,6 +83,7 @@ export default class ScrollList extends React.Component {
             // releaseToRefreshContent={
             //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
             // }
+            scrollThreshold={0.5}
             hasMore={this.state.hasMore}
             loader={<Loader />}
             // endMessage={
