@@ -139,6 +139,8 @@ LoginContainer.Input = styled.input`
   text-align:left;
   border: 2px solid #333333;
   width: 100%;
+  height: 40px;
+  text-indent: 10px;
 `;
 
 export default LoginContainer;

@@ -139,6 +139,11 @@ const StoreIcon = styled.img`
   margin-left: 0;
   display: inline-block;
 `;
+FooterStyled.Anchor = styled.a`
+  &:visited{
+    color:#333333;
+  }
+`;
 
 FooterStyled.list = List;
 FooterStyled.listItem = ListItem;
@@ -148,5 +153,6 @@ FooterStyled.StoreIconWrapper = StoreIconWrapper;
 FooterStyled.StoreIcon = StoreIcon;
 FooterStyled.shareIconWrapper = shareIconWrapper;
 FooterStyled.shareIcon = shareIcon;
+
 
 export { FooterStyled };
