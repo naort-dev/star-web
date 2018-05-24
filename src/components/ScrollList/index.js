@@ -30,7 +30,7 @@ export default class ScrollList extends React.Component {
   }
 
   refresh = () => {
-    // this.setState({ items: Array.from({ length: 20 }) });
+    this.props.fetchData(0, true);
   }
 
   fetchMoreData = () => {
@@ -75,8 +75,14 @@ export default class ScrollList extends React.Component {
             dataLength={this.props.dataList.length}
             next={this.fetchMoreData}
             scrollableTarget="scrollable-target"
-            // refreshFunction={this.refresh}
+            refreshFunction={this.refresh}
             // pullDownToRefresh
+            // pullDownToRefreshContent={
+            //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
+            // }
+            // releaseToRefreshContent={
+            //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
+            // }
             hasMore={this.state.hasMore}
             loader={<Loader />}
             // endMessage={
