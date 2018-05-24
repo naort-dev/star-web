@@ -5,6 +5,7 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
+  currentCategory: 'featured',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -29,12 +30,34 @@ export default (state = { ...initalState }, action) => {
         offset: action.offset,
         data: action.list,
         count: action.count,
+        [action.category]: {
+          offset: action.offset,
+          data: action.list,
+          count: action.count,
+        },
+        currentCategory: action.category,
       };
 
     case CELEB_LIST.failed:
       return {
-        ...initalState,
+        ...state,
         loading: false,
+      };
+
+    case CELEB_LIST.swapCacheStart:
+      return {
+        ...state,
+        data: action.refresh ? [] : state.data,
+      };
+
+    case CELEB_LIST.swapCacheEnd:
+      const cachedData = state[action.key];
+      return {
+        ...state,
+        data: cachedData.data,
+        offset: cachedData.offset,
+        count: cachedData.count,
+        currentCategory: action.key,
       };
 
     default:

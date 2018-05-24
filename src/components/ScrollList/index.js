@@ -52,6 +52,7 @@ export default class ScrollList extends React.Component {
   }
 
   renderList() {
+    console.log(this.props.dataList)
     return this.props.dataList.map((item, index) => (
       <ListStyled.listItem key={index}>
         <ImageRender

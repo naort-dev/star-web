@@ -1,7 +1,10 @@
 import { UPDATEFILTER } from '../actions/updateFilters';
 
 const initalState = {
-  category: '',
+  category: {
+    label: 'featured',
+    value: '',
+  },
 };
 
 export default (state = { ...initalState }, action) => {
@@ -9,7 +12,10 @@ export default (state = { ...initalState }, action) => {
     case UPDATEFILTER.updateCategory:
       return {
         ...state,
-        category: action.value,
+        category: {
+          label: action.label,
+          value: action.value,
+        },
       };
 
     default:
