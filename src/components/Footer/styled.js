@@ -143,6 +143,7 @@ FooterStyled.Anchor = styled.a`
   &:visited{
     color:#333333;
   }
+  color: #333333;
 `;
 
 FooterStyled.list = List;
