@@ -8,6 +8,7 @@ const HeaderSection = styled.header`
   background: white;
   box-shadow: 0px 4px 8px 0px #cccccc;
   height: 60px;
+  z-index: 10;
 `;
 
 HeaderSection.HeaderDiv = styled.div`
