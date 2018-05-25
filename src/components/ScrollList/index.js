@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
 // import ImageCollection from '../ImageCollection';
-import { ImageRender } from '../ImageRender';
+import ImageRender from '../ImageRender';
 import { Loader } from '../Loader';
 
 export default class ScrollList extends React.Component {

@@ -40,7 +40,7 @@ ImageRenderDiv.ProfileImageWrapper = styled.div`
 ImageRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
   display: inline-block;
-  background-image: ${props => 'url('+props.imageUrl+')' };
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
