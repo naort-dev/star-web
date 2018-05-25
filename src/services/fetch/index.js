@@ -17,7 +17,9 @@ const fetch = axios.create({
   },
 });
 
+const { CancelToken } = axios;
+
 fetch.interceptors.request.use(requestOnSuccess, requestOnFailed);
 fetch.interceptors.response.use(responseOnSuccess, responseOnFailed);
 
-export default fetch;
+export { fetch, CancelToken };

@@ -1,13 +1,13 @@
 
 import Api from '../../../lib/api';
-import fetch from '../../../services/fetch';
+import { fetch } from '../../../services/fetch';
 
 export const PROFESSION_LIST = {
   start: 'fetch_start/professions_list',
   end: 'fetch_end/professions_list',
   success: 'fetch_success/professions_list',
   failed: 'fetch_failed/professions_list',
-}
+};
 
 export const professionsListFetchStart = () => ({
   type: PROFESSION_LIST.start,
@@ -30,14 +30,13 @@ export const professionsListtFetchFailed = error => ({
   error,
 });
 
-export const fetchProfessionsList = () => (dispatch, getState) => {
+export const fetchProfessionsList = () => (dispatch) => {
   dispatch(professionsListFetchStart());
-  return fetch.get(Api.getProfessionsList).then(resp => {
+  return fetch.get(Api.getProfessionsList).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(professionsListtFetchEnd());
       dispatch(professionsListtFetchSuccess(resp.data.data));
-    }
-    else {
+    } else {
       dispatch(professionsListtFetchEnd());
     }
   }).catch((exception) => {

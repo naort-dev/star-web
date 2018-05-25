@@ -38,7 +38,7 @@ LandingStyled.mainSection = styled.section`
     display: inline-block;
     vertical-align: top;
     padding-right: 50px;
-    padding-top: 50px;
+    padding-top: 30px;
     float: right;
   }
   @media(min-width: 1241px) {

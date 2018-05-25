@@ -1,6 +1,6 @@
 
 import Api from '../../../lib/api';
-import fetch from '../../../services/fetch';
+import { fetch, CancelToken } from '../../../services/fetch';
 
 export const CELEB_LIST = {
   start: 'fetch_start/celeb_list',
@@ -11,9 +11,11 @@ export const CELEB_LIST = {
   swapCacheEnd: 'swap_cache_end/celeb_list',
 };
 
-export const celebListFetchStart = refresh => ({
+export const celebListFetchStart = (refresh, token, category) => ({
   type: CELEB_LIST.start,
   refresh,
+  token,
+  category,
 });
 
 export const celebListFetchEnd = () => ({
@@ -51,34 +53,43 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
   if (categoryChange && cachedData) {
+    if (typeof getState().celebList.token !== typeof undefined) {
+      getState().celebList.token.cancel('Operation canceled due to new request.');
+    }
     dispatch(celebListSwapCacheStart(refresh));
-    setTimeout(() => {
+    return new Promise((resolve) => {
+      setTimeout(resolve, 0);
+    }).then(() => {
       dispatch(celebListSwapCacheEnd(category.label));
-    }, 0);
-  }
-  else {
-    dispatch(celebListFetchStart(refresh));
-    return fetch.get(Api.getCelebList + '&offset=' + offset + '&profession=' + category.value).then(resp => {
-      if (resp.data && resp.data.success) {
-        dispatch(celebListFetchEnd());
-        let list = getState().celebList.data;
-        let page = offset;
-        let count = resp.data.data.count
-        if(refresh) {
-          list=resp.data.data.celebrity_list
-        }
-        else {
-          list=[...list, ...resp.data.data.celebrity_list]
-        }
-        dispatch(celebListFetchSuccess(list, offset, count, category.label));
-      }
-      else {
-        dispatch(celebListFetchEnd());
-      }
-    }).catch((exception) => {
-      dispatch(celebListFetchEnd());
-      dispatch(celebListFetchFailed(exception));
     });
+    // setTimeout(() => {
+    //   dispatch(celebListSwapCacheEnd(category.label));
+    // }, 0);
   }
+  if (typeof getState().celebList.token !== typeof undefined) {
+    getState().celebList.token.cancel('Operation canceled due to new request.');
+  }
+  const source = CancelToken.source();
+  dispatch(celebListFetchStart(refresh, source, category.label));
+  return fetch.get(Api.getCelebList + '&offset=' + offset + '&profession=' + category.value, {
+    cancelToken: source.token,
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(celebListFetchEnd());
+      let list = getState().celebList.data;
+      const { count } = resp.data.data;
+      if (refresh) {
+        list = resp.data.data.celebrity_list;
+      } else {
+        list = [...list, ...resp.data.data.celebrity_list];
+      }
+      dispatch(celebListFetchSuccess(list, offset, count, category.label));
+    } else {
+      dispatch(celebListFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(celebListFetchEnd());
+    dispatch(celebListFetchFailed(exception));
+  });
 };
 
