@@ -28,14 +28,19 @@ LoginContainer.RightSection = styled.div`
   }
 `;
 LoginContainer.SocialMediaSignup = styled.div`
-  padding: 41px 29px;
   text-align:center;
+  padding-bottom: 56px;
+  @media(min-width:768px){
+    padding: 5px 65px; 
+    padding-bottom: 56px;
+  }
 `;
 LoginContainer.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size: 20px;
   text-align: center;
   color: #FF6C58;
+  margin-top:10%;;
 `;
 LoginContainer.ButtonIcon = styled.img`
   
@@ -88,11 +93,11 @@ LoginContainer.FacebookContent = styled.span`
 `;
 LoginContainer.GoogleContent = styled.span`
   position:relative;
-  padding-left: 32px;
+  padding-left: 14px;
   &:before{
     content:'';
     position:absolute;
-    left:-25px;
+    left:-32px;
     right:0;
     top:-4px;
     bottom:0;
@@ -120,27 +125,85 @@ LoginContainer.InstagramContent = styled.span`
 `;
 LoginContainer.Line = styled.hr`
   width:230px;
-  margin-top:11%;
+  margin-top:7%;
   background-color:#CCCCCC;
+  @media(min-width:768px){
+   display:none;
+  }
 `;
 LoginContainer.InputFieldsWrapper = styled.div`
-  padding: 0px 15px;
+  
+  padding: 0px 25px;
+  @media(min-width:768px){
+    padding: 0px 0px;
+    margin-top: 6%;
+    border-top: solid 1px #545454;
+  }
 `;
 LoginContainer.Label = styled.div`
   color:#333333;
   font-family: 'Ubuntu-Bold';
   font-size:16px;
   text-align:left;
+  @media(min-width:768px){
+    width:35%;
+  }
+`;
+LoginContainer.SectionHeading = styled.div`
+    display:none;
+    color: #FF953C;
+    font-family: 'Ubuntu-Bold';
+    text-align:center;
+    font-size:32px;
+    @media(min-width:768px){
+      display:block;
+      margin-top: 7%;
+    }
 `;
 LoginContainer.Input = styled.input`
   font-family: 'Ubuntu-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
+  outline:none;
   border: 2px solid #333333;
   width: 100%;
   height: 40px;
   text-indent: 10px;
+  margin-top:3%;
+  @media(min-width:768px){
+    margin-top:0;
+    width:352px;
+    height:40px;
+  }
 `;
+LoginContainer.InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top:1%;
+  @media(min-width:768px){
+    flex-direction: row;
+    margin-top:5%;
+  }
+`;
+LoginContainer.PrivacyContent = styled.div`
+  text-align:left;
+  font-family: 'Ubuntu-Regular';
+  font-size:12px;
+  padding: 17px 35px;
+  color: #707070;
+  @media(min-width:768px){
+    display:none;
+  }
+`;
+LoginContainer.Footer = styled.div`
+  position:fixed;
+  bottom: 0;
+  height:56px;
+  background-color:#FFFFFF;
+  z-index:1;
+  width:100%;
+`;
+
 
 export default LoginContainer;

@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const ImageRenderDiv = styled.div`
   right:0;
+  cursor: pointer;
+ 
+ 
 `;
 ImageRenderDiv.ImageSection = styled.div`
   right:0;
@@ -12,12 +15,16 @@ ImageRenderDiv.ImageSection = styled.div`
   background-size:cover;
   width:100%;
   height:167px;
+  &:hover{
+    box-shadow: 0px 6px 8px #FF6C58;
+  }
   @media(min-width: 768px) {
     height:${props => (props.height ? props.height : '177')}px;
   }
   
   
 `;
+
 ImageRenderDiv.BannerImage = styled.img`
   width:100%;
 `;
@@ -25,8 +32,10 @@ ImageRenderDiv.ProfileImageWrapper = styled.div`
   position:absolute;
   right:0;
   left:0;
-  bottom: -12px;
+  bottom: 0;
   text-align:center;
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.66) 100%);
+
 `;
 ImageRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
@@ -39,6 +48,8 @@ ImageRenderDiv.ProfileImage = styled.span`
   border: solid 2px #FFFFFF;
   box-shadow: 2px 2px 9px #4f4f4f;
   width:30px;
+  position: relative;
+  top: 8px;
   @media(min-width: 768px) {
     width: 48px;
     height: 48px;
