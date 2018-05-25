@@ -34,13 +34,13 @@ ImageRenderDiv.ProfileImageWrapper = styled.div`
   left:0;
   bottom: 0;
   text-align:center;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.66) 100%);
+  background-image: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(34,34,34,0.1),rgba(34,34,34,.3) 100%);
 
 `;
 ImageRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
   display: inline-block;
-  background-image: ${props => 'url('+props.imageUrl+')' };
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;

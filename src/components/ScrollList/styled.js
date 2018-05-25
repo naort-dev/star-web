@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const ListStyled = styled.section`
   padding: 0 16px;
+  padding-right: 10px;
   height: calc(100% - 95px);
   overflow: auto;
   margin: 20px 0;
@@ -20,11 +21,13 @@ ListStyled.listWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
     flex-wrap: wrap;
   }
   @media(min-width: 1025px) {
+    width: auto;
     margin-right: 15px;
   }
 `;
