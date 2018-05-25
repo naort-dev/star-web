@@ -34,7 +34,7 @@ ImageRenderDiv.ProfileImageWrapper = styled.div`
   left:0;
   bottom: 0;
   text-align:center;
-  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.66) 50%);
+  background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.66) 100%);
 
 `;
 ImageRenderDiv.ProfileImage = styled.span`
