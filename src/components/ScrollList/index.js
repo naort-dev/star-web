@@ -45,8 +45,12 @@ export default class ScrollList extends React.Component {
 
   renderStarProfessions = (list) => {
     let string = '';
-    list.forEach((professions) => {
-      string += `${professions.title}\xa0\xa0\xa0`;
+    list.forEach((professions, index) => {
+      if (index === list.length - 1) {
+        string += `${professions.title}`;
+      } else {
+        string += `${professions.title}\xa0|\xa0`;
+      }
     });
     return string;
   }
