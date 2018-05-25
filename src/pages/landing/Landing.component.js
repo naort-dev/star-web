@@ -13,9 +13,6 @@ export default class Landing extends React.Component {
       menuActive: false,
     };
   }
-  componentWillMount() {
-    this.props.fetchProfessionsList();
-  }
   componentWillReceiveProps(nextProps) {
     const filterChange = this.props.filters.category !== nextProps.filters.category
     if(filterChange) {

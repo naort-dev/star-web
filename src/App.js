@@ -11,6 +11,7 @@ import {
   protectRoute,
   allUserRoles,
 } from './services/protectRoute';
+import { fetchProfessionsList } from './store/shared/actions/getProfessions';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -34,6 +35,13 @@ class App extends React.Component {
     this.timer = null;
   }
 
+  componentWillMount() {
+    this.props.fetchProfessionsList();
+    if (!this.props.professionsList.professions.length) {
+      this.setState({ showLoading: true });
+    }
+  }
+
   componentDidMount() {
     // this.props.onGetUserDetails();
 
@@ -47,6 +55,9 @@ class App extends React.Component {
     //   this.setState({ showLoading: false });
     //   this.timer && window.clearTimeout(this.timer)
     // }
+    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
+      this.setState({ showLoading: false });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -123,9 +134,11 @@ App.propTypes = {
 };
 
 const mapState = state => ({
+  professionsList: state.professionsList
 });
 
 const mapProps = dispatch => ({
+  fetchProfessionsList: () => dispatch(fetchProfessionsList()),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));
