@@ -15,6 +15,8 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: true,
         data: action.refresh ? [] : state.data,
+        token: action.token,
+        currentCategory: action.category,
       };
 
     case CELEB_LIST.end:
@@ -42,6 +44,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+        currentCategory: action.category,
       };
 
     case CELEB_LIST.swapCacheStart:
