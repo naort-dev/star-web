@@ -60,6 +60,7 @@ export default (state = { ...initalState }, action) => {
         offset: cachedData.offset,
         count: cachedData.count,
         currentCategory: action.key,
+        loading: false,
       };
 
     default:

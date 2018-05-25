@@ -44,10 +44,10 @@ ImageRenderDiv.ProfileImage = styled.span`
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
-  height:30px;
+  height:40px;
   border: solid 2px #FFFFFF;
   box-shadow: 2px 2px 9px #4f4f4f;
-  width:30px;
+  width:40px;
   position: relative;
   top: 8px;
   @media(min-width: 768px) {

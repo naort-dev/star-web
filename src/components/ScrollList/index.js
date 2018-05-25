@@ -14,6 +14,12 @@ export default class ScrollList extends React.Component {
     };
   }
 
+  componentWillMount() {
+    if (!this.props.loading) {
+      this.setState({ hasMore: false });
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
     const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
     if (endOfList) {
