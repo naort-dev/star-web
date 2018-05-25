@@ -11,16 +11,24 @@ export default class ImageRender extends React.Component {
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
+    this.mounted = true;
   }
   componentWillMount() {
     this.coverImage.onload = () => {
-      this.setState({ coverImage: this.coverImage.src });
+      if (this.mounted) {
+        this.setState({ coverImage: this.coverImage.src });
+      }
     };
     this.coverImage.src = this.props.cover;
     this.profileImage.onload = () => {
-      this.setState({ profileImage: this.profileImage.src });
+      if (this.mounted) {
+        this.setState({ profileImage: this.profileImage.src });
+      }
     };
     this.profileImage.src = this.props.profile;
+  }
+  componentWillUnmount() {
+    this.mounted = false;
   }
   render() {
     const { props } = this;

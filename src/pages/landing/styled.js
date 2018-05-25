@@ -46,4 +46,16 @@ LandingStyled.mainSection = styled.section`
   }
 `;
 
+LandingStyled.loaderWrapper = styled.div`
+  height: calc(100% - 95px);
+  padding: 0px 16px;
+  margin: 20px 0px;
+  @media(min-width: 1025px) {
+    height: calc(100% - 79px);
+    padding: 0px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+`;
+
 export default LandingStyled;

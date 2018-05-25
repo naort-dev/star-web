@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch, CancelToken } from '../../../services/fetch';
+import axios from 'axios';
 
 export const CELEB_LIST = {
   start: 'fetch_start/celeb_list',
@@ -88,7 +89,9 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
       dispatch(celebListFetchEnd());
     }
   }).catch((exception) => {
-    dispatch(celebListFetchEnd());
+    if (!axios.isCancel(exception)) {
+      dispatch(celebListFetchEnd());
+    }
     dispatch(celebListFetchFailed(exception));
   });
 };

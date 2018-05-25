@@ -1,7 +1,7 @@
 import React from 'react';
 import LoaderWrapper from './styled';
 
-export const Loader = props => (
+const Loader = props => (
   <LoaderWrapper>
     <LoaderWrapper.inner>
       <svg
@@ -32,3 +32,4 @@ export const Loader = props => (
     </LoaderWrapper.inner>
   </LoaderWrapper>
 );
+export default Loader;

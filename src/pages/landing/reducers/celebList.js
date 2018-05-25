@@ -43,8 +43,7 @@ export default (state = { ...initalState }, action) => {
     case CELEB_LIST.failed:
       return {
         ...state,
-        loading: false,
-        currentCategory: action.category,
+        error: action.error,
       };
 
     case CELEB_LIST.swapCacheStart:

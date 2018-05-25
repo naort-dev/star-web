@@ -3,6 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import { Header } from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
+import Loader from '../../components/Loader';
 import LandingStyled from './styled';
 import ScrollList from '../../components/ScrollList';
 
@@ -13,9 +14,14 @@ export default class Landing extends React.Component {
       menuActive: false,
     };
   }
+  componentWillMount() {
+    if (!this.props.celebList.data.length) {
+      this.props.fetchCelebrityList(this.props.celebList.offset+1)
+    }
+  }
   componentWillReceiveProps(nextProps) {
     const filterChange = this.props.filters.category !== nextProps.filters.category
-    if(filterChange) {
+    if (filterChange) {
       this.props.fetchCelebrityList(0, true);
     }
   }
@@ -45,13 +51,20 @@ export default class Landing extends React.Component {
               labels={['Stars', 'Videos']}
               selected="Stars"
             />
-            <ScrollList
-              dataList={this.props.celebList.data}
-              totalCount={this.props.celebList.count}
-              offset={this.props.celebList.offset}
-              loading={this.props.celebList.loading}
-              fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh)}
-            />
+            {
+              !this.props.celebList.data.length && this.props.celebList.loading ?
+                <LandingStyled.loaderWrapper>
+                  <Loader />
+                </LandingStyled.loaderWrapper>
+              :
+                <ScrollList
+                  dataList={this.props.celebList.data}
+                  totalCount={this.props.celebList.count}
+                  offset={this.props.celebList.offset}
+                  loading={this.props.celebList.loading}
+                  fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh)}
+                />
+            }
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>
       </LandingStyled>
