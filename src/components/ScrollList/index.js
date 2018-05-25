@@ -4,7 +4,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
 // import ImageCollection from '../ImageCollection';
 import ImageRender from '../ImageRender';
-import { Loader } from '../Loader';
+import Loader from '../Loader';
 
 export default class ScrollList extends React.Component {
   constructor(props) {
@@ -12,11 +12,6 @@ export default class ScrollList extends React.Component {
     this.state = {
       hasMore: true,
     };
-  }
-  componentWillMount() {
-    if (!this.props.dataList.length) {
-      this.props.fetchData(this.props.offset+1);
-    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -90,7 +85,7 @@ export default class ScrollList extends React.Component {
             // }
             scrollThreshold={0.5}
             hasMore={this.state.hasMore}
-            loader={<Loader />}
+            loader={this.props.dataList.length ? <Loader /> : null}
             // endMessage={
             //   <p style={{ textAlign: 'center' }}>
             //     <b>End of list</b>

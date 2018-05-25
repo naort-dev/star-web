@@ -8,6 +8,7 @@ const HeaderSection = styled.header`
   background: white;
   box-shadow: 0px 4px 8px 0px #cccccc;
   height: 60px;
+  z-index: 10;
 `;
 
 HeaderSection.HeaderDiv = styled.div`
@@ -43,6 +44,7 @@ HeaderSection.MenuButton = styled.button`
   margin-left:10px;
   vertical-align: top;
   margin-top: 10px;
+  outline: none;
   border:none;
   background-color:white;
   @media(min-width : 1025px){
@@ -54,6 +56,7 @@ HeaderSection.SearchButton = styled.button`
   background-repeat: no-repeat;
   background-position: center;
   border:none;
+  outline: none;
   padding:20px;
   background-size: 40px;
   background-color:white;
@@ -67,6 +70,7 @@ HeaderSection.SignInButtonMobile = styled.button`
   background-repeat:no-repeat;
   background-position: center;
   border:none;
+  outline: none;
   padding:18px;
   background-size: 35px;
   background-color:white;

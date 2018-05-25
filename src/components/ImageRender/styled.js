@@ -80,7 +80,7 @@ ImageRenderDiv.StarName = styled.h4`
 `;
 ImageRenderDiv.StarDetails = styled.p`
   font-size: 12px;
-  color:#333333;
+  color:rgba(34, 34, 34, 0.7);
   font-family: 'Ubuntu-Light';
 `;
 
