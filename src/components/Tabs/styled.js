@@ -9,6 +9,8 @@ const TabStyled = styled.div`
   }
   @media(min-width: 768px) {
     padding-top: 0;
+    padding-left: 44px;
+    padding-right: 44px;
     text-align: center;
   }
   @media(min-width: 1025px) {

@@ -34,7 +34,12 @@ export default class Landing extends React.Component {
     const filterChange = this.props.filters.category !== nextProps.filters.category;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (filterChange) {
-      this.props.fetchCelebrityList(0, true);
+      if (nextProps.filters.selectedTab === 'Videos') {
+        this.props.fetchVideosList(0, true);
+      }
+      else {
+        this.props.fetchCelebrityList(0, true);
+      }
     }
     if (tabChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
@@ -98,7 +103,8 @@ export default class Landing extends React.Component {
               selected={this.props.filters.selectedTab}
             />
             {
-              !this.props.celebList.data.length && this.props.celebList.loading ?
+              (!this.props.celebList.data.length && this.props.celebList.loading) ||
+              (!this.props.videosList.data.length && this.props.videosList.loading) ?
                 <LandingStyled.loaderWrapper>
                   <Loader />
                 </LandingStyled.loaderWrapper>
