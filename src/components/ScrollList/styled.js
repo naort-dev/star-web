@@ -19,8 +19,9 @@ const ListStyled = styled.section`
 
 ListStyled.listWrapper = styled.ul`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: ${props => (props.videos ? 'row' : 'column')};
+  flex-wrap: wrap;
+  align-items: ${props => (props.videos ? 'flex-start' : 'center')};
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
@@ -33,9 +34,10 @@ ListStyled.listWrapper = styled.ul`
 `;
 
 ListStyled.listItem = styled.li`
-  width: 100%;
+  width: 100%
   display: inline-block;
   margin-bottom: 10px;
+  padding-left: 0;
   @media(min-width: 768px) {
     width: 50%;
     padding-left: 24px;
@@ -49,6 +51,31 @@ ListStyled.listItem = styled.li`
     width: 33.33%;
     padding-left: 24px;
     margin-bottom: 30px;
+  }
+`;
+
+ListStyled.listVideos = ListStyled.listItem.extend`
+  width: 50%;
+  padding-left: 20px;
+  @media(max-width: 767px) {
+    &:nth-child(odd) {
+      padding-left: 0;
+    }
+  }
+  @media(min-width: 768px) {
+    width: 33.33%;
+  }
+  @media(min-width: 768px) and (max-width: 1024px) {
+    &:nth-child(odd) {
+      padding-left: 24px;
+    }
+    &:nth-child(3n+1) {
+      padding-left: 0;
+    }
+  }
+  @media(min-width: 1025px) {
+    width: 25%;
+    padding-left: 40px;
   }
 `;
 

@@ -14,7 +14,13 @@ export default class Tabs extends React.Component {
         <TabStyled.tabList>
           {
             this.props.labels.map((item, index) => (
-              <TabStyled.tabListItem key={index} selected={this.props.selected === item}>{item}</TabStyled.tabListItem>
+              <TabStyled.tabListItem
+                key={index}
+                onClick={() => this.props.switchTab(item)}
+                selected={this.props.selected === item}
+              >
+               {item}
+               </TabStyled.tabListItem>
             ))
           }
         </TabStyled.tabList>
