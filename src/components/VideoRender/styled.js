@@ -14,7 +14,7 @@ VideoRenderDiv.ImageSection = styled.div`
   background-position: center;
   background-size:cover;
   width:100%;
-  height:167px;
+  height:160px;
   &:hover{
     box-shadow: 0px 6px 8px #FF6C58;
   }
@@ -68,10 +68,11 @@ VideoRenderDiv.FavoriteButton = styled.button`
   right: 8px;
 `;
 VideoRenderDiv.ProfileContent = styled.div`
-  margin-top: 10px;
+  margin-top: 18px;
 `;
 VideoRenderDiv.Span = styled.span`
   text-align:center;
+  line-height: 18px;
 `;
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
@@ -82,6 +83,7 @@ VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
   font-family: 'Ubuntu-Light';
+  margin-top: 8px;
 `;
 
 export default VideoRenderDiv;
