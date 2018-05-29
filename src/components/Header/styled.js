@@ -13,7 +13,7 @@ const HeaderSection = styled.header`
 
 HeaderSection.HeaderDiv = styled.div`
   display:flex;
-  padding: 10px 16px;
+  padding: 3px 16px;
   justify-content: space-between;
   align-items: center;
   max-width: 1920px;
@@ -21,8 +21,8 @@ HeaderSection.HeaderDiv = styled.div`
   @media (min-width: 1025px) {
     padding: 10px 50px;
   }
-  @media (max-width:767px){
-    padding: 3px 16px;
+  @media (min-width:768px){
+    padding: 10px 44px;
   }
 `;
 HeaderSection.HeaderRight = styled.div`

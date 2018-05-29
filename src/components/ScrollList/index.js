@@ -3,6 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
 // import ImageCollection from '../ImageCollection';
+import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
 import Loader from '../Loader';
 
@@ -58,10 +59,21 @@ export default class ScrollList extends React.Component {
 
   renderList() {
     // console.log(this.props.dataList)
+    if (this.props.videos) {
+      return this.props.dataList.map((item, index) => (
+        <ListStyled.listVideos videos={this.props.videos} key={index}>
+          <VideoRender
+            cover={item.s3_thumbnail_url}
+            profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
+            starName={item.full_name}
+            details={item.booking_title}
+          />
+        </ListStyled.listVideos>
+      ));
+    }
     return this.props.dataList.map((item, index) => (
       <ListStyled.listItem key={index}>
         <ImageRender
-          data={item}
           cover={item.avatar_photo && item.avatar_photo.image_url}
           profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
           starName={`${item.first_name} ${item.last_name}`}
@@ -98,7 +110,7 @@ export default class ScrollList extends React.Component {
             //   </p>
             // }
           >
-            <ListStyled.listWrapper>
+            <ListStyled.listWrapper videos={this.props.videos}>
               {this.renderList()}
             </ListStyled.listWrapper>
           </InfiniteScroll>

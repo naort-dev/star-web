@@ -5,6 +5,7 @@ const initalState = {
     label: 'featured',
     value: '',
   },
+  selectedTab: 'Stars',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -16,6 +17,12 @@ export default (state = { ...initalState }, action) => {
           label: action.label,
           value: action.value,
         },
+      };
+
+    case UPDATEFILTER.switchTab:
+      return {
+        ...state,
+        selectedTab: action.label,
       };
 
     default:

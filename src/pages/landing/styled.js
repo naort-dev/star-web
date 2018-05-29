@@ -37,6 +37,7 @@ LandingStyled.mainSection = styled.section`
     width: 75%;
     display: inline-block;
     vertical-align: top;
+    padding-left: 50px;
     padding-right: 50px;
     padding-top: 30px;
     float: right;

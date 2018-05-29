@@ -9,6 +9,8 @@ const ListStyled = styled.section`
   @media(min-width: 768px) {
     margin: 30px 0;
     height: calc(100% - 99px);
+    padding: 0 44px;
+    padding-right: 38px;
   }
   @media(min-width: 1025px) {
     padding: 0;
@@ -19,8 +21,10 @@ const ListStyled = styled.section`
 
 ListStyled.listWrapper = styled.ul`
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: ${props => (props.videos ? 'row' : 'column')};
+  flex-wrap: wrap;
+  align-items: ${props => (props.videos ? 'flex-start' : 'center')};
+  justify-content: space-between
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
@@ -33,23 +37,34 @@ ListStyled.listWrapper = styled.ul`
 `;
 
 ListStyled.listItem = styled.li`
-  width: 100%;
+  width: 100%
   display: inline-block;
   margin-bottom: 10px;
+  padding-left: 0;
   @media(min-width: 768px) {
-    width: 50%;
-    padding-left: 24px;
-  }
-  @media(min-width: 768px) and (max-width: 1024px) {
-    &:nth-child(odd) {
-      padding-left: 0;
-    } 
+    width: calc(50% - 20px);
   }
   @media(min-width: 1025px) {
-    width: 33.33%;
-    padding-left: 24px;
+    width: calc(33.33% - 20px);
     margin-bottom: 30px;
   }
+`;
+
+ListStyled.listVideos = ListStyled.listItem.extend`
+  width: calc(50% - 10px);
+  @media(min-width: 768px) {
+    padding: 0;
+    width: calc(33.33% - 40px);
+  }
+  @media(min-width: 1025px) {
+    padding: 0;
+    width: calc(25% - 20px);
+  }
+  @media(min-width: 1221px) {
+    padding: 0;
+    width: calc(25% - 40px);
+  }
+
 `;
 
 export default ListStyled;

@@ -53,6 +53,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const { category } = getState().filters;
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
+  const { limit } = getState().celebList;
   if (categoryChange && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {
       getState().celebList.token.cancel('Operation canceled due to new request.');
@@ -72,7 +73,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   }
   const source = CancelToken.source();
   dispatch(celebListFetchStart(refresh, source, category.label));
-  return fetch.get(Api.getCelebList + '&offset=' + offset + '&profession=' + category.value, {
+  return fetch.get(Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
