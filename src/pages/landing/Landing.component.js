@@ -27,7 +27,7 @@ export default class Landing extends React.Component {
         }
         break;
       default:
-        console.log('hi');
+        this.props.fetchCelebrityList(this.props.celebList.offset+1);
     }
   }
   componentWillReceiveProps(nextProps) {
