@@ -2,6 +2,7 @@ import React from 'react';
 import LoginContainer from './styled';
 import { LoginHeader } from '../../components/LoginHeader';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
+import { ImageStack } from '../../components/ImageStack';
 
 export default class SignupType extends React.Component {
   constructor(props) {
@@ -20,7 +21,9 @@ export default class SignupType extends React.Component {
             <LoginTypeSelector />
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
-            Image card layout updated Soon
+            <LoginContainer.ImageStackLayout>
+              <ImageStack />
+            </LoginContainer.ImageStackLayout>
           </LoginContainer.RightSection>
         </LoginContainer>
       </div>

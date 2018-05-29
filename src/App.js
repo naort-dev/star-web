@@ -37,9 +37,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
-    if (!this.props.professionsList.professions.length) {
-      this.setState({ showLoading: true });
-    }
+    // if (!this.props.professionsList.professions.length) {
+    //   this.setState({ showLoading: true });
+    // }
   }
 
   componentDidMount() {

@@ -265,19 +265,80 @@ LoginContainer.PrivacyContent = styled.div`
     display:none;
   }
 `;
-
+LoginContainer.Footer = styled.div`
+  position:fixed;
+  bottom: 0;
+  height:56px;
+  background-color:#FFFFFF;
+  z-index:1;
+  display:flex;
+  width:100%;
+  padding:15px 6px;
+  box-shadow: 0px 0px 12px 0px rgba(34, 34, 34, 0.4);
+  @media(min-width:1025px){
+   position:relative;
+   box-shadow:none;
+   border-top: 1px solid #222;
+   padding:26px 0px; 
+   margin-top:18%;
+  }
+`;
+LoginContainer.Footerleft = styled.div`
+  width:60%;
+  text-align:left;
+`;
+LoginContainer.ForgotButton = styled.button`
+  color:rgba(51, 51, 51, 1);
+  font-size:14px;
+  font-family: 'Ubuntu-Medium';
+  outline:none;
+  border:none;
+  background-color:white;
+  
+`;
+LoginContainer.FooterRight = styled.div`
+  width:40%;
+  text-align:right;
+`;
+LoginContainer.SignIn = styled.button`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 4px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Medium';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+`;
+LoginContainer.CoverImage = styled.div`
+  display:none;
+  @media(min-width:768px){
+    display:block;
+    background-image: url( 'assets/images/Stage_1200x800.jpg' );
+    background-repeat:no-repeat;
+    background-position: center;
+    width: 100%;
+    height: 200px;
+  }
+  @media(min-width:1025px){
+    display:none;
+  }
+`;
+LoginContainer.FooterSection = styled.div`
+  padding: 0px 0px;
+  @media(min-width:1025px){
+    padding:0px 56px;
+    
+  }
+`;
 LoginContainer.ImageStackLayout = styled.div`
   padding:32px 110px 76px 33px;
   width:100%;
   height:600px;
 
-`;
-LoginContainer.FooterLayout = styled.div`
-  padding: 0;
-  @media(min-width:1025px){
-    padding: 0px 57px;
-  }
-  
 `;
 
 

@@ -14,7 +14,7 @@ LoginContainer.BannerImage = styled.div`
   display:none;
   right:0;
   position:relative;
-  background-image: url( 'assets/images/trial.jpg' );
+  background-image: url( 'assets/images/Stadium_800x376.jpg' );
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
@@ -46,5 +46,12 @@ LoginContainer.RightSection = styled.div`
     padding: 0px 0px;
   }
 `;
+LoginContainer.ImageStackLayout = styled.div`
+  padding:32px 110px 76px 33px;
+  width:100%;
+  height:600px;
+
+`;
+
 
 export default LoginContainer;
