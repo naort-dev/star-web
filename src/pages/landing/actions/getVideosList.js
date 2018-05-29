@@ -53,6 +53,7 @@ export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
   const { category } = getState().filters;
   const cachedData = getState().videosList[category.label] && getState().videosList[category.label].data;
   const categoryChange = category.label !== getState().videosList.currentCategory;
+  const { limit } = getState().videosList;
   if (categoryChange && cachedData) {
     if (typeof getState().videosList.token !== typeof undefined) {
       getState().videosList.token.cancel('Operation canceled due to new request.');
@@ -72,7 +73,7 @@ export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
   }
   const source = CancelToken.source();
   dispatch(videosListFetchStart(refresh, source, category.label));
-  return fetch.get(Api.getVideosList + '&offset=' + offset + '&profession=' + category.value, {
+  return fetch.get(Api.getVideosList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {

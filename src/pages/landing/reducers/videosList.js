@@ -5,6 +5,7 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
+  limit: 40,
   currentCategory: 'featured',
 };
 
