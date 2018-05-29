@@ -35,17 +35,15 @@ export default class Landing extends React.Component {
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (filterChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.fetchVideosList(0, true);
-      }
-      else {
+        this.props.switchTab('Stars');
+      } else {
         this.props.fetchCelebrityList(0, true);
       }
     }
     if (tabChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
-      }
-      else {
+      } else {
         this.props.fetchCelebrityList(0, true);
       }
     }
