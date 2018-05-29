@@ -1,7 +1,8 @@
-const config = {
-    API_URL: '<API_URL goes here></API_URL>',
-  }
+/* eslint-disable */
+(function (window) {
+  const config = {
+    API_URL: '<API url goes here>',
+  };
   
-  const env = key => config[key] || undefined;
-  
-  export default env;
+  window.env = key => config[key] || undefined;
+}(this || {}));

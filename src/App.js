@@ -11,14 +11,16 @@ import {
   protectRoute,
   allUserRoles,
 } from './services/protectRoute';
-import { Header } from './components/Header';
-import { Footer } from './components/Footer';
+import { fetchProfessionsList } from './store/shared/actions/getProfessions';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
+import { SignupType } from './pages/signuptype';
+import { SignUp } from './pages/signup';
 import { Dashboard } from './pages/dashboard';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
+import { Starprofile } from './pages/starProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +33,13 @@ class App extends React.Component {
     };
 
     this.timer = null;
+  }
+
+  componentWillMount() {
+    this.props.fetchProfessionsList();
+    if (!this.props.professionsList.professions.length) {
+      this.setState({ showLoading: true });
+    }
   }
 
   componentDidMount() {
@@ -46,6 +55,9 @@ class App extends React.Component {
     //   this.setState({ showLoading: false });
     //   this.timer && window.clearTimeout(this.timer)
     // }
+    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
+      this.setState({ showLoading: false });
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -60,7 +72,6 @@ class App extends React.Component {
 
     return (
       <div>
-        <Header />
         <div id="content-wrapper">
           {
             showLoading && <ComponentLoading timedOut={this.state.timedOut} />
@@ -72,6 +83,10 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
+                <Route path="/detail" component={Starprofile} />
+                <Route path="/signuptype" component={SignupType} />
+                <Route path="/signup" component={SignUp} />
+                
 
                 {/* logged in areas */}
 
@@ -110,7 +125,6 @@ class App extends React.Component {
             )
           }
         </div>
-        <Footer />
       </div>
     );
   }
@@ -120,9 +134,11 @@ App.propTypes = {
 };
 
 const mapState = state => ({
+  professionsList: state.professionsList
 });
 
 const mapProps = dispatch => ({
+  fetchProfessionsList: () => dispatch(fetchProfessionsList()),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Mask } from './styled';
 
 import { Placeholder } from '../Placeholder';
+import MainLoader from '../MainLoader';
 
 export const ComponentLoading = ({
   error,
@@ -18,13 +19,13 @@ export const ComponentLoading = ({
   } else if (timedOut) {
     return (
       <Mask>
-        <Placeholder message="Still loading the page..." />
+        <MainLoader />
       </Mask>
     );
   } else if (pastDelay) {
     return (
       <Mask>
-        <Placeholder message="Loading the page..." />
+        <MainLoader />
       </Mask>
     );
   }

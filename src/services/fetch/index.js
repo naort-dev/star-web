@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-import env from '../../../env';
 import {
   requestOnSuccess,
   requestOnFailed,
@@ -10,13 +9,17 @@ import {
 
 const fetch = axios.create({
   baseURL: env('API_URL'),
-  timeout: 1000,
-//   headers: {
-//     'X-Custom-Header': 'foobar',
-//   };
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'device': 'ios',
+    'version': '3.0',
+  },
 });
+
+const { CancelToken } = axios;
 
 fetch.interceptors.request.use(requestOnSuccess, requestOnFailed);
 fetch.interceptors.response.use(responseOnSuccess, responseOnFailed);
 
-export default fetch;
+export { fetch, CancelToken };

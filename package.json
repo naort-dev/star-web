@@ -5,13 +5,18 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^0.28.11",
     "history": "^4.7.2",
     "lodash": "^4.17.5",
     "moment": "^2.22.1",
+    "node-sass": "^4.9.0",
     "prop-types": "^15.6.1",
     "react": "^16.3.1",
+    "react-custom-scrollbars": "^4.2.1",
     "react-dom": "^16.3.1",
     "react-helmet": "^5.2.0",
+    "react-infinite-scroll-component": "^4.1.0",
     "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
@@ -21,6 +26,8 @@
     "redux-devtools-log-monitor": "^1.4.0",
     "redux-thunk": "^2.2.0",
     "regenerator": "^0.12.3",
+    "sass-loader": "^7.0.1",
+    "style-loader": "^0.21.0",
     "styled-components": "^3.2.5"
   },
   "devDependencies": {

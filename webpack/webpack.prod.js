@@ -4,9 +4,9 @@ const SriPlugin = require('webpack-subresource-integrity');
 
 module.exports = {
   mode: 'production',
-  entry: {
-    app: [`${commonPaths.appEntry}/index.js`],
-  },
+  entry: [
+    "babel-polyfill", `${commonPaths.appEntry}/index.js`
+  ],
   output: {
     filename: '[name].[hash].js',
     crossOriginLoading: 'anonymous',
