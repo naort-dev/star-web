@@ -68,7 +68,7 @@ ImageRenderDiv.FavoriteButton = styled.button`
   right: 8px;
 `;
 ImageRenderDiv.ProfileContent = styled.div`
-  margin-top: 10px;
+  margin-top: 18px;
 `;
 ImageRenderDiv.Span = styled.span`
   text-align:center;
@@ -82,6 +82,10 @@ ImageRenderDiv.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
   font-family: 'Ubuntu-Light';
+  margin-top: 8px;
+  @media(min-width: 768px) {
+    font-size: 14px;
+  }
 `;
 
 export default ImageRenderDiv;

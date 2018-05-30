@@ -23,7 +23,7 @@ ListStyled.listWrapper = styled.ul`
   display: flex;
   flex-direction: ${props => (props.videos ? 'row' : 'column')};
   flex-wrap: wrap;
-  align-items: ${props => (props.videos ? 'flex-start' : 'center')};
+  align-items: flex-start;
   justify-content: space-between
   width: calc(100% - 10px);
   @media(min-width: 768px) {
@@ -39,7 +39,7 @@ ListStyled.listWrapper = styled.ul`
 ListStyled.listItem = styled.li`
   width: 100%
   display: inline-block;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   padding-left: 0;
   @media(min-width: 768px) {
     width: calc(50% - 20px);
