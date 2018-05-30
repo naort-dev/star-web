@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Header } from '../../components/Header';
+import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import Loader from '../../components/Loader';
