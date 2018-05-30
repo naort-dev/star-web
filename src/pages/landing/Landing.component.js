@@ -79,7 +79,10 @@ export default class Landing extends React.Component {
   render() {
     return (
       <LandingStyled>
-        <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
+        <Header
+         menuActive={this.state.menuActive}
+         enableMenu={() => this.activateMenu()} 
+        />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
@@ -114,4 +117,4 @@ export default class Landing extends React.Component {
       </LandingStyled>
     );
   }
-};
+}

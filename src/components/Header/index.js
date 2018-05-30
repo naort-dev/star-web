@@ -42,6 +42,13 @@ export default class Header extends React.Component {
             <HeaderSection.InputWrapper>
               <HeaderSection.Input placeholder="Let’s search the Stars!" />
               <HeaderSection.ClearButton onClick={() => this.deactivateSearch()} />
+              <HeaderSection.SuggestionListWrapper>
+                <HeaderSection.SuggestionListItem>sadasdasd</HeaderSection.SuggestionListItem>
+                <HeaderSection.SuggestionListItem>sadasdasd</HeaderSection.SuggestionListItem>
+                <HeaderSection.SuggestionListItem>sadasdasd</HeaderSection.SuggestionListItem>
+                <HeaderSection.SuggestionListItem>sadasdasd</HeaderSection.SuggestionListItem>
+                <HeaderSection.SuggestionListItem>sadasdasd</HeaderSection.SuggestionListItem>
+              </HeaderSection.SuggestionListWrapper>
             </HeaderSection.InputWrapper>
           </HeaderSection.SearchBar>
           <HeaderSection.HeaderRight>
@@ -66,4 +73,4 @@ export default class Header extends React.Component {
       </HeaderSection>
     );
   }
-};
+}

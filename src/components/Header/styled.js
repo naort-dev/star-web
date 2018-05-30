@@ -140,11 +140,18 @@ HeaderSection.SearchBar = styled.div`
     align-items: center;
   }
 `;
-
-HeaderSection.SearchIcon = styled.img`
-  position: absolute;
-  width: 35px;
-  height: 35px;
+HeaderSection.SuggestionListWrapper = styled.ul`
+  position: fixed;
+  top: 60px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 20px 10px;
+  background-color: #FFFFFF;
+`;
+HeaderSection.SuggestionListItem = styled.li`
+  width: 100%;
+  height: 30px;
 `;
 HeaderSection.InputWrapper = styled.div`
   width: 100%;
