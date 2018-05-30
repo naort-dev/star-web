@@ -26,13 +26,11 @@ HeaderSection.HeaderDiv = styled.div`
   }
 `;
 HeaderSection.HeaderRight = styled.div`
-  
-  display:inline-block;
+  display: inline-block;
 `;
 HeaderSection.HeaderLeft = styled.div`
-  display:inline-block;
+  display: inline-block;
 `;
-
 HeaderSection.ImgLogo = styled.img`
   width:117.61px;
   height:30.27px
@@ -63,7 +61,18 @@ HeaderSection.SearchButton = styled.button`
   @media(min-width : 768px){
     display:none;
   }
-
+`;
+HeaderSection.ClearButton = styled.span`
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  background-image: url( 'assets/images/close-icon.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  @media(min-width: 768px) {
+    display: none;
+  }
 `;
 HeaderSection.SignInButtonMobile = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
@@ -117,30 +126,65 @@ HeaderSection.MyvideoButton = styled.button`
   }
 `;
 HeaderSection.SearchBar = styled.div`
-  position:relative;
-  display:inline-block;
-  @media(max-width : 767px){
-    display:none;
+  position:absolute;
+  display: ${props => (props.hide ? 'none' : 'block')};
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 60px;
+  background: #fff;
+  @media(min-width : 768px){
+    position: relative;
+    display: inline-block;
+    display: flex;
+    align-items: center;
   }
 `;
+
 HeaderSection.SearchIcon = styled.img`
   position: absolute;
   width: 35px;
   height: 35px;
 `;
+HeaderSection.InputWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    background-image: url( 'assets/images/icon_search_40a.png' );
+    background-repeat:no-repeat;
+    background-position: center;
+    left: 15px;
+    top: 25%;
+    width: 35px;
+    height: 35px;
+  }
+  @media(min-width: 768px) {
+    width: 319px;
+    height: 32px;
+    background-color: #F8F8F8;
+    &::before {
+      width: 20px;
+      height: 23px;  
+    }
+  }
+  @media(min-width: 1025px) {
+    width: 441px;
+  }
+`;
 HeaderSection.Input = styled.input`
-  padding-left: 48px;
-  width: 426px;
-  height: 28px;
+  padding-left: 64px;
+  width: calc(100% - 28px);
   outline:none;
+  height: 100%;
   font-family: 'Ubuntu-Light';
   font-size: 16px;
-  background: #fcfcfc;
   border: none;
   border-radius: 5px;
-  text-indent: 78px;
   @media(min-width : 768px){
-    width: 319px;
+    text-indent: 78px;
   }
 `;
 HeaderSection.SignIn = styled.button`
@@ -189,3 +233,4 @@ HeaderSection.SignInIcon = styled.img`
 `;
 
 export default HeaderSection;
+
