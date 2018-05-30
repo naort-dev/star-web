@@ -155,6 +155,7 @@ HeaderSection.SignIn = styled.button`
   display: inline-block;
   font-size: 13px;
   border: none;
+  cursor: pointer;
   @media(max-width:767px){
     display:none;
   }
@@ -170,6 +171,7 @@ HeaderSection.Join = styled.button`
   font-family: 'Ubuntu-Bold';
   outline:none;
   border-radius:5px;
+  cursor: pointer;
   border: 2px solid #FF6C58;
   @media(max-width:767px){
     display:none;
