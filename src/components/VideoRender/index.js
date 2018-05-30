@@ -12,6 +12,7 @@ export default class VideoRender extends React.Component {
     this.coverImage = new Image();
     this.profileImage = new Image();
     this.mounted = true;
+    this.charLimit = 50;
   }
   componentWillMount() {
     this.coverImage.onload = () => {
@@ -29,6 +30,13 @@ export default class VideoRender extends React.Component {
   }
   componentWillUnmount() {
     this.mounted = false;
+  }
+  renderVideoDetails = (text) => {
+    let splicedText = text;
+    if (text.length > this.charLimit) {
+      splicedText = text.substring(0, this.charLimit) + '...';
+    }
+    return splicedText;
   }
   render() {
     const { props } = this;
@@ -50,7 +58,7 @@ export default class VideoRender extends React.Component {
             <VideoRenderDiv.StarName>
               {props.starName}
             </VideoRenderDiv.StarName>
-            <VideoRenderDiv.StarDetails>{props.details}</VideoRenderDiv.StarDetails>
+            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
           </VideoRenderDiv.Span>
         </VideoRenderDiv.ProfileContent>
       </VideoRenderDiv>

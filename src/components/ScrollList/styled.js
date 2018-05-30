@@ -23,7 +23,7 @@ ListStyled.listWrapper = styled.ul`
   display: flex;
   flex-direction: ${props => (props.videos ? 'row' : 'column')};
   flex-wrap: wrap;
-  align-items: ${props => (props.videos ? 'flex-start' : 'center')};
+  align-items: flex-start;
   justify-content: space-between
   width: calc(100% - 10px);
   @media(min-width: 768px) {
