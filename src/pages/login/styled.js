@@ -312,6 +312,11 @@ LoginContainer.SignIn = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  &:disabled{
+    color: #222;
+    border: 2px solid #222;
+  }
+  
 `;
 LoginContainer.CoverImage = styled.div`
   display:none;

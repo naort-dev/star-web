@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-
+import { loginUser } from '../../store/shared/actions/login';
 import Login from './Login.component';
 
 const mapStateToProps = state => ({
@@ -8,13 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onLogin: () => {
-    dispatch({ type: 'session/ON_LOGIN' });
-
-    setTimeout(() => {
-      dispatch({ type: 'session/ON_LOGIN_SUCCESS', user: { role: 'SUPER_ADMIN' } });
-    }, 1000);
-  },
+  loginUser: state => dispatch(loginUser(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
