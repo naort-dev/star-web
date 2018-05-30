@@ -1,9 +1,9 @@
 import React from 'react';
 import {
   Redirect,
+  Link,
 } from 'react-router-dom';
-import LoginContainer from './styled';
-import { LoginHeader } from '../../components/LoginHeader';
+import { LoginContainer, HeaderSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
 
 export default class Login extends React.Component {
@@ -40,7 +40,15 @@ export default class Login extends React.Component {
           <p>You must login before accessing!</p>
         }
         <div>
-          <LoginHeader />
+          <HeaderSection>
+            <Link to="/">
+              <HeaderSection.HeaderNavigation />
+            </Link>
+            <HeaderSection.MiddleDiv> Sign In</HeaderSection.MiddleDiv>
+            <Link to="/signuptype">
+              <HeaderSection.RightDiv>Join free</HeaderSection.RightDiv>
+            </Link>
+          </HeaderSection>
           <LoginContainer>
             <LoginContainer.LeftSection>
               <LoginContainer.CoverImage />
