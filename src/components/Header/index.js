@@ -60,7 +60,9 @@ class Header extends React.Component {
   }
 
   activateSearch = () => {
-    this.setState({ searchActive: true });
+    this.setState({ searchActive: true } ,() => {
+      this.searchInput.focus();
+    });
   }
 
   deactivateSearch = () => {
@@ -95,7 +97,7 @@ class Header extends React.Component {
           <HeaderSection.SearchBar innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
             <HeaderSection.InputWrapper>
               <HeaderSection.Input
-                ref={(node) => { this.searchInput = node; }}
+                innerRef={(node) => { this.searchInput = node; }}
                 placeholder="Let’s search the Stars!"
                 value={this.state.searchText}
                 onClick={() => this.showSuggestions()}
