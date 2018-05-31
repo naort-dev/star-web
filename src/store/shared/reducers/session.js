@@ -1,16 +1,10 @@
-console.log('!!!! (0.O) !!!!!');
-console.log('isLoggedIn is true!');
-console.log('role is SUPER_ADMIN!');
-console.log('!!!! (0.O) !!!!!');
+import { LOGIN } from '../actions/login';
+import { REGISTER } from '../actions/register';
 
 const initalState = {
-  firstname: '',
-  lastname: '',
-  username: '',
-  laslogin: '',
-  role: '',
   isLoggedIn: false,
   loading: false,
+  auth_token: '',
   error: {
     has: false,
     message: '',
@@ -19,28 +13,34 @@ const initalState = {
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
-    case 'session/ON_LOGIN':
+    case LOGIN.start:
       return {
-        ...initalState,
+        ...state,
         loading: true,
       };
 
-    case 'session/ON_LOGIN_SUCCESS':
+    case LOGIN.success:
       return {
-        ...initalState,
+        ...state,
         ...action.user,
         isLoggedIn: true,
         loading: false,
+        auth_token: action.data.user,
       };
 
-    case 'session/ON_LOGIN_FAILED':
+    case LOGIN.failed:
       return {
-        ...initalState,
+        ...state,
         loading: false,
         error: {
           has: true,
           message: action.message,
         },
+      };
+    case LOGIN.end:
+      return {
+        ...state,
+        loading: false,
       };
 
     default:

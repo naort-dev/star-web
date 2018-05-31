@@ -279,6 +279,100 @@ LoginContainer.FooterLayout = styled.div`
   }
   
 `;
+const HeaderSection = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  @media(min-width : 1025px){
+    width: 660px;
+  }
+`;
+HeaderSection.HeaderNavigation = styled.button`
+  background-image: url( 'assets/images/icon_back_40a.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  border:none;
+  padding:20px;
+  background-size: 26px;
+  background-color:white;
+  outline:none;
+  cursor: pointer;
+`;
+HeaderSection.MiddleDiv = styled.div`
+  font-family: 'Ubuntu-Bold';
+  font-size : 13px;
+  margin-left: 12%;
+  @media(min-width : 1025px){
+    margin-right: 20%;
+  }
 
+`;
+HeaderSection.RightDiv = styled.button`
+  background-color: #fff; 
+  margin-right: 5px;
+  color: black;
+  padding: 6px 33px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Ubuntu-Light';
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  outline:none;
+  border: none;
+`;
+const FooterSection = styled.div`
+  position:fixed;
+  bottom: 0;
+  height:42px;
+  background-color:#FFFFFF;
+  z-index:1;
+  width:100%;
+  display:flex;
+  padding:8px 12px;
+  box-shadow: 0px 0px 12px 0px rgba(34, 34, 34, 0.4);
+  @media(min-width:1025px){
+   position:relative;
+   box-shadow:none;
+   border-top: 1px solid #222;
+   padding: 11px 0px;
+  }
+  
+`;
+FooterSection.LeftSection = styled.div`
+  display:none;
+  text-align:left;
+  @media(min-width:768px){
+    display:block;
+    width:50%;
+  }
+`;
+FooterSection.Agreement = styled.div`
+  text-align:left;
+  color:rgba(112, 112, 112, 1);
+  font-family: 'Ubuntu-Regular';
+  font-size:12px;
+`;
+FooterSection.RightSection = styled.div`
+  width:100%;
+  text-align:right; 
+  @media(min-width:768px){
+    width:50%;
+  }
+`;
+FooterSection.Button = styled.button`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 4px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 10px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+`;
 
-export default LoginContainer;
+export { LoginContainer, HeaderSection, FooterSection };

@@ -16,6 +16,5 @@ export const LoginTypeSelector = props => (
     <Link to="/signup">
       <TypeSelectorWrapper.Button>I’m a Star</TypeSelectorWrapper.Button>
     </Link>
-   
   </TypeSelectorWrapper>
 );

@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginContainer from './styled';
-import { LoginHeader } from '../../components/LoginHeader';
+import { Link } from 'react-router-dom';
+import { LoginContainer, HeaderSection } from './styled';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { ImageStack } from '../../components/ImageStack';
 
@@ -14,7 +14,15 @@ export default class SignupType extends React.Component {
   render() {
     return (
       <div>
-        <LoginHeader />
+        <HeaderSection>
+          <Link to="/">
+            <HeaderSection.HeaderNavigation />
+          </Link>
+          <HeaderSection.MiddleDiv> Join Free</HeaderSection.MiddleDiv>
+          <Link to="/login">
+            <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+          </Link>
+        </HeaderSection>
         <LoginContainer>
           <LoginContainer.LeftSection>
             <LoginContainer.BannerImage />
