@@ -31,7 +31,8 @@ export default class Landing extends React.Component {
     }
   }
   componentWillReceiveProps(nextProps) {
-    const filterChange = this.props.filters.category !== nextProps.filters.category;
+    const filterChange = this.props.filters.category.label !== nextProps.filters.category.label
+    || this.props.filters.searchParam !== nextProps.filters.searchParam;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (filterChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
@@ -50,6 +51,9 @@ export default class Landing extends React.Component {
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
+  }
+  searchFilter = (searchText) => {
+    this.props.updateSearchParam(searchText);
   }
   renderScrollList() {
     if (this.props.filters.selectedTab === 'Stars') {
@@ -80,8 +84,9 @@ export default class Landing extends React.Component {
     return (
       <LandingStyled>
         <Header
-         menuActive={this.state.menuActive}
-         enableMenu={() => this.activateMenu()} 
+          menuActive={this.state.menuActive}
+          enableMenu={() => this.activateMenu()}
+          searchFilter={searchText => this.searchFilter(searchText)}
         />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
@@ -91,6 +96,7 @@ export default class Landing extends React.Component {
             >
               <Sidebar
                 list={this.props.professionsList}
+                selectedCategory={this.props.filters.category.value}
                 menuActive={this.state.menuActive}
                 toggleMenu={() => this.activateMenu()}
                 updateCategory={(label, value) => this.props.updateCategory(label, value)}

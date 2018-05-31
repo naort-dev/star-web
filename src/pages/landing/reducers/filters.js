@@ -6,6 +6,7 @@ const initalState = {
     value: '',
   },
   selectedTab: 'Stars',
+  searchParam: '',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -23,6 +24,12 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         selectedTab: action.label,
+      };
+
+    case UPDATEFILTER.updateSearchParam:
+      return {
+        ...state,
+        searchParam: action.value,
       };
 
     default:
