@@ -49,6 +49,10 @@ export default class Landing extends React.Component {
       }
     }
   }
+  updateCategory = (label, value) => {
+    this.props.updateCategory(label, value);
+    this.props.fetchCelebrityList(0, true);
+  }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
@@ -99,7 +103,7 @@ export default class Landing extends React.Component {
                 selectedCategory={this.props.filters.category.value}
                 menuActive={this.state.menuActive}
                 toggleMenu={() => this.activateMenu()}
-                updateCategory={(label, value) => this.props.updateCategory(label, value)}
+                updateCategory={(label, value) => this.updateCategory(label, value)}
               />
             </Scrollbars>
           </LandingStyled.sideSection>

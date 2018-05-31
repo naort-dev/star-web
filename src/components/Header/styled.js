@@ -153,6 +153,7 @@ HeaderSection.SuggestionListWrapper = styled.ul`
   background-color: #FFFFFF;
   box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   @media(min-width: 768px) {
+    box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
     top: 50px;
     left: 0;
@@ -166,7 +167,7 @@ HeaderSection.SuggestionListWrapper = styled.ul`
     width: auto;
     top: 47px;
     right: 0;
-    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+    box-shadow: 0px 6px 6px 0px #cccccc;
   }
 `;
 HeaderSection.SuggestionListItem = styled.li`
