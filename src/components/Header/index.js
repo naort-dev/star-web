@@ -14,6 +14,7 @@ class Header extends React.Component {
       showSuggestions: false,
       searchText: this.props.suggestionsList.searchText || '',
     };
+    this.suggestionsFetchDelay=undefined;
   }
 
   componentDidMount() {
@@ -28,7 +29,12 @@ class Header extends React.Component {
     this.setState({ searchText: e.target.value });
     if (e.target.value.length >= 3) {
       this.setState({ showSuggestions: true });
-      this.props.fetchSuggestionList(e.target.value);
+      if (this.suggestionsFetchDelay) {
+        clearTimeout(this.suggestionsFetchDelay);
+      }
+      this.suggestionsFetchDelay = setTimeout(() => {
+        this.props.fetchSuggestionList(this.state.searchText);
+      }, 500);
     } else {
       this.setState({ showSuggestions: false });
     }
@@ -38,6 +44,12 @@ class Header extends React.Component {
     if (e.keyCode === 13 && this.props.searchFilter) {
       this.props.searchFilter(e.target.value);
       this.setState({ searchActive: false, showSuggestions: false });
+    }
+  }
+
+  showSuggestions = () => {
+    if (this.state.searchText.length >= 3) {
+      this.setState({ showSuggestions: true });
     }
   }
 
@@ -86,6 +98,7 @@ class Header extends React.Component {
                 ref={(node) => { this.searchInput = node; }}
                 placeholder="Let’s search the Stars!"
                 value={this.state.searchText}
+                onClick={() => this.showSuggestions()}
                 onChange={e => this.handleSearchChange(e)}
                 onKeyUp={e => this.handleSearchSubmit(e)}
               />

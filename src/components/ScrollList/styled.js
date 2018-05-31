@@ -27,6 +27,7 @@ ListStyled.listWrapper = styled.ul`
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
+    align-items: flex-start;
     flex-wrap: wrap;
   }
   @media(min-width: 1025px) {
