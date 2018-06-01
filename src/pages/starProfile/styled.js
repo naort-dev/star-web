@@ -10,6 +10,21 @@ const Detail = styled.section`
  }
  
 `;
+Detail.sideSection = styled.section`
+  background-color: #fff;
+  height: ${props => props.menuActive && '100%'};
+  @media(min-width: 1025px) {
+    width:25%;
+    max-width: 310px;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    top: 60px;
+    box-shadow: 0px 3px 7px 0px #cccccc inset;
+    bottom: 0;
+    overflow: auto;
+  }
+`;
 Detail.LeftSection = styled.div`
 width:100%;
 

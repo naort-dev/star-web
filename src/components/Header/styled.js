@@ -209,6 +209,11 @@ HeaderSection.SuggestionListItem = styled.li`
     padding: 0 30px;
   }
 `;
+HeaderSection.SuggestionListContent = styled.span`
+  color: #333333;
+  display: block;
+  height: 100%;
+`;
 HeaderSection.InputWrapper = styled.div`
   width: 100%;
   height: 100%;
