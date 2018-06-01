@@ -24,7 +24,7 @@ export default class Starprofile extends React.Component {
       <div>
         <Header
           menuActive={this.state.menuActive}
-          enableMenu={() => this.activateMenu()}
+          enableMenu={this.activateMenu}
           disableMenu
         />
         <Detail>

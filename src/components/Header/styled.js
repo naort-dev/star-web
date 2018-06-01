@@ -174,11 +174,12 @@ HeaderSection.SuggestionListWrapper = styled.div`
     width: auto;
     top: 47px;
     right: 0;
+    height: 320px;
     box-shadow: 0px 6px 6px 0px #cccccc;
   }
 `;
 HeaderSection.SuggestionList = styled.ul`
-
+  padding: 0 10px;
 `;
 HeaderSection.noDataWrapper = styled.div`
   display: table;

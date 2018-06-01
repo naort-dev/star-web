@@ -88,7 +88,7 @@ class Header extends React.Component {
                 key={index}
               >
                 <Link to={`/starDetail/${item.id}`}>
-                  <HeaderSection.SuggestionListContent onClick={() => this.handleSearchItemClick()}>
+                  <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>
                 </Link>
@@ -130,11 +130,11 @@ class Header extends React.Component {
                 innerRef={(node) => { this.searchInput = node; }}
                 placeholder="Let’s search the Stars!"
                 value={this.state.searchText}
-                onClick={() => this.showSuggestions()}
-                onChange={e => this.handleSearchChange(e)}
-                onKeyUp={e => this.handleSearchSubmit(e)}
+                onClick={this.showSuggestions}
+                onChange={this.handleSearchChange}
+                onKeyUp={this.handleSearchSubmit}
               />
-              <HeaderSection.ClearButton onClick={() => this.deactivateSearch()} />
+              <HeaderSection.ClearButton onClick={this.deactivateSearch} />
               {this.state.showSuggestions &&
                 <HeaderSection.SuggestionListWrapper>
                   <HeaderSection.AutoSuggest>
@@ -151,7 +151,7 @@ class Header extends React.Component {
             </HeaderSection.InputWrapper>
           </HeaderSection.SearchBar>
           <HeaderSection.HeaderRight>
-            <HeaderSection.SearchButton onClick={() => this.activateSearch()} />
+            <HeaderSection.SearchButton onClick={this.activateSearch} />
               { /*<HeaderSection.FavoriteButton />
                 <HeaderSection.MyvideoButton />
             <HeaderSection.ProfileButton /> */}

@@ -25,8 +25,7 @@ export default class ScrollList extends React.Component {
     const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
     if (endOfList) {
       this.setState({ hasMore: false });
-    }
-    else {
+    } else {
       this.setState({ hasMore: true });
     }
   }
@@ -58,7 +57,6 @@ export default class ScrollList extends React.Component {
   }
 
   renderList() {
-    // console.log(this.props.dataList)
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos videos={this.props.videos} key={index}>
@@ -73,7 +71,7 @@ export default class ScrollList extends React.Component {
     }
     return this.props.dataList.map((item, index) => {
       let coverPhoto;
-      let  profilePhoto;
+      let profilePhoto;
       if (item.avatar_photo) {
         coverPhoto = item.avatar_photo.image_url && item.avatar_photo.image_url;
         profilePhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
@@ -90,16 +88,14 @@ export default class ScrollList extends React.Component {
             details={this.renderStarProfessions(item.celebrity_profession)}
           />
         </ListStyled.listItem>
-      )
+      );
     });
   }
 
   render() {
     return (
       <ListStyled>
-        <Scrollbars
-          renderView={props => <div {...props} className="view" id="scrollable-target" />}
-        >
+        <Scrollbars>
           <InfiniteScroll
             dataLength={this.props.dataList.length}
             next={this.fetchMoreData}
