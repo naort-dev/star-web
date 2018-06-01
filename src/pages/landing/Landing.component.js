@@ -17,17 +17,13 @@ export default class Landing extends React.Component {
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        if (!this.props.celebList.data.length) {
-          this.props.fetchCelebrityList(this.props.celebList.offset+1);
-        }
+        this.props.fetchCelebrityList(0, true);
         break;
       case 'Videos':
-        if (!this.props.videosList.data.length) {
-          this.props.fetchVideosList(this.props.videosList.offset+1);
-        }
+        this.props.fetchVideosList(0, true);
         break;
       default:
-        this.props.fetchCelebrityList(this.props.celebList.offset+1);
+        this.props.fetchCelebrityList(0, true);
     }
   }
   componentWillReceiveProps(nextProps) {

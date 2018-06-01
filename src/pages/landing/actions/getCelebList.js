@@ -53,7 +53,6 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const { category, searchParam } = getState().filters;
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
-  console.log(categoryChange)
   const { limit } = getState().celebList;
   if (categoryChange && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {

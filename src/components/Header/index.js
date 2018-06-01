@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import HeaderSection from './styled';
 import Loader from '../Loader';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { fetchSuggestionList } from '../../store/shared/actions/getSuggestionsList';
+import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 
 class Header extends React.Component {
   constructor(props) {
@@ -55,7 +55,7 @@ class Header extends React.Component {
 
   removeSuggestions = (e) => {
     if (this.searchRef && !this.searchRef.contains(e.target)) {
-      this.setState({ showSuggestions: false });
+      this.setState({ showSuggestions: false, searchActive: false });
     }
   }
 
@@ -72,6 +72,12 @@ class Header extends React.Component {
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
   }
 
+  handleSearchItemClick = () => {
+    this.props.resetSearchParam('');
+    this.props.searchFilter('');
+    this.setState({ searchActive: false, showSuggestions: false });
+  }
+
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
       return (
@@ -81,7 +87,11 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                {item.get_short_name}
+                <Link to={`/starDetail/${item.id}`}>
+                  <HeaderSection.SuggestionListContent onClick={() => this.handleSearchItemClick()}>
+                    {item.get_short_name}
+                  </HeaderSection.SuggestionListContent>
+                </Link>
               </HeaderSection.SuggestionListItem>
             ))
           }
@@ -101,14 +111,18 @@ class Header extends React.Component {
       <HeaderSection>
         <HeaderSection.HeaderDiv >
           <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <HeaderSection.ImgLogo
-              src="assets/images/logo_starsona.png"
-              alt=""
-            />
-            <HeaderSection.MenuButton
-              menuActive={props.menuActive}
-              onClick={() => props.enableMenu()}
-            />
+            <Link to="/">
+              <HeaderSection.ImgLogo
+                src="assets/images/logo_starsona.png"
+                alt=""
+              />
+            </Link>
+            {
+              !props.disableMenu && <HeaderSection.MenuButton
+                menuActive={props.menuActive}
+                onClick={() => props.enableMenu()}
+              />
+            }
           </HeaderSection.HeaderLeft>
           <HeaderSection.SearchBar innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
             <HeaderSection.InputWrapper>
@@ -166,6 +180,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
+  resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
