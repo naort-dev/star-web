@@ -71,16 +71,27 @@ export default class ScrollList extends React.Component {
         </ListStyled.listVideos>
       ));
     }
-    return this.props.dataList.map((item, index) => (
-      <ListStyled.listItem key={index}>
-        <ImageRender
-          cover={item.avatar_photo && item.avatar_photo.image_url}
-          profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-          starName={`${item.first_name} ${item.last_name}`}
-          details={this.renderStarProfessions(item.celebrity_profession)}
-        />
-      </ListStyled.listItem>
-    ));
+    return this.props.dataList.map((item, index) => {
+      let coverPhoto;
+      let  profilePhoto;
+      if (item.avatar_photo) {
+        coverPhoto = item.avatar_photo.image_url && item.avatar_photo.image_url;
+        profilePhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
+      } else {
+        coverPhoto = item.images && item.images[0] && item.images[0].image_url;
+        profilePhoto = item.images && item.images[0] && item.images[0].thumbnail_url;
+      }
+      return (
+        <ListStyled.listItem key={index}>
+          <ImageRender
+            cover={coverPhoto}
+            profile={profilePhoto}
+            starName={`${item.first_name} ${item.last_name}`}
+            details={this.renderStarProfessions(item.celebrity_profession)}
+          />
+        </ListStyled.listItem>
+      )
+    });
   }
 
   render() {
