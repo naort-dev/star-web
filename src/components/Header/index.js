@@ -63,10 +63,13 @@ class Header extends React.Component {
     this.setState({ searchActive: true }, () => {
       this.searchInput.focus();
     });
+    if (this.state.searchText.length >= 3) {
+      this.setState({ showSuggestions: true });
+    }
   }
 
   deactivateSearch = () => {
-    this.setState({ searchActive: false, searchText: '' });
+    this.setState({ searchActive: false, searchText: '', showSuggestions: false });
   }
 
   renderSuggestionsList = () => {
@@ -86,10 +89,10 @@ class Header extends React.Component {
       );
     }
     return (
-      <div>
-        <span>No Results</span>
-      </div>
-    )
+      <HeaderSection.noDataWrapper>
+        <HeaderSection.noDataText>No Results</HeaderSection.noDataText>
+      </HeaderSection.noDataWrapper>
+    );
   }
 
   render() {
@@ -120,13 +123,15 @@ class Header extends React.Component {
               <HeaderSection.ClearButton onClick={() => this.deactivateSearch()} />
               {this.state.showSuggestions &&
                 <HeaderSection.SuggestionListWrapper>
-                  <Scrollbars>
-                    {
-                      this.props.suggestionsList.loading ?
-                        <Loader />
-                      : this.renderSuggestionsList()
-                    }
-                  </Scrollbars>
+                  <HeaderSection.AutoSuggest>
+                    <Scrollbars>
+                      {
+                        this.props.suggestionsList.loading ?
+                          <Loader />
+                        : this.renderSuggestionsList()
+                      }
+                    </Scrollbars>
+                  </HeaderSection.AutoSuggest>
                 </HeaderSection.SuggestionListWrapper>
               }
             </HeaderSection.InputWrapper>

@@ -143,13 +143,20 @@ HeaderSection.SearchBar = styled.div`
     width: 50%;
   }
 `;
+HeaderSection.AutoSuggest = styled.div`
+  height: 100%;
+  padding: 20px 0;
+  @media(min-width: 1025px) {
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+  }
+`;
 HeaderSection.SuggestionListWrapper = styled.div`
+  font-family: Ubuntu-Light;
   position: fixed;
   top: 60px;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 20px 0;
   background-color: #FFFFFF;
   box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   @media(min-width: 768px) {
@@ -170,9 +177,19 @@ HeaderSection.SuggestionListWrapper = styled.div`
     box-shadow: 0px 6px 6px 0px #cccccc;
   }
 `;
-
 HeaderSection.SuggestionList = styled.ul`
+
+`;
+HeaderSection.noDataWrapper = styled.div`
+  display: table;
+  width: 100%;
   height: 100%;
+`;
+HeaderSection.noDataText = styled.span`
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 18px;
 `;
 HeaderSection.SuggestionListItem = styled.li`
   width: 100%;
@@ -180,6 +197,7 @@ HeaderSection.SuggestionListItem = styled.li`
   padding: 0 16px;
   margin-top: 20px;
   cursor: pointer;
+  font-size: 18px;
   &:first-child{
     margin-top:0;
   }
