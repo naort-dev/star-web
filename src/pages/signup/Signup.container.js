@@ -5,10 +5,12 @@ import SignUp from './Signup.component';
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   loading: state.session.loading,
+  error: state.session.incorrectError,
 });
 
 const mapDispatchToProps = dispatch => ({
-  registerUser: state => dispatch(registerUser(state)),
+  registerUser: (firstName, lastName, email, password, role) =>
+    dispatch(registerUser(firstName, lastName, email, password, role)),
 });
 
 

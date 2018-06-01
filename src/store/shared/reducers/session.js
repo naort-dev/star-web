@@ -5,6 +5,7 @@ const initalState = {
   isLoggedIn: false,
   loading: false,
   auth_token: '',
+  incorrectError: '',
   error: {
     has: false,
     message: '',
@@ -17,6 +18,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: true,
+        incorrectError: '',
       };
 
     case LOGIN.success:
@@ -28,13 +30,19 @@ export default (state = { ...initalState }, action) => {
         auth_token: action.data.user,
       };
 
+    case LOGIN.incorrect:
+      return {
+        ...state,
+        incorrectError: action.error,
+      };
+
     case LOGIN.failed:
       return {
         ...state,
         loading: false,
         error: {
           has: true,
-          message: action.message,
+          message: action.error,
         },
       };
     case LOGIN.end:

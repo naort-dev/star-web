@@ -3,8 +3,10 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
+import validator from 'validator';
 import { LoginContainer, HeaderSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
+
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -12,8 +14,8 @@ export default class Login extends React.Component {
 
     this.state = {
       redirectToReferrer: false,
-      email: '',
-      password: '',
+      email: { value: '', isValid: false, message: '' },
+      password: { value: '', isValid: false, message: '' },
     };
   }
 
@@ -24,17 +26,52 @@ export default class Login extends React.Component {
       });
     }
   }
-  onLogin = () => {
-    this.props.loginUser(this.state);
-
+  onLogin = (e) => {
+    e.preventDefault();
+    if (this.isFormValid()) {
+      this.props.loginUser(this.state.email.value, this.state.password.value);
+    }
+    else{
+      this.checkEmail();
+      this.checkPassword();
+    }
   }
   acceptEmailHandler = (e) => {
-    this.setState({ email: e.target.value });
+    this.setState({ email: { ...this.state.email, value: e.target.value } });
   }
   acceptPasswordHandler =(e) => {
-    this.setState({ password: e.target.value });
+    this.setState({ password: { ...this.state.password, value: e.target.value } });
+  }
+
+  checkEmail = () => {
+    if (validator.isEmpty(this.state.email.value)) {
+      this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
+      return false;
+    }
+    if (!validator.isEmail(this.state.email.value)) {
+      this.setState({ email: { ...this.state.email, message: 'Enter a valid email address' } });
+      return false;
+    }
+    this.setState({ email: { ...this.state.email, message: '', isValid: true } });
+    return true;
+  }
+  checkPassword = () => {
+    if (validator.isEmpty(this.state.password.value)) {
+      this.setState({ password: { ...this.state.password, message: 'Enter a valid password' } });
+      return false;
+    }
+    this.setState({ password: { ...this.state.password, message: '', isValid: true } });
+    return true;
+  }
+  isFormValid = () => {
+    if (this.state.email.isValid && this.state.password.isValid) {
+      return true;
+    }
+    return false;
   }
   render() {
+    console.log(this.state);
+    const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.from;
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
@@ -86,25 +123,39 @@ export default class Login extends React.Component {
                     <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
                     <LoginContainer.InputWrapper>
                       <LoginContainer.Label>Email</LoginContainer.Label>
-                      <LoginContainer.Input
-                        type="email"
-                        name="email"
-                        value={this.state.email}
-                        placeholder="Enter your email"
-                        onChange={this.acceptEmailHandler}
-                      />
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          type="text"
+                          name="email"
+                          value={email.value}
+                          placeholder="Enter your email"
+                          onChange={this.acceptEmailHandler}
+                          onBlur={this.checkEmail}
+                        />
+                        <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>  
+                      </LoginContainer.WrapsInput>                   
                     </LoginContainer.InputWrapper>
-                    <LoginContainer.InputWrapper>
+
+                    <LoginContainer.InputWrapper>                
                       <LoginContainer.Label>Password</LoginContainer.Label>
-                      <LoginContainer.Input
-                        type="password"
-                        name="password"
-                        value={this.state.password}
-                        placeholder="Enter your password"
-                        onChange={this.acceptPasswordHandler}
-                      />
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          type="password"
+                          name="password"
+                          value={password.value}
+                          placeholder="Enter your password"
+                          onChange={this.acceptPasswordHandler}
+                          onBlur={this.checkPassword}
+                        />
+                        <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
+                      </LoginContainer.WrapsInput> 
                     </LoginContainer.InputWrapper>
+                   
+                   
                   </LoginContainer.InputFieldsWrapper>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
                 </LoginContainer.SocialMediaSignup>
                 <LoginContainer.FooterSection>
                   <LoginContainer.Footer>
@@ -113,6 +164,7 @@ export default class Login extends React.Component {
                         Forgot your password?
                       </LoginContainer.ForgotButton>
                     </LoginContainer.Footerleft>
+                    
                     <LoginContainer.FooterRight>
                       <LoginContainer.SignIn onClick={this.onLogin} disabled={this.props.loading} >Sign In </LoginContainer.SignIn>
                     </LoginContainer.FooterRight>

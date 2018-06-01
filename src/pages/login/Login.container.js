@@ -5,10 +5,11 @@ import Login from './Login.component';
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   loading: state.session.loading,
+  error: state.session.incorrectError,
 });
 
 const mapDispatchToProps = dispatch => ({
-  loginUser: state => dispatch(loginUser(state)),
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
