@@ -143,7 +143,7 @@ HeaderSection.SearchBar = styled.div`
     width: 50%;
   }
 `;
-HeaderSection.SuggestionListWrapper = styled.ul`
+HeaderSection.SuggestionListWrapper = styled.div`
   position: fixed;
   top: 60px;
   left: 0;
@@ -170,14 +170,18 @@ HeaderSection.SuggestionListWrapper = styled.ul`
     box-shadow: 0px 6px 6px 0px #cccccc;
   }
 `;
+
+HeaderSection.SuggestionList = styled.ul`
+  height: 100%;
+`;
 HeaderSection.SuggestionListItem = styled.li`
   width: 100%;
   height: 30px;
   padding: 0 16px;
-  margin: 20px 0;
+  margin-top: 20px;
   cursor: pointer;
-  &:last-child{
-    margin-bottom:0;
+  &:first-child{
+    margin-top:0;
   }
   @media(min-width: 1025px) {
     padding: 0 30px;

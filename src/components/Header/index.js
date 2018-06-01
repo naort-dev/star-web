@@ -60,7 +60,7 @@ class Header extends React.Component {
   }
 
   activateSearch = () => {
-    this.setState({ searchActive: true } ,() => {
+    this.setState({ searchActive: true }, () => {
       this.searchInput.focus();
     });
   }
@@ -69,15 +69,28 @@ class Header extends React.Component {
     this.setState({ searchActive: false, searchText: '' });
   }
 
-  renderSuggestionsList = () => (
-    this.props.suggestionsList.suggestions.map((item, index) => (
-      <HeaderSection.SuggestionListItem
-        key={index}
-      >
-        {item.get_short_name}
-      </HeaderSection.SuggestionListItem>
-    ))
-  )
+  renderSuggestionsList = () => {
+    if (this.props.suggestionsList.suggestions.length) {
+      return (
+        <HeaderSection.SuggestionList>
+          {
+            this.props.suggestionsList.suggestions.map((item, index) => (
+              <HeaderSection.SuggestionListItem
+                key={index}
+              >
+                {item.get_short_name}
+              </HeaderSection.SuggestionListItem>
+            ))
+          }
+        </HeaderSection.SuggestionList>
+      );
+    }
+    return (
+      <div>
+        <span>No Results</span>
+      </div>
+    )
+  }
 
   render() {
     const { props } = this;
