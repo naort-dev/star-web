@@ -24,7 +24,6 @@ ListStyled.listWrapper = styled.ul`
   flex-direction: ${props => (props.videos ? 'row' : 'column')};
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: space-between
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
