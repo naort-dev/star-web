@@ -24,10 +24,10 @@ ListStyled.listWrapper = styled.ul`
   flex-direction: ${props => (props.videos ? 'row' : 'column')};
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: space-between
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
+    align-items: flex-start;
     flex-wrap: wrap;
   }
   @media(min-width: 1025px) {
@@ -42,27 +42,61 @@ ListStyled.listItem = styled.li`
   margin-bottom: 20px;
   padding-left: 0;
   @media(min-width: 768px) {
-    width: calc(50% - 20px);
+    width: calc(50%);
+    border-right: 20px solid transparent;
+    &:nth-child(even) {
+      border-right: 0;
+    }
   }
   @media(min-width: 1025px) {
-    width: calc(33.33% - 20px);
+    width: calc(33.33%);
     margin-bottom: 30px;
+    &:nth-child(even) {
+      border-right: 20px solid transparent;
+    }
+    &:nth-child(3n) {
+      border-right: 0;
+    }
   }
 `;
 
 ListStyled.listVideos = ListStyled.listItem.extend`
-  width: calc(50% - 10px);
+  width: calc(50%);
+  border-right: 10px solid transparent;
+  &:nth-child(even) {
+    border-right: none;
+  }
   @media(min-width: 768px) {
     padding: 0;
-    width: calc(33.33% - 40px);
+    border-right: 40px solid transparent;
+    width:33.33%;
+    &:nth-child(even) {
+      border-right: 40px solid transparent;
+    }
+    &:nth-child(3n) {
+      border-right: 0;
+    }
   }
   @media(min-width: 1025px) {
     padding: 0;
-    width: calc(25% - 20px);
+    border-right: 20px solid transparent;
+    width: 25%;
+    &:nth-child(even), &:nth-child(3n) {
+      border-right: 20px solid transparent;
+    }
+    &:nth-child(4n) {
+      border-right: 0;
+    }
   }
   @media(min-width: 1221px) {
     padding: 0;
-    width: calc(25% - 40px);
+    border-right: 40px solid transparent;
+    &:nth-child(even), &:nth-child(3n) {
+      border-right: 40px solid transparent;
+    }
+    &:nth-child(4n) {
+      border-right: 0;
+    }
   }
 
 `;

@@ -5,15 +5,13 @@ import { Footer } from '../Footer';
 export default class Sidebar extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
-      selectedId: '',
+
     };
   }
 
   selectCategory = (label, id) => {
-    this.setState({ selectedId: id });
-    if(window.outerWidth<=1024) {
+    if (window.outerWidth<=1024) {
       this.props.toggleMenu();
     }
     this.props.updateCategory(label, id);
@@ -23,7 +21,7 @@ export default class Sidebar extends React.Component {
     this.props.list.professions.map(item => (
       <SidebarStyled.ListItem
         key={item.id}
-        selected={this.state.selectedId === item.id ? true : false}
+        selected={this.props.selectedCategory === item.id ? true : false}
         onClick={() => this.selectCategory(item.title, item.id)}
       >
         {item.title}
@@ -50,7 +48,7 @@ export default class Sidebar extends React.Component {
               <SidebarStyled.Separator />
               <SidebarStyled.ListWrapper>
                 <SidebarStyled.ListItem
-                  selected={this.state.selectedId === '' ? true : false}
+                  selected={this.props.selectedCategory === '' ? true : false}
                   onClick={() => this.selectCategory('featured', '')}
                 >
                   Featured
