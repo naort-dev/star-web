@@ -139,6 +139,9 @@ HeaderSection.SearchBar = styled.div`
     display: flex;
     align-items: center;
   }
+  @media(min-width: 1025px) {
+    width: 50%;
+  }
 `;
 HeaderSection.SuggestionListWrapper = styled.ul`
   position: fixed;
@@ -146,12 +149,37 @@ HeaderSection.SuggestionListWrapper = styled.ul`
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 20px 10px;
+  padding: 20px 0;
   background-color: #FFFFFF;
+  box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+  @media(min-width: 768px) {
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: initial;
+    height: 300px;
+    width: 400px;
+    bottom: initial;
+    box-shadow: none;
+  }
+  @media(min-width: 1025px) {
+    width: auto;
+    top: 47px;
+    right: 0;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+  }
 `;
 HeaderSection.SuggestionListItem = styled.li`
   width: 100%;
   height: 30px;
+  padding: 0 16px;
+  margin: 20px 0;
+  &:last-child{
+    margin-bottom:0;
+  }
+  @media(min-width: 1025px) {
+    padding: 0 30px;
+  }
 `;
 HeaderSection.InputWrapper = styled.div`
   width: 100%;
@@ -178,7 +206,7 @@ HeaderSection.InputWrapper = styled.div`
     }
   }
   @media(min-width: 1025px) {
-    width: 441px;
+    width: 100%;
   }
 `;
 HeaderSection.Input = styled.input`
@@ -190,7 +218,10 @@ HeaderSection.Input = styled.input`
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  @media(min-width : 768px){
+  @media(min-width: 768px) {
+    text-indent: 24px;
+  } 
+  @media(min-width : 1025px){
     text-indent: 78px;
   }
 `;

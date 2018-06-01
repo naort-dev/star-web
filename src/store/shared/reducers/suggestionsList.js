@@ -1,35 +1,38 @@
-import { PROFESSION_LIST } from '../actions/getProfessions';
+import { SUGGESTION_LIST } from '../actions/getSuggestionsList';
 
 const initalState = {
-  professions: [],
+  suggestions: [],
   loading: false,
+  error: undefined,
+  searchText: undefined,
 };
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
-    case PROFESSION_LIST.start:
+    case SUGGESTION_LIST.start:
       return {
         ...state,
         loading: true,
+        searchText: action.searchText,
       };
 
-    case PROFESSION_LIST.end:
+    case SUGGESTION_LIST.end:
       return {
         ...state,
         loading: false,
       };
 
-    case PROFESSION_LIST.success:
+    case SUGGESTION_LIST.success:
       return {
         ...state,
         loading: false,
-        professions: [...state.professions, ...action.data.professions],
+        suggestions: action.suggestions,
       };
 
-    case PROFESSION_LIST.failed:
+    case SUGGESTION_LIST.failed:
       return {
         ...initalState,
-        loading: false,
+        error: action.error,
       };
 
     default:
