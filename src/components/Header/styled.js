@@ -198,6 +198,9 @@ HeaderSection.SuggestionListItem = styled.li`
   margin-top: 20px;
   cursor: pointer;
   font-size: 18px;
+  &:hover{
+    background-color: #F8F8F8;
+  }
   &:first-child{
     margin-top:0;
   }
