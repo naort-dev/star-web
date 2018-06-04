@@ -40,7 +40,7 @@ export default class Login extends React.Component {
       });
       window.FB.getLoginStatus = (response) => {
         if (response.status === 'connected') {
-
+          // for already connected
         } else {
           // user is not authorized
         }
@@ -71,7 +71,6 @@ export default class Login extends React.Component {
     }
   }
   onSocialMediaLogin =(r, source) => {
-    console.log(r);
     this.setState({
       socialMedia: {
         ...this.state.socialMedia,
@@ -169,15 +168,14 @@ export default class Login extends React.Component {
               <LoginContainer.CoverImage />
               <LoginContainer.SocialMediaSignup>
                 <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
-                <LoginContainer.ButtonDiv>
-            
+                <LoginContainer.ButtonDiv>     
                   <LoginContainer.Button onClick={() => this.OnFBlogin()}>
                     <LoginContainer.FacebookContent>Continue with Facebook
                     </LoginContainer.FacebookContent>
                   </LoginContainer.Button>
                 </LoginContainer.ButtonDiv>
                 <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button>
+                  <LoginContainer.Button >
                     <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
                   </LoginContainer.Button>
                 </LoginContainer.ButtonDiv>

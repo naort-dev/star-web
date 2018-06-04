@@ -15,7 +15,43 @@ export default class SignUp extends React.Component {
       password: { value: '', isValid: false, message: '' },
       email: { value: '', isValid: false, message: '' },
       role: 'R1001',
+      socialMedia: {
+        username: '',
+        first_name: '',
+        last_name: '',
+        sign_up_source: '',
+        profile_photo: '',
+        nick_name: '',
+        fb_id: '',
+        gp_id: '',
+        in_id: '',
+        role: 'R1001',
+      },
     };
+  }
+  componentDidMount() {
+    window.fbAsyncInit = () => {
+      window.FB.init({
+        appId: '1237328416404211',
+        cookie: true,
+        xfbml: true,
+        version: 'v3.0',
+      });
+      window.FB.getLoginStatus = (response) => {
+        if (response.status === 'connected') {
+          // for already connected
+        } else {
+          // user is not authorized
+        }
+      };
+    };
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) {return;}
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
@@ -39,6 +75,39 @@ export default class SignUp extends React.Component {
       this.checkPassword();
       this.checkRequired();
     }
+  }
+  onSocialMediaLogin =(r, source) => {
+    this.setState({
+      socialMedia: {
+        ...this.state.socialMedia,
+        username: r.email,
+        first_name: r.first_name,
+        last_name: r.last_name,
+        sign_up_source: source,
+        nick_name: r.name,
+        profile_photo: r.picture.data.url,
+        fb_id: r.id,
+      },
+    });
+    this.props.socialMediaLogin(
+      this.state.socialMedia.username,
+      this.state.socialMedia.first_name,
+      this.state.socialMedia.last_name,
+      this.state.socialMedia.sign_up_source,
+      this.state.socialMedia.profile_photo,
+      this.state.socialMedia.fb_id,
+    );
+  }
+  OnFBlogin = () => {
+    const that = this;
+    window.FB.login (function (response) {
+      if (response.authResponse) {
+        window.FB.api('/me',{ locale: 'en_US', fields: 'name, email,first_name,last_name,picture' },
+         function(response) {
+           that.onSocialMediaLogin(response,2);
+         });
+      }
+    }, { scope: 'email,user_birthday', return_scopes: true });
   }
   firstNameHandler = (e) => {
     this.setState({ firstName: { ...this.state.firstName, value: e.target.value } });
@@ -115,117 +184,115 @@ export default class SignUp extends React.Component {
           </Link>
         </HeaderSection>
         <LoginContainer>
-          <LoginContainer.LeftSection>
-            <form>
-              <LoginContainer.SocialMediaSignup>
-                <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
-                <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button>
-                    <LoginContainer.FacebookContent>Continue with Facebook
-                    </LoginContainer.FacebookContent>
-                  </LoginContainer.Button>
-                </LoginContainer.ButtonDiv>
-                <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button>
-                    <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
-                  </LoginContainer.Button>
-                </LoginContainer.ButtonDiv>
-                <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button>
-                    <LoginContainer.InstagramContent>Continue with Instagram
-                    </LoginContainer.InstagramContent>
-                  </LoginContainer.Button>
-                </LoginContainer.ButtonDiv>
-                <LoginContainer.Line />
-                <LoginContainer.InputFieldsWrapper>
-                  <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.Label>First Name</LoginContainer.Label>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder="Enter your first name"
-                        type="text"
-                        name="firstName"
-                        value={this.state.firstName.value}
-                        onChange={this.firstNameHandler}
-                        onBlur={this.checkRequired}
-                      />
-                      <LoginContainer.ErrorMsg>
-                        {this.state.firstName.message}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>     
-                  </LoginContainer.InputWrapper>
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.Label>Second Name</LoginContainer.Label>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder="Enter your last name"
-                        type="text"
-                        name="lastName"
-                        value={this.state.lastName.value}
-                        onChange={this.lastNameHandler}
-                      />
-                      <LoginContainer.ErrorMsg>
-                        {this.state.lastName.message}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.Label>Email</LoginContainer.Label>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder="Enter your email"
-                        type="email"
-                        name="email"
-                        value={this.state.email.value}
-                        onChange={this.emailHandler}
-                        onBlur={this.checkEmail}
-                      />
-                      <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                  <LoginContainer.InputWrapper>      
-                    <LoginContainer.Label>Password</LoginContainer.Label>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder="Enter your password"
-                        type="password"
-                        name="password"
-                        value={this.state.password.value}
-                        onChange={this.passwordHandler}
-                        onBlur={this.checkPassword}
-                      />
-                      <LoginContainer.ErrorMsg>
-                        {this.state.password.message}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                  <LoginContainer.PrivacyContent>
-                  By creating an account you agree to Starsona’s
-                    <strong>Privacy Policy</strong>
-                  and <strong>Terms of Service</strong>
-                  </LoginContainer.PrivacyContent>
-                </LoginContainer.InputFieldsWrapper>
-                <LoginContainer.WrapsInput>
-                  <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.SocialMediaSignup>
-              <LoginContainer.FooterLayout>
-                <div>
-                  <FooterSection>
-                    <FooterSection.LeftSection>
-                      <FooterSection.Agreement>
-                        By creating an account you agree to Starsona’s
-                        Privacy Policy and Terms of Service
-                      </FooterSection.Agreement>
-                    </FooterSection.LeftSection>
-                    <FooterSection.RightSection>
-                      <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>Join Free</FooterSection.Button>
-                    </FooterSection.RightSection>
-                  </FooterSection>
-                </div>
-              </LoginContainer.FooterLayout>
-            </form>
+          <LoginContainer.LeftSection>   
+            <LoginContainer.SocialMediaSignup>
+              <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
+              <LoginContainer.ButtonDiv>
+                <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+                  <LoginContainer.FacebookContent>Continue with Facebook
+                  </LoginContainer.FacebookContent>
+                </LoginContainer.Button>
+              </LoginContainer.ButtonDiv>
+              <LoginContainer.ButtonDiv>
+                <LoginContainer.Button>
+                  <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
+                </LoginContainer.Button>
+              </LoginContainer.ButtonDiv>
+              <LoginContainer.ButtonDiv>
+                <LoginContainer.Button>
+                  <LoginContainer.InstagramContent>Continue with Instagram
+                  </LoginContainer.InstagramContent>
+                </LoginContainer.Button>
+              </LoginContainer.ButtonDiv>
+              <LoginContainer.Line />
+              <LoginContainer.InputFieldsWrapper>
+                <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>First Name</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      placeholder="Enter your first name"
+                      type="text"
+                      name="firstName"
+                      value={this.state.firstName.value}
+                      onChange={this.firstNameHandler}
+                      onBlur={this.checkRequired}
+                    />
+                    <LoginContainer.ErrorMsg>
+                      {this.state.firstName.message}
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>    
+                </LoginContainer.InputWrapper>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Second Name</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      placeholder="Enter your last name"
+                      type="text"
+                      name="lastName"
+                      value={this.state.lastName.value}
+                      onChange={this.lastNameHandler}
+                    />
+                    <LoginContainer.ErrorMsg>
+                      {this.state.lastName.message}
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Email</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      placeholder="Enter your email"
+                      type="email"
+                      name="email"
+                      value={this.state.email.value}
+                      onChange={this.emailHandler}
+                      onBlur={this.checkEmail}
+                    />
+                    <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                <LoginContainer.InputWrapper>      
+                  <LoginContainer.Label>Password</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      placeholder="Enter your password"
+                      type="password"
+                      name="password"
+                      value={this.state.password.value}
+                      onChange={this.passwordHandler}
+                      onBlur={this.checkPassword}
+                    />
+                    <LoginContainer.ErrorMsg>
+                      {this.state.password.message}
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                <LoginContainer.PrivacyContent>
+                By creating an account you agree to Starsona’s
+                  <strong>Privacy Policy</strong>
+                and <strong>Terms of Service</strong>
+                </LoginContainer.PrivacyContent>
+              </LoginContainer.InputFieldsWrapper>
+              <LoginContainer.WrapsInput>
+                <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+              </LoginContainer.WrapsInput>
+            </LoginContainer.SocialMediaSignup>
+            <LoginContainer.FooterLayout>
+              <div>
+                <FooterSection>
+                  <FooterSection.LeftSection>
+                    <FooterSection.Agreement>
+                      By creating an account you agree to Starsona’s
+                      Privacy Policy and Terms of Service
+                    </FooterSection.Agreement>
+                  </FooterSection.LeftSection>
+                  <FooterSection.RightSection>
+                    <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>Join Free</FooterSection.Button>
+                  </FooterSection.RightSection>
+                </FooterSection>
+              </div>
+            </LoginContainer.FooterLayout>
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
             <LoginContainer.ImageStackLayout>
