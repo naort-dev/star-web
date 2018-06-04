@@ -17,6 +17,8 @@ export default class FilterSection extends React.Component {
     switch (type) {
       case 'priceRange': this.props.updatePriceRange(data.low, data.high);
         break;
+      case 'sort': this.props.updateSort(data);
+        break;
       default: break;
     }
   }
@@ -27,12 +29,11 @@ export default class FilterSection extends React.Component {
     for (i = this.lowPrice; i <= (this.highPrice - 100) / 100; i += 1) {
       const low = (100 * i) + 1;
       const high = (100 * i) + 100;
-      console.log(selectedPriceRange);
       priceList.push(
         <FilterStyled.filterItem
           key={i}
-          selected={selectedPriceRange.low === low && selectedPriceRange.high === high ? true: false}
-          onClick={() => this.filterSelection("priceRange",{low: low, high: high})}
+          selected={selectedPriceRange.low === low && selectedPriceRange.high === high ? true : false}
+          onClick={() => this.filterSelection('priceRange', { low, high })}
         >
           {low}$ - {high}$
         </FilterStyled.filterItem>,
@@ -59,8 +60,18 @@ export default class FilterSection extends React.Component {
               Sort
             </FilterStyled.filterHeading>
             <FilterStyled.filterItemWrapper>
-              <FilterStyled.filterItem>A - Z</FilterStyled.filterItem>
-              <FilterStyled.filterItem>Z - A</FilterStyled.filterItem>
+              <FilterStyled.filterItem
+                selected={this.props.selectedSort === 'az' ? true : false}
+                onClick={() => this.filterSelection('sort', 'az')}
+              >
+                A - Z
+              </FilterStyled.filterItem>
+              <FilterStyled.filterItem
+                selected={this.props.selectedSort === 'za' ? true : false}
+                onClick={() => this.filterSelection('sort', 'za')}
+              >
+                Z - A
+              </FilterStyled.filterItem>
             </FilterStyled.filterItemWrapper>
           </FilterStyled.filterSection>
         </FilterStyled.filterWrapper>

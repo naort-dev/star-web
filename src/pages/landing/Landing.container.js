@@ -6,6 +6,7 @@ import {
   switchTab,
   updateSearchParam,
   updatePriceRange,
+  updateSort,
 } from './actions/updateFilters';
 
 import Landing from './Landing.component';
@@ -24,6 +25,7 @@ const mapDispatchToProps = dispatch => ({
   switchTab: label => dispatch(switchTab(label)),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
   updatePriceRange: (lowPrice, highPrice) => dispatch(updatePriceRange(lowPrice, highPrice)),
+  updateSort: value => dispatch(updateSort(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

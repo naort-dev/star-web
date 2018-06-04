@@ -5,6 +5,7 @@ export const UPDATEFILTER = {
   switchTab: 'switch/switch_home_tab',
   updateSearchParam: 'update/search_param',
   updatePriceRange: 'update/price_range',
+  updateSort: 'update/update_sort',
 };
 
 export const updateCategory = (label, value) => ({
@@ -27,4 +28,9 @@ export const updatePriceRange = (low, high) => ({
   type: UPDATEFILTER.updatePriceRange,
   low,
   high,
+});
+
+export const updateSort = value => ({
+  type: UPDATEFILTER.updateSort,
+  value,
 });

@@ -70,6 +70,9 @@ TabStyled.FilterControl = styled.div`
   display: inline-block;
   float: right;
   border-bottom: ${props => (props.filterSelected && '4px solid #FF6C58')};
+  @media(min-width: 768px) {
+    margin-top: 7px;
+  }
   @media(min-width: 1025px) {
     margin-top: 8px;
   }

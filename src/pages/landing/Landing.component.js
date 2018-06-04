@@ -36,15 +36,12 @@ export default class Landing extends React.Component {
     const filterChange = categoryChange
     || this.props.filters.searchParam !== nextProps.filters.searchParam
     || this.props.filters.lowPrice !== nextProps.filters.lowPrice
-    || this.props.filters.highPrice !== nextProps.filters.highPrice;
+    || this.props.filters.highPrice !== nextProps.filters.highPrice
+    || this.props.filters.sortValue !== nextProps.filters.sortValue;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (filterChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
-        if (categoryChange) {
-          this.props.switchTab('Stars');
-        } else {
-          this.props.fetchVideosList(0, true);
-        }
+        this.props.switchTab('Stars');
       } else {
         this.props.fetchCelebrityList(0, true);
       }
@@ -65,7 +62,6 @@ export default class Landing extends React.Component {
   }
   updateCategory = (label, value) => {
     this.props.updateCategory(label, value);
-    this.props.fetchCelebrityList(0, true);
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
@@ -138,10 +134,12 @@ export default class Landing extends React.Component {
                 toggleFilter={this.toggleFilterSection}
               />
               {
-                this.state.filterSelected &&
+                this.state.filterSelected  &&
                   <FilterSection
                     selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
+                    selectedSort={this.props.filters.sortValue}
                     updatePriceRange={this.props.updatePriceRange}
+                    updateSort={this.props.updateSort}
                     toggleFilter={this.toggleFilterSection}
                   />
               }

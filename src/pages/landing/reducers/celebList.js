@@ -40,6 +40,7 @@ export default (state = { ...initalState }, action) => {
           currentSearchParam: action.searchParam,
           lowPrice: action.lowPrice,
           highPrice: action.highPrice,
+          sortValue: action.sortValue,
         },
         currentCategory: action.category,
       };

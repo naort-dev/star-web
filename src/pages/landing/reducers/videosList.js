@@ -17,7 +17,6 @@ export default (state = { ...initalState }, action) => {
         loading: true,
         data: action.refresh ? [] : state.data,
         token: action.token,
-        currentCategory: action.category,
       };
 
     case VIDEOS_LIST.end:

@@ -12,25 +12,23 @@ export const VIDEOS_LIST = {
   swapCacheEnd: 'swap_cache_end/videos_list',
 };
 
-export const videosListFetchStart = (refresh, token, category) => ({
+export const videosListFetchStart = (refresh, token) => ({
   type: VIDEOS_LIST.start,
   refresh,
   token,
-  category,
 });
 
 export const videosListFetchEnd = () => ({
   type: VIDEOS_LIST.end,
 });
 
-export const videosListFetchSuccess = (list, offset, count, category) => {
+export const videosListFetchSuccess = (list, offset, count) => {
   return (
     {
       type: VIDEOS_LIST.success,
       list,
       offset,
       count,
-      category,
     });
 };
 
@@ -50,30 +48,29 @@ export const videosListSwapCacheEnd = key => ({
 });
 
 export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
-  const { category } = getState().filters;
-  const cachedData = getState().videosList[category.label] && getState().videosList[category.label].data;
-  const categoryChange = category.label !== getState().videosList.currentCategory;
+  const { lowPrice, highPrice } = getState().filters;
+  // const cachedData = getState().videosList[category.label] && getState().videosList[category.label].data;
   const { limit } = getState().videosList;
-  if (categoryChange && cachedData) {
-    if (typeof getState().videosList.token !== typeof undefined) {
-      getState().videosList.token.cancel('Operation canceled due to new request.');
-    }
-    dispatch(videosListSwapCacheStart(refresh));
-    return new Promise((resolve) => {
-      setTimeout(resolve, 0);
-    }).then(() => {
-      dispatch(videosListSwapCacheEnd(category.label));
-    });
-    // setTimeout(() => {
-    //   dispatch(videosListSwapCacheEnd(category.label));
-    // }, 0);
-  }
+  // if (categoryChange && cachedData) {
+  //   if (typeof getState().videosList.token !== typeof undefined) {
+  //     getState().videosList.token.cancel('Operation canceled due to new request.');
+  //   }
+  //   dispatch(videosListSwapCacheStart(refresh));
+  //   return new Promise((resolve) => {
+  //     setTimeout(resolve, 0);
+  //   }).then(() => {
+  //     dispatch(videosListSwapCacheEnd(category.label));
+  //   });
+  //   // setTimeout(() => {
+  //   //   dispatch(videosListSwapCacheEnd(category.label));
+  //   // }, 0);
+  // }
   if (typeof getState().videosList.token !== typeof undefined) {
     getState().videosList.token.cancel('Operation canceled due to new request.');
   }
   const source = CancelToken.source();
-  dispatch(videosListFetchStart(refresh, source, category.label));
-  return fetch.get(Api.getVideosList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value, {
+  dispatch(videosListFetchStart(refresh, source));
+  return fetch.get(Api.getVideosList + '?limit='+ limit + '&offset=' + offset, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
@@ -85,7 +82,7 @@ export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
       } else {
         list = [...list, ...resp.data.data.featured_videos];
       }
-      dispatch(videosListFetchSuccess(list, offset, count, category.label));
+      dispatch(videosListFetchSuccess(list, offset, count));
     } else {
       dispatch(videosListFetchEnd());
     }

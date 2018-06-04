@@ -9,6 +9,7 @@ const initalState = {
   searchParam: '',
   lowPrice: '',
   highPrice: '',
+  sortValue: 'featured',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -39,6 +40,12 @@ export default (state = { ...initalState }, action) => {
         ...state,
         lowPrice: action.low,
         highPrice: action.high,
+      };
+
+    case UPDATEFILTER.updateSort:
+      return {
+        ...state,
+        sortValue: action.value,
       };
 
     default:

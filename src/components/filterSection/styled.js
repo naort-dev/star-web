@@ -16,6 +16,9 @@ FilterStyled.filterSection = styled.li`
   padding: 0 20px;
   display: inline-block;
   vertical-align: top;
+  @media(min-width: 1025px) {
+    line-height: 33px;
+  }
 `;
 FilterStyled.filterHeading = styled.span`
   display: block;
