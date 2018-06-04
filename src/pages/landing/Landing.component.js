@@ -12,6 +12,8 @@ export default class Landing extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
+      tabsRef: undefined,
+      tabsClientHeight: 0,
     };
   }
   componentWillMount() {
@@ -25,6 +27,7 @@ export default class Landing extends React.Component {
       default:
         this.props.fetchCelebrityList(0, true);
     }
+    window.addEventListener('resize', this.setScrollHeight);
   }
   componentWillReceiveProps(nextProps) {
     const filterChange = this.props.filters.category.label !== nextProps.filters.category.label
@@ -44,6 +47,12 @@ export default class Landing extends React.Component {
         this.props.fetchCelebrityList(0, true);
       }
     }
+  }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setScrollHeight);
+  }
+  setScrollHeight = () => {
+    this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
   updateCategory = (label, value) => {
     this.props.updateCategory(label, value);
@@ -81,6 +90,7 @@ export default class Landing extends React.Component {
     return null;
   }
   render() {
+    console.log(this.state.tabsRef && this.state.tabsRef.clientHeight);
     return (
       <LandingStyled>
         <Header
@@ -104,11 +114,15 @@ export default class Landing extends React.Component {
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <Tabs
-              labels={['Stars', 'Videos']}
-              switchTab={this.props.switchTab}
-              selected={this.props.filters.selectedTab}
-            />
+            <div
+              ref={(node)=>!this.state.tabsRef && this.setState({tabsRef: node, tabsClientHeight: node.clientHeight})}
+            >
+              <Tabs
+                labels={['Stars', 'Videos']}
+                switchTab={this.props.switchTab}
+                selected={this.props.filters.selectedTab}
+              />
+            </div>
             {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
               (!this.props.videosList.data.length && this.props.videosList.loading) ?
@@ -116,7 +130,9 @@ export default class Landing extends React.Component {
                   <Loader />
                 </LandingStyled.loaderWrapper>
               :
-              this.renderScrollList()
+                <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)`}}>
+                  {this.renderScrollList()}
+                </div>
             }
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>

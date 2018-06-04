@@ -3,19 +3,20 @@ import styled from 'styled-components';
 const ListStyled = styled.section`
   padding: 0 16px;
   padding-right: 10px;
-  height: calc(100% - 95px);
+  height: 100%;
   overflow: auto;
-  margin: 20px 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
   @media(min-width: 768px) {
-    margin: 30px 0;
-    height: calc(100% - 99px);
     padding: 0 44px;
     padding-right: 38px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
   @media(min-width: 1025px) {
     padding: 0;
-    margin: 20px 0;
-    height: calc(100% - 79px);
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 `;
 
