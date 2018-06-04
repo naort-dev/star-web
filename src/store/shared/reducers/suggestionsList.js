@@ -35,6 +35,12 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case SUGGESTION_LIST.resetSearchParam:
+      return {
+        ...initalState,
+        searchText: action.searchParam,
+      };
+
     default:
       return state;
   }

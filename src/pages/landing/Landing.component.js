@@ -17,17 +17,13 @@ export default class Landing extends React.Component {
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        if (!this.props.celebList.data.length) {
-          this.props.fetchCelebrityList(this.props.celebList.offset+1);
-        }
+        this.props.fetchCelebrityList(0, true);
         break;
       case 'Videos':
-        if (!this.props.videosList.data.length) {
-          this.props.fetchVideosList(this.props.videosList.offset+1);
-        }
+        this.props.fetchVideosList(0, true);
         break;
       default:
-        this.props.fetchCelebrityList(this.props.celebList.offset+1);
+        this.props.fetchCelebrityList(0, true);
     }
   }
   componentWillReceiveProps(nextProps) {
@@ -89,8 +85,8 @@ export default class Landing extends React.Component {
       <LandingStyled>
         <Header
           menuActive={this.state.menuActive}
-          enableMenu={() => this.activateMenu()}
-          searchFilter={searchText => this.searchFilter(searchText)}
+          enableMenu={this.activateMenu}
+          searchFilter={this.searchFilter}
         />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
@@ -102,15 +98,15 @@ export default class Landing extends React.Component {
                 list={this.props.professionsList}
                 selectedCategory={this.props.filters.category.value}
                 menuActive={this.state.menuActive}
-                toggleMenu={() => this.activateMenu()}
-                updateCategory={(label, value) => this.updateCategory(label, value)}
+                toggleMenu={this.activateMenu}
+                updateCategory={this.updateCategory}
               />
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
             <Tabs
               labels={['Stars', 'Videos']}
-              switchTab={tab => this.props.switchTab(tab)}
+              switchTab={this.props.switchTab}
               selected={this.props.filters.selectedTab}
             />
             {

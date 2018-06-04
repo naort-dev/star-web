@@ -6,6 +6,7 @@ export const SUGGESTION_LIST = {
   end: 'fetch_end/suggestion_list',
   success: 'fetch_success/suggestion_list',
   failed: 'fetch_failed/suggestion_list',
+  resetSearchParam: 'reset_search/search_param',
 };
 
 export const suggestionListFetchStart = searchText => ({
@@ -28,6 +29,11 @@ export const suggestionListtFetchSuccess = (suggestions) => {
 export const suggestionListtFetchFailed = error => ({
   type: SUGGESTION_LIST.failed,
   error,
+});
+
+export const resetSearchParam = searchParam => ({
+  type: SUGGESTION_LIST.resetSearchParam,
+  searchParam,
 });
 
 export const fetchSuggestionList = searchParam => (dispatch, getState) => {

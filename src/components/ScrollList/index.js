@@ -25,8 +25,7 @@ export default class ScrollList extends React.Component {
     const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
     if (endOfList) {
       this.setState({ hasMore: false });
-    }
-    else {
+    } else {
       this.setState({ hasMore: true });
     }
   }
@@ -58,7 +57,6 @@ export default class ScrollList extends React.Component {
   }
 
   renderList() {
-    // console.log(this.props.dataList)
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos videos={this.props.videos} key={index}>
@@ -71,16 +69,27 @@ export default class ScrollList extends React.Component {
         </ListStyled.listVideos>
       ));
     }
-    return this.props.dataList.map((item, index) => (
-      <ListStyled.listItem key={index}>
-        <ImageRender
-          cover={item.avatar_photo && item.avatar_photo.image_url}
-          profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-          starName={`${item.first_name} ${item.last_name}`}
-          details={this.renderStarProfessions(item.celebrity_profession)}
-        />
-      </ListStyled.listItem>
-    ));
+    return this.props.dataList.map((item, index) => {
+      let coverPhoto;
+      let profilePhoto;
+      if (item.avatar_photo) {
+        coverPhoto = item.avatar_photo.image_url && item.avatar_photo.image_url;
+        profilePhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
+      } else {
+        coverPhoto = item.images && item.images[0] && item.images[0].image_url;
+        profilePhoto = item.images && item.images[0] && item.images[0].thumbnail_url;
+      }
+      return (
+        <ListStyled.listItem key={index}>
+          <ImageRender
+            cover={coverPhoto}
+            profile={profilePhoto}
+            starName={`${item.first_name} ${item.last_name}`}
+            details={this.renderStarProfessions(item.celebrity_profession)}
+          />
+        </ListStyled.listItem>
+      );
+    });
   }
 
   render() {

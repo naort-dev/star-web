@@ -37,6 +37,7 @@ export default (state = { ...initalState }, action) => {
           offset: action.offset,
           data: action.list,
           count: action.count,
+          currentSearchParam: action.searchParam,
         },
         currentCategory: action.category,
       };

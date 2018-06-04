@@ -23,7 +23,7 @@ export const celebListFetchEnd = () => ({
   type: CELEB_LIST.end,
 });
 
-export const celebListFetchSuccess = (list, offset, count, category) => {
+export const celebListFetchSuccess = (list, offset, count, category, searchParam) => {
   return (
     {
       type: CELEB_LIST.success,
@@ -31,6 +31,7 @@ export const celebListFetchSuccess = (list, offset, count, category) => {
       offset,
       count,
       category,
+      searchParam,
     });
 };
 
@@ -53,9 +54,9 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const { category, searchParam } = getState().filters;
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
-  console.log(categoryChange)
+  const searchParamChange = searchParam !== (getState().celebList[category.label] && getState().celebList[category.label].currentSearchParam);
   const { limit } = getState().celebList;
-  if (categoryChange && cachedData) {
+  if (categoryChange && !searchParamChange && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {
       getState().celebList.token.cancel('Operation canceled due to new request.');
     }
@@ -83,7 +84,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
       } else {
         list = [...list, ...resp.data.data.celebrity_list];
       }
-      dispatch(celebListFetchSuccess(list, offset, count, category.label));
+      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam));
     } else {
       dispatch(celebListFetchEnd());
     }
