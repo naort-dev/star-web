@@ -5,6 +5,7 @@ class Api {
   static login = 'user/login/';
   static register = 'user/register/'
   static getSuggestionList = 'user/fan/suggestion_list/';
+  static socialMediaLogin = 'user/socialsignup/';
 }
 
 export default Api;

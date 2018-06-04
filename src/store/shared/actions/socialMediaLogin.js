@@ -1,0 +1,64 @@
+
+import Api from '../../../lib/api';
+import { fetch } from '../../../services/fetch';
+
+export const SOCIALMEDIALOGIN = {
+  start: 'session/ON_LOGIN',
+  end: 'session/ON_LOGIN_END',
+  success: 'session/ON_LOGIN_SUCCESS',
+  failed: 'session/ON_LOGIN_FAILED',
+  incorrect: 'session/ON_LOGIN_INCORRECT',
+};
+
+export const socialMediaLoginFetchStart = () => ({
+  type: SOCIALMEDIALOGIN.start,
+});
+
+export const socialMediaLoginFetchEnd = () => ({
+  type: SOCIALMEDIALOGIN.end,
+});
+
+export const socialMediaLoginFetchSuccess = (data) => {
+  return (
+    {
+      type: SOCIALMEDIALOGIN.success,
+      data,
+    });
+};
+
+export const socialMediaLoginFetchIncorrect = error => ({
+  type: SOCIALMEDIALOGIN.incorrect,
+  error,
+});
+
+export const socialMediaLoginFetchFailed = error => ({
+  type: SOCIALMEDIALOGIN.failed,
+  error,
+});
+
+export const socialMediaLogin = (userName, firstName, lastName, signUpSource, profilePhoto, fbId) => (dispatch) => {
+  dispatch(socialMediaLoginFetchStart());
+  return fetch.post(Api.socialMediaLogin, {
+    username: userName,
+    first_name: firstName,
+    last_name: lastName,
+    sign_up_source: signUpSource,
+    profile_photo: profilePhoto,
+    fb_id: fbId,
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      localStorage.setItem('data', JSON.stringify(resp.data.data));
+      dispatch(socialMediaLoginFetchEnd());
+      dispatch(socialMediaLoginFetchSuccess(resp.data.data));
+    } else {
+      dispatch(socialMediaLoginFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(socialMediaLoginFetchEnd());
+    if (exception.response.status === 400) {
+      dispatch(socialMediaLoginFetchIncorrect(exception.response.data.error.message));
+    } else {
+      dispatch(socialMediaLoginFetchFailed(exception));
+    }
+  });
+};
