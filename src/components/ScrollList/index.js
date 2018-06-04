@@ -95,7 +95,9 @@ export default class ScrollList extends React.Component {
   render() {
     return (
       <ListStyled>
-        <Scrollbars>
+        <Scrollbars
+          renderView={props => <div {...props} className="view" id="scrollable-target" />}
+        >
           <InfiniteScroll
             dataLength={this.props.dataList.length}
             next={this.fetchMoreData}

@@ -18,11 +18,11 @@ HeaderSection.HeaderDiv = styled.div`
   align-items: center;
   max-width: 1920px;
   height: 100%;  
-  @media (min-width: 1025px) {
-    padding: 10px 50px;
-  }
   @media (min-width:768px){
     padding: 10px 44px;
+  }
+  @media (min-width: 1025px) {
+    padding: 10px 50px;
   }
 `;
 HeaderSection.HeaderRight = styled.div`
@@ -30,6 +30,10 @@ HeaderSection.HeaderRight = styled.div`
 `;
 HeaderSection.HeaderLeft = styled.div`
   display: inline-block;
+  @media(min-width: 1025px) {
+    width: 25%;
+    max-width: 310px;
+  }
 `;
 HeaderSection.ImgLogo = styled.img`
   width:117.61px;
@@ -141,6 +145,7 @@ HeaderSection.SearchBar = styled.div`
   }
   @media(min-width: 1025px) {
     width: 50%;
+    max-width: 640px;
   }
 `;
 HeaderSection.AutoSuggest = styled.div`
@@ -257,6 +262,7 @@ HeaderSection.Input = styled.input`
   } 
   @media(min-width : 1025px){
     text-indent: 78px;
+    font-size: 18px;
   }
 `;
 HeaderSection.SignIn = styled.button`
