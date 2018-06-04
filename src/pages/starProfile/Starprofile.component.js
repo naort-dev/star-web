@@ -19,7 +19,6 @@ export default class Starprofile extends React.Component {
     this.setState({ menuActive: !this.state.menuActive });
   }
   render() {
-    console.log(this.props.match.params.id)
     return (
       <div>
         <Header
