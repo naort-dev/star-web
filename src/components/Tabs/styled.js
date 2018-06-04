@@ -15,6 +15,7 @@ const TabStyled = styled.div`
   }
   @media(min-width: 1025px) {
     border: none;
+    border-bottom: ${props => (props.filterSelected && '1px solid #CCCCCC')};
     padding: 0;
   }
 `;
@@ -44,6 +45,7 @@ TabStyled.tabListItem = styled.li`
 
 TabStyled.FilterLabel = styled.span`
   display: none;
+  color: ${props => (props.filterSelected && '#FF6C58')};
   @media(min-width: 1025px) {
     display: inline-block;
     vertical-align: top;
@@ -55,8 +57,9 @@ TabStyled.FilterLabel = styled.span`
 
 TabStyled.FilterIcon = styled.span`
   display: inline-block;
-  background: url('/assets/images/filter-icon.svg');
+  background: ${props => (props.filterSelected ? 'url(/assets/images/filter-icon-selected.svg)' : 'url(/assets/images/filter-icon.svg)')};
   background-repeat: no-repeat;
+  cursor: pointer;
   background-size: 25px 30px;
   width: 25px;
   height: 22px;
@@ -67,6 +70,9 @@ TabStyled.FilterControl = styled.div`
   display: inline-block;
   float: right;
   border-bottom: ${props => (props.filterSelected && '4px solid #FF6C58')};
+  @media(min-width: 1025px) {
+    margin-top: 8px;
+  }
 `;
 
 export default TabStyled;

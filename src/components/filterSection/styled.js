@@ -22,6 +22,7 @@ FilterStyled.filterHeading = styled.span`
   font-family: 'Ubuntu-Bold';
   text-align: left;
   padding: 0 10px;
+  font-size: 20px;
 `;
 FilterStyled.filterItemWrapper = styled.ul`
 
@@ -32,9 +33,15 @@ FilterStyled.filterItem = styled.li`
   text-align: left;
   cursor: pointer;
   padding: 0 10px;
+  color: ${props => (props.selected && '#FF6C58')}
+  border-left: ${props => (props.selected && '4px solid #FF6C58')};
+  margin-left: ${props => (props.selected && '-4px')}; 
   &:hover {
     margin-left: -4px; 
     border-left: 4px solid #FF6C58;
+  }
+  @media(min-width: 1025px) {
+    font-size: 18px;
   }
 `;
 export default FilterStyled;

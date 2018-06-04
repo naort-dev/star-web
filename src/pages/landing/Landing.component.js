@@ -133,13 +133,16 @@ export default class Landing extends React.Component {
               <Tabs
                 labels={['Stars', 'Videos']}
                 switchTab={this.props.switchTab}
+                filterSelected={this.state.filterSelected}
                 selected={this.props.filters.selectedTab}
                 toggleFilter={this.toggleFilterSection}
               />
               {
                 this.state.filterSelected &&
                   <FilterSection
+                    selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
                     updatePriceRange={this.props.updatePriceRange}
+                    toggleFilter={this.toggleFilterSection}
                   />
               }
             </div>

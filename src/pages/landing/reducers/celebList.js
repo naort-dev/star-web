@@ -38,6 +38,8 @@ export default (state = { ...initalState }, action) => {
           data: action.list,
           count: action.count,
           currentSearchParam: action.searchParam,
+          lowPrice: action.lowPrice,
+          highPrice: action.highPrice,
         },
         currentCategory: action.category,
       };

@@ -23,7 +23,7 @@ export const celebListFetchEnd = () => ({
   type: CELEB_LIST.end,
 });
 
-export const celebListFetchSuccess = (list, offset, count, category, searchParam) => {
+export const celebListFetchSuccess = (list, offset, count, category, searchParam, lowPrice, highPrice) => {
   return (
     {
       type: CELEB_LIST.success,
@@ -32,6 +32,8 @@ export const celebListFetchSuccess = (list, offset, count, category, searchParam
       count,
       category,
       searchParam,
+      lowPrice,
+      highPrice,
     });
 };
 
@@ -51,9 +53,12 @@ export const celebListSwapCacheEnd = key => ({
 });
 
 export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
-  const { category, searchParam } = getState().filters;
+  const { category, searchParam, lowPrice, highPrice } = getState().filters;
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
+  const priceRangeChange =
+    lowPrice !== (getState().celebList[category.label] && getState().celebList[category.label].lowPrice) ||
+    highPrice !== (getState().celebList[category.label] && getState().celebList[category.label].highPrice);
   const searchParamChange = searchParam !== (getState().celebList[category.label] && getState().celebList[category.label].currentSearchParam);
   const { limit } = getState().celebList;
   if (categoryChange && !searchParamChange && cachedData) {
@@ -72,7 +77,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   }
   const source = CancelToken.source();
   dispatch(celebListFetchStart(refresh, source, category.label));
-  return fetch.get(Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam, {
+  return fetch.get(Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam + '&urate=' + highPrice + '&lrate=' + lowPrice, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
@@ -84,7 +89,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
       } else {
         list = [...list, ...resp.data.data.celebrity_list];
       }
-      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam));
+      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam, lowPrice, highPrice));
     } else {
       dispatch(celebListFetchEnd());
     }
