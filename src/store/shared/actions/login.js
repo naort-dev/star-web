@@ -7,6 +7,7 @@ export const LOGIN = {
   end: 'session/ON_LOGIN_END',
   success: 'session/ON_LOGIN_SUCCESS',
   failed: 'session/ON_LOGIN_FAILED',
+  incorrect: 'session/ON_LOGIN_INCORRECT',
 };
 
 export const loginFetchStart = () => ({
@@ -25,16 +26,21 @@ export const loginFetchSuccess = (data) => {
     });
 };
 
+export const loginFetchIncorrect = error => ({
+  type: LOGIN.incorrect,
+  error,
+});
+
 export const loginFetchFailed = error => ({
   type: LOGIN.failed,
   error,
 });
 
-export const loginUser = loginValue => (dispatch) => {
+export const loginUser = (loginEmail, loginPassword) => (dispatch) => {
   dispatch(loginFetchStart());
   return fetch.post(Api.login, {
-    username: loginValue.email,
-    password: loginValue.password,
+    username: loginEmail,
+    password: loginPassword,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       localStorage.setItem('data', JSON.stringify(resp.data.data));
@@ -45,6 +51,10 @@ export const loginUser = loginValue => (dispatch) => {
     }
   }).catch((exception) => {
     dispatch(loginFetchEnd());
-    dispatch(loginFetchFailed(exception));
+    if (exception.response.status === 400) {
+      dispatch(loginFetchIncorrect(exception.response.data.error.message));
+    } else {
+      dispatch(loginFetchFailed(exception));
+    }
   });
 };

@@ -7,6 +7,7 @@ export const REGISTER = {
   end: 'session/ON_LOGIN_END',
   success: 'session/ON_LOGIN_SUCCESS',
   failed: 'session/ON_LOGIN_FAILED',
+  incorrect: 'session/ON_LOGIN_INCORRECT',
 };
 
 export const registerFetchStart = () => ({
@@ -24,20 +25,30 @@ export const registerFetchSuccess = (data) => {
       data,
     });
 };
+export const registerFetchIncorrect = error => ({
+  type: REGISTER.incorrect,
+  error,
+});
 
 export const registerFetchFailed = error => ({
   type: REGISTER.failed,
   error,
 });
 
-export const registerUser = register => (dispatch) => {
+export const registerUser = (
+  UserFirstName,
+  UserLastName,
+  UserEmail,
+  UserPassword,
+  UserRole,
+) => (dispatch) => {
   dispatch(registerFetchStart());
   return fetch.post(Api.register, {
-    first_name: register.firstName,
-    last_name: register.lastName,
-    password: register.password,
-    email: register.email,
-    role: register.role,
+    first_name: UserFirstName,
+    last_name: UserLastName,
+    email: UserEmail,
+    password: UserPassword,
+    role: UserRole,
 
   }).then((resp) => {
     if (resp.data && resp.data.success) {
@@ -49,6 +60,11 @@ export const registerUser = register => (dispatch) => {
     }
   }).catch((exception) => {
     dispatch(registerFetchEnd());
-    dispatch(registerFetchFailed(exception));
+    console.log(exception);
+    if (exception.response.status === 400) {
+      dispatch(registerFetchIncorrect(exception.response.data.error.message));
+    } else {
+      dispatch(registerFetchFailed(exception));
+    }
   });
 };

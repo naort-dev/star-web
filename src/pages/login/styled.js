@@ -29,10 +29,9 @@ LoginContainer.RightSection = styled.div`
 `;
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
-  padding-bottom: 56px;
   @media(min-width:768px){
     padding: 5px 65px; 
-    padding-bottom: 56px;
+    
   }
 `;
 LoginContainer.Heading = styled.div`
@@ -236,12 +235,10 @@ LoginContainer.Input = styled.input`
   margin-top:3%;
   @media(min-width:768px){
     margin-top:0;
-    width:571px;
     height:40px;
   }
   @media(min-width:1025px){
     margin-top:0;
-    width:352px;
     height:26px;
     font-size:12px;
   }
@@ -345,6 +342,16 @@ LoginContainer.ImageStackLayout = styled.div`
   height:600px;
 
 `;
+LoginContainer.ErrorDiv = styled.div`
+  width:100%
+`;
+LoginContainer.ErrorMsg = styled.div`
+  color:red;
+  font-size: 11px;
+  font-family: 'Ubuntu-light';
+  text-align:left;
+  
+`;
 const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
@@ -387,6 +394,19 @@ HeaderSection.RightDiv = styled.button`
   border: none;
   cursor: pointer;
   outline:none;
+`;
+LoginContainer.WrapsInput = styled.div`
+  width:100%;
+  height:60px;
+  @media(min-width:768px){
+    width:571px;
+    height:30px;
+  }
+  @media(min-width:1025){
+    width:352px;
+    height:25px;
+  }
+
 `;
 
 
