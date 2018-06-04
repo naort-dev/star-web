@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import Loader from '../../components/Loader';
+import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 import ScrollList from '../../components/ScrollList';
 
@@ -14,6 +15,7 @@ export default class Landing extends React.Component {
       menuActive: false,
       tabsRef: undefined,
       tabsClientHeight: 0,
+      filterSelected: false,
     };
   }
   componentWillMount() {
@@ -30,12 +32,19 @@ export default class Landing extends React.Component {
     window.addEventListener('resize', this.setScrollHeight);
   }
   componentWillReceiveProps(nextProps) {
-    const filterChange = this.props.filters.category.label !== nextProps.filters.category.label
-    || this.props.filters.searchParam !== nextProps.filters.searchParam;
+    const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
+    const filterChange = categoryChange
+    || this.props.filters.searchParam !== nextProps.filters.searchParam
+    || this.props.filters.lowPrice !== nextProps.filters.lowPrice
+    || this.props.filters.highPrice !== nextProps.filters.highPrice;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (filterChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.switchTab('Stars');
+        if (categoryChange) {
+          this.props.switchTab('Stars');
+        } else {
+          this.props.fetchVideosList(0, true);
+        }
       } else {
         this.props.fetchCelebrityList(0, true);
       }
@@ -64,6 +73,11 @@ export default class Landing extends React.Component {
   searchFilter = (searchText) => {
     this.props.updateSearchParam(searchText);
   }
+  toggleFilterSection = () => {
+    this.setState({ filterSelected: !this.state.filterSelected }, () => {
+      this.setScrollHeight();
+    });
+  }
   renderScrollList() {
     if (this.props.filters.selectedTab === 'Stars') {
       return (
@@ -90,7 +104,6 @@ export default class Landing extends React.Component {
     return null;
   }
   render() {
-    console.log(this.state.tabsRef && this.state.tabsRef.clientHeight);
     return (
       <LandingStyled>
         <Header
@@ -115,22 +128,29 @@ export default class Landing extends React.Component {
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
             <div
-              ref={(node)=>!this.state.tabsRef && this.setState({tabsRef: node, tabsClientHeight: node.clientHeight})}
+              ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
             >
               <Tabs
                 labels={['Stars', 'Videos']}
                 switchTab={this.props.switchTab}
                 selected={this.props.filters.selectedTab}
+                toggleFilter={this.toggleFilterSection}
               />
+              {
+                this.state.filterSelected &&
+                  <FilterSection
+                    updatePriceRange={this.props.updatePriceRange}
+                  />
+              }
             </div>
             {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
               (!this.props.videosList.data.length && this.props.videosList.loading) ?
-                <LandingStyled.loaderWrapper>
+                <LandingStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   <Loader />
                 </LandingStyled.loaderWrapper>
               :
-                <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)`}}>
+                <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   {this.renderScrollList()}
                 </div>
             }

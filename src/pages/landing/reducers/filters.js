@@ -7,6 +7,8 @@ const initalState = {
   },
   selectedTab: 'Stars',
   searchParam: '',
+  lowPrice: '',
+  highPrice: '',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -30,6 +32,13 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         searchParam: action.value,
+      };
+
+    case UPDATEFILTER.updatePriceRange:
+      return {
+        ...state,
+        lowPrice: action.low,
+        highPrice: action.high,
       };
 
     default:

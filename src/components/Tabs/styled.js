@@ -66,6 +66,7 @@ TabStyled.FilterIcon = styled.span`
 TabStyled.FilterControl = styled.div`
   display: inline-block;
   float: right;
+  border-bottom: ${props => (props.filterSelected && '4px solid #FF6C58')};
 `;
 
 export default TabStyled;

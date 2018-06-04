@@ -5,10 +5,15 @@ export default class Tabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      filterSelected: false,
     };
   }
+  toggleFilter = () => {
+    this.setState({ filterSelected: !this.state.filterSelected });
+    this.props.toggleFilter();
+  }
   render() {
+    console.log(this.state.filterSelected);
     return (
       <TabStyled>
         <TabStyled.tabList>
@@ -26,9 +31,9 @@ export default class Tabs extends React.Component {
         </TabStyled.tabList>
         {
           !this.props.disableFilter &&
-          <TabStyled.FilterControl>
+          <TabStyled.FilterControl filterSelected={this.state.filterSelected}>
             <TabStyled.FilterLabel>Filter</TabStyled.FilterLabel>
-            <TabStyled.FilterIcon />
+            <TabStyled.FilterIcon onClick={this.toggleFilter} />
           </TabStyled.FilterControl>
         }
       </TabStyled>
