@@ -3,6 +3,7 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
+import axios from 'axios';
 import validator from 'validator';
 import { LoginContainer, HeaderSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
@@ -33,7 +34,7 @@ export default class Login extends React.Component {
   componentDidMount() {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: '1237328416404211',
+        appId: '178768332841448',
         cookie: true,
         xfbml: true,
         version: 'v3.0',
@@ -91,6 +92,21 @@ export default class Login extends React.Component {
       this.state.socialMedia.profile_photo,
       this.state.socialMedia.fb_id,
     );
+  }
+  onInstagramLogin = () => {
+    const clientId = '1625de3a5b3748fdac72141431f10159';
+    const clientSecret = 'ddc4f615024b47a0bb5e5d22ef511965';
+    const redirectUri = 'http://localhost:8080';
+    const authUrl = 'https://api.instagram.com/oauth/authorize/?client_id=' 
+    + clientId + '&redirect_uri='+ redirectUri + '&response_type=code';
+    const url = 'https://api.instagram.com/oauth/access_token';
+    axios.get(authUrl)
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
   OnFBlogin = () => {
     const that = this;
@@ -180,7 +196,7 @@ export default class Login extends React.Component {
                   </LoginContainer.Button>
                 </LoginContainer.ButtonDiv>
                 <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button>
+                  <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
                     <LoginContainer.InstagramContent>Continue with Instagram
                     </LoginContainer.InstagramContent>
                   </LoginContainer.Button>

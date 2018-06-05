@@ -101,7 +101,7 @@ HeaderSection.ProfileButton = styled.button`
   background-color:white;
   @media(max-width:767px){
    background-size: 23px; 
-   display: none;
+   display:none;
   }
   
 `;
@@ -113,9 +113,7 @@ HeaderSection.FavoriteButton = styled.button`
   padding:18px;
   background-size: 23px;
   background-color:white;
-  @media(max-width:767px){
-    display:none;
-  }
+  
 `;
 HeaderSection.MyvideoButton = styled.button`
   background-image: url( 'assets/images/icon_myVids_40a.png' );
@@ -125,9 +123,7 @@ HeaderSection.MyvideoButton = styled.button`
   padding:18px;
   background-size: 23px;
   background-color:white;
-  @media(max-width:767px){
-    display:none;
-  }
+  
 `;
 HeaderSection.SearchBar = styled.div`
   position:absolute;

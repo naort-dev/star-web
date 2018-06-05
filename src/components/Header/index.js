@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 
 class Header extends React.Component {
@@ -151,22 +151,34 @@ class Header extends React.Component {
             </HeaderSection.InputWrapper>
           </HeaderSection.SearchBar>
           <HeaderSection.HeaderRight>
-            <HeaderSection.SearchButton onClick={this.activateSearch} />
-              { /*<HeaderSection.FavoriteButton />
-                <HeaderSection.MyvideoButton />
-            <HeaderSection.ProfileButton /> */}
-            <HeaderSection.SignInButtonMobile />
-            <Link to="/login">
-              <HeaderSection.SignIn>Sign In
-                <HeaderSection.SignInIcon
-                  src="assets/images/icon_profile_40a.png"
-                  alt=""
-                />   
-              </HeaderSection.SignIn>
-            </Link>
-            <Link to="/signuptype">
-              <HeaderSection.Join>Join Free!</HeaderSection.Join>
-            </Link>
+            
+            {
+              this.props.isLoggedIn ?
+                <div>
+                  <HeaderSection.FavoriteButton />
+                  <HeaderSection.MyvideoButton />
+                  <HeaderSection.ProfileButton />
+                  <HeaderSection.SearchButton onClick={this.activateSearch} />
+                </div>
+            :
+                <div>
+                  <HeaderSection.SearchButton onClick={this.activateSearch} />
+                  <Link to="/login">
+                    <HeaderSection.SignInButtonMobile />
+                  </Link>
+                  <Link to="/login">
+                    <HeaderSection.SignIn>Sign In
+                      <HeaderSection.SignInIcon
+                        src="assets/images/icon_profile_40a.png"
+                        alt=""
+                      />
+                    </HeaderSection.SignIn>
+                  </Link>
+                  <Link to="/signuptype">
+                    <HeaderSection.Join>Join Free!</HeaderSection.Join>
+                  </Link>
+                </div>
+            }
           </HeaderSection.HeaderRight>
         </HeaderSection.HeaderDiv>
       </HeaderSection>
@@ -176,6 +188,7 @@ class Header extends React.Component {
 
 const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
