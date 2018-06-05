@@ -107,7 +107,7 @@ export default class Login extends React.Component {
            that.onSocialMediaLogin(response,2);
          });
       }
-    }, { scope: 'email,user_birthday', return_scopes: true });
+    }, { scope: 'email', return_scopes: true });
   }
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
