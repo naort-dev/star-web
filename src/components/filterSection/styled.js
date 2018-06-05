@@ -59,7 +59,7 @@ FilterStyled.filterItem = styled.li`
 `;
 FilterStyled.filterTypeItem = FilterStyled.filterItem.extend`
   border-radius: 13px;
-  border: 1px solid #ccc;
+  border: ${props => (props.selected ? '1px solid #FF6C58' : '1px solid #ccc')};
   margin: 4px;
   display: inline-block;
   background-color: ${props => (props.selected ? '#FF6C58' : '#fff')};
