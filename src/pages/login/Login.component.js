@@ -97,16 +97,6 @@ export default class Login extends React.Component {
     const clientId = '1625de3a5b3748fdac72141431f10159';
     const clientSecret = 'ddc4f615024b47a0bb5e5d22ef511965';
     const redirectUri = 'http://localhost:8080';
-    const authUrl = 'https://api.instagram.com/oauth/authorize/?client_id=' 
-    + clientId + '&redirect_uri='+ redirectUri + '&response_type=code';
-    const url = 'https://api.instagram.com/oauth/access_token';
-    axios.get(authUrl)
-    .then(function (response) {
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-    });
   }
   OnFBlogin = () => {
     const that = this;
@@ -117,7 +107,7 @@ export default class Login extends React.Component {
            that.onSocialMediaLogin(response,2);
          });
       }
-    }, { scope: 'email,user_birthday', return_scopes: true });
+    }, { scope: 'email', return_scopes: true });
   }
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
