@@ -5,12 +5,11 @@ export default class Tabs extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
     };
   }
   render() {
     return (
-      <TabStyled>
+      <TabStyled filterSelected={this.props.filterSelected}>
         <TabStyled.tabList>
           {
             this.props.labels.map((item, index) => (
@@ -19,16 +18,25 @@ export default class Tabs extends React.Component {
                 onClick={() => this.props.switchTab(item)}
                 selected={this.props.selected === item}
               >
-               {item}
-               </TabStyled.tabListItem>
+                {item}
+              </TabStyled.tabListItem>
             ))
           }
         </TabStyled.tabList>
         {
-          !this.props.disableFilter &&
-          <TabStyled.FilterControl>
-            <TabStyled.FilterLabel>Filter</TabStyled.FilterLabel>
-            <TabStyled.FilterIcon />
+          !this.props.disableFilter && this.props.selectedCategory!='featured' &&
+          <TabStyled.FilterControl
+            onClick={this.props.toggleFilter}
+            filterSelected={this.props.filterSelected}
+          >
+            <TabStyled.FilterLabel
+              filterSelected={this.props.filterSelected}
+            >
+              Filter
+            </TabStyled.FilterLabel>
+            <TabStyled.FilterIcon
+              filterSelected={this.props.filterSelected}
+            />
           </TabStyled.FilterControl>
         }
       </TabStyled>

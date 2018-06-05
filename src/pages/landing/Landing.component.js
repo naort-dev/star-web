@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import Loader from '../../components/Loader';
+import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 import ScrollList from '../../components/ScrollList';
 
@@ -12,6 +13,10 @@ export default class Landing extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
+      tabsRef: undefined,
+      tabsClientHeight: 0,
+      filterSelected: false,
+      subCategoryList: [],
     };
   }
   componentWillMount() {
@@ -25,17 +30,24 @@ export default class Landing extends React.Component {
       default:
         this.props.fetchCelebrityList(0, true);
     }
+    window.addEventListener('resize', this.setScrollHeight);
   }
   componentWillReceiveProps(nextProps) {
-    const filterChange = this.props.filters.category.label !== nextProps.filters.category.label
-    || this.props.filters.searchParam !== nextProps.filters.searchParam;
+    const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
+    const searchParamChange = this.props.filters.searchParam !== nextProps.filters.searchParam;
+    const lowPriceChange = this.props.filters.lowPrice !== nextProps.filters.lowPrice;
+    const highPriceChange = this.props.filters.highPrice !== nextProps.filters.highPrice;
+    const sortValueChange = this.props.filters.sortValue !== nextProps.filters.sortValue;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    if (filterChange) {
+    if (categoryChange || searchParamChange || lowPriceChange || highPriceChange || sortValueChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.switchTab('Stars');
-      } else {
+      } else if (!categoryChange) {
         this.props.fetchCelebrityList(0, true);
       }
+    }
+    if (categoryChange) {
+      this.findSubCategoryList(nextProps.filters.category.value);
     }
     if (tabChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
@@ -45,8 +57,28 @@ export default class Landing extends React.Component {
       }
     }
   }
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setScrollHeight);
+  }
+  setScrollHeight = () => {
+    this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+  }
+  findSubCategoryList = (selectedCategory) => {
+    const { professions } = this.props.professionsList;
+    let subCategoryList;
+    professions.forEach((item) => {
+      if (item.id === selectedCategory) {
+        subCategoryList = item.child;
+      }
+    });
+    this.setState({ subCategoryList });
+  }
   updateCategory = (label, value) => {
     this.props.updateCategory(label, value);
+    this.props.fetchCelebrityList(0, true);
+  }
+  updateSubCategoryList = (selectedList) => {
+    this.props.updateSelectedSubCategory(selectedList, this.props.filters.category.value);
     this.props.fetchCelebrityList(0, true);
   }
   activateMenu = () => {
@@ -54,6 +86,14 @@ export default class Landing extends React.Component {
   }
   searchFilter = (searchText) => {
     this.props.updateSearchParam(searchText);
+  }
+  toggleFilterSection = () => {
+    this.setState({ filterSelected: !this.state.filterSelected }, () => {
+      this.setScrollHeight();
+    });
+    if (this.props.filters.selectedTab === "Stars") {
+      this.findSubCategoryList(this.props.filters.category.value);
+    }
   }
   renderScrollList() {
     if (this.props.filters.selectedTab === 'Stars') {
@@ -104,19 +144,42 @@ export default class Landing extends React.Component {
             </Scrollbars>
           </LandingStyled.sideSection>
           <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <Tabs
-              labels={['Stars', 'Videos']}
-              switchTab={this.props.switchTab}
-              selected={this.props.filters.selectedTab}
-            />
+            <div
+              ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
+            >
+              <Tabs
+                labels={['Stars', 'Videos']}
+                switchTab={this.props.switchTab}
+                selectedCategory={this.props.filters.category.label}
+                filterSelected={this.state.filterSelected}
+                selected={this.props.filters.selectedTab}
+                toggleFilter={this.toggleFilterSection}
+              />
+              {
+                this.state.filterSelected  &&
+                  <FilterSection
+                    selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
+                    selectedTab={this.props.filters.selectedTab}
+                    selectedSort={this.props.filters.sortValue}
+                    selectedSubCategories={this.props.filters[this.props.filters.category.value]}
+                    subCategoryList={this.state.subCategoryList}
+                    updatePriceRange={this.props.updatePriceRange}
+                    updateSort={this.props.updateSort}
+                    updateSelectedSubCategory={this.updateSubCategoryList}
+                    toggleFilter={this.toggleFilterSection}
+                  />
+              }
+            </div>
             {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
               (!this.props.videosList.data.length && this.props.videosList.loading) ?
-                <LandingStyled.loaderWrapper>
+                <LandingStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   <Loader />
                 </LandingStyled.loaderWrapper>
               :
-              this.renderScrollList()
+                <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                  {this.renderScrollList()}
+                </div>
             }
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>

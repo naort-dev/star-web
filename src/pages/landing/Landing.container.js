@@ -1,7 +1,14 @@
 import { connect } from 'react-redux';
 import { fetchCelebrityList } from './actions/getCelebList';
 import { fetchVideosList } from './actions/getVideosList';
-import { updateCategory, switchTab, updateSearchParam } from './actions/updateFilters';
+import {
+  updateCategory,
+  switchTab,
+  updateSearchParam,
+  updatePriceRange,
+  updateSort,
+  updateSelectedSubCategory,
+} from './actions/updateFilters';
 
 import Landing from './Landing.component';
 
@@ -18,6 +25,9 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value) => dispatch(updateCategory(label, value)),
   switchTab: label => dispatch(switchTab(label)),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
+  updatePriceRange: (lowPrice, highPrice) => dispatch(updatePriceRange(lowPrice, highPrice)),
+  updateSort: value => dispatch(updateSort(value)),
+  updateSelectedSubCategory: (selectedList, category) => dispatch(updateSelectedSubCategory(selectedList, category)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

@@ -7,6 +7,9 @@ const initalState = {
   },
   selectedTab: 'Stars',
   searchParam: '',
+  lowPrice: '',
+  highPrice: '',
+  sortValue: 'featured',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -30,6 +33,25 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         searchParam: action.value,
+      };
+
+    case UPDATEFILTER.updatePriceRange:
+      return {
+        ...state,
+        lowPrice: action.low,
+        highPrice: action.high,
+      };
+
+    case UPDATEFILTER.updateSort:
+      return {
+        ...state,
+        sortValue: action.value,
+      };
+
+    case UPDATEFILTER.updateSelectedSubCategory:
+      return {
+        ...state,
+        [action.category]: action.selectedList,
       };
 
     default:
