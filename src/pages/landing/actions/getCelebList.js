@@ -61,6 +61,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
     highPrice,
     sortValue,
   } = getState().filters;
+  const { filters } = getState();
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
   const priceRangeChange =
@@ -87,9 +88,12 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   dispatch(celebListFetchStart(refresh, source, category.label));
   let API_URL;
   if (category.label === 'featured') {
-    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam + '&sort=featured';
+
+    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&name=' + searchParam + '&sort=featured';
   } else {
-    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam + '&urate=' + highPrice + '&lrate=' + lowPrice + '&sort=' + sortValue;
+    const subCategoryList = filters[category.value];
+    const professsion = subCategoryList && Object.keys(subCategoryList).length ? Object.keys(subCategoryList).toString() : category.value;
+    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + professsion + '&name=' + searchParam + '&urate=' + highPrice + '&lrate=' + lowPrice + '&sort=' + sortValue;
   }
   return fetch.get(API_URL, {
     cancelToken: source.token,

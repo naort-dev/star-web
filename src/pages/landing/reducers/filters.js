@@ -48,6 +48,12 @@ export default (state = { ...initalState }, action) => {
         sortValue: action.value,
       };
 
+    case UPDATEFILTER.updateSelectedSubCategory:
+      return {
+        ...state,
+        [action.category]: action.selectedList,
+      };
+
     default:
       return state;
   }

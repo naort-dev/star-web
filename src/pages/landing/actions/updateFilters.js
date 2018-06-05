@@ -6,6 +6,7 @@ export const UPDATEFILTER = {
   updateSearchParam: 'update/search_param',
   updatePriceRange: 'update/price_range',
   updateSort: 'update/update_sort',
+  updateSelectedSubCategory: 'update/update_sub_category',
 };
 
 export const updateCategory = (label, value) => ({
@@ -33,4 +34,10 @@ export const updatePriceRange = (low, high) => ({
 export const updateSort = value => ({
   type: UPDATEFILTER.updateSort,
   value,
+});
+
+export const updateSelectedSubCategory = (selectedList, category) => ({
+  type: UPDATEFILTER.updateSelectedSubCategory,
+  selectedList,
+  category,
 });

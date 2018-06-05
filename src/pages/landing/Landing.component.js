@@ -34,13 +34,12 @@ export default class Landing extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
-    const filterChange = categoryChange
-    || this.props.filters.searchParam !== nextProps.filters.searchParam
-    || this.props.filters.lowPrice !== nextProps.filters.lowPrice
-    || this.props.filters.highPrice !== nextProps.filters.highPrice
-    || this.props.filters.sortValue !== nextProps.filters.sortValue;
+    const searchParamChange = this.props.filters.searchParam !== nextProps.filters.searchParam;
+    const lowPriceChange = this.props.filters.lowPrice !== nextProps.filters.lowPrice;
+    const highPriceChange = this.props.filters.highPrice !== nextProps.filters.highPrice;
+    const sortValueChange = this.props.filters.sortValue !== nextProps.filters.sortValue;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    if (filterChange) {
+    if (categoryChange || searchParamChange || lowPriceChange || highPriceChange || sortValueChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.switchTab('Stars');
       } else if (!categoryChange) {
@@ -65,7 +64,7 @@ export default class Landing extends React.Component {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
   findSubCategoryList = (selectedCategory) => {
-    const professions = this.props.professionsList.professions;
+    const { professions } = this.props.professionsList;
     let subCategoryList;
     professions.forEach((item) => {
       if (item.id === selectedCategory) {
@@ -76,6 +75,10 @@ export default class Landing extends React.Component {
   }
   updateCategory = (label, value) => {
     this.props.updateCategory(label, value);
+    this.props.fetchCelebrityList(0, true);
+  }
+  updateSubCategoryList = (selectedList) => {
+    this.props.updateSelectedSubCategory(selectedList, this.props.filters.category.value);
     this.props.fetchCelebrityList(0, true);
   }
   activateMenu = () => {
@@ -158,9 +161,11 @@ export default class Landing extends React.Component {
                     selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
                     selectedTab={this.props.filters.selectedTab}
                     selectedSort={this.props.filters.sortValue}
+                    selectedSubCategories={this.props.filters[this.props.filters.category.value]}
                     subCategoryList={this.state.subCategoryList}
                     updatePriceRange={this.props.updatePriceRange}
                     updateSort={this.props.updateSort}
+                    updateSelectedSubCategory={this.updateSubCategoryList}
                     toggleFilter={this.toggleFilterSection}
                   />
               }

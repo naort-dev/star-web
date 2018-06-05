@@ -1,81 +1,55 @@
 import React from 'react';
-import Select from 'react-select';
-import 'react-select/dist/react-select.css';
+import { Scrollbars } from 'react-custom-scrollbars';
 import FilterStyled from './styled';
 
 export default class FilterSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categoryValues: [],
+
     };
     this.lowPrice = 0;
     this.highPrice = 500;
   }
   filterSelection = (type, data) => {
-    if (this.props.toggleFilter) {
+    if (this.props.toggleFilter && type !== 'category') {
       this.props.toggleFilter();
     }
+    let selectedList;
     switch (type) {
       case 'priceRange': this.props.updatePriceRange(data.low, data.high);
         break;
       case 'sort': this.props.updateSort(data);
         break;
+      case 'category':
+        selectedList = this.props.selectedSubCategories ? this.props.selectedSubCategories : {};
+        if (selectedList.hasOwnProperty(data.value)) {
+          delete selectedList[data.value];
+        } else {
+          selectedList[data.value] = data.label;
+        }
+        this.props.updateSelectedSubCategory(selectedList);
+        break;
       default: break;
     }
   }
 
-  handleSelectChange = (selectedList) => {
-    this.setState({ categoryValues: selectedList });
-  }
-
   renderTypeList = () => {
-    let options;
     switch (this.props.selectedTab) {
       case 'Stars':
-        options = this.props.subCategoryList.map((item) => {
-          return {
-            label: item.title,
-            value: item.id,
-          };
-        });
-        return (
-          <FilterStyled.filterItem typeFilter>
-            <Select
-              closeOnSelect={false}
-              multi
-              onChange={this.handleSelectChange}
-              options={options}
-              placeholder="Select a subcategory"
-              simpleValue
-              value={this.state.categoryValues}
-            />
-          </FilterStyled.filterItem>
-        );
+        return this.props.subCategoryList.map((item, index) => (
+          <FilterStyled.filterTypeItem
+            key={index}
+            selected={this.props.selectedSubCategories && this.props.selectedSubCategories.hasOwnProperty(item.id)}
+            onClick={() => this.filterSelection('category', { label: item.title, value: item.id })}
+          >
+            {item.title}
+          </FilterStyled.filterTypeItem>
+        ));
       default:
         return null;
     }
   }
-
-  // renderPriceList = () => {
-  //   const priceList = [];
-  //   const { selectedPriceRange } = this.props;
-  //   let i;
-  //   for (i = this.lowPrice; i <= (this.highPrice - 100) / 100; i += 1) {
-  //     const low = (100 * i) + 1;
-  //     const high = (100 * i) + 100;
-  //     priceList.push(
-  //       <FilterStyled.filterItem
-  //         key={i}
-  //         selected={selectedPriceRange.low === low && selectedPriceRange.high === high ? true : false}
-  //         onClick={() => this.filterSelection('priceRange', { low, high })}
-  //       >
-  //         {low}$ - {high}$
-  //       </FilterStyled.filterItem>,
-  //     );
-  //   }
-  //   return priceList;
-  // }
   render() {
     return (
       <FilterStyled>
@@ -86,11 +60,19 @@ export default class FilterSection extends React.Component {
                 <FilterStyled.filterHeading>
                   Type
                 </FilterStyled.filterHeading>
-                <FilterStyled.filterItemWrapper>
-                  {
-                    this.renderTypeList()
-                  }
-                </FilterStyled.filterItemWrapper>
+                <FilterStyled.filterTypeWrapper>
+                  <Scrollbars>
+                    <FilterStyled.filterTypeItem
+                      selected={this.props.selectedSubCategories && !Object.keys(this.props.selectedSubCategories).length}
+                      onClick={() => this.props.updateSelectedSubCategory({})}
+                    >
+                      All
+                    </FilterStyled.filterTypeItem>
+                    {
+                      this.renderTypeList()
+                    }
+                  </Scrollbars>
+                </FilterStyled.filterTypeWrapper>
               </FilterStyled.filterSection>
             :
               null
