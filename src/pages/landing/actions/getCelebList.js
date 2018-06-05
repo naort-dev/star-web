@@ -54,7 +54,13 @@ export const celebListSwapCacheEnd = key => ({
 });
 
 export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
-  const { category, searchParam, lowPrice, highPrice, sortValue } = getState().filters;
+  const {
+    category,
+    searchParam,
+    lowPrice,
+    highPrice,
+    sortValue,
+  } = getState().filters;
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
   const priceRangeChange =
@@ -63,7 +69,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const searchParamChange = searchParam !== (getState().celebList[category.label] && getState().celebList[category.label].currentSearchParam);
   const sortValueChange = sortValue !== (getState().celebList[category.label] && getState().celebList[category.label].sortValue);
   const { limit } = getState().celebList;
-  if (categoryChange && !searchParamChange && !priceRangeChange && !sortValueChange && cachedData) {
+  if (categoryChange && !searchParamChange && ((!priceRangeChange && !sortValueChange) || category.label === 'featured') && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {
       getState().celebList.token.cancel('Operation canceled due to new request.');
     }
@@ -79,7 +85,13 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   }
   const source = CancelToken.source();
   dispatch(celebListFetchStart(refresh, source, category.label));
-  return fetch.get(Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam + '&urate=' + highPrice + '&lrate=' + lowPrice + '&sort=' + sortValue, {
+  let API_URL;
+  if (category.label === 'featured') {
+    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam + '&sort=featured';
+  } else {
+    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + category.value + '&name=' + searchParam + '&urate=' + highPrice + '&lrate=' + lowPrice + '&sort=' + sortValue;
+  }
+  return fetch.get(API_URL, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {

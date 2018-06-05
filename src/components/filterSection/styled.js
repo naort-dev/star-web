@@ -19,8 +19,10 @@ FilterStyled.filterSection = styled.li`
   padding: 0 20px;
   display: inline-block;
   vertical-align: top;
+  width: ${props => (props.typeFilter ? '100%' : 'auto')};
   @media(min-width: 1025px) {
     line-height: 33px;
+    width: ${props => (props.typeFilter ? '400px' : 'auto')};
   }
 `;
 FilterStyled.filterHeading = styled.span`
@@ -31,7 +33,7 @@ FilterStyled.filterHeading = styled.span`
   font-size: 20px;
 `;
 FilterStyled.filterItemWrapper = styled.ul`
-
+  margin-top: 10px;
 `;
 FilterStyled.filterItem = styled.li`
   font-family: 'Ubuntu-Light';
@@ -43,8 +45,8 @@ FilterStyled.filterItem = styled.li`
   border-left: ${props => (props.selected && '4px solid #FF6C58')};
   margin-left: ${props => (props.selected && '-4px')}; 
   &:hover {
-    margin-left: -4px; 
-    border-left: 4px solid #FF6C58;
+    margin-left: ${props => (props.typeFilter && '-4px')}; 
+    border-left: ${props => (props.typeFilter && '4px solid #FF6C58')};
   }
   @media(min-width: 1025px) {
     font-size: 18px;

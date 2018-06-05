@@ -24,7 +24,7 @@ export default class Tabs extends React.Component {
           }
         </TabStyled.tabList>
         {
-          !this.props.disableFilter &&
+          !this.props.disableFilter && this.props.selectedCategory!='featured' &&
           <TabStyled.FilterControl
             onClick={this.props.toggleFilter}
             filterSelected={this.props.filterSelected}

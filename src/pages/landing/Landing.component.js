@@ -16,6 +16,7 @@ export default class Landing extends React.Component {
       tabsRef: undefined,
       tabsClientHeight: 0,
       filterSelected: false,
+      subCategoryList: [],
     };
   }
   componentWillMount() {
@@ -46,6 +47,9 @@ export default class Landing extends React.Component {
         this.props.fetchCelebrityList(0, true);
       }
     }
+    if (categoryChange) {
+      this.findSubCategoryList(nextProps.filters.category.value);
+    }
     if (tabChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
@@ -59,6 +63,16 @@ export default class Landing extends React.Component {
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+  }
+  findSubCategoryList = (selectedCategory) => {
+    const professions = this.props.professionsList.professions;
+    let subCategoryList;
+    professions.forEach((item) => {
+      if (item.id === selectedCategory) {
+        subCategoryList = item.child;
+      }
+    });
+    this.setState({ subCategoryList });
   }
   updateCategory = (label, value) => {
     this.props.updateCategory(label, value);
@@ -74,6 +88,9 @@ export default class Landing extends React.Component {
     this.setState({ filterSelected: !this.state.filterSelected }, () => {
       this.setScrollHeight();
     });
+    if (this.props.filters.selectedTab === "Stars") {
+      this.findSubCategoryList(this.props.filters.category.value);
+    }
   }
   renderScrollList() {
     if (this.props.filters.selectedTab === 'Stars') {
@@ -130,6 +147,7 @@ export default class Landing extends React.Component {
               <Tabs
                 labels={['Stars', 'Videos']}
                 switchTab={this.props.switchTab}
+                selectedCategory={this.props.filters.category.label}
                 filterSelected={this.state.filterSelected}
                 selected={this.props.filters.selectedTab}
                 toggleFilter={this.toggleFilterSection}
@@ -138,7 +156,9 @@ export default class Landing extends React.Component {
                 this.state.filterSelected  &&
                   <FilterSection
                     selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
+                    selectedTab={this.props.filters.selectedTab}
                     selectedSort={this.props.filters.sortValue}
+                    subCategoryList={this.state.subCategoryList}
                     updatePriceRange={this.props.updatePriceRange}
                     updateSort={this.props.updateSort}
                     toggleFilter={this.toggleFilterSection}
