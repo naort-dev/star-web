@@ -5,6 +5,9 @@ const FilterStyled = styled.div`
   overflow: auto;
   background: transparent;
   padding: 16px;
+  @media(min-width: 768px) {
+    height: auto;
+  }
 `;
 FilterStyled.filterWrapper = styled.ul`
   display: block;

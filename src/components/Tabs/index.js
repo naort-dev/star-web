@@ -25,7 +25,10 @@ export default class Tabs extends React.Component {
         </TabStyled.tabList>
         {
           !this.props.disableFilter &&
-          <TabStyled.FilterControl filterSelected={this.props.filterSelected}>
+          <TabStyled.FilterControl
+            onClick={this.props.toggleFilter}
+            filterSelected={this.props.filterSelected}
+          >
             <TabStyled.FilterLabel
               filterSelected={this.props.filterSelected}
             >
@@ -33,7 +36,6 @@ export default class Tabs extends React.Component {
             </TabStyled.FilterLabel>
             <TabStyled.FilterIcon
               filterSelected={this.props.filterSelected}
-              onClick={this.props.toggleFilter}
             />
           </TabStyled.FilterControl>
         }

@@ -42,7 +42,7 @@ export default class Landing extends React.Component {
     if (filterChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.switchTab('Stars');
-      } else {
+      } else if (!categoryChange) {
         this.props.fetchCelebrityList(0, true);
       }
     }
@@ -62,6 +62,7 @@ export default class Landing extends React.Component {
   }
   updateCategory = (label, value) => {
     this.props.updateCategory(label, value);
+    this.props.fetchCelebrityList(0, true);
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
