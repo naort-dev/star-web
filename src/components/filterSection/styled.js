@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const FilterStyled = styled.div`
-  height: 300px;
+  max-height: 300px;
   overflow: auto;
   background: transparent;
   padding: 16px;
@@ -22,7 +22,7 @@ FilterStyled.filterSection = styled.li`
   width: ${props => (props.typeFilter ? '100%' : 'auto')};
   @media(min-width: 1025px) {
     line-height: 33px;
-    width: ${props => (props.typeFilter ? '40%' : '20%')};
+    width: ${props => (props.typeFilter ? '80%' : '20%')};
   }
 `;
 FilterStyled.filterHeading = styled.span`
@@ -35,10 +35,13 @@ FilterStyled.filterHeading = styled.span`
 FilterStyled.filterItemWrapper = styled.ul`
   margin-top: 10px;
 `;
-FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.extend`
+FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.withComponent('div').extend`
   height: 200px;
   text-align: left;
   overflow: auto;
+`;
+FilterStyled.filterTypeList = styled.ul`
+  padding-right: 10px;
 `;
 FilterStyled.filterItem = styled.li`
   font-family: 'Ubuntu-Light';

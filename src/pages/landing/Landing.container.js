@@ -8,6 +8,7 @@ import {
   updatePriceRange,
   updateSort,
   updateSelectedSubCategory,
+  updateSelectedVideoType,
 } from './actions/updateFilters';
 
 import Landing from './Landing.component';
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   updatePriceRange: (lowPrice, highPrice) => dispatch(updatePriceRange(lowPrice, highPrice)),
   updateSort: value => dispatch(updateSort(value)),
   updateSelectedSubCategory: (selectedList, category) => dispatch(updateSelectedSubCategory(selectedList, category)),
+  updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
