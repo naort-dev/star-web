@@ -54,6 +54,17 @@ export default class Login extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+    const token = this.props.location.hash;
+    const authToken = token.split('=')[1];
+    const instaUrl = `https://api.instagram.com/v1/users/self/?access_token=${authToken}`;
+    axios.get(instaUrl)
+      .then(function (response) {
+          console.log(response);
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
+    
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
@@ -92,11 +103,6 @@ export default class Login extends React.Component {
       this.state.socialMedia.profile_photo,
       this.state.socialMedia.fb_id,
     );
-  }
-  onInstagramLogin = () => {
-    const clientId = '1625de3a5b3748fdac72141431f10159';
-    const clientSecret = 'ddc4f615024b47a0bb5e5d22ef511965';
-    const redirectUri = 'http://localhost:8080';
   }
   OnFBlogin = () => {
     const that = this;
@@ -144,6 +150,14 @@ export default class Login extends React.Component {
     }
     return false;
   }
+  onInstagramLogin = () => {
+    const clientId = '26885a83d43849ddbdf1950c81ad7530';
+    const redirectUri = 'http://localhost:8080/login';
+    const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+    window.location.href = url;
+    // const accessToken = getUrl.location.hash.slice(14);
+    // console.log(accessToken);
+  }
   render() {
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.from;
@@ -174,14 +188,14 @@ export default class Login extends React.Component {
               <LoginContainer.CoverImage />
               <LoginContainer.SocialMediaSignup>
                 <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
-                <LoginContainer.ButtonDiv>     
+                <LoginContainer.ButtonDiv>
                   <LoginContainer.Button onClick={() => this.OnFBlogin()}>
                     <LoginContainer.FacebookContent>Continue with Facebook
                     </LoginContainer.FacebookContent>
                   </LoginContainer.Button>
                 </LoginContainer.ButtonDiv>
                 <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button >
+                  <LoginContainer.Button>
                     <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
                   </LoginContainer.Button>
                 </LoginContainer.ButtonDiv>

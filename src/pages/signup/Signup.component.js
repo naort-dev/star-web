@@ -107,7 +107,7 @@ export default class SignUp extends React.Component {
            that.onSocialMediaLogin(response,2);
          });
       }
-    }, { scope: 'email,user_birthday', return_scopes: true });
+    }, { scope: 'email', return_scopes: true });
   }
   firstNameHandler = (e) => {
     this.setState({ firstName: { ...this.state.firstName, value: e.target.value } });
@@ -123,6 +123,9 @@ export default class SignUp extends React.Component {
   }
   roleHandler = () => {
 
+  }
+  responseInstagram = (response) => {
+    console.log(response);
   }
   checkEmail = () => {
     if (validator.isEmpty(this.state.email.value)) {
