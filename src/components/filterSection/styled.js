@@ -37,7 +37,7 @@ FilterStyled.filterItemWrapper = styled.ul`
   margin-top: 10px;
 `;
 FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.withComponent('div').extend`
-  height: 200px;
+  max-height: 200px;
   text-align: left;
   overflow: auto;
 `;

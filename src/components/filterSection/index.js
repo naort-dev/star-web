@@ -81,7 +81,9 @@ export default class FilterSection extends React.Component {
                   {
                     this.props.selectedTab !== 'Videos' ?
                       <FilterStyled.filterTypeWrapper>
-                        <Scrollbars>
+                        <Scrollbars
+                          autoHeight
+                        >
                           <FilterStyled.filterTypeList>
                             <FilterStyled.filterTypeItem
                               selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
