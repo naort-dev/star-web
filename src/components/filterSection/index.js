@@ -41,6 +41,9 @@ export default class FilterSection extends React.Component {
         }
         this.props.updateSelectedSubCategory(selectedList);
         break;
+      case 'video_type':
+        this.props.updateSelectedVideoType(data);
+        break;
       default: break;
     }
   }
@@ -65,30 +68,57 @@ export default class FilterSection extends React.Component {
     return (
       <FilterStyled>
         <FilterStyled.filterWrapper>
-          {
-            this.props.subCategoryList && this.props.subCategoryList.length ?
-              <FilterStyled.filterSection typeFilter>
-                <FilterStyled.filterHeading>
-                  Type
-                </FilterStyled.filterHeading>
+          <FilterStyled.filterSection typeFilter>
+            <FilterStyled.filterHeading>
+              Type
+            </FilterStyled.filterHeading>
+            {
+              this.props.selectedTab !== 'Videos' && this.props.subCategoryList && this.props.subCategoryList.length ?
                 <FilterStyled.filterTypeWrapper>
                   <Scrollbars>
-                    <FilterStyled.filterTypeItem
-                      selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
-                      onClick={() => this.props.updateSelectedSubCategory({})}
-                    >
-                      All
-                    </FilterStyled.filterTypeItem>
-                    {
-                      this.renderTypeList()
-                    }
+                    <FilterStyled.filterTypeList>
+                      <FilterStyled.filterTypeItem
+                        selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
+                        onClick={() => this.props.updateSelectedSubCategory({})}
+                      >
+                        All
+                      </FilterStyled.filterTypeItem>
+                      {
+                        this.renderTypeList()
+                      }
+                    </FilterStyled.filterTypeList>
                   </Scrollbars>
                 </FilterStyled.filterTypeWrapper>
-              </FilterStyled.filterSection>
-            :
-              null
-          }
-          <FilterStyled.filterSection typeFilter>
+              :
+                <FilterStyled.filterItemWrapper>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedVideoType === '' ? true : false}
+                    onClick={() => this.filterSelection('video_type', '')}
+                  >
+                    All
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedVideoType === 3 ? true : false}
+                    onClick={() => this.filterSelection('video_type', 3)}
+                  >
+                    Q&A
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedVideoType === 2 ? true : false}
+                    onClick={() => this.filterSelection('video_type', 2)}
+                  >
+                    Event Announcement
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedVideoType === 1 ? true : false}
+                    onClick={() => this.filterSelection('video_type', 1)}
+                  >
+                    Shoutouts
+                  </FilterStyled.filterItem>
+                </FilterStyled.filterItemWrapper>
+            }
+          </FilterStyled.filterSection>
+          {/* <FilterStyled.filterSection typeFilter>
             <FilterStyled.filterHeading>
               Price
             </FilterStyled.filterHeading>
@@ -109,38 +139,42 @@ export default class FilterSection extends React.Component {
                 <FilterStyled.priceSliderMaxLabel>500+</FilterStyled.priceSliderMaxLabel>
               </FilterStyled.filterPriceItem>
             </FilterStyled.filterItemWrapper>
-          </FilterStyled.filterSection>
-          <FilterStyled.filterSection>
-            <FilterStyled.filterHeading>
-              Sort
-            </FilterStyled.filterHeading>
-            <FilterStyled.filterItemWrapper>
-              <FilterStyled.filterItem
-                selected={this.props.selectedSort === 'az' ? true : false}
-                onClick={() => this.filterSelection('sort', 'az')}
-              >
-                A - Z
-              </FilterStyled.filterItem>
-              <FilterStyled.filterItem
-                selected={this.props.selectedSort === 'za' ? true : false}
-                onClick={() => this.filterSelection('sort', 'za')}
-              >
-                Z - A
-              </FilterStyled.filterItem>
-              <FilterStyled.filterItem
-                selected={this.props.selectedSort === 'lpf' ? true : false}
-                onClick={() => this.filterSelection('sort', 'lpf')}
-              >
-                $ - $$$
-              </FilterStyled.filterItem>
-              <FilterStyled.filterItem
-                selected={this.props.selectedSort === 'hpf' ? true : false}
-                onClick={() => this.filterSelection('sort', 'hpf')}
-              >
-                $$$ - $
-              </FilterStyled.filterItem>
-            </FilterStyled.filterItemWrapper>
-          </FilterStyled.filterSection>
+          </FilterStyled.filterSection> */}
+          {
+            this.props.selectedTab !== 'Videos' ?
+              <FilterStyled.filterSection>
+                <FilterStyled.filterHeading>
+                  Sort
+                </FilterStyled.filterHeading>
+                <FilterStyled.filterItemWrapper>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedSort === 'az' ? true : false}
+                    onClick={() => this.filterSelection('sort', 'az')}
+                  >
+                    A - Z
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedSort === 'za' ? true : false}
+                    onClick={() => this.filterSelection('sort', 'za')}
+                  >
+                    Z - A
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedSort === 'lpf' ? true : false}
+                    onClick={() => this.filterSelection('sort', 'lpf')}
+                  >
+                    $ - $$$
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedSort === 'hpf' ? true : false}
+                    onClick={() => this.filterSelection('sort', 'hpf')}
+                  >
+                    $$$ - $
+                  </FilterStyled.filterItem>
+                </FilterStyled.filterItemWrapper>
+              </FilterStyled.filterSection>
+            : null
+          }
         </FilterStyled.filterWrapper>
       </FilterStyled>
     );
