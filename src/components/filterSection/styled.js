@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 
 const FilterStyled = styled.div`
-  height: 300px;
+  max-height: 319px;
   overflow: auto;
   background: transparent;
   padding: 16px;
-  @media(min-width: 768px) {
-    height: 319px;
-  }
 `;
 FilterStyled.filterWrapper = styled.ul`
   display: block;

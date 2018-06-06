@@ -68,7 +68,10 @@ export default class FilterSection extends React.Component {
   render() {
     return (
       <FilterStyled>
-        <Scrollbars>
+        <Scrollbars
+          autoHeight
+          autoHeightMax={319}
+        >
           <FilterStyled.filterWrapper>
             {
               this.props.selectedTab !== 'Videos' && this.props.subCategoryList && !this.props.subCategoryList.length ?
