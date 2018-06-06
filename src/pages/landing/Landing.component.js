@@ -49,6 +49,11 @@ export default class Landing extends React.Component {
     if (categoryChange) {
       this.findSubCategoryList(nextProps.filters.category.value);
     }
+    if (nextProps.filters.category.label === 'featured' || nextProps.filters.selectedTab === 'Videos') {
+      this.setState({ filterSelected: false }, () => {
+        this.setScrollHeight();
+      });
+    }
     if (tabChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
@@ -88,10 +93,11 @@ export default class Landing extends React.Component {
     this.props.updateSearchParam(searchText);
   }
   toggleFilterSection = () => {
+    const filterState = this.state.filterSelected;
     this.setState({ filterSelected: !this.state.filterSelected }, () => {
       this.setScrollHeight();
     });
-    if (this.props.filters.selectedTab === "Stars") {
+    if (!filterState && this.props.filters.selectedTab === "Stars") {
       this.findSubCategoryList(this.props.filters.category.value);
     }
   }
