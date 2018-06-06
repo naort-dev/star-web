@@ -10,6 +10,7 @@ const initalState = {
   lowPrice: '',
   highPrice: '',
   sortValue: 'featured',
+  selectedVideoType: '',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -52,6 +53,12 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         [action.category]: action.selectedList,
+      };
+
+    case UPDATEFILTER.updateSelectedVideoType:
+      return {
+        ...state,
+        selectedVideoType: action.value,
       };
 
     default:

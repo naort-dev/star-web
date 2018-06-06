@@ -1,13 +1,10 @@
 import styled from 'styled-components';
 
 const FilterStyled = styled.div`
-  height: 300px;
+  max-height: 319px;
   overflow: auto;
   background: transparent;
   padding: 16px;
-  @media(min-width: 768px) {
-    height: auto;
-  }
 `;
 FilterStyled.filterWrapper = styled.ul`
   display: block;
@@ -20,9 +17,10 @@ FilterStyled.filterSection = styled.li`
   display: inline-block;
   vertical-align: top;
   width: ${props => (props.typeFilter ? '100%' : 'auto')};
+  max-width: ${props => (props.typeFilter ? 'none' : '300px')};
   @media(min-width: 1025px) {
     line-height: 33px;
-    width: ${props => (props.typeFilter ? '400px' : 'auto')};
+    width: ${props => (props.typeFilter ? '80%' : '20%')};
   }
 `;
 FilterStyled.filterHeading = styled.span`
@@ -35,10 +33,13 @@ FilterStyled.filterHeading = styled.span`
 FilterStyled.filterItemWrapper = styled.ul`
   margin-top: 10px;
 `;
-FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.extend`
-  height: 200px;
+FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.withComponent('div').extend`
+  max-height: 200px;
   text-align: left;
   overflow: auto;
+`;
+FilterStyled.filterTypeList = styled.ul`
+  padding-right: 10px;
 `;
 FilterStyled.filterItem = styled.li`
   font-family: 'Ubuntu-Light';
@@ -56,6 +57,20 @@ FilterStyled.filterItem = styled.li`
   @media(min-width: 1025px) {
     font-size: 18px;
   }
+`;
+FilterStyled.filterPriceItem = FilterStyled.filterItem.extend`
+&:hover {
+  margin-left: 0;
+  border-left: none;
+}
+`;
+FilterStyled.priceSliderMinLabel = styled.span`
+  display: inline-block;
+  float: left;
+`;
+FilterStyled.priceSliderMaxLabel = styled.span`
+  display: inline-block;
+  float: right;
 `;
 FilterStyled.filterTypeItem = FilterStyled.filterItem.extend`
   border-radius: 13px;

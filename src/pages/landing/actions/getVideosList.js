@@ -48,7 +48,7 @@ export const videosListSwapCacheEnd = key => ({
 });
 
 export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
-  const { lowPrice, highPrice } = getState().filters;
+  const { lowPrice, highPrice, selectedVideoType } = getState().filters;
   // const cachedData = getState().videosList[category.label] && getState().videosList[category.label].data;
   const { limit } = getState().videosList;
   // if (categoryChange && cachedData) {
@@ -70,7 +70,7 @@ export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
   }
   const source = CancelToken.source();
   dispatch(videosListFetchStart(refresh, source));
-  return fetch.get(Api.getVideosList + '?limit='+ limit + '&offset=' + offset, {
+  return fetch.get(`${Api.getVideosList}?limit=${limit}&offset=${offset}&request_type=${selectedVideoType}`, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {

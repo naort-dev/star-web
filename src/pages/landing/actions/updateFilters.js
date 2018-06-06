@@ -7,6 +7,7 @@ export const UPDATEFILTER = {
   updatePriceRange: 'update/price_range',
   updateSort: 'update/update_sort',
   updateSelectedSubCategory: 'update/update_sub_category',
+  updateSelectedVideoType: 'update/update_video_type',
 };
 
 export const updateCategory = (label, value) => ({
@@ -40,4 +41,9 @@ export const updateSelectedSubCategory = (selectedList, category) => ({
   type: UPDATEFILTER.updateSelectedSubCategory,
   selectedList,
   category,
+});
+
+export const updateSelectedVideoType = value => ({
+  type: UPDATEFILTER.updateSelectedVideoType,
+  value,
 });

@@ -89,11 +89,11 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   let API_URL;
   if (category.label === 'featured') {
 
-    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&name=' + searchParam + '&sort=featured';
+    API_URL = `${Api.getCelebList}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
   } else {
     const subCategoryList = filters[category.value];
     const professsion = subCategoryList && Object.keys(subCategoryList).length ? Object.keys(subCategoryList).toString() : category.value;
-    API_URL = Api.getCelebList + '?limit='+ limit + '&offset=' + offset + '&profession=' + professsion + '&name=' + searchParam + '&urate=' + highPrice + '&lrate=' + lowPrice + '&sort=' + sortValue;
+    API_URL = `${Api.getCelebList}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
   }
   return fetch.get(API_URL, {
     cancelToken: source.token,

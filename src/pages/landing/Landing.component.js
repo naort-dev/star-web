@@ -38,18 +38,27 @@ export default class Landing extends React.Component {
     const lowPriceChange = this.props.filters.lowPrice !== nextProps.filters.lowPrice;
     const highPriceChange = this.props.filters.highPrice !== nextProps.filters.highPrice;
     const sortValueChange = this.props.filters.sortValue !== nextProps.filters.sortValue;
+    const selectedVideoTypeChange = this.props.filters.selectedVideoType !== nextProps.filters.selectedVideoType;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    if (categoryChange || searchParamChange || lowPriceChange || highPriceChange || sortValueChange) {
+    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.switchTab('Stars');
-      } else if (!categoryChange) {
+        this.props.fetchVideosList(0, true);
+      } else {
         this.props.fetchCelebrityList(0, true);
       }
     }
-    if (categoryChange) {
+    if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(nextProps.filters.category.value);
     }
+    if (nextProps.filters.category.label === 'featured' || (tabChange && nextProps.filters.selectedTab === 'Videos')) {
+      this.setState({ filterSelected: false }, () => {
+        this.setScrollHeight();
+      });
+    }
     if (tabChange) {
+      this.setState({ filterSelected: false }, () => {
+        this.setScrollHeight();
+      });
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
       } else {
@@ -74,6 +83,7 @@ export default class Landing extends React.Component {
     this.setState({ subCategoryList });
   }
   updateCategory = (label, value) => {
+    this.props.switchTab('Stars');
     this.props.updateCategory(label, value);
     this.props.fetchCelebrityList(0, true);
   }
@@ -88,10 +98,11 @@ export default class Landing extends React.Component {
     this.props.updateSearchParam(searchText);
   }
   toggleFilterSection = () => {
+    const filterState = this.state.filterSelected;
     this.setState({ filterSelected: !this.state.filterSelected }, () => {
       this.setScrollHeight();
     });
-    if (this.props.filters.selectedTab === "Stars") {
+    if (!filterState && this.props.filters.selectedTab === "Stars") {
       this.findSubCategoryList(this.props.filters.category.value);
     }
   }
@@ -156,16 +167,18 @@ export default class Landing extends React.Component {
                 toggleFilter={this.toggleFilterSection}
               />
               {
-                this.state.filterSelected  &&
+                this.state.filterSelected &&
                   <FilterSection
                     selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
                     selectedTab={this.props.filters.selectedTab}
                     selectedSort={this.props.filters.sortValue}
                     selectedSubCategories={this.props.filters[this.props.filters.category.value]}
                     subCategoryList={this.state.subCategoryList}
+                    selectedVideoType={this.props.filters.selectedVideoType}
                     updatePriceRange={this.props.updatePriceRange}
                     updateSort={this.props.updateSort}
                     updateSelectedSubCategory={this.updateSubCategoryList}
+                    updateSelectedVideoType={this.props.updateSelectedVideoType}
                     toggleFilter={this.toggleFilterSection}
                   />
               }
