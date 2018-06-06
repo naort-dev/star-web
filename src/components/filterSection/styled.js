@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const FilterStyled = styled.div`
   max-height: 319px;
-  overflow: auto;
   background: transparent;
   padding: 16px;
 `;
