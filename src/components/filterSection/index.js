@@ -1,15 +1,26 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
 import FilterStyled from './styled';
 
 export default class FilterSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      minPrice: props.selectedPriceRange.low === '' ? 0 : props.selectedPriceRange.low,
+      maxPrice: props.selectedPriceRange.high === '' ? 500 : props.selectedPriceRange.high,
     };
     this.lowPrice = 0;
     this.highPrice = 500;
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectedPriceRange.low !== nextProps.selectedPriceRange.low) {
+      this.setState({ minPrice: nextProps.selectedPriceRange.low });
+    }
+    if (this.props.selectedPriceRange.high !== nextProps.selectedPriceRange.high) {
+      this.setState({ maxPrice: nextProps.selectedPriceRange.high });
+    }
   }
   filterSelection = (type, data) => {
     if (this.props.toggleFilter && type !== 'category') {
@@ -55,7 +66,7 @@ export default class FilterSection extends React.Component {
       <FilterStyled>
         <FilterStyled.filterWrapper>
           {
-            this.props.subCategoryList.length ?
+            this.props.subCategoryList && this.props.subCategoryList.length ?
               <FilterStyled.filterSection typeFilter>
                 <FilterStyled.filterHeading>
                   Type
@@ -63,7 +74,7 @@ export default class FilterSection extends React.Component {
                 <FilterStyled.filterTypeWrapper>
                   <Scrollbars>
                     <FilterStyled.filterTypeItem
-                      selected={this.props.selectedSubCategories && !Object.keys(this.props.selectedSubCategories).length}
+                      selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
                       onClick={() => this.props.updateSelectedSubCategory({})}
                     >
                       All
@@ -77,6 +88,28 @@ export default class FilterSection extends React.Component {
             :
               null
           }
+          <FilterStyled.filterSection typeFilter>
+            <FilterStyled.filterHeading>
+              Price
+            </FilterStyled.filterHeading>
+            <FilterStyled.filterItemWrapper>
+              <FilterStyled.filterPriceItem>
+                <div>{this.state.minPrice}$ - {this.state.maxPrice}$</div>
+                <Range
+                  handleStyle={[{ borderColor: '#FF6C58', backgroundColor: '#FF6C58' }, { borderColor: '#FF6C58', backgroundColor: '#FF6C58' }]}
+                  trackStyle={[{ backgroundColor: '#FF6C58' }]}
+                  onChange={value => this.setState({ minPrice: value[0], maxPrice: value[1] })}
+                  onAfterChange={value => this.props.updatePriceRange(value[0], value[1])}
+                  allowCross={false}
+                  value={[this.state.minPrice, this.state.maxPrice]}
+                  min={0}
+                  max={500}
+                />
+                <FilterStyled.priceSliderMinLabel>0</FilterStyled.priceSliderMinLabel>
+                <FilterStyled.priceSliderMaxLabel>500+</FilterStyled.priceSliderMaxLabel>
+              </FilterStyled.filterPriceItem>
+            </FilterStyled.filterItemWrapper>
+          </FilterStyled.filterSection>
           <FilterStyled.filterSection>
             <FilterStyled.filterHeading>
               Sort

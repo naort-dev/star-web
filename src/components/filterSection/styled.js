@@ -22,7 +22,7 @@ FilterStyled.filterSection = styled.li`
   width: ${props => (props.typeFilter ? '100%' : 'auto')};
   @media(min-width: 1025px) {
     line-height: 33px;
-    width: ${props => (props.typeFilter ? '400px' : 'auto')};
+    width: ${props => (props.typeFilter ? '40%' : '20%')};
   }
 `;
 FilterStyled.filterHeading = styled.span`
@@ -56,6 +56,20 @@ FilterStyled.filterItem = styled.li`
   @media(min-width: 1025px) {
     font-size: 18px;
   }
+`;
+FilterStyled.filterPriceItem = FilterStyled.filterItem.extend`
+&:hover {
+  margin-left: 0;
+  border-left: none;
+}
+`;
+FilterStyled.priceSliderMinLabel = styled.span`
+  display: inline-block;
+  float: left;
+`;
+FilterStyled.priceSliderMaxLabel = styled.span`
+  display: inline-block;
+  float: right;
 `;
 FilterStyled.filterTypeItem = FilterStyled.filterItem.extend`
   border-radius: 13px;
