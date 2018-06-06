@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 const FilterStyled = styled.div`
-  max-height: 300px;
+  height: 300px;
   overflow: auto;
   background: transparent;
   padding: 16px;
   @media(min-width: 768px) {
-    height: auto;
+    height: 319px;
   }
 `;
 FilterStyled.filterWrapper = styled.ul`
@@ -20,6 +20,7 @@ FilterStyled.filterSection = styled.li`
   display: inline-block;
   vertical-align: top;
   width: ${props => (props.typeFilter ? '100%' : 'auto')};
+  max-width: ${props => (props.typeFilter ? 'none' : '300px')};
   @media(min-width: 1025px) {
     line-height: 33px;
     width: ${props => (props.typeFilter ? '80%' : '20%')};

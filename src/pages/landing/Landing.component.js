@@ -50,12 +50,15 @@ export default class Landing extends React.Component {
     if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(nextProps.filters.category.value);
     }
-    if (nextProps.filters.category.label === 'featured' || nextProps.filters.selectedTab === 'Videos') {
+    if (nextProps.filters.category.label === 'featured' || (tabChange && nextProps.filters.selectedTab === 'Videos')) {
       this.setState({ filterSelected: false }, () => {
         this.setScrollHeight();
       });
     }
     if (tabChange) {
+      this.setState({ filterSelected: false }, () => {
+        this.setScrollHeight();
+      });
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
       } else {
@@ -164,7 +167,7 @@ export default class Landing extends React.Component {
                 toggleFilter={this.toggleFilterSection}
               />
               {
-                this.state.filterSelected  &&
+                this.state.filterSelected &&
                   <FilterSection
                     selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
                     selectedTab={this.props.filters.selectedTab}

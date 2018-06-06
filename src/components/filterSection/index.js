@@ -22,6 +22,7 @@ export default class FilterSection extends React.Component {
       this.setState({ maxPrice: nextProps.selectedPriceRange.high });
     }
   }
+
   filterSelection = (type, data) => {
     if (this.props.toggleFilter && type !== 'category') {
       this.props.toggleFilter();
@@ -48,7 +49,7 @@ export default class FilterSection extends React.Component {
     }
   }
 
-  renderTypeList = () => {
+  renderSubCategoryList = () => {
     switch (this.props.selectedTab) {
       case 'Stars':
         return this.props.subCategoryList.map((item, index) => (
@@ -67,115 +68,122 @@ export default class FilterSection extends React.Component {
   render() {
     return (
       <FilterStyled>
-        <FilterStyled.filterWrapper>
-          <FilterStyled.filterSection typeFilter>
-            <FilterStyled.filterHeading>
-              Type
-            </FilterStyled.filterHeading>
+        <Scrollbars>
+          <FilterStyled.filterWrapper>
             {
-              this.props.selectedTab !== 'Videos' && this.props.subCategoryList && this.props.subCategoryList.length ?
-                <FilterStyled.filterTypeWrapper>
-                  <Scrollbars>
-                    <FilterStyled.filterTypeList>
-                      <FilterStyled.filterTypeItem
-                        selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
-                        onClick={() => this.props.updateSelectedSubCategory({})}
-                      >
-                        All
-                      </FilterStyled.filterTypeItem>
-                      {
-                        this.renderTypeList()
-                      }
-                    </FilterStyled.filterTypeList>
-                  </Scrollbars>
-                </FilterStyled.filterTypeWrapper>
+              this.props.selectedTab !== 'Videos' && this.props.subCategoryList && !this.props.subCategoryList.length ?
+                null
               :
-                <FilterStyled.filterItemWrapper>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedVideoType === '' ? true : false}
-                    onClick={() => this.filterSelection('video_type', '')}
-                  >
-                    All
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedVideoType === 3 ? true : false}
-                    onClick={() => this.filterSelection('video_type', 3)}
-                  >
-                    Q&A
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedVideoType === 2 ? true : false}
-                    onClick={() => this.filterSelection('video_type', 2)}
-                  >
-                    Event Announcement
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedVideoType === 1 ? true : false}
-                    onClick={() => this.filterSelection('video_type', 1)}
-                  >
-                    Shoutouts
-                  </FilterStyled.filterItem>
-                </FilterStyled.filterItemWrapper>
+                <FilterStyled.filterSection typeFilter={this.props.selectedTab !== 'Videos' ? true : false}>
+                  <FilterStyled.filterHeading>
+                    Type
+                  </FilterStyled.filterHeading>
+                  {
+                    this.props.selectedTab !== 'Videos' ?
+                      <FilterStyled.filterTypeWrapper>
+                        <Scrollbars>
+                          <FilterStyled.filterTypeList>
+                            <FilterStyled.filterTypeItem
+                              selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
+                              onClick={() => this.props.updateSelectedSubCategory({})}
+                            >
+                              All
+                            </FilterStyled.filterTypeItem>
+                            {
+                              this.renderSubCategoryList()
+                            }
+                          </FilterStyled.filterTypeList>
+                        </Scrollbars>
+                      </FilterStyled.filterTypeWrapper>
+                    :
+                      <FilterStyled.filterItemWrapper>
+                        <FilterStyled.filterItem
+                          selected={this.props.selectedVideoType === '' ? true : false}
+                          onClick={() => this.filterSelection('video_type', '')}
+                        >
+                          All
+                        </FilterStyled.filterItem>
+                        <FilterStyled.filterItem
+                          selected={this.props.selectedVideoType === 3 ? true : false}
+                          onClick={() => this.filterSelection('video_type', 3)}
+                        >
+                          Q&A
+                        </FilterStyled.filterItem>
+                        <FilterStyled.filterItem
+                          selected={this.props.selectedVideoType === 2 ? true : false}
+                          onClick={() => this.filterSelection('video_type', 2)}
+                        >
+                          Event Announcement
+                        </FilterStyled.filterItem>
+                        <FilterStyled.filterItem
+                          selected={this.props.selectedVideoType === 1 ? true : false}
+                          onClick={() => this.filterSelection('video_type', 1)}
+                        >
+                          Shoutouts
+                        </FilterStyled.filterItem>
+                      </FilterStyled.filterItemWrapper>
+                  }
+                </FilterStyled.filterSection>
             }
-          </FilterStyled.filterSection>
-          {/* <FilterStyled.filterSection typeFilter>
-            <FilterStyled.filterHeading>
-              Price
-            </FilterStyled.filterHeading>
-            <FilterStyled.filterItemWrapper>
-              <FilterStyled.filterPriceItem>
-                <div>{this.state.minPrice}$ - {this.state.maxPrice}$</div>
-                <Range
-                  handleStyle={[{ borderColor: '#FF6C58', backgroundColor: '#FF6C58' }, { borderColor: '#FF6C58', backgroundColor: '#FF6C58' }]}
-                  trackStyle={[{ backgroundColor: '#FF6C58' }]}
-                  onChange={value => this.setState({ minPrice: value[0], maxPrice: value[1] })}
-                  onAfterChange={value => this.props.updatePriceRange(value[0], value[1])}
-                  allowCross={false}
-                  value={[this.state.minPrice, this.state.maxPrice]}
-                  min={0}
-                  max={500}
-                />
-                <FilterStyled.priceSliderMinLabel>0</FilterStyled.priceSliderMinLabel>
-                <FilterStyled.priceSliderMaxLabel>500+</FilterStyled.priceSliderMaxLabel>
-              </FilterStyled.filterPriceItem>
-            </FilterStyled.filterItemWrapper>
-          </FilterStyled.filterSection> */}
-          {
-            this.props.selectedTab !== 'Videos' ?
-              <FilterStyled.filterSection>
-                <FilterStyled.filterHeading>
-                  Sort
-                </FilterStyled.filterHeading>
-                <FilterStyled.filterItemWrapper>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedSort === 'az' ? true : false}
-                    onClick={() => this.filterSelection('sort', 'az')}
-                  >
-                    A - Z
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedSort === 'za' ? true : false}
-                    onClick={() => this.filterSelection('sort', 'za')}
-                  >
-                    Z - A
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedSort === 'lpf' ? true : false}
-                    onClick={() => this.filterSelection('sort', 'lpf')}
-                  >
-                    $ - $$$
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedSort === 'hpf' ? true : false}
-                    onClick={() => this.filterSelection('sort', 'hpf')}
-                  >
-                    $$$ - $
-                  </FilterStyled.filterItem>
-                </FilterStyled.filterItemWrapper>
-              </FilterStyled.filterSection>
-            : null
-          }
-        </FilterStyled.filterWrapper>
+            {/* <FilterStyled.filterSection typeFilter>
+              <FilterStyled.filterHeading>
+                Price
+              </FilterStyled.filterHeading>
+              <FilterStyled.filterItemWrapper>
+                <FilterStyled.filterPriceItem>
+                  <div>{this.state.minPrice}$ - {this.state.maxPrice}$</div>
+                  <Range
+                    handleStyle={[{ borderColor: '#FF6C58', backgroundColor: '#FF6C58' }, { borderColor: '#FF6C58', backgroundColor: '#FF6C58' }]}
+                    trackStyle={[{ backgroundColor: '#FF6C58' }]}
+                    onChange={value => this.setState({ minPrice: value[0], maxPrice: value[1] })}
+                    onAfterChange={value => this.props.updatePriceRange(value[0], value[1])}
+                    allowCross={false}
+                    value={[this.state.minPrice, this.state.maxPrice]}
+                    min={0}
+                    max={500}
+                  />
+                  <FilterStyled.priceSliderMinLabel>0</FilterStyled.priceSliderMinLabel>
+                  <FilterStyled.priceSliderMaxLabel>500+</FilterStyled.priceSliderMaxLabel>
+                </FilterStyled.filterPriceItem>
+              </FilterStyled.filterItemWrapper>
+            </FilterStyled.filterSection> */}
+            {
+              this.props.selectedTab !== 'Videos' ?
+                <FilterStyled.filterSection>
+                  <FilterStyled.filterHeading>
+                    Sort
+                  </FilterStyled.filterHeading>
+                  <FilterStyled.filterItemWrapper>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedSort === 'az' ? true : false}
+                      onClick={() => this.filterSelection('sort', 'az')}
+                    >
+                      A - Z
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedSort === 'za' ? true : false}
+                      onClick={() => this.filterSelection('sort', 'za')}
+                    >
+                      Z - A
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedSort === 'lpf' ? true : false}
+                      onClick={() => this.filterSelection('sort', 'lpf')}
+                    >
+                      $ - $$$
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedSort === 'hpf' ? true : false}
+                      onClick={() => this.filterSelection('sort', 'hpf')}
+                    >
+                      $$$ - $
+                    </FilterStyled.filterItem>
+                  </FilterStyled.filterItemWrapper>
+                </FilterStyled.filterSection>
+              : null
+            }
+          </FilterStyled.filterWrapper>
+        </Scrollbars>
       </FilterStyled>
     );
   }
