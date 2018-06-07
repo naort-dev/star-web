@@ -49,8 +49,8 @@ FilterStyled.CloseButton = styled.span`
   top: 27px;
   right: 18px;
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 30px;
+  height: 30px;
   background: url('assets/images/close-icon.svg') no-repeat;
   background-size: cover;
   background-position: center center;
@@ -115,7 +115,7 @@ FilterStyled.filterTypeList = styled.ul`
 `;
 FilterStyled.filterItem = styled.li`
   font-family: 'Ubuntu-Light';
-  font-size: 14px;
+  font-size: 16px;
   text-align: left;
   cursor: pointer;
   padding: 0 10px;
@@ -148,6 +148,7 @@ FilterStyled.filterTypeItem = FilterStyled.filterItem.extend`
   display: inline-block;
   background-color: ${props => (props.selected ? '#FF6C58' : '#fff')};
   color: ${props => (props.selected && '#fff')};
+  font-size: 14px;
   &:hover {
     margin-left: 3px;
     border-left: 1px solid #ccc;
