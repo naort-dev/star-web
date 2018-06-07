@@ -5,6 +5,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
+import { logOut } from '../../store/shared/actions/login';
 
 class Header extends React.Component {
   constructor(props) {
@@ -12,6 +13,7 @@ class Header extends React.Component {
     this.state = {
       searchActive: false,
       showSuggestions: false,
+      profileDropdown: false,
       searchText: this.props.suggestionsList.searchText || '',
     };
     this.suggestionsFetchDelay=undefined;
@@ -76,6 +78,13 @@ class Header extends React.Component {
     this.props.resetSearchParam('');
     this.props.searchFilter('');
     this.setState({ searchActive: false, showSuggestions: false });
+  }
+
+  logoutUser = () => {
+    if (localStorage) {
+      localStorage.removeItem('data');
+      this.props.logOut();
+    }
   }
 
   renderSuggestionsList = () => {
@@ -154,11 +163,18 @@ class Header extends React.Component {
             
             {
               this.props.isLoggedIn ?
-                <div>
-                  <HeaderSection.FavoriteButton />
-                  <HeaderSection.MyvideoButton />
-                  <HeaderSection.ProfileButton />
+                <div style={{position: 'relative'}}>
+                  {/* <HeaderSection.FavoriteButton />
+                  <HeaderSection.MyvideoButton /> */}
                   <HeaderSection.SearchButton onClick={this.activateSearch} />
+                  <HeaderSection.ProfileButton onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})} />
+                  {
+                    this.state.profileDropdown &&
+                      <HeaderSection.ProfileDropdown>
+                        <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
+                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>LogOut</HeaderSection.ProfileDropdownItem>
+                      </HeaderSection.ProfileDropdown>
+                  }
                 </div>
             :
                 <div>
@@ -189,11 +205,13 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
   isLoggedIn: state.session.isLoggedIn,
+  userDetails: state.session.auth_token,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
+  logOut: () => dispatch(logOut()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

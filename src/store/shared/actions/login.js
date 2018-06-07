@@ -8,6 +8,7 @@ export const LOGIN = {
   success: 'session/ON_LOGIN_SUCCESS',
   failed: 'session/ON_LOGIN_FAILED',
   incorrect: 'session/ON_LOGIN_INCORRECT',
+  logout: 'session/ON_LOGOUT',
 };
 
 export const loginFetchStart = () => ({
@@ -34,6 +35,10 @@ export const loginFetchIncorrect = error => ({
 export const loginFetchFailed = error => ({
   type: LOGIN.failed,
   error,
+});
+
+export const logOut = () => ({
+  type: LOGIN.logout,
 });
 
 export const loginUser = (loginEmail, loginPassword) => (dispatch) => {

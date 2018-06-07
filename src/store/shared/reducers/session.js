@@ -1,7 +1,7 @@
 import { LOGIN } from '../actions/login';
 import { REGISTER } from '../actions/register';
 
-const initalState = {
+const initialState = {
   isLoggedIn: false,
   loading: false,
   auth_token: '',
@@ -12,7 +12,7 @@ const initalState = {
   },
 };
 
-export default (state = { ...initalState }, action) => {
+export default (state = { ...initialState }, action) => {
   switch (action.type) {
     case LOGIN.start:
       return {
@@ -49,6 +49,10 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+      };
+    case LOGIN.logout:
+      return {
+        ...initialState,
       };
 
     default:
