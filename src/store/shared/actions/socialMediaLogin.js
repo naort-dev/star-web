@@ -60,6 +60,8 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
     dispatch(socialMediaLoginFetchEnd());
     if (exception.response.status === 400) {
       dispatch(socialMediaLoginFetchIncorrect(exception.response.data.error.message));
+    } else if (exception.response.status === 410) {
+      dispatch(socialMediaLoginFetchFailed(exception.response.data.error.message));
     } else {
       dispatch(socialMediaLoginFetchFailed(exception));
     }

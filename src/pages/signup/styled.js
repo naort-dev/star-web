@@ -399,5 +399,9 @@ LoginContainer.WrapsInput = styled.div`
   }
 
 `;
+LoginContainer.GoogleWrapper = styled.div`
+  display:none;
+  
+`;
 
 export { LoginContainer, HeaderSection, FooterSection };

@@ -33,7 +33,6 @@ export default class Login extends React.Component {
     };
   }
   componentDidMount() {
-    const obj = this.refs.gmail;
     window.fbAsyncInit = () => {
       window.FB.init({
         appId: '178768332841448',
@@ -69,8 +68,6 @@ export default class Login extends React.Component {
             console.log(error);
         });
     }
-    
-
       gapi.signin2.render('g-sign-in', {
         'scope': 'profile email',
         'width': 200,
@@ -149,6 +146,16 @@ export default class Login extends React.Component {
       this.state.socialMedia.in_id,
     );
   }
+  onInstagramLogin = () => {
+    const clientId = '26885a83d43849ddbdf1950c81ad7530';
+    const redirectUri = 'http://localhost:8080/login';
+    const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+    window.location.href = url;
+  }
+  onGmail = () => {
+    const check = document.getElementsByClassName('abcRioButtonIcon');
+    check[0].click();
+  }
   OnFBlogin = () => {
     const that = this;
     window.FB.login (function (response) {
@@ -195,18 +202,6 @@ export default class Login extends React.Component {
     }
     return false;
   }
-  onInstagramLogin = () => {
-    const clientId = '26885a83d43849ddbdf1950c81ad7530';
-    const redirectUri = 'http://localhost:8080/login';
-    const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
-    window.location.href = url;
-    // const accessToken = getUrl.location.hash.slice(14);
-    // console.log(accessToken);
-  }
-  onGmail = () => {  
-    const check = document.getElementsByClassName('abcRioButtonIcon');
-    check[0].click();
-  }
   render() {
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.from;
@@ -247,10 +242,9 @@ export default class Login extends React.Component {
                         </LoginContainer.FacebookContent>
                       </LoginContainer.Button>
                     </LoginContainer.ButtonDiv>
-                    <LoginContainer.ButtonDiv>
-                    
+                    <LoginContainer.ButtonDiv>                 
                       <LoginContainer.Button onClick={() => this.onGmail()} >
-                        <LoginContainer.GoogleWrapper id="g-sign-in" ref="gmail"/>
+                        <LoginContainer.GoogleWrapper id="g-sign-in" />
                         <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
                       </LoginContainer.Button>
                     </LoginContainer.ButtonDiv>
@@ -275,9 +269,8 @@ export default class Login extends React.Component {
                             onBlur={this.checkEmail}
                           />
                           <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>  
-                        </LoginContainer.WrapsInput>                   
+                        </LoginContainer.WrapsInput>                
                       </LoginContainer.InputWrapper>
-
                       <LoginContainer.InputWrapper>                
                         <LoginContainer.Label>Password</LoginContainer.Label>
                         <LoginContainer.WrapsInput>
@@ -291,9 +284,7 @@ export default class Login extends React.Component {
                           />
                           <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
                         </LoginContainer.WrapsInput> 
-                      </LoginContainer.InputWrapper>
-                      
-                      
+                      </LoginContainer.InputWrapper>                   
                     </LoginContainer.InputFieldsWrapper>
                     <LoginContainer.WrapsInput>
                       <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
@@ -305,14 +296,12 @@ export default class Login extends React.Component {
                         <LoginContainer.ForgotButton>
                           Forgot your password?
                         </LoginContainer.ForgotButton>
-                      </LoginContainer.Footerleft>
-                      
+                      </LoginContainer.Footerleft>            
                       <LoginContainer.FooterRight>
                         <LoginContainer.SignIn onClick={this.onLogin} disabled={this.props.loading} >Sign In </LoginContainer.SignIn>
                       </LoginContainer.FooterRight>
                     </LoginContainer.Footer>
-                  </LoginContainer.FooterSection>
-                
+                  </LoginContainer.FooterSection>          
                 </LoginContainer.LeftSection>
                 <LoginContainer.RightSection>
                   <LoginContainer.ImageStackLayout>

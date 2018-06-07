@@ -308,5 +308,6 @@ HeaderSection.SignInIcon = styled.img`
   }
 `;
 
+
 export default HeaderSection;
 

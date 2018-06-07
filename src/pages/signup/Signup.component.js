@@ -52,6 +52,28 @@ export default class SignUp extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+    const token = this.props.location.hash;
+    const authToken = token.split('=')[1];
+    const instaUrl = `https://api.instagram.com/v1/users/self/?access_token=${authToken}`;
+    const that = this;
+    if(authToken !== undefined) {
+      axios.get(instaUrl)
+        .then(function (response) {
+           that.onSocialMediaLogin(response,4);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+    
+
+    gapi.signin2.render('g-sign-in', {
+      'scope': 'profile email',
+      'width': 200,
+      'height': 50,
+      'theme': 'dark',
+      'onsuccess': this.onSignIn,
+  });
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
@@ -59,6 +81,10 @@ export default class SignUp extends React.Component {
         redirectToReferrer: nextProps.isLoggedIn,
       });
     }
+  }
+  onSignIn = (googleUser) => {
+    const profile = googleUser.getBasicProfile();
+    this.onSocialMediaLogin(profile, 3);
   }
   onRegister = (e) => {
     e.preventDefault();
@@ -77,26 +103,64 @@ export default class SignUp extends React.Component {
     }
   }
   onSocialMediaLogin =(r, source) => {
-    this.setState({
-      socialMedia: {
-        ...this.state.socialMedia,
-        username: r.email,
-        first_name: r.first_name,
-        last_name: r.last_name,
-        sign_up_source: source,
-        nick_name: r.name,
-        profile_photo: r.picture.data.url,
-        fb_id: r.id,
-      },
-    });
+    if (source === 2) {
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: r.email,
+          first_name: r.first_name,
+          last_name: r.last_name,
+          sign_up_source: source,
+          nick_name: r.name,
+          profile_photo: r.picture.data.url,
+          fb_id: r.id,
+        },
+      });
+    } else if (source === 3) {
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: r.getEmail(),
+          sign_up_source: source,
+          nick_name: r.getName(),
+          profile_photo: r.getImageUrl(),
+          gp_id: r.getId(),
+        },
+      });
+    } else {
+      const val = r.data.data;
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: val.username,
+          sign_up_source: source,
+          nick_name: val.full_name,
+          profile_photo: val.profile_picture,
+          in_id: val.id,
+        },
+      });
+    }
     this.props.socialMediaLogin(
       this.state.socialMedia.username,
       this.state.socialMedia.first_name,
       this.state.socialMedia.last_name,
       this.state.socialMedia.sign_up_source,
       this.state.socialMedia.profile_photo,
+      this.state.socialMedia.role,
       this.state.socialMedia.fb_id,
+      this.state.socialMedia.gp_id,
+      this.state.socialMedia.in_id,
     );
+  }
+  onGmail = () => {
+    const check = document.getElementsByClassName('abcRioButtonIcon');
+    check[0].click();
+  }
+  onInstagramLogin = () => {
+    const clientId = '26885a83d43849ddbdf1950c81ad7530';
+    const redirectUri = 'http://localhost:8080/login';
+    const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+    window.location.href = url;
   }
   OnFBlogin = () => {
     const that = this;
@@ -197,12 +261,13 @@ export default class SignUp extends React.Component {
                 </LoginContainer.Button>
               </LoginContainer.ButtonDiv>
               <LoginContainer.ButtonDiv>
-                <LoginContainer.Button>
+                <LoginContainer.GoogleWrapper id="g-sign-in" />
+                <LoginContainer.Button onClick={() => this.onGmail()}>
                   <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
                 </LoginContainer.Button>
               </LoginContainer.ButtonDiv>
               <LoginContainer.ButtonDiv>
-                <LoginContainer.Button>
+                <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
                   <LoginContainer.InstagramContent>Continue with Instagram
                   </LoginContainer.InstagramContent>
                 </LoginContainer.Button>
