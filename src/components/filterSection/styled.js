@@ -115,7 +115,7 @@ FilterStyled.filterTypeList = styled.ul`
 `;
 FilterStyled.filterItem = styled.li`
   font-family: 'Ubuntu-Light';
-  font-size: 16px;
+  font-size: 14px;
   text-align: left;
   cursor: pointer;
   padding: 0 10px;
@@ -125,9 +125,6 @@ FilterStyled.filterItem = styled.li`
   &:hover {
     margin-left: -4px; 
     border-left: 4px solid #FF6C58;
-  }
-  @media(min-width: 1025px) {
-    font-size: 18px;
   }
 `;
 FilterStyled.filterPriceItem = FilterStyled.filterItem.extend`
@@ -147,12 +144,12 @@ FilterStyled.priceSliderMaxLabel = styled.span`
 FilterStyled.filterTypeItem = FilterStyled.filterItem.extend`
   border-radius: 13px;
   border: ${props => (props.selected ? '1px solid #FF6C58' : '1px solid #ccc')};
-  margin: 4px;
+  margin: 3px;
   display: inline-block;
   background-color: ${props => (props.selected ? '#FF6C58' : '#fff')};
   color: ${props => (props.selected && '#fff')};
   &:hover {
-    margin-left: 4px;
+    margin-left: 3px;
     border-left: 1px solid #ccc;
   }
 `;
