@@ -50,7 +50,8 @@ export default class Landing extends React.Component {
     if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(nextProps.filters.category.value);
     }
-    if (nextProps.filters.category.label === 'featured' || (tabChange && nextProps.filters.selectedTab === 'Videos')) {
+    if ((nextProps.filters.selectedTab === 'Stars' && nextProps.filters.category.label === 'featured') ||
+      (tabChange && nextProps.filters.selectedTab === 'Videos')) {
       this.setState({ filterSelected: false }, () => {
         this.setScrollHeight();
       });
