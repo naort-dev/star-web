@@ -21,6 +21,8 @@ import { Dashboard } from './pages/dashboard';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
+import { StarsignUp } from './pages/starsignup';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -86,6 +88,7 @@ class App extends React.Component {
                 <Route path="/starDetail/:id" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
+                <Route path="/starsignup" component={StarsignUp} />
                 
 
                 {/* logged in areas */}

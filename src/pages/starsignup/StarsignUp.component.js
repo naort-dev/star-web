@@ -1,0 +1,46 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { LoginContainer, HeaderSection } from './styled';
+import { ImageStack } from '../../components/ImageStack';
+
+export default class StarsignUp extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+  }
+  render() {
+    return (
+      <div>
+        <HeaderSection>
+          <Link to="/">
+            <HeaderSection.HeaderNavigation />
+          </Link>
+          <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
+          <Link to="/login">
+            <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+          </Link>
+        </HeaderSection>
+        <LoginContainer>
+          <LoginContainer.LeftSection>
+            <LoginContainer.Heading>Please Download the Application</LoginContainer.Heading>   
+            <LoginContainer.AppIconWrapper>
+              <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
+                <LoginContainer.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
+              </a>
+              <a target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
+                <LoginContainer.StoreIcon alt="playsore icon" src="assets/images/appstore-download.svg" />
+              </a>
+            </LoginContainer.AppIconWrapper>
+          </LoginContainer.LeftSection>
+          <LoginContainer.RightSection>
+            <LoginContainer.ImageStackLayout>
+              <ImageStack />
+            </LoginContainer.ImageStackLayout>
+          </LoginContainer.RightSection>
+        </LoginContainer>
+      </div>
+    );
+  }
+}

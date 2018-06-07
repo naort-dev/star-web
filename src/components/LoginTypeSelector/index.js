@@ -13,7 +13,7 @@ export const LoginTypeSelector = props => (
     <Link to="/signup">
       <TypeSelectorWrapper.Button>I’m a Fan</TypeSelectorWrapper.Button>
     </Link>
-    <Link to="/signup">
+    <Link to="/starsignup">
       <TypeSelectorWrapper.Button>I’m a Star</TypeSelectorWrapper.Button>
     </Link>
   </TypeSelectorWrapper>
