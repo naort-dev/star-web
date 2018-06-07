@@ -39,8 +39,9 @@ export default class Landing extends React.Component {
     const highPriceChange = this.props.filters.highPrice !== nextProps.filters.highPrice;
     const sortValueChange = this.props.filters.sortValue !== nextProps.filters.sortValue;
     const selectedVideoTypeChange = this.props.filters.selectedVideoType !== nextProps.filters.selectedVideoType;
+    const selectedVideoDateChange = this.props.filters.selectedVideoDate !== nextProps.filters.selectedVideoDate;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange) {
+    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
       } else {
@@ -50,7 +51,8 @@ export default class Landing extends React.Component {
     if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(nextProps.filters.category.value);
     }
-    if (nextProps.filters.category.label === 'featured' || (tabChange && nextProps.filters.selectedTab === 'Videos')) {
+    if ((nextProps.filters.selectedTab === 'Stars' && nextProps.filters.category.label === 'featured') ||
+      (tabChange && nextProps.filters.selectedTab === 'Videos')) {
       this.setState({ filterSelected: false }, () => {
         this.setScrollHeight();
       });
@@ -71,6 +73,27 @@ export default class Landing extends React.Component {
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+  }
+  getFilterCount = () => {
+    let count = 0;
+    switch (this.props.filters.selectedTab) {
+      case 'Stars':
+        if (this.props.filters[this.props.filters.category.value]) {
+          count = Object.keys(this.props.filters[this.props.filters.category.value]).length;
+        }
+        break;
+      case 'Videos':
+        if (this.props.filters.selectedVideoType !== '') {
+          count += 1;
+        }
+        if (this.props.filters.selectedVideoDate !== '') {
+          count += 1;
+        }
+        break;
+      default:
+        break;
+    }
+    return count;
   }
   findSubCategoryList = (selectedCategory) => {
     const { professions } = this.props.professionsList;
@@ -164,6 +187,7 @@ export default class Landing extends React.Component {
                 selectedCategory={this.props.filters.category.label}
                 filterSelected={this.state.filterSelected}
                 selected={this.props.filters.selectedTab}
+                filterCount={this.getFilterCount}
                 toggleFilter={this.toggleFilterSection}
               />
               {
@@ -175,10 +199,13 @@ export default class Landing extends React.Component {
                     selectedSubCategories={this.props.filters[this.props.filters.category.value]}
                     subCategoryList={this.state.subCategoryList}
                     selectedVideoType={this.props.filters.selectedVideoType}
+                    selectedVideoDate={this.props.filters.selectedVideoDate}
+                    filterSelected={this.state.filterSelected}
                     updatePriceRange={this.props.updatePriceRange}
                     updateSort={this.props.updateSort}
                     updateSelectedSubCategory={this.updateSubCategoryList}
                     updateSelectedVideoType={this.props.updateSelectedVideoType}
+                    updateSelectedVideoDate={this.props.updateSelectedVideoDate}
                     toggleFilter={this.toggleFilterSection}
                   />
               }

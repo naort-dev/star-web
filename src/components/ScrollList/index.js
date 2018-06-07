@@ -84,7 +84,7 @@ export default class ScrollList extends React.Component {
           <ImageRender
             cover={coverPhoto}
             profile={profilePhoto}
-            starName={`${item.first_name} ${item.last_name}`}
+            starName={item.get_short_name}
             details={this.renderStarProfessions(item.celebrity_profession)}
           />
         </ListStyled.listItem>

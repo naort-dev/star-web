@@ -37,6 +37,11 @@ export default class Tabs extends React.Component {
             <TabStyled.FilterIcon
               filterSelected={this.props.filterSelected}
             />
+            {
+            this.props.filterCount() ?
+              <TabStyled.FilterCount>{this.props.filterCount()}</TabStyled.FilterCount>
+            : null
+            }
           </TabStyled.FilterControl>
         }
       </TabStyled>

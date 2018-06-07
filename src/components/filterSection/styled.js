@@ -1,15 +1,88 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const menuEnter = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const menuLeave = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
 
 const FilterStyled = styled.div`
-  max-height: 319px;
-  overflow: auto;
-  background: transparent;
-  padding: 16px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  background-color: white;
+  z-index: 5;
+  max-height: 100%;
+  padding: 0;
+  padding-top: 50px;
+  display: ${props => (props.filterActive ? 'block' : 'none')};
+  animation: ${props => (props.filterActive ? menuEnter : menuLeave)} 0.1s linear;
+  @media(min-width: 768px) {
+    padding: 16px;
+    position: static;
+    height: 319px;
+    background: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 `;
+
+FilterStyled.CloseButton = styled.span`
+  position: absolute;
+  top: 27px;
+  right: 18px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url('assets/images/close-icon.svg') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
 FilterStyled.filterWrapper = styled.ul`
   display: block;
-  text-align: center;
+  text-align: left;
+  @media(min-width: 768px) {
+    text-align: center;
+  }
 `;
+
+FilterStyled.ApplyButtonWrapper = styled.div`
+  text-align: center;
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
+FilterStyled.ApplyButton = styled.span`
+  display: inline-block;
+  padding: 16px;
+  width: 200px;
+  border-radius: 13px;
+  background-color: #FF6C58;
+  color: #fff;
+`;
+
 FilterStyled.filterSection = styled.li`
   margin: 20px 0;
   line-height: 30px;
@@ -34,9 +107,8 @@ FilterStyled.filterItemWrapper = styled.ul`
   margin-top: 10px;
 `;
 FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.withComponent('div').extend`
-  max-height: 200px;
+  max-height: none;
   text-align: left;
-  overflow: auto;
 `;
 FilterStyled.filterTypeList = styled.ul`
   padding-right: 10px;
@@ -53,9 +125,6 @@ FilterStyled.filterItem = styled.li`
   &:hover {
     margin-left: -4px; 
     border-left: 4px solid #FF6C58;
-  }
-  @media(min-width: 1025px) {
-    font-size: 18px;
   }
 `;
 FilterStyled.filterPriceItem = FilterStyled.filterItem.extend`
@@ -75,12 +144,13 @@ FilterStyled.priceSliderMaxLabel = styled.span`
 FilterStyled.filterTypeItem = FilterStyled.filterItem.extend`
   border-radius: 13px;
   border: ${props => (props.selected ? '1px solid #FF6C58' : '1px solid #ccc')};
-  margin: 4px;
+  margin: 3px;
   display: inline-block;
   background-color: ${props => (props.selected ? '#FF6C58' : '#fff')};
   color: ${props => (props.selected && '#fff')};
+  font-size: 14px;
   &:hover {
-    margin-left: 4px;
+    margin-left: 3px;
     border-left: 1px solid #ccc;
   }
 `;

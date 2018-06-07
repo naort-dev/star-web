@@ -8,6 +8,7 @@ export const UPDATEFILTER = {
   updateSort: 'update/update_sort',
   updateSelectedSubCategory: 'update/update_sub_category',
   updateSelectedVideoType: 'update/update_video_type',
+  updateSelectedVideoDate: 'update/update_video_date',
 };
 
 export const updateCategory = (label, value) => ({
@@ -46,4 +47,9 @@ export const updateSelectedSubCategory = (selectedList, category) => ({
 export const updateSelectedVideoType = value => ({
   type: UPDATEFILTER.updateSelectedVideoType,
   value,
+});
+
+export const updateSelectedVideoDate = timeSpan => ({
+  type: UPDATEFILTER.updateSelectedVideoDate,
+  timeSpan,
 });
