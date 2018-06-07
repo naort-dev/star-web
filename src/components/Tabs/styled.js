@@ -66,8 +66,23 @@ TabStyled.FilterIcon = styled.span`
   margin: 1px 0;
 `;
 
+TabStyled.FilterCount = styled.span`
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 13px;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FF6C58;
+  color: #fff;
+  display: inline-block;
+`;
+
 TabStyled.FilterControl = styled.div`
   display: inline-block;
+  position: relative;
   float: right;
   cursor: pointer;
   border-bottom: ${props => (props.filterSelected && '4px solid #FF6C58')};
