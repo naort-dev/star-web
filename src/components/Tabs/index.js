@@ -38,8 +38,9 @@ export default class Tabs extends React.Component {
               filterSelected={this.props.filterSelected}
             />
             {
-            this.props.filterCount() &&
+            this.props.filterCount() ?
               <TabStyled.FilterCount>{this.props.filterCount()}</TabStyled.FilterCount>
+            : null
             }
           </TabStyled.FilterControl>
         }

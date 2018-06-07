@@ -1,14 +1,87 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const menuEnter = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const menuLeave = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
 
 const FilterStyled = styled.div`
-  max-height: 319px;
-  background: transparent;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  background-color: white;
+  z-index: 5;
+  max-height: 100%;
   padding: 16px;
+  padding-top: 31px;
+  display: ${props => (props.filterActive ? 'block' : 'none')};
+  animation: ${props => (props.filterActive ? menuEnter : menuLeave)} 0.1s linear;
+  @media(min-width: 768px) {
+    position: static;
+    height: 319px;
+    background: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
 `;
+
+FilterStyled.CloseButton = styled.span`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: url('assets/images/close-icon.svg') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
 FilterStyled.filterWrapper = styled.ul`
   display: block;
-  text-align: center;
+  text-align: left;
+  @media(min-width: 768px) {
+    text-align: center;
+  }
 `;
+
+FilterStyled.ApplyButtonWrapper = styled.div`
+  text-align: center;
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
+FilterStyled.ApplyButton = styled.span`
+  display: inline-block;
+  padding: 16px;
+  width: 200px;
+  border-radius: 13px;
+  background-color: #FF6C58;
+  color: #fff;
+`;
+
 FilterStyled.filterSection = styled.li`
   margin: 20px 0;
   line-height: 30px;
@@ -33,9 +106,8 @@ FilterStyled.filterItemWrapper = styled.ul`
   margin-top: 10px;
 `;
 FilterStyled.filterTypeWrapper = FilterStyled.filterItemWrapper.withComponent('div').extend`
-  max-height: 200px;
+  max-height: none;
   text-align: left;
-  overflow: auto;
 `;
 FilterStyled.filterTypeList = styled.ul`
   padding-right: 10px;

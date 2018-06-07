@@ -67,11 +67,11 @@ export default class FilterSection extends React.Component {
   }
   render() {
     return (
-      <FilterStyled>
-        <Scrollbars
-          autoHeight
-          autoHeightMax={319}
-        >
+      <FilterStyled filterActive={this.props.filterSelected}>
+        <FilterStyled.CloseButton
+          onClick={() => this.props.toggleFilter()}
+        />
+        <Scrollbars>
           <FilterStyled.filterWrapper>
             {
               this.props.selectedTab !== 'Videos' && this.props.subCategoryList && !this.props.subCategoryList.length ?
@@ -85,7 +85,10 @@ export default class FilterSection extends React.Component {
                     this.props.selectedTab !== 'Videos' ?
                       <FilterStyled.filterTypeWrapper>
                         <Scrollbars
+                          hideTracksWhenNotNeeded
                           autoHeight
+                          autoHeightMin={0}
+                          autoHeightMax={'100%'}
                         >
                           <FilterStyled.filterTypeList>
                             <FilterStyled.filterTypeItem
@@ -188,6 +191,9 @@ export default class FilterSection extends React.Component {
               : null
             }
           </FilterStyled.filterWrapper>
+          {/* <FilterStyled.ApplyButtonWrapper>
+            <FilterStyled.ApplyButton>Apply</FilterStyled.ApplyButton>
+          </FilterStyled.ApplyButtonWrapper> */}
         </Scrollbars>
       </FilterStyled>
     );
