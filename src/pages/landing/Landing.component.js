@@ -39,8 +39,9 @@ export default class Landing extends React.Component {
     const highPriceChange = this.props.filters.highPrice !== nextProps.filters.highPrice;
     const sortValueChange = this.props.filters.sortValue !== nextProps.filters.sortValue;
     const selectedVideoTypeChange = this.props.filters.selectedVideoType !== nextProps.filters.selectedVideoType;
+    const selectedVideoDateChange = this.props.filters.selectedVideoDate !== nextProps.filters.selectedVideoDate;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange) {
+    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
         this.props.fetchVideosList(0, true);
       } else {
@@ -74,7 +75,7 @@ export default class Landing extends React.Component {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
   getFilterCount = () => {
-    let count;
+    let count = 0;
     switch (this.props.filters.selectedTab) {
       case 'Stars':
         if (this.props.filters[this.props.filters.category.value]) {
@@ -83,7 +84,10 @@ export default class Landing extends React.Component {
         break;
       case 'Videos':
         if (this.props.filters.selectedVideoType !== '') {
-          count = 1;
+          count += 1;
+        }
+        if (this.props.filters.selectedVideoDate !== '') {
+          count += 1;
         }
         break;
       default:
@@ -195,11 +199,13 @@ export default class Landing extends React.Component {
                     selectedSubCategories={this.props.filters[this.props.filters.category.value]}
                     subCategoryList={this.state.subCategoryList}
                     selectedVideoType={this.props.filters.selectedVideoType}
+                    selectedVideoDate={this.props.filters.selectedVideoDate}
                     filterSelected={this.state.filterSelected}
                     updatePriceRange={this.props.updatePriceRange}
                     updateSort={this.props.updateSort}
                     updateSelectedSubCategory={this.updateSubCategoryList}
                     updateSelectedVideoType={this.props.updateSelectedVideoType}
+                    updateSelectedVideoDate={this.props.updateSelectedVideoDate}
                     toggleFilter={this.toggleFilterSection}
                   />
               }

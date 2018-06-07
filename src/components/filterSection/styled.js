@@ -30,11 +30,12 @@ const FilterStyled = styled.div`
   background-color: white;
   z-index: 5;
   max-height: 100%;
-  padding: 16px;
-  padding-top: 31px;
+  padding: 0;
+  padding-top: 50px;
   display: ${props => (props.filterActive ? 'block' : 'none')};
   animation: ${props => (props.filterActive ? menuEnter : menuLeave)} 0.1s linear;
   @media(min-width: 768px) {
+    padding: 16px;
     position: static;
     height: 319px;
     background: transparent;
@@ -45,8 +46,8 @@ const FilterStyled = styled.div`
 
 FilterStyled.CloseButton = styled.span`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 27px;
+  right: 18px;
   display: inline-block;
   width: 20px;
   height: 20px;

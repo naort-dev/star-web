@@ -9,6 +9,7 @@ import {
   updateSort,
   updateSelectedSubCategory,
   updateSelectedVideoType,
+  updateSelectedVideoDate,
 } from './actions/updateFilters';
 
 import Landing from './Landing.component';
@@ -30,6 +31,7 @@ const mapDispatchToProps = dispatch => ({
   updateSort: value => dispatch(updateSort(value)),
   updateSelectedSubCategory: (selectedList, category) => dispatch(updateSelectedSubCategory(selectedList, category)),
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
+  updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

@@ -11,6 +11,7 @@ const initalState = {
   highPrice: '',
   sortValue: 'featured',
   selectedVideoType: '',
+  selectedVideoDate: '',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -59,6 +60,12 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         selectedVideoType: action.value,
+      };
+
+    case UPDATEFILTER.updateSelectedVideoDate:
+      return {
+        ...state,
+        selectedVideoDate: action.timeSpan,
       };
 
     default:
