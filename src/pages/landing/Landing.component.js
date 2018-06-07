@@ -72,6 +72,24 @@ export default class Landing extends React.Component {
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
+  getFilterCount = () => {
+    let count;
+    switch (this.props.filters.selectedTab) {
+      case 'Stars':
+        if (this.props.filters[this.props.filters.category.value]) {
+          count = Object.keys(this.props.filters[this.props.filters.category.value]).length;
+        }
+        break;
+      case 'Videos':
+        if (this.props.filters.selectedVideoType !== '') {
+          count = 1;
+        }
+        break;
+      default:
+        break;
+    }
+    return count;
+  }
   findSubCategoryList = (selectedCategory) => {
     const { professions } = this.props.professionsList;
     let subCategoryList;
@@ -164,6 +182,7 @@ export default class Landing extends React.Component {
                 selectedCategory={this.props.filters.category.label}
                 filterSelected={this.state.filterSelected}
                 selected={this.props.filters.selectedTab}
+                filterCount={this.getFilterCount}
                 toggleFilter={this.toggleFilterSection}
               />
               {
@@ -175,6 +194,7 @@ export default class Landing extends React.Component {
                     selectedSubCategories={this.props.filters[this.props.filters.category.value]}
                     subCategoryList={this.state.subCategoryList}
                     selectedVideoType={this.props.filters.selectedVideoType}
+                    filterSelected={this.state.filterSelected}
                     updatePriceRange={this.props.updatePriceRange}
                     updateSort={this.props.updateSort}
                     updateSelectedSubCategory={this.updateSubCategoryList}
