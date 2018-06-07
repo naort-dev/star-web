@@ -403,5 +403,8 @@ LoginContainer.GoogleWrapper = styled.div`
   display:none;
   
 `;
+LoginContainer.EmptyDiv = styled.div`
+  display:none;
+`;
 
 export { LoginContainer, HeaderSection, FooterSection };

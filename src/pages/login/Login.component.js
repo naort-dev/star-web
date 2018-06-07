@@ -59,10 +59,10 @@ export default class Login extends React.Component {
     const authToken = token.split('=')[1];
     const instaUrl = `https://api.instagram.com/v1/users/self/?access_token=${authToken}`;
     const that = this;
-    if(authToken !== undefined) {
+    if (authToken !== undefined) {
       axios.get(instaUrl)
         .then(function (response) {
-           that.onSocialMediaLogin(response,4);
+           that.onSocialMediaLogin(response.data.data,4);
         })
         .catch(function (error) {
             console.log(error);
@@ -89,12 +89,20 @@ export default class Login extends React.Component {
   }
   onLogin = (e) => {
     e.preventDefault();
-    if (this.isFormValid()) {
-      this.props.loginUser(this.state.email.value, this.state.password.value);
+    if (this.props.statusCode === undefined) {
+      if (this.isFormValid()) {
+        this.props.loginUser(this.state.email.value, this.state.password.value);
+      } else {
+        this.checkEmail();
+        this.checkPassword();
+      }
+    } else if (this.checkEmail()) {
+      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () =>{
+        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
+      });
     } else {
       this.checkEmail();
-      this.checkPassword();
-    }
+    } 
   }
   onSocialMediaLogin =(r, source) => {
     if (source === 2) {
@@ -122,7 +130,7 @@ export default class Login extends React.Component {
         },
       });
     } else {
-      const val = r.data.data;
+      const val = r;
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
@@ -170,9 +178,6 @@ export default class Login extends React.Component {
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
   }
-  updateLoggedInState = (r) => {
-    console.log(r);
-  }
   acceptPasswordHandler =(e) => {
     this.setState({ password: { ...this.state.password, value: e.target.value } });
   }
@@ -207,11 +212,11 @@ export default class Login extends React.Component {
     const loginToContinue = this.props.location.state && this.props.location.state.from;
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
-
     if (redirectToReferrer) {
       return <Redirect to="/" />;
     }
     return (
+      
       <div>
         {
           loginToContinue &&
@@ -242,7 +247,7 @@ export default class Login extends React.Component {
                         </LoginContainer.FacebookContent>
                       </LoginContainer.Button>
                     </LoginContainer.ButtonDiv>
-                    <LoginContainer.ButtonDiv>                 
+                    <LoginContainer.ButtonDiv>                
                       <LoginContainer.Button onClick={() => this.onGmail()} >
                         <LoginContainer.GoogleWrapper id="g-sign-in" />
                         <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
@@ -256,7 +261,7 @@ export default class Login extends React.Component {
                     </LoginContainer.ButtonDiv>
                     <LoginContainer.Line />
                     <LoginContainer.InputFieldsWrapper>
-                      <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
+                      <LoginContainer.SectionHeading>{this.props.statusCode === '410' ? this.props.error : <div>Use your email</div>}</LoginContainer.SectionHeading>
                       <LoginContainer.InputWrapper>
                         <LoginContainer.Label>Email</LoginContainer.Label>
                         <LoginContainer.WrapsInput>
@@ -271,23 +276,36 @@ export default class Login extends React.Component {
                           <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>  
                         </LoginContainer.WrapsInput>                
                       </LoginContainer.InputWrapper>
-                      <LoginContainer.InputWrapper>                
-                        <LoginContainer.Label>Password</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.Input
-                            type="password"
-                            name="password"
-                            value={password.value}
-                            placeholder="Enter your password"
-                            onChange={this.acceptPasswordHandler}
-                            onBlur={this.checkPassword}
-                          />
-                          <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
-                        </LoginContainer.WrapsInput> 
-                      </LoginContainer.InputWrapper>                   
+                      {
+                        this.props.statusCode === undefined ?
+                          <LoginContainer.InputWrapper>               
+                            <LoginContainer.Label>Password</LoginContainer.Label>
+                            <LoginContainer.WrapsInput>
+                              <LoginContainer.Input
+                                type="password"
+                                name="password"
+                                value={password.value}
+                                placeholder="Enter your password"
+                                onChange={this.acceptPasswordHandler}
+                                onBlur={this.checkPassword}
+                              />
+                              <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
+                            </LoginContainer.WrapsInput>
+                          </LoginContainer.InputWrapper> 
+                        :
+                          <LoginContainer.EmptyDiv />
+
+                      }
+                                     
                     </LoginContainer.InputFieldsWrapper>
+                    
                     <LoginContainer.WrapsInput>
-                      <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                      {this.props.statusCode === undefined ? 
+                        <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                      :
+                        <LoginContainer.EmptyDiv />
+                      }
+                      
                     </LoginContainer.WrapsInput>
                   </LoginContainer.SocialMediaSignup>
                   <LoginContainer.FooterSection>
@@ -298,7 +316,11 @@ export default class Login extends React.Component {
                         </LoginContainer.ForgotButton>
                       </LoginContainer.Footerleft>            
                       <LoginContainer.FooterRight>
-                        <LoginContainer.SignIn onClick={this.onLogin} disabled={this.props.loading} >Sign In </LoginContainer.SignIn>
+                        <LoginContainer.SignIn
+                          onClick={this.onLogin}
+                          disabled={this.props.loading}
+                        >Sign In
+                        </LoginContainer.SignIn>
                       </LoginContainer.FooterRight>
                     </LoginContainer.Footer>
                   </LoginContainer.FooterSection>          
