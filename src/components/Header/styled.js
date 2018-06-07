@@ -97,13 +97,37 @@ HeaderSection.ProfileButton = styled.button`
   background-position: center;
   border:none;
   padding:18px;
-  background-size: 23px;
+  background-size: 30px;
   background-color:white;
-  @media(max-width:767px){
-   background-size: 23px; 
-   display:none;
+  cursor: pointer;
+`;
+HeaderSection.ProfileDropdown = styled.ul`
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  bottom: -95px;
+  width: 100px;
+  background: #fff;
+  border-radius: 13px;
+`;
+HeaderSection.ProfileDropdownItem = styled.li`
+  font-size: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  &:hover {
+    color: #FF6C58;
   }
-  
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
+  font-family: 'Ubuntu-Bold';
+  cursor: auto;
+  &:hover {
+    color: #333333;
+  }
 `;
 HeaderSection.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40a.png' );
