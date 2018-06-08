@@ -117,7 +117,7 @@ export default class SignUp extends React.Component {
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
-          username: r.email,
+          username: r.email === '' ? 'facebook' : r.email,
           first_name: r.first_name,
           last_name: r.last_name,
           sign_up_source: source,
@@ -127,10 +127,15 @@ export default class SignUp extends React.Component {
         },
       });
     } else if (source === 3) {
+      const name = r.getName();
+      const firstName = name.split('')[0];
+      const lastName = name.split('')[1];
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
           username: r.getEmail(),
+          first_name: firstName,
+          last_name: lastName,
           sign_up_source: source,
           nick_name: r.getName(),
           profile_photo: r.getImageUrl(),
