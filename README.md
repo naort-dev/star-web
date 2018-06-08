@@ -1,5 +1,4 @@
-# Web
-Frontend for Starsona
+# Web App for Starsona
 
 1. Go to project folder and install dependencies, use command npm install
 2. Create an env.js file from content of env.example.js and change the urls based on the server(changing dev/prod api urls for example).
