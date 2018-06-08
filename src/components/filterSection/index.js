@@ -74,9 +74,7 @@ export default class FilterSection extends React.Component {
         <FilterStyled.CloseButton
           onClick={() => this.props.toggleFilter()}
         />
-        <Scrollbars
-          autoHeight
-        >
+        <Scrollbars>
           <FilterStyled.filterWrapper>
             {
               this.props.selectedTab !== 'Videos' && this.props.subCategoryList && !this.props.subCategoryList.length ?

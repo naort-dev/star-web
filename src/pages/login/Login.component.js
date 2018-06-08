@@ -226,7 +226,7 @@ export default class Login extends React.Component {
           this.props.loading ?
             <MainLoader />
           :
-            <div>
+            <LoginContainer.wrapper>
               <HeaderSection>
                 <Link to="/">
                   <HeaderSection.HeaderNavigation />
@@ -331,7 +331,7 @@ export default class Login extends React.Component {
                   </LoginContainer.ImageStackLayout>
                 </LoginContainer.RightSection>
               </LoginContainer>
-            </div>
+            </LoginContainer.wrapper>
         }
       </div>
     );

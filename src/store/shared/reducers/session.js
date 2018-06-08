@@ -52,6 +52,12 @@ export default (state = { ...initialState }, action) => {
         ...state,
         loading: false,
       };
+    case LOGIN.updateLoginStatus:
+      return {
+        ...state,
+        auth_token: action.sessionDetails,
+        isLoggedIn: true,
+      };
     case LOGIN.logout:
       return {
         ...initialState,

@@ -72,6 +72,7 @@ class Header extends React.Component {
 
   deactivateSearch = () => {
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
+    this.props.searchFilter('');
   }
 
   handleSearchItemClick = () => {
