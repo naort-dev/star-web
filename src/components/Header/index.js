@@ -166,8 +166,14 @@ class Header extends React.Component {
                 <div style={{position: 'relative'}}>
                   {/* <HeaderSection.FavoriteButton />
                   <HeaderSection.MyvideoButton /> */}
-                  <HeaderSection.SearchButton onClick={this.activateSearch} />
-                  <HeaderSection.ProfileButton onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})} />
+                  <HeaderSection.SearchButton
+                    hide={this.state.searchActive}
+                    onClick={this.activateSearch}
+                  />
+                  <HeaderSection.ProfileButton
+                    hide={this.state.searchActive}
+                    onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
+                  />
                   {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown>
