@@ -96,10 +96,6 @@ export default class SignUp extends React.Component {
           this.state.password.value,
           this.state.role,
         );
-      } else {
-        this.checkEmail();
-        this.checkPassword();
-        this.checkRequired();
       }
     } else if (this.checkEmail()) {
       this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
@@ -117,7 +113,7 @@ export default class SignUp extends React.Component {
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
-          username: r.email,
+          username: r.email === '' ? 'facebook' : r.email,
           first_name: r.first_name,
           last_name: r.last_name,
           sign_up_source: source,
@@ -127,10 +123,15 @@ export default class SignUp extends React.Component {
         },
       });
     } else if (source === 3) {
+      const name = r.getName();
+      const firstName = name.split('')[0];
+      const lastName = name.split('')[1];
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
           username: r.getEmail(),
+          first_name: firstName,
+          last_name: lastName,
           sign_up_source: source,
           nick_name: r.getName(),
           profile_photo: r.getImageUrl(),
@@ -199,11 +200,12 @@ export default class SignUp extends React.Component {
 
   }
   checkEmail = () => {
+    const re = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
       return false;
     }
-    if (!validator.isEmail(this.state.email.value)) {
+    if (!re.test(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a valid email address' } });
       return false;
     }
