@@ -82,6 +82,9 @@ class Header extends React.Component {
   }
 
   logoutUser = () => {
+    if (window.gapi.auth2) {
+      window.gapi.auth2.getAuthInstance().signOut();
+    }
     if (localStorage) {
       localStorage.removeItem('data');
       this.props.logOut();
@@ -166,13 +169,19 @@ class Header extends React.Component {
                 <div style={{position: 'relative'}}>
                   {/* <HeaderSection.FavoriteButton />
                   <HeaderSection.MyvideoButton /> */}
-                  <HeaderSection.SearchButton onClick={this.activateSearch} />
-                  <HeaderSection.ProfileButton onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})} />
+                  <HeaderSection.SearchButton
+                    hide={this.state.searchActive}
+                    onClick={this.activateSearch}
+                  />
+                  <HeaderSection.ProfileButton
+                    hide={this.state.searchActive}
+                    onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
+                  />
                   {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown>
                         <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
-                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>LogOut</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
                 </div>

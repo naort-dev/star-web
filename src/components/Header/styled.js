@@ -54,6 +54,7 @@ HeaderSection.MenuButton = styled.button`
   }
 `;
 HeaderSection.SearchButton = styled.button` 
+  display: ${props => (props.hide ? 'none' : 'inline-block')};
   background-image: url( 'assets/images/icon_search_40a.png' );
   background-repeat: no-repeat;
   background-position: center;
@@ -92,6 +93,7 @@ HeaderSection.SignInButtonMobile = styled.button`
   }
 `;
 HeaderSection.ProfileButton = styled.button`
+  display: ${props => (props.hide ? 'none' : 'inline-block')};
   background-image: url( 'assets/images/icon_profile_40a.png' );
   background-repeat:no-repeat;
   background-position: center;
@@ -106,7 +108,7 @@ HeaderSection.ProfileDropdown = styled.ul`
   right: 0;
   padding: 10px;
   top: 100%;
-  width: 100px;
+  width: 200px;
   background: #fff;
   border-radius: 13px;
 `;
