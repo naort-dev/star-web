@@ -400,16 +400,14 @@ LoginContainer.WrapsInput = styled.div`
 
 `;
 LoginContainer.AppIconWrapper = styled.div`
-  margin: 110px 50px;
+  text-align: center;
   @media(min-width: 768px) and (max-width: 1024px) {
-    display: inline-block;
-    margin: 0px 50px;;
+    
+   
   }
   @media(min-width: 1025px) {
     margin: 0;
-    order: 2;
     text-align: center;
-    margin: 0 20px;
   }
 `;
 LoginContainer.StoreIcon = styled.img`
@@ -419,5 +417,9 @@ LoginContainer.StoreIcon = styled.img`
   margin: 10px;
   margin-left: 0;
   display: inline-block;
+`;
+LoginContainer.Link = styled.a`
+  width: 100%;
+  display: block;
 `;
 export { LoginContainer, HeaderSection, FooterSection };

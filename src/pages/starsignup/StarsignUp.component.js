@@ -26,12 +26,12 @@ export default class StarsignUp extends React.Component {
           <LoginContainer.LeftSection>
             <LoginContainer.Heading>Please Download the Application</LoginContainer.Heading>   
             <LoginContainer.AppIconWrapper>
-              <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
+              <LoginContainer.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
                 <LoginContainer.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
-              </a>
-              <a target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
+              </LoginContainer.Link>
+              <LoginContainer.Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
                 <LoginContainer.StoreIcon alt="playsore icon" src="assets/images/appstore-download.svg" />
-              </a>
+              </LoginContainer.Link>
             </LoginContainer.AppIconWrapper>
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
