@@ -43,6 +43,12 @@ LoginContainer.SocialMediaSignup = styled.div`
     padding-bottom:45px;
     
   }
+  @media(min-width: 1025px) {
+    padding-bottom: 60px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 `;
 LoginContainer.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
@@ -287,7 +293,6 @@ LoginContainer.Footer = styled.div`
    box-shadow:none;
    border-top: 1px solid #222;
    padding:26px 0px; 
-   margin-top:18%;
   }
 `;
 LoginContainer.Footerleft = styled.div`
@@ -346,9 +351,7 @@ LoginContainer.FooterSection = styled.div`
     position: absolute;
     left: 0;
     right: 0;
-    bottom: 6px;
-    height: 145px;
-    
+    bottom: 0;   
   }
 `;
 LoginContainer.ImageStackLayout = styled.div`
