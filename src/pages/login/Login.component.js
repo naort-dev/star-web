@@ -58,7 +58,7 @@ export default class Login extends React.Component {
     }(document, 'script', 'facebook-jssdk'));
     const token = this.props.location.hash;
     const authToken = token.split('=')[1];
-    const instaUrl = `https://api.instagram.com/v1/users/self/?access_token=${authToken}`;
+    const instaUrl = config.instaUrl + authToken;
     const that = this;
     if (authToken !== undefined) {
       axios.get(instaUrl)
@@ -158,7 +158,7 @@ export default class Login extends React.Component {
   onInstagramLogin = () => {
     const clientId = config.instaId;
     const redirectUri = config.instaRedirectUri;
-    const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+    const url = config.instaAuthUrl +'?client_id='+ clientId +'&redirect_uri='+redirectUri+'&response_type=token';
     window.location.href = url;
   }
   onGmail = () => {
