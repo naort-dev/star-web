@@ -105,7 +105,7 @@ HeaderSection.ProfileDropdown = styled.ul`
   position: absolute;
   right: 0;
   padding: 10px;
-  bottom: -95px;
+  top: 100%;
   width: 100px;
   background: #fff;
   border-radius: 13px;
@@ -279,6 +279,7 @@ HeaderSection.Input = styled.input`
   border-radius: 5px;
   @media(min-width: 768px) {
     text-indent: 24px;
+    width: 100%;
   } 
   @media(min-width : 1025px){
     text-indent: 78px;

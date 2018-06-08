@@ -1,5 +1,6 @@
 import React from 'react';
 import VideoRenderDiv from './styled';
+import Popup from '../Popup';
 
 
 export default class VideoRender extends React.Component {
@@ -8,6 +9,7 @@ export default class VideoRender extends React.Component {
     this.state = {
       coverImage: false,
       profileImage: false,
+      showPopup: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -31,6 +33,9 @@ export default class VideoRender extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
+  closePopup = () => {
+    this.setState({ showPopup: false })
+  }
   renderVideoDetails = (text) => {
     let splicedText = text;
     if (text.length > this.charLimit) {
@@ -42,9 +47,25 @@ export default class VideoRender extends React.Component {
     const { props } = this;
     return (
       <VideoRenderDiv>
+        {
+          this.state.showPopup && this.props.videoUrl ?
+            <Popup
+              closePopUp={this.closePopup}
+            >
+              <video
+                style={{width: '100%', height: '300px'}}
+                autoPlay
+                src={this.props.videoUrl}
+                poster={this.props.cover}
+                controls
+              />
+            </Popup>
+          : null
+        }
         <VideoRenderDiv.ImageSection
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
+          onClick={() => this.setState({ showPopup: true })}
         >
           <VideoRenderDiv.ProfileImageWrapper>
             <VideoRenderDiv.ProfileImage
