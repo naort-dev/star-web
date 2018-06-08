@@ -7,20 +7,15 @@ const LoginContainer = styled.div`
   flex-direction: column;
   @media(min-width: 1025px){
     flex-direction: row;
-    height: calc(100% - 40px);
   }
 `;
 LoginContainer.wrapper = styled.div`
-  @media(min-width: 1025px) {
-    height: 100vh;
-  }
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   @media(min-width: 1025px){
     width: 40%;
     padding: 0px 0px;
-    height: 80%;
     position: relative;
   }
 `;
@@ -33,7 +28,6 @@ LoginContainer.RightSection = styled.div`
     display: block;
     padding: 0px 0px;
     position: relative;
-    height: 75%;
   }
 `;
 LoginContainer.SocialMediaSignup = styled.div`
@@ -45,15 +39,6 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
   @media(min-width: 1025px) {
     padding-bottom: 60px;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-  @media(min-width: 1025px) {
-    padding-bottom: 60px;
-    height: 100%;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
 `;
 LoginContainer.Heading = styled.div`
@@ -354,19 +339,12 @@ LoginContainer.FooterSection = styled.div`
   padding: 0px 0px;
   @media(min-width:1025px){
     padding:0px 56px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;   
   }
 `;
 LoginContainer.ImageStackLayout = styled.div`
   padding:32px 110px 76px 33px;
   width:100%;
   height:600px;
-  @media(min-width: 1025px) {
-    height: 100%;
-  }
 
 `;
 LoginContainer.ErrorDiv = styled.div`
