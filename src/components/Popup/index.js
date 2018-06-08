@@ -7,8 +7,8 @@ export default class Popup extends React.Component {
     this.state = {
 
     };
-    this.popupContent = undefined;
-    this.popupWrapper = undefined;
+    this.popupContent = null;
+    this.popupWrapper = null;
   }
   componentDidMount() {
     window.addEventListener('click', this.hidePopup);
