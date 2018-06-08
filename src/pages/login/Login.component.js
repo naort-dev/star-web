@@ -191,11 +191,13 @@ export default class Login extends React.Component {
     this.setState({ password: { ...this.state.password, value: e.target.value } });
   }
   checkEmail = () => {
+    const re = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+   
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
       return false;
     }
-    if (!validator.isEmail(this.state.email.value)) {
+    if (!re.test(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a valid email address' } });
       return false;
     }
