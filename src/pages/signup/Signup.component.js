@@ -66,8 +66,6 @@ export default class SignUp extends React.Component {
             console.log(error);
         });
     }
-    
-
     gapi.signin2.render('g-sign-in', {
       'scope': 'profile email',
       'width': 200,
@@ -285,7 +283,10 @@ export default class SignUp extends React.Component {
               <LoginContainer.InputFieldsWrapper>
                 <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
                 {
-                  this.props.statusCode === undefined ?
+                  this.props.statusCode === '410' ?
+                    <LoginContainer.EmptyDiv />
+                    
+                  :
                     <LoginContainer.InputWrapper>
                       <LoginContainer.Label>First Name</LoginContainer.Label>
                       <LoginContainer.WrapsInput>
@@ -302,12 +303,13 @@ export default class SignUp extends React.Component {
                         </LoginContainer.ErrorMsg>
                       </LoginContainer.WrapsInput>    
                     </LoginContainer.InputWrapper>
-                  :
-                    <LoginContainer.EmptyDiv />
                  
                 }
                 {
-                  this.props.statusCode === undefined ?
+                  this.props.statusCode === '410' ?
+                    <LoginContainer.EmptyDiv />
+                    
+                :
                     <LoginContainer.InputWrapper>
                       <LoginContainer.Label>Second Name</LoginContainer.Label>
                       <LoginContainer.WrapsInput>
@@ -323,8 +325,6 @@ export default class SignUp extends React.Component {
                         </LoginContainer.ErrorMsg>
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
-                :
-                    <LoginContainer.EmptyDiv />
                 }
                 
                 <LoginContainer.InputWrapper>
@@ -342,7 +342,9 @@ export default class SignUp extends React.Component {
                   </LoginContainer.WrapsInput>
                 </LoginContainer.InputWrapper>
                 {
-                  this.props.statusCode === undefined ?
+                  this.props.statusCode === '410' ?
+                    <LoginContainer.EmptyDiv />
+                  :
                     <LoginContainer.InputWrapper>      
                       <LoginContainer.Label>Password</LoginContainer.Label>
                       <LoginContainer.WrapsInput>
@@ -358,9 +360,7 @@ export default class SignUp extends React.Component {
                           {this.state.password.message}
                         </LoginContainer.ErrorMsg>
                       </LoginContainer.WrapsInput>
-                    </LoginContainer.InputWrapper>
-                :
-                    <LoginContainer.EmptyDiv />
+                    </LoginContainer.InputWrapper>                   
                 }
                 
                 <LoginContainer.PrivacyContent>
