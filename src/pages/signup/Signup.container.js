@@ -7,6 +7,7 @@ const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   loading: state.session.loading,
   error: state.session.incorrectError,
+  statusCode: state.session.statusCode,
 });
 
 const mapDispatchToProps = dispatch => ({

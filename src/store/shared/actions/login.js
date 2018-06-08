@@ -26,9 +26,10 @@ export const loginFetchSuccess = (data) => {
     });
 };
 
-export const loginFetchIncorrect = error => ({
+export const loginFetchIncorrect = (error, status) => ({
   type: LOGIN.incorrect,
   error,
+  status,
 });
 
 export const loginFetchFailed = error => ({
@@ -52,7 +53,7 @@ export const loginUser = (loginEmail, loginPassword) => (dispatch) => {
   }).catch((exception) => {
     dispatch(loginFetchEnd());
     if (exception.response.status === 400) {
-      dispatch(loginFetchIncorrect(exception.response.data.error.message));
+      dispatch(loginFetchIncorrect(exception.response.data.error.message, exception.response.status));
     } else {
       dispatch(loginFetchFailed(exception));
     }

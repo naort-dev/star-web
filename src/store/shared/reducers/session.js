@@ -1,5 +1,4 @@
 import { LOGIN } from '../actions/login';
-import { REGISTER } from '../actions/register';
 
 const initalState = {
   isLoggedIn: false,
@@ -10,6 +9,7 @@ const initalState = {
     has: false,
     message: '',
   },
+  statusCode: undefined,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -27,6 +27,7 @@ export default (state = { ...initalState }, action) => {
         ...action.user,
         isLoggedIn: true,
         loading: false,
+        statusCode: undefined,
         auth_token: action.data.user,
       };
 
@@ -34,6 +35,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         incorrectError: action.error,
+        statusCode: action.status,
       };
 
     case LOGIN.failed:

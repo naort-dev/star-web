@@ -150,8 +150,7 @@ class Header extends React.Component {
               }
             </HeaderSection.InputWrapper>
           </HeaderSection.SearchBar>
-          <HeaderSection.HeaderRight>
-            
+          <HeaderSection.HeaderRight>      
             {
               this.props.isLoggedIn ?
                 <div>

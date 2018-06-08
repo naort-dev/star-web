@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import validator from 'validator';
+import config from '../../lib/config';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
 
@@ -32,7 +33,7 @@ export default class SignUp extends React.Component {
   componentDidMount() {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: '1237328416404211',
+        appId: config.fbId,
         cookie: true,
         xfbml: true,
         version: 'v3.0',
@@ -52,6 +53,28 @@ export default class SignUp extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
+    const token = this.props.location.hash;
+    const authToken = token.split('=')[1];
+    const instaUrl = config.instaUrl + authToken;
+    const that = this;
+    if(authToken !== undefined) {
+      axios.get(instaUrl)
+        .then(function (response) {
+           that.onSocialMediaLogin(response.data.data,4);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+    
+
+    gapi.signin2.render('g-sign-in', {
+      'scope': 'profile email',
+      'width': 200,
+      'height': 50,
+      'theme': 'dark',
+      'onsuccess': this.onSignIn,
+    });
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
@@ -60,43 +83,96 @@ export default class SignUp extends React.Component {
       });
     }
   }
+  onSignIn = (googleUser) => {
+    const profile = googleUser.getBasicProfile();
+    this.onSocialMediaLogin(profile, 3);
+  }
   onRegister = (e) => {
     e.preventDefault();
-    if (this.isFormValid()) {
-      this.props.registerUser(
-        this.state.firstName.value,
-        this.state.lastName.value,
-        this.state.email.value,
-        this.state.password.value,
-        this.state.role,
-      );
+    if (this.props.statusCode === undefined) {
+      if (this.isFormValid()) {
+        this.props.registerUser(
+          this.state.firstName.value,
+          this.state.lastName.value,
+          this.state.email.value,
+          this.state.password.value,
+          this.state.role,
+        );
+      } else {
+        this.checkEmail();
+        this.checkPassword();
+        this.checkRequired();
+      }
+    } else if (this.checkEmail()) {
+      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
+        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
+      });
     } else {
       this.checkEmail();
       this.checkPassword();
       this.checkRequired();
     }
+    
   }
   onSocialMediaLogin =(r, source) => {
-    this.setState({
-      socialMedia: {
-        ...this.state.socialMedia,
-        username: r.email,
-        first_name: r.first_name,
-        last_name: r.last_name,
-        sign_up_source: source,
-        nick_name: r.name,
-        profile_photo: r.picture.data.url,
-        fb_id: r.id,
-      },
-    });
+    if (source === 2) {
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: r.email,
+          first_name: r.first_name,
+          last_name: r.last_name,
+          sign_up_source: source,
+          nick_name: r.name,
+          profile_photo: r.picture.data.url,
+          fb_id: r.id,
+        },
+      });
+    } else if (source === 3) {
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: r.getEmail(),
+          sign_up_source: source,
+          nick_name: r.getName(),
+          profile_photo: r.getImageUrl(),
+          gp_id: r.getId(),
+        },
+      });
+    } else {
+      const val = r.data.data;
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: val.username,
+          sign_up_source: source,
+          nick_name: val.full_name,
+          profile_photo: val.profile_picture,
+          in_id: val.id,
+        },
+      });
+    }
     this.props.socialMediaLogin(
       this.state.socialMedia.username,
       this.state.socialMedia.first_name,
       this.state.socialMedia.last_name,
       this.state.socialMedia.sign_up_source,
       this.state.socialMedia.profile_photo,
+      this.state.socialMedia.role,
       this.state.socialMedia.fb_id,
+      this.state.socialMedia.gp_id,
+      this.state.socialMedia.in_id,
     );
+  }
+  onGmail = () => {
+    const check = document.getElementsByClassName('abcRioButtonIcon');
+    check[0].click();
+  }
+  onInstagramLogin = () => {
+    const clientId = config.instaId;
+    const redirectUri = config.instaRedirectUri;
+    const url = config.instaAuthUrl +'?client_id='+ clientId +'&redirect_uri='+redirectUri+'&response_type=token';
+    window.location.href = url;
   }
   OnFBlogin = () => {
     const that = this;
@@ -107,7 +183,7 @@ export default class SignUp extends React.Component {
            that.onSocialMediaLogin(response,2);
          });
       }
-    }, { scope: 'email,user_birthday', return_scopes: true });
+    }, { scope: 'email', return_scopes: true });
   }
   firstNameHandler = (e) => {
     this.setState({ firstName: { ...this.state.firstName, value: e.target.value } });
@@ -194,12 +270,13 @@ export default class SignUp extends React.Component {
                 </LoginContainer.Button>
               </LoginContainer.ButtonDiv>
               <LoginContainer.ButtonDiv>
-                <LoginContainer.Button>
+                <LoginContainer.GoogleWrapper id="g-sign-in" />
+                <LoginContainer.Button onClick={() => this.onGmail()}>
                   <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
                 </LoginContainer.Button>
               </LoginContainer.ButtonDiv>
               <LoginContainer.ButtonDiv>
-                <LoginContainer.Button>
+                <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
                   <LoginContainer.InstagramContent>Continue with Instagram
                   </LoginContainer.InstagramContent>
                 </LoginContainer.Button>
@@ -207,37 +284,49 @@ export default class SignUp extends React.Component {
               <LoginContainer.Line />
               <LoginContainer.InputFieldsWrapper>
                 <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>First Name</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
-                      placeholder="Enter your first name"
-                      type="text"
-                      name="firstName"
-                      value={this.state.firstName.value}
-                      onChange={this.firstNameHandler}
-                      onBlur={this.checkRequired}
-                    />
-                    <LoginContainer.ErrorMsg>
-                      {this.state.firstName.message}
-                    </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>    
-                </LoginContainer.InputWrapper>
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>Second Name</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
-                      placeholder="Enter your last name"
-                      type="text"
-                      name="lastName"
-                      value={this.state.lastName.value}
-                      onChange={this.lastNameHandler}
-                    />
-                    <LoginContainer.ErrorMsg>
-                      {this.state.lastName.message}
-                    </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
+                {
+                  this.props.statusCode === undefined ?
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>First Name</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          placeholder="Enter your first name"
+                          type="text"
+                          name="firstName"
+                          value={this.state.firstName.value}
+                          onChange={this.firstNameHandler}
+                          onBlur={this.checkRequired}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.firstName.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>    
+                    </LoginContainer.InputWrapper>
+                  :
+                    <LoginContainer.EmptyDiv />
+                 
+                }
+                {
+                  this.props.statusCode === undefined ?
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Second Name</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          placeholder="Enter your last name"
+                          type="text"
+                          name="lastName"
+                          value={this.state.lastName.value}
+                          onChange={this.lastNameHandler}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.lastName.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                :
+                    <LoginContainer.EmptyDiv />
+                }
+                
                 <LoginContainer.InputWrapper>
                   <LoginContainer.Label>Email</LoginContainer.Label>
                   <LoginContainer.WrapsInput>
@@ -252,22 +341,28 @@ export default class SignUp extends React.Component {
                     <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
                   </LoginContainer.WrapsInput>
                 </LoginContainer.InputWrapper>
-                <LoginContainer.InputWrapper>      
-                  <LoginContainer.Label>Password</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
-                      placeholder="Enter your password"
-                      type="password"
-                      name="password"
-                      value={this.state.password.value}
-                      onChange={this.passwordHandler}
-                      onBlur={this.checkPassword}
-                    />
-                    <LoginContainer.ErrorMsg>
-                      {this.state.password.message}
-                    </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
+                {
+                  this.props.statusCode === undefined ?
+                    <LoginContainer.InputWrapper>      
+                      <LoginContainer.Label>Password</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          placeholder="Enter your password"
+                          type="password"
+                          name="password"
+                          value={this.state.password.value}
+                          onChange={this.passwordHandler}
+                          onBlur={this.checkPassword}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.password.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                :
+                    <LoginContainer.EmptyDiv />
+                }
+                
                 <LoginContainer.PrivacyContent>
                 By creating an account you agree to Starsona’s
                   <strong>Privacy Policy</strong>
