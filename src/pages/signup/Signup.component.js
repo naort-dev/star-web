@@ -200,12 +200,12 @@ export default class SignUp extends React.Component {
 
   }
   checkEmail = () => {
-    const re = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
       return false;
     }
-    if (!re.test(this.state.email.value)) {
+    if (!emailRegex.test(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a valid email address' } });
       return false;
     }
