@@ -279,6 +279,7 @@ HeaderSection.Input = styled.input`
   border-radius: 5px;
   @media(min-width: 768px) {
     text-indent: 24px;
+    width: 100%;
   } 
   @media(min-width : 1025px){
     text-indent: 78px;
