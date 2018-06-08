@@ -68,11 +68,11 @@ TabStyled.FilterIcon = styled.span`
 
 TabStyled.FilterCount = styled.span`
   position: absolute;
-  top: 0;
-  right: 0;
-  font-size: 13px;
+  top: -3px;
+  right: -9px;
+  font-size: 11px;
   width: 18px;
-  padding-top: 1px;
+  padding-top: 3px;
   height: 18px;
   text-align: center;
   border-radius: 50%;

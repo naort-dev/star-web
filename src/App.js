@@ -43,9 +43,9 @@ class App extends React.Component {
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
     }
-    // if (!this.props.professionsList.professions.length) {
-    //   this.setState({ showLoading: true });
-    // }
+    if (!this.props.professionsList.professions.length) {
+      this.setState({ showLoading: true });
+    }
   }
 
   componentDidMount() {

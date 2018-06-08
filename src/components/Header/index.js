@@ -23,6 +23,13 @@ class Header extends React.Component {
     window.addEventListener('mousedown', this.removeSuggestions.bind(this));
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      this.props.searchFilter('');
+      this.setState({ searchText: '' });
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
   }

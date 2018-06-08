@@ -279,12 +279,14 @@ HeaderSection.Input = styled.input`
   font-size: 16px;
   border: none;
   border-radius: 5px;
+  background: transparent;
   @media(min-width: 768px) {
     text-indent: 24px;
     width: 100%;
   } 
   @media(min-width : 1025px){
-    text-indent: 78px;
+    text-indent: 0;
+    text-align: center;
     font-size: 18px;
   }
 `;
