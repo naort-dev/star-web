@@ -17,7 +17,6 @@ export default class Popup extends React.Component {
     window.removeEventListener('click', this.hidePopup);
   }
   hidePopup = (e) => {
-    console.log(e)
     if (this.popupContent && this.popupWrapper.contains(e.target) && !this.popupContent.contains(e.target)) {
       this.props.closePopUp();
     }
