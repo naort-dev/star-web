@@ -5,6 +5,7 @@ import {
 } from 'react-router-dom';
 import axios from 'axios';
 import validator from 'validator';
+import config from '../../lib/config';
 import { LoginContainer, HeaderSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
 import MainLoader from '../../components/MainLoader';
@@ -35,7 +36,7 @@ export default class Login extends React.Component {
   componentDidMount() {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: '178768332841448',
+        appId: config.fbId,
         cookie: true,
         xfbml: true,
         version: 'v3.0',
@@ -155,8 +156,8 @@ export default class Login extends React.Component {
     );
   }
   onInstagramLogin = () => {
-    const clientId = '26885a83d43849ddbdf1950c81ad7530';
-    const redirectUri = 'http://localhost:8080/login';
+    const clientId = config.instaId;
+    const redirectUri = config.instaRedirectUri;
     const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
     window.location.href = url;
   }
@@ -215,8 +216,7 @@ export default class Login extends React.Component {
     if (redirectToReferrer) {
       return <Redirect to="/" />;
     }
-    return (
-      
+    return (   
       <div>
         {
           loginToContinue &&

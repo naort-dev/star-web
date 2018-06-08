@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import validator from 'validator';
+import config from '../../lib/config';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
 
@@ -32,7 +33,7 @@ export default class SignUp extends React.Component {
   componentDidMount() {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: '1237328416404211',
+        appId: config.fbId,
         cookie: true,
         xfbml: true,
         version: 'v3.0',
@@ -168,8 +169,8 @@ export default class SignUp extends React.Component {
     check[0].click();
   }
   onInstagramLogin = () => {
-    const clientId = '26885a83d43849ddbdf1950c81ad7530';
-    const redirectUri = 'http://localhost:8080/login';
+    const clientId = config.instaId;
+    const redirectUri = config.instaRedirectUri;
     const url = `https://api.instagram.com/oauth/authorize/?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
     window.location.href = url;
   }
