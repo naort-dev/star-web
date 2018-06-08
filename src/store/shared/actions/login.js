@@ -8,6 +8,8 @@ export const LOGIN = {
   success: 'session/ON_LOGIN_SUCCESS',
   failed: 'session/ON_LOGIN_FAILED',
   incorrect: 'session/ON_LOGIN_INCORRECT',
+  logout: 'session/ON_LOGOUT',
+  updateLoginStatus: 'session/ON_UPDATE_LOGIN_STATUS',
 };
 
 export const loginFetchStart = () => ({
@@ -35,6 +37,15 @@ export const loginFetchIncorrect = (error, status) => ({
 export const loginFetchFailed = error => ({
   type: LOGIN.failed,
   error,
+});
+
+export const logOut = () => ({
+  type: LOGIN.logout,
+});
+
+export const updateLoginStatus = sessionDetails => ({
+  type: LOGIN.updateLoginStatus,
+  sessionDetails,
 });
 
 export const loginUser = (loginEmail, loginPassword) => (dispatch) => {

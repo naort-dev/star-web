@@ -33,6 +33,7 @@ export default class Landing extends React.Component {
     window.addEventListener('resize', this.setScrollHeight);
   }
   componentWillReceiveProps(nextProps) {
+    const loginChange = this.props.isLoggedIn !== nextProps.isLoggedIn;
     const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
     const searchParamChange = this.props.filters.searchParam !== nextProps.filters.searchParam;
     const lowPriceChange = this.props.filters.lowPrice !== nextProps.filters.lowPrice;
@@ -57,7 +58,7 @@ export default class Landing extends React.Component {
         this.setScrollHeight();
       });
     }
-    if (tabChange) {
+    if (tabChange || loginChange) {
       this.setState({ filterSelected: false }, () => {
         this.setScrollHeight();
       });

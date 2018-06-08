@@ -42,7 +42,7 @@ HeaderSection.ImgLogo = styled.img`
 HeaderSection.MenuButton = styled.button`
   background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
   background-repeat:no-repeat;
-  padding: 8px;
+  padding: 11px;
   margin-left:10px;
   vertical-align: top;
   margin-top: 10px;
@@ -97,13 +97,37 @@ HeaderSection.ProfileButton = styled.button`
   background-position: center;
   border:none;
   padding:18px;
-  background-size: 23px;
+  background-size: 30px;
   background-color:white;
-  @media(max-width:767px){
-   background-size: 23px; 
-   display:none;
+  cursor: pointer;
+`;
+HeaderSection.ProfileDropdown = styled.ul`
+  position: absolute;
+  right: 0;
+  padding: 10px;
+  bottom: -95px;
+  width: 100px;
+  background: #fff;
+  border-radius: 13px;
+`;
+HeaderSection.ProfileDropdownItem = styled.li`
+  font-size: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  cursor: pointer;
+  &:hover {
+    color: #FF6C58;
   }
-  
+  &:last-child {
+    border-bottom: none;
+  }
+`;
+HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
+  font-family: 'Ubuntu-Bold';
+  cursor: auto;
+  &:hover {
+    color: #333333;
+  }
 `;
 HeaderSection.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40a.png' );

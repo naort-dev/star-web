@@ -14,6 +14,11 @@ ImageStackDiv.FeatureImage = styled.div`
   height:50%;
   background-position: center;
   margin-bottom:1%;
+  @media(min-width: 1025px) {
+    background-position: center center;
+    background-size: cover;
+    margin-bottom: 10px;
+  }
 `;
 ImageStackDiv.ExtraImagesLayout = styled.div`
   display:flex;
@@ -27,8 +32,14 @@ ImageStackDiv.ExtraImages1 = styled.div`
   background-repeat:no-repeat;
   height:100%;
   padding-right:5px;
-  background-position: center;
+  background-position: center center;
+  background-size: cover;
   margin-right:1%;
+  @media(min-width: 1025px) {
+    background-position: center center;
+    background-size: cover;
+    margin-right: 10px;
+  }
 `;
 ImageStackDiv.ExtraImages2 = styled.div`
   width:50%;
@@ -36,6 +47,10 @@ ImageStackDiv.ExtraImages2 = styled.div`
   background-repeat:no-repeat;
   height:100%;
   background-position: center;
+  @media(min-width: 1025px) {
+    background-position: center center;
+    background-size: cover;
+  }
 `;
 
 

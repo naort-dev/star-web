@@ -12,6 +12,7 @@ import {
   allUserRoles,
 } from './services/protectRoute';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
+import { updateLoginStatus } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -39,6 +40,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    if (localStorage && localStorage.getItem('data') !== null) {
+      this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+    }
     // if (!this.props.professionsList.professions.length) {
     //   this.setState({ showLoading: true });
     // }
@@ -142,6 +146,7 @@ const mapState = state => ({
 
 const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
+  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));

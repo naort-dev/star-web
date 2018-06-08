@@ -23,7 +23,7 @@ export const celebListFetchEnd = () => ({
   type: CELEB_LIST.end,
 });
 
-export const celebListFetchSuccess = (list, offset, count, category, searchParam, lowPrice, highPrice, sortValue) => {
+export const celebListFetchSuccess = (list, offset, count, category, searchParam, lowPrice, highPrice, sortValue, isLoggedIn) => {
   return (
     {
       type: CELEB_LIST.success,
@@ -35,6 +35,7 @@ export const celebListFetchSuccess = (list, offset, count, category, searchParam
       lowPrice,
       highPrice,
       sortValue,
+      isLoggedIn,
     });
 };
 
@@ -62,6 +63,8 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
     sortValue,
   } = getState().filters;
   const { filters } = getState();
+  const { isLoggedIn, auth_token } = getState().session;
+  const loginChange = isLoggedIn === (getState().celebList[category.label] && getState().celebList[category.label].isLoggedIn);
   const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
   const priceRangeChange =
@@ -70,7 +73,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const searchParamChange = searchParam !== (getState().celebList[category.label] && getState().celebList[category.label].currentSearchParam);
   const sortValueChange = sortValue !== (getState().celebList[category.label] && getState().celebList[category.label].sortValue);
   const { limit } = getState().celebList;
-  if (categoryChange && !searchParamChange && ((!priceRangeChange && !sortValueChange) || category.label === 'featured') && cachedData) {
+  if (categoryChange && loginChange && !searchParamChange && ((!priceRangeChange && !sortValueChange) || category.label === 'featured') && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {
       getState().celebList.token.cancel('Operation canceled due to new request.');
     }
@@ -86,18 +89,31 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   }
   const source = CancelToken.source();
   dispatch(celebListFetchStart(refresh, source, category.label));
+  let API_BASE;
+  let options;
+  if (isLoggedIn) {
+    API_BASE = Api.authGetCelebList;
+    options = {
+      cancelToken: source.token,
+      headers: {
+        'Authorization': `token ${auth_token.authentication_token}`,
+      },
+    };
+  } else {
+    API_BASE = Api.getCelebList;
+    options = {
+      cancelToken: source.token
+    };
+  }
   let API_URL;
-  if (category.label === 'featured') {
-
-    API_URL = `${Api.getCelebList}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
+  if (category.label === 'featured')  {
+    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
   } else {
     const subCategoryList = filters[category.value];
     const professsion = subCategoryList && Object.keys(subCategoryList).length ? Object.keys(subCategoryList).toString() : category.value;
-    API_URL = `${Api.getCelebList}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
+    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
   }
-  return fetch.get(API_URL, {
-    cancelToken: source.token,
-  }).then((resp) => {
+  return fetch.get(API_URL, options).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(celebListFetchEnd());
       let list = getState().celebList.data;
@@ -107,7 +123,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
       } else {
         list = [...list, ...resp.data.data.celebrity_list];
       }
-      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam, lowPrice, highPrice, sortValue));
+      dispatch(celebListFetchSuccess(list, offset, count, category.label, searchParam, lowPrice, highPrice, sortValue, isLoggedIn));
     } else {
       dispatch(celebListFetchEnd());
     }
