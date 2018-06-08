@@ -19,6 +19,7 @@ const mapStateToProps = state => ({
   videosList: state.videosList,
   professionsList: state.professionsList,
   filters: state.filters,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
