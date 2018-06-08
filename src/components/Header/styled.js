@@ -108,7 +108,7 @@ HeaderSection.ProfileDropdown = styled.ul`
   right: 0;
   padding: 10px;
   top: 100%;
-  width: 100px;
+  width: 200px;
   background: #fff;
   border-radius: 13px;
 `;

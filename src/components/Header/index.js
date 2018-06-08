@@ -178,7 +178,7 @@ class Header extends React.Component {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown>
                         <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
-                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>LogOut</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
                 </div>
