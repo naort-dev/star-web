@@ -106,7 +106,6 @@ export default class Login extends React.Component {
     } 
   }
   onSocialMediaLogin =(r, source) => {
-    console.log(r);
     if (source === 2) {
       this.setState({
        
@@ -124,8 +123,8 @@ export default class Login extends React.Component {
       });
     } else if (source === 3) {
       const name = r.getName();
-      const firstName = name.split('')[0];
-      const lastName = name.split('')[1];
+      const firstName = name.split(' ')[0];
+      const lastName = name.split(' ')[1];
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,

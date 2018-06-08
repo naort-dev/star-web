@@ -82,6 +82,9 @@ class Header extends React.Component {
   }
 
   logoutUser = () => {
+    if (window.gapi.auth2) {
+      window.gapi.auth2.getAuthInstance().signOut();
+    }
     if (localStorage) {
       localStorage.removeItem('data');
       this.props.logOut();
