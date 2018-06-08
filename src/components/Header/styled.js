@@ -42,7 +42,7 @@ HeaderSection.ImgLogo = styled.img`
 HeaderSection.MenuButton = styled.button`
   background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
   background-repeat:no-repeat;
-  padding: 8px;
+  padding: 11px;
   margin-left:10px;
   vertical-align: top;
   margin-top: 10px;

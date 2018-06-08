@@ -30,7 +30,8 @@ LoginContainer.RightSection = styled.div`
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
   @media(min-width:768px){
-    padding: 5px 65px; 
+    padding: 5px 65px;
+    padding-bottom: 45px;
   }
 `;
 LoginContainer.Heading = styled.div`
