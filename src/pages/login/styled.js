@@ -49,6 +49,12 @@ LoginContainer.SocialMediaSignup = styled.div`
     overflow-y: auto;
     overflow-x: hidden;
   }
+  @media(min-width: 1025px) {
+    padding-bottom: 60px;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
 `;
 LoginContainer.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
