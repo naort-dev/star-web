@@ -71,8 +71,9 @@ TabStyled.FilterCount = styled.span`
   top: 0;
   right: 0;
   font-size: 13px;
-  width: 15px;
-  height: 15px;
+  width: 18px;
+  padding-top: 1px;
+  height: 18px;
   text-align: center;
   border-radius: 50%;
   background-color: #FF6C58;
