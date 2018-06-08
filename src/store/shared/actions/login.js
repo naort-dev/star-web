@@ -9,7 +9,10 @@ export const LOGIN = {
   failed: 'session/ON_LOGIN_FAILED',
   incorrect: 'session/ON_LOGIN_INCORRECT',
   logout: 'session/ON_LOGOUT',
+<<<<<<< HEAD
   updateLoginStatus: 'session/ON_UPDATE_LOGIN_STATUS',
+=======
+>>>>>>> 7a7a3f761c1e1a33668691f3a59f42d04e37bdc7
 };
 
 export const loginFetchStart = () => ({
