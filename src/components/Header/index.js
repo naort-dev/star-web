@@ -107,11 +107,11 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                {/* <Link to={`/starDetail/${item.id}`}> */}
+                <Link to={`/starDetail/${item.id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>
-                {/* </Link> */}
+                </Link>
               </HeaderSection.SuggestionListItem>
             ))
           }
