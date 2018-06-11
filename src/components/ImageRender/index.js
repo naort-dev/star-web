@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ImageRenderDiv from './styled';
 
 
@@ -34,25 +35,27 @@ export default class ImageRender extends React.Component {
     const { props } = this;
     return (
       <ImageRenderDiv>
-        <ImageRenderDiv.ImageSection
-          height={props.imageHeight}
-          imageUrl={this.state.coverImage}
-        >
-          <ImageRenderDiv.ProfileImageWrapper>
-            <ImageRenderDiv.ProfileImage
-              imageUrl={this.state.profileImage}
-            />
-          </ImageRenderDiv.ProfileImageWrapper>
-          {/* <ImageRenderDiv.FavoriteButton /> */}
-        </ImageRenderDiv.ImageSection>
-        <ImageRenderDiv.ProfileContent>
-          <ImageRenderDiv.Span>
-            <ImageRenderDiv.StarName>
-              {props.starName}
-            </ImageRenderDiv.StarName>
-            <ImageRenderDiv.StarDetails>{props.details}</ImageRenderDiv.StarDetails>
-          </ImageRenderDiv.Span>
-        </ImageRenderDiv.ProfileContent>
+        <Link to={`/starDetail/${props.id}`}>
+          <ImageRenderDiv.ImageSection
+            height={props.imageHeight}
+            imageUrl={this.state.coverImage}
+          >
+            <ImageRenderDiv.ProfileImageWrapper>
+              <ImageRenderDiv.ProfileImage
+                imageUrl={this.state.profileImage}
+              />
+            </ImageRenderDiv.ProfileImageWrapper>
+            {/* <ImageRenderDiv.FavoriteButton /> */}
+          </ImageRenderDiv.ImageSection>
+          <ImageRenderDiv.ProfileContent>
+            <ImageRenderDiv.Span>
+              <ImageRenderDiv.StarName>
+                {props.starName}
+              </ImageRenderDiv.StarName>
+              <ImageRenderDiv.StarDetails>{props.details}</ImageRenderDiv.StarDetails>
+            </ImageRenderDiv.Span>
+          </ImageRenderDiv.ProfileContent>
+        </Link>
       </ImageRenderDiv>
     )
   }

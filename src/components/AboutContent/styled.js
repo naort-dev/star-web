@@ -22,7 +22,7 @@ AboutContentDiv.ProfileName = styled.h5`
 AboutContentDiv.ProfileCategory = styled.h6`
   font-family: 'Ubuntu-Light';
   color:#333333;
-  font-size: 12px;
+  font-size: 20px;
 `;
 AboutContentDiv.ProfileDetailsWrapper = styled.article`
   margin-top : 2.5%;
@@ -31,7 +31,7 @@ AboutContentDiv.ProfileDetailsWrapper = styled.article`
 AboutContentDiv.ProfileDetails = styled.p`
   text-align: left;
   font-family: 'Ubuntu-Regular';
-  font-size: 11px;
+  font-size: 18px;
   color:#333333;
 `;
 AboutContentDiv.VideoHeading = styled.h6`

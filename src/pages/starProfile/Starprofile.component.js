@@ -62,7 +62,34 @@ export default class Starprofile extends React.Component {
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
+  generateStarDetails = () => {
+    let string = '';
+    if (this.props.celebrityDetails.profession_details) {
+      this.props.celebrityDetails.profession_details.forEach((professions, index) => {
+        if (index === this.props.celebrityDetails.profession_details.length - 1) {
+          string += `${professions.title}`;
+        } else {
+          string += `${professions.title}\xa0|\xa0`;
+        }
+      });
+    }
+    return string;
+  }
   render() {
+    let coverPhoto;
+    let profilePhoto;
+    let fullName = '';
+    let rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
+    if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
+      fullName = `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
+    }
+    if (this.props.userDetails.avatar_photo) {
+      coverPhoto = this.props.userDetails.avatar_photo.image_url && this.props.userDetails.avatar_photo.image_url;
+      profilePhoto = this.props.userDetails.avatar_photo.thumbnail_url && this.props.userDetails.avatar_photo.thumbnail_url;
+    } else {
+      coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
+      profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
+    }
     return (
       <Detail.Wrapper>
         <Header
@@ -73,13 +100,41 @@ export default class Starprofile extends React.Component {
         <Detail>
           <Detail.LeftSection>
             <Detail.SmallScreenLayout>
-              <ImageRender imageHeight="270" />
+              <Detail.ImageRenderDiv>
+                <Detail.ImageSection
+                  imageUrl={coverPhoto}
+                >
+                  <Detail.ProfileImageWrapper>
+                    <Detail.ProfileImage
+                      imageUrl={profilePhoto}
+                    />
+                  </Detail.ProfileImageWrapper>
+                  {/* <Detail.FavoriteButton /> */}
+                </Detail.ImageSection>
+                <Detail.ProfileContent>
+                  <Detail.Span>
+                    <Detail.StarName>
+                      {fullName}
+                    </Detail.StarName>
+                    <Detail.StarDetails>
+                      {
+                        this.generateStarDetails()
+                      }
+                    </Detail.StarDetails>
+                  </Detail.Span>
+                </Detail.ProfileContent>
+              </Detail.ImageRenderDiv>
             </Detail.SmallScreenLayout>
             <Detail.LargeScreenLayout>
-              <AboutContent />
+              <AboutContent
+                profilePhoto={profilePhoto}
+                description={this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}
+                fullName={fullName}
+                starDetails={this.generateStarDetails()}
+              />
             </Detail.LargeScreenLayout>
             <Detail.RequestControllerWrapper>
-              <RequestController />
+              <RequestController rate={rate} />
             </Detail.RequestControllerWrapper>
           </Detail.LeftSection>
           <Detail.RightSection>
@@ -99,6 +154,7 @@ export default class Starprofile extends React.Component {
                       <ScrollList
                         dataList={this.props.videosList.data}
                         videos
+                        limit={this.props.videosList.limit}
                         totalCount={this.props.videosList.count}
                         offset={this.props.videosList.offset}
                         loading={this.props.videosList.loading}
@@ -106,7 +162,17 @@ export default class Starprofile extends React.Component {
                       />
                   }
                 </Detail.ScrollListWrapper>
-              : <AboutContent />
+              :
+                <Detail.AboutDetailsWrapper>
+                  <Detail.AboutDetailHeading>About</Detail.AboutDetailHeading>
+                  <Detail.AboutDetailContent>
+                    {
+                      this.props.celebrityDetails.description ?
+                        this.props.celebrityDetails.description
+                      : null
+                    }
+                  </Detail.AboutDetailContent>
+                </Detail.AboutDetailsWrapper>
             }
           </Detail.RightSection>
         </Detail>

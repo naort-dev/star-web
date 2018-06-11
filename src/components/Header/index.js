@@ -160,7 +160,11 @@ class Header extends React.Component {
                 onChange={this.handleSearchChange}
                 onKeyUp={this.handleSearchSubmit}
               />
-              <HeaderSection.ClearButton onClick={this.deactivateSearch} />
+              {
+                this.state.searchText.length >= 3 ?
+                  <HeaderSection.ClearButton onClick={this.deactivateSearch} />
+                : null
+              }
               {this.state.showSuggestions &&
                 <HeaderSection.SuggestionListWrapper>
                   <HeaderSection.AutoSuggest>
