@@ -1,7 +1,8 @@
 import { CELEB_DETAILS } from '../actions/getCelebDetails';
 
 const initalState = {
-  data: [],
+  celebrityDetails: {},
+  userDetails: {},
   loading: false,
 };
 
@@ -23,7 +24,8 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        data: action.details,
+        celebrityDetails: action.details.celebrity_details,
+        userDetails: action.details.user,
       };
 
     case CELEB_DETAILS.failed:

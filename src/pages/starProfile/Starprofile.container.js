@@ -5,7 +5,8 @@ import { fetchCelebDetails } from './actions/getCelebDetails';
 import { fetchCelebVideosList } from './actions/getCelebVideos';
 
 const mapStateToProps = state => ({
-  celebDetails: state.celebDetails.data,
+  celebrityDetails: state.celebDetails.celebrityDetails,
+  userDetails: state.celebDetails.userDetails,
   videosList: state.celebVideos,
 });
 

@@ -44,7 +44,11 @@ export default class Landing extends React.Component {
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.fetchVideosList(0, true);
+        if (searchParamChange) {
+          this.props.switchTab('Stars');
+        } else {
+          this.props.fetchVideosList(0, true);
+        }
       } else {
         this.props.fetchCelebrityList(0, true);
       }
@@ -135,6 +139,7 @@ export default class Landing extends React.Component {
       return (
         <ScrollList
           dataList={this.props.celebList.data}
+          limit={this.props.celebList.limit}
           totalCount={this.props.celebList.count}
           offset={this.props.celebList.offset}
           loading={this.props.celebList.loading}
@@ -146,6 +151,7 @@ export default class Landing extends React.Component {
         <ScrollList
           dataList={this.props.videosList.data}
           videos
+          limit={this.props.videosList.limit}
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
