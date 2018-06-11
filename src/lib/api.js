@@ -7,6 +7,9 @@ class Api {
   static register = 'user/register/'
   static getSuggestionList = 'user/fan/suggestion_list/';
   static socialMediaLogin = 'user/socialsignup/';
+  static authGetCelebDetails = 'user/user_details/';
+  static getCelebDetails = id => `user/user_details/${id}/get_details/`;
 }
 
 export default Api;
+

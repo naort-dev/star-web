@@ -15,6 +15,9 @@ export default class Starprofile extends React.Component {
       selectedTab: 'All',
     };
   }
+  componentWillMount() {
+    this.props.fetchCelebDetails(this.props.match.params.id)
+  }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
