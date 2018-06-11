@@ -9,6 +9,8 @@ const Detail = styled.section`
  max-width: 1920px;
  @media(min-width: 1025px){
   flex-direction: row;
+  padding-bottom: 0;
+  height: auto;
  }
  
 `;
@@ -36,6 +38,7 @@ width:100%;
 @media(min-width: 1025px){
   width:32%;
   padding: 0px 0px;
+  box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
 }
 
 `;
@@ -49,7 +52,7 @@ Detail.RightSection = styled.div`
   @media(min-width: 1025px){
     width:68%;
     height:90vh;
-    padding: 0px 35px;
+    padding: 27px 35px;
   }
 `;
 Detail.SmallScreenLayout = styled.div`
@@ -75,9 +78,11 @@ Detail.RequestControllerWrapper = styled.div`
   z-index: 5;
   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   @media(min-width:1025px){
-    padding: 27px 42px;
+    padding: 27px 0;
+    margin: 0 42px;
     position:relative;
     box-shadow: none;
+    border-top: solid #333333 1px;
   }
 `;
 Detail.ScrollListWrapper = styled.div`
