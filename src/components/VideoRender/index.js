@@ -1,7 +1,7 @@
 import React from 'react';
+import { Player, BigPlayButton } from 'video-react';
 import VideoRenderDiv from './styled';
 import Popup from '../Popup';
-
 
 export default class VideoRender extends React.Component {
   constructor(props) {
@@ -52,13 +52,13 @@ export default class VideoRender extends React.Component {
             <Popup
               closePopUp={this.closePopup}
             >
-              <video
-                style={{width: '100%', height: '300px'}}
-                autoPlay
-                src={this.props.videoUrl}
+              <Player
+                playsInline
                 poster={this.props.cover}
-                controls
-              />
+                src={this.props.videoUrl}
+              >
+                <BigPlayButton position="center" />
+              </Player>
             </Popup>
           : null
         }
@@ -79,11 +79,13 @@ export default class VideoRender extends React.Component {
             <VideoRenderDiv.StarName>
               {props.starName}
             </VideoRenderDiv.StarName>
-            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+            <VideoRenderDiv.StarDetails>
+              {this.renderVideoDetails(props.details)}
+            </VideoRenderDiv.StarDetails>
           </VideoRenderDiv.Span>
         </VideoRenderDiv.ProfileContent>
       </VideoRenderDiv>
-    )
+    );
   }
 }
 
