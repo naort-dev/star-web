@@ -5,7 +5,7 @@ import FooterDiv from './styled';
 export const RequestController = () => (
   <FooterDiv>
     <FooterDiv.BookingLeft>
-      <strong>100</strong> Bookings left
+      <strong>100</strong> Left
     </FooterDiv.BookingLeft>
     <FooterDiv.BookingPrice>
       <strong>$250</strong>

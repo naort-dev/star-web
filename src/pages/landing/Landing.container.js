@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchCelebrityList } from './actions/getCelebList';
-import { fetchVideosList } from './actions/getVideosList';
+import { fetchVideosList } from './actions//getVideosList';
 import {
   updateCategory,
   switchTab,
