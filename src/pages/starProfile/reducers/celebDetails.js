@@ -1,32 +1,32 @@
-import { PROFESSION_LIST } from '../actions/getProfessions';
+import { CELEB_DETAILS } from '../actions/getCelebDetails';
 
 const initalState = {
-  professions: [],
+  data: [],
   loading: false,
 };
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
-    case PROFESSION_LIST.start:
+    case CELEB_DETAILS.start:
       return {
         ...state,
         loading: true,
       };
 
-    case PROFESSION_LIST.end:
+    case CELEB_DETAILS.end:
       return {
         ...state,
         loading: false,
       };
 
-    case PROFESSION_LIST.success:
+    case CELEB_DETAILS.success:
       return {
         ...state,
         loading: false,
-        professions: action.data['filtered-professions'],
+        data: action.details,
       };
 
-    case PROFESSION_LIST.failed:
+    case CELEB_DETAILS.failed:
       return {
         ...initalState,
         loading: false,
