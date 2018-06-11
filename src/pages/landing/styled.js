@@ -37,6 +37,7 @@ LandingStyled.mainSection = styled.section`
     width: 75%;
     display: inline-block;
     vertical-align: top;
+    padding-left: 50px;
     padding-right: 50px;
     padding-top: 30px;
     float: right;
@@ -48,13 +49,12 @@ LandingStyled.mainSection = styled.section`
 
 LandingStyled.loaderWrapper = styled.div`
   height: calc(100% - 95px);
-  padding: 0px 16px;
-  margin: 20px 0px;
+  padding: 20px 16px;
   @media(min-width: 1025px) {
     height: calc(100% - 79px);
     padding: 0px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
   }
 `;
 

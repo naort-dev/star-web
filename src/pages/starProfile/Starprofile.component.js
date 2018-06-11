@@ -1,6 +1,6 @@
 import React from 'react';
-import { Header } from '../../components/Header';
-import { ImageRender } from '../../components/ImageRender';
+import Header from '../../components/Header';
+import ImageRender from '../../components/ImageRender';
 import Tabs from '../../components/Tabs';
 import { Detail } from '../starProfile/styled';
 import { AboutContent } from '../../components/AboutContent';
@@ -12,6 +12,7 @@ export default class Starprofile extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
+      selectedTab: 'All',
     };
   }
   activateMenu = () => {
@@ -20,7 +21,11 @@ export default class Starprofile extends React.Component {
   render() {
     return (
       <div>
-        <Header menuActive={this.state.menuActive} enableMenu={() => this.activateMenu()} />
+        <Header
+          menuActive={this.state.menuActive}
+          enableMenu={this.activateMenu}
+          disableMenu
+        />
         <Detail>
           <Detail.LeftSection>
             <Detail.SmallScreenLayout>
@@ -34,8 +39,18 @@ export default class Starprofile extends React.Component {
             </Detail.RequestControllerWrapper>
           </Detail.LeftSection>
           <Detail.RightSection>
-            <Tabs labels={['All', 'Q&A', 'Events']} selected="Q&A" disableFilter /> 
-            <ScrollList />   
+            <Tabs
+              labels={['All', 'Q&A', 'Events']}
+              selected={this.state.selectedTab}
+              disableFilter
+              switchTab={tab => this.setState({ selectedTab: tab })}
+            />
+            <ScrollList
+              dataList={[]}
+              totalCount={0}
+              offset={0}
+              loading={false}
+            />
           </Detail.RightSection>
         </Detail>
       </div>

@@ -12,6 +12,7 @@ import {
   allUserRoles,
 } from './services/protectRoute';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
+import { updateLoginStatus } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -21,6 +22,8 @@ import { Dashboard } from './pages/dashboard';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
+import { StarsignUp } from './pages/starsignup';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -37,6 +40,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    if (localStorage && localStorage.getItem('data') !== null) {
+      this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+    }
     if (!this.props.professionsList.professions.length) {
       this.setState({ showLoading: true });
     }
@@ -83,9 +89,10 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
-                <Route path="/detail" component={Starprofile} />
+                <Route path="/starDetail/:id" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
+                <Route path="/starsignup" component={StarsignUp} />
                 
 
                 {/* logged in areas */}
@@ -139,6 +146,7 @@ const mapState = state => ({
 
 const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
+  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));

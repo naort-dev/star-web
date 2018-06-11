@@ -8,4 +8,4 @@ dist/
 env.js
 .idea/
 yarn.lock
-package.lock.json
+package-lock.json

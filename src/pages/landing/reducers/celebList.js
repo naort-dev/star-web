@@ -5,6 +5,7 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
+  limit: 20,
   currentCategory: 'featured',
 };
 
@@ -36,6 +37,11 @@ export default (state = { ...initalState }, action) => {
           offset: action.offset,
           data: action.list,
           count: action.count,
+          currentSearchParam: action.searchParam,
+          lowPrice: action.lowPrice,
+          highPrice: action.highPrice,
+          sortValue: action.sortValue,
+          isLoggedIn: action.isLoggedIn,
         },
         currentCategory: action.category,
       };

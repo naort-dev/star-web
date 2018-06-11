@@ -9,10 +9,13 @@ const TabStyled = styled.div`
   }
   @media(min-width: 768px) {
     padding-top: 0;
+    padding-left: 44px;
+    padding-right: 44px;
     text-align: center;
   }
   @media(min-width: 1025px) {
     border: none;
+    border-bottom: ${props => (props.filterSelected && '1px solid #CCCCCC')};
     padding: 0;
   }
 `;
@@ -42,6 +45,7 @@ TabStyled.tabListItem = styled.li`
 
 TabStyled.FilterLabel = styled.span`
   display: none;
+  color: ${props => (props.filterSelected && '#FF6C58')};
   @media(min-width: 1025px) {
     display: inline-block;
     vertical-align: top;
@@ -53,17 +57,44 @@ TabStyled.FilterLabel = styled.span`
 
 TabStyled.FilterIcon = styled.span`
   display: inline-block;
-  background: url('/assets/images/filter-icon.svg');
+  background: ${props => (props.filterSelected ? 'url(/assets/images/filter-icon-selected.svg)' : 'url(/assets/images/filter-icon.svg)')};
   background-repeat: no-repeat;
+  cursor: pointer;
   background-size: 25px 30px;
   width: 25px;
   height: 22px;
   margin: 1px 0;
 `;
 
+TabStyled.FilterCount = styled.span`
+  position: absolute;
+  top: -3px;
+  right: -9px;
+  font-size: 11px;
+  width: 18px;
+  padding-top: 3px;
+  height: 18px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FF6C58;
+  color: #fff;
+  display: inline-block;
+`;
+
 TabStyled.FilterControl = styled.div`
   display: inline-block;
+  position: relative;
   float: right;
+  cursor: pointer;
+  border-bottom: ${props => (props.filterSelected && '4px solid #FF6C58')};
+  @media(min-width: 768px) {
+    margin-top: 5px;
+    padding-bottom: 2px;
+  }
+  @media(min-width: 1025px) {
+    margin-top: 5px;
+    padding-bottom: 4px;
+  }
 `;
 
 export default TabStyled;

@@ -24,7 +24,6 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: false,
         professions: [...state.professions, ...action.data.professions],
-        count: action.data.count,
       };
 
     case PROFESSION_LIST.failed:

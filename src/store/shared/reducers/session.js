@@ -1,46 +1,66 @@
-console.log('!!!! (0.O) !!!!!');
-console.log('isLoggedIn is true!');
-console.log('role is SUPER_ADMIN!');
-console.log('!!!! (0.O) !!!!!');
+import { LOGIN } from '../actions/login';
 
-const initalState = {
-  firstname: '',
-  lastname: '',
-  username: '',
-  laslogin: '',
-  role: '',
+const initialState = {
   isLoggedIn: false,
   loading: false,
+  auth_token: '',
+  incorrectError: '',
   error: {
     has: false,
     message: '',
   },
+  statusCode: undefined,
 };
 
-export default (state = { ...initalState }, action) => {
+export default (state = { ...initialState }, action) => {
   switch (action.type) {
-    case 'session/ON_LOGIN':
+    case LOGIN.start:
       return {
-        ...initalState,
+        ...state,
         loading: true,
+        incorrectError: '',
       };
 
-    case 'session/ON_LOGIN_SUCCESS':
+    case LOGIN.success:
       return {
-        ...initalState,
+        ...state,
         ...action.user,
         isLoggedIn: true,
         loading: false,
+        statusCode: undefined,
+        auth_token: action.data.user,
       };
 
-    case 'session/ON_LOGIN_FAILED':
+    case LOGIN.incorrect:
       return {
-        ...initalState,
+        ...state,
+        incorrectError: action.error,
+        statusCode: action.status,
+      };
+
+    case LOGIN.failed:
+      return {
+        ...state,
         loading: false,
         error: {
           has: true,
-          message: action.message,
+          message: action.error,
         },
+      };
+    case LOGIN.end:
+      return {
+        ...state,
+        loading: false,
+      };
+    case LOGIN.updateLoginStatus:
+      return {
+        ...state,
+        auth_token: action.sessionDetails,
+        isLoggedIn: true,
+      };
+    case LOGIN.logout:
+      return {
+        ...initialState,
       };
 
     default:
