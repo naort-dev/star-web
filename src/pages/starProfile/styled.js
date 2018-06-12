@@ -103,6 +103,10 @@ Detail.AboutDetailsWrapper = styled.article`
   height: 450px;
   overflow-y: auto;
   line-height: 30px;
+  padding-bottom: 50px;
+  @media(min-width: 768px) {
+    padding: 10px 44px;
+  }
 `;
 Detail.AboutDetailHeading = styled.span`
   display: block;
