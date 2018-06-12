@@ -88,6 +88,7 @@ export default class Starprofile extends React.Component {
         <ScrollList
           dataList={this.props.videosList.data}
           videos
+          starsPage
           limit={this.props.videosList.limit}
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}

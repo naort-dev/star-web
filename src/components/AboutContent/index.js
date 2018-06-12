@@ -6,8 +6,7 @@ export const AboutContent = props => (
   <AboutContentDiv>
     <AboutContentDiv.ProfileMainContent>
       <AboutContentDiv.ProfileImage
-        src={props.profilePhoto}
-        alt=""
+        imgUrl={props.profilePhoto}
       />
       <AboutContentDiv.ProfileName>{props.fullName}</AboutContentDiv.ProfileName>
       <AboutContentDiv.ProfileCategory>{props.starDetails}</AboutContentDiv.ProfileCategory>
@@ -25,7 +24,7 @@ export const AboutContent = props => (
             </div>
           : null
         }
-        <AboutContentDiv.SocialMediaFollowers>
+        {/* <AboutContentDiv.SocialMediaFollowers>
           <AboutContentDiv.Ul>
             <AboutContentDiv.list>
               <span>
@@ -72,7 +71,7 @@ export const AboutContent = props => (
               </AboutContentDiv.SocialCountSpan>
             </AboutContentDiv.list>
           </AboutContentDiv.Ul>
-        </AboutContentDiv.SocialMediaFollowers>
+        </AboutContentDiv.SocialMediaFollowers> */}
       </AboutContentDiv.ProfileDetailsWrapper>
     </AboutContentDiv.ProfileMainContent>
   </AboutContentDiv>

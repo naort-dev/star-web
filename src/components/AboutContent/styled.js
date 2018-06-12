@@ -6,22 +6,27 @@ const AboutContentDiv = styled.div`
 AboutContentDiv.ProfileMainContent = styled.div`
   text-align:center;
 `;
-AboutContentDiv.ProfileImage = styled.img`
+AboutContentDiv.ProfileImage = styled.span`
   border-radius: 50%;
-  height:55px;
-  width:55px;
+  display: block;
+  height:100px;
+  width:100px;
   border:2px solid #333333;
-
+  background-image: ${props => (props.imgUrl ? `url(${props.imgUrl})` : 'url(assets/images/profile.png)')};
+  margin: 0 auto;
+  background-size: cover;
+  background-position: center center;
 `;
 AboutContentDiv.ProfileName = styled.h5`
   font-family: 'Ubuntu-Bold';
-  font-size: 26px;
+  font-size: 48px;
   color:#FF6C58;
+  margin: 10px 0;
 `;
 AboutContentDiv.ProfileCategory = styled.h6`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Ubuntu-Regular';
   color:#333333;
-  font-size: 20px;
+  font-size: 24px;
 `;
 AboutContentDiv.ProfileDetailsWrapper = styled.article`
   margin-top : 2.5%;

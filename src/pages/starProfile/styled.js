@@ -11,6 +11,7 @@ const Detail = styled.section`
   flex-direction: row;
   padding-bottom: 0;
   height: auto;
+  background-color: #F8F8F8;
  }
  
 `;
@@ -39,7 +40,7 @@ Detail.sideSection = styled.section`
 `;
 Detail.LeftSection = styled.div`
   width:100%;
-
+  background-color: #fff;
   @media(min-width: 1025px){
     width:40%;
     padding: 0px 0px;
