@@ -10,10 +10,11 @@ export default class Tabs extends React.Component {
   render() {
     return (
       <TabStyled filterSelected={this.props.filterSelected}>
-        <TabStyled.tabList>
+        <TabStyled.tabList disableFilter={this.props.disableFilter}>
           {
             this.props.labels.map((item, index) => (
               <TabStyled.tabListItem
+                disableFilter={this.props.disableFilter}
                 key={index}
                 onClick={() => this.props.switchTab(item)}
                 selected={this.props.selected === item}

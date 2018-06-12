@@ -25,7 +25,9 @@ class Header extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
-      this.props.searchFilter('');
+      if (this.props.searchFilter) {
+        this.props.searchFilter('');
+      }
       this.setState({ searchText: '' });
     }
   }
@@ -51,7 +53,9 @@ class Header extends React.Component {
 
   handleSearchSubmit = (e) => {
     if (e.keyCode === 13 && this.props.searchFilter) {
-      this.props.searchFilter(e.target.value);
+      if (this.props.searchFilter) {
+        this.props.searchFilter(e.target.value);
+      }
       this.setState({ searchActive: false, showSuggestions: false });
     }
   }
@@ -84,7 +88,9 @@ class Header extends React.Component {
 
   handleSearchItemClick = () => {
     this.props.resetSearchParam('');
-    this.props.searchFilter('');
+    if (this.props.searchFilter) {
+      this.props.searchFilter('');
+    }
     this.setState({ searchActive: false, showSuggestions: false });
   }
 
@@ -107,11 +113,11 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                {/* <Link to={`/starDetail/${item.id}`}> */}
+                <Link to={`/starDetail/${item.id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>
-                {/* </Link> */}
+                </Link>
               </HeaderSection.SuggestionListItem>
             ))
           }
@@ -154,7 +160,11 @@ class Header extends React.Component {
                 onChange={this.handleSearchChange}
                 onKeyUp={this.handleSearchSubmit}
               />
-              <HeaderSection.ClearButton onClick={this.deactivateSearch} />
+              {
+                this.state.searchText.length >= 3 ?
+                  <HeaderSection.ClearButton onClick={this.deactivateSearch} />
+                : null
+              }
               {this.state.showSuggestions &&
                 <HeaderSection.SuggestionListWrapper>
                   <HeaderSection.AutoSuggest>

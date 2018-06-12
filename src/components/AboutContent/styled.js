@@ -5,7 +5,6 @@ const AboutContentDiv = styled.div`
 `;
 AboutContentDiv.ProfileMainContent = styled.div`
   text-align:center;
-  border-bottom: solid #333333 1px;
 `;
 AboutContentDiv.ProfileImage = styled.img`
   border-radius: 50%;
@@ -22,7 +21,7 @@ AboutContentDiv.ProfileName = styled.h5`
 AboutContentDiv.ProfileCategory = styled.h6`
   font-family: 'Ubuntu-Light';
   color:#333333;
-  font-size: 12px;
+  font-size: 20px;
 `;
 AboutContentDiv.ProfileDetailsWrapper = styled.article`
   margin-top : 2.5%;
@@ -31,14 +30,15 @@ AboutContentDiv.ProfileDetailsWrapper = styled.article`
 AboutContentDiv.ProfileDetails = styled.p`
   text-align: left;
   font-family: 'Ubuntu-Regular';
-  font-size: 11px;
-  color:#333333;
+  font-size: 18px;
+  margin: 20px 0;
+  color: rgba(51, 51, 51, 0.72);
 `;
 AboutContentDiv.VideoHeading = styled.h6`
   text-align: center;
   margin-top:4%;
   font-family: 'Ubuntu-Bold';
-  font-size : 13px;
+  font-size : 20px;
   color:#FF953C;
 
 `;
@@ -52,14 +52,14 @@ AboutContentDiv.SocialMediaFollowers = styled.div`
 AboutContentDiv.SocialCountSpan = styled.span`
   display:block;
   font-family: 'Ubuntu-Bold';
-  font-size:7px;
+  font-size:14px;
 `;
 AboutContentDiv.Ul = styled.ul`
  
 `;
 AboutContentDiv.SocialMedia = styled.img`
-  width:14px;
-  height:14px;
+  width: 24px;
+  height: 24px;
 `;
 
 export default AboutContentDiv;

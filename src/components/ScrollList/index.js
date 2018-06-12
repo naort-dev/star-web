@@ -40,7 +40,7 @@ export default class ScrollList extends React.Component {
       return;
     }
     if (!this.props.loading) {
-      this.props.fetchData(this.props.offset + 20);
+      this.props.fetchData(this.props.offset + this.props.limit);
     }
   };
 
@@ -83,6 +83,7 @@ export default class ScrollList extends React.Component {
       return (
         <ListStyled.listItem key={index}>
           <ImageRender
+            id={item.id}
             cover={coverPhoto}
             profile={profilePhoto}
             starName={item.get_short_name}
