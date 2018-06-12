@@ -17,6 +17,11 @@ const Detail = styled.section`
 Detail.Wrapper = styled.div`
  height: 100vh;
 `;
+
+Detail.Content = styled.div`
+ height: 100%;
+`;
+
 Detail.sideSection = styled.section`
   background-color: #fff;
   height: ${props => props.menuActive && '100%'};
@@ -33,13 +38,13 @@ Detail.sideSection = styled.section`
   }
 `;
 Detail.LeftSection = styled.div`
-width:100%;
+  width:100%;
 
-@media(min-width: 1025px){
-  width:32%;
-  padding: 0px 0px;
-  box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
-}
+  @media(min-width: 1025px){
+    width:32%;
+    padding: 0px 0px;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+  }
 
 `;
 Detail.RightSection = styled.div`
@@ -53,6 +58,7 @@ Detail.RightSection = styled.div`
     width:68%;
     height:90vh;
     padding: 27px 35px;
+    padding-bottom: 0;
   }
 `;
 Detail.SmallScreenLayout = styled.div`

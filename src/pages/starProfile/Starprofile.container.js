@@ -7,7 +7,9 @@ import { fetchCelebVideosList } from './actions/getCelebVideos';
 const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
+  detailsLoading: state.celebDetails.loading,
   videosList: state.celebVideos,
+  isLoggedIn: state.session,
 });
 
 const mapDispatchToProps = dispatch => ({
