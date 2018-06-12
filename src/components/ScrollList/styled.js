@@ -81,12 +81,15 @@ ListStyled.listVideos = ListStyled.listItem.extend`
   @media(min-width: 1025px) {
     padding: 0;
     border-right: 20px solid transparent;
-    width: 25%;
+    width: ${props => (props.starsPage ? '33.33%' : '25%')};
     &:nth-child(even), &:nth-child(3n) {
       border-right: 20px solid transparent;
     }
+    &:nth-child(3n) {
+      border-right: ${props => (props.starsPage ? '0' : '20px solid transparent')};
+    }
     &:nth-child(4n) {
-      border-right: 0;
+      border-right: ${props => (props.starsPage ? '20px solid transparent' : '0')};
     }
   }
   @media(min-width: 1221px) {
@@ -95,8 +98,11 @@ ListStyled.listVideos = ListStyled.listItem.extend`
     &:nth-child(even), &:nth-child(3n) {
       border-right: 40px solid transparent;
     }
+    &:nth-child(3n) {
+      border-right: ${props => (props.starsPage ? '0' : '40px solid transparent')};
+    }
     &:nth-child(4n) {
-      border-right: 0;
+      border-right: ${props => (props.starsPage ? '20px solid transparent' : '0')};
     }
   }
 

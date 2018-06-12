@@ -337,7 +337,10 @@ export default class Login extends React.Component {
                 </LoginContainer.LeftSection>
                 <LoginContainer.RightSection>
                   <LoginContainer.ImageStackLayout>
-                    <ImageStack />
+                    <ImageStack
+                      featureImage="assets/images/Stadium_800x376.jpg"
+                      imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                    />
                   </LoginContainer.ImageStackLayout>
                 </LoginContainer.RightSection>
               </LoginContainer>

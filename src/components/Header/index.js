@@ -14,7 +14,7 @@ class Header extends React.Component {
       searchActive: false,
       showSuggestions: false,
       profileDropdown: false,
-      searchText: this.props.suggestionsList.searchText || '',
+      searchText: this.props.searchParam || '',
     };
     this.suggestionsFetchDelay=undefined;
   }
@@ -83,7 +83,10 @@ class Header extends React.Component {
 
   deactivateSearch = () => {
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
-    this.props.searchFilter('');
+    if (this.props.searchFilter) {
+      this.props.searchFilter('');
+    }
+    this.props.fetchSuggestionList('');
   }
 
   handleSearchItemClick = () => {

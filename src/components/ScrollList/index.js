@@ -30,6 +30,24 @@ export default class ScrollList extends React.Component {
     }
   }
 
+  getVideoType = (bookingType) => {
+    let videoType;
+    switch (bookingType) {
+      case 3:
+        videoType = 'Q&A';
+        break;
+      case 2:
+        videoType = 'Event';
+        break;
+      case 1:
+        videoType = 'Shoutout';
+        break;
+      default:
+        videoType = '';
+    }
+    return videoType;
+  }
+
   refresh = () => {
     this.props.fetchData(0, true);
   }
@@ -55,16 +73,15 @@ export default class ScrollList extends React.Component {
     });
     return string;
   }
-
   renderList() {
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
-        <ListStyled.listVideos videos={this.props.videos} key={index}>
+        <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
             cover={item.s3_thumbnail_url}
             videoUrl={item.s3_video_url}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-            starName={item.full_name}
+            starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}
           />
         </ListStyled.listVideos>

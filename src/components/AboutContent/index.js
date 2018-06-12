@@ -6,8 +6,7 @@ export const AboutContent = props => (
   <AboutContentDiv>
     <AboutContentDiv.ProfileMainContent>
       <AboutContentDiv.ProfileImage
-        src={props.profilePhoto}
-        alt=""
+        imgUrl={props.profilePhoto}
       />
       <AboutContentDiv.ProfileName>{props.fullName}</AboutContentDiv.ProfileName>
       <AboutContentDiv.ProfileCategory>{props.starDetails}</AboutContentDiv.ProfileCategory>
@@ -15,12 +14,17 @@ export const AboutContent = props => (
         <AboutContentDiv.ProfileDetails>
           {props.description}
         </AboutContentDiv.ProfileDetails>
-        <AboutContentDiv.VideoHeading>My videos support a charity</AboutContentDiv.VideoHeading>
-        <AboutContentDiv.ProfileDetails>
-        I am supporting the following charity with each of my bookings.
-        Thank you for partnering with me and helping to bring an end to this.
-        </AboutContentDiv.ProfileDetails>
-        <AboutContentDiv.SocialMediaFollowers>
+        {
+          props.charity && props.charity !== '' ?
+            <div>
+              <AboutContentDiv.VideoHeading>My videos support a charity</AboutContentDiv.VideoHeading>
+              <AboutContentDiv.ProfileDetails>
+                {props.charity}
+              </AboutContentDiv.ProfileDetails>
+            </div>
+          : null
+        }
+        {/* <AboutContentDiv.SocialMediaFollowers>
           <AboutContentDiv.Ul>
             <AboutContentDiv.list>
               <span>
@@ -67,7 +71,7 @@ export const AboutContent = props => (
               </AboutContentDiv.SocialCountSpan>
             </AboutContentDiv.list>
           </AboutContentDiv.Ul>
-        </AboutContentDiv.SocialMediaFollowers>
+        </AboutContentDiv.SocialMediaFollowers> */}
       </AboutContentDiv.ProfileDetailsWrapper>
     </AboutContentDiv.ProfileMainContent>
   </AboutContentDiv>
