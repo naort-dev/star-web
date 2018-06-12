@@ -1,7 +1,8 @@
 const config = {
-  fbId: '178768332841448',
-  instaId: '61e92eda03c04e5b8775082eb3b5a376',
-  instaRedirectUri: 'https://starsona-dev.qburst.build/login',
+  fbId: '1638565172829009',
+  instaId: '8bea5765428248eca3a09d288ef7e4c2',
+  loginInstaRedirectUri: 'https://starsona-dev.qburst.build/login',
+  signupInstaRedirectUri: 'https://starsona-dev.qburst.build/signup',
   instaUrl: 'https://api.instagram.com/v1/users/self/?access_token=',
   instaAuthUrl: 'https://api.instagram.com/oauth/authorize/',
 };
