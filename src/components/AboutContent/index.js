@@ -15,11 +15,16 @@ export const AboutContent = props => (
         <AboutContentDiv.ProfileDetails>
           {props.description}
         </AboutContentDiv.ProfileDetails>
-        <AboutContentDiv.VideoHeading>My videos support a charity</AboutContentDiv.VideoHeading>
-        <AboutContentDiv.ProfileDetails>
-        I am supporting the following charity with each of my bookings.
-        Thank you for partnering with me and helping to bring an end to this.
-        </AboutContentDiv.ProfileDetails>
+        {
+          props.charity && props.charity !== '' ?
+            <div>
+              <AboutContentDiv.VideoHeading>My videos support a charity</AboutContentDiv.VideoHeading>
+              <AboutContentDiv.ProfileDetails>
+                {props.charity}
+              </AboutContentDiv.ProfileDetails>
+            </div>
+          : null
+        }
         <AboutContentDiv.SocialMediaFollowers>
           <AboutContentDiv.Ul>
             <AboutContentDiv.list>

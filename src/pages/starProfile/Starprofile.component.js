@@ -8,6 +8,7 @@ import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
 import { ComponentLoading } from '../../components/ComponentLoading';
+import { ImageStack } from '../../components/ImageStack';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -47,7 +48,7 @@ export default class Starprofile extends React.Component {
     this.setState({ selectedTab: tab });
     let requestId;
     switch (tab) {
-      case 'Q&A': 
+      case 'Q&A':
         requestId = 3;
         break;
       case 'Events':
@@ -58,7 +59,7 @@ export default class Starprofile extends React.Component {
     this.props.fetchCelebVideosList(0, true, this.props.match.params.id, requestId);
   }
   handleWindowResize = (e) => {
-    if (this.state.selectedTab === 'About') {
+    if (this.state.selectedTab === 'About' && window.outerWidth >= 1025) {
       this.setState({ selectedTab: 'All' }, () => {
         this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
       });
@@ -81,11 +82,45 @@ export default class Starprofile extends React.Component {
     }
     return string;
   }
+  renderList = () => {
+    if (this.props.videosList.data.length) {
+      return (
+        <ScrollList
+          dataList={this.props.videosList.data}
+          videos
+          limit={this.props.videosList.limit}
+          totalCount={this.props.videosList.count}
+          offset={this.props.videosList.offset}
+          loading={this.props.videosList.loading}
+          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
+        />
+      );
+    }
+    let imageList = [];
+    let firstImage;
+    let secondImage;
+    if (this.props.userDetails.images && this.props.userDetails.images.length) {
+      firstImage = this.props.userDetails.images[0] ? this.props.userDetails.images[0].image_url : null;
+      secondImage = this.props.userDetails.images[1] ? this.props.userDetails.images[1].image_url : null;
+      imageList = [firstImage, secondImage]
+    }
+    if (window.outerWidth >= 1025) {
+      return (
+        <ImageStack
+          featureImage={this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.image_url}
+          imageList={imageList}
+        />
+      );
+    }
+    return (
+      <Detail.NoData> <strong>No Data</strong> </Detail.NoData>
+    );
+  }
   render() {
     let coverPhoto;
     let profilePhoto;
     let fullName = '';
-    let rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
@@ -140,6 +175,7 @@ export default class Starprofile extends React.Component {
                     <AboutContent
                       profilePhoto={profilePhoto}
                       description={this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}
+                      charity={this.props.celebrityDetails.charity ? this.props.celebrityDetails.charity : ''}
                       fullName={fullName}
                       starDetails={this.generateStarDetails()}
                     />
@@ -149,12 +185,17 @@ export default class Starprofile extends React.Component {
                   </Detail.RequestControllerWrapper>
                 </Detail.LeftSection>
                 <Detail.RightSection>
-                  <Tabs
-                    labels={this.state.tabList}
-                    selected={this.state.selectedTab}
-                    disableFilter
-                    switchTab={this.switchTab}
-                  />
+                  {
+                  !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 ?
+                    null
+                  :
+                    <Tabs
+                      labels={this.state.tabList}
+                      selected={this.state.selectedTab}
+                      disableFilter
+                      switchTab={this.switchTab}
+                    />
+                  }
                   {
                     this.state.selectedTab !== 'About' ?
                       <Detail.ScrollListWrapper>
@@ -162,27 +203,31 @@ export default class Starprofile extends React.Component {
                           !this.props.videosList.data.length && this.props.videosList.loading ?
                             <Loader />
                           :
-                            <ScrollList
-                              dataList={this.props.videosList.data}
-                              videos
-                              limit={this.props.videosList.limit}
-                              totalCount={this.props.videosList.count}
-                              offset={this.props.videosList.offset}
-                              loading={this.props.videosList.loading}
-                              fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
-                            />
+                            this.renderList()
                         }
                       </Detail.ScrollListWrapper>
                     :
                       <Detail.AboutDetailsWrapper>
-                        <Detail.AboutDetailHeading>About</Detail.AboutDetailHeading>
-                        <Detail.AboutDetailContent>
-                          {
-                            this.props.celebrityDetails.description ?
-                              this.props.celebrityDetails.description
-                            : null
-                          }
-                        </Detail.AboutDetailContent>
+                        {
+                          this.props.celebrityDetails.description && this.props.celebrityDetails.description !== '' ?
+                            <div>
+                              <Detail.AboutDetailHeading>About</Detail.AboutDetailHeading>
+                              <Detail.AboutDetailContent>
+                                {this.props.celebrityDetails.description}
+                              </Detail.AboutDetailContent>
+                            </div>
+                          : null
+                        }
+                        {
+                          this.props.celebrityDetails.charity && this.props.celebrityDetails.charity !== '' ?
+                            <div>
+                              <Detail.AboutDetailHeading>My videos support a charity</Detail.AboutDetailHeading>
+                              <Detail.AboutDetailContent>
+                                {this.props.celebrityDetails.charity}
+                              </Detail.AboutDetailContent>
+                            </div>
+                          : null
+                        }
                       </Detail.AboutDetailsWrapper>
                   }
                 </Detail.RightSection>

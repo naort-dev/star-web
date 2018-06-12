@@ -41,7 +41,7 @@ Detail.LeftSection = styled.div`
   width:100%;
 
   @media(min-width: 1025px){
-    width:32%;
+    width:40%;
     padding: 0px 0px;
     box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   }
@@ -55,7 +55,7 @@ Detail.RightSection = styled.div`
     height: calc(100% - 426px);
   }
   @media(min-width: 1025px){
-    width:68%;
+    width:60%;
     height:90vh;
     padding: 27px 35px;
     padding-bottom: 0;
@@ -195,5 +195,10 @@ Detail.StarDetails = styled.p`
     font-size: 14px;
   }
 `;
-
+Detail.NoData = styled.div`
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
 export { Detail };
