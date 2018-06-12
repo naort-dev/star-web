@@ -164,7 +164,7 @@ export default class Login extends React.Component {
   }
   onInstagramLogin = () => {
     const clientId = config.instaId;
-    const redirectUri = config.instaRedirectUri;
+    const redirectUri = config.loginInstaRedirectUri;
     const url = config.instaAuthUrl +'?client_id='+ clientId +'&redirect_uri='+redirectUri+'&response_type=token';
     window.location.href = url;
   }
