@@ -168,6 +168,7 @@ export default class Landing extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           searchFilter={this.searchFilter}
+          searchParam={this.props.filters.searchParam}
         />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
