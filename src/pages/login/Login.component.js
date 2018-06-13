@@ -19,6 +19,7 @@ export default class Login extends React.Component {
       redirectToReferrer: false,
       email: { value: '', isValid: false, message: '' },
       password: { value: '', isValid: false, message: '' },
+      showPassword: false,
       socialMedia: {
         username: '',
         first_name: '',
@@ -217,6 +218,9 @@ export default class Login extends React.Component {
     }
     return false;
   }
+  ShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
   render() {
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.from;
@@ -295,14 +299,14 @@ export default class Login extends React.Component {
                             <LoginContainer.WrapsInput>
                               <LoginContainer.PasswordWrapper>
                                 <LoginContainer.Input
-                                  type="password"
+                                  type={this.state.showPassword ? 'text' : 'password'}
                                   name="password"
                                   value={password.value}
                                   placeholder="Enter your password"
                                   onChange={this.acceptPasswordHandler}
                                   onBlur={this.checkPassword}
                                 />
-                                <LoginContainer.ShowPassword />
+                                <LoginContainer.ShowPassword onClick={this.ShowPassword} />
                               </LoginContainer.PasswordWrapper>
                               
                               <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
