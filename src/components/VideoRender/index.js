@@ -1,5 +1,6 @@
 import React from 'react';
-import { Player, BigPlayButton } from 'video-react';
+import { Player, BigPlayButton, ControlBar } from 'video-react';
+import './video';
 import VideoRenderDiv from './styled';
 import Popup from '../Popup';
 
@@ -52,13 +53,17 @@ export default class VideoRender extends React.Component {
             <Popup
               closePopUp={this.closePopup}
             >
-              <Player
-                playsInline
-                poster={this.props.cover}
-                src={this.props.videoUrl}
-              >
-                <BigPlayButton position="center" />
-              </Player>
+              <div id ="player">
+                <Player
+                
+                  poster={this.props.cover}
+                  src={this.props.videoUrl}
+                >
+                <BigPlayButton disabled />
+                </Player>
+              </div>
+              
+            
             </Popup>
           : null
         }
