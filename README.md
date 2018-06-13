@@ -1,6 +1,21 @@
 # Web App for Starsona
 
-1. Go to project folder and install dependencies, use command npm install
-2. Create an env.js file from content of env.example.js and change the urls based on the server(changing dev/prod api urls for example).
-2. For Launch development server: npm start
-3. For Creating a build : npm run build , build will be created in the dist folder.
+## Getting Started
+```
+# Clone repo
+git clone git@github.com:Starsona/web.git
+
+# Navigate to repo
+cd web
+
+# Install deps
+npm install
+
+# To run the project 
+npm start
+http://localhost:8080 in the browser to see the running application.  
+
+# For Creating a build 
+npm run build , build will be created in the dist folder.
+
+```
