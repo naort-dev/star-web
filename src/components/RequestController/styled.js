@@ -20,6 +20,7 @@ FooterDiv.Button = styled.button`
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  cursor: pointer;
   font-size: 14px;
   font-family: 'Ubuntu-Bold';
   outline:none;

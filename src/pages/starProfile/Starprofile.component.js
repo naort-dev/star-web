@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import { Detail } from '../starProfile/styled';
@@ -224,6 +225,7 @@ export default class Starprofile extends React.Component {
                         <Link to={`/starDetail/${this.props.match.params.id}`}>
                           <Detail.CloseButton />
                         </Link>
+<<<<<<< HEAD
                         <Detail.VideoPlayer
                           videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
                           videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
@@ -251,6 +253,47 @@ export default class Starprofile extends React.Component {
                             fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
                           />
                         </Detail.RelatedVideos>
+=======
+                        <Detail.VideoPlayerSection>
+                          <Scrollbars
+                            autoHide
+                          >
+                            <Detail.VideoPlayerContent>
+                              <Detail.VideoPlayer
+                                videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
+                                videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
+                              >
+                                <video
+                                  autoPlay
+                                  controls
+                                  width='100%'
+                                  height='100%'
+                                  src={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
+                                  poster={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
+                                />
+                              </Detail.VideoPlayer>
+                              <Detail.VideoContent>
+                                <Detail.VideoTitle>
+                                  {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
+                                </Detail.VideoTitle>
+                              </Detail.VideoContent>
+                              <Detail.RelatedVideos>
+                                <ScrollList
+                                  dataList={this.state.relatedVideos}
+                                  finite
+                                  videos
+                                  starsPage
+                                  limit={this.props.videosList.limit}
+                                  totalCount={this.props.videosList.count}
+                                  offset={this.props.videosList.offset}
+                                  loading={this.props.videosList.loading}
+                                  fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
+                                />
+                              </Detail.RelatedVideos>
+                            </Detail.VideoPlayerContent>
+                          </Scrollbars>
+                        </Detail.VideoPlayerSection>
+>>>>>>> Removed scrollbars for stars page
                       </Detail.VideoPlayWrapper>
                     : null
                   }

@@ -85,6 +85,7 @@ Detail.LargeScreenLayout = styled.div`
   display: none;
   @media(min-width:1025px){
     display:block;
+    height: calc(100% - 89px);
   }
 `;
 Detail.RequestControllerWrapper = styled.div`
@@ -120,25 +121,34 @@ Detail.VideoPlayWrapper = styled.div`
   @media(min-width: 768px) {
     top: 60px;
     background: #fff;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    padding: 150px 44px 58px;
     z-index: 1;
-    padding-top: 160px;
-    padding-left: 44px;
-    padding-right: 44px;
   }
   @media(min-width: 1025px) {
     position: absolute;
     top: 0;
     padding-top: 100px;
-    height: 100vh;
+    height: 100%;
   }
 `;
+
+Detail.VideoPlayerSection = styled.div`
+  height: 100%;
+  padding-top:46px;
+`;
+
+Detail.VideoPlayerContent = styled.div`
+  height: 100%;
+  @media(min-width: 768px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+`;
+
 Detail.VideoPlayer = styled.div`
   width: 100%;
   height: 100%;
-  padding-top:46px;
   background: #000;
   @media(min-width:768px) {
     width: ${props => `${props.videoWidth}px`};
