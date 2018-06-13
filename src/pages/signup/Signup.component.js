@@ -351,17 +351,21 @@ export default class SignUp extends React.Component {
                     <LoginContainer.InputWrapper>      
                       <LoginContainer.Label>Password</LoginContainer.Label>
                       <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
-                          placeholder="Enter your password"
-                          type="password"
-                          name="password"
-                          value={this.state.password.value}
-                          onChange={this.passwordHandler}
-                          onBlur={this.checkPassword}
-                        />
+                        <LoginContainer.PasswordWrapper>
+                          <LoginContainer.Input
+                            placeholder="Enter your password"
+                            type="password"
+                            name="password"
+                            value={this.state.password.value}
+                            onChange={this.passwordHandler}
+                            onBlur={this.checkPassword}
+                          />
+                          <LoginContainer.ShowPassword />
+                        </LoginContainer.PasswordWrapper>
                         <LoginContainer.ErrorMsg>
                           {this.state.password.message}
                         </LoginContainer.ErrorMsg>
+                        
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>                   
                 }

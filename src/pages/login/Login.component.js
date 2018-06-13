@@ -293,14 +293,18 @@ export default class Login extends React.Component {
                           <LoginContainer.InputWrapper>               
                             <LoginContainer.Label>Password</LoginContainer.Label>
                             <LoginContainer.WrapsInput>
-                              <LoginContainer.Input
-                                type="password"
-                                name="password"
-                                value={password.value}
-                                placeholder="Enter your password"
-                                onChange={this.acceptPasswordHandler}
-                                onBlur={this.checkPassword}
-                              />
+                              <LoginContainer.PasswordWrapper>
+                                <LoginContainer.Input
+                                  type="password"
+                                  name="password"
+                                  value={password.value}
+                                  placeholder="Enter your password"
+                                  onChange={this.acceptPasswordHandler}
+                                  onBlur={this.checkPassword}
+                                />
+                                <LoginContainer.ShowPassword />
+                              </LoginContainer.PasswordWrapper>
+                              
                               <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
                             </LoginContainer.WrapsInput>
                           </LoginContainer.InputWrapper> 
