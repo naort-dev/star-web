@@ -13,7 +13,8 @@ npm install
 
 # To run the project 
 npm start
-http://localhost:8080 in the browser to see the running application.  
+
+open http://localhost:8080 in the browser to see the running application.  
 
 # For Creating a build 
 npm run build , build will be created in the dist folder.
