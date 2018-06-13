@@ -8,7 +8,7 @@ git clone git@github.com:Starsona/web.git
 # Navigate to repo
 cd web
 
-# Install deps
+# Install dependencies
 npm install
 
 # To run the project 
