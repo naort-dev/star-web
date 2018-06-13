@@ -116,7 +116,6 @@ export default class ScrollList extends React.Component {
   }
 
   render() {
-    console.log(this.state.hasMore);
     return (
       <ListStyled>
         <Scrollbars

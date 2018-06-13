@@ -51,6 +51,7 @@ Detail.sideSection = styled.section`
 Detail.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
+  animation: ${menuEnter} 0.3s linear;
   @media(min-width: 1025px){
     width:40%;
     padding: 0px 0px;
@@ -95,6 +96,9 @@ Detail.RequestControllerWrapper = styled.div`
   background-color: #fff;
   z-index: 5;
   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+  @media(min-width: 768px) {
+    padding: 13px 44px;
+  }
   @media(min-width:1025px){
     padding: 27px 0;
     margin: 0 42px;
@@ -121,6 +125,8 @@ Detail.VideoPlayWrapper = styled.div`
     flex-direction: column;
     z-index: 1;
     padding-top: 160px;
+    padding-left: 44px;
+    padding-right: 44px;
   }
   @media(min-width: 1025px) {
     position: absolute;

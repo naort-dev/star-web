@@ -19,14 +19,14 @@ AboutContentDiv.ProfileImage = styled.span`
 `;
 AboutContentDiv.ProfileName = styled.h5`
   font-family: 'Ubuntu-Bold';
-  font-size: 48px;
+  font-size: 30px;
   color:#FF6C58;
   margin: 10px 0;
 `;
 AboutContentDiv.ProfileCategory = styled.h6`
   font-family: 'Ubuntu-Regular';
   color:#333333;
-  font-size: 24px;
+  font-size: 20px;
 `;
 AboutContentDiv.ProfileDetailsWrapper = styled.article`
   margin-top : 2.5%;

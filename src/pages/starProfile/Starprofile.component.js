@@ -163,6 +163,7 @@ export default class Starprofile extends React.Component {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
       profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
     }
+    console.log(this.state.selectedVideoItem)
     return (
       <Detail.Wrapper>
         {
