@@ -11,6 +11,7 @@ import {
   protectRoute,
   allUserRoles,
 } from './services/protectRoute';
+import '../node_modules/video-react/dist/video-react.css';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
 import { updateLoginStatus } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
