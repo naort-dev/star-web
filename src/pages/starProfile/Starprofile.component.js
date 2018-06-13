@@ -38,11 +38,11 @@ export default class Starprofile extends React.Component {
       this.props.fetchCelebDetails(nextProps.match.params.id);
     }
     if (!nextProps.match.params.videoId) {
-      this.setState({ videoActive: false, selectedVideoItem: {} });
+      this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
     }
     if (nextProps.match.params.videoId !== this.props.match.params.videoId) {
       if (!nextProps.match.params.videoId) {
-        this.setState({ videoActive: false, selectedVideoItem: {} });
+        this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
       } else {
         this.setState({ videoActive: true });
         this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
@@ -71,7 +71,9 @@ export default class Starprofile extends React.Component {
     const relatedVideos = dataList.filter((item) => {
       return item.booking_id !== bookingId;
     });
-    this.setState({ relatedVideos });
+    this.setState({ relatedVideos: [] }, () => {
+      this.setState({ relatedVideos });
+    });
   }
   switchTab = (tab) => {
     this.setState({ selectedTab: tab });
@@ -132,7 +134,7 @@ export default class Starprofile extends React.Component {
     if (this.props.userDetails.images && this.props.userDetails.images.length) {
       firstImage = this.props.userDetails.images[0] ? this.props.userDetails.images[0].image_url : null;
       secondImage = this.props.userDetails.images[1] ? this.props.userDetails.images[1].image_url : null;
-      imageList = [firstImage, secondImage]
+      imageList = [firstImage, secondImage];
     }
     if (window.outerWidth >= 1025) {
       return (
@@ -161,7 +163,6 @@ export default class Starprofile extends React.Component {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
       profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
     }
-    console.log(this.state.relatedVideos)
     return (
       <Detail.Wrapper>
         {
@@ -238,7 +239,7 @@ export default class Starprofile extends React.Component {
                         </Detail.VideoContent>
                         <Detail.RelatedVideos>
                           <ScrollList
-                            dataList={this.props.videosList.data}
+                            dataList={this.state.relatedVideos}
                             finite
                             videos
                             starsPage

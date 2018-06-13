@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const menuEnter = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const Detail = styled.section`
  display:flex;
@@ -10,7 +20,7 @@ const Detail = styled.section`
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
-  height: auto;
+  height: 100%;
   background-color: #F8F8F8;
  }
  
@@ -58,7 +68,7 @@ Detail.RightSection = styled.div`
   }
   @media(min-width: 1025px){
     width:60%;
-    height:90vh;
+    height: 100%;
     padding: 27px 35px;
     padding-bottom: 0;
   }
@@ -96,6 +106,7 @@ Detail.RequestControllerWrapper = styled.div`
 
 Detail.VideoPlayWrapper = styled.div`
   position: fixed;
+  animation: ${menuEnter} 0.2s linear;
   top: 0;
   left: 0;
   right: 0;
@@ -149,7 +160,8 @@ Detail.RelatedVideos = styled.div`
     width: 100%;
     height: calc(100% - 400px);
     padding: 0 50px;
-    display: block;    
+    display: block;
+    padding-top: 20px;    
   }
 `;
 Detail.CloseButton = styled.span`
@@ -159,15 +171,21 @@ Detail.CloseButton = styled.span`
   display: inline-block;
   width: 30px;
   height: 30px;
-  background: url('assets/images/close-icon-orange.svg') no-repeat;
+  background: url('assets/images/close-icon.svg') no-repeat;
   background-size: cover;
   background-position: center center;
+  @media(min-width: 768px) {
+    right: 44px;
+  }
+  @media(min-width: 1025px) {
+    right: 50px;
+  }
 `;
 Detail.ScrollListWrapper = styled.div`
   height: 450px;
   padding-bottom: 47px;
   @media(min-width: 768px) {
-    height: calc(100% - 32px);
+    height: calc(100% - 39px);
     padding-bottom: 0;
   }
 `;

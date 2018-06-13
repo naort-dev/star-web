@@ -15,17 +15,20 @@ export default class ScrollList extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.loading || this.props.finite) {
+    const endOfList = this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
+    if ((!this.props.loading && endOfList) || this.props.finite) {
       this.setState({ hasMore: false });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
-    if (endOfList) {
-      this.setState({ hasMore: false });
-    } else {
-      this.setState({ hasMore: true });
+    if (!this.props.finite) {
+      const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
+      if (endOfList) {
+        this.setState({ hasMore: false });
+      } else {
+        this.setState({ hasMore: true });
+      }
     }
   }
 
@@ -113,6 +116,7 @@ export default class ScrollList extends React.Component {
   }
 
   render() {
+    console.log(this.state.hasMore);
     return (
       <ListStyled>
         <Scrollbars
@@ -120,7 +124,7 @@ export default class ScrollList extends React.Component {
         >
           <InfiniteScroll
             dataLength={this.props.dataList.length}
-            next={this.fetchMoreData}
+            next={this.props.finite ? () => {} : this.fetchMoreData}
             scrollableTarget="scrollable-target"
             refreshFunction={this.refresh}
             // pullDownToRefresh

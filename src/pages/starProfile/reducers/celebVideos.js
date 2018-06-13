@@ -29,7 +29,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: false,
         offset: action.offset,
-        data: action.list,
+        data: [...state.data, ...action.list],
         count: action.count,
       };
 
