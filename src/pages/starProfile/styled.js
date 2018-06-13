@@ -169,6 +169,8 @@ Detail.VideoTitle = styled.span`
   display: block;
   font-size: 20px;
   font-family: 'Ubuntu-Bold';
+  text-align: center;
+
 `;
 Detail.VideoRequester = styled.div`
   display: none;

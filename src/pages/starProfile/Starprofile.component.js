@@ -137,7 +137,7 @@ export default class Starprofile extends React.Component {
       secondImage = this.props.userDetails.images[1] ? this.props.userDetails.images[1].image_url : null;
       imageList = [firstImage, secondImage];
     }
-    if (window.outerWidth >= 1025) {
+    if (window.outerWidth >= 1025 && this.state.selectedTab === 'All') {
       return (
         <ImageStack
           featureImage={this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.image_url}
@@ -164,7 +164,6 @@ export default class Starprofile extends React.Component {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
       profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
     }
-    console.log(this.state.selectedVideoItem)
     return (
       <Detail.Wrapper>
         {
@@ -308,7 +307,7 @@ export default class Starprofile extends React.Component {
                     : null
                   }
                   {
-                    !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 ?
+                    !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 && this.state.selectedTab === 'All' ?
                       null
                     :
                       <Tabs
