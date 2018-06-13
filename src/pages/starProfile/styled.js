@@ -170,6 +170,41 @@ Detail.VideoTitle = styled.span`
   font-size: 20px;
   font-family: 'Ubuntu-Bold';
 `;
+Detail.VideoRequester = styled.div`
+  display: none;
+  @media(min-width: 768px) {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+  }
+`;
+Detail.VideoRequestImage = styled.span`
+  border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:40px;
+  border: solid 2px #FFFFFF;
+  box-shadow: 2px 2px 9px #4f4f4f;
+  width:40px;
+  position: relative;
+  top: 8px;
+  margin-right: 20px;
+  @media(min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
+`;
+Detail.VideoRequestName = styled.span`
+  display: inline-block;
+  color: rgba(51, 51, 51, 0.72);
+  font-size: 16px;
+  font-family: 'Ubuntu-Regular';
+  vertical-align: top;
+  padding-top: 22px;
+`;
 Detail.RelatedVideos = styled.div`
   display: none;
   @media(min-width: 1025px) {

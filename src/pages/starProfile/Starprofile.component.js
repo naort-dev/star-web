@@ -276,6 +276,16 @@ export default class Starprofile extends React.Component {
                                 <Detail.VideoTitle>
                                   {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
                                 </Detail.VideoTitle>
+                                <Detail.VideoRequester>
+                                  <Detail.VideoRequestImage
+                                    imageUrl={this.state.selectedVideoItem.fan_avatar_photo &&
+                                       this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
+                                    }
+                                  />
+                                  <Detail.VideoRequestName>
+                                    {this.state.selectedVideoItem.fan_name ? this.state.selectedVideoItem.fan_name : ''}
+                                  </Detail.VideoRequestName>
+                                </Detail.VideoRequester>
                               </Detail.VideoContent>
                               <Detail.RelatedVideos>
                                 <ScrollList
