@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const menuEnter = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const Detail = styled.section`
  display:flex;
@@ -10,7 +20,7 @@ const Detail = styled.section`
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
-  height: auto;
+  height: 100%;
   background-color: #F8F8F8;
  }
  
@@ -41,6 +51,7 @@ Detail.sideSection = styled.section`
 Detail.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
+  animation: ${menuEnter} 0.3s linear;
   @media(min-width: 1025px){
     width:40%;
     padding: 0px 0px;
@@ -52,12 +63,13 @@ Detail.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
   height: 50%;
+  position: relative;
   @media(min-width: 768px) {
     height: calc(100% - 426px);
   }
   @media(min-width: 1025px){
     width:60%;
-    height:90vh;
+    height: 100%;
     padding: 27px 35px;
     padding-bottom: 0;
   }
@@ -73,6 +85,7 @@ Detail.LargeScreenLayout = styled.div`
   display: none;
   @media(min-width:1025px){
     display:block;
+    height: calc(100% - 89px);
   }
 `;
 Detail.RequestControllerWrapper = styled.div`
@@ -84,6 +97,9 @@ Detail.RequestControllerWrapper = styled.div`
   background-color: #fff;
   z-index: 5;
   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+  @media(min-width: 768px) {
+    padding: 13px 44px;
+  }
   @media(min-width:1025px){
     padding: 27px 0;
     margin: 0 42px;
@@ -92,10 +108,138 @@ Detail.RequestControllerWrapper = styled.div`
     border-top: solid #333333 1px;
   }
 `;
+
+Detail.VideoPlayWrapper = styled.div`
+  position: fixed;
+  animation: ${menuEnter} 0.2s linear;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 11;
+  @media(min-width: 768px) {
+    top: 60px;
+    background: #fff;
+    padding: 150px 44px 58px;
+    z-index: 1;
+  }
+  @media(min-width: 1025px) {
+    position: absolute;
+    top: 0;
+    padding-top: 100px;
+    height: 100%;
+  }
+`;
+
+Detail.VideoPlayerSection = styled.div`
+  height: 100%;
+  padding-top:46px;
+`;
+
+Detail.VideoPlayerContent = styled.div`
+  height: 100%;
+  @media(min-width: 768px) {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+`;
+
+Detail.VideoPlayer = styled.div`
+  width: 100%;
+  height: 100%;
+  background: #000;
+  @media(min-width:768px) {
+    width: ${props => `${props.videoWidth}px`};
+    height: ${props => `${props.videoHeight}px`}
+    max-width: 640px;
+    max-height: 480px;
+    padding: 0;
+  }
+`;
+Detail.VideoContent = styled.section`
+  display: none;
+  @media(min-width: 768px) {
+    margin-top: 20px;
+    display: block;
+  }
+`;
+Detail.VideoTitle = styled.span`
+  display: block;
+  font-size: 20px;
+  font-family: 'Ubuntu-Bold';
+  text-align: center;
+
+`;
+Detail.VideoRequester = styled.div`
+  display: none;
+  @media(min-width: 768px) {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+  }
+`;
+Detail.VideoRequestImage = styled.span`
+  border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:40px;
+  border: solid 2px #FFFFFF;
+  box-shadow: 2px 2px 9px #4f4f4f;
+  width:40px;
+  position: relative;
+  top: 8px;
+  margin-right: 20px;
+  @media(min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
+`;
+Detail.VideoRequestName = styled.span`
+  display: inline-block;
+  color: rgba(51, 51, 51, 0.72);
+  font-size: 16px;
+  font-family: 'Ubuntu-Regular';
+  vertical-align: top;
+  padding-top: 22px;
+`;
+Detail.RelatedVideos = styled.div`
+  display: none;
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: calc(100% - 400px);
+    padding: 0 50px;
+    display: block;
+    padding-top: 20px;    
+  }
+`;
+Detail.CloseButton = styled.span`
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url('assets/images/close-icon-orange.svg') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  @media(min-width: 768px) {
+    right: 44px;
+  }
+  @media(min-width: 1025px) {
+    right: 50px;
+  }
+`;
 Detail.ScrollListWrapper = styled.div`
   height: 450px;
+  padding-bottom: 47px;
   @media(min-width: 768px) {
-    height: calc(100% - 32px);
+    height: calc(100% - 39px);
+    padding-bottom: 0;
   }
 `;
 

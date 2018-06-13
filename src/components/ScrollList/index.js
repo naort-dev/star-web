@@ -2,7 +2,6 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
-// import ImageCollection from '../ImageCollection';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
 import Loader from '../Loader';
@@ -16,17 +15,20 @@ export default class ScrollList extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.loading) {
+    const endOfList = this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
+    if ((!this.props.loading && endOfList) || this.props.finite) {
       this.setState({ hasMore: false });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
-    if (endOfList) {
-      this.setState({ hasMore: false });
-    } else {
-      this.setState({ hasMore: true });
+    if (!this.props.finite) {
+      const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
+      if (endOfList) {
+        this.setState({ hasMore: false });
+      } else {
+        this.setState({ hasMore: true });
+      }
     }
   }
 
@@ -80,6 +82,8 @@ export default class ScrollList extends React.Component {
           <VideoRender
             cover={item.s3_thumbnail_url}
             videoUrl={item.s3_video_url}
+            celebId={item.celebrity_id}
+            videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}
@@ -119,7 +123,7 @@ export default class ScrollList extends React.Component {
         >
           <InfiniteScroll
             dataLength={this.props.dataList.length}
-            next={this.fetchMoreData}
+            next={this.props.finite ? () => {} : this.fetchMoreData}
             scrollableTarget="scrollable-target"
             refreshFunction={this.refresh}
             // pullDownToRefresh
