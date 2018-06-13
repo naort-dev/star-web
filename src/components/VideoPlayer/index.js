@@ -1,5 +1,5 @@
 import React from 'react';
-import { Player, BigPlayButton } from 'video-react';
+import { Player, BigPlayButton, LoadingSpinner } from 'video-react';
 import './video';
 import VideoRenderDiv from './styled';
 
@@ -11,15 +11,17 @@ export default class VideoPlayer extends React.Component {
     };
   }
   render() {
-    console.log(this.props.src);
     const { props } = this;
     return (
       <VideoRenderDiv>
         <div id="player">
-          <Player   
+          <Player
             poster={this.props.cover}
             src={this.props.src}
+            aspectRatio="4:3"
+            autoPlay
           >
+            <LoadingSpinner />
             <BigPlayButton disabled />
           </Player>
         </div>
