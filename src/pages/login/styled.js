@@ -206,6 +206,7 @@ LoginContainer.Label = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size:16px;
   text-align:left;
+  padding-bottom:10px;
   @media(min-width:768px){
     width:55%;
   }
@@ -239,7 +240,6 @@ LoginContainer.Input = styled.input`
   width: 100%;
   height: 40px;
   text-indent: 10px;
-  margin-top:3%;
   @media(min-width:768px){
     margin-top:0;
     height:40px;
@@ -419,6 +419,25 @@ LoginContainer.GoogleWrapper = styled.div`
 `;
 LoginContainer.EmptyDiv = styled.div`
   display:none;
+`;
+LoginContainer.ShowPassword = styled.span`
+  position:absolute;
+  background-image: url( 'assets/images/icon_1pass_24a.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:19px;
+  padding: 14px;
+  right: 7px;
+  top: 6px;
+  cursor:pointer;
+  @media(min-width:1025px){
+    top:1px;
+    padding: 12px;
+  }
+`;
+LoginContainer.PasswordWrapper = styled.div`
+  position:relative;
+ 
 `;
 
 

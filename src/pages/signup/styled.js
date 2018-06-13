@@ -407,5 +407,23 @@ LoginContainer.GoogleWrapper = styled.div`
 LoginContainer.EmptyDiv = styled.div`
   display:none;
 `;
+LoginContainer.ShowPassword = styled.span`
+  position:absolute;
+  background-image: url( 'assets/images/icon_1pass_24a.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:19px;
+  padding: 14px;
+  right: 7px;
+  top: 6px;
+  @media(min-width:1025px){
+    top:1px;
+    padding: 12px;
+  }
+`;
+LoginContainer.PasswordWrapper = styled.div`
+  position:relative;
+ 
+`;
 
 export { LoginContainer, HeaderSection, FooterSection };

@@ -15,6 +15,7 @@ export default class SignUp extends React.Component {
       firstName: { value: '', isValid: false, message: '' },
       lastName: { value: '', isValid: true, message: '' },
       password: { value: '', isValid: false, message: '' },
+      showPassword: false,
       email: { value: '', isValid: false, message: '' },
       role: 'R1001',
       socialMedia: {
@@ -241,6 +242,9 @@ export default class SignUp extends React.Component {
     }
     return false;
   }
+  ShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
 
 
   render() {
@@ -351,17 +355,21 @@ export default class SignUp extends React.Component {
                     <LoginContainer.InputWrapper>      
                       <LoginContainer.Label>Password</LoginContainer.Label>
                       <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
-                          placeholder="Enter your password"
-                          type="password"
-                          name="password"
-                          value={this.state.password.value}
-                          onChange={this.passwordHandler}
-                          onBlur={this.checkPassword}
-                        />
+                        <LoginContainer.PasswordWrapper>
+                          <LoginContainer.Input
+                            placeholder="Enter your password"
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            name="password"
+                            value={this.state.password.value}
+                            onChange={this.passwordHandler}
+                            onBlur={this.checkPassword}
+                          />
+                          <LoginContainer.ShowPassword onClick={this.ShowPassword} />
+                        </LoginContainer.PasswordWrapper>
                         <LoginContainer.ErrorMsg>
                           {this.state.password.message}
                         </LoginContainer.ErrorMsg>
+                        
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>                   
                 }
