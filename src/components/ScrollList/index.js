@@ -2,7 +2,6 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
-// import ImageCollection from '../ImageCollection';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
 import Loader from '../Loader';
@@ -16,7 +15,7 @@ export default class ScrollList extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.loading) {
+    if (!this.props.loading || this.props.finite) {
       this.setState({ hasMore: false });
     }
   }
@@ -80,6 +79,8 @@ export default class ScrollList extends React.Component {
           <VideoRender
             cover={item.s3_thumbnail_url}
             videoUrl={item.s3_video_url}
+            celebId={item.celebrity_id}
+            videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}

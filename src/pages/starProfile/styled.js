@@ -52,6 +52,7 @@ Detail.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
   height: 50%;
+  position: relative;
   @media(min-width: 768px) {
     height: calc(100% - 426px);
   }
@@ -92,10 +93,82 @@ Detail.RequestControllerWrapper = styled.div`
     border-top: solid #333333 1px;
   }
 `;
+
+Detail.VideoPlayWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #000;
+  z-index: 11;
+  @media(min-width: 768px) {
+    top: 60px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    z-index: 1;
+    padding-top: 160px;
+  }
+  @media(min-width: 1025px) {
+    position: absolute;
+    top: 0;
+    padding-top: 100px;
+    height: 100vh;
+  }
+`;
+Detail.VideoPlayer = styled.div`
+  width: 100%;
+  height: 100%;
+  padding-top:46px;
+  background: #000;
+  @media(min-width:768px) {
+    width: ${props => `${props.videoWidth}px`};
+    height: ${props => `${props.videoHeight}px`}
+    max-width: 640px;
+    max-height: 480px;
+    padding: 0;
+  }
+`;
+Detail.VideoContent = styled.section`
+  display: none;
+  @media(min-width: 768px) {
+    margin-top: 20px;
+    display: block;
+  }
+`;
+Detail.VideoTitle = styled.span`
+  display: block;
+  font-size: 20px;
+  font-family: 'Ubuntu-Bold';
+`;
+Detail.RelatedVideos = styled.div`
+  display: none;
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: calc(100% - 400px);
+    padding: 0 50px;
+    display: block;    
+  }
+`;
+Detail.CloseButton = styled.span`
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: url('assets/images/close-icon-orange.svg') no-repeat;
+  background-size: cover;
+  background-position: center center;
+`;
 Detail.ScrollListWrapper = styled.div`
   height: 450px;
+  padding-bottom: 47px;
   @media(min-width: 768px) {
     height: calc(100% - 32px);
+    padding-bottom: 0;
   }
 `;
 

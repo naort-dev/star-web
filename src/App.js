@@ -90,7 +90,7 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
-                <Route path="/starDetail/:id" component={Starprofile} />
+                <Route path="/starDetail/:id/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starsignup" component={StarsignUp} />

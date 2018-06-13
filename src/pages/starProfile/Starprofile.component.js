@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Header from '../../components/Header';
-import ImageRender from '../../components/ImageRender';
 import Tabs from '../../components/Tabs';
 import { Detail } from '../starProfile/styled';
 import Loader from '../../components/Loader';
+import VideoPlayer from '../../components/VideoPlayer';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
@@ -17,6 +18,9 @@ export default class Starprofile extends React.Component {
       menuActive: false,
       selectedTab: 'All',
       tabList: [],
+      videoActive: props.match.params.videoId ? true : false,
+      selectedVideoItem: {},
+      relatedVideos: [],
     };
   }
   componentWillMount() {
@@ -33,6 +37,20 @@ export default class Starprofile extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchCelebDetails(nextProps.match.params.id);
     }
+    if (!nextProps.match.params.videoId) {
+      this.setState({ videoActive: false, selectedVideoItem: {} });
+    }
+    if (nextProps.match.params.videoId !== this.props.match.params.videoId) {
+      if (!nextProps.match.params.videoId) {
+        this.setState({ videoActive: false, selectedVideoItem: {} });
+      } else {
+        this.setState({ videoActive: true });
+        this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
+      }
+    }
+    if (this.state.videoActive && nextProps.videosList.data.length) {
+      this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
@@ -43,6 +61,17 @@ export default class Starprofile extends React.Component {
     } else {
       this.setState({ tabList: ['All', 'Q&A', 'Events'] });
     }
+  }
+  findVideoItem = (dataList, bookingId) => {
+    dataList.forEach((item) => {
+      if (item.booking_id === bookingId) {
+        this.setState({ selectedVideoItem: item });
+      }
+    });
+    const relatedVideos = dataList.filter((item) => {
+      return item.booking_id !== bookingId;
+    });
+    this.setState({ relatedVideos });
   }
   switchTab = (tab) => {
     this.setState({ selectedTab: tab });
@@ -132,6 +161,7 @@ export default class Starprofile extends React.Component {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
       profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
     }
+    console.log(this.state.relatedVideos)
     return (
       <Detail.Wrapper>
         {
@@ -187,15 +217,51 @@ export default class Starprofile extends React.Component {
                 </Detail.LeftSection>
                 <Detail.RightSection>
                   {
-                  !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 ?
-                    null
-                  :
-                    <Tabs
-                      labels={this.state.tabList}
-                      selected={this.state.selectedTab}
-                      disableFilter
-                      switchTab={this.switchTab}
-                    />
+                    this.state.videoActive ?
+                      <Detail.VideoPlayWrapper>
+                        <Link to={`/starDetail/${this.props.match.params.id}`}>
+                          <Detail.CloseButton />
+                        </Link>
+                        <Detail.VideoPlayer
+                          videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
+                          videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
+                        >
+                          <VideoPlayer
+                            cover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
+                            src={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
+                          />
+                        </Detail.VideoPlayer>
+                        <Detail.VideoContent>
+                          <Detail.VideoTitle>
+                            {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
+                          </Detail.VideoTitle>
+                        </Detail.VideoContent>
+                        <Detail.RelatedVideos>
+                          <ScrollList
+                            dataList={this.props.videosList.data}
+                            finite
+                            videos
+                            starsPage
+                            limit={this.props.videosList.limit}
+                            totalCount={this.props.videosList.count}
+                            offset={this.props.videosList.offset}
+                            loading={this.props.videosList.loading}
+                            fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
+                          />
+                        </Detail.RelatedVideos>
+                      </Detail.VideoPlayWrapper>
+                    : null
+                  }
+                  {
+                    !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 ?
+                      null
+                    :
+                      <Tabs
+                        labels={this.state.tabList}
+                        selected={this.state.selectedTab}
+                        disableFilter
+                        switchTab={this.switchTab}
+                      />
                   }
                   {
                     this.state.selectedTab !== 'About' ?

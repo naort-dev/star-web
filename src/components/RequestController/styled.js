@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const FooterDiv = styled.div`
   display:flex;
   justify-content: space-between;
- 
+  align-items: center; 
 `;
 FooterDiv.BookingLeft = styled.div`
   font-size:14px;
@@ -25,7 +25,6 @@ FooterDiv.Button = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
-  margin-top: -5px;
 `;
 
 export default FooterDiv;
