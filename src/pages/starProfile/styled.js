@@ -222,7 +222,7 @@ Detail.CloseButton = styled.span`
   display: inline-block;
   width: 30px;
   height: 30px;
-  background: url('assets/images/close-icon.svg') no-repeat;
+  background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: cover;
   background-position: center center;
   @media(min-width: 768px) {

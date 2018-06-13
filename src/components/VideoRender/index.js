@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import VideoRenderDiv from './styled';
-import Popup from '../Popup';
 
 export default class VideoRender extends React.Component {
   constructor(props) {
