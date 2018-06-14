@@ -13,5 +13,7 @@ injectGlobal`
  #player .video-react.video-react-16-9,
  #player .video-react.video-react-4-3 {
    height: 100%;
+   padding-top: 0 !important;
+   outline: none;
  }
 `

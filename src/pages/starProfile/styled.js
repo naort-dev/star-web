@@ -142,7 +142,7 @@ Detail.VideoPlayerSection = styled.div`
 `;
 
 Detail.VideoPlayerContent = styled.div`
-  height: 100%;
+  height: calc(100vh - 46px);
   @media(min-width: 768px) {
     display: flex;
     align-items: center;

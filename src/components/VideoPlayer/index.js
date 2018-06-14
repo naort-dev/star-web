@@ -19,7 +19,7 @@ export default class VideoPlayer extends React.Component {
             playsInline
             poster={this.props.cover}
             src={this.props.src}
-            aspectRatio="4:3"
+            // aspectRatio="4:3"
             autoPlay
           >
             <LoadingSpinner />
