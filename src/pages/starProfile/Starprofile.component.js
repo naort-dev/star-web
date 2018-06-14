@@ -173,6 +173,7 @@ export default class Starprofile extends React.Component {
     let profilePhoto;
     let fullName = '';
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
+    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit: 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
@@ -230,7 +231,7 @@ export default class Starprofile extends React.Component {
                 />
               </Detail.LargeScreenLayout>
               <Detail.RequestControllerWrapper>
-                <RequestController rate={rate} />
+                <RequestController rate={rate} remainingBookings={remainingBookings} />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
             <Detail.RightSection>
