@@ -6,6 +6,7 @@ import Tabs from '../../components/Tabs';
 import { Detail } from '../starProfile/styled';
 import Loader from '../../components/Loader';
 import VideoPlayer from '../../components/VideoPlayer';
+import VideoRender from '../../components/VideoRender';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
@@ -41,6 +42,9 @@ export default class Starprofile extends React.Component {
       this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
     }
     if (nextProps.match.params.videoId !== this.props.match.params.videoId) {
+      if (document.getElementById('player')) {
+        document.getElementById('player').scrollIntoView();
+      }
       if (!nextProps.match.params.videoId) {
         this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
       } else {
@@ -113,6 +117,21 @@ export default class Starprofile extends React.Component {
       });
     }
     return string;
+  }
+  renderRelatedVideosList = (dataList) => {
+    return dataList.map((item, index) => (
+      <Detail.RelatedVideosItem key={index}>
+        <VideoRender
+          cover={item.s3_thumbnail_url}
+          videoUrl={item.s3_video_url}
+          celebId={item.celebrity_id}
+          videoId={item.booking_id}
+          profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
+          starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
+          details={item.booking_title}
+        />
+      </Detail.RelatedVideosItem>
+    ));
   }
   renderList = () => {
     if (this.props.videosList.data.length) {
@@ -231,6 +250,8 @@ export default class Starprofile extends React.Component {
                             videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
                           >
                             <VideoPlayer
+                              videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
+                              videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
                               cover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
                               src={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
                             />
@@ -251,7 +272,10 @@ export default class Starprofile extends React.Component {
                             </Detail.VideoRequester>
                           </Detail.VideoContent>
                           <Detail.RelatedVideos>
-                            <ScrollList
+                            {
+                              this.renderRelatedVideosList(this.state.relatedVideos)
+                            }
+                            {/* <ScrollList
                               dataList={this.state.relatedVideos}
                               finite
                               videos
@@ -261,7 +285,7 @@ export default class Starprofile extends React.Component {
                               offset={this.props.videosList.offset}
                               loading={this.props.videosList.loading}
                               fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
-                            />
+                            /> */}
                           </Detail.RelatedVideos>
                         </Detail.VideoPlayerContent>
                       </Scrollbars>
