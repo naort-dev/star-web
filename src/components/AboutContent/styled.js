@@ -24,14 +24,14 @@ AboutContentDiv.ProfileImage = styled.span`
 `;
 AboutContentDiv.ProfileName = styled.h5`
   font-family: 'Ubuntu-Bold';
-  font-size: 30px;
+  font-size: 26px;
   color:#FF6C58;
   margin: 10px 0;
 `;
 AboutContentDiv.ProfileCategory = styled.h6`
   font-family: 'Ubuntu-Regular';
   color:#333333;
-  font-size: 20px;
+  font-size: 16px;
 `;
 AboutContentDiv.ProfileDetailsWrapper = styled.article`
   margin-top : 2.5%;
@@ -40,7 +40,7 @@ AboutContentDiv.ProfileDetailsWrapper = styled.article`
 AboutContentDiv.ProfileDetails = styled.p`
   text-align: left;
   font-family: 'Ubuntu-Regular';
-  font-size: 18px;
+  font-size: 16px;
   margin: 20px 0;
   color: rgba(51, 51, 51, 0.72);
 `;

@@ -67,6 +67,8 @@ Detail.RightSection = styled.div`
   position: relative;
   @media(min-width: 768px) {
     height: calc(100% - 426px);
+    min-height: calc(100vh - 60px);
+    padding-bottom: 58px;
   }
   @media(min-width: 1025px){
     width:60%;
@@ -209,7 +211,7 @@ Detail.VideoRequestName = styled.span`
   vertical-align: top;
   padding-top: 22px;
 `;
-Detail.RelatedVideos = styled.div`
+Detail.RelatedVideos = styled.ul`
   display: none;
   @media(min-width: 1025px) {
     width: 100%;
@@ -218,6 +220,31 @@ Detail.RelatedVideos = styled.div`
     padding: 0 50px;
     display: block;
     padding-top: 20px;    
+  }
+`;
+Detail.RelatedVideosItem = styled.li`
+  width: 100%
+  display: inline-block;
+  margin-bottom: 20px;
+  padding-left: 0;
+  vertical-align: top;
+  animation: ${menuEnter} 0.2s linear;
+  @media(min-width: 768px) {
+    width: calc(50%);
+    border-right: 20px solid transparent;
+    &:nth-child(even) {
+      border-right: 0;
+    }
+  }
+  @media(min-width: 1025px) {
+    width: calc(33.33%);
+    margin-bottom: 30px;
+    &:nth-child(even) {
+      border-right: 20px solid transparent;
+    }
+    &:nth-child(3n) {
+      border-right: 0;
+    }
   }
 `;
 Detail.CloseButton = styled.span`
