@@ -104,7 +104,7 @@ export default class ScrollList extends React.Component {
       return (
         <ListStyled.listItem key={index}>
           <ImageRender
-            id={item.id}
+            id={item.user_id}
             cover={coverPhoto}
             profile={profilePhoto}
             starName={item.get_short_name}

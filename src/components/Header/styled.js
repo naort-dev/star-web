@@ -225,7 +225,7 @@ HeaderSection.SuggestionListItem = styled.li`
   cursor: pointer;
   font-size: 18px;
   line-height: 23px;
-  &:hover{
+  &:hover, &:focus{
     background-color: #F8F8F8;
   }
   &:first-child{
