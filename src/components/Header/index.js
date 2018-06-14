@@ -94,7 +94,7 @@ class Header extends React.Component {
     if (this.props.searchFilter) {
       this.props.searchFilter('');
     }
-    this.setState({ searchActive: false, showSuggestions: false });
+    this.setState({ searchActive: false, searchText: '', showSuggestions: false });
   }
 
   logoutUser = () => {
