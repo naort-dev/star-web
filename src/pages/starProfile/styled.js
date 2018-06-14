@@ -63,7 +63,7 @@ Detail.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
   height: calc(100% - 237px);
-  min-height: 400px;
+  min-height: calc(95vh - 54px);
   position: relative;
   @media(min-width: 768px) {
     height: calc(100% - 426px);
