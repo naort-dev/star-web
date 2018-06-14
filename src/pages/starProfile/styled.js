@@ -30,7 +30,7 @@ Detail.Wrapper = styled.div`
 `;
 
 Detail.Content = styled.div`
- height: 100%;
+ height: 100%;24px
 `;
 
 Detail.sideSection = styled.section`
@@ -131,14 +131,14 @@ Detail.VideoPlayWrapper = styled.div`
   @media(min-width: 1025px) {
     position: absolute;
     top: 0;
-    padding-top: 100px;
+    padding-top: 44px;
     height: 100%;
   }
 `;
 
 Detail.VideoPlayerSection = styled.div`
   height: 100%;
-  padding-top:46px;
+  padding-top:20px;
 `;
 
 Detail.VideoPlayerContent = styled.div`
@@ -166,6 +166,11 @@ Detail.VideoPlayer = styled.div`
     max-height: 480px;
     padding: 0;
   }
+  @media(min-width: 1025px) {
+    height: calc(100vh - 341px);
+    max-width: 100%;
+    max-height: none;
+  }
 `;
 Detail.VideoContent = styled.section`
   display: none;
@@ -179,6 +184,9 @@ Detail.VideoTitle = styled.span`
   font-size: 20px;
   font-family: 'Ubuntu-Bold';
   text-align: center;
+  @media(min-width: 1025px) {
+    font-size: 16px;
+  }
 
 `;
 Detail.VideoRequester = styled.div`
@@ -187,6 +195,10 @@ Detail.VideoRequester = styled.div`
     margin-top: 20px;
     display: block;
     text-align: center;
+  }
+  @media(min-width: 1025px) {
+    margin-top: 0px;
+    margin-bottom: 22px;
   }
 `;
 Detail.VideoRequestImage = styled.span`
@@ -207,6 +219,11 @@ Detail.VideoRequestImage = styled.span`
     width: 48px;
     height: 48px;
   }
+  @media(min-width: 1025px) {
+    width: 30px;
+    height: 30px;
+    margin-right: 11px;
+  }
 `;
 Detail.VideoRequestName = styled.span`
   display: inline-block;
@@ -215,6 +232,10 @@ Detail.VideoRequestName = styled.span`
   font-family: 'Ubuntu-Regular';
   vertical-align: top;
   padding-top: 22px;
+  @media(min-width: 1025px) {
+    padding-top: 17px;
+    font-size: 14px;
+  }
 `;
 Detail.RelatedVideos = styled.ul`
   display: none;
@@ -267,6 +288,8 @@ Detail.CloseButton = styled.span`
   }
   @media(min-width: 1025px) {
     right: 50px;
+    width: 24px;
+    height: 24px;
   }
 `;
 Detail.ScrollListWrapper = styled.div`
