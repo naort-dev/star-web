@@ -22,7 +22,7 @@ export default class Landing extends React.Component {
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        if (!this.props.celebList.data.length) {
+        if (!this.props.celebList.data.length || this.props.isLoggedIn !== this.props.celebList.isLoggedIn) {
           this.props.fetchCelebrityList(0, true);
         }
         break;
@@ -71,9 +71,13 @@ export default class Landing extends React.Component {
         this.setScrollHeight();
       });
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.fetchVideosList(0, true);
-      } else {
-        this.props.fetchCelebrityList(0, true);
+        if ((tabChange && !this.props.videosList.data.length) || loginChange) {
+          this.props.fetchVideosList(0, true);
+        }
+      } else if (nextProps.filters.selectedTab === 'Stars') {
+        if ((tabChange && !this.props.celebList.data.length) || loginChange) {
+          this.props.fetchCelebrityList(0, true);
+        }
       }
     }
   }
