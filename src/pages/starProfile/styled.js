@@ -392,8 +392,13 @@ Detail.PopupContainer = styled.div`
   padding:52px 36px;
 `;
 Detail.PopupContent = styled.div`
-  font-size: 16px;
-  font-family: 'Ubuntu-Light';
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  color: #FF6C58;
+  
+`;
+Detail.Article = styled.article`
+  padding-bottom:20px;
 `;
 Detail.AppIconWrapper = styled.div`
   text-align: center;

@@ -345,8 +345,8 @@ export default class Starprofile extends React.Component {
               <Popup closePopUp={() => this.setState({showPopup: false})}>
                 <Detail.PopupContainer>
                   <Detail.PopupContent>
-                    <article><center>This feature soon be available,please download the app from the below links</center>
-                    </article>
+                    <Detail.Article><center>This feature will soon be available. Please download mobile app from the below links</center>
+                    </Detail.Article>
                     <Detail.AppIconWrapper>
                       <Detail.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
                         <Detail.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
