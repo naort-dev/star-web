@@ -89,7 +89,12 @@ export default class SignUp extends React.Component {
   }
   onRegister = (e) => {
     e.preventDefault();
-    if (this.props.statusCode === undefined) {
+    if (this.props.statusCode === '410') {
+      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
+        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
+      });
+      
+    } else if (this.checkEmail()) {
       if (this.isFormValid()) {
         this.props.registerUser(
           this.state.firstName.value,
@@ -99,10 +104,7 @@ export default class SignUp extends React.Component {
           this.state.role,
         );
       }
-    } else if (this.checkEmail()) {
-      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
-        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-      });
+     
     } else {
       this.checkEmail();
       this.checkPassword();

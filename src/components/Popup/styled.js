@@ -21,8 +21,8 @@ PopupStyled.Container = styled.div`
   justify-content: center;
   align-items: center;
   @media(min-width: 768px) {
-    width: 400px;
-    height: 400px;
+    width: 50%;
+    height: 50%;
   }
 `;
 
