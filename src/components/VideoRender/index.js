@@ -42,7 +42,7 @@ export default class VideoRender extends React.Component {
     const { props } = this;
     return (
       <VideoRenderDiv>
-        <Link to={`/starDetail/${props.user_id}/${props.videoId}`}>
+        <Link to={`/starDetail/${props.celebId}/${props.videoId}`}>
           <VideoRenderDiv.ImageSection
             height={props.imageHeight}
             imageUrl={this.state.coverImage}
