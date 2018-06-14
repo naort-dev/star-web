@@ -2,9 +2,14 @@ import styled from 'styled-components';
 
 const AboutContentDiv = styled.div`
   padding: 27px 42px;
+  height: 100%;
 `;
 AboutContentDiv.ProfileMainContent = styled.div`
   text-align:center;
+  height: 100%;
+`;
+AboutContentDiv.LoaderWrapper = styled.div`
+  height: calc(100% - 100px);
 `;
 AboutContentDiv.ProfileImage = styled.span`
   border-radius: 50%;

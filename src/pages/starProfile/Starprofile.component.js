@@ -9,7 +9,6 @@ import VideoPlayer from '../../components/VideoPlayer';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
-import { ComponentLoading } from '../../components/ComponentLoading';
 import { ImageStack } from '../../components/ImageStack';
 
 export default class Starprofile extends React.Component {
@@ -54,6 +53,7 @@ export default class Starprofile extends React.Component {
     }
   }
   componentWillUnmount() {
+    this.props.resetCelebDetails();
     window.removeEventListener('resize', this.handleWindowResize);
   }
   setTabList = () => {
@@ -166,161 +166,157 @@ export default class Starprofile extends React.Component {
     }
     return (
       <Detail.Wrapper>
-        {
-          this.props.detailsLoading?
-            <ComponentLoading />
-          :
-            <Detail.Content>
-              <Header
-                menuActive={this.state.menuActive}
-                enableMenu={this.activateMenu}
-                disableMenu
-              />
-              <Detail>
-                <Detail.LeftSection>
-                  <Detail.SmallScreenLayout>
-                    <Detail.ImageRenderDiv>
-                      <Detail.ImageSection
-                        imageUrl={coverPhoto}
-                      >
-                        <Detail.ProfileImageWrapper>
-                          <Detail.ProfileImage
-                            imageUrl={profilePhoto}
-                          />
-                        </Detail.ProfileImageWrapper>
-                        {/* <Detail.FavoriteButton /> */}
-                      </Detail.ImageSection>
-                      <Detail.ProfileContent>
-                        <Detail.Span>
-                          <Detail.StarName>
-                            {fullName}
-                          </Detail.StarName>
-                          <Detail.StarDetails>
-                            {
-                              this.generateStarDetails()
-                            }
-                          </Detail.StarDetails>
-                        </Detail.Span>
-                      </Detail.ProfileContent>
-                    </Detail.ImageRenderDiv>
-                  </Detail.SmallScreenLayout>
-                  <Detail.LargeScreenLayout>
-                    <AboutContent
-                      profilePhoto={profilePhoto}
-                      description={this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}
-                      charity={this.props.celebrityDetails.charity ? this.props.celebrityDetails.charity : ''}
-                      fullName={fullName}
-                      starDetails={this.generateStarDetails()}
-                    />
-                  </Detail.LargeScreenLayout>
-                  <Detail.RequestControllerWrapper>
-                    <RequestController rate={rate} />
-                  </Detail.RequestControllerWrapper>
-                </Detail.LeftSection>
-                <Detail.RightSection>
-                  {
-                    this.state.videoActive ?
-                      <Detail.VideoPlayWrapper>
-                        <Link to={`/starDetail/${this.props.match.params.id}`}>
-                          <Detail.CloseButton />
-                        </Link>
-                        <Detail.VideoPlayerSection>
-                          <Scrollbars
-                            autoHide
-                          >
-                            <Detail.VideoPlayerContent>
-                              <Detail.VideoPlayer
-                                videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
-                                videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
-                              >
-                                <VideoPlayer
-                                  cover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
-                                  src={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
-                                />
-                              </Detail.VideoPlayer>
-                              <Detail.VideoContent>
-                                <Detail.VideoTitle>
-                                  {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
-                                </Detail.VideoTitle>
-                                <Detail.VideoRequester>
-                                  <Detail.VideoRequestImage
-                                    imageUrl={this.state.selectedVideoItem.fan_avatar_photo &&
-                                       this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
-                                    }
-                                  />
-                                  <Detail.VideoRequestName>
-                                    {this.state.selectedVideoItem.fan_name ? this.state.selectedVideoItem.fan_name : ''}
-                                  </Detail.VideoRequestName>
-                                </Detail.VideoRequester>
-                              </Detail.VideoContent>
-                              <Detail.RelatedVideos>
-                                <ScrollList
-                                  dataList={this.state.relatedVideos}
-                                  finite
-                                  videos
-                                  starsPage
-                                  limit={this.props.videosList.limit}
-                                  totalCount={this.props.videosList.count}
-                                  offset={this.props.videosList.offset}
-                                  loading={this.props.videosList.loading}
-                                  fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
-                                />
-                              </Detail.RelatedVideos>
-                            </Detail.VideoPlayerContent>
-                          </Scrollbars>
-                        </Detail.VideoPlayerSection>
-                      </Detail.VideoPlayWrapper>
-                    : null
-                  }
-                  {
-                    !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 && this.state.selectedTab === 'All' ?
-                      null
-                    :
-                      <Tabs
-                        labels={this.state.tabList}
-                        selected={this.state.selectedTab}
-                        disableFilter
-                        switchTab={this.switchTab}
+        <Detail.Content>
+          <Header
+            menuActive={this.state.menuActive}
+            enableMenu={this.activateMenu}
+            disableMenu
+          />
+          <Detail>
+            <Detail.LeftSection>
+              <Detail.SmallScreenLayout>
+                <Detail.ImageRenderDiv>
+                  <Detail.ImageSection
+                    imageUrl={coverPhoto}
+                  >
+                    <Detail.ProfileImageWrapper>
+                      <Detail.ProfileImage
+                        imageUrl={profilePhoto}
                       />
-                  }
-                  {
-                    this.state.selectedTab !== 'About' ?
-                      <Detail.ScrollListWrapper>
+                    </Detail.ProfileImageWrapper>
+                    {/* <Detail.FavoriteButton /> */}
+                  </Detail.ImageSection>
+                  <Detail.ProfileContent>
+                    <Detail.Span>
+                      <Detail.StarName>
+                        {fullName}
+                      </Detail.StarName>
+                      <Detail.StarDetails>
                         {
-                          !this.props.videosList.data.length && this.props.videosList.loading ?
-                            <Loader />
-                          :
-                            this.renderList()
+                          this.generateStarDetails()
                         }
-                      </Detail.ScrollListWrapper>
-                    :
-                      <Detail.AboutDetailsWrapper>
-                        {
-                          this.props.celebrityDetails.description && this.props.celebrityDetails.description !== '' ?
-                            <div>
-                              <Detail.AboutDetailHeading>About</Detail.AboutDetailHeading>
-                              <Detail.AboutDetailContent>
-                                {this.props.celebrityDetails.description}
-                              </Detail.AboutDetailContent>
-                            </div>
-                          : null
-                        }
-                        {
-                          this.props.celebrityDetails.charity && this.props.celebrityDetails.charity !== '' ?
-                            <div>
-                              <Detail.AboutDetailHeading>My videos support a charity</Detail.AboutDetailHeading>
-                              <Detail.AboutDetailContent>
-                                {this.props.celebrityDetails.charity}
-                              </Detail.AboutDetailContent>
-                            </div>
-                          : null
-                        }
-                      </Detail.AboutDetailsWrapper>
-                  }
-                </Detail.RightSection>
-              </Detail>
-            </Detail.Content>
-        }
+                      </Detail.StarDetails>
+                    </Detail.Span>
+                  </Detail.ProfileContent>
+                </Detail.ImageRenderDiv>
+              </Detail.SmallScreenLayout>
+              <Detail.LargeScreenLayout>
+                <AboutContent
+                  profilePhoto={profilePhoto}
+                  loading={this.props.detailsLoading}
+                  description={this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}
+                  charity={this.props.celebrityDetails.charity ? this.props.celebrityDetails.charity : ''}
+                  fullName={fullName}
+                  starDetails={this.generateStarDetails()}
+                />
+              </Detail.LargeScreenLayout>
+              <Detail.RequestControllerWrapper>
+                <RequestController rate={rate} />
+              </Detail.RequestControllerWrapper>
+            </Detail.LeftSection>
+            <Detail.RightSection>
+              {
+                this.state.videoActive ?
+                  <Detail.VideoPlayWrapper>
+                    <Link to={`/starDetail/${this.props.match.params.id}`}>
+                      <Detail.CloseButton />
+                    </Link>
+                    <Detail.VideoPlayerSection>
+                      <Scrollbars
+                        autoHide
+                      >
+                        <Detail.VideoPlayerContent>
+                          <Detail.VideoPlayer
+                            videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
+                            videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
+                          >
+                            <VideoPlayer
+                              cover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
+                              src={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
+                            />
+                          </Detail.VideoPlayer>
+                          <Detail.VideoContent>
+                            <Detail.VideoTitle>
+                              {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
+                            </Detail.VideoTitle>
+                            <Detail.VideoRequester>
+                              <Detail.VideoRequestImage
+                                imageUrl={this.state.selectedVideoItem.fan_avatar_photo &&
+                                    this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
+                                }
+                              />
+                              <Detail.VideoRequestName>
+                                {this.state.selectedVideoItem.fan_name ? this.state.selectedVideoItem.fan_name : ''}
+                              </Detail.VideoRequestName>
+                            </Detail.VideoRequester>
+                          </Detail.VideoContent>
+                          <Detail.RelatedVideos>
+                            <ScrollList
+                              dataList={this.state.relatedVideos}
+                              finite
+                              videos
+                              starsPage
+                              limit={this.props.videosList.limit}
+                              totalCount={this.props.videosList.count}
+                              offset={this.props.videosList.offset}
+                              loading={this.props.videosList.loading}
+                              fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
+                            />
+                          </Detail.RelatedVideos>
+                        </Detail.VideoPlayerContent>
+                      </Scrollbars>
+                    </Detail.VideoPlayerSection>
+                  </Detail.VideoPlayWrapper>
+                : null
+              }
+              {
+                !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 && this.state.selectedTab === 'All' ?
+                  null
+                :
+                  <Tabs
+                    labels={this.state.tabList}
+                    selected={this.state.selectedTab}
+                    disableFilter
+                    switchTab={this.switchTab}
+                  />
+              }
+              {
+                this.state.selectedTab !== 'About' ?
+                  <Detail.ScrollListWrapper>
+                    {
+                      !this.props.videosList.data.length && this.props.videosList.loading ?
+                        <Loader />
+                      :
+                        this.renderList()
+                    }
+                  </Detail.ScrollListWrapper>
+                :
+                  <Detail.AboutDetailsWrapper>
+                    {
+                      this.props.celebrityDetails.description && this.props.celebrityDetails.description !== '' ?
+                        <div>
+                          <Detail.AboutDetailHeading>About</Detail.AboutDetailHeading>
+                          <Detail.AboutDetailContent>
+                            {this.props.celebrityDetails.description}
+                          </Detail.AboutDetailContent>
+                        </div>
+                      : null
+                    }
+                    {
+                      this.props.celebrityDetails.charity && this.props.celebrityDetails.charity !== '' ?
+                        <div>
+                          <Detail.AboutDetailHeading>My videos support a charity</Detail.AboutDetailHeading>
+                          <Detail.AboutDetailContent>
+                            {this.props.celebrityDetails.charity}
+                          </Detail.AboutDetailContent>
+                        </div>
+                      : null
+                    }
+                  </Detail.AboutDetailsWrapper>
+              }
+            </Detail.RightSection>
+          </Detail>
+        </Detail.Content>
       </Detail.Wrapper>
     );
   }

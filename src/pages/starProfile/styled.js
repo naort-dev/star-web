@@ -86,6 +86,7 @@ Detail.LargeScreenLayout = styled.div`
   @media(min-width:1025px){
     display:block;
     height: calc(100% - 89px);
+    padding-bottom: 16px;
   }
 `;
 Detail.RequestControllerWrapper = styled.div`

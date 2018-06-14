@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Starprofile from './Starprofile.component';
-import { fetchCelebDetails } from './actions/getCelebDetails';
+import { fetchCelebDetails, resetCelebDetails } from './actions/getCelebDetails';
 import { fetchCelebVideosList } from './actions/getCelebVideos';
 
 const mapStateToProps = state => ({
@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
+  resetCelebDetails: () => dispatch(resetCelebDetails()),
   fetchCelebVideosList: (offset, refresh, id, requestType) => dispatch(fetchCelebVideosList(offset, refresh, id, requestType)),
 });
 
