@@ -318,10 +318,11 @@ export default class Login extends React.Component {
                     </LoginContainer.InputFieldsWrapper>
                     
                     <LoginContainer.WrapsInput>
-                      {this.props.statusCode === undefined ? 
-                        <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                      :
+                      {this.props.statusCode === '410' ? 
                         <LoginContainer.EmptyDiv />
+                        
+                      :
+                        <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
                       }
                       
                     </LoginContainer.WrapsInput>
