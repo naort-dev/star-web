@@ -10,6 +10,7 @@ import VideoRender from '../../components/VideoRender';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
+import Popup from '../../components/Popup';
 import { ImageStack } from '../../components/ImageStack';
 
 export default class Starprofile extends React.Component {
@@ -22,6 +23,7 @@ export default class Starprofile extends React.Component {
       videoActive: props.match.params.videoId ? true : false,
       selectedVideoItem: {},
       relatedVideos: [],
+      showPopup: false,
     };
   }
   componentWillMount() {
@@ -230,7 +232,7 @@ export default class Starprofile extends React.Component {
                 />
               </Detail.LargeScreenLayout>
               <Detail.RequestControllerWrapper>
-                <RequestController rate={rate} />
+                <RequestController rate={rate} showPopup={() => this.setState({showPopup: true})} />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
             <Detail.RightSection>
@@ -339,6 +341,28 @@ export default class Starprofile extends React.Component {
                   </Detail.AboutDetailsWrapper>
               }
             </Detail.RightSection>
+            {this.state.showPopup ?
+              <Popup closePopUp={() => this.setState({showPopup: false})}>
+                <Detail.PopupContainer>
+                  <Detail.PopupContent>
+                    <article><center>This feature soon be available,please download the app from the below links</center>
+                    </article>
+                    <Detail.AppIconWrapper>
+                      <Detail.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
+                        <Detail.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
+                      </Detail.Link>
+                      <Detail.Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
+                        <Detail.StoreIcon alt="playsore icon" src="assets/images/appstore-download.svg" />
+                      </Detail.Link>
+                    </Detail.AppIconWrapper>
+                  </Detail.PopupContent>
+                </Detail.PopupContainer>
+            
+              </Popup>
+            :
+            null
+          }
+            
           </Detail>
         </Detail.Content>
       </Detail.Wrapper>

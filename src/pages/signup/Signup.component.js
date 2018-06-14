@@ -381,7 +381,11 @@ export default class SignUp extends React.Component {
                 </LoginContainer.PrivacyContent>
               </LoginContainer.InputFieldsWrapper>
               <LoginContainer.WrapsInput>
-                <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                {this.props.statusCode === undefined ? 
+                  <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                :
+                  <LoginContainer.EmptyDiv />
+                }
               </LoginContainer.WrapsInput>
             </LoginContainer.SocialMediaSignup>
             <LoginContainer.FooterLayout>

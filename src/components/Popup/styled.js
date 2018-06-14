@@ -33,6 +33,7 @@ PopupStyled.CloseButton = styled.span`
   display: inline-block;
   width: 30px;
   height: 30px;
+  cursor:pointer;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: cover;
   background-position: center center;
