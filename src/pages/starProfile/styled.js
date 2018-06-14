@@ -62,7 +62,8 @@ Detail.LeftSection = styled.div`
 Detail.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
-  height: 50%;
+  height: calc(100% - 237px);
+  min-height: 400px;
   position: relative;
   @media(min-width: 768px) {
     height: calc(100% - 426px);
@@ -213,6 +214,7 @@ Detail.RelatedVideos = styled.div`
   @media(min-width: 1025px) {
     width: 100%;
     height: calc(100% - 400px);
+    min-height: 100%;
     padding: 0 50px;
     display: block;
     padding-top: 20px;    
@@ -236,7 +238,7 @@ Detail.CloseButton = styled.span`
   }
 `;
 Detail.ScrollListWrapper = styled.div`
-  height: 450px;
+  height: calc(100% - 32px);
   padding-bottom: 47px;
   @media(min-width: 768px) {
     height: calc(100% - 39px);
