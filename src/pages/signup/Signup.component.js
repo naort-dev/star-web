@@ -62,12 +62,10 @@ export default class SignUp extends React.Component {
     if(authToken !== undefined) {
       axios.get(instaUrl)
         .then(function (response) {
-           console.log(response);
            that.onSocialMediaLogin(response.data.data,4);
         })
         .catch(function (error) {
-            console.log("hi");
-            console.log(error);
+           
         });
     }
     gapi.signin2.render('g-sign-in', {
@@ -143,7 +141,7 @@ export default class SignUp extends React.Component {
         },
       });
     } else {
-      const val = r.data.data;
+      const val = r;
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
