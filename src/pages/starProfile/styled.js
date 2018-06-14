@@ -384,5 +384,43 @@ Detail.NoData = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-`
+`;
+Detail.PopupContainer = styled.div`
+  background-color:white;
+  width:100%;
+  height:300px;
+  padding:52px 36px;
+`;
+Detail.PopupContent = styled.div`
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  color: #FF6C58;
+  
+`;
+Detail.Article = styled.article`
+  padding-bottom:20px;
+`;
+Detail.AppIconWrapper = styled.div`
+  text-align: center;
+  @media(min-width: 768px) and (max-width: 1024px) {
+    
+   
+  }
+  @media(min-width: 1025px) {
+    margin: 0;
+    text-align: center;
+  }
+`;
+Detail.Link = styled.a`
+  width: 100%;
+  display: block;
+`;
+Detail.StoreIcon = styled.img`
+  cursor: pointer;
+  width: 117px;
+  height: 40px;
+  margin: 10px;
+  margin-left: 0;
+  display: inline-block;
+`;
 export { Detail };
