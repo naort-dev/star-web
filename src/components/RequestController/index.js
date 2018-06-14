@@ -6,7 +6,7 @@ import FooterDiv from './styled';
 export const RequestController = props => (
   <FooterDiv>
     <FooterDiv.BookingLeft>
-      <strong>100</strong> Left
+      <strong>${props.remainingBookings}</strong> Left
     </FooterDiv.BookingLeft>
     <FooterDiv.BookingPrice>
       <strong>${props.rate}</strong>

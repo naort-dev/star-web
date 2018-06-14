@@ -7,6 +7,7 @@ const initalState = {
   count: 0,
   limit: 20,
   currentCategory: 'featured',
+  isLoggedIn: false,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -65,6 +66,7 @@ export default (state = { ...initalState }, action) => {
         data: cachedData.data,
         offset: cachedData.offset,
         count: cachedData.count,
+        isLoggedIn: cachedData.isLoggedIn,
         currentCategory: action.key,
         loading: false,
       };
