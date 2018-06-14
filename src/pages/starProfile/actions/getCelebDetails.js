@@ -7,6 +7,7 @@ export const CELEB_DETAILS = {
   end: 'fetch_end/celeb_details',
   success: 'fetch_success/celeb_details',
   failed: 'fetch_failed/celeb_details',
+  reset: 'reset/celeb_details',
 };
 
 export const celebDetailsFetchStart = () => ({
@@ -28,6 +29,10 @@ export const celebDetailstFetchSuccess = (details) => {
 export const celebDetailstFetchFailed = error => ({
   type: CELEB_DETAILS.failed,
   error,
+});
+
+export const resetCelebDetails = () => ({
+  type: CELEB_DETAILS.reset,
 });
 
 export const fetchCelebDetails = id => (dispatch, getState) => {

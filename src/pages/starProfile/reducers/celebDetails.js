@@ -30,8 +30,15 @@ export default (state = { ...initalState }, action) => {
 
     case CELEB_DETAILS.failed:
       return {
-        ...initalState,
+        ...state,
         loading: false,
+      };
+
+    case CELEB_DETAILS.reset:
+      return {
+        ...state,
+        celebrityDetails: {},
+        userDetails: {},
       };
 
     default:
