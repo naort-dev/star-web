@@ -147,6 +147,11 @@ Detail.VideoPlayerContent = styled.div`
     display: flex;
     align-items: center;
     flex-direction: column;
+    height: auto;
+    padding-bottom: 20px;
+  }
+  @media(min-width: 1025px) {
+    padding: 0;
   }
 `;
 
