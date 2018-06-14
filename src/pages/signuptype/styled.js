@@ -7,6 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   @media(min-width: 1025px){
   flex-direction: row;
+  height: calc(100vh - 40px);
   }
 `;
 
@@ -49,7 +50,7 @@ LoginContainer.RightSection = styled.div`
 LoginContainer.ImageStackLayout = styled.div`
   padding:32px 110px 76px 33px;
   width:100%;
-  height:600px;
+  height:100%;
 
 `;
 const HeaderSection = styled.div`
