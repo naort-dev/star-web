@@ -16,6 +16,7 @@ export default class VideoPlayer extends React.Component {
       <VideoRenderDiv>
         <div id="player">
           <Player
+            playsInline
             poster={this.props.cover}
             src={this.props.src}
             aspectRatio="4:3"
