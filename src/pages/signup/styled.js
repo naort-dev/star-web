@@ -358,6 +358,7 @@ const FooterSection = styled.div`
   @media(min-width:1025px){
    box-shadow:none;
    position: relative;
+   padding: 26px 0px;
    border-top: 1px solid #222;
   }
   
@@ -390,7 +391,7 @@ FooterSection.Button = styled.button`
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 10px;
+  font-size:14px;
   font-family: 'Ubuntu-Bold';
   outline:none;
   border-radius:5px;
