@@ -1,0 +1,15 @@
+ARG REGISTRY=''
+ARG IMAGE_TAG=''
+FROM ${REGISTRY}base-node${IMAGE_TAG}
+
+COPY . /starsona/web
+WORKDIR /starsona/web
+RUN npm install
+RUN npm run build
+
+ENV PORT=8080
+EXPOSE $PORT
+
+ENTRYPOINT ["./docker-entrypoint.sh"]
+CMD ["node", "node_modules/.bin/webpack-dev-server", "--env.env=prod", "--hot"]
+
