@@ -55,7 +55,6 @@ Detail.LeftSection = styled.div`
   @media(min-width: 1025px){
     width:40%;
     padding: 0px 0px;
-    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   }
 
 `;
@@ -138,11 +137,14 @@ Detail.VideoPlayWrapper = styled.div`
 
 Detail.VideoPlayerSection = styled.div`
   height: 100%;
-  padding-top:20px;
+  padding-top:47px;
+  @media(min-width: 1025px) {
+    padding-top: 20px;
+  }
 `;
 
 Detail.VideoPlayerContent = styled.div`
-  height: calc(100vh - 46px);
+  height: calc(100vh - 50px);
   @media(min-width: 768px) {
     display: flex;
     align-items: center;

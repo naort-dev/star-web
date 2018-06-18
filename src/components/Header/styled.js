@@ -311,7 +311,9 @@ HeaderSection.SignIn = styled.button`
     display:none;
   }
   @media(min-width: 768px) {
+    font-size: 16px;
     padding: 6px 10px;
+    padding-bottom: 12px;
   }
   @media(min-width: 1920px) {
     font-size: 16px;
