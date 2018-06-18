@@ -212,12 +212,13 @@ class Header extends React.Component {
                     <HeaderSection.SignInButtonMobile />
                   </Link>
                   <Link to="/login">
-                    <HeaderSection.SignIn>Sign In
-                      <HeaderSection.SignInIcon
-                        src="assets/images/icon_profile_40a.png"
-                        alt=""
-                      />
+                    <HeaderSection.SignIn>
+                      Sign In
                     </HeaderSection.SignIn>
+                    <HeaderSection.SignInIcon
+                      src="assets/images/icon_profile_40a.png"
+                      alt=""
+                    />
                   </Link>
                   <Link to="/signuptype">
                     <HeaderSection.Join>Join Free!</HeaderSection.Join>

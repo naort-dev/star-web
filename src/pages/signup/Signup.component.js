@@ -93,8 +93,7 @@ export default class SignUp extends React.Component {
     if (this.props.statusCode === '410') {
       this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
         this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-      });
-      
+      });  
     } else if (this.checkEmail()) {
       if (this.isFormValid()) {
         this.props.registerUser(
@@ -105,13 +104,11 @@ export default class SignUp extends React.Component {
           this.state.role,
         );
       }
-     
     } else {
       this.checkEmail();
       this.checkPassword();
       this.checkRequired();
     }
-    
   }
   onSocialMediaLogin =(r, source) => {
     if (source === 2) {
@@ -258,17 +255,17 @@ export default class SignUp extends React.Component {
     }
     return (
       <LoginContainer.wrapper>
-        <HeaderSection>
-          <Link to="/">
-            <HeaderSection.HeaderNavigation />
-          </Link>
-          <HeaderSection.MiddleDiv> I'm a Fan</HeaderSection.MiddleDiv>
-          <Link to="/login">
-            <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
-          </Link>
-        </HeaderSection>
         <LoginContainer>
-          <LoginContainer.LeftSection>   
+          <LoginContainer.LeftSection> 
+            <HeaderSection>
+              <HeaderSection.HeaderNavigation
+                onClick={() => this.props.history.goBack()}
+              />
+              <HeaderSection.MiddleDiv> I'm a Fan</HeaderSection.MiddleDiv>
+              <Link to="/login">
+                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+              </Link>
+            </HeaderSection>  
             <LoginContainer.SocialMediaSignup>
               <Scrollbars>
                 <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>

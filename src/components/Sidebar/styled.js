@@ -39,6 +39,9 @@ const SidebarStyled = styled.div`
     float: left;
     width: 100%;
   }
+  @media(min-width: 1920px) {
+    padding-top: 0;
+  }
 `;
 
 const FilterWrapper = styled.div`
@@ -66,6 +69,9 @@ const ListWrapper = styled.ul`
   @media(min-width: 768px) {
     margin: 0 30px;
   }
+  @media(min-width: 1025px) {
+    line-height: 36px;
+  }
 `;
 
 const ListItem = styled.li`
@@ -87,6 +93,9 @@ const ListItem = styled.li`
       border-left: 4px solid #FF6C58;
     }
   }
+  @media(min-width: 1920px) {
+    font-size: 18px;
+  }
 `;
 
 const SectionHeading = styled.h3`
@@ -95,6 +104,9 @@ const SectionHeading = styled.h3`
   color: #333333;
   padding: 10px 0;
   margin: 0 40px;
+  @media(min-width: 1920px) {
+    font-size: 24px;
+  }
 `;
 
 const Separator = styled.span`

@@ -4,6 +4,10 @@ const LandingStyled = styled.div`
   margin-top: 60px;
   height: calc(100vh - 60px);
   background-color: #F8F8F8;
+  @media(min-width: 1920px) {
+    margin-top: 72px;
+    height: calc(100vh - 72px);
+  }
 `;
 
 LandingStyled.sectionWrapper = styled.div`
@@ -21,9 +25,12 @@ LandingStyled.sideSection = styled.section`
     position: fixed;
     left: 0;
     top: 60px;
-    box-shadow: 0px 3px 7px 0px #cccccc inset;
     bottom: 0;
     overflow: auto;
+  }
+  @media(min-width: 1920px) {
+    top: 72px;
+    padding-top: 72px;
   }
 `;
 
@@ -42,6 +49,9 @@ LandingStyled.mainSection = styled.section`
     padding-top: 30px;
     float: right;
   }
+  @media(min-width: 1920px) {
+    padding-top: 72px;
+  }
   @media(min-width: 1241px) {
     width: calc(100% - 310px);
   }
@@ -55,6 +65,9 @@ LandingStyled.loaderWrapper = styled.div`
     padding: 0px;
     padding-top: 20px;
     padding-bottom: 20px;
+  }
+  @media(min-width: 1920px) {
+    padding-top: 32px;
   }
 `;
 

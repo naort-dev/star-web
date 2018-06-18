@@ -9,6 +9,9 @@ const HeaderSection = styled.header`
   box-shadow: 0px 4px 8px 0px #cccccc;
   height: 60px;
   z-index: 10;
+  @media(min-width: 1920px) {
+    height: 72px;
+  }
 `;
 
 HeaderSection.HeaderDiv = styled.div`
@@ -38,6 +41,10 @@ HeaderSection.HeaderLeft = styled.div`
 HeaderSection.ImgLogo = styled.img`
   width:117.61px;
   height:30.27px
+  @media(min-width: 1920px) {
+    width: auto;
+    height: 40px;
+  }
 `;
 HeaderSection.MenuButton = styled.button`
   background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
@@ -267,6 +274,9 @@ HeaderSection.InputWrapper = styled.div`
   @media(min-width: 1025px) {
     width: 100%;
   }
+  @media(min-width: 1920px) {
+    height: 48px;
+  }
 `;
 HeaderSection.Input = styled.input`
   padding-left: 64px;
@@ -286,6 +296,9 @@ HeaderSection.Input = styled.input`
     text-align: center;
     font-size: 18px;
   }
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
 `;
 HeaderSection.SignIn = styled.button`
   background-color: #fff; 
@@ -294,15 +307,22 @@ HeaderSection.SignIn = styled.button`
   padding: 6px 33px;
   text-align: center;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 13px;
   font-family: 'Ubuntu-Bold';
   display: inline-block;
-  font-size: 13px;
   border: none;
   outline:none;
   cursor: pointer;
   @media(max-width:767px){
     display:none;
+  }
+  @media(min-width: 768px) {
+    font-size: 16px;
+    padding: 6px 10px;
+    padding-bottom: 10px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 16px;
   }
 `;
 HeaderSection.Join = styled.button`
@@ -322,15 +342,24 @@ HeaderSection.Join = styled.button`
   @media(max-width:767px){
     display:none;
   }
+  @media(min-width: 1920px) {
+    font-size: 20px;
+    width: 160px;
+    height: 40px;
+  }
 `;
 HeaderSection.SignInIcon = styled.img`
-  position: absolute;
+  display: none;
   width: 25px;
   height: 25px;
-  top: 14px;
-  margin-left: 3px;
+  position: relative;
+  top: 7px;
   @media(min-width: 768px) {
-    top: 18px;
+    display: inline-block;
+    margin-right: 13px;
+  }
+  @media(min-width: 1920px) {
+
   }
 `;
 

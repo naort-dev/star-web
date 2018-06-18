@@ -14,17 +14,18 @@ export default class SignupType extends React.Component {
   render() {
     return (
       <div>
-        <HeaderSection>
-          <Link to="/">
-            <HeaderSection.HeaderNavigation />
-          </Link>
-          <HeaderSection.MiddleDiv> Join Free</HeaderSection.MiddleDiv>
-          <Link to="/login">
-            <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
-          </Link>
-        </HeaderSection>
+        
         <LoginContainer>
           <LoginContainer.LeftSection>
+            <HeaderSection>
+              <HeaderSection.HeaderNavigation
+                onClick={() => this.props.history.goBack()}
+              />
+              <HeaderSection.MiddleDiv> Join Free</HeaderSection.MiddleDiv>
+              <Link to="/login">
+                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+              </Link>
+            </HeaderSection>
             <LoginContainer.BannerImage />
             <LoginTypeSelector />
           </LoginContainer.LeftSection>
