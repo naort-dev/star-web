@@ -9,6 +9,9 @@ const HeaderSection = styled.header`
   box-shadow: 0px 4px 8px 0px #cccccc;
   height: 60px;
   z-index: 10;
+  @media(min-width: 1920px) {
+    height: 72px;
+  }
 `;
 
 HeaderSection.HeaderDiv = styled.div`
@@ -331,6 +334,9 @@ HeaderSection.SignInIcon = styled.img`
   margin-left: 3px;
   @media(min-width: 768px) {
     top: 18px;
+  }
+  @media(min-width: 1920px) {
+    top: 24px;
   }
 `;
 
