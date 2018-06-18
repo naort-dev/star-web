@@ -69,6 +69,9 @@ const ListWrapper = styled.ul`
   @media(min-width: 768px) {
     margin: 0 30px;
   }
+  @media(min-width: 1025px) {
+    line-height: 36px;
+  }
 `;
 
 const ListItem = styled.li`
