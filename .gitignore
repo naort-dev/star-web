@@ -5,7 +5,6 @@ dist/
 .vscode
 .chrome
 .DS_Store
-env.js
 .idea/
 yarn.lock
 package-lock.json
