@@ -78,6 +78,9 @@ VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
   font-family: 'Ubuntu-Bold';
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
 `;
 VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;

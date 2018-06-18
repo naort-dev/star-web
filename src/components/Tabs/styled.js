@@ -46,6 +46,9 @@ TabStyled.tabListItem = styled.li`
     padding: 5px 50px;
     width: 184px;
   }
+  @media(min-width: 1920px) {
+    font-size: 24px;
+  }
 `;
 
 TabStyled.FilterLabel = styled.span`

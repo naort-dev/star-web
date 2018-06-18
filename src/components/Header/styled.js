@@ -274,6 +274,9 @@ HeaderSection.InputWrapper = styled.div`
   @media(min-width: 1025px) {
     width: 100%;
   }
+  @media(min-width: 1920px) {
+    height: 48px;
+  }
 `;
 HeaderSection.Input = styled.input`
   padding-left: 64px;
@@ -292,6 +295,9 @@ HeaderSection.Input = styled.input`
     text-indent: 0;
     text-align: center;
     font-size: 18px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 20px;
   }
 `;
 HeaderSection.SignIn = styled.button`

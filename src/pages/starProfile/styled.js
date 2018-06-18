@@ -23,6 +23,9 @@ const Detail = styled.section`
   height: 100%;
   background-color: #F8F8F8;
  }
+ @media(min-width: 1920px) {
+  padding-top: 72px;
+}
  
 `;
 Detail.Wrapper = styled.div`
@@ -74,6 +77,9 @@ Detail.RightSection = styled.div`
     height: 100%;
     padding: 27px 35px;
     padding-bottom: 0;
+  }
+  @media(min-width: 1920px) {
+    padding-top: 48px;
   }
 `;
 Detail.SmallScreenLayout = styled.div`
