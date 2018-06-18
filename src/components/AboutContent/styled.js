@@ -3,6 +3,9 @@ import styled from 'styled-components';
 const AboutContentDiv = styled.div`
   padding: 27px 42px;
   height: 100%;
+  @media(min-width: 1920px) {
+    padding-top: 48px;
+  }
 `;
 AboutContentDiv.ProfileMainContent = styled.div`
   text-align:center;
@@ -27,11 +30,17 @@ AboutContentDiv.ProfileName = styled.h5`
   font-size: 26px;
   color:#FF6C58;
   margin: 10px 0;
+  @media(min-width: 1920px) {
+    font-size: 48px;
+  }
 `;
 AboutContentDiv.ProfileCategory = styled.h6`
   font-family: 'Ubuntu-Regular';
   color:#333333;
   font-size: 16px;
+  @media(min-width: 1920px) {
+    font-size: 24px;
+  }
 `;
 AboutContentDiv.ProfileDetailsWrapper = styled.article`
   margin-top : 2.5%;
@@ -43,6 +52,9 @@ AboutContentDiv.ProfileDetails = styled.p`
   font-size: 16px;
   margin: 20px 0;
   color: rgba(51, 51, 51, 0.72);
+  @media(min-width: 1920px) {
+    font-size: 18px;
+  }
 `;
 AboutContentDiv.VideoHeading = styled.h6`
   text-align: center;
@@ -50,7 +62,9 @@ AboutContentDiv.VideoHeading = styled.h6`
   font-family: 'Ubuntu-Bold';
   font-size : 20px;
   color:#FF953C;
-
+  @media(min-width: 1920px) {
+    font-size: 24px;
+  }
 `;
 AboutContentDiv.list = styled.li`
   display:inline-block

@@ -17,12 +17,16 @@ const TabStyled = styled.div`
     border: none;
     border-bottom: ${props => (props.filterSelected && '1px solid #CCCCCC')};
     padding: 0;
+    position: relative;
   }
 `;
 
 TabStyled.tabList = styled.ul`
   display: inline-block;
   width: ${props => (props.disableFilter ? '100%' : '80%')};
+  @media(min-width: 1025px) {
+    width: 100%;
+  }
 `;
 
 TabStyled.tabListItem = styled.li`
@@ -40,6 +44,10 @@ TabStyled.tabListItem = styled.li`
   @media(min-width: 1025px) {
     font-size: 21px;
     padding: 5px 50px;
+    width: 184px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 24px;
   }
 `;
 
@@ -94,6 +102,8 @@ TabStyled.FilterControl = styled.div`
   @media(min-width: 1025px) {
     margin-top: 5px;
     padding-bottom: 4px;
+    position: absolute;
+    right: 0;
   }
 `;
 

@@ -5,9 +5,6 @@ export const Footer = () => (
   <FooterStyled>
     <FooterStyled.Separator />
     <FooterStyled.list>
-      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/">
-        <FooterStyled.listItem>About Starsona</FooterStyled.listItem>
-      </FooterStyled.Anchor>
       <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/contact/">
         <FooterStyled.listItem>Contact</FooterStyled.listItem>
       </FooterStyled.Anchor>

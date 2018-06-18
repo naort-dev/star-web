@@ -126,6 +126,9 @@ FilterStyled.filterItem = styled.li`
     margin-left: -4px; 
     border-left: 4px solid #FF6C58;
   }
+  @media(min-width: 1920px) {
+    font-size: 18px;
+  }
 `;
 FilterStyled.filterPriceItem = FilterStyled.filterItem.extend`
 &:hover {

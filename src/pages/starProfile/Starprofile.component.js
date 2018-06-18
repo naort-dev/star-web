@@ -177,7 +177,8 @@ export default class Starprofile extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
     const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit: 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
-      fullName = `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
+      fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
+        : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
     if (this.props.userDetails.avatar_photo) {
       coverPhoto = this.props.userDetails.avatar_photo.image_url && this.props.userDetails.avatar_photo.image_url;
@@ -350,7 +351,7 @@ export default class Starprofile extends React.Component {
               <Popup closePopUp={() => this.setState({showPopup: false})}>
                 <Detail.PopupContainer>
                   <Detail.PopupContent>
-                    <Detail.Article><center>This feature will soon be available. Please download mobile app from the below links</center>
+                    <Detail.Article><center>You’re close to getting your personalized video! To request a video today, please download the Starsona app. Web ordering is coming soon.</center>
                     </Detail.Article>
                     <Detail.AppIconWrapper>
                       <Detail.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
