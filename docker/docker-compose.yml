@@ -1,0 +1,29 @@
+version: '3.3'
+services:
+  nginx:
+    image: web-nginx-swarm
+    hostname: ${SSL_SERVER_NAME}
+    volumes:
+    - /etc/letsencrypt
+    networks:
+    - overlay
+    ports:
+    - "80:80"
+    - "443:443"
+    restart: on-failure
+    environment:
+    - SSL_SERVER_NAME
+    - SSL_SERVER_EMAIL
+
+  node:
+    image: web-node
+    networks:
+    - overlay
+    restart: on-failure
+    environment:
+    - API_URL
+    - PUBLIC=$SSL_SERVER_NAME
+
+networks:
+  overlay:
+

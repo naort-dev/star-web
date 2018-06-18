@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - export REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
+      - export DEPLOYMENT_TYPE=aws
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker images...
+      - chmod +x build-docker-images.sh
+      - ./build-docker-images.sh
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
+      - docker push ${REGISTRY}web-node${IMAGE_TAG}
+      - echo Writing image definitions file...
+      - echo [ > imagedefinitions.json
+      - printf '{"name":"web-nginx-%s","imageUri":"%sweb-nginx-%s%s"},\n' $DEPLOYMENT_TYPE $REPOSITORY_URI $DEPLOYMENT_TYPE $IMAGE_TAG >> imagedefinitions.json
+      - printf '{"name":"web-node","imageUri":"%sweb-node%s"}\n' $REPOSITORY_URI $IMAGE_TAG >> imagedefinitions.json
+      - echo ] >> imagedefinitions.json

@@ -1,0 +1,26 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - export REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - echo Build started on `date`
+      - echo Building the Docker images...
+      - chmod +x build-docker-base.sh
+      - ./build-docker-base.sh
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push ${REGISTRY}base-nginx${IMAGE_TAG}
+      - docker push ${REGISTRY}base-letsencrypt${IMAGE_TAG}
+      - docker push ${REGISTRY}base-node${IMAGE_TAG}
+      - echo [ > imagedefinitions.json
+      - printf '{"name":"base-nginx","imageUri":"%sbase-nginx%s"},\n' $REPOSITORY_URI $IMAGE_TAG >> imagedefinitions.json
+      - printf '{"name":"base-letsencrypt","imageUri":"%sbase-letsencrypt%s"},\n' $REPOSITORY_URI $IMAGE_TAG >> imagedefinitions.json
+      - printf '{"name":"base-node","imageUri":"%sbase-node%s"}\n' $REPOSITORY_URI $IMAGE_TAG >> imagedefinitions.json
+      - echo ] >> imagedefinitions.json
