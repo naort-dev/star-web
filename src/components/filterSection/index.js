@@ -162,7 +162,7 @@ export default class FilterSection extends React.Component {
               this.props.selectedTab !== 'Videos' ?
                 <FilterStyled.filterSection>
                   <FilterStyled.filterHeading>
-                    Sort
+                    Sort By
                   </FilterStyled.filterHeading>
                   <FilterStyled.filterItemWrapper>
                     <FilterStyled.filterItem

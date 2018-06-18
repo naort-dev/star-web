@@ -28,6 +28,9 @@ const ListStyled = styled.section`
     padding-top: 20px;
     padding-bottom: 20px;
   }
+  @media(min-width: 1920px) {
+    padding-top: 32px;
+  }
 `;
 
 ListStyled.listWrapper = styled.ul`
