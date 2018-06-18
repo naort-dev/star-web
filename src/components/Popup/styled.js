@@ -21,8 +21,8 @@ PopupStyled.Container = styled.div`
   justify-content: center;
   align-items: center;
   @media(min-width: 768px) {
-    width: 400px;
-    height: 400px;
+    width: 50%;
+    height: 50%;
   }
 `;
 
@@ -33,6 +33,7 @@ PopupStyled.CloseButton = styled.span`
   display: inline-block;
   width: 30px;
   height: 30px;
+  cursor:pointer;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: cover;
   background-position: center center;

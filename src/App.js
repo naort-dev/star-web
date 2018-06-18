@@ -11,6 +11,7 @@ import {
   protectRoute,
   allUserRoles,
 } from './services/protectRoute';
+import '../node_modules/video-react/dist/video-react.css';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
 import { updateLoginStatus } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
@@ -89,7 +90,7 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
-                <Route path="/starDetail/:id" component={Starprofile} />
+                <Route path="/starDetail/:id/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starsignup" component={StarsignUp} />

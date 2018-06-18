@@ -1,12 +1,15 @@
 class Api {
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
-  static getProfessionsList = 'user/professions/';
+  static getProfessionsList = 'user/filtered_professions/';
   static getVideosList = 'request/featured_videos/';
   static login = 'user/login/';
   static register = 'user/register/'
   static getSuggestionList = 'user/fan/suggestion_list/';
   static socialMediaLogin = 'user/socialsignup/';
+  static authGetCelebDetails = 'user/user_details/';
+  static getCelebDetails = id => `user/user_details/${id}/get_details/`;
 }
 
 export default Api;
+

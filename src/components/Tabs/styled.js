@@ -22,12 +22,12 @@ const TabStyled = styled.div`
 
 TabStyled.tabList = styled.ul`
   display: inline-block;
-  width: 80%;
+  width: ${props => (props.disableFilter ? '100%' : '80%')};
 `;
 
 TabStyled.tabListItem = styled.li`
   display: inline-block;
-  padding: 5px 19px;
+  padding: ${props => (props.disableFilter ? '5px 15px' : '5px 19px')};
   font-size: 16px;
   cursor: pointer;
   font-family: 'Ubuntu-Bold';

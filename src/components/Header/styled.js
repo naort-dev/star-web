@@ -68,6 +68,7 @@ HeaderSection.SearchButton = styled.button`
   }
 `;
 HeaderSection.ClearButton = styled.span`
+  cursor: pointer;
   display: inline-block;
   width: 16px;
   height: 16px;
@@ -75,9 +76,6 @@ HeaderSection.ClearButton = styled.span`
   background-image: url( 'assets/images/close-icon.svg' );
   background-repeat: no-repeat;
   background-position: center;
-  @media(min-width: 768px) {
-    display: none;
-  }
 `;
 HeaderSection.SignInButtonMobile = styled.button`
   background-image: url( 'assets/images/icon_profile_40a.png' );
@@ -227,7 +225,7 @@ HeaderSection.SuggestionListItem = styled.li`
   cursor: pointer;
   font-size: 18px;
   line-height: 23px;
-  &:hover{
+  &:hover, &:focus{
     background-color: #F8F8F8;
   }
   &:first-child{
@@ -282,7 +280,6 @@ HeaderSection.Input = styled.input`
   background: transparent;
   @media(min-width: 768px) {
     text-indent: 24px;
-    width: 100%;
   } 
   @media(min-width : 1025px){
     text-indent: 0;

@@ -1,72 +1,57 @@
-import { CELEB_LIST } from '../actions/getCelebList';
+import { CELEB_VIDEOS_LIST } from '../actions/getCelebVideos';
 
 const initalState = {
   data: [],
   loading: false,
   offset: -1,
   count: 0,
-  limit: 20,
-  currentCategory: 'featured',
-  isLoggedIn: false,
+  limit: 40,
 };
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
-    case CELEB_LIST.start:
+    case CELEB_VIDEOS_LIST.start:
       return {
         ...state,
         loading: true,
         data: action.refresh ? [] : state.data,
         token: action.token,
-        currentCategory: action.category,
       };
 
-    case CELEB_LIST.end:
+    case CELEB_VIDEOS_LIST.end:
       return {
         ...state,
         loading: false,
       };
 
-    case CELEB_LIST.success:
+    case CELEB_VIDEOS_LIST.success:
       return {
         ...state,
         loading: false,
         offset: action.offset,
-        data: action.list,
+        data: [...state.data, ...action.list],
         count: action.count,
-        [action.category]: {
-          offset: action.offset,
-          data: action.list,
-          count: action.count,
-          currentSearchParam: action.searchParam,
-          lowPrice: action.lowPrice,
-          highPrice: action.highPrice,
-          sortValue: action.sortValue,
-          isLoggedIn: action.isLoggedIn,
-        },
-        currentCategory: action.category,
       };
 
-    case CELEB_LIST.failed:
+    case CELEB_VIDEOS_LIST.failed:
       return {
         ...state,
         error: action.error,
       };
 
-    case CELEB_LIST.swapCacheStart:
+    case CELEB_VIDEOS_LIST.swapCacheStart:
       return {
         ...state,
         data: action.refresh ? [] : state.data,
       };
 
-    case CELEB_LIST.swapCacheEnd:
+    case CELEB_VIDEOS_LIST.swapCacheEnd:
       const cachedData = state[action.key];
       return {
         ...state,
         data: cachedData.data,
         offset: cachedData.offset,
         count: cachedData.count,
-        isLoggedIn: cachedData.isLoggedIn,
         currentCategory: action.key,
         loading: false,
       };

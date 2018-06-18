@@ -4,6 +4,7 @@ import {
   Link,
 } from 'react-router-dom';
 import axios from 'axios';
+import { Scrollbars } from 'react-custom-scrollbars';
 import validator from 'validator';
 import config from '../../lib/config';
 import { LoginContainer, HeaderSection } from './styled';
@@ -19,6 +20,7 @@ export default class Login extends React.Component {
       redirectToReferrer: false,
       email: { value: '', isValid: false, message: '' },
       password: { value: '', isValid: false, message: '' },
+      showPassword: false,
       socialMedia: {
         username: '',
         first_name: '',
@@ -90,17 +92,19 @@ export default class Login extends React.Component {
   }
   onLogin = (e) => {
     e.preventDefault();
-    if (this.props.statusCode === undefined) {
+    if (this.props.statusCode === '410') {
+      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () =>{
+        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
+      });
+     
+    } else if (this.checkEmail()) {
       if (this.isFormValid()) {
         this.props.loginUser(this.state.email.value, this.state.password.value);
       } else {
         this.checkEmail();
         this.checkPassword();
       }
-    } else if (this.checkEmail()) {
-      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () =>{
-        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-      });
+      
     } else {
       this.checkEmail();
     } 
@@ -164,7 +168,7 @@ export default class Login extends React.Component {
   }
   onInstagramLogin = () => {
     const clientId = config.instaId;
-    const redirectUri = config.instaRedirectUri;
+    const redirectUri = config.loginInstaRedirectUri;
     const url = config.instaAuthUrl +'?client_id='+ clientId +'&redirect_uri='+redirectUri+'&response_type=token';
     window.location.href = url;
   }
@@ -217,6 +221,9 @@ export default class Login extends React.Component {
     }
     return false;
   }
+  ShowPassword = () => {
+    this.setState({ showPassword: !this.state.showPassword });
+  }
   render() {
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.from;
@@ -249,74 +256,81 @@ export default class Login extends React.Component {
                 <LoginContainer.LeftSection>
                   <LoginContainer.CoverImage />
                   <LoginContainer.SocialMediaSignup>
-                    <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
-                    <LoginContainer.ButtonDiv>
-                      <LoginContainer.Button onClick={() => this.OnFBlogin()}>
-                        <LoginContainer.FacebookContent>Continue with Facebook
-                        </LoginContainer.FacebookContent>
-                      </LoginContainer.Button>
-                    </LoginContainer.ButtonDiv>
-                    <LoginContainer.ButtonDiv>                
-                      <LoginContainer.Button onClick={() => this.onGmail()} >
-                        <LoginContainer.GoogleWrapper id="g-sign-in" />
-                        <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
-                      </LoginContainer.Button>
-                    </LoginContainer.ButtonDiv>
-                    <LoginContainer.ButtonDiv>
-                      <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-                        <LoginContainer.InstagramContent>Continue with Instagram
-                        </LoginContainer.InstagramContent>
-                      </LoginContainer.Button>
-                    </LoginContainer.ButtonDiv>
-                    <LoginContainer.Line />
-                    <LoginContainer.InputFieldsWrapper>
-                      <LoginContainer.SectionHeading>{this.props.statusCode === '410' ? this.props.error : <div>Use your email</div>}</LoginContainer.SectionHeading>
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Email</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.Input
-                            type="text"
-                            name="email"
-                            value={email.value}
-                            placeholder="Enter your email"
-                            onChange={this.acceptEmailHandler}
-                            onBlur={this.checkEmail}
-                          />
-                          <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>  
-                        </LoginContainer.WrapsInput>                
-                      </LoginContainer.InputWrapper>
-                      {
-                        this.props.statusCode === '410' ?
+                    <Scrollbars>
+                      <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
+                      <LoginContainer.ButtonDiv>
+                        <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+                          <LoginContainer.FacebookContent>Continue with Facebook
+                          </LoginContainer.FacebookContent>
+                        </LoginContainer.Button>
+                      </LoginContainer.ButtonDiv>
+                      <LoginContainer.ButtonDiv>                
+                        <LoginContainer.Button onClick={() => this.onGmail()} >
+                          <LoginContainer.GoogleWrapper id="g-sign-in" />
+                          <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
+                        </LoginContainer.Button>
+                      </LoginContainer.ButtonDiv>
+                      <LoginContainer.ButtonDiv>
+                        <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+                          <LoginContainer.InstagramContent>Continue with Instagram
+                          </LoginContainer.InstagramContent>
+                        </LoginContainer.Button>
+                      </LoginContainer.ButtonDiv>
+                      <LoginContainer.Line />
+                      <LoginContainer.InputFieldsWrapper>
+                        <LoginContainer.SectionHeading>{this.props.statusCode === '410' ? this.props.error : <div>Use your email</div>}</LoginContainer.SectionHeading>
+                        <LoginContainer.InputWrapper>
+                          <LoginContainer.Label>Email</LoginContainer.Label>
+                          <LoginContainer.WrapsInput>
+                            <LoginContainer.Input
+                              type="text"
+                              name="email"
+                              value={email.value}
+                              placeholder="Enter your email"
+                              onChange={this.acceptEmailHandler}
+                              onBlur={this.checkEmail}
+                            />
+                            <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>  
+                          </LoginContainer.WrapsInput>                
+                        </LoginContainer.InputWrapper>
+                        {
+                          this.props.statusCode === '410' ?
+                            <LoginContainer.EmptyDiv />
+                            
+                          :
+                            <LoginContainer.InputWrapper>               
+                              <LoginContainer.Label>Password</LoginContainer.Label>
+                              <LoginContainer.WrapsInput>
+                                <LoginContainer.PasswordWrapper>
+                                  <LoginContainer.Input
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                    name="password"
+                                    value={password.value}
+                                    placeholder="Enter your password"
+                                    onChange={this.acceptPasswordHandler}
+                                    onBlur={this.checkPassword}
+                                  />
+                                  <LoginContainer.ShowPassword onClick={this.ShowPassword} />
+                                </LoginContainer.PasswordWrapper>
+                                
+                                <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
+                              </LoginContainer.WrapsInput>
+                            </LoginContainer.InputWrapper> 
+
+                        }
+                                      
+                      </LoginContainer.InputFieldsWrapper>
+                      
+                      <LoginContainer.WrapsInput>
+                        {this.props.statusCode === '410' ? 
                           <LoginContainer.EmptyDiv />
                           
                         :
-                          <LoginContainer.InputWrapper>               
-                            <LoginContainer.Label>Password</LoginContainer.Label>
-                            <LoginContainer.WrapsInput>
-                              <LoginContainer.Input
-                                type="password"
-                                name="password"
-                                value={password.value}
-                                placeholder="Enter your password"
-                                onChange={this.acceptPasswordHandler}
-                                onBlur={this.checkPassword}
-                              />
-                              <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>  
-                            </LoginContainer.WrapsInput>
-                          </LoginContainer.InputWrapper> 
-
-                      }
-                                     
-                    </LoginContainer.InputFieldsWrapper>
-                    
-                    <LoginContainer.WrapsInput>
-                      {this.props.statusCode === undefined ? 
-                        <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                      :
-                        <LoginContainer.EmptyDiv />
-                      }
-                      
-                    </LoginContainer.WrapsInput>
+                          <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                        }
+                        
+                      </LoginContainer.WrapsInput>
+                    </Scrollbars>
                   </LoginContainer.SocialMediaSignup>
                   <LoginContainer.FooterSection>
                     <LoginContainer.Footer>
@@ -333,11 +347,14 @@ export default class Login extends React.Component {
                         </LoginContainer.SignIn>
                       </LoginContainer.FooterRight>
                     </LoginContainer.Footer>
-                  </LoginContainer.FooterSection>          
+                  </LoginContainer.FooterSection>         
                 </LoginContainer.LeftSection>
                 <LoginContainer.RightSection>
                   <LoginContainer.ImageStackLayout>
-                    <ImageStack />
+                    <ImageStack
+                      featureImage="assets/images/Stadium_800x376.jpg"
+                      imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                    />
                   </LoginContainer.ImageStackLayout>
                 </LoginContainer.RightSection>
               </LoginContainer>

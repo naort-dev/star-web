@@ -1,7 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import VideoRenderDiv from './styled';
-import Popup from '../Popup';
-
 
 export default class VideoRender extends React.Component {
   constructor(props) {
@@ -9,7 +8,6 @@ export default class VideoRender extends React.Component {
     this.state = {
       coverImage: false,
       profileImage: false,
-      showPopup: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -33,9 +31,6 @@ export default class VideoRender extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
-  closePopup = () => {
-    this.setState({ showPopup: false })
-  }
   renderVideoDetails = (text) => {
     let splicedText = text;
     if (text.length > this.charLimit) {
@@ -47,43 +42,29 @@ export default class VideoRender extends React.Component {
     const { props } = this;
     return (
       <VideoRenderDiv>
-        {
-          this.state.showPopup && this.props.videoUrl ?
-            <Popup
-              closePopUp={this.closePopup}
-            >
-              <video
-                style={{width: '100%', height: '300px'}}
-                autoPlay
-                src={this.props.videoUrl}
-                poster={this.props.cover}
-                controls
+        <Link to={`/starDetail/${props.celebId}/${props.videoId}`}>
+          <VideoRenderDiv.ImageSection
+            height={props.imageHeight}
+            imageUrl={this.state.coverImage}
+          >
+            <VideoRenderDiv.ProfileImageWrapper>
+              <VideoRenderDiv.ProfileImage
+                imageUrl={this.state.profileImage}
               />
-            </Popup>
-          : null
-        }
-        <VideoRenderDiv.ImageSection
-          height={props.imageHeight}
-          imageUrl={this.state.coverImage}
-          onClick={() => this.setState({ showPopup: true })}
-        >
-          <VideoRenderDiv.ProfileImageWrapper>
-            <VideoRenderDiv.ProfileImage
-              imageUrl={this.state.profileImage}
-            />
-          </VideoRenderDiv.ProfileImageWrapper>
-          {/* <VideoRenderDiv.FavoriteButton /> */}
-        </VideoRenderDiv.ImageSection>
-        <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.Span>
-            <VideoRenderDiv.StarName>
-              {props.starName}
-            </VideoRenderDiv.StarName>
-            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
-          </VideoRenderDiv.Span>
-        </VideoRenderDiv.ProfileContent>
+            </VideoRenderDiv.ProfileImageWrapper>
+            {/* <VideoRenderDiv.FavoriteButton /> */}
+          </VideoRenderDiv.ImageSection>
+          <VideoRenderDiv.ProfileContent>
+            <VideoRenderDiv.Span>
+              <VideoRenderDiv.StarName>
+                {props.starName}
+              </VideoRenderDiv.StarName>
+              <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+            </VideoRenderDiv.Span>
+          </VideoRenderDiv.ProfileContent>
+        </Link>
       </VideoRenderDiv>
-    )
+    );
   }
 }
 

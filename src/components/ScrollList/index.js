@@ -2,7 +2,6 @@ import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
-// import ImageCollection from '../ImageCollection';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
 import Loader from '../Loader';
@@ -16,18 +15,39 @@ export default class ScrollList extends React.Component {
   }
 
   componentWillMount() {
-    if (!this.props.loading) {
+    const endOfList = this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
+    if ((!this.props.loading && endOfList) || this.props.finite) {
       this.setState({ hasMore: false });
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
-    if (endOfList) {
-      this.setState({ hasMore: false });
-    } else {
-      this.setState({ hasMore: true });
+    if (!this.props.finite) {
+      const endOfList = nextProps.dataList.length !== 0 && nextProps.dataList.length >= nextProps.totalCount;
+      if (endOfList) {
+        this.setState({ hasMore: false });
+      } else {
+        this.setState({ hasMore: true });
+      }
     }
+  }
+
+  getVideoType = (bookingType) => {
+    let videoType;
+    switch (bookingType) {
+      case 3:
+        videoType = 'Q&A';
+        break;
+      case 2:
+        videoType = 'Event';
+        break;
+      case 1:
+        videoType = 'Shoutout';
+        break;
+      default:
+        videoType = '';
+    }
+    return videoType;
   }
 
   refresh = () => {
@@ -40,7 +60,7 @@ export default class ScrollList extends React.Component {
       return;
     }
     if (!this.props.loading) {
-      this.props.fetchData(this.props.offset + 20);
+      this.props.fetchData(this.props.offset + this.props.limit);
     }
   };
 
@@ -55,16 +75,17 @@ export default class ScrollList extends React.Component {
     });
     return string;
   }
-
   renderList() {
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
-        <ListStyled.listVideos videos={this.props.videos} key={index}>
+        <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
             cover={item.s3_thumbnail_url}
             videoUrl={item.s3_video_url}
+            celebId={item.user_id}
+            videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-            starName={item.full_name}
+            starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}
           />
         </ListStyled.listVideos>
@@ -83,6 +104,7 @@ export default class ScrollList extends React.Component {
       return (
         <ListStyled.listItem key={index}>
           <ImageRender
+            id={item.user_id}
             cover={coverPhoto}
             profile={profilePhoto}
             starName={item.get_short_name}
@@ -101,7 +123,7 @@ export default class ScrollList extends React.Component {
         >
           <InfiniteScroll
             dataLength={this.props.dataList.length}
-            next={this.fetchMoreData}
+            next={this.props.finite ? () => {} : this.fetchMoreData}
             scrollableTarget="scrollable-target"
             refreshFunction={this.refresh}
             // pullDownToRefresh

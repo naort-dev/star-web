@@ -1,15 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import FooterDiv from './styled';
 
 
-export const RequestController = () => (
+export const RequestController = props => (
   <FooterDiv>
     <FooterDiv.BookingLeft>
-      <strong>100</strong> Bookings left
+      <strong>${props.remainingBookings}</strong> Left
     </FooterDiv.BookingLeft>
     <FooterDiv.BookingPrice>
-      <strong>$250</strong>
+      <strong>${props.rate}</strong>
     </FooterDiv.BookingPrice>
-    <FooterDiv.Button>Request a Video</FooterDiv.Button>
+   
+    <FooterDiv.Button onClick={() => props.showPopup()}>Request a Video</FooterDiv.Button>
+   
   </FooterDiv>
 );

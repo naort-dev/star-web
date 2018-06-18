@@ -22,10 +22,14 @@ export default class Landing extends React.Component {
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        this.props.fetchCelebrityList(0, true);
+        if (!this.props.celebList.data.length || this.props.isLoggedIn !== this.props.celebList.isLoggedIn) {
+          this.props.fetchCelebrityList(0, true);
+        }
         break;
       case 'Videos':
-        this.props.fetchVideosList(0, true);
+        if (!this.props.videosList.data.length) {
+          this.props.fetchVideosList(0, true);
+        }
         break;
       default:
         this.props.fetchCelebrityList(0, true);
@@ -44,7 +48,11 @@ export default class Landing extends React.Component {
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
     if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange) {
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.fetchVideosList(0, true);
+        if (searchParamChange) {
+          this.props.switchTab('Stars');
+        } else {
+          this.props.fetchVideosList(0, true);
+        }
       } else {
         this.props.fetchCelebrityList(0, true);
       }
@@ -63,9 +71,13 @@ export default class Landing extends React.Component {
         this.setScrollHeight();
       });
       if (nextProps.filters.selectedTab === 'Videos') {
-        this.props.fetchVideosList(0, true);
-      } else {
-        this.props.fetchCelebrityList(0, true);
+        if ((tabChange && !this.props.videosList.data.length) || loginChange) {
+          this.props.fetchVideosList(0, true);
+        }
+      } else if (nextProps.filters.selectedTab === 'Stars') {
+        if ((tabChange && !this.props.celebList.data.length) || loginChange) {
+          this.props.fetchCelebrityList(0, true);
+        }
       }
     }
   }
@@ -135,6 +147,7 @@ export default class Landing extends React.Component {
       return (
         <ScrollList
           dataList={this.props.celebList.data}
+          limit={this.props.celebList.limit}
           totalCount={this.props.celebList.count}
           offset={this.props.celebList.offset}
           loading={this.props.celebList.loading}
@@ -146,6 +159,7 @@ export default class Landing extends React.Component {
         <ScrollList
           dataList={this.props.videosList.data}
           videos
+          limit={this.props.videosList.limit}
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
@@ -162,6 +176,7 @@ export default class Landing extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           searchFilter={this.searchFilter}
+          searchParam={this.props.filters.searchParam}
         />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>

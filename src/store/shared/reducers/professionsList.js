@@ -23,7 +23,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        professions: [...state.professions, ...action.data.professions],
+        professions: action.data['filtered-professions'],
       };
 
     case PROFESSION_LIST.failed:

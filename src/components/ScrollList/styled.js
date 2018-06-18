@@ -1,4 +1,14 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const menuEnter = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
 
 const ListStyled = styled.section`
   padding: 0 16px;
@@ -42,6 +52,7 @@ ListStyled.listItem = styled.li`
   display: inline-block;
   margin-bottom: 20px;
   padding-left: 0;
+  animation: ${menuEnter} 0.2s linear;
   @media(min-width: 768px) {
     width: calc(50%);
     border-right: 20px solid transparent;
@@ -81,12 +92,15 @@ ListStyled.listVideos = ListStyled.listItem.extend`
   @media(min-width: 1025px) {
     padding: 0;
     border-right: 20px solid transparent;
-    width: 25%;
+    width: ${props => (props.starsPage ? '33.33%' : '25%')};
     &:nth-child(even), &:nth-child(3n) {
       border-right: 20px solid transparent;
     }
+    &:nth-child(3n) {
+      border-right: ${props => (props.starsPage ? '0' : '20px solid transparent')};
+    }
     &:nth-child(4n) {
-      border-right: 0;
+      border-right: ${props => (props.starsPage ? '20px solid transparent' : '0')};
     }
   }
   @media(min-width: 1221px) {
@@ -96,7 +110,10 @@ ListStyled.listVideos = ListStyled.listItem.extend`
       border-right: 40px solid transparent;
     }
     &:nth-child(4n) {
-      border-right: 0;
+      border-right: ${props => (props.starsPage ? '40px solid transparent' : '0')};
+    }
+    &:nth-child(3n) {
+      border-right: ${props => (props.starsPage ? '0' : '40px solid transparent')};
     }
   }
 

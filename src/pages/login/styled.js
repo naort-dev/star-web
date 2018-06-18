@@ -5,18 +5,25 @@ const LoginContainer = styled.div`
   display: flex;
   padding: 0px 0px;
   flex-direction: column;
+  height: calc(100% - 40px);
   @media(min-width: 1025px){
     flex-direction: row;
   }
 `;
 LoginContainer.wrapper = styled.div`
+  height: 100vh;
+  @media(min-width: 1025px) {
+    height: 100vh;
+  }
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
+  height: 100%;
   @media(min-width: 1025px){
     width: 40%;
     padding: 0px 0px;
     position: relative;
+    padding-bottom: 83px;
   }
 `;
 LoginContainer.RightSection = styled.div`
@@ -32,6 +39,7 @@ LoginContainer.RightSection = styled.div`
 `;
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
+  height: 100%;
   @media(min-width:768px){
     padding: 5px 65px; 
     padding-bottom:45px;
@@ -39,6 +47,7 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
   @media(min-width: 1025px) {
     padding-bottom: 60px;
+    height: 100%;
   }
 `;
 LoginContainer.Heading = styled.div`
@@ -198,7 +207,7 @@ LoginContainer.InputFieldsWrapper = styled.div`
     border-top: solid 1px rgba(51, 51, 51, 0.5);
   }
   @media(min-width:1025px){
-   
+    padding-right: 39px;
   }
 `;
 LoginContainer.Label = styled.div`
@@ -206,6 +215,7 @@ LoginContainer.Label = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size:16px;
   text-align:left;
+  padding-bottom:10px;
   @media(min-width:768px){
     width:55%;
   }
@@ -239,7 +249,6 @@ LoginContainer.Input = styled.input`
   width: 100%;
   height: 40px;
   text-indent: 10px;
-  margin-top:3%;
   @media(min-width:768px){
     margin-top:0;
     height:40px;
@@ -339,12 +348,16 @@ LoginContainer.FooterSection = styled.div`
   padding: 0px 0px;
   @media(min-width:1025px){
     padding:0px 56px;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
   }
 `;
 LoginContainer.ImageStackLayout = styled.div`
   padding:32px 110px 76px 33px;
   width:100%;
-  height:600px;
+  height:100%;
 
 `;
 LoginContainer.ErrorDiv = styled.div`
@@ -404,7 +417,7 @@ LoginContainer.WrapsInput = styled.div`
   width:100%;
   height:60px;
   @media(min-width:768px){
-    width:571px;
+    width:100%;
     height:30px;
   }
   @media(min-width:1025){
@@ -419,6 +432,25 @@ LoginContainer.GoogleWrapper = styled.div`
 `;
 LoginContainer.EmptyDiv = styled.div`
   display:none;
+`;
+LoginContainer.ShowPassword = styled.span`
+  position:absolute;
+  background-image: url( 'assets/images/icon_1pass_24a.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:19px;
+  padding: 14px;
+  right: 7px;
+  top: 6px;
+  cursor:pointer;
+  @media(min-width:1025px){
+    top:1px;
+    padding: 12px;
+  }
+`;
+LoginContainer.PasswordWrapper = styled.div`
+  position:relative;
+ 
 `;
 
 

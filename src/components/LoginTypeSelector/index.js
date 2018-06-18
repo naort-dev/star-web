@@ -7,7 +7,7 @@ export const LoginTypeSelector = props => (
   <TypeSelectorWrapper>
     <TypeSelectorWrapper.Content>
       <TypeSelectorWrapper.heading>Create your free account</TypeSelectorWrapper.heading>
-      <TypeSelectorWrapper.subheading>Chose your account type to get started
+      <TypeSelectorWrapper.subheading>Choose your account type to get started
       </TypeSelectorWrapper.subheading>
     </TypeSelectorWrapper.Content>
     <div> 
