@@ -297,15 +297,20 @@ HeaderSection.SignIn = styled.button`
   padding: 6px 33px;
   text-align: center;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 13px;
   font-family: 'Ubuntu-Bold';
   display: inline-block;
-  font-size: 13px;
   border: none;
   outline:none;
   cursor: pointer;
   @media(max-width:767px){
     display:none;
+  }
+  @media(min-width: 768px) {
+    padding: 6px 10px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 16px;
   }
 `;
 HeaderSection.Join = styled.button`
@@ -325,18 +330,22 @@ HeaderSection.Join = styled.button`
   @media(max-width:767px){
     display:none;
   }
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
 `;
 HeaderSection.SignInIcon = styled.img`
-  position: absolute;
+  display: none;
   width: 25px;
   height: 25px;
-  top: 14px;
-  margin-left: 3px;
+  position: relative;
+  top: 7px;
   @media(min-width: 768px) {
-    top: 18px;
+    display: inline-block;
+    margin-right: 13px;
   }
   @media(min-width: 1920px) {
-    top: 24px;
+
   }
 `;
 
