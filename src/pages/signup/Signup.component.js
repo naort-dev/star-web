@@ -258,9 +258,9 @@ export default class SignUp extends React.Component {
         <LoginContainer>
           <LoginContainer.LeftSection> 
             <HeaderSection>
-              <Link to="/">
-                <HeaderSection.HeaderNavigation />
-              </Link>
+              <HeaderSection.HeaderNavigation
+                onClick={() => this.props.history.goBack()}
+              />
               <HeaderSection.MiddleDiv> I'm a Fan</HeaderSection.MiddleDiv>
               <Link to="/login">
                 <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>

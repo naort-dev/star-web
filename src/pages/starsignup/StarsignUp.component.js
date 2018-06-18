@@ -17,9 +17,9 @@ export default class StarsignUp extends React.Component {
         <LoginContainer>
           <LoginContainer.LeftSection>
             <HeaderSection>
-              <Link to="/">
-                <HeaderSection.HeaderNavigation />
-              </Link>
+              <HeaderSection.HeaderNavigation
+                onClick={() => this.props.history.goBack()}
+              />
               <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
               <Link to="/login">
                 <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
