@@ -93,8 +93,7 @@ export default class SignUp extends React.Component {
     if (this.props.statusCode === '410') {
       this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
         this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-      });
-      
+      });  
     } else if (this.checkEmail()) {
       if (this.isFormValid()) {
         this.props.registerUser(
@@ -105,13 +104,11 @@ export default class SignUp extends React.Component {
           this.state.role,
         );
       }
-     
     } else {
       this.checkEmail();
       this.checkPassword();
       this.checkRequired();
     }
-    
   }
   onSocialMediaLogin =(r, source) => {
     if (source === 2) {
