@@ -41,6 +41,10 @@ HeaderSection.HeaderLeft = styled.div`
 HeaderSection.ImgLogo = styled.img`
   width:117.61px;
   height:30.27px
+  @media(min-width: 1920px) {
+    width: auto;
+    height: 40px;
+  }
 `;
 HeaderSection.MenuButton = styled.button`
   background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
@@ -332,6 +336,8 @@ HeaderSection.Join = styled.button`
   }
   @media(min-width: 1920px) {
     font-size: 20px;
+    width: 160px;
+    height: 40px;
   }
 `;
 HeaderSection.SignInIcon = styled.img`
