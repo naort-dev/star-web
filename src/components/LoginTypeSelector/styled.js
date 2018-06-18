@@ -21,6 +21,9 @@ TypeSelectorWrapper.heading = styled.div`
   @media(min-width: 1025px){
     font-size: 16px;
   }
+  @media(min-width:1920px){
+    font-size:32px;
+  }
 `;
 TypeSelectorWrapper.subheading = styled.div`
   font-family: 'Ubuntu-Light';
@@ -30,13 +33,16 @@ TypeSelectorWrapper.subheading = styled.div`
     font-size: 16px;
   }
   @media(min-width: 1025px){
-    font-size: 13px;
+    font-size: 9px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
   }
 `;
 TypeSelectorWrapper.Button = styled.button`
   padding: 10px 10px;
   outline:none;
-  border: 2px solid #333333; 
+  border: 2px solid rgba(51, 51, 51, 1); 
   background-color: white;
   border-radius: 13px;
   margin-top: 6%;
@@ -46,6 +52,7 @@ TypeSelectorWrapper.Button = styled.button`
   width: 100%;
   text-align:center;
   cursor: pointer;
+  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.12);
   
   &:hover {
     color :#FF6C58;

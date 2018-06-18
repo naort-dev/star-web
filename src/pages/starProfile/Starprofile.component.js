@@ -350,7 +350,7 @@ export default class Starprofile extends React.Component {
               <Popup closePopUp={() => this.setState({showPopup: false})}>
                 <Detail.PopupContainer>
                   <Detail.PopupContent>
-                    <Detail.Article><center>This feature will soon be available. Please download mobile app from the below links</center>
+                    <Detail.Article><center>You’re close to getting your personalized video! To request a video today, please download the Starsona app. Web ordering is coming soon.</center>
                     </Detail.Article>
                     <Detail.AppIconWrapper>
                       <Detail.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
