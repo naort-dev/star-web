@@ -11,6 +11,7 @@ phases:
     commands:
       - echo Build started on `date`
       - echo Building the Docker images...
+      - chmod +x build-docker-images.sh
       - ./build-docker-images.sh
   post_build:
     commands:
