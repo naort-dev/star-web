@@ -13,17 +13,18 @@ export default class StarsignUp extends React.Component {
   render() {
     return (
       <div>
-        <HeaderSection>
-          <Link to="/">
-            <HeaderSection.HeaderNavigation />
-          </Link>
-          <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
-          <Link to="/login">
-            <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
-          </Link>
-        </HeaderSection>
+        
         <LoginContainer>
           <LoginContainer.LeftSection>
+            <HeaderSection>
+              <Link to="/">
+                <HeaderSection.HeaderNavigation />
+              </Link>
+              <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
+              <Link to="/login">
+                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+              </Link>
+            </HeaderSection>
             <LoginContainer.Heading>Please Download the Application</LoginContainer.Heading>   
             <LoginContainer.AppIconWrapper>
               <LoginContainer.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">

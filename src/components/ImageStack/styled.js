@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ImageStackDiv = styled.div`
-  background-color:white;
+  background-color:rgba(248, 248, 248, 1);
   padding: 10px 10px;
   height:100%;
   

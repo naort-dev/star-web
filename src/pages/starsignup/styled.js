@@ -12,6 +12,8 @@ const LoginContainer = styled.div`
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
+  height: 100%;
+  background-color:white;
 
   @media(min-width: 1025px){
     width: 40%;
@@ -21,6 +23,7 @@ LoginContainer.LeftSection = styled.div`
 LoginContainer.RightSection = styled.div`
   width: 100%;
   display: none;
+  background-color:rgba(248, 248, 248, 1);
 
   @media(min-width: 1025px){
     width: 60%;
@@ -296,9 +299,7 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
-  @media(min-width : 1025px){
-    width: 660px;
-  }
+ 
 `;
 HeaderSection.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
@@ -314,17 +315,11 @@ HeaderSection.HeaderNavigation = styled.button`
 HeaderSection.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;
-  margin-left: 12%;
-  @media(min-width : 1025px){
-    margin-right: 20%;
-  }
-
 `;
 HeaderSection.RightDiv = styled.button`
   background-color: #fff; 
   margin-right: 5px;
   color: black;
-  padding: 6px 33px;
   text-align: center;
   text-decoration: none;
   font-size: 16px;

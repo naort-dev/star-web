@@ -255,17 +255,17 @@ export default class SignUp extends React.Component {
     }
     return (
       <LoginContainer.wrapper>
-        <HeaderSection>
-          <Link to="/">
-            <HeaderSection.HeaderNavigation />
-          </Link>
-          <HeaderSection.MiddleDiv> I'm a Fan</HeaderSection.MiddleDiv>
-          <Link to="/login">
-            <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
-          </Link>
-        </HeaderSection>
         <LoginContainer>
-          <LoginContainer.LeftSection>   
+          <LoginContainer.LeftSection> 
+            <HeaderSection>
+              <Link to="/">
+                <HeaderSection.HeaderNavigation />
+              </Link>
+              <HeaderSection.MiddleDiv> I'm a Fan</HeaderSection.MiddleDiv>
+              <Link to="/login">
+                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+              </Link>
+            </HeaderSection>  
             <LoginContainer.SocialMediaSignup>
               <Scrollbars>
                 <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>

@@ -243,17 +243,18 @@ export default class Login extends React.Component {
             <MainLoader />
           :
             <LoginContainer.wrapper>
-              <HeaderSection>
-                <Link to="/">
-                  <HeaderSection.HeaderNavigation />
-                </Link>
-                <HeaderSection.MiddleDiv> Sign In</HeaderSection.MiddleDiv>
-                <Link to="/signuptype">
-                  <HeaderSection.RightDiv>Join free</HeaderSection.RightDiv>
-                </Link>
-              </HeaderSection>
+             
               <LoginContainer>
                 <LoginContainer.LeftSection>
+                  <HeaderSection>
+                    <Link to="/">
+                      <HeaderSection.HeaderNavigation />
+                    </Link>
+                    <HeaderSection.MiddleDiv> Sign In</HeaderSection.MiddleDiv>
+                    <Link to="/signuptype">
+                      <HeaderSection.RightDiv>Join free</HeaderSection.RightDiv>
+                    </Link>
+                  </HeaderSection>
                   <LoginContainer.CoverImage />
                   <LoginContainer.SocialMediaSignup>
                     <Scrollbars>
