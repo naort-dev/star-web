@@ -7,7 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   @media(min-width: 1025px){
   flex-direction: row;
-  height: calc(100vh - 40px);
+  height: calc(100vh);
   }
 `;
 

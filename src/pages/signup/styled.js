@@ -5,7 +5,7 @@ const LoginContainer = styled.div`
   display: flex;
   padding: 0px 0px;
   flex-direction: column;
-  height: calc(100% - 40px);
+  height: calc(100%);
   @media(min-width: 1025px){
   flex-direction: row;
   }
@@ -217,6 +217,7 @@ LoginContainer.ErrorDiv = styled.div`
 LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
+  margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
   @media(min-width:768px){
@@ -233,7 +234,7 @@ LoginContainer.Label = styled.div`
     width:55%;
   }
   @media(min-width:1025px){
-    font-size:12px;
+    font-size:16px;
     width:69%;
   }
 
@@ -270,8 +271,8 @@ LoginContainer.Input = styled.input`
   }
   @media(min-width:1025px){
     margin-top:0;
-    height:26px;
-    font-size:12px;
+    height:40px;
+    font-size:16px;
   }
 `;
 LoginContainer.InputWrapper = styled.div`
@@ -438,7 +439,7 @@ LoginContainer.ShowPassword = styled.span`
   top: 6px;
   cursor:pointer;
   @media(min-width:1025px){
-    top:1px;
+    top:5px;
     padding: 12px;
   }
 `;

@@ -7,7 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   @media(min-width: 1025px){
     flex-direction: row;
-    height: calc(100vh - 40px);
+    height: calc(100vh);
   }
 `;
 LoginContainer.LeftSection = styled.div`
@@ -51,7 +51,7 @@ LoginContainer.Heading = styled.div`
     font-size: 32px;
   }
   @media(min-width:1025px){
-    font-size:22px;
+    font-size:32px;
   }
   
 `;
@@ -208,6 +208,7 @@ LoginContainer.ErrorDiv = styled.div`
 LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
+  margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
   @media(min-width:768px){
