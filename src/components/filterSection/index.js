@@ -130,7 +130,7 @@ export default class FilterSection extends React.Component {
                           selected={this.props.selectedVideoType === 1 ? true : false}
                           onClick={() => this.filterSelection('video_type', 1)}
                         >
-                          Shoutouts
+                          Shout-outs
                         </FilterStyled.filterItem>
                       </FilterStyled.filterItemWrapper>
                   }

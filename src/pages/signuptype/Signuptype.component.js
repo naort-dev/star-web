@@ -21,9 +21,9 @@ export default class SignupType extends React.Component {
               <HeaderSection.HeaderNavigation
                 onClick={() => this.props.history.goBack()}
               />
-              <HeaderSection.MiddleDiv> Join Free</HeaderSection.MiddleDiv>
+              <HeaderSection.MiddleDiv> Sign Up</HeaderSection.MiddleDiv>
               <Link to="/login">
-                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+                <HeaderSection.RightDiv>Log In</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
             <LoginContainer.BannerImage />

@@ -263,7 +263,7 @@ export default class SignUp extends React.Component {
               />
               <HeaderSection.MiddleDiv> I'm a Fan</HeaderSection.MiddleDiv>
               <Link to="/login">
-                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+                <HeaderSection.RightDiv>Log In</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>  
             <LoginContainer.SocialMediaSignup>
@@ -400,7 +400,7 @@ export default class SignUp extends React.Component {
                     </FooterSection.Agreement>
                   </FooterSection.LeftSection>
                   <FooterSection.RightSection>
-                    <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>Join Free</FooterSection.Button>
+                    <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>Sign Up</FooterSection.Button>
                   </FooterSection.RightSection>
                 </FooterSection>
               </div>

@@ -22,7 +22,7 @@ export default class StarsignUp extends React.Component {
               />
               <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
               <Link to="/login">
-                <HeaderSection.RightDiv>Sign In</HeaderSection.RightDiv>
+                <HeaderSection.RightDiv>Log In</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
             <LoginContainer.Heading>Please Download the Application</LoginContainer.Heading>   

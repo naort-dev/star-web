@@ -64,9 +64,9 @@ export default class Starprofile extends React.Component {
   }
   setTabList = () => {
     if (window.outerWidth < 1025) {
-      this.setState({ tabList: ['All', 'Q&A', 'Events', 'About'] });
+      this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs', 'About'] });
     } else {
-      this.setState({ tabList: ['All', 'Q&A', 'Events'] });
+      this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs'] });
     }
   }
   findVideoItem = (dataList, bookingId) => {
@@ -91,6 +91,9 @@ export default class Starprofile extends React.Component {
         break;
       case 'Events':
         requestId = 2;
+        break;
+      case 'Shout-outs':
+        requestId = 1;
         break;
       default: break;
     }
@@ -167,7 +170,7 @@ export default class Starprofile extends React.Component {
       );
     }
     return (
-      <Detail.NoData> <strong>No Data</strong> </Detail.NoData>
+      <Detail.NoData> <strong>Be the first to get this type of video!</strong> </Detail.NoData>
     );
   }
   render() {
@@ -306,6 +309,7 @@ export default class Starprofile extends React.Component {
                   null
                 :
                   <Tabs
+                    starsPage
                     labels={this.state.tabList}
                     selected={this.state.selectedTab}
                     disableFilter
