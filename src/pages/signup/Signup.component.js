@@ -36,7 +36,7 @@ export default class SignUp extends React.Component {
   componentDidMount() {
     window.fbAsyncInit = () => {
       window.FB.init({
-        appId: config.fbId,
+        appId: env('fbId'),
         cookie: true,
         xfbml: true,
         version: 'v3.0',
@@ -58,7 +58,7 @@ export default class SignUp extends React.Component {
     }(document, 'script', 'facebook-jssdk'));
     const token = this.props.location.hash;
     const authToken = token.split('=')[1];
-    const instaUrl = config.instaUrl + authToken;
+    const instaUrl = env('instaUrl') + authToken;
     const that = this;
     if(authToken !== undefined) {
       axios.get(instaUrl)
@@ -170,9 +170,9 @@ export default class SignUp extends React.Component {
     check[0].click();
   }
   onInstagramLogin = () => {
-    const clientId = config.instaId;
-    const redirectUri = config.signupInstaRedirectUri;
-    const url = config.instaAuthUrl +'?client_id='+ clientId +'&redirect_uri='+redirectUri+'&response_type=token';
+    const clientId = env('instaId');
+    const redirectUri = env('signupInstaRedirectUri');
+    const url = env('instaAuthUrl') +'?client_id='+ clientId +'&redirect_uri='+redirectUri+'&response_type=token';
     window.location.href = url;
   }
   OnFBlogin = () => {

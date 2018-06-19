@@ -225,10 +225,14 @@ LoginContainer.Label = styled.div`
   padding-bottom:10px;
   @media(min-width:768px){
     width:55%;
+    display:flex;
+    align-items:center;
+    padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:16px;
+    font-size:13px;
     width:69%;
+   
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -269,11 +273,12 @@ LoginContainer.Input = styled.input`
   }
   @media(min-width:1025px){
     margin-top:0;
-    height:40px;
-    font-size:16px;
+    height:33px;
+    font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;
+    height:40px;
   }
 `;
 LoginContainer.InputWrapper = styled.div`
