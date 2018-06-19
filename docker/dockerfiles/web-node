@@ -3,6 +3,8 @@ ARG IMAGE_TAG=''
 FROM ${REGISTRY}base-node${IMAGE_TAG}
 
 COPY . /starsona/web
+RUN chmod +x /starsona/web/docker-entrypoint.sh
+
 WORKDIR /starsona/web
 RUN npm install
 RUN npm run build
