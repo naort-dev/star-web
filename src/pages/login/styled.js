@@ -225,10 +225,14 @@ LoginContainer.Label = styled.div`
   padding-bottom:10px;
   @media(min-width:768px){
     width:55%;
+    display:flex;
+    align-items:center;
+    padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:12px;
+    font-size:13px;
     width:69%;
+   
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -269,11 +273,12 @@ LoginContainer.Input = styled.input`
   }
   @media(min-width:1025px){
     margin-top:0;
-    height:26px;
-    font-size:12px;
+    height:33px;
+    font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;
+    height:40px;
   }
 `;
 LoginContainer.InputWrapper = styled.div`
@@ -345,6 +350,9 @@ LoginContainer.SignIn = styled.button`
     color: #222;
     border: 2px solid #222;
   }
+  @media(min-width:1920px){
+    font-size:20px;
+  }
   
 `;
 LoginContainer.CoverImage = styled.div`
@@ -383,6 +391,7 @@ LoginContainer.ErrorDiv = styled.div`
 LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
+  margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
   
@@ -407,6 +416,9 @@ HeaderSection.HeaderNavigation = styled.button`
 HeaderSection.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 
 `;
 HeaderSection.RightDiv = styled.button`
@@ -423,6 +435,9 @@ HeaderSection.RightDiv = styled.button`
   border: none;
   cursor: pointer;
   outline:none;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
@@ -455,7 +470,7 @@ LoginContainer.ShowPassword = styled.span`
   top: 6px;
   cursor:pointer;
   @media(min-width:1025px){
-    top:1px;
+    top:5px;
     padding: 12px;
   }
 `;
