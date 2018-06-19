@@ -345,6 +345,9 @@ LoginContainer.SignIn = styled.button`
     color: #222;
     border: 2px solid #222;
   }
+  @media(min-width:1920px){
+    font-size:20px;
+  }
   
 `;
 LoginContainer.CoverImage = styled.div`
@@ -407,6 +410,9 @@ HeaderSection.HeaderNavigation = styled.button`
 HeaderSection.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 
 `;
 HeaderSection.RightDiv = styled.button`
@@ -423,6 +429,9 @@ HeaderSection.RightDiv = styled.button`
   border: none;
   cursor: pointer;
   outline:none;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;

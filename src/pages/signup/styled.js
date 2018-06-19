@@ -20,10 +20,11 @@ LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
   background-color:white;
+
   @media(min-width: 1025px){
     width: 40%;
-    position: relative;
     padding: 0px 0px;
+    position: relative;
     padding-bottom: 83px;
   }
 `;
@@ -36,6 +37,7 @@ LoginContainer.RightSection = styled.div`
     width: 60%;
     display: block;
     padding: 0px 0px;
+    position: relative;
   }
 `;
 LoginContainer.SocialMediaSignup = styled.div`
