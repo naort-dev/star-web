@@ -31,3 +31,4 @@ echo "Stopping existing nginx if needed"
 echo "Starting main process:"
 echo "    $@"
 exec "$@"
+

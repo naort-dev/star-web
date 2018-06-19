@@ -13,3 +13,4 @@ cat env.js
 echo "Starting main process:"
 echo "    $@"
 exec "$@"
+

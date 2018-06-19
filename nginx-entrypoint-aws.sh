@@ -6,3 +6,4 @@ sed -i -r "s/(^[ \t]+proxy_pass[ \t]+http:\/\/).*(:[0-9]+.*$)/\1${PRIVATE_LB_HOS
 echo "Starting main process:"
 echo "    $@"
 exec "$@"
+
