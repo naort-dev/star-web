@@ -3,6 +3,8 @@ import styled from 'styled-components';
 const TabStyled = styled.div`
   padding: 22px 16px 0;
   border-bottom: 1px solid #CCCCCC;
+  display: flex;
+  justify-content: space-between;
   &::after {
     content: '';
     clear: both;
@@ -22,8 +24,15 @@ const TabStyled = styled.div`
 `;
 
 TabStyled.tabList = styled.ul`
-  display: inline-block;
-  width: ${props => (props.disableFilter ? '100%' : '80%')};
+  display: block;
+  width: ${props => (props.disableFilter ? '100%' : 'calc(100% - 25px)')};
+  overflow-x: auto;
+  white-space: nowrap;
+  @media(min-width: 768px) {
+    overflow: initial;
+    height: auto;
+    white-space: normal;
+  }
   @media(min-width: 1025px) {
     width: 100%;
   }
@@ -43,8 +52,8 @@ TabStyled.tabListItem = styled.li`
   }
   @media(min-width: 1025px) {
     font-size: 21px;
-    padding: 5px 50px;
-    width: 184px;
+    padding: ${props => (props.starsPage ? '5px 27px' : '5px 50px')};
+    width: ${props => (props.starsPage ? 'auto' : '184px')};;
   }
   @media(min-width: 1920px) {
     font-size: 24px;

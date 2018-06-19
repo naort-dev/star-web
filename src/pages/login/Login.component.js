@@ -251,9 +251,9 @@ export default class Login extends React.Component {
                     <HeaderSection.HeaderNavigation
                       onClick={() => this.props.history.goBack()}
                     />
-                    <HeaderSection.MiddleDiv> Sign In</HeaderSection.MiddleDiv>
+                    <HeaderSection.MiddleDiv> Log In</HeaderSection.MiddleDiv>
                     <Link to="/signuptype">
-                      <HeaderSection.RightDiv>Join free</HeaderSection.RightDiv>
+                      <HeaderSection.RightDiv>Sign Up</HeaderSection.RightDiv>
                     </Link>
                   </HeaderSection>
                   <LoginContainer.CoverImage />
@@ -345,7 +345,7 @@ export default class Login extends React.Component {
                         <LoginContainer.SignIn
                           onClick={this.onLogin}
                           disabled={this.props.loading}
-                        >Sign In
+                        >Log In
                         </LoginContainer.SignIn>
                       </LoginContainer.FooterRight>
                     </LoginContainer.Footer>
