@@ -7,7 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   @media(min-width: 1025px){
     flex-direction: row;
-    height: calc(100vh - 40px);
+    height: calc(100vh);
   }
 `;
 LoginContainer.LeftSection = styled.div`
@@ -18,17 +18,20 @@ LoginContainer.LeftSection = styled.div`
   @media(min-width: 1025px){
     width: 40%;
     padding: 0px 0px;
+    position: relative;
+    padding-bottom: 83px;
   }
 `;
 LoginContainer.RightSection = styled.div`
   width: 100%;
   display: none;
   background-color:rgba(248, 248, 248, 1);
-
+  
   @media(min-width: 1025px){
     width: 60%;
     display: block;
     padding: 0px 0px;
+    position: relative;
   }
 `;
 LoginContainer.SocialMediaSignup = styled.div`
@@ -48,7 +51,7 @@ LoginContainer.Heading = styled.div`
     font-size: 32px;
   }
   @media(min-width:1025px){
-    font-size:22px;
+    font-size:32px;
   }
   
 `;
@@ -205,6 +208,7 @@ LoginContainer.ErrorDiv = styled.div`
 LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
+  margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
   @media(min-width:768px){
@@ -315,6 +319,9 @@ HeaderSection.HeaderNavigation = styled.button`
 HeaderSection.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
 HeaderSection.RightDiv = styled.button`
   background-color: #fff; 
@@ -329,6 +336,9 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
 const FooterSection = styled.div`
   position:fixed;

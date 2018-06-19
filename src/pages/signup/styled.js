@@ -5,7 +5,7 @@ const LoginContainer = styled.div`
   display: flex;
   padding: 0px 0px;
   flex-direction: column;
-  height: calc(100% - 40px);
+  height: calc(100%);
   @media(min-width: 1025px){
   flex-direction: row;
   }
@@ -20,10 +20,11 @@ LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
   background-color:white;
+
   @media(min-width: 1025px){
     width: 40%;
-    position: relative;
     padding: 0px 0px;
+    position: relative;
     padding-bottom: 83px;
   }
 `;
@@ -36,6 +37,7 @@ LoginContainer.RightSection = styled.div`
     width: 60%;
     display: block;
     padding: 0px 0px;
+    position: relative;
   }
 `;
 LoginContainer.SocialMediaSignup = styled.div`
@@ -215,6 +217,7 @@ LoginContainer.ErrorDiv = styled.div`
 LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
+  margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
   @media(min-width:768px){
@@ -229,10 +232,15 @@ LoginContainer.Label = styled.div`
   text-align:left;
   @media(min-width:768px){
     width:55%;
+    align-items:center;
+    padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:12px;
+    font-size:13px;
     width:69%;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
   }
 
 `;
@@ -268,8 +276,12 @@ LoginContainer.Input = styled.input`
   }
   @media(min-width:1025px){
     margin-top:0;
-    height:26px;
-    font-size:12px;
+    height:33px;
+    font-size:13px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+    height:40px;
   }
 `;
 LoginContainer.InputWrapper = styled.div`
@@ -436,7 +448,7 @@ LoginContainer.ShowPassword = styled.span`
   top: 6px;
   cursor:pointer;
   @media(min-width:1025px){
-    top:1px;
+    top:5px;
     padding: 12px;
   }
 `;

@@ -14,6 +14,7 @@ export default class Tabs extends React.Component {
           {
             this.props.labels.map((item, index) => (
               <TabStyled.tabListItem
+                starsPage={this.props.starsPage}
                 disableFilter={this.props.disableFilter}
                 key={index}
                 onClick={() => this.props.switchTab(item)}

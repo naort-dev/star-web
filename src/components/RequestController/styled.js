@@ -8,10 +8,16 @@ const FooterDiv = styled.div`
 FooterDiv.BookingLeft = styled.div`
   font-size:14px;
   color:#333333;
+  @media(min-width: 1920px) {
+    font-size: 18px;
+  }
 `;
 FooterDiv.BookingPrice = styled.div`
   color:#333333;
   font-size:14px;
+  @media(min-width: 1920px) {
+    font-size: 18px;
+  }
 `;
 FooterDiv.Button = styled.button`
   background-color: #fff; 
@@ -26,6 +32,9 @@ FooterDiv.Button = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
 `;
 
 export default FooterDiv;
