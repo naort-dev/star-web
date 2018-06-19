@@ -213,7 +213,7 @@ class Header extends React.Component {
                   </Link>
                   <Link to="/login">
                     <HeaderSection.SignIn>
-                      Sign In
+                      Log In
                     </HeaderSection.SignIn>
                     <HeaderSection.SignInIcon
                       src="assets/images/icon_profile_40a.png"
@@ -221,7 +221,7 @@ class Header extends React.Component {
                     />
                   </Link>
                   <Link to="/signuptype">
-                    <HeaderSection.Join>Join Free!</HeaderSection.Join>
+                    <HeaderSection.Join>Sign Up!</HeaderSection.Join>
                   </Link>
                 </div>
             }

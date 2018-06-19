@@ -19,7 +19,7 @@ TypeSelectorWrapper.heading = styled.div`
     font-size: 32px;
   }
   @media(min-width: 1025px){
-    font-size: 16px;
+    font-size: 32px;
   }
   @media(min-width:1920px){
     font-size:32px;
@@ -33,7 +33,7 @@ TypeSelectorWrapper.subheading = styled.div`
     font-size: 16px;
   }
   @media(min-width: 1025px){
-    font-size: 9px;
+    font-size: 16px;
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -63,8 +63,13 @@ TypeSelectorWrapper.Button = styled.button`
     width: 490px;
   }
   @media(min-width: 1025px){
-    font-size: 15px;
-    width: 256px;
+    font-size: 22px;
+    width: 300px;
+  }
+  @media(min-width:1920px){
+    width:480px;
+    height:80px;
+    font-size:28px;
   }
 `;
 

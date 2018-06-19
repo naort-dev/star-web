@@ -7,7 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   @media(min-width: 1025px){
   flex-direction: row;
-  height: calc(100vh - 40px);
+  height: calc(100vh);
   }
 `;
 
@@ -30,24 +30,27 @@ LoginContainer.BannerImage = styled.div`
   
 `;
 LoginContainer.LeftSection = styled.div`
-  width:100%;
+  width: 100%;
   height: 100%;
   background-color:white;
 
   @media(min-width: 1025px){
-    width:40%;
+    width: 40%;
     padding: 0px 0px;
+    position: relative;
+    padding-bottom: 83px;
   }
 `;
 LoginContainer.RightSection = styled.div`
-  width:100%;
-  display:none;
+  width: 100%;
+  display: none;
   background-color:rgba(248, 248, 248, 1);
-
+  
   @media(min-width: 1025px){
-    width:60%;
-    display:block;
+    width: 60%;
+    display: block;
     padding: 0px 0px;
+    position: relative;
   }
 `;
 LoginContainer.ImageStackLayout = styled.div`
