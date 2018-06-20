@@ -24,23 +24,11 @@ export default class FilterSection extends React.Component {
   }
 
   filterSelection = (type, data) => {
-    if (this.props.toggleFilter && type !== 'category') {
-      this.props.toggleFilter();
-    }
-    let selectedList;
+    this.props.toggleFilter();
     switch (type) {
       case 'priceRange': this.props.updatePriceRange(data.low, data.high);
         break;
       case 'sort': this.props.updateSort(data);
-        break;
-      case 'category':
-        selectedList = this.props.selectedSubCategories ? this.props.selectedSubCategories : {};
-        if (selectedList.hasOwnProperty(data.value)) {
-          delete selectedList[data.value];
-        } else {
-          selectedList[data.value] = data.label;
-        }
-        this.props.updateSelectedSubCategory(selectedList);
         break;
       case 'video_type':
         this.props.updateSelectedVideoType(data);
@@ -49,23 +37,6 @@ export default class FilterSection extends React.Component {
         this.props.updateSelectedVideoDate(data);
         break;
       default: break;
-    }
-  }
-
-  renderSubCategoryList = () => {
-    switch (this.props.selectedTab) {
-      case 'Stars':
-        return this.props.subCategoryList.map((item, index) => (
-          <FilterStyled.filterTypeItem
-            key={index}
-            selected={this.props.selectedSubCategories && this.props.selectedSubCategories.hasOwnProperty(item.id)}
-            onClick={() => this.filterSelection('category', { label: item.title, value: item.id })}
-          >
-            {item.title}
-          </FilterStyled.filterTypeItem>
-        ));
-      default:
-        return null;
     }
   }
   render() {
@@ -77,63 +48,39 @@ export default class FilterSection extends React.Component {
         <Scrollbars>
           <FilterStyled.filterWrapper>
             {
-              this.props.selectedTab !== 'Videos' && this.props.subCategoryList && !this.props.subCategoryList.length ?
+              this.props.selectedTab !== 'Videos' ?
                 null
               :
                 <FilterStyled.filterSection typeFilter={this.props.selectedTab !== 'Videos' ? true : false}>
                   <FilterStyled.filterHeading>
                     Type
                   </FilterStyled.filterHeading>
-                  {
-                    this.props.selectedTab !== 'Videos' ?
-                      <FilterStyled.filterTypeWrapper>
-                        <Scrollbars
-                          hideTracksWhenNotNeeded
-                          autoHeight
-                          autoHeightMin={0}
-                          autoHeightMax={'100%'}
-                        >
-                          <FilterStyled.filterTypeList>
-                            <FilterStyled.filterTypeItem
-                              selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
-                              onClick={() => this.props.updateSelectedSubCategory({})}
-                            >
-                              All
-                            </FilterStyled.filterTypeItem>
-                            {
-                              this.renderSubCategoryList()
-                            }
-                          </FilterStyled.filterTypeList>
-                        </Scrollbars>
-                      </FilterStyled.filterTypeWrapper>
-                    :
-                      <FilterStyled.filterItemWrapper>
-                        <FilterStyled.filterItem
-                          selected={this.props.selectedVideoType === '' ? true : false}
-                          onClick={() => this.filterSelection('video_type', '')}
-                        >
-                          All
-                        </FilterStyled.filterItem>
-                        <FilterStyled.filterItem
-                          selected={this.props.selectedVideoType === 3 ? true : false}
-                          onClick={() => this.filterSelection('video_type', 3)}
-                        >
-                          Q&A
-                        </FilterStyled.filterItem>
-                        <FilterStyled.filterItem
-                          selected={this.props.selectedVideoType === 2 ? true : false}
-                          onClick={() => this.filterSelection('video_type', 2)}
-                        >
-                          Event Announcement
-                        </FilterStyled.filterItem>
-                        <FilterStyled.filterItem
-                          selected={this.props.selectedVideoType === 1 ? true : false}
-                          onClick={() => this.filterSelection('video_type', 1)}
-                        >
-                          Shout-outs
-                        </FilterStyled.filterItem>
-                      </FilterStyled.filterItemWrapper>
-                  }
+                  <FilterStyled.filterItemWrapper>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedVideoType === '' ? true : false}
+                      onClick={() => this.filterSelection('video_type', '')}
+                    >
+                      All
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedVideoType === 3 ? true : false}
+                      onClick={() => this.filterSelection('video_type', 3)}
+                    >
+                      Q&A
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedVideoType === 2 ? true : false}
+                      onClick={() => this.filterSelection('video_type', 2)}
+                    >
+                      Event Announcement
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedVideoType === 1 ? true : false}
+                      onClick={() => this.filterSelection('video_type', 1)}
+                    >
+                      Shout-outs
+                    </FilterStyled.filterItem>
+                  </FilterStyled.filterItemWrapper>
                 </FilterStyled.filterSection>
             }
             {/* <FilterStyled.filterSection typeFilter>

@@ -91,9 +91,9 @@ export default class Landing extends React.Component {
     let count = 0;
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        if (this.props.filters[this.props.filters.category.value]) {
-          count = Object.keys(this.props.filters[this.props.filters.category.value]).length;
-        }
+        // if (this.props.filters[this.props.filters.category.value]) {
+        //   count = Object.keys(this.props.filters[this.props.filters.category.value]).length;
+        // }
         break;
       case 'Videos':
         if (this.props.filters.selectedVideoType !== '') {
