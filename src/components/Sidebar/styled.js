@@ -44,7 +44,7 @@ const SidebarStyled = styled.div`
   }
 `;
 
-const FilterWrapper = styled.div`
+SidebarStyled.FilterWrapper = styled.div`
   display: flex;
   flex-direction: column;
   @media(min-width: 768px) {
@@ -59,10 +59,10 @@ const FilterWrapper = styled.div`
   }
 `;
 
-const Filter = styled.div`
+SidebarStyled.Filter = styled.div`
 `;
 
-const ListWrapper = styled.ul`
+SidebarStyled.ListWrapper = styled.ul`
   padding: 20px 0;
   line-height: 33px;
   cursor: pointer;
@@ -74,10 +74,19 @@ const ListWrapper = styled.ul`
   }
 `;
 
-const ListItem = styled.li`
+SidebarStyled.ListItem = styled.li`
   font-family: 'Ubuntu-Light';
-  padding: 0 40px;
   font-size: 16px;
+  color: ${props => props.selected && '#FF6C58'};
+  background-color: ${props => props.selected && '#F8F8F8'};
+  @media(min-width: 1920px) {
+    font-size: 18px;
+  }
+`;
+
+SidebarStyled.CategoryTitle = styled.span`
+  display: block;
+  padding: 0 40px;
   color: ${props => props.selected && '#FF6C58'};
   background-color: ${props => props.selected && '#F8F8F8'};
   &:hover {
@@ -93,12 +102,21 @@ const ListItem = styled.li`
       border-left: 4px solid #FF6C58;
     }
   }
-  @media(min-width: 1920px) {
-    font-size: 18px;
-  }
 `;
 
-const SectionHeading = styled.h3`
+SidebarStyled.SubCategoryList = styled.ul`
+  margin-left: 20px;
+  width: calc(100% - 20px);
+`;
+
+SidebarStyled.SubCategoryListItem = styled.li`
+  color: ${props => (props.selected ? '#FF6C58' : '#333333')};
+  padding: 0 10px;
+  border-left: ${props => props.selected && '4px solid #FF6C58'};
+  margin-left: ${props => props.selected && '-4px'}; 
+`;
+
+SidebarStyled.SectionHeading = styled.h3`
   font-family: 'Ubuntu-Bold';
   font-size: 18px;
   color: #333333;
@@ -109,7 +127,7 @@ const SectionHeading = styled.h3`
   }
 `;
 
-const Separator = styled.span`
+SidebarStyled.Separator = styled.span`
   border-top: 1px solid #CCCCCC;
   display: block;
   margin: 0 40px;
@@ -117,13 +135,5 @@ const Separator = styled.span`
     display: none;
   }
 `;
-
-SidebarStyled.ListWrapper = ListWrapper;
-SidebarStyled.ListItem = ListItem;
-SidebarStyled.SectionHeading = SectionHeading;
-SidebarStyled.Separator = Separator;
-SidebarStyled.FilterWrapper = FilterWrapper;
-SidebarStyled.Filter = Filter;
-
 
 export { SidebarStyled };
