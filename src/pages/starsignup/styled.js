@@ -428,4 +428,7 @@ LoginContainer.Link = styled.a`
   width: 100%;
   display: block;
 `;
+LoginContainer.Content = styled.div`  
+  padding: 28px 0px;
+`;
 export { LoginContainer, HeaderSection, FooterSection };
