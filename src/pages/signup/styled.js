@@ -5,16 +5,15 @@ const LoginContainer = styled.div`
   display: flex;
   padding: 0px 0px;
   flex-direction: column;
-  height: calc(100%);
+  height: 100%;
+  padding-bottom: 56px;
   @media(min-width: 1025px){
-  flex-direction: row;
+    flex-direction: row;
+    padding-bottom: 0;
   }
 `;
 LoginContainer.wrapper = styled.div`
   height: 100vh;
-  @media(min-width: 1025px) {
-    height: 100vh;
-  }
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
@@ -42,10 +41,23 @@ LoginContainer.RightSection = styled.div`
 `;
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
-  height: 100%;
+  height: calc(100% - 40px);
   @media(min-width:768px){
-    padding: 5px 57px;
-    padding-bottom: 45px;
+    padding: 5px 0;
+    padding-bottom: 20px;  
+  }
+  @media(min-width: 1025px) {
+    height: 100%;    
+    padding: 5px 37px;
+    padding-bottom: 69px;
+  }
+`;
+LoginContainer.Container = styled.div`
+  @media(min-width: 768px) {
+    padding: 0 65px;
+  }
+  @media(min-width: 1025px) {
+    padding: 0 20px;
   }
 `;
 LoginContainer.Heading = styled.div`
@@ -238,6 +250,7 @@ LoginContainer.Label = styled.div`
   @media(min-width:1025px){
     font-size:13px;
     width:69%;
+    line-height: 30px;
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -291,6 +304,12 @@ LoginContainer.InputWrapper = styled.div`
   @media(min-width:768px){
     flex-direction: row;
     margin-top:5%;
+  }
+  @media(min-width: 1025px) {
+    margin-top: 30px;
+  }
+  @media(min-width: 1920px) {
+    margin-top: 50px;
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
@@ -411,6 +430,7 @@ FooterSection.Button = styled.button`
   font-size:14px;
   font-family: 'Ubuntu-Bold';
   outline:none;
+  cursor: pointer;
   border-radius:5px;
   border: 2px solid #FF6C58;
   @media(min-width:1920px){
