@@ -20,7 +20,7 @@ module.exports = {
     hot: true,
     contentBase: './dist',
     publicPath: '/',
-    public: process.env.PUBLIC,
+    public: process.env.DOMAIN_NAME,
   },
   plugins: [
     new UglifyJSPlugin({

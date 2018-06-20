@@ -14,15 +14,8 @@ services:
     environment:
     - SSL_SERVER_NAME
     - SSL_SERVER_EMAIL
-
-  node:
-    image: web-node
-    networks:
-    - overlay
-    restart: on-failure
-    environment:
     - API_URL
-    - PUBLIC=$SSL_SERVER_NAME
+    - DOMAIN_NAME=$SSL_SERVER_NAME
 
 networks:
   overlay:

@@ -25,11 +25,6 @@ Parameters:
     Default: 80
     Description: What port number the application inside the docker container is binding to
 
-  BackendPort:
-    Type: Number
-    Default: 8080
-    Description: What port number the application inside the docker container is binding to
-
   Path:
     Type: String
     Default: "*"
@@ -106,10 +101,11 @@ Resources:
             HardLimit: 8192
             SoftLimit: 8192
           Environment:
-          - Name: PRIVATE_LB_HOSTNAME
+          - { Name: API_URL, Value: !Ref 'ApiURL' }
+          - Name: DOMAIN_NAME
             Value:
               Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'InternalLB']]
+                !Join [':', [!Ref 'StackName', 'DomainName']]
 
   NginxService:
     Type: AWS::ECS::Service
@@ -187,112 +183,4 @@ Resources:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTPS']]
       Priority: !Ref 'Priority'
-
-
-  #--------------------------------------------------------------------------------------------------------------------
-  # NODEJS
-  # Backend running behind InternalLB:8080
-  #--------------------------------------------------------------------------------------------------------------------
-
-  NodeTaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      Family: 'node'
-      Cpu: 512
-      Memory: 1024
-      NetworkMode: awsvpc
-      RequiresCompatibilities:
-        - FARGATE
-      ExecutionRoleArn:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'ECSTaskExecutionRole']]
-      TaskRoleArn:
-        Fn::If:
-          - 'HasCustomRole'
-          - !Ref 'Role'
-          - !Ref "AWS::NoValue"
-      ContainerDefinitions:
-        - Name: 'node'
-          Image: !Join ['', [!Ref 'ImageRepository', 'web-node', !Ref 'ImageTag']]
-          PortMappings:
-            - ContainerPort: !Ref 'BackendPort'
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: !Ref 'AWS::StackName'
-              awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: 'node'
-          Ulimits:
-          - Name: nofile
-            HardLimit: 8192
-            SoftLimit: 8192
-          Environment:
-          - { Name: API_URL, Value: !Ref 'ApiURL' }
-          - Name: PUBLIC
-            Value:
-              Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'DomainName']]
-
-  NodeService:
-    Type: AWS::ECS::Service
-    DependsOn: NodeLoadBalancerRule
-    Properties:
-      ServiceName: 'node'
-      Cluster:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'ClusterName']]
-      LaunchType: FARGATE
-      DeploymentConfiguration:
-        MaximumPercent: 200
-        MinimumHealthyPercent: 75
-      DesiredCount: !Ref 'DesiredCount'
-      HealthCheckGracePeriodSeconds: 300
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
-          SecurityGroups:
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'FargateContainerSecurityGroup']]
-          Subnets:
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'PrivateSubnetOne']]
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'PrivateSubnetTwo']]
-      TaskDefinition: !Ref 'NodeTaskDefinition'
-      LoadBalancers:
-        - ContainerName: 'node'
-          ContainerPort: !Ref 'BackendPort'
-          TargetGroupArn: !Ref 'NodeTargetGroup'
-
-  NodeTargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      HealthCheckIntervalSeconds: 6
-      HealthCheckPath: /
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 5
-      HealthyThresholdCount: 2
-      TargetType: ip
-      Name: 'node'
-      Port: !Ref 'BackendPort'
-      Protocol: HTTP
-      UnhealthyThresholdCount: 2
-      VpcId:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'VPCId']]
-
-  NodeLoadBalancerRule:
-    Type: AWS::ElasticLoadBalancingV2::ListenerRule
-    Properties:
-      Actions:
-        - TargetGroupArn: !Ref 'NodeTargetGroup'
-          Type: 'forward'
-      Conditions:
-        - Field: path-pattern
-          Values: [!Ref 'Path']
-      ListenerArn:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'PrivateListener']]
-      Priority: !Ref 'Priority'
-
 

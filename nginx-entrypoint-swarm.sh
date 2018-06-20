@@ -11,10 +11,23 @@ if [[ -z "$SSL_SERVER_EMAIL" ]]; then
     exit 1
 fi
 
+if [[ -z "$API_URL" ]]; then
+    echo "Must provide API_URL in environment" 1>&2
+    exit 1
+fi
+
+if [[ -z "$DOMAIN_NAME" ]]; then
+    echo "Must provide DOMAIN_NAME in environment" 1>&2
+    exit 1
+fi
+
 sed -i -r "s/(^[ \t]*server_name[ \t]+).*(;.*)$/\1${SSL_SERVER_NAME}\2/g" /etc/nginx/sites-enabled/default
 
 if [ ! -e /etc/letsencrypt/live/${SSL_SERVER_NAME}/cert.pem ]; then
    certbot --nginx -d ${SSL_SERVER_NAME} -n --agree-tos --email ${SSL_SERVER_EMAIL} --staging
+   cp /etc/nginx/sites-enabled/default /etc/letsencrypt/live/${SSL_SERVER_NAME}/
+else
+   cp /etc/letsencrypt/live/${SSL_SERVER_NAME}/default /etc/nginx/sites-enabled/
 fi
 
 # crontab for auto renewal
@@ -27,6 +40,13 @@ fi
 
 echo "Stopping existing nginx if needed"
 /usr/sbin/nginx -s stop || true
+
+sed -i -r "s#(^[ \t]*API_URL:[ \t]*').*('[, \t]*$)#\1$API_URL\2#g" env.js
+sed -i -r "s#(^[ \t]*loginInstaRedirectUri:[ \t]*'https://).*(/.*'[, \t]*$)#\1$DOMAIN_NAME\2#g" env.js
+sed -i -r "s#(^[ \t]*signupInstaRedirectUri:[ \t]*'https://).*(/.*'[, \t]*$)#\1$DOMAIN_NAME\2#g" env.js
+
+echo "env.js:"
+cat env.js
 
 echo "Starting main process:"
 echo "    $@"
