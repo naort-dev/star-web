@@ -225,7 +225,6 @@ export default class Login extends React.Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
   render() {
-    console.log();
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.from;
     const { from } = this.props.location.state || { from: { pathname: '/' } };

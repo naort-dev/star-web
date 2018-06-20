@@ -9,6 +9,7 @@ const LoginContainer = styled.div`
   padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
+    padding-bottom: 0;
   }
 `;
 LoginContainer.wrapper = styled.div`
@@ -18,7 +19,7 @@ LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
   background-color:white;
-
+  
   @media(min-width: 1025px){
     width: 40%;
     padding: 0px 0px;
@@ -43,8 +44,8 @@ LoginContainer.SocialMediaSignup = styled.div`
   height: calc(100% - 40px);
   @media(min-width:768px){
     padding: 5px 0;
-    height: calc(100% - 240px); 
-    padding-bottom: 20px;  
+    height: 100%;
+    padding-bottom: 60px;  
   }
   @media(min-width: 1025px) {
     height: 100%;
@@ -296,6 +297,12 @@ LoginContainer.InputWrapper = styled.div`
     flex-direction: row;
     margin-top:5%;
   }
+  @media(min-width: 1025px) {
+    margin-top: 30px;
+  }
+  @media(min-width: 1920px) {
+    margin-top: 50px;
+  }
 `;
 LoginContainer.PrivacyContent = styled.div`
   text-align:left;
@@ -353,6 +360,7 @@ LoginContainer.SignIn = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  cursor: pointer;
   &:disabled{
     color: #222;
     border: 2px solid #222;
