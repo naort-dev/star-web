@@ -37,7 +37,7 @@ const FilterStyled = styled.div`
   @media(min-width: 768px) {
     padding: 16px;
     position: static;
-    height: 319px;
+    height: 217px;
     background: transparent;
     padding-top: 0;
     padding-bottom: 0;
