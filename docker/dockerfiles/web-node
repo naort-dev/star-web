@@ -7,11 +7,11 @@ RUN chmod +x /starsona/web/docker-entrypoint.sh
 
 WORKDIR /starsona/web
 RUN npm install --no-color
-RUN npm run build
+RUN npm run build --no-color
 
 ENV PORT=8080
 EXPOSE $PORT
 
 ENTRYPOINT ["./docker-entrypoint.sh"]
-CMD ["node", "node_modules/.bin/webpack-dev-server", "--env.env=prod", "--hot"]
+CMD ["node", "node_modules/.bin/webpack-dev-server", "--env.env=prod", "--hot", "--no-color"]
 
