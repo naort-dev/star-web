@@ -6,7 +6,7 @@ COPY . /starsona/web
 RUN chmod +x /starsona/web/docker-entrypoint.sh
 
 WORKDIR /starsona/web
-RUN npm install
+RUN npm install --no-color
 RUN npm run build
 
 ENV PORT=8080
