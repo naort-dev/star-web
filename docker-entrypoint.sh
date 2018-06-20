@@ -11,7 +11,7 @@ if [[ -z "$PUBLIC" ]]; then
     exit 1
 fi
 
-sed -i -r "s#(^[ \t]*API_URL:[ \t]*).*([, \t]*$)#\1'$API_URL'\2#g" env.js
+sed -i -r "s#(^[ \t]*API_URL:[ \t]*').*('[, \t]*$)#\1$API_URL\2#g" env.js
 sed -i -r "s#(^[ \t]*loginInstaRedirectUri:[ \t]*'https://).*(/.*'[, \t]*$)#\1$PUBLIC\2#g" env.js
 sed -i -r "s#(^[ \t]*signupInstaRedirectUri:[ \t]*'https://).*(/.*'[, \t]*$)#\1$PUBLIC\2#g" env.js
 
