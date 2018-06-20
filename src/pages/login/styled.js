@@ -6,15 +6,13 @@ const LoginContainer = styled.div`
   padding: 0px 0px;
   flex-direction: column;
   height: 100%;
+  padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
   }
 `;
 LoginContainer.wrapper = styled.div`
   height: 100vh;
-  @media(min-width: 1025px) {
-    height: 100vh;
-  }
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
@@ -42,15 +40,24 @@ LoginContainer.RightSection = styled.div`
 `;
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
-  height: 100%;
+  height: calc(100% - 40px);
   @media(min-width:768px){
-    padding: 5px 65px; 
-    padding-bottom:45px;
-    
+    padding: 5px 0;
+    height: calc(100% - 240px); 
+    padding-bottom: 20px;  
   }
   @media(min-width: 1025px) {
-    padding-bottom: 60px;
     height: 100%;
+    padding: 5px 45px;
+    padding-bottom: 60px;
+  }
+`;
+LoginContainer.Container = styled.div`
+  @media(min-width: 768px) {
+    padding: 0 65px;
+  }
+  @media(min-width: 1025px) {
+    padding: 0 20px;
   }
 `;
 LoginContainer.Heading = styled.div`
