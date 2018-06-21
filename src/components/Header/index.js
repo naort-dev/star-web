@@ -11,11 +11,15 @@ import { logOut } from '../../store/shared/actions/login';
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    let searchText = '';
+    if (this.props.history.location.pathname === '/') {
+      searchText = this.props.filters.searchParam || '';
+    }
     this.state = {
       searchActive: false,
       showSuggestions: false,
       profileDropdown: false,
-      searchText: this.props.filters.searchParam || '',
+      searchText,
     };
     this.suggestionsFetchDelay=undefined;
   }

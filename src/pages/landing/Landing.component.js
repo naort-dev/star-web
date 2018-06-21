@@ -22,7 +22,11 @@ export default class Landing extends React.Component {
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        if (!this.props.celebList.data.length || this.props.isLoggedIn !== this.props.celebList.isLoggedIn) {
+        if (!this.props.celebList.data.length ||
+            this.props.isLoggedIn !== this.props.celebList.isLoggedIn ||
+            this.props.filters.searchParam !== this.props.celebList.currentSearchParam
+
+        ) {
           this.props.fetchCelebrityList(0, true);
         }
         break;
