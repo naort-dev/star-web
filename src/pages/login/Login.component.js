@@ -194,7 +194,7 @@ export default class Login extends React.Component {
     this.setState({ password: { ...this.state.password, value: e.target.value } });
   }
   checkEmail = () => {
-    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // To check email validity
    
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
