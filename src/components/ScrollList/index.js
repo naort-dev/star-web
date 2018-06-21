@@ -95,11 +95,16 @@ export default class ScrollList extends React.Component {
       let coverPhoto;
       let profilePhoto;
       if (item.avatar_photo) {
-        coverPhoto = item.avatar_photo.image_url && item.avatar_photo.image_url;
         profilePhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
       } else {
-        coverPhoto = item.images && item.images[0] && item.images[0].image_url;
         profilePhoto = item.images && item.images[0] && item.images[0].thumbnail_url;
+      }
+      if (item.featured_photo) {
+        coverPhoto = item.featured_photo.thumbnail_url && item.featured_photo.thumbnail_url;
+      } else if (item.images && Object.keys(item.images[0]).length) {
+        coverPhoto = item.images && item.images[0] && item.images[0].image_url;
+      } else {
+        coverPhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
       }
       return (
         <ListStyled.listItem key={index}>
