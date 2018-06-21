@@ -25,11 +25,6 @@ Parameters:
     Default: 80
     Description: What port number the application inside the docker container is binding to
 
-  BackendPort:
-    Type: Number
-    Default: 8080
-    Description: What port number the application inside the docker container is binding to
-
   Path:
     Type: String
     Default: "*"
@@ -69,14 +64,14 @@ Resources:
       RetentionInDays: 14
 
   #--------------------------------------------------------------------------------------------------------------------
-  # NGINX
+  # WEB
   # Serves static content and proxies dynamic content to backend NODE at InternalLB:8080
   #--------------------------------------------------------------------------------------------------------------------
 
   NginxTaskDefinition:
     Type: AWS::ECS::TaskDefinition
     Properties:
-      Family: 'web-nginx'
+      Family: !Join ['-', [!Ref 'AWS::StackName', 'nginx']]
       Cpu: 256
       Memory: 512
       NetworkMode: awsvpc
@@ -91,7 +86,7 @@ Resources:
           - !Ref 'Role'
           - !Ref "AWS::NoValue"
       ContainerDefinitions:
-        - Name: 'web-nginx'
+        - Name: 'nginx'
           Image: !Join ['', [!Ref 'ImageRepository', 'web-nginx-aws', !Ref 'ImageTag']]
           PortMappings:
             - ContainerPort: !Ref 'HttpPort'
@@ -100,24 +95,25 @@ Resources:
             Options:
               awslogs-group: !Ref 'AWS::StackName'
               awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: 'web-nginx'
+              awslogs-stream-prefix: 'web'
           Ulimits:
           - Name: nofile
             HardLimit: 8192
             SoftLimit: 8192
           Environment:
-          - Name: PRIVATE_LB_HOSTNAME
+          - { Name: API_URL, Value: !Ref 'ApiURL' }
+          - Name: DOMAIN_NAME
             Value:
               Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'InternalLB']]
+                !Join [':', [!Ref 'StackName', 'DomainName']]
 
-  NginxService:
+  WebService:
     Type: AWS::ECS::Service
     DependsOn:
-    - NginxLoadBalancerRuleHTTP
-    - NginxLoadBalancerRuleHTTPS
+    - WebLoadBalancerRuleHTTP
+    - WebLoadBalancerRuleHTTPS
     Properties:
-      ServiceName: 'web-nginx'
+      ServiceName: 'web'
       Cluster:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'ClusterName']]
@@ -139,11 +135,11 @@ Resources:
                 !Join [':', [!Ref 'StackName', 'PrivateSubnetTwo']]
       TaskDefinition: !Ref 'NginxTaskDefinition'
       LoadBalancers:
-        - ContainerName: 'web-nginx'
+        - ContainerName: 'nginx'
           ContainerPort: !Ref 'HttpPort'
-          TargetGroupArn: !Ref 'NginxTargetGroup'
+          TargetGroupArn: !Ref 'WebTargetGroup'
 
-  NginxTargetGroup:
+  WebTargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
       HealthCheckIntervalSeconds: 6
@@ -152,7 +148,7 @@ Resources:
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
       TargetType: ip
-      Name: !Join ['-', [!Ref 'AWS::StackName', 'nginx']]
+      Name: !Join ['-', [!Ref 'AWS::StackName', 'web']]
       Port: !Ref 'HttpPort'
       Protocol: HTTP
       UnhealthyThresholdCount: 2
@@ -160,11 +156,11 @@ Resources:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'VPCId']]
 
-  NginxLoadBalancerRuleHTTP:
+  WebLoadBalancerRuleHTTP:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
-        - TargetGroupArn: !Ref 'NginxTargetGroup'
+        - TargetGroupArn: !Ref 'WebTargetGroup'
           Type: 'forward'
       Conditions:
         - Field: path-pattern
@@ -174,11 +170,11 @@ Resources:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTP']]
       Priority: !Ref 'Priority'
 
-  NginxLoadBalancerRuleHTTPS:
+  WebLoadBalancerRuleHTTPS:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
       Actions:
-        - TargetGroupArn: !Ref 'NginxTargetGroup'
+        - TargetGroupArn: !Ref 'WebTargetGroup'
           Type: 'forward'
       Conditions:
         - Field: path-pattern
@@ -187,112 +183,4 @@ Resources:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTPS']]
       Priority: !Ref 'Priority'
-
-
-  #--------------------------------------------------------------------------------------------------------------------
-  # NODEJS
-  # Backend running behind InternalLB:8080
-  #--------------------------------------------------------------------------------------------------------------------
-
-  NodeTaskDefinition:
-    Type: AWS::ECS::TaskDefinition
-    Properties:
-      Family: 'node'
-      Cpu: 512
-      Memory: 1024
-      NetworkMode: awsvpc
-      RequiresCompatibilities:
-        - FARGATE
-      ExecutionRoleArn:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'ECSTaskExecutionRole']]
-      TaskRoleArn:
-        Fn::If:
-          - 'HasCustomRole'
-          - !Ref 'Role'
-          - !Ref "AWS::NoValue"
-      ContainerDefinitions:
-        - Name: 'node'
-          Image: !Join ['', [!Ref 'ImageRepository', 'web-node', !Ref 'ImageTag']]
-          PortMappings:
-            - ContainerPort: !Ref 'BackendPort'
-          LogConfiguration:
-            LogDriver: awslogs
-            Options:
-              awslogs-group: !Ref 'AWS::StackName'
-              awslogs-region: !Ref 'AWS::Region'
-              awslogs-stream-prefix: 'node'
-          Ulimits:
-          - Name: nofile
-            HardLimit: 8192
-            SoftLimit: 8192
-          Environment:
-          - { Name: API_URL, Value: !Ref 'ApiURL' }
-          - Name: PUBLIC
-            Value:
-              Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'DomainName']]
-
-  NodeService:
-    Type: AWS::ECS::Service
-    DependsOn: NodeLoadBalancerRule
-    Properties:
-      ServiceName: 'node'
-      Cluster:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'ClusterName']]
-      LaunchType: FARGATE
-      DeploymentConfiguration:
-        MaximumPercent: 200
-        MinimumHealthyPercent: 75
-      DesiredCount: !Ref 'DesiredCount'
-      HealthCheckGracePeriodSeconds: 300
-      NetworkConfiguration:
-        AwsvpcConfiguration:
-          AssignPublicIp: DISABLED
-          SecurityGroups:
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'FargateContainerSecurityGroup']]
-          Subnets:
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'PrivateSubnetOne']]
-            - Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'PrivateSubnetTwo']]
-      TaskDefinition: !Ref 'NodeTaskDefinition'
-      LoadBalancers:
-        - ContainerName: 'node'
-          ContainerPort: !Ref 'BackendPort'
-          TargetGroupArn: !Ref 'NodeTargetGroup'
-
-  NodeTargetGroup:
-    Type: AWS::ElasticLoadBalancingV2::TargetGroup
-    Properties:
-      HealthCheckIntervalSeconds: 6
-      HealthCheckPath: /
-      HealthCheckProtocol: HTTP
-      HealthCheckTimeoutSeconds: 5
-      HealthyThresholdCount: 2
-      TargetType: ip
-      Name: 'node'
-      Port: !Ref 'BackendPort'
-      Protocol: HTTP
-      UnhealthyThresholdCount: 2
-      VpcId:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'VPCId']]
-
-  NodeLoadBalancerRule:
-    Type: AWS::ElasticLoadBalancingV2::ListenerRule
-    Properties:
-      Actions:
-        - TargetGroupArn: !Ref 'NodeTargetGroup'
-          Type: 'forward'
-      Conditions:
-        - Field: path-pattern
-          Values: [!Ref 'Path']
-      ListenerArn:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'PrivateListener']]
-      Priority: !Ref 'Priority'
-
 
