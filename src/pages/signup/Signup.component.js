@@ -202,7 +202,7 @@ export default class SignUp extends React.Component {
 
   }
   checkEmail = () => {
-    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
       return false;
@@ -215,7 +215,7 @@ export default class SignUp extends React.Component {
     return true;
   }
   checkPassword = () => {
-    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
 
     if (validator.isEmpty(this.state.password.value)) {
       this.setState({ password: { ...this.state.password, message: 'Enter a  password' } });
