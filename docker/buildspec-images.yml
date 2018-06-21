@@ -19,8 +19,8 @@ phases:
       - echo Pushing the Docker images...
       - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
       - echo Writing image definitions files...
-      - printf '[{"name":"web-nginx","imageUri":"%sweb-nginx-%s%s"}]' $REGISTRY $DEPLOYMENT_TYPE $IMAGE_TAG > imagedefinitions-web-nginx.json
+      - printf '[{"name":"nginx","imageUri":"%sweb-nginx-%s%s"}]' $REGISTRY $DEPLOYMENT_TYPE $IMAGE_TAG > imagedefinitions-nginx.json
 artifacts:
   files:
-    - imagedefinitions-web-nginx.json
+    - imagedefinitions-nginx.json
   discard-paths: yes
