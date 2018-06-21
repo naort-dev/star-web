@@ -215,7 +215,7 @@ export default class SignUp extends React.Component {
     return true;
   }
   checkPassword = () => {
-    const pattern = /^(?=.*?[A-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
 
     if (validator.isEmpty(this.state.password.value)) {
       this.setState({ password: { ...this.state.password, message: 'Enter a  password' } });
