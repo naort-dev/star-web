@@ -156,15 +156,21 @@ export default class Starprofile extends React.Component {
     let imageList = [];
     let firstImage;
     let secondImage;
+    let featuredImage;
     if (this.props.userDetails.images && this.props.userDetails.images.length) {
       firstImage = this.props.userDetails.images[0] ? this.props.userDetails.images[0].image_url : null;
       secondImage = this.props.userDetails.images[1] ? this.props.userDetails.images[1].image_url : null;
       imageList = [firstImage, secondImage];
     }
+    if (this.props.userDetails.featured_photo) {
+      featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url
+    } else {
+      featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
+    }
     if (window.outerWidth >= 1025 && this.state.selectedTab === 'All') {
       return (
         <ImageStack
-          featureImage={this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.image_url}
+          featureImage={featuredImage}
           imageList={imageList}
         />
       );
@@ -184,11 +190,14 @@ export default class Starprofile extends React.Component {
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
     if (this.props.userDetails.avatar_photo) {
-      coverPhoto = this.props.userDetails.avatar_photo.image_url && this.props.userDetails.avatar_photo.image_url;
       profilePhoto = this.props.userDetails.avatar_photo.thumbnail_url && this.props.userDetails.avatar_photo.thumbnail_url;
     } else {
-      coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
       profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
+    }
+    if (this.props.userDetails.featured_photo) {
+      coverPhoto = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url;
+    } else {
+      coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
     }
     return (
       <Detail.Wrapper>
@@ -197,6 +206,7 @@ export default class Starprofile extends React.Component {
             menuActive={this.state.menuActive}
             enableMenu={this.activateMenu}
             disableMenu
+            history={this.props.history}
           />
           <Detail>
             <Detail.LeftSection>

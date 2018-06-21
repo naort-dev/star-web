@@ -22,7 +22,11 @@ export default class Landing extends React.Component {
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
-        if (!this.props.celebList.data.length || this.props.isLoggedIn !== this.props.celebList.isLoggedIn) {
+        if (!this.props.celebList.data.length ||
+            this.props.isLoggedIn !== this.props.celebList.isLoggedIn ||
+            this.props.filters.searchParam !== this.props.celebList.currentSearchParam
+
+        ) {
           this.props.fetchCelebrityList(0, true);
         }
         break;
@@ -175,8 +179,7 @@ export default class Landing extends React.Component {
         <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
-          searchFilter={this.searchFilter}
-          searchParam={this.props.filters.searchParam}
+          history={this.props.history}
         />
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>

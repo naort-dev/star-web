@@ -1,20 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, BrowserRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
+import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOut } from '../../store/shared/actions/login';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
+    let searchText = '';
+    if (this.props.history.location.pathname === '/') {
+      searchText = this.props.filters.searchParam || '';
+    }
     this.state = {
       searchActive: false,
       showSuggestions: false,
       profileDropdown: false,
-      searchText: this.props.searchParam || '',
+      searchText,
     };
     this.suggestionsFetchDelay=undefined;
   }
@@ -25,9 +30,7 @@ class Header extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
-      if (this.props.searchFilter) {
-        this.props.searchFilter('');
-      }
+      this.props.updateSearchParam('');
       this.setState({ searchText: '' });
     }
   }
@@ -52,9 +55,10 @@ class Header extends React.Component {
   }
 
   handleSearchSubmit = (e) => {
-    if (e.keyCode === 13 && this.props.searchFilter) {
-      if (this.props.searchFilter) {
-        this.props.searchFilter(e.target.value);
+    if (e.keyCode === 13) {
+      this.props.updateSearchParam(e.target.value);
+      if (this.props.history.location.pathname != '/') {
+        this.props.history.push('/');
       }
       this.setState({ searchActive: false, showSuggestions: false });
     }
@@ -83,17 +87,13 @@ class Header extends React.Component {
 
   deactivateSearch = () => {
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
-    if (this.props.searchFilter) {
-      this.props.searchFilter('');
-    }
+    this.props.updateSearchParam('');
     this.props.fetchSuggestionList('');
   }
 
   handleSearchItemClick = () => {
     this.props.resetSearchParam('');
-    if (this.props.searchFilter) {
-      this.props.searchFilter('');
-    }
+    this.props.updateSearchParam('');
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
   }
 
@@ -236,12 +236,14 @@ const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.session.auth_token,
+  filters: state.filters,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   logOut: () => dispatch(logOut()),
+  updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
