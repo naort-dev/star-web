@@ -206,6 +206,7 @@ export default class Starprofile extends React.Component {
             menuActive={this.state.menuActive}
             enableMenu={this.activateMenu}
             disableMenu
+            history={this.props.history}
           />
           <Detail>
             <Detail.LeftSection>
