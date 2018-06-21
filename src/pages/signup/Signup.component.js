@@ -202,7 +202,7 @@ export default class SignUp extends React.Component {
 
   }
   checkEmail = () => {
-    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/;
+    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
       return false;
@@ -215,7 +215,7 @@ export default class SignUp extends React.Component {
     return true;
   }
   checkPassword = () => {
-    const pattern = /^(?=.*?[A-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
 
     if (validator.isEmpty(this.state.password.value)) {
       this.setState({ password: { ...this.state.password, message: 'Enter a  password' } });
@@ -268,126 +268,128 @@ export default class SignUp extends React.Component {
             </HeaderSection>  
             <LoginContainer.SocialMediaSignup>
               <Scrollbars>
-                <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
-                <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button onClick={() => this.OnFBlogin()}>
-                    <LoginContainer.FacebookContent>Continue with Facebook
-                    </LoginContainer.FacebookContent>
-                  </LoginContainer.Button>
-                </LoginContainer.ButtonDiv>
-                <LoginContainer.ButtonDiv>
-                  <LoginContainer.GoogleWrapper id="g-sign-in" />
-                  <LoginContainer.Button onClick={() => this.onGmail()}>
-                    <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
-                  </LoginContainer.Button>
-                </LoginContainer.ButtonDiv>
-                <LoginContainer.ButtonDiv>
-                  <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-                    <LoginContainer.InstagramContent>Continue with Instagram
-                    </LoginContainer.InstagramContent>
-                  </LoginContainer.Button>
-                </LoginContainer.ButtonDiv>
-                <LoginContainer.Line />
-                <LoginContainer.InputFieldsWrapper>
-                  <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
-                  {
-                    this.props.statusCode === '410' ?
-                      <LoginContainer.EmptyDiv />
-                      
-                    :
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>First Name</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.Input
-                            placeholder="Enter your first name"
-                            type="text"
-                            name="firstName"
-                            value={this.state.firstName.value}
-                            onChange={this.firstNameHandler}
-                            onBlur={this.checkRequired}
-                          />
-                          <LoginContainer.ErrorMsg>
-                            {this.state.firstName.message}
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>    
-                      </LoginContainer.InputWrapper>
-                  
-                  }
-                  {
-                    this.props.statusCode === '410' ?
-                      <LoginContainer.EmptyDiv />
-                      
-                  :
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Second Name</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.Input
-                            placeholder="Enter your last name"
-                            type="text"
-                            name="lastName"
-                            value={this.state.lastName.value}
-                            onChange={this.lastNameHandler}
-                          />
-                          <LoginContainer.ErrorMsg>
-                            {this.state.lastName.message}
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-                  }
-                  
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.Label>Email</LoginContainer.Label>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder="Enter your email"
-                        type="email"
-                        name="email"
-                        value={this.state.email.value}
-                        onChange={this.emailHandler}
-                        onBlur={this.checkEmail}
-                      />
-                      <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                  {
-                    this.props.statusCode === '410' ?
-                      <LoginContainer.EmptyDiv />
-                    :
-                      <LoginContainer.InputWrapper>      
-                        <LoginContainer.Label>Password</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.PasswordWrapper>
+                <LoginContainer.Container>
+                  <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
+                  <LoginContainer.ButtonDiv>
+                    <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+                      <LoginContainer.FacebookContent>Continue with Facebook
+                      </LoginContainer.FacebookContent>
+                    </LoginContainer.Button>
+                  </LoginContainer.ButtonDiv>
+                  <LoginContainer.ButtonDiv>
+                    <LoginContainer.GoogleWrapper id="g-sign-in" />
+                    <LoginContainer.Button onClick={() => this.onGmail()}>
+                      <LoginContainer.GoogleContent>Continue with Google</LoginContainer.GoogleContent>
+                    </LoginContainer.Button>
+                  </LoginContainer.ButtonDiv>
+                  <LoginContainer.ButtonDiv>
+                    <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+                      <LoginContainer.InstagramContent>Continue with Instagram
+                      </LoginContainer.InstagramContent>
+                    </LoginContainer.Button>
+                  </LoginContainer.ButtonDiv>
+                  <LoginContainer.Line />
+                  <LoginContainer.InputFieldsWrapper>
+                    <LoginContainer.SectionHeading>Use your email</LoginContainer.SectionHeading>
+                    {
+                      this.props.statusCode === '410' ?
+                        <LoginContainer.EmptyDiv />
+                        
+                      :
+                        <LoginContainer.InputWrapper>
+                          <LoginContainer.Label>First Name</LoginContainer.Label>
+                          <LoginContainer.WrapsInput>
                             <LoginContainer.Input
-                              placeholder="Enter your password"
-                              type={this.state.showPassword ? 'text' : 'password'}
-                              name="password"
-                              value={this.state.password.value}
-                              onChange={this.passwordHandler}
-                              onBlur={this.checkPassword}
+                              placeholder="Enter your first name"
+                              type="text"
+                              name="firstName"
+                              value={this.state.firstName.value}
+                              onChange={this.firstNameHandler}
+                              onBlur={this.checkRequired}
                             />
-                            <LoginContainer.ShowPassword onClick={this.ShowPassword} />
-                          </LoginContainer.PasswordWrapper>
-                          <LoginContainer.ErrorMsg>
-                            {this.state.password.message}
-                          </LoginContainer.ErrorMsg>
-                          
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>                   
-                  }
-                  
-                  <LoginContainer.PrivacyContent>
-                  By creating an account you agree to Starsona’s
-                    <strong> Privacy Policy </strong>
-                  and <strong> Terms of Service</strong>
-                  </LoginContainer.PrivacyContent>
-                </LoginContainer.InputFieldsWrapper>
-                <LoginContainer.WrapsInput>
-                  {this.props.statusCode === undefined ? 
-                    <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                  :
-                    <LoginContainer.EmptyDiv />
-                  }
-                </LoginContainer.WrapsInput>
+                            <LoginContainer.ErrorMsg>
+                              {this.state.firstName.message}
+                            </LoginContainer.ErrorMsg>
+                          </LoginContainer.WrapsInput>    
+                        </LoginContainer.InputWrapper>
+                    
+                    }
+                    {
+                      this.props.statusCode === '410' ?
+                        <LoginContainer.EmptyDiv />
+                        
+                    :
+                        <LoginContainer.InputWrapper>
+                          <LoginContainer.Label>Second Name</LoginContainer.Label>
+                          <LoginContainer.WrapsInput>
+                            <LoginContainer.Input
+                              placeholder="Enter your last name"
+                              type="text"
+                              name="lastName"
+                              value={this.state.lastName.value}
+                              onChange={this.lastNameHandler}
+                            />
+                            <LoginContainer.ErrorMsg>
+                              {this.state.lastName.message}
+                            </LoginContainer.ErrorMsg>
+                          </LoginContainer.WrapsInput>
+                        </LoginContainer.InputWrapper>
+                    }
+                    
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Email</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          placeholder="Enter your email"
+                          type="email"
+                          name="email"
+                          value={this.state.email.value}
+                          onChange={this.emailHandler}
+                          onBlur={this.checkEmail}
+                        />
+                        <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                    {
+                      this.props.statusCode === '410' ?
+                        <LoginContainer.EmptyDiv />
+                      :
+                        <LoginContainer.InputWrapper>      
+                          <LoginContainer.Label>Password</LoginContainer.Label>
+                          <LoginContainer.WrapsInput>
+                            <LoginContainer.PasswordWrapper>
+                              <LoginContainer.Input
+                                placeholder="Enter your password"
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                name="password"
+                                value={this.state.password.value}
+                                onChange={this.passwordHandler}
+                                onBlur={this.checkPassword}
+                              />
+                              <LoginContainer.ShowPassword onClick={this.ShowPassword} />
+                            </LoginContainer.PasswordWrapper>
+                            <LoginContainer.ErrorMsg>
+                              {this.state.password.message}
+                            </LoginContainer.ErrorMsg>
+                            
+                          </LoginContainer.WrapsInput>
+                        </LoginContainer.InputWrapper>                   
+                    }
+                    
+                    <LoginContainer.PrivacyContent>
+                    By creating an account you agree to Starsona’s
+                      <strong> Privacy Policy </strong>
+                    and <strong> Terms of Service</strong>
+                    </LoginContainer.PrivacyContent>
+                  </LoginContainer.InputFieldsWrapper>
+                  <LoginContainer.WrapsInput>
+                    {this.props.statusCode === undefined ? 
+                      <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                    :
+                      <LoginContainer.EmptyDiv />
+                    }
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.Container>
               </Scrollbars>
             </LoginContainer.SocialMediaSignup>
             <LoginContainer.FooterLayout>

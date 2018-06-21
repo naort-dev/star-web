@@ -34,6 +34,7 @@ export default (state = { ...initalState }, action) => {
         offset: action.offset,
         data: action.list,
         count: action.count,
+        currentSearchParam: action.searchParam,
         [action.category]: {
           offset: action.offset,
           data: action.list,
@@ -65,6 +66,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         data: cachedData.data,
         offset: cachedData.offset,
+        currentSearchParam: cachedData.searchParam,
         count: cachedData.count,
         isLoggedIn: cachedData.isLoggedIn,
         currentCategory: action.key,
