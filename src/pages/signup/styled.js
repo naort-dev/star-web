@@ -324,7 +324,7 @@ LoginContainer.PrivacyContent = styled.div`
 `;
 
 LoginContainer.ImageStackLayout = styled.div`
-  padding:32px 110px 76px 33px;
+  padding:32px 0;
   width:100%;
   height:100%;
 

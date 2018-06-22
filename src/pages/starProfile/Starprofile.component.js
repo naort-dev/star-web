@@ -63,7 +63,7 @@ export default class Starprofile extends React.Component {
     window.removeEventListener('resize', this.handleWindowResize);
   }
   setTabList = () => {
-    if (window.outerWidth < 1025) {
+    if (document.body.getBoundingClientRect().width < 1025) {
       this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs', 'About'] });
     } else {
       this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs'] });
@@ -100,7 +100,7 @@ export default class Starprofile extends React.Component {
     this.props.fetchCelebVideosList(0, true, this.props.match.params.id, requestId);
   }
   handleWindowResize = (e) => {
-    if (this.state.selectedTab === 'About' && window.outerWidth >= 1025) {
+    if (this.state.selectedTab === 'About' && document.body.getBoundingClientRect().width >= 1025) {
       this.setState({ selectedTab: 'All' }, () => {
         this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
       });
@@ -167,7 +167,7 @@ export default class Starprofile extends React.Component {
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
-    if (window.outerWidth >= 1025 && this.state.selectedTab === 'All') {
+    if (document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All') {
       return (
         <ImageStack
           featureImage={featuredImage}
@@ -212,9 +212,8 @@ export default class Starprofile extends React.Component {
             <Detail.LeftSection>
               <Detail.SmallScreenLayout>
                 <Detail.ImageRenderDiv>
-                  <Detail.ImageSection
-                    imageUrl={coverPhoto}
-                  >
+                  <Detail.ImageSection imageUrl={coverPhoto}>
+                    <Detail.CoverImage alt="" src={coverPhoto} />
                     <Detail.ProfileImageWrapper>
                       <Detail.ProfileImage
                         imageUrl={profilePhoto}
@@ -315,7 +314,7 @@ export default class Starprofile extends React.Component {
                 : null
               }
               {
-                !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 && this.state.selectedTab === 'All' ?
+                !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width > 1025 && this.state.selectedTab === 'All' ?
                   null
                 :
                   <Tabs

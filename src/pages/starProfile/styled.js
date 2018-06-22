@@ -337,17 +337,12 @@ Detail.ImageRenderDiv = styled.div`
 Detail.ImageSection = styled.div`
   right:0;
   position:relative;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/default-cover.jpg)'};
-  background-repeat:no-repeat;
-  background-position: center;
-  background-size:cover;
   width:100%;
-  height:177px;
-  @media(min-width: 768px) {
-    height: 363px;
-  }  
 `;
-
+Detail.CoverImage = styled.img`
+  width: 100%;
+  display: block;
+`;
 Detail.BannerImage = styled.img`
   width:100%;
 `;
