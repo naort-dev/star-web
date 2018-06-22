@@ -23,6 +23,10 @@ export class ImageStack extends React.Component {
     window.addEventListener('resize', this.setImagesHeight);
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setImagesHeight);
+  }
+
   setImagesHeight = () => {
     if (this.imageStack) {
       const parentWidth = this.imageStack.parentNode.clientWidth - 20;
@@ -42,6 +46,7 @@ export class ImageStack extends React.Component {
     }
   }
 
+  
   render() {
     const { props } = this;
     return (
