@@ -51,7 +51,7 @@ ListStyled.listWrapper = styled.ul`
 `;
 
 ListStyled.listItem = styled.li`
-  width: 100%
+  width: 100%;
   display: inline-block;
   margin-bottom: 20px;
   padding-left: 0;
