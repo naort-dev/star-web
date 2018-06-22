@@ -338,6 +338,14 @@ Detail.ImageSection = styled.div`
   right:0;
   position:relative;
   width:100%;
+  background: ${props => !props.imageUrl && 'url(assets/images/default-cover.jpg)'};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  min-height: 177px;
+  @media(min-width: 768px) {
+    min-height: 300px;
+  }
 `;
 Detail.CoverImage = styled.img`
   width: 100%;
