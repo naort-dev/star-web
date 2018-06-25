@@ -14,12 +14,24 @@ ImageRenderDiv.ImageSection = styled.div`
   background-position: center;
   background-size:cover;
   width:100%;
-  height:167px;
+  height:158px;
   &:hover{
     box-shadow: 0px 6px 8px #FF6C58;
   }
   @media(min-width: 768px) {
     height:${props => (props.height ? props.height : '177')}px;
+  }
+  @media(min-width: 1025px) {
+    height: 99px;
+  }
+  @media(min-width: 1300px) {
+    height: 123px;
+  }
+  @media(min-width: 1600px) {
+    height: 148px;
+  }
+  @media(min-width: 1920px) {
+    height: 209px;
   }
   
   

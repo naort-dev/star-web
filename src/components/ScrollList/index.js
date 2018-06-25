@@ -55,6 +55,7 @@ export default class ScrollList extends React.Component {
   }
 
   fetchMoreData = () => {
+    console.log(this.props.dataList.length, this.props.totalCount);
     if (this.props.dataList.length >= this.props.totalCount) {
       this.setState({ hasMore: false });
       return;
@@ -63,6 +64,36 @@ export default class ScrollList extends React.Component {
       this.props.fetchData(this.props.offset + this.props.limit);
     }
   };
+
+  infiniteScrollList = (scrollTarget) => {
+    return (
+      <InfiniteScroll
+        dataLength={this.props.dataList.length}
+        next={this.fetchMoreData}
+        scrollableTarget={scrollTarget}
+        refreshFunction={this.refresh}
+        // pullDownToRefresh
+        // pullDownToRefreshContent={
+        //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
+        // }
+        // releaseToRefreshContent={
+        //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
+        // }
+        scrollThreshold={0.5}
+        hasMore={this.state.hasMore}
+        loader={this.props.dataList.length ? <Loader /> : null}
+        // endMessage={
+        //   <p style={{ textAlign: 'center' }}>
+        //     <b>End of list</b>
+        //   </p>
+        // }
+      >
+        <ListStyled.listWrapper videos={this.props.videos}>
+          {this.renderList()}
+        </ListStyled.listWrapper>
+      </InfiniteScroll>
+    );
+  }
 
   renderStarProfessions = (list) => {
     let string = '';
@@ -75,6 +106,7 @@ export default class ScrollList extends React.Component {
     });
     return string;
   }
+
   renderList() {
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
@@ -123,35 +155,18 @@ export default class ScrollList extends React.Component {
   render() {
     return (
       <ListStyled>
-        <Scrollbars
-          renderView={props => <div {...props} className="view" id="scrollable-target" />}
-        >
-          <InfiniteScroll
-            dataLength={this.props.dataList.length}
-            next={this.props.finite ? () => {} : this.fetchMoreData}
-            scrollableTarget="scrollable-target"
-            refreshFunction={this.refresh}
-            // pullDownToRefresh
-            // pullDownToRefreshContent={
-            //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
-            // }
-            // releaseToRefreshContent={
-            //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
-            // }
-            scrollThreshold={0.5}
-            hasMore={this.state.hasMore}
-            loader={this.props.dataList.length ? <Loader /> : null}
-            // endMessage={
-            //   <p style={{ textAlign: 'center' }}>
-            //     <b>End of list</b>
-            //   </p>
-            // }
-          >
-            <ListStyled.listWrapper videos={this.props.videos}>
-              {this.renderList()}
-            </ListStyled.listWrapper>
-          </InfiniteScroll>
-        </Scrollbars>
+        {
+          this.props.scrollTarget ?
+            this.infiniteScrollList(this.props.scrollTarget)
+          :
+            <Scrollbars
+              renderView={props => <div {...props} className="view" id="scrollable-target" />}
+            >
+              {
+                this.infiniteScrollList('scrollable-target')
+              }
+            </Scrollbars>
+        }
       </ListStyled>
     );
   }
