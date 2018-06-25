@@ -35,7 +35,7 @@ const ListStyled = styled.section`
 
 ListStyled.listWrapper = styled.ul`
   display: flex;
-  flex-direction: ${props => (props.videos ? 'row' : 'row')};
+  flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
   justify-content: center;
