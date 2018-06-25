@@ -23,7 +23,6 @@ export default class Starprofile extends React.Component {
       videoActive: props.match.params.videoId ? true : false,
       selectedVideoItem: {},
       relatedVideos: [],
-      showPopup: false,
     };
   }
   componentWillMount() {
@@ -250,7 +249,6 @@ export default class Starprofile extends React.Component {
                 <RequestController
                   rate={rate}
                   remainingBookings={remainingBookings}
-                  showPopup={() => this.setState({ showPopup: true })}
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
@@ -360,29 +358,7 @@ export default class Starprofile extends React.Component {
                     }
                   </Detail.AboutDetailsWrapper>
               }
-            </Detail.RightSection>
-            {this.state.showPopup ?
-              <Popup closePopUp={() => this.setState({showPopup: false})}>
-                <Detail.PopupContainer>
-                  <Detail.PopupContent>
-                    <Detail.Article><center>You’re close to getting your personalized video! To request a video today, please download the Starsona app. Web ordering is coming soon.</center>
-                    </Detail.Article>
-                    <Detail.AppIconWrapper>
-                      <Detail.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
-                        <Detail.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
-                      </Detail.Link>
-                      <Detail.Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
-                        <Detail.StoreIcon alt="playsore icon" src="assets/images/appstore-download.svg" />
-                      </Detail.Link>
-                    </Detail.AppIconWrapper>
-                  </Detail.PopupContent>
-                </Detail.PopupContainer>
-            
-              </Popup>
-            :
-            null
-          }
-            
+            </Detail.RightSection> 
           </Detail>
         </Detail.Content>
       </Detail.Wrapper>
