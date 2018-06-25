@@ -123,6 +123,7 @@ export default class Starprofile extends React.Component {
     }
     return string;
   }
+  // To be Deleted //
   renderRelatedVideosList = (dataList) => {
     return dataList.map((item, index) => (
       <Detail.RelatedVideosItem key={index}>
@@ -263,6 +264,7 @@ export default class Starprofile extends React.Component {
                     <Detail.VideoPlayerSection>
                       <Scrollbars
                         autoHide
+                        renderView={props => <div {...props} id="video-scroll-section" />}
                       >
                         <Detail.VideoPlayerContent>
                           <Detail.VideoPlayer
@@ -292,20 +294,17 @@ export default class Starprofile extends React.Component {
                             </Detail.VideoRequester>
                           </Detail.VideoContent>
                           <Detail.RelatedVideos>
-                            {
-                              this.renderRelatedVideosList(this.state.relatedVideos)
-                            }
-                            {/* <ScrollList
+                            <ScrollList
                               dataList={this.state.relatedVideos}
-                              finite
+                              scrollTarget="video-scroll-section"
                               videos
                               starsPage
                               limit={this.props.videosList.limit}
-                              totalCount={this.props.videosList.count}
+                              totalCount={this.props.videosList.count - 1}
                               offset={this.props.videosList.offset}
                               loading={this.props.videosList.loading}
                               fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
-                            /> */}
+                            />
                           </Detail.RelatedVideos>
                         </Detail.VideoPlayerContent>
                       </Scrollbars>
