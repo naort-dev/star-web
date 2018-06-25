@@ -44,11 +44,11 @@ ListStyled.listWrapper = styled.ul`
     flex-direction: row;
     align-items: flex-start;
     flex-wrap: wrap;
+    justify-content: flex-start;
   }
   @media(min-width: 1025px) {
     width: auto;
     margin-right: 15px;
-    justify-content: flex-start;
   }
 `;
 
@@ -60,7 +60,7 @@ ListStyled.listItem = styled.li`
   animation: ${menuEnter} 0.2s linear;
   @media(min-width: 661px) {
     width: 300px;
-    margin-right: 3%;
+    margin-right: calc(100% - 600px);
     &:nth-child(even) {
       margin-right: 0;
     }
@@ -69,9 +69,9 @@ ListStyled.listItem = styled.li`
   @media(min-width: 1025px) {
     width: 200px;
     margin-bottom: 30px;
-    margin-right: calc((100% - 600px) / 2);;
+    margin-right: calc((100% - 600px) / 2);
     &:nth-child(even) {
-      margin-right: calc((100% - 600px) / 2);;
+      margin-right: calc((100% - 600px) / 2);
     }
     &:nth-child(3n) {
       margin-right: 0;
@@ -136,7 +136,7 @@ ListStyled.listVideos = ListStyled.listItem.extend`
       margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 'calc(10% / 3)')};
     }
     &:nth-child(3n) {
-      margin-right: ${props => (props.starsPage ? '0' : 'calc(10% / 3)')};
+      margin-right: ${props => (props.starsPage ? '0 !important' : 'calc(10% / 3)')};
     }
     &:nth-child(4n) {
       margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 0)};
