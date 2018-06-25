@@ -350,6 +350,7 @@ Detail.ImageSection = styled.div`
 Detail.CoverImage = styled.img`
   width: 100%;
   display: block;
+  max-height: 80vh;
 `;
 Detail.BannerImage = styled.img`
   width:100%;

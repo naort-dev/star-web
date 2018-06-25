@@ -35,9 +35,10 @@ const ListStyled = styled.section`
 
 ListStyled.listWrapper = styled.ul`
   display: flex;
-  flex-direction: ${props => (props.videos ? 'row' : 'column')};
+  flex-direction: ${props => (props.videos ? 'row' : 'row')};
   flex-wrap: wrap;
   align-items: flex-start;
+  justify-content: center;
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;
@@ -47,78 +48,101 @@ ListStyled.listWrapper = styled.ul`
   @media(min-width: 1025px) {
     width: auto;
     margin-right: 15px;
+    justify-content: flex-start;
   }
 `;
 
 ListStyled.listItem = styled.li`
-  width: 100%;
+  width: 320px;
   display: inline-block;
   margin-bottom: 20px;
   padding-left: 0;
   animation: ${menuEnter} 0.2s linear;
-  @media(min-width: 768px) {
-    width: calc(50%);
-    border-right: 20px solid transparent;
+  @media(min-width: 661px) {
+    width: 300px;
+    margin-right: 3%;
     &:nth-child(even) {
-      border-right: 0;
+      margin-right: 0;
     }
   }
+
   @media(min-width: 1025px) {
-    width: calc(33.33%);
+    width: 200px;
     margin-bottom: 30px;
+    margin-right: calc((100% - 600px) / 2);;
     &:nth-child(even) {
-      border-right: 20px solid transparent;
+      margin-right: calc((100% - 600px) / 2);;
     }
     &:nth-child(3n) {
-      border-right: 0;
+      margin-right: 0;
+    }
+  }
+  @media(min-width: 1300px) {
+    width: 250px;
+    margin-right: calc((100% - 750px) / 2);
+    &:nth-child(even) {
+      margin-right: calc((100% - 750px) / 2);
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+  @media(min-width: 1600px) {
+    width: 300px;
+    margin-right: calc((100% - 900px) / 2);
+    &:nth-child(even) {
+      margin-right: calc((100% - 900px) / 2);
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+  @media(min-width: 1920px) {
+    width: 424px;
+    margin-right: calc((100% - 1272px) / 2);
+    &:nth-child(even) {
+      margin-right: calc((100% - 1272px) / 2);
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
     }
   }
 `;
 
 ListStyled.listVideos = ListStyled.listItem.extend`
-  width: calc(50%);
-  border-right: 10px solid transparent;
+  width: 45%;
+  margin-right: 10%;
   &:nth-child(even) {
     border-right: none;
+    margin-right: 0;
   }
   @media(min-width: 768px) {
     padding: 0;
-    border-right: 40px solid transparent;
-    width:33.33%;
+    border-right: none;
+    width:calc(85% / 3);
+    margin-right: 7.5%;
     &:nth-child(even) {
-      border-right: 40px solid transparent;
+      margin-right: 7.5%;
     }
     &:nth-child(3n) {
-      border-right: 0;
+      margin-right: 0;
     }
   }
   @media(min-width: 1025px) {
     padding: 0;
-    border-right: 20px solid transparent;
-    width: ${props => (props.starsPage ? '33.33%' : '25%')};
+    width: ${props => (props.starsPage ? 'calc(85% / 3)' : 'calc(90% / 4)')};
+    margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 'calc(10% / 3)')};
     &:nth-child(even), &:nth-child(3n) {
-      border-right: 20px solid transparent;
+      margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 'calc(10% / 3)')};
     }
     &:nth-child(3n) {
-      border-right: ${props => (props.starsPage ? '0' : '20px solid transparent')};
+      margin-right: ${props => (props.starsPage ? '0' : 'calc(10% / 3)')};
     }
     &:nth-child(4n) {
-      border-right: ${props => (props.starsPage ? '20px solid transparent' : '0')};
+      margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 0)};
     }
   }
-  @media(min-width: 1221px) {
-    padding: 0;
-    border-right: 40px solid transparent;
-    &:nth-child(even), &:nth-child(3n) {
-      border-right: 40px solid transparent;
-    }
-    &:nth-child(4n) {
-      border-right: ${props => (props.starsPage ? '40px solid transparent' : '0')};
-    }
-    &:nth-child(3n) {
-      border-right: ${props => (props.starsPage ? '0' : '40px solid transparent')};
-    }
-  }
+
 
 `;
 
