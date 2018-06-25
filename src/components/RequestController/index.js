@@ -11,8 +11,9 @@ export const RequestController = props => (
     <FooterDiv.BookingPrice>
       <strong>${props.rate}</strong>
     </FooterDiv.BookingPrice>
-   
-    <FooterDiv.Button onClick={() => props.showPopup()}>Request a Video</FooterDiv.Button>
+    <Link to="/request">
+      <FooterDiv.Button>Request a Video</FooterDiv.Button>
+    </Link>
    
   </FooterDiv>
 );

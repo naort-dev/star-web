@@ -24,6 +24,7 @@ import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
 import { StarsignUp } from './pages/starsignup';
+import { Requestvideo } from './pages/requestvideo';
 
 
 class App extends React.Component {
@@ -94,6 +95,7 @@ class App extends React.Component {
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starsignup" component={StarsignUp} />
+                <Route path="/request" component={Requestvideo} />
                 
 
                 {/* logged in areas */}
