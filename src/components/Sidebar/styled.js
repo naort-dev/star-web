@@ -105,8 +105,11 @@ SidebarStyled.CategoryTitle = styled.span`
 `;
 
 SidebarStyled.SubCategoryList = styled.ul`
-  margin-left: 20px;
-  width: calc(100% - 20px);
+  margin-left: 60px;
+  width: 100%;
+  @media(min-width: 768px) {
+    margin-left: 20px;
+  }
 `;
 
 SidebarStyled.SubCategoryListItem = styled.li`
