@@ -46,6 +46,7 @@ export default (state = { ...initalState }, action) => {
           isLoggedIn: action.isLoggedIn,
         },
         currentCategory: action.category,
+        isLoggedIn: action.isLoggedIn,
       };
 
     case CELEB_LIST.failed:

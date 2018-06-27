@@ -9,6 +9,8 @@ class Api {
   static socialMediaLogin = 'user/socialsignup/';
   static authGetCelebDetails = 'user/user_details/';
   static getCelebDetails = id => `user/user_details/${id}/get_details/`;
+  static getUserFavourites = 'user/fan/favourite_stars/';
+  static getUserVideos = 'request/request_list/';
 }
 
 export default Api;

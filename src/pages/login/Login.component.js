@@ -230,14 +230,14 @@ export default class Login extends React.Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      return <Redirect to={from} />;
     }
     return (   
       <div>
-        {
+        {/* {
           loginToContinue &&
           <p>You must login before accessing!</p>
-        }
+        } */}
         {
           this.props.loading ?
             <MainLoader />
