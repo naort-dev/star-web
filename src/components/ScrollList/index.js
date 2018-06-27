@@ -55,7 +55,6 @@ export default class ScrollList extends React.Component {
   }
 
   fetchMoreData = () => {
-    console.log(this.props.dataList.length, this.props.totalCount);
     if (this.props.dataList.length >= this.props.totalCount) {
       this.setState({ hasMore: false });
       return;

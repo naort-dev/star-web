@@ -37,8 +37,9 @@ export const favouritesListFetchFailed = error => ({
 
 export const fetchFavouritesList = (offset, refresh) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
+  const { limit } = getState().favouritesList;
   dispatch(favouritesListFetchStart(refresh));
-  return fetch.get(`${Api.getUserFavourites}?offset=${offset}`, {
+  return fetch.get(`${Api.getUserFavourites}?offset=${offset}&limit=${limit}`, {
     headers: {
       'Authorization': `token ${auth_token.authentication_token}`,
     },
