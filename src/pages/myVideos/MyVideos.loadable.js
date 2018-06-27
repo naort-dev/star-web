@@ -3,11 +3,11 @@ import Loadable from 'react-loadable';
 import { ComponentLoading } from '../../components/ComponentLoading';
 
 const LoadableComponent = Loadable({
-  loader: () => import('./Dashboard.container'),
+  loader: () => import('./MyVideos.container'),
   loading: ComponentLoading,
   timeout: 5000,
 });
 
-export const Dashboard = props => <LoadableComponent {...props} />;
+export const MyVideos = props => <LoadableComponent {...props} />;
 
-Dashboard.displayName = 'Dashboard';
+MyVideos.displayName = 'My Videos';

@@ -8,6 +8,7 @@ import celebVideos from '../pages/starProfile/reducers/celebVideos';
 import professionsList from './shared/reducers/professionsList';
 import suggestionsList from './shared/reducers/suggestionsList';
 import filters from '../pages/landing/reducers/filters';
+import favouritesList from '../pages/favourites/reducers/favouritesList';
 
 const rootReducer = combineReducers({
   session,
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   suggestionsList,
   celebDetails,
   celebVideos,
+  favouritesList,
 });
 
 export default rootReducer;
