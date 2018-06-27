@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { Request, HeaderSection } from '../../pages/requestvideo/styled';
-
-import ScrollList from '../../components/ScrollList';
-import Popup from '../../components/Popup';
 import { ImageStack } from '../../components/ImageStack';
+import { PaymentFooterController } from '../../components/PaymentFooterController';
+import { RequestVideoOption } from '../../components/RequestVideoOptions';
+import { AskQuestion } from '../../components/AskQuestion';
 
 export default class Requestvideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-     
     };
   }
   render() {
@@ -35,16 +35,21 @@ export default class Requestvideo extends React.Component {
                   />
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
-              <Request.ContentWrapper>
-                <Request.HeaderText>
-                  What kind of video would you like to request?
-                </Request.HeaderText>
-                <Request.ButtonWrapper>
-                  <Request.Button>Ask a Question</Request.Button>
-                  <Request.Button>Personalized Shout-Out</Request.Button>
-                  <Request.Button>Event Announcement</Request.Button>
-                </Request.ButtonWrapper>        
-              </Request.ContentWrapper> 
+                
+              <Request.ComponentWrapper>
+                <Scrollbars>
+                  {/* <RequestVideoOption /> */}
+                  <AskQuestion />
+                </Scrollbars>
+                 
+              </Request.ComponentWrapper> 
+              <Request.PaymentControllerWrapper>
+                <PaymentFooterController
+                  rate={0}
+                  remainingBookings={0}
+                />
+              </Request.PaymentControllerWrapper>  
+              
             </Request.LeftSection>
             <Request.RightSection>
               <ImageStack

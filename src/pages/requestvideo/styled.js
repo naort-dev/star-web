@@ -53,6 +53,7 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
+  position:relative;
   animation: ${menuEnter} 0.3s linear;
   @media(min-width: 1025px){
     width:40%;
@@ -115,7 +116,7 @@ Request.RequestControllerWrapper = styled.div`
     margin: 0 42px;
     position:relative;
     box-shadow: none;
-    border-top: solid #333333 1px;
+    border-top: 1px solid #333333;
   }
 `;
 Request.CloseButton = styled.span`
@@ -291,6 +292,20 @@ Request.StoreIcon = styled.img`
   margin-left: 0;
   display: inline-block;
 `;
+Request.ScrollBar = styled.div`
+  text-align:center;
+  height: 100%;
+  @media(min-width:768px){
+    padding: 5px 0;
+    height: 100%;
+    padding-bottom: 60px;  
+  }
+  @media(min-width: 1025px) {
+    height: 100%;
+    padding: 5px 45px;
+    padding-bottom: 60px;
+  }
+`;
 const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
@@ -346,56 +361,36 @@ Request.ContentWrapper = styled.div`
     padding: 165px 188px;
   }
 `;
-Request.HeaderText = styled.div`
-  text-align:center;
-  color:#FF6C58;
-  font-size:20px;
-  font-family: 'Ubuntu-Bold';
+Request.ComponentWrapper = styled.div`
+  height:100vh;
   @media(min-width:768px){
-    font-size:32px;
+    height:calc(100% -403px);
   }
   @media(min-width:1025px){
-    font-size:20px;
+    height:calc(100% - 40px);
   }
+  
 `;
-Request.ButtonWrapper = styled.div`
-  padding-top:29px;
-  text-align:center;
-  @media(min-width: 768px){
-    padding-top:52px;
+Request.PaymentControllerWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-left: 4%;
+  padding: 7px 16px;
+  background-color: #fff;
+  z-index: 5;
+  
+  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+  @media(min-width: 768px) {
+    padding: 13px 44px;
   }
-`;
-Request.Button = styled.button`
-  width:100%;
-  max-width:364px;
-  height:56px;
-  background-color:white;
-  color:rgba(51, 51, 51, 1);
-  border: 3px solid rgba(51, 51, 51, 0.72); 
-  border-radius:19px;
-  font-size:16px;
-  font-family: 'Ubuntu-Medium';
-  box-shadow: -2px 6px 8px rgba(0, 0, 0, 0.12);
-  margin-bottom:25px;
-  outline:none;
-  cursor: pointer;
-  &:hover {
-    color :#FF6C58;
-    border-color:#FF6C58;
-  }
-  @media(min-width: 768px){
-    max-width:500px;
-    height:80px;
-    font-size:28px;
-    margin-bottom:40px;
-  }
-  @media(min-width: 1025px){
-    max-width:325px;
-    height:53px;
-    font-size:20px;
-  }
-  @media(min-width:1920px){
-    max-width: 475px;
+  @media(min-width:1025px){
+    border-top: 2px solid rgba(51, 51, 51, 1);
+    padding: 25px 48px;
+    position:absolute;
+    bottom:0;
+    box-shadow: none;
   }
 `;
 export { Request, HeaderSection };
