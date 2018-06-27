@@ -190,7 +190,7 @@ export default class Landing extends React.Component {
               <Sidebar
                 list={this.props.professionsList}
                 selectedCategory={this.props.filters.category.value}
-                selectedSubCategories={this.props.filters[this.props.filters.category.value]}
+                selectedSubCategories={{ ...this.props.filters[this.props.filters.category.value] }}
                 menuActive={this.state.menuActive}
                 toggleMenu={this.activateMenu}
                 updateMainCategory={this.updateCategory}
