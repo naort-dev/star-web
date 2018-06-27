@@ -53,55 +53,25 @@ ListStyled.listWrapper = styled.ul`
 `;
 
 ListStyled.listItem = styled.li`
-  width: 320px;
+  width: 100%;
   display: inline-block;
   margin-bottom: 20px;
   padding-left: 0;
   animation: ${menuEnter} 0.2s linear;
-  @media(min-width: 661px) {
-    width: 300px;
-    margin-right: calc(100% - 600px);
+  @media(min-width: 768px) {
+    width: 48%;
+    margin-right: calc(100% - 96%);
     &:nth-child(even) {
       margin-right: 0;
     }
   }
 
   @media(min-width: 1025px) {
-    width: 200px;
+    width: 30%;
     margin-bottom: 30px;
-    margin-right: calc((100% - 600px) / 2);
+    margin-right: calc((100% - 90%) / 2);
     &:nth-child(even) {
-      margin-right: calc((100% - 600px) / 2);
-    }
-    &:nth-child(3n) {
-      margin-right: 0;
-    }
-  }
-  @media(min-width: 1300px) {
-    width: 250px;
-    margin-right: calc((100% - 750px) / 2);
-    &:nth-child(even) {
-      margin-right: calc((100% - 750px) / 2);
-    }
-    &:nth-child(3n) {
-      margin-right: 0;
-    }
-  }
-  @media(min-width: 1600px) {
-    width: 300px;
-    margin-right: calc((100% - 900px) / 2);
-    &:nth-child(even) {
-      margin-right: calc((100% - 900px) / 2);
-    }
-    &:nth-child(3n) {
-      margin-right: 0;
-    }
-  }
-  @media(min-width: 1920px) {
-    width: 424px;
-    margin-right: calc((100% - 1272px) / 2);
-    &:nth-child(even) {
-      margin-right: calc((100% - 1272px) / 2);
+      margin-right: calc((100% - 90%) / 2);
     }
     &:nth-child(3n) {
       margin-right: 0;

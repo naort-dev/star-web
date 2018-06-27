@@ -21,19 +21,6 @@ ImageRenderDiv.ImageSection = styled.div`
   @media(min-width: 768px) {
     height:${props => (props.height ? props.height : '177')}px;
   }
-  @media(min-width: 1025px) {
-    height: 99px;
-  }
-  @media(min-width: 1300px) {
-    height: 123px;
-  }
-  @media(min-width: 1600px) {
-    height: 148px;
-  }
-  @media(min-width: 1920px) {
-    height: 209px;
-  }
-  
   
 `;
 
