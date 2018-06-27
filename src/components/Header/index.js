@@ -187,7 +187,7 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
-                  <Link to="/user/favourites">
+                  <Link to="/user/favorites">
                     <HeaderSection.FavoriteButton />
                   </Link>
                   <Link to="/user/myVideos">
@@ -206,7 +206,7 @@ class Header extends React.Component {
                       <HeaderSection.ProfileDropdown>
                         <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
-                          <Link to="/user/favourites">
+                          <Link to="/user/favorites">
                             Favourites
                           </Link>
                         </HeaderSection.UserLink>
