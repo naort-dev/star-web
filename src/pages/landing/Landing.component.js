@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Route } from 'react-router-dom';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
@@ -124,7 +125,6 @@ export default class Landing extends React.Component {
   }
   updateCategory = (label, value) => {
     this.props.switchTab('Stars');
-    this.props.updateCategory(label, value);
     this.props.fetchCelebrityList(0, true);
   }
   updateSubCategoryList = (selectedList) => {
@@ -192,7 +192,7 @@ export default class Landing extends React.Component {
                 selectedCategory={this.props.filters.category.value}
                 menuActive={this.state.menuActive}
                 toggleMenu={this.activateMenu}
-                updateCategory={this.updateCategory}
+                updateMainCategory={this.updateCategory}
               />
             </Scrollbars>
           </LandingStyled.sideSection>

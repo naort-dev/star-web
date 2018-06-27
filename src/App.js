@@ -19,7 +19,8 @@ import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { SignupType } from './pages/signuptype';
 import { SignUp } from './pages/signup';
-import { Dashboard } from './pages/dashboard';
+import { Favourites } from './pages/favourites';
+import { MyVideos } from './pages/myVideos';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
@@ -101,10 +102,17 @@ class App extends React.Component {
                 {/* logged in areas */}
 
                 <Route
-                  path="/dashboard"
+                  path="/user/favourites"
                   component={protectRoute({
-                    RouteComponent: Dashboard,
-                    roles: allUserRoles,
+                    RouteComponent: Favourites,
+                    // roles: allUserRoles,
+                  })}
+                />
+                <Route
+                  path="/user/myVideos"
+                  component={protectRoute({
+                    RouteComponent: MyVideos,
+                    // roles: allUserRoles,
                   })}
                 />
                 {/*

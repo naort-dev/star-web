@@ -72,6 +72,14 @@ TabStyled.FilterLabel = styled.span`
   }
 `;
 
+TabStyled.TitleLabel = TabStyled.FilterLabel.extend`
+  display: inline-block;
+  font-size: 14px;
+  @media(min-width: 768px) {
+    font-size: 16px;
+  }
+`;
+
 TabStyled.FilterIcon = styled.span`
   display: inline-block;
   background: ${props => (props.filterSelected ? 'url(/assets/images/filter-icon-selected.svg)' : 'url(/assets/images/filter-icon.svg)')};
@@ -112,8 +120,18 @@ TabStyled.FilterControl = styled.div`
     margin-top: 5px;
     padding-bottom: 4px;
     position: absolute;
-    right: 0;
+    right: ${props => (props.titleLabel ? 'initial' : 0)};
+    left: ${props => (props.titleLabel ? 0 : 'initial')};
   }
 `;
-
+TabStyled.TitleControl = TabStyled.FilterControl.extend`
+  float: none;
+  padding-bottom: 10px;
+  @media(min-width: 768px) {
+    padding-bottom: 10px;
+  }
+  @media(min-width: 1025px) {
+    position: relative;
+  }
+`;
 export default TabStyled;

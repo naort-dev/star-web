@@ -1,8 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { SidebarStyled } from './styled';
 import { Footer } from '../Footer';
+import { updateCategory } from '../../pages/landing/actions/updateFilters';
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -15,6 +17,12 @@ export default class Sidebar extends React.Component {
       this.props.toggleMenu();
     }
     this.props.updateCategory(label, id);
+    if (this.props.updateMainCategory) {
+      this.props.updateMainCategory(label, id);
+    }
+    if (this.props.history && this.props.history.location.pathname != '/') {
+      this.props.history.push('/');
+    }
   }
 
   renderCategoryList = () => (
@@ -65,3 +73,12 @@ export default class Sidebar extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({
+  // filters: state.filters,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateCategory: (label, value) => dispatch(updateCategory(label, value)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
