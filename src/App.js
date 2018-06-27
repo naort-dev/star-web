@@ -102,7 +102,7 @@ class App extends React.Component {
                 {/* logged in areas */}
 
                 <Route
-                  path="/user/favourites"
+                  path="/user/favorites"
                   component={protectRoute({
                     RouteComponent: Favourites,
                     // roles: allUserRoles,

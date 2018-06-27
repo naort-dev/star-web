@@ -159,6 +159,7 @@ HeaderSection.FavoriteButton = styled.button`
     padding:18px;
     background-size: 29px;
     background-color:white;
+    margin-right: 16px;
   }
   
 `;
@@ -175,6 +176,7 @@ HeaderSection.MyvideoButton = styled.button`
     padding:18px;
     background-size: 29px;
     background-color:white;
+    margin-right: 16px;
   } 
 `;
 HeaderSection.SearchBar = styled.div`

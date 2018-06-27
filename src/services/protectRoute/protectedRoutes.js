@@ -1,5 +1,5 @@
 export const protectedRoutes = [
-  '/user/favourites',
+  '/user/favorites',
   '/login-history',
   '/account-settings',
   '/account-settings/change-password',
