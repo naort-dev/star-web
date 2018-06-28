@@ -5,7 +5,7 @@ import { fetchMyVideosList } from './actions/getMyVideosList';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
-  favouritesList: state.favouritesList,
+  myVideosList: state.myVideosList,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -5,6 +5,7 @@ const TabStyled = styled.div`
   border-bottom: 1px solid #CCCCCC;
   display: flex;
   justify-content: space-between;
+  position: relative;
   &::after {
     content: '';
     clear: both;
@@ -84,11 +85,15 @@ TabStyled.FilterIcon = styled.span`
   display: inline-block;
   background: ${props => (props.filterSelected ? 'url(/assets/images/filter-icon-selected.svg)' : 'url(/assets/images/filter-icon.svg)')};
   background-repeat: no-repeat;
+  background-position: center center;
   cursor: pointer;
   background-size: 25px 30px;
   width: 25px;
   height: 22px;
   margin: 1px 0;
+  @media(min-width: 1025px) {
+    background-position: initial;
+  }
 `;
 
 TabStyled.FilterCount = styled.span`
@@ -108,13 +113,14 @@ TabStyled.FilterCount = styled.span`
 
 TabStyled.FilterControl = styled.div`
   display: inline-block;
-  position: relative;
-  float: right;
+  position: absolute;
+  right: 16px;
   cursor: pointer;
   border-bottom: ${props => (props.filterSelected && '4px solid #FF6C58')};
   @media(min-width: 768px) {
     margin-top: 5px;
     padding-bottom: 2px;
+    right: 44px;
   }
   @media(min-width: 1025px) {
     margin-top: 5px;
@@ -126,9 +132,13 @@ TabStyled.FilterControl = styled.div`
 `;
 TabStyled.TitleControl = TabStyled.FilterControl.extend`
   float: none;
+  position: relative;
+  right: initial;
   padding-bottom: 10px;
   @media(min-width: 768px) {
     padding-bottom: 10px;
+    position: relative;
+    right: initial;
   }
   @media(min-width: 1025px) {
     position: relative;
