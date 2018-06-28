@@ -11,6 +11,7 @@ class Api {
   static getCelebDetails = id => `user/user_details/${id}/get_details/`;
   static getUserFavourites = 'user/fan/favourite_stars/';
   static getUserVideos = 'request/request_list/';
+  static followCelebrity = 'user/fan/celebrity_follow/';
 }
 
 export default Api;

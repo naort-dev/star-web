@@ -1,9 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import ImageRenderDiv from './styled';
+import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 
 
-export default class ImageRender extends React.Component {
+class ImageRender extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,7 +14,9 @@ export default class ImageRender extends React.Component {
       coverImageSize: {
         width: '100%',
         height: '158px',
-      }
+      },
+      favouriteSelected: props.celebrityFollow || false,
+      loginRedirect: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -20,26 +24,37 @@ export default class ImageRender extends React.Component {
     this.featureImageRatio = (800 / 396);
   }
   componentWillMount() {
-    this.coverImage.onload = () => {
-      if (this.mounted) {
-        this.setState({ coverImage: this.coverImage.src });
-      }
-    };
-    this.coverImage.src = this.props.cover;
-    this.profileImage.onload = () => {
-      if (this.mounted) {
-        this.setState({ profileImage: this.profileImage.src });
-      }
-    };
-    this.profileImage.src = this.props.profile;
+    this.setImages(this.props.cover, this.props.profile);
   }
   componentDidMount() {
     this.setImagesHeight();
     window.addEventListener('resize', this.setImagesHeight);
   }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.celebrityFollow !== this.state.favouriteSelected) {
+      this.setState({ favouriteSelected: nextProps.celebrityFollow });
+    }
+    if (this.props.cover !== nextProps.cover || this.props.profile !== nextProps.profile) {
+      this.setImages(nextProps.cover, nextProps.profile);
+    }
+  }
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImagesHeight);
     this.mounted = false;
+  }
+  setImages = (cover, profile) => {
+    this.coverImage.onload = () => {
+      if (this.mounted) {
+        this.setState({ coverImage: this.coverImage.src });
+      }
+    };
+    this.coverImage.src = cover;
+    this.profileImage.onload = () => {
+      if (this.mounted) {
+        this.setState({ profileImage: this.profileImage.src });
+      }
+    };
+    this.profileImage.src = profile;
   }
   setImagesHeight = () => {
     if (this.imageDiv) {
@@ -50,23 +65,39 @@ export default class ImageRender extends React.Component {
       this.setState({ coverImageSize });
     }
   }
+  updateFavouriteSelection = (event) => {
+    if (this.props.isLoggedIn) {
+      this.props.followCelebrity(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
+      this.setState({ favouriteSelected: !this.state.favouriteSelected });
+    } else {
+      this.setState({ loginRedirect: true });
+    }
+  }
   render() {
+    if (this.state.loginRedirect) {
+      return <Redirect to="/login" />;
+    }
     const { props } = this;
     return (
       <ImageRenderDiv innerRef={(node) => { this.imageDiv = node; }}>
-        <Link to={`/starDetail/${props.id}`}>
-          <ImageRenderDiv.ImageSection
-            style={{ height: this.state.coverImageSize.height }}
-            height={props.imageHeight}
-            imageUrl={this.state.coverImage}
-          >
+        <ImageRenderDiv.ImageSection
+          style={{ height: this.state.coverImageSize.height }}
+          height={props.imageHeight}
+          imageUrl={this.state.coverImage}
+        >
+          <Link to={`/starDetail/${props.id}`} style={{ display: 'block', height: '100%' }}>
             <ImageRenderDiv.ProfileImageWrapper>
               <ImageRenderDiv.ProfileImage
                 imageUrl={this.state.profileImage}
               />
             </ImageRenderDiv.ProfileImageWrapper>
-            {/* <ImageRenderDiv.FavoriteButton /> */}
-          </ImageRenderDiv.ImageSection>
+          </Link>
+          <ImageRenderDiv.FavoriteButton
+            onClick={e => this.updateFavouriteSelection(e)}
+            selected={this.state.favouriteSelected}
+          />
+        </ImageRenderDiv.ImageSection>
+        <Link to={`/starDetail/${props.id}`} style={{ display: 'block', height: '100%' }}>
           <ImageRenderDiv.ProfileContent>
             <ImageRenderDiv.Span>
               <ImageRenderDiv.StarName>
@@ -81,3 +112,13 @@ export default class ImageRender extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  isLoggedIn: state.session.isLoggedIn,
+  error: state.followCelebrityStatus.error,
+});
+
+const mapDispatchToProps = dispatch => ({
+  followCelebrity: (celebId, celebProfessions, follow) => dispatch(followCelebrity(celebId, celebProfessions, follow)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ImageRender);

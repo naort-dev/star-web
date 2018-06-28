@@ -7,6 +7,7 @@ import celebDetails from '../pages/starProfile/reducers/celebDetails';
 import celebVideos from '../pages/starProfile/reducers/celebVideos';
 import professionsList from './shared/reducers/professionsList';
 import suggestionsList from './shared/reducers/suggestionsList';
+import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
 import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   celebDetails,
   celebVideos,
   favouritesList,
+  followCelebrityStatus,
 });
 
 export default rootReducer;
