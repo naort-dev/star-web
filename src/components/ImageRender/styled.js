@@ -55,10 +55,12 @@ ImageRenderDiv.ProfileImage = styled.span`
   }
 `;
 ImageRenderDiv.FavoriteButton = styled.button`
-  background-image: url( 'assets/images/icon_favorite_40b.png' );
+  cursor: pointer;
+  background-image: ${props => (props.selected ? 'url(assets/images/favourite-icon-selected.svg)' : 'url(assets/images/favourite-icon.svg)')};
   background-repeat:no-repeat;
   background-position: center;
   border:none;
+  outline: none;
   padding:18px;
   background-size: 27px;
   position:absolute;
