@@ -8,6 +8,7 @@ export const FAVOURITES_LIST = {
   end: 'fetch_end/FAVOURITES_LIST',
   success: 'fetch_success/FAVOURITES_LIST',
   failed: 'fetch_failed/FAVOURITES_LIST',
+  updateFollow: 'update_list/FAVOURTIE_LIST',
 };
 
 export const favouritesListFetchStart = refresh => ({
@@ -29,11 +30,24 @@ export const favouritesListFetchSuccess = (list, offset, count) => {
     });
 };
 
+export const favouritesListUpdateFollow = (list, newCount) => ({
+  type: FAVOURITES_LIST.updateFollow,
+  list,
+  newCount,
+});
+
 export const favouritesListFetchFailed = error => ({
   type: FAVOURITES_LIST.failed,
   error,
 });
 
+export const updateFavouriteList = (celebrityId, follow) => (dispatch, getState) => {
+  const newFavList = getState().favouritesList.data.filter((celeb) => {
+    return celeb.id !== celebrityId;
+  });
+  const newCount = getState().favouritesList.count - 1;
+  dispatch(favouritesListUpdateFollow(newFavList, newCount));
+};
 
 export const fetchFavouritesList = (offset, refresh) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;

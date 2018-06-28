@@ -38,6 +38,13 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case FAVOURITES_LIST.updateFollow:
+      return {
+        ...state,
+        data: action.list,
+        count: action.newCount,
+      };
+
     default:
       return state;
   }

@@ -79,7 +79,7 @@ export default (state = { ...initalState }, action) => {
         loading: false,
       };
 
-    case CELEB_LIST.updateFollow:
+    case CELEB_LIST.updateCelebList:
       return {
         ...state,
         cachedData: action.cachedData,

@@ -8,7 +8,7 @@ export const CELEB_LIST = {
   end: 'fetch_end/celeb_list',
   success: 'fetch_success/celeb_list',
   failed: 'fetch_failed/celeb_list',
-  updateFollow: 'update_celeb_follow/celeb_list',
+  updateCelebList: 'update_celeb_follow/celeb_list',
   swapCacheStart: 'swap_cache_start/celeb_list',
   swapCacheEnd: 'swap_cache_end/celeb_list',
 };
@@ -46,7 +46,7 @@ export const celebListFetchFailed = error => ({
 });
 
 export const celebListUpdateFollow = cachedData => ({
-  type: CELEB_LIST.updateFollow,
+  type: CELEB_LIST.updateCelebList,
   cachedData,
 });
 
@@ -60,37 +60,25 @@ export const celebListSwapCacheEnd = key => ({
   key,
 });
 
-export const followCelebrity = (celebrityId, celebProfessions, follow) => (dispatch, getState) => {
-  const { isLoggedIn, auth_token } = getState().session;
-  return fetch.post(Api.followCelebrity, {
-    celebrity: celebrityId,
-    follow,
-  }, {
-    headers: {
-      'Authorization': `token ${auth_token.authentication_token}`,
-    },
-  }).then((resp) => {
-    const {
-      category,
-    } = getState().filters;
-    const categoryList = celebProfessions.map((profession, index) => {
-      return profession.parent;
-    });
-    categoryList.push('featured');
-    let cachedData = { ...getState().celebList.cachedData };
-    Object.keys(cachedData).map((key, index) => {
-      if (categoryList.indexOf(key) > -1) {
-        cachedData[key].data.map((celeb) => {
-          if (celeb.id === celebrityId) {
-            celeb.celebrity_follow = follow;
-          }
-        });
-      }
-    });
-    dispatch(celebListUpdateFollow(cachedData));
-  }).catch((exception) => {
-    dispatch(celebListFetchFailed(exception));
+export const updateCelebrityFollow = (celebrityId, celebProfessions, follow) => (dispatch, getState) => {
+  const {
+    category,
+  } = getState().filters;
+  const categoryList = celebProfessions.map((profession, index) => {
+    return profession.parent;
   });
+  categoryList.push('featured');
+  let cachedData = { ...getState().celebList.cachedData };
+  Object.keys(cachedData).map((key, index) => {
+    if (categoryList.indexOf(key) > -1) {
+      cachedData[key].data.map((celeb) => {
+        if (celeb.id === celebrityId) {
+          celeb.celebrity_follow = follow;
+        }
+      });
+    }
+  });
+  dispatch(celebListUpdateFollow(cachedData));
 }
 export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const {

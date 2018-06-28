@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ImageRenderDiv from './styled';
-import { followCelebrity } from '../../pages/landing/actions/getCelebList';
+import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 
 
 class ImageRender extends React.Component {
@@ -24,18 +24,7 @@ class ImageRender extends React.Component {
     this.featureImageRatio = (800 / 396);
   }
   componentWillMount() {
-    this.coverImage.onload = () => {
-      if (this.mounted) {
-        this.setState({ coverImage: this.coverImage.src });
-      }
-    };
-    this.coverImage.src = this.props.cover;
-    this.profileImage.onload = () => {
-      if (this.mounted) {
-        this.setState({ profileImage: this.profileImage.src });
-      }
-    };
-    this.profileImage.src = this.props.profile;
+    this.setImages(this.props.cover, this.props.profile);
   }
   componentDidMount() {
     this.setImagesHeight();
@@ -45,10 +34,27 @@ class ImageRender extends React.Component {
     if (nextProps.celebrityFollow !== this.state.favouriteSelected) {
       this.setState({ favouriteSelected: nextProps.celebrityFollow });
     }
+    if (this.props.cover !== nextProps.cover || this.props.profile !== nextProps.profile) {
+      this.setImages(nextProps.cover, nextProps.profile);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImagesHeight);
     this.mounted = false;
+  }
+  setImages = (cover, profile) => {
+    this.coverImage.onload = () => {
+      if (this.mounted) {
+        this.setState({ coverImage: this.coverImage.src });
+      }
+    };
+    this.coverImage.src = cover;
+    this.profileImage.onload = () => {
+      if (this.mounted) {
+        this.setState({ profileImage: this.profileImage.src });
+      }
+    };
+    this.profileImage.src = profile;
   }
   setImagesHeight = () => {
     if (this.imageDiv) {
@@ -108,7 +114,7 @@ class ImageRender extends React.Component {
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
-  error: state.celebList.error,
+  error: state.followCelebrityStatus.error,
 });
 
 const mapDispatchToProps = dispatch => ({
