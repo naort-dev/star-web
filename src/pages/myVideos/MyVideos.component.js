@@ -61,7 +61,6 @@ export default class MyVideos extends React.Component {
                 <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   <ScrollList
                     dataList={this.props.myVideosList.data}
-                    videos
                     requestDetails
                     limit={this.props.myVideosList.limit}
                     totalCount={this.props.myVideosList.count}
