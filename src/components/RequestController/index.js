@@ -11,9 +11,8 @@ export const RequestController = props => (
     <FooterDiv.BookingPrice>
       <strong>${props.rate}</strong>
     </FooterDiv.BookingPrice>
-    <Link to="/request">
+    <Link to={`/${props.url}/request`}>
       <FooterDiv.Button>Request a Video</FooterDiv.Button>
     </Link>
-   
   </FooterDiv>
 );

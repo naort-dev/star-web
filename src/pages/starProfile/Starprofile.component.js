@@ -248,6 +248,7 @@ export default class Starprofile extends React.Component {
                 <RequestController
                   rate={rate}
                   remainingBookings={remainingBookings}
+                  url={this.props.userDetails.user_id}
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>

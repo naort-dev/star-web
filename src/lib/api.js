@@ -12,6 +12,7 @@ class Api {
   static getUserFavourites = 'user/fan/favourite_stars/';
   static getUserVideos = 'request/request_list/';
   static followCelebrity = 'user/fan/celebrity_follow/';
+  static getOccasionList = 'request/occasion_list/';
 }
 
 export default Api;

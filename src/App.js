@@ -96,7 +96,7 @@ class App extends React.Component {
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starsignup" component={StarsignUp} />
-                <Route path="/request" component={Requestvideo} />
+                <Route path="/:id/request" component={Requestvideo} />
                 
 
                 {/* logged in areas */}
