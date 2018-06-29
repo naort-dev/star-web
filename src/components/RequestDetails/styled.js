@@ -70,9 +70,11 @@ VideoRenderDiv.FavoriteButton = styled.button`
 VideoRenderDiv.ProfileContent = styled.div`
   margin-top: 18px;
 `;
-VideoRenderDiv.Span = styled.span`
+VideoRenderDiv.DetailWrapper = styled.div`
   text-align:center;
   line-height: 18px;
+  position: relative;
+  min-height: 120px;
 `;
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
@@ -81,6 +83,24 @@ VideoRenderDiv.StarName = styled.h4`
   @media(min-width: 1920px) {
     font-size: 20px;
   }
+`;
+VideoRenderDiv.RequestDetails = styled.div`
+  margin-top: 10px;
+  color: #333333;
+  line-height: 20px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+`;
+VideoRenderDiv.RequestStatus = styled.span`
+  font-family: Ubuntu-Medium;
+  font-size: 16px;
+`;
+VideoRenderDiv.EventType = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Regular';
+  font-size: 12px;
 `;
 VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;
