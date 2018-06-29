@@ -1,15 +1,29 @@
 version: 0.2
 
+env:
+  variables:
+    GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
 phases:
+  install:
+    commands:
+      - apt-get update && apt-get install -y openssh-client jq
+      - mkdir -p ~/.ssh/ && chmod 700 ~/.ssh/
+      - aws ssm get-parameter --name /codebuild/github/web/key.pem | jq -r .Parameter.Value > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
   pre_build:
     commands:
+      - "export AWS_ACCOUNT_ID=`echo $CODEBUILD_BUILD_ARN | cut -d: -f5`"
       - export REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
       - export DEPLOYMENT_TYPE=aws
       - echo Logging in to Amazon ECR...
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - echo Build started on `date`
+      - chmod +x version.sh
+      - ./version.sh 'git@github.com:Starsona/web.git'
+      - export IMAGE_TAG=:`cat .version`
+      - echo Build $IMAGE_TAG started on `date`
       - echo Building the Docker images...
       - chmod +x build-docker-images.sh
       - ./build-docker-images.sh
@@ -18,9 +32,11 @@ phases:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
-      - echo Writing image definitions files...
-      - printf '[{"name":"nginx","imageUri":"%sweb-nginx-%s%s"}]' $REGISTRY $DEPLOYMENT_TYPE $IMAGE_TAG > imagedefinitions-nginx.json
+      - echo Writing artifacts...
+      - aws ssm get-parameter --name /env/$ENV/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > web.json
+      - aws ssm get-parameter --name /env/$ENV/web/vpc.json | jq -r .Parameter.Value > vpc.json
 artifacts:
   files:
-    - imagedefinitions-nginx.json
+    - web.json
+    - vpc.json
   discard-paths: yes
