@@ -77,7 +77,7 @@ Resources:
 
       Source:
         Type: CODEPIPELINE
-        BuildSpec: docker/codebuild/buildspec-images.yml
+        BuildSpec: aws/codebuild/buildspec-images.yml
       TimeoutInMinutes: 15
 
   Pipeline:
