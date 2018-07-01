@@ -20,13 +20,12 @@ phases:
       - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
   build:
     commands:
-      - chmod +x version.sh
-      - ./version.sh 'git@github.com:Starsona/web.git'
+      - chmod +x aws/scripts/version.sh
+      - aws/scripts/version.sh 'git@github.com:Starsona/web.git'
       - export IMAGE_TAG=:`cat .version`
-      - echo Build $IMAGE_TAG started on `date`
-      - echo Building the Docker images...
-      - chmod +x build-docker-images.sh
-      - ./build-docker-images.sh
+      - echo Building the Docker images version$IMAGE_TAG...
+      - chmod +x docker/build-docker-images.sh
+      - docker/build-docker-images.sh
   post_build:
     commands:
       - echo Build completed on `date`

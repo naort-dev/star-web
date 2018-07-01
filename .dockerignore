@@ -1,0 +1,11 @@
+.gitignore
+.dockerignore
+.git
+README.md
+*.iml
+docker/
+!docker/scripts
+!docker/configs
+.idea
+aws
+
