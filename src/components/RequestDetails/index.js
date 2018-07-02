@@ -13,6 +13,11 @@ export default class RequestDetails extends React.Component {
     this.profileImage = new Image();
     this.mounted = true;
     this.charLimit = 50;
+    this.requestType = {
+      3: 'Q&A',
+      2: 'Event',
+      1: 'Shout-outs',
+    };
   }
   componentWillMount() {
     this.coverImage.onload = () => {
@@ -77,7 +82,7 @@ export default class RequestDetails extends React.Component {
               Completed
             </VideoRenderDiv.RequestStatus>
             <VideoRenderDiv.EventType>
-              Event
+              {this.requestType[this.props.requestType]}
             </VideoRenderDiv.EventType>
           </VideoRenderDiv.RequestDetails>
         );
@@ -88,7 +93,7 @@ export default class RequestDetails extends React.Component {
               Cancelled
             </VideoRenderDiv.RequestStatus>
             <VideoRenderDiv.EventType>
-              Event
+              {this.requestType[this.props.requestType]}
             </VideoRenderDiv.EventType>
           </VideoRenderDiv.RequestDetails>
         );
@@ -100,7 +105,7 @@ export default class RequestDetails extends React.Component {
               {this.findTime()}
             </VideoRenderDiv.RequestStatus>
             <VideoRenderDiv.EventType>
-              Event
+              {this.requestType[this.props.requestType]}
             </VideoRenderDiv.EventType>
           </VideoRenderDiv.RequestDetails>
         );

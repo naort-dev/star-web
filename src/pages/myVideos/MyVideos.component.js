@@ -14,18 +14,22 @@ export default class MyVideos extends React.Component {
     this.state = {
       menuActive: false,
       filterSelected: false,
+      tabsClientHeight: 0,
       requestStatus: 'all',
     };
   }
   componentWillMount() {
     this.props.fetchMyVideosList(0, true);
   }
+  setScrollHeight = () => {
+    this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+  }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
   toggleFilterSection = () => {
     this.setState({ filterSelected: !this.state.filterSelected }, () => {
-
+      this.setScrollHeight();
     });
   }
   updateRequestStatus = (requestStatus) => {
