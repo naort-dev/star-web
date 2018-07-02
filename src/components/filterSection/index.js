@@ -8,19 +8,19 @@ export default class FilterSection extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      minPrice: props.selectedPriceRange.low === '' ? 0 : props.selectedPriceRange.low,
-      maxPrice: props.selectedPriceRange.high === '' ? 500 : props.selectedPriceRange.high,
+      // minPrice: props.selectedPriceRange.low === '' ? 0 : props.selectedPriceRange.low,
+      // maxPrice: props.selectedPriceRange.high === '' ? 500 : props.selectedPriceRange.high,
     };
     this.lowPrice = 0;
     this.highPrice = 500;
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.selectedPriceRange.low !== nextProps.selectedPriceRange.low) {
-      this.setState({ minPrice: nextProps.selectedPriceRange.low });
-    }
-    if (this.props.selectedPriceRange.high !== nextProps.selectedPriceRange.high) {
-      this.setState({ maxPrice: nextProps.selectedPriceRange.high });
-    }
+    // if (this.props.selectedPriceRange.low !== nextProps.selectedPriceRange.low) {
+    //   this.setState({ minPrice: nextProps.selectedPriceRange.low });
+    // }
+    // if (this.props.selectedPriceRange.high !== nextProps.selectedPriceRange.high) {
+    //   this.setState({ maxPrice: nextProps.selectedPriceRange.high });
+    // }
   }
 
   filterSelection = (type, data) => {
@@ -36,10 +36,68 @@ export default class FilterSection extends React.Component {
       case 'video_upload_date':
         this.props.updateSelectedVideoDate(data);
         break;
+      case 'request_status':
+        this.props.updateRequestStatus(data)
       default: break;
     }
   }
   render() {
+    if (this.props.requestStatus) {
+      return (
+        <FilterStyled filterActive={this.props.filterSelected}>
+          <FilterStyled.CloseButton
+            onClick={() => this.props.toggleFilter()}
+          />
+          <Scrollbars>
+            <FilterStyled.filterWrapper>
+              <FilterStyled.filterSection typeFilter={this.props.selectedTab !== 'Videos' ? true : false}>
+                <FilterStyled.filterHeading>
+                  Request Status
+                </FilterStyled.filterHeading>
+                <FilterStyled.filterItemWrapper>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedRequestStatus === 'all' ? true : false}
+                    onClick={() => this.filterSelection('request_status', 'all')}
+                  >
+                    All
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedRequestStatus === 2 ? true : false}
+                    onClick={() => this.filterSelection('request_status', 2)}
+                  >
+                    Pending
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedRequestStatus === 3 ? true : false}
+                    onClick={() => this.filterSelection('request_status', 3)}
+                  >
+                    Processing
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedRequestStatus === 4 ? true : false}
+                    onClick={() => this.filterSelection('request_status', 4)}
+                  >
+                    InComplete
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedRequestStatus === 5 ? true : false}
+                    onClick={() => this.filterSelection('request_status', 5)}
+                  >
+                    Cancelled
+                  </FilterStyled.filterItem>
+                  <FilterStyled.filterItem
+                    selected={this.props.selectedRequestStatus === 6 ? true : false}
+                    onClick={() => this.filterSelection('request_status', 6)}
+                  >
+                    Completed
+                  </FilterStyled.filterItem>
+                </FilterStyled.filterItemWrapper>
+              </FilterStyled.filterSection>
+            </FilterStyled.filterWrapper>
+          </Scrollbars>
+        </FilterStyled>
+      );
+    }
     return (
       <FilterStyled filterActive={this.props.filterSelected}>
         <FilterStyled.CloseButton

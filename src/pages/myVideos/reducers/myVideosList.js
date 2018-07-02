@@ -31,6 +31,7 @@ export default (state = { ...initalState }, action) => {
         offset: action.offset,
         data: action.list,
         count: action.count,
+        status: action.videoStatus,
       };
 
     case MY_VIDEOS_LIST.failed:

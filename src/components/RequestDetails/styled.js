@@ -75,6 +75,7 @@ VideoRenderDiv.DetailWrapper = styled.div`
   line-height: 18px;
   position: relative;
   min-height: 120px;
+  padding-bottom: 58px;
 `;
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
