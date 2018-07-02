@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
+import FilterSection from '../../components/filterSection';
 import Tabs from '../../components/Tabs';
 import MyVideosStyled from './styled';
 
@@ -12,6 +13,8 @@ export default class MyVideos extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
+      filterSelected: false,
+      requestStatus: 'all',
     };
   }
   componentWillMount() {
@@ -19,6 +22,16 @@ export default class MyVideos extends React.Component {
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
+  }
+  toggleFilterSection = () => {
+    this.setState({ filterSelected: !this.state.filterSelected }, () => {
+
+    });
+  }
+  updateRequestStatus = (requestStatus) => {
+    this.setState({ requestStatus }, () => {
+      this.props.fetchMyVideosList(0, true, this.state.requestStatus);
+    });
   }
   render() {
     return (
@@ -50,7 +63,18 @@ export default class MyVideos extends React.Component {
                 labels={['Stars', 'Videos']}
                 disableTabs
                 heading="My Videos"
+                toggleFilter={this.toggleFilterSection}
               />
+              {
+                this.state.filterSelected &&
+                  <FilterSection
+                    requestStatus
+                    filterSelected={this.state.filterSelected}
+                    toggleFilter={this.toggleFilterSection}
+                    selectedRequestStatus={this.state.requestStatus}
+                    updateRequestStatus={this.updateRequestStatus}
+                  />
+              }
             </div>
             {
               (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?

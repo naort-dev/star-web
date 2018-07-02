@@ -19,13 +19,14 @@ export const myVideosListFetchEnd = () => ({
   type: MY_VIDEOS_LIST.end,
 });
 
-export const myVideosListFetchSuccess = (list, offset, count) => {
+export const myVideosListFetchSuccess = (list, offset, count, videoStatus) => {
   return (
     {
       type: MY_VIDEOS_LIST.success,
       list,
       offset,
       count,
+      videoStatus,
     });
 };
 
@@ -34,12 +35,12 @@ export const myVideosListFetchFailed = error => ({
   error,
 });
 
-
-export const fetchMyVideosList = (offset, refresh) => (dispatch, getState) => {
+export const fetchMyVideosList = (offset, refresh, requestStatus) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   const { status, limit } = getState().myVideosList;
+  const videoStatus = requestStatus ? requestStatus : status;
   dispatch(myVideosListFetchStart(refresh));
-  return fetch.get(`${Api.getUserVideos}?status=${status}&limit=${limit}&offset=${offset}`, {
+  return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}`, {
     headers: {
       'Authorization': `token ${auth_token.authentication_token}`,
     },
@@ -53,7 +54,7 @@ export const fetchMyVideosList = (offset, refresh) => (dispatch, getState) => {
       } else {
         list = [...list, ...resp.data.data.request_list];
       }
-      dispatch(myVideosListFetchSuccess(list, offset, count));
+      dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus));
     } else {
       dispatch(myVideosListFetchEnd());
     }

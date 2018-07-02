@@ -44,7 +44,6 @@ export default class RequestDetails extends React.Component {
     const diffDays = Math.floor(timeDiff / 86400000); // days
     const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
     const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
-    console.log('days:'+diffDays+'hrs:'+diffHrs+'min'+diffMins);
     if (diffDays === 1) {
       timeString = `${timeString} ${diffDays} day ago`;
     } else if (diffDays > 1) {
