@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Requestvideo from './Requestvideo.component';
+import Askquestion from './Askquestion.component';
 import { fetchCelebDetails, resetCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
@@ -14,4 +14,4 @@ const mapDispatchToProps = dispatch => ({
   resetCelebDetails: () => dispatch(resetCelebDetails()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Requestvideo);
+export default connect(mapStateToProps, mapDispatchToProps)(Askquestion);

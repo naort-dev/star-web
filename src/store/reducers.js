@@ -10,7 +10,7 @@ import suggestionsList from './shared/reducers/suggestionsList';
 import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
 import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
-import occasionList from '../pages/requestvideo/reducers/occasionList';
+import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 
 const rootReducer = combineReducers({
   session,

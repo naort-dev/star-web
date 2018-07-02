@@ -1,4 +1,4 @@
-import { OCCASION_LIST } from '../../requestvideo/actions/getOccasionList';
+import { OCCASION_LIST } from '../../eventAnnouncement/actions/getOccasionList';
 
 const initalState = {
   data: [],

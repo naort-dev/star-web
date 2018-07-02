@@ -1,18 +1,24 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Request, HeaderSection } from '../../pages/requestvideo/styled';
+import * as qs from 'query-string';
+import { Request, HeaderSection } from '../../pages/eventAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
+import './event';
+import EventAnnouncementSteps from '../../components/EventAnnouncementSteps';
 
-
-export default class Requestvideo extends React.Component {
+export default class Event extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      step: '',
     };
   }
   componentWillMount() {
     this.props.fetchCelebDetails(this.props.match.params.id);
+    this.props.fetchOccasionlist(2);
+    const parsedQuery = qs.parse(this.props.location.search)
+    this.setState({step: parsedQuery});
   }
   componentWillUnmount() {
     this.props.resetCelebDetails();
@@ -52,6 +58,11 @@ export default class Requestvideo extends React.Component {
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
+    const eventNames = this.props.eventsDetails;
+    const parsedQuery = qs.parse(this.props.location.search)
+    const optionItems = eventNames.map((eventNames) => 
+    <option key={eventNames.id}>{eventNames.title}</option>
+    );
     return (
       <Request.Wrapper>
         <Request.Content>
@@ -71,26 +82,51 @@ export default class Requestvideo extends React.Component {
                   />
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
-                
+              
               <Request.ComponentWrapper>
                 <Scrollbars>
-                  <Request.OptionWrapper>
-                    <Request.HeaderText>
-                      What kind of video would you like to request?
-                    </Request.HeaderText>
-                    <Request.ButtonWrapper>
-                      <Link to={`/${this.props.match.params.id}/request/ask`}>
-                        <Request.Button>Ask a Question</Request.Button>
-                      </Link>
-                      <Link to={`/${this.props.match.params.id}/request/personal`}>
-                        <Request.Button >Personalized Shout-Out</Request.Button>
-                      </Link>
-                      <Link to={`/${this.props.match.params.id}/request/event/`}>
-                        <Request.Button >Event Announcement</Request.Button>
-                      </Link>
-                    </Request.ButtonWrapper>    
-                  </Request.OptionWrapper>
-                </Scrollbars>  
+                  <Request.Questionwraps>
+                    <Request.Ask>
+                      {
+                        !Object.keys(parsedQuery).length ?
+                          <Request.EventStep1>
+                            <Request.InputFieldsWrapper>
+                              <Request.InputWrapper>
+                                <Request.Label>Event Type</Request.Label>
+                                <Request.WrapsInput>
+                                  <Request.Select>
+                                    {optionItems}
+                                  </Request.Select>
+                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                </Request.WrapsInput>   
+                              </Request.InputWrapper>
+                            </Request.InputFieldsWrapper>
+                          </Request.EventStep1>
+                        : null                        
+                      } 
+                      {
+                        parsedQuery.step === '1' ?
+                          <Request.EventStep2>
+                            <Request.InputFieldsWrapper>
+                              <Request.InputWrapper>
+                                <Request.Label>Event Type</Request.Label>
+                                <Request.WrapsInput>
+                                  <EventAnnouncementSteps />
+                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                </Request.WrapsInput>   
+                              </Request.InputWrapper>
+                            </Request.InputFieldsWrapper>
+                          </Request.EventStep2>
+                        : null
+                      }
+                    </Request.Ask>
+                  </Request.Questionwraps>
+                </Scrollbars>
+                <Request.PaymentControllerWrapper>
+                  <Request.ContinueButton>
+                    <Link to={`/${this.props.match.params.id}/request/event?step=1`}>Continue</Link>
+                  </Request.ContinueButton>
+                </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
