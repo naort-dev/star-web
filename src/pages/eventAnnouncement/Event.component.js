@@ -5,13 +5,15 @@ import * as qs from 'query-string';
 import { Request, HeaderSection } from '../../pages/eventAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
 import './event';
-import EventAnnouncementSteps from '../../components/EventAnnouncementSteps';
+import RequestTemplates from '../../components/RequestTemplates';
 
 export default class Event extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      step: '',
+      selectedValue: '',
+      steps: true,
+      
     };
   }
   componentWillMount() {
@@ -23,8 +25,14 @@ export default class Event extends React.Component {
   componentWillUnmount() {
     this.props.resetCelebDetails();
   }
-
+  handleChange = (e) => {
+    this.setState({ selectedValue: e.target.value });
+  }
+  steps =() => {
+    this.setState({ steps: false });
+  }
   render() {
+    
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -61,7 +69,7 @@ export default class Event extends React.Component {
     const eventNames = this.props.eventsDetails;
     const parsedQuery = qs.parse(this.props.location.search)
     const optionItems = eventNames.map((eventNames) => 
-    <option key={eventNames.id}>{eventNames.title}</option>
+      <option value={eventNames.type} key={eventNames.id}>{eventNames.title}</option>
     );
     return (
       <Request.Wrapper>
@@ -94,7 +102,11 @@ export default class Event extends React.Component {
                               <Request.InputWrapper>
                                 <Request.Label>Event Type</Request.Label>
                                 <Request.WrapsInput>
-                                  <Request.Select>
+                                  <Request.Select
+                                    value={this.state.selectedValue}
+                                    onChange={this.handleChange}
+                                  >
+                                    <option value="0" key="0">Choose One</option>
                                     {optionItems}
                                   </Request.Select>
                                   <Request.ErrorMsg></Request.ErrorMsg>
@@ -107,15 +119,7 @@ export default class Event extends React.Component {
                       {
                         parsedQuery.step === '1' ?
                           <Request.EventStep2>
-                            <Request.InputFieldsWrapper>
-                              <Request.InputWrapper>
-                                <Request.Label>Event Type</Request.Label>
-                                <Request.WrapsInput>
-                                  <EventAnnouncementSteps />
-                                  <Request.ErrorMsg></Request.ErrorMsg>
-                                </Request.WrapsInput>   
-                              </Request.InputWrapper>
-                            </Request.InputFieldsWrapper>
+                            <RequestTemplates type={this.state.selectedValue} />
                           </Request.EventStep2>
                         : null
                       }
@@ -123,9 +127,17 @@ export default class Event extends React.Component {
                   </Request.Questionwraps>
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
-                  <Request.ContinueButton>
-                    <Link to={`/${this.props.match.params.id}/request/event?step=1`}>Continue</Link>
-                  </Request.ContinueButton>
+                  {this.state.steps ?
+                    <Request.ContinueButton onClick={() => this.steps()}>
+                      <Link to={`/${this.props.match.params.id}/request/event?step=1`}>Continue</Link>
+                    </Request.ContinueButton>
+                    :
+                    <Request.ContinueButton>
+                      <Link to={`/${this.props.match.params.id}/request/event?step=1`}>Book</Link>
+                    </Request.ContinueButton>
+                  }
+                  
+                  
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>

@@ -694,6 +694,9 @@ Request.ContinueButton = styled.button`
   @media(min-width: 1920px) {
     font-size: 20px;
   }
+  a{
+    color: #FF6C58;
+  }
 `;
 
 export { Request, HeaderSection };
