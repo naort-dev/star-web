@@ -131,5 +131,41 @@ Templates.ErrorMsg = styled.div`
   text-align:left;
   
 `;
+Templates.Select = styled.select`
+ -webkit-appearance: none; 
+ -moz-appearance:none;
+  width: 268px;
+  padding: 5px;
+  font-size: 16px;
+  line-height: 1;
+  border: 0;
+  border-radius: 5px;
+  height: 34px;
+  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
+  
+  background-position-x: 244px;
+  font-family: 'Ubuntu-Regular';
+  color: #333333;
+  font-size:16px;
+  text-align:left;
+  outline:none;
+  border: 2px solid rgba(51, 51, 51, 1);
+ 
+  text-indent: 10px;
+  background-color:rgba(248, 248, 248, 1);
+  @media(min-width:768px){
+    margin-top:0;
+    height:40px;
+  }
+  @media(min-width:1025px){
+    margin-top:0;
+    height:33px;
+    font-size:13px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+    height:40px;
+  }
+`;
 
 export { Templates };

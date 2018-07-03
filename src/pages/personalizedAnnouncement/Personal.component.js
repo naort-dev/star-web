@@ -2,35 +2,35 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import * as qs from 'query-string';
-import { Request, HeaderSection } from '../../pages/eventAnnouncement/styled';
+import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
-import './event';
+import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
 
-export default class Event extends React.Component {
+export default class Personal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedValue: '',
       steps: true,
+      selectedPersonal: '',
       templateType: '',
       relationship: [],
       eventName: '',
-      
     };
   }
   componentWillMount() {
     this.props.fetchCelebDetails(this.props.match.params.id);
-    this.props.fetchOccasionlist(2);
+    this.props.fetchOccasionlist(1);
     const parsedQuery = qs.parse(this.props.location.search)
-    this.setState({step: parsedQuery});
+    this.setState({ step: parsedQuery });
   }
   componentWillUnmount() {
     this.props.resetCelebDetails();
   }
   handleChange = (e) => {
     const occasionList = this.props.eventsDetails;
-    const result = occasionList.find((find) => {  
+    const result = occasionList.find((find) => { 
       return find.id == e.target.value;
     });
     this.setState({
@@ -40,11 +40,13 @@ export default class Event extends React.Component {
       eventName: result.title,
     });
   }
+  handleChangePersonal = (e) => {
+    this.setState({ selectedPersonal: e.target.value });
+  }
   steps =() => {
     this.setState({ steps: false });
   }
   render() {
-    
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -95,6 +97,7 @@ export default class Event extends React.Component {
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
               </HeaderSection>
+
               <Request.SmallScreenLayout>
                 <Request.ImageRenderDiv>
                   <Request.ImageSection
@@ -125,6 +128,20 @@ export default class Event extends React.Component {
                                   <Request.ErrorMsg></Request.ErrorMsg>
                                 </Request.WrapsInput>   
                               </Request.InputWrapper>
+                              <Request.InputWrapper>
+                                <Request.Label>Who is the video for ?</Request.Label>
+                                <Request.WrapsInput>
+                                  <Request.Select
+                                    value={this.state.selectedPersonal}
+                                    onChange={this.handleChangePersonal}
+                                  >
+                                    <option value="0" key="0">Choose One</option>
+                                    <option value="1" key="1">Myself</option>
+                                    <option value="2" key="2">For someone else</option>                        
+                                  </Request.Select>
+                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                </Request.WrapsInput>   
+                              </Request.InputWrapper>
                             </Request.InputFieldsWrapper>
                           </Request.EventStep1>
                         : null                        
@@ -135,6 +152,7 @@ export default class Event extends React.Component {
                             <RequestTemplates
                               type={this.state.templateType}
                               relationship={this.state.relationship}
+                              user={this.state.selectedPersonal}
                               eventName={this.state.eventName}
                             />
                           </Request.EventStep2>
@@ -145,15 +163,15 @@ export default class Event extends React.Component {
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
                   {this.state.steps ?
-                    <Link to={`/${this.props.match.params.id}/request/event?step=1`}>
+                    <Link to={`/${this.props.match.params.id}/request/personal?step=1`}>
                       <Request.ContinueButton onClick={() => this.steps()}>
-                        Continue
+                       Continue
                       </Request.ContinueButton>
                     </Link>
                     :
-                    <Link to={`/${this.props.match.params.id}/request/event?step=1`}>
+                    <Link to={`/${this.props.match.params.id}/request/personal?step=1`}>
                       <Request.ContinueButton>
-                       Book
+                        Book
                       </Request.ContinueButton>
                     </Link>
                   }

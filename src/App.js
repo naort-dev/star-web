@@ -25,6 +25,7 @@ import { StarsignUp } from './pages/starsignup';
 import { Requestvideo } from './pages/requestvideo';
 import { Askquestion } from './pages/askQuestion';
 import { Event } from './pages/eventAnnouncement';
+import { Personal } from './pages/personalizedAnnouncement';
 
 
 class App extends React.Component {
@@ -98,6 +99,7 @@ class App extends React.Component {
                 <Route exact path="/:id/request" component={Requestvideo} />
                 <Route path="/:id/request/ask" component={Askquestion} />
                 <Route path="/:id/request/event" component={Event} />
+                <Route path="/:id/request/personal" component={Personal} />
 
                 {/* logged in areas */}
 
