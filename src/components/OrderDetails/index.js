@@ -1,7 +1,7 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
+import OrderDetailsItem from './orderDetailsItem';
 import OrderStyled from './styled';
 
 export default class OrderDetails extends React.Component {
@@ -15,53 +15,42 @@ export default class OrderDetails extends React.Component {
     const { props } = this;
     switch (eventType) {
       case 1:
+      case 5:
         return (
           <React.Fragment>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Occasion:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.occasion}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>To:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.to}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>From:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.from}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Relationship:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.relationShip}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Important Info:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.importantInfo}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Occasion Date:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.occasionDate}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
+            <OrderDetailsItem title="Occasion" value={props.occasion} />
+            <OrderDetailsItem title="To" value={props.to} />
+            <OrderDetailsItem title="From" value={props.from} />
+            <OrderDetailsItem title={`${props.from} is ${props.to}'s`} value={props.relationShip} />
+            <OrderDetailsItem title="From" value={props.from} />
+            <OrderDetailsItem title="What specifically for" value={props.specificallyFor} />
+            <OrderDetailsItem title="Occasion Date" value={props.occasionDate} />
+            <OrderDetailsItem title="Person of honor" value={props.honoringFor} />
+            <OrderDetailsItem title="Important Info" value={props.importantInfo} />
           </React.Fragment>
         );
       case 2:
         return (
           <React.Fragment>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Event:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.occasion}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Event Title:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.eventTitle}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
-            <OrderStyled.DetailsItem>
-              <OrderStyled.DetailsTitle>Event Date:</OrderStyled.DetailsTitle>
-              <OrderStyled.DetailsValue>{props.occasionDate}</OrderStyled.DetailsValue>
-            </OrderStyled.DetailsItem>
+            <OrderDetailsItem title="Event" value={props.occasion} />
+            <OrderDetailsItem title="Event Title" value={props.eventTitle} />
+            <OrderDetailsItem title="Event Date" value={props.occasionDate} />
+            <OrderDetailsItem title="Host" value={props.eventHost} />
+            <OrderDetailsItem title="Guest of honor" value={props.eventGuestHonor} />
           </React.Fragment>
         );
       default: return null;
     }
+  }
+  downloadVideo = (url) => {
+    const videoUrl = url;
+    const element = document.createElement('a');
+    element.setAttribute('href', videoUrl);
+    element.setAttribute('download', 'video.mp4');
+    element.style.display = 'none';
+    document.body.appendChild(element);
+    element.click();
+    document.body.removeChild(element);
   }
   render() {
     const { props } = this;
@@ -87,14 +76,23 @@ export default class OrderDetails extends React.Component {
             <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
             {
               props.requestVideo ?
-                <OrderStyled.VideoContentWrapper width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
-                  <VideoPlayer
-                    videoWidth={'100%'}
-                    videoHeight={'100%'}
-                    cover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
-                    src={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
-                  />
-                </OrderStyled.VideoContentWrapper>
+                <React.Fragment>
+                  <OrderStyled.VideoContentWrapper width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
+                    <VideoPlayer
+                      videoWidth={'100%'}
+                      videoHeight={'100%'}
+                      cover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
+                      src={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
+                    />
+                  </OrderStyled.VideoContentWrapper>
+                  <OrderStyled.VideoDetails>
+                    <OrderStyled.DownloadVideo
+                      onClick={() => this.downloadVideo(props.requestVideo.s3_video_url)}
+                    >
+                      Download
+                    </OrderStyled.DownloadVideo>
+                  </OrderStyled.VideoDetails>
+                </React.Fragment>
               : null
             }
           </OrderStyled.rightContent>
