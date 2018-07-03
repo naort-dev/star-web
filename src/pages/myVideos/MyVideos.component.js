@@ -65,7 +65,7 @@ export default class MyVideos extends React.Component {
   }
   render() {
     let requestStatus, orderId, requestType, requestVideo, starPhoto, starProfessions, createdDate, occasion, price, isPrivate, from, requestTypeId;
-    let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity;
+    let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity, eventHost, honoringFor, eventGuestHonor, specificallyFor;
     if (Object.keys(this.state.orderDetails).length) {
       if (this.state.orderDetails.request_status === 2 || this.state.orderDetails.request_status === 3) {
         requestStatus = 'Open';
@@ -91,6 +91,10 @@ export default class MyVideos extends React.Component {
         to = this.state.orderDetails.request_details.stargramto ? this.state.orderDetails.request_details.stargramto : '';
         importantInfo = this.state.orderDetails.request_details.important_info ? this.state.orderDetails.request_details.important_info : '';
         eventTitle = this.state.orderDetails.request_details.event_title ? this.state.orderDetails.request_details.event_title : '';
+        eventHost = this.state.orderDetails.request_details.event_host ? this.state.orderDetails.request_details.event_host : '';
+        honoringFor = this.state.orderDetails.request_details.honoring_for ? this.state.orderDetails.request_details.honoring_for : '';
+        eventGuestHonor = this.state.orderDetails.request_details.event_guest_honor ? this.state.orderDetails.request_details.event_guest_honor : '';
+        specificallyFor = this.state.orderDetails.request_details.specifically_for ? this.state.orderDetails.request_details.specifically_for : '';
         if (this.state.orderDetails.request_details.relationship) {
           relationShip = this.state.orderDetails.request_details.relationship.title ? this.state.orderDetails.request_details.relationship.title : '';
         } else {
@@ -128,6 +132,10 @@ export default class MyVideos extends React.Component {
             importantInfo={importantInfo}
             occasionDate={occasionDate}
             eventTitle={eventTitle}
+            eventHost={eventHost}
+            honoringFor={honoringFor}
+            eventGuestHonor={eventGuestHonor}
+            specificallyFor={specificallyFor}
           />
         </div>
         <MyVideosStyled style={{ display: Object.keys(this.state.orderDetails).length ? 'none' : 'block' }}>

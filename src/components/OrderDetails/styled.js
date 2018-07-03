@@ -60,6 +60,26 @@ OrderStyled.VideoContentWrapper = styled.div`
     max-height: 480px;
   }
 `;
+
+OrderStyled.DownloadVideo = styled.span`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 4px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Medium';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  cursor: pointer;
+  &:disabled{
+    color: #222;
+    border: 2px solid #222;
+  }
+`;
+
 OrderStyled.leftContent = styled.div`
   padding: 10px 16px;
   @media(min-width: 1025px) {
@@ -83,6 +103,7 @@ OrderStyled.scrollWrapper = styled(Scrollbars)`
   }
 `;
 OrderStyled.rightContent = styled.div`
+  text-align: center;
   @media(min-width: 1025px) {
     width: 60%;
     float: right;
@@ -92,7 +113,12 @@ OrderStyled.rightContent = styled.div`
     justify-content: center;
     position: relative;
     padding: 58px 0;
+    flex-direction: column;
   }
+`;
+
+OrderStyled.VideoDetails = styled.div`
+  margin-top: 20px;
 `;
 
 OrderStyled.CloseButton = styled.span`
@@ -101,6 +127,7 @@ OrderStyled.CloseButton = styled.span`
     position: absolute;
     top: 16px;
     right: 18px;
+    cursor: pointer;
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -119,12 +146,15 @@ OrderStyled.MainTitle = styled.span`
   color: #FF6C58;
   text-align: center;
   font-size: 18px;
+  @media(min-width: 1025px) {
+    margin: 44px 0;
+  }
 `;
 OrderStyled.ProfileImageWrapper = styled.div`
   width: 100%;
   text-align: center;
   @media(min-width: 1025px) {
-    padding-bottom: 20px;
+    padding-bottom: 40px;
     border-bottom: 1px solid #333333;
   }
 `;
@@ -145,6 +175,10 @@ OrderStyled.ProfileImage = styled.span`
     width: 48px;
     height: 48px;
   }
+  @media(min-width: 1025px) {
+    height:100px;
+    width:100px;
+  }
 `;
 OrderStyled.StarName = styled.h4`
   font-size: 18px;
@@ -153,6 +187,7 @@ OrderStyled.StarName = styled.h4`
   font-family: 'Ubuntu-Bold';
   @media(min-width: 1025px) {
     font-size: 26px;
+    margin-top: 25px;
   }
 `;
 OrderStyled.StarProfessions = styled.div`
