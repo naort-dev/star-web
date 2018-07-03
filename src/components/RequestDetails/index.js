@@ -115,29 +115,29 @@ export default class RequestDetails extends React.Component {
   render() {
     const { props } = this;
     return (
-      <VideoRenderDiv>
-        <Link to={`/starDetail/${props.celebId}/${props.videoId}`} onClick={e => this.checkRoute(e)}>
-          <VideoRenderDiv.ImageSection
-            height={props.imageHeight}
-            imageUrl={this.state.coverImage}
-          >
-            <VideoRenderDiv.ProfileImageWrapper>
-              <VideoRenderDiv.ProfileImage
-                imageUrl={this.state.profileImage}
-              />
-            </VideoRenderDiv.ProfileImageWrapper>
-            {/* <VideoRenderDiv.FavoriteButton /> */}
-          </VideoRenderDiv.ImageSection>
-          <VideoRenderDiv.ProfileContent>
-            <VideoRenderDiv.DetailWrapper>
-              <VideoRenderDiv.StarName>
-                {props.starName}
-              </VideoRenderDiv.StarName>
-              <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
-              {this.renderRequestDetails()}
-            </VideoRenderDiv.DetailWrapper>
-          </VideoRenderDiv.ProfileContent>
-        </Link>
+      <VideoRenderDiv onClick={() => this.props.selectItem()}>
+        {/* <Link to={`/starDetail/${props.celebId}/${props.videoId}`} onClick={e => this.checkRoute(e)}> */}
+        <VideoRenderDiv.ImageSection
+          height={props.imageHeight}
+          imageUrl={this.state.coverImage}
+        >
+          <VideoRenderDiv.ProfileImageWrapper>
+            <VideoRenderDiv.ProfileImage
+              imageUrl={this.state.profileImage}
+            />
+          </VideoRenderDiv.ProfileImageWrapper>
+          {/* <VideoRenderDiv.FavoriteButton /> */}
+        </VideoRenderDiv.ImageSection>
+        <VideoRenderDiv.ProfileContent>
+          <VideoRenderDiv.DetailWrapper>
+            <VideoRenderDiv.StarName>
+              {props.starName}
+            </VideoRenderDiv.StarName>
+            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+            {this.renderRequestDetails()}
+          </VideoRenderDiv.DetailWrapper>
+        </VideoRenderDiv.ProfileContent>
+        {/* </Link> */}
       </VideoRenderDiv>
     );
   }

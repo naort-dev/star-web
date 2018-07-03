@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMyVideosList: (offset, refresh) => dispatch(fetchMyVideosList(offset, refresh)),
+  fetchMyVideosList: (offset, refresh, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, requestStatus)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);

@@ -9,7 +9,6 @@ const MyVideosStyled = styled.div`
     height: calc(100vh - 72px);
   }
 `;
-
 MyVideosStyled.sectionWrapper = styled.div`
   max-width: 1920px;
   height:100%;
