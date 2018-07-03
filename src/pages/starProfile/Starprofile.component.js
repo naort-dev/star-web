@@ -10,7 +10,6 @@ import VideoRender from '../../components/VideoRender';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
-import Popup from '../../components/Popup';
 import { ImageStack } from '../../components/ImageStack';
 
 export default class Starprofile extends React.Component {

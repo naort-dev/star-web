@@ -136,6 +136,7 @@ export default class ScrollList extends React.Component {
             requestStatus={item.request_status}
             requestType={item.request_type}
             createdDate={item.created_date}
+            selectItem={() => this.props.selectItem(item)}
           />
         </ListStyled.listVideos>
       ));
