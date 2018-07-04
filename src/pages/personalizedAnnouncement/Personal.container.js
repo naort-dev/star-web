@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Personal from './Personal.component';
-import { fetchCelebDetails, resetCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
 
 
@@ -13,8 +12,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
-  resetCelebDetails: () => dispatch(resetCelebDetails()),
   fetchOccasionlist: id => dispatch(fetchOccasionlist(id)),
 
 });

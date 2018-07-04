@@ -11,12 +11,6 @@ export default class Requestvideo extends React.Component {
     this.state = {
     };
   }
-  componentWillMount() {
-    this.props.fetchCelebDetails(this.props.match.params.id);
-  }
-  componentWillUnmount() {
-    this.props.resetCelebDetails();
-  }
   goBack = () => {
     this.props.history.goBack();
   }

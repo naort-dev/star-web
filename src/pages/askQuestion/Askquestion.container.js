@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Askquestion from './Askquestion.component';
-import { fetchCelebDetails, resetCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -10,8 +9,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
-  resetCelebDetails: () => dispatch(resetCelebDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Askquestion);

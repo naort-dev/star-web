@@ -25,6 +25,7 @@ export default class Starprofile extends React.Component {
     };
   }
   componentWillMount() {
+    this.props.resetCelebDetails();
     this.props.fetchCelebDetails(this.props.match.params.id);
     this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
     window.addEventListener('resize', this.handleWindowResize);
@@ -57,7 +58,6 @@ export default class Starprofile extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.props.resetCelebDetails();
     window.removeEventListener('resize', this.handleWindowResize);
   }
   setTabList = () => {

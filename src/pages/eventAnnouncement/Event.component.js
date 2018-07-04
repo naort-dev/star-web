@@ -29,13 +29,9 @@ export default class Event extends React.Component {
     };
   }
   componentWillMount() {
-    this.props.fetchCelebDetails(this.props.match.params.id);
     this.props.fetchOccasionlist(2);
     const parsedQuery = qs.parse(this.props.location.search)
     this.setState({step: parsedQuery});
-  }
-  componentWillUnmount() {
-    this.props.resetCelebDetails();
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
