@@ -50,7 +50,7 @@ export default class FilterSection extends React.Component {
           />
           <Scrollbars>
             <FilterStyled.filterWrapper>
-              <FilterStyled.filterSection typeFilter={this.props.selectedTab !== 'Videos' ? true : false}>
+              <FilterStyled.filterSection>
                 <FilterStyled.filterHeading>
                   Request Status
                 </FilterStyled.filterHeading>
