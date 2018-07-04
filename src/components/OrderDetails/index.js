@@ -134,7 +134,13 @@ export default class OrderDetails extends React.Component {
                     }
                   </OrderStyled.VideoDetails>
                 </React.Fragment>
-              : null
+              : <OrderStyled.NoVideoText>
+                {
+                  props.requestStatusId !== 5 ?
+                    'The request has been sent. Stay tuned!'
+                  : `This request was cancelled by ${props.celebrity}`
+                }
+              </OrderStyled.NoVideoText>
             }
           </OrderStyled.rightContent>
           <OrderStyled.leftContent>

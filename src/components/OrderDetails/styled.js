@@ -78,6 +78,14 @@ OrderStyled.VideoContentWrapper = styled.div`
   }
 `;
 
+OrderStyled.NoVideoText = styled.span`
+  display: none;
+  @media(min-width: 1025px) {
+    font-family: 'Ubuntu-Bold';
+    display: block;
+  }
+`;
+
 OrderStyled.DownloadVideo = styled.span`
   background-color: #fff; 
   color: #333333;
