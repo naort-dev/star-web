@@ -76,6 +76,13 @@ injectGlobal`
   .react-datepicker__input-container{
     width:100%;
   }
+  .react-datepicker__day--selected,
+  .react-datepicker__day--in-selecting-range, 
+  .react-datepicker__day--in-range {
+    border-radius: 0.3rem;
+    background-color: #FF6C58!important;
+    color: #fff;
+  }
   
   
  
