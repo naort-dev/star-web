@@ -93,7 +93,7 @@ FilterStyled.filterSection = styled.li`
   max-width: ${props => (props.typeFilter ? 'none' : '300px')};
   @media(min-width: 1025px) {
     line-height: 33px;
-    width: ${props => (props.typeFilter ? '80%' : '20%')};
+    width: ${props => (props.typeFilter ? '80%' : 'auto')};
   }
 `;
 FilterStyled.filterHeading = styled.span`

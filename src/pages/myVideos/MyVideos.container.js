@@ -5,11 +5,11 @@ import { fetchMyVideosList } from './actions/getMyVideosList';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
-  favouritesList: state.favouritesList,
+  myVideosList: state.myVideosList,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMyVideosList: (offset, refresh) => dispatch(fetchMyVideosList(offset, refresh)),
+  fetchMyVideosList: (offset, refresh, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, requestStatus)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);
