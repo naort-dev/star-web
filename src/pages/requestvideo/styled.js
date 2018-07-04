@@ -76,7 +76,6 @@ Request.RightSection = styled.div`
   @media(min-width: 1025px){
     display:block;
     width:60%;
-    height: 100%;
     padding: 27px 35px;
     padding-bottom: 0;
   }

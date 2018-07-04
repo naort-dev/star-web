@@ -76,7 +76,6 @@ Request.RightSection = styled.div`
   @media(min-width: 1025px){
     display:block;
     width:60%;
-    height: 100%;
     padding: 27px 35px;
     padding-bottom: 0;
   }
@@ -629,7 +628,7 @@ box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
 }
 @media(min-width:1025px){
   margin: 0 42px;
-  position:relative;
+  position:absolute;
   box-shadow: none;
   border-top: solid #333333 1px;
 }
