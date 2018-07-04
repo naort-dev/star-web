@@ -91,7 +91,6 @@ export default class MyVideos extends React.Component {
       orderId = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.order : '';
       requestType = this.requestType[this.state.orderDetails.request_type];
       requestTypeId = this.state.orderDetails.request_type;
-      // requestVideo = this.state.orderDetails.request_video ? this.state.orderDetails.request_video[0] : {};
       starPhoto = this.state.orderDetails.avatar_photo && this.state.orderDetails.avatar_photo.thumbnail_url;
       fanPhoto = this.state.orderDetails.fan_photo && this.state.orderDetails.fan_photo.thumbnail_url;
       starProfessions = this.renderStarProfessions(this.state.orderDetails.professions);

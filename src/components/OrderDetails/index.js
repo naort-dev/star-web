@@ -12,9 +12,9 @@ export default class OrderDetails extends React.Component {
     };
   }
 
-  getOccasionDetails = (occasioType) => {
+  getOccasionDetails = (occasionType) => {
     const { props } = this;
-    switch (occasioType) {
+    switch (occasionType) {
       case 1:
       case 5:
         return (
@@ -39,6 +39,7 @@ export default class OrderDetails extends React.Component {
     const { props } = this;
     switch (eventType) {
       case 1:
+        // Personal Shout-outs
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.occasion} />
@@ -52,6 +53,7 @@ export default class OrderDetails extends React.Component {
           </React.Fragment>
         );
       case 2:
+        // Event Announcement
         return (
           <React.Fragment>
             <OrderDetailsItem title="Event" value={props.occasion} />
@@ -64,6 +66,7 @@ export default class OrderDetails extends React.Component {
           </React.Fragment>
         );
       case 3:
+        // Q&A
         return <OrderDetailsItem title="Title" value={props.question} />;
       default: return null;
     }
@@ -169,6 +172,7 @@ export default class OrderDetails extends React.Component {
                 {
                   this.getEventDetails(props.requestTypeId)
                 }
+                {/* Show Reason if request is cancelled */}
                 {
                   props.requestStatusId === 5 ?
                     <OrderDetailsItem title="Decline Reason" value={props.comment} />
