@@ -11,21 +11,43 @@ export default class OrderDetails extends React.Component {
 
     };
   }
+
+  getOccasionDetails = (occasioType) => {
+    const { props } = this;
+    switch (occasioType) {
+      case 1:
+      case 5:
+        return (
+          <OrderDetailsItem title="Occasion Date" value={props.occasionDate} />
+        );
+      case 2:
+        return <OrderDetailsItem title="What specifically for" value={props.specificallyFor} />;
+      case 3:
+        return <OrderDetailsItem title="Person of honor" value={props.honoringFor} />;
+      case 4:
+        return <OrderDetailsItem title={`${props.occasion} from`} value={props.fromWhere} />;
+      case 6:
+        return <OrderDetailsItem title="Event Title" value={props.eventTitle} />;
+      case 7:
+        return <OrderDetailsItem title="Guest of honor" value={props.eventGuestHonor} />;
+      default:
+        return null;
+    }
+  }
+
   getEventDetails = (eventType) => {
     const { props } = this;
     switch (eventType) {
       case 1:
-      case 5:
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.occasion} />
             <OrderDetailsItem title="To" value={props.to} />
             <OrderDetailsItem title="From" value={props.from} />
             <OrderDetailsItem title={`${props.from} is ${props.to}'s`} value={props.relationShip} />
-            <OrderDetailsItem title="From" value={props.from} />
-            <OrderDetailsItem title="What specifically for" value={props.specificallyFor} />
-            <OrderDetailsItem title="Occasion Date" value={props.occasionDate} />
-            <OrderDetailsItem title="Person of honor" value={props.honoringFor} />
+            {
+              this.getOccasionDetails(props.occasionType)
+            }
             <OrderDetailsItem title="Important Info" value={props.importantInfo} />
           </React.Fragment>
         );
@@ -33,12 +55,16 @@ export default class OrderDetails extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Event" value={props.occasion} />
-            <OrderDetailsItem title="Event Title" value={props.eventTitle} />
-            <OrderDetailsItem title="Event Date" value={props.occasionDate} />
+            {
+              this.getOccasionDetails(props.occasionType)
+            }
             <OrderDetailsItem title="Host" value={props.eventHost} />
-            <OrderDetailsItem title="Guest of honor" value={props.eventGuestHonor} />
+            <OrderDetailsItem title="Event Date" value={props.occasionDate} />
+            <OrderDetailsItem title="Important Info" value={props.importantInfo} />
           </React.Fragment>
         );
+      case 3:
+        return <OrderDetailsItem title="Title" value={props.question} />;
       default: return null;
     }
   }
@@ -86,11 +112,15 @@ export default class OrderDetails extends React.Component {
                     />
                   </OrderStyled.VideoContentWrapper>
                   <OrderStyled.VideoDetails>
-                    <OrderStyled.DownloadVideo
-                      onClick={() => this.downloadVideo(props.requestVideo.s3_video_url)}
-                    >
-                      Download
-                    </OrderStyled.DownloadVideo>
+                    {
+                      props.requestStatusId === 6 ?
+                        <OrderStyled.DownloadVideo
+                          onClick={() => this.downloadVideo(props.requestVideo.s3_video_url)}
+                        >
+                          Download
+                        </OrderStyled.DownloadVideo>
+                      : null
+                    }
                   </OrderStyled.VideoDetails>
                 </React.Fragment>
               : null
@@ -121,17 +151,22 @@ export default class OrderDetails extends React.Component {
                 {
                   this.getEventDetails(props.requestTypeId)
                 }
+                {
+                  props.requestStatusId === 5 ?
+                    <OrderDetailsItem title="Decline Reason" value={props.comment} />
+                  : null
+                }
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Booking Price:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
                 <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
-                <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
+                </OrderStyled.DetailsItem>
+                <OrderStyled.DetailsItem>
+                  <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
+                  <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>

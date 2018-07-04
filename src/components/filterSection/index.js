@@ -62,22 +62,10 @@ export default class FilterSection extends React.Component {
                     All
                   </FilterStyled.filterItem>
                   <FilterStyled.filterItem
-                    selected={this.props.selectedRequestStatus === 2 ? true : false}
-                    onClick={() => this.filterSelection('request_status', 2)}
+                    selected={'1,2,3,4'.indexOf(this.props.selectedRequestStatus) > -1 ? true : false}
+                    onClick={() => this.filterSelection('request_status', '1,2,3,4')}
                   >
-                    Pending
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedRequestStatus === 3 ? true : false}
-                    onClick={() => this.filterSelection('request_status', 3)}
-                  >
-                    Processing
-                  </FilterStyled.filterItem>
-                  <FilterStyled.filterItem
-                    selected={this.props.selectedRequestStatus === 4 ? true : false}
-                    onClick={() => this.filterSelection('request_status', 4)}
-                  >
-                    InComplete
+                    Open
                   </FilterStyled.filterItem>
                   <FilterStyled.filterItem
                     selected={this.props.selectedRequestStatus === 5 ? true : false}

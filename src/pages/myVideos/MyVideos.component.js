@@ -52,6 +52,13 @@ export default class MyVideos extends React.Component {
   hideRequest = () => {
     this.setState({ orderDetails: {} });
   }
+  findRequestVideo = (list, videoStatus) => {
+    let requestVideo = {};
+    requestVideo = list.find((videoItem) => {
+      return videoItem.video_status === videoStatus;
+    });
+    return requestVideo;
+  }
   renderStarProfessions = (list) => {
     let string = '';
     list.forEach((professions, index) => {
@@ -65,19 +72,26 @@ export default class MyVideos extends React.Component {
   }
   render() {
     let requestStatus, orderId, requestType, requestVideo, starPhoto, starProfessions, createdDate, occasion, price, isPrivate, from, requestTypeId;
-    let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity, eventHost, honoringFor, eventGuestHonor, specificallyFor;
+    let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity, eventHost, honoringFor, eventGuestHonor, specificallyFor, occasionType;
+    let fromWhere, question, requestStatusId, comment;
     if (Object.keys(this.state.orderDetails).length) {
-      if (this.state.orderDetails.request_status === 2 || this.state.orderDetails.request_status === 3) {
+      requestStatusId = this.state.orderDetails.request_status;
+      if ([1, 2, 3, 4].indexOf(requestStatusId) > -1) {
+        if (this.state.orderDetails.request_type === 3) {
+          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 4);
+        }
         requestStatus = 'Open';
-      } else if (this.state.orderDetails.request_status === 5) {
+      } else if (requestStatusId === 5) {
         requestStatus = 'Cancelled';
-      } else if (this.state.orderDetails.request_status === 6) {
+      } else if (requestStatusId === 6) {
+        requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
         requestStatus = 'Completed';
       }
+      comment = this.state.orderDetails.comment ? this.state.orderDetails.comment : '';
       orderId = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.order : '';
       requestType = this.requestType[this.state.orderDetails.request_type];
       requestTypeId = this.state.orderDetails.request_type;
-      requestVideo = this.state.orderDetails.request_video ? this.state.orderDetails.request_video[0] : {};
+      // requestVideo = this.state.orderDetails.request_video ? this.state.orderDetails.request_video[0] : {};
       starPhoto = this.state.orderDetails.avatar_photo && this.state.orderDetails.avatar_photo.thumbnail_url;
       starProfessions = this.renderStarProfessions(this.state.orderDetails.professions);
       createdDate = moment(this.state.orderDetails.created_date).format('LL');
@@ -85,6 +99,7 @@ export default class MyVideos extends React.Component {
       celebrity = this.state.orderDetails ? this.state.orderDetails.celebrity : '';
       price = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.amount : '';
       isPrivate = this.state.orderDetails.public_request ? 'No' : 'Yes';
+      occasionType = this.state.orderDetails.occasion_type ? this.state.orderDetails.occasion_type : '';
       if (this.state.orderDetails.request_details) {
         from = this.state.orderDetails.request_details.stargramfrom ? this.state.orderDetails.request_details.stargramfrom : '';
         occasionDate = this.state.orderDetails.request_details.date ? moment(this.state.orderDetails.request_details.date).format('LL') : '';
@@ -95,6 +110,8 @@ export default class MyVideos extends React.Component {
         honoringFor = this.state.orderDetails.request_details.honoring_for ? this.state.orderDetails.request_details.honoring_for : '';
         eventGuestHonor = this.state.orderDetails.request_details.event_guest_honor ? this.state.orderDetails.request_details.event_guest_honor : '';
         specificallyFor = this.state.orderDetails.request_details.specifically_for ? this.state.orderDetails.request_details.specifically_for : '';
+        fromWhere = this.state.orderDetails.request_details.from_where ? this.state.orderDetails.request_details.from_where : '';
+        question = this.state.orderDetails.request_details.question ? this.state.orderDetails.request_details.question : '';
         if (this.state.orderDetails.request_details.relationship) {
           relationShip = this.state.orderDetails.request_details.relationship.title ? this.state.orderDetails.request_details.relationship.title : '';
         } else {
@@ -113,10 +130,13 @@ export default class MyVideos extends React.Component {
         <div style={{ display: Object.keys(this.state.orderDetails).length ? 'block' : 'none' }}>
           <OrderDetails
             history={this.props.history}
+            comment={comment}
             requestStatus={requestStatus}
+            requestStatusId={requestStatusId}
             orderId={orderId}
             celebrity={celebrity}
             requestType={requestType}
+            occasionType={occasionType}
             requestTypeId={requestTypeId}
             hideRequest={this.hideRequest}
             requestVideo={requestVideo}
@@ -136,6 +156,8 @@ export default class MyVideos extends React.Component {
             honoringFor={honoringFor}
             eventGuestHonor={eventGuestHonor}
             specificallyFor={specificallyFor}
+            fromWhere={fromWhere}
+            question={question}
           />
         </div>
         <MyVideosStyled style={{ display: Object.keys(this.state.orderDetails).length ? 'none' : 'block' }}>
