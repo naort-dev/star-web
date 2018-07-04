@@ -13,9 +13,9 @@ export default class Personal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: '',
+      selectedValue: '0',
       steps: true,
-      selectedPersonal: '',
+      selectedPersonal: '0',
       templateType: '',
       relationship: [],
       eventName: '',
@@ -26,6 +26,8 @@ export default class Personal extends React.Component {
       importantinfo: '',
       date: moment(),
       eventdetailName: '',
+      selectEventerror: false,
+      selectVideoerror: false,
     };
   }
   componentWillMount() {
@@ -37,53 +39,71 @@ export default class Personal extends React.Component {
   componentWillUnmount() {
     this.props.resetCelebDetails();
   }
-  handleChange = (e) => {
+  handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
     const result = occasionList.find((find) => { 
-      return find.id == e.target.value;
+      return find.id == event.target.value;
     });
+    
     this.setState({
-      selectedValue: e.target.value,
-      templateType: result.type,
-      relationship: result.relationships,
-      eventName: result.title,
+      selectedValue: event.target.value,
+      templateType: result ? result.type : '0',
+      relationship: result ? result.relationships : '0',
+      eventName: result ? result.title : 'Choose One',
     });
   }
   handleChangePersonal = (e) => {
     this.setState({ selectedPersonal: e.target.value });
   }
   steps =() => {
-    this.setState({ steps: false });
-  }
-  handleInput = (e, type) => {
-    switch (type) {
-      case 'hostName':
-        this.setState({ hostName: e.target.value });
-        break;
-      case 'userName':
-        this.setState({ userName: e.target.value });
-        break;
-      case 'relationship':
-        this.setState({ relationshipValue: e.target.value });
-        break;
-      case 'specification':
-        this.setState({ specification: e.target.value });
-        break;
-      case 'important':
-        this.setState({ importantinfo: e.target.value });
-        break;
-      case 'date':
-        this.setState({ date: e });
-        break;
-      case 'eventDetailName':
-        this.setState({ eventdetailName: e.target.value });
-        break;
-      default:
-        console.log(this.state);
+    if (this.state.selectedValue === '0') {
+      this.setState({ selectEventerror: true });
+    } else {
+      this.setState({ selectEventerror: false });
+    }
+    if (this.state.selectedPersonal === '0') {
+      this.setState({ selectVideoerror: true });
+    } else {
+      this.setState({ selectVideoerror: false });
+    }
+    if (this.state.selectedValue !== '0' && this.state.selectedPersonal !== '0') {
+      this.setState({ steps: false }, () => {
+        this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
+      });
     }
   }
+  handleInput = (event, type) => {
+    switch (type) {
+      case 'hostName':
+        this.setState({ hostName: event.target.value });
+        break;
+      case 'userName':
+        this.setState({ userName: event.target.value });
+        break;
+      case 'relationship':
+        this.setState({ relationshipValue: event.target.value });
+        break;
+      case 'specification':
+        this.setState({ specification: event.target.value });
+        break;
+      case 'important':
+        this.setState({ importantinfo: event.target.value });
+        break;
+      case 'date':
+        this.setState({ date: event });
+        break;
+      case 'eventDetailName':
+        this.setState({ eventdetailName: event.target.value });
+        break;
+      default:
+        this.props.history.push(`/${this.props.match.params.id}/request/personal`);
+    }
+  }
+  goBack = () => {
+    this.props.history.goBack();
+  }
+
   render() {
-    console.log(this.state);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -128,8 +148,8 @@ export default class Personal extends React.Component {
           <Request>
             <Request.LeftSection>
               <HeaderSection>
-                <HeaderSection.HeaderNavigation />
-                <HeaderSection.MiddleDiv> The Weekend</HeaderSection.MiddleDiv>
+                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
@@ -162,7 +182,12 @@ export default class Personal extends React.Component {
                                     <option value="0" key="0">Choose One</option>
                                     {optionItems}
                                   </Request.Select>
-                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                  {this.state.selectEventerror ?
+                                    <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
+                                    :
+                                    null
+                                  }
+                                  
                                 </Request.WrapsInput>   
                               </Request.InputWrapper>
                               <Request.InputWrapper>
@@ -176,7 +201,11 @@ export default class Personal extends React.Component {
                                     <option value="1" key="1">Myself</option>
                                     <option value="2" key="2">For someone else</option>                        
                                   </Request.Select>
-                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                  {this.state.selectVideoerror ? 
+                                    <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
+                                  :
+                                  null
+                                  }
                                 </Request.WrapsInput>   
                               </Request.InputWrapper>
                             </Request.InputFieldsWrapper>
@@ -208,11 +237,9 @@ export default class Personal extends React.Component {
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
                   {this.state.steps ?
-                    <Link to={`/${this.props.match.params.id}/request/personal?step=1`}>
-                      <Request.ContinueButton onClick={() => this.steps()}>
-                       Continue
-                      </Request.ContinueButton>
-                    </Link>
+                    <Request.ContinueButton onClick={() => this.steps()}>
+                      Continue
+                    </Request.ContinueButton>
                     :
                    
                     <PaymentFooterController

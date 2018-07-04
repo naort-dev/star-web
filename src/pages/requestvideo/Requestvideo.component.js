@@ -17,6 +17,9 @@ export default class Requestvideo extends React.Component {
   componentWillUnmount() {
     this.props.resetCelebDetails();
   }
+  goBack = () => {
+    this.props.history.goBack();
+  }
 
   render() {
     let coverPhoto;
@@ -58,8 +61,8 @@ export default class Requestvideo extends React.Component {
           <Request>
             <Request.LeftSection>
               <HeaderSection>
-                <HeaderSection.HeaderNavigation />
-                <HeaderSection.MiddleDiv> The Weekend</HeaderSection.MiddleDiv>
+                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>

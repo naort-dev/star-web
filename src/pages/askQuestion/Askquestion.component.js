@@ -18,12 +18,16 @@ export default class Askquestion extends React.Component {
   componentWillUnmount() {
     this.props.resetCelebDetails();
   }
+  goBack = () => {
+    this.props.history.goBack();
+  }
 
   render() {
+    console.log(this.props.userDetails);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
-    let fullName = '';
+    let fullName = ``;
     let featuredImage;
     let firstImage;
     let secondImage;
@@ -59,8 +63,8 @@ export default class Askquestion extends React.Component {
           <Request>
             <Request.LeftSection>
               <HeaderSection>
-                <HeaderSection.HeaderNavigation />
-                <HeaderSection.MiddleDiv> The Weekend</HeaderSection.MiddleDiv>
+                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
