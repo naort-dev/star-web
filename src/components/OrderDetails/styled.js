@@ -3,7 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 const OrderStyled = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
 `;
 
 OrderStyled.Header = styled.div`
@@ -58,6 +58,7 @@ OrderStyled.ContentWrapper = styled.div`
     overflow: initial;
     background-color: rgb(248, 248, 248);
     padding-top: 60px;
+    height: 100%;
   }
   @media(min-width: 1920px) {
     padding-top: 72px;
@@ -72,7 +73,7 @@ OrderStyled.VideoContentWrapper = styled.div`
   @media(min-width: 1025px) {
     width: ${props => (props.width ? props.width: '100%')};
     height: ${props => (props.height ? props.height: '100%')};
-    max-width: 640px;
+    max-width: 100%;
     max-height: 480px;
   }
 `;
@@ -128,7 +129,7 @@ OrderStyled.rightContent = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 58px 0;
+    padding: 150px 44px 58px;
     flex-direction: column;
   }
 `;
