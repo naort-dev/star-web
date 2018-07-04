@@ -112,6 +112,17 @@ export default class OrderDetails extends React.Component {
                     />
                   </OrderStyled.VideoContentWrapper>
                   <OrderStyled.VideoDetails>
+                    <OrderStyled.VideoTitle>
+                      {props.bookingTitle}
+                    </OrderStyled.VideoTitle>
+                    <OrderStyled.VideoRequester>
+                      <OrderStyled.VideoRequestImage
+                        imageUrl={props.fanPhoto}
+                      />
+                      <OrderStyled.VideoRequestName>
+                        {props.fanName}
+                      </OrderStyled.VideoRequestName>
+                    </OrderStyled.VideoRequester>
                     {
                       props.requestStatusId === 6 ?
                         <OrderStyled.DownloadVideo
