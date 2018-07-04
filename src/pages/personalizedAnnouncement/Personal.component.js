@@ -7,6 +7,7 @@ import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/sty
 import { ImageStack } from '../../components/ImageStack';
 import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
+import { PaymentFooterController } from '../../components/PaymentFooterController';
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -55,12 +56,34 @@ export default class Personal extends React.Component {
     this.setState({ steps: false });
   }
   handleInput = (e, type) => {
-    console.log(e, type);
-  }
-  xyz=(value, type) => {
-    console.log(value, type);
+    switch (type) {
+      case 'hostName':
+        this.setState({ hostName: e.target.value });
+        break;
+      case 'userName':
+        this.setState({ userName: e.target.value });
+        break;
+      case 'relationship':
+        this.setState({ relationshipValue: e.target.value });
+        break;
+      case 'specification':
+        this.setState({ specification: e.target.value });
+        break;
+      case 'important':
+        this.setState({ importantinfo: e.target.value });
+        break;
+      case 'date':
+        this.setState({ date: e });
+        break;
+      case 'eventDetailName':
+        this.setState({ eventdetailName: e.target.value });
+        break;
+      default:
+        console.log(this.state);
+    }
   }
   render() {
+    console.log(this.state);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -191,14 +214,13 @@ export default class Personal extends React.Component {
                       </Request.ContinueButton>
                     </Link>
                     :
-                    <Link to={`/${this.props.match.params.id}/request/personal?step=1`}>
-                      <Request.ContinueButton>
-                        Book
-                      </Request.ContinueButton>
-                    </Link>
-                  }
-                  
-                  
+                   
+                    <PaymentFooterController
+                      rate={rate}
+                      remainingBookings={remainingBookings}
+                    />
+                
+                  }              
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>

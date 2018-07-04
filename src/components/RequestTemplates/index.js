@@ -18,11 +18,6 @@ class RequestTemplates extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
-  handleChange(date) {
-    this.setState({
-      startDate: date,
-    });
-  }
   checkRequired = (e, arg) => {
     if (arg === '1') {
       if (e.target.value === '') {
@@ -50,6 +45,12 @@ class RequestTemplates extends React.Component {
       });
     }
   }
+  handleChange(date) {
+    this.setState({
+      startDate: this.props.date,
+    });
+    this.props.handleChange(date, 'date');
+  }
   renderTemplates = () => {
     const relations = this.state.relationship;
     const optionItems = relations.map((relations) => 
@@ -71,7 +72,7 @@ class RequestTemplates extends React.Component {
                     name="hostName"
                     value={this.props.hostName}
                     onBlur={(e)=>this.checkRequired(e, '1')}
-                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
+                    onChange={event => this.props.handleChange(event, 'hostName')}
                   />
                   {this.state.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
@@ -93,6 +94,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="userName"
                     value={this.props.userName}
+                    onChange={event => this.props.handleChange(event, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -105,7 +107,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={this.handleChange}
+                    onChange={event => this.props.handleChange(event, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -123,6 +125,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="specification"
                   value={this.props.specification}
+                  onChange={event => this.props.handleChange(event, 'specification')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -134,6 +137,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
+                  onChange={event => this.props.handleChange(event, 'important')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -152,6 +156,7 @@ class RequestTemplates extends React.Component {
                     name="hostName"
                     value={this.props.hostName}
                     onBlur={(e)=>this.checkRequired(e, '1')}
+                    onChange={event => this.props.handleChange(event, 'hostName')}
                   />
                   {this.state.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
@@ -172,6 +177,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="userName"
                     value={this.props.userName}
+                    onChange={event => this.props.handleChange(event, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -184,6 +190,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
+                    onChange={event => this.props.handleChange(event, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -201,6 +208,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="specification"
                   value={this.props.specification}
+                  onChange={event => this.props.handleChange(event, 'specification')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -212,6 +220,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
+                  onChange={event => this.props.handleChange(event, 'important')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -230,6 +239,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
+                    onChange={event => this.props.handleChange(event, 'hostName')}
                     onBlur={(e)=>this.checkRequired(e, '1')}
                   />
                   {this.state.whoIsfor ?
@@ -251,6 +261,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     value={this.props.userName}
                     name="userName"
+                    onChange={event => this.props.handleChange(event, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -263,6 +274,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
+                    onChange={event => this.props.handleChange(event, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -275,7 +287,11 @@ class RequestTemplates extends React.Component {
             <Templates.InputWrapper>
               <Templates.Label>When is the Occasion</Templates.Label>
               <Templates.WrapsInput>
-                <DatePicker customInput={<Templates.Input />} selected={this.props.date} onChange={this.handleChange} />
+                <DatePicker
+                  customInput={<Templates.Input />}
+                  selected={this.props.date}
+                  onChange={this.handleChange}
+                />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -286,6 +302,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="specification"
                   value={this.props.specification}
+                  onChange={event => this.props.handleChange(event, 'specification')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -297,6 +314,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
+                  onChange={event => this.props.handleChange(event, 'important')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -315,6 +333,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
+                    onChange={event => this.props.handleChange(event, 'hostName')}
                     onBlur={(e)=>this.checkRequired(e, '1')}
                   />
                   {this.state.whoIsfor ?
@@ -336,6 +355,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="userName"
                     value={this.props.userName}
+                    onChange={event => this.props.handleChange(event, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -348,6 +368,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
+                    onChange={event => this.props.handleChange(event, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -360,7 +381,11 @@ class RequestTemplates extends React.Component {
             <Templates.InputWrapper>
               <Templates.Label>When is the Occasion</Templates.Label>
               <Templates.WrapsInput>
-                <DatePicker customInput={<Templates.Input />} selected={this.props.date} onChange={this.handleChange} />
+                <DatePicker
+                  customInput={<Templates.Input />}
+                  selected={this.props.date}
+                  onChange={this.handleChange}
+                />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -371,6 +396,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="userName"
                   value={this.props.userName}
+                  onChange={event => this.props.handleChange(event, 'userName')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -381,6 +407,7 @@ class RequestTemplates extends React.Component {
                   placeholder="Nickname?"
                   type="text"
                   name="important"
+                  onChange={event => this.props.handleChange(event, 'important')}
                   value={this.props.importantinfo}
                 />
               </Templates.WrapsInput>
@@ -398,6 +425,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="EventName"
                   value={this.props.eventdetailName}
+                  onChange={event => this.props.handleChange(event, 'eventDetailName')}
                   onBlur={(e)=>this.checkRequired(e, '2')}
                 />
                 {this.state.eventTitle ?
@@ -415,6 +443,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="userName"
                   value={this.props.userName}
+                  onChange={event => this.props.handleChange(event, 'userName')}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -443,6 +472,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
+                  onChange={event => this.props.handleChange(event, 'important')}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -459,8 +489,9 @@ class RequestTemplates extends React.Component {
                 <Templates.Input
                   placeholder="Enter the guest name"
                   type="text"
-                  name="guestName"
+                  name="hostName"
                   value={this.props.hostName}
+                  onChange={event => this.props.handleChange(event, 'hostName')}
                   onBlur={(e)=>this.checkRequired(e, '2')}
                 />
                 {this.state.eventTitle ?
@@ -478,6 +509,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   value={this.props.userName}
                   name="userName"
+                  onChange={event => this.props.handleChange(event, 'userName')}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -504,7 +536,8 @@ class RequestTemplates extends React.Component {
                 <Templates.InputArea
                   placeholder="Nickname?"
                   type="text"
-                  name="EventName"
+                  name="important"
+                  onChange={event => this.props.handleChange(event, 'important')}
                   value={this.props.importantinfo}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
