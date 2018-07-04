@@ -137,6 +137,11 @@ export default class Starprofile extends React.Component {
       </Detail.RelatedVideosItem>
     ));
   }
+  handleRequest = () => {
+    if (!this.props.loading && this.props.userDetails.user_id) {
+      this.props.history.push(`/${this.props.userDetails.user_id}/request`);
+    }
+  }
   renderList = () => {
     if (this.props.videosList.data.length) {
       return (
@@ -248,7 +253,7 @@ export default class Starprofile extends React.Component {
                 <RequestController
                   rate={rate}
                   remainingBookings={remainingBookings}
-                  url={this.props.userDetails.user_id}
+                  handleRequest={this.handleRequest}
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
