@@ -49,18 +49,12 @@ export default class RequestDetails extends React.Component {
     const diffDays = Math.floor(timeDiff / 86400000); // days
     const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
     const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
-    if (diffDays === 1) {
-      timeString = `${timeString} ${diffDays} day ago`;
-    } else if (diffDays > 1) {
-      timeString = `${timeString} ${diffDays} days ago`;
-    } else if (diffHrs === 1) {
-      timeString = `${timeString} ${diffHrs} hour ago`;
+    if (diffDays >= 1) {
+      timeString = diffDays === 1 ? `${timeString} ${diffDays} day ago` : `${timeString} ${diffDays} days ago`;
     } else if (diffHrs >= 1) {
-      timeString = `${timeString} ${diffHrs} hours ago`;
-    } else if (diffMins === 1) {
-      timeString = `${timeString} ${diffMins} minute ago`;
+      timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : timeString = `${timeString} ${diffHrs} hours ago`;
     } else if (diffMins >= 1) {
-      timeString = `${timeString} ${diffMins} minutes ago`;
+      timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ago` : `${timeString} ${diffMins} minutes ago`;
     } else {
       timeString = `${timeString} just now`;
     }
@@ -97,8 +91,10 @@ export default class RequestDetails extends React.Component {
             </VideoRenderDiv.EventType>
           </VideoRenderDiv.RequestDetails>
         );
-      case 2:
+      case 4:
       case 3:
+      case 2:
+      case 1:
         return (
           <VideoRenderDiv.RequestDetails>
             <VideoRenderDiv.RequestStatus>
