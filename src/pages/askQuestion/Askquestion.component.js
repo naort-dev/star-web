@@ -1,11 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Request, HeaderSection } from '../../pages/requestvideo/styled';
+import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import { ImageStack } from '../../components/ImageStack';
+import { PaymentFooterController } from '../../components/PaymentFooterController';
+import './ask';
 
-
-export default class Requestvideo extends React.Component {
+export default class Askquestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +20,7 @@ export default class Requestvideo extends React.Component {
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
-    let fullName = '';
+    let fullName = ``;
     let featuredImage;
     let firstImage;
     let secondImage;
@@ -56,7 +57,7 @@ export default class Requestvideo extends React.Component {
             <Request.LeftSection>
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
+                <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
@@ -71,23 +72,38 @@ export default class Requestvideo extends React.Component {
                 
               <Request.ComponentWrapper>
                 <Scrollbars>
-                  <Request.OptionWrapper>
-                    <Request.HeaderText>
-                      What kind of video would you like to request?
-                    </Request.HeaderText>
-                    <Request.ButtonWrapper>
-                      <Link to={`/${this.props.match.params.id}/request/ask`}>
-                        <Request.Button>Ask a Question</Request.Button>
-                      </Link>
-                      <Link to={`/${this.props.match.params.id}/request/personal`}>
-                        <Request.Button >Personalized Shout-Out</Request.Button>
-                      </Link>
-                      <Link to={`/${this.props.match.params.id}/request/event/`}>
-                        <Request.Button >Event Announcement</Request.Button>
-                      </Link>
-                    </Request.ButtonWrapper>    
-                  </Request.OptionWrapper>
+                  <Request.Questionwraps>
+                    <Request.Ask>  
+                      <Request.InputFieldsWrapper>
+                        <Request.InputWrapper>
+                          <Request.Label>What’s your question ?</Request.Label>
+                          <Request.WrapsInput>
+                            <Request.InputQuestion
+                              placeholder="Best to start your question with “What”, “How” or “Why”."
+                            />
+                            <Request.ErrorMsg></Request.ErrorMsg>
+                          </Request.WrapsInput>         
+                        </Request.InputWrapper>
+                      </Request.InputFieldsWrapper>
+                      <Request.OptionWrapper>
+                        <Request.QuestionButton>Record Question</Request.QuestionButton>
+                        <Request.CheckBoxWrapper>
+                          <Request.Label id="checkbox_container">
+                            <span>Make video private?</span>
+                            <Request.CheckBox id="private_video" type="checkbox" />
+                            <Request.Span htmlFor="private_video" id="checkmark" />
+                          </Request.Label>
+                        </Request.CheckBoxWrapper>
+                      </Request.OptionWrapper>
+                    </Request.Ask>
+                  </Request.Questionwraps>
                 </Scrollbars>  
+                <Request.PaymentControllerWrapper>
+                  <PaymentFooterController
+                    rate={rate}
+                    remainingBookings={remainingBookings}
+                  />
+                </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>

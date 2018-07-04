@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import Requestvideo from './Requestvideo.component';
+import Askquestion from './Askquestion.component';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -11,4 +11,4 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Requestvideo);
+export default connect(mapStateToProps, mapDispatchToProps)(Askquestion);

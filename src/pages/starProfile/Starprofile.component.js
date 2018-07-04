@@ -10,7 +10,6 @@ import VideoRender from '../../components/VideoRender';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
-import Popup from '../../components/Popup';
 import { ImageStack } from '../../components/ImageStack';
 
 export default class Starprofile extends React.Component {
@@ -26,6 +25,7 @@ export default class Starprofile extends React.Component {
     };
   }
   componentWillMount() {
+    this.props.resetCelebDetails();
     this.props.fetchCelebDetails(this.props.match.params.id);
     this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
     window.addEventListener('resize', this.handleWindowResize);
@@ -58,7 +58,6 @@ export default class Starprofile extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.props.resetCelebDetails();
     window.removeEventListener('resize', this.handleWindowResize);
   }
   setTabList = () => {
@@ -137,6 +136,11 @@ export default class Starprofile extends React.Component {
         />
       </Detail.RelatedVideosItem>
     ));
+  }
+  handleRequest = () => {
+    if (!this.props.loading && this.props.userDetails.user_id) {
+      this.props.history.push(`/${this.props.userDetails.user_id}/request`);
+    }
   }
   renderList = () => {
     if (this.props.videosList.data.length) {
@@ -249,6 +253,7 @@ export default class Starprofile extends React.Component {
                 <RequestController
                   rate={rate}
                   remainingBookings={remainingBookings}
+                  handleRequest={this.handleRequest}
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
