@@ -10,9 +10,10 @@ export const MY_VIDEOS_LIST = {
   failed: 'fetch_failed/MY_VIDEOS_LIST',
 };
 
-export const myVideosListFetchStart = refresh => ({
+export const myVideosListFetchStart = (refresh, token) => ({
   type: MY_VIDEOS_LIST.start,
   refresh,
+  token,
 });
 
 export const myVideosListFetchEnd = () => ({
@@ -39,8 +40,13 @@ export const fetchMyVideosList = (offset, refresh, requestStatus) => (dispatch, 
   const { isLoggedIn, auth_token } = getState().session;
   const { status, limit } = getState().myVideosList;
   const videoStatus = requestStatus ? requestStatus : status;
-  dispatch(myVideosListFetchStart(refresh));
+  const source = CancelToken.source();
+  if (typeof getState().myVideosList.token !== typeof undefined) {
+    getState().myVideosList.token.cancel('Operation canceled due to new request.');
+  }
+  dispatch(myVideosListFetchStart(refresh, source));
   return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}`, {
+    cancelToken: source.token,
     headers: {
       'Authorization': `token ${auth_token.authentication_token}`,
     },
@@ -59,7 +65,9 @@ export const fetchMyVideosList = (offset, refresh, requestStatus) => (dispatch, 
       dispatch(myVideosListFetchEnd());
     }
   }).catch((exception) => {
-    dispatch(myVideosListFetchEnd());
+    if (!axios.isCancel(exception)) {
+      dispatch(myVideosListFetchEnd());
+    }
     dispatch(myVideosListFetchFailed(exception));
   });
 };
