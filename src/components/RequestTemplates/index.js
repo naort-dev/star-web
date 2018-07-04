@@ -6,14 +6,15 @@ import { Templates } from './styled';
 
 class RequestTemplates extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
     this.state = {
       type: props.type,
-      startDate: '',
       relationship: props.relationship,
       user:props.user,
       eventname:props.eventName,
+      whoIsfor: false,
+      eventTitle: false,
+      eventDate: false,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -22,6 +23,33 @@ class RequestTemplates extends React.Component {
       startDate: date,
     });
   }
+  checkRequired = (e, arg) => {
+    if (arg === '1') {
+      if (e.target.value === '') {
+        this.setState({ whoIsfor: true });
+      } else {
+        this.setState({ whoIsfor: false });
+      }
+    } else if (arg === '2') {
+      if (e.target.value === '') {
+        this.setState({ eventTitle: true });
+      } else {
+        this.setState({ eventTitle: false });
+      }
+    } else if (arg === '3') {
+      if (e.target.value === '') {
+        this.setState({ eventDate: true });
+      } else {
+        this.setState({ eventDate: false });
+      }
+    } else {
+      this.setState({
+        whoIsfor: false,
+        eventTitle: false,
+        eventDate: false,
+      });
+    }
+  }
   renderTemplates = () => {
     const relations = this.state.relationship;
     const optionItems = relations.map((relations) => 
@@ -29,19 +57,7 @@ class RequestTemplates extends React.Component {
     );
     switch (this.state.type) {
       case 1:
-        return (
-          <Templates.InputWrapper>
-            <Templates.Label>Hi am a label</Templates.Label>
-            <Templates.WrapsInput>
-              <Templates.Input
-                placeholder="Enter your last name"
-                type="text"
-                name="lastName"
-              />
-              <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg>
-            </Templates.WrapsInput>
-          </Templates.InputWrapper>
-        );
+        return null;
       case 2:
         return (
           <div>
@@ -50,11 +66,19 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video for</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter your host name"
                     type="text"
-                    name="lastName"
+                    name="hostName"
+                    value={this.props.hostName}
+                    onBlur={(e)=>this.checkRequired(e, '1')}
+                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
-                  {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                  {this.state.whoIsfor ?
+                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                    :
+                    null
+                  }
+                  
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
             :
@@ -67,9 +91,9 @@ class RequestTemplates extends React.Component {
                   <Templates.Input
                     placeholder="Enter your name"
                     type="text"
-                    name="lastName"
+                    name="userName"
+                    value={this.props.userName}
                   />
-                  {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
             :
@@ -80,13 +104,12 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Select
-                    value={this.state.selectedValue}
+                    value={this.props.relationshipValue}
                     onChange={this.handleChange}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
                   </Templates.Select>
-                  {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
             :
@@ -98,9 +121,9 @@ class RequestTemplates extends React.Component {
                 <Templates.Input
                   placeholder="What specifically for"
                   type="text"
-                  name="lastName"
+                  name="specification"
+                  value={this.props.specification}
                 />
-                  {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -109,9 +132,9 @@ class RequestTemplates extends React.Component {
                 <Templates.InputArea
                   placeholder="Nickname?"
                   type="text"
-                  name="EventName"
+                  name="important"
+                  value={this.props.importantinfo}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
             </Templates.InputWrapper>
           </div>
@@ -119,15 +142,66 @@ class RequestTemplates extends React.Component {
       case 3:
         return (
           <div>
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Enter your host name"
+                    type="text"
+                    name="hostName"
+                    value={this.props.hostName}
+                    onBlur={(e)=>this.checkRequired(e, '1')}
+                  />
+                  {this.state.whoIsfor ?
+                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                    :
+                    null
+                  }
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+               null
+              }
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Enter your name"
+                    type="text"
+                    name="userName"
+                    value={this.props.userName}
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+            :
+            null
+            }
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Select
+                    value={this.props.relationshipValue}
+                  >
+                    <option value="0" key="0">Choose One</option>
+                    {optionItems}
+                  </Templates.Select>
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+            :
+            null
+            }
             <Templates.InputWrapper>
               <Templates.Label>Who is the Starsona video honoring</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="What specifically for"
                   type="text"
-                  name="lastName"
+                  name="specification"
+                  value={this.props.specification}
                 />
-                  {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -136,9 +210,9 @@ class RequestTemplates extends React.Component {
                 <Templates.InputArea
                   placeholder="Nickname?"
                   type="text"
-                  name="EventName"
+                  name="important"
+                  value={this.props.importantinfo}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
             </Templates.InputWrapper>
 
@@ -146,33 +220,172 @@ class RequestTemplates extends React.Component {
         );
       case 4:
         return (
-        
-          <Templates.InputWrapper>
-            <Templates.Label>Hi am a label</Templates.Label>
-            <Templates.WrapsInput>
-              <Templates.Input
-                placeholder="Enter your last name"
-                type="text"
-                name="lastName"
-              />
-              <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg>
-            </Templates.WrapsInput>
-          </Templates.InputWrapper>
+          <div>
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Enter your name"
+                    type="text"
+                    name="hostName"
+                    value={this.props.hostName}
+                    onBlur={(e)=>this.checkRequired(e, '1')}
+                  />
+                  {this.state.whoIsfor ?
+                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                    :
+                    null
+                  }
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+               null
+              }
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Enter your name"
+                    type="text"
+                    value={this.props.userName}
+                    name="userName"
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+            :
+            null
+            }
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Select
+                    value={this.props.relationshipValue}
+                  >
+                    <option value="0" key="0">Choose One</option>
+                    {optionItems}
+                  </Templates.Select>
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+            :
+            null
+            }
+            <Templates.InputWrapper>
+              <Templates.Label>When is the Occasion</Templates.Label>
+              <Templates.WrapsInput>
+                <DatePicker customInput={<Templates.Input />} selected={this.props.date} onChange={this.handleChange} />
+              </Templates.WrapsInput>
+            </Templates.InputWrapper>
+            <Templates.InputWrapper>
+              <Templates.Label>{this.state.eventname} from</Templates.Label>
+              <Templates.WrapsInput>
+                <Templates.Input
+                  placeholder="From Where"
+                  type="text"
+                  name="specification"
+                  value={this.props.specification}
+                />
+              </Templates.WrapsInput>
+            </Templates.InputWrapper>
+            <Templates.InputWrapper>
+              <Templates.Label>Important Info</Templates.Label>
+              <Templates.WrapsInput>
+                <Templates.InputArea
+                  placeholder="Nickname?"
+                  type="text"
+                  name="important"
+                  value={this.props.importantinfo}
+                />
+              </Templates.WrapsInput>
+            </Templates.InputWrapper>
+          </div>
         );
       case 5:
         return (
         
-          <Templates.InputWrapper>
-            <Templates.Label>Hi am a label</Templates.Label>
-            <Templates.WrapsInput>
-              <Templates.Input
-                placeholder="Enter your last name"
-                type="text"
-                name="lastName"
-              />
-              <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg>
-            </Templates.WrapsInput>
-          </Templates.InputWrapper>
+          <div>
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Enter your name"
+                    type="text"
+                    name="hostName"
+                    value={this.props.hostName}
+                    onBlur={(e)=>this.checkRequired(e, '1')}
+                  />
+                  {this.state.whoIsfor ?
+                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                    :
+                    null
+                  }
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+               null
+              }
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Enter your name"
+                    type="text"
+                    name="userName"
+                    value={this.props.userName}
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+            :
+            null
+            }
+            {this.state.user === '2' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Select
+                    value={this.props.relationshipValue}
+                  >
+                    <option value="0" key="0">Choose One</option>
+                    {optionItems}
+                  </Templates.Select>
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+            :
+            null
+            }
+            <Templates.InputWrapper>
+              <Templates.Label>When is the Occasion</Templates.Label>
+              <Templates.WrapsInput>
+                <DatePicker customInput={<Templates.Input />} selected={this.props.date} onChange={this.handleChange} />
+              </Templates.WrapsInput>
+            </Templates.InputWrapper>
+            <Templates.InputWrapper>
+              <Templates.Label>{this.state.eventname} from</Templates.Label>
+              <Templates.WrapsInput>
+                <Templates.Input
+                  placeholder="From Where"
+                  type="text"
+                  name="userName"
+                  value={this.props.userName}
+                />
+              </Templates.WrapsInput>
+            </Templates.InputWrapper>
+            <Templates.InputWrapper>
+              <Templates.Label>Important Info</Templates.Label>
+              <Templates.WrapsInput>
+                <Templates.InputArea
+                  placeholder="Nickname?"
+                  type="text"
+                  name="important"
+                  value={this.props.importantinfo}
+                />
+              </Templates.WrapsInput>
+            </Templates.InputWrapper>
+          </div>
         );
       case 6:
         return (
@@ -184,8 +397,14 @@ class RequestTemplates extends React.Component {
                   placeholder="Enter the Event Name"
                   type="text"
                   name="EventName"
+                  value={this.props.eventdetailName}
+                  onBlur={(e)=>this.checkRequired(e, '2')}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                {this.state.eventTitle ?
+                  <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
+                  :
+                  null
+                  }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -194,7 +413,8 @@ class RequestTemplates extends React.Component {
                 <Templates.Input
                   placeholder="Enter the Name"
                   type="text"
-                  name="EventName"
+                  name="userName"
+                  value={this.props.userName}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -202,8 +422,17 @@ class RequestTemplates extends React.Component {
             <Templates.InputWrapper>
               <Templates.Label>When is the event</Templates.Label>
               <Templates.WrapsInput>
-                <DatePicker customInput = {<Templates.Input />} selected={this.state.startDate} onChange={this.handleChange} />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                <DatePicker
+                  customInput={<Templates.Input />}
+                  selected={this.props.date}
+                  onChange={this.handleChange}
+                  onBlur={(e)=>this.checkRequired(e, '3')}
+                />
+                {this.state.eventDate ?
+                  <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
+                  :
+                  null
+                  }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -212,7 +441,8 @@ class RequestTemplates extends React.Component {
                 <Templates.InputArea
                   placeholder="Nickname?"
                   type="text"
-                  name="EventName"
+                  name="important"
+                  value={this.props.importantinfo}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -229,9 +459,15 @@ class RequestTemplates extends React.Component {
                 <Templates.Input
                   placeholder="Enter the guest name"
                   type="text"
-                  name="EventName"
+                  name="guestName"
+                  value={this.props.hostName}
+                  onBlur={(e)=>this.checkRequired(e, '2')}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                {this.state.eventTitle ?
+                  <Templates.ErrorMsg>Please enter guest of honor</Templates.ErrorMsg>
+                  :
+                  null
+                  }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -240,7 +476,8 @@ class RequestTemplates extends React.Component {
                 <Templates.Input
                   placeholder="Enter the name"
                   type="text"
-                  name="EventName"
+                  value={this.props.userName}
+                  name="userName"
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -248,8 +485,17 @@ class RequestTemplates extends React.Component {
             <Templates.InputWrapper>
               <Templates.Label>When is the event</Templates.Label>
               <Templates.WrapsInput>
-                <DatePicker customInput = {<Templates.Input />} selected={this.state.startDate} onChange={this.handleChange} />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                <DatePicker
+                  customInput = {<Templates.Input />}
+                  selected={this.props.date}
+                  onChange={this.handleChange}
+                  onBlur={(e)=>this.checkRequired(e, '3')}
+                />
+                {this.state.eventDate ?
+                  <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
+                  :
+                  null
+                  }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -259,6 +505,7 @@ class RequestTemplates extends React.Component {
                   placeholder="Nickname?"
                   type="text"
                   name="EventName"
+                  value={this.props.importantinfo}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>

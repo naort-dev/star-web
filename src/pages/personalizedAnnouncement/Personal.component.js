@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import * as qs from 'query-string';
+import moment from 'moment';
 import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
 import './personal';
@@ -17,6 +18,13 @@ export default class Personal extends React.Component {
       templateType: '',
       relationship: [],
       eventName: '',
+      hostName: '',
+      userName: '',
+      relationshipValue: 0,
+      specification: '',
+      importantinfo: '',
+      date: moment(),
+      eventdetailName: '',
     };
   }
   componentWillMount() {
@@ -45,6 +53,12 @@ export default class Personal extends React.Component {
   }
   steps =() => {
     this.setState({ steps: false });
+  }
+  handleInput = (e, type) => {
+    console.log(e, type);
+  }
+  xyz=(value, type) => {
+    console.log(value, type);
   }
   render() {
     let coverPhoto;
@@ -154,6 +168,14 @@ export default class Personal extends React.Component {
                               relationship={this.state.relationship}
                               user={this.state.selectedPersonal}
                               eventName={this.state.eventName}
+                              handleChange={this.handleInput}
+                              hostName={this.state.hostName}
+                              userName={this.state.userName}
+                              relationshipValue={this.state.relationshipValue}
+                              specification={this.state.specification}
+                              importantinfo={this.state.importantinfo}
+                              date={this.state.date}
+                              eventdetailName={this.state.eventdetailName}
                             />
                           </Request.EventStep2>
                         : null
