@@ -139,7 +139,7 @@ export default class OrderDetails extends React.Component {
                   {
                     props.requestStatusId !== 5 ?
                       'The request has been sent. Stay tuned!'
-                    : 'This request was cancelled.'
+                    : 'This request has been cancelled.'
                   }
                 </OrderStyled.NoVideoText>
             }
