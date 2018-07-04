@@ -31,6 +31,7 @@ export default class Personal extends React.Component {
     };
   }
   componentWillMount() {
+    // 1 is used to specify the request was personal announcement
     this.props.fetchOccasionlist(1);
     const parsedQuery = qs.parse(this.props.location.search)
     this.setState({ step: parsedQuery });
@@ -68,32 +69,18 @@ export default class Personal extends React.Component {
       });
     }
   }
-  handleInput = (event, type) => {
-    switch (type) {
-      case 'hostName':
-        this.setState({ hostName: event.target.value });
-        break;
-      case 'userName':
-        this.setState({ userName: event.target.value });
-        break;
-      case 'relationship':
-        this.setState({ relationshipValue: event.target.value });
-        break;
-      case 'specification':
-        this.setState({ specification: event.target.value });
-        break;
-      case 'important':
-        this.setState({ importantinfo: event.target.value });
-        break;
-      case 'date':
-        this.setState({ date: event });
-        break;
-      case 'eventDetailName':
-        this.setState({ eventdetailName: event.target.value });
-        break;
-      default:
-        this.props.history.push(`/${this.props.match.params.id}/request/personal`);
-    }
+  handleInput = (data, type) => {
+    /*
+      expected types:
+      hostName,
+      userName,
+      relationshipValue,
+      specification,
+      importantinfo,
+      date,
+      eventdetailName
+    */
+    this.setState({ [type]: data });
   }
   goBack = () => {
     this.setState({ steps: true });

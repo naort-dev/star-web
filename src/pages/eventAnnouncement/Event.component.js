@@ -13,7 +13,7 @@ export default class Event extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: '0',
+      selectedValue: '0', // for default state (choose one)
       steps: true,
       templateType: '',
       relationship: [],
@@ -29,6 +29,7 @@ export default class Event extends React.Component {
     };
   }
   componentWillMount() {
+    // 2 is used to specify the request was event announcement
     this.props.fetchOccasionlist(2);
     const parsedQuery = qs.parse(this.props.location.search)
     this.setState({step: parsedQuery});
@@ -58,37 +59,22 @@ export default class Event extends React.Component {
       });
     }
   }
-  handleInput = (event, type) => {
-    switch (type) {
-      case 'hostName':
-        this.setState({ hostName: event.target.value });
-        break;
-      case 'userName':
-        this.setState({ userName: event.target.value });
-        break;
-      case 'relationship':
-        this.setState({ relationshipValue: event.target.value });
-        break;
-      case 'specification':
-        this.setState({ specification: event.target.value });
-        break;
-      case 'important':
-        this.setState({ importantinfo: event.target.value });
-        break;
-      case 'date':
-        this.setState({ date: event });
-        break;
-      case 'eventDetailName':
-        this.setState({ eventdetailName: event.target.value });
-        break;
-      default:
-        this.props.history.push(`/${this.props.match.params.id}/request/personal`);
-    }
+  handleInput = (data, type) => {
+    /*
+      expected types:
+      hostName,
+      userName,
+      relationshipValue,
+      specification,
+      importantinfo,
+      date,
+      eventdetailName
+    */
+    this.setState({ [type]: data });
   }
   goBack = () => {
     this.setState({ steps: true });
     this.props.history.goBack();
-   
   }
   render() {
     let coverPhoto;
@@ -151,7 +137,6 @@ export default class Event extends React.Component {
                   />
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
-              
               <Request.ComponentWrapper>
                 <Scrollbars>
                   <Request.Heading>What is the event</Request.Heading>
@@ -180,8 +165,8 @@ export default class Event extends React.Component {
                               </Request.InputWrapper>
                             </Request.InputFieldsWrapper>
                           </Request.EventStep1>
-                        : null                        
-                      } 
+                        : null                
+                      }
                       {
                         parsedQuery.step === '1' ?
                           <Request.EventStep2>

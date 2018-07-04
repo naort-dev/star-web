@@ -11,13 +11,12 @@ export default class Askquestion extends React.Component {
     super(props);
     this.state = {
     };
-  } 
+  }
   goBack = () => {
     this.props.history.goBack();
   }
 
   render() {
-    console.log(this.props.userDetails);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;

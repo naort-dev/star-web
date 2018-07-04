@@ -72,7 +72,7 @@ class RequestTemplates extends React.Component {
                     name="hostName"
                     value={this.props.hostName}
                     onBlur={(e)=>this.checkRequired(e, '1')}
-                    onChange={event => this.props.handleChange(event, 'hostName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
                   {this.state.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
@@ -94,7 +94,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="userName"
                     value={this.props.userName}
-                    onChange={event => this.props.handleChange(event, 'userName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -107,7 +107,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -125,7 +125,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="specification"
                   value={this.props.specification}
-                  onChange={event => this.props.handleChange(event, 'specification')}
+                  onChange={event => this.props.handleChange(event.target.value, 'specification')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -137,7 +137,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event, 'important')}
+                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -156,7 +156,7 @@ class RequestTemplates extends React.Component {
                     name="hostName"
                     value={this.props.hostName}
                     onBlur={(e)=>this.checkRequired(e, '1')}
-                    onChange={event => this.props.handleChange(event, 'hostName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
                   {this.state.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
@@ -177,7 +177,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="userName"
                     value={this.props.userName}
-                    onChange={event => this.props.handleChange(event, 'userName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -190,7 +190,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -208,7 +208,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="specification"
                   value={this.props.specification}
-                  onChange={event => this.props.handleChange(event, 'specification')}
+                  onChange={event => this.props.handleChange(event.target.value, 'specification')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -220,7 +220,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event, 'important')}
+                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -239,7 +239,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
-                    onChange={event => this.props.handleChange(event, 'hostName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                     onBlur={(e)=>this.checkRequired(e, '1')}
                   />
                   {this.state.whoIsfor ?
@@ -261,7 +261,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     value={this.props.userName}
                     name="userName"
-                    onChange={event => this.props.handleChange(event, 'userName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -274,7 +274,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -302,7 +302,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="specification"
                   value={this.props.specification}
-                  onChange={event => this.props.handleChange(event, 'specification')}
+                  onChange={event => this.props.handleChange(event.target.value, 'specification')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -314,7 +314,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event, 'important')}
+                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -333,7 +333,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
-                    onChange={event => this.props.handleChange(event, 'hostName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                     onBlur={(e)=>this.checkRequired(e, '1')}
                   />
                   {this.state.whoIsfor ?
@@ -355,7 +355,7 @@ class RequestTemplates extends React.Component {
                     type="text"
                     name="userName"
                     value={this.props.userName}
-                    onChange={event => this.props.handleChange(event, 'userName')}
+                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -368,7 +368,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -395,7 +395,7 @@ class RequestTemplates extends React.Component {
                   placeholder="Nickname?"
                   type="text"
                   name="important"
-                  onChange={event => this.props.handleChange(event, 'important')}
+                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                   value={this.props.importantinfo}
                 />
               </Templates.WrapsInput>
@@ -413,7 +413,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="EventName"
                   value={this.props.eventdetailName}
-                  onChange={event => this.props.handleChange(event, 'eventDetailName')}
+                  onChange={event => this.props.handleChange(event.target.value, 'eventDetailName')}
                   onBlur={(e)=>this.checkRequired(e, '2')}
                 />
                 {this.state.eventTitle ?
@@ -431,7 +431,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="userName"
                   value={this.props.userName}
-                  onChange={event => this.props.handleChange(event, 'userName')}
+                  onChange={event => this.props.handleChange(event.target.value, 'userName')}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -460,7 +460,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event, 'important')}
+                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -479,7 +479,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="hostName"
                   value={this.props.hostName}
-                  onChange={event => this.props.handleChange(event, 'hostName')}
+                  onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   onBlur={(e)=>this.checkRequired(e, '2')}
                 />
                 {this.state.eventTitle ?
@@ -497,7 +497,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   value={this.props.userName}
                   name="userName"
-                  onChange={event => this.props.handleChange(event, 'userName')}
+                  onChange={event => this.props.handleChange(event.target.value, 'userName')}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
@@ -525,7 +525,7 @@ class RequestTemplates extends React.Component {
                   placeholder="Nickname?"
                   type="text"
                   name="important"
-                  onChange={event => this.props.handleChange(event, 'important')}
+                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                   value={this.props.importantinfo}
                 />
                 {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
