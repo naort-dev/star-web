@@ -72,8 +72,9 @@ injectGlobal`
         height:6px;
       }
   }
- 
-
- 
+  .react-datepicker-wrapper,
+  .react-datepicker__input-container{
+    width:100%;
+  }
  
 `

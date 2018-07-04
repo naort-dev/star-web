@@ -132,25 +132,26 @@ Templates.ErrorMsg = styled.div`
   
 `;
 Templates.Select = styled.select`
- -webkit-appearance: none; 
- -moz-appearance:none;
-  width: 268px;
-  padding: 5px;
-  font-size: 16px;
-  line-height: 1;
-  border: 0;
-  border-radius: 5px;
-  height: 34px;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ddd;
-  
-  background-position-x: 244px;
+  margin: 0;
+  outline: none;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat;
+  background-position: 97% 8px;
+  background-size: 16px;
+  padding-right: 40px;
+  background-color: #fff;
+  border: 2px solid rgba(51, 51, 51, 1);
   font-family: 'Ubuntu-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
   outline:none;
-  border: 2px solid rgba(51, 51, 51, 1);
- 
+  height: 34px;
   text-indent: 10px;
   background-color:rgba(248, 248, 248, 1);
   @media(min-width:768px){
