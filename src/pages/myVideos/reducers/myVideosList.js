@@ -1,4 +1,4 @@
-import { MY_VIDEOS_LIST } from '../actions/getFavouritesList';
+import { MY_VIDEOS_LIST } from '../actions/getMyVideosList';
 
 const initalState = {
   data: [],
@@ -6,6 +6,7 @@ const initalState = {
   offset: -1,
   count: 0,
   limit: 20,
+  status: 'all',
 };
 
 export default (state = { ...initalState }, action) => {

@@ -37,20 +37,21 @@ export const myVideosListFetchFailed = error => ({
 
 export const fetchMyVideosList = (offset, refresh) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
+  const { status } = getState().myVideosList;
   dispatch(myVideosListFetchStart(refresh));
-  return fetch.get(Api.getUserVideos, {
+  return fetch.get(`${Api.getUserVideos}?status=${status}`, {
     headers: {
       'Authorization': `token ${auth_token.authentication_token}`,
-    }
+    },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(myVideosListFetchEnd());
       let list = getState().myVideosList.data;
       const { count } = resp.data.data;
       if (refresh) {
-        list = resp.data.data.celebrity_list;
+        list = resp.data.data.request_list;
       } else {
-        list = [...list, ...resp.data.data.celebrity_list];
+        list = [...list, ...resp.data.data.request_list];
       }
       console.log(resp.data);
       dispatch(myVideosListFetchSuccess(list, offset, count));

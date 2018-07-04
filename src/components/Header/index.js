@@ -211,7 +211,7 @@ class Header extends React.Component {
                           </Link>
                         </HeaderSection.UserLink>
                         <HeaderSection.UserLink>
-                          <Link to="/user/favourites">
+                          <Link to="/user/myVideos">
                             My Videos
                           </Link>
                         </HeaderSection.UserLink>

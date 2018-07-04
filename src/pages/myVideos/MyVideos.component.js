@@ -48,9 +48,8 @@ export default class MyVideos extends React.Component {
             >
               <Tabs
                 labels={['Stars', 'Videos']}
-                disableFilter
                 disableTabs
-                heading="My Favourites"
+                heading="My Videos"
               />
             </div>
             {
@@ -62,6 +61,8 @@ export default class MyVideos extends React.Component {
                 <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   <ScrollList
                     dataList={this.props.myVideosList.data}
+                    videos
+                    requestDetails
                     limit={this.props.myVideosList.limit}
                     totalCount={this.props.myVideosList.count}
                     offset={this.props.myVideosList.offset}
