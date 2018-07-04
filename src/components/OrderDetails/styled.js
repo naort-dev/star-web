@@ -80,7 +80,7 @@ OrderStyled.VideoContentWrapper = styled.div`
 
 OrderStyled.DownloadVideo = styled.span`
   background-color: #fff; 
-  color: #FF6C58;
+  color: #333333;
   padding: 4px 30px;
   text-align: center;
   text-decoration: none;
@@ -89,7 +89,8 @@ OrderStyled.DownloadVideo = styled.span`
   font-family: 'Ubuntu-Medium';
   outline:none;
   border-radius:5px;
-  border: 2px solid #FF6C58;
+  border: 2px solid #333333;
+  box-shadow: -2px 4px 8px #333333;
   cursor: pointer;
   &:disabled{
     color: #222;
@@ -97,8 +98,68 @@ OrderStyled.DownloadVideo = styled.span`
   }
 `;
 
+OrderStyled.VideoTitle = styled.span`
+  display: block;
+  font-size: 20px;
+  font-family: 'Ubuntu-Bold';
+  text-align: center;
+  @media(min-width: 1025px) {
+    font-size: 16px;
+  }
+`;
+
+OrderStyled.VideoRequester = styled.span`
+  margin-bottom: 20px;
+  display: block;
+  text-align: center;
+  @media(min-width: 1025px) {
+    margin-bottom: 22px;
+  }
+`;
+
+OrderStyled.VideoRequestImage = styled.span`
+  border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:40px;
+  border: solid 2px #FFFFFF;
+  box-shadow: 2px 2px 9px #4f4f4f;
+  width:40px;
+  position: relative;
+  top: 8px;
+  margin-right: 20px;
+  @media(min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
+  @media(min-width: 1025px) {
+    width: 30px;
+    height: 30px;
+    margin-right: 11px;
+  }
+`;
+
+OrderStyled.VideoRequestName = styled.span`
+  display: inline-block;
+  color: rgba(51, 51, 51, 0.72);
+  font-size: 16px;
+  font-family: 'Ubuntu-Regular';
+  vertical-align: top;
+  padding-top: 22px;
+  @media(min-width: 1025px) {
+    padding-top: 17px;
+    font-size: 14px;
+  }
+`;
+
 OrderStyled.leftContent = styled.div`
   padding: 10px 16px;
+  @media(min-width: 768px) {
+    padding 20px 16px;
+  }
   @media(min-width: 1025px) {
     width: 40%;
     background-color: #fff;
@@ -136,6 +197,7 @@ OrderStyled.rightContent = styled.div`
 
 OrderStyled.VideoDetails = styled.div`
   margin-top: 20px;
+  padding: 10px 16px;
 `;
 
 OrderStyled.CloseButton = styled.span`
@@ -157,7 +219,7 @@ OrderStyled.CloseButton = styled.span`
 
 OrderStyled.MainTitle = styled.span`
   display: block;
-  margin: 10px 0;
+  margin: 20px 0;
   color: #FF6C58;
   text-align: center;
   font-size: 18px;

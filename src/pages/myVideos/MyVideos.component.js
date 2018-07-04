@@ -73,7 +73,7 @@ export default class MyVideos extends React.Component {
   render() {
     let requestStatus, orderId, requestType, requestVideo, starPhoto, starProfessions, createdDate, occasion, price, isPrivate, from, requestTypeId;
     let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity, eventHost, honoringFor, eventGuestHonor, specificallyFor, occasionType;
-    let fromWhere, question, requestStatusId, comment;
+    let fromWhere, question, requestStatusId, comment, bookingTitle, fanName, fanPhoto;
     if (Object.keys(this.state.orderDetails).length) {
       requestStatusId = this.state.orderDetails.request_status;
       if ([1, 2, 3, 4].indexOf(requestStatusId) > -1) {
@@ -93,6 +93,7 @@ export default class MyVideos extends React.Component {
       requestTypeId = this.state.orderDetails.request_type;
       // requestVideo = this.state.orderDetails.request_video ? this.state.orderDetails.request_video[0] : {};
       starPhoto = this.state.orderDetails.avatar_photo && this.state.orderDetails.avatar_photo.thumbnail_url;
+      fanPhoto = this.state.orderDetails.fan_photo && this.state.orderDetails.fan_photo.thumbnail_url;
       starProfessions = this.renderStarProfessions(this.state.orderDetails.professions);
       createdDate = moment(this.state.orderDetails.created_date).format('LL');
       occasion = this.state.orderDetails.occasion;
@@ -100,6 +101,8 @@ export default class MyVideos extends React.Component {
       price = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.amount : '';
       isPrivate = this.state.orderDetails.public_request ? 'No' : 'Yes';
       occasionType = this.state.orderDetails.occasion_type ? this.state.orderDetails.occasion_type : '';
+      bookingTitle = this.state.orderDetails.booking_title ? this.state.orderDetails.booking_title : '';
+      fanName = this.state.orderDetails.fan ? this.state.orderDetails.fan : '';
       if (this.state.orderDetails.request_details) {
         from = this.state.orderDetails.request_details.stargramfrom ? this.state.orderDetails.request_details.stargramfrom : '';
         occasionDate = this.state.orderDetails.request_details.date ? moment(this.state.orderDetails.request_details.date).format('LL') : '';
@@ -131,6 +134,9 @@ export default class MyVideos extends React.Component {
           <OrderDetails
             history={this.props.history}
             comment={comment}
+            fanName={fanName}
+            fanPhoto={fanPhoto}
+            bookingTitle={bookingTitle}
             requestStatus={requestStatus}
             requestStatusId={requestStatusId}
             orderId={orderId}
