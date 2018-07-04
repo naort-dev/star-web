@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import * as qs from 'query-string';
 import moment from 'moment';
@@ -96,6 +96,7 @@ export default class Personal extends React.Component {
     }
   }
   goBack = () => {
+    this.setState({ steps: true });
     this.props.history.goBack();
   }
 
@@ -138,6 +139,9 @@ export default class Personal extends React.Component {
     const optionItems = eventNames.map((eventNames) => 
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
+    if (parsedQuery.step && (this.state.selectedValue === '0' || this.state.selectedPersonal === '0')) {
+      return <Redirect to="/" />;
+    }
     return (
       <Request.Wrapper>
         <Request.Content>

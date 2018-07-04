@@ -389,18 +389,6 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>{this.state.eventname} from</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="From Where"
-                  type="text"
-                  name="userName"
-                  value={this.props.userName}
-                  onChange={event => this.props.handleChange(event, 'userName')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
               <Templates.Label>Important Info</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
