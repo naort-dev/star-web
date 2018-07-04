@@ -13,12 +13,19 @@ OrderStyled.Header = styled.div`
   position: relative;
   height: 56px;
   box-shadow: 0px 1px 0px 0px #333333;
+  @media(min-width: 1025px) {
+    display: none;
+  }
 `;
 
 OrderStyled.DesktopHeader = styled.div`
   display: none;
   @media(min-width: 1025px) {
     display: block;
+    position: fixed;
+  }
+  @media(min-width: 1920px) {
+    height: 72px;
   }
 `;
 
@@ -46,13 +53,22 @@ OrderStyled.HeaderTitle = styled.span`
 
 OrderStyled.ContentWrapper = styled.div`
   height: calc(100vh - 56px);
+  overflow: auto;
   @media (min-width: 1025px) {
+    overflow: initial;
     background-color: rgb(248, 248, 248);
+    padding-top: 60px;
+  }
+  @media(min-width: 1920px) {
+    padding-top: 72px;
   }
 `;
 OrderStyled.VideoContentWrapper = styled.div`
   width: 100%;
   height: 200px;
+  @media(min-width: 768px) {
+    height: 400px;
+  }
   @media(min-width: 1025px) {
     width: ${props => (props.width ? props.width: '100%')};
     height: ${props => (props.height ? props.height: '100%')};
@@ -129,14 +145,12 @@ OrderStyled.CloseButton = styled.span`
     right: 18px;
     cursor: pointer;
     display: inline-block;
-    width: 30px;
-    height: 30px;
     background: url('assets/images/close-icon-orange.svg') no-repeat;
     background-size: cover;
     background-position: center center;
     right: 50px;
-    width: 24px;
-    height: 24px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
