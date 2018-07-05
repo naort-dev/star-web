@@ -107,7 +107,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -190,7 +190,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -274,7 +274,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
@@ -368,7 +368,7 @@ class RequestTemplates extends React.Component {
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationship')}
+                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
