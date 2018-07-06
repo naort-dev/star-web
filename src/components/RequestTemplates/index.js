@@ -258,6 +258,8 @@ class RequestTemplates extends React.Component {
               <Templates.Label>What's the occasion?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
+                  dateFormat="LL"
+                  readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
@@ -353,6 +355,8 @@ class RequestTemplates extends React.Component {
               <Templates.Label>When is the Occasion?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
+                  dateFormat="LL"
+                  readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
@@ -412,6 +416,8 @@ class RequestTemplates extends React.Component {
               <Templates.Label>When is the event?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
+                  dateFormat="LL"
+                  readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
@@ -479,6 +485,8 @@ class RequestTemplates extends React.Component {
               <Templates.Label>When is the event?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
+                  dateFormat="LL"
+                  readOnly
                   customInput = {<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}

@@ -50,7 +50,7 @@ export default class Favourites extends React.Component {
                 labels={['Stars', 'Videos']}
                 disableFilter
                 disableTabs
-                heading="My Favorite's"
+                heading="My Favorites"
               />
             </div>
             {
@@ -64,6 +64,7 @@ export default class Favourites extends React.Component {
                     dataList={this.props.favouritesList.data}
                     limit={this.props.favouritesList.limit}
                     totalCount={this.props.favouritesList.count}
+                    noDataText="You haven't favorited any stars yet"
                     offset={this.props.favouritesList.offset}
                     loading={this.props.favouritesList.loading}
                     fetchData={(offset, refresh) => this.props.fetchFavouritesList(offset, refresh)}
