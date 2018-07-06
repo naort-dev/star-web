@@ -29,7 +29,7 @@ Templates.Label = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size:16px;
   text-align:left;
-  padding-bottom:10px;
+  padding:10px 0;
   @media(min-width:768px){
     width:55%;
     display:flex;
@@ -48,30 +48,15 @@ Templates.Label = styled.div`
 `;
 Templates.WrapsInput = styled.div`
   width:100%;
-  height:60px;
   @media(min-width:768px){
     width:100%;
-    height:30px;
   }
   @media(min-width:1025){
     width:352px;
-    height:25px;
   }
 
 `;
-Templates.WrapsInput = styled.div`
-  width:100%;
-  height:60px;
-  @media(min-width:768px){
-    width:100%;
-    height:30px;
-  }
-  @media(min-width:1025){
-    width:352px;
-    height:25px;
-  }
 
-`;
 Templates.Input = styled.input`
   font-family: 'Ubuntu-Regular';
   color: #333333;
