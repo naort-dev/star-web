@@ -133,7 +133,6 @@ export default class Event extends React.Component {
   }
   emptyTemplateDetails = () => {
     this.setState({
-      eventName: '',
       hostName: '',
       userName: '',
       relationshipValue: 0,

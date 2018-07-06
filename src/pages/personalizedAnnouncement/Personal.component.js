@@ -45,7 +45,6 @@ export default class Personal extends React.Component {
     const result = occasionList.find((find) => {
       return find.id == event.target.value;
     });
-
     this.setState({
       selectedValue: event.target.value,
       templateType: result ? result.type : '0',
@@ -146,7 +145,6 @@ export default class Personal extends React.Component {
   }
   emptyTemplateDetails = () => {
     this.setState({
-      eventName: '',
       hostName: '',
       userName: '',
       relationshipValue: 0,
