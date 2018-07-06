@@ -107,6 +107,7 @@ export default class Login extends React.Component {
       
     } else {
       this.checkEmail();
+      this.checkPassword();
     } 
   }
   onSocialMediaLogin =(r, source) => {
@@ -216,6 +217,7 @@ export default class Login extends React.Component {
     return true;
   }
   isFormValid = () => {
+    console.log(this.state);
     if (this.state.email.isValid && this.state.password.isValid) {
       return true;
     }
@@ -230,14 +232,14 @@ export default class Login extends React.Component {
     const { from } = this.props.location.state || { from: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      return <Redirect to={from} />;
     }
     return (   
       <div>
-        {
+        {/* {
           loginToContinue &&
           <p>You must login before accessing!</p>
-        }
+        } */}
         {
           this.props.loading ?
             <MainLoader />

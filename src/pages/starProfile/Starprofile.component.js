@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
@@ -10,7 +10,6 @@ import VideoRender from '../../components/VideoRender';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
-import Popup from '../../components/Popup';
 import { ImageStack } from '../../components/ImageStack';
 
 export default class Starprofile extends React.Component {
@@ -23,10 +22,10 @@ export default class Starprofile extends React.Component {
       videoActive: props.match.params.videoId ? true : false,
       selectedVideoItem: {},
       relatedVideos: [],
-      showPopup: false,
     };
   }
   componentWillMount() {
+    this.props.resetCelebDetails();
     this.props.fetchCelebDetails(this.props.match.params.id);
     this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
     window.addEventListener('resize', this.handleWindowResize);
@@ -59,11 +58,10 @@ export default class Starprofile extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.props.resetCelebDetails();
     window.removeEventListener('resize', this.handleWindowResize);
   }
   setTabList = () => {
-    if (window.outerWidth < 1025) {
+    if (document.body.getBoundingClientRect().width < 1025) {
       this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs', 'About'] });
     } else {
       this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs'] });
@@ -100,7 +98,7 @@ export default class Starprofile extends React.Component {
     this.props.fetchCelebVideosList(0, true, this.props.match.params.id, requestId);
   }
   handleWindowResize = (e) => {
-    if (this.state.selectedTab === 'About' && window.outerWidth >= 1025) {
+    if (this.state.selectedTab === 'About' && document.body.getBoundingClientRect().width >= 1025) {
       this.setState({ selectedTab: 'All' }, () => {
         this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
       });
@@ -123,6 +121,7 @@ export default class Starprofile extends React.Component {
     }
     return string;
   }
+  // To be Deleted //
   renderRelatedVideosList = (dataList) => {
     return dataList.map((item, index) => (
       <Detail.RelatedVideosItem key={index}>
@@ -137,6 +136,11 @@ export default class Starprofile extends React.Component {
         />
       </Detail.RelatedVideosItem>
     ));
+  }
+  handleRequest = () => {
+    if (!this.props.loading && this.props.userDetails.user_id) {
+      this.props.history.push(`/${this.props.userDetails.user_id}/request`);
+    }
   }
   renderList = () => {
     if (this.props.videosList.data.length) {
@@ -167,7 +171,7 @@ export default class Starprofile extends React.Component {
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
-    if (window.outerWidth >= 1025 && this.state.selectedTab === 'All') {
+    if (document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All') {
       return (
         <ImageStack
           featureImage={featuredImage}
@@ -199,6 +203,9 @@ export default class Starprofile extends React.Component {
     } else {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
     }
+    if (this.props.detailsError === '404') {
+      return <Redirect to="/not-found" />;
+    }
     return (
       <Detail.Wrapper>
         <Detail.Content>
@@ -212,9 +219,8 @@ export default class Starprofile extends React.Component {
             <Detail.LeftSection>
               <Detail.SmallScreenLayout>
                 <Detail.ImageRenderDiv>
-                  <Detail.ImageSection
-                    imageUrl={coverPhoto}
-                  >
+                  <Detail.ImageSection imageUrl={coverPhoto}>
+                    <Detail.CoverImage alt="" src={coverPhoto} />
                     <Detail.ProfileImageWrapper>
                       <Detail.ProfileImage
                         imageUrl={profilePhoto}
@@ -250,7 +256,7 @@ export default class Starprofile extends React.Component {
                 <RequestController
                   rate={rate}
                   remainingBookings={remainingBookings}
-                  showPopup={() => this.setState({ showPopup: true })}
+                  handleRequest={this.handleRequest}
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
@@ -264,6 +270,7 @@ export default class Starprofile extends React.Component {
                     <Detail.VideoPlayerSection>
                       <Scrollbars
                         autoHide
+                        renderView={props => <div {...props} id="video-scroll-section" />}
                       >
                         <Detail.VideoPlayerContent>
                           <Detail.VideoPlayer
@@ -293,20 +300,17 @@ export default class Starprofile extends React.Component {
                             </Detail.VideoRequester>
                           </Detail.VideoContent>
                           <Detail.RelatedVideos>
-                            {
-                              this.renderRelatedVideosList(this.state.relatedVideos)
-                            }
-                            {/* <ScrollList
+                            <ScrollList
                               dataList={this.state.relatedVideos}
-                              finite
+                              scrollTarget="video-scroll-section"
                               videos
                               starsPage
                               limit={this.props.videosList.limit}
-                              totalCount={this.props.videosList.count}
+                              totalCount={this.props.videosList.count - 1}
                               offset={this.props.videosList.offset}
                               loading={this.props.videosList.loading}
                               fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
-                            /> */}
+                            />
                           </Detail.RelatedVideos>
                         </Detail.VideoPlayerContent>
                       </Scrollbars>
@@ -315,7 +319,7 @@ export default class Starprofile extends React.Component {
                 : null
               }
               {
-                !this.props.videosList.data.length && !this.props.videosList.loading && window.outerWidth > 1025 && this.state.selectedTab === 'All' ?
+                !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width > 1025 && this.state.selectedTab === 'All' ?
                   null
                 :
                   <Tabs
@@ -360,29 +364,7 @@ export default class Starprofile extends React.Component {
                     }
                   </Detail.AboutDetailsWrapper>
               }
-            </Detail.RightSection>
-            {this.state.showPopup ?
-              <Popup closePopUp={() => this.setState({showPopup: false})}>
-                <Detail.PopupContainer>
-                  <Detail.PopupContent>
-                    <Detail.Article><center>You’re close to getting your personalized video! To request a video today, please download the Starsona app. Web ordering is coming soon.</center>
-                    </Detail.Article>
-                    <Detail.AppIconWrapper>
-                      <Detail.Link target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
-                        <Detail.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
-                      </Detail.Link>
-                      <Detail.Link target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
-                        <Detail.StoreIcon alt="playsore icon" src="assets/images/appstore-download.svg" />
-                      </Detail.Link>
-                    </Detail.AppIconWrapper>
-                  </Detail.PopupContent>
-                </Detail.PopupContainer>
-            
-              </Popup>
-            :
-            null
-          }
-            
+            </Detail.RightSection> 
           </Detail>
         </Detail.Content>
       </Detail.Wrapper>

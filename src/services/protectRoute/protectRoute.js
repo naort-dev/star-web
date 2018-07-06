@@ -8,32 +8,43 @@ import { Page404 } from '../../pages/page404';
 
 export const protectRoute = ({
   RouteComponent,
-  roles = [],
 }) => {
   const ProtectedRoute = (props) => {
     const {
       location,
-      role,
+      // role,
       isLoggedIn,
     } = props;
     const isProtectedRoute = protectedRoutes.includes(location.pathname);
-    const hasRole = roles.length ? roles.includes(role) : true;
+    // const hasRole = roles.length ? roles.includes(role) : true;
 
-    const allowAcceess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
-    const unAuthorized = isLoggedIn && !hasRole;
+    // const allowAcceess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
+    const allowAccess = (isProtectedRoute && isLoggedIn);
+    // const unAuthorized = isLoggedIn && !hasRole;
     const shouldAuthenticate = isProtectedRoute && !isLoggedIn;
 
-    if (allowAcceess) {
+    if (allowAccess) {
       return <RouteComponent {...props} />;
-    } else if (unAuthorized) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/unauthorized',
-          }}
-        />
-      );
-    } else if (shouldAuthenticate) {
+    } 
+    // else if (unAuthorized) {
+    //   return (
+    //     <Redirect
+    //       to={{
+    //         pathname: '/unauthorized',
+    //       }}
+    //     />
+    //   );
+    // } else if (shouldAuthenticate) {
+    //   return (
+    //     <Redirect
+    //       to={{
+    //         pathname: '/login',
+    //         state: { from: location },
+    //       }}
+    //     />
+    //   );
+    // }
+    else if (shouldAuthenticate) {
       return (
         <Redirect
           to={{
@@ -43,7 +54,6 @@ export const protectRoute = ({
         />
       );
     }
-
     return <Page404 {...props} />;
   };
 
@@ -52,7 +62,7 @@ export const protectRoute = ({
   ProtectedRoute.propTypes = {
     location: PropTypes.object.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    role: PropTypes.string.isRequired,
+    // role: PropTypes.string.isRequired,
   };
 
   const mapState = state => ({

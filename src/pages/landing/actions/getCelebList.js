@@ -8,6 +8,7 @@ export const CELEB_LIST = {
   end: 'fetch_end/celeb_list',
   success: 'fetch_success/celeb_list',
   failed: 'fetch_failed/celeb_list',
+  updateCelebList: 'update_celeb_follow/celeb_list',
   swapCacheStart: 'swap_cache_start/celeb_list',
   swapCacheEnd: 'swap_cache_end/celeb_list',
 };
@@ -44,6 +45,11 @@ export const celebListFetchFailed = error => ({
   error,
 });
 
+export const celebListUpdateFollow = cachedData => ({
+  type: CELEB_LIST.updateCelebList,
+  cachedData,
+});
+
 export const celebListSwapCacheStart = refresh => ({
   type: CELEB_LIST.swapCacheStart,
   refresh,
@@ -54,6 +60,26 @@ export const celebListSwapCacheEnd = key => ({
   key,
 });
 
+export const updateCelebrityFollow = (celebrityId, celebProfessions, follow) => (dispatch, getState) => {
+  const {
+    category,
+  } = getState().filters;
+  const categoryList = celebProfessions.map((profession, index) => {
+    return profession.parent;
+  });
+  categoryList.push('featured');
+  let cachedData = { ...getState().celebList.cachedData };
+  Object.keys(cachedData).map((key, index) => {
+    if (categoryList.indexOf(key) > -1) {
+      cachedData[key].data.map((celeb) => {
+        if (celeb.id === celebrityId) {
+          celeb.celebrity_follow = follow;
+        }
+      });
+    }
+  });
+  dispatch(celebListUpdateFollow(cachedData));
+}
 export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   const {
     category,
@@ -64,14 +90,14 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   } = getState().filters;
   const { filters } = getState();
   const { isLoggedIn, auth_token } = getState().session;
-  const loginChange = isLoggedIn === (getState().celebList[category.label] && getState().celebList[category.label].isLoggedIn);
-  const cachedData = getState().celebList[category.label] && getState().celebList[category.label].data;
+  const loginChange = isLoggedIn === (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].isLoggedIn);
+  const cachedData = getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].data;
   const categoryChange = category.label !== getState().celebList.currentCategory;
   const priceRangeChange =
-    lowPrice !== (getState().celebList[category.label] && getState().celebList[category.label].lowPrice) ||
-    highPrice !== (getState().celebList[category.label] && getState().celebList[category.label].highPrice);
-  const searchParamChange = searchParam !== (getState().celebList[category.label] && getState().celebList[category.label].currentSearchParam);
-  const sortValueChange = sortValue !== (getState().celebList[category.label] && getState().celebList[category.label].sortValue);
+    lowPrice !== (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].lowPrice) ||
+    highPrice !== (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].highPrice);
+  const searchParamChange = searchParam !== (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].currentSearchParam);
+  const sortValueChange = sortValue !== (getState().celebList.cachedData[category.label] && getState().celebList.cachedData[category.label].sortValue);
   const { limit } = getState().celebList;
   if (categoryChange && loginChange && !searchParamChange && ((!priceRangeChange && !sortValueChange) || category.label === 'featured') && cachedData) {
     if (typeof getState().celebList.token !== typeof undefined) {

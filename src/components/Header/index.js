@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, BrowserRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
@@ -187,8 +187,12 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
-                  {/* <HeaderSection.FavoriteButton />
-                  <HeaderSection.MyvideoButton /> */}
+                  <Link to="/user/favorites">
+                    <HeaderSection.FavoriteButton />
+                  </Link>
+                  <Link to="/user/myVideos">
+                    <HeaderSection.MyvideoButton />
+                  </Link>
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}
                     onClick={this.activateSearch}
@@ -201,6 +205,16 @@ class Header extends React.Component {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown>
                         <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
+                        <HeaderSection.UserLink>
+                          <Link to="/user/favorites">
+                            Favourites
+                          </Link>
+                        </HeaderSection.UserLink>
+                        <HeaderSection.UserLink>
+                          <Link to="/user/myVideos">
+                            My Videos
+                          </Link>
+                        </HeaderSection.UserLink>
                         <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }

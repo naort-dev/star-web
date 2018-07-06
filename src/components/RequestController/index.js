@@ -6,13 +6,11 @@ import FooterDiv from './styled';
 export const RequestController = props => (
   <FooterDiv>
     <FooterDiv.BookingLeft>
-      <strong>{props.remainingBookings}</strong> Left
+      <strong>{props.remainingBookings}</strong> {props.remainingBookings === '1' ? 'Booking Left' : 'Bookings Left'}
     </FooterDiv.BookingLeft>
     <FooterDiv.BookingPrice>
       <strong>${props.rate}</strong>
     </FooterDiv.BookingPrice>
-   
-    <FooterDiv.Button onClick={() => props.showPopup()}>Request a Video</FooterDiv.Button>
-   
+    <FooterDiv.Button onClick={() => props.handleRequest()}>Request a Video</FooterDiv.Button>
   </FooterDiv>
 );
