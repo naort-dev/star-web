@@ -13,21 +13,25 @@ export default class Personal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: '0',
+      selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0',
       steps: true,
-      selectedPersonal: '0',
-      templateType: '',
-      relationship: [],
-      eventName: '',
-      hostName: '',
-      userName: '',
-      relationshipValue: 0,
-      specification: '',
-      importantinfo: '',
+      selectedPersonal: props.bookingData.selectedPersonal ? props.bookingData.selectedPersonal : '0',
+      templateType: props.bookingData.occasionType ? props.bookingData.occasionType : '',
+      relationship: props.bookingData.relationshipArray ? props.bookingData.relationshipArray : [],
+      eventName: props.bookingData.eventName ? props.bookingData.eventName : '',
+      hostName: props.bookingData.hostName ? props.bookingData.hostName : '',
+      userName: props.bookingData.userName ? props.bookingData.userName : '',
+      relationshipValue: props.bookingData.relationshipValue ? props.bookingData.relationshipValue : 0,
+      relationshipObjName: '',
+      specification: props.bookingData.specification ? props.bookingData.specification : '',
+      importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
       date: moment(),
-      eventdetailName: '',
+      eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       selectVideoerror: false,
+      whoIsfor: false,
+      eventTitle: false,
+      eventDate: false,
     };
   }
   componentWillMount() {
@@ -38,10 +42,10 @@ export default class Personal extends React.Component {
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
-    const result = occasionList.find((find) => { 
+    const result = occasionList.find((find) => {
       return find.id == event.target.value;
     });
-    
+
     this.setState({
       selectedValue: event.target.value,
       templateType: result ? result.type : '0',
@@ -49,10 +53,79 @@ export default class Personal extends React.Component {
       eventName: result ? result.title : 'Choose One',
     });
   }
+  handleBooking = () => {
+    if (!this.state.whoIsfor) {
+      const bookObj = this.createBookingObject(this.state);
+      if (bookObj) {
+        if (localStorage) {
+          localStorage.setItem('bookingData', JSON.stringify(bookObj));
+        }
+        this.props.setBookingDetails(bookObj);
+        this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+      }
+    }
+  }
+  checkRequired = (event, arg) => {
+    if (arg === '1') {
+      if (event === '') {
+        this.setState({ whoIsfor: true });
+      } else {
+        this.setState({ whoIsfor: false });
+      }
+    } else if (arg === '2') {
+      if (event === '') {
+        this.setState({ eventTitle: true });
+      } else {
+        this.setState({ eventTitle: false });
+      }
+    } else if (arg === '3') {
+      if (event === '') {
+        this.setState({ eventDate: true });
+      } else {
+        this.setState({ eventDate: false });
+      }
+    } else {
+      this.setState({
+        whoIsfor: false,
+        eventTitle: false,
+        eventDate: false,
+      });
+    }
+  }
+  createBookingObject = (obj) => {
+    const relationshipValue = obj.relationship;
+    let relationsShipTitle = '';
+    let relationshipName = relationshipValue.find((find) => {
+      return find.id == obj.relationshipValue;
+    });
+
+    if (relationshipName && relationshipName.title) {
+      relationsShipTitle = relationshipName.title;
+    }
+    const bookingData = {
+      starDetail: this.props.userDetails,
+      starPrice: this.props.celebrityDetails,
+      eventName: this.state.eventName,
+      hostName: this.state.hostName,
+      userName: this.state.userName,
+      specification: this.state.specification,
+      importantinfo: this.state.importantinfo,
+      eventdetailName: this.state.eventdetailName,
+      relationship: relationsShipTitle,
+      relationshipArray: this.state.relationship,
+      relationshipValue: this.state.relationshipValue,
+      date: this.state.date.format('MMM DD,YYYY'),
+      type: 1,
+      occasionType: this.state.templateType,
+      selectedValue: this.state.selectedValue,
+      selectedPersonal: this.state.selectedPersonal,
+    };
+    return bookingData;
+  }
   handleChangePersonal = (e) => {
     this.setState({ selectedPersonal: e.target.value });
   }
-  steps =() => {
+  steps = () => {
     if (this.state.selectedValue === '0') {
       this.setState({ selectEventerror: true });
     } else {
@@ -86,6 +159,13 @@ export default class Personal extends React.Component {
     this.setState({ steps: true });
     this.props.history.goBack();
   }
+  cancel = () => {
+    if (localStorage && localStorage.getItem('bookingData')) {
+      localStorage.removeItem('bookingData');
+    }
+    this.props.cancelBookingDetails();
+    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
+  }
 
   render() {
     let coverPhoto;
@@ -95,8 +175,8 @@ export default class Personal extends React.Component {
     let featuredImage;
     let firstImage;
     let secondImage;
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit: 0;
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
+    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
@@ -123,7 +203,7 @@ export default class Personal extends React.Component {
     }
     const eventNames = this.props.eventsDetails;
     const parsedQuery = qs.parse(this.props.location.search)
-    const optionItems = eventNames.map((eventNames) => 
+    const optionItems = eventNames.map((eventNames) =>
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
     if (parsedQuery.step && (this.state.selectedValue === '0' || this.state.selectedPersonal === '0')) {
@@ -137,9 +217,7 @@ export default class Personal extends React.Component {
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-                <Link to={`/starDetail/${this.props.match.params.id}`}>
-                  <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
-                </Link>
+                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </HeaderSection>
 
               <Request.SmallScreenLayout>
@@ -149,7 +227,7 @@ export default class Personal extends React.Component {
                   />
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
-              
+
               <Request.ComponentWrapper>
                 <Scrollbars>
                   <Request.Heading>What is the event</Request.Heading>
@@ -174,8 +252,8 @@ export default class Personal extends React.Component {
                                     :
                                     null
                                   }
-                                  
-                                </Request.WrapsInput>   
+
+                                </Request.WrapsInput>
                               </Request.InputWrapper>
                               <Request.InputWrapper>
                                 <Request.Label>Who is the video for ?</Request.Label>
@@ -186,19 +264,19 @@ export default class Personal extends React.Component {
                                   >
                                     <option value="0" key="0">Choose One</option>
                                     <option value="1" key="1">Myself</option>
-                                    <option value="2" key="2">For someone else</option>                        
+                                    <option value="2" key="2">For someone else</option>
                                   </Request.Select>
-                                  {this.state.selectVideoerror ? 
+                                  {this.state.selectVideoerror ?
                                     <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
-                                  :
-                                  null
+                                    :
+                                    null
                                   }
-                                </Request.WrapsInput>   
+                                </Request.WrapsInput>
                               </Request.InputWrapper>
                             </Request.InputFieldsWrapper>
                           </Request.EventStep1>
-                        : null                        
-                      } 
+                          : null
+                      }
                       {
                         parsedQuery.step === '1' ?
                           <Request.EventStep2>
@@ -215,26 +293,30 @@ export default class Personal extends React.Component {
                               importantinfo={this.state.importantinfo}
                               date={this.state.date}
                               eventdetailName={this.state.eventdetailName}
+                              checkRequired={this.checkRequired}
+                              whoIsfor={this.state.whoIsfor}
+                              eventTitle={this.state.eventTitle}
+                              eventDate={this.state.eventDate}
                             />
                           </Request.EventStep2>
-                        : null
+                          : null
                       }
                     </Request.Ask>
                   </Request.Questionwraps>
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
-                  {this.state.steps ?
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-                    :
-                   
+                  {parsedQuery.step === '1' ?
                     <PaymentFooterController
                       rate={rate}
                       remainingBookings={remainingBookings}
+                      buttonName="Book"
+                      handleBooking={this.handleBooking}
                     />
-                
-                  }              
+                    :
+                    <Request.ContinueButton onClick={() => this.steps()}>
+                      Continue
+                    </Request.ContinueButton>
+                  }
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>

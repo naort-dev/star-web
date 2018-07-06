@@ -13,33 +13,37 @@ export default class Event extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedValue: '0', // for default state (choose one)
+      selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0', // for default state (choose one)
       steps: true,
-      templateType: '',
+      templateType: props.bookingData.occasionType ? props.bookingData.occasionType : '',
       relationship: [],
-      eventName: '',
-      hostName: '',
-      userName: '',
+      eventName: props.bookingData.eventName ? props.bookingData.eventName : '',
+      hostName: props.bookingData.hostName ? props.bookingData.hostName : '',
+      userName: props.bookingData.userName ? props.bookingData.userName : '',
       relationshipValue: 0,
-      specification: '',
-      importantinfo: '',
+      relationshipName: '',
+      specification: props.bookingData.specification ? props.bookingData.specification : '',
+      importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
       date: moment(),
-      eventdetailName: '',
+      eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
+      whoIsfor: false,
+      eventTitle: false,
+      eventDate: false,
     };
   }
   componentWillMount() {
     // 2 is used to specify the request was event announcement
     this.props.fetchOccasionlist(2);
     const parsedQuery = qs.parse(this.props.location.search)
-    this.setState({step: parsedQuery});
+    this.setState({ step: parsedQuery });
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
-    const result = occasionList.find((find) => { 
+    const result = occasionList.find((find) => {
       return find.id == event.target.value;
     });
-    
+
     this.setState({
       selectedValue: event.target.value,
       templateType: result ? result.type : '0',
@@ -47,13 +51,13 @@ export default class Event extends React.Component {
       eventName: result ? result.title : 'Choose One',
     });
   }
-  steps =() => {
+  steps = () => {
     if (this.state.selectedValue === '0') {
       this.setState({ selectEventerror: true });
     } else {
       this.setState({ selectEventerror: false });
     }
-    if (this.state.selectedValue !== '0' ) {
+    if (this.state.selectedValue !== '0') {
       this.setState({ steps: false }, () => {
         this.props.history.push(`/${this.props.match.params.id}/request/event?step=1`);
       });
@@ -72,9 +76,71 @@ export default class Event extends React.Component {
     */
     this.setState({ [type]: data });
   }
+  handleBooking = () => {
+    if (!this.state.eventTitle && !this.state.eventDate) {
+      const bookObj = this.createBookingObject(this.state);
+      if (bookObj) {
+        localStorage.setItem('bookingData', JSON.stringify(bookObj));
+        this.props.setBookingDetails(bookObj);
+        this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+      }
+    }
+  }
+  checkRequired = (event, arg) => {
+    if (arg === '1') {
+      if (event === '') {
+        this.setState({ whoIsfor: true });
+      } else {
+        this.setState({ whoIsfor: false });
+      }
+    } else if (arg === '2') {
+      if (event === '') {
+        this.setState({ eventTitle: true });
+      } else {
+        this.setState({ eventTitle: false });
+      }
+    } else if (arg === '3') {
+      if (event === '') {
+        this.setState({ eventDate: true });
+      } else {
+        this.setState({ eventDate: false });
+      }
+    } else {
+      this.setState({
+        whoIsfor: false,
+        eventTitle: false,
+        eventDate: false,
+      });
+    }
+  }
+  createBookingObject = () => {
+
+    const bookingData = {
+      starDetail: this.props.userDetails,
+      starPrice: this.props.celebrityDetails,
+      eventName: this.state.eventName,
+      hostName: this.state.hostName,
+      userName: this.state.userName,
+      specification: this.state.specification,
+      importantinfo: this.state.importantinfo,
+      eventdetailName: this.state.eventdetailName,
+      date: this.state.date.format('MMM DD,YYYY'),
+      type: 2,
+      occasionType: this.state.templateType,
+      selectedValue: this.state.selectedValue,
+    };
+    return bookingData;
+  }
   goBack = () => {
     this.setState({ steps: true });
     this.props.history.goBack();
+  }
+  cancel = () => {
+    if (localStorage && localStorage.getItem('bookingData')) {
+      localStorage.removeItem('bookingData');
+    }
+    this.props.cancelBookingDetails();
+    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
   render() {
     let coverPhoto;
@@ -84,8 +150,8 @@ export default class Event extends React.Component {
     let featuredImage;
     let firstImage;
     let secondImage;
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit: 0;
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
+    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
@@ -112,7 +178,7 @@ export default class Event extends React.Component {
     }
     const eventNames = this.props.eventsDetails;
     const parsedQuery = qs.parse(this.props.location.search)
-    const optionItems = eventNames.map((eventNames) => 
+    const optionItems = eventNames.map((eventNames) =>
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
     if (parsedQuery.step && (this.state.selectedValue === '0')) {
@@ -126,9 +192,7 @@ export default class Event extends React.Component {
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <Link to={`/starDetail/${this.props.match.params.id}`}>
-                  <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
-                </Link>
+                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </HeaderSection>
               <Request.SmallScreenLayout>
                 <Request.ImageRenderDiv>
@@ -161,11 +225,11 @@ export default class Event extends React.Component {
                                     :
                                     null
                                   }
-                                </Request.WrapsInput>   
+                                </Request.WrapsInput>
                               </Request.InputWrapper>
                             </Request.InputFieldsWrapper>
                           </Request.EventStep1>
-                        : null                
+                          : null
                       }
                       {
                         parsedQuery.step === '1' ?
@@ -182,28 +246,32 @@ export default class Event extends React.Component {
                               importantinfo={this.state.importantinfo}
                               date={this.state.date}
                               eventdetailName={this.state.eventdetailName}
+                              checkRequired={this.checkRequired}
+                              whoIsfor={this.state.whoIsfor}
+                              eventTitle={this.state.eventTitle}
+                              eventDate={this.state.eventDate}
                             />
                           </Request.EventStep2>
-                        : null
+                          : null
                       }
                     </Request.Ask>
                   </Request.Questionwraps>
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
-                  {this.state.steps ?
-                   
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-                   
-                    :
+                  {parsedQuery.step === '1' ?
                     <PaymentFooterController
                       rate={rate}
                       remainingBookings={remainingBookings}
+                      buttonName="Book"
+                      handleBooking={this.handleBooking}
                     />
+                    :
+                    <Request.ContinueButton onClick={() => this.steps()}>
+                      Continue
+                    </Request.ContinueButton>
                   }
-                  
-                  
+
+
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>

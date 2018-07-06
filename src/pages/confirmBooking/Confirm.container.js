@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import Personal from './Personal.component';
-import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
+import Confirm from './Confirm.component';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 
 
@@ -14,10 +13,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchOccasionlist: id => dispatch(fetchOccasionlist(id)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
-  cancelBookingDetails:() => dispatch(cancelBookingDetails()),
+  cancelBookingDetails: () => dispatch(cancelBookingDetails()),
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Personal);
+export default connect(mapStateToProps, mapDispatchToProps)(Confirm);

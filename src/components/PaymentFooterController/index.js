@@ -11,8 +11,6 @@ export const PaymentFooterController = props => (
     <FooterDiv.BookingPrice>
       <strong>${props.rate}</strong>
     </FooterDiv.BookingPrice>
-    <Link to="/request">
-      <FooterDiv.Button>Purchase</FooterDiv.Button>
-    </Link> 
+    <FooterDiv.Button onClick={props.handleBooking}>{props.buttonName}</FooterDiv.Button>
   </FooterDiv>
 );
