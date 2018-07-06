@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   detailsLoading: state.celebDetails.loading,
+  detailsError: state.celebDetails.error,
   videosList: state.celebVideos,
   isLoggedIn: state.session,
 });

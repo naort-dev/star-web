@@ -4,6 +4,7 @@ const initalState = {
   celebrityDetails: {},
   userDetails: {},
   loading: false,
+  error: '',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -32,6 +33,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+        error: action.error,
       };
 
     case CELEB_DETAILS.reset:

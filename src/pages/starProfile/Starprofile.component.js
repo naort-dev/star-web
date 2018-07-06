@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
@@ -202,6 +202,9 @@ export default class Starprofile extends React.Component {
       coverPhoto = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url;
     } else {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
+    }
+    if (this.props.detailsError === '404') {
+      return <Redirect to="/not-found" />;
     }
     return (
       <Detail.Wrapper>
