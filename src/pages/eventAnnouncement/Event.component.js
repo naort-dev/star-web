@@ -49,6 +49,7 @@ export default class Event extends React.Component {
       relationship: result ? result.relationships : '0',
       eventName: result ? result.title : 'Choose One',
     });
+    this.emptyTemplateDetails();
   }
   steps = () => {
     if (this.state.selectedValue === '0') {
@@ -129,6 +130,18 @@ export default class Event extends React.Component {
       selectedValue: this.state.selectedValue,
     };
     return bookingData;
+  }
+  emptyTemplateDetails = () => {
+    this.setState({
+      eventName: '',
+      hostName: '',
+      userName: '',
+      relationshipValue: 0,
+      relationshipObjName: '',
+      specification: '',
+      importantinfo: '',
+      eventdetailName: '',
+    });
   }
   goBack = () => {
     this.setState({ steps: true });

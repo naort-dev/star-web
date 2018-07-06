@@ -291,9 +291,23 @@ OrderStyled.DetailsTitle = styled.span`
   display: table-cell;
   font-family: 'Ubuntu-Bold';
   width: 50%;
+  font-size:16px;
+  @media(min-width:1025px){
+    font-size:13px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
 OrderStyled.DetailsValue = styled.span`
   display: table-cell;
   width: 50%;
+  font-size:16px;
+  @media(min-width:1025px){
+    font-size:13px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
 export default OrderStyled;
