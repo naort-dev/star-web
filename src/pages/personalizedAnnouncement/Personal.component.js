@@ -22,6 +22,7 @@ export default class Personal extends React.Component {
       hostName: '',
       userName: '',
       relationshipValue: 0,
+      relationshipObjName: '',
       specification: '',
       importantinfo: '',
       date: moment(),
@@ -48,6 +49,38 @@ export default class Personal extends React.Component {
       relationship: result ? result.relationships : '0',
       eventName: result ? result.title : 'Choose One',
     });
+  }
+  handleBooking = () => {
+    const bookObj = this.createBookingObject(this.state);
+    if (bookObj) {
+      localStorage.setItem('bookingData', JSON.stringify(bookObj));
+      this.props.setBookingDetails(bookObj);
+      this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+    }
+  }
+  createBookingObject = (obj) => {
+    const relationshipValue = obj.relationship;
+    let relationshipName = relationshipValue.find((find) => {
+      return find.id == obj.relationshipValue;
+    });
+    if (relationshipName === undefined && relationshipName === '') {
+      relationshipName.title = '';
+    }
+    const bookingData = {
+      starDetail: this.props.userDetails,
+      starPrice: this.props.celebrityDetails,
+      eventName: this.state.eventName,
+      hostName: this.state.hostName,
+      userName: this.state.userName,
+      specification: this.state.specification,
+      importantinfo: this.state.importantinfo,
+      eventdetailName: this.state.eventdetailName,
+      relationship: relationshipName.title,
+      date: this.state.date.format('MMM DD,YYYY'),
+      type: 1,
+      occasionType: this.state.templateType,
+    };
+    return bookingData;
   }
   handleChangePersonal = (e) => {
     this.setState({ selectedPersonal: e.target.value });
@@ -232,6 +265,8 @@ export default class Personal extends React.Component {
                     <PaymentFooterController
                       rate={rate}
                       remainingBookings={remainingBookings}
+                      buttonName="Book"
+                      handleBooking={this.handleBooking}
                     />
                 
                   }              

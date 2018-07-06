@@ -108,6 +108,7 @@ Templates.InputArea = styled.textarea`
   height: 100px;
   text-indent: 10px;
   padding: 8px 8px;
+  resize: none;
   background-color:rgba(248, 248, 248, 1);
   @media(min-width:768px){
     margin-top:0;

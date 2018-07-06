@@ -12,6 +12,7 @@ import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 import myVideosList from '../pages/myVideos/reducers/myVideosList';
+import bookingData from '../store/shared/reducers/bookings';
 
 const rootReducer = combineReducers({
   session,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   followCelebrityStatus,
   occasionList,
   myVideosList,
+  bookingData,
 });
 
 export default rootReducer;

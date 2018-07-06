@@ -413,7 +413,7 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="EventName"
                   value={this.props.eventdetailName}
-                  onChange={event => this.props.handleChange(event.target.value, 'eventDetailName')}
+                  onChange={event => this.props.handleChange(event.target.value, 'eventdetailName')}
                   onBlur={(e)=>this.checkRequired(e, '2')}
                 />
                 {this.state.eventTitle ?

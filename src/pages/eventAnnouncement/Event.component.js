@@ -21,6 +21,7 @@ export default class Event extends React.Component {
       hostName: '',
       userName: '',
       relationshipValue: 0,
+      relationshipName: '',
       specification: '',
       importantinfo: '',
       date: moment(),
@@ -71,6 +72,31 @@ export default class Event extends React.Component {
       eventdetailName
     */
     this.setState({ [type]: data });
+  }
+  handleBooking = () => {
+    const bookObj = this.createBookingObject(this.state);
+    if (bookObj) {
+      localStorage.setItem('bookingData', JSON.stringify(bookObj));
+      this.props.setBookingDetails(bookObj);
+      this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+    }
+  }
+  createBookingObject = () => {
+
+    const bookingData = {
+      starDetail: this.props.userDetails,
+      starPrice: this.props.celebrityDetails,
+      eventName: this.state.eventName,
+      hostName: this.state.hostName,
+      userName: this.state.userName,
+      specification: this.state.specification,
+      importantinfo: this.state.importantinfo,
+      eventdetailName: this.state.eventdetailName,
+      date: this.state.date.format('MMM DD,YYYY'),
+      type: 2,
+      occasionType: this.state.templateType,
+    };
+    return bookingData;
   }
   goBack = () => {
     this.setState({ steps: true });
@@ -200,6 +226,8 @@ export default class Event extends React.Component {
                     <PaymentFooterController
                       rate={rate}
                       remainingBookings={remainingBookings}
+                      buttonName="Book"
+                      handleBooking={this.handleBooking}
                     />
                   }
                   

@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Event from './Event.component';
 import { fetchOccasionlist } from './actions/getOccasionList';
+import { setBookingDetails } from '../../store/shared/actions/storeBooking';
 
 
 const mapStateToProps = state => ({
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchOccasionlist: id => dispatch(fetchOccasionlist(id)),
+  setBookingDetails: data => dispatch(setBookingDetails(data)),
 
 });
 

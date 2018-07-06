@@ -27,6 +27,7 @@ Request.InputQuestion = styled.textarea`
   width:100%;
   padding:6px 9px;
   height:120px;
+  resize: none;
 
 `;
 Request.OptionWrapper = styled.div`

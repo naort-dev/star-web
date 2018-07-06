@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
-import Personal from './Personal.component';
-import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
+import Confirm from './Confirm.component';
 import { setBookingDetails } from '../../store/shared/actions/storeBooking';
 
 
@@ -10,12 +9,12 @@ const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   eventsDetails: state.occasionList.data,
+  bookingData: state.bookingData,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchOccasionlist: id => dispatch(fetchOccasionlist(id)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
 
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Personal);
+export default connect(mapStateToProps, mapDispatchToProps)(Confirm);
