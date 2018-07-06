@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import Event from './Event.component';
 import { fetchOccasionlist } from './actions/getOccasionList';
-import { setBookingDetails } from '../../store/shared/actions/storeBooking';
+import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 
 
 const mapStateToProps = state => ({
