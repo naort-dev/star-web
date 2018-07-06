@@ -64,7 +64,7 @@ export default class Favourites extends React.Component {
                     dataList={this.props.favouritesList.data}
                     limit={this.props.favouritesList.limit}
                     totalCount={this.props.favouritesList.count}
-                    NoDataText="You haven't favorited any stars yet"
+                    noDataText="You haven't favorited any stars yet"
                     offset={this.props.favouritesList.offset}
                     loading={this.props.favouritesList.loading}
                     fetchData={(offset, refresh) => this.props.fetchFavouritesList(offset, refresh)}
