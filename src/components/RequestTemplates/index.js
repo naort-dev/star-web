@@ -34,7 +34,7 @@ class RequestTemplates extends React.Component {
           <div>
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your host name"
@@ -57,7 +57,7 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your name"
@@ -88,7 +88,7 @@ class RequestTemplates extends React.Component {
             null
             }
             <Templates.InputWrapper>
-              <Templates.Label>What is {this.state.eventname} for</Templates.Label>
+              <Templates.Label>What is {this.state.eventname} for?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="What specifically for"
@@ -100,10 +100,10 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info</Templates.Label>
+              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
@@ -118,7 +118,7 @@ class RequestTemplates extends React.Component {
           <div>
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your host name"
@@ -140,7 +140,7 @@ class RequestTemplates extends React.Component {
               }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your name"
@@ -171,7 +171,7 @@ class RequestTemplates extends React.Component {
             null
             }
             <Templates.InputWrapper>
-              <Templates.Label>Who is the Starsona video honoring</Templates.Label>
+              <Templates.Label>Who is the Starsona video honoring?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="What specifically for"
@@ -183,10 +183,10 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info</Templates.Label>
+              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
@@ -202,7 +202,7 @@ class RequestTemplates extends React.Component {
           <div>
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your name"
@@ -224,7 +224,7 @@ class RequestTemplates extends React.Component {
               }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your name"
@@ -255,7 +255,7 @@ class RequestTemplates extends React.Component {
             null
             }
             <Templates.InputWrapper>
-              <Templates.Label>When is the Occasion</Templates.Label>
+              <Templates.Label>What's the occasion?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
                   customInput={<Templates.Input />}
@@ -278,10 +278,10 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info</Templates.Label>
+              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
@@ -297,7 +297,7 @@ class RequestTemplates extends React.Component {
           <div>
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for</Templates.Label>
+                <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your name"
@@ -319,7 +319,7 @@ class RequestTemplates extends React.Component {
               }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from</Templates.Label>
+                <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter your name"
@@ -350,7 +350,7 @@ class RequestTemplates extends React.Component {
             null
             }
             <Templates.InputWrapper>
-              <Templates.Label>When is the Occasion</Templates.Label>
+              <Templates.Label>When is the Occasion?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
                   customInput={<Templates.Input />}
@@ -361,10 +361,10 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info</Templates.Label>
+              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
                   onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
@@ -396,7 +396,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Who's hosting the event</Templates.Label>
+              <Templates.Label>Who's hosting the event?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="Enter the Name"
@@ -409,7 +409,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>When is the event</Templates.Label>
+              <Templates.Label>When is the event?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
                   customInput={<Templates.Input />}
@@ -426,10 +426,10 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info</Templates.Label>
+              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
@@ -445,7 +445,7 @@ class RequestTemplates extends React.Component {
         
           <div>
             <Templates.InputWrapper>
-              <Templates.Label>Who's the guest of honour</Templates.Label>
+              <Templates.Label>Who's the guest of honour?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="Enter the guest name"
@@ -463,7 +463,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Who's hosting the event</Templates.Label>
+              <Templates.Label>Who's hosting the event?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="Enter the name"
@@ -476,7 +476,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>When is the event</Templates.Label>
+              <Templates.Label>When is the event?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
                   customInput = {<Templates.Input />}
@@ -493,10 +493,10 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info</Templates.Label>
+              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
                   onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}

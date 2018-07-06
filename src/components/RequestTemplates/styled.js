@@ -91,7 +91,6 @@ Templates.InputArea = styled.textarea`
   border: 2px solid rgba(51, 51, 51, 1);
   width: 100%;
   height: 100px;
-  text-indent: 10px;
   padding: 8px 8px;
   resize: none;
   background-color:rgba(248, 248, 248, 1);
