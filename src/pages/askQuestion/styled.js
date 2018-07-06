@@ -488,7 +488,7 @@ Request.InputQuestion = styled.textarea`
   font-family: 'Ubuntu-Regular';
   width:100%;
   padding:6px 9px;
-  height:120px;
+  height:100px;
   resize: none;
 
 `;
