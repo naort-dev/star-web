@@ -37,7 +37,7 @@ const FilterStyled = styled.div`
   @media(min-width: 768px) {
     padding: 16px;
     position: static;
-    height: 319px;
+    height: 217px;
     background: transparent;
     padding-top: 0;
     padding-bottom: 0;
@@ -93,7 +93,7 @@ FilterStyled.filterSection = styled.li`
   max-width: ${props => (props.typeFilter ? 'none' : '300px')};
   @media(min-width: 1025px) {
     line-height: 33px;
-    width: ${props => (props.typeFilter ? '80%' : '20%')};
+    width: ${props => (props.typeFilter ? '80%' : 'auto')};
   }
 `;
 FilterStyled.filterHeading = styled.span`

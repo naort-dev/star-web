@@ -132,29 +132,52 @@ HeaderSection.ProfileDropdownItem = styled.li`
 HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
   font-family: 'Ubuntu-Bold';
   cursor: auto;
+  border-bottom: none;
   &:hover {
     color: #333333;
   }
 `;
+HeaderSection.UserLink = HeaderSection.ProfileDropdownItem.extend`
+  display: block;
+  a {
+    color: #333333;
+  }
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
 HeaderSection.FavoriteButton = styled.button`
-  background-image: url( 'assets/images/icon_favorite_40a.png' );
-  background-repeat:no-repeat;
-  background-position: center;
-  border:none;
-  padding:18px;
-  background-size: 23px;
-  background-color:white;
+  display: none;
+  @media(min-width: 768px) {
+    display: inline;
+    cursor: pointer;
+    outline: none;
+    background-image: url( 'assets/images/icon_favorite_40a.png' );
+    background-repeat:no-repeat;
+    background-position: center;
+    border:none;
+    padding:18px;
+    background-size: 29px;
+    background-color:white;
+    margin-right: 16px;
+  }
   
 `;
 HeaderSection.MyvideoButton = styled.button`
-  background-image: url( 'assets/images/icon_myVids_40a.png' );
-  background-repeat:no-repeat;
-  background-position: center;
-  border:none;
-  padding:18px;
-  background-size: 23px;
-  background-color:white;
-  
+  display: none;
+  @media(min-width: 768px) {
+    display: inline;
+    cursor: pointer;
+    outline: none;
+    background-image: url( 'assets/images/icon_myVids_40a.png' );
+    background-repeat:no-repeat;
+    background-position: center;
+    border:none;
+    padding:18px;
+    background-size: 29px;
+    background-color:white;
+    margin-right: 16px;
+  } 
 `;
 HeaderSection.SearchBar = styled.div`
   position:absolute;

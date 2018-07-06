@@ -7,7 +7,6 @@ const ImageStackDiv = styled.div`
   @media(min-width: 1025px) {
     display: flex;
     justify-content: center;
-    align-items: center;
     flex-direction: column;
   }
  
@@ -29,7 +28,6 @@ ImageStackDiv.FeatureImage = styled.div`
 `;
 ImageStackDiv.ExtraImagesLayout = styled.div`
   display:flex;
-  justify-content: space-between;
   flex-direction: row;
   height: 50%;
   @media(min-width: 1025px) {

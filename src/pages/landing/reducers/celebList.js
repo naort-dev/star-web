@@ -8,9 +8,11 @@ const initalState = {
   limit: 20,
   currentCategory: 'featured',
   isLoggedIn: false,
+  cachedData: {},
 };
 
 export default (state = { ...initalState }, action) => {
+  let cachedData;
   switch (action.type) {
     case CELEB_LIST.start:
       return {
@@ -35,17 +37,21 @@ export default (state = { ...initalState }, action) => {
         data: action.list,
         count: action.count,
         currentSearchParam: action.searchParam,
-        [action.category]: {
-          offset: action.offset,
-          data: action.list,
-          count: action.count,
-          currentSearchParam: action.searchParam,
-          lowPrice: action.lowPrice,
-          highPrice: action.highPrice,
-          sortValue: action.sortValue,
-          isLoggedIn: action.isLoggedIn,
+        cachedData: {
+          ...state.cachedData,
+          [action.category]: {
+            offset: action.offset,
+            data: action.list,
+            count: action.count,
+            currentSearchParam: action.searchParam,
+            lowPrice: action.lowPrice,
+            highPrice: action.highPrice,
+            sortValue: action.sortValue,
+            isLoggedIn: action.isLoggedIn,
+          },
         },
         currentCategory: action.category,
+        isLoggedIn: action.isLoggedIn,
       };
 
     case CELEB_LIST.failed:
@@ -61,7 +67,7 @@ export default (state = { ...initalState }, action) => {
       };
 
     case CELEB_LIST.swapCacheEnd:
-      const cachedData = state[action.key];
+      const cachedData = state.cachedData[action.key];
       return {
         ...state,
         data: cachedData.data,
@@ -71,6 +77,12 @@ export default (state = { ...initalState }, action) => {
         isLoggedIn: cachedData.isLoggedIn,
         currentCategory: action.key,
         loading: false,
+      };
+
+    case CELEB_LIST.updateCelebList:
+      return {
+        ...state,
+        cachedData: action.cachedData,
       };
 
     default:
