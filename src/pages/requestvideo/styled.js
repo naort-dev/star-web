@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const menuEnter = keyframes`
   from {
@@ -83,6 +84,12 @@ Request.RightSection = styled.div`
     padding-top: 48px;
   }
 `;
+
+Request.ImageStackWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+
 Request.SmallScreenLayout = styled.div`
   width:100%;
   @media(min-width:1025px){
@@ -361,14 +368,21 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height:100vh;
-  @media(min-width:768px){
-    height:calc(100% -403px);
-  }
   @media(min-width:1025px){
     height:calc(100% - 40px);
+    position:relative;
   }
-  
+`;
+
+Request.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    overflow: hidden !important;
+    position: static !important;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
+  }
 `;
 Request.PaymentControllerWrapper = styled.div`
   position: fixed;
