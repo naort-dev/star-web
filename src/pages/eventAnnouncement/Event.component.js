@@ -192,7 +192,7 @@ export default class Event extends React.Component {
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>       
+                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </HeaderSection>
               <Request.SmallScreenLayout>
                 <Request.ImageRenderDiv>
@@ -258,19 +258,17 @@ export default class Event extends React.Component {
                   </Request.Questionwraps>
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
-                  {this.state.steps ?
-
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-
-                    :
+                  {parsedQuery.step === '1' ?
                     <PaymentFooterController
                       rate={rate}
                       remainingBookings={remainingBookings}
                       buttonName="Book"
                       handleBooking={this.handleBooking}
                     />
+                    :
+                    <Request.ContinueButton onClick={() => this.steps()}>
+                      Continue
+                    </Request.ContinueButton>
                   }
 
 
