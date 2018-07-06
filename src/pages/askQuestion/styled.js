@@ -305,6 +305,12 @@ Request.ScrollBar = styled.div`
     padding-bottom: 60px;
   }
 `;
+
+Request.ImageStackWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+
 const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
