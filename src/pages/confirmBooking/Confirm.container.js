@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Confirm from './Confirm.component';
-import { setBookingDetails } from '../../store/shared/actions/storeBooking';
+import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 
 
 const mapStateToProps = state => ({
@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   setBookingDetails: data => dispatch(setBookingDetails(data)),
+  cancelBookingDetails: () => dispatch(cancelBookingDetails()),
 
 });
 

@@ -9,28 +9,30 @@ import { PaymentFooterController } from '../../components/PaymentFooterControlle
 export default class Confirm extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { 
-      bookingData:{}
+    this.state = {
+      bookingData: {}
     };
   }
   componentWillMount() {
     const StoreEmpty = this.checkDataInStore(this.props.bookingData);
     let bookingData;
     if (StoreEmpty) {
-      const localStorageValue = localStorage.getItem('bookingData');      
-      bookingData = JSON.parse(localStorageValue);
-      this.updateDataToStore();
+      if (localStorage && localStorage.getItem('bookingData')) {
+        const localStorageValue = localStorage.getItem('bookingData');
+        bookingData = JSON.parse(localStorageValue);
+        this.updateDataToStore();
+      }
     } else {
       bookingData = this.props.bookingData;
     }
     this.setState({
-      bookingData: bookingData
+      bookingData,
     });
   }
 
   getOccasionDetails = (occasionType) => {
     const { props } = this;
-    const that =  props.bookingData;
+    const that = props.bookingData;
     switch (occasionType) {
       case 1:
       case 5:
@@ -53,7 +55,7 @@ export default class Confirm extends React.Component {
   }
   getEventDetails = (eventType) => {
     const { props } = this;
-    const that =  props.bookingData;
+    const that = props.bookingData;
     switch (eventType) {
       case 1:
         // Personal Shout-outs
@@ -88,12 +90,21 @@ export default class Confirm extends React.Component {
       default: return null;
     }
   }
-  checkDataInStore = (obj) =>{
+  checkDataInStore = (obj) => {
     return Object.keys(obj).length === 0;
   }
   updateDataToStore = () => {
-    const localStorageValue =localStorage.getItem('bookingData');
-    this.props.setBookingDetails(JSON.parse(localStorageValue));
+    if (localStorage && localStorage.getItem('bookingData')) {
+      const localStorageValue = localStorage.getItem('bookingData');
+      this.props.setBookingDetails(JSON.parse(localStorageValue));
+    }
+  }
+  cancel = () => {
+    if (localStorage && localStorage.getItem('bookingData')) {
+      localStorage.removeItem('bookingData');
+    }
+    this.props.cancelBookingDetails();
+    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
   goBack = () => {
     this.setState({ steps: true });
@@ -142,9 +153,8 @@ export default class Confirm extends React.Component {
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <Link to={`/starDetail/${this.props.match.params.id}`}>
-                  <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
-                </Link>
+                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
+
               </HeaderSection>
               <Request.SmallScreenLayout>
                 <Request.ImageRenderDiv>
@@ -159,18 +169,18 @@ export default class Confirm extends React.Component {
                   <Request.Questionwraps>
                     <Request.Ask>
                       {
-                  this.getEventDetails(props.type)
-                   } 
+                        this.getEventDetails(props.type)
+                      }
                     </Request.Ask>
                   </Request.Questionwraps>
                 </Scrollbars>
                 <Request.PaymentControllerWrapper>
                   {this.state.steps ?
-                   
+
                     <Request.ContinueButton onClick={() => this.steps()}>
                       Continue
                     </Request.ContinueButton>
-                   
+
                     :
                     <PaymentFooterController
                       rate={rate}
@@ -179,8 +189,8 @@ export default class Confirm extends React.Component {
                       handleBooking={this.handleBooking}
                     />
                   }
-                  
-                  
+
+
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>
