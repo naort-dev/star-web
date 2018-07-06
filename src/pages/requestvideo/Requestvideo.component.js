@@ -70,7 +70,10 @@ export default class Requestvideo extends React.Component {
               </Request.SmallScreenLayout>
                 
               <Request.ComponentWrapper>
-                <Scrollbars>
+                <Request.ComponentWrapperScroll
+                  autoHide
+                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                >
                   <Request.OptionWrapper>
                     <Request.HeaderText>
                       What kind of video would you like to request?
@@ -85,16 +88,18 @@ export default class Requestvideo extends React.Component {
                       <Link to={`/${this.props.match.params.id}/request/event/`}>
                         <Request.Button >Event Announcement</Request.Button>
                       </Link>
-                    </Request.ButtonWrapper>    
+                    </Request.ButtonWrapper>
                   </Request.OptionWrapper>
-                </Scrollbars>  
+                </Request.ComponentWrapperScroll>
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <ImageStack
-                featureImage={featuredImage}
-                imageList={imageList}
-              />
+              <Request.ImageStackWrapper>
+                <ImageStack
+                  featureImage={featuredImage}
+                  imageList={imageList}
+                />
+              </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>
         </Request.Content>

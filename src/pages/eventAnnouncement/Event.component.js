@@ -278,10 +278,12 @@ export default class Event extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <ImageStack
-                featureImage={featuredImage}
-                imageList={imageList}
-              />
+              <Request.ImageStackWrapper>
+                <ImageStack
+                  featureImage={featuredImage}
+                  imageList={imageList}
+                />
+              </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>
         </Request.Content>

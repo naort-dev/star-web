@@ -434,6 +434,12 @@ Request.ButtonWrapper = styled.div`
     padding-top:52px;
   }
 `;
+
+Request.ImageStackWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+
 Request.Button = styled.button`
   width:100%;
   max-width:364px;
