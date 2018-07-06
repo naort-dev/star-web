@@ -81,7 +81,7 @@ export default class ScrollList extends React.Component {
         // }
         scrollThreshold={0.5}
         hasMore={this.state.hasMore}
-        loader={this.props.dataList.length ? <Loader /> : null}
+        loader={this.props.dataList.length ? <Loader /> : <ListStyled.NoDataText>{this.props.NoDataText}</ListStyled.NoDataText>}
         // endMessage={
         //   <p style={{ textAlign: 'center' }}>
         //     <b>End of list</b>
