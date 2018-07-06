@@ -107,6 +107,7 @@ export default class Login extends React.Component {
       
     } else {
       this.checkEmail();
+      this.checkPassword();
     } 
   }
   onSocialMediaLogin =(r, source) => {
@@ -216,6 +217,7 @@ export default class Login extends React.Component {
     return true;
   }
   isFormValid = () => {
+    console.log(this.state);
     if (this.state.email.isValid && this.state.password.isValid) {
       return true;
     }

@@ -52,6 +52,7 @@ export default class Personal extends React.Component {
       relationship: result ? result.relationships : '0',
       eventName: result ? result.title : 'Choose One',
     });
+    this.emptyTemplateDetails();
   }
   handleBooking = () => {
     if (!this.state.whoIsfor) {
@@ -124,6 +125,7 @@ export default class Personal extends React.Component {
   }
   handleChangePersonal = (e) => {
     this.setState({ selectedPersonal: e.target.value });
+    this.emptyTemplateDetails();
   }
   steps = () => {
     if (this.state.selectedValue === '0') {
@@ -141,6 +143,18 @@ export default class Personal extends React.Component {
         this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
       });
     }
+  }
+  emptyTemplateDetails = () => {
+    this.setState({
+      eventName: '',
+      hostName: '',
+      userName: '',
+      relationshipValue: 0,
+      relationshipObjName: '',
+      specification: '',
+      importantinfo: '',
+      eventdetailName: '',
+    });
   }
   handleInput = (data, type) => {
     /*
@@ -300,6 +314,7 @@ export default class Personal extends React.Component {
                               whoIsfor={this.state.whoIsfor}
                               eventTitle={this.state.eventTitle}
                               eventDate={this.state.eventDate}
+                              starName={fullName}
                             />
                           </Request.EventStep2>
                           : null
