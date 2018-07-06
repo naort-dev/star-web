@@ -50,7 +50,7 @@ export default class Favourites extends React.Component {
                 labels={['Stars', 'Videos']}
                 disableFilter
                 disableTabs
-                heading="My Favorite's"
+                heading="My Favorites"
               />
             </div>
             {
