@@ -164,7 +164,10 @@ export default class Confirm extends React.Component {
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
               <Request.ComponentWrapper>
-                <Scrollbars>
+                <Request.ComponentWrapperScroll
+                  autoHide
+                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                >
                   <Request.Heading>Confirm Booking</Request.Heading>
                   <Request.Questionwraps>
                     <Request.Ask>
@@ -173,7 +176,7 @@ export default class Confirm extends React.Component {
                       }
                     </Request.Ask>
                   </Request.Questionwraps>
-                </Scrollbars>
+                </Request.ComponentWrapperScroll>
                 <Request.PaymentControllerWrapper>
                   {this.state.steps ?
 
@@ -195,10 +198,12 @@ export default class Confirm extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <ImageStack
-                featureImage={featuredImage}
-                imageList={imageList}
-              />
+              <Request.ImageStackWrapper>
+                <ImageStack
+                  featureImage={featuredImage}
+                  imageList={imageList}
+                />
+              </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>
         </Request.Content>
