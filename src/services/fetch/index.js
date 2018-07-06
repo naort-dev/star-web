@@ -13,7 +13,7 @@ const fetch = axios.create({
     'Accept': 'application/json',
     'Content-Type': 'application/json',
     'device': 'ios',
-    'version': '3.0',
+    'version': '4.0',
   },
 });
 

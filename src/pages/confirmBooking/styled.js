@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const menuEnter = keyframes`
   from {
@@ -361,15 +362,22 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height:100vh;
-  @media(min-width:768px){
-    height:calc(100% -403px);
-  }
+  padding-bottom: 46px;
   @media(min-width:1025px){
     height:calc(100% - 40px);
     position:relative;
   }
-  
+`;
+
+Request.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    overflow: hidden !important;
+    position: static !important;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
+  }
 `;
 Request.PaymentControllerWrapper = styled.div`
   position: fixed;
@@ -466,8 +474,7 @@ Request.Ask = styled.div`
   }
 `;
 Request.Questionwraps = styled.div`
-  width:100%;
-  height:100%;
+
 `;
 Request.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
@@ -497,6 +504,12 @@ Request.InputQuestion = styled.textarea`
   resize: none;
 
 `;
+
+Request.ImageStackWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+
 Request.OptionWrapper = styled.div`
   padding: 78px 20px;
   text-align:center;
@@ -541,126 +554,6 @@ Request.InputFieldsWrapper = styled.div`
   }
   @media(min-width:1025px){
    
-  }
-`;
-Request.InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top:1%;
-  @media(min-width:768px){
-    flex-direction: row;
-    margin-top:5%;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
-  }
-`;
-Request.WrapsInput = styled.div`
-  width:100%;
-  height:60px;
-  @media(min-width:768px){
-    width:100%;
-    height:30px;
-  }
-  @media(min-width:1025){
-    width:352px;
-    height:25px;
-  }
-
-`;
-Request.Label = styled.div`
-  color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
-  text-align:left;
-  padding-bottom:10px;
-  @media(min-width:768px){
-    width:55%;
-    display:flex;
-    align-items:center;
-    padding-bottom:0px;
-  }
-  @media(min-width:1025px){
-    font-size:13px;
-    width:69%;
-   
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
-
-`;
-Request.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
-  color: #333333;
-  font-size:16px;
-  text-align:left;
-  outline:none;
-  border: 2px solid rgba(51, 51, 51, 1);
-  width: 100%;
-  height: 40px;
-  text-indent: 10px;
-  background-color:rgba(248, 248, 248, 1);
-  @media(min-width:768px){
-    margin-top:0;
-    height:40px;
-  }
-  @media(min-width:1025px){
-    margin-top:0;
-    height:33px;
-    font-size:13px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-    height:40px;
-  }
-`;
-Request.ErrorMsg = styled.div`
-  color:red;
-  font-size: 11px;
-  margin-top:4px;
-  font-family: 'Ubuntu-light';
-  text-align:left;
-  
-`;
-Request.Select = styled.select`
-  margin: 0;
-  outline: none;
-  display: inline-block;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  cursor: pointer;
-  width: 100%;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat;
-  background-position: 97% 8px;
-  background-size: 16px;
-  padding-right: 40px;
-  background-color: #fff;
-  border: 2px solid rgba(51, 51, 51, 1);
-  font-family: 'Ubuntu-Regular';
-  color: #333333;
-  font-size:16px;
-  text-align:left;
-  outline:none;
-  height: 34px;
-  text-indent: 10px;
-  background-color:rgba(248, 248, 248, 1);
-  @media(min-width:768px){
-    margin-top:0;
-    height:40px;
-  }
-  @media(min-width:1025px){
-    margin-top:0;
-    height:33px;
-    font-size:13px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-    height:40px;
   }
 `;
 Request.EventStep1 = styled.div`

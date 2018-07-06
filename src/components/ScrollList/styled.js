@@ -59,19 +59,18 @@ ListStyled.listItem = styled.li`
   padding-left: 0;
   animation: ${menuEnter} 0.2s linear;
   @media(min-width: 768px) {
-    width: 48%;
-    margin-right: calc(100% - 96%);
+    width: calc(50% - 14px);
+    margin-right: 20px;
     &:nth-child(even) {
       margin-right: 0;
     }
   }
 
   @media(min-width: 1025px) {
-    width: 30%;
+    width: calc((100% / 3) - 14px);
     margin-bottom: 30px;
-    margin-right: calc((100% - 90%) / 2);
     &:nth-child(even) {
-      margin-right: calc((100% - 90%) / 2);
+      margin-right: 20px;
     }
     &:nth-child(3n) {
       margin-right: 0;
@@ -80,19 +79,17 @@ ListStyled.listItem = styled.li`
 `;
 
 ListStyled.listVideos = ListStyled.listItem.extend`
-  width: 45%;
-  margin-right: 10%;
+  width: calc(50% - 7px);
+  margin-right: 10px;
   &:nth-child(even) {
-    border-right: none;
     margin-right: 0;
   }
   @media(min-width: 768px) {
     padding: 0;
-    border-right: none;
-    width:calc(85% / 3);
-    margin-right: 7.5%;
+    width: calc((100% / 3) - 30px);
+    margin-right: 40px;
     &:nth-child(even) {
-      margin-right: 7.5%;
+      margin-right: 40px;
     }
     &:nth-child(3n) {
       margin-right: 0;

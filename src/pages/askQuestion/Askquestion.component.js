@@ -100,6 +100,7 @@ export default class Askquestion extends React.Component {
                 </Scrollbars>  
                 <Request.PaymentControllerWrapper>
                   <PaymentFooterController
+                    buttonName="Book"
                     rate={rate}
                     remainingBookings={remainingBookings}
                   />
@@ -107,10 +108,12 @@ export default class Askquestion extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <ImageStack
-                featureImage={featuredImage}
-                imageList={imageList}
-              />
+              <Request.ImageStackWrapper>
+                <ImageStack
+                  featureImage={featuredImage}
+                  imageList={imageList}
+                />
+              </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>
         </Request.Content>
