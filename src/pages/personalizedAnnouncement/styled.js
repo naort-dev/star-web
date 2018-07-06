@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const menuEnter = keyframes`
   from {
@@ -361,15 +362,22 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height:100vh;
-  @media(min-width:768px){
-    height:calc(100% -403px);
-  }
+  padding-bottom: 46px;
   @media(min-width:1025px){
     height:calc(100% - 40px);
     position:relative;
   }
-  
+`;
+
+Request.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    overflow: hidden !important;
+    position: static !important;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
+  }
 `;
 Request.PaymentControllerWrapper = styled.div`
   position: fixed;
@@ -417,6 +425,12 @@ Request.HeaderText = styled.div`
     font-size:20px;
   }
 `;
+
+Request.ImageStackWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+
 Request.ButtonWrapper = styled.div`
   padding-top:29px;
   text-align:center;
@@ -466,8 +480,7 @@ Request.Ask = styled.div`
   }
 `;
 Request.Questionwraps = styled.div`
-  width:100%;
-  height:100%;
+
 `;
 Request.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
@@ -560,14 +573,11 @@ Request.InputWrapper = styled.div`
 `;
 Request.WrapsInput = styled.div`
   width:100%;
-  height:60px;
   @media(min-width:768px){
     width:100%;
-    height:30px;
   }
   @media(min-width:1025){
     width:352px;
-    height:25px;
   }
 
 `;
@@ -679,7 +689,7 @@ background-color: #fff;
 z-index: 5;
 box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
 @media(min-width: 768px) {
-  padding: 13px 0px;
+  padding: 13px;
 }
 @media(min-width:1025px){
   margin: 0 42px;

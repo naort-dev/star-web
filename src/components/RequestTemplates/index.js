@@ -480,6 +480,7 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   customInput = {<Templates.Input />}
+                  popperPlacement="top"
                   selected={this.props.date}
                   onChange={this.handleChange}
                   onBlur={event => this.props.checkRequired(event.target.value, '3')}
