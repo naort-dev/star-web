@@ -679,27 +679,27 @@ Request.EventStep2 = styled.div`
 
 `;
 Request.PaymentControllerWrapper = styled.div`
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-text-align:right;
-padding: 7px 16px;
-background-color: #fff;
-z-index: 5;
-box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-@media(min-width: 768px) {
-  padding: 13px;
-}
-@media(min-width:1025px){
-  margin: 0 42px;
-  position:absolute;
-  box-shadow: none;
-  left:0;
-  right:0;
-  bottom:0;
-  border-top: solid #333333 1px;
-}
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align:right;
+  padding: 7px 16px;
+  background-color: #fff;
+  z-index: 5;
+  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+  @media(min-width: 768px) {
+    padding: 13px;
+  }
+  @media(min-width:1025px){
+    margin: 0 42px;
+    position:absolute;
+    box-shadow: none;
+    left:0;
+    right:0;
+    bottom:0;
+    border-top: solid #333333 1px;
+  }
 `;
 Request.ContinueButton = styled.button`
   background-color: #fff; 
