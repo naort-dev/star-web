@@ -103,7 +103,7 @@ class RequestTemplates extends React.Component {
               <Templates.Label>Important Info</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
-                  placeholder="Nickname?"
+                  placeholder="hello you&#10;Second line&#10;Third line"
                   type="text"
                   name="important"
                   value={this.props.importantinfo}
