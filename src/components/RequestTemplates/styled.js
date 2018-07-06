@@ -15,6 +15,7 @@ Templates.InputWrapper = styled.div`
   margin-top:1%;
   @media(min-width:768px){
     flex-direction: row;
+    align-items: flex-start;
     margin-top:5%;
   }
   @media(min-width: 1025px) {
@@ -34,6 +35,7 @@ Templates.Label = styled.div`
     width:55%;
     display:flex;
     align-items:center;
+    padding-right: 10px;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
