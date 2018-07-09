@@ -217,7 +217,6 @@ export default class Login extends React.Component {
     return true;
   }
   isFormValid = () => {
-    console.log(this.state);
     if (this.state.email.isValid && this.state.password.isValid) {
       return true;
     }
@@ -228,11 +227,11 @@ export default class Login extends React.Component {
   }
   render() {
     const { email, password } = this.state;
-    const loginToContinue = this.props.location.state && this.props.location.state.from;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const loginToContinue = this.props.location.state && this.props.location.state.to;
+    const { to } = this.props.location.state || { to: { pathname: '/' } };
     const { redirectToReferrer } = this.state;
     if (redirectToReferrer) {
-      return <Redirect to={from} />;
+      return <Redirect to={to} />;
     }
     return (   
       <div>

@@ -75,7 +75,7 @@ class ImageRender extends React.Component {
   }
   render() {
     if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
+      return <Redirect to={{ pathname: '/login', state: { to: `starDetail/${this.props.id}` } }} />;
     }
     const { props } = this;
     return (

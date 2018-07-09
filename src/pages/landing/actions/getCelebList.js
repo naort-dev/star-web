@@ -1,7 +1,6 @@
 
 import Api from '../../../lib/api';
 import { fetch, CancelToken } from '../../../services/fetch';
-import { resetFavouritesQueue } from '../../../store/shared/actions/followCelebrity';
 import axios from 'axios';
 
 export const CELEB_LIST = {

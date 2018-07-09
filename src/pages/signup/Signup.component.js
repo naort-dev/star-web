@@ -249,9 +249,10 @@ export default class SignUp extends React.Component {
 
   render() {
     const { redirectToReferrer } = this.state;
-
+    const loginToContinue = this.props.location.state && this.props.location.state.to;
+    const { to } = this.props.location.state || { to: { pathname: '/' } };
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      return <Redirect to={to} />;
     }
     return (
       <LoginContainer.wrapper>
