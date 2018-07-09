@@ -84,6 +84,11 @@ export default class SignUp extends React.Component {
       });
     }
   }
+  componentWillUnmount() {
+    if (this.state.redirectToReferrer) {
+      this.props.resetRedirectUrls();
+    }
+  }
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);
@@ -248,9 +253,9 @@ export default class SignUp extends React.Component {
 
 
   render() {
-    const { redirectToReferrer } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.to;
-    const { to } = this.props.location.state || { to: { pathname: '/' } };
+    const to = this.props.redirectUrls.to || '/';
+    const { redirectToReferrer } = this.state;
     if (redirectToReferrer) {
       return <Redirect to={to} />;
     }

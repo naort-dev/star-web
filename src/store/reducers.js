@@ -13,6 +13,7 @@ import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 import myVideosList from '../pages/myVideos/reducers/myVideosList';
 import bookingData from '../store/shared/reducers/bookings';
+import redirectReferrer from '../store/shared/reducers/redirect';
 
 const rootReducer = combineReducers({
   session,
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   occasionList,
   myVideosList,
   bookingData,
+  redirectReferrer,
 });
 
 export default rootReducer;

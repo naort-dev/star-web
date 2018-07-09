@@ -27,7 +27,16 @@ export default class Landing extends React.Component {
             this.props.filters.searchParam !== this.props.celebList.currentSearchParam
 
         ) {
-          this.props.fetchCelebrityList(0, true);
+          if (this.props.isLoggedIn && this.props.followCelebData.celebId) {
+            this.props.followCelebrity(
+              this.props.followCelebData.celebId,
+              this.props.followCelebData.celebProfessions,
+              this.props.followCelebData.follow,
+              () => { this.props.fetchCelebrityList(0, true); },
+            );
+          } else {
+            this.props.fetchCelebrityList(0, true);
+          }
         }
         break;
       case 'Videos':
@@ -71,7 +80,6 @@ export default class Landing extends React.Component {
       });
     }
     if (tabChange || loginChange) {
-      const followCelebData = this.props.followCelebData;
       this.setState({ filterSelected: false }, () => {
         this.setScrollHeight();
       });
@@ -83,9 +91,6 @@ export default class Landing extends React.Component {
         if ((tabChange && !this.props.celebList.data.length) || loginChange) {
           this.props.fetchCelebrityList(0, true);
         }
-      }
-      if (followCelebData.celebId) {
-        this.props.updateCelebrityFollow(followCelebData.celebId, followCelebData.celebrityProfessions, followCelebData.follow);
       }
     }
   }

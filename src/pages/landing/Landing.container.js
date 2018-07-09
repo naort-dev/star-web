@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebList';
 import { fetchVideosList } from './actions//getVideosList';
+import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 
 import {
   updateCategory,
@@ -35,7 +36,7 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedSubCategory: (selectedList, category) => dispatch(updateSelectedSubCategory(selectedList, category)),
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
-  updateCelebrityFollow: (celebId, celebProfessions, follow) => dispatch(updateCelebrityFollow(celebId, celebProfessions, follow)),
+  followCelebrity: (celebId, celebProfessions, follow, callback) => dispatch(followCelebrity(celebId, celebProfessions, follow, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

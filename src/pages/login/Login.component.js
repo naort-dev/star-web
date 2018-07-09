@@ -11,7 +11,6 @@ import { LoginContainer, HeaderSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
 import MainLoader from '../../components/MainLoader';
 
-
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -84,6 +83,11 @@ export default class Login extends React.Component {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
+    }
+  }
+  componentWillUnmount() {
+    if (this.state.redirectToReferrer) {
+      this.props.resetRedirectUrls();
     }
   }
   onSignIn = (googleUser) => {
@@ -228,17 +232,13 @@ export default class Login extends React.Component {
   render() {
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.to;
-    const { to } = this.props.location.state || { to: { pathname: '/' } };
+    const to = this.props.redirectUrls.to || '/';
     const { redirectToReferrer } = this.state;
     if (redirectToReferrer) {
       return <Redirect to={to} />;
     }
     return (   
       <div>
-        {/* {
-          loginToContinue &&
-          <p>You must login before accessing!</p>
-        } */}
         {
           this.props.loading ?
             <MainLoader />

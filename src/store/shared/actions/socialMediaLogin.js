@@ -1,7 +1,6 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { followCelebrity } from './followCelebrity';
 
 export const SOCIALMEDIALOGIN = {
   start: 'session/ON_LOGIN',
@@ -56,10 +55,6 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(socialMediaLoginFetchEnd());
       dispatch(socialMediaLoginFetchSuccess(resp.data.data));
-      const followQueue = getState().followCelebrityStatus;
-      if (followQueue.celebId) {
-        dispatch(followCelebrity(followQueue.celebId, followQueue.celebProfessions, followQueue.follow));
-      }
     } else {
       dispatch(socialMediaLoginFetchEnd());
       if (resp.data.status === '400') {

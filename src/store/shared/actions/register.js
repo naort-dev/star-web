@@ -1,7 +1,6 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { followCelebrity } from './followCelebrity';
 
 export const REGISTER = {
   start: 'session/ON_LOGIN',
@@ -56,10 +55,6 @@ export const registerUser = (
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(registerFetchEnd());
       dispatch(registerFetchSuccess(resp.data.data));
-      const followQueue = getState().followCelebrityStatus;
-      if (followQueue.celebId) {
-        dispatch(followCelebrity(followQueue.celebId, followQueue.celebProfessions, followQueue.follow));
-      }
     } else {
       dispatch(registerFetchEnd());
     }

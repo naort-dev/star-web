@@ -26,7 +26,7 @@ export const resetFavouritesQueue = () => ({
   type: FOLLOW_CELEBRITY.resetFollowQueue,
 });
 
-export const followCelebrity = (celebrityId, celebProfessions, follow) => (dispatch, getState) => {
+export const followCelebrity = (celebrityId, celebProfessions, follow, callback) => (dispatch, getState) => {
   const { auth_token } = getState().session;
   return fetch.post(Api.followCelebrity, {
     celebrity: celebrityId,
@@ -38,6 +38,9 @@ export const followCelebrity = (celebrityId, celebProfessions, follow) => (dispa
   }).then((resp) => {
     dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
     dispatch(updateFavouriteList(celebrityId, follow));
+    if (callback) {
+      callback();
+    }
     const followQueue = getState().followCelebrityStatus;
     if (followQueue.celebId) {
       dispatch(resetFavouritesQueue());
