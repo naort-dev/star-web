@@ -94,9 +94,7 @@ export default class SignUp extends React.Component {
     }
   }
   componentWillUnmount() {
-    if (this.state.redirectToReferrer) {
-      this.props.resetRedirectUrls();
-    }
+    this.props.resetRedirectUrls();
   }
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
