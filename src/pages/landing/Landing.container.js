@@ -21,7 +21,6 @@ const mapStateToProps = state => ({
   professionsList: state.professionsList,
   filters: state.filters,
   isLoggedIn: state.session.isLoggedIn,
-  followCelebData: state.followCelebrityStatus,
 });
 
 const mapDispatchToProps = dispatch => ({
