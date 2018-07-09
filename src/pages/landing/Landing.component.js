@@ -27,16 +27,7 @@ export default class Landing extends React.Component {
             this.props.filters.searchParam !== this.props.celebList.currentSearchParam
 
         ) {
-          if (this.props.isLoggedIn && this.props.followCelebData.celebId) {
-            this.props.followCelebrity(
-              this.props.followCelebData.celebId,
-              this.props.followCelebData.celebProfessions,
-              this.props.followCelebData.follow,
-              () => { this.props.fetchCelebrityList(0, true); },
-            );
-          } else {
-            this.props.fetchCelebrityList(0, true);
-          }
+          this.props.fetchCelebrityList(0, true);
         }
         break;
       case 'Videos':

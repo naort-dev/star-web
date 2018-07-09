@@ -16,13 +16,6 @@ export default class Favourites extends React.Component {
   }
   componentWillMount() {
     if (this.props.followCelebData.celebId) {
-      this.props.followCelebrity(
-        this.props.followCelebData.celebId,
-        this.props.followCelebData.celebProfessions,
-        this.props.followCelebData.follow,
-        () => { this.props.fetchFavouritesList(0, true); },
-      );
-    } else {
       this.props.fetchFavouritesList(0, true);
     }
   }

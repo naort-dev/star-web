@@ -82,6 +82,15 @@ export default class SignUp extends React.Component {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
+      const followData = this.props.followCelebData;
+      if (followData.celebId) {
+        this.props.followCelebrity(
+          this.props.followCelebData.celebId,
+          this.props.followCelebData.celebProfessions,
+          this.props.followCelebData.follow,
+          true,
+        );
+      }
     }
   }
   componentWillUnmount() {
