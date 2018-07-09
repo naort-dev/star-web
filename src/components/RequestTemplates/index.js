@@ -414,7 +414,7 @@ class RequestTemplates extends React.Component {
                   name="EventName"
                   value={this.props.eventdetailName}
                   onChange={event => this.props.handleChange(event.target.value, 'eventdetailName')}
-                  onBlur={event => this.props.checkRequired(event.target.value, 'eventTitleValidation')}
+                  onBlur={this.props.checkRequiredTitle}
                 />
                 {this.props.eventTitle ?
                   <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
@@ -431,10 +431,14 @@ class RequestTemplates extends React.Component {
                   type="text"
                   name="userName"
                   value={this.props.userName}
-                  onBlur={event => this.props.checkRequired(event.target.value, 'userNameValidation')}
+                  onBlur={this.props.checkRequiredUserName}
                   onChange={event => this.props.handleChange(event.target.value, 'userName')}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                {this.props.whoIsfrom ?
+                  <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
+                  :
+                  null
+                  }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -447,7 +451,7 @@ class RequestTemplates extends React.Component {
                   popperPlacement="top"
                   selected={this.props.date}
                   onChange={this.handleChange}
-                  onBlur={event => this.props.checkRequired(event.target.value, 'dateValidation')}
+                  onBlur={this.props.checkRequiredDate}
                 />
                 {this.props.eventDate ?
                   <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
@@ -483,9 +487,9 @@ class RequestTemplates extends React.Component {
                   name="hostName"
                   value={this.props.hostName}
                   onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                  onBlur={event => this.props.checkRequired(event.target.value, 'hostNameValidation')}
+                  onBlur={this.props.checkRequiredHostName}
                 />
-                {this.props.eventTitle ?
+                {this.props.whoIsfor ?
                   <Templates.ErrorMsg>Please enter guest of honor</Templates.ErrorMsg>
                   :
                   null
@@ -501,9 +505,13 @@ class RequestTemplates extends React.Component {
                   value={this.props.userName}
                   name="userName"
                   onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                  onBlur={event => this.props.checkRequired(event.target.value, 'userNameValidation')}
+                  onBlur={this.props.checkRequiredUserName}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
+                {this.props.whoIsfrom ?
+                  <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                  :
+                  null
+                  }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -516,7 +524,7 @@ class RequestTemplates extends React.Component {
                   popperPlacement="top"
                   selected={this.props.date}
                   onChange={this.handleChange}
-                  onBlur={event => this.props.checkRequired(event.target.value, 'dateValidation')}
+                  onBlur={this.props.checkRequiredDate}
                 />
                 {this.props.eventDate ?
                   <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>

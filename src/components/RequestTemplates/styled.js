@@ -13,12 +13,16 @@ Templates.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top:1%;
+  height:90px;
+ 
   @media(min-width:768px){
     flex-direction: row;
     align-items: flex-start;
     margin-top:5%;
+    height:40px;
   }
   @media(min-width: 1025px) {
+    height:40px;
     margin-top: 30px;
   }
   @media(min-width: 1920px) {
