@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { followCelebrity } from './followCelebrity';
 
 export const LOGIN = {
   start: 'session/ON_LOGIN',
@@ -48,7 +49,7 @@ export const updateLoginStatus = sessionDetails => ({
   sessionDetails,
 });
 
-export const loginUser = (loginEmail, loginPassword) => (dispatch) => {
+export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => {
   dispatch(loginFetchStart());
   return fetch.post(Api.login, {
     username: loginEmail,
@@ -58,6 +59,10 @@ export const loginUser = (loginEmail, loginPassword) => (dispatch) => {
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(loginFetchEnd());
       dispatch(loginFetchSuccess(resp.data.data));
+      const followQueue = getState().followCelebrityStatus;
+      if (followQueue.celebId) {
+        dispatch(followCelebrity(followQueue.celebId, followQueue.celebProfessions, followQueue.follow));
+      }
     } else {
       dispatch(loginFetchEnd());
     }

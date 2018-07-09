@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
-import { fetchCelebrityList } from './actions/getCelebList';
+import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebList';
 import { fetchVideosList } from './actions//getVideosList';
+
 import {
   updateCategory,
   switchTab,
@@ -20,6 +21,7 @@ const mapStateToProps = state => ({
   professionsList: state.professionsList,
   filters: state.filters,
   isLoggedIn: state.session.isLoggedIn,
+  followCelebData: state.followCelebrityStatus,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -33,6 +35,7 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedSubCategory: (selectedList, category) => dispatch(updateSelectedSubCategory(selectedList, category)),
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
+  updateCelebrityFollow: (celebId, celebProfessions, follow) => dispatch(updateCelebrityFollow(celebId, celebProfessions, follow)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

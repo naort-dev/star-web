@@ -2,8 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ImageRenderDiv from './styled';
-import { followCelebrity } from '../../store/shared/actions/followCelebrity';
-
+import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 
 class ImageRender extends React.Component {
   constructor(props) {
@@ -70,6 +69,7 @@ class ImageRender extends React.Component {
       this.props.followCelebrity(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
       this.setState({ favouriteSelected: !this.state.favouriteSelected });
     } else {
+      this.props.updateFavouritesQueue(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
       this.setState({ loginRedirect: true });
     }
   }
@@ -119,6 +119,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   followCelebrity: (celebId, celebProfessions, follow) => dispatch(followCelebrity(celebId, celebProfessions, follow)),
+  updateFavouritesQueue: (celebId, celebProfessions, follow) => dispatch(updateFavouritesQueue(celebId, celebProfessions, follow)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageRender);

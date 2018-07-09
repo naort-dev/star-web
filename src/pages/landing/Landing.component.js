@@ -1,6 +1,5 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Route } from 'react-router-dom';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
@@ -72,6 +71,7 @@ export default class Landing extends React.Component {
       });
     }
     if (tabChange || loginChange) {
+      const followCelebData = this.props.followCelebData;
       this.setState({ filterSelected: false }, () => {
         this.setScrollHeight();
       });
@@ -83,6 +83,9 @@ export default class Landing extends React.Component {
         if ((tabChange && !this.props.celebList.data.length) || loginChange) {
           this.props.fetchCelebrityList(0, true);
         }
+      }
+      if (followCelebData.celebId) {
+        this.props.updateCelebrityFollow(followCelebData.celebId, followCelebData.celebrityProfessions, followCelebData.follow);
       }
     }
   }
