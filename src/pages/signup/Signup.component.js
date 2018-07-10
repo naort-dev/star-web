@@ -82,7 +82,19 @@ export default class SignUp extends React.Component {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
+      const followData = this.props.followCelebData;
+      if (followData.celebId) {
+        this.props.followCelebrity(
+          this.props.followCelebData.celebId,
+          this.props.followCelebData.celebProfessions,
+          this.props.followCelebData.follow,
+          true,
+        );
+      }
     }
+  }
+  componentWillUnmount() {
+    this.props.resetRedirectUrls();
   }
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
@@ -248,10 +260,11 @@ export default class SignUp extends React.Component {
 
 
   render() {
+    const loginToContinue = this.props.location.state && this.props.location.state.to;
+    const to = this.props.redirectUrls.to || '/';
     const { redirectToReferrer } = this.state;
-
     if (redirectToReferrer) {
-      return <Redirect to="/" />;
+      return <Redirect to={to} />;
     }
     return (
       <LoginContainer.wrapper>

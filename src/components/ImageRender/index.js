@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
 import { connect } from 'react-redux';
 import ImageRenderDiv from './styled';
-import { followCelebrity } from '../../store/shared/actions/followCelebrity';
-
+import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
+import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 
 class ImageRender extends React.Component {
   constructor(props) {
@@ -16,7 +17,6 @@ class ImageRender extends React.Component {
         height: '158px',
       },
       favouriteSelected: props.celebrityFollow || false,
-      loginRedirect: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -70,13 +70,12 @@ class ImageRender extends React.Component {
       this.props.followCelebrity(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
       this.setState({ favouriteSelected: !this.state.favouriteSelected });
     } else {
-      this.setState({ loginRedirect: true });
+      this.props.setRedirectUrls(`starDetail/${this.props.id}`);
+      this.props.updateFavouritesQueue(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
+      this.props.history.push('/login');
     }
   }
   render() {
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
-    }
     const { props } = this;
     return (
       <ImageRenderDiv innerRef={(node) => { this.imageDiv = node; }}>
@@ -119,6 +118,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   followCelebrity: (celebId, celebProfessions, follow) => dispatch(followCelebrity(celebId, celebProfessions, follow)),
+  updateFavouritesQueue: (celebId, celebProfessions, follow) => dispatch(updateFavouritesQueue(celebId, celebProfessions, follow)),
+  setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ImageRender);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ImageRender));

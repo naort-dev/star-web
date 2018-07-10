@@ -41,7 +41,7 @@ export const registerUser = (
   UserEmail,
   UserPassword,
   UserRole,
-) => (dispatch) => {
+) => (dispatch, getState) => {
   dispatch(registerFetchStart());
   return fetch.post(Api.register, {
     first_name: UserFirstName,
