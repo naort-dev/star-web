@@ -15,9 +15,7 @@ export default class Favourites extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.props.followCelebData.celebId) {
-      this.props.fetchFavouritesList(0, true);
-    }
+    this.props.fetchFavouritesList(0, true);
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
