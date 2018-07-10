@@ -560,12 +560,16 @@ Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top:1%;
+  height:90px;
+ 
   @media(min-width:768px){
     flex-direction: row;
     margin-top:5%;
+    height:40px;
   }
   @media(min-width: 1025px) {
     margin-top: 30px;
+    height:40px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;

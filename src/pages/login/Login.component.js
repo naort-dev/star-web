@@ -11,7 +11,6 @@ import { LoginContainer, HeaderSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
 import MainLoader from '../../components/MainLoader';
 
-
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
@@ -84,7 +83,19 @@ export default class Login extends React.Component {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
+      const followData = this.props.followCelebData;
+      if (followData.celebId) {
+        this.props.followCelebrity(
+          this.props.followCelebData.celebId,
+          this.props.followCelebData.celebProfessions,
+          this.props.followCelebData.follow,
+          true,
+        );
+      }
     }
+  }
+  componentWillUnmount() {
+    this.props.resetRedirectUrls();
   }
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
@@ -217,7 +228,6 @@ export default class Login extends React.Component {
     return true;
   }
   isFormValid = () => {
-    console.log(this.state);
     if (this.state.email.isValid && this.state.password.isValid) {
       return true;
     }
@@ -228,18 +238,14 @@ export default class Login extends React.Component {
   }
   render() {
     const { email, password } = this.state;
-    const loginToContinue = this.props.location.state && this.props.location.state.from;
-    const { from } = this.props.location.state || { from: { pathname: '/' } };
+    const loginToContinue = this.props.location.state && this.props.location.state.to;
+    const to = this.props.redirectUrls.to || '/';
     const { redirectToReferrer } = this.state;
     if (redirectToReferrer) {
-      return <Redirect to={from} />;
+      return <Redirect to={to} />;
     }
     return (   
       <div>
-        {/* {
-          loginToContinue &&
-          <p>You must login before accessing!</p>
-        } */}
         {
           this.props.loading ?
             <MainLoader />

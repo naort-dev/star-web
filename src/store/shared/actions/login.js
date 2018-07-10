@@ -48,7 +48,7 @@ export const updateLoginStatus = sessionDetails => ({
   sessionDetails,
 });
 
-export const loginUser = (loginEmail, loginPassword) => (dispatch) => {
+export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => {
   dispatch(loginFetchStart());
   return fetch.post(Api.login, {
     username: loginEmail,

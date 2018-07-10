@@ -30,6 +30,7 @@ export default class Personal extends React.Component {
       selectEventerror: false,
       selectVideoerror: false,
       whoIsfor: false,
+      whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
     };
@@ -54,7 +55,9 @@ export default class Personal extends React.Component {
     this.emptyTemplateDetails();
   }
   handleBooking = () => {
-    if (!this.state.whoIsfor) {
+    const hostNameValid = this.checkRequiredHostName();
+    const userNameValid = this.checkRequiredUserName();
+    if (!hostNameValid && !userNameValid) {
       const bookObj = this.createBookingObject(this.state);
       if (bookObj) {
         if (localStorage) {
@@ -65,32 +68,25 @@ export default class Personal extends React.Component {
       }
     }
   }
-  checkRequired = (event, arg) => {
-    if (arg === '1') {
-      if (event === '') {
-        this.setState({ whoIsfor: true });
-      } else {
-        this.setState({ whoIsfor: false });
-      }
-    } else if (arg === '2') {
-      if (event === '') {
-        this.setState({ eventTitle: true });
-      } else {
-        this.setState({ eventTitle: false });
-      }
-    } else if (arg === '3') {
-      if (event === '') {
-        this.setState({ eventDate: true });
-      } else {
-        this.setState({ eventDate: false });
-      }
+  checkRequiredHostName = () => {
+    let whoIsforValue;
+    if (this.state.selectedPersonal === '2') {
+      whoIsforValue = this.state.hostName === '' ? true : false;
     } else {
-      this.setState({
-        whoIsfor: false,
-        eventTitle: false,
-        eventDate: false,
-      });
+      whoIsforValue = false;
     }
+    this.setState({ whoIsfor: whoIsforValue });
+    return whoIsforValue;
+  }
+  checkRequiredUserName = () => {
+    let whoIsfromValue;
+    if (this.state.selectedPersonal === '2') {
+      whoIsfromValue = this.state.userName === '' ? true : false;
+    } else {
+      whoIsfromValue = false;
+    }
+    this.setState({ whoIsfrom: whoIsfromValue });
+    return whoIsfromValue;
   }
   createBookingObject = (obj) => {
     const relationshipValue = obj.relationship;
@@ -180,6 +176,7 @@ export default class Personal extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -308,8 +305,10 @@ export default class Personal extends React.Component {
                               importantinfo={this.state.importantinfo}
                               date={this.state.date}
                               eventdetailName={this.state.eventdetailName}
-                              checkRequired={this.checkRequired}
+                              checkRequiredHostName={this.checkRequiredHostName}
+                              checkRequiredUserName={this.checkRequiredUserName}
                               whoIsfor={this.state.whoIsfor}
+                              whoIsfrom={this.state.whoIsfrom}
                               eventTitle={this.state.eventTitle}
                               eventDate={this.state.eventDate}
                               starName={fullName}
