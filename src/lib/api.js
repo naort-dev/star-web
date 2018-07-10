@@ -13,6 +13,7 @@ class Api {
   static getUserVideos = 'request/request_list/';
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
+  static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
 }
 
 export default Api;

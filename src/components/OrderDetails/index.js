@@ -2,6 +2,7 @@ import React from 'react';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import OrderDetailsItem from './orderDetailsItem';
+import Api from '../../lib/api';
 import OrderStyled from './styled';
 
 export default class OrderDetails extends React.Component {
@@ -71,8 +72,8 @@ export default class OrderDetails extends React.Component {
       default: return null;
     }
   }
-  downloadVideo = (url) => {
-    const videoUrl = url;
+  downloadVideo = (videoId) => {
+    const videoUrl = Api.downloadVideo(videoId);
     const element = document.createElement('a');
     element.setAttribute('href', videoUrl);
     element.setAttribute('download', 'video.mp4');
@@ -129,7 +130,7 @@ export default class OrderDetails extends React.Component {
                     {
                       props.requestStatusId === 6 ?
                         <OrderStyled.DownloadVideo
-                          onClick={() => this.downloadVideo(props.requestVideo.s3_video_url)}
+                          onClick={() => this.downloadVideo(props.requestVideo.video_id)}
                         >
                           Download
                         </OrderStyled.DownloadVideo>

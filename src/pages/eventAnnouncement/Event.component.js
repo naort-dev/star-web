@@ -27,6 +27,7 @@ export default class Event extends React.Component {
       eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       whoIsfor: false,
+      whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
     };
@@ -77,7 +78,11 @@ export default class Event extends React.Component {
     this.setState({ [type]: data });
   }
   handleBooking = () => {
-    if (!this.state.eventTitle && !this.state.eventDate) {
+    const hostNameValid = this.checkRequiredHostName();
+    const userNameValid = this.checkRequiredUserName();
+    const dateValid = this.checkRequiredDate();
+    const eventTitleValid = this.checkRequiredTitle();
+    if (!hostNameValid && !userNameValid && !dateValid && !eventTitleValid) {
       const bookObj = this.createBookingObject(this.state);
       if (bookObj) {
         localStorage.setItem('bookingData', JSON.stringify(bookObj));
@@ -86,32 +91,35 @@ export default class Event extends React.Component {
       }
     }
   }
-  checkRequired = (event, arg) => {
-    if (arg === '1') {
-      if (event === '') {
-        this.setState({ whoIsfor: true });
-      } else {
-        this.setState({ whoIsfor: false });
-      }
-    } else if (arg === '2') {
-      if (event === '') {
-        this.setState({ eventTitle: true });
-      } else {
-        this.setState({ eventTitle: false });
-      }
-    } else if (arg === '3') {
-      if (event === '') {
-        this.setState({ eventDate: true });
-      } else {
-        this.setState({ eventDate: false });
-      }
+  checkRequiredHostName = () => {
+    let whoIsforValue;
+    if (this.state.templateType === 7) {
+      whoIsforValue = this.state.hostName === '' ? true : false;
     } else {
-      this.setState({
-        whoIsfor: false,
-        eventTitle: false,
-        eventDate: false,
-      });
+      whoIsforValue = false;
     }
+    this.setState({ whoIsfor: whoIsforValue });
+    return whoIsforValue;
+  }
+  checkRequiredUserName = () => {
+    const whoIsfromValue = this.state.userName === '' ? true : false;
+    this.setState({ whoIsfrom: whoIsfromValue });
+    return whoIsfromValue;
+  }
+  checkRequiredTitle = () => {
+    let eventTitleValue;
+    if (this.state.templateType === 6) {
+      eventTitleValue = this.state.eventdetailName === '' ? true : false;
+    } else {
+      eventTitleValue = false;
+    }
+    this.setState({ eventTitle: eventTitleValue });
+    return eventTitleValue;
+  }
+  checkRequiredDate = () => {
+    const dateValue = this.state.date === '' ? true : false;
+    this.setState({ eventDate: dateValue });
+    return dateValue;
   }
   createBookingObject = () => {
 
@@ -260,10 +268,15 @@ export default class Event extends React.Component {
                               importantinfo={this.state.importantinfo}
                               date={this.state.date}
                               eventdetailName={this.state.eventdetailName}
-                              checkRequired={this.checkRequired}
                               whoIsfor={this.state.whoIsfor}
+                              whoIsfrom={this.state.whoIsfrom}
                               eventTitle={this.state.eventTitle}
                               eventDate={this.state.eventDate}
+                              checkRequiredHostName={this.checkRequiredHostName}
+                              checkRequiredUserName={this.checkRequiredUserName}
+                              checkRequiredTitle={this.checkRequiredTitle}
+                              checkRequiredDate={this.checkRequiredDate}
+
                             />
                           </Request.EventStep2>
                           : null
