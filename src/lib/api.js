@@ -13,11 +13,15 @@ class Api {
   static getUserVideos = 'request/request_list/';
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
+<<<<<<< HEAD
 <<<<<<< 6f9e291d1a3f3f5ffde8c632414facc4abab5667
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
 =======
   static otherRelation = 'request/other_relation/';
 >>>>>>>  for other reationship feature
+=======
+  static otherRelation = 'request/other_relation/';
+>>>>>>> 762383b9e79ea591808dfd6f5a7cfecd734d0553
 }
 
 export default Api;
