@@ -658,8 +658,6 @@ Request.Select = styled.select`
   background-position: 97% 8px;
   background-size: 16px;
   padding-right: 40px;
-  background-color: #fff;
-  border: 2px solid rgba(51, 51, 51, 1);
   font-family: 'Ubuntu-Regular';
   color: #333333;
   font-size:16px;
@@ -667,7 +665,9 @@ Request.Select = styled.select`
   outline:none;
   height: 34px;
   text-indent: 10px;
-  background-color:rgba(248, 248, 248, 1);
+  background-color: white;
+  border: 1px solid #d0d2d3;
+  border-radius: 2px;
   @media(min-width:768px){
     margin-top:0;
     height:40px;

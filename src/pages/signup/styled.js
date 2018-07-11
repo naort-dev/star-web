@@ -277,12 +277,13 @@ LoginContainer.Input = styled.input`
   font-size:16px;
   text-align:left;
   outline:none;
-  border: 2px solid rgba(51, 51, 51, 1);
+  border: 1px solid #d0d2d3;
+  border-radius: 2px;
   width: 100%;
   height: 40px;
   text-indent: 10px;
   margin-top:3%;
-  background-color:rgba(248, 248, 248, 1);
+  background-color: #fff;
   @media(min-width:768px){
     margin-top:0;
     height:40px;
