@@ -10,8 +10,8 @@ class RequestTemplates extends React.Component {
     this.state = {
       type: props.type,
       relationship: props.relationship,
-      user:props.user,
-      eventname:props.eventName,
+      user: props.user,
+      eventname: props.eventName,
     };
     this.handleChange = this.handleChange.bind(this);
   }
@@ -23,7 +23,7 @@ class RequestTemplates extends React.Component {
   }
   renderTemplates = () => {
     const relations = this.state.relationship;
-    const optionItems = relations.map((relations) => 
+    const optionItems = relations.map((relations) =>
       <option value={relations.id} key={relations.id}>{relations.title}</option>
     );
     switch (this.state.type) {
@@ -49,11 +49,11 @@ class RequestTemplates extends React.Component {
                     :
                     null
                   }
-                  
+
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-             null
+              :
+              null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
@@ -74,8 +74,8 @@ class RequestTemplates extends React.Component {
                   }
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
@@ -87,11 +87,29 @@ class RequestTemplates extends React.Component {
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
+                    <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
+            }
+            {this.props.relationshipValue === 'otherRelation' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Please enter relationship"
+                    type="text"
+                    name="otherRelationship"
+                    value={this.props.otherRelationValue}
+                    onBlur={this.props.otherRelationship}
+                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+              null
             }
             <Templates.InputWrapper>
               <Templates.Label>What is {this.state.eventname} for?</Templates.Label>
@@ -142,8 +160,8 @@ class RequestTemplates extends React.Component {
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
               :
-               null
-              }
+              null
+            }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
@@ -163,8 +181,8 @@ class RequestTemplates extends React.Component {
                   }
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
@@ -176,11 +194,29 @@ class RequestTemplates extends React.Component {
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
+                    <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
+            }
+            {this.props.relationshipValue === 'otherRelation' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Please enter relationship"
+                    type="text"
+                    name="otherRelationship"
+                    value={this.props.otherRelationValue}
+                    onBlur={this.props.otherRelationship}
+                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+              null
             }
             <Templates.InputWrapper>
               <Templates.Label>Who is the Starsona video honoring?</Templates.Label>
@@ -232,8 +268,8 @@ class RequestTemplates extends React.Component {
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
               :
-               null
-              }
+              null
+            }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
@@ -253,8 +289,8 @@ class RequestTemplates extends React.Component {
                   }
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
@@ -266,11 +302,29 @@ class RequestTemplates extends React.Component {
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
+                    <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
+            }
+            {this.props.relationshipValue === 'otherRelation' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Please enter relationship"
+                    type="text"
+                    name="otherRelationship"
+                    value={this.props.otherRelationValue}
+                    onBlur={this.props.otherRelationship}
+                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+              null
             }
             <Templates.InputWrapper>
               <Templates.Label>What's the occasion?</Templates.Label>
@@ -313,7 +367,7 @@ class RequestTemplates extends React.Component {
         );
       case 5:
         return (
-        
+
           <div>
             {this.state.user === '2' ?
               <Templates.InputWrapper>
@@ -335,8 +389,8 @@ class RequestTemplates extends React.Component {
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
               :
-               null
-              }
+              null
+            }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
@@ -356,8 +410,8 @@ class RequestTemplates extends React.Component {
                   }
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
@@ -369,11 +423,29 @@ class RequestTemplates extends React.Component {
                   >
                     <option value="0" key="0">Choose One</option>
                     {optionItems}
+                    <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
-            :
-            null
+              :
+              null
+            }
+            {this.props.relationshipValue === 'otherRelation' ?
+              <Templates.InputWrapper>
+                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.WrapsInput>
+                  <Templates.Input
+                    placeholder="Please enter relationship"
+                    type="text"
+                    name="otherRelationship"
+                    value={this.props.otherRelationValue}
+                    onBlur={this.props.otherRelationship}
+                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
+                  />
+                </Templates.WrapsInput>
+              </Templates.InputWrapper>
+              :
+              null
             }
             <Templates.InputWrapper>
               <Templates.Label>When is the Occasion?</Templates.Label>
@@ -420,7 +492,7 @@ class RequestTemplates extends React.Component {
                   <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
                   :
                   null
-                  }
+                }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -438,7 +510,7 @@ class RequestTemplates extends React.Component {
                   <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
                   :
                   null
-                  }
+                }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -457,7 +529,7 @@ class RequestTemplates extends React.Component {
                   <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
                   :
                   null
-                  }
+                }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -493,7 +565,7 @@ class RequestTemplates extends React.Component {
                   <Templates.ErrorMsg>Please enter guest of honor</Templates.ErrorMsg>
                   :
                   null
-                  }
+                }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -511,7 +583,7 @@ class RequestTemplates extends React.Component {
                   <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                   :
                   null
-                  }
+                }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
@@ -520,7 +592,7 @@ class RequestTemplates extends React.Component {
                 <DatePicker
                   dateFormat="LL"
                   readOnly
-                  customInput = {<Templates.Input />}
+                  customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
                   onChange={this.handleChange}
@@ -530,7 +602,7 @@ class RequestTemplates extends React.Component {
                   <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
                   :
                   null
-                  }
+                }
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>

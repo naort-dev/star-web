@@ -34,7 +34,7 @@ injectGlobal`
     background-color: white;
     border: 3px solid rgba(51, 51, 51, 1);
     @media(min-width:768px){
-      left: 0px;
+      left:0px;
     }
     @media(min-width: 1025px){
       left:0px;
@@ -72,16 +72,8 @@ injectGlobal`
         height:6px;
       }
   }
-  .react-datepicker-wrapper,
-  .react-datepicker__input-container{
-    width:100%;
-  }
-  .react-datepicker__day--selected,
-  .react-datepicker__day--in-selecting-range, 
-  .react-datepicker__day--in-range {
-    border-radius: 0.3rem;
-    background-color: #FF6C58!important;
-    color: #fff;
-  }
+ 
+
+ 
  
 `
