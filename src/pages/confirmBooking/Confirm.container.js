@@ -5,6 +5,7 @@ import { setBookingDetails, cancelBookingDetails } from '../../store/shared/acti
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
+  authToken: state.session.auth_token.authentication_token,
   loading: state.session.loading,
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,

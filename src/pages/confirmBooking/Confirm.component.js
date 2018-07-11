@@ -5,12 +5,13 @@ import { Request, HeaderSection } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
+import StripeCheckout from '../../components/StripeCheckout';
 
 export default class Confirm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      bookingData: {}
+      bookingData: {},
     };
   }
   componentWillMount() {
@@ -99,6 +100,11 @@ export default class Confirm extends React.Component {
       this.props.setBookingDetails(JSON.parse(localStorageValue));
     }
   }
+
+  handleBooking = () => {
+    this.setState({ paymentMode: true });
+  }
+
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
       localStorage.removeItem('bookingData');
@@ -107,9 +113,45 @@ export default class Confirm extends React.Component {
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
   goBack = () => {
-    this.setState({ steps: true });
-    this.props.history.goBack();
+    if (this.state.paymentMode) {
+      this.setState({ paymentMode: false });
+    } else {
+      this.props.history.goBack();
+    }
   }
+
+  renderPaymentDetails = (props) => {
+    return (
+      <StripeCheckout authToken={props.authToken} />
+    );
+  }
+
+  renderConfirmDetails = (bookingData, rate, remainingBookings) => (
+    <React.Fragment>
+      <Request.ComponentWrapperScroll
+        autoHide
+        renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+      >
+        <Request.Heading>Confirm Booking</Request.Heading>
+        <Request.Questionwraps>
+          <Request.Ask>
+            {
+              this.getEventDetails(bookingData.type)
+            }
+          </Request.Ask>
+        </Request.Questionwraps>
+      </Request.ComponentWrapperScroll>
+      <Request.PaymentControllerWrapper>
+        <PaymentFooterController
+          rate={rate}
+          remainingBookings={remainingBookings}
+          buttonName="Purchase"
+          handleBooking={this.handleBooking}
+        />
+      </Request.PaymentControllerWrapper>
+    </React.Fragment>
+  )
+
   render() {
     let coverPhoto;
     let imageList = [];
@@ -118,32 +160,33 @@ export default class Confirm extends React.Component {
     let featuredImage;
     let firstImage;
     let secondImage;
-    const props = this.state.bookingData;
-    const rate = props.starPrice.rate ? props.starPrice.rate : 0;
-    const remainingBookings = props.starPrice.remaining_limit ? props.starPrice.remaining_limit : 0;
-    if (props.starDetail.first_name && props.starDetail.last_name) {
-      fullName = props.starDetail.nick_name ? props.starDetail.nick_name
-        : `${props.starDetail.first_name} ${props.starDetail.last_name}`;
+    const { props } = this;
+    const { bookingData } = this.state;
+    const rate = bookingData.starPrice.rate ? bookingData.starPrice.rate : 0;
+    const remainingBookings = bookingData.starPrice.remaining_limit ? bookingData.starPrice.remaining_limit : 0;
+    if (bookingData.starDetail.first_name && bookingData.starDetail.last_name) {
+      fullName = bookingData.starDetail.nick_name ? bookingData.starDetail.nick_name
+        : `${bookingData.starDetail.first_name} ${bookingData.starDetail.last_name}`;
     }
-    if (props.starDetail.avatar_photo) {
-      profilePhoto = props.starDetail.avatar_photo.thumbnail_url && props.starDetail.avatar_photo.thumbnail_url;
+    if (bookingData.starDetail.avatar_photo) {
+      profilePhoto = bookingData.starDetail.avatar_photo.thumbnail_url && bookingData.starDetail.avatar_photo.thumbnail_url;
     } else {
-      profilePhoto = props.starDetail.images && props.starDetail.images[0] && props.starDetail.images[0].thumbnail_url;
+      profilePhoto = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].thumbnail_url;
     }
-    if (props.starDetail.featured_photo) {
-      coverPhoto = props.starDetail.featured_photo.image_url && props.starDetail.featured_photo.image_url;
+    if (bookingData.starDetail.featured_photo) {
+      coverPhoto = bookingData.starDetail.featured_photo.image_url && bookingData.starDetail.featured_photo.image_url;
     } else {
-      coverPhoto = props.starDetail.images && props.starDetail.images[0] && props.starDetail.images[0].image_url;
+      coverPhoto = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url;
     }
-    if (props.starDetail.images && props.starDetail.images.length) {
-      firstImage = props.starDetail.images[0] ? props.starDetail.images[0].image_url : null;
-      secondImage = props.starDetail.images[1] ? props.starDetail.images[1].image_url : null;
+    if (bookingData.starDetail.images && bookingData.starDetail.images.length) {
+      firstImage = bookingData.starDetail.images[0] ? bookingData.starDetail.images[0].image_url : null;
+      secondImage = bookingData.starDetail.images[1] ? bookingData.starDetail.images[1].image_url : null;
       imageList = [firstImage, secondImage];
     }
-    if (props.starDetail.featured_photo) {
-      featuredImage = props.starDetail.featured_photo.image_url && props.starDetail.featured_photo.image_url
+    if (bookingData.starDetail.featured_photo) {
+      featuredImage = bookingData.starDetail.featured_photo.image_url && bookingData.starDetail.featured_photo.image_url
     } else {
-      featuredImage = props.starDetail.images && props.starDetail.images[0] && props.starDetail.images[0].image_url
+      featuredImage = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url
     }
     return (
       <Request.Wrapper>
@@ -164,37 +207,12 @@ export default class Confirm extends React.Component {
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
               <Request.ComponentWrapper>
-                <Request.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                >
-                  <Request.Heading>Confirm Booking</Request.Heading>
-                  <Request.Questionwraps>
-                    <Request.Ask>
-                      {
-                        this.getEventDetails(props.type)
-                      }
-                    </Request.Ask>
-                  </Request.Questionwraps>
-                </Request.ComponentWrapperScroll>
-                <Request.PaymentControllerWrapper>
-                  {this.state.steps ?
-
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-
-                    :
-                    <PaymentFooterController
-                      rate={rate}
-                      remainingBookings={remainingBookings}
-                      buttonName="Purchase"
-                      handleBooking={this.handleBooking}
-                    />
-                  }
-
-
-                </Request.PaymentControllerWrapper>
+                {
+                  this.state.paymentMode ?
+                    this.renderPaymentDetails(props)
+                  :
+                    this.renderConfirmDetails(bookingData, rate, remainingBookings)
+                }
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>

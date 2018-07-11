@@ -14,6 +14,7 @@ class Api {
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
+  static getEphemeralKey = 'payments/generatekey/';
 }
 
 export default Api;
