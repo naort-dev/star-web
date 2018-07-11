@@ -1,9 +1,5 @@
 Description: Create a CodePipeline to include Nested CloudFormation, CodeBuild and Approval steps.
 Parameters:
-  Env:
-    Type: String
-    Description: Environment name
-    Default: staging
 
   MajorVersion:
     Type: Number
@@ -70,7 +66,6 @@ Resources:
         PrivilegedMode: true
         EnvironmentVariables:
           - { Name: BASE_IMAGE_TAG, Value: !Ref 'BaseImageTag' }
-          - { Name: ENV, Value: !Ref 'Env' }
           - { Name: GIT_BRANCH, Value: !Ref 'GitBranch' }
           - { Name: MAJOR_VERSION, Value: !Ref 'MajorVersion' }
           - { Name: MINOR_VERSION, Value: !Ref 'MinorVersion' }
@@ -123,7 +118,7 @@ Resources:
                 ProjectName: !Ref 'BuildImages'
               RunOrder: 1
         -
-          Name: Deploy
+          Name: Staging
           Actions:
             -
               Name: vpc
@@ -139,8 +134,8 @@ Resources:
                 ActionMode: CREATE_UPDATE
                 RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
                 Capabilities: CAPABILITY_IAM
-                StackName: !Join ['', [!Ref 'Env', '-web-vpc']]
-                TemplateConfiguration: build::vpc.json
+                StackName: staging-web-vpc
+                TemplateConfiguration: build::staging-vpc.json
                 TemplatePath: source::aws/cloudformation/vpc.yml
               RunOrder: 1
             -
@@ -157,8 +152,8 @@ Resources:
                 ActionMode: CREATE_UPDATE
                 RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
                 Capabilities: CAPABILITY_IAM
-                StackName: !Join ['', [!Ref 'Env', '-web-app']]
-                TemplateConfiguration: build::web.json
+                StackName: staging-web-app
+                TemplateConfiguration: build::staging-web.json
                 TemplatePath: source::aws/cloudformation/web.yml
               RunOrder: 2
 

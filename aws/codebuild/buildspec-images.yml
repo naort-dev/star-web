@@ -32,10 +32,10 @@ phases:
       - echo Pushing the Docker images...
       - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
       - echo Writing artifacts...
-      - aws ssm get-parameter --name /env/$ENV/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > web.json
-      - aws ssm get-parameter --name /env/$ENV/web/vpc.json | jq -r .Parameter.Value > vpc.json
+      - aws ssm get-parameter --name /env/staging/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > staging-web.json
+      - aws ssm get-parameter --name /env/staging/web/vpc.json | jq -r .Parameter.Value > staging-vpc.json
 artifacts:
   files:
-    - web.json
-    - vpc.json
+    - staging-web.json
+    - staging-vpc.json
   discard-paths: yes
