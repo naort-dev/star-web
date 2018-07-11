@@ -87,13 +87,13 @@ export default class Askquestion extends React.Component {
                       </Request.InputFieldsWrapper>
                       <Request.OptionWrapper>
                         <Request.QuestionButton>Record Question</Request.QuestionButton>
-                        <Request.CheckBoxWrapper>
+                        {/* <Request.CheckBoxWrapper>
                           <Request.Label id="checkbox_container">
                             <span>Make video private?</span>
                             <Request.CheckBox id="private_video" type="checkbox" />
                             <Request.Span htmlFor="private_video" id="checkmark" />
                           </Request.Label>
-                        </Request.CheckBoxWrapper>
+                        </Request.CheckBoxWrapper> */}
                       </Request.OptionWrapper>
                     </Request.Ask>
                   </Request.Questionwraps>

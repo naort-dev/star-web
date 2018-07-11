@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { Redirect } from 'react-router-dom';
 import * as qs from 'query-string';
 import moment from 'moment';
 import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/styled';
@@ -33,6 +32,7 @@ export default class Personal extends React.Component {
       whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
+      otherRelationValue: props.bookingData.otherRelationValue ==='' ? '' : props.bookingData.otherRelationValue,
     };
   }
   componentWillMount() {
@@ -40,6 +40,21 @@ export default class Personal extends React.Component {
     this.props.fetchOccasionlist(1);
     const parsedQuery = qs.parse(this.props.location.search)
     this.setState({ step: parsedQuery });
+    if (this.props.isLoggedIn) {
+      this.setLoginUserName();
+    }
+  }
+
+  setLoginUserName = () => {
+    let userNameValue;
+    if (this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name !== '') {
+      userNameValue = this.props.loginDetails.nick_name;
+    } else if (!this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name == '') {
+      userNameValue = this.props.loginDetails.first_name + '' + this.props.loginDetails.last_name;
+    } else {
+      userNameValue = 'Myself';
+    }
+    this.setState({ userName: userNameValue });
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
@@ -88,38 +103,57 @@ export default class Personal extends React.Component {
     this.setState({ whoIsfrom: whoIsfromValue });
     return whoIsfromValue;
   }
+  checkMyself = (stateName) => {
+    let myselfValue;
+    if (this.state.selectedPersonal === '1' && this.state[stateName] === '') {
+      myselfValue = 'Myself';
+    } else {
+      myselfValue = this.state[stateName];
+    }
+    return myselfValue;
+  }
   createBookingObject = (obj) => {
     const relationshipValue = obj.relationship;
     let relationsShipTitle = '';
     let relationshipName = relationshipValue.find((find) => {
       return find.id == obj.relationshipValue;
     });
-
     if (relationshipName && relationshipName.title) {
       relationsShipTitle = relationshipName.title;
     }
+    if (this.state.relationshipValue === 'otherRelation') {
+      relationshipName = this.props.otherRelationData
+    }
+    const userNameValue = this.checkMyself('userName');
+    const hostNameValue = this.checkMyself('hostName');
     const bookingData = {
       starDetail: this.props.userDetails,
       starPrice: this.props.celebrityDetails,
       eventName: this.state.eventName,
-      hostName: this.state.hostName,
-      userName: this.state.userName,
+      hostName: hostNameValue,
+      userName: userNameValue,
       specification: this.state.specification,
       importantinfo: this.state.importantinfo,
       eventdetailName: this.state.eventdetailName,
       relationship: relationsShipTitle,
       relationshipArray: this.state.relationship,
       relationshipValue: this.state.relationshipValue,
+      requestRelationshipData: relationshipName,
       date: this.state.date.format('MMM DD,YYYY'),
       type: 1,
       occasionType: this.state.templateType,
       selectedValue: this.state.selectedValue,
       selectedPersonal: this.state.selectedPersonal,
+      otherRelationValue: this.state.otherRelationValue,
     };
     return bookingData;
   }
+  otherRelationship = () => {
+    this.props.postOtherRelation(this.state.otherRelationValue);
+  }
   handleChangePersonal = (e) => {
     this.setState({ selectedPersonal: e.target.value });
+
     this.emptyTemplateDetails();
   }
   steps = () => {
@@ -134,15 +168,15 @@ export default class Personal extends React.Component {
       this.setState({ selectVideoerror: false });
     }
     if (this.state.selectedValue !== '0' && this.state.selectedPersonal !== '0') {
-      this.setState({ steps: false }, () => {
+      this.setState({ steps: false}, () => {
         this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
       });
     }
   }
   emptyTemplateDetails = () => {
+    this.setLoginUserName();
     this.setState({
       hostName: '',
-      userName: '',
       relationshipValue: 0,
       relationshipObjName: '',
       specification: '',
@@ -176,7 +210,6 @@ export default class Personal extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -312,6 +345,8 @@ export default class Personal extends React.Component {
                               eventTitle={this.state.eventTitle}
                               eventDate={this.state.eventDate}
                               starName={fullName}
+                              otherRelationship={this.otherRelationship}
+                              otherRelationValue ={this.state.otherRelationValue}
                             />
                           </Request.EventStep2>
                           : null

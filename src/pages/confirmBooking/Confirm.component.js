@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { Request, HeaderSection } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
+import './confirmCss';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 
 export default class Confirm extends React.Component {
@@ -159,7 +158,7 @@ export default class Confirm extends React.Component {
               <Request.SmallScreenLayout>
                 <Request.ImageRenderDiv>
                   <Request.ImageSection
-                    imageUrl="assets/images/Stadium_800x376.jpg"
+                    imageUrl={coverPhoto}
                   />
                 </Request.ImageRenderDiv>
               </Request.SmallScreenLayout>
@@ -176,6 +175,15 @@ export default class Confirm extends React.Component {
                       }
                     </Request.Ask>
                   </Request.Questionwraps>
+                  <Request.OptionWrapper>
+                    <Request.CheckBoxWrapper>
+                      <Request.Label id="checkbox_container">
+                        <span>Make video private?</span>
+                        <Request.CheckBox id="private_video" type="checkbox" />
+                        <Request.Span htmlFor="private_video" id="checkmark" />
+                      </Request.Label>
+                    </Request.CheckBoxWrapper>
+                  </Request.OptionWrapper>
                 </Request.ComponentWrapperScroll>
                 <Request.PaymentControllerWrapper>
                   {this.state.steps ?
