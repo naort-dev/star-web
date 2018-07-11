@@ -22,7 +22,7 @@ FooterDiv.BookingPrice = styled.div`
 FooterDiv.Button = styled.button`
   background-color: #fff; 
   color: #FF6C58;
-  padding: 6px 41px;
+  padding: 6px 18px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
