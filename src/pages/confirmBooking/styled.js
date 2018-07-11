@@ -403,14 +403,15 @@ Request.PaymentControllerWrapper = styled.div`
 `;
 Request.OptionWrapper = styled.footer`
   padding: 28px 29px;
+  text-align:center;
   @media(min-width:768px){
     padding:63px 50px;
   }
   @media(min-width:1025px){
-    padding: 110px 95px;
+    padding: 0;
   }
   @media(min-width: 1920px){
-    padding: 165px 188px;
+    padding: 0;
   }
 `;
 Request.HeaderText = styled.div`
@@ -508,14 +509,6 @@ Request.InputQuestion = styled.textarea`
 Request.ImageStackWrapper = styled.div`
   width:100%;
   height:100%;
-`;
-
-Request.OptionWrapper = styled.div`
-  padding: 78px 20px;
-  text-align:center;
-  @media(min-width:768px){
-    padding: 125px 20px;
-  }
 `;
 Request.QuestionButton = styled.button`
   background-color:white;
