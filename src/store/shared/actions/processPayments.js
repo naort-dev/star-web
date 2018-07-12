@@ -30,25 +30,36 @@ export const paymentFetchFailed = error => ({
   error,
 });
 
-export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
+export const requestVideo = (bookingData, publicStatus) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  let requestDetails = {
+    stargramto: bookingData.userName,
+    relationship: bookingData.requestRelationshipData,
+    show_relationship: true,
+    date: '12/24/2003',
+  };
+  let formData = new FormData();
+  formData.append('celebrity', bookingData.starDetail.id);
+  formData.append('occasion', bookingData.occasionType);
+  formData.append('public_request', publicStatus);
+  formData.append('request_details', JSON.stringify(requestDetails));
+  // formData.append('from_audio_file', '');
+  // formData.append('to_audio_file', '');
   dispatch(paymentFetchStart());
-  return fetch.post(Api.createCharge, {
-    username: loginEmail,
-    password: loginPassword,
+  return fetch.post(Api.requestVideo, formData, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
-      localStorage.setItem('data', JSON.stringify(resp.data.data));
+      console.log(resp.data);
       dispatch(paymentFetchEnd());
-      dispatch(paymentFetchSuccess(resp.data.data));
+      dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
     } else {
       dispatch(paymentFetchEnd());
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    if (exception.response.status === 400) {
-      dispatch(loginFetchIncorrect(exception.response.data.error.message, exception.response.status));
-    } else {
-      dispatch(paymentFetchFailed(exception));
-    }
+    dispatch(paymentFetchFailed(exception));
   });
 };

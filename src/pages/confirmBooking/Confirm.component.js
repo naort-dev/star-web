@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import { Request, HeaderSection } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
@@ -11,6 +12,8 @@ export default class Confirm extends React.Component {
     super(props);
     this.state = {
       bookingData: {},
+      publicRequest: false,
+      loginRedirect: false,
     };
   }
   componentWillMount() {
@@ -101,7 +104,13 @@ export default class Confirm extends React.Component {
   }
 
   handleBooking = () => {
-    this.setState({ paymentMode: true });
+    if (this.props.isLoggedIn) {
+      this.props.requestVideo(this.state.bookingData, true);
+      this.setState({ paymentMode: true });
+    } else {
+      this.props.setRedirectUrls(this.props.location.pathname);
+      this.setState({loginRedirect: true})
+    }
   }
 
   cancel = () => {
@@ -199,6 +208,9 @@ export default class Confirm extends React.Component {
       featuredImage = bookingData.starDetail.featured_photo.image_url && bookingData.starDetail.featured_photo.image_url
     } else {
       featuredImage = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url
+    }
+    if (this.state.loginRedirect) {
+      return <Redirect to="/login" />;
     }
     return (
       <Request.Wrapper>

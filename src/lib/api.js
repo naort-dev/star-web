@@ -17,6 +17,7 @@ class Api {
   static otherRelation = 'request/other_relation/';
   static getEphemeralKey = 'payments/generatekey/';
   static createCharge = 'payments/createcharge/';
+  static requestVideo = 'request/stargramz/';
 }
 
 export default Api;
