@@ -4,16 +4,37 @@ const PaymentStyled = styled.form`
   padding: 7px 16px;
 `;
 
+PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
+  padding: 7px 16px;
+`;
+
+PaymentStyled.Heading = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Bold';
+  font-size: 20px;
+  text-align: center;
+  color: #FF6C58;
+  margin: 20px 0;
+
+  @media(min-width:768px){
+    font-size: 32px;
+  }
+  @media(min-width:1025px){
+    font-size:22px;
+  }
+  @media(min-width:1920px){
+    font-size:32px;
+  }
+`;
+
 PaymentStyled.PaymentController = styled.div`
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  margin-left: 4%;
   padding: 7px 16px;
   background-color: #fff;
-  z-index: 5;
-  
+  z-index: 5;  
   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   @media(min-width: 768px) {
     padding: 13px 44px;
