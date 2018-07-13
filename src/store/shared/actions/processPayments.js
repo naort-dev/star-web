@@ -31,6 +31,31 @@ export const paymentFetchFailed = error => ({
   error,
 });
 
+export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  dispatch(paymentFetchStart());
+  return fetch.post(Api.createCharge, {
+    starsona: starsonaId,
+    amount,
+    source: tokenId,
+  }, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(paymentFetchEnd());
+      // dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
+    } else {
+      dispatch(paymentFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(paymentFetchFailed(exception));
+  });
+};
+
+
 export const requestVideo = (bookingData, publicStatus) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   let requestDetails = {

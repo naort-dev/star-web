@@ -105,7 +105,7 @@ export default class Confirm extends React.Component {
 
   handleBooking = () => {
     if (this.props.isLoggedIn) {
-      this.props.requestVideo(this.state.bookingData, true);
+      this.props.requestVideo(this.state.bookingData, this.state.publicRequest);
       this.setState({ paymentMode: true });
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
@@ -126,6 +126,10 @@ export default class Confirm extends React.Component {
     } else {
       this.props.history.goBack();
     }
+  }
+
+  changePublicStatus = () => {
+    this.setState({ publicRequest: !this.state.publicRequest });
   }
 
   renderPaymentDetails = (props, rate, fullName) => {
@@ -156,7 +160,12 @@ export default class Confirm extends React.Component {
           <Request.CheckBoxWrapper>
             <Request.Label id="checkbox_container">
               <span>Make video private?</span>
-              <Request.CheckBox id="private_video" type="checkbox" />
+              <Request.CheckBox
+                id="private_video"
+                type="checkbox"
+                value={this.state.publicRequest}
+                onChange={() => this.changePublicStatus()}
+              />
               <Request.Span htmlFor="private_video" id="checkmark" />
             </Request.Label>
           </Request.CheckBoxWrapper>

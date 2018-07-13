@@ -28,13 +28,12 @@ class checkout extends React.Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.props.stripe && this.props.type && this.props.id) {
-      console.log(this.props.stripe)
+    if (this.props.stripe) {
       this.props.stripe
-        .createToken()
-        .then((payload) => console.log('[token]', payload));
-    } else {
-      console.log("Stripe.js hasn't loaded yet.");
+        .createSource({
+          type: 'card',
+        })
+        .then(payload => this.props.chargeCreator(payload.source.id));
     }
   }
 
