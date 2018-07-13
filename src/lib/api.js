@@ -15,6 +15,9 @@ class Api {
   static getOccasionList = 'request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
   static otherRelation = 'request/other_relation/';
+  static getEphemeralKey = 'payments/generatekey/';
+  static createCharge = 'payments/createcharge/';
+  static requestVideo = 'request/stargramz/';
 }
 
 export default Api;

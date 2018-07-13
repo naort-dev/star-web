@@ -28,7 +28,6 @@ import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
