@@ -7,6 +7,8 @@ export const PAYMENTS = {
   start: 'payments/REQUEST',
   end: 'payments/REQUEST_END',
   success: 'payments/REQUEST_SUCCESS',
+  fetchSourceStart: 'payments/SOURCE_FETCH_START',
+  fetchSourceEnd: 'payments/SOURCE_FETCH_END',
   setPaymentStatus: 'payments/PAYMENT_STATUS',
   resetPayments: 'payments/RESET_PAYMENTS',
   failed: 'payments/REQUEST_FAILED',
@@ -18,6 +20,14 @@ export const paymentFetchStart = () => ({
 
 export const paymentFetchEnd = () => ({
   type: PAYMENTS.end,
+});
+
+export const paymentFetchSourceStart = () => ({
+  type: PAYMENTS.fetchSourceStart,
+});
+
+export const paymentFetchSourceEnd = () => ({
+  type: PAYMENTS.fetchSourceEnd,
 });
 
 export const paymentFetchSuccess = (data) => {

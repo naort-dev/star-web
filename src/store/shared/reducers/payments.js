@@ -9,12 +9,14 @@ const initalState = {
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
     case PAYMENTS.start:
+    case PAYMENTS.fetchSourceStart:
       return {
         ...state,
         loading: true,
       };
-
+      
     case PAYMENTS.end:
+    case PAYMENTS.fetchSourceEnd:
       return {
         ...state,
         loading: false,

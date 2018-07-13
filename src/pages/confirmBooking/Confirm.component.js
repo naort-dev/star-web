@@ -14,6 +14,7 @@ export default class Confirm extends React.Component {
       bookingData: {},
       publicRequest: true,
       loginRedirect: false,
+      requestEndRedirect: false,
     };
   }
   componentWillMount() {
@@ -136,6 +137,12 @@ export default class Confirm extends React.Component {
     this.setState({ paymentMode: false });
   }
 
+  closeRequestFlow = () => {
+    this.props.resetPaymentDetails();
+    this.props.cancelBookingDetails();
+    this.setState({ requestEndRedirect: true });
+  }
+
   orderConfirmationView = fullName => (
     <ConfirmationModal>
       <ConfirmationModal.confirmationWrapper>
@@ -144,7 +151,7 @@ export default class Confirm extends React.Component {
           {fullName} can now has a week to complete your personalized video. We'll send you a notification
           once it's done.
         </ConfirmationModal.description>
-        <ConfirmationModal.Button>Done</ConfirmationModal.Button>
+        <ConfirmationModal.Button onClick={()=>this.closeRequestFlow()}>Done</ConfirmationModal.Button>
       </ConfirmationModal.confirmationWrapper>
     </ConfirmationModal>
   )
@@ -240,6 +247,9 @@ export default class Confirm extends React.Component {
     }
     if (this.state.loginRedirect) {
       return <Redirect to="/login" />;
+    }
+    if (this.state.requestEndRedirect) {
+      return <Redirect to="/" />;
     }
     return (
       <Request.Wrapper>

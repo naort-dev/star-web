@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkout from './checkout';
 import Loader from '../Loader';
-import { createCharge } from '../../store/shared/actions/processPayments';
+import { createCharge, paymentFetchSourceStart, paymentFetchSourceEnd } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
@@ -36,11 +36,15 @@ class StripeCheckout extends React.Component {
   }
   handleBooking = () => {
     if (this.state.stripe) {
+      this.props.paymentFetchSourceStart();
       this.state.stripe
         .createSource({
           type: 'card',
         })
-        .then(payload => this.chargeCreator(payload.source.id));
+        .then((payload) => {
+          this.props.paymentFetchSourceEnd();
+          this.chargeCreator(payload.source.id);
+        });
     }
   }
   chargeCreator = (tokenId) => {
@@ -113,6 +117,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createCharge: (starsonaId, amount, tokenId) => dispatch((createCharge(starsonaId, amount, tokenId))),
+  paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
+  paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StripeCheckout);
