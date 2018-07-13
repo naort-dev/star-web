@@ -6,7 +6,7 @@ import fetchEphemeralKey from '../../services/generateEphemeralKey';
 import { createCharge } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
-
+import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
 class StripeCheckout extends React.Component {
   constructor(props) {

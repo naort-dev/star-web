@@ -6,6 +6,10 @@ import {
   CardCVCElement,
   PostalCodeElement,
 } from 'react-stripe-elements';
+<<<<<<< HEAD
+=======
+import { PaymentFooterController } from '../PaymentFooterController';
+>>>>>>> 802a7698d2d2c0f407b996485619be3013faf21a
 import PaymentStyled from './styled';
 
 class checkout extends React.Component {
@@ -28,12 +32,27 @@ class checkout extends React.Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
+<<<<<<< HEAD
     if (this.props.stripe) {
       this.props.stripe
         .createSource({
           type: 'card',
         })
         .then(payload => this.props.chargeCreator(payload.source.id));
+=======
+    if (this.props.stripe && this.props.ephemeralKey.id) {
+      this.props.stripe
+        .createSource({
+          type: 'customer',
+          customer: this.props.ephemeralKey.id,
+          owner: {
+            name: 'hi',
+          },
+        })
+        .then((payload) => console.log('[token]', payload));
+    } else {
+      console.log("Stripe.js hasn't loaded yet.");
+>>>>>>> 802a7698d2d2c0f407b996485619be3013faf21a
     }
   }
 
@@ -66,6 +85,17 @@ class checkout extends React.Component {
             />
           </PaymentStyled.CardElementWrapper>
         </PaymentStyled.OtherDetailsWrapper>
+<<<<<<< HEAD
+=======
+        <PaymentStyled.PaymentController>
+          <PaymentFooterController
+            // rate={rate}
+            // remainingBookings={remainingBookings}
+            buttonName="Pay"
+            handleBooking={this.handleBooking}
+          />
+        </PaymentStyled.PaymentController>
+>>>>>>> 802a7698d2d2c0f407b996485619be3013faf21a
       </PaymentStyled>
     );
   }
