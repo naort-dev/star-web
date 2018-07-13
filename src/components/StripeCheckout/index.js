@@ -2,7 +2,6 @@ import React from 'react';
 import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Checkout from './checkout';
-import fetchEphemeralKey from '../../services/generateEphemeralKey';
 import { createCharge } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
@@ -30,9 +29,19 @@ class StripeCheckout extends React.Component {
   render() {
     const type = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].type : null;
     const id = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].id : null;
+    console.log(this.props.profilePhoto)
     return (
       <PaymentStyled.wrapper>
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
+        <PaymentStyled.StarDetailsWrapper>
+          <PaymentStyled.StarNameWrapper>
+            <PaymentStyled.SubTitle>
+              Starsona booking for
+            </PaymentStyled.SubTitle>
+            {this.props.fullName}
+          </PaymentStyled.StarNameWrapper>
+          <PaymentStyled.StarPhoto src={this.props.profilePhoto} />
+        </PaymentStyled.StarDetailsWrapper>
         <Elements>
           <Checkout
             type={type}

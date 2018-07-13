@@ -45,7 +45,6 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
-      // dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
     } else {
       dispatch(paymentFetchEnd());
     }
@@ -73,8 +72,6 @@ export const requestVideo = (bookingData, publicStatus) => (dispatch, getState) 
   formData.append('public_request', publicStatus);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
-  // formData.append('from_audio_file', '');
-  // formData.append('to_audio_file', '');
   dispatch(paymentFetchStart());
   return fetch.post(Api.requestVideo, formData, {
     headers: {

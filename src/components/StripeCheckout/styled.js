@@ -27,6 +27,26 @@ PaymentStyled.Heading = styled.span`
   }
 `;
 
+PaymentStyled.StarDetailsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+PaymentStyled.StarNameWrapper = styled.div`
+  font-family: 'Ubuntu-Bold';
+  line-height: 22px;
+`;
+
+PaymentStyled.StarPhoto = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
+PaymentStyled.SubTitle = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Light';
+`;
+
 PaymentStyled.PaymentController = styled.div`
   position: fixed;
   left: 0;
