@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkout from './checkout';
 import Popup from '../Popup';
+import Loader from '../Loader';
 import { createCharge, resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
@@ -47,6 +48,13 @@ class StripeCheckout extends React.Component {
     const id = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].id : null;
     return (
       <PaymentStyled.wrapper>
+        {
+          this.props.loading ?
+            <PaymentStyled.loaderWrapper>
+              <Loader />
+            </PaymentStyled.loaderWrapper>
+          : null
+        }
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
         <PaymentStyled.StarDetailsWrapper>
           <PaymentStyled.StarNameWrapper>
