@@ -12,7 +12,7 @@ export default class Confirm extends React.Component {
     super(props);
     this.state = {
       bookingData: {},
-      publicRequest: false,
+      publicRequest: true,
       loginRedirect: false,
     };
   }
@@ -49,7 +49,7 @@ export default class Confirm extends React.Component {
       case 4:
         return <OrderDetailsItem title={`${that.eventName} from`} value={that.specification} />;
       case 6:
-        return <OrderDetailsItem title="Event Title" value={that.eventName} />;
+        return <OrderDetailsItem title="Event Title" value={that.eventdetailName} />;
       case 7:
         return <OrderDetailsItem title="Guest of honor" value={that.hostName} />;
       default:
@@ -82,7 +82,7 @@ export default class Confirm extends React.Component {
             {
               this.getOccasionDetails(that.occasionType)
             }
-            <OrderDetailsItem title="Host" value={that.hostName} />
+            <OrderDetailsItem title="Host" value={that.userName} />
             <OrderDetailsItem title="Event Date" value={that.date} />
             <OrderDetailsItem title="Important Info" value={that.importantinfo} />
           </React.Fragment>
@@ -132,13 +132,14 @@ export default class Confirm extends React.Component {
     this.setState({ publicRequest: !this.state.publicRequest });
   }
 
-  renderPaymentDetails = (props, rate, fullName, profilePhoto) => {
+  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
     return (
       <StripeCheckout
         rate={rate}
         fullName={fullName}
         profilePhoto={profilePhoto}
         authToken={props.authToken}
+        remainingBookings={remainingBookings}
       />
     );
   }
@@ -243,7 +244,7 @@ export default class Confirm extends React.Component {
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
-                    this.renderPaymentDetails(props, rate, fullName, profilePhoto)
+                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
                   :
                     this.renderConfirmDetails(bookingData, rate, remainingBookings)
                 }

@@ -1,8 +1,10 @@
 import React from 'react';
 import { Elements } from 'react-stripe-elements';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkout from './checkout';
-import { createCharge } from '../../store/shared/actions/processPayments';
+import Popup from '../Popup';
+import { createCharge, resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
@@ -17,6 +19,14 @@ class StripeCheckout extends React.Component {
   componentWillMount() {
     this.getEphemeralKey();
   }
+  componentDidUpdate(prevProps) {
+    if (this.props.paymentStatus) {
+      this.props.resetPaymentDetails();
+    }
+  }
+  componentWillUnmount() {
+    this.props.resetPaymentDetails();
+  }
   getEphemeralKey = () => {
     fetchEphemeralKey(this.props.authToken)
       .then((resp) => {
@@ -26,10 +36,15 @@ class StripeCheckout extends React.Component {
   chargeCreator = (tokenId) => {
     this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId);
   }
+
+  orderConfirmation = () => {
+    if (this.props.paymentStatus) {
+      return <Popup>asdasd</Popup>;
+    }
+  }
   render() {
     const type = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].type : null;
     const id = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].id : null;
-    console.log(this.props.profilePhoto)
     return (
       <PaymentStyled.wrapper>
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
@@ -51,12 +66,15 @@ class StripeCheckout extends React.Component {
         </Elements>
         <PaymentStyled.PaymentController>
           <PaymentFooterController
-            // rate={rate}
-            // remainingBookings={remainingBookings}
+            rate={this.props.rate}
+            remainingBookings={this.props.remainingBookings}
             buttonName="Pay"
             handleBooking={this.handleBooking}
           />
         </PaymentStyled.PaymentController>
+        {
+          this.orderConfirmation()
+        }
       </PaymentStyled.wrapper>
     );
   }
@@ -65,10 +83,12 @@ class StripeCheckout extends React.Component {
 const mapStateToProps = state => ({
   loading: state.paymentDetails.loading,
   requestDetails: state.paymentDetails.requestDetails,
+  paymentStatus: state.paymentDetails.paymentStatus,
 });
 
 const mapDispatchToProps = dispatch => ({
   createCharge: (starsonaId, amount, tokenId) => dispatch((createCharge(starsonaId, amount, tokenId))),
+  resetPaymentDetails: () => dispatch(resetPaymentDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StripeCheckout);

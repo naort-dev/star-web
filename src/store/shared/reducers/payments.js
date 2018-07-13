@@ -3,6 +3,7 @@ import { PAYMENTS } from '../actions/processPayments';
 const initalState = {
   requestDetails: {},
   loading: false,
+  paymentStatus: false,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -25,6 +26,16 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         requestDetails: action.data,
       };
+
+    case PAYMENTS.setPaymentStatus:
+      return {
+        ...state,
+        loading: false,
+        paymentStatus: action.status,
+      };
+
+    case PAYMENTS.resetPayments:
+      return initalState;
 
     case PAYMENTS.failed:
       return {
