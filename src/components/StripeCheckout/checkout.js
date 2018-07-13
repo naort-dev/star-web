@@ -26,15 +26,12 @@ class checkout extends React.Component {
       },
     };
   }
+  componentWillMount() {
+    this.props.setStripe(this.props.stripe);
+  }
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.props.stripe) {
-      this.props.stripe
-        .createSource({
-          type: 'card',
-        })
-        .then(payload => this.props.chargeCreator(payload.source.id));
-    }
+    this.props.handleBooking();
   }
 
   render() {

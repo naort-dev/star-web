@@ -311,7 +311,6 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
-  
 `;
 HeaderSection.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
@@ -367,6 +366,7 @@ Request.ComponentWrapper = styled.div`
   @media(min-width:1025px){
     height:calc(100% - 40px);
     position:relative;
+    padding-bottom: 59px;
   }
 `;
 

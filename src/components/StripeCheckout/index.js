@@ -15,6 +15,7 @@ class StripeCheckout extends React.Component {
     super(props);
     this.state = {
       ephemeralKey: '',
+      stripe: null,
     };
   }
   componentWillMount() {
@@ -33,6 +34,19 @@ class StripeCheckout extends React.Component {
       .then((resp) => {
         this.setState({ ephemeralKey: resp.ephemeralKey });
       });
+  }
+  setStripe = (stripe) => {
+    this.setState({ stripe });
+  }
+  handleBooking = () => {
+    console.log(this.state.stripe)
+    if (this.state.stripe) {
+      this.state.stripe
+        .createSource({
+          type: 'card',
+        })
+        .then(payload => this.chargeCreator(payload.source.id));
+    }
   }
   chargeCreator = (tokenId) => {
     this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId);
@@ -69,7 +83,9 @@ class StripeCheckout extends React.Component {
           <Checkout
             type={type}
             id={id}
+            handleBooking={this.handleBooking}
             chargeCreator={this.chargeCreator}
+            setStripe={this.setStripe}
           />
         </Elements>
         <PaymentStyled.PaymentController>
