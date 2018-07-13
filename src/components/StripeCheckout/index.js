@@ -3,9 +3,8 @@ import { Elements } from 'react-stripe-elements';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkout from './checkout';
-import Popup from '../Popup';
 import Loader from '../Loader';
-import { createCharge, resetPaymentDetails } from '../../store/shared/actions/processPayments';
+import { createCharge } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
@@ -23,11 +22,8 @@ class StripeCheckout extends React.Component {
   }
   componentDidUpdate(prevProps) {
     if (this.props.paymentStatus) {
-      this.props.resetPaymentDetails();
+      this.props.exitPaymentMode();
     }
-  }
-  componentWillUnmount() {
-    this.props.resetPaymentDetails();
   }
   getEphemeralKey = () => {
     fetchEphemeralKey(this.props.authToken)
@@ -39,7 +35,6 @@ class StripeCheckout extends React.Component {
     this.setState({ stripe });
   }
   handleBooking = () => {
-    console.log(this.state.stripe)
     if (this.state.stripe) {
       this.state.stripe
         .createSource({
@@ -54,7 +49,13 @@ class StripeCheckout extends React.Component {
 
   orderConfirmation = () => {
     if (this.props.paymentStatus) {
-      return <Popup>asdasd</Popup>;
+      return (
+        <PaymentStyled.confirmationModal>
+          <PaymentStyled.confirmationWrapper>
+            asdsad
+          </PaymentStyled.confirmationWrapper>
+        </PaymentStyled.confirmationModal>
+      );
     }
   }
   render() {
@@ -112,7 +113,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   createCharge: (starsonaId, amount, tokenId) => dispatch((createCharge(starsonaId, amount, tokenId))),
-  resetPaymentDetails: () => dispatch(resetPaymentDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StripeCheckout);

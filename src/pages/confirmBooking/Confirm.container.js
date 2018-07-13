@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   userDetails: state.celebDetails.userDetails,
   eventsDetails: state.occasionList.data,
   bookingData: state.bookingData,
+  paymentStatus: state.paymentDetails.paymentStatus,
 });
 
 const mapDispatchToProps = dispatch => ({

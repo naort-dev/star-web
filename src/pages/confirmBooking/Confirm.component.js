@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Request, HeaderSection } from '../../pages/confirmBooking/styled';
+import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
 import './confirmCss';
@@ -132,6 +132,23 @@ export default class Confirm extends React.Component {
     this.setState({ publicRequest: !this.state.publicRequest });
   }
 
+  exitPaymentMode = () => {
+    this.setState({ paymentMode: false });
+  }
+
+  orderConfirmationView = fullName => (
+    <ConfirmationModal>
+      <ConfirmationModal.confirmationWrapper>
+        <ConfirmationModal.Heading>Thank you! Your request has been sent</ConfirmationModal.Heading>
+        <ConfirmationModal.description>
+          {fullName} can now has a week to complete your personalized video. We'll send you a notification
+          once it's done.
+        </ConfirmationModal.description>
+        <ConfirmationModal.Button>Done</ConfirmationModal.Button>
+      </ConfirmationModal.confirmationWrapper>
+    </ConfirmationModal>
+  )
+
   renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
     return (
       <StripeCheckout
@@ -140,6 +157,7 @@ export default class Confirm extends React.Component {
         profilePhoto={profilePhoto}
         authToken={props.authToken}
         remainingBookings={remainingBookings}
+        exitPaymentMode={this.exitPaymentMode}
       />
     );
   }
@@ -247,6 +265,9 @@ export default class Confirm extends React.Component {
                     this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
                   :
                     this.renderConfirmDetails(bookingData, rate, remainingBookings)
+                }
+                {
+                  this.props.paymentStatus && this.orderConfirmationView(fullName)
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const PaymentStyled = styled.form`
-  padding: 7px 16px;
+
 `;
 
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
@@ -108,6 +108,28 @@ PaymentStyled.loaderWrapper = styled.div`
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0, 0.3);
+`;
+
+PaymentStyled.confirmationModal = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 10;
+`;
+
+PaymentStyled.confirmationWrapper = styled.div`
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
 `;
 
 export default PaymentStyled;

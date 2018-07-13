@@ -599,4 +599,51 @@ Request.ContinueButton = styled.button`
   }
 `;
 
-export { Request, HeaderSection };
+const ConfirmationModal = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 10;
+`;
+
+ConfirmationModal.confirmationWrapper = styled.div`
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 400px;
+  padding: 10px 20px;
+  background-color: #fff;
+`;
+
+ConfirmationModal.Heading = Request.Heading.extend`
+  margin: 0;
+`;
+ConfirmationModal.description = styled.p`
+  font-size: 16px;
+  font-family: 'Ubuntu-Regular';
+  margin: 20px 0;
+`;
+ConfirmationModal.Button = styled.button`
+  background-color: #fff;
+  color: #FF6C58;
+  padding: 6px 18px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+`;
+export { Request, HeaderSection, ConfirmationModal };
