@@ -19,7 +19,7 @@ const DevToolsWrapper = () => (process.env.NODE_ENV === 'development' ? <DevTool
 render(
   <Provider store={store}>
     <ThemeProvider theme={{}}>
-      <StripeProvider apiKey="pk_test_RBSzULFNLChp2ACqsYRkMJPV">
+      <StripeProvider apiKey={env('STRIPE_PUBLISH_KEY')}>
         <Router>
           <div>
             <App />
