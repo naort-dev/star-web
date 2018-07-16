@@ -566,7 +566,7 @@ background-color: #fff;
 z-index: 5;
 box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
 @media(min-width: 768px) {
-  padding: 13px 0px;
+  padding: 13px;
 }
 @media(min-width:1025px){
   margin: 0 42px;
