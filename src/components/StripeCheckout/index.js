@@ -43,7 +43,9 @@ class StripeCheckout extends React.Component {
         })
         .then((payload) => {
           this.props.paymentFetchSourceEnd();
-          this.chargeCreator(payload.source.id);
+          if (payload.source) {
+            this.chargeCreator(payload.source.id);
+          }
         });
     }
   }

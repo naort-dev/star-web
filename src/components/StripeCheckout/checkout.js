@@ -31,6 +31,7 @@ class checkout extends React.Component {
   }
   handleSubmit = (event) => {
     event.preventDefault();
+    console.log(event)
     this.props.handleBooking();
   }
 
@@ -40,6 +41,7 @@ class checkout extends React.Component {
         <PaymentStyled.CardElementWrapper>
           <PaymentStyled.title>Card Number</PaymentStyled.title>
           <CardNumberElement
+            onChange={(event) =>  console.log(event)}
             style={this.styles}
           />
         </PaymentStyled.CardElementWrapper>
@@ -47,18 +49,21 @@ class checkout extends React.Component {
           <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>Valid till</PaymentStyled.title>
             <CardExpiryElement
+              onChange={(event) =>  console.log(event)}
               style={this.styles}
             />
           </PaymentStyled.CardElementWrapper>
           <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>CVV</PaymentStyled.title>
             <CardCVCElement
+              onChange={(event) =>  console.log(event)}
               style={this.styles}
             />
           </PaymentStyled.CardElementWrapper>
           <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>Zip code</PaymentStyled.title>
             <PostalCodeElement
+              onChange={(event) =>  console.log(event)}
               style={this.styles}
             />
           </PaymentStyled.CardElementWrapper>
