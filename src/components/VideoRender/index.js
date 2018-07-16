@@ -41,7 +41,9 @@ export default class VideoRender extends React.Component {
       <Popup
         closePopUp={() => this.setState({ videoActive: false })}
       >
-        <VideoRenderDiv.VideoContentWrapper>
+        <VideoRenderDiv.VideoContentWrapper
+          videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
+        >
           <Scrollbars>
             <VideoRenderDiv.VideoPlayer
               videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
