@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const PaymentStyled = styled.form`
-  padding: 7px 16px;
+
 `;
 
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
@@ -85,20 +85,66 @@ PaymentStyled.ElementsWrapper = styled.div`
 `;
 
 PaymentStyled.CardElementWrapper = PaymentStyled.ElementsWrapper.extend`
-
+  .StripeElement {
+    margin: 10px 0;
+    margin-bottom: 0;
+  }
+`;
+PaymentStyled.ErrorElement = styled.span`
+  color:red;
+  font-size: 11px;
+  display: inline-block;
+  margin-top:4px;
+  font-family: 'Ubuntu-light';
+  text-align:left;
 `;
 
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
   justify-content: space-between;
+  margin-top: 30px;
   .StripeElement {
     padding: 10px 5px;
     min-width: 70px;
+  }
+  ${PaymentStyled.ErrorElement} {
+    width: 60px;
   }
 `;
 
 PaymentStyled.title = styled.label`
   font-size: 14px;
+`;
+PaymentStyled.loaderWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, 0.3);
+`;
+
+PaymentStyled.confirmationModal = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 10;
+`;
+
+PaymentStyled.confirmationWrapper = styled.div`
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
 `;
 
 export default PaymentStyled;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Request, HeaderSection } from '../../pages/confirmBooking/styled';
+import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
 import './confirmCss';
@@ -12,8 +12,9 @@ export default class Confirm extends React.Component {
     super(props);
     this.state = {
       bookingData: {},
-      publicRequest: false,
+      publicRequest: true,
       loginRedirect: false,
+      requestEndRedirect: false,
     };
   }
   componentWillMount() {
@@ -49,7 +50,7 @@ export default class Confirm extends React.Component {
       case 4:
         return <OrderDetailsItem title={`${that.eventName} from`} value={that.specification} />;
       case 6:
-        return <OrderDetailsItem title="Event Title" value={that.eventName} />;
+        return <OrderDetailsItem title="Event Title" value={that.eventdetailName} />;
       case 7:
         return <OrderDetailsItem title="Guest of honor" value={that.hostName} />;
       default:
@@ -82,7 +83,7 @@ export default class Confirm extends React.Component {
             {
               this.getOccasionDetails(that.occasionType)
             }
-            <OrderDetailsItem title="Host" value={that.hostName} />
+            <OrderDetailsItem title="Host" value={that.userName} />
             <OrderDetailsItem title="Event Date" value={that.date} />
             <OrderDetailsItem title="Important Info" value={that.importantinfo} />
           </React.Fragment>
@@ -132,13 +133,38 @@ export default class Confirm extends React.Component {
     this.setState({ publicRequest: !this.state.publicRequest });
   }
 
-  renderPaymentDetails = (props, rate, fullName, profilePhoto) => {
+  exitPaymentMode = () => {
+    this.setState({ paymentMode: false });
+  }
+
+  closeRequestFlow = () => {
+    this.props.resetPaymentDetails();
+    this.props.cancelBookingDetails();
+    this.setState({ requestEndRedirect: true });
+  }
+
+  orderConfirmationView = fullName => (
+    <ConfirmationModal>
+      <ConfirmationModal.confirmationWrapper>
+        <ConfirmationModal.Heading>Thank you! Your request has been sent</ConfirmationModal.Heading>
+        <ConfirmationModal.description>
+          {fullName} can now has a week to complete your personalized video. We'll send you a notification
+          once it's done.
+        </ConfirmationModal.description>
+        <ConfirmationModal.Button onClick={()=>this.closeRequestFlow()}>Done</ConfirmationModal.Button>
+      </ConfirmationModal.confirmationWrapper>
+    </ConfirmationModal>
+  )
+
+  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
     return (
       <StripeCheckout
         rate={rate}
         fullName={fullName}
         profilePhoto={profilePhoto}
         authToken={props.authToken}
+        remainingBookings={remainingBookings}
+        exitPaymentMode={this.exitPaymentMode}
       />
     );
   }
@@ -222,6 +248,9 @@ export default class Confirm extends React.Component {
     if (this.state.loginRedirect) {
       return <Redirect to="/login" />;
     }
+    if (this.state.requestEndRedirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <Request.Wrapper>
         <Request.Content>
@@ -243,9 +272,12 @@ export default class Confirm extends React.Component {
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
-                    this.renderPaymentDetails(props, rate, fullName, profilePhoto)
+                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
                   :
                     this.renderConfirmDetails(bookingData, rate, remainingBookings)
+                }
+                {
+                  this.props.paymentStatus && this.orderConfirmationView(fullName)
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>

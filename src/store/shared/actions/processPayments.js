@@ -1,12 +1,16 @@
 
+import moment from 'moment';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import moment from 'moment';
 
 export const PAYMENTS = {
   start: 'payments/REQUEST',
   end: 'payments/REQUEST_END',
   success: 'payments/REQUEST_SUCCESS',
+  fetchSourceStart: 'payments/SOURCE_FETCH_START',
+  fetchSourceEnd: 'payments/SOURCE_FETCH_END',
+  setPaymentStatus: 'payments/PAYMENT_STATUS',
+  resetPayments: 'payments/RESET_PAYMENTS',
   failed: 'payments/REQUEST_FAILED',
 };
 
@@ -18,6 +22,14 @@ export const paymentFetchEnd = () => ({
   type: PAYMENTS.end,
 });
 
+export const paymentFetchSourceStart = () => ({
+  type: PAYMENTS.fetchSourceStart,
+});
+
+export const paymentFetchSourceEnd = () => ({
+  type: PAYMENTS.fetchSourceEnd,
+});
+
 export const paymentFetchSuccess = (data) => {
   return (
     {
@@ -26,9 +38,21 @@ export const paymentFetchSuccess = (data) => {
     });
 };
 
+export const setPaymentStatus = (status) => {
+  return (
+    {
+      type: PAYMENTS.setPaymentStatus,
+      status,
+    });
+};
+
 export const paymentFetchFailed = error => ({
   type: PAYMENTS.failed,
   error,
+});
+
+export const resetPaymentDetails = () => ({
+  type: PAYMENTS.resetPayments,
 });
 
 export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
@@ -45,6 +69,7 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
+      dispatch(setPaymentStatus(resp.data.success));
     } else {
       dispatch(paymentFetchEnd());
     }
@@ -65,10 +90,12 @@ export const requestVideo = (bookingData, publicStatus) => (dispatch, getState) 
     specifically_for: bookingData.specification,
     important_info: bookingData.importantinfo,
     date: moment.utc(bookingData.date).format(),
+    event_title: bookingData.eventdetailName,
+    event_guest_honor: bookingData.hostName,
   };
   let formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);
-  formData.append('occasion', bookingData.occasionType);
+  formData.append('occasion', bookingData.selectedValue);
   formData.append('public_request', publicStatus);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
