@@ -1,4 +1,13 @@
-import styled from 'styled-components';
+import styled, {keyframes}  from 'styled-components';
+
+const popupEnter = keyframes`
+  0% {
+    top: 100%;
+  }
+  100% {
+    top: 0;
+  }
+`;
 
 const PopupStyled = styled.div`
   position: fixed;
@@ -20,6 +29,8 @@ PopupStyled.Container = styled.div`
   height: 100%;
   justify-content: center;
   align-items: center;
+  position: relative;
+  animation: ${popupEnter} 0.2s ease-out;
   @media(min-width: 768px) {
     max-width: 80%;
     max-height: 80%;
