@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const VideoRecorderDiv = styled.div`
-  height: 30vh;
-  width: 30vw;
+  height: 40vh;
+  width: 50vw;
   background-color: black
   @media(max-width:1024px){
     width: 100%;

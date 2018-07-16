@@ -13,17 +13,15 @@ export default class StarsignUpVideo extends React.Component {
     onSubmit() {
         const signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
     }
-    
+
     render() {
         return (
             <SignupContainer>
                 <SignupContainer.LeftSection>
                     <HeaderSection>
-                        <HeaderSection.HeaderNavigation
-                            onClick={this.goBack.bind(this)}
-                        />
                         <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
                     </HeaderSection>
+                    <SignupContainer.Line/>
                     <SignupContainer.SocialMediaSignup>
 
                         <SignupContainer.Container>
@@ -38,16 +36,16 @@ export default class StarsignUpVideo extends React.Component {
                         </SignupContainer.Container>
                     </SignupContainer.SocialMediaSignup>
                     <SignupContainer.FooterLayout>
-                        <div>
-                            <FooterSection>
-                                <FooterSection.LeftSection>
-                                </FooterSection.LeftSection>
-                                <FooterSection.RightSection>
-                                    {/* <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>Next</FooterSection.Button> */}
-                                    <FooterSection.Button onClick={this.onSubmit.bind(this)}>Submit</FooterSection.Button>
-                                </FooterSection.RightSection>
-                            </FooterSection>
-                        </div>
+
+                        <FooterSection>
+                            <FooterSection.LeftSection>
+                            </FooterSection.LeftSection>
+                            <FooterSection.RightSection>
+                                {/* <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>Next</FooterSection.Button> */}
+                                <FooterSection.Button onClick={this.onSubmit.bind(this)}>Submit</FooterSection.Button>
+                            </FooterSection.RightSection>
+                        </FooterSection>
+
                     </SignupContainer.FooterLayout>
                 </SignupContainer.LeftSection>
                 <SignupContainer.RightSection>

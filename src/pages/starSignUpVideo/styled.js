@@ -32,7 +32,6 @@ SignupContainer.LeftSection = styled.div`
 
 SignupContainer.RightSection = styled.div`
   width: 100%;
-  display: none;
   background-color:rgba(248, 248, 248, 1);
 
   @media(min-width: 1025px){
@@ -220,8 +219,9 @@ SignupContainer.Line = styled.hr`
   width:230px;
   margin-top:7%;
   background-color:#CCCCCC;
-  @media(min-width:768px){
-   display:none;
+  @media(min-width:1025px){
+   width: 100%;
+   margin-top: 4%;
   }
 `;
 SignupContainer.InputFieldsWrapper = styled.div`
@@ -357,7 +357,7 @@ SignupContainer.FooterLayout = styled.div`
 `;
 const HeaderSection = styled.div`
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 `;
 HeaderSection.HeaderNavigation = styled.button`
