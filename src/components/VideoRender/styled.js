@@ -92,4 +92,94 @@ VideoRenderDiv.StarDetails = styled.p`
   }
 `;
 
+VideoRenderDiv.VideoContentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0 10px;
+  background: #fff;
+  @media(min-width: 768px) {
+    padding: 10px;
+  }
+`;
+
+VideoRenderDiv.VideoPlayer = styled.div`
+  width: 100%;
+  height: 80%;
+  background: #000;
+  @media(min-width:768px) {
+    width: ${props => `${props.videoWidth}px`};
+    height: ${props => `${props.videoHeight}px`};
+    margin: 0 auto;
+    max-width: 640px;
+    max-height: 480px;
+    padding: 0;
+  }
+  @media(min-width: 1025px) {
+    height: calc(100vh - 341px);
+    max-width: 100%;
+    max-height: none;
+  }
+`;
+
+VideoRenderDiv.VideoContent = styled.section`
+  margin-top: 20px;
+  height: 20%;
+`;
+
+VideoRenderDiv.VideoTitle = styled.span`
+  display: block;
+  font-size: 20px;
+  font-family: 'Ubuntu-Bold';
+  text-align: center;
+  @media(min-width: 1025px) {
+    font-size: 16px;
+  }
+`;
+
+VideoRenderDiv.VideoRequester = styled.div`
+  margin: 10px 0;
+  display: block;
+  text-align: center;
+  @media(min-width: 1025px) {
+    margin-top: 0px;
+    margin-bottom: 22px;
+  }
+`;
+VideoRenderDiv.VideoRequestImage = styled.span`
+  border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:40px;
+  border: solid 2px #FFFFFF;
+  box-shadow: 2px 2px 9px #4f4f4f;
+  width:40px;
+  position: relative;
+  top: 8px;
+  margin-right: 20px;
+  @media(min-width: 768px) {
+    width: 48px;
+    height: 48px;
+  }
+  @media(min-width: 1025px) {
+    width: 30px;
+    height: 30px;
+    margin-right: 11px;
+  }
+`;
+VideoRenderDiv.VideoRequestName = styled.span`
+  display: inline-block;
+  color: rgba(51, 51, 51, 0.72);
+  font-size: 16px;
+  font-family: 'Ubuntu-Regular';
+  vertical-align: top;
+  padding-top: 22px;
+  @media(min-width: 1025px) {
+    padding-top: 17px;
+    font-size: 14px;
+  }
+`;
+
 export default VideoRenderDiv;
