@@ -5,7 +5,7 @@ let recordedBlobs = [];
 export default class VideoRecorder extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { mediaRecorder: null, error: null };
+        this.state = { mediaRecorder: null, error: null, streamFetched: null };
         this.mediaSource = new MediaSource();
     }
 
@@ -27,6 +27,7 @@ export default class VideoRecorder extends React.Component {
     captureUserMedia(mediaConstraints) {
         return navigator.mediaDevices.getUserMedia(mediaConstraints)
             .then(this.successCallback)
+            .then(()=> this.setState({streamFetched: true}))
             .catch((err) => {
                 this.setState({ error: true });
 
@@ -42,7 +43,7 @@ export default class VideoRecorder extends React.Component {
     stopRecording() {
         const superBuffer = new Blob(recordedBlobs, { type: 'video/mp4' });
         const videoSrc = window.URL.createObjectURL(superBuffer)
-        this.props.onStopRecording(videoSrc)
+        this.props.onStopRecording({videoSrc, superBuffer})
         this.state.mediaRecorder.stop();
         this.closeStream()
 
@@ -95,7 +96,7 @@ export default class VideoRecorder extends React.Component {
                     :
                     <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls />
                 }
-                {this.state.error ?
+                {this.state.error || !this.state.streamFetched ?
                     <h4> Unable to Record Video. Kindly refresh your browser </h4> :
                     this.props.videoRecorder.start == null ?
                         <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>

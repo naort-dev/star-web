@@ -2,6 +2,7 @@ export const START_VIDEO_RECORDING = 'startRecording'
 export const STOP_VIDEO_RECORDING = 'stopRecording'
 export const PLAY_RECORDED_VIDEO = 'playVideo'
 export const RE_RECORD_VIDEO = 'reRecordVideo'
+export const CLEAR_ALL_STREAMS = 'clearStreams'
 
 
 export function startRecording() {
@@ -11,18 +12,19 @@ export function startRecording() {
 
 }
 
-export function stopRecording(recordedVideo) {
+export function stopRecording(videoData) {
     return {
         type: STOP_VIDEO_RECORDING,
-        payload: recordedVideo
+        payload: { recordedURL: videoData.videoSrc, recordedBuffer: videoData.superBuffer }
     }
 
 }
 
-export function playVideo(recordedVideo) {
+export function playVideo(videoData) {
+ 
     return {
         type: PLAY_RECORDED_VIDEO,
-        payload: recordedVideo
+        
     }
 
 }
@@ -33,3 +35,11 @@ export function reRecord() {
     }
 
 }
+
+export function clearStreams() {
+    return {
+        type: CLEAR_ALL_STREAMS
+    }
+
+}
+

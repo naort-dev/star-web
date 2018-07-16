@@ -81,38 +81,35 @@ export default class StarsignUp extends React.Component {
   }
 
   onRegister = (e) => {
-    // e.preventDefault();
-    // if (this.props.statusCode === '410') {
-    //   this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
-    //     this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-    //   });
-    // } else if (this.checkEmail()) {
-    //   if (this.isFormValid()) {
-    //     this.props.registerUser(
-    //       this.state.firstName.value,
-    //       this.state.lastName.value,
-    //       this.state.email.value,
-    //       this.state.password.value,
-    //       this.state.role,
-    //     )
-    //       .then(response => response.status == 200 ? this.props.history.push({
-    //         pathname: '/starsignup',
-    //         search: '?step=2'
-    //       }) : null)
-    //   }
-    // } else {
-    //   this.checkEmail();
-    //   this.checkPassword();
-    //   this.checkRequired();
-    // }
-    this.props.history.push('/recordvideo')
+    e.preventDefault();
+    if (this.props.statusCode === '410') {
+      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
+        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
+      });
+    } else if (this.checkEmail()) {
+      if (this.isFormValid()) {
+        this.props.registerUser(
+          this.state.firstName.value,
+          this.state.lastName.value,
+          this.state.email.value,
+          this.state.password.value,
+          this.state.role,
+        )
+          .then(response => response.status == 200 ? this.props.history.push('/recordvideo') : null)
+      }
+    } else {
+      this.checkEmail();
+      this.checkPassword();
+      this.checkRequired();
+    }
+
   }
 
   componentWillUnmount() {
     this.props.resetRedirectUrls();
   }
 
-  
+
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);

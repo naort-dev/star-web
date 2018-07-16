@@ -1,8 +1,9 @@
-import { START_VIDEO_RECORDING, STOP_VIDEO_RECORDING, PLAY_RECORDED_VIDEO, RE_RECORD_VIDEO } from '../actions/videoRecorder';
+import { START_VIDEO_RECORDING, STOP_VIDEO_RECORDING, PLAY_RECORDED_VIDEO, RE_RECORD_VIDEO, CLEAR_ALL_STREAMS } from '../actions/videoRecorder';
 
 
 const initalState = {
     recordedBlob: null,
+    recordedBuffer: null,
     start: null,
     stop: null,
     re_record: null,
@@ -20,7 +21,7 @@ export default (state = { ...initalState }, action) => {
         case STOP_VIDEO_RECORDING:
             return {
                 ...state,
-                start: false, stop: true,recordedBlob: action.payload
+                start: false, stop: true,recordedBlob: action.payload.recordedURL, recordedBuffer: action.payload.recordedBuffer
             };
         case PLAY_RECORDED_VIDEO:
             return {
@@ -34,6 +35,11 @@ export default (state = { ...initalState }, action) => {
             return {
                 ...initalState
             };
+
+        case CLEAR_ALL_STREAMS:
+        return {
+            ...initalState
+        }
 
         default:
             return state;

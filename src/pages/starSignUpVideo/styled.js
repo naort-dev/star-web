@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const LoginContainer = styled.div`
+const SignupContainer = styled.div`
   background-color: white;
   display: flex;
   padding: 0px 0px;
@@ -14,10 +14,10 @@ const LoginContainer = styled.div`
     width: 100vw;
   }
 `;
-LoginContainer.wrapper = styled.div`
+SignupContainer.wrapper = styled.div`
   height: 100vh;
 `;
-LoginContainer.LeftSection = styled.div`
+SignupContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
   background-color:white;
@@ -29,7 +29,8 @@ LoginContainer.LeftSection = styled.div`
     padding-bottom: 83px;
   }
 `;
-LoginContainer.RightSection = styled.div`
+
+SignupContainer.RightSection = styled.div`
   width: 100%;
   display: none;
   background-color:rgba(248, 248, 248, 1);
@@ -45,7 +46,7 @@ LoginContainer.RightSection = styled.div`
     flex-direction: column;
   }
 `;
-LoginContainer.SocialMediaSignup = styled.div`
+SignupContainer.SocialMediaSignup = styled.div`
   text-align:center;
   height: calc(100% - 40px);
   @media(min-width:768px){
@@ -62,7 +63,7 @@ LoginContainer.SocialMediaSignup = styled.div`
     flex-direction: column
   }
 `;
-LoginContainer.Container = styled.div`
+SignupContainer.Container = styled.div`
   @media(min-width: 768px) {
     padding: 0 65px;
   }
@@ -70,7 +71,7 @@ LoginContainer.Container = styled.div`
     padding: 0 20px;
   }
 `;
-LoginContainer.Heading = styled.div`
+SignupContainer.Heading = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size: 20px;
   text-align: center;
@@ -89,16 +90,16 @@ LoginContainer.Heading = styled.div`
   
 `;
 
-LoginContainer.ButtonIcon = styled.img`
+SignupContainer.ButtonIcon = styled.img`
   
   width: 23px;
   height: 23px;
   
 `;
-LoginContainer.ButtonDiv = styled.div`
+SignupContainer.ButtonDiv = styled.div`
     width:100%;
 `;
-LoginContainer.Button = styled.button`
+SignupContainer.Button = styled.button`
   padding: 12px 10px;
   outline:none;
   border: 2px solid rgba(51, 51, 51, 1); 
@@ -128,7 +129,7 @@ LoginContainer.Button = styled.button`
     width: 256px;
   }
 `;
-LoginContainer.FacebookContent = styled.span`
+SignupContainer.FacebookContent = styled.span`
   position:relative;
   padding-left: 32px;
   &:before{
@@ -157,7 +158,7 @@ LoginContainer.FacebookContent = styled.span`
     }
   }
 `;
-LoginContainer.GoogleContent = styled.span`
+SignupContainer.GoogleContent = styled.span`
   position:relative;
   padding-left: 14px;
   &:before{
@@ -186,7 +187,7 @@ LoginContainer.GoogleContent = styled.span`
     }
   }
 `;
-LoginContainer.InstagramContent = styled.span`
+SignupContainer.InstagramContent = styled.span`
   position:relative;
   padding-left: 32px;
   &:before{
@@ -215,7 +216,7 @@ LoginContainer.InstagramContent = styled.span`
     }
   }
 `;
-LoginContainer.Line = styled.hr`
+SignupContainer.Line = styled.hr`
   width:230px;
   margin-top:7%;
   background-color:#CCCCCC;
@@ -223,7 +224,7 @@ LoginContainer.Line = styled.hr`
    display:none;
   }
 `;
-LoginContainer.InputFieldsWrapper = styled.div`
+SignupContainer.InputFieldsWrapper = styled.div`
   
   padding: 0px 25px;
   @media(min-width:768px){
@@ -232,11 +233,11 @@ LoginContainer.InputFieldsWrapper = styled.div`
     border-top: solid 1px rgba(51, 51, 51, 0.5);
   }
 `;
-LoginContainer.ErrorDiv = styled.div`
+SignupContainer.ErrorDiv = styled.div`
   height:10px;
   
 `;
-LoginContainer.ErrorMsg = styled.div`
+SignupContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
@@ -247,7 +248,7 @@ LoginContainer.ErrorMsg = styled.div`
 
   }
 `;
-LoginContainer.Label = styled.div`
+SignupContainer.Label = styled.div`
   color:#333333;
   font-family: 'Ubuntu-Bold';
   font-size:16px;
@@ -267,7 +268,7 @@ LoginContainer.Label = styled.div`
   }
 
 `;
-LoginContainer.SectionHeading = styled.div`
+SignupContainer.SectionHeading = styled.div`
     display:none;
     color: #FF953C;
     font-family: 'Ubuntu-Bold';
@@ -281,7 +282,7 @@ LoginContainer.SectionHeading = styled.div`
       font-size:22px;
     }
 `;
-LoginContainer.Input = styled.input`
+SignupContainer.Input = styled.input`
   font-family: 'Ubuntu-Regular';
   color: #333333;
   font-size:16px;
@@ -307,7 +308,7 @@ LoginContainer.Input = styled.input`
     height:40px;
   }
 `;
-LoginContainer.InputWrapper = styled.div`
+SignupContainer.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top:1%;
@@ -322,7 +323,7 @@ LoginContainer.InputWrapper = styled.div`
     margin-top: 50px;
   }
 `;
-LoginContainer.PrivacyContent = styled.div`
+SignupContainer.PrivacyContent = styled.div`
   text-align:left;
   font-family: 'Ubuntu-Regular';
   font-size:12px;
@@ -333,7 +334,7 @@ LoginContainer.PrivacyContent = styled.div`
   }
 `;
 
-LoginContainer.ImageStackLayout = styled.div`
+SignupContainer.ImageStackLayout = styled.div`
   padding:32px 0;
   width:100%;
   height:100%;
@@ -343,7 +344,7 @@ LoginContainer.ImageStackLayout = styled.div`
   flex-direction: column
 
 `;
-LoginContainer.FooterLayout = styled.div`
+SignupContainer.FooterLayout = styled.div`
   padding: 0;
   @media(min-width:1025px){
     padding: 0px 57px;
@@ -451,7 +452,7 @@ FooterSection.Button = styled.button`
     font-size:20px;
   }
 `;
-LoginContainer.WrapsInput = styled.div`
+SignupContainer.WrapsInput = styled.div`
   width:100%;
   height:60px;
   @media(min-width:768px){
@@ -464,14 +465,14 @@ LoginContainer.WrapsInput = styled.div`
   }
 
 `;
-LoginContainer.GoogleWrapper = styled.div`
+SignupContainer.GoogleWrapper = styled.div`
   display:none;
   
 `;
-LoginContainer.EmptyDiv = styled.div`
+SignupContainer.EmptyDiv = styled.div`
   display:none;
 `;
-LoginContainer.ShowPassword = styled.span`
+SignupContainer.ShowPassword = styled.span`
   position:absolute;
   background-image: url( 'assets/images/icon_1pass_24a.svg' );
   background-repeat: no-repeat;
@@ -486,9 +487,15 @@ LoginContainer.ShowPassword = styled.span`
     padding: 12px;
   }
 `;
-LoginContainer.PasswordWrapper = styled.div`
+SignupContainer.PasswordWrapper = styled.div`
   position:relative;
  
 `;
 
-export { LoginContainer, HeaderSection, FooterSection };
+SignupContainer.VerificationText = styled.h4`
+ color: black;
+ padding: 20px 0px
+
+`;
+
+export { SignupContainer, HeaderSection, FooterSection };
