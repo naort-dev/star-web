@@ -95,6 +95,7 @@ VideoRenderDiv.StarDetails = styled.p`
 VideoRenderDiv.VideoContentWrapper = styled.div`
   width: ${props => `${props.videoWidth}px`};
   height: 100%;
+  max-width: 100%;
   margin: 0 10px;
   background: #fff;
 `;
@@ -107,7 +108,7 @@ VideoRenderDiv.VideoPlayer = styled.div`
     width: ${props => `${props.videoWidth}px`};
     height: ${props => `${props.videoHeight}px`};
     margin: 0 auto;
-    max-width: 640px;
+    max-width: 100%;
     max-height: 480px;
     padding: 0;
   }
