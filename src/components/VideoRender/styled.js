@@ -98,19 +98,20 @@ VideoRenderDiv.VideoContentWrapper = styled.div`
   max-width: 100%;
   margin: 0 10px;
   background: #fff;
+  cursor: initial;
 `;
 
 VideoRenderDiv.VideoPlayer = styled.div`
   width: 100%;
   height: 80%;
   background: #000;
+  padding: 0 10px;
   @media(min-width:768px) {
     width: ${props => `${props.videoWidth}px`};
     height: ${props => `${props.videoHeight}px`};
     margin: 0 auto;
     max-width: 100%;
     max-height: 480px;
-    padding: 0;
   }
   @media(min-width: 1025px) {
     height: calc(100vh - 341px);
@@ -121,7 +122,10 @@ VideoRenderDiv.VideoPlayer = styled.div`
 
 VideoRenderDiv.VideoContent = styled.section`
   margin-top: 20px;
-  height: 20%;
+  padding: 20px 10px;
+  @media(min-width: 768px) {
+    padding: 0 10px;
+  }
 `;
 
 VideoRenderDiv.VideoTitle = styled.span`

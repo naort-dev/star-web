@@ -156,7 +156,7 @@ export default class ScrollList extends React.Component {
       }
       if (item.featured_photo) {
         coverPhoto = item.featured_photo.thumbnail_url && item.featured_photo.thumbnail_url;
-      } else if (item.images && Object.keys(item.images[0]).length) {
+      } else if (item.images && item.images[0] && Object.keys(item.images[0]).length) {
         coverPhoto = item.images && item.images[0] && item.images[0].image_url;
       } else {
         coverPhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
