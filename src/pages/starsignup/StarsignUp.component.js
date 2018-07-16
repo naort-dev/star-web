@@ -18,7 +18,7 @@ export default class StarsignUp extends React.Component {
       password: { value: '', isValid: false, message: '' },
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
-      role: 'R1001',
+      role: 'R1002',
       socialMedia: {
         username: '',
         first_name: '',
