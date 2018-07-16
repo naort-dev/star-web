@@ -55,6 +55,7 @@ export const registerUser = (
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(registerFetchEnd());
       dispatch(registerFetchSuccess(resp.data.data));
+      return resp
     } else {
       dispatch(registerFetchEnd());
     }
