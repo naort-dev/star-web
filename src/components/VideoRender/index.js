@@ -61,14 +61,12 @@ export default class VideoRender extends React.Component {
                 {this.props.details}
               </VideoRenderDiv.VideoTitle>
               <VideoRenderDiv.VideoRequester>
-                <Link to={`/starDetail/${this.props.celebId}`}>
-                  <VideoRenderDiv.VideoRequestImage 
-                    imageUrl={this.props.fanPhoto}
-                  />
-                  <VideoRenderDiv.VideoRequestName>
-                    {this.props.fanName}
-                  </VideoRenderDiv.VideoRequestName>
-                </Link>
+                <VideoRenderDiv.VideoRequestImage 
+                  imageUrl={this.props.fanPhoto}
+                />
+                <VideoRenderDiv.VideoRequestName>
+                  {this.props.fanName}
+                </VideoRenderDiv.VideoRequestName>
               </VideoRenderDiv.VideoRequester>
             </VideoRenderDiv.VideoContent>
           </Scrollbars>
