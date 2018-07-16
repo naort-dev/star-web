@@ -113,12 +113,17 @@ export default class ScrollList extends React.Component {
         <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
             cover={item.s3_thumbnail_url}
+            fanName={item.fan_name}
+            fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}
             videoUrl={item.s3_video_url}
+            videoCover={item.s3_thumbnail_url}
             celebId={item.user_id}
             videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}
+            videoWidth={item.width}
+            videoHeight={item.height}
           />
         </ListStyled.listVideos>
       ));
