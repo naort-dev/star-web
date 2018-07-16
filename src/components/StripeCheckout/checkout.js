@@ -11,6 +11,12 @@ import PaymentStyled from './styled';
 class checkout extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      cardNumberError: '',
+      cardExpiryError: '',
+      cvvError: '',
+      zipCodeError: '',
+    };
     this.styles = {
       base: {
         fontSize: '12px',
@@ -29,9 +35,18 @@ class checkout extends React.Component {
   componentWillMount() {
     this.props.setStripe(this.props.stripe);
   }
+  setErrorMsg = (event, element) => {
+    const errorMsg = event.error ? event.error.message : '';
+    this.setState({ [element]: errorMsg });
+  }
+  returnErrorMsg = (element) => {
+    if (this.state[element] !== '') {
+      return <PaymentStyled.ErrorElement>{this.state[element]}</PaymentStyled.ErrorElement>;
+    }
+    return null;
+  }
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log(event)
     this.props.handleBooking();
   }
 
@@ -41,31 +56,35 @@ class checkout extends React.Component {
         <PaymentStyled.CardElementWrapper>
           <PaymentStyled.title>Card Number</PaymentStyled.title>
           <CardNumberElement
-            onChange={(event) =>  console.log(event)}
+            onChange={event => this.setErrorMsg(event, 'cardNumberError')}
             style={this.styles}
           />
+          { this.returnErrorMsg('cardNumberError') }
         </PaymentStyled.CardElementWrapper>
         <PaymentStyled.OtherDetailsWrapper>
           <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>Valid till</PaymentStyled.title>
             <CardExpiryElement
-              onChange={(event) =>  console.log(event)}
+              onChange={event => this.setErrorMsg(event, 'cardExpiryError')}
               style={this.styles}
             />
+            { this.returnErrorMsg('cardExpiryError') }
           </PaymentStyled.CardElementWrapper>
           <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>CVV</PaymentStyled.title>
             <CardCVCElement
-              onChange={(event) =>  console.log(event)}
+              onChange={event => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
             />
+            { this.returnErrorMsg('cvvError') }
           </PaymentStyled.CardElementWrapper>
           <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>Zip code</PaymentStyled.title>
             <PostalCodeElement
-              onChange={(event) =>  console.log(event)}
+              onChange={event => this.setErrorMsg(event, 'zipCodeError')}
               style={this.styles}
             />
+            { this.returnErrorMsg('zipCodeError') }
           </PaymentStyled.CardElementWrapper>
         </PaymentStyled.OtherDetailsWrapper>
       </PaymentStyled>

@@ -85,15 +85,30 @@ PaymentStyled.ElementsWrapper = styled.div`
 `;
 
 PaymentStyled.CardElementWrapper = PaymentStyled.ElementsWrapper.extend`
-
+  .StripeElement {
+    margin: 10px 0;
+    margin-bottom: 0;
+  }
+`;
+PaymentStyled.ErrorElement = styled.span`
+  color:red;
+  font-size: 11px;
+  display: inline-block;
+  margin-top:4px;
+  font-family: 'Ubuntu-light';
+  text-align:left;
 `;
 
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
   justify-content: space-between;
+  margin-top: 10px;
   .StripeElement {
     padding: 10px 5px;
     min-width: 70px;
+  }
+  ${PaymentStyled.ErrorElement} {
+    width: 60px;
   }
 `;
 
