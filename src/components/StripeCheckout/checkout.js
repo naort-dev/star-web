@@ -20,11 +20,10 @@ class checkout extends React.Component {
     this.styles = {
       base: {
         fontSize: '12px',
-        color: '#424770',
-        letterSpacing: '0.025em',
-        fontFamily: 'Source Code Pro, monospace',
+        color: '#333333',
+        fontFamily: 'Ubuntu-Regular',
         '::placeholder': {
-          color: '#aab7c4',
+          color: '#333333',
         },
       },
       invalid: {
