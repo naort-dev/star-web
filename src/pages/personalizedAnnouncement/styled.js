@@ -547,13 +547,8 @@ Request.CheckBox = styled.input`
 Request.Span = styled.label`
 `;
 Request.InputFieldsWrapper = styled.div`
-  
-  
   @media(min-width:768px){
     padding: 0px 0px;
-   
-  }
-  @media(min-width:1025px){
    
   }
 `;
@@ -597,7 +592,6 @@ Request.Label = styled.div`
   @media(min-width:1025px){
     font-size:13px;
     width:69%;
-   
   }
   @media(min-width:1920px){
     font-size:16px;
