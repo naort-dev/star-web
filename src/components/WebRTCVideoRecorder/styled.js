@@ -16,7 +16,6 @@ const VideoRecorderDiv = styled.div`
 VideoRecorderDiv.Video = styled.video`
   height: 70%;
   width: 100vw;
-  object-fit:cover;
   @media(min-width:1025px){
     width: 50%;
     height: 50%
