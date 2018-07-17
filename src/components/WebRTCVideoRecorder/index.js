@@ -45,8 +45,8 @@ export default class VideoRecorder extends React.Component {
     }
 
     closeStream() {
-        let stream = document.getElementById('video-player').srcObject
-        let tracks = stream.getTracks();
+        const stream = document.getElementById('video-player').srcObject
+        const tracks = stream.getTracks();
         tracks.forEach(function (track) {
             track.stop();
         });
