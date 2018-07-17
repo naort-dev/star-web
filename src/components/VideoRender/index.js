@@ -86,7 +86,6 @@ export default class VideoRender extends React.Component {
         {
           this.state.videoActive && this.showVideoPopup()
         }
-        {/* <Link to={`/starDetail/${props.celebId}/${props.videoId}`}> */}
         <VideoRenderDiv.ImageSection
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
@@ -96,7 +95,6 @@ export default class VideoRender extends React.Component {
               imageUrl={this.state.profileImage}
             />
           </VideoRenderDiv.ProfileImageWrapper>
-          {/* <VideoRenderDiv.FavoriteButton /> */}
         </VideoRenderDiv.ImageSection>
         <VideoRenderDiv.ProfileContent>
           <VideoRenderDiv.Span>
@@ -106,7 +104,6 @@ export default class VideoRender extends React.Component {
             <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
           </VideoRenderDiv.Span>
         </VideoRenderDiv.ProfileContent>
-        {/* </Link> */}
       </VideoRenderDiv>
     );
   }
