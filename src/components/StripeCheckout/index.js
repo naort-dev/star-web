@@ -84,7 +84,9 @@ class StripeCheckout extends React.Component {
             </PaymentStyled.SubTitle>
             {this.props.fullName}
           </PaymentStyled.StarNameWrapper>
-          <PaymentStyled.StarPhoto src={this.props.profilePhoto} />
+          <PaymentStyled.StarPhoto 
+            imageUrl={this.props.profilePhoto}
+          />
         </PaymentStyled.StarDetailsWrapper>
         <Elements>
           <Checkout

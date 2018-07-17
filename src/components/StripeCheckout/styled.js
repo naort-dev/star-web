@@ -37,9 +37,14 @@ PaymentStyled.StarNameWrapper = styled.div`
   line-height: 22px;
 `;
 
-PaymentStyled.StarPhoto = styled.img`
+PaymentStyled.StarPhoto = styled.span`
+  display: inline-block;
   width: 100px;
   height: 100px;
+  background: ${props => props.imageUrl && `url(${props.imageUrl})`};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 `;
 
 PaymentStyled.SubTitle = styled.span`

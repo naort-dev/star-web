@@ -29,6 +29,7 @@ export default class Confirm extends React.Component {
     } else {
       bookingData = this.props.bookingData;
     }
+    this.updatePublicStatus(bookingData);
     this.setState({
       bookingData,
     });
@@ -129,8 +130,20 @@ export default class Confirm extends React.Component {
     }
   }
 
+  updatePublicStatus = (bookingData) => {
+    const publicRequest = typeof bookingData.publicRequest !== 'undefined' ? bookingData.publicRequest : true;
+    this.setState({ publicRequest });
+  }
+
   changePublicStatus = () => {
-    this.setState({ publicRequest: !this.state.publicRequest });
+    this.setState({ publicRequest: !this.state.publicRequest }, () => {
+      if (localStorage && localStorage.getItem('bookingData')) {
+        const localStorageValue = JSON.parse(localStorage.getItem('bookingData'));
+        localStorageValue.publicRequest = this.state.publicRequest;
+        localStorage.setItem('bookingData', JSON.stringify(localStorageValue));
+        this.props.setBookingDetails(localStorageValue);
+      }
+    });
   }
 
   exitPaymentMode = () => {
@@ -190,7 +203,7 @@ export default class Confirm extends React.Component {
               <Request.CheckBox
                 id="private_video"
                 type="checkbox"
-                value={this.state.publicRequest}
+                checked={!this.state.publicRequest}
                 onChange={() => this.changePublicStatus()}
               />
               <Request.Span htmlFor="private_video" id="checkmark" />

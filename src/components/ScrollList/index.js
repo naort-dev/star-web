@@ -113,12 +113,18 @@ export default class ScrollList extends React.Component {
         <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
             cover={item.s3_thumbnail_url}
+            fanName={item.fan_name}
+            fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}
+            celebProfessions={this.renderStarProfessions(item.professions)}
             videoUrl={item.s3_video_url}
+            videoCover={item.s3_thumbnail_url}
             celebId={item.user_id}
             videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}
+            videoWidth={item.width}
+            videoHeight={item.height}
           />
         </ListStyled.listVideos>
       ));
@@ -151,7 +157,7 @@ export default class ScrollList extends React.Component {
       }
       if (item.featured_photo) {
         coverPhoto = item.featured_photo.thumbnail_url && item.featured_photo.thumbnail_url;
-      } else if (item.images && Object.keys(item.images[0]).length) {
+      } else if (item.images && item.images[0] && Object.keys(item.images[0]).length) {
         coverPhoto = item.images && item.images[0] && item.images[0].image_url;
       } else {
         coverPhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
