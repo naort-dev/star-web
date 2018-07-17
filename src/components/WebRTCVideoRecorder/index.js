@@ -53,9 +53,7 @@ export default class VideoRecorder extends React.Component {
         document.getElementById('video-player').srcObject = null;
     }
 
-    onPause(){
-        console.log("paused")
-    }
+
 
     async startRecording(rerecord = false) {
         if (rerecord === true) {
@@ -78,7 +76,6 @@ export default class VideoRecorder extends React.Component {
         try {
             this.mediaRecorder = new MediaRecorder(window.stream, options);
             this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
-            this.mediaRecorder.onpause = this.onPause.bind(this)
             this.mediaRecorder.start(1000);
         } catch (e) {
             alert('Exception while creating MediaRecorder: '
@@ -92,7 +89,7 @@ export default class VideoRecorder extends React.Component {
             <VideoRecorderDiv >
                 <VideoRecorderDiv.VideoContainer>
                     {!this.props.videoRecorder.recordedBlob ?
-                        <VideoRecorderDiv.Video id="video-player" autoPlay  />
+                        <VideoRecorderDiv.Video id="video-player" autoPlay />
                         :
                         <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
                     }

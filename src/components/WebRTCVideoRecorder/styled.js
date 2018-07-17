@@ -21,13 +21,13 @@ VideoRecorderDiv.VideoContainer = styled.div`
   height: 90%;
   width: 100%;
   background-color: black;
-  @media(min-width:1025px){
-    height: 40%;
-    width: 60%;
-  }
   @media(min-width:768px){
     width: 100%;
     height: 90%;
+  }
+  @media(min-width:1025px){
+    height: 40%;
+    width: 60%;
   }
 
 `;
