@@ -1,33 +1,30 @@
 import React from 'react';
 import VideoRecorderDiv from './styled';
-let recordedBlobs = [];
+
 
 export default class VideoRecorder extends React.Component {
     constructor(props) {
         super(props);
         this.state = { mediaRecorder: null, error: null, streamFetched: null };
         this.mediaSource = new MediaSource();
+        this.mediaRecorder = null;
+        this.recordedBlobs = []
     }
 
     componentDidMount() {
-        this.mediaSource.addEventListener('sourceopen', this.handleSourceOpen.bind(this), false);
         this.captureUserMedia({ audio: true, video: { width: { min: 640 }, height: { min: 480 } } });
-    }
-
-    handleSourceOpen() {
-        sourceBuffer = this.mediaSource.addSourceBuffer('video/webm; codecs="vp9"');
     }
 
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
-            recordedBlobs.push(event.data);
+            this.recordedBlobs.push(event.data);
         }
     }
 
     captureUserMedia(mediaConstraints) {
         return navigator.mediaDevices.getUserMedia(mediaConstraints)
             .then(this.successCallback)
-            .then(()=> this.setState({streamFetched: true}))
+            .then(() => this.setState({ streamFetched: true }))
             .catch((err) => {
                 this.setState({ error: true });
 
@@ -41,10 +38,10 @@ export default class VideoRecorder extends React.Component {
     }
 
     stopRecording() {
-        const superBuffer = new Blob(recordedBlobs, { type: 'video/mp4' });
+        const superBuffer = new Blob(this.recordedBlobs, { type: 'video/mp4' });
         const videoSrc = window.URL.createObjectURL(superBuffer)
-        this.props.onStopRecording({videoSrc, superBuffer})
-        this.state.mediaRecorder.stop();
+        this.props.onStopRecording({ videoSrc, superBuffer })
+        this.mediaRecorder.stop();
         this.closeStream()
 
     }
@@ -61,26 +58,24 @@ export default class VideoRecorder extends React.Component {
     async startRecording(rerecord = false) {
         if (rerecord === true) {
             this.props.onRerecord();
-            recordedBlobs = [];
+            this.recordedBlobs = [];
             await this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
         }
-        let mediaRecorder
         this.props.onStartRecording()
-        var options = { mimeType: 'video/webm;codecs=vp9' };
+        var options = { mimeType: 'video/mp4;codecs=vp9' };
         if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-            options = { mimeType: 'video/webm;codecs=vp8' };
+            options = { mimeType: 'video/mp4;codecs=vp8' };
             if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                options = { mimeType: 'video/webm' };
+                options = { mimeType: 'video/mp4' };
                 if (!MediaRecorder.isTypeSupported(options.mimeType)) {
                     options = { mimeType: '' };
                 }
             }
         }
         try {
-            mediaRecorder = new MediaRecorder(window.stream, options);
-            this.setState({ mediaRecorder: mediaRecorder })
-            mediaRecorder.ondataavailable = this.handleDataAvailable;
-            mediaRecorder.start(1000);
+            this.mediaRecorder = new MediaRecorder(window.stream, options);
+            this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
+            this.mediaRecorder.start(1000);
         } catch (e) {
             alert('Exception while creating MediaRecorder: '
                 + e + '. mimeType: ' + options.mimeType);
@@ -94,7 +89,7 @@ export default class VideoRecorder extends React.Component {
                 {!this.props.videoRecorder.recordedBlob ?
                     <VideoRecorderDiv.Video id="video-player" autoPlay controls={this.props.videoRecorder.start ? true : false} />
                     :
-                    <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls />
+                    <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
                 }
                 {this.state.error || !this.state.streamFetched ?
                     <h4> Unable to Record Video. Kindly refresh your browser </h4> :

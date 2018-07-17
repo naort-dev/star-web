@@ -17,11 +17,12 @@ export default class StarsignUpVideo extends React.Component {
     render() {
         return (
             <SignupContainer>
+            
                 <SignupContainer.LeftSection>
-                    <HeaderSection>
-                        <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
-                    </HeaderSection>
-                    <SignupContainer.Line/>
+                <HeaderSection>
+                    <HeaderSection.MiddleDiv> I'm a Star</HeaderSection.MiddleDiv>
+                </HeaderSection>
+
                     <SignupContainer.SocialMediaSignup>
 
                         <SignupContainer.Container>

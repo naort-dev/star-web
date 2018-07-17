@@ -1,18 +1,26 @@
 import styled from 'styled-components';
 
 const VideoRecorderDiv = styled.div`
-  height: 40vh;
-  width: 50vw;
-  background-color: black
-  @media(max-width:1024px){
+  height: 100%;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  @media(min-width:1025px){
     width: 100%;
     height: 100%
   }
 `;
 
 VideoRecorderDiv.Video = styled.video`
-  height: 100%;
-  width: 100%;
+  height: 70%;
+  width: 100vw;
+  object-fit:cover;
+  @media(min-width:1025px){
+    width: 50%;
+    height: 50%
+  }
 `;
 
 VideoRecorderDiv.Button = styled.button`

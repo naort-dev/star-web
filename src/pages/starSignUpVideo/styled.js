@@ -4,8 +4,8 @@ const SignupContainer = styled.div`
   background-color: white;
   display: flex;
   padding: 0px 0px;
-  flex-direction: column;
-  height: 100%;
+  height: 100vh;
+  flex-direction: column-reverse;
   padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
@@ -16,26 +16,31 @@ const SignupContainer = styled.div`
 `;
 SignupContainer.wrapper = styled.div`
   height: 100vh;
+  
 `;
 SignupContainer.LeftSection = styled.div`
   width: 100%;
-  height: 100%;
+
   background-color:white;
+  width: 100vw;
+  height: 40vh;
 
   @media(min-width: 1025px){
-    width: 40%;
+    width: 40vw;
+    height: 94vh;
     padding: 0px 0px;
-    position: relative;
     padding-bottom: 83px;
   }
 `;
 
 SignupContainer.RightSection = styled.div`
-  width: 100%;
-  background-color:rgba(248, 248, 248, 1);
+  width: 100vw ;
+  height: 50vh;
+  background-color: white;
+  
 
   @media(min-width: 1025px){
-    width: 60%;
+    width: 60vw;
     display: block;
     padding: 0px 0px;
     position: relative;
@@ -43,6 +48,8 @@ SignupContainer.RightSection = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    height: 100vh;
+    background-color:rgba(248, 248, 248, 1);
   }
 `;
 SignupContainer.SocialMediaSignup = styled.div`
@@ -89,132 +96,6 @@ SignupContainer.Heading = styled.div`
   
 `;
 
-SignupContainer.ButtonIcon = styled.img`
-  
-  width: 23px;
-  height: 23px;
-  
-`;
-SignupContainer.ButtonDiv = styled.div`
-    width:100%;
-`;
-SignupContainer.Button = styled.button`
-  padding: 12px 10px;
-  outline:none;
-  border: 2px solid rgba(51, 51, 51, 1); 
-  background-color: white;
-  border-radius: 24px;
-  margin-top: 6%;
-  font-family: 'Ubuntu-Medium';
-  font-size:16px;
-  color: rgba(84, 84, 84, 1);
-  width: 272px;
-  text-align:center;
-  cursor: pointer;
-  box-shadow: 2px 6px 8px rgba(0, 0, 0, 0.12);
-  
-  &:hover {
-    color :#FF6C58;
-    border-color:#FF6C58;
-  }
-  @media(min-width : 768px){
-    font-size:16px;
-    border: 3px solid #333333; 
-    width: 350px;
-  }
-  @media(min-width: 1025px){
-    padding: 9px 10px;
-    font-size: 12px;
-    width: 256px;
-  }
-`;
-SignupContainer.FacebookContent = styled.span`
-  position:relative;
-  padding-left: 32px;
-  &:before{
-    content:'';
-    position:absolute;
-    left:-15px;
-    right:0;
-    top:-4px;
-    bottom:0;
-    background: url( 'assets/images/fb-icon.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 4px;
-    
-  }
-  @media(min-width:768px){
-    padding-left: 17px;
-    &:before{
-    left: -56px;
-    }
-  }
-  @media(min-width:1025px){
-    padding-left: 17px;
-    &:before{
-    left: -33px;
-    height:0;
-    }
-  }
-`;
-SignupContainer.GoogleContent = styled.span`
-  position:relative;
-  padding-left: 14px;
-  &:before{
-    content:'';
-    position:absolute;
-    left:-32px;
-    right:0;
-    top:-4px;
-    bottom:0;
-    background: url( 'assets/images/icon_social_G_24a.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 4px;
-    
-  }
-  @media(min-width:768px){
-    padding-left:0;
-    &:before{
-      left:-73px;
-    }
-  }
-  @media(min-width:1025px){
-    padding-left: 0;
-    &:before{
-    left: -48px;
-    height:0;
-    }
-  }
-`;
-SignupContainer.InstagramContent = styled.span`
-  position:relative;
-  padding-left: 32px;
-  &:before{
-    content:'';
-    position:absolute;
-    left:-15px;
-    right:0;
-    top:-4px;
-    bottom:0;
-    background: url( 'assets/images/insta-icon.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 4px;
-    
-  }
-  @media(min-width:768px){
-    padding-left: 17px;
-    &:before{
-    left: -56px;
-    }
-  }
-  @media(min-width:1025px){
-    padding-left: 17px;
-    &:before{
-    left: -33px;
-    height:0;
-    }
-  }
-`;
 SignupContainer.Line = styled.hr`
   width:230px;
   margin-top:7%;
@@ -224,118 +105,8 @@ SignupContainer.Line = styled.hr`
    margin-top: 4%;
   }
 `;
-SignupContainer.InputFieldsWrapper = styled.div`
-  
-  padding: 0px 25px;
-  @media(min-width:768px){
-    padding: 0px 0px;
-    margin-top: 6%;
-    border-top: solid 1px rgba(51, 51, 51, 0.5);
-  }
-`;
-SignupContainer.ErrorDiv = styled.div`
-  height:10px;
-  
-`;
-SignupContainer.ErrorMsg = styled.div`
-  color:red;
-  font-size: 11px;
-  margin-top:4px;
-  font-family: 'Ubuntu-light';
-  text-align:left;
-  @media(min-width:768px){
-    
-
-  }
-`;
-SignupContainer.Label = styled.div`
-  color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
-  text-align:left;
-  @media(min-width:768px){
-    width:55%;
-    align-items:center;
-    padding-bottom:0px;
-  }
-  @media(min-width:1025px){
-    font-size:13px;
-    width:69%;
-    line-height: 30px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
-
-`;
-SignupContainer.SectionHeading = styled.div`
-    display:none;
-    color: #FF953C;
-    font-family: 'Ubuntu-Bold';
-    text-align:center;
-    font-size:32px;
-    @media(min-width:768px){
-      display:block;
-      margin-top: 7%;
-    }
-    @media(min-width:1025px){
-      font-size:22px;
-    }
-`;
-SignupContainer.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
-  color: #333333;
-  font-size:16px;
-  text-align:left;
-  outline:none;
-  border: 2px solid rgba(51, 51, 51, 1);
-  width: 100%;
-  height: 40px;
-  text-indent: 10px;
-  margin-top:3%;
-  background-color:rgba(248, 248, 248, 1);
-  @media(min-width:768px){
-    margin-top:0;
-    height:40px;
-  }
-  @media(min-width:1025px){
-    margin-top:0;
-    height:33px;
-    font-size:13px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-    height:40px;
-  }
-`;
-SignupContainer.InputWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top:1%;
-  @media(min-width:768px){
-    flex-direction: row;
-    margin-top:5%;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
-  }
-`;
-SignupContainer.PrivacyContent = styled.div`
-  text-align:left;
-  font-family: 'Ubuntu-Regular';
-  font-size:12px;
-  padding: 17px 35px;
-  color: #707070;
-  @media(min-width:768px){
-    display:none;
-  }
-`;
 
 SignupContainer.ImageStackLayout = styled.div`
-  padding:32px 0;
   width:100%;
   height:100%;
   display: flex;
@@ -359,50 +130,34 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
+  height: 6vh;
+  top: 0vh;
+  position: absolute;
+  @media(min-width:1025px){
+    font-size:16px;
+    display:block;
+    height: 6vh;
+    position: absolute;
+    width: 100vw;
+    top: 0px;
+    
+  }
 `;
-HeaderSection.HeaderNavigation = styled.button`
-  background-image: url( 'assets/images/icon_back_40a.svg' );
-  background-repeat: no-repeat;
-  background-position: center;
-  border:none;
-  padding:20px;
-  background-size: 26px;
-  background-color:white;
-  outline:none;
-  cursor: pointer;
-`;
+
 HeaderSection.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;
   @media(min-width:1920px){
     font-size:16px;
   }
-  
+`;
 
-`;
-HeaderSection.RightDiv = styled.button`
-  background-color: #fff; 
-  margin-right: 5px;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  font-family: 'Ubuntu-Light';
-  display: inline-block;
-  font-size: 12px;
-  cursor: pointer;
-  outline:none;
-  border: none;
-  @media(min-width:1920px){
-    font-size:16px;
-  }
-`;
 const FooterSection = styled.div`
   position:fixed;
   bottom: 0;
   background-color:#FFFFFF;
   z-index:1;
-  width:100%;
+  width: 100vw;
   display:flex;
   padding:13px 12px;
   box-shadow: 0px 0px 12px 0px rgba(34, 34, 34, 0.4);
@@ -411,6 +166,7 @@ const FooterSection = styled.div`
    position: relative;
    padding: 26px 0px;
    border-top: 1px solid #222;
+   width:30vw;
   }
   
 `;
@@ -422,12 +178,7 @@ FooterSection.LeftSection = styled.div`
     width:50%;
   }
 `;
-FooterSection.Agreement = styled.div`
-  text-align:left;
-  color:rgba(112, 112, 112, 1);
-  font-family: 'Ubuntu-Regular';
-  font-size:12px;
-`;
+
 FooterSection.RightSection = styled.div`
   width:100%;
   text-align:right; 
@@ -451,45 +202,6 @@ FooterSection.Button = styled.button`
   @media(min-width:1920px){
     font-size:20px;
   }
-`;
-SignupContainer.WrapsInput = styled.div`
-  width:100%;
-  height:60px;
-  @media(min-width:768px){
-    width:100%;
-    height:30px;
-  }
-  @media(min-width:1025){
-    width:352px;
-    height:25px;
-  }
-
-`;
-SignupContainer.GoogleWrapper = styled.div`
-  display:none;
-  
-`;
-SignupContainer.EmptyDiv = styled.div`
-  display:none;
-`;
-SignupContainer.ShowPassword = styled.span`
-  position:absolute;
-  background-image: url( 'assets/images/icon_1pass_24a.svg' );
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size:19px;
-  padding: 14px;
-  right: 7px;
-  top: 6px;
-  cursor:pointer;
-  @media(min-width:1025px){
-    top:5px;
-    padding: 12px;
-  }
-`;
-SignupContainer.PasswordWrapper = styled.div`
-  position:relative;
- 
 `;
 
 SignupContainer.VerificationText = styled.h4`
