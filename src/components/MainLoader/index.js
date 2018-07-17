@@ -3,7 +3,7 @@ import MainLoaderWrapper from './styled'
 
 const MainLoader = () => (
   <MainLoaderWrapper>
-    <img src="assets/images/main-loader.gif" alt="" />
+    <MainLoaderWrapper.loaderImage src="assets/images/main-loader.gif" alt="" />
   </MainLoaderWrapper>
 );
 
