@@ -12,17 +12,13 @@ const Templates = styled.div`
 Templates.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
-  height:90px;
- 
+  margin-top: 10px; 
   @media(min-width:768px){
     flex-direction: row;
+    margin-top: 30px;
     align-items: flex-start;
-    margin-top:5%;
-    height:40px;
   }
   @media(min-width: 1025px) {
-    height:40px;
     margin-top: 30px;
   }
   @media(min-width: 1920px) {
@@ -96,22 +92,15 @@ Templates.InputArea = styled.textarea`
   outline:none;
   border: 2px solid rgba(51, 51, 51, 1);
   width: 100%;
-  height: 100px;
+  height: 108px;
   padding: 8px 8px;
   resize: none;
   background-color:rgba(248, 248, 248, 1);
-  @media(min-width:768px){
-    margin-top:0;
-    height:100px;
-  }
   @media(min-width:1025px){
-    margin-top:0;
-    height:100px;
     font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;
-    height:100px;
   }
 `;
 Templates.ErrorMsg = styled.div`
