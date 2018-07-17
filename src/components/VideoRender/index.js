@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
 import VideoPlayer from '../VideoPlayer';
 import Popup from '../Popup';
 import VideoRenderDiv from './styled';
@@ -44,32 +43,30 @@ export default class VideoRender extends React.Component {
         <VideoRenderDiv.VideoContentWrapper
           videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
         >
-          <Scrollbars>
-            <VideoRenderDiv.VideoPlayer
+          <VideoRenderDiv.VideoContent>
+            <VideoRenderDiv.VideoRequester>
+              <VideoRenderDiv.VideoRequestImage
+                imageUrl={this.state.profileImage}
+              />
+              <VideoRenderDiv.VideoRequestName>
+                {this.props.starName}
+                <VideoRenderDiv.VideoTitle>
+                  {this.props.celebProfessions}
+                </VideoRenderDiv.VideoTitle>
+              </VideoRenderDiv.VideoRequestName>
+            </VideoRenderDiv.VideoRequester>
+          </VideoRenderDiv.VideoContent>
+          <VideoRenderDiv.VideoPlayer
+            videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
+            videoHeight={this.props.videoHeight ? this.props.videoHeight: '100%'}
+          >
+            <VideoPlayer
               videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
               videoHeight={this.props.videoHeight ? this.props.videoHeight: '100%'}
-            >
-              <VideoPlayer
-                videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
-                videoHeight={this.props.videoHeight ? this.props.videoHeight: '100%'}
-                cover={this.state.videoCover ? this.state.videoCover : ''}
-                src={this.props.videoUrl ? this.props.videoUrl : ''}
-              />
-            </VideoRenderDiv.VideoPlayer>
-            <VideoRenderDiv.VideoContent>
-              <VideoRenderDiv.VideoTitle>
-                {this.props.details}
-              </VideoRenderDiv.VideoTitle>
-              <VideoRenderDiv.VideoRequester>
-                <VideoRenderDiv.VideoRequestImage 
-                  imageUrl={this.props.fanPhoto}
-                />
-                <VideoRenderDiv.VideoRequestName>
-                  {this.props.fanName}
-                </VideoRenderDiv.VideoRequestName>
-              </VideoRenderDiv.VideoRequester>
-            </VideoRenderDiv.VideoContent>
-          </Scrollbars>
+              cover={this.state.videoCover ? this.state.videoCover : ''}
+              src={this.props.videoUrl ? this.props.videoUrl : ''}
+            />
+          </VideoRenderDiv.VideoPlayer>
         </VideoRenderDiv.VideoContentWrapper>
       </Popup>
     );

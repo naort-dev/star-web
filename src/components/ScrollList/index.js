@@ -115,6 +115,7 @@ export default class ScrollList extends React.Component {
             cover={item.s3_thumbnail_url}
             fanName={item.fan_name}
             fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}
+            celebProfessions={this.renderStarProfessions(item.professions)}
             videoUrl={item.s3_video_url}
             videoCover={item.s3_thumbnail_url}
             celebId={item.user_id}
