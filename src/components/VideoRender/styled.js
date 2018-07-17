@@ -129,9 +129,6 @@ VideoRenderDiv.VideoTitle = styled.span`
   font-size: 12px;
   font-family: 'Ubuntu-Regular';
   text-align: center;
-  @media(min-width: 1025px) {
-    font-size: 16px;
-  }
 `;
 
 VideoRenderDiv.VideoRequester = styled.div`
