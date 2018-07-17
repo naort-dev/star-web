@@ -9,8 +9,9 @@ export default class VideoRecorder extends React.Component {
         this.mediaSource = new MediaSource();
         this.mediaRecorder = null;
         this.recordedBlobs = []
+        this.handleDataAvailable = this.handleDataAvailable.bind(this)
+        this.stopRecording = this.stopRecording.bind(this)
     }
-
 
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
@@ -75,7 +76,7 @@ export default class VideoRecorder extends React.Component {
         }
         try {
             this.mediaRecorder = new MediaRecorder(window.stream, options);
-            this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
+            this.mediaRecorder.ondataavailable = this.handleDataAvailable
             this.mediaRecorder.start(1000);
         } catch (e) {
             alert('Exception while creating MediaRecorder: '
@@ -99,7 +100,7 @@ export default class VideoRecorder extends React.Component {
                     this.props.videoRecorder.start == null ?
                         <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                         : (this.props.videoRecorder.start == true ?
-                            <VideoRecorderDiv.Button onClick={this.stopRecording.bind(this)}> Stop Recording </VideoRecorderDiv.Button> :
+                            <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
                             <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re-Record </VideoRecorderDiv.Button>)
                 }
             </VideoRecorderDiv>

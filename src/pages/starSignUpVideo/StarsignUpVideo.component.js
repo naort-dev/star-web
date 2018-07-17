@@ -5,6 +5,10 @@ import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 
 export default class StarsignUpVideo extends React.Component {
+    constructor(props){
+        super(props)
+        this.onSubmit = this.onSubmit.bind(this)
+    }
 
     onSubmit() {
         const signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
@@ -34,7 +38,7 @@ export default class StarsignUpVideo extends React.Component {
                             </FooterSection.LeftSection>
                             <FooterSection.RightSection>
                                 {this.props.videoRecorder.stop ?
-                                    <FooterSection.Button onClick={this.onSubmit.bind(this)}>Submit</FooterSection.Button>
+                                    <FooterSection.Button onClick={this.onSubmit}>Submit</FooterSection.Button>
                                     : null}
                             </FooterSection.RightSection>
                         </FooterSection>
