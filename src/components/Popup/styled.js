@@ -11,7 +11,7 @@ const popupEnter = keyframes`
 
 const PopupStyled = styled.div`
   position: fixed;
-  top: 60px;
+  top: 0;
   bottom: 0;
   right: 0;
   left: 0;
@@ -20,11 +20,16 @@ const PopupStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 10;
+  @media(min-width: 1025px) {
+    top: 60px;
+  }
 `;
 
 PopupStyled.Container = styled.div`
   display: flex;
+  max-width: 100%;
+  max-height: 100%;
   width: 100%;
   height: 100%;
   justify-content: center;
@@ -32,6 +37,8 @@ PopupStyled.Container = styled.div`
   position: relative;
   animation: ${popupEnter} 0.2s ease-out;
   @media(min-width: 768px) {
+    width: auto;
+    height: 100%;
     max-width: 80%;
     max-height: 80%;
   }
