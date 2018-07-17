@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const VideoRecorderDiv = styled.div`
-  height: 100%;
+  height: 80%;
   width: 100vw;
   display: flex;
   align-items: center;
@@ -9,16 +9,35 @@ const VideoRecorderDiv = styled.div`
   flex-direction: column;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%
+    height: 100%;
+  }
+  @media(min-width:768px){
+    width: 100%;
+    height: 90%;
   }
 `;
 
-VideoRecorderDiv.Video = styled.video`
-  height: 70%;
-  width: 100vw;
+VideoRecorderDiv.VideoContainer = styled.div`
+  height: 90%;
+  width: 100%;
+  background-color: black;
   @media(min-width:1025px){
-    width: 50%;
-    height: 50%
+    height: 40%;
+    width: 60%;
+  }
+  @media(min-width:768px){
+    width: 100%;
+    height: 90%;
+  }
+
+`;
+
+VideoRecorderDiv.Video = styled.video`
+  height: 100%;
+  width: 100%;
+  @media(min-width:1025px){
+    width: 100%;
+    height: 100%
   }
 `;
 

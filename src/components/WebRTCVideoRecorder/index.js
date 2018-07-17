@@ -11,9 +11,6 @@ export default class VideoRecorder extends React.Component {
         this.recordedBlobs = []
     }
 
-    componentDidMount() {
-        this.captureUserMedia({ audio: true, video: { width: { min: 640 }, height: { min: 480 } } });
-    }
 
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
@@ -26,6 +23,7 @@ export default class VideoRecorder extends React.Component {
             .then(this.successCallback)
             .then(() => this.setState({ streamFetched: true }))
             .catch((err) => {
+                console.log("err", err)
                 this.setState({ error: true });
 
             })
@@ -55,6 +53,10 @@ export default class VideoRecorder extends React.Component {
         document.getElementById('video-player').srcObject = null;
     }
 
+    onPause(){
+        console.log("paused")
+    }
+
     async startRecording(rerecord = false) {
         if (rerecord === true) {
             this.props.onRerecord();
@@ -62,6 +64,7 @@ export default class VideoRecorder extends React.Component {
             await this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
         }
         this.props.onStartRecording()
+        await this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
         var options = { mimeType: 'video/mp4;codecs=vp9' };
         if (!MediaRecorder.isTypeSupported(options.mimeType)) {
             options = { mimeType: 'video/mp4;codecs=vp8' };
@@ -75,6 +78,7 @@ export default class VideoRecorder extends React.Component {
         try {
             this.mediaRecorder = new MediaRecorder(window.stream, options);
             this.mediaRecorder.ondataavailable = this.handleDataAvailable.bind(this);
+            this.mediaRecorder.onpause = this.onPause.bind(this)
             this.mediaRecorder.start(1000);
         } catch (e) {
             alert('Exception while creating MediaRecorder: '
@@ -86,12 +90,14 @@ export default class VideoRecorder extends React.Component {
     render() {
         return (
             <VideoRecorderDiv >
-                {!this.props.videoRecorder.recordedBlob ?
-                    <VideoRecorderDiv.Video id="video-player" autoPlay controls={this.props.videoRecorder.start ? true : false} />
-                    :
-                    <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
-                }
-                {this.state.error || !this.state.streamFetched ?
+                <VideoRecorderDiv.VideoContainer>
+                    {!this.props.videoRecorder.recordedBlob ?
+                        <VideoRecorderDiv.Video id="video-player" autoPlay  />
+                        :
+                        <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
+                    }
+                </VideoRecorderDiv.VideoContainer>
+                {this.state.error ?
                     <h4> Unable to Record Video. Kindly refresh your browser </h4> :
                     this.props.videoRecorder.start == null ?
                         <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
