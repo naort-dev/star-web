@@ -108,6 +108,7 @@ LoginContainer.SocialMediaMessage = styled.div`
   text-align: center;
   color: #333333;
   margin-top:3%;
+  margin-bottom:5%;
   @media(min-width:768px){
     font-size: 18px;
   }
@@ -372,9 +373,9 @@ border: 2px solid #FF6C58;
 `;
 LoginContainer.ForgotButtonWrapper = styled.div`
   text-align:left;
-  margin-top:1%;
+  margin-top:3%;
 `;
-LoginContainer.ForgotButtonSpan =  styled.span`
+LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;
   font-family: 'Ubuntu-Regular';
   font-size:12px;
