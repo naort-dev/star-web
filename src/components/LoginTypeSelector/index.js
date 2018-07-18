@@ -10,16 +10,16 @@ export const LoginTypeSelector = props => (
       <TypeSelectorWrapper.subheading>Choose your account type to get started
       </TypeSelectorWrapper.subheading>
     </TypeSelectorWrapper.Content>
-    <div> 
-      <Link to="/signup">
+    <div>
+      <Link to={{ pathname: "/signup", state: { type: "fan" } }}>
         <TypeSelectorWrapper.Button>I’m a Fan</TypeSelectorWrapper.Button>
       </Link>
     </div>
     <div>
-      <Link to="/starsignup">
+      <Link to={{ pathname: "/signup", state: { type: "star" } }}>
         <TypeSelectorWrapper.Button>I’m a Star</TypeSelectorWrapper.Button>
       </Link>
     </div>
-    
+
   </TypeSelectorWrapper>
 );

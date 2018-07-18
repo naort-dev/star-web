@@ -128,19 +128,31 @@ SignupContainer.FooterLayout = styled.div`
 `;
 const HeaderSection = styled.div`
   display:flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 6vh;
+  width: 100vw;
   top: 0vh;
   position: absolute;
   @media(min-width:1025px){
     font-size:16px;
-    display:block;
-    height: 6vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 10vh;
     position: absolute;
-    width: 100vw;
+    width: 40vw;
     top: 0px;
     
+  }
+`;
+
+HeaderSection.LogoImage = styled.img`
+  width:100px;
+  height:45px;
+  @media(min-width:1025px){
+    width:160px;
+    height:60px;
   }
 `;
 
@@ -199,6 +211,24 @@ FooterSection.Button = styled.button`
   cursor: pointer;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  @media(min-width:1920px){
+    font-size:20px;
+  }
+`;
+
+FooterSection.DisabledButton = styled.button`
+  background-color: white; 
+  color: grey;
+  padding: 4px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border-radius:5px;
+  border: 2px solid grey;
   @media(min-width:1920px){
     font-size:20px;
   }

@@ -3,266 +3,15 @@ import { Link, Redirect } from 'react-router-dom';
 import validator from 'validator';
 import axios from 'axios';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
+<<<<<<< 71a1f5c3f26a55bb651874f5caa443813456946c
+=======
+import { ImageStack } from '../../components/ImageStack';
+import SignUpForm from '../../components/SignupForm'
+>>>>>>> cleaned the code
 
 export default class SignUp extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      redirectToReferrer: false,
-      firstName: { value: '', isValid: false, message: '' },
-      lastName: { value: '', isValid: true, message: '' },
-      password: { value: '', isValid: false, message: '' },
-      showPassword: false,
-      email: { value: '', isValid: false, message: '' },
-      role: 'R1001',
-      socialMedia: {
-        username: '',
-        first_name: '',
-        last_name: '',
-        sign_up_source: '',
-        profile_photo: '',
-        nick_name: '',
-        fb_id: '',
-        gp_id: '',
-        in_id: '',
-        role: 'R1001',
-      },
-    };
-  }
-  componentDidMount() {
-    window.fbAsyncInit = () => {
-      window.FB.init({
-        appId: env('fbId'),
-        cookie: true,
-        xfbml: true,
-        version: 'v3.0',
-      });
-      window.FB.getLoginStatus = (response) => {
-        if (response.status === 'connected') {
-          // for already connected
-        } else {
-          // user is not authorized
-        }
-      };
-    };
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    const token = this.props.location.hash;
-    const authToken = token.split('=')[1];
-    const instaUrl = env('instaUrl') + authToken;
-    const that = this;
-    if (authToken !== undefined) {
-      axios.get(instaUrl)
-        .then(function (response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-        })
-        .catch(function (error) {
-
-        });
-    }
-    gapi.signin2.render('g-sign-in', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'theme': 'dark',
-      'onsuccess': this.onSignIn,
-    });
-  }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.isLoggedIn) {
-      this.setState({
-        redirectToReferrer: nextProps.isLoggedIn,
-      });
-      const followData = this.props.followCelebData;
-      if (followData.celebId) {
-        this.props.followCelebrity(
-          this.props.followCelebData.celebId,
-          this.props.followCelebData.celebProfessions,
-          this.props.followCelebData.follow,
-          true,
-        );
-      }
-    }
-  }
-  componentWillUnmount() {
-    this.props.resetRedirectUrls();
-  }
-  onSignIn = (googleUser) => {
-    const profile = googleUser.getBasicProfile();
-    this.onSocialMediaLogin(profile, 3);
-  }
-  onRegister = (e) => {
-    e.preventDefault();
-    if (this.props.statusCode === '410') {
-      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
-        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-      });
-    } else if (this.checkEmail()) {
-      if (this.isFormValid()) {
-        this.props.registerUser(
-          this.state.firstName.value,
-          this.state.lastName.value,
-          this.state.email.value,
-          this.state.password.value,
-          this.state.role,
-        );
-      }
-    } else {
-      this.checkEmail();
-      this.checkPassword();
-      this.checkRequired();
-    }
-  }
-  onSocialMediaLogin = (r, source) => {
-    if (source === 2) {
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: r.email === '' ? 'facebook' : r.email,
-          first_name: r.first_name,
-          last_name: r.last_name,
-          sign_up_source: source,
-          nick_name: r.name,
-          profile_photo: r.picture.data.url,
-          fb_id: r.id,
-        },
-      });
-    } else if (source === 3) {
-      const name = r.getName();
-      const firstName = name.split('')[0];
-      const lastName = name.split('')[1];
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: r.getEmail(),
-          first_name: firstName,
-          last_name: lastName,
-          sign_up_source: source,
-          nick_name: r.getName(),
-          profile_photo: r.getImageUrl(),
-          gp_id: r.getId(),
-        },
-      });
-    } else {
-      const val = r;
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: val.username,
-          sign_up_source: source,
-          nick_name: val.full_name,
-          profile_photo: val.profile_picture,
-          in_id: val.id,
-        },
-      });
-    }
-    this.props.socialMediaLogin(
-      this.state.socialMedia.username,
-      this.state.socialMedia.first_name,
-      this.state.socialMedia.last_name,
-      this.state.socialMedia.sign_up_source,
-      this.state.socialMedia.profile_photo,
-      this.state.socialMedia.role,
-      this.state.socialMedia.fb_id,
-      this.state.socialMedia.gp_id,
-      this.state.socialMedia.in_id,
-    );
-  }
-  onGmail = () => {
-    const check = document.getElementsByClassName('abcRioButtonIcon');
-    check[0].click();
-  }
-  onInstagramLogin = () => {
-    const clientId = env('instaId');
-    const redirectUri = env('signupInstaRedirectUri');
-    const url = env('instaAuthUrl') + '?client_id=' + clientId + '&redirect_uri=' + redirectUri + '&response_type=token';
-    window.location.href = url;
-  }
-  OnFBlogin = () => {
-    const that = this;
-    window.FB.login(function (response) {
-      if (response.authResponse) {
-        window.FB.api('/me', { locale: 'en_US', fields: 'name, email,first_name,last_name,picture' },
-          function (response) {
-            that.onSocialMediaLogin(response, 2);
-          });
-      }
-    }, { scope: 'email', return_scopes: true });
-  }
-  firstNameHandler = (e) => {
-    this.setState({ firstName: { ...this.state.firstName, value: e.target.value } });
-  }
-  lastNameHandler = (e) => {
-    this.setState({ lastName: { ...this.state.lastName, value: e.target.value } });
-  }
-  passwordHandler = (e) => {
-    this.setState({ password: { ...this.state.password, value: e.target.value } });
-  }
-  emailHandler = (e) => {
-    this.setState({ email: { ...this.state.email, value: e.target.value } });
-  }
-  roleHandler = () => {
-
-  }
-  checkEmail = () => {
-    const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
-    if (validator.isEmpty(this.state.email.value)) {
-      this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
-      return false;
-    }
-    if (!emailRegex.test(this.state.email.value)) {
-      this.setState({ email: { ...this.state.email, message: 'Enter a valid email address' } });
-      return false;
-    }
-    this.setState({ email: { ...this.state.email, message: '', isValid: true } });
-    return true;
-  }
-  checkPassword = () => {
-    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
-
-    if (validator.isEmpty(this.state.password.value)) {
-      this.setState({ password: { ...this.state.password, message: 'Enter a  password' } });
-      return false;
-    }
-    if (!pattern.test(this.state.password.value)) {
-      this.setState({ password: { ...this.state.password, message: 'Enter a valid password must contain atleast one symbol' } });
-      return false;
-    }
-    this.setState({ password: { ...this.state.password, message: '', isValid: true } });
-    return true;
-  }
-  checkRequired = () => {
-    if (validator.isEmpty(this.state.firstName.value)) {
-      this.setState({ firstName: { ...this.state.firstName, message: 'Enter a valid Firstname' } });
-      return false;
-    }
-    this.setState({ firstName: { ...this.state.firstName, message: '', isValid: true } });
-    return true;
-  }
-  isFormValid = () => {
-    if (this.state.email.isValid && this.state.firstName.isValid && this.state.password.isValid) {
-      return true;
-    }
-    return false;
-  }
-  ShowPassword = () => {
-    this.setState({ showPassword: !this.state.showPassword });
-  }
-
-
   render() {
-    const loginToContinue = this.props.location.state && this.props.location.state.to;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
+
     return (
       <LoginContainer.wrapper>
         <LoginContainer>
@@ -278,6 +27,7 @@ export default class SignUp extends React.Component {
                 <HeaderSection.RightDiv>LOG IN</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
+<<<<<<< 71a1f5c3f26a55bb651874f5caa443813456946c
             <LoginContainer.SocialMediaSignup>
               <LoginContainer.Container>
                 <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
@@ -420,10 +170,16 @@ export default class SignUp extends React.Component {
                 </LoginContainer.WrapsInput>
               </LoginContainer.Container>
             </LoginContainer.SocialMediaSignup>
+=======
+            <React.Fragment>
+              <SignUpForm {...this.props} />
+            </React.Fragment>
+>>>>>>> cleaned the code
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection />
         </LoginContainer>
       </LoginContainer.wrapper>
+
     );
   }
 }

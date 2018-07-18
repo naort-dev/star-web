@@ -42,13 +42,14 @@ VideoRecorderDiv.Video = styled.video`
 `;
 
 VideoRecorderDiv.Button = styled.button`
+  margin-top: 10px;
   background-color: #fff; 
   color: #FF6C58;
   padding: 4px 30px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 10px;
+  font-size: 14px;
   font-family: 'Ubuntu-Bold';
   outline:none;
   border-radius:5px;
