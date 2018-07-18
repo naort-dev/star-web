@@ -105,20 +105,6 @@ VideoRenderDiv.VideoPlayer = styled.div`
   width: 100%;
   height: calc(100% - 80px);
   background: #000;
-<<<<<<< HEAD
-=======
-  @media(min-width:768px) {
-    width: ${props => `${props.videoWidth}px`};
-    height: ${props => `${props.videoHeight}px`};
-    margin: 0 auto;
-    max-width: 100%;
-    max-height: 480px;
-  }
-  @media(min-width: 1025px) {
-    max-width: 100%;
-    max-height: calc(100% - 50px);
-  }
->>>>>>> video popup alignment
 `;
 
 VideoRenderDiv.VideoContent = styled.section`
