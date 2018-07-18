@@ -18,6 +18,7 @@ class Api {
   static getEphemeralKey = 'payments/generatekey/';
   static createCharge = 'payments/createcharge/';
   static requestVideo = 'request/stargramz/';
+  static getSourceList = 'payments/stripe_cards/';
 }
 
 export default Api;
