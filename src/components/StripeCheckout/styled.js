@@ -61,16 +61,14 @@ PaymentStyled.PaymentController = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 7px 16px;
+  padding: 13px;
   background-color: #fff;
   z-index: 5;  
   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-  @media(min-width: 768px) {
-    padding: 13px 44px;
-  }
   @media(min-width:1025px){
-    border-top: 2px solid rgba(51, 51, 51, 1);
-    padding: 25px 48px;
+    padding: 27px 0;
+    border-top: 1px solid rgba(51, 51, 51, 1);
+    margin: 0 42px;
     position:absolute;
     bottom:0;
     box-shadow: none;
@@ -87,6 +85,7 @@ PaymentStyled.OptionSelector = styled.div`
 
 PaymentStyled.OptionLabel = styled.label`
   margin-left: 20px;
+  cursor: pointer;
 `;
 
 PaymentStyled.cardListWrapper = styled.ul`
@@ -142,6 +141,7 @@ PaymentStyled.ComponentWrapperScroll = styled(Scrollbars)`
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;
+      padding: 7px 42px;
     }
   }
 `;
