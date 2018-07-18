@@ -114,7 +114,7 @@ VideoRenderDiv.VideoPlayer = styled.div`
   }
   @media(min-width: 1025px) {
     max-width: 100%;
-    max-height: 100%;
+    max-height: calc(100% - 50px);
   }
 `;
 
@@ -126,7 +126,7 @@ VideoRenderDiv.VideoContent = styled.section`
 
 VideoRenderDiv.VideoTitle = styled.span`
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   font-family: 'Ubuntu-Regular';
 `;
 
