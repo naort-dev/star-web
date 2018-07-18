@@ -19,7 +19,7 @@ class StripeCheckout extends React.Component {
     this.state = {
       customerId: '',
       stripe: null,
-      cardSelection: true,
+      cardSelection: false,
       selectedCardIndex: '0',
       selectedSourceId: null,
     };
@@ -33,6 +33,7 @@ class StripeCheckout extends React.Component {
       this.props.exitPaymentMode();
     }
   }
+
   getEphemeralKey = () => {
     fetchEphemeralKey(this.props.authToken)
       .then((resp) => {
@@ -47,7 +48,7 @@ class StripeCheckout extends React.Component {
     this.setState({ cardSelection: value });
   }
   handleBooking = () => {
-    if (this.state.cardSelection && Object.keys(this.props.sourceList)) {
+    if (this.state.cardSelection && Object.keys(this.props.sourceList).length) {
       const sourceId = this.state.selectedSourceId !== null ? this.state.selectedSourceId : this.props.sourceList['0'].id;
       this.chargeCreator(sourceId);
     } else if (!this.state.cardSelection && this.state.stripe) {
@@ -85,7 +86,7 @@ class StripeCheckout extends React.Component {
                 **** **** **** {this.props.sourceList[index].last4}
               </PaymentStyled.cardItemDetails>
               {
-                Object.keys(this.props.sourceList) > 1 &&
+                Object.keys(this.props.sourceList).length > 1 &&
                   <PaymentStyled.removeCardListItem
                     selected={this.state.selectedCardIndex === index}
                     onClick={event => this.removeCard(event)}
@@ -129,20 +130,24 @@ class StripeCheckout extends React.Component {
           />
         </PaymentStyled.StarDetailsWrapper>
         <PaymentStyled.OptionSelectionWrapper>
-          <PaymentStyled.OptionSelector>
-            <input
-              id="card-select"
-              name="card-selection"
-              type="radio"
-              checked={this.state.cardSelection}
-              onChange={event => this.toggleCardSelection(event, true)}
-            />
-            <PaymentStyled.OptionLabel
-              htmlFor="card-select"
-            >
-              Select cards
-            </PaymentStyled.OptionLabel>
-          </PaymentStyled.OptionSelector>
+          {
+            Object.keys(this.props.sourceList).length ?
+              <PaymentStyled.OptionSelector>
+                <input
+                  id="card-select"
+                  name="card-selection"
+                  type="radio"
+                  checked={this.state.cardSelection}
+                  onChange={event => this.toggleCardSelection(event, true)}
+                />
+                <PaymentStyled.OptionLabel
+                  htmlFor="card-select"
+                >
+                  Select cards
+                </PaymentStyled.OptionLabel>
+              </PaymentStyled.OptionSelector>
+            : null
+          }
           <PaymentStyled.OptionSelector>
             <input
               id="add-card"
