@@ -97,8 +97,12 @@ export default class OrderDetails extends React.Component {
   }
   render() {
     const { props } = this;
-    const shareUrl = 'http://github.com';
-    const title = 'GitHub';
+    let shareUrl = '';
+    let title = '';
+    if (this.props.requestVideo) {
+      shareUrl = this.props.requestVideo.video_url;
+      title = this.props.bookingTitle;
+    }
     return (
       <OrderStyled>
         <OrderStyled.Header>
