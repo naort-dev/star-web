@@ -71,8 +71,8 @@ OrderStyled.VideoContentWrapper = styled.div`
     height: 400px;
   }
   @media(min-width: 1025px) {
-    width: ${props => (props.width ? props.width: '100%')};
-    height: ${props => (props.height ? props.height: '100%')};
+    width: ${props => (props.width ? props.width : '100%')};
+    height: ${props => (props.height ? props.height : '100%')};
     max-width: 100%;
     max-height: 480px;
   }
@@ -128,7 +128,7 @@ OrderStyled.VideoRequester = styled.span`
 OrderStyled.VideoRequestImage = styled.span`
   border-radius: 50%;
   display: inline-block;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-image: ${props => props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/profile.png)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
@@ -246,7 +246,7 @@ OrderStyled.ProfileImageWrapper = styled.div`
 OrderStyled.ProfileImage = styled.span`
   border-radius: 50%;
   display: inline-block;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-image: ${props => props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/profile.png)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
@@ -309,5 +309,14 @@ OrderStyled.DetailsValue = styled.span`
   @media(min-width:1920px){
     font-size:16px;
   }
+`;
+OrderStyled.SocialMediaWrapper = styled.div`
+  margin-top:3%;
+`;
+OrderStyled.Somenetwork = styled.div`
+  vertical-align: top;
+  display: inline-block;
+  margin-right: 30px;
+  text-align: center;
 `;
 export default OrderStyled;

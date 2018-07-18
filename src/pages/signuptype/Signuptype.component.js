@@ -14,7 +14,6 @@ export default class SignupType extends React.Component {
   render() {
     return (
       <div>
-        
         <LoginContainer>
           <LoginContainer.LeftSection>
             <HeaderSection>
