@@ -53,6 +53,12 @@ VideoRecorderDiv.Button = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+
+  @media(max-width:1024px){
+    position: fixed;
+    top: 80vh;
+  }
+
 `;
 
 

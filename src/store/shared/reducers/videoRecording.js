@@ -33,7 +33,7 @@ export default (state = { ...initalState }, action) => {
 
         case RE_RECORD_VIDEO:
             return {
-                ...initalState
+                ...initalState, start: true
             };
 
         case CLEAR_ALL_STREAMS:

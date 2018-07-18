@@ -11,6 +11,11 @@ export default class VideoRecorder extends React.Component {
         this.recordedBlobs = []
         this.handleDataAvailable = this.handleDataAvailable.bind(this)
         this.stopRecording = this.stopRecording.bind(this)
+        this.timerID = null
+    }
+
+    componentDidMount() {
+        this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
     }
 
     handleDataAvailable(event) {
@@ -20,7 +25,7 @@ export default class VideoRecorder extends React.Component {
     }
 
     captureUserMedia(mediaConstraints) {
-        return navigator.mediaDevices.getUserMedia(mediaConstraints)
+        return window.navigator.mediaDevices.getUserMedia(mediaConstraints)
             .then(this.successCallback)
             .then(() => this.setState({ streamFetched: true }))
             .catch((err) => {
@@ -37,6 +42,10 @@ export default class VideoRecorder extends React.Component {
     }
 
     stopRecording() {
+        if (this.timerID != null) {
+            clearTimeout(this.timerID)
+            console.log(this.timerID)
+        }
         const superBuffer = new Blob(this.recordedBlobs, { type: 'video/mp4' });
         const videoSrc = window.URL.createObjectURL(superBuffer)
         this.props.onStopRecording({ videoSrc, superBuffer })
@@ -57,6 +66,7 @@ export default class VideoRecorder extends React.Component {
 
 
     async startRecording(rerecord = false) {
+        window.stream = null
         if (rerecord === true) {
             this.props.onRerecord();
             this.recordedBlobs = [];
@@ -78,6 +88,9 @@ export default class VideoRecorder extends React.Component {
             this.mediaRecorder = new MediaRecorder(window.stream, options);
             this.mediaRecorder.ondataavailable = this.handleDataAvailable
             this.mediaRecorder.start(1000);
+            this.timerID = setTimeout(() => {
+                this.stopRecording()
+            }, 61000);
         } catch (e) {
             alert('Exception while creating MediaRecorder: '
                 + e + '. mimeType: ' + options.mimeType);
