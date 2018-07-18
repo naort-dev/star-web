@@ -1,11 +1,15 @@
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const PaymentStyled = styled.form`
 
 `;
 
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
-  padding: 7px 16px;
+  @media(min-width: 1025px) {
+    height: calc(100vh - 40px);
+    padding-bottom: 90px;
+  }
 `;
 
 PaymentStyled.Heading = styled.span`
@@ -127,6 +131,18 @@ PaymentStyled.ElementsWrapper = styled.div`
     border: 1px solid #d0d2d3;
     border-radius: 2px;
     outline: 0;
+  }
+`;
+
+PaymentStyled.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    padding: 7px 16px;
+    overflow: hidden !important;
+    position: static !important;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
   }
 `;
 
