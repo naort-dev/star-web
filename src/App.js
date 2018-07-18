@@ -27,6 +27,7 @@ import { Askquestion } from './pages/askQuestion';
 import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
+import { Starbio } from './pages/starbio';
 
 class App extends React.Component {
   constructor(props) {
@@ -97,6 +98,7 @@ class App extends React.Component {
                 <Route path="/starDetail/:id/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
+                <Route path="/starbio" component={Starbio} />
                 <Route path="/recordvideo" component={StarsignUpVideo} />
                 <Route exact path="/:id/request" component={Requestvideo} />
                 <Route path="/:id/request/ask" component={Askquestion} />
