@@ -24,9 +24,7 @@ export default class SignUp extends React.Component {
                 <HeaderSection.RightDiv>LOG IN</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
-            <React.Fragment>
               <SignUpForm {...this.props} />
-            </React.Fragment>
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection />
         </LoginContainer>
