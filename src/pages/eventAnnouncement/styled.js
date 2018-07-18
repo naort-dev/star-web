@@ -33,7 +33,7 @@ Request.Wrapper = styled.div`
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -561,17 +561,13 @@ Request.InputFieldsWrapper = styled.div`
 Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
-  height:90px;
- 
+  margin-top: 10px;
   @media(min-width:768px){
+    margin-top: 30px;
     flex-direction: row;
-    margin-top:5%;
-    height:40px;
   }
   @media(min-width: 1025px) {
     margin-top: 30px;
-    height:40px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;
