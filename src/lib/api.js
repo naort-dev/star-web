@@ -19,6 +19,7 @@ class Api {
   static createCharge = 'payments/createcharge/';
   static requestVideo = 'request/stargramz/';
   static getSourceList = 'payments/stripe_cards/';
+  static modifySourceList = 'payments/attach_detach_source/';
 }
 
 export default Api;

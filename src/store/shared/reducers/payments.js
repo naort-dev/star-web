@@ -12,6 +12,7 @@ export default (state = { ...initalState }, action) => {
     case PAYMENTS.start:
     case PAYMENTS.fetchSourceStart:
     case PAYMENTS.sourceListStart:
+    case PAYMENTS.modifYSourceListStart:
       return {
         ...state,
         loading: true,
@@ -20,6 +21,7 @@ export default (state = { ...initalState }, action) => {
     case PAYMENTS.end:
     case PAYMENTS.fetchSourceEnd:
     case PAYMENTS.sourceListEnd:
+    case PAYMENTS.modifYSourceListEnd:
       return {
         ...state,
         loading: false,
@@ -44,12 +46,20 @@ export default (state = { ...initalState }, action) => {
 
     case PAYMENTS.failed:
     case PAYMENTS.sourceListFailed:
+    case PAYMENTS.modifySourceListFailed:
       return {
         ...state,
         loading: false,
       };
 
     case PAYMENTS.sourceListSuccess:
+      return {
+        ...state,
+        loading: false,
+        sourceList: action.data,
+      };
+
+    case PAYMENTS.modifySourceListSuccess:
       return {
         ...state,
         loading: false,

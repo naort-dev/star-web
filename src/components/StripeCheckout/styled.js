@@ -73,6 +73,48 @@ PaymentStyled.PaymentController = styled.div`
   }
 `;
 
+PaymentStyled.OptionSelectionWrapper = styled.div`
+
+`;
+
+PaymentStyled.OptionSelector = styled.div`
+  margin-bottom: 20px;
+`;
+
+PaymentStyled.OptionLabel = styled.label`
+  margin-left: 20px;
+`;
+
+PaymentStyled.cardListWrapper = styled.ul`
+
+`;
+
+PaymentStyled.cardListItem = styled.li`
+  margin-bottom: 10px;
+  position: relative;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+PaymentStyled.cardItemDetails = styled.span`
+  background-color: ${props => (props.selected ? '#FF6C58' : 'rgb(248,248,248)')};
+  padding: 10px;
+  color: ${props => (props.selected ? '#fff' : '#333333')};
+  width: 100%;
+  display: block;
+`;
+
+PaymentStyled.removeCardListItem = styled.span`
+  position:absolute;
+  right: 10px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: ${props => (props.selected ? 'url(assets/images/close-icon.svg)' : 'url(assets/images/close-icon-orange.svg)')};
+  background-repeat: no-repeat;
+`;
+
 PaymentStyled.ElementsWrapper = styled.div`
   .StripeElement {
     display: block;
@@ -105,9 +147,9 @@ PaymentStyled.ErrorElement = styled.span`
 
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
-  justify-content: space-between;
   margin-top: 30px;
   .StripeElement {
+    margin-right: 30px;
     padding: 10px 5px;
     min-width: 70px;
   }

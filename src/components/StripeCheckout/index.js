@@ -1,6 +1,5 @@
 import React from 'react';
 import { Elements } from 'react-stripe-elements';
-import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Checkout from './checkout';
 import Loader from '../Loader';
@@ -18,8 +17,11 @@ class StripeCheckout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ephemeralKey: '',
+      customerId: '',
       stripe: null,
+      cardSelection: true,
+      selectedCardIndex: '0',
+      selectedSourceId: null,
     };
   }
   componentWillMount() {
@@ -34,14 +36,21 @@ class StripeCheckout extends React.Component {
   getEphemeralKey = () => {
     fetchEphemeralKey(this.props.authToken)
       .then((resp) => {
-        this.setState({ ephemeralKey: resp.ephemeralKey });
+        const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
+        this.setState({ customerId });
       });
   }
   setStripe = (stripe) => {
     this.setState({ stripe });
   }
+  toggleCardSelection = (event, value) => {
+    this.setState({ cardSelection: value });
+  }
   handleBooking = () => {
-    if (this.state.stripe) {
+    if (this.state.cardSelection && Object.keys(this.props.sourceList)) {
+      const sourceId = this.state.selectedSourceId !== null ? this.state.selectedSourceId : this.props.sourceList['0'].id;
+      this.chargeCreator(sourceId);
+    } else if (!this.state.cardSelection && this.state.stripe) {
       this.props.paymentFetchSourceStart();
       this.state.stripe
         .createSource({
@@ -58,9 +67,46 @@ class StripeCheckout extends React.Component {
   chargeCreator = (tokenId) => {
     this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId);
   }
+  removeCard = () => {
+
+  }
+  renderCardList = () => {
+    return (
+      <PaymentStyled.cardListWrapper>
+        {
+          Object.keys(this.props.sourceList).map(index => (
+            <PaymentStyled.cardListItem
+              key={index}
+            >
+              <PaymentStyled.cardItemDetails
+                selected={this.state.selectedCardIndex === index}
+                onClick={() => this.setState({ selectedCardIndex: index })}
+              >
+                **** **** **** {this.props.sourceList[index].last4}
+              </PaymentStyled.cardItemDetails>
+              {
+                Object.keys(this.props.sourceList) > 1 &&
+                  <PaymentStyled.removeCardListItem
+                    selected={this.state.selectedCardIndex === index}
+                    onClick={event => this.removeCard(event)}
+                  />
+              }
+            </PaymentStyled.cardListItem>
+          ))
+        }
+      </PaymentStyled.cardListWrapper>
+    );
+  }
+  renderAddCard = () => (
+    <Elements>
+      <Checkout
+        handleBooking={this.handleBooking}
+        chargeCreator={this.chargeCreator}
+        setStripe={this.setStripe}
+      />
+    </Elements>
+  )
   render() {
-    const type = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].type : null;
-    const id = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].id : null;
     return (
       <PaymentStyled.wrapper>
         {
@@ -82,15 +128,41 @@ class StripeCheckout extends React.Component {
             imageUrl={this.props.profilePhoto}
           />
         </PaymentStyled.StarDetailsWrapper>
-        <Elements>
-          <Checkout
-            type={type}
-            id={id}
-            handleBooking={this.handleBooking}
-            chargeCreator={this.chargeCreator}
-            setStripe={this.setStripe}
-          />
-        </Elements>
+        <PaymentStyled.OptionSelectionWrapper>
+          <PaymentStyled.OptionSelector>
+            <input
+              id="card-select"
+              name="card-selection"
+              type="radio"
+              checked={this.state.cardSelection}
+              onChange={event => this.toggleCardSelection(event, true)}
+            />
+            <PaymentStyled.OptionLabel
+              htmlFor="card-select"
+            >
+              Select cards
+            </PaymentStyled.OptionLabel>
+          </PaymentStyled.OptionSelector>
+          <PaymentStyled.OptionSelector>
+            <input
+              id="add-card"
+              name="card-selection"
+              type="radio"
+              checked={!this.state.cardSelection}
+              onChange={event => this.toggleCardSelection(event, false)}
+            />
+            <PaymentStyled.OptionLabel
+              htmlFor="add-card"
+            >
+              Pay using new card
+            </PaymentStyled.OptionLabel>
+          </PaymentStyled.OptionSelector>
+        </PaymentStyled.OptionSelectionWrapper>
+        {
+          this.state.cardSelection ?
+           this.renderCardList()
+          : this.renderAddCard()
+        }
         <PaymentStyled.PaymentController>
           <PaymentFooterController
             rate={this.props.rate}
@@ -108,6 +180,7 @@ const mapStateToProps = state => ({
   loading: state.paymentDetails.loading,
   requestDetails: state.paymentDetails.requestDetails,
   paymentStatus: state.paymentDetails.paymentStatus,
+  sourceList: state.paymentDetails.sourceList,
 });
 
 const mapDispatchToProps = dispatch => ({
