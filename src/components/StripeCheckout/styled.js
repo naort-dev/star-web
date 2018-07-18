@@ -123,10 +123,10 @@ PaymentStyled.ElementsWrapper = styled.div`
     padding: 10px 14px;
     font-size: 1em;
     font-family: 'Ubuntu-Regular';
-    border: 2px solid rgba(51,51,51,1);
+    background-color: white;
+    border: 1px solid #d0d2d3;
+    border-radius: 2px;
     outline: 0;
-    border-radius: 4px;
-    background: white;
   }
 `;
 

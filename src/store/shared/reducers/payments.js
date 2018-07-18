@@ -4,7 +4,7 @@ const initalState = {
   requestDetails: {},
   loading: false,
   paymentStatus: false,
-  sourceList: [],
+  sourceList: {},
 };
 
 export default (state = { ...initalState }, action) => {
