@@ -56,7 +56,7 @@ export default class VideoRender extends React.Component {
           </VideoRenderDiv.VideoContent>
           <VideoRenderDiv.VideoPlayer>
             <VideoPlayer
-              cover={this.state.videoCover ? this.state.videoCover : ''}
+              cover={this.state.coverImage ? this.state.coverImage : ''}
               src={this.props.videoUrl ? this.props.videoUrl : ''}
             />
           </VideoRenderDiv.VideoPlayer>
