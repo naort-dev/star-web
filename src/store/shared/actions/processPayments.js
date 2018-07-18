@@ -16,6 +16,10 @@ export const PAYMENTS = {
   sourceListSuccess: 'payments/SOURCE_LIST_SUCCESS',
   sourceListEnd: 'payments/SOURCE_LIST_END',
   sourceListFailed: 'payments/SOURCE_LIST_FAILED',
+  modifySourceListStart: 'payments/MODIFY_SOURCE_START',
+  modifySourceListSuccess: 'payments/MODIFY_SOURCE_SUCCESS',
+  modifySourceListEnd: 'payments/MODIFY_SOURCE_END',
+  modifySourceListFailed: 'payments/MODIFY_SOURCE_FAILED',
 };
 
 
@@ -60,6 +64,27 @@ export const resetPaymentDetails = () => ({
   type: PAYMENTS.resetPayments,
 });
 
+export const sourceListModifyStart = () => ({
+  type: PAYMENTS.modifySourceListStart,
+});
+
+export const sourceListModifyEnd = () => ({
+  type: PAYMENTS.modifySourceListEnd,
+});
+
+export const sourceListModifySuccess = (data) => {
+  return (
+    {
+      type: PAYMENTS.modifySourceListSuccess,
+      data,
+    });
+};
+
+export const sourceListModifyFailed = error => ({
+  type: PAYMENTS.modifySourceListFailed,
+  error,
+});
+
 export const sourceListFetchStart = () => ({
   type: PAYMENTS.sourceListStart,
 });
@@ -81,6 +106,27 @@ export const sourceListFetchFailed = error => ({
   error,
 });
 
+export const modifySourceList = (sourceId, customerId, action) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  const { sourceList } = getState().paymentDetails;
+  dispatch(sourceListFetchStart());
+  return fetch(Api.modifySourceList, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(sourceListFetchEnd());
+      dispatch(sourceListFetchSuccess(resp.data.data.cards));
+    } else {
+      dispatch(sourceListFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(sourceListFetchFailed(exception));
+  });
+};
+
 export const fetchSourceList = () => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   dispatch(sourceListFetchStart());
@@ -99,7 +145,7 @@ export const fetchSourceList = () => (dispatch, getState) => {
     dispatch(paymentFetchEnd());
     dispatch(sourceListFetchFailed(exception));
   });
-}
+};
 
 
 export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
