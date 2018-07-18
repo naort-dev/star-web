@@ -52,18 +52,6 @@ class StripeCheckout extends React.Component {
   chargeCreator = (tokenId) => {
     this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId);
   }
-
-  orderConfirmation = () => {
-    if (this.props.paymentStatus) {
-      return (
-        <PaymentStyled.confirmationModal>
-          <PaymentStyled.confirmationWrapper>
-            asdsad
-          </PaymentStyled.confirmationWrapper>
-        </PaymentStyled.confirmationModal>
-      );
-    }
-  }
   render() {
     const type = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].type : null;
     const id = this.state.ephemeralKey.associated_objects && this.state.ephemeralKey.associated_objects[0] ? this.state.ephemeralKey.associated_objects[0].id : null;
@@ -105,9 +93,6 @@ class StripeCheckout extends React.Component {
             handleBooking={this.handleBooking}
           />
         </PaymentStyled.PaymentController>
-        {
-          this.orderConfirmation()
-        }
       </PaymentStyled.wrapper>
     );
   }
