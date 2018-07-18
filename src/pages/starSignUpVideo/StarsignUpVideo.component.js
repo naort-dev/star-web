@@ -4,7 +4,7 @@ import VideoRecorder from '../../components/WebRTCVideoRecorder'
 import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 export default class StarsignUpVideo extends React.Component {
     constructor(props) {
@@ -19,6 +19,9 @@ export default class StarsignUpVideo extends React.Component {
     }
 
     render() {
+        if(!this.props.isLoggedIn){
+            return <Redirect to={locations.signupType}/>
+        }
         return (
             <SignupContainer>
                 <SignupContainer.LeftSection>
