@@ -20,7 +20,7 @@ export default class VideoRecorder extends React.Component {
         }
 
         else {
-            alert("your browser doesnot support video recording")
+            alert("Your browser does not support video recording")
         }
 
     }
