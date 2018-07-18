@@ -8,6 +8,7 @@ import {
   paymentFetchSourceStart,
   paymentFetchSourceEnd,
   fetchSourceList,
+  modifySourceList,
 } from '../../store/shared/actions/processPayments';
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
@@ -68,8 +69,8 @@ class StripeCheckout extends React.Component {
   chargeCreator = (tokenId) => {
     this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId);
   }
-  removeCard = () => {
-
+  removeCard = (source) => {
+    this.props.modifySourceList(source, this.state.customerId, false);
   }
   renderCardList = () => {
     return (
@@ -89,7 +90,7 @@ class StripeCheckout extends React.Component {
                 Object.keys(this.props.sourceList).length > 1 &&
                   <PaymentStyled.removeCardListItem
                     selected={this.state.selectedCardIndex === index}
-                    onClick={event => this.removeCard(event)}
+                    onClick={() => this.removeCard(this.props.sourceList[index].id)}
                   />
               }
             </PaymentStyled.cardListItem>
@@ -198,6 +199,7 @@ const mapDispatchToProps = dispatch => ({
   paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),
+  modifySourceList: (source, customer, action) => dispatch(modifySourceList(source, customer, action)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StripeCheckout);
