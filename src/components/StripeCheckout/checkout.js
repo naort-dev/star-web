@@ -19,15 +19,15 @@ class checkout extends React.Component {
     };
     this.styles = {
       base: {
-        fontSize: '12px',
+        fontSize: '14px',
         color: '#333333',
-        fontFamily: 'Ubuntu-Regular',
+        fontFamily: 'Ubuntu-Light',
         '::placeholder': {
           color: '#333333',
         },
       },
       invalid: {
-        color: '#9e2146',
+        color: 'red',
       },
     };
   }
