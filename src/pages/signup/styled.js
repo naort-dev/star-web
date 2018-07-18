@@ -122,6 +122,7 @@ LoginContainer.SocialMediaMessage = styled.div`
   text-align: center;
   color: #333333;
   margin-top:3%;
+  margin-bottom:5%;
   @media(min-width:768px){
     font-size: 18px;
   }
@@ -221,14 +222,7 @@ LoginContainer.InstagramContent = styled.span`
   }
  
 `;
-LoginContainer.Line = styled.hr`
-  width:230px;
-  margin-top:7%;
-  background-color:#CCCCCC;
-  @media(min-width:768px){
-   display:none;
-  }
-`;
+
 LoginContainer.InputFieldsWrapper = styled.div`
   
   padding: 0px 25px;
@@ -520,7 +514,7 @@ LoginContainer.InputContainer = styled.div`
   height: 100%;
   
   @media(min-width:768px){
-    width:90%;
+    width:75%;
     margin: 20px 20px;
   }
 `;

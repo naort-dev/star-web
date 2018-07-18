@@ -1,11 +1,8 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
 import validator from 'validator';
 import axios from 'axios';
-import config from '../../lib/config';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
-import { ImageStack } from '../../components/ImageStack';
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -405,7 +402,7 @@ export default class SignUp extends React.Component {
 
                    
                     <LoginContainer.ButtonWrapper>
-                      <FooterSection.Button>SIGNUP</FooterSection.Button>
+                      <FooterSection.Button onClick={this.onRegister} disabled={this.props.loading}>SIGNUP</FooterSection.Button>
                     </LoginContainer.ButtonWrapper>
                     <LoginContainer.PrivacyContent>
                       By creating an account you agree to Starsona’s
