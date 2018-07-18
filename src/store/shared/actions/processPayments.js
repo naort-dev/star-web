@@ -17,7 +17,6 @@ export const PAYMENTS = {
   sourceListEnd: 'payments/SOURCE_LIST_END',
   sourceListFailed: 'payments/SOURCE_LIST_FAILED',
   modifySourceListStart: 'payments/MODIFY_SOURCE_START',
-  modifySourceListSuccess: 'payments/MODIFY_SOURCE_SUCCESS',
   modifySourceListEnd: 'payments/MODIFY_SOURCE_END',
   modifySourceListFailed: 'payments/MODIFY_SOURCE_FAILED',
 };
@@ -72,14 +71,6 @@ export const sourceListModifyEnd = () => ({
   type: PAYMENTS.modifySourceListEnd,
 });
 
-export const sourceListModifySuccess = (data) => {
-  return (
-    {
-      type: PAYMENTS.modifySourceListSuccess,
-      data,
-    });
-};
-
 export const sourceListModifyFailed = error => ({
   type: PAYMENTS.modifySourceListFailed,
   error,
@@ -106,26 +97,6 @@ export const sourceListFetchFailed = error => ({
   error,
 });
 
-export const modifySourceList = (sourceId, customerId, action) => (dispatch, getState) => {
-  const { authentication_token: authToken } = getState().session.auth_token;
-  const { sourceList } = getState().paymentDetails;
-  dispatch(sourceListFetchStart());
-  return fetch(Api.modifySourceList, {
-    headers: {
-      'Authorization': `token ${authToken}`,
-    },
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(sourceListFetchEnd());
-      dispatch(sourceListFetchSuccess(resp.data.data.cards));
-    } else {
-      dispatch(sourceListFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(sourceListFetchFailed(exception));
-  });
-};
 
 export const fetchSourceList = () => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
@@ -147,6 +118,30 @@ export const fetchSourceList = () => (dispatch, getState) => {
   });
 };
 
+export const modifySourceList = (source, customer, action) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  const { sourceList } = getState().paymentDetails;
+  dispatch(sourceListFetchStart());
+  return fetch.post(Api.modifySourceList, {
+    customer,
+    source,
+    action,
+  }, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(sourceListFetchEnd());
+      dispatch(fetchSourceList(resp.data.data.cards));
+    } else {
+      dispatch(sourceListFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(sourceListFetchFailed(exception));
+  });
+};
 
 export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;

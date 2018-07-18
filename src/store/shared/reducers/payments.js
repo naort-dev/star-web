@@ -59,13 +59,6 @@ export default (state = { ...initalState }, action) => {
         sourceList: action.data,
       };
 
-    case PAYMENTS.modifySourceListSuccess:
-      return {
-        ...state,
-        loading: false,
-        sourceList: action.data,
-      };
-
     default:
       return state;
   }
