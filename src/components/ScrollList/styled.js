@@ -167,6 +167,7 @@ ListStyled.Somenetwork = styled.div`
   margin-right: 30px;
   margin-top: 10px;
   text-align: center;
+  cursor: pointer;
 `;
 
 ListStyled.VideoContent = styled.section`
