@@ -283,13 +283,6 @@ export default class Confirm extends React.Component {
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
 
               </HeaderSection>
-              <Request.SmallScreenLayout>
-                <Request.ImageRenderDiv>
-                  <Request.ImageSection
-                    imageUrl={coverPhoto}
-                  />
-                </Request.ImageRenderDiv>
-              </Request.SmallScreenLayout>
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?

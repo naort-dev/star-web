@@ -154,6 +154,8 @@ Request.ProfileImageWrapper = styled.div`
   @media(min-width: 1025px) {
     padding-bottom: 40px;
     border-bottom: 1px solid #333333;
+    margin: 0 auto;
+    width: calc(100% - 84px)
   }
 `;
 Request.ProfileImage = styled.span`
@@ -418,16 +420,9 @@ Request.PaymentControllerWrapper = styled.div`
   }
 `;
 Request.OptionWrapper = styled.footer`
-  padding: 28px 29px;
-  text-align:center;
-  @media(min-width:768px){
-    padding:63px 50px;
-  }
-  @media(min-width:1025px){
-    padding: 0;
-  }
-  @media(min-width: 1920px){
-    padding: 0;
+  padding: 25px 19px;
+  @media(min-width: 1025px) {
+    padding: 25px 48px;
   }
 `;
 Request.HeaderText = styled.div`
