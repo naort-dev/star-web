@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
@@ -98,15 +99,17 @@ export default class ScrollList extends React.Component {
                 <ListStyled.VideoPlayer>
                   <ListStyled.VideoContent>
                     <ListStyled.VideoRequester>
-                      <ListStyled.VideoRequestImage
-                        imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
-                      />
-                      <ListStyled.VideoRequestName>
-                        {selectedVideo.full_name}
-                        <ListStyled.VideoTitle>
-                          {this.renderStarProfessions(selectedVideo.professions)}
-                        </ListStyled.VideoTitle>
-                      </ListStyled.VideoRequestName>
+                      <Link to={`/starDetail/${selectedVideo.user_id}`} >
+                        <ListStyled.VideoRequestImage
+                          imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
+                        />
+                        <ListStyled.VideoRequestName>
+                          {selectedVideo.full_name}
+                          <ListStyled.VideoTitle>
+                            {this.renderStarProfessions(selectedVideo.professions)}
+                          </ListStyled.VideoTitle>
+                        </ListStyled.VideoRequestName>
+                      </Link>
                     </ListStyled.VideoRequester>
                   </ListStyled.VideoContent>
                   <VideoPlayer

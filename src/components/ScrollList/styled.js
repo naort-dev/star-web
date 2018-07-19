@@ -141,7 +141,6 @@ ListStyled.VideoPlayer = styled.div`
 ListStyled.VideoContent = styled.section`
   padding: 10px;
   background-color: rgba(0,0,0,.2);
-  color: #fff;
   z-index: 1;
   position: absolute;
   top: 0;
@@ -151,6 +150,7 @@ ListStyled.VideoContent = styled.section`
 
 ListStyled.VideoTitle = styled.span`
   display: block;
+  color: #fff;
   font-size: 11px;
   font-family: 'Ubuntu-Regular';
 `;
@@ -184,6 +184,7 @@ ListStyled.VideoRequestImage = styled.span`
 `;
 ListStyled.VideoRequestName = styled.span`
   display: inline-block;
+  color: #fff;
   font-size: 16px;
   font-family: 'Ubuntu-Regular';
   vertical-align: top;
