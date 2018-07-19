@@ -257,8 +257,8 @@ OrderStyled.ProfileImage = styled.span`
   position: relative;
   top: 8px;
   @media(min-width: 768px) {
-    width: 48px;
-    height: 48px;
+    width: 70px;
+    height: 70px;
   }
   @media(min-width: 1025px) {
     height:100px;

@@ -151,10 +151,12 @@ Request.ScrollListWrapper = styled.div`
 Request.ProfileImageWrapper = styled.div`
   width: 100%;
   text-align: center;
+  margin-top: 10px;
   @media(min-width: 1025px) {
     padding-bottom: 40px;
     border-bottom: 1px solid #333333;
     margin: 0 auto;
+    margin-top: 20px;
     width: calc(100% - 84px)
   }
 `;
@@ -172,8 +174,8 @@ Request.ProfileImage = styled.span`
   position: relative;
   top: 8px;
   @media(min-width: 768px) {
-    width: 48px;
-    height: 48px;
+    width: 70px;
+    height: 70px;
   }
   @media(min-width: 1025px) {
     height:100px;
