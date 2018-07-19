@@ -8,7 +8,7 @@
     "babel-polyfill": "^6.26.0",
     "css-loader": "^0.28.11",
     "history": "^4.7.2",
-    "lodash": "^4.17.5",
+    "lodash": "^4.17.10",
     "moment": "^2.22.2",
     "node-sass": "^4.9.0",
     "prop-types": "^15.6.1",
@@ -24,8 +24,13 @@
     "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
+<<<<<<< 2ef8f91f00a3bc1246d6b48e2eac2f70946ed86d
     "react-share": "^2.2.0",
+=======
+    "react-select": "^1.2.1",
+>>>>>>> updated
     "react-stripe-elements": "^2.0.0",
+    "react-styled-select": "^1.1.0",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.1",
     "redux-devtools-dock-monitor": "^1.1.3",

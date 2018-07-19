@@ -28,6 +28,7 @@ import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
+import Starsuccess from './pages/starsuccess/Starsuccess.container'
 
 class App extends React.Component {
   constructor(props) {
@@ -99,6 +100,7 @@ class App extends React.Component {
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starbio" component={Starbio} />
+                <Route path="/starsuccess" component={Starsuccess} />
                 <Route path="/recordvideo" component={StarsignUpVideo} />
                 <Route exact path="/:id/request" component={Requestvideo} />
                 <Route path="/:id/request/ask" component={Askquestion} />

@@ -18,10 +18,14 @@ class Api {
   static getEphemeralKey = 'payments/generatekey/';
   static createCharge = 'payments/createcharge/';
   static requestVideo = 'request/stargramz/';
+<<<<<<< 2ef8f91f00a3bc1246d6b48e2eac2f70946ed86d
   static getSourceList = 'payments/stripe_cards/';
   static modifySourceList = 'payments/attach_detach_source/';
   static forgotPassword = 'user/forgotpassword/';
   static resetPassword = 'user/resetpassword/';
+=======
+  static getImageCredentials = 'user/signed_url/?extension=png&key=profile_images&file_type=image'
+>>>>>>> updated
 }
 
 export default Api;

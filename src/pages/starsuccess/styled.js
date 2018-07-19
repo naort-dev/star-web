@@ -22,138 +22,29 @@ LoginContainer.wrapper = styled.div`
   
 `;
 LoginContainer.LeftSection = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
  
 
   @media(min-width: 1025px){
     width: 45%;
-    padding: 0px 0px;
+    padding: 0px;
     position: relative;
-    padding-bottom: 83px;
   }
 `;
 LoginContainer.RightSection = styled.div`
   width: 100%;
   display: none;
-  background-color:rgba(248, 248, 248, 1);
+  background: url( 'assets/images/1297371108618082396.jpg' ) no-repeat ;
+  background-position: center; 
+  background-size:cover;
   @media(min-width: 1025px){
     width: 55%;
-    display:flex;
-    align-items: flex-start;
-    justify-content: space-around;
+    display: block;
     padding: 0px 0px;
     position: relative;
-    padding: 30px 30px;
-    flex-wrap: wrap;
   }
 `;
-
-LoginContainer.FeaturedImage = styled.div`
- width: 100%;
- height: 40%;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
- })
-}
-
-`;
-
-LoginContainer.FirstImage = styled.div`
- width: 48%;
- height: 30%;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
- })
-}
-`;
-
-LoginContainer.SecondImage = styled.div`
- width: 48%;
- height: 30%;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
- })
-}
-`;
-
-LoginContainer.Avatar = styled.div`
- position: absolute;
- top: 75%;
- padding: 20px;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- border: 4px solid black;
- border-radius: 50%;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-    objectFit: "contain"
- })
-}
-`;
-
-LoginContainer.UploadWrapper = styled.div`
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    ${props => props.imageType == "avatar" && ({
-        height: "100%",
-        width: "100%",
-       })
-    }
-  }
-`;
-  
-LoginContainer.UploadButton = styled.button`
-  border: 2px solid black;
-  color: black;
-  background-color: transparent;
-  border-radius: 60px;
-  font-size: 20px;
-  font-weight: bold;
-  height: 40px;
-  width: 40px;
-  text-align: center;
-  ${props => props.imageType == "avatar" && ({
-    height: "100%",
-    width: "100%",
-    visibility: "hidden",
-   })
-  }
-  `;
-  
-  
-  LoginContainer.UploadInput = styled.input`
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-  `;
-
-
 
 LoginContainer.FirstLastNameWrapper = styled.div`
   display:flex;
@@ -188,8 +79,6 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 `;
 LoginContainer.Container = styled.div`
-  margin-top: 2%;
-  margin-bottom: 2%;
   @media(min-width: 768px) {
     padding: 0 65px;
   }
@@ -202,27 +91,20 @@ LoginContainer.Heading = styled.div`
   font-size: 25px;
   text-align: center;
   color: #FF6C58;
+  margin-top:10%;
+  margin-bottom: 5%;
   
   @media(min-width:768px){
     font-size: 32px;
   }
   @media(min-width:1025px){
-    font-size:32px;
+    font-size:35px;
   }
   @media(min-width:1920px){
-    font-size:32px;
+    font-size:38px;
   }
   
 `;
-
-LoginContainer.HeadingSubText = styled.p`
-  font-size: 16px;
-  text-align: center;
-  }
-  
-`;
-
-
 
 LoginContainer.ButtonIcon = styled.img`
   
@@ -427,7 +309,21 @@ LoginContainer.Input = styled.input`
     height:40px;
   }
 `;
-
+LoginContainer.InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top:1%;
+  @media(min-width:768px){
+    flex-direction: row;
+    margin-top:5%;
+  }
+  @media(min-width: 1025px) {
+    margin-top: 30px;
+  }
+  @media(min-width: 1920px) {
+    margin-top: 50px;
+  }
+`;
 LoginContainer.PrivacyContent = styled.div`
   text-align:left;
   font-family: 'Ubuntu-Regular';
@@ -449,11 +345,6 @@ LoginContainer.FooterLayout = styled.div`
   padding: 0;
   @media(min-width:1025px){
     padding: 0px 57px;
-    position: absolute;
-    bottom: 20px;
-    left: 0;
-    right: 0;
-    width: 45%;
   }
   
 `;
@@ -541,20 +432,22 @@ FooterSection.RightSection = styled.div`
   }
 `;
 FooterSection.Button = styled.button`
-background-color: #fff; 
-color: #FF6C58;
-padding: 4px 30px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size:14px;
-font-family: 'Ubuntu-Bold';
-outline:none;
-cursor: pointer;
-border-radius:5px;
-border: 2px solid #FF6C58;
-@media(min-width:1920px){
-  font-size:20px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width:1920px){
+    font-size:20px;
+  }
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
@@ -654,91 +547,23 @@ LoginContainer.SignupLine = styled.div`
   
 `;
 
-
-LoginContainer.TextArea = styled.textarea`
- height: 100%;
- width: 80%;
-`;
-
-
- 
-LoginContainer.InputContainer = styled.div`
- height: 80%;
- flex-direction: row;
- display: flex;
- align-items: flex-start;
- justify-content: center;
- width: 100%;
-`;
-
-LoginContainer.InputContainerWrapper = styled.div`
- height: 100%;
- flex-direction: column;
- display: flex;
- align-items: center;
- justify-content: center;
- width: 100%;
-`;
-
-
-
-LoginContainer.InputWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 75%;
-  align-items: flex-start;
-  justify-content: center;
-  flex: 1;
-  margin: 2% 0px;
-`;
-
-LoginContainer.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
-  color: #333333;
-  font-size:16px;
-  text-align:left;
-  outline:none;
-  border: 1px solid #d0d2d3;
-  border-radius: 2px;
+ LoginContainer.SuccessContainer = styled.div`
+  height: 70%;
   width: 100%;
-  height: 40px;
-  text-indent: 10px;
-  margin-top:3%;
-  background-color: #fff;
-  @media(min-width:768px){
-    margin-top:0;
-    height:40px;
-  }
-  @media(min-width:1025px){
-    margin-top:0;
-    height:33px;
-    font-size:13px;
-    width: 80%;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-    height:40px;
-    width: 60%;
-  }
-`;
-
-LoginContainer.LabelContainer = styled.div`
-height: 100%;
-width: 30%;
-display: flex;
-align-items: flex-center;
-justify-content: flex-start
-`;
-
-LoginContainer.RightContainer = styled.div`
-height: 100%;
-width: 70%;
-display: flex;
-align-items: flex-center;
-justify-content: flex-end
-`;
+  padding: 0 60px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+ `;
 
 
-
+ LoginContainer.SuccessText = styled.p`
+  font-size: 24px;
+  margin-top: 5%;
+  margin-bottom: 5%;
+  text-align: left;
+  width: 100%;
+ `;
 
 export { LoginContainer, HeaderSection, FooterSection };
