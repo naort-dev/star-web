@@ -21,7 +21,7 @@ class checkout extends React.Component {
       base: {
         fontSize: '13px',
         color: '#333333',
-        fontFamily: 'Ubuntu-Regular !important',
+        fontFamily: '"Ubuntu-Regular"',
         '::placeholder': {
           color: '#333333',
         },
@@ -70,7 +70,7 @@ class checkout extends React.Component {
             { this.returnErrorMsg('cardExpiryError') }
           </PaymentStyled.CardElementWrapper>
           <PaymentStyled.CardElementWrapper>
-            <PaymentStyled.title>CVV</PaymentStyled.title>
+            <PaymentStyled.title>CVC</PaymentStyled.title>
             <CardCVCElement
               onChange={event => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
