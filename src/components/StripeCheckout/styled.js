@@ -210,4 +210,8 @@ PaymentStyled.confirmationWrapper = styled.div`
   background-color: #fff;
 `;
 
+PaymentStyled.StripeLogoWrapper = styled.div`
+  text-align: center;
+`;
+
 export default PaymentStyled;

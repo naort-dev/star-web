@@ -15,7 +15,7 @@ injectGlobal`
   -ms-user-select: none;
   user-select: none;
   @media(min-width:1025px){
-    font-size:10px;
+    font-size:13px;
   }
  }
  /* Hide the browser's default checkbox */
@@ -40,6 +40,7 @@ injectGlobal`
       left:0px;
       height: 18px;
       width: 18px;
+      top: -2px;
     }
   }
   #checkbox_container:checked ~ #checkmark {

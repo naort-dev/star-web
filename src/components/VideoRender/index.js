@@ -10,7 +10,6 @@ export default class VideoRender extends React.Component {
     this.state = {
       coverImage: false,
       profileImage: false,
-      videoActive: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -34,37 +33,6 @@ export default class VideoRender extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
-
-  showVideoPopup = () => {
-    return (
-      <Popup
-        closePopUp={() => this.setState({ videoActive: false })}
-      >
-        <VideoRenderDiv.VideoContentWrapper>
-          <VideoRenderDiv.VideoContent>
-            <VideoRenderDiv.VideoRequester>
-              <VideoRenderDiv.VideoRequestImage
-                imageUrl={this.state.profileImage}
-              />
-              <VideoRenderDiv.VideoRequestName>
-                {this.props.starName}
-                <VideoRenderDiv.VideoTitle>
-                  {this.props.celebProfessions}
-                </VideoRenderDiv.VideoTitle>
-              </VideoRenderDiv.VideoRequestName>
-            </VideoRenderDiv.VideoRequester>
-          </VideoRenderDiv.VideoContent>
-          <VideoRenderDiv.VideoPlayer>
-            <VideoPlayer
-              cover={this.state.coverImage ? this.state.coverImage : ''}
-              src={this.props.videoUrl ? this.props.videoUrl : ''}
-            />
-          </VideoRenderDiv.VideoPlayer>
-        </VideoRenderDiv.VideoContentWrapper>
-      </Popup>
-    );
-  }
-
   renderVideoDetails = (text) => {
     let splicedText = text;
     if (text.length > this.charLimit) {
@@ -75,10 +43,7 @@ export default class VideoRender extends React.Component {
   render() {
     const { props } = this;
     return (
-      <VideoRenderDiv onClick={() => this.setState({ videoActive: true })}>
-        {
-          this.state.videoActive && this.showVideoPopup()
-        }
+      <VideoRenderDiv onClick={() => this.props.enableVideoPopup()}>
         <VideoRenderDiv.ImageSection
           height={props.imageHeight}
           imageUrl={this.state.coverImage}

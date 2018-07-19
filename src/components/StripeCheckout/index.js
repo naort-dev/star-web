@@ -173,6 +173,9 @@ class StripeCheckout extends React.Component {
             this.renderCardList()
             : this.renderAddCard()
           }
+          <PaymentStyled.StripeLogoWrapper>
+            <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
+          </PaymentStyled.StripeLogoWrapper>
         </PaymentStyled.ComponentWrapperScroll>
         <PaymentStyled.PaymentController>
           <PaymentFooterController
