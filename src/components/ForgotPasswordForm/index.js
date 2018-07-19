@@ -26,7 +26,7 @@ export default class ForgotPassword extends React.Component {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // To check email validity
 
     if (validator.isEmpty(this.state.email.value)) {
-      this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
+      this.setState({ email: { ...this.state.email, message: 'Enter an email address ' } });
       return false;
     }
     if (!emailRegex.test(this.state.email.value)) {
