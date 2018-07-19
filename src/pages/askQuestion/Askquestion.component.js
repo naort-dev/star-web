@@ -5,6 +5,7 @@ import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import { ImageStack } from '../../components/ImageStack';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
+import  VideoRecorder  from '../../components/WebRTCVideoRecorder'
 
 export default class Askquestion extends React.Component {
   constructor(props) {
@@ -17,6 +18,7 @@ export default class Askquestion extends React.Component {
   }
 
   render() {
+    console.log("props", this.props)
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -109,10 +111,13 @@ export default class Askquestion extends React.Component {
             </Request.LeftSection>
             <Request.RightSection>
               <Request.ImageStackWrapper>
-                <ImageStack
+                {/* <ImageStack
                   featureImage={featuredImage}
                   imageList={imageList}
-                />
+                /> */}
+
+                <VideoRecorder {...this.props} />
+
               </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>
