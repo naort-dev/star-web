@@ -129,6 +129,9 @@ ListStyled.VideoContentWrapper = styled.div`
   max-width: 100%;
   margin: 0 10px;
   cursor: initial;
+  @media(min-width: 768px) {
+    display: flex;
+  }
 `;
 
 ListStyled.VideoPlayer = styled.div`
@@ -138,9 +141,36 @@ ListStyled.VideoPlayer = styled.div`
   position: relative;
 `;
 
+ListStyled.SocialMediaWrapper = styled.div`
+  position: absolute;
+  transition: 0.2s bottom ease-out;
+  padding: 10px;
+  background: #fff;
+  left: 0;
+  right: 0;
+  bottom: ${props => (props.visible ? '10px' : '-100%')};
+  @media(min-width: 768px) {
+    position: absolute;
+    width: 50px;
+    bottom: 0;
+    top: 0;
+    display: ${props => (props.visible ? 'block' : 'none')};
+    right: ${props => (props.visible ? '-52px' : '0')};
+    left: initial;
+  }
+`;
+
+ListStyled.Somenetwork = styled.div`
+  vertical-align: top;
+  display: inline-block;
+  margin-right: 30px;
+  margin-top: 10px;
+  text-align: center;
+`;
+
 ListStyled.VideoContent = styled.section`
   padding: 10px;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0,0,0,.5);
   z-index: 1;
   position: absolute;
   top: 0;
@@ -155,8 +185,15 @@ ListStyled.VideoTitle = styled.span`
   font-family: 'Ubuntu-Regular';
 `;
 
+ListStyled.ShareButton = styled.span`
+  padding-top: 10px;
+  color: #fff;
+  cursor: pointer;
+`;
+
 ListStyled.VideoRequester = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 ListStyled.VideoRequestImage = styled.span`
   border-radius: 50%;
@@ -170,7 +207,6 @@ ListStyled.VideoRequestImage = styled.span`
   box-shadow: 2px 2px 9px #4f4f4f;
   width:40px;
   position: relative;
-  top: 8px;
   margin-right: 11px;
   @media(min-width: 768px) {
     width: 40px;
@@ -188,15 +224,15 @@ ListStyled.VideoRequestName = styled.span`
   font-size: 16px;
   font-family: 'Ubuntu-Regular';
   vertical-align: top;
-  padding-top: 13px;
+  padding-top: 5px;
   @media(min-width: 1025px) {
     padding-top: 9px;
     font-size: 14px;
   }
 `;
 ListStyled.SliderArrows = styled.span`
-  width: 48px;
-  height: 48px;
+  width: 30px;
+  height: 30px;
   border-color: #000;
   position: absolute;
   top: 50%;
@@ -205,6 +241,10 @@ ListStyled.SliderArrows = styled.span`
   opacity: 0.6;
   &:hover {
     opacity: 1;
+  }
+  @media(min-width: 768px) {
+    width: 48px;
+    height: 48px;
   }
 `;
 

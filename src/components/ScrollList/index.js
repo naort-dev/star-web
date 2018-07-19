@@ -1,5 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import {
+  FacebookShareButton,
+  GooglePlusShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  WhatsappIcon,
+  FacebookIcon,
+  TwitterIcon,
+  GooglePlusIcon,
+  EmailIcon,
+} from 'react-share';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
@@ -18,6 +30,7 @@ export default class ScrollList extends React.Component {
       videoActive: false,
       selectedVideoIndex: null,
       videoPopupLoading: false,
+      sharePopup: false,
     };
   }
 
@@ -85,12 +98,11 @@ export default class ScrollList extends React.Component {
     }
   }
 
-
   showVideoPopup = () => {
     const selectedVideo = this.props.dataList[this.state.selectedVideoIndex];
     return (
       <Popup
-        closePopUp={() => this.setState({ videoActive: false })}
+        closePopUp={() => this.setState({ videoActive: false, sharePopup: false })}
       >
         <ListStyled.VideoContentWrapper>
           {
@@ -110,6 +122,11 @@ export default class ScrollList extends React.Component {
                           </ListStyled.VideoTitle>
                         </ListStyled.VideoRequestName>
                       </Link>
+                      <ListStyled.ShareButton
+                        onClick={() => this.setState({sharePopup: !this.state.sharePopup})}
+                      >
+                        Share
+                      </ListStyled.ShareButton>
                     </ListStyled.VideoRequester>
                   </ListStyled.VideoContent>
                   <VideoPlayer
@@ -120,6 +137,9 @@ export default class ScrollList extends React.Component {
               </React.Fragment>
             : <Loader />
           }
+          <ListStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+            {this.renderSocialIcons(selectedVideo)}
+          </ListStyled.SocialMediaWrapper>
           <ListStyled.LeftSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex-1)} />
           <ListStyled.RightSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex+1)} />
         </ListStyled.VideoContentWrapper>
@@ -160,6 +180,73 @@ export default class ScrollList extends React.Component {
 
   enableVideoPopup = (index) => {
     this.setState({ videoActive: true, selectedVideoIndex: index });
+  }
+
+
+  renderSocialIcons = (selectedVideo) => {
+    const shareUrl = selectedVideo.video_url
+    const title = selectedVideo.booking_title
+    return (
+      <React.Fragment>
+        <ListStyled.Somenetwork>
+          <FacebookShareButton
+            url={shareUrl}
+            quote={title}
+            className="Demo__some-network__share-button"
+          >
+            <FacebookIcon
+              size={32}
+              round
+            />
+          </FacebookShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <GooglePlusShareButton
+            url={shareUrl}
+            className="Demo__some-network__share-button"
+          >
+            <GooglePlusIcon
+              size={32}
+              round />
+          </GooglePlusShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <TwitterShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button"
+          >
+            <TwitterIcon
+              size={32}
+              round
+            />
+          </TwitterShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <WhatsappShareButton
+            url={shareUrl}
+            title={title}
+            separator=":: "
+            className="Demo__some-network__share-button"
+          >
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <EmailShareButton
+            url={shareUrl}
+            subject={title}
+            body={title}
+            className="Demo__some-network__share-button"
+          >
+            <EmailIcon
+              size={32}
+              round
+            />
+          </EmailShareButton>
+        </ListStyled.Somenetwork>
+      </React.Fragment>
+    );
   }
 
   renderStarProfessions = (list) => {
