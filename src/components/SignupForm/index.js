@@ -161,7 +161,7 @@ export default class SignUp extends React.Component {
     checkEmail = () => {
         const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
         if (validator.isEmpty(this.state.email.value)) {
-            this.setState({ email: { ...this.state.email, message: 'Enter a email address ' } });
+            this.setState({ email: { ...this.state.email, message: 'Enter an email address ' } });
             return false;
         }
         if (!emailRegex.test(this.state.email.value)) {
@@ -180,7 +180,7 @@ export default class SignUp extends React.Component {
             return false;
         }
         if (!pattern.test(this.state.password.value)) {
-            this.setState({ password: { ...this.state.password, message: 'Enter a valid password must contain atleast one symbol' } });
+            this.setState({ password: { ...this.state.password, message: 'Enter a valid password with atleast one symbol' } });
             return false;
         }
         this.setState({ password: { ...this.state.password, message: '', isValid: true } });
@@ -189,7 +189,7 @@ export default class SignUp extends React.Component {
 
     checkRequired = () => {
         if (validator.isEmpty(this.state.firstName.value)) {
-            this.setState({ firstName: { ...this.state.firstName, message: 'Enter a valid Firstname' } });
+            this.setState({ firstName: { ...this.state.firstName, message: 'Enter a Firstname' } });
             return false;
         }
         this.setState({ firstName: { ...this.state.firstName, message: '', isValid: true } });
