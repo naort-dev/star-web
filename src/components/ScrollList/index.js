@@ -236,7 +236,7 @@ export default class ScrollList extends React.Component {
           <EmailShareButton
             url={shareUrl}
             subject={title}
-            body="body"
+            body={title}
             className="Demo__some-network__share-button"
           >
             <EmailIcon
