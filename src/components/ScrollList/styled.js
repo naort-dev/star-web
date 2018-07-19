@@ -150,8 +150,13 @@ ListStyled.SocialMediaWrapper = styled.div`
   right: 0;
   bottom: ${props => (props.visible ? '10px' : '-100%')};
   @media(min-width: 768px) {
-    position: static;
+    position: absolute;
     width: 50px;
+    bottom: 0;
+    top: 0;
+    display: ${props => (props.visible ? 'block' : 'none')};
+    right: ${props => (props.visible ? '-52px' : '0')};
+    left: initial;
   }
 `;
 
@@ -184,9 +189,6 @@ ListStyled.ShareButton = styled.span`
   padding-top: 10px;
   color: #fff;
   cursor: pointer;
-  @media(min-width: 768px) {
-    display: none;
-  }
 `;
 
 ListStyled.VideoRequester = styled.div`
@@ -258,9 +260,6 @@ ListStyled.RightSliderArrow = ListStyled.SliderArrows.extend`
   border-left: 6px solid;
   transform: rotate(-135deg);
   right: 15px;
-  @media(min-width: 768px) {
-    right: 63px;
-  }
 `;
 
 
