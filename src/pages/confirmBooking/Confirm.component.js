@@ -6,6 +6,7 @@ import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
 import './confirmCss';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import StripeCheckout from '../../components/StripeCheckout';
+import renderStarProfessions from '../../utils/formatProfessions';
 
 export default class Confirm extends React.Component {
   constructor(props) {
@@ -182,12 +183,19 @@ export default class Confirm extends React.Component {
     );
   }
 
-  renderConfirmDetails = (bookingData, rate, remainingBookings) => (
+  renderConfirmDetails = (bookingData, rate, remainingBookings, profilePhoto, fullName) => (
     <React.Fragment>
       <Request.ComponentWrapperScroll
         autoHide
         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
       >
+        <Request.ProfileImageWrapper>
+          <Request.ProfileImage
+            imageUrl={profilePhoto}
+          />
+          <Request.StarName>{fullName}</Request.StarName>
+          <Request.StarProfessions>{renderStarProfessions(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
+        </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
         <Request.Questionwraps>
           <Request.Ask>
@@ -287,7 +295,7 @@ export default class Confirm extends React.Component {
                   this.state.paymentMode ?
                     this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
                   :
-                    this.renderConfirmDetails(bookingData, rate, remainingBookings)
+                    this.renderConfirmDetails(bookingData, rate, remainingBookings, profilePhoto, fullName)
                 }
                 {
                   this.props.paymentStatus && this.orderConfirmationView(fullName)
