@@ -1,4 +1,4 @@
-import { URL } from '../constants/url'
+import { URL } from '../constants/url';
 
 export function FBLogin(token, setValues) {
     window.fbAsyncInit = () => {

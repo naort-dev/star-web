@@ -3,9 +3,9 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
-import axios from 'axios';
 import validator from 'validator';
 import { LoginContainer } from './styled';
+import { FBLogin, GmailLogin, OnFBlogin, onInstagramLogin } from '../../utils/socialMediaLogin'
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -31,48 +31,7 @@ export default class LoginForm extends React.Component {
     };
   }
   componentDidMount() {
-    window.fbAsyncInit = () => {
-      window.FB.init({
-        appId: env('fbId'),
-        cookie: true,
-        xfbml: true,
-        version: 'v3.0',
-      });
-      window.FB.getLoginStatus = (response) => {
-        if (response.status === 'connected') {
-          // for already connected
-        } else {
-          // user is not authorized
-        }
-      };
-    };
-    (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) { return; }
-      js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-    const token = this.props.location.hash;
-    const authToken = token.split('=')[1];
-    const instaUrl = env('instaUrl') + authToken;
-    const that = this;
-    if (authToken !== undefined) {
-      axios.get(instaUrl)
-        .then(function (response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-    gapi.signin2.render('g-sign-in', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'theme': 'dark',
-      'onsuccess': this.onSignIn,
-    });
+    FBLogin(this.props.location.hash, this.onSocialMediaLogin);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
@@ -252,17 +211,17 @@ export default class LoginForm extends React.Component {
             <span>Login using social</span>
           </LoginContainer.SignupLine>
           <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+            <LoginContainer.Button onClick={() => OnFBlogin()}>
               <LoginContainer.FacebookContent>Facebook
               </LoginContainer.FacebookContent>
             </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => this.onGmail()} >
+            <LoginContainer.Button onClick={() => GmailLogin()} >
               <LoginContainer.GoogleWrapper id="g-sign-in" />
               <LoginContainer.GoogleContent>Google</LoginContainer.GoogleContent>
             </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+            <LoginContainer.Button onClick={() =>  onInstagramLogin()}>
               <LoginContainer.InstagramContent>Instagram
               </LoginContainer.InstagramContent>
             </LoginContainer.Button>
@@ -311,7 +270,9 @@ export default class LoginForm extends React.Component {
 
               }
               <LoginContainer.ForgotButtonWrapper>
-                <LoginContainer.ForgotButtonSpan> Forgot your password?</LoginContainer.ForgotButtonSpan>
+                <Link to="/forgotpassword">
+                  <LoginContainer.ForgotButtonSpan> Forgot your password?</LoginContainer.ForgotButtonSpan>
+                </Link>
               </LoginContainer.ForgotButtonWrapper>
               <LoginContainer.ButtonWrapper>
                 <LoginContainer.SignIn

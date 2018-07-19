@@ -6,9 +6,17 @@ import {
 import { LoginContainer, HeaderSection } from './styled';
 import MainLoader from '../../components/MainLoader';
 import LoginForm from '../../components/LoginForm';
+import ForgotPassword from '../../components/ForgotPasswordForm';
 
 export default class Login extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+    };
+  }
   render() {
+    console.log(this.props.location);
     return (
       <React.Fragment>
         {
@@ -31,7 +39,13 @@ export default class Login extends React.Component {
                     </Link>
                   </HeaderSection>
                   <LoginContainer.CoverImage />
-                  <LoginForm {...this.props} />
+                  {this.props.location.pathname === '/forgotpassword' ?
+                    <ForgotPassword {...this.props} />
+                    :
+                    <LoginForm {...this.props} />
+                  }
+                  
+                 
                 </LoginContainer.LeftSection>
                 <LoginContainer.RightSection />
               </LoginContainer>

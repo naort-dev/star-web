@@ -20,6 +20,7 @@ class Api {
   static requestVideo = 'request/stargramz/';
   static getSourceList = 'payments/stripe_cards/';
   static modifySourceList = 'payments/attach_detach_source/';
+  static forgotPassword = 'user/forgotpassword/';
 }
 
 export default Api;
