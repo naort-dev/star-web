@@ -1,6 +1,6 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import validator from 'validator';
+import { Redirect } from 'react-router-dom';
 import * as qs from 'query-string';
 import Api from '../../lib/api';
 import resetPassword from '../../utils/resetPassword';
@@ -14,15 +14,19 @@ export default class ResetPassword extends React.Component {
     this.state = {
       newPassword: { value: '', isValid: false, message: '' },
       retypePassword: { value: '', isValid: false, message: '' },
+      errorMsg: '',
+      redirect: false,
     };
   }
   onResetPassword = () => {
     if (this.state.newPassword.isValid && this.state.retypePassword.isValid) {
       const parsedQuery = qs.parse(this.props.location.search);
       resetPassword(Api.resetPassword, { password: this.state.newPassword.value, reset_id: parsedQuery.reset_id }).then((response) => {
-        if (response.status == 200) {
-          this.props.history.push(`/login`);
+        if (response.status === 200) {
+          this.setState({ redirect: true });
         }
+      }).catch((exception) => {
+        this.setState({ errorMsg: exception.response.data.error.message });
       });
     } else {
       this.checkPassword();
@@ -53,6 +57,10 @@ export default class ResetPassword extends React.Component {
     }
   }
   render() {
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to= "/login" />;
+    }
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
@@ -109,6 +117,9 @@ export default class ResetPassword extends React.Component {
             </LoginContainer.InputContainer>
 
           </LoginContainer.InputFieldsWrapper>
+          <LoginContainer.WrapsInput>
+            <LoginContainer.ErrorMsg>{this.state.errorMsg}</LoginContainer.ErrorMsg>
+          </LoginContainer.WrapsInput>
         </LoginContainer.Container>
       </LoginContainer.SocialMediaSignup>
     );
