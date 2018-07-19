@@ -21,6 +21,7 @@ class Api {
   static getSourceList = 'payments/stripe_cards/';
   static modifySourceList = 'payments/attach_detach_source/';
   static forgotPassword = 'user/forgotpassword/';
+  static resetPassword = 'user/resetpassword/';
 }
 
 export default Api;

@@ -49,9 +49,6 @@ export default class LoginForm extends React.Component {
       }
     }
   }
-  componentWillUnmount() {
-    this.props.resetRedirectUrls();
-  }
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);

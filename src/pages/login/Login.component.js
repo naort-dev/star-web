@@ -7,6 +7,7 @@ import { LoginContainer, HeaderSection } from './styled';
 import MainLoader from '../../components/MainLoader';
 import LoginForm from '../../components/LoginForm';
 import ForgotPassword from '../../components/ForgotPasswordForm';
+import ResetPassword from '../../components/ResetPasswordForm';
 
 export default class Login extends React.Component {
   constructor(props) {
@@ -15,8 +16,13 @@ export default class Login extends React.Component {
     this.state = {
     };
   }
+  componentWillUnmount() {
+    if (this.props.isLoggedIn) {
+      this.props.resetRedirectUrls();
+    }
+  }
   render() {
-    console.log(this.props.location);
+    const path = this.props.location.pathname;
     return (
       <React.Fragment>
         {
@@ -39,13 +45,23 @@ export default class Login extends React.Component {
                     </Link>
                   </HeaderSection>
                   <LoginContainer.CoverImage />
-                  {this.props.location.pathname === '/forgotpassword' ?
+                  {path === '/forgotpassword' ?
                     <ForgotPassword {...this.props} />
                     :
-                    <LoginForm {...this.props} />
+                    null
                   }
-                  
-                 
+                  {path === '/login' ?
+                    <LoginForm {...this.props} />
+                    :
+                    null
+                  }
+                  {path === '/resetpassword' ?
+                    <ResetPassword {...this.props} />
+                    :
+                    null
+                  }
+
+
                 </LoginContainer.LeftSection>
                 <LoginContainer.RightSection />
               </LoginContainer>

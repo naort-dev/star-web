@@ -7,8 +7,12 @@ import { ImageStack } from '../../components/ImageStack';
 import SignUpForm from '../../components/SignupForm'
 
 export default class SignUp extends React.Component {
+  componentWillUnmount() {
+    if (this.props.location.state && this.props.location.state.type === "fan" && this.props.isLoggedIn) {
+      this.props.resetRedirectUrls();
+    }
+  }
   render() {
-
     return (
       <LoginContainer.wrapper>
         <LoginContainer>
@@ -24,7 +28,7 @@ export default class SignUp extends React.Component {
                 <HeaderSection.RightDiv>LOG IN</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
-              <SignUpForm {...this.props} />
+            <SignUpForm {...this.props} />
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection />
         </LoginContainer>

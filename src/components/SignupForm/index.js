@@ -62,14 +62,6 @@ export default class SignUp extends React.Component {
 
         }
     }
-
-
-    componentWillUnmount() {
-        if (this.props.location.state && this.props.location.state.type === "fan") {
-            this.props.resetRedirectUrls();
-        }
-    }
-
     onRegister = (e) => {
         e.preventDefault();
         if (this.props.statusCode === '410') {

@@ -49,7 +49,7 @@ export default class Personal extends React.Component {
     let userNameValue;
     if (this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name !== '') {
       userNameValue = this.props.loginDetails.nick_name;
-    } else if (!this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name == '') {
+    } else if (!this.props.loginDetails.show_nick_name) {
       userNameValue = this.props.loginDetails.first_name + '' + this.props.loginDetails.last_name;
     } else {
       userNameValue = 'Myself';
@@ -174,7 +174,9 @@ export default class Personal extends React.Component {
     }
   }
   emptyTemplateDetails = () => {
-    this.setLoginUserName();
+    if (this.props.isLoggedIn) {
+      this.setLoginUserName();
+    }
     this.setState({
       hostName: '',
       relationshipValue: 0,
