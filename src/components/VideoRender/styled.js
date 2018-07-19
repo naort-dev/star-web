@@ -93,7 +93,7 @@ VideoRenderDiv.StarDetails = styled.p`
 `;
 
 VideoRenderDiv.VideoContentWrapper = styled.div`
-  width: ${props => `${props.videoWidth}px`};
+  width: 100%;
   position: relative;
   height: 100%;
   max-width: 100%;
@@ -103,19 +103,8 @@ VideoRenderDiv.VideoContentWrapper = styled.div`
 
 VideoRenderDiv.VideoPlayer = styled.div`
   width: 100%;
-  height: calc(100% - 124px);
+  height: calc(100% - 80px);
   background: #000;
-  @media(min-width:768px) {
-    width: ${props => `${props.videoWidth}px`};
-    height: ${props => `${props.videoHeight}px`};
-    margin: 0 auto;
-    max-width: 100%;
-    max-height: 480px;
-  }
-  @media(min-width: 1025px) {
-    max-width: 100%;
-    max-height: 100%;
-  }
 `;
 
 VideoRenderDiv.VideoContent = styled.section`
@@ -126,9 +115,8 @@ VideoRenderDiv.VideoContent = styled.section`
 
 VideoRenderDiv.VideoTitle = styled.span`
   display: block;
-  font-size: 12px;
+  font-size: 11px;
   font-family: 'Ubuntu-Regular';
-  text-align: center;
 `;
 
 VideoRenderDiv.VideoRequester = styled.div`

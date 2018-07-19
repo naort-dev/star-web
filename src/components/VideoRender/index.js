@@ -40,9 +40,7 @@ export default class VideoRender extends React.Component {
       <Popup
         closePopUp={() => this.setState({ videoActive: false })}
       >
-        <VideoRenderDiv.VideoContentWrapper
-          videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
-        >
+        <VideoRenderDiv.VideoContentWrapper>
           <VideoRenderDiv.VideoContent>
             <VideoRenderDiv.VideoRequester>
               <VideoRenderDiv.VideoRequestImage
@@ -56,14 +54,9 @@ export default class VideoRender extends React.Component {
               </VideoRenderDiv.VideoRequestName>
             </VideoRenderDiv.VideoRequester>
           </VideoRenderDiv.VideoContent>
-          <VideoRenderDiv.VideoPlayer
-            videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
-            videoHeight={this.props.videoHeight ? this.props.videoHeight: '100%'}
-          >
+          <VideoRenderDiv.VideoPlayer>
             <VideoPlayer
-              videoWidth={this.props.videoWidth ? this.props.videoWidth: '100%'}
-              videoHeight={this.props.videoHeight ? this.props.videoHeight: '100%'}
-              cover={this.state.videoCover ? this.state.videoCover : ''}
+              cover={this.state.coverImage ? this.state.coverImage : ''}
               src={this.props.videoUrl ? this.props.videoUrl : ''}
             />
           </VideoRenderDiv.VideoPlayer>

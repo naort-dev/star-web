@@ -1,11 +1,16 @@
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const PaymentStyled = styled.form`
 
 `;
 
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
-  padding: 7px 16px;
+  padding-bottom: 22px;
+  @media(min-width: 1025px) {
+    height: calc(100vh - 40px);
+    padding-bottom: 90px;
+  }
 `;
 
 PaymentStyled.Heading = styled.span`
@@ -57,20 +62,61 @@ PaymentStyled.PaymentController = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 7px 16px;
+  padding: 13px;
   background-color: #fff;
   z-index: 5;  
   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-  @media(min-width: 768px) {
-    padding: 13px 44px;
-  }
   @media(min-width:1025px){
-    border-top: 2px solid rgba(51, 51, 51, 1);
-    padding: 25px 48px;
+    padding: 27px 0;
+    border-top: 1px solid rgba(51, 51, 51, 1);
+    margin: 0 42px;
     position:absolute;
     bottom:0;
     box-shadow: none;
   }
+`;
+
+PaymentStyled.OptionSelectionWrapper = styled.div`
+
+`;
+
+PaymentStyled.OptionSelector = styled.div`
+  margin-bottom: 20px;
+`;
+
+PaymentStyled.OptionLabel = styled.label`
+  margin-left: 20px;
+  cursor: pointer;
+`;
+
+PaymentStyled.cardListWrapper = styled.ul`
+
+`;
+
+PaymentStyled.cardListItem = styled.li`
+  margin-bottom: 10px;
+  position: relative;
+  margin-right: 10px;
+  cursor: pointer;
+`;
+
+PaymentStyled.cardItemDetails = styled.span`
+  background-color: ${props => (props.selected ? '#FF6C58' : 'rgb(248,248,248)')};
+  padding: 10px;
+  color: ${props => (props.selected ? '#fff' : '#333333')};
+  width: 100%;
+  display: block;
+`;
+
+PaymentStyled.removeCardListItem = styled.span`
+  position:absolute;
+  right: 10px;
+  top: 10px;
+  width: 20px;
+  height: 20px;
+  display: block;
+  background: ${props => (props.selected ? 'url(assets/images/close-icon.svg)' : 'url(assets/images/close-icon-orange.svg)')};
+  background-repeat: no-repeat;
 `;
 
 PaymentStyled.ElementsWrapper = styled.div`
@@ -80,12 +126,24 @@ PaymentStyled.ElementsWrapper = styled.div`
     max-width: 500px;
     padding: 10px 14px;
     font-size: 1em;
-    font-family: 'Source Code Pro', monospace;
-    box-shadow: rgba(50, 50, 93, 0.14902) 0px 1px 3px, rgba(0, 0, 0, 0.0196078) 0px 1px 0px;
-    border: 0;
+    font-family: 'Ubuntu-Regular';
+    background-color: white;
+    border: 1px solid #d0d2d3;
+    border-radius: 2px;
     outline: 0;
-    border-radius: 4px;
-    background: white;
+  }
+`;
+
+PaymentStyled.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    padding: 7px 16px;
+    overflow: hidden !important;
+    position: static !important;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+      padding: 7px 42px;
+    }
   }
 `;
 
@@ -106,9 +164,9 @@ PaymentStyled.ErrorElement = styled.span`
 
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
-  justify-content: space-between;
   margin-top: 30px;
   .StripeElement {
+    margin-right: 30px;
     padding: 10px 5px;
     min-width: 70px;
   }

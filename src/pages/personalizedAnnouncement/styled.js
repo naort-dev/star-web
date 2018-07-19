@@ -56,6 +56,7 @@ Request.LeftSection = styled.div`
   background-color: #fff;
   position:relative;
   animation: ${menuEnter} 0.3s linear;
+  height: 100%;
   @media(min-width: 1025px){
     width:40%;
     padding: 0px 0px;
@@ -546,30 +547,21 @@ Request.CheckBox = styled.input`
 Request.Span = styled.label`
 `;
 Request.InputFieldsWrapper = styled.div`
-  
-  
   @media(min-width:768px){
     padding: 0px 0px;
-   
-  }
-  @media(min-width:1025px){
    
   }
 `;
 Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
-  height:90px;
- 
+  margin-top: 10px; 
   @media(min-width:768px){
+    margin-top: 30px;
     flex-direction: row;
-    margin-top:5%;
-    height:40px;
   }
   @media(min-width: 1025px) {
     margin-top: 30px;
-    height:40px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;
@@ -600,7 +592,6 @@ Request.Label = styled.div`
   @media(min-width:1025px){
     font-size:13px;
     width:69%;
-   
   }
   @media(min-width:1920px){
     font-size:16px;

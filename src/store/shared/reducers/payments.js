@@ -4,12 +4,15 @@ const initalState = {
   requestDetails: {},
   loading: false,
   paymentStatus: false,
+  sourceList: {},
 };
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
     case PAYMENTS.start:
     case PAYMENTS.fetchSourceStart:
+    case PAYMENTS.sourceListStart:
+    case PAYMENTS.modifYSourceListStart:
       return {
         ...state,
         loading: true,
@@ -17,6 +20,8 @@ export default (state = { ...initalState }, action) => {
       
     case PAYMENTS.end:
     case PAYMENTS.fetchSourceEnd:
+    case PAYMENTS.sourceListEnd:
+    case PAYMENTS.modifYSourceListEnd:
       return {
         ...state,
         loading: false,
@@ -40,9 +45,18 @@ export default (state = { ...initalState }, action) => {
       return initalState;
 
     case PAYMENTS.failed:
+    case PAYMENTS.sourceListFailed:
+    case PAYMENTS.modifySourceListFailed:
       return {
-        ...initalState,
+        ...state,
         loading: false,
+      };
+
+    case PAYMENTS.sourceListSuccess:
+      return {
+        ...state,
+        loading: false,
+        sourceList: action.data,
       };
 
     default:

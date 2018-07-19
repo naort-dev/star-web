@@ -50,7 +50,6 @@ ListStyled.listWrapper = styled.ul`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-start;
-  justify-content: center;
   width: calc(100% - 10px);
   @media(min-width: 768px) {
     flex-direction: row;

@@ -12,7 +12,15 @@ export const PAYMENTS = {
   setPaymentStatus: 'payments/PAYMENT_STATUS',
   resetPayments: 'payments/RESET_PAYMENTS',
   failed: 'payments/REQUEST_FAILED',
+  sourceListStart: 'payments/SOURCE_LIST_START',
+  sourceListSuccess: 'payments/SOURCE_LIST_SUCCESS',
+  sourceListEnd: 'payments/SOURCE_LIST_END',
+  sourceListFailed: 'payments/SOURCE_LIST_FAILED',
+  modifySourceListStart: 'payments/MODIFY_SOURCE_START',
+  modifySourceListEnd: 'payments/MODIFY_SOURCE_END',
+  modifySourceListFailed: 'payments/MODIFY_SOURCE_FAILED',
 };
+
 
 export const paymentFetchStart = () => ({
   type: PAYMENTS.start,
@@ -20,14 +28,6 @@ export const paymentFetchStart = () => ({
 
 export const paymentFetchEnd = () => ({
   type: PAYMENTS.end,
-});
-
-export const paymentFetchSourceStart = () => ({
-  type: PAYMENTS.fetchSourceStart,
-});
-
-export const paymentFetchSourceEnd = () => ({
-  type: PAYMENTS.fetchSourceEnd,
 });
 
 export const paymentFetchSuccess = (data) => {
@@ -38,6 +38,19 @@ export const paymentFetchSuccess = (data) => {
     });
 };
 
+export const paymentFetchFailed = error => ({
+  type: PAYMENTS.failed,
+  error,
+});
+
+export const paymentFetchSourceStart = () => ({
+  type: PAYMENTS.fetchSourceStart,
+});
+
+export const paymentFetchSourceEnd = () => ({
+  type: PAYMENTS.fetchSourceEnd,
+});
+
 export const setPaymentStatus = (status) => {
   return (
     {
@@ -46,14 +59,89 @@ export const setPaymentStatus = (status) => {
     });
 };
 
-export const paymentFetchFailed = error => ({
-  type: PAYMENTS.failed,
-  error,
-});
-
 export const resetPaymentDetails = () => ({
   type: PAYMENTS.resetPayments,
 });
+
+export const sourceListModifyStart = () => ({
+  type: PAYMENTS.modifySourceListStart,
+});
+
+export const sourceListModifyEnd = () => ({
+  type: PAYMENTS.modifySourceListEnd,
+});
+
+export const sourceListModifyFailed = error => ({
+  type: PAYMENTS.modifySourceListFailed,
+  error,
+});
+
+export const sourceListFetchStart = () => ({
+  type: PAYMENTS.sourceListStart,
+});
+
+export const sourceListFetchEnd = () => ({
+  type: PAYMENTS.sourceListEnd,
+});
+
+export const sourceListFetchSuccess = (data) => {
+  return (
+    {
+      type: PAYMENTS.sourceListSuccess,
+      data,
+    });
+};
+
+export const sourceListFetchFailed = error => ({
+  type: PAYMENTS.sourceListFailed,
+  error,
+});
+
+
+export const fetchSourceList = () => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  dispatch(sourceListFetchStart());
+  return fetch(Api.getSourceList, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(sourceListFetchEnd());
+      dispatch(sourceListFetchSuccess(resp.data.data.cards));
+    } else {
+      dispatch(sourceListFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(sourceListFetchFailed(exception));
+  });
+};
+
+export const modifySourceList = (source, customer, action) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  const { sourceList } = getState().paymentDetails;
+  dispatch(sourceListFetchStart());
+  return fetch.post(Api.modifySourceList, {
+    customer,
+    source,
+    action,
+  }, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(sourceListFetchEnd());
+      dispatch(fetchSourceList(resp.data.data.cards));
+    } else {
+      dispatch(sourceListFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(sourceListFetchFailed(exception));
+  });
+};
 
 export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
