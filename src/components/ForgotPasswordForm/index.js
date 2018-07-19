@@ -17,7 +17,7 @@ export default class ForgotPassword extends React.Component {
     };
   }
   onForgotPassword = () => {
-    forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then(response => this.setState({message : response.data, forgotPassword: true }), error => this.setState({ message: 'No Stargramz account was found with given email address ', forgotPassword: true }));
+    forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then(response => this.setState({ message: response.data, forgotPassword: true }), exception => this.setState({ message: 'No Stargramz account was found with given email address ', forgotPassword: true }));
   }
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
@@ -72,7 +72,7 @@ export default class ForgotPassword extends React.Component {
                       <LoginContainer.SignIn
                         onClick={this.onForgotPassword}
                         disabled={this.props.loading}
-                      >Reset Password
+                      >Continue
                       </LoginContainer.SignIn>
                     </LoginContainer.ButtonWrapper>
                   </ForgotPasswordWrap>
