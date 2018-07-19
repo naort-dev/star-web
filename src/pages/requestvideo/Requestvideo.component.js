@@ -60,15 +60,7 @@ export default class Requestvideo extends React.Component {
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
-              </HeaderSection>
-              <Request.SmallScreenLayout>
-                <Request.ImageRenderDiv>
-                  <Request.ImageSection
-                    imageUrl={coverPhoto}
-                  />
-                </Request.ImageRenderDiv>
-              </Request.SmallScreenLayout>
-                
+              </HeaderSection>               
               <Request.ComponentWrapper>
                 <Request.ComponentWrapperScroll
                   autoHide

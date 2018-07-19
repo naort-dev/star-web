@@ -374,6 +374,7 @@ Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
+    background: #fff;
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;

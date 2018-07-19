@@ -261,15 +261,6 @@ export default class Personal extends React.Component {
                 <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </HeaderSection>
-
-              <Request.SmallScreenLayout>
-                <Request.ImageRenderDiv>
-                  <Request.ImageSection
-                    imageUrl={coverPhoto}
-                  />
-                </Request.ImageRenderDiv>
-              </Request.SmallScreenLayout>
-
               <Request.ComponentWrapper>
                 <Request.ComponentWrapperScroll
                   autoHide

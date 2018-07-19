@@ -29,6 +29,13 @@ class StripeCheckout extends React.Component {
     this.getEphemeralKey();
     this.props.fetchSourceList();
   }
+  componentWillReceiveProps(nextProps) {
+    console.log(Object.keys(nextProps.sourceList).length);
+    if (Object.keys(nextProps.sourceList).length) {
+      this.setState({ cardSelection: true });
+    }
+  }
+
   componentDidUpdate(prevProps) {
     if (this.props.paymentStatus) {
       this.props.exitPaymentMode();
@@ -153,6 +160,9 @@ class StripeCheckout extends React.Component {
                 </PaymentStyled.OptionSelector>
               : null
             }
+            {
+              this.state.cardSelection && this.renderCardList()
+            }
             <PaymentStyled.OptionSelector>
               <input
                 id="add-card"
@@ -169,9 +179,7 @@ class StripeCheckout extends React.Component {
             </PaymentStyled.OptionSelector>
           </PaymentStyled.OptionSelectionWrapper>
           {
-            this.state.cardSelection ?
-            this.renderCardList()
-            : this.renderAddCard()
+            !this.state.cardSelection && this.renderAddCard()
           }
           <PaymentStyled.StripeLogoWrapper>
             <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
