@@ -4,6 +4,8 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
+import VideoPlayer from '../VideoPlayer';
+import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
 import Loader from '../Loader';
 
@@ -12,6 +14,9 @@ export default class ScrollList extends React.Component {
     super(props);
     this.state = {
       hasMore: true,
+      videoActive: false,
+      selectedVideoIndex: null,
+      videoPopupLoading: false,
     };
   }
 
@@ -30,6 +35,9 @@ export default class ScrollList extends React.Component {
       } else {
         this.setState({ hasMore: true });
       }
+    }
+    if (this.state.videoActive && this.props.loading !== nextProps.loading && !nextProps.loading) {
+      this.setState({ videoPopupLoading: false })
     }
   }
 
@@ -65,6 +73,58 @@ export default class ScrollList extends React.Component {
     }
   };
 
+  changeVideo = (videoIndex) => {
+    if (this.props.dataList.length - videoIndex <= 10) {
+      this.fetchMoreData();
+    }
+    if (videoIndex < this.props.dataList.length && videoIndex >= 0) {
+      this.setState({ selectedVideoIndex: videoIndex, videoPopupLoading: false });
+    } else if (videoIndex === this.props.dataList.length && videoIndex < this.props.totalCount) {
+      this.setState({ videoPopupLoading: true });
+    }
+  }
+
+
+  showVideoPopup = () => {
+    const selectedVideo = this.props.dataList[this.state.selectedVideoIndex];
+    return (
+      <Popup
+        closePopUp={() => this.setState({ videoActive: false })}
+      >
+        <ListStyled.VideoContentWrapper>
+          {
+            !this.state.videoPopupLoading ?
+              <React.Fragment>
+                <ListStyled.VideoPlayer>
+                  <ListStyled.VideoContent>
+                    <ListStyled.VideoRequester>
+                      <ListStyled.VideoRequestImage
+                        imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
+                      />
+                      <ListStyled.VideoRequestName>
+                        {selectedVideo.full_name}
+                        <ListStyled.VideoTitle>
+                          {this.renderStarProfessions(selectedVideo.professions)}
+                        </ListStyled.VideoTitle>
+                      </ListStyled.VideoRequestName>
+                    </ListStyled.VideoRequester>
+                  </ListStyled.VideoContent>
+                  <VideoPlayer
+                    cover={selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : ''}
+                    src={selectedVideo.s3_video_url ? selectedVideo.s3_video_url : ''}
+                  />
+                </ListStyled.VideoPlayer>
+              </React.Fragment>
+            : <Loader />
+          }
+          <ListStyled.LeftSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex-1)} />
+          <ListStyled.RightSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex+1)} />
+        </ListStyled.VideoContentWrapper>
+      </Popup>
+    );
+  }
+
+
   infiniteScrollList = (scrollTarget) => {
     return (
       <InfiniteScroll
@@ -95,6 +155,10 @@ export default class ScrollList extends React.Component {
     );
   }
 
+  enableVideoPopup = (index) => {
+    this.setState({ videoActive: true, selectedVideoIndex: index });
+  }
+
   renderStarProfessions = (list) => {
     let string = '';
     list.forEach((professions, index) => {
@@ -112,6 +176,9 @@ export default class ScrollList extends React.Component {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
+            videoList={this.props.dataList}
+            index={index}
+            enableVideoPopup={() => this.enableVideoPopup(index)}
             cover={item.s3_thumbnail_url}
             fanName={item.fan_name}
             fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}
@@ -123,8 +190,6 @@ export default class ScrollList extends React.Component {
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
             details={item.booking_title}
-            videoWidth={item.width}
-            videoHeight={item.height}
           />
         </ListStyled.listVideos>
       ));
@@ -182,6 +247,9 @@ export default class ScrollList extends React.Component {
   render() {
     return (
       <ListStyled>
+        {
+          this.state.videoActive && this.showVideoPopup()
+        }
         {
           this.props.scrollTarget ?
             this.infiniteScrollList(this.props.scrollTarget)

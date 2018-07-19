@@ -16,7 +16,7 @@ const PopupStyled = styled.div`
   right: 0;
   left: 0;
   padding-top: 46px;
-  background-color: rgba(0,0,0,.8);
+  background-color: rgba(0,0,0,.6);
   display: flex;
   justify-content: center;
   align-items: center;
