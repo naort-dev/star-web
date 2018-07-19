@@ -151,6 +151,7 @@ ListStyled.SocialMediaWrapper = styled.div`
   bottom: ${props => (props.visible ? '10px' : '-100%')};
   @media(min-width: 768px) {
     position: absolute;
+    background: transparent;
     width: 50px;
     bottom: 0;
     top: 0;
