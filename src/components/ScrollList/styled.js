@@ -129,6 +129,9 @@ ListStyled.VideoContentWrapper = styled.div`
   max-width: 100%;
   margin: 0 10px;
   cursor: initial;
+  @media(min-width: 768px) {
+    display: flex;
+  }
 `;
 
 ListStyled.VideoPlayer = styled.div`
@@ -136,6 +139,28 @@ ListStyled.VideoPlayer = styled.div`
   height: 100%;
   background: #000;
   position: relative;
+`;
+
+ListStyled.SocialMediaWrapper = styled.div`
+  position: absolute;
+  transition: 0.2s bottom ease-out;
+  padding: 10px;
+  background: #fff;
+  left: 0;
+  right: 0;
+  bottom: ${props => (props.visible ? '10px' : '-100%')};
+  @media(min-width: 768px) {
+    position: static;
+    width: 50px;
+  }
+`;
+
+ListStyled.Somenetwork = styled.div`
+  vertical-align: top;
+  display: inline-block;
+  margin-right: 30px;
+  margin-top: 10px;
+  text-align: center;
 `;
 
 ListStyled.VideoContent = styled.section`
@@ -155,8 +180,18 @@ ListStyled.VideoTitle = styled.span`
   font-family: 'Ubuntu-Regular';
 `;
 
+ListStyled.ShareButton = styled.span`
+  padding-top: 10px;
+  color: #fff;
+  cursor: pointer;
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
 ListStyled.VideoRequester = styled.div`
   display: flex;
+  justify-content: space-between;
 `;
 ListStyled.VideoRequestImage = styled.span`
   border-radius: 50%;
@@ -194,8 +229,8 @@ ListStyled.VideoRequestName = styled.span`
   }
 `;
 ListStyled.SliderArrows = styled.span`
-  width: 48px;
-  height: 48px;
+  width: 30px;
+  height: 30px;
   border-color: #000;
   position: absolute;
   top: 50%;
@@ -204,6 +239,10 @@ ListStyled.SliderArrows = styled.span`
   opacity: 0.6;
   &:hover {
     opacity: 1;
+  }
+  @media(min-width: 768px) {
+    width: 48px;
+    height: 48px;
   }
 `;
 
@@ -219,6 +258,9 @@ ListStyled.RightSliderArrow = ListStyled.SliderArrows.extend`
   border-left: 6px solid;
   transform: rotate(-135deg);
   right: 15px;
+  @media(min-width: 768px) {
+    right: 63px;
+  }
 `;
 
 
