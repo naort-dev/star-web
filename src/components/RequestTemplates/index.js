@@ -37,7 +37,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your host name"
+                    placeholder="Enter host name"
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
@@ -60,7 +60,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter name"
                     type="text"
                     name="userName"
                     value={this.props.userName}
@@ -145,7 +145,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your host name"
+                    placeholder="Enter host name"
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
@@ -167,7 +167,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter name"
                     type="text"
                     name="userName"
                     value={this.props.userName}
@@ -206,7 +206,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Other Relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Please enter relationship"
+                    placeholder="Enter relationship"
                     type="text"
                     name="otherRelationship"
                     value={this.props.otherRelationValue}
@@ -253,7 +253,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter name"
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
@@ -275,7 +275,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter name"
                     type="text"
                     value={this.props.userName}
                     name="userName"
@@ -314,7 +314,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Other Relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Please enter relationship"
+                    placeholder="Enter relationship"
                     type="text"
                     name="otherRelationship"
                     value={this.props.otherRelationValue}
@@ -374,7 +374,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter name"
                     type="text"
                     name="hostName"
                     value={this.props.hostName}
@@ -396,7 +396,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Enter your name"
+                    placeholder="Enter name"
                     type="text"
                     name="userName"
                     value={this.props.userName}
@@ -435,7 +435,7 @@ class RequestTemplates extends React.Component {
                 <Templates.Label>Other Relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
-                    placeholder="Please enter relationship"
+                    placeholder="Enter relationship"
                     type="text"
                     name="otherRelationship"
                     value={this.props.otherRelationValue}
@@ -499,7 +499,7 @@ class RequestTemplates extends React.Component {
               <Templates.Label>Who's hosting the event?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
-                  placeholder="Enter the Name"
+                  placeholder="Enter Name"
                   type="text"
                   name="userName"
                   value={this.props.userName}
@@ -554,7 +554,7 @@ class RequestTemplates extends React.Component {
               <Templates.Label>Who's the guest of honour?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
-                  placeholder="Enter the guest name"
+                  placeholder="Enter guest name"
                   type="text"
                   name="hostName"
                   value={this.props.hostName}
@@ -572,7 +572,7 @@ class RequestTemplates extends React.Component {
               <Templates.Label>Who's hosting the event?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
-                  placeholder="Enter the name"
+                  placeholder="Enter name"
                   type="text"
                   value={this.props.userName}
                   name="userName"

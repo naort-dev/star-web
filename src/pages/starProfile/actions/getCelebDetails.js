@@ -56,7 +56,6 @@ export const fetchCelebDetails = id => (dispatch, getState) => {
       dispatch(celebDetailstFetchEnd());
       dispatch(celebDetailstFetchSuccess(resp.data.data));
     } else {
-      console.log(resp)
       dispatch(celebDetailstFetchEnd());
       dispatch(celebDetailstFetchFailed('404'));
     }
