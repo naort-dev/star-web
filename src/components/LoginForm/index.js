@@ -57,6 +57,7 @@ export default class LoginForm extends React.Component {
     this.onSocialMediaLogin(profile, 3);
   }
   onLogin = (e) => {
+    /* Status code 410 means Socialmedia account doesn't have email id */
     e.preventDefault();
     if (this.props.statusCode === '410') {
       this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
