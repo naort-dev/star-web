@@ -95,7 +95,7 @@ LoginContainer.FeaturedImage = styled.div`
 `;
 
 LoginContainer.FirstImage = styled.div`
-width: 90%;
+width: 42%;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -107,10 +107,15 @@ ${props => props.image != null && ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   })
-  }
+}
+
+@media(min-width: 768px){
+   width: 45%;  
+}
+
 @media(min-width: 1025px){
  width: 48%;
- height: 40%;
+ height: 50%;
  display: flex;
  justify-content: center;
  align-items: center;
@@ -119,7 +124,7 @@ ${props => props.image != null && ({
 `;
 
 LoginContainer.SecondImage = styled.div`
-width: 90%;
+width: 42%;
 display: flex;
 justify-content: center;
 align-items: center;
@@ -131,10 +136,15 @@ ${props => props.image != null && ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   })
-  }
+}
+
+@media(min-width: 768px){
+  width: 45%;  
+}
+
 @media(min-width: 1025px){
  width: 48%;
- height: 40%;
+ height: 50%;
  background-color: #cccccc;
  display: flex;
  justify-content: center;
@@ -185,17 +195,18 @@ LoginContainer.UploadWrapper = styled.div`
 `;
 
 LoginContainer.UploadButton = styled.button`
-  border: 1px solid black;
-  color: black;
-  background-color: transparent;
-  border-radius: 60px;
-  font-size: 20px;
-  font-weight: bold;
-  height: 40px;
-  width: 40px;
-  text-align: center;
-  }
-  `;
+border: 1px solid black;
+color: black;
+background-color: transparent;
+border-radius: 60px;
+font-size: 20px;
+font-weight: bold;
+text-align: center;
+@media(min-width: 1025px){
+height: 40px;
+width: 40px;
+}
+`;
 
 
 LoginContainer.UploadInput = styled.input`
@@ -867,13 +878,26 @@ justify-content: center;
 display: flex;
 `
 LoginContainer.FeaturedText = styled.div`
-font-size: 24px;
+font-size: 16px;
 font-weight: 700;
 margin-top: 5%;
+@media(min-width:1025px){
+font-size: 24px;
+}
 `
 
-LoginContainer.CaptionText = styled.div `
+LoginContainer.CaptionText = styled.div`
 font-size: 14px;
+`;
+
+LoginContainer.loaderWrapper = styled.div`
+position: fixed;
+top: 0;
+z-index: 10;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0,0,0, 0.3);
 `;
 
 

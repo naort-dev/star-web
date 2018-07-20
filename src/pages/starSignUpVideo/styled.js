@@ -96,6 +96,22 @@ SignupContainer.Heading = styled.div`
   
 `;
 
+SignupContainer.Username = styled.span`
+
+`;
+
+SignupContainer.loaderWrapper = styled.div`
+position: fixed;
+top: 0;
+z-index: 10;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: rgba(0,0,0, 0.3);
+`;
+
+
+
 SignupContainer.Line = styled.hr`
   width:230px;
   margin-top:7%;

@@ -6,6 +6,7 @@ import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
 import { Link, Redirect } from 'react-router-dom';
 import { fetch } from '../../services/fetch'
+import Loader from '../../components/Loader'
 
 export default class StarsignUpVideo extends React.Component {
     constructor(props) {
@@ -32,7 +33,7 @@ export default class StarsignUpVideo extends React.Component {
                     )
             })
             .then(() => {
-                this.setState({upload: false})
+                this.setState({ upload: false })
                 this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
             }
             )
@@ -44,6 +45,11 @@ export default class StarsignUpVideo extends React.Component {
         }
         return (
             <SignupContainer>
+                {this.state.upload ?
+                    <SignupContainer.loaderWrapper>
+                        <Loader />
+                    </SignupContainer.loaderWrapper>
+                    : null}
                 <SignupContainer.LeftSection>
                     <HeaderSection>
                         <Link to="/">
@@ -64,7 +70,7 @@ export default class StarsignUpVideo extends React.Component {
                             <p>Please record a short video saying the following </p>
                         </SignupContainer.Container>
                         <SignupContainer.Container>
-                            <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am "the real" </SignupContainer.VerificationText>
+                            <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
                         </SignupContainer.Container>
                     </SignupContainer.SocialMediaSignup>
                     <SignupContainer.FooterLayout>
@@ -73,7 +79,7 @@ export default class StarsignUpVideo extends React.Component {
                             </FooterSection.LeftSection>
                             <FooterSection.RightSection>
                                 {this.props.videoRecorder.stop ?
-                                    <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit" }</FooterSection.Button>
+                                    <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
                                     : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
                             </FooterSection.RightSection>
                         </FooterSection>

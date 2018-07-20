@@ -25,6 +25,12 @@ export default class VideoRecorder extends React.Component {
 
     }
 
+    componentWillUnmount(){
+        console.log("unmount called")
+
+    }
+
+
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
             this.recordedBlobs.push(event.data);
@@ -117,7 +123,7 @@ export default class VideoRecorder extends React.Component {
             <VideoRecorderDiv >
                 <VideoRecorderDiv.VideoContainer>
                     {!this.props.videoRecorder.recordedBlob ?
-                        <VideoRecorderDiv.Video id="video-player" autoPlay />
+                        <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
                         :
                         <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
                     }
