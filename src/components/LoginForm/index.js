@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom';
 import validator from 'validator';
 import { LoginContainer } from './styled';
-import { FBLogin, GmailLogin, OnFBlogin, onInstagramLogin } from '../../utils/socialMediaLogin'
 
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -30,15 +29,60 @@ export default class LoginForm extends React.Component {
       },
     };
   }
+ 
+
   componentDidMount() {
-    FBLogin(this.props.location.hash, this.onSocialMediaLogin);
+    window.fbAsyncInit = () => {
+      window.FB.init({
+        appId: env('fbId'),
+        cookie: true,
+        xfbml: true,
+        version: 'v3.0',
+      });
+      window.FB.getLoginStatus = (response) => {
+        if (response.status === 'connected') {
+          // for already connected
+        } else {
+          // user is not authorized
+        }
+      };
+    };
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) { return; }
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    const token = this.props.location.hash;
+    const authToken = token.split('=')[1];
+    const instaUrl = env('instaUrl') + authToken;
+    const that = this;
+    if (authToken !== undefined) {
+      axios.get(instaUrl)
+        .then(function (response) {
+          that.onSocialMediaLogin(response.data.data, 4);
+        })
+        .catch(function (error) {
+
+        });
+    }
+    gapi.signin2.render('g-sign-in', {
+      'scope': 'profile email',
+      'width': 200,
+      'height': 50,
+      'theme': 'dark',
+      'onsuccess': this.onSignIn,
+    });
   }
+
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
-      const followData = this.props.followCelebData;
+      const folloForgotButtonWrapperwData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
           this.props.followCelebData.celebId,
@@ -49,6 +93,7 @@ export default class LoginForm extends React.Component {
       }
     }
   }
+
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);
@@ -140,7 +185,8 @@ export default class LoginForm extends React.Component {
     const check = document.getElementsByClassName('abcRioButtonIcon');
     check[0].click();
   }
-  OnFBlogin = () => {
+
+  onFBlogin = () => {
     const that = this;
     window.FB.login(function (response) {
       if (response.authResponse) {
@@ -209,17 +255,17 @@ export default class LoginForm extends React.Component {
             <span>Login using social</span>
           </LoginContainer.SignupLine>
           <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={() => OnFBlogin()}>
+            <LoginContainer.Button onClick={() => this.onFBlogin()}>
               <LoginContainer.FacebookContent>Facebook
               </LoginContainer.FacebookContent>
             </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => GmailLogin()} >
+            <LoginContainer.Button onClick={() => this.onGmail()} >
               <LoginContainer.GoogleWrapper id="g-sign-in" />
               <LoginContainer.GoogleContent>Google</LoginContainer.GoogleContent>
             </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() =>  onInstagramLogin()}>
+            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
               <LoginContainer.InstagramContent>Instagram
               </LoginContainer.InstagramContent>
             </LoginContainer.Button>
