@@ -22,6 +22,7 @@ class Api {
   static modifySourceList = 'payments/attach_detach_source/';
   static forgotPassword = 'user/forgotpassword/';
   static resetPassword = 'user/resetpassword/';
+  static getImageCredentials = 'user/signed_url/?extension=png&key=profile_images&file_type=image'
 }
 
 export default Api;

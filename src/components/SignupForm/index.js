@@ -78,7 +78,7 @@ export default class SignUp extends React.Component {
                     this.state.role,
                 ).then(() => {
                     if (this.props.location.state && this.props.location.state.type === "star") {
-                        this.props.history.push('/recordvideo')
+                        this.props.history.push('/starbio')
                     }
                 })
 
