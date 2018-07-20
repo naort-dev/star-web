@@ -17,7 +17,11 @@ export default class ForgotPassword extends React.Component {
     };
   }
   onForgotPassword = () => {
-    forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then(response => this.setState({ message: response.data, forgotPassword: true }), exception => this.setState({ message: 'No Stargramz account was found with given email address ', forgotPassword: true }));
+    forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then((response) => {
+      this.setState({ message: response.data.data, forgotPassword: true });
+    }).catch((exception) => {
+      this.setState({ message: exception.response.data.error.message, forgotPassword: true });
+    });
   }
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
@@ -46,45 +50,42 @@ export default class ForgotPassword extends React.Component {
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
-          {this.state.forgotPassword ?
-            <LoginContainer.Heading>{this.state.message}</LoginContainer.Heading>
-            :
-            <React.Fragment>
-              <LoginContainer.Heading>Forgot Password or Username?</LoginContainer.Heading>
+          <React.Fragment>
+            <LoginContainer.Heading>Forgot Password or Username?</LoginContainer.Heading>
 
-              <LoginContainer.InputFieldsWrapper>
-                <LoginContainer.InputContainer>
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        type="text"
-                        name="email"
-                        value={email.value}
-                        placeholder="Email"
-                        onChange={this.acceptEmailHandler}
-                        onBlur={this.checkEmail}
-                      />
-                      <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                  <ForgotPasswordWrap>
-                    <LoginContainer.ButtonWrapper >
-                      <LoginContainer.SignIn
-                        onClick={this.onForgotPassword}
-                        disabled={this.props.loading}
-                      >Continue
-                      </LoginContainer.SignIn>
-                    </LoginContainer.ButtonWrapper>
-                  </ForgotPasswordWrap>
+            <LoginContainer.InputFieldsWrapper>
+              <LoginContainer.InputContainer>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      type="text"
+                      name="email"
+                      value={email.value}
+                      placeholder="Email"
+                      onChange={this.acceptEmailHandler}
+                      onBlur={this.checkEmail}
+                    />
+                    <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                <ForgotPasswordWrap>
+                  <LoginContainer.ButtonWrapper >
+                    <LoginContainer.SignIn
+                      onClick={this.onForgotPassword}
+                      disabled={this.props.loading}
+                    >Continue
+                    </LoginContainer.SignIn>
+                  </LoginContainer.ButtonWrapper>
+                </ForgotPasswordWrap>
 
-                </LoginContainer.InputContainer>
+              </LoginContainer.InputContainer>
 
-              </LoginContainer.InputFieldsWrapper>
+            </LoginContainer.InputFieldsWrapper>
+            <LoginContainer.WrapsInput>
+              <LoginContainer.ErrorMsg>{this.state.message}</LoginContainer.ErrorMsg>
+            </LoginContainer.WrapsInput>
 
-            </React.Fragment>
-
-          }
-
+          </React.Fragment>
         </LoginContainer.Container>
       </LoginContainer.SocialMediaSignup>
     );
