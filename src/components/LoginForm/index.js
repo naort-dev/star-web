@@ -180,6 +180,7 @@ export default class LoginForm extends React.Component {
       this.state.socialMedia.in_id,
     );
   }
+  
   onInstagramLogin = () => {
     const clientId = env('instaId');
     const redirectUri = env('loginInstaRedirectUri');
