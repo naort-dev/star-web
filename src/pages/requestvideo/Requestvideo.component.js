@@ -60,15 +60,7 @@ export default class Requestvideo extends React.Component {
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
-              </HeaderSection>
-              <Request.SmallScreenLayout>
-                <Request.ImageRenderDiv>
-                  <Request.ImageSection
-                    imageUrl={coverPhoto}
-                  />
-                </Request.ImageRenderDiv>
-              </Request.SmallScreenLayout>
-                
+              </HeaderSection>               
               <Request.ComponentWrapper>
                 <Request.ComponentWrapperScroll
                   autoHide
@@ -79,9 +71,9 @@ export default class Requestvideo extends React.Component {
                       What kind of video would you like to request?
                     </Request.HeaderText>
                     <Request.ButtonWrapper>
-                      <Link to={`/${this.props.match.params.id}/request/ask`}>
+                      {/* <Link to={`/${this.props.match.params.id}/request/ask`}>
                         <Request.Button>Ask a Question</Request.Button>
-                      </Link>
+                      </Link> */}
                       <Link to={`/${this.props.match.params.id}/request/personal`}>
                         <Request.Button >Personalized Shout-Out</Request.Button>
                       </Link>

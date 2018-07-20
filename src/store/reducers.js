@@ -14,6 +14,9 @@ import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 import myVideosList from '../pages/myVideos/reducers/myVideosList';
 import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
+import otherRelation from '../store/shared/reducers/other';
+import paymentDetails from '../store/shared/reducers/payments';
+import videoRecorder from '../store/shared/reducers/videoRecording'
 
 const rootReducer = combineReducers({
   session,
@@ -29,7 +32,10 @@ const rootReducer = combineReducers({
   occasionList,
   myVideosList,
   bookingData,
+  otherRelation,
   redirectReferrer,
+  paymentDetails,
+  videoRecorder
 });
 
 export default rootReducer;

@@ -34,10 +34,10 @@ injectGlobal`
     background-color: white;
     border: 3px solid rgba(51, 51, 51, 1);
     @media(min-width:768px){
-      left: 100px;
+      left: 0px;
     }
     @media(min-width: 1025px){
-      left:75px;
+      left:0px;
       height: 18px;
       width: 18px;
     }

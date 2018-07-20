@@ -25,7 +25,7 @@ export const protectRoute = ({
 
     if (allowAccess) {
       return <RouteComponent {...props} />;
-    } 
+    }
     // else if (unAuthorized) {
     //   return (
     //     <Redirect

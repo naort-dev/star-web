@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import VideoPlayer from '../VideoPlayer';
+import Popup from '../Popup';
 import VideoRenderDiv from './styled';
 
 export default class VideoRender extends React.Component {
@@ -41,28 +43,25 @@ export default class VideoRender extends React.Component {
   render() {
     const { props } = this;
     return (
-      <VideoRenderDiv>
-        <Link to={`/starDetail/${props.celebId}/${props.videoId}`}>
-          <VideoRenderDiv.ImageSection
-            height={props.imageHeight}
-            imageUrl={this.state.coverImage}
-          >
-            <VideoRenderDiv.ProfileImageWrapper>
-              <VideoRenderDiv.ProfileImage
-                imageUrl={this.state.profileImage}
-              />
-            </VideoRenderDiv.ProfileImageWrapper>
-            {/* <VideoRenderDiv.FavoriteButton /> */}
-          </VideoRenderDiv.ImageSection>
-          <VideoRenderDiv.ProfileContent>
-            <VideoRenderDiv.Span>
-              <VideoRenderDiv.StarName>
-                {props.starName}
-              </VideoRenderDiv.StarName>
-              <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
-            </VideoRenderDiv.Span>
-          </VideoRenderDiv.ProfileContent>
-        </Link>
+      <VideoRenderDiv onClick={() => this.props.enableVideoPopup()}>
+        <VideoRenderDiv.ImageSection
+          height={props.imageHeight}
+          imageUrl={this.state.coverImage}
+        >
+          <VideoRenderDiv.ProfileImageWrapper>
+            <VideoRenderDiv.ProfileImage
+              imageUrl={this.state.profileImage}
+            />
+          </VideoRenderDiv.ProfileImageWrapper>
+        </VideoRenderDiv.ImageSection>
+        <VideoRenderDiv.ProfileContent>
+          <VideoRenderDiv.Span>
+            <VideoRenderDiv.StarName>
+              {props.starName}
+            </VideoRenderDiv.StarName>
+            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+          </VideoRenderDiv.Span>
+        </VideoRenderDiv.ProfileContent>
       </VideoRenderDiv>
     );
   }

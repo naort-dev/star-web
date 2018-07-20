@@ -17,6 +17,7 @@ const Request = styled.section`
  padding-bottom: 40px;
  height: 100%;
  max-width: 1920px;
+ background-color: #fff;
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
