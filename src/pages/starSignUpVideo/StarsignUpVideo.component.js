@@ -15,6 +15,8 @@ export default class StarsignUpVideo extends React.Component {
         this.state = { upload: false }
     }
 
+    onBackButtonEvent = () => console.log("browser back pressed") 
+
     onSubmit() {
         this.setState({ upload: true })
         const signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
