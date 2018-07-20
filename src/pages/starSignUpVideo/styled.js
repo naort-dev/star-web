@@ -26,7 +26,7 @@ SignupContainer.LeftSection = styled.div`
   height: 40vh;
 
   @media(min-width: 1025px){
-    width: 40vw;
+    width: 45%;
     height: 94vh;
     padding: 0px 0px;
     padding-bottom: 83px;
@@ -40,7 +40,7 @@ SignupContainer.RightSection = styled.div`
   
 
   @media(min-width: 1025px){
-    width: 60vw;
+    width: 55%;
     display: block;
     padding: 0px 0px;
     position: relative;
@@ -133,6 +133,7 @@ const HeaderSection = styled.div`
   height: 6vh;
   width: 100vw;
   top: 0vh;
+  padding: 3px 15px;
   position: absolute;
   @media(min-width:1025px){
     font-size:16px;
@@ -147,6 +148,8 @@ const HeaderSection = styled.div`
   }
 `;
 
+
+
 HeaderSection.LogoImage = styled.img`
   width:100px;
   height:45px;
@@ -156,11 +159,24 @@ HeaderSection.LogoImage = styled.img`
   }
 `;
 
-HeaderSection.MiddleDiv = styled.div`
-  font-family: 'Ubuntu-Bold';
-  font-size : 13px;
+HeaderSection.RightDiv = styled.button`
+  background-color: #fff; 
+  margin-right: 5px;
+  color: #333333;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Ubuntu-Medium';
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  outline:none;
+  border: none;
+  @media(min-width:1025px){
+    font-size:20px
+  }
   @media(min-width:1920px){
-    font-size:16px;
+    font-size:22px;
   }
 `;
 
@@ -178,7 +194,7 @@ const FooterSection = styled.div`
    position: relative;
    padding: 26px 0px;
    border-top: 1px solid #222;
-   width:30vw;
+   width:40%;
   }
   
 `;

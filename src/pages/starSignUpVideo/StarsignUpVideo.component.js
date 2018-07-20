@@ -5,23 +5,42 @@ import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
 import { Link, Redirect } from 'react-router-dom';
+import { fetch } from '../../services/fetch'
 
 export default class StarsignUpVideo extends React.Component {
     constructor(props) {
         super(props)
         this.onSubmit = this.onSubmit.bind(this)
+        this.state = { upload: false }
     }
 
     onSubmit() {
+        this.setState({ upload: true })
         const signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
         getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
-            .then(response => axios.post(response.url, response.formData))
-            .then(() => this.props.history.push("/starsuccess"))
+            .then(response => {
+                axios.post(response.url, response.formData)
+                    .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+                        ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+                    },
+                        {
+                            "headers": {
+                                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+                            }
+                        }
+                    )
+                    )
+            })
+            .then(() => {
+                this.setState({upload: false})
+                this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+            }
+            )
     }
 
     render() {
-        if(!this.props.isLoggedIn){
-            return <Redirect to={locations.signupType}/>
+        if (!this.props.isLoggedIn) {
+            return <Redirect to={locations.signupType} />
         }
         return (
             <SignupContainer>
@@ -34,10 +53,10 @@ export default class StarsignUpVideo extends React.Component {
                             />
                         </Link>
 
-                        <HeaderSection.MiddleDiv>
-                            <p> I am a Star </p>
-                        </HeaderSection.MiddleDiv>
-                      
+                        <Link to="#">
+                            <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
+                        </Link>
+
                     </HeaderSection>
                     <SignupContainer.SocialMediaSignup>
                         <SignupContainer.Container>
@@ -54,7 +73,7 @@ export default class StarsignUpVideo extends React.Component {
                             </FooterSection.LeftSection>
                             <FooterSection.RightSection>
                                 {this.props.videoRecorder.stop ?
-                                    <FooterSection.Button onClick={this.onSubmit}>Submit</FooterSection.Button>
+                                    <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit" }</FooterSection.Button>
                                     : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
                             </FooterSection.RightSection>
                         </FooterSection>

@@ -5,30 +5,19 @@ import './tags.js'
 export default class SelectTags extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { multi: true, multiValue: [], value: undefined }
+        this.state = { multi: true}
     }
 
-    handleOnChange(value) {
-
-            this.setState({ multiValue: value });
-    }
-       
     render() {
-        console.log("this.state for tags", this.state)
-
-
         return (
-
-            <div style={{ width: "80%" }}>
                 <Select.Creatable
                     multi={true}
-                    onChange={(value) => this.handleOnChange(value)}
-                    value={this.state.multiValue}
+                    onChange={(value) => this.props.handleFieldChange('searchTags', value)}
+                    value={this.props.searchTags}
                     showNewOptionAtTop={true}
                     placeholder={"enter tags"}
 
                 />
-            </div>
         )
     }
 }

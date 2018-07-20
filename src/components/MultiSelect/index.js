@@ -7,38 +7,26 @@ export default class MultiSelect extends React.Component {
         super(props)
         this.state = {
             removeSelected: true,
-            disabled: false,
-            crazy: false,
-            stayOpen: false,
-            value: [],
-            rtl: false,
+            stayOpen: true,
         }
     }
 
-    handleSelectChange(value) {
-        if (value.split(',').length <= 3) {
-            this.setState({ value });
-        }
-        
-    }
+    
 
     render() {
         const { crazy, disabled, stayOpen, value } = this.state;
         return (
-            <div style={{ width: "80%" }}>
                 <Select
-                    closeOnSelect={true}
+                    closeOnSelect={!this.state.stayOpen}
                     disabled={disabled}
                     multi
                     options={this.props.industry}
-                    onChange={(value) => this.handleSelectChange(value)}
+                    onChange={(value) => this.props.handleFieldChange('profession', value)}
                     placeholder="Select your favourite(s)"
                     simpleValue
-                    value={value}
+                    value={this.props.profession}
                     placeholder={"choose your industry"}
                 />
-            </div>
-
         )
     }
 }

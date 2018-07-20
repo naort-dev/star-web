@@ -138,6 +138,7 @@ injectGlobal`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 13px;
 }
 .Select-input {
   height: 34px;
@@ -305,8 +306,6 @@ injectGlobal`
 }
 .Select-option.is-selected {
   background-color: #f5faff;
-  /* Fallback color for IE 8 */
-  background-color: rgba(0, 126, 255, 0.04);
   color: #333;
 }
 .Select-option.is-focused {

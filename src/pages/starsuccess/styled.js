@@ -32,17 +32,78 @@ LoginContainer.LeftSection = styled.div`
     position: relative;
   }
 `;
+
 LoginContainer.RightSection = styled.div`
   width: 100%;
-  display: none;
-  background: url( 'assets/images/1297371108618082396.jpg' ) no-repeat ;
-  background-position: center; 
-  background-size:cover;
+  background-color:rgba(248, 248, 248, 1);
   @media(min-width: 1025px){
     width: 55%;
-    display: block;
+    display:flex;
+    align-items: center;
+    justify-content: center;
     padding: 0px 0px;
     position: relative;
+    padding: 30px 30px;
+    flex-wrap: wrap;
+  }
+`;
+
+LoginContainer.ImageWrapper = styled.div`
+  @media(min-width: 1025px){
+    display:flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 0px;
+    position: relative;
+    flex-wrap: wrap;
+    height: 80%;
+    width: 80%;
+  }
+`;
+
+LoginContainer.FeaturedImage = styled.div`
+ width: 98%;
+ height: 50%;
+ background-color: #cccccc;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ ${props => props.image != null && ({
+    background: `url(${props.image}) no-repeat`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  })
+  }
+
+`;
+
+LoginContainer.FirstImage = styled.div`
+ width: 48%;
+ height: 40%;
+ background-color: #cccccc;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ ${props => props.image != null && ({
+    background: `url(${props.image}) no-repeat`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  })
+  }
+`;
+
+LoginContainer.SecondImage = styled.div`
+ width: 48%;
+ height: 40%;
+ background-color: #cccccc;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ ${props => props.image != null && ({
+    background: `url(${props.image}) no-repeat`,
+    backgroundPosition: "center",
+    backgroundSize: "cover",
+  })
   }
 `;
 
@@ -432,23 +493,22 @@ FooterSection.RightSection = styled.div`
   }
 `;
 FooterSection.Button = styled.button`
-  background-color:#FF6C58 ; 
-  color: #fff;
-  padding: 12px 30px;
-  width:100%;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size:14px;
-  font-family: 'Ubuntu-Bold';
-  outline:none;
-  cursor: pointer;
-  border-radius:5px;
-  border: 2px solid #FF6C58;
-  @media(min-width:1920px){
-    font-size:20px;
-  }
+background-color: #fff; 
+color: #FF6C58;
+padding: 4px 30px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size:14px;
+font-family: 'Ubuntu-Bold';
+outline:none;
+cursor: pointer;
+border-radius:5px;
+border: 2px solid #FF6C58;
+@media(min-width:1920px){
+  font-size:20px;
 `;
+
 LoginContainer.WrapsInput = styled.div`
   width:100%;
   @media(min-width:768px){
@@ -548,7 +608,7 @@ LoginContainer.SignupLine = styled.div`
 `;
 
  LoginContainer.SuccessContainer = styled.div`
-  height: 70%;
+  height: 80%;
   width: 100%;
   padding: 0 60px;
   align-items: center;
@@ -559,11 +619,20 @@ LoginContainer.SignupLine = styled.div`
 
 
  LoginContainer.SuccessText = styled.p`
-  font-size: 24px;
+  font-size: 20px;
   margin-top: 5%;
   margin-bottom: 5%;
   text-align: left;
   width: 100%;
  `;
+
+ LoginContainer.SuccessTextBold = styled.p`
+ font-size: 20px;
+ margin-top: 5%;
+ margin-bottom: 5%;
+ text-align: left;
+ width: 100%;
+ font-weight: 700;
+`;
 
 export { LoginContainer, HeaderSection, FooterSection };
