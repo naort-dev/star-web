@@ -76,10 +76,13 @@ export default class SignUp extends React.Component {
                     this.state.email.value,
                     this.state.password.value,
                     this.state.role,
-                ).then(() => {
-                    if (this.props.location.state && this.props.location.state.type === "star") {
-                        this.props.history.push('/starbio')
+                ).then((response) => {
+                    if (response != undefined) {
+                        if (this.props.location.state && this.props.location.state.type === "star") {
+                            this.props.history.push('/starbio')
+                        }
                     }
+
                 })
 
             }
