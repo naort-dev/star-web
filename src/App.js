@@ -21,13 +21,14 @@ import { MyVideos } from './pages/myVideos';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
-import { StarsignUp } from './pages/starsignup';
+import { StarsignUpVideo } from './pages/starSignUpVideo';
 import { Requestvideo } from './pages/requestvideo';
 import { Askquestion } from './pages/askQuestion';
 import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
-
+import { Starbio } from './pages/starbio';
+import Starsuccess from './pages/starsuccess/Starsuccess.container'
 
 class App extends React.Component {
   constructor(props) {
@@ -93,10 +94,14 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/login" component={Login} />
+                <Route path="/forgotpassword" component={Login} />
+                <Route path="/resetpassword" component={Login} />
                 <Route path="/starDetail/:id/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
-                <Route path="/starsignup" component={StarsignUp} />
+                <Route path="/starbio" component={Starbio} />
+                <Route path="/starsuccess" component={Starsuccess} />
+                <Route path="/recordvideo" component={StarsignUpVideo} />
                 <Route exact path="/:id/request" component={Requestvideo} />
                 <Route path="/:id/request/ask" component={Askquestion} />
                 <Route path="/:id/request/event" component={Event} />

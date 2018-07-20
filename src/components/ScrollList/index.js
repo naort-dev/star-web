@@ -1,9 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import {
+  FacebookShareButton,
+  GooglePlusShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  WhatsappIcon,
+  FacebookIcon,
+  TwitterIcon,
+  GooglePlusIcon,
+  EmailIcon,
+} from 'react-share';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ListStyled from './styled';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
+import VideoPlayer from '../VideoPlayer';
+import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
 import Loader from '../Loader';
 
@@ -12,6 +27,10 @@ export default class ScrollList extends React.Component {
     super(props);
     this.state = {
       hasMore: true,
+      videoActive: false,
+      selectedVideoIndex: null,
+      videoPopupLoading: false,
+      sharePopup: false,
     };
   }
 
@@ -30,6 +49,9 @@ export default class ScrollList extends React.Component {
       } else {
         this.setState({ hasMore: true });
       }
+    }
+    if (this.state.videoActive && this.props.loading !== nextProps.loading && !nextProps.loading) {
+      this.setState({ videoPopupLoading: false })
     }
   }
 
@@ -65,6 +87,67 @@ export default class ScrollList extends React.Component {
     }
   };
 
+  changeVideo = (videoIndex) => {
+    if (this.props.dataList.length - videoIndex <= 10) {
+      this.fetchMoreData();
+    }
+    if (videoIndex < this.props.dataList.length && videoIndex >= 0) {
+      this.setState({ selectedVideoIndex: videoIndex, videoPopupLoading: false });
+    } else if (videoIndex === this.props.dataList.length && videoIndex < this.props.totalCount) {
+      this.setState({ videoPopupLoading: true });
+    }
+  }
+
+  showVideoPopup = () => {
+    const selectedVideo = this.props.dataList[this.state.selectedVideoIndex];
+    return (
+      <Popup
+        closePopUp={() => this.setState({ videoActive: false, sharePopup: false })}
+      >
+        <ListStyled.VideoContentWrapper>
+          {
+            !this.state.videoPopupLoading ?
+              <React.Fragment>
+                <ListStyled.VideoPlayer>
+                  <ListStyled.VideoContent>
+                    <ListStyled.VideoRequester>
+                      <Link to={`/starDetail/${selectedVideo.user_id}`} >
+                        <ListStyled.VideoRequestImage
+                          imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
+                        />
+                        <ListStyled.VideoRequestName>
+                          {selectedVideo.full_name}
+                          <ListStyled.VideoTitle>
+                            {this.renderStarProfessions(selectedVideo.professions)}
+                          </ListStyled.VideoTitle>
+                        </ListStyled.VideoRequestName>
+                      </Link>
+                      <ListStyled.ShareButton
+                        onClick={() => this.setState({sharePopup: !this.state.sharePopup})}
+                      >
+                        Share
+                      </ListStyled.ShareButton>
+                    </ListStyled.VideoRequester>
+                  </ListStyled.VideoContent>
+                  <VideoPlayer
+                    cover={selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : ''}
+                    src={selectedVideo.s3_video_url ? selectedVideo.s3_video_url : ''}
+                  />
+                </ListStyled.VideoPlayer>
+              </React.Fragment>
+            : <Loader />
+          }
+          <ListStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+            {this.renderSocialIcons(selectedVideo)}
+          </ListStyled.SocialMediaWrapper>
+          <ListStyled.LeftSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex-1)} />
+          <ListStyled.RightSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex+1)} />
+        </ListStyled.VideoContentWrapper>
+      </Popup>
+    );
+  }
+
+
   infiniteScrollList = (scrollTarget) => {
     return (
       <InfiniteScroll
@@ -95,6 +178,78 @@ export default class ScrollList extends React.Component {
     );
   }
 
+  enableVideoPopup = (index) => {
+    this.setState({ videoActive: true, selectedVideoIndex: index });
+  }
+
+
+  renderSocialIcons = (selectedVideo) => {
+    const defaultUrl = selectedVideo.video_url;
+    const shareUrl = `https://${defaultUrl}`;
+    const title = selectedVideo.booking_title
+    return (
+      <React.Fragment>
+        <ListStyled.Somenetwork>
+          <FacebookShareButton
+            url={shareUrl}
+            quote={title}
+            className="Demo__some-network__share-button"
+          >
+            <FacebookIcon
+              size={32}
+              round
+            />
+          </FacebookShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <GooglePlusShareButton
+            url={shareUrl}
+            className="Demo__some-network__share-button"
+          >
+            <GooglePlusIcon
+              size={32}
+              round />
+          </GooglePlusShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <TwitterShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button"
+          >
+            <TwitterIcon
+              size={32}
+              round
+            />
+          </TwitterShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <WhatsappShareButton
+            url={shareUrl}
+            title={title}
+            separator=":: "
+            className="Demo__some-network__share-button"
+          >
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <EmailShareButton
+            url={shareUrl}
+            subject={title}
+            body={title}
+            className="Demo__some-network__share-button"
+          >
+            <EmailIcon
+              size={32}
+              round
+            />
+          </EmailShareButton>
+        </ListStyled.Somenetwork>
+      </React.Fragment>
+    );
+  }
+
   renderStarProfessions = (list) => {
     let string = '';
     list.forEach((professions, index) => {
@@ -112,8 +267,15 @@ export default class ScrollList extends React.Component {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
+            videoList={this.props.dataList}
+            index={index}
+            enableVideoPopup={() => this.enableVideoPopup(index)}
             cover={item.s3_thumbnail_url}
+            fanName={item.fan_name}
+            fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}
+            celebProfessions={this.renderStarProfessions(item.professions)}
             videoUrl={item.s3_video_url}
+            videoCover={item.s3_thumbnail_url}
             celebId={item.user_id}
             videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
@@ -151,7 +313,7 @@ export default class ScrollList extends React.Component {
       }
       if (item.featured_photo) {
         coverPhoto = item.featured_photo.thumbnail_url && item.featured_photo.thumbnail_url;
-      } else if (item.images && Object.keys(item.images[0]).length) {
+      } else if (item.images && item.images[0] && Object.keys(item.images[0]).length) {
         coverPhoto = item.images && item.images[0] && item.images[0].image_url;
       } else {
         coverPhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
@@ -176,6 +338,9 @@ export default class ScrollList extends React.Component {
   render() {
     return (
       <ListStyled>
+        {
+          this.state.videoActive && this.showVideoPopup()
+        }
         {
           this.props.scrollTarget ?
             this.infiniteScrollList(this.props.scrollTarget)

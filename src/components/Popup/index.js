@@ -12,9 +12,11 @@ export default class Popup extends React.Component {
   }
   componentDidMount() {
     window.addEventListener('click', this.hidePopup);
+    document.body.style.overflow = 'hidden';
   }
   componentWillUnmount() {
     window.removeEventListener('click', this.hidePopup);
+    document.body.style.overflow = 'initial';
   }
   hidePopup = (e) => {
     if (this.popupContent && this.popupWrapper.contains(e.target) && !this.popupContent.contains(e.target)) {

@@ -5,6 +5,7 @@ import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import { ImageStack } from '../../components/ImageStack';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
+import  VideoRecorder  from '../../components/WebRTCVideoRecorder'
 
 export default class Askquestion extends React.Component {
   constructor(props) {
@@ -87,13 +88,13 @@ export default class Askquestion extends React.Component {
                       </Request.InputFieldsWrapper>
                       <Request.OptionWrapper>
                         <Request.QuestionButton>Record Question</Request.QuestionButton>
-                        <Request.CheckBoxWrapper>
+                        {/* <Request.CheckBoxWrapper>
                           <Request.Label id="checkbox_container">
                             <span>Make video private?</span>
                             <Request.CheckBox id="private_video" type="checkbox" />
                             <Request.Span htmlFor="private_video" id="checkmark" />
                           </Request.Label>
-                        </Request.CheckBoxWrapper>
+                        </Request.CheckBoxWrapper> */}
                       </Request.OptionWrapper>
                     </Request.Ask>
                   </Request.Questionwraps>
@@ -109,10 +110,13 @@ export default class Askquestion extends React.Component {
             </Request.LeftSection>
             <Request.RightSection>
               <Request.ImageStackWrapper>
-                <ImageStack
+                {/* <ImageStack
                   featureImage={featuredImage}
                   imageList={imageList}
-                />
+                /> */}
+
+                <VideoRecorder {...this.props} />
+
               </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>

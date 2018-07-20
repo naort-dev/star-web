@@ -483,7 +483,8 @@ Request.Heading = styled.div`
 `;
 Request.InputQuestion = styled.textarea`
   background-color: white;
-  border: 2px solid rgba(51, 51, 51, 1);
+  border: 1px solid #d0d2d3;
+  border-radius: 2px;
   font-size:16px;
   font-family: 'Ubuntu-Regular';
   width:100%;

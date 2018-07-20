@@ -1,9 +1,22 @@
 import React from 'react';
+import {
+  FacebookShareButton,
+  GooglePlusShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+  EmailShareButton,
+  WhatsappIcon,
+  FacebookIcon,
+  TwitterIcon,
+  GooglePlusIcon,
+  EmailIcon,
+} from 'react-share';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import OrderDetailsItem from './orderDetailsItem';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
+
 
 export default class OrderDetails extends React.Component {
   constructor(props) {
@@ -84,6 +97,13 @@ export default class OrderDetails extends React.Component {
   }
   render() {
     const { props } = this;
+    let shareUrl = '';
+    let title = '';
+    if (this.props.requestVideo) {
+      const defaultUrl = this.props.requestVideo.video_url;
+      shareUrl = `https://${defaultUrl}`;
+      title = this.props.bookingTitle;
+    }
     return (
       <OrderStyled>
         <OrderStyled.Header>
@@ -97,7 +117,7 @@ export default class OrderDetails extends React.Component {
         <OrderStyled.DesktopHeader>
           <Header
             menuActive={false}
-            enableMenu={() => {}}
+            enableMenu={() => { }}
             history={this.props.history}
           />
         </OrderStyled.DesktopHeader>
@@ -115,6 +135,67 @@ export default class OrderDetails extends React.Component {
                       src={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
                     />
                   </OrderStyled.VideoContentWrapper>
+                  <OrderStyled.SocialMediaWrapper>
+
+                    <OrderStyled.Somenetwork>
+                      <FacebookShareButton
+                        url={shareUrl}
+                        quote={title}
+                        className="Demo__some-network__share-button"
+                      >
+                        <FacebookIcon
+                          size={32}
+                          round
+                        />
+                      </FacebookShareButton>
+                    </OrderStyled.Somenetwork>
+                    <OrderStyled.Somenetwork>
+                      <GooglePlusShareButton
+                        url={shareUrl}
+                        className="Demo__some-network__share-button"
+                      >
+                        <GooglePlusIcon
+                          size={32}
+                          round />
+                      </GooglePlusShareButton>
+                    </OrderStyled.Somenetwork>
+                    <OrderStyled.Somenetwork>
+                      <TwitterShareButton
+                        url={shareUrl}
+                        title={title}
+                        className="Demo__some-network__share-button"
+                      >
+                        <TwitterIcon
+                          size={32}
+                          round
+                        />
+                      </TwitterShareButton>
+                    </OrderStyled.Somenetwork>
+                    <OrderStyled.Somenetwork>
+                      <WhatsappShareButton
+                        url={shareUrl}
+                        title={title}
+                        separator=":: "
+                        className="Demo__some-network__share-button"
+                      >
+                        <WhatsappIcon size={32} round />
+                      </WhatsappShareButton>
+                    </OrderStyled.Somenetwork>
+                    <OrderStyled.Somenetwork>
+                      <EmailShareButton
+                        url={shareUrl}
+                        subject={title}
+                        body="body"
+                        className="Demo__some-network__share-button"
+                      >
+                        <EmailIcon
+                          size={32}
+                          round
+                        />
+                      </EmailShareButton>
+                    </OrderStyled.Somenetwork>
+
+                  </OrderStyled.SocialMediaWrapper>
                   <OrderStyled.VideoDetails>
                     <OrderStyled.VideoTitle>
                       {props.bookingTitle}
@@ -134,16 +215,17 @@ export default class OrderDetails extends React.Component {
                         >
                           Download
                         </OrderStyled.DownloadVideo>
-                      : null
+                        : null
                     }
                   </OrderStyled.VideoDetails>
+
                 </React.Fragment>
-              :
+                :
                 <OrderStyled.NoVideoText>
                   {
                     props.requestStatusId !== 5 ?
                       'The request has been sent. Stay tuned!'
-                    : 'This request has been cancelled.'
+                      : 'This request has been cancelled.'
                   }
                 </OrderStyled.NoVideoText>
             }
@@ -177,7 +259,7 @@ export default class OrderDetails extends React.Component {
                 {
                   props.requestStatusId === 5 ?
                     <OrderDetailsItem title="Decline Reason" value={props.comment} />
-                  : null
+                    : null
                 }
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Booking Price:</OrderStyled.DetailsTitle>

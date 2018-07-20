@@ -17,6 +17,7 @@ const Request = styled.section`
  padding-bottom: 40px;
  height: 100%;
  max-width: 1920px;
+ background-color: #fff;
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
@@ -147,6 +148,56 @@ Request.ScrollListWrapper = styled.div`
   }
 `;
 
+Request.ProfileImageWrapper = styled.div`
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+  @media(min-width: 1025px) {
+    padding-bottom: 40px;
+    border-bottom: 1px solid #333333;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: calc(100% - 84px)
+  }
+`;
+Request.ProfileImage = styled.span`
+  border-radius: 50%;
+  display: inline-block;
+  background-image: ${props => props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/profile.png)'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:50px;
+  border: solid 2px #FFFFFF;
+  box-shadow: 2px 2px 9px #4f4f4f;
+  width:50px;
+  position: relative;
+  top: 8px;
+  @media(min-width: 768px) {
+    width: 70px;
+    height: 70px;
+  }
+  @media(min-width: 1025px) {
+    height:100px;
+    width:100px;
+  }
+`;
+Request.StarName = styled.h4`
+  font-size: 18px;
+  color: #FF6C58;
+  margin-top: 15px;
+  font-family: 'Ubuntu-Bold';
+  @media(min-width: 1025px) {
+    font-size: 26px;
+    margin-top: 25px;
+  }
+`;
+Request.StarProfessions = styled.div`
+  display: block;
+  text-align: center;
+`;
+
+
 Request.AboutDetailsWrapper = styled.article`
   padding: 16px;
   height: 450px;
@@ -189,33 +240,7 @@ Request.ImageSection = styled.div`
 Request.BannerImage = styled.img`
   width:100%;
 `;
-Request.ProfileImageWrapper = styled.div`
-  position:absolute;
-  right:0;
-  left:0;
-  bottom: 0;
-  text-align:center;
-  background-image: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(34,34,34,0.1),rgba(34,34,34,.3) 100%);
 
-`;
-Request.ProfileImage = styled.span`
-  border-radius: 50%;
-  display: inline-block;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
-  background-repeat:no-repeat;
-  background-position: center;
-  background-size:cover;
-  height:40px;
-  border: solid 2px #FFFFFF;
-  box-shadow: 2px 2px 9px #4f4f4f;
-  width:40px;
-  position: relative;
-  top: 8px;
-  @media(min-width: 768px) {
-    width: 48px;
-    height: 48px;
-  }
-`;
 Request.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40b.png' );
   background-repeat:no-repeat;
@@ -233,11 +258,6 @@ Request.ProfileContent = styled.div`
 `;
 Request.Span = styled.span`
   text-align:center;
-`;
-Request.StarName = styled.h4`
-  font-size: 18px;
-  color: #FF6C58;
-  font-family: 'Ubuntu-Bold';
 `;
 Request.StarRequests = styled.p`
   font-size: 12px;
@@ -310,7 +330,6 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
-  
 `;
 HeaderSection.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
@@ -366,6 +385,7 @@ Request.ComponentWrapper = styled.div`
   @media(min-width:1025px){
     height:calc(100% - 40px);
     position:relative;
+    padding-bottom: 59px;
   }
 `;
 
@@ -402,15 +422,9 @@ Request.PaymentControllerWrapper = styled.div`
   }
 `;
 Request.OptionWrapper = styled.footer`
-  padding: 28px 29px;
-  @media(min-width:768px){
-    padding:63px 50px;
-  }
-  @media(min-width:1025px){
-    padding: 110px 95px;
-  }
-  @media(min-width: 1920px){
-    padding: 165px 188px;
+  padding: 25px 19px;
+  @media(min-width: 1025px) {
+    padding: 25px 48px;
   }
 `;
 Request.HeaderText = styled.div`
@@ -477,20 +491,13 @@ Request.Questionwraps = styled.div`
 
 `;
 Request.Heading = styled.div`
-  font-family: 'Ubuntu-Bold';
-  font-size: 20px;
-  text-align: center;
+  display: block;
+  margin: 20px 0;
   color: #FF6C58;
-  margin-top:10%;
-  
-  @media(min-width:768px){
-    font-size: 32px;
-  }
-  @media(min-width:1025px){
-    font-size:22px;
-  }
-  @media(min-width:1920px){
-    font-size:32px;
+  text-align: center;
+  font-size: 18px;
+  @media(min-width: 1025px) {
+    margin: 10px 0;
   }
 `;
 Request.InputQuestion = styled.textarea`
@@ -508,14 +515,6 @@ Request.InputQuestion = styled.textarea`
 Request.ImageStackWrapper = styled.div`
   width:100%;
   height:100%;
-`;
-
-Request.OptionWrapper = styled.div`
-  padding: 78px 20px;
-  text-align:center;
-  @media(min-width:768px){
-    padding: 125px 20px;
-  }
 `;
 Request.QuestionButton = styled.button`
   background-color:white;
@@ -572,7 +571,7 @@ background-color: #fff;
 z-index: 5;
 box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
 @media(min-width: 768px) {
-  padding: 13px 0px;
+  padding: 13px;
 }
 @media(min-width:1025px){
   margin: 0 42px;
@@ -605,4 +604,52 @@ Request.ContinueButton = styled.button`
   }
 `;
 
-export { Request, HeaderSection };
+const ConfirmationModal = styled.div`
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 10;
+`;
+
+ConfirmationModal.confirmationWrapper = styled.div`
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 500px;
+  height: 165px;
+  padding: 10px 20px;
+  background-color: #fff;
+`;
+
+ConfirmationModal.Heading = Request.Heading.extend`
+  margin: 0;
+`;
+ConfirmationModal.description = styled.p`
+  font-size: 16px;
+  font-family: 'Ubuntu-Regular';
+`;
+ConfirmationModal.Button = styled.button`
+  background-color: #fff;
+  color: #FF6C58;
+  padding: 6px 18px;
+  text-align: center;
+  margin-top:5%;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+`;
+export { Request, HeaderSection, ConfirmationModal };

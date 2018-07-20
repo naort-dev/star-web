@@ -33,7 +33,7 @@ Request.Wrapper = styled.div`
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -374,6 +374,7 @@ Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
+    background: #fff;
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;
@@ -547,31 +548,22 @@ Request.CheckBox = styled.input`
 `;
 Request.Span = styled.label`
 `;
-Request.InputFieldsWrapper = styled.div`
-  
-  
+Request.InputFieldsWrapper = styled.div` 
   @media(min-width:768px){
     padding: 0px 0px;
-   
-  }
-  @media(min-width:1025px){
    
   }
 `;
 Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
-  height:90px;
- 
+  margin-top: 10px;
   @media(min-width:768px){
+    margin-top: 30px;
     flex-direction: row;
-    margin-top:5%;
-    height:40px;
   }
   @media(min-width: 1025px) {
     margin-top: 30px;
-    height:40px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;
@@ -605,7 +597,7 @@ Request.Label = styled.div`
   @media(min-width:1025px){
     font-size:13px;
     width:69%;
-   
+    padding: 0;   
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -658,8 +650,6 @@ Request.Select = styled.select`
   background-position: 97% 8px;
   background-size: 16px;
   padding-right: 40px;
-  background-color: #fff;
-  border: 2px solid rgba(51, 51, 51, 1);
   font-family: 'Ubuntu-Regular';
   color: #333333;
   font-size:16px;
@@ -667,7 +657,9 @@ Request.Select = styled.select`
   outline:none;
   height: 34px;
   text-indent: 10px;
-  background-color:rgba(248, 248, 248, 1);
+  background-color: white;
+  border: 1px solid #d0d2d3;
+  border-radius: 2px;
   @media(min-width:768px){
     margin-top:0;
     height:40px;

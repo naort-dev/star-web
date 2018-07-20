@@ -14,6 +14,15 @@ class Api {
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
+  static otherRelation = 'request/other_relation/';
+  static getEphemeralKey = 'payments/generatekey/';
+  static createCharge = 'payments/createcharge/';
+  static requestVideo = 'request/stargramz/';
+  static getSourceList = 'payments/stripe_cards/';
+  static modifySourceList = 'payments/attach_detach_source/';
+  static forgotPassword = 'user/forgotpassword/';
+  static resetPassword = 'user/resetpassword/';
+  static getImageCredentials = 'user/signed_url/?extension=png&key=profile_images&file_type=image'
 }
 
 export default Api;

@@ -32,10 +32,10 @@ LoginContainer.BannerImage = styled.div`
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
-  background-color:white;
+ 
 
   @media(min-width: 1025px){
-    width: 40%;
+    width: 45%;
     padding: 0px 0px;
     position: relative;
     padding-bottom: 83px;
@@ -44,10 +44,11 @@ LoginContainer.LeftSection = styled.div`
 LoginContainer.RightSection = styled.div`
   width: 100%;
   display: none;
-  background-color:rgba(248, 248, 248, 1);
-  
+  background: url( 'assets/images/1297371108618082396.jpg' ) no-repeat ;
+  background-position: center; 
+  background-size:cover;
   @media(min-width: 1025px){
-    width: 60%;
+    width: 55%;
     display: block;
     padding: 0px 0px;
     position: relative;
@@ -60,6 +61,7 @@ LoginContainer.ImageStackLayout = styled.div`
 
 `;
 const HeaderSection = styled.div`
+  padding: 3px 15px;
   display:flex;
   justify-content: space-between;
   align-items: center;

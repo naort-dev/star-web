@@ -55,12 +55,12 @@ export const registerUser = (
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(registerFetchEnd());
       dispatch(registerFetchSuccess(resp.data.data));
+      return resp
     } else {
       dispatch(registerFetchEnd());
     }
   }).catch((exception) => {
     dispatch(registerFetchEnd());
-    console.log(exception);
     if (exception.response.status === 400) {
       dispatch(registerFetchIncorrect(exception.response.data.error.message));
     } else {
