@@ -23,11 +23,8 @@
     "react-loadable": "^5.3.1",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.2.2",
-<<<<<<< 2ef8f91f00a3bc1246d6b48e2eac2f70946ed86d
     "react-share": "^2.2.0",
-=======
     "react-select": "^1.2.1",
->>>>>>> updated
     "react-stripe-elements": "^2.0.0",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.1",
