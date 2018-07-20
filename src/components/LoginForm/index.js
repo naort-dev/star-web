@@ -186,7 +186,7 @@ export default class LoginForm extends React.Component {
     check[0].click();
   }
 
-  OnFBlogin = () => {
+  onFBlogin = () => {
     const that = this;
     window.FB.login(function (response) {
       if (response.authResponse) {
