@@ -6,6 +6,7 @@ import Api from '../../lib/api';
 import { Link, Redirect } from 'react-router-dom'
 import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
+import Loader from '../../components/Loader'
 
 export default class Starbio extends React.Component {
     constructor(props) {
@@ -222,6 +223,11 @@ export default class Starbio extends React.Component {
 
             <LoginContainer.wrapper>
                 <LoginContainer>
+                    {this.state.saving ?
+                        <LoginContainer.loaderWrapper>
+                            <Loader />
+                        </LoginContainer.loaderWrapper>
+                        : null}
                     <LoginContainer.LeftSection>
                         <HeaderSection>
                             <Link to="/">
@@ -372,16 +378,16 @@ export default class Starbio extends React.Component {
                                 </LoginContainer.ImageInner>
 
                             </LoginContainer.SecondImage>
-                 
-                            <LoginContainer.Avatar style={{backgroundColor: "grey" }} imageType="avatar" image={this.state.avatar}>
+
+                            <LoginContainer.Avatar style={{ backgroundColor: "grey" }} imageType="avatar" image={this.state.avatar}>
                                 <LoginContainer.UploadWrapper>
-                                    <LoginContainer.UploadButton style={{visibility: "hidden"}} onClick={() => { }}>
+                                    <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }}>
                                         +
                                 </LoginContainer.UploadButton>
                                     <LoginContainer.UploadInput accept=".png, .jpeg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
                                 </LoginContainer.UploadWrapper>
                             </LoginContainer.Avatar>
-         
+
                         </LoginContainer.ImageWrapper>
                     </LoginContainer.RightSection>
                 </LoginContainer>

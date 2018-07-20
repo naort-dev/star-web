@@ -117,7 +117,7 @@ export default class VideoRecorder extends React.Component {
             <VideoRecorderDiv >
                 <VideoRecorderDiv.VideoContainer>
                     {!this.props.videoRecorder.recordedBlob ?
-                        <VideoRecorderDiv.Video id="video-player" autoPlay />
+                        <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
                         :
                         <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
                     }
