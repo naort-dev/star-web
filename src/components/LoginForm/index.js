@@ -87,7 +87,7 @@ export default class LoginForm extends React.Component {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
-      const folloForgotButtonWrapperwData = this.props.followCelebData;
+      const followData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
           this.props.followCelebData.celebId,
