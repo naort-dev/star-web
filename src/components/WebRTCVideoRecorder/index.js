@@ -19,14 +19,11 @@ export default class VideoRecorder extends React.Component {
         if (window.navigator && window.navigator.mediaDevices.getUserMedia) {
             return this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
         }
-
         else {
             alert("Your browser does not support video recording")
         }
 
     }
-
-    onBackButtonEvent = () => this.closeStream()
 
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
@@ -62,19 +59,17 @@ export default class VideoRecorder extends React.Component {
 
     }
 
-    // closeStream() {
-    //     const stream = document.getElementById('video-player').srcObject
-    //     const tracks = stream.getTracks();
-    //     tracks.forEach(function (track) {
-    //         track.stop();
-    //     });
-    //     document.getElementById('video-player').srcObject = null;
-    // }
-
+    closeStream() {
+        const stream = document.getElementById('video-player').srcObject
+        const tracks = stream.getTracks();
+        tracks.forEach(function (track) {
+            track.stop();
+        });
+        document.getElementById('video-player').srcObject = null;
+    }
 
 
     async startRecording(rerecord = false) {
-        window.stream = null
         if (rerecord === true) {
             this.props.onRerecord();
             this.recordedBlobs = [];
@@ -116,6 +111,7 @@ export default class VideoRecorder extends React.Component {
     }
 
     render() {
+        console.log("props", this.props)
         return (
             <VideoRecorderDiv >
                 <VideoRecorderDiv.VideoContainer>
