@@ -184,7 +184,9 @@ export default class ScrollList extends React.Component {
 
 
   renderSocialIcons = (selectedVideo) => {
-    const shareUrl = selectedVideo.video_url
+    const defaultUrl = selectedVideo.video_url;
+    const shareUrl = 'https://'+defaultUrl;
+    console.log(shareUrl);
     const title = selectedVideo.booking_title
     return (
       <React.Fragment>
