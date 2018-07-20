@@ -107,7 +107,7 @@ ${props => props.image != null && ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   })
-}
+  }
 
 @media(min-width: 768px){
    width: 45%;  
@@ -136,7 +136,7 @@ ${props => props.image != null && ({
     backgroundPosition: "center",
     backgroundSize: "cover",
   })
-}
+  }
 
 @media(min-width: 768px){
   width: 45%;  
@@ -186,11 +186,6 @@ LoginContainer.UploadWrapper = styled.div`
     position: relative;
     overflow: hidden;
     display: inline-block;
-    ${props => props.imageType == "avatar" && ({
-    height: "100%",
-    width: "100%",
-  })
-  }
   }
 `;
 
@@ -557,12 +552,12 @@ LoginContainer.ImageStackLayout = styled.div`
 LoginContainer.FooterLayout = styled.div`
   padding: 0;
   @media(min-width:1025px){
-    padding: 0px 57px;
+    padding: 0px 40px;
     position: absolute;
-    bottom: 20px;
     left: 0;
     right: 0;
     width: 45%;
+    bottom: 0;
   }
   
 `;
@@ -899,6 +894,41 @@ right: 0;
 bottom: 0;
 background-color: rgba(0,0,0, 0.3);
 `;
+
+LoginContainer.FullScreenUploadWrapper = styled.div`
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+LoginContainer.FullScreenUploadButton = styled.button`
+border: 1px solid black;
+color: black;
+background-color: transparent;
+border-radius: 60px;
+font-size: 20px;
+font-weight: bold;
+text-align: center;
+height: 100%;
+width: 100%;
+visibility: hidden;
+`;
+
+
+LoginContainer.FullScreenUploadInput = styled.input`
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+  `;
+
+
 
 
 
