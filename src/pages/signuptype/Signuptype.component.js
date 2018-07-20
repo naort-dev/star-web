@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LoginContainer, HeaderSection } from './styled';
+import { LoginContainer  } from './styled';
+import { HeaderSection } from '../login/styled';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
-import { ImageStack } from '../../components/ImageStack';
 
 export default class SignupType extends React.Component {
   constructor(props) {
@@ -17,25 +17,20 @@ export default class SignupType extends React.Component {
         <LoginContainer>
           <LoginContainer.LeftSection>
             <HeaderSection>
-              <HeaderSection.HeaderNavigation
-                onClick={() => this.props.history.goBack()}
-              />
-              <HeaderSection.MiddleDiv> Sign Up</HeaderSection.MiddleDiv>
-              <Link to="/login">
-                <HeaderSection.RightDiv>Log In</HeaderSection.RightDiv>
+              <Link to="/">
+                <HeaderSection.LogoImage
+                  src="assets/images/logo_starsona_large.svg"
+                  alt=""
+                />
+              </Link>
+              <Link to="/signuptype">
+                <HeaderSection.RightDiv>SIGNUP</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
             <LoginContainer.BannerImage />
             <LoginTypeSelector />
           </LoginContainer.LeftSection>
-          <LoginContainer.RightSection>
-            <LoginContainer.ImageStackLayout>
-              <ImageStack
-                featureImage="assets/images/Stadium_800x376.jpg"
-                imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
-              />
-            </LoginContainer.ImageStackLayout>
-          </LoginContainer.RightSection>
+          <LoginContainer.RightSection />
         </LoginContainer>
       </div>
     );

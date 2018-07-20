@@ -1,9 +1,7 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import validator from 'validator';
-import axios from 'axios';
-import { LoginContainer, HeaderSection, FooterSection } from './styled';
-import { ImageStack } from '../../components/ImageStack';
+import { Link } from 'react-router-dom';
+import { LoginContainer } from './styled';
+import { HeaderSection } from '../login/styled';
 import SignUpForm from '../../components/SignupForm'
 
 export default class SignUp extends React.Component {

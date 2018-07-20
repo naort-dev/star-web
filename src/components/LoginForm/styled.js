@@ -132,7 +132,7 @@ LoginContainer.ButtonDiv = styled.div`
 LoginContainer.Button = styled.button`
   padding: 12px 10px;
   outline:none;
-  border: 2px solid rgba(51, 51, 51, 1); 
+  border: 1.5px solid rgba(51, 51, 51, 1); 
   background-color: white;
   margin-top: 6%;
   font-family: 'Ubuntu-Medium';
@@ -149,7 +149,7 @@ LoginContainer.Button = styled.button`
   }
   @media(min-width : 768px){
     font-size:16px;
-    border: 2px solid #333333; 
+    border: 1.5px solid #333333; 
     width: 180px;
   }
   @media(min-width: 1025px){
@@ -223,7 +223,6 @@ LoginContainer.InputFieldsWrapper = styled.div`
   padding: 0px 25px;
   @media(min-width:768px){
     padding: 0px 0px;
-    margin-top: 6%;
   }
 `;
 LoginContainer.Label = styled.div`
