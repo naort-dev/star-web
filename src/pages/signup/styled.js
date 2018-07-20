@@ -228,7 +228,6 @@ LoginContainer.InputFieldsWrapper = styled.div`
   padding: 0px 25px;
   @media(min-width:768px){
     padding: 0px 0px;
-    margin-top: 6%;
   }
 `;
 LoginContainer.ErrorDiv = styled.div`

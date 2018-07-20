@@ -497,7 +497,7 @@ Request.Heading = styled.div`
   text-align: center;
   font-size: 18px;
   @media(min-width: 1025px) {
-    margin: 44px 0;
+    margin: 10px 0;
   }
 `;
 Request.InputQuestion = styled.textarea`
@@ -623,7 +623,8 @@ ConfirmationModal.confirmationWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 400px;
+  width: 500px;
+  height: 165px;
   padding: 10px 20px;
   background-color: #fff;
 `;
@@ -634,13 +635,13 @@ ConfirmationModal.Heading = Request.Heading.extend`
 ConfirmationModal.description = styled.p`
   font-size: 16px;
   font-family: 'Ubuntu-Regular';
-  margin: 20px 0;
 `;
 ConfirmationModal.Button = styled.button`
   background-color: #fff;
   color: #FF6C58;
   padding: 6px 18px;
   text-align: center;
+  margin-top:5%;
   -webkit-text-decoration: none;
   text-decoration: none;
   display: inline-block;

@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import Api from '../../lib/api';
 import forgotPassword from '../../utils/forgotPassword';
+import Loader from '../Loader';
 import { LoginContainer } from '../../components/LoginForm/styled';
 import { ForgotPasswordWrap } from './styled';
 
@@ -12,15 +13,18 @@ export default class ForgotPassword extends React.Component {
 
     this.state = {
       email: { value: '', isValid: false, message: '' },
-      forgotPassword: false,
       message: '',
+      loader: false,
+      errorCondition: false,
+      successCondition: true,
     };
   }
   onForgotPassword = () => {
+    this.setState({ loader: true });
     forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then((response) => {
-      this.setState({ message: response.data.data, forgotPassword: true });
+      this.setState({ message: response.data.data, successCondition: true, errorCondition: false, loader: false });
     }).catch((exception) => {
-      this.setState({ message: exception.response.data.error.message, forgotPassword: true });
+      this.setState({ message: exception.response.data.error.message, successCondition: false, errorCondition: true, loader: false });
     });
   }
   acceptEmailHandler = (e) => {
@@ -50,40 +54,60 @@ export default class ForgotPassword extends React.Component {
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
+          {this.state.loader ?
+            <ForgotPasswordWrap.loaderWrapper>
+              <Loader />
+            </ForgotPasswordWrap.loaderWrapper>
+            :
+            null
+          }
           <React.Fragment>
-            <LoginContainer.Heading>Forgot Password or Username?</LoginContainer.Heading>
+            {this.state.successCondition ?
+              <ForgotPasswordWrap>
+                <ForgotPasswordWrap.Message>
+                  <ForgotPasswordWrap.Logo
+                    src="assets/images/mailSent.png"
+                    alt=""
+                  />
+                  <ForgotPasswordWrap.MailContent>
+                    A password reset link has been sent to your email address.Please tap the link
+                      in that message to reset your password.
+                  </ForgotPasswordWrap.MailContent>
+                </ForgotPasswordWrap.Message>
+              </ForgotPasswordWrap>
+              :
+              <React.Fragment>
+                <LoginContainer.Heading>Forgot Password or Username?</LoginContainer.Heading>
+                <LoginContainer.InputFieldsWrapper>
+                  <LoginContainer.InputContainer>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          type="text"
+                          name="email"
+                          value={email.value}
+                          placeholder="Please enter your registered email address"
+                          onChange={this.acceptEmailHandler}
+                          onBlur={this.checkEmail}
+                        />
+                        <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                    <ForgotPasswordWrap>
+                      <LoginContainer.ButtonWrapper >
+                        <LoginContainer.SignIn
+                          onClick={this.onForgotPassword}
+                          disabled={this.props.loading}
+                        >Continue
+                        </LoginContainer.SignIn>
+                      </LoginContainer.ButtonWrapper>
+                      <LoginContainer.ErrorMsg>{this.state.errorCondition ? this.state.message : null}</LoginContainer.ErrorMsg>
+                    </ForgotPasswordWrap>
+                  </LoginContainer.InputContainer>
+                </LoginContainer.InputFieldsWrapper>
+              </React.Fragment>
+            }
 
-            <LoginContainer.InputFieldsWrapper>
-              <LoginContainer.InputContainer>
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
-                      type="text"
-                      name="email"
-                      value={email.value}
-                      placeholder="Email"
-                      onChange={this.acceptEmailHandler}
-                      onBlur={this.checkEmail}
-                    />
-                    <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
-                <ForgotPasswordWrap>
-                  <LoginContainer.ButtonWrapper >
-                    <LoginContainer.SignIn
-                      onClick={this.onForgotPassword}
-                      disabled={this.props.loading}
-                    >Continue
-                    </LoginContainer.SignIn>
-                  </LoginContainer.ButtonWrapper>
-                </ForgotPasswordWrap>
-
-              </LoginContainer.InputContainer>
-
-            </LoginContainer.InputFieldsWrapper>
-            <LoginContainer.WrapsInput>
-              <LoginContainer.ErrorMsg>{this.state.message}</LoginContainer.ErrorMsg>
-            </LoginContainer.WrapsInput>
 
           </React.Fragment>
         </LoginContainer.Container>

@@ -471,11 +471,14 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
+  &:hover {
+    color :#FF6C58;
+  }
   @media(min-width:1025px){
-    font-size:20px
+    font-size:14px
   }
   @media(min-width:1920px){
-    font-size:22px;
+    font-size:18px;
   }
 `;
 LoginContainer.WrapsInput = styled.div`

@@ -211,6 +211,7 @@ PaymentStyled.confirmationWrapper = styled.div`
 `;
 
 PaymentStyled.StripeLogoWrapper = styled.div`
+  margin-top:10%;
   text-align: center;
 `;
 
