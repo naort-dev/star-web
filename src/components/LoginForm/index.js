@@ -76,6 +76,11 @@ export default class LoginForm extends React.Component {
     });
   }
 
+  componentWillUnmount() {
+    if (this.props.isLoggedIn) {
+      this.props.resetRedirectUrls();
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
