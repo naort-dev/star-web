@@ -101,7 +101,7 @@ export default class OrderDetails extends React.Component {
     let title = '';
     if (this.props.requestVideo) {
       const defaultUrl = this.props.requestVideo.video_url;
-      shareUrl = 'https://'+defaultUrl;
+      shareUrl = `https://${defaultUrl}`;
       title = this.props.bookingTitle;
     }
     return (
