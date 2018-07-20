@@ -25,12 +25,6 @@ export default class VideoRecorder extends React.Component {
 
     }
 
-    componentWillUnmount(){
-        console.log("unmount called")
-
-    }
-
-
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
             this.recordedBlobs.push(event.data);
