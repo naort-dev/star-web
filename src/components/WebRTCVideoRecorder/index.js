@@ -15,6 +15,7 @@ export default class VideoRecorder extends React.Component {
     }
 
     componentDidMount() {
+        window.onpopstate = this.onBackButtonEvent;
         if (window.navigator && window.navigator.mediaDevices.getUserMedia) {
             return this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
         }
@@ -24,6 +25,8 @@ export default class VideoRecorder extends React.Component {
         }
 
     }
+
+    onBackButtonEvent = () => this.closeStream()
 
     handleDataAvailable(event) {
         if (event.data && event.data.size > 0) {
@@ -59,14 +62,14 @@ export default class VideoRecorder extends React.Component {
 
     }
 
-    closeStream() {
-        const stream = document.getElementById('video-player').srcObject
-        const tracks = stream.getTracks();
-        tracks.forEach(function (track) {
-            track.stop();
-        });
-        document.getElementById('video-player').srcObject = null;
-    }
+    // closeStream() {
+    //     const stream = document.getElementById('video-player').srcObject
+    //     const tracks = stream.getTracks();
+    //     tracks.forEach(function (track) {
+    //         track.stop();
+    //     });
+    //     document.getElementById('video-player').srcObject = null;
+    // }
 
 
 
