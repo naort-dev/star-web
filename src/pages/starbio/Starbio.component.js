@@ -66,10 +66,12 @@ export default class Starbio extends React.Component {
         }.bind(this), false);
         if (file) {
             reader.readAsDataURL(file);
-        }
+        } 
     }
 
     uploadImage(type) {
+        console.log(type);
+
         return fetch(Api.getImageCredentials, {
             'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
         })
@@ -111,11 +113,12 @@ export default class Starbio extends React.Component {
             this.uploadImage("featuredImage")
                 .then(() => this.uploadImage("firstImage"))
                 .then(() => this.uploadImage("secondImage"))
+                .then(() => this.uploadImage("avatarImage"))
                 .then(() => {
                     fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
                         {
-                            images: [...this.state.secondaryImageNames, this.state.featuredImageName],
-                            avatar_photo: this.state.secondaryImageNames[0],
+                            images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+                            avatar_photo: this.state.avatarImageName    ,
                             featured_image: this.state.featuredImageName
                         }, {
                             "headers": {
@@ -365,7 +368,7 @@ export default class Starbio extends React.Component {
                                 </LoginContainer.ImageInner>
 
                             </LoginContainer.FirstImage>
-                            <LoginContainer.SecondImage imageTType="secondImage" image={this.state.secondImage}>
+                            <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
                                 <LoginContainer.ImageInner>
                                     <LoginContainer.UploadWrapper>
                                         <LoginContainer.UploadButton onClick={() => { }}>
@@ -384,7 +387,7 @@ export default class Starbio extends React.Component {
                                     <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }}>
                                         +
                                 </LoginContainer.UploadButton>
-                                    <LoginContainer.UploadInput accept=".png, .jpeg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
+                                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
                                 </LoginContainer.UploadWrapper>
                             </LoginContainer.Avatar>
 
