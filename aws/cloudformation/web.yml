@@ -10,6 +10,14 @@ Parameters:
     Type: String
     Description: API URL
 
+  ServerURL:
+    Type: String
+    Description: Server URL
+
+  StripePublishKey:
+    Type: String
+    Description: Stripe publish key
+
   ImageRepository:
     Type: String
     Default: 376169159073.dkr.ecr.us-east-1.amazonaws.com/
@@ -102,6 +110,8 @@ Resources:
             SoftLimit: 8192
           Environment:
           - { Name: API_URL, Value: !Ref 'ApiURL' }
+          - { Name: SERVER_URL, Value: !Ref 'ServerURL' }
+          - { Name: STRIPE_PUBLISH_KEY, Value: !Ref 'StripePublishKey'}
           - Name: DOMAIN_NAME
             Value:
               Fn::ImportValue:

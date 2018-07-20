@@ -15,6 +15,8 @@ services:
     - SSL_SERVER_NAME
     - SSL_SERVER_EMAIL
     - API_URL
+    - SERVER_URL
+    - STRIPE_PUBLISH_KEY
     - DOMAIN_NAME=$SSL_SERVER_NAME
 
 networks:
