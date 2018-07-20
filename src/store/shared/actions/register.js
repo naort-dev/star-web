@@ -61,7 +61,6 @@ export const registerUser = (
     }
   }).catch((exception) => {
     dispatch(registerFetchEnd());
-    console.log(exception);
     if (exception.response.status === 400) {
       dispatch(registerFetchIncorrect(exception.response.data.error.message));
     } else {
