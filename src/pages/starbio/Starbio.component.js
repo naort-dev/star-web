@@ -215,9 +215,9 @@ export default class Starbio extends React.Component {
     }
 
     render() {
-        if(!this.props.session.isLoggedIn){
+        if (!this.props.session.isLoggedIn) {
             return <Redirect to="/signuptype" />
-         }
+        }
         return (
 
             <LoginContainer.wrapper>
@@ -334,40 +334,54 @@ export default class Starbio extends React.Component {
                                 {/* {this.state.featuredImage != null ?
                             <img src={this.state.featuredImage}/>
                             : */}
-                                <LoginContainer.UploadWrapper >
-                                    <LoginContainer.UploadButton onClick={() => { }}>
-                                        +
+                                <LoginContainer.ImageInner>
+                                    <LoginContainer.UploadWrapper >
+                                        <LoginContainer.UploadButton onClick={() => { }}>
+                                            +
                                 </LoginContainer.UploadButton>
-                                    <LoginContainer.UploadInput accept=".png, .jpeg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
-                                </LoginContainer.UploadWrapper>
-
+                                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                                    </LoginContainer.UploadWrapper>
+                                    <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
+                                    <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                                </LoginContainer.ImageInner>
                             </LoginContainer.FeaturedImage>
                             <LoginContainer.FirstImage imageType="firstimage" image={this.state.firstImage}>
-                                <LoginContainer.UploadWrapper>
-                                    <LoginContainer.UploadButton onClick={() => { }}>
-                                        +
+                                <LoginContainer.ImageInner>
+                                    <LoginContainer.UploadWrapper>
+                                        <LoginContainer.UploadButton onClick={() => { }}>
+                                            +
                                 </LoginContainer.UploadButton>
-                                    <LoginContainer.UploadInput accept=".png, .jpeg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+                                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
 
-                                </LoginContainer.UploadWrapper>
+                                    </LoginContainer.UploadWrapper>
+                                    <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
+                                    <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                                </LoginContainer.ImageInner>
+
                             </LoginContainer.FirstImage>
                             <LoginContainer.SecondImage imageTType="secondImage" image={this.state.secondImage}>
-                                <LoginContainer.UploadWrapper>
-                                    <LoginContainer.UploadButton onClick={() => { }}>
-                                        +
+                                <LoginContainer.ImageInner>
+                                    <LoginContainer.UploadWrapper>
+                                        <LoginContainer.UploadButton onClick={() => { }}>
+                                            +
                                 </LoginContainer.UploadButton>
-                                    <LoginContainer.UploadInput accept=".png, .jpeg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
-                                </LoginContainer.UploadWrapper>
-                            </LoginContainer.SecondImage>
+                                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                                    </LoginContainer.UploadWrapper>
+                                    <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
+                                    <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                                </LoginContainer.ImageInner>
 
-                            <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
+                            </LoginContainer.SecondImage>
+                 
+                            <LoginContainer.Avatar style={{backgroundColor: "grey" }} imageType="avatar" image={this.state.avatar}>
                                 <LoginContainer.UploadWrapper>
-                                    <LoginContainer.UploadButton onClick={() => { }}>
+                                    <LoginContainer.UploadButton style={{visibility: "hidden"}} onClick={() => { }}>
                                         +
                                 </LoginContainer.UploadButton>
                                     <LoginContainer.UploadInput accept=".png, .jpeg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
                                 </LoginContainer.UploadWrapper>
                             </LoginContainer.Avatar>
+         
                         </LoginContainer.ImageWrapper>
                     </LoginContainer.RightSection>
                 </LoginContainer>
