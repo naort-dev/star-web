@@ -18,7 +18,6 @@ export default class Askquestion extends React.Component {
   }
 
   render() {
-    console.log("props", this.props)
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
