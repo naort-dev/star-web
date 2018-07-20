@@ -15,7 +15,6 @@ export default class Login extends React.Component {
   }
  
   render() {
-    console.log("props for login", this.props)
     const path = this.props.location.pathname;
     return (
       <React.Fragment>

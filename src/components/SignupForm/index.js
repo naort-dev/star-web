@@ -85,11 +85,11 @@ export default class SignUp extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.location.state && this.props.location.state.type === "fan") {
-      if (nextProps.isLoggedIn) {
-        this.setState({
-          redirectToReferrer: nextProps.isLoggedIn,
-        });
+    if (nextProps.isLoggedIn) {
+      this.setState({
+        redirectToReferrer: nextProps.isLoggedIn,
+      });
+      if (this.props.location.state && this.props.location.state.type === "fan") {
         const followData = this.props.followCelebData;
         if (followData.celebId) {
           this.props.followCelebrity(
@@ -105,9 +105,7 @@ export default class SignUp extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.props.location.state && (this.props.location.state.type === "fan" && this.props.isLoggedIn)) {
-      this.props.resetRedirectUrls();
-    }
+    this.props.resetRedirectUrls();
   }
 
   onSignIn = (googleUser) => {
@@ -281,14 +279,20 @@ export default class SignUp extends React.Component {
 
 
   render() {
-    if (this.props.location.state && this.props.location.state.type === 'fan') {
-      const loginToContinue = this.props.location.state && this.props.location.state.to;
-      const to = this.props.redirectUrls.to || '/';
-      const { redirectToReferrer } = this.state;
-      if (redirectToReferrer) {
-        return <Redirect to={to} />;
+
+    const { redirectToReferrer } = this.state;
+    if (redirectToReferrer) {
+      if (this.props.location.state && this.props.location.state.type === 'fan') {
+        const to = this.props.redirectUrls.to || '/';
+        return <Redirect to={to} />
+      }
+      else {
+        const to = '/starbio';
+        return <Redirect to={to} />
+
       }
     }
+
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
