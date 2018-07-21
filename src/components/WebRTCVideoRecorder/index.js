@@ -111,7 +111,6 @@ export default class VideoRecorder extends React.Component {
     }
 
     render() {
-        console.log("props", this.props)
         return (
             <VideoRecorderDiv >
                 <VideoRecorderDiv.VideoContainer>

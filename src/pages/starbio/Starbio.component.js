@@ -41,7 +41,6 @@ export default class Starbio extends React.Component {
     }
 
     componentDidMount() {
-
         const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
         this.setState({ ...savedValues  })
 
@@ -319,7 +318,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Your charity</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
+                                    <LoginContainer.Input  placeholder="optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
 
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -329,7 +328,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                    <LoginContainer.Input type="tel" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
                                         onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }}
                                         value={this.state.bookingPrice} />
                                     {this.state.errors.bookingPrice ? <LoginContainer.ErrorMsg>Please enter your booking price</LoginContainer.ErrorMsg> : null}
@@ -341,7 +340,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Booking limit</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                    <LoginContainer.Input type="tel" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
                                         value={this.state.bookingLimit}
                                         onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
                                     {this.state.errors.bookingLimit ? <LoginContainer.ErrorMsg>Please enter your booking limit</LoginContainer.ErrorMsg> : null}

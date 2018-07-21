@@ -46,14 +46,22 @@ LoginContainer.RightSection = styled.div`
     position: relative;
     padding: 30px 30px;
     flex-wrap: wrap;
+    height: 100vh;
+    padding-top: 13vh;
   }
 `;
 
 LoginContainer.ImageWrapper = styled.div`
 display:flex;
 align-items: center;
-justify-content: center;
+justify-content: space-between;
 flex-wrap: wrap;
+
+@media(min-width: 768px){
+  justify-content: space-between;
+} 
+
+
   @media(min-width: 1025px){
     display:flex;
     align-items: flex-start;
@@ -61,18 +69,17 @@ flex-wrap: wrap;
     padding: 0px 0px;
     position: relative;
     flex-wrap: wrap;
-    height: 80%;
+    height: 65vh;
     width: 80%;
   }
 `;
 
 LoginContainer.FeaturedImage = styled.div`
- width: 90%;
+ width: 100%;
  display: flex;
  justify-content: center;
  align-items: center;
- height: 250px;
- margin: 10px 10px;
+ height: 150px;
  background-color: #cccccc;
  ${props => props.image != null && ({
     background: `url(${props.image}) no-repeat`,
@@ -80,6 +87,10 @@ LoginContainer.FeaturedImage = styled.div`
     backgroundSize: "cover",
   })
   }
+
+@media(min-width: 768px){
+  height: 250px;  
+}
 
 @media(min-width: 1025px){
  width: 98%;
@@ -95,12 +106,12 @@ LoginContainer.FeaturedImage = styled.div`
 `;
 
 LoginContainer.FirstImage = styled.div`
-width: 42%;
+width: 49vw;
 display: flex;
 justify-content: center;
 align-items: center;
 height: 150px;
-margin: 10px 10px;
+margin: 10px 0px;
 background-color: #cccccc;
 ${props => props.image != null && ({
     background: `url(${props.image}) no-repeat`,
@@ -110,7 +121,8 @@ ${props => props.image != null && ({
   }
 
 @media(min-width: 768px){
-   width: 45%;  
+   width: 49.5vw;
+   height: 250px;  
 }
 
 @media(min-width: 1025px){
@@ -124,13 +136,13 @@ ${props => props.image != null && ({
 `;
 
 LoginContainer.SecondImage = styled.div`
-width: 42%;
+width: 49vw;
 display: flex;
 justify-content: center;
 align-items: center;
 height:150px;
 background-color: #cccccc;
-margin: 10px 10px;
+margin: 10px 0px;
 ${props => props.image != null && ({
     background: `url(${props.image}) no-repeat`,
     backgroundPosition: "center",
@@ -139,7 +151,8 @@ ${props => props.image != null && ({
   }
 
 @media(min-width: 768px){
-  width: 45%;  
+  width: 49.5vw;  
+  height: 250px;  
 }
 
 @media(min-width: 1025px){
@@ -175,10 +188,20 @@ LoginContainer.Avatar = styled.div`
     objectFit: "contain"
   })
   }
+
+  position: relative;
+  left: 40vw;
+
+  @media(min-width: 768px) {
+    position: relative;
+    left: 47vw;
+    top: -35px;
+  }
+
   @media(min-width: 1025px){
     position: absolute;
-    top: 90%;
-    left: 43%;
+    top: 62vh;
+    left: 44%;
   }
 `;
 
@@ -190,16 +213,16 @@ LoginContainer.UploadWrapper = styled.div`
 `;
 
 LoginContainer.UploadButton = styled.button`
-border: 1px solid black;
+
+background: url('assets/images/plus-icon.svg') no-repeat center;
 color: black;
 background-color: transparent;
-border-radius: 60px;
+border: 0;
 font-size: 20px;
 font-weight: bold;
 text-align: center;
 @media(min-width: 1025px){
-height: 40px;
-width: 40px;
+
 }
 `;
 
@@ -875,7 +898,7 @@ display: flex;
 LoginContainer.FeaturedText = styled.div`
 font-size: 16px;
 font-weight: 700;
-margin-top: 5%;
+margin-top: 2%;
 @media(min-width:1025px){
 font-size: 24px;
 }
