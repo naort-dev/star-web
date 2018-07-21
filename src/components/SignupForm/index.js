@@ -109,6 +109,7 @@ export default class SignUp extends React.Component {
   }
 
   onSignIn = (googleUser) => {
+    console.log("onsignin from signup")
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);
   }
