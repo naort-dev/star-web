@@ -7,12 +7,20 @@ import { Link, Redirect } from 'react-router-dom'
 
 export default class Starsuccess extends React.Component {
 
+
+
     onContinueClick() {
+        if (localStorage) {
+            localStorage.removeItem("bioDetails")
+        }
         this.props.history.push('/')
     }
+
+
+
     render() {
-        if(!this.props.session.isLoggedIn){
-           return <Redirect to="/signuptype" />
+        if (!this.props.session.isLoggedIn) {
+            return <Redirect to="/signuptype" />
         }
         return (
             <LoginContainer.wrapper>
