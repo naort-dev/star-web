@@ -28,8 +28,9 @@ export default class LoginForm extends React.Component {
         role: 'R1001',
       },
     };
+
   }
- 
+
 
   componentDidMount() {
     window.fbAsyncInit = () => {
@@ -67,22 +68,29 @@ export default class LoginForm extends React.Component {
 
         });
     }
-    gapi.signin2.render('g-sign-in', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'theme': 'dark',
-      'onsuccess': this.onSignIn,
-    });
+    if (!this.props.isLoggedIn) {
+      gapi.signin2.render('g-sign-in', {
+        'scope': 'profile email',
+        'width': 200,
+        'height': 50,
+        'theme': 'dark',
+        'onsuccess': this.onSignIn,
+      });
+    }
   }
 
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      this.setState({ redirectToReferrer: true });
+    }
+  }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
-      const folloForgotButtonWrapperwData = this.props.followCelebData;
+      const followData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
           this.props.followCelebData.celebId,
@@ -93,11 +101,17 @@ export default class LoginForm extends React.Component {
       }
     }
   }
+  componentWillUnmount() {
+    if (this.props.isLoggedIn) {
+      this.props.resetRedirectUrls();
+    }
+  }
 
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);
   }
+
   onLogin = (e) => {
     /* Status code 410 means Socialmedia account doesn't have email id */
     e.preventDefault();
@@ -118,6 +132,8 @@ export default class LoginForm extends React.Component {
       this.checkPassword();
     }
   }
+
+
   onSocialMediaLogin = (r, source) => {
     if (source === 2) {
       this.setState({
@@ -175,6 +191,7 @@ export default class LoginForm extends React.Component {
       this.state.socialMedia.in_id,
     );
   }
+
   onInstagramLogin = () => {
     const clientId = env('instaId');
     const redirectUri = env('loginInstaRedirectUri');
@@ -197,6 +214,8 @@ export default class LoginForm extends React.Component {
       }
     }, { scope: 'email', return_scopes: true });
   }
+
+
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
   }
