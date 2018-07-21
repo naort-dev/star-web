@@ -839,7 +839,7 @@ LoginContainer.InputWrapper = styled.div`
   @media(min-width:768px){
     flex-direction: row;
     align-items: flex-start;
-    margin: 0px 185px;
+    margin: 0px 120px;
     margin-top:5%;
     height:40px;
   }

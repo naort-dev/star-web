@@ -42,7 +42,6 @@ export default class Starbio extends React.Component {
 
     componentDidMount() {
         const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
-        console.log('LOCALSTORE', savedValues);
         this.setState({ ...savedValues })
         fetch('user/professions/').then(response => {
             let dropDownList = [];
@@ -61,12 +60,9 @@ export default class Starbio extends React.Component {
     }
 
     onFileChange(type = "featuredImage") {
-        console.log("type is", type)
         const file = document.getElementById(type).files[0];
-        console.log("file is", file)
         const reader = new FileReader();
         reader.addEventListener("load", function () {
-            console.log("result", reader.result)
             this.setState({ [type]: reader.result, [`${type}File`]: file })
         }.bind(this), false);
         if (file) {
@@ -213,7 +209,6 @@ export default class Starbio extends React.Component {
             this.setState({ errors: { ...this.state.errors, bio: true } })
             return false
         }
-        console.log('STATE', this.state.profession)
         if (!this.state.profession || !this.state.profession[0]) {
             this.setState({ errors: { ...this.state.errors, profession: true } })
             return false
@@ -286,10 +281,10 @@ export default class Starbio extends React.Component {
                                         <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
 
                                         <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
-                                        { 
-                                          this.state.errors.bio ? 'Please enter a valid event title' : 
-                                          'Have fun with it... no need to be serious'
-                                        }
+                                            {
+                                                this.state.errors.bio ? 'Please enter a valid event title' :
+                                                    'Have fun with it... no need to be serious'
+                                            }
                                         </LoginContainer.ErrorMsg>
                                     </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
@@ -303,9 +298,9 @@ export default class Starbio extends React.Component {
 
                                     <MultiSelect industry={this.state.industry} value={this.state.profession} profession={this.state.profession.join(',')} handleFieldChange={this.handleFieldChange.bind(this)} />
                                     <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
-                                        { 
-                                          this.state.errors.profession ? 'Please choose your industry' : 
-                                          'You can choose a maximum of 3 industries'
+                                        {
+                                            this.state.errors.profession ? 'Please choose your industry' :
+                                                'You can choose a maximum of 3 industries'
                                         }
                                     </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
@@ -318,7 +313,7 @@ export default class Starbio extends React.Component {
 
                                     <SelectTags searchTags={this.state.searchTags} value={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
                                     <LoginContainer.ErrorMsg isError={false}>
-                                          Add hashtags to help Fans find you quicker
+                                        Add hashtags to help Fans find you quicker
                                     </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -342,10 +337,10 @@ export default class Starbio extends React.Component {
                                         onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
                                         value={this.state.bookingPrice} />
                                     <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
-                                    { 
-                                      this.state.errors.bookingPrice ? 'Please enter your booking price' : 
-                                      'Our pricing engines will automatically maximize your earnings based on demand.'
-                                    }
+                                        {
+                                            this.state.errors.bookingPrice ? 'Please enter your booking price' :
+                                                'Our pricing engines will automatically maximize your earnings based on demand.'
+                                        }
                                     </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -359,10 +354,10 @@ export default class Starbio extends React.Component {
                                         value={this.state.bookingLimit}
                                         onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
                                     <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
-                                    { 
-                                      this.state.errors.bookingLimit ? 'Please enter your booking limit' : 
-                                      'What\'s the maximum number of open bookings you want to offer at any given time?'
-                                    }
+                                        {
+                                            this.state.errors.bookingLimit ? 'Please enter your booking limit' :
+                                                'What\'s the maximum number of open bookings you want to offer at any given time?'
+                                        }
                                     </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
