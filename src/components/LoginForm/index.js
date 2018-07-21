@@ -69,20 +69,20 @@ export default class LoginForm extends React.Component {
 
         });
     }
-    
-    gapi.signin2.render('g-sign-in', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'theme': 'dark',
-      'onsuccess': this.onSignIn,
-    });
+    if (!this.props.isLoggedIn) {
+      gapi.signin2.render('g-sign-in', {
+        'scope': 'profile email',
+        'width': 200,
+        'height': 50,
+        'theme': 'dark',
+        'onsuccess': this.onSignIn,
+      });
+    }
   }
 
-
-  componentWillUnmount() {
+  componentWillMount() {
     if (this.props.isLoggedIn) {
-      this.props.resetRedirectUrls();
+      this.setState({ redirectToReferrer: true });
     }
   }
 
@@ -100,6 +100,11 @@ export default class LoginForm extends React.Component {
           true,
         );
       }
+    }
+  }
+  componentWillUnmount() {
+    if (this.props.isLoggedIn) {
+      this.props.resetRedirectUrls();
     }
   }
 
