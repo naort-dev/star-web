@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Askquestion from './Askquestion.component';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
+import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -19,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
   onRerecord: () => dispatch(reRecord()),
   onClearStreams: () => dispatch(clearStreams()),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
+  setBookingDetails: data => dispatch(setBookingDetails(data)),
+  cancelBookingDetails: () => dispatch(cancelBookingDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Askquestion);
