@@ -42,6 +42,7 @@ export default class Starbio extends React.Component {
 
     componentDidMount() {
         const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
+        console.log('LOCALSTORE', savedValues);
         this.setState({ ...savedValues })
         fetch('user/professions/').then(response => {
             let dropDownList = [];
@@ -208,22 +209,22 @@ export default class Starbio extends React.Component {
 
 
     validateIsEmpty() {
-        if (this.state.bio == null) {
+        if (!this.state.bio) {
             this.setState({ errors: { ...this.state.errors, bio: true } })
             return false
         }
-
-        if (this.state.profession.length == 0) {
+        console.log('STATE', this.state.profession)
+        if (!this.state.profession || !this.state.profession[0]) {
             this.setState({ errors: { ...this.state.errors, profession: true } })
             return false
         }
 
-        if (this.state.bookingPrice == null) {
+        if (!this.state.bookingPrice) {
             this.setState({ errors: { ...this.state.errors, bookingPrice: true } })
             return false
         }
 
-        if (this.state.bookingLimit == null) {
+        if (!this.state.bookingLimit) {
             this.setState({ errors: { ...this.state.errors, bookingLimit: true } })
             return false
         }
@@ -284,8 +285,12 @@ export default class Starbio extends React.Component {
 
                                         <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
 
-                                        {this.state.errors.bio ? <LoginContainer.ErrorMsg>Please enter a valid event title</LoginContainer.ErrorMsg> : null}
-
+                                        <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
+                                        { 
+                                          this.state.errors.bio ? 'Please enter a valid event title' : 
+                                          'Have fun with it... no need to be serious'
+                                        }
+                                        </LoginContainer.ErrorMsg>
                                     </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
                             </LoginContainer.InputwrapperDiv>
@@ -297,7 +302,12 @@ export default class Starbio extends React.Component {
 
 
                                     <MultiSelect industry={this.state.industry} value={this.state.profession} profession={this.state.profession.join(',')} handleFieldChange={this.handleFieldChange.bind(this)} />
-                                    {this.state.errors.profession ? <LoginContainer.ErrorMsg>Please choose your industry</LoginContainer.ErrorMsg> : null}
+                                    <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
+                                        { 
+                                          this.state.errors.profession ? 'Please choose your industry' : 
+                                          'You can choose a maximum of 3 industries'
+                                        }
+                                    </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
 
@@ -307,7 +317,9 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.WrapsInput>
 
                                     <SelectTags searchTags={this.state.searchTags} value={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
-
+                                    <LoginContainer.ErrorMsg isError={false}>
+                                          Add hashtags to help Fans find you quicker
+                                    </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
 
@@ -316,7 +328,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Your charity</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
+                                    <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
 
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -327,9 +339,14 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.WrapsInput>
 
                                     <LoginContainer.Input type="tel" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                                        onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }}
+                                        onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
                                         value={this.state.bookingPrice} />
-                                    {this.state.errors.bookingPrice ? <LoginContainer.ErrorMsg>Please enter your booking price</LoginContainer.ErrorMsg> : null}
+                                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
+                                    { 
+                                      this.state.errors.bookingPrice ? 'Please enter your booking price' : 
+                                      'Our pricing engines will automatically maximize your earnings based on demand.'
+                                    }
+                                    </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
 
@@ -341,7 +358,12 @@ export default class Starbio extends React.Component {
                                     <LoginContainer.Input type="tel" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
                                         value={this.state.bookingLimit}
                                         onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
-                                    {this.state.errors.bookingLimit ? <LoginContainer.ErrorMsg>Please enter your booking limit</LoginContainer.ErrorMsg> : null}
+                                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
+                                    { 
+                                      this.state.errors.bookingLimit ? 'Please enter your booking limit' : 
+                                      'What\'s the maximum number of open bookings you want to offer at any given time?'
+                                    }
+                                    </LoginContainer.ErrorMsg>
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
 
