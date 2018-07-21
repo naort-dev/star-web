@@ -75,8 +75,6 @@ export default class Starbio extends React.Component {
     }
 
     uploadImage(type) {
-        console.log(type);
-
         return fetch(Api.getImageCredentials, {
             'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
         })
