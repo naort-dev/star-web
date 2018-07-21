@@ -29,7 +29,6 @@ export default class LoginForm extends React.Component {
       },
     };
 
-    this.count = 0;
   }
 
 
@@ -111,7 +110,6 @@ export default class LoginForm extends React.Component {
   onSignIn = (googleUser) => {
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);
-    this.count = this.count + 1;
   }
 
   onLogin = (e) => {
