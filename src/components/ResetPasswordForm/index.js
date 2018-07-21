@@ -112,13 +112,14 @@ export default class ResetPassword extends React.Component {
                   >Reset Password
                       </LoginContainer.SignIn>
                 </LoginContainer.ButtonWrapper>
+                <LoginContainer.ErrorMsg>{this.state.errorMsg}</LoginContainer.ErrorMsg>
               </ForgotPasswordWrap>
 
             </LoginContainer.InputContainer>
 
           </LoginContainer.InputFieldsWrapper>
           <LoginContainer.WrapsInput>
-            <LoginContainer.ErrorMsg>{this.state.errorMsg}</LoginContainer.ErrorMsg>
+            
           </LoginContainer.WrapsInput>
         </LoginContainer.Container>
       </LoginContainer.SocialMediaSignup>
