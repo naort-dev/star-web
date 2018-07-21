@@ -13,11 +13,7 @@ export default class Login extends React.Component {
     this.state = {
     };
   }
-  componentWillUnmount() {
-    if (this.props.isLoggedIn) {
-      this.props.resetRedirectUrls();
-    }
-  }
+ 
   render() {
     const path = this.props.location.pathname;
     return (
