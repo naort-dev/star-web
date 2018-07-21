@@ -53,7 +53,7 @@ export default class ResetPassword extends React.Component {
     if (this.state.newPassword.value !== '' && this.state.newPassword.value === this.state.retypePassword.value) {
       this.setState({ retypePassword: { ...this.state.retypePassword, message: '', isValid: true } });
     } else {
-      this.setState({ retypePassword: { ...this.state.retypePassword, message: 'Please check that you\'ve entered and confirmed your password!', isValid: false } });
+      this.setState({ retypePassword: { ...this.state.retypePassword, message: 'The passwords entered do not match!', isValid: false } });
     }
   }
   render() {
