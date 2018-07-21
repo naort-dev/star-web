@@ -15,10 +15,10 @@ export default class VideoRecorder extends React.Component {
     }
 
     componentDidMount() {
+        window.onpopstate = this.onBackButtonEvent;
         if (window.navigator && window.navigator.mediaDevices.getUserMedia) {
             return this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
         }
-
         else {
             alert("Your browser does not support video recording")
         }
@@ -69,9 +69,7 @@ export default class VideoRecorder extends React.Component {
     }
 
 
-
     async startRecording(rerecord = false) {
-        window.stream = null
         if (rerecord === true) {
             this.props.onRerecord();
             this.recordedBlobs = [];

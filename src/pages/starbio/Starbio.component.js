@@ -7,6 +7,7 @@ import { Link, Redirect } from 'react-router-dom'
 import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader'
+import { Scrollbars } from 'react-custom-scrollbars';
 
 export default class Starbio extends React.Component {
     constructor(props) {
@@ -24,9 +25,9 @@ export default class Starbio extends React.Component {
             avatarImageName: null,
             profession: [],
             searchTags: [],
-            bio: null,
-            bookingPrice: null,
-            bookingLimit: null,
+            bio: "",
+            bookingPrice: "",
+            bookingLimit: "",
             errors: {
                 bio: false,
                 profession: false,
@@ -40,6 +41,8 @@ export default class Starbio extends React.Component {
     }
 
     componentDidMount() {
+        const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
+        this.setState({ ...savedValues  })
         fetch('user/professions/').then(response => {
             let dropDownList = [];
             response.data.data.professions.map((profObj, profIndex) => {
@@ -51,7 +54,9 @@ export default class Starbio extends React.Component {
             return dropDownList;
         }
         )
+
             .then(industryItem => this.setState({ industry: industryItem }))
+
     }
 
     beforeUpload(file) {
@@ -66,7 +71,7 @@ export default class Starbio extends React.Component {
         }.bind(this), false);
         if (file) {
             reader.readAsDataURL(file);
-        }
+        } 
     }
 
     uploadImage(type) {
@@ -108,14 +113,28 @@ export default class Starbio extends React.Component {
     onContinueClick() {
         if (this.validateIsEmpty()) {
             this.setState({ saving: true })
+            const bioDetails = {
+                profession: this.state.profession,
+                searchTags: this.state.searchTags,
+                bio: this.state.bio,
+                bookingPrice: this.state.bookingPrice,
+                bookingLimit: this.state.bookingLimit,
+                charity: this.state.charity,
+                featuredImage: this.state.featuredImage,
+                firstImage: this.state.firstImage,
+                secondImage: this.state.secondImage,
+                avatar: this.state.avatar
+            }
+            localStorage.setItem("bioDetails", JSON.stringify(bioDetails));
             this.uploadImage("featuredImage")
                 .then(() => this.uploadImage("firstImage"))
                 .then(() => this.uploadImage("secondImage"))
+                .then(() => this.uploadImage("avatarImage"))
                 .then(() => {
                     fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
                         {
-                            images: [...this.state.secondaryImageNames, this.state.featuredImageName],
-                            avatar_photo: this.state.secondaryImageNames[0],
+                            images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+                            avatar_photo: this.state.avatarImageName,
                             featured_image: this.state.featuredImageName
                         }, {
                             "headers": {
@@ -215,6 +234,19 @@ export default class Starbio extends React.Component {
 
     }
 
+    FullscreenUploader = () => {
+        return (
+            <LoginContainer.FullScreenUploadWrapper >
+                <LoginContainer.FullScreenUploadButton onClick={() => { }}>
+                    +
+            </LoginContainer.FullScreenUploadButton>
+                <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+            </LoginContainer.FullScreenUploadWrapper>
+        )
+
+
+    }
+
     render() {
         if (!this.props.session.isLoggedIn) {
             return <Redirect to="/signuptype" />
@@ -228,6 +260,7 @@ export default class Starbio extends React.Component {
                             <Loader />
                         </LoginContainer.loaderWrapper>
                         : null}
+
                     <LoginContainer.LeftSection>
                         <HeaderSection>
                             <Link to="/">
@@ -244,14 +277,13 @@ export default class Starbio extends React.Component {
                             <LoginContainer.Heading>Tell your fans about yourself</LoginContainer.Heading>
                             <LoginContainer.HeadingSubText>You can always update these later in your profile </LoginContainer.HeadingSubText>
                         </LoginContainer.Container>
-
                         <LoginContainer.Ask>
                             <LoginContainer.InputwrapperDiv>
                                 <LoginContainer.InputWrapper>
                                     <LoginContainer.Label>Your bio</LoginContainer.Label>
                                     <LoginContainer.WrapsInput>
 
-                                        <LoginContainer.InputArea placeholder="no need to be serious... have fun with it" onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
+                                        <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
 
                                         {this.state.errors.bio ? <LoginContainer.ErrorMsg>Please enter a valid event title</LoginContainer.ErrorMsg> : null}
 
@@ -265,7 +297,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.WrapsInput>
 
 
-                                    <MultiSelect industry={this.state.industry} profession={this.state.profession.join(',')} handleFieldChange={this.handleFieldChange.bind(this)} />
+                                    <MultiSelect industry={this.state.industry} value={this.state.profession} profession={this.state.profession.join(',')} handleFieldChange={this.handleFieldChange.bind(this)} />
                                     {this.state.errors.profession ? <LoginContainer.ErrorMsg>Please choose your industry</LoginContainer.ErrorMsg> : null}
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -275,7 +307,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Search tags</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <SelectTags searchTags={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
+                                    <SelectTags searchTags={this.state.searchTags} value={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
 
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -285,7 +317,7 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Your charity</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="optional" onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
+                                    <LoginContainer.Input  placeholder="optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
 
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -295,8 +327,9 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                                        onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} />
+                                    <LoginContainer.Input type="tel" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                        onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }}
+                                        value={this.state.bookingPrice} />
                                     {this.state.errors.bookingPrice ? <LoginContainer.ErrorMsg>Please enter your booking price</LoginContainer.ErrorMsg> : null}
                                 </LoginContainer.WrapsInput>
                             </LoginContainer.InputWrapper>
@@ -306,7 +339,8 @@ export default class Starbio extends React.Component {
                                 <LoginContainer.Label>Booking limit</LoginContainer.Label>
                                 <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                    <LoginContainer.Input type="tel" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                        value={this.state.bookingLimit}
                                         onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
                                     {this.state.errors.bookingLimit ? <LoginContainer.ErrorMsg>Please enter your booking limit</LoginContainer.ErrorMsg> : null}
                                 </LoginContainer.WrapsInput>
@@ -341,40 +375,58 @@ export default class Starbio extends React.Component {
                             <img src={this.state.featuredImage}/>
                             : */}
                                 <LoginContainer.ImageInner>
-                                    <LoginContainer.UploadWrapper >
-                                        <LoginContainer.UploadButton onClick={() => { }}>
-                                            +
-                                </LoginContainer.UploadButton>
-                                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
-                                    </LoginContainer.UploadWrapper>
-                                    <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
-                                    <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                                    {this.state.featuredImage != null ?
+
+                                        this.FullscreenUploader() :
+                                        <React.Fragment>
+                                            <LoginContainer.UploadWrapper >
+                                                <LoginContainer.UploadButton onClick={() => { }}>
+                                                    +
+                        </LoginContainer.UploadButton>
+                                                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                                            </LoginContainer.UploadWrapper>
+                                            <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
+                                            <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                                        </React.Fragment>
+                                    }
                                 </LoginContainer.ImageInner>
                             </LoginContainer.FeaturedImage>
                             <LoginContainer.FirstImage imageType="firstimage" image={this.state.firstImage}>
                                 <LoginContainer.ImageInner>
-                                    <LoginContainer.UploadWrapper>
-                                        <LoginContainer.UploadButton onClick={() => { }}>
-                                            +
-                                </LoginContainer.UploadButton>
-                                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+                                    {this.state.firstImage != null ?
 
-                                    </LoginContainer.UploadWrapper>
-                                    <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
-                                    <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                                        this.FullscreenUploader() :
+                                        <React.Fragment>
+                                            <LoginContainer.UploadWrapper>
+                                                <LoginContainer.UploadButton onClick={() => { }}>
+                                                    +
+                                </LoginContainer.UploadButton>
+                                                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+
+                                            </LoginContainer.UploadWrapper>
+                                            <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
+                                            <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                                        </React.Fragment>
+                                    }
                                 </LoginContainer.ImageInner>
 
                             </LoginContainer.FirstImage>
-                            <LoginContainer.SecondImage imageTType="secondImage" image={this.state.secondImage}>
+                            <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
                                 <LoginContainer.ImageInner>
-                                    <LoginContainer.UploadWrapper>
-                                        <LoginContainer.UploadButton onClick={() => { }}>
-                                            +
+                                    {this.state.secondImage != null ?
+
+                                        this.FullscreenUploader() :
+                                        <React.Fragment>
+                                            <LoginContainer.UploadWrapper>
+                                                <LoginContainer.UploadButton onClick={() => { }}>
+                                                    +
                                 </LoginContainer.UploadButton>
-                                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
-                                    </LoginContainer.UploadWrapper>
-                                    <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
-                                    <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                                                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                                            </LoginContainer.UploadWrapper>
+                                            <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
+                                            <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                                        </React.Fragment>
+                                    }
                                 </LoginContainer.ImageInner>
 
                             </LoginContainer.SecondImage>
@@ -384,7 +436,7 @@ export default class Starbio extends React.Component {
                                     <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }}>
                                         +
                                 </LoginContainer.UploadButton>
-                                    <LoginContainer.UploadInput accept=".png, .jpeg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
+                                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
                                 </LoginContainer.UploadWrapper>
                             </LoginContainer.Avatar>
 

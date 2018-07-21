@@ -19,12 +19,20 @@ export default class Landing extends React.Component {
       subCategoryList: [],
     };
   }
+
+  componentDidMount() {
+    window.onpopstate = this.onBackButtonEvent;
+  }
+
+  onBackButtonEvent = (event) => event.preventDefault()
+
+
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
         if (!this.props.celebList.data.length ||
-            this.props.isLoggedIn !== this.props.celebList.isLoggedIn ||
-            this.props.filters.searchParam !== this.props.celebList.currentSearchParam
+          this.props.isLoggedIn !== this.props.celebList.isLoggedIn ||
+          this.props.filters.searchParam !== this.props.celebList.currentSearchParam
 
         ) {
           this.props.fetchCelebrityList(0, true);
@@ -212,32 +220,32 @@ export default class Landing extends React.Component {
               />
               {
                 this.state.filterSelected &&
-                  <FilterSection
-                    selectedPriceRange={{low: this.props.filters.lowPrice, high: this.props.filters.highPrice}}
-                    selectedTab={this.props.filters.selectedTab}
-                    selectedSort={this.props.filters.sortValue}
-                    selectedSubCategories={this.props.filters[this.props.filters.category.value]}
-                    subCategoryList={this.state.subCategoryList}
-                    selectedVideoType={this.props.filters.selectedVideoType}
-                    selectedVideoDate={this.props.filters.selectedVideoDate}
-                    filterSelected={this.state.filterSelected}
-                    updatePriceRange={this.props.updatePriceRange}
-                    updateSort={this.props.updateSort}
-                    updateSelectedSubCategory={this.updateSubCategoryList}
-                    updateSelectedVideoType={this.props.updateSelectedVideoType}
-                    updateSelectedVideoDate={this.props.updateSelectedVideoDate}
-                    toggleFilter={this.toggleFilterSection}
-                  />
+                <FilterSection
+                  selectedPriceRange={{ low: this.props.filters.lowPrice, high: this.props.filters.highPrice }}
+                  selectedTab={this.props.filters.selectedTab}
+                  selectedSort={this.props.filters.sortValue}
+                  selectedSubCategories={this.props.filters[this.props.filters.category.value]}
+                  subCategoryList={this.state.subCategoryList}
+                  selectedVideoType={this.props.filters.selectedVideoType}
+                  selectedVideoDate={this.props.filters.selectedVideoDate}
+                  filterSelected={this.state.filterSelected}
+                  updatePriceRange={this.props.updatePriceRange}
+                  updateSort={this.props.updateSort}
+                  updateSelectedSubCategory={this.updateSubCategoryList}
+                  updateSelectedVideoType={this.props.updateSelectedVideoType}
+                  updateSelectedVideoDate={this.props.updateSelectedVideoDate}
+                  toggleFilter={this.toggleFilterSection}
+                />
               }
             </div>
             {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
-              (!this.props.videosList.data.length && this.props.videosList.loading) ?
-                <LandingStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                (!this.props.videosList.data.length && this.props.videosList.loading) ?
+                <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   <Loader />
                 </LandingStyled.loaderWrapper>
-              :
-                <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                :
+                <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                   {this.renderScrollList()}
                 </div>
             }
