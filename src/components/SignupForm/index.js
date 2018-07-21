@@ -72,18 +72,22 @@ export default class SignUp extends React.Component {
 
         });
     }
-    gapi.signin2.render('g-sign-in', {
-      'scope': 'profile email',
-      'width': 200,
-      'height': 50,
-      'theme': 'dark',
-      'onsuccess': this.onSignIn,
-    });
+    if (!this.props.isLoggedIn) {
+      gapi.signin2.render('g-sign-in', {
+        'scope': 'profile email',
+        'width': 200,
+        'height': 50,
+        'theme': 'dark',
+        'onsuccess': this.onSignIn,
+      });
+    }
   }
-
-
-
-
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      this.setState({ redirectToReferrer: true });
+    }
+  }
+  
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
       this.setState({
@@ -105,11 +109,12 @@ export default class SignUp extends React.Component {
   }
 
   componentWillUnmount() {
-    this.props.resetRedirectUrls();
+    if (this.props.isLoggedIn) {
+      this.props.resetRedirectUrls();
+    }
   }
 
   onSignIn = (googleUser) => {
-    console.log("onsignin from signup")
     const profile = googleUser.getBasicProfile();
     this.onSocialMediaLogin(profile, 3);
   }
