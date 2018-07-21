@@ -15,10 +15,18 @@ export default class Askquestion extends React.Component {
     super(props);
     this.state = {
       loginRedirect: false,
+      QuestionValue: '',
     };
   }
   goBack = () => {
     this.props.history.goBack();
+  }
+  cancel = () => {
+    if (localStorage && localStorage.getItem('bookingData')) {
+      localStorage.removeItem('bookingData');
+    }
+    this.props.cancelBookingDetails();
+    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
 
 
@@ -26,7 +34,17 @@ export default class Askquestion extends React.Component {
     if (this.props.isLoggedIn) {
       const askVideo = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
       getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, askVideo)
-        .then(response => axios.post(response.url, response.formData))
+        .then((response) => {
+          if (response && response.filename) {
+            const bookObj = this.createBookingObject(response.filename);
+            if (bookObj) {
+              localStorage.setItem('bookingData', JSON.stringify(bookObj));
+              this.props.setBookingDetails(bookObj);
+              this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+            }
+          }
+        }
+        )
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
       this.setState({ loginRedirect: true });
@@ -48,9 +66,16 @@ export default class Askquestion extends React.Component {
     //     )
     // })
   }
+  createBookingObject = (fileNameValue) => {
+    const bookingData = {
+      QuestionValue: this.props.QuestionValue,
+      fileName: fileNameValue,
+      type: 1,
 
+    };
+    return bookingData;
+  }
   render() {
-    console.log(this.props.videoRecorder);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -97,7 +122,7 @@ export default class Askquestion extends React.Component {
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
                 <Link to={`/starDetail/${this.props.match.params.id}`}>
-                  <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
+                  <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
                 </Link>
               </HeaderSection>
               <Request.SmallScreenLayout>
