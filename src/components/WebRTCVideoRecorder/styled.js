@@ -83,9 +83,10 @@ VideoRecorderDiv.NoVideoContainer = styled.div`
 VideoRecorderDiv.NoVideoText = styled.div`
 font-family: 'Ubuntu-Bold';
 font-size: 25px;
+margin-top: 50%;
 text-align: center;
 color: #FF6C58;
-margin-top:10%;
+
 
 @media(min-width:768px){
   font-size: 32px;
@@ -99,38 +100,19 @@ margin-top:10%;
 `;
 
 VideoRecorderDiv.NoVideoButton = styled.button`
-  width:100%;
-  max-width:364px;
-  height:46px;
-  background-color:white;
-  color: #FF6C58;
-  border: 3px solid #FF6C58; 
-  border-radius:19px;
-  font-size:16px;
-  font-family: 'Ubuntu-Medium';
-  box-shadow: -2px 6px 8px #FF6C58);
-  margin-bottom:25px;
-  outline:none;
-  cursor: pointer;
-  margin-top: 20px;
-  &:hover {
-    color :#FF6C58;
-    border-color:#FF6C58;
-  }
-  @media(min-width: 768px){
-    max-width:500px;
-    height:60px;
-    font-size:28px;
-    margin-bottom:40px;
-  }
-  @media(min-width: 1025px){
-    max-width:325px;
-    height:53px;
-    font-size:20px;
-  }
-  @media(min-width:1920px){
-    max-width: 475px;
-  }
+margin-top: 10px;
+background-color: #fff; 
+color: #FF6C58;
+padding: 4px 30px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+font-family: 'Ubuntu-Bold';
+outline:none;
+border-radius:5px;
+border: 2px solid #FF6C58;
+
 `;
 
 
@@ -170,6 +152,7 @@ VideoRecorderDiv.UploadInput = styled.input`
   font-family: 'Ubuntu-Medium';
   font-style: italic;
   text-align: center;
+  margin-top: 25%;
   `;
 
 
