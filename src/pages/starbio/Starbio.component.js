@@ -234,6 +234,7 @@ export default class Starbio extends React.Component {
       <LoginContainer.mutiSelectItemWrapper>
         {selectProps.value.label}
         <LoginContainer.CloseButton
+          type="button"
           onClick={(e) => selectProps.onRemove(selectProps.value)}
         />
       </LoginContainer.mutiSelectItemWrapper>

@@ -77,12 +77,13 @@ LoginContainer.mutiSelectItemWrapper = styled.div`
   margin: 3px;
   font-size: 14px;
 `
-LoginContainer.CloseButton = styled.button`
+LoginContainer.CloseButton = styled.input`
   display: inline-block;
   width: 12px;
   height: 12px;
   margin-left: 10px;
   cursor: pointer;
+  border: none;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
 `;
 LoginContainer.ImageWrapper = styled.div`
