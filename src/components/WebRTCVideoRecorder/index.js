@@ -102,7 +102,6 @@ export default class VideoRecorder extends React.Component {
         if (rerecord === true) {
             this.props.onRerecord();
             this.recordedBlobs = [];
-
         }
 
         this.props.onStartRecording()
