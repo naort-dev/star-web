@@ -8,6 +8,7 @@ import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader'
 import { Scrollbars } from 'react-custom-scrollbars';
+import EXIF from 'exif-js'
 
 export default class Starbio extends React.Component {
   constructor(props) {
@@ -59,16 +60,72 @@ export default class Starbio extends React.Component {
 
   }
 
-  onFileChange(type = "featuredImage") {
+  async onFileChange(type = "featuredImage") {
     const file = document.getElementById(type).files[0];
-    const reader = new FileReader();
-    reader.addEventListener("load", function () {
-      this.setState({ [type]: reader.result, [`${type}File`]: file })
-    }.bind(this), false);
-    if (file) {
-      reader.readAsDataURL(file)
+    if (await this.checkResolution(file, type)) {
+        await this.getImageData(file, type)
     }
-  }
+}
+
+getImageData(file, type) {
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const exif = await this.getExif(file, type)
+        this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif} })
+    }.bind(this)
+    if (file) {
+        reader.readAsDataURL(file)
+    }
+
+}
+
+
+getExif = (file) => {
+    return new Promise((resolve, reject) => {
+        EXIF.getData(file, function () {
+            const exif = EXIF.getTag(this, "Orientation")
+            switch(exif) {
+                case 3: 
+                resolve('rotate(180deg)')
+                case 6: 
+                resolve('rotate(90deg)')
+                case 9: 
+                resolve('rotate(270deg)')
+                default:
+                resolve('rotate(0deg)')
+            }
+        })
+
+    })
+
+}
+
+
+
+checkResolution(file, type) {
+    let correctResolution = false;
+    var img = new Image();
+    img.src = window.URL.createObjectURL(file);
+    return new Promise((resolve, reject) => {
+        img.onload = () => {
+            var width = img.naturalWidth;
+            var height = img.naturalHeight;
+            window.URL.revokeObjectURL(img.src);
+            if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
+                (type === 'firstImage' && width >= 400 && height >= 400) ||
+                (type === 'secondImage' && width >= 400 && height >= 400) ||
+                (type === 'avatar' && width >= 100 && height >= 100)
+            ) {
+                correctResolution = true;
+            }
+            resolve(correctResolution)
+        }
+
+    })
+}
+
+
+  
 
   uploadImage(type) {
     return fetch(Api.getImageCredentials, {
@@ -242,11 +299,11 @@ export default class Starbio extends React.Component {
   }
 
   FullscreenUploader = (type) => {
+      const borderRadius = type == "avatar" ? "100px" : "0px"
     return (
       <LoginContainer.FullScreenUploadWrapper >
-        <LoginContainer.FullScreenUploadButton onClick={() => { }}>
-          +
-            </LoginContainer.FullScreenUploadButton>
+        <LoginContainer.Image src={this.state[`${type}`]} style={{transform: this.state.rotations[`${type}`], borderRadius}} />
+        <LoginContainer.FullScreenUploadButton onClick={() => { }}/>
         <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
       </LoginContainer.FullScreenUploadWrapper>
     )
@@ -479,10 +536,13 @@ export default class Starbio extends React.Component {
 
               <LoginContainer.AvatarContainer>
                 <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
+                {this.state.avatar != null ?
+                  this.FullscreenUploader("avatar") :  
                   <LoginContainer.UploadWrapper>
                     <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
                     <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
                   </LoginContainer.UploadWrapper>
+                }
                 </LoginContainer.Avatar>
                 <LoginContainer.HeadingWrapper>
                   <LoginContainer.FeaturedText> Profile Image </LoginContainer.FeaturedText>
