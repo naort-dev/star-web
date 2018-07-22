@@ -120,17 +120,8 @@ LoginContainer.FeaturedImage = styled.div`
  align-items: center;
  height: 175px;
  background-color: #cccccc;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-}
-
-
 @media(min-width: 768px){
-  height: 365px;
-  
+  height: 365px; 
 }
 
 @media(min-width: 1025px){
@@ -154,12 +145,6 @@ align-items: center;
 height: 175px;
 margin: 10px 0px;
 background-color: #cccccc;
-${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover"
-  })
-  }
 
 @media(min-width: 768px){
    width: 49.5vw;
@@ -184,12 +169,6 @@ align-items: center;
 height:175px;
 background-color: #cccccc;
 margin: 10px 0px;
-${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
 
 @media(min-width: 768px){
   width: 49.5vw;  
@@ -1000,17 +979,10 @@ bottom: 0;
 background-color: rgba(0,0,0, 0.3);
 `;
 
-// LoginContainer.imageLoaderWrapper = styled.div`
-// position: fixed;
-// top: 20;
-// z-index: 10;
-// left: 30;
-// right: 40;
-// bottom: 60;
-// background-color: rgba(0,0,0, 0.3);
-// width:50vh;
-// height: 50vh;
-// `;
+LoginContainer.Image = styled.img`
+ height: 100%;
+ width: 100%;
+`;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`
     position: relative;
