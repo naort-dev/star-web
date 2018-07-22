@@ -9,7 +9,7 @@ import { fetch } from '../../services/fetch'
 export default class VideoRecorder extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { streaned: null, error: null, startUpload: false, browserSupport: true };
+        this.state = { streamed: null, error: null, startUpload: false, browserSupport: false, play: false };
         this.mediaSource = new MediaSource();
         this.mediaRecorder = null;
         this.recordedBlobs = []
@@ -22,6 +22,18 @@ export default class VideoRecorder extends React.Component {
     componentDidMount() {
         if (!window.navigator || !window.navigator.mediaDevices.getUserMedia) {
             this.setState({ browserSupport: false });
+        }
+        else {
+            return window.navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: {
+                    width: { min: 640, ideal: 1920 },
+                    height: { min: 400, ideal: 1080 },
+                    aspectRatio: { ideal: 1.7777777778 }
+                }
+            })
+                .then(() => { this.setState({browserSupport: true}) }, (err) => this.setState({ browserSupport: false }))
+
         }
     }
 
@@ -69,32 +81,39 @@ export default class VideoRecorder extends React.Component {
     }
 
     fileUpload() {
+        this.setState({ extensionError: false,  play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        reader.addEventListener("load", function () {
-            this.setState({ startUpload: true })
-            getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
-                .then(response => {
-                    axios.post(response.url, response.formData)
-                        .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-                            ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
-                        },
-                            {
-                                "headers": {
-                                    'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+        const allowedExtensions = /(\.mp4)$/i;
+        if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
+            this.setState({ extensionError: true })
+        }
+        else {
+            const fileURL = URL.createObjectURL(file)
+            this.setState({ play: true}, () => document.getElementById('fallback-video').src = fileURL)
+            reader.addEventListener("load", function () {
+                getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
+                    .then(response => {
+                        axios.post(response.url, response.formData)
+                            .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+                                ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+                            },
+                                {
+                                    "headers": {
+                                        'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+                                    }
                                 }
-                            }
-                        )
-                        )
-                })
-                .then(() => {
-                    this.setState({ startUpload: false })
-                    this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+                            )
+                            )
+                    })
+                    .then(() => {
+                        this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
 
-                })
-        }.bind(this), false);
-        if (file) {
-            reader.readAsDataURL(file)
+                    })
+            }.bind(this), false);
+            if (file) {
+                reader.readAsDataURL(file)
+            }
         }
     }
 
@@ -104,8 +123,16 @@ export default class VideoRecorder extends React.Component {
             this.recordedBlobs = [];
         }
 
+
         this.props.onStartRecording()
-        return this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
+        return this.captureUserMedia({
+            audio: true,
+            video: {
+                width: { min: 640, ideal: 1920 },
+                height: { min: 400, ideal: 1080 },
+                aspectRatio: { ideal: 1.7777777778 }
+            }
+        })
             .then(() => {
                 var options = { mimeType: 'video/mp4;codecs=vp9' };
                 if (!MediaRecorder.isTypeSupported(options.mimeType)) {
@@ -134,7 +161,6 @@ export default class VideoRecorder extends React.Component {
     }
 
     render() {
-        console.log("props", this.props)
         return (
             <React.Fragment>
                 {this.state.browserSupport == true ?
@@ -157,30 +183,24 @@ export default class VideoRecorder extends React.Component {
                                 <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                                 : (this.props.videoRecorder.start == true ?
                                     <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
-                                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re-Record </VideoRecorderDiv.Button>)
+                                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>)
                         }
                     </VideoRecorderDiv>
 
                     :
 
                     <VideoRecorderDiv>
+                        <VideoRecorderDiv.VideoContainer>
+                            { this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> :  (
+                                this.state.extensionError ? "Invalid file format. Only MP4 is supported" : "Kindly check your device or upload a video"
+                            )   }
+                      
+                        </VideoRecorderDiv.VideoContainer>
 
-                        <VideoRecorderDiv.NoVideoContainer>
-                            {this.state.startUpload ?
-                                <VideoRecorderDiv.LoaderWrapper>
-                                    <Loader />
-                                </VideoRecorderDiv.LoaderWrapper>
-                                : null
-                            }
-                            <VideoRecorderDiv.NoVideoText>
-                                Your Browser Doesnot Support video Recording
-                            </VideoRecorderDiv.NoVideoText>
-                            <VideoRecorderDiv.UploadWrapper>
-                                <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
-                                <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4" onChange={() => { this.fileUpload() }} type="file" />
-                            </VideoRecorderDiv.UploadWrapper>
-                        </VideoRecorderDiv.NoVideoContainer>
-
+                        <VideoRecorderDiv.UploadWrapper>
+                            <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+                            <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4" onChange={() => { this.fileUpload() }} type="file" />
+                        </VideoRecorderDiv.UploadWrapper>
                     </VideoRecorderDiv>
                 }
 
