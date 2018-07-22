@@ -337,7 +337,16 @@ export default class Starbio extends React.Component {
                   <LoginContainer.Label>Search tags</LoginContainer.Label>
                   <LoginContainer.WrapsInput>
 
-                    <SelectTags searchTags={this.state.searchTags} value={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
+                    <SelectTags
+                      otherOptions={{
+                        clearable: false,
+                        arrowRenderer: null,
+                        valueComponent:(selectProps)=>this.renderMultiValueItems(selectProps),
+                      }}
+                      searchTags={this.state.searchTags}
+                      value={this.state.searchTags}
+                      handleFieldChange={this.handleFieldChange.bind(this)}
+                    />
                     <LoginContainer.ErrorMsg isError={false}>
                       Add hashtags to help Fans find you quicker
                                     </LoginContainer.ErrorMsg>

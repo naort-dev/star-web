@@ -11,6 +11,9 @@ export default class SelectTags extends React.Component {
     render() {
         return (
                 <Select.Creatable
+                    {
+                      ...this.props.otherOptions
+                    }
                     multi={true}
                     onChange={(value) => this.props.handleFieldChange('searchTags', value)}
                     value={this.props.searchTags}
