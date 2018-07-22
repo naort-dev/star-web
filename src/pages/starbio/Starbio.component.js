@@ -9,6 +9,7 @@ import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader'
 import { Scrollbars } from 'react-custom-scrollbars';
 import EXIF from 'exif-js'
+import { default as ReactLoader } from 'react-loader'
 
 export default class Starbio extends React.Component {
   constructor(props) {
@@ -29,6 +30,7 @@ export default class Starbio extends React.Component {
       bio: "",
       bookingPrice: "",
       bookingLimit: "",
+      loaders: {featuredImage: null, firstImage: null, secondImage: null, avatar: null},
       errors: {
         bio: false,
         profession: false,
@@ -68,10 +70,11 @@ export default class Starbio extends React.Component {
 }
 
 getImageData(file, type) {
+    this.setState({loaders: {...this.state.loaders, [`${type}`]: false}})
     const reader = new FileReader();
     reader.onload = async function (e) {
         const exif = await this.getExif(file, type)
-        this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif} })
+        this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
     }.bind(this)
     if (file) {
         reader.readAsDataURL(file)
@@ -312,6 +315,14 @@ checkResolution(file, type) {
   }
 
   render() {
+    const options = {
+        color: '#000',
+        zIndex: 2e9,
+        top: '50%',
+        left: '0vw',
+        position: 'relative'
+    };
+    
     if (!this.props.session.isLoggedIn) {
       return <Redirect to="/signuptype" />
     }
@@ -480,9 +491,9 @@ checkResolution(file, type) {
           <LoginContainer.RightSection>
             <LoginContainer.ImageWrapper>
               <LoginContainer.FeaturedImage imageType="featured" image={this.state.featuredImage}>
-                {/* {this.state.featuredImage != null ?
-                            <img src={this.state.featuredImage}/>
-                            : */}
+              {this.state.loaders.featuredImage === false ?
+               <ReactLoader loaded={false} className="spinner"
+               zIndex={2e9} options={options}/>:
                 <LoginContainer.ImageInner>
                   {this.state.featuredImage != null ?
 
@@ -497,8 +508,12 @@ checkResolution(file, type) {
                     </React.Fragment>
                   }
                 </LoginContainer.ImageInner>
+              }
               </LoginContainer.FeaturedImage>
               <LoginContainer.FirstImage imageType="firstImage" image={this.state.firstImage}>
+              {this.state.loaders.firstImage === false ?
+               <ReactLoader loaded={false} className="spinner"
+               zIndex={2e9} options={options}/>:
                 <LoginContainer.ImageInner>
                   {this.state.firstImage != null ?
 
@@ -514,9 +529,12 @@ checkResolution(file, type) {
                     </React.Fragment>
                   }
                 </LoginContainer.ImageInner>
-
+              }
               </LoginContainer.FirstImage>
               <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
+              {this.state.loaders.secondImage === false ?
+               <ReactLoader loaded={false} className="spinner"
+               zIndex={2e9} options={options}/>:
                 <LoginContainer.ImageInner>
                   {this.state.secondImage != null ?
 
@@ -531,6 +549,7 @@ checkResolution(file, type) {
                     </React.Fragment>
                   }
                 </LoginContainer.ImageInner>
+              }
 
               </LoginContainer.SecondImage>
 
