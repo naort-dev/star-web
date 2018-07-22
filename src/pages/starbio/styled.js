@@ -86,9 +86,10 @@ LoginContainer.FeaturedImage = styled.div`
  ${props => props.image != null && ({
     background: `url(${props.image}) no-repeat`,
     backgroundPosition: "center",
-    backgroundSize: "contain",
+    backgroundSize: "cover",
   })
-  }
+}
+
 
 @media(min-width: 768px){
   height: 365px;
@@ -942,6 +943,18 @@ right: 0;
 bottom: 0;
 background-color: rgba(0,0,0, 0.3);
 `;
+
+// LoginContainer.imageLoaderWrapper = styled.div`
+// position: fixed;
+// top: 20;
+// z-index: 10;
+// left: 30;
+// right: 40;
+// bottom: 60;
+// background-color: rgba(0,0,0, 0.3);
+// width:50vh;
+// height: 50vh;
+// `;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`
     position: relative;

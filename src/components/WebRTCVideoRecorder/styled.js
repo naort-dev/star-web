@@ -20,7 +20,7 @@ const VideoRecorderDiv = styled.div`
 VideoRecorderDiv.VideoContainer = styled.div`
   height: 90%;
   width: 100%;
-  background-color: black;
+  background-color: #333333;
   @media(min-width:768px){
     width: 100%;
     height: 90%;
@@ -35,6 +35,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
 VideoRecorderDiv.Video = styled.video`
   height: 100%;
   width: 100%;
+  object-fit: contain;
   @media(min-width:1025px){
     width: 100%;
     height: 100%
@@ -160,6 +161,15 @@ VideoRecorderDiv.UploadInput = styled.input`
   right: 0;
   bottom: 0;
   background-color: rgba(0,0,0, 0.3);
+  `;
+
+
+  VideoRecorderDiv.InfoText = styled.div`
+  font-size: 20px;
+  color: #FFFFFF;
+  font-family: 'Ubuntu-Medium';
+  font-style: italic;
+  text-align: center;
   `;
 
 

@@ -8,6 +8,7 @@ import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader'
 import { Scrollbars } from 'react-custom-scrollbars';
+import EXIF from 'exif-js'
 
 export default class Starbio extends React.Component {
     constructor(props) {
@@ -36,11 +37,16 @@ export default class Starbio extends React.Component {
                 bookingLimit: false,
 
             },
-            saving: false
+            saving: false,
+            featuredImageLoading: false,
+            rotations: { featuredImage: "rotate(0deg)", firstImage: "rotate(0deg)", secondImage: "rotate(0deg)", avatar: "rotate(0deg)" }
         }
     }
 
     componentDidMount() {
+        if (this.props.session.isLoggedIn) {
+
+        }
         const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
         this.setState({ ...savedValues })
         fetch('user/professions/').then(response => {
@@ -59,15 +65,68 @@ export default class Starbio extends React.Component {
 
     }
 
-    onFileChange(type = "featuredImage") {
+    async onFileChange(type = "featuredImage") {
         const file = document.getElementById(type).files[0];
+        if (await this.checkResolution(file, type)) {
+            await this.getImageData(file, type)
+        }
+    }
+
+    getImageData(file, type) {
         const reader = new FileReader();
-        reader.addEventListener("load", function () {
-            this.setState({ [type]: reader.result, [`${type}File`]: file })
-        }.bind(this), false);
+        reader.onload = async function (e) {
+            const exif = await this.getExif(file, type)
+            this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif} })
+        }.bind(this)
         if (file) {
             reader.readAsDataURL(file)
         }
+
+    }
+
+
+    getExif = (file) => {
+        return new Promise((resolve, reject) => {
+            EXIF.getData(file, function () {
+                const exif = EXIF.getTag(this, "Orientation")
+                switch(exif) {
+                    case 3: 
+                    resolve('rotate(180deg)')
+                    case 6: 
+                    resolve('rotate(90deg)')
+                    case 9: 
+                    resolve('rotate(270deg)')
+                    default:
+                    resolve('rotate(0deg)')
+                }
+            })
+
+        })
+
+    }
+
+
+
+    checkResolution(file, type) {
+        let correctResolution = false;
+        var img = new Image();
+        img.src = window.URL.createObjectURL(file);
+        return new Promise((resolve, reject) => {
+            img.onload = () => {
+                var width = img.naturalWidth;
+                var height = img.naturalHeight;
+                window.URL.revokeObjectURL(img.src);
+                if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
+                    (type === 'firstImage' && width >= 400 && height >= 400) ||
+                    (type === 'secondImage' && width >= 400 && height >= 400) ||
+                    (type === 'avatar' && width >= 100 && height >= 100)
+                ) {
+                    correctResolution = true;
+                }
+                resolve(correctResolution)
+            }
+
+        })
     }
 
     uploadImage(type) {
@@ -103,6 +162,17 @@ export default class Starbio extends React.Component {
                 return { formData, url: response.data.data.url }
             })
             .then(response => axios.post(response.url, response.formData))
+            .then(response => {
+                // const parser = new DOMParser();
+                // const xmlDoc = parser.parseFromString(response.data, "text/xml");
+                // const imageURL = xmlDoc.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
+                // console.log("url", imageURL)
+                return fetch(`users/user_details/${this.props.session.auth_token.id}/get_details`,
+                    {
+                        'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
+                    }
+                )
+            })
     }
 
 
@@ -158,7 +228,6 @@ export default class Starbio extends React.Component {
 
                 )
         }
-
     }
 
     handleOnChange(value) {
@@ -223,7 +292,6 @@ export default class Starbio extends React.Component {
             this.setState({ errors: { ...this.state.errors, bookingLimit: true } })
             return false
         }
-
         return true
 
 
@@ -232,15 +300,14 @@ export default class Starbio extends React.Component {
     FullscreenUploader = (type) => {
         return (
             <LoginContainer.FullScreenUploadWrapper >
-                <LoginContainer.FullScreenUploadButton onClick={() => { }}/>
+                <LoginContainer.FullScreenUploadButton onClick={() => { }} />
                 <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
             </LoginContainer.FullScreenUploadWrapper>
         )
-
-
     }
 
     render() {
+        console.log("state", this.state)
         if (!this.props.session.isLoggedIn) {
             return <Redirect to="/signuptype" />
         }
@@ -379,22 +446,15 @@ export default class Starbio extends React.Component {
                             </FooterSection.RightSection>
                         </FooterSection>
                     </LoginContainer.FooterLayout>
-
-
-
                     <LoginContainer.RightSection>
                         <LoginContainer.ImageWrapper>
-                            <LoginContainer.FeaturedImage imageType="featured" image={this.state.featuredImage}>
-                                {/* {this.state.featuredImage != null ?
-                            <img src={this.state.featuredImage}/>
-                            : */}
+                            <LoginContainer.FeaturedImage style={{transform: this.state.rotations.featuredImage}}imageType="featured" image={this.state.featuredImage}>
                                 <LoginContainer.ImageInner>
                                     {this.state.featuredImage != null ?
-
                                         this.FullscreenUploader("featuredImage") :
                                         <React.Fragment>
                                             <LoginContainer.UploadWrapper >
-                                                <LoginContainer.UploadButton onClick={() => { }}/>
+                                                <LoginContainer.UploadButton onClick={() => { }} />
                                                 <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
                                             </LoginContainer.UploadWrapper>
                                             <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
@@ -410,7 +470,7 @@ export default class Starbio extends React.Component {
                                         this.FullscreenUploader("firstImage") :
                                         <React.Fragment>
                                             <LoginContainer.UploadWrapper>
-                                                <LoginContainer.UploadButton onClick={() => { }}/>
+                                                <LoginContainer.UploadButton onClick={() => { }} />
                                                 <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
 
                                             </LoginContainer.UploadWrapper>
@@ -428,7 +488,7 @@ export default class Starbio extends React.Component {
                                         this.FullscreenUploader("secondImage") :
                                         <React.Fragment>
                                             <LoginContainer.UploadWrapper>
-                                                <LoginContainer.UploadButton onClick={() => { }}/>
+                                                <LoginContainer.UploadButton onClick={() => { }} />
                                                 <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
                                             </LoginContainer.UploadWrapper>
                                             <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>

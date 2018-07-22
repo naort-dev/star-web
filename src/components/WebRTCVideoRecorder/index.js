@@ -9,7 +9,7 @@ import { fetch } from '../../services/fetch'
 export default class VideoRecorder extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { mediaRecorder: null, error: null, startUpload: false, streamFetched: null, browserSupport: true, checkSupport: null };
+        this.state = { streaned: null, error: null, startUpload: false, browserSupport: true };
         this.mediaSource = new MediaSource();
         this.mediaRecorder = null;
         this.recordedBlobs = []
@@ -20,11 +20,7 @@ export default class VideoRecorder extends React.Component {
     }
 
     componentDidMount() {
-        if (window.navigator && window.navigator.mediaDevices.getUserMedia) {
-            this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
-        }
-
-        else {
+        if (!window.navigator || !window.navigator.mediaDevices.getUserMedia) {
             this.setState({ browserSupport: false });
         }
     }
@@ -49,7 +45,6 @@ export default class VideoRecorder extends React.Component {
         const liveVideo = document.getElementById('video-player')
         liveVideo.srcObject = stream;
         this.stream = stream;
-        this.setState({ checkSupport: false })
     }
 
     stopRecording() {
@@ -109,6 +104,7 @@ export default class VideoRecorder extends React.Component {
             this.recordedBlobs = [];
 
         }
+
         this.props.onStartRecording()
         return this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
             .then(() => {
@@ -125,30 +121,35 @@ export default class VideoRecorder extends React.Component {
                 try {
                     this.mediaRecorder = new MediaRecorder(this.stream, options);
                     this.mediaRecorder.ondataavailable = this.handleDataAvailable
-                    this.mediaRecorder.start(1000);
+                    this.mediaRecorder.start(100);
                     this.timerID = setTimeout(() => {
                         this.stopRecording()
                     }, 61000);
                 } catch (e) {
-                    alert('Error while creating MediaRecorder: '
-                        + e + '. mimeType: ' + options.mimeType);
+                    this.setState({})
                     return;
                 }
             })
-            .catch(err => this.setState({ error: true }))
+            .catch(err => this.setState({ browserSupport: false }))
 
     }
 
     render() {
+        console.log("props", this.props)
         return (
             <React.Fragment>
                 {this.state.browserSupport == true ?
                     <VideoRecorderDiv >
                         <VideoRecorderDiv.VideoContainer>
-                            {!this.props.videoRecorder.recordedBlob ?
-                                <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
-                                :
-                                <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
+                            {this.props.videoRecorder.start == null ?
+                                <VideoRecorderDiv.InfoText>
+                                    Note: video from their webcam
+                                </VideoRecorderDiv.InfoText> :
+                                (!this.props.videoRecorder.recordedBlob ?
+                                    <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
+                                    :
+                                    <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
+                                )
                             }
                         </VideoRecorderDiv.VideoContainer>
                         {this.state.error ?
@@ -157,7 +158,7 @@ export default class VideoRecorder extends React.Component {
                                 <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                                 : (this.props.videoRecorder.start == true ?
                                     <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
-                                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>)
+                                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re-Record </VideoRecorderDiv.Button>)
                         }
                     </VideoRecorderDiv>
 
