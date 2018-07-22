@@ -15,11 +15,7 @@ export default class Askquestion extends React.Component {
     super(props);
     this.state = {
       loginRedirect: false,
-<<<<<<< HEAD
-      QuestionValue: '',
-=======
       question: '',
->>>>>>> 4c5abf71ac36abea5473f7a9b5e18792655d25cf
     };
   }
   goBack = () => {
@@ -70,13 +66,6 @@ export default class Askquestion extends React.Component {
     //     )
     // })
   }
-<<<<<<< HEAD
-  createBookingObject = (fileNameValue) => {
-    const bookingData = {
-      QuestionValue: this.props.QuestionValue,
-      fileName: fileNameValue,
-      type: 1,
-=======
   setQuestion = (question) => {
     this.setState({question});
   }
@@ -87,7 +76,6 @@ export default class Askquestion extends React.Component {
       question: this.state.question,
       fileName: fileNameValue,
       type: 3,
->>>>>>> 4c5abf71ac36abea5473f7a9b5e18792655d25cf
 
     };
     return bookingData;
