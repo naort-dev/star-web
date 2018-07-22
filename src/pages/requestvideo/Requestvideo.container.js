@@ -1,5 +1,7 @@
 import { connect } from 'react-redux';
 import Requestvideo from './Requestvideo.component';
+import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
+
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -9,6 +11,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requestvideo);

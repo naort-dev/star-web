@@ -1,12 +1,12 @@
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const LoginContainer = styled.div`
   background-color: white;
   display: flex;
-  padding: 0px 0px;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 56px;
+  padding-bottom: 64px;
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
@@ -21,6 +21,18 @@ LoginContainer.wrapper = styled.div`
     background-color:white;
   }
   
+`;
+
+Request.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    overflow: hidden !important;
+    position: static !important;
+    background: #fff;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
+  }
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
@@ -37,6 +49,9 @@ LoginContainer.LeftSection = styled.div`
 LoginContainer.RightSection = styled.div`
   width: 100%;
   margin-top: 40px;
+  @media(min-width: 768px) {
+    margin-bottom: 80px;
+  }
   @media(min-width: 1025px){
     background-color:rgba(248, 248, 248, 1);
     width: 55%;
@@ -53,6 +68,24 @@ LoginContainer.RightSection = styled.div`
   }
 `;
 
+LoginContainer.mutiSelectItemWrapper = styled.div`
+  display: inline-block;
+  border: 2px solid #FF6C58;
+  padding: 5px 10px;
+  color: #FF6C58;
+  border-radius: 20px;
+  margin: 3px;
+  font-size: 14px;
+`
+LoginContainer.CloseButton = styled.input`
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: none;
+  background: url('assets/images/close-icon-orange.svg') no-repeat;
+`;
 LoginContainer.ImageWrapper = styled.div`
 display:flex;
 align-items: center;
@@ -61,6 +94,7 @@ flex-wrap: wrap;
 
 @media(min-width: 768px){
   justify-content: space-between;
+  position: relative;
 } 
 
 
@@ -171,47 +205,48 @@ ${props => props.image != null && ({
 `;
 
 LoginContainer.AvatarContainer = styled.div`
-height: 20%;
-width: 50%;
-`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+@media(min-width: 768px) {
+  position: absolute;
+  bottom: -64px;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+}
+@media(min-width: 1025px){
+  bottom: -100px;
+}
+`;
 
-LoginContainer.Avatar = styled.div`
- padding: 20px;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- border: 4px solid black;
+LoginContainer.HeadingWrapper = styled.div`
+  display: inline-block;
+  margin-left: 20px;
+`;
+
+LoginContainer.Avatar = styled.span`
+ width: 100px;
+ height: 100px;
+ display: inline-block;
  border-radius: 50%;
- background-color: #cccccc;
  background: url('assets/images/blank-avatar.svg') no-repeat center;
  ${props => props.image != null && ({
+    border: "6px solid #333333",
     background: `url(${props.image}) no-repeat`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     objectFit: "contain"
   })
   }
-
-  position: relative;
-  left: 40vw;
-
-  @media(min-width: 768px) {
-    position: relative;
-    left: 47vw;
-    top: -35px;
-  }
-
-  @media(min-width: 1025px){
-    position: absolute;
-    top: 62vh;
-    left: 44%;
-  }
 `;
 
 LoginContainer.UploadWrapper = styled.div`
     position: relative;
     overflow: hidden;
+    width: 100px;
+    height: 100px;
     display: inline-block;
   }
 `;
@@ -222,6 +257,8 @@ background: url('assets/images/plus-icon.svg') no-repeat center;
 color: black;
 background-color: transparent;
 border: 0;
+width: 40px;
+height: 40px;
 font-size: 20px;
 font-weight: bold;
 text-align: center;
@@ -235,7 +272,7 @@ width: 40px;
 
 
 LoginContainer.UploadInput = styled.input`
-    font-size: 100px;
+    bottom: 0;
     position: absolute;
     left: 0;
     top: 0;

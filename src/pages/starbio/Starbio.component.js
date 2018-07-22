@@ -8,510 +8,482 @@ import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader'
 import { Scrollbars } from 'react-custom-scrollbars';
-import EXIF from 'exif-js'
 
 export default class Starbio extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            avatar: null,
-            industry: [],
-            featuredImage: null,
-            firstImage: null,
-            secondImage: null,
-            multi: true,
-            multiValue: [],
-            featuredImageName: null,
-            secondaryImageNames: [],
-            avatarImageName: null,
-            profession: [],
-            searchTags: [],
-            bio: "",
-            bookingPrice: "",
-            bookingLimit: "",
-            errors: {
-                bio: false,
-                profession: false,
-                searchTags: false,
-                bookingPrice: false,
-                bookingLimit: false,
+  constructor(props) {
+    super(props)
+    this.state = {
+      avatar: null,
+      industry: [],
+      featuredImage: null,
+      firstImage: null,
+      secondImage: null,
+      multi: true,
+      multiValue: [],
+      featuredImageName: null,
+      secondaryImageNames: [],
+      avatarImageName: null,
+      profession: [],
+      searchTags: [],
+      bio: "",
+      bookingPrice: "",
+      bookingLimit: "",
+      errors: {
+        bio: false,
+        profession: false,
+        searchTags: false,
+        bookingPrice: false,
+        bookingLimit: false,
 
+      },
+      saving: false
+    }
+  }
+
+  componentDidMount() {
+    const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
+    this.setState({ ...savedValues })
+    fetch('user/professions/').then(response => {
+      let dropDownList = [];
+      response.data.data.professions.map((profObj, profIndex) => {
+        dropDownList.push({ value: profObj.id, label: profObj.title });
+        profObj.child.map((childObj) => {
+          dropDownList.push({ value: childObj.id, label: childObj.title });
+        });
+      });
+      return dropDownList;
+    }
+    )
+
+      .then(industryItem => this.setState({ industry: industryItem }))
+
+  }
+
+  onFileChange(type = "featuredImage") {
+    const file = document.getElementById(type).files[0];
+    const reader = new FileReader();
+    reader.addEventListener("load", function () {
+      this.setState({ [type]: reader.result, [`${type}File`]: file })
+    }.bind(this), false);
+    if (file) {
+      reader.readAsDataURL(file)
+    }
+  }
+
+  uploadImage(type) {
+    return fetch(Api.getImageCredentials, {
+      'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
+    })
+      .then(response => {
+        let filename = response.data.data.fields.key.split('/')
+        filename = filename[2]
+        const formData = new FormData()
+        formData.append('success_action_status', response.data.data.fields.success_action_status);
+        formData.append('signature', response.data.data.fields.signature)
+        formData.append('x-amz-security-token', response.data.data.fields["x-amz-security-token"]);
+        formData.append('acl', response.data.data.fields.acl);
+        formData.append('Access-Control-Allow-Origin', response.data.data.fields["Access-Control-Allow-Origin"]);
+        formData.append('policy', response.data.data.fields.policy);
+        formData.append('key', response.data.data.fields.key);
+        formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
+        formData.append('file', this.state[`${type}File`]);
+        if (type == "firstImage") {
+          const secondaryImageNames = [...this.state.secondaryImageNames]
+          secondaryImageNames[0] = filename
+          this.setState({ secondaryImageNames })
+        }
+        else if (type == "secondImage") {
+          const secondaryImageNames = [...this.state.secondaryImageNames]
+          secondaryImageNames[1] = filename
+          this.setState({ secondaryImageNames })
+        }
+        else {
+          this.setState({ [`${type}Name`]: filename })
+        }
+        return { formData, url: response.data.data.url }
+      })
+      .then(response => axios.post(response.url, response.formData))
+  }
+
+
+  onContinueClick() {
+    if (this.validateIsEmpty()) {
+      this.setState({ saving: true })
+      const bioDetails = {
+        profession: this.state.profession,
+        searchTags: this.state.searchTags,
+        bio: this.state.bio,
+        bookingPrice: this.state.bookingPrice,
+        bookingLimit: this.state.bookingLimit,
+        charity: this.state.charity,
+        featuredImage: this.state.featuredImage,
+        firstImage: this.state.firstImage,
+        secondImage: this.state.secondImage,
+        avatar: this.state.avatar
+      }
+      localStorage.setItem("bioDetails", JSON.stringify(bioDetails));
+      this.uploadImage("featuredImage")
+        .then(() => this.uploadImage("firstImage"))
+        .then(() => this.uploadImage("secondImage"))
+        .then(() => this.uploadImage("avatarImage"))
+        .then(() => {
+          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+            {
+              images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+              avatar_photo: this.state.avatarImageName,
+              featured_image: this.state.featuredImageName
+            }, {
+              "headers": {
+                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+              }
+            })
+          this.setState({ saving: false })
+        })
+        .then(() => this.props.history.push({
+          pathname: '/recordvideo', state: {
+            bioDetails: {
+              charity: this.state.charity,
+              weekly_limits: this.state.bookingLimit,
+              rate: this.state.bookingPrice,
+              profession: this.state.profession,
+              description: this.state.bio
             },
-            saving: false,
-            featuredImageLoading: false,
-            rotations: { featuredImage: "rotate(0deg)", firstImage: "rotate(0deg)", secondImage: "rotate(0deg)", avatar: "rotate(0deg)" }
-        }
-    }
+            images: {
+              featuredImage: this.state.featuredImage,
+              firstImage: this.state.firstImage,
+              secondImage: this.state.secondImage
+            }
+          }
+        })
 
-    componentDidMount() {
-        if (this.props.session.isLoggedIn) {
-
-        }
-        const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
-        this.setState({ ...savedValues })
-        fetch('user/professions/').then(response => {
-            let dropDownList = [];
-            response.data.data.professions.map((profObj, profIndex) => {
-                dropDownList.push({ value: profObj.id, label: profObj.title });
-                profObj.child.map((childObj) => {
-                    dropDownList.push({ value: childObj.id, label: childObj.title });
-                });
-            });
-            return dropDownList;
-        }
         )
-
-            .then(industryItem => this.setState({ industry: industryItem }))
-
     }
 
-    async onFileChange(type = "featuredImage") {
-        const file = document.getElementById(type).files[0];
-        if (await this.checkResolution(file, type)) {
-            await this.getImageData(file, type)
-        }
+  }
+
+  handleOnChange(value) {
+    const { multi } = this.state;
+    if (multi) {
+      this.setState({ multiValue: value });
+    } else {
+      this.setState({ value });
+    }
+  }
+
+  handleFieldChange(fieldType, fieldValue) {
+    if (fieldType === 'profession') {
+      const professionArray = fieldValue.split(',');
+      if (professionArray.length <= 3) {
+        this.setState({ profession: professionArray, errors: { ...this.state.errors, profession: false } });
+      }
+    } else if (fieldType === 'searchTags') {
+      this.setState({ searchTags: fieldValue });
+    } else {
+      this.setState({ [`${fieldType}`]: fieldValue, errors: { ...this.state.errors, [`${fieldType}`]: false } });
+    }
+  }
+
+  isNumberKey(event) {
+    var charCode = event.keyCode;
+    if (([46, 8, 9, 27, 13, 110].indexOf(charCode)) !== -1 ||
+      // Allow: Ctrl/cmd+A
+      (charCode === 65 && (event.ctrlKey === true || event.metaKey === true)) ||
+      // Allow: Ctrl/cmd+C
+      (charCode === 67 && (event.ctrlKey === true || event.metaKey === true)) ||
+      // Allow: Ctrl/cmd+X
+      (charCode === 88 && (event.ctrlKey === true || event.metaKey === true)) ||
+      // Allow: home, end, left, right
+      (charCode >= 35 && charCode <= 39)) {
+      // let it happen, don't do anything
+      return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if ((event.shiftKey || (charCode < 48 || charCode > 57)) && (charCode < 96 || charCode > 105)) {
+      event.preventDefault();
+    }
+  }
+
+
+  validateIsEmpty() {
+    if (!this.state.bio) {
+      this.setState({ errors: { ...this.state.errors, bio: true } })
+      return false
+    }
+    if (!this.state.profession || !this.state.profession[0]) {
+      this.setState({ errors: { ...this.state.errors, profession: true } })
+      return false
     }
 
-    getImageData(file, type) {
-        const reader = new FileReader();
-        reader.onload = async function (e) {
-            const exif = await this.getExif(file, type)
-            this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif} })
-        }.bind(this)
-        if (file) {
-            reader.readAsDataURL(file)
-        }
-
+    if (!this.state.bookingPrice) {
+      this.setState({ errors: { ...this.state.errors, bookingPrice: true } })
+      return false
     }
 
-
-    getExif = (file) => {
-        return new Promise((resolve, reject) => {
-            EXIF.getData(file, function () {
-                const exif = EXIF.getTag(this, "Orientation")
-                switch(exif) {
-                    case 3: 
-                    resolve('rotate(180deg)')
-                    case 6: 
-                    resolve('rotate(90deg)')
-                    case 9: 
-                    resolve('rotate(270deg)')
-                    default:
-                    resolve('rotate(0deg)')
-                }
-            })
-
-        })
-
+    if (!this.state.bookingLimit) {
+      this.setState({ errors: { ...this.state.errors, bookingLimit: true } })
+      return false
     }
 
+    return true
 
 
-    checkResolution(file, type) {
-        let correctResolution = false;
-        var img = new Image();
-        img.src = window.URL.createObjectURL(file);
-        return new Promise((resolve, reject) => {
-            img.onload = () => {
-                var width = img.naturalWidth;
-                var height = img.naturalHeight;
-                window.URL.revokeObjectURL(img.src);
-                if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
-                    (type === 'firstImage' && width >= 400 && height >= 400) ||
-                    (type === 'secondImage' && width >= 400 && height >= 400) ||
-                    (type === 'avatar' && width >= 100 && height >= 100)
-                ) {
-                    correctResolution = true;
-                }
-                resolve(correctResolution)
-            }
+  }
 
-        })
+  renderMultiValueItems = (selectProps) => {
+    return (
+      <LoginContainer.mutiSelectItemWrapper>
+        {selectProps.value.label}
+        <LoginContainer.CloseButton
+          type="button"
+          onClick={(e) => selectProps.onRemove(selectProps.value)}
+        />
+      </LoginContainer.mutiSelectItemWrapper>
+    );
+  }
+
+  FullscreenUploader = (type) => {
+    return (
+      <LoginContainer.FullScreenUploadWrapper >
+        <LoginContainer.FullScreenUploadButton onClick={() => { }}>
+          +
+            </LoginContainer.FullScreenUploadButton>
+        <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
+      </LoginContainer.FullScreenUploadWrapper>
+    )
+
+
+  }
+
+  render() {
+    if (!this.props.session.isLoggedIn) {
+      return <Redirect to="/signuptype" />
     }
+    return (
 
-    uploadImage(type) {
-        return fetch(Api.getImageCredentials, {
-            'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
-        })
-            .then(response => {
-                let filename = response.data.data.fields.key.split('/')
-                filename = filename[2]
-                const formData = new FormData()
-                formData.append('success_action_status', response.data.data.fields.success_action_status);
-                formData.append('signature', response.data.data.fields.signature)
-                formData.append('x-amz-security-token', response.data.data.fields["x-amz-security-token"]);
-                formData.append('acl', response.data.data.fields.acl);
-                formData.append('Access-Control-Allow-Origin', response.data.data.fields["Access-Control-Allow-Origin"]);
-                formData.append('policy', response.data.data.fields.policy);
-                formData.append('key', response.data.data.fields.key);
-                formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
-                formData.append('file', this.state[`${type}File`]);
-                if (type == "firstImage") {
-                    const secondaryImageNames = [...this.state.secondaryImageNames]
-                    secondaryImageNames[0] = filename
-                    this.setState({ secondaryImageNames })
-                }
-                else if (type == "secondImage") {
-                    const secondaryImageNames = [...this.state.secondaryImageNames]
-                    secondaryImageNames[1] = filename
-                    this.setState({ secondaryImageNames })
-                }
-                else {
-                    this.setState({ [`${type}Name`]: filename })
-                }
-                return { formData, url: response.data.data.url }
-            })
-            .then(response => axios.post(response.url, response.formData))
-            .then(response => {
-                // const parser = new DOMParser();
-                // const xmlDoc = parser.parseFromString(response.data, "text/xml");
-                // const imageURL = xmlDoc.getElementsByTagName('Location')[0].childNodes[0].nodeValue;
-                // console.log("url", imageURL)
-                return fetch(`users/user_details/${this.props.session.auth_token.id}/get_details`,
-                    {
-                        'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
-                    }
-                )
-            })
-    }
+      <LoginContainer.wrapper>
+        <LoginContainer>
+          {this.state.saving ?
+            <LoginContainer.loaderWrapper>
+              <Loader />
+            </LoginContainer.loaderWrapper>
+            : null}
 
+          <LoginContainer.LeftSection>
+            <Request.ComponentWrapperScroll
+              autoHide
+              renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+            >
+              <HeaderSection>
+                <Link to="/">
+                  <HeaderSection.LogoImage
+                    src="assets/images/logo_starsona_large.svg"
+                    alt=""
+                  />
+                </Link>
+                <Link to="#">
+                  <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
+                </Link>
+              </HeaderSection>
+              <LoginContainer.Container>
+                <LoginContainer.Heading>Tell your fans about yourself</LoginContainer.Heading>
+                <LoginContainer.HeadingSubText>You can always update these later in your profile </LoginContainer.HeadingSubText>
+              </LoginContainer.Container>
+              <LoginContainer.Ask>
+                <LoginContainer.InputwrapperDiv>
+                  <LoginContainer.InputWrapper>
+                    <LoginContainer.Label>Your bio</LoginContainer.Label>
+                    <LoginContainer.WrapsInput>
 
-    onContinueClick() {
-        if (this.validateIsEmpty()) {
-            this.setState({ saving: true })
-            const bioDetails = {
-                profession: this.state.profession,
-                searchTags: this.state.searchTags,
-                bio: this.state.bio,
-                bookingPrice: this.state.bookingPrice,
-                bookingLimit: this.state.bookingLimit,
-                charity: this.state.charity,
-                featuredImage: this.state.featuredImage,
-                firstImage: this.state.firstImage,
-                secondImage: this.state.secondImage,
-                avatar: this.state.avatar
-            }
-            localStorage.setItem("bioDetails", JSON.stringify(bioDetails));
-            this.uploadImage("featuredImage")
-                .then(() => this.uploadImage("firstImage"))
-                .then(() => this.uploadImage("secondImage"))
-                .then(() => this.uploadImage("avatarImage"))
-                .then(() => {
-                    fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+                      <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
+
+                      <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
                         {
-                            images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
-                            avatar_photo: this.state.avatarImageName,
-                            featured_image: this.state.featuredImageName
-                        }, {
-                            "headers": {
-                                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
-                            }
-                        })
-                    this.setState({ saving: false })
-                })
-                .then(() => this.props.history.push({
-                    pathname: '/recordvideo', state: {
-                        bioDetails: {
-                            charity: this.state.charity,
-                            weekly_limits: this.state.bookingLimit,
-                            rate: this.state.bookingPrice,
-                            profession: this.state.profession,
-                            description: this.state.bio
-                        },
-                        images: {
-                            featuredImage: this.state.featuredImage,
-                            firstImage: this.state.firstImage,
-                            secondImage: this.state.secondImage
+                          this.state.errors.bio ? 'Please enter a valid event title' :
+                            'Have fun with it... no need to be serious'
                         }
-                    }
-                })
-
-                )
-        }
-    }
-
-    handleOnChange(value) {
-        const { multi } = this.state;
-        if (multi) {
-            this.setState({ multiValue: value });
-        } else {
-            this.setState({ value });
-        }
-    }
-
-    handleFieldChange(fieldType, fieldValue) {
-        if (fieldType === 'profession') {
-            const professionArray = fieldValue.split(',');
-            if (professionArray.length <= 3) {
-                this.setState({ profession: professionArray, errors: { ...this.state.errors, profession: false } });
-            }
-        } else if (fieldType === 'searchTags') {
-            this.setState({ searchTags: fieldValue });
-        } else {
-            this.setState({ [`${fieldType}`]: fieldValue, errors: { ...this.state.errors, [`${fieldType}`]: false } });
-        }
-    }
-
-    isNumberKey(event) {
-        var charCode = event.keyCode;
-        if (([46, 8, 9, 27, 13, 110].indexOf(charCode)) !== -1 ||
-            // Allow: Ctrl/cmd+A
-            (charCode === 65 && (event.ctrlKey === true || event.metaKey === true)) ||
-            // Allow: Ctrl/cmd+C
-            (charCode === 67 && (event.ctrlKey === true || event.metaKey === true)) ||
-            // Allow: Ctrl/cmd+X
-            (charCode === 88 && (event.ctrlKey === true || event.metaKey === true)) ||
-            // Allow: home, end, left, right
-            (charCode >= 35 && charCode <= 39)) {
-            // let it happen, don't do anything
-            return;
-        }
-        // Ensure that it is a number and stop the keypress
-        if ((event.shiftKey || (charCode < 48 || charCode > 57)) && (charCode < 96 || charCode > 105)) {
-            event.preventDefault();
-        }
-    }
+                      </LoginContainer.ErrorMsg>
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+                </LoginContainer.InputwrapperDiv>
 
 
-    validateIsEmpty() {
-        if (!this.state.bio) {
-            this.setState({ errors: { ...this.state.errors, bio: true } })
-            return false
-        }
-        if (!this.state.profession || !this.state.profession[0]) {
-            this.setState({ errors: { ...this.state.errors, profession: true } })
-            return false
-        }
-
-        if (!this.state.bookingPrice) {
-            this.setState({ errors: { ...this.state.errors, bookingPrice: true } })
-            return false
-        }
-
-        if (!this.state.bookingLimit) {
-            this.setState({ errors: { ...this.state.errors, bookingLimit: true } })
-            return false
-        }
-        return true
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Your industry</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
 
 
-    }
-
-    FullscreenUploader = (type) => {
-        return (
-            <LoginContainer.FullScreenUploadWrapper >
-                <LoginContainer.FullScreenUploadButton onClick={() => { }} />
-                <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
-            </LoginContainer.FullScreenUploadWrapper>
-        )
-    }
-
-    render() {
-        console.log("state", this.state)
-        if (!this.props.session.isLoggedIn) {
-            return <Redirect to="/signuptype" />
-        }
-        return (
-
-            <LoginContainer.wrapper>
-                <LoginContainer>
-                    {this.state.saving ?
-                        <LoginContainer.loaderWrapper>
-                            <Loader />
-                        </LoginContainer.loaderWrapper>
-                        : null}
-
-                    <LoginContainer.LeftSection>
-                        <HeaderSection>
-                            <Link to="/">
-                                <HeaderSection.LogoImage
-                                    src="assets/images/logo_starsona_large.svg"
-                                    alt=""
-                                />
-                            </Link>
-                            <Link to="#">
-                                <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
-                            </Link>
-                        </HeaderSection>
-                        <LoginContainer.Container>
-                            <LoginContainer.Heading>Tell your fans about yourself</LoginContainer.Heading>
-                            <LoginContainer.HeadingSubText>You can always update these later in your profile </LoginContainer.HeadingSubText>
-                        </LoginContainer.Container>
-                        <LoginContainer.Ask>
-                            <LoginContainer.InputwrapperDiv>
-                                <LoginContainer.InputWrapper>
-                                    <LoginContainer.Label>Your bio</LoginContainer.Label>
-                                    <LoginContainer.WrapsInput>
-
-                                        <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
-
-                                        <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
-                                            {
-                                                this.state.errors.bio ? 'Please enter a valid event title' :
-                                                    'Have fun with it... no need to be serious'
-                                            }
-                                        </LoginContainer.ErrorMsg>
-                                    </LoginContainer.WrapsInput>
-                                </LoginContainer.InputWrapper>
-                            </LoginContainer.InputwrapperDiv>
+                    <MultiSelect
+                      otherOptions={{
+                        clearable: false,
+                        arrowRenderer: null,
+                        valueComponent:(selectProps)=>this.renderMultiValueItems(selectProps),
+                      }}
+                      industry={this.state.industry}
+                      value={this.state.profession}
+                      profession={this.state.profession.join(',')}
+                      handleFieldChange={this.handleFieldChange.bind(this)}
+                    />
+                    <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
+                      {
+                        this.state.errors.profession ? 'Please choose your industry' :
+                          'You can choose a maximum of 3 industries'
+                      }
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
 
 
-                            <LoginContainer.InputWrapper>
-                                <LoginContainer.Label>Your industry</LoginContainer.Label>
-                                <LoginContainer.WrapsInput>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Search tags</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
 
-
-                                    <MultiSelect industry={this.state.industry} value={this.state.profession} profession={this.state.profession.join(',')} handleFieldChange={this.handleFieldChange.bind(this)} />
-                                    <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
-                                        {
-                                            this.state.errors.profession ? 'Please choose your industry' :
-                                                'You can choose a maximum of 3 industries'
-                                        }
+                    <SelectTags searchTags={this.state.searchTags} value={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
+                    <LoginContainer.ErrorMsg isError={false}>
+                      Add hashtags to help Fans find you quicker
                                     </LoginContainer.ErrorMsg>
-                                </LoginContainer.WrapsInput>
-                            </LoginContainer.InputWrapper>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
 
 
-                            <LoginContainer.InputWrapper>
-                                <LoginContainer.Label>Search tags</LoginContainer.Label>
-                                <LoginContainer.WrapsInput>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Your charity</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
 
-                                    <SelectTags searchTags={this.state.searchTags} value={this.state.searchTags} handleFieldChange={this.handleFieldChange.bind(this)} />
-                                    <LoginContainer.ErrorMsg isError={false}>
-                                        Add hashtags to help Fans find you quicker
-                                    </LoginContainer.ErrorMsg>
-                                </LoginContainer.WrapsInput>
-                            </LoginContainer.InputWrapper>
+                    <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
+
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
 
 
-                            <LoginContainer.InputWrapper>
-                                <LoginContainer.Label>Your charity</LoginContainer.Label>
-                                <LoginContainer.WrapsInput>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
-
-                                </LoginContainer.WrapsInput>
-                            </LoginContainer.InputWrapper>
-
-
-                            <LoginContainer.InputWrapper>
-                                <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
-                                <LoginContainer.WrapsInput>
-
-                                    <LoginContainer.Input type="tel" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                                        onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
-                                        value={this.state.bookingPrice} />
-                                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
-                                        {
-                                            this.state.errors.bookingPrice ? 'Please enter your booking price' :
-                                                'Our pricing engines will automatically maximize your earnings based on demand.'
-                                        }
-                                    </LoginContainer.ErrorMsg>
-                                </LoginContainer.WrapsInput>
-                            </LoginContainer.InputWrapper>
+                    <LoginContainer.Input type="tel" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                      onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
+                      value={this.state.bookingPrice} />
+                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
+                      {
+                        this.state.errors.bookingPrice ? 'Please enter your booking price' :
+                          'Our pricing engines will automatically maximize your earnings based on demand.'
+                      }
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
 
 
-                            <LoginContainer.InputWrapper>
-                                <LoginContainer.Label>Booking limit</LoginContainer.Label>
-                                <LoginContainer.WrapsInput>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.Label>Booking limit</LoginContainer.Label>
+                  <LoginContainer.WrapsInput>
 
-                                    <LoginContainer.Input type="tel" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                                        value={this.state.bookingLimit}
-                                        onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
-                                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
-                                        {
-                                            this.state.errors.bookingLimit ? 'Please enter your booking limit' :
-                                                'What\'s the maximum number of open bookings you want to offer at any given time?'
-                                        }
-                                    </LoginContainer.ErrorMsg>
-                                </LoginContainer.WrapsInput>
-                            </LoginContainer.InputWrapper>
+                    <LoginContainer.Input type="tel" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                      value={this.state.bookingLimit}
+                      onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
+                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
+                      {
+                        this.state.errors.bookingLimit ? 'Please enter your booking limit' :
+                          'What\'s the maximum number of open bookings you want to offer at any given time?'
+                      }
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
 
-                        </LoginContainer.Ask>
-                    </LoginContainer.LeftSection>
-                    <LoginContainer.FooterLayout>
-                        <FooterSection>
-                            <FooterSection.LeftSection>
-                            </FooterSection.LeftSection>
-                            <FooterSection.RightSection>
-                                {this.state.featuredImage != null && (
-                                    this.state.firstImage != null && this.state.secondImage != null
-                                ) ?
-                                    <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
-                                        {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
-                                    :
-                                    <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick() }}>Continue </FooterSection.DisabledButton>
-                                }
+              </LoginContainer.Ask>
+            </Request.ComponentWrapperScroll>
+          </LoginContainer.LeftSection>
+          <LoginContainer.FooterLayout>
+            <FooterSection>
+              <FooterSection.LeftSection>
+              </FooterSection.LeftSection>
+              <FooterSection.RightSection>
+                {this.state.featuredImage != null && (
+                  this.state.firstImage != null && this.state.secondImage != null
+                ) ?
+                  <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
+                    {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
+                  :
+                  <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick() }}>Continue </FooterSection.DisabledButton>
+                }
 
-                            </FooterSection.RightSection>
-                        </FooterSection>
-                    </LoginContainer.FooterLayout>
-                    <LoginContainer.RightSection>
-                        <LoginContainer.ImageWrapper>
-                            <LoginContainer.FeaturedImage style={{transform: this.state.rotations.featuredImage}}imageType="featured" image={this.state.featuredImage}>
-                                <LoginContainer.ImageInner>
-                                    {this.state.featuredImage != null ?
-                                        this.FullscreenUploader("featuredImage") :
-                                        <React.Fragment>
-                                            <LoginContainer.UploadWrapper >
-                                                <LoginContainer.UploadButton onClick={() => { }} />
-                                                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
-                                            </LoginContainer.UploadWrapper>
-                                            <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
-                                            <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
-                                        </React.Fragment>
-                                    }
-                                </LoginContainer.ImageInner>
-                            </LoginContainer.FeaturedImage>
-                            <LoginContainer.FirstImage imageType="firstImage" image={this.state.firstImage}>
-                                <LoginContainer.ImageInner>
-                                    {this.state.firstImage != null ?
+              </FooterSection.RightSection>
+            </FooterSection>
+          </LoginContainer.FooterLayout>
 
-                                        this.FullscreenUploader("firstImage") :
-                                        <React.Fragment>
-                                            <LoginContainer.UploadWrapper>
-                                                <LoginContainer.UploadButton onClick={() => { }} />
-                                                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
 
-                                            </LoginContainer.UploadWrapper>
-                                            <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
-                                            <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
-                                        </React.Fragment>
-                                    }
-                                </LoginContainer.ImageInner>
 
-                            </LoginContainer.FirstImage>
-                            <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
-                                <LoginContainer.ImageInner>
-                                    {this.state.secondImage != null ?
+          <LoginContainer.RightSection>
+            <LoginContainer.ImageWrapper>
+              <LoginContainer.FeaturedImage imageType="featured" image={this.state.featuredImage}>
+                {/* {this.state.featuredImage != null ?
+                            <img src={this.state.featuredImage}/>
+                            : */}
+                <LoginContainer.ImageInner>
+                  {this.state.featuredImage != null ?
 
-                                        this.FullscreenUploader("secondImage") :
-                                        <React.Fragment>
-                                            <LoginContainer.UploadWrapper>
-                                                <LoginContainer.UploadButton onClick={() => { }} />
-                                                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
-                                            </LoginContainer.UploadWrapper>
-                                            <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
-                                            <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
-                                        </React.Fragment>
-                                    }
-                                </LoginContainer.ImageInner>
+                    this.FullscreenUploader("featuredImage") :
+                    <React.Fragment>
+                      <LoginContainer.UploadWrapper >
+                        <LoginContainer.UploadButton onClick={() => { }} />
+                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                      </LoginContainer.UploadWrapper>
+                      <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
+                      <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                    </React.Fragment>
+                  }
+                </LoginContainer.ImageInner>
+              </LoginContainer.FeaturedImage>
+              <LoginContainer.FirstImage imageType="firstImage" image={this.state.firstImage}>
+                <LoginContainer.ImageInner>
+                  {this.state.firstImage != null ?
 
-                            </LoginContainer.SecondImage>
+                    this.FullscreenUploader("firstImage") :
+                    <React.Fragment>
+                      <LoginContainer.UploadWrapper>
+                        <LoginContainer.UploadButton onClick={() => { }} />
+                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
 
-                            <LoginContainer.Avatar style={{ backgroundColor: "grey" }} imageType="avatar" image={this.state.avatar}>
-                                <LoginContainer.UploadWrapper>
-                                    <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }}>
-                                        +
-                                </LoginContainer.UploadButton>
-                                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
-                                </LoginContainer.UploadWrapper>
-                            </LoginContainer.Avatar>
+                      </LoginContainer.UploadWrapper>
+                      <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
+                      <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                    </React.Fragment>
+                  }
+                </LoginContainer.ImageInner>
 
-                        </LoginContainer.ImageWrapper>
-                    </LoginContainer.RightSection>
-                </LoginContainer>
-            </LoginContainer.wrapper>
-        )
-    }
+              </LoginContainer.FirstImage>
+              <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
+                <LoginContainer.ImageInner>
+                  {this.state.secondImage != null ?
+
+                    this.FullscreenUploader("secondImage") :
+                    <React.Fragment>
+                      <LoginContainer.UploadWrapper>
+                        <LoginContainer.UploadButton onClick={() => { }} />
+                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                      </LoginContainer.UploadWrapper>
+                      <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
+                      <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                    </React.Fragment>
+                  }
+                </LoginContainer.ImageInner>
+
+              </LoginContainer.SecondImage>
+
+              <LoginContainer.AvatarContainer>
+                <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
+                  <LoginContainer.UploadWrapper>
+                    <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
+                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
+                  </LoginContainer.UploadWrapper>
+                </LoginContainer.Avatar>
+                <LoginContainer.HeadingWrapper>
+                  <LoginContainer.FeaturedText> Profile Image </LoginContainer.FeaturedText>
+                  <LoginContainer.CaptionText>At least 100x100 </LoginContainer.CaptionText>
+                </LoginContainer.HeadingWrapper>
+              </LoginContainer.AvatarContainer>
+            </LoginContainer.ImageWrapper>
+          </LoginContainer.RightSection>
+        </LoginContainer>
+      </LoginContainer.wrapper>
+    )
+  }
 }
