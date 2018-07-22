@@ -6,6 +6,7 @@ export default class MultiSelect extends React.Component {
     render() {
         return (
                 <Select
+                    {...this.props.otherOptions}
                     closeOnSelect={false}
                     multi
                     options={this.props.industry}
