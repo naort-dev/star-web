@@ -3,7 +3,7 @@ import Confirm from './Confirm.component';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
-import { requestVideo } from '../../store/shared/actions/processPayments';
+import { starsonaRequest } from '../../store/shared/actions/processPayments';
 
 
 const mapStateToProps = state => ({
@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
-  requestVideo: (bookingData, publicStatus) => dispatch(requestVideo(bookingData, publicStatus)),
+  starsonaRequest: (bookingData, publicStatus) => dispatch(starsonaRequest(bookingData, publicStatus)),
   resetPaymentDetails: () => dispatch(resetPaymentDetails()),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
 });

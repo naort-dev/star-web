@@ -92,7 +92,7 @@ export default class Confirm extends React.Component {
         );
       case 3:
         // Q&A
-        return <OrderDetailsItem title="Title" value={props.question} />;
+        return <OrderDetailsItem title="Title" value={that.question} />;
       default: return null;
     }
   }
@@ -108,7 +108,7 @@ export default class Confirm extends React.Component {
 
   handleBooking = () => {
     if (this.props.isLoggedIn) {
-      this.props.requestVideo(this.state.bookingData, this.state.publicRequest);
+      this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
       this.setState({ paymentMode: true });
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
