@@ -71,10 +71,10 @@ LoginContainer.RightSection = styled.div`
 LoginContainer.mutiSelectItemWrapper = styled.div`
   display: inline-block;
   border: 2px solid #FF6C58;
-  padding: 5px 10px;
+  padding: 5px;
   color: #FF6C58;
   border-radius: 20px;
-  margin: 3px;
+  margin: 9px;
   font-size: 14px;
 `
 LoginContainer.CloseButton = styled.input`
@@ -240,6 +240,9 @@ LoginContainer.Avatar = styled.span`
     objectFit: "contain"
   })
   }
+  @media(min-width: 768px) {
+    background: url('assets/images/avatar-grey.svg') no-repeat center;
+  }
 `;
 
 LoginContainer.UploadWrapper = styled.div`
@@ -248,6 +251,11 @@ LoginContainer.UploadWrapper = styled.div`
     width: 100px;
     height: 100px;
     display: inline-block;
+    @media(min-width: 768px) {
+      width: 100%;
+      height: auto;
+      text-align: center;
+    }
   }
 `;
 
@@ -277,6 +285,10 @@ LoginContainer.UploadInput = styled.input`
     left: 0;
     top: 0;
     opacity: 0;
+    @media(min-width: 768px) {
+      left: initial;
+      right: 25%;
+    }
   `;
 
 
@@ -492,7 +504,7 @@ LoginContainer.ErrorDiv = styled.div`
 `;
 LoginContainer.ErrorMsg = styled.div`
   color:red;
-  font-size: 11px;
+  font-size: 12px;
   margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
@@ -752,6 +764,9 @@ border: 2px solid grey;
 `
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  .Select-multi-value-wrapper {
+    padding: 9px;
+  }
   @media(min-width:768px){
     width:100%;
   }
@@ -876,17 +891,13 @@ LoginContainer.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top:1%;
-  height:120px;
-
   @media(min-width:768px){
     flex-direction: row;
     align-items: flex-start;
     margin: 0px 120px;
     margin-top:5%;
-    height:40px;
   }
   @media(min-width: 1025px) {
-    height:60px;
     margin: 0px 0px;
     margin-top: 30px;
   }
