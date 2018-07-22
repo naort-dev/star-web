@@ -17,7 +17,8 @@ class Api {
   static otherRelation = 'request/other_relation/';
   static getEphemeralKey = 'payments/generatekey/';
   static createCharge = 'payments/createcharge/';
-  static requestVideo = 'request/stargramz/';
+  static starsonaRequest = 'request/stargramz/';
+  static starsonaVideo = 'request/stargramz_video/';
   static getSourceList = 'payments/stripe_cards/';
   static modifySourceList = 'payments/attach_detach_source/';
   static forgotPassword = 'user/forgotpassword/';

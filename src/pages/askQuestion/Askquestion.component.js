@@ -15,7 +15,7 @@ export default class Askquestion extends React.Component {
     super(props);
     this.state = {
       loginRedirect: false,
-      QuestionValue: '',
+      question: '',
     };
   }
   goBack = () => {
@@ -66,11 +66,16 @@ export default class Askquestion extends React.Component {
     //     )
     // })
   }
+  setQuestion = (question) => {
+    this.setState({question});
+  }
   createBookingObject = (fileNameValue) => {
     const bookingData = {
-      QuestionValue: this.props.QuestionValue,
+      starDetail: this.props.userDetails,
+      starPrice: this.props.celebrityDetails,
+      question: this.state.question,
       fileName: fileNameValue,
-      type: 1,
+      type: 3,
 
     };
     return bookingData;
@@ -143,6 +148,8 @@ export default class Askquestion extends React.Component {
                           <Request.WrapsInput>
                             <Request.InputQuestion
                               placeholder="Best to start your question with “What”, “How” or “Why”."
+                              value={this.state.question}
+                              onChange={event => this.setQuestion(event.target.value)}
                             />
                             <Request.ErrorMsg></Request.ErrorMsg>
                           </Request.WrapsInput>
@@ -164,13 +171,7 @@ export default class Askquestion extends React.Component {
             </Request.LeftSection>
             <Request.RightSection>
               <Request.ImageStackWrapper>
-                {/* <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                /> */}
-
                 <VideoRecorder {...this.props} />
-
               </Request.ImageStackWrapper>
             </Request.RightSection>
           </Request>
