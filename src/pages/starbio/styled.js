@@ -36,6 +36,7 @@ LoginContainer.LeftSection = styled.div`
 `;
 LoginContainer.RightSection = styled.div`
   width: 100%;
+  margin-top: 40px;
   @media(min-width: 1025px){
     background-color:rgba(248, 248, 248, 1);
     width: 55%;
@@ -48,6 +49,7 @@ LoginContainer.RightSection = styled.div`
     flex-wrap: wrap;
     height: 100vh;
     padding-top: 13vh;
+    margin-top: 0px;
   }
 `;
 
@@ -452,6 +454,10 @@ LoginContainer.ErrorMsg = styled.div`
   margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
+  ${props => !props.isError && ({
+    color: "grey"
+  })
+  }
 `;
 LoginContainer.Label = styled.div`
   color:#333333;
@@ -828,19 +834,22 @@ LoginContainer.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top:1%;
-  height:90px;
+  height:120px;
 
   @media(min-width:768px){
     flex-direction: row;
     align-items: flex-start;
+    margin: 0px 120px;
     margin-top:5%;
     height:40px;
   }
   @media(min-width: 1025px) {
-    height:40px;
+    height:60px;
+    margin: 0px 0px;
     margin-top: 30px;
   }
   @media(min-width: 1920px) {
+    margin: 0px 0px;
     margin-top: 50px;
   }
 `;
