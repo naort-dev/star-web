@@ -81,17 +81,18 @@ LoginContainer.FeaturedImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- height: 150px;
+ height: 175px;
  background-color: #cccccc;
  ${props => props.image != null && ({
     background: `url(${props.image}) no-repeat`,
     backgroundPosition: "center",
-    backgroundSize: "cover",
+    backgroundSize: "contain",
   })
   }
 
 @media(min-width: 768px){
-  height: 250px;  
+  height: 365px;
+  
 }
 
 @media(min-width: 1025px){
@@ -112,19 +113,19 @@ width: 49vw;
 display: flex;
 justify-content: center;
 align-items: center;
-height: 150px;
+height: 175px;
 margin: 10px 0px;
 background-color: #cccccc;
 ${props => props.image != null && ({
     background: `url(${props.image}) no-repeat`,
     backgroundPosition: "center",
-    backgroundSize: "cover",
+    backgroundSize: "cover"
   })
   }
 
 @media(min-width: 768px){
    width: 49.5vw;
-   height: 250px;  
+   height: 365px;  
 }
 
 @media(min-width: 1025px){
@@ -142,7 +143,7 @@ width: 49vw;
 display: flex;
 justify-content: center;
 align-items: center;
-height:150px;
+height:175px;
 background-color: #cccccc;
 margin: 10px 0px;
 ${props => props.image != null && ({
@@ -154,7 +155,7 @@ ${props => props.image != null && ({
 
 @media(min-width: 768px){
   width: 49.5vw;  
-  height: 250px;  
+  height: 365px;  
 }
 
 @media(min-width: 1025px){
@@ -223,8 +224,11 @@ border: 0;
 font-size: 20px;
 font-weight: bold;
 text-align: center;
-@media(min-width: 1025px){
-
+height: 40px;
+width: 40px;
+@media(min-width: 768px){
+  height: 40px;
+  width: 40px;
 }
 `;
 
@@ -906,8 +910,13 @@ display: flex;
 `
 LoginContainer.FeaturedText = styled.div`
 font-size: 16px;
-font-weight: 700;
+font-family: Ubuntu-bold
 margin-top: 2%;
+
+@media(min-width:768px){
+  font-size: 23px;
+}
+
 @media(min-width:1025px){
 font-size: 24px;
 }
@@ -915,6 +924,13 @@ font-size: 24px;
 
 LoginContainer.CaptionText = styled.div`
 font-size: 14px;
+font-family: Ubuntu-light;
+@media(min-width:768px){
+  font-size: 15px;
+}
+@media(min-width:1025px){
+  font-size: 16px;
+}
 `;
 
 LoginContainer.loaderWrapper = styled.div`
