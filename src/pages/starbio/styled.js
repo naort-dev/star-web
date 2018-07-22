@@ -43,7 +43,7 @@ LoginContainer.LeftSection = styled.div`
     width: 45%;
     padding: 0px 0px;
     position: relative;
-    padding-bottom: 83px;
+    padding-bottom: 100px;
   }
 `;
 LoginContainer.RightSection = styled.div`
@@ -76,6 +76,9 @@ LoginContainer.mutiSelectItemWrapper = styled.div`
   border-radius: 20px;
   margin: 9px;
   font-size: 14px;
+  @media(min-width: 1025px) {
+    margin: 7.5px;
+  }
 `
 LoginContainer.CloseButton = styled.input`
   display: inline-block;
@@ -243,6 +246,14 @@ LoginContainer.Avatar = styled.span`
   @media(min-width: 768px) {
     background: url('assets/images/avatar-grey.svg') no-repeat center;
   }
+  @media(min-width: 1025px) {
+    > div {
+      height: 100%;
+      input {
+        right: 0;
+      }
+    }
+  }
 `;
 
 LoginContainer.UploadWrapper = styled.div`
@@ -260,10 +271,10 @@ LoginContainer.UploadWrapper = styled.div`
 `;
 
 LoginContainer.UploadButton = styled.button`
-
 background: url('assets/images/plus-icon.svg') no-repeat center;
 color: black;
 background-color: transparent;
+cursor: pointer;
 border: 0;
 width: 40px;
 height: 40px;
@@ -284,6 +295,7 @@ LoginContainer.UploadInput = styled.input`
     position: absolute;
     left: 0;
     top: 0;
+    cursor: pointer;
     opacity: 0;
     @media(min-width: 768px) {
       left: initial;
@@ -527,7 +539,6 @@ LoginContainer.Label = styled.div`
     padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:13px;
     width:69%;
   
   }
@@ -681,12 +692,6 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
-  @media(min-width:1025px){
-    font-size:20px
-  }
-  @media(min-width:1920px){
-    font-size:22px;
-  }
 `;
 
 const FooterSection = styled.div`
@@ -766,6 +771,9 @@ LoginContainer.WrapsInput = styled.div`
   width:100%;
   .Select-multi-value-wrapper {
     padding: 9px;
+    @media(min-width: 1025px) {
+      padding: 7.5px;
+    }
   }
   @media(min-width:768px){
     width:100%;
