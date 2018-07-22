@@ -15,7 +15,11 @@ export default class Askquestion extends React.Component {
     super(props);
     this.state = {
       loginRedirect: false,
+<<<<<<< HEAD
       question: '',
+=======
+      QuestionValue: '',
+>>>>>>> d32fb28d80d4072100c88754d7a34dfdb794f00f
     };
   }
   goBack = () => {
