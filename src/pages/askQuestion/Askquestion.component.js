@@ -33,8 +33,14 @@ export default class Askquestion extends React.Component {
   handleBooking = () => {
     this.setState({ loader: true });
     if (this.props.isLoggedIn) {
-      const askVideo = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
-      getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, askVideo)
+      let uploadVideo;
+      if (this.props.videoUploader.savedFile != null) {
+        uploadVideo = this.props.videoUploader.savedFile;
+      }
+      else {
+        uploadVideo = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
+      }
+      getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
         .then((response) => {
           if (response && response.filename) {
             axios.post(response.url, response.formData).then(() => {
