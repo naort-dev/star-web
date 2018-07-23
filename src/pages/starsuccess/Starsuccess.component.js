@@ -32,7 +32,7 @@ export default class Starsuccess extends React.Component {
                                 />
                             </Link>
                             <Link to="#">
-                                <HeaderSection.RightDiv>{this.props.session.auth_token.first_name}</HeaderSection.RightDiv>
+                                <HeaderSection.RightDiv>{this.props.session.auth_token.first_name} {this.props.session.auth_token.last_name}</HeaderSection.RightDiv>
                             </Link>
                         </HeaderSection>
 
