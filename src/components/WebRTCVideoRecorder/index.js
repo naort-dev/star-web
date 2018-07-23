@@ -84,7 +84,7 @@ export default class VideoRecorder extends React.Component {
         this.setState({ extensionError: false, play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        const allowedExtensions = /((\.mp4)|(\.mov))$/i;
+        const allowedExtensions = /((\.mp4)|(\.MOV))$/i;
         if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
             this.setState({ extensionError: true })
         }
@@ -116,12 +116,12 @@ export default class VideoRecorder extends React.Component {
         })
             .then(() => {
 
-                let options
-                if (MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
-                    options = { mimeType: 'video/mp4;codecs=h264 ' }
+                let options = { mimeType: 'video/webm', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000 }
+                if (!MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
+                    options = { mimeType: 'video/webm;codecs=vp9 ' }
                 }
-                else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-                    options = { mimeType: 'video/webm;codecs=vp9' };
+                else if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+                    options = { mimeType: 'video/webm;codecs=vp8' };
                     // if (!MediaRecorder.isTypeSupported(options.mimeType)) {
                     //     options = { mimeType: 'video/webm' };
                     //     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
@@ -184,7 +184,7 @@ export default class VideoRecorder extends React.Component {
 
                         <VideoRecorderDiv.UploadWrapper>
                             <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
-                            <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4" onChange={() => { this.fileUpload() }} type="file" />
+                            <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => { this.fileUpload() }} type="file" />
                         </VideoRecorderDiv.UploadWrapper>
                     </VideoRecorderDiv>
                 }
