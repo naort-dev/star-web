@@ -6,6 +6,7 @@ export default class MultiSelect extends React.Component {
     render() {
         return (
                 <Select
+                    {...this.props.otherOptions}
                     closeOnSelect={false}
                     multi
                     options={this.props.industry}
@@ -13,7 +14,6 @@ export default class MultiSelect extends React.Component {
                     placeholder="Select your favourite(s)"
                     simpleValue
                     value={this.props.profession}
-                    placeholder={"choose your industry"}
                 />
         )
     }

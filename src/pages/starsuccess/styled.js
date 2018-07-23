@@ -6,7 +6,6 @@ const LoginContainer = styled.div`
   padding: 0px 0px;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
@@ -68,12 +67,7 @@ LoginContainer.FeaturedImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
+
 
 `;
 
@@ -84,12 +78,6 @@ LoginContainer.FirstImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
 `;
 
 LoginContainer.SecondImage = styled.div`
@@ -99,12 +87,6 @@ LoginContainer.SecondImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
 `;
 
 LoginContainer.FirstLastNameWrapper = styled.div`
@@ -610,29 +592,53 @@ LoginContainer.SignupLine = styled.div`
  LoginContainer.SuccessContainer = styled.div`
   height: 80%;
   width: 100%;
-  padding: 0 60px;
+  padding: 0px 24px;
   align-items: center;
   justify-content: center;
   display: flex;
   flex-direction: column;
+  @media(min-width:768px){
+    padding: 0px 100px;
+    height:45%;
+  }
+  @media(min-width:1025px){
+    height:80%;
+    padding:0px 65px;
+  }
  `;
 
 
  LoginContainer.SuccessText = styled.p`
-  font-size: 20px;
+  font-size: 18px;
   margin-top: 5%;
+  color:rgba(51, 51, 51, 1);
+  font-family: 'Ubuntu-Regular';
   margin-bottom: 5%;
   text-align: left;
   width: 100%;
  `;
 
  LoginContainer.SuccessTextBold = styled.p`
- font-size: 20px;
+ font-size: 18px;
  margin-top: 5%;
+ font-family: 'Ubuntu-Bold';
  margin-bottom: 5%;
  text-align: left;
  width: 100%;
- font-weight: 700;
+`;
+
+LoginContainer.Image = styled.img`
+ height: 100%;
+ width: 100%;
+`;
+
+LoginContainer.FullScreenImageWrapper = styled.div`
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export { LoginContainer, HeaderSection, FooterSection };

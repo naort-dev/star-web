@@ -1,19 +1,12 @@
 import styled from 'styled-components';
 
 const VideoRecorderDiv = styled.div`
-  height: 80%;
-  width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  @media(min-width:1025px){
-    width: 100%;
+  @media(min-width: 1025px) {
     height: 100%;
-  }
-  @media(min-width:768px){
-    width: 100%;
-    height: 90%;
   }
 `;
 
@@ -38,7 +31,6 @@ VideoRecorderDiv.VideoContainer = styled.div`
 VideoRecorderDiv.Video = styled.video`
   height: 100%;
   width: 100%;
-  object-fit: contain;
   @media(min-width:1025px){
     width: 100%;
     height: 100%
@@ -80,37 +72,28 @@ VideoRecorderDiv.NoVideoContainer = styled.div`
 
 VideoRecorderDiv.NoVideoText = styled.div`
 font-family: 'Ubuntu-Bold';
-font-size: 25px;
-margin-top: 50%;
+font-size: 16px;
 text-align: center;
 color: #FF6C58;
-
-
-@media(min-width:768px){
-  font-size: 32px;
-}
+margin-top:10%;
 @media(min-width:1025px){
-  font-size:35px;
-}
-@media(min-width:1920px){
-  font-size:38px;
+  font-size: 20px;
 }
 `;
 
 VideoRecorderDiv.NoVideoButton = styled.button`
-margin-top: 10px;
-background-color: #fff; 
-color: #FF6C58;
-padding: 4px 30px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size: 14px;
-font-family: 'Ubuntu-Bold';
-outline:none;
-border-radius:5px;
-border: 2px solid #FF6C58;
-
+  margin-top: 10px;
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 4px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
 `;
 
 
@@ -131,10 +114,6 @@ VideoRecorderDiv.UploadInput = styled.input`
     top: 0;
     opacity: 0;
     cursor: pointer;
-    width:160px;
-    height:28px;
-    margin-top: 10px;
-
   `;
 
   VideoRecorderDiv.LoaderWrapper = styled.div`
@@ -146,15 +125,15 @@ VideoRecorderDiv.UploadInput = styled.input`
   bottom: 0;
   background-color: rgba(0,0,0, 0.3);
   `;
-
-
+  
   VideoRecorderDiv.InfoText = styled.div`
-  font-size: 20px;
-  color: #FFFFFF;
-  font-family: 'Ubuntu-Medium';
-  font-style: italic;
-  text-align: center;
+    font-size: 20px;
+    color: #FFFFFF;
+    font-family: 'Ubuntu-Medium';
+    font-style: italic;
+    text-align: center;
   `;
+
 
 
 export default VideoRecorderDiv;

@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 
 const mapStateToProps = state => ({
-   session: state.session
+   session: state.session,
+   imageViewer: state.imageViewer
   });
 
 export default withRouter(connect(mapStateToProps)(Starsuccess))

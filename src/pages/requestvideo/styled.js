@@ -24,9 +24,7 @@ const Request = styled.section`
   height: 100%;
   background-color: #F8F8F8;
  }
- @media(min-width: 1920px) {
-  padding-top: 72px;
-}
+
  
 `;
 Request.Wrapper = styled.div`
