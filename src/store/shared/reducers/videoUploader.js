@@ -2,7 +2,8 @@ import { SAVE_VIDEO} from '../actions/videoUploader';
 
 
 const initalState = {
-   savedFile: null
+   savedFile: null,
+   extension: null
 };
 
 export default (state = { ...initalState }, action) => {
@@ -10,7 +11,8 @@ export default (state = { ...initalState }, action) => {
         case SAVE_VIDEO:
             return {
                 ...state,
-                savedFile: action.payload
+                savedFile: action.payload.videoFile,
+                extension: action.payload.extension
             }
         
         default:

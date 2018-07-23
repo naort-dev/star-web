@@ -40,7 +40,8 @@ export default class Starbio extends React.Component {
         bookingLimit: false,
 
       },
-      saving: false
+      saving: false,
+      extensions: { featuredImage: null, firstImage: null, secondImage: null, avatarImage: null }
     }
   }
 
@@ -78,9 +79,13 @@ export default class Starbio extends React.Component {
   getImageData(file, type) {
     this.setState({ loaders: { ...this.state.loaders, [`${type}`]: false } })
     const reader = new FileReader();
+    const extensionType = type === 'avatar' ? 'avatarImage' : type; 
     reader.onload = async function (e) {
       const exif = await this.getExif(file, type)
-      this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true } })
+      this.setState({
+        [type]: reader.result, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true },
+        extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
+      })
     }.bind(this)
     if (file) {
       reader.readAsDataURL(file)
@@ -137,7 +142,7 @@ export default class Starbio extends React.Component {
 
 
   uploadImage(type) {
-    return fetch(Api.getImageCredentials, {
+    return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
       .then(response => {
@@ -172,7 +177,7 @@ export default class Starbio extends React.Component {
       .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
         'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
       })
-    )
+      )
   }
 
 
