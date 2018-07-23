@@ -18,7 +18,6 @@ export default class SelectTags extends React.Component {
                     onChange={(value) => this.props.handleFieldChange('searchTags', value)}
                     value={this.props.searchTags}
                     showNewOptionAtTop={true}
-                    placeholder={"Add hashtags to help Fans find you quicker"}
 
                 />
         )

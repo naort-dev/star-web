@@ -14,7 +14,6 @@ export default class MultiSelect extends React.Component {
                     placeholder="Select your favourite(s)"
                     simpleValue
                     value={this.props.profession}
-                    placeholder={"You can choose a maximum of 3 industries"}
                 />
         )
     }
