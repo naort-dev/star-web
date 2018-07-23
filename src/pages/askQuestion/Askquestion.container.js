@@ -3,7 +3,7 @@ import Askquestion from './Askquestion.component';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { saveVideo } from '../../store/shared/actions/videoUploader'
+import { saveVideo } from '../../store/shared/actions/videoUploader';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   videoRecorder: state.videoRecorder,
-  session: state.session
+  session: state.session,
+  videoUploader: state.videoUploader,
 });
 
 const mapDispatchToProps = dispatch => ({
