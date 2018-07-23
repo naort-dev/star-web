@@ -35,15 +35,16 @@ export default class Askquestion extends React.Component {
       getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, askVideo)
         .then((response) => {
           if (response && response.filename) {
-            const bookObj = this.createBookingObject(response.filename);
-            if (bookObj) {
-              localStorage.setItem('bookingData', JSON.stringify(bookObj));
-              this.props.setBookingDetails(bookObj);
-              this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
-            }
+            axios.post(response.url, response.formData).then(() => {
+              const bookObj = this.createBookingObject(response.filename);
+              if (bookObj) {
+                localStorage.setItem('bookingData', JSON.stringify(bookObj));
+                this.props.setBookingDetails(bookObj);
+                this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+              }
+            });
           }
-        }
-        )
+        });
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
       this.setState({ loginRedirect: true });
