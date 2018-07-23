@@ -16,14 +16,6 @@ export default class Starsuccess extends React.Component {
         this.props.history.push('/')
     }
 
-
-
-
-
-
-
-
-
     render() {
         if (!this.props.session.isLoggedIn) {
             return <Redirect to="/signuptype" />

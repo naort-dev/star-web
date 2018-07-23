@@ -14,11 +14,12 @@ export default class StarsignUpVideo extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.state = { upload: false }
   }
+ 
 
   onSubmit() {
     this.setState({ upload: true })
     let signupVideo
-    if(this.props.videoUploader.savedFile != null) {
+    if (this.props.videoUploader.savedFile != null) {
       signupVideo = this.props.videoUploader.savedFile;
     }
     else {
@@ -49,6 +50,10 @@ export default class StarsignUpVideo extends React.Component {
     if (!this.props.isLoggedIn) {
       return <Redirect to={locations.signupType} />
     }
+
+    if (!this.props.location.state ) {
+      return <Redirect to="/starbio" />
+    }
     return (
       <SignupContainer>
         {this.state.upload ?
@@ -56,17 +61,17 @@ export default class StarsignUpVideo extends React.Component {
             <Loader />
           </SignupContainer.loaderWrapper>
           : null}
-          <HeaderSection>
-            <Link to="/">
-              <HeaderSection.LogoImage
-                src="assets/images/logo_starsona_large.svg"
-                alt=""
-              />
-            </Link>
+        <HeaderSection>
+          <Link to="/">
+            <HeaderSection.LogoImage
+              src="assets/images/logo_starsona_large.svg"
+              alt=""
+            />
+          </Link>
 
-            <Link to="#">
-              <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
-            </Link>
+          <Link to="#">
+            <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
+          </Link>
         </HeaderSection>
         <SignupContainer.RightSection>
           <SignupContainer.recorderWrapper>

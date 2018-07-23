@@ -32,7 +32,7 @@ export default class VideoRecorder extends React.Component {
                     aspectRatio: { ideal: 1.7777777778 }
                 }
             })
-                .then(() => { this.setState({browserSupport: true}) }, (err) => this.setState({ browserSupport: false }))
+                .then(() => { this.setState({ browserSupport: true }) }, (err) => this.setState({ browserSupport: false }))
 
         }
     }
@@ -81,16 +81,16 @@ export default class VideoRecorder extends React.Component {
     }
 
     fileUpload() {
-        this.setState({ extensionError: false,  play: false })
+        this.setState({ extensionError: false, play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        const allowedExtensions = /(\.mp4)$/i;
+        const allowedExtensions = /((\.mp4) | (\.MOV))$/i;
         if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
             this.setState({ extensionError: true })
         }
         else {
             const fileURL = URL.createObjectURL(file)
-            this.setState({ play: true}, () => document.getElementById('fallback-video').src = fileURL)
+            this.setState({ play: true }, () => document.getElementById('fallback-video').src = fileURL)
             this.props.onSaveVideo(file)
             // reader.addEventListener("load", function () {
             //     getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
@@ -135,23 +135,21 @@ export default class VideoRecorder extends React.Component {
             }
         })
             .then(() => {
-                var options = { mimeType: 'video/mp4;codecs=vp9' };
-                if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                    options = { mimeType: 'video/mp4;codecs=vp8' };
-                    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                        options = { mimeType: 'video/mp4' };
-                        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                            options = { mimeType: '' };
-                        }
-                    }
+                let options = { mimeType: 'video/mp4;codecs=h264', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000 }
+                if (!MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
+                    options = { mimeType: 'video/webm;codecs=vp9 ' }
                 }
+                else if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+                    options = { mimeType: 'video/webm;codecs=vp8' };
+                }
+             
                 try {
                     this.mediaRecorder = new MediaRecorder(this.stream, options);
                     this.mediaRecorder.ondataavailable = this.handleDataAvailable
                     this.mediaRecorder.start(100);
                     this.timerID = setTimeout(() => {
                         this.stopRecording()
-                    }, 61000);
+                    }, 305000);
                 } catch (e) {
                     this.setState({})
                     return;
@@ -192,15 +190,15 @@ export default class VideoRecorder extends React.Component {
 
                     <VideoRecorderDiv>
                         <VideoRecorderDiv.VideoContainer>
-                            { this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> :  (
+                            {this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> : (
                                 this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format. Only MP4 is supported</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Kindly check your device or upload a video</VideoRecorderDiv.InfoText>
-                            )   }
-                      
+                            )}
+
                         </VideoRecorderDiv.VideoContainer>
 
                         <VideoRecorderDiv.UploadWrapper>
                             <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
-                            <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4" onChange={() => { this.fileUpload() }} type="file" />
+                            <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => { this.fileUpload() }} type="file" />
                         </VideoRecorderDiv.UploadWrapper>
                     </VideoRecorderDiv>
                 }
