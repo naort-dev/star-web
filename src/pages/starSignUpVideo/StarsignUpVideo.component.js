@@ -58,7 +58,6 @@ export default class StarsignUpVideo extends React.Component {
             <Loader />
           </SignupContainer.loaderWrapper>
           : null}
-        <SignupContainer.LeftSection>
           <HeaderSection>
             <Link to="/">
               <HeaderSection.LogoImage
@@ -70,7 +69,13 @@ export default class StarsignUpVideo extends React.Component {
             <Link to="#">
               <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
             </Link>
-          </HeaderSection>
+        </HeaderSection>
+        <SignupContainer.RightSection>
+          <SignupContainer.recorderWrapper>
+            <VideoRecorder {...this.props} />
+          </SignupContainer.recorderWrapper>
+        </SignupContainer.RightSection>
+        <SignupContainer.LeftSection>
           <SignupContainer.SocialMediaSignup>
             <SignupContainer.Container>
               <SignupContainer.Heading>Verify your identity!</SignupContainer.Heading>
@@ -92,11 +97,6 @@ export default class StarsignUpVideo extends React.Component {
             </FooterSection>
           </SignupContainer.FooterLayout>
         </SignupContainer.LeftSection>
-        <SignupContainer.RightSection>
-          <SignupContainer.ImageStackLayout>
-            <VideoRecorder {...this.props} />
-          </SignupContainer.ImageStackLayout>
-        </SignupContainer.RightSection>
       </SignupContainer>
     );
   }

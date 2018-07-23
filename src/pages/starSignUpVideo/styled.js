@@ -4,12 +4,12 @@ const SignupContainer = styled.div`
   background-color: white;
   display: flex;
   padding: 0px 0px;
+  flex-direction: column;
+  padding-top: 40px;
   height: 100vh;
-  flex-direction: column-reverse;
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
-    height: 100vh;
     width: 100vw;
     padding-bottom: 56px;
   }
@@ -20,38 +20,35 @@ SignupContainer.wrapper = styled.div`
 `;
 SignupContainer.LeftSection = styled.div`
   width: 100%;
-
   background-color:white;
   width: 100vw;
-  height: 40vh;
-
   @media(min-width: 1025px){
     width: 45%;
-    height: 94vh;
     padding: 0px 0px;
     padding-bottom: 83px;
   }
 `;
 
 SignupContainer.RightSection = styled.div`
-  width: 100vw ;
-  height: 50vh;
-  background-color: white;
-  
-
+  width:100%;
+  position: relative;
   @media(min-width: 1025px){
-    width: 55%;
-    display: block;
-    padding: 0px 0px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100vh;
-    background-color:rgba(248, 248, 248, 1);
+    order: 2;
+    display:block;
+    width:60%;
+    padding: 27px 35px;
+    padding-bottom: 0;
+  }
+  @media(min-width: 1920px) {
+    padding-top: 48px;
   }
 `;
+
+SignupContainer.recorderWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+
 SignupContainer.SocialMediaSignup = styled.div`
   text-align:center;
   height: calc(100% - 40px);
@@ -82,8 +79,7 @@ SignupContainer.Heading = styled.div`
   font-size: 20px;
   text-align: center;
   color: #FF6C58;
-  margin-top:10%;
-  
+  margin-top: 20px;
   @media(min-width:768px){
     font-size: 32px;
   }
@@ -143,25 +139,21 @@ SignupContainer.FooterLayout = styled.div`
   
 `;
 const HeaderSection = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
   display:flex;
   justify-content: space-between;
   align-items: center;
-  height: 6vh;
-  width: 100vw;
-  top: 0vh;
-  padding: 3px 15px;
-  position: absolute;
-  @media(min-width:1025px){
-    font-size:16px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 10vh;
-    position: absolute;
-    width: 40vw;
-    top: 0px;
-    
+  background: white;
+  z-index: 9;
+  @media(min-width: 1025px) {
+    left: initial;
+    right: initial;
+    width: 40%;
   }
+  
 `;
 
 

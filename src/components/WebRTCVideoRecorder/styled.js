@@ -18,12 +18,15 @@ const VideoRecorderDiv = styled.div`
 `;
 
 VideoRecorderDiv.VideoContainer = styled.div`
-  height: 90%;
+  height: 300px;
   width: 100%;
-  background-color: #333333;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   @media(min-width:768px){
     width: 100%;
-    height: 90%;
+    height: 400px
   }
   @media(min-width:1025px){
     height: 40%;
@@ -55,11 +58,6 @@ VideoRecorderDiv.Button = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
-
-  @media(max-width:1024px){
-    position: fixed;
-    top: 80vh;
-  }
 
 `;
 
@@ -156,7 +154,6 @@ VideoRecorderDiv.UploadInput = styled.input`
   font-family: 'Ubuntu-Medium';
   font-style: italic;
   text-align: center;
-  margin-top: 25%;
   `;
 
 

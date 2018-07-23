@@ -9,7 +9,7 @@ import { fetch } from '../../services/fetch'
 export default class VideoRecorder extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { mediaRecorder: null, error: null, startUpload: false, streamFetched: null, browserSupport: true, checkSupport: null };
+        this.state = { streamed: null, error: null, startUpload: false, browserSupport: false, play: false };
         this.mediaSource = new MediaSource();
         this.mediaRecorder = null;
         this.recordedBlobs = []
@@ -20,12 +20,20 @@ export default class VideoRecorder extends React.Component {
     }
 
     componentDidMount() {
-        if (window.navigator && window.navigator.mediaDevices.getUserMedia) {
-            this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
-        }
-
-        else {
+        if (!window.navigator || !window.navigator.mediaDevices.getUserMedia) {
             this.setState({ browserSupport: false });
+        }
+        else {
+            return window.navigator.mediaDevices.getUserMedia({
+                audio: true,
+                video: {
+                    width: { min: 640, ideal: 1920 },
+                    height: { min: 400, ideal: 1080 },
+                    aspectRatio: { ideal: 1.7777777778 }
+                }
+            })
+                .then(() => { this.setState({browserSupport: true}) }, (err) => this.setState({ browserSupport: false }))
+
         }
     }
 
@@ -49,7 +57,6 @@ export default class VideoRecorder extends React.Component {
         const liveVideo = document.getElementById('video-player')
         liveVideo.srcObject = stream;
         this.stream = stream;
-        this.setState({ checkSupport: false })
     }
 
     stopRecording() {
@@ -74,32 +81,40 @@ export default class VideoRecorder extends React.Component {
     }
 
     fileUpload() {
+        this.setState({ extensionError: false,  play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        reader.addEventListener("load", function () {
-            this.setState({ startUpload: true })
-            getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
-                .then(response => {
-                    axios.post(response.url, response.formData)
-                        .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-                            ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
-                        },
-                            {
-                                "headers": {
-                                    'Authorization': `token ${this.props.session.auth_token.authentication_token}`
-                                }
-                            }
-                        )
-                        )
-                })
-                .then(() => {
-                    this.setState({ startUpload: false })
-                    this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+        const allowedExtensions = /(\.mp4)$/i;
+        if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
+            this.setState({ extensionError: true })
+        }
+        else {
+            const fileURL = URL.createObjectURL(file)
+            this.setState({ play: true}, () => document.getElementById('fallback-video').src = fileURL)
+            this.props.onSaveVideo(file)
+            // reader.addEventListener("load", function () {
+            //     getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
+            //         .then(response => {
+            //             axios.post(response.url, response.formData)
+            //                 .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+            //                     ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+            //                 },
+            //                     {
+            //                         "headers": {
+            //                             'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+            //                         }
+            //                     }
+            //                 )
+            //                 )
+            //         })
+            //         .then(() => {
+            //             this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
 
-                })
-        }.bind(this), false);
-        if (file) {
-            reader.readAsDataURL(file)
+            //         })
+            // }.bind(this), false);
+            if (file) {
+                reader.readAsDataURL(file)
+            }
         }
     }
 
@@ -107,10 +122,18 @@ export default class VideoRecorder extends React.Component {
         if (rerecord === true) {
             this.props.onRerecord();
             this.recordedBlobs = [];
-
         }
+
+
         this.props.onStartRecording()
-        return this.captureUserMedia({ audio: true, video: { width: { exact: 640 }, height: { min: 480 } } })
+        return this.captureUserMedia({
+            audio: true,
+            video: {
+                width: { min: 640, ideal: 1920 },
+                height: { min: 400, ideal: 1080 },
+                aspectRatio: { ideal: 1.7777777778 }
+            }
+        })
             .then(() => {
                 var options = { mimeType: 'video/mp4;codecs=vp9' };
                 if (!MediaRecorder.isTypeSupported(options.mimeType)) {
@@ -125,17 +148,16 @@ export default class VideoRecorder extends React.Component {
                 try {
                     this.mediaRecorder = new MediaRecorder(this.stream, options);
                     this.mediaRecorder.ondataavailable = this.handleDataAvailable
-                    this.mediaRecorder.start(1000);
+                    this.mediaRecorder.start(100);
                     this.timerID = setTimeout(() => {
                         this.stopRecording()
                     }, 61000);
                 } catch (e) {
-                    alert('Error while creating MediaRecorder: '
-                        + e + '. mimeType: ' + options.mimeType);
+                    this.setState({})
                     return;
                 }
             })
-            .catch(err => this.setState({ error: true }))
+            .catch(err => this.setState({ browserSupport: false }))
 
     }
 
@@ -145,10 +167,15 @@ export default class VideoRecorder extends React.Component {
                 {this.state.browserSupport == true ?
                     <VideoRecorderDiv >
                         <VideoRecorderDiv.VideoContainer>
-                            {!this.props.videoRecorder.recordedBlob ?
-                                <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
-                                :
-                                <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
+                            {this.props.videoRecorder.start == null ?
+                                <VideoRecorderDiv.InfoText>
+                                    Note: video from their webcam
+                                </VideoRecorderDiv.InfoText> :
+                                (!this.props.videoRecorder.recordedBlob ?
+                                    <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
+                                    :
+                                    <VideoRecorderDiv.Video id="video-player" src={this.props.videoRecorder.recordedBlob} controls width="100%" />
+                                )
                             }
                         </VideoRecorderDiv.VideoContainer>
                         {this.state.error ?
@@ -164,23 +191,17 @@ export default class VideoRecorder extends React.Component {
                     :
 
                     <VideoRecorderDiv>
+                        <VideoRecorderDiv.VideoContainer>
+                            { this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> :  (
+                                this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format. Only MP4 is supported</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Kindly check your device or upload a video</VideoRecorderDiv.InfoText>
+                            )   }
+                      
+                        </VideoRecorderDiv.VideoContainer>
 
-                        <VideoRecorderDiv.NoVideoContainer>
-                            {this.state.startUpload ?
-                                <VideoRecorderDiv.LoaderWrapper>
-                                    <Loader />
-                                </VideoRecorderDiv.LoaderWrapper>
-                                : null
-                            }
-                            <VideoRecorderDiv.NoVideoText>
-                                Your Browser does not support video recording
-                            </VideoRecorderDiv.NoVideoText>
-                            <VideoRecorderDiv.UploadWrapper>
-                                <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
-                                <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4" onChange={() => { this.fileUpload() }} type="file" />
-                            </VideoRecorderDiv.UploadWrapper>
-                        </VideoRecorderDiv.NoVideoContainer>
-
+                        <VideoRecorderDiv.UploadWrapper>
+                            <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+                            <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4" onChange={() => { this.fileUpload() }} type="file" />
+                        </VideoRecorderDiv.UploadWrapper>
                     </VideoRecorderDiv>
                 }
 
