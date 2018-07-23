@@ -380,7 +380,7 @@ export default class Starbio extends React.Component {
                       <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
                         {
                           this.state.errors.bio ? 'Please enter a valid event title' :
-                            'Have fun with it... no need to be serious'
+                            null
                         }
                       </LoginContainer.ErrorMsg>
                     </LoginContainer.WrapsInput>

@@ -24,7 +24,6 @@ export default class StarsignUpVideo extends React.Component {
     else {
       signupVideo = new File([this.props.videoRecorder.recordedBuffer], `signupVideo.${this.props.videoUploader.extension}`);
     }
-  
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
       .then(response => {
         axios.post(response.url, response.formData)
