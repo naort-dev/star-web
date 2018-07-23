@@ -238,8 +238,6 @@ LoginContainer.Avatar = styled.span`
 LoginContainer.UploadWrapper = styled.div`
     position: relative;
     overflow: hidden;
-    width: 100px;
-    height: 100px;
     display: inline-block;
     @media(min-width: 768px) {
       width: 100%;
