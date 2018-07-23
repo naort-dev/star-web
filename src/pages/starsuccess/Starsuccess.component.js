@@ -18,6 +18,12 @@ export default class Starsuccess extends React.Component {
 
 
 
+
+
+
+
+
+
     render() {
         if (!this.props.session.isLoggedIn) {
             return <Redirect to="/signuptype" />
@@ -56,9 +62,21 @@ export default class Starsuccess extends React.Component {
                     </LoginContainer.LeftSection>
                     <LoginContainer.RightSection>
                         <LoginContainer.ImageWrapper>
-                            <LoginContainer.FeaturedImage image={this.props.location.state.images.featuredImage} />
-                            <LoginContainer.FirstImage image={this.props.location.state.images.firstImage} />
-                            <LoginContainer.SecondImage image={this.props.location.state.images.secondImage} />
+                            <LoginContainer.FeaturedImage>
+                            <LoginContainer.FullScreenImageWrapper >
+                                <LoginContainer.Image src={this.props.imageViewer.featuredImage.imageURL} style={{transform: this.props.imageViewer.featuredImage.rotations}} />
+                                </LoginContainer.FullScreenImageWrapper >
+                            </LoginContainer.FeaturedImage>
+                            <LoginContainer.FirstImage>
+                            <LoginContainer.FullScreenImageWrapper >
+                                <LoginContainer.Image src={this.props.imageViewer.firstImage.imageURL}  style={{transform: this.props.imageViewer.firstImage.rotations}} />
+                                </LoginContainer.FullScreenImageWrapper >
+                            </LoginContainer.FirstImage>
+                            <LoginContainer.SecondImage>
+                            <LoginContainer.FullScreenImageWrapper >
+                                <LoginContainer.Image src={this.props.imageViewer.secondImage.imageURL}  style={{transform: this.props.imageViewer.secondImage.rotations}} />
+                                </LoginContainer.FullScreenImageWrapper >
+                            </LoginContainer.SecondImage>
                         </LoginContainer.ImageWrapper>
                     </LoginContainer.RightSection>
                 </LoginContainer>

@@ -175,13 +175,16 @@ checkResolution(file, type) {
         bio: this.state.bio,
         bookingPrice: this.state.bookingPrice,
         bookingLimit: this.state.bookingLimit,
-        charity: this.state.charity,
-        featuredImage: this.state.featuredImage,
-        firstImage: this.state.firstImage,
-        secondImage: this.state.secondImage,
-        avatar: this.state.avatar
+        charity: this.state.charity
       }
       localStorage.setItem("bioDetails", JSON.stringify(bioDetails));
+      this.props.onSaveImage({
+        avatar: {rotations: this.state.rotations.avatar, imageFile: this.state.avatarFile, imageURL: this.state.avatar},
+        featuredImage: {rotations: this.state.rotations.featuredImage, imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage},
+        firstImage: {rotations: this.state.rotations.firstImage, imageFile: this.state.firstImageFile, imageURL: this.state.firstImage},
+        secondImage: {rotations: this.state.rotations.secondImage, imageFile: this.state.secondImageFile, imageURL: this.state.secondImage}
+
+      })
       this.uploadImage("featuredImage")
         .then(() => this.uploadImage("firstImage"))
         .then(() => this.uploadImage("secondImage"))
@@ -436,7 +439,7 @@ checkResolution(file, type) {
                   <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
                   <LoginContainer.WrapsInput>
 
-                    <LoginContainer.Input type="tel" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                    <LoginContainer.Input type="number" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
                       onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
                       value={this.state.bookingPrice} />
                     <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
@@ -453,7 +456,7 @@ checkResolution(file, type) {
                   <LoginContainer.Label>Booking limit</LoginContainer.Label>
                   <LoginContainer.WrapsInput>
 
-                    <LoginContainer.Input type="tel" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                    <LoginContainer.Input type="number" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
                       value={this.state.bookingLimit}
                       onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
                     <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
@@ -557,7 +560,7 @@ checkResolution(file, type) {
                 <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
                 {this.state.avatar != null ?
                   this.FullscreenUploader("avatar") :  
-                  <LoginContainer.UploadWrapper>
+                  <LoginContainer.UploadWrapper type="avatar">
                     <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
                     <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
                   </LoginContainer.UploadWrapper>

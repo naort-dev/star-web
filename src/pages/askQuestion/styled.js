@@ -15,9 +15,9 @@ const Request = styled.section`
  display:flex;
  flex-direction: column;
  padding-bottom: 40px;
- height: 100%;
  max-width: 1920px;
  padding-top: 40px;
+ background: #fff;
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
@@ -30,7 +30,7 @@ Request.Wrapper = styled.div`
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -548,7 +548,6 @@ Request.InputWrapper = styled.div`
 `;
 Request.WrapsInput = styled.div`
   width:100%;
-  height:60px;
   @media(min-width:768px){
     width:100%;
     height:30px;

@@ -67,12 +67,7 @@ LoginContainer.FeaturedImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
+
 
 `;
 
@@ -83,12 +78,6 @@ LoginContainer.FirstImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
 `;
 
 LoginContainer.SecondImage = styled.div`
@@ -98,12 +87,6 @@ LoginContainer.SecondImage = styled.div`
  display: flex;
  justify-content: center;
  align-items: center;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
 `;
 
 LoginContainer.FirstLastNameWrapper = styled.div`
@@ -642,6 +625,20 @@ LoginContainer.SignupLine = styled.div`
  margin-bottom: 5%;
  text-align: left;
  width: 100%;
+`;
+
+LoginContainer.Image = styled.img`
+ height: 100%;
+ width: 100%;
+`;
+
+LoginContainer.FullScreenImageWrapper = styled.div`
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export { LoginContainer, HeaderSection, FooterSection };
