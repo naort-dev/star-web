@@ -51,14 +51,13 @@ SignupContainer.recorderWrapper = styled.div`
 
 SignupContainer.SocialMediaSignup = styled.div`
   text-align:center;
-  height: calc(100% - 40px);
   @media(min-width:768px){
     padding: 5px 0;
     padding-bottom: 20px;  
   }
-  @media(min-width: 1025px) {
-    height: 100%;    
-    padding: 5px 37px;
+  @media(min-width: 1025px) { 
+    margin-top:30%;
+    padding: 0px 37px;
     padding-bottom: 69px;
     display: flex;
     align-items: center;
@@ -71,7 +70,7 @@ SignupContainer.Container = styled.div`
     padding: 0 65px;
   }
   @media(min-width: 1025px) {
-    padding: 0 20px;
+    padding: 24px 20px;
   }
 `;
 SignupContainer.Heading = styled.div`
@@ -90,6 +89,13 @@ SignupContainer.Heading = styled.div`
     font-size:32px;
   }
   
+`;
+SignupContainer.paragraph = styled.div`
+  margin-top:1%;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align: center;
+  color:rgba(51, 51, 51, 1);
 `;
 
 SignupContainer.Username = styled.span`
@@ -259,9 +265,19 @@ FooterSection.DisabledButton = styled.button`
 `;
 
 SignupContainer.VerificationText = styled.h4`
- color: black;
- padding: 20px 0px;
- height: 150px;
+  color: rgba(51, 51, 51, 1);
+  padding: 20px 0px;
+  font-family: 'Ubuntu-Medium';
+  height: 150px;
+  margin-top:5%;
+  font-size:16px;
+  @media(min-width:768px){
+    font-size:18px;
+  }
+  @media(min-width:1025px){
+    font-size:22px;
+  }
+  
 
 `;
 
