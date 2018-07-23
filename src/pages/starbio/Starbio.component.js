@@ -32,7 +32,7 @@ export default class Starbio extends React.Component {
       bio: "",
       bookingPrice: "",
       bookingLimit: "",
-      imageError: "",
+      imageError: {featuredImage: null, firstImage: null, secondImage: null, avatar: null },
       loaders: { featuredImage: null, firstImage: null, secondImage: null, avatar: null },
       errors: {
         bio: false,
@@ -106,13 +106,14 @@ export default class Starbio extends React.Component {
     window.removeEventListener('resize', this.setImageSize);
   }
   async onFileChange(type = "featuredImage") {
+    this.setState({ imageError: {...this.state.imageError, [`${type}`]: false}});
     const file = document.getElementById(type).files[0];
     if (file) {
       const correctResolution = await this.checkResolution(file, type);
       if (correctResolution) {
         await this.getImageData(file, type)
       } else {
-        this.setState({ imageError: "Image doesn't meet required resolution" })
+        this.setState({ imageError: {...this.state.imageError, [`${type}`]: true}});
       }
     }
   }
@@ -591,6 +592,7 @@ export default class Starbio extends React.Component {
                         </LoginContainer.UploadWrapper>
                         <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
                         <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                        {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText>: null }
                       </React.Fragment>
                     }
                   </LoginContainer.ImageInner>
@@ -612,6 +614,7 @@ export default class Starbio extends React.Component {
                         </LoginContainer.UploadWrapper>
                         <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
                         <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                        {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText>: null }
                       </React.Fragment>
                     }
                   </LoginContainer.ImageInner>
@@ -634,6 +637,7 @@ export default class Starbio extends React.Component {
                         </LoginContainer.UploadWrapper>
                         <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
                         <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                        {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null }
                       </React.Fragment>
                     }
                   </LoginContainer.ImageInner>

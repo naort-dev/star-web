@@ -987,7 +987,8 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 display: flex;
-`
+position: relative;
+`;
 LoginContainer.FeaturedText = styled.div`
 font-size: 16px;
 font-family: Ubuntu-bold
@@ -1066,6 +1067,13 @@ LoginContainer.FullScreenUploadInput = styled.input`
 LoginContainer.ErrorMessage = styled.span`
 color:  red;
 font-size: 16px;
+`;
+
+LoginContainer.ErrorText = styled.span`
+ color: red;
+ position: absolute;
+ bottom: 20px;
+ font-size: 14px;
 `;
 
 
