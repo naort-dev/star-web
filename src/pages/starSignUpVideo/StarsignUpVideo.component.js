@@ -37,13 +37,12 @@ export default class StarsignUpVideo extends React.Component {
               }
             }
           )
-          )
+          ).then(() => {
+            this.setState({ upload: false })
+            this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+          })
       })
-      .then(() => {
-        this.setState({ upload: false })
-        this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
-      }
-      )
+
   }
 
   render() {

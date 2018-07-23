@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder'
-import { saveVideo } from '../../store/shared/actions/videoUploader'
+import { saveVideo, uploadVideo } from '../../store/shared/actions/videoUploader'
 
 import StarsignUpVideo from './StarsignUpVideo.component';
 
@@ -17,7 +17,8 @@ const mapDispatchToProps = dispatch => ({
     onPlayVideo: () => dispatch(playVideo()),
     onRerecord: () => dispatch(reRecord()),
     onClearStreams: () => dispatch(clearStreams()),
-    onSaveVideo: (videoFile) => dispatch(saveVideo(videoFile))
+    onSaveVideo: (videoFile) => dispatch(saveVideo(videoFile)),
+    uploadVideo: () => dispatch(uploadVideo())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StarsignUpVideo);

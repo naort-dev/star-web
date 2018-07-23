@@ -7,7 +7,6 @@ import SignUpForm from '../../components/SignupForm'
 export default class SignUp extends React.Component {
   
   render() {
-    console.log(this.props.statusCode);
     return (
       <LoginContainer.wrapper>
         <LoginContainer>
