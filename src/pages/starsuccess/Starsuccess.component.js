@@ -25,7 +25,6 @@ export default class Starsuccess extends React.Component {
 
 
     render() {
-        console.log("propssss", this.props)
         if (!this.props.session.isLoggedIn) {
             return <Redirect to="/signuptype" />
         }

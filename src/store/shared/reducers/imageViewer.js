@@ -9,7 +9,6 @@ const initalState = {
 };
 
 export default (state = { ...initalState }, action) => {
-    console.log("payload", action.payload)
     switch (action.type) {
         case SAVE_IMAGE:
             return {

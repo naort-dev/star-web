@@ -318,7 +318,6 @@ checkResolution(file, type) {
   }
 
   render() {
-    console.log("props in bio", this.props)
     const options = {
         color: '#000',
         zIndex: 2e9,
