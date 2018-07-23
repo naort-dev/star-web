@@ -20,7 +20,7 @@ export default class VideoRecorder extends React.Component {
     }
 
     componentDidMount() {
-        if (!window.navigator || !window.navigator.mediaDevices.getUserMedia) {
+        if (!window.navigator && !window.navigator.mediaDevices.getUserMedia && !window.MediaRecorder) {
             this.setState({ browserSupport: false });
         }
         else {
