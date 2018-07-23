@@ -42,6 +42,11 @@ export default class Starbio extends React.Component {
         bookingLimit: false,
 
       },
+      imageHeights: {
+        featured: '100%',
+        first: '100%',
+        second: '100%',
+      },
       saving: false,
       extensions: { featuredImage: null, firstImage: null, secondImage: null, avatarImage: null }
     };
@@ -51,9 +56,34 @@ export default class Starbio extends React.Component {
       secondImage: 400 / 400,
       avatar: 400 / 400,
     }
+    this.featuredImage = null;
+    this.secondImage = null;
+    this.firstImage = null;
+  }
+
+  setImageSize = () => {
+    let featuredImageHeight, firstImageHeight, secondImageHeight;
+    if (this.featuredImage) {
+      featuredImageHeight = this.featuredImage.clientWidth/this.imageRatios['featuredImage'];
+    }
+    if (this.secondImage) {
+      secondImageHeight = this.secondImage.clientWidth/this.imageRatios['secondImage'];
+    }
+    if (this.firstImage) {
+      firstImageHeight = this.firstImage.clientWidth/this.imageRatios['firstImage'];
+    }
+    this.setState({
+      imageHeights: {
+        featured: featuredImageHeight,
+        second: secondImageHeight,
+        first: firstImageHeight,
+      }
+    })
   }
 
   componentDidMount() {
+    this.setImageSize();
+    window.addEventListener('resize', this.setImageSize)
     const savedValues = JSON.parse(localStorage.getItem("bioDetails"))
     this.setState({ ...savedValues })
     fetch('user/professions/').then(response => {
@@ -72,6 +102,9 @@ export default class Starbio extends React.Component {
 
   }
 
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setImageSize);
+  }
   async onFileChange(type = "featuredImage") {
     const file = document.getElementById(type).files[0];
     if (file) {
@@ -538,7 +571,9 @@ export default class Starbio extends React.Component {
           <LoginContainer.RightSection>
             {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
             <LoginContainer.ImageWrapper>
-              <LoginContainer.FeaturedImage imageType="featured" image={this.state.featuredImage}>
+              <LoginContainer.FeaturedImage
+                style={{height: this.state.imageHeights.featured}}
+                innerRef={(node)=>this.featuredImage=node} imageType="featured" image={this.state.featuredImage}>
                 {this.state.loaders.featuredImage === false ?
                   <ReactLoader loaded={false} className="spinner"
                     zIndex={2e9} options={options} /> :
@@ -558,7 +593,9 @@ export default class Starbio extends React.Component {
                   </LoginContainer.ImageInner>
                 }
               </LoginContainer.FeaturedImage>
-              <LoginContainer.FirstImage imageType="firstImage" image={this.state.firstImage}>
+              <LoginContainer.FirstImage
+                style={{height: this.state.imageHeights.first}}
+                innerRef={(node)=>this.firstImage=node} imageType="firstImage" image={this.state.firstImage}>
                 {this.state.loaders.firstImage === false ?
                   <ReactLoader loaded={false} className="spinner"
                     zIndex={2e9} options={options} /> :
@@ -577,7 +614,9 @@ export default class Starbio extends React.Component {
                   </LoginContainer.ImageInner>
                 }
               </LoginContainer.FirstImage>
-              <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
+              <LoginContainer.SecondImage
+                style={{height: this.state.imageHeights.second}}
+                innerRef={(node)=>this.secondImage=node} imageType="secondImage" image={this.state.secondImage}>
                 {this.state.loaders.secondImage === false ?
                   <ReactLoader loaded={false} className="spinner"
                     zIndex={2e9} options={options} /> :

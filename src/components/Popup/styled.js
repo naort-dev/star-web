@@ -32,13 +32,13 @@ PopupStyled.Container = styled.div`
   max-height: 100%;
   width: 100%;
   height: 100%;
-  justify-content: center;
-  align-items: center;
   position: relative;
   animation: ${popupEnter} 0.2s ease-out;
   @media(min-width: 768px) {
     width: 100%;
     height: 100%;
+    justify-content: center;
+    align-items: center;
     max-width: 80%;
     max-height: 80%;
   }
