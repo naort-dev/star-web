@@ -7,9 +7,8 @@ import { Link, Redirect } from 'react-router-dom'
 import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader'
-import { Cropper } from 'react-image-cropper';
+import { Scrollbars } from 'react-custom-scrollbars';
 import EXIF from 'exif-js'
-import Popup from '../../components/Popup';
 import { default as ReactLoader } from 'react-loader'
 
 export default class Starbio extends React.Component {
@@ -18,7 +17,6 @@ export default class Starbio extends React.Component {
     this.state = {
       avatar: null,
       industry: [],
-      cropMode: false,
       featuredImage: null,
       firstImage: null,
       secondImage: null,
@@ -44,12 +42,6 @@ export default class Starbio extends React.Component {
       },
       saving: false,
       extensions: { featuredImage: null, firstImage: null, secondImage: null, avatarImage: null }
-    };
-    this.imageRatios = {
-      featuredImage: 800 / 376,
-      firstImage: 400 / 400,
-      secondImage: 400 / 400,
-      avatar: 400 / 400,
     }
   }
 
@@ -94,15 +86,10 @@ export default class Starbio extends React.Component {
     const extensionType = type === 'avatar' ? 'avatarImage' : type; 
     reader.onload = async function (e) {
       const exif = await this.getExif(file, type)
-      // this.setState({
-      //   [type]: reader.result, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true },
-      //   extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
-      // })
-      //   const exif = await this.getExif(file, type)
-        // const exif = await this.getExif(file, type)
-        this.setState({cropMode: true, cropImage: e.target.result, currentImageType: type})
-        this.setState({ [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
-        // this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
+      this.setState({
+        [type]: reader.result, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true },
+        extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
+      })
     }.bind(this)
     if (file) {
       reader.readAsDataURL(file)
@@ -190,8 +177,10 @@ export default class Starbio extends React.Component {
         }
         return { formData, url: response.data.data.url }
       })
-      .then(response => axios.post(response.url, response.formData))
-      .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
+      .then((response) =>{
+        axios.post(response.url, response.formData) 
+      })
+      .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details`, {
         'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
       })
       )
@@ -293,25 +282,6 @@ export default class Starbio extends React.Component {
     }
   }
 
-  handleCrop = () => {
-    this.setState({ [this.state.currentImageType]: this.image.crop(), cropMode: false })
-  }
-
-  renderCropper = () => {
-    return (
-      <Popup closePopUp={() => this.setState({ cropMode: false })}>
-        <LoginContainer.CropperWrapper>
-          <Cropper
-            src={this.state.cropImage}
-            ratio={this.imageRatios[this.state.currentImageType]}
-            ref={ref => { this.image = ref }}
-          />
-          <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
-        </LoginContainer.CropperWrapper>
-      </Popup>
-    );
-  }
-
 
   validateIsEmpty() {
     if (!this.state.bio) {
@@ -384,11 +354,7 @@ export default class Starbio extends React.Component {
               <Loader />
             </LoginContainer.loaderWrapper>
             : null}
-          {
-            this.state.cropMode ?
-              this.renderCropper()
-            : null
-          }
+
           <LoginContainer.LeftSection>
             <Request.ComponentWrapperScroll
               autoHide
