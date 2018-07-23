@@ -167,7 +167,11 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
   });
 };
 
+<<<<<<< 649a5456c0035d56a39ab69b6d19c23763bec554
 const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
+=======
+const starsonaVideo = (authToken, filename, requestId, duration) => {
+>>>>>>> payment fix
   return fetch.post(Api.starsonaVideo, {
     video: filename,
     stragramz_request: requestId,
