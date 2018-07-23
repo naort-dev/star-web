@@ -11,7 +11,7 @@ export default class MultiSelect extends React.Component {
                     multi
                     options={this.props.industry}
                     onChange={(value) => this.props.handleFieldChange('profession', value)}
-                    placeholder="Select your favourite(s)"
+                    placeholder="Select your industry"
                     simpleValue
                     value={this.props.profession}
                 />
