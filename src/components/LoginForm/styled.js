@@ -505,7 +505,7 @@ LoginContainer.ShowPassword = styled.span`
   background-size:19px;
   padding: 14px;
   right: 7px;
-  top: 6px;
+  top: 12px;
   cursor:pointer;
   @media(min-width:1025px){
     top:5px;
