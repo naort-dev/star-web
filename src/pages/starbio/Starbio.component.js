@@ -189,7 +189,6 @@ export default class Starbio extends React.Component {
       // .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
       //   'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
       // })
-      )
   }
 
 
