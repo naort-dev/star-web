@@ -487,7 +487,7 @@ export default class Starbio extends React.Component {
               </FooterSection.LeftSection>
               <FooterSection.RightSection>
                 {this.state.featuredImage != null && (
-                  this.state.firstImage != null && this.state.secondImage != null
+                  this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
                 ) ?
                   <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
                     {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
