@@ -91,26 +91,27 @@ export default class VideoRecorder extends React.Component {
         else {
             const fileURL = URL.createObjectURL(file)
             this.setState({ play: true}, () => document.getElementById('fallback-video').src = fileURL)
-            reader.addEventListener("load", function () {
-                getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
-                    .then(response => {
-                        axios.post(response.url, response.formData)
-                            .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-                                ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
-                            },
-                                {
-                                    "headers": {
-                                        'Authorization': `token ${this.props.session.auth_token.authentication_token}`
-                                    }
-                                }
-                            )
-                            )
-                    })
-                    .then(() => {
-                        this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+            this.props.onSaveVideo(file)
+            // reader.addEventListener("load", function () {
+            //     getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
+            //         .then(response => {
+            //             axios.post(response.url, response.formData)
+            //                 .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+            //                     ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+            //                 },
+            //                     {
+            //                         "headers": {
+            //                             'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+            //                         }
+            //                     }
+            //                 )
+            //                 )
+            //         })
+            //         .then(() => {
+            //             this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
 
-                    })
-            }.bind(this), false);
+            //         })
+            // }.bind(this), false);
             if (file) {
                 reader.readAsDataURL(file)
             }

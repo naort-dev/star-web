@@ -6,12 +6,12 @@ const SignupContainer = styled.div`
   padding: 0px 0px;
   height: 100vh;
   flex-direction: column-reverse;
-  padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
     height: 100vh;
     width: 100vw;
+    padding-bottom: 56px;
   }
 `;
 SignupContainer.wrapper = styled.div`
@@ -268,7 +268,8 @@ FooterSection.DisabledButton = styled.button`
 
 SignupContainer.VerificationText = styled.h4`
  color: black;
- padding: 20px 0px
+ padding: 20px 0px;
+ height: 150px;
 
 `;
 

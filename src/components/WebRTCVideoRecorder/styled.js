@@ -133,6 +133,10 @@ VideoRecorderDiv.UploadInput = styled.input`
     top: 0;
     opacity: 0;
     cursor: pointer;
+    width:160px;
+    height:28px;
+    margin-top: 10px;
+
   `;
 
   VideoRecorderDiv.LoaderWrapper = styled.div`

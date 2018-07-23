@@ -17,7 +17,14 @@ export default class StarsignUpVideo extends React.Component {
 
   onSubmit() {
     this.setState({ upload: true })
-    const signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
+    let signupVideo
+    if(this.props.videoUploader.savedFile != null) {
+      signupVideo = this.props.videoUploader.savedFile;
+    }
+    else {
+      signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
+    }
+  
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
       .then(response => {
         axios.post(response.url, response.formData)
@@ -40,6 +47,7 @@ export default class StarsignUpVideo extends React.Component {
   }
 
   render() {
+    console.log("propsssss", this.props)
     if (!this.props.isLoggedIn) {
       return <Redirect to={locations.signupType} />
     }
@@ -62,7 +70,6 @@ export default class StarsignUpVideo extends React.Component {
             <Link to="#">
               <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
             </Link>
-
           </HeaderSection>
           <SignupContainer.SocialMediaSignup>
             <SignupContainer.Container>
@@ -70,7 +77,7 @@ export default class StarsignUpVideo extends React.Component {
               <p>Please record a short video saying the following </p>
             </SignupContainer.Container>
             <SignupContainer.Container>
-              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
+              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
             </SignupContainer.Container>
           </SignupContainer.SocialMediaSignup>
           <SignupContainer.FooterLayout>
@@ -78,7 +85,7 @@ export default class StarsignUpVideo extends React.Component {
               <FooterSection.LeftSection>
               </FooterSection.LeftSection>
               <FooterSection.RightSection>
-                {this.props.videoRecorder.stop ?
+                {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
                   <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
                   : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
               </FooterSection.RightSection>

@@ -239,6 +239,13 @@ LoginContainer.UploadWrapper = styled.div`
     position: relative;
     overflow: hidden;
     display: inline-block;
+    ${props => props.type == "avatar" && ({
+    height: "100%",
+    width: "100%"
+
+    })
+    }
+    
     @media(min-width: 768px) {
       width: 100%;
       height: auto;
@@ -277,6 +284,7 @@ LoginContainer.UploadInput = styled.input`
     @media(min-width: 768px) {
       left: initial;
       right: 25%;
+      width: 100%;
     }
   `;
 
