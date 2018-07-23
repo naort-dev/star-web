@@ -129,6 +129,9 @@ export default class VideoRecorder extends React.Component {
                     //     }
                     // }
                 }
+                //addition test
+                options = { mimeType: 'video/mp4;codecs=h264' };
+
                 try {
                     this.mediaRecorder = new MediaRecorder(this.stream, options);
                     this.mediaRecorder.ondataavailable = this.handleDataAvailable
