@@ -30,7 +30,8 @@ export default class Starbio extends React.Component {
       bio: "",
       bookingPrice: "",
       bookingLimit: "",
-      loaders: {featuredImage: null, firstImage: null, secondImage: null, avatar: null},
+      imageError: "",
+      loaders: { featuredImage: null, firstImage: null, secondImage: null, avatar: null },
       errors: {
         bio: false,
         profession: false,
@@ -64,71 +65,76 @@ export default class Starbio extends React.Component {
 
   async onFileChange(type = "featuredImage") {
     const file = document.getElementById(type).files[0];
-    if (await this.checkResolution(file, type)) {
+    if (file) {
+      const correctResolution = await this.checkResolution(file, type);
+      if (correctResolution) {
         await this.getImageData(file, type)
+      } else {
+        this.setState({ imageError: "Image doesn't meet required resolution" })
+      }
     }
-}
+  }
 
-getImageData(file, type) {
-    this.setState({loaders: {...this.state.loaders, [`${type}`]: false}})
+  getImageData(file, type) {
+    this.setState({ loaders: { ...this.state.loaders, [`${type}`]: false } })
     const reader = new FileReader();
     reader.onload = async function (e) {
-        const exif = await this.getExif(file, type)
-        this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
+      const exif = await this.getExif(file, type)
+      this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true } })
     }.bind(this)
     if (file) {
-        reader.readAsDataURL(file)
+      reader.readAsDataURL(file)
     }
 
-}
+  }
 
 
-getExif = (file) => {
+  getExif = (file) => {
     return new Promise((resolve, reject) => {
-        EXIF.getData(file, function () {
-            const exif = EXIF.getTag(this, "Orientation")
-            switch(exif) {
-                case 3: 
-                resolve('rotate(180deg)')
-                case 6: 
-                resolve('rotate(90deg)')
-                case 9: 
-                resolve('rotate(270deg)')
-                default:
-                resolve('rotate(0deg)')
-            }
-        })
+      EXIF.getData(file, function () {
+        const exif = EXIF.getTag(this, "Orientation")
+        switch (exif) {
+          case 3:
+            resolve('rotate(180deg)')
+          case 6:
+            resolve('rotate(90deg)')
+          case 9:
+            resolve('rotate(270deg)')
+          default:
+            resolve('rotate(0deg)')
+        }
+      })
 
     })
 
-}
+  }
 
 
 
-checkResolution(file, type) {
+  checkResolution(file, type) {
     let correctResolution = false;
     var img = new Image();
     img.src = window.URL.createObjectURL(file);
     return new Promise((resolve, reject) => {
-        img.onload = () => {
-            var width = img.naturalWidth;
-            var height = img.naturalHeight;
-            window.URL.revokeObjectURL(img.src);
-            if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
-                (type === 'firstImage' && width >= 400 && height >= 400) ||
-                (type === 'secondImage' && width >= 400 && height >= 400) ||
-                (type === 'avatar' && width >= 100 && height >= 100)
-            ) {
-                correctResolution = true;
-            }
-            resolve(correctResolution)
+      img.onload = () => {
+        var width = img.naturalWidth;
+        var height = img.naturalHeight;
+        window.URL.revokeObjectURL(img.src);
+        if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
+          (type === 'firstImage' && width >= 400 && height >= 400) ||
+          (type === 'secondImage' && width >= 400 && height >= 400) ||
+          (type === 'avatar' && width >= 100 && height >= 100)
+        ) {
+          correctResolution = true;
         }
+        resolve(correctResolution)
+      }
 
     })
-}
+  }
 
 
-  
+
 
   uploadImage(type) {
     return fetch(Api.getImageCredentials, {
@@ -163,6 +169,10 @@ checkResolution(file, type) {
         return { formData, url: response.data.data.url }
       })
       .then(response => axios.post(response.url, response.formData))
+      .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
+        'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
+      })
+    )
   }
 
 
@@ -179,10 +189,10 @@ checkResolution(file, type) {
       }
       localStorage.setItem("bioDetails", JSON.stringify(bioDetails));
       this.props.onSaveImage({
-        avatar: {rotations: this.state.rotations.avatar, imageFile: this.state.avatarFile, imageURL: this.state.avatar},
-        featuredImage: {rotations: this.state.rotations.featuredImage, imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage},
-        firstImage: {rotations: this.state.rotations.firstImage, imageFile: this.state.firstImageFile, imageURL: this.state.firstImage},
-        secondImage: {rotations: this.state.rotations.secondImage, imageFile: this.state.secondImageFile, imageURL: this.state.secondImage}
+        avatar: { rotations: this.state.rotations.avatar, imageFile: this.state.avatarFile, imageURL: this.state.avatar },
+        featuredImage: { rotations: this.state.rotations.featuredImage, imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage },
+        firstImage: { rotations: this.state.rotations.firstImage, imageFile: this.state.firstImageFile, imageURL: this.state.firstImage },
+        secondImage: { rotations: this.state.rotations.secondImage, imageFile: this.state.secondImageFile, imageURL: this.state.secondImage }
 
       })
       this.uploadImage("featuredImage")
@@ -210,11 +220,6 @@ checkResolution(file, type) {
               rate: this.state.bookingPrice,
               profession: this.state.profession,
               description: this.state.bio
-            },
-            images: {
-              featuredImage: this.state.featuredImage,
-              firstImage: this.state.firstImage,
-              secondImage: this.state.secondImage
             }
           }
         })
@@ -305,11 +310,11 @@ checkResolution(file, type) {
   }
 
   FullscreenUploader = (type) => {
-      const borderRadius = type == "avatar" ? "100px" : "0px"
+    const borderRadius = type == "avatar" ? "100px" : "0px"
     return (
       <LoginContainer.FullScreenUploadWrapper >
-        <LoginContainer.Image src={this.state[`${type}`]} style={{transform: this.state.rotations[`${type}`], borderRadius}} />
-        <LoginContainer.FullScreenUploadButton onClick={() => { }}/>
+        <LoginContainer.Image src={this.state[`${type}`]} style={{ transform: this.state.rotations[`${type}`], borderRadius }} />
+        <LoginContainer.FullScreenUploadButton onClick={() => { }} />
         <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
       </LoginContainer.FullScreenUploadWrapper>
     )
@@ -319,18 +324,18 @@ checkResolution(file, type) {
 
   render() {
     const options = {
-        color: '#000',
-        zIndex: 2e9,
-        top: '50%',
-        left: '0vw',
-        position: 'relative'
+      color: '#000',
+      zIndex: 2e9,
+      top: '50%',
+      left: '0vw',
+      position: 'relative'
     };
-    
+
     if (!this.props.session.isLoggedIn) {
       return <Redirect to="/signuptype" />
     }
-    return (
 
+    return (
       <LoginContainer.wrapper>
         <LoginContainer>
           {this.state.saving ?
@@ -387,7 +392,7 @@ checkResolution(file, type) {
                       otherOptions={{
                         clearable: false,
                         arrowRenderer: null,
-                        valueComponent:(selectProps)=>this.renderMultiValueItems(selectProps),
+                        valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
                       }}
                       industry={this.state.industry}
                       value={this.state.profession}
@@ -412,7 +417,7 @@ checkResolution(file, type) {
                       otherOptions={{
                         clearable: false,
                         arrowRenderer: null,
-                        valueComponent:(selectProps)=>this.renderMultiValueItems(selectProps),
+                        valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
                       }}
                       searchTags={this.state.searchTags}
                       value={this.state.searchTags}
@@ -492,85 +497,85 @@ checkResolution(file, type) {
 
 
           <LoginContainer.RightSection>
+            {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
             <LoginContainer.ImageWrapper>
               <LoginContainer.FeaturedImage imageType="featured" image={this.state.featuredImage}>
-              {this.state.loaders.featuredImage === false ?
-               <ReactLoader loaded={false} className="spinner"
-               zIndex={2e9} options={options}/>:
-                <LoginContainer.ImageInner>
-                  {this.state.featuredImage != null ?
+                {this.state.loaders.featuredImage === false ?
+                  <ReactLoader loaded={false} className="spinner"
+                    zIndex={2e9} options={options} /> :
+                  <LoginContainer.ImageInner>
+                    {this.state.featuredImage != null ?
 
-                    this.FullscreenUploader("featuredImage") :
-                    <React.Fragment>
-                      <LoginContainer.UploadWrapper >
-                        <LoginContainer.UploadButton onClick={() => { }} />
-                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
-                      </LoginContainer.UploadWrapper>
-                      <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
-                      <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
-                    </React.Fragment>
-                  }
-                </LoginContainer.ImageInner>
-              }
+                      this.FullscreenUploader("featuredImage") :
+                      <React.Fragment>
+                        <LoginContainer.UploadWrapper >
+                          <LoginContainer.UploadButton onClick={() => { }} />
+                          <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                        </LoginContainer.UploadWrapper>
+                        <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
+                        <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                      </React.Fragment>
+                    }
+                  </LoginContainer.ImageInner>
+                }
               </LoginContainer.FeaturedImage>
               <LoginContainer.FirstImage imageType="firstImage" image={this.state.firstImage}>
-              {this.state.loaders.firstImage === false ?
-               <ReactLoader loaded={false} className="spinner"
-               zIndex={2e9} options={options}/>:
-                <LoginContainer.ImageInner>
-                  {this.state.firstImage != null ?
-
-                    this.FullscreenUploader("firstImage") :
-                    <React.Fragment>
-                      <LoginContainer.UploadWrapper>
-                        <LoginContainer.UploadButton onClick={() => { }} />
-                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
-
-                      </LoginContainer.UploadWrapper>
-                      <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
-                      <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
-                    </React.Fragment>
-                  }
-                </LoginContainer.ImageInner>
-              }
+                {this.state.loaders.firstImage === false ?
+                  <ReactLoader loaded={false} className="spinner"
+                    zIndex={2e9} options={options} /> :
+                  <LoginContainer.ImageInner>
+                    {this.state.firstImage != null ?
+                      this.FullscreenUploader("firstImage") :
+                      <React.Fragment>
+                        <LoginContainer.UploadWrapper>
+                          <LoginContainer.UploadButton onClick={() => { }} />
+                          <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+                        </LoginContainer.UploadWrapper>
+                        <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
+                        <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                      </React.Fragment>
+                    }
+                  </LoginContainer.ImageInner>
+                }
               </LoginContainer.FirstImage>
               <LoginContainer.SecondImage imageType="secondImage" image={this.state.secondImage}>
-              {this.state.loaders.secondImage === false ?
-               <ReactLoader loaded={false} className="spinner"
-               zIndex={2e9} options={options}/>:
-                <LoginContainer.ImageInner>
-                  {this.state.secondImage != null ?
+                {this.state.loaders.secondImage === false ?
+                  <ReactLoader loaded={false} className="spinner"
+                    zIndex={2e9} options={options} /> :
+                  <LoginContainer.ImageInner>
+                    {this.state.secondImage != null ?
 
-                    this.FullscreenUploader("secondImage") :
-                    <React.Fragment>
-                      <LoginContainer.UploadWrapper>
-                        <LoginContainer.UploadButton onClick={() => { }} />
-                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
-                      </LoginContainer.UploadWrapper>
-                      <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
-                      <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
-                    </React.Fragment>
-                  }
-                </LoginContainer.ImageInner>
-              }
+                      this.FullscreenUploader("secondImage") :
+                      <React.Fragment>
+                        <LoginContainer.UploadWrapper>
+                          <LoginContainer.UploadButton onClick={() => { }} />
+                          <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                        </LoginContainer.UploadWrapper>
+                        <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
+                        <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                      </React.Fragment>
+                    }
+                  </LoginContainer.ImageInner>
+                }
 
               </LoginContainer.SecondImage>
 
               <LoginContainer.AvatarContainer>
                 <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
-                {this.state.avatar != null ?
-                  this.FullscreenUploader("avatar") :  
-                  <LoginContainer.UploadWrapper type="avatar">
-                    <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
-                  </LoginContainer.UploadWrapper>
-                }
+                  {this.state.avatar != null ?
+                    this.FullscreenUploader("avatar") :
+                    <LoginContainer.UploadWrapper type="avatar">
+                      <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
+                      <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
+                    </LoginContainer.UploadWrapper>
+                  }
                 </LoginContainer.Avatar>
                 <LoginContainer.HeadingWrapper>
                   <LoginContainer.FeaturedText> Profile Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 100x100 </LoginContainer.CaptionText>
                 </LoginContainer.HeadingWrapper>
               </LoginContainer.AvatarContainer>
+
             </LoginContainer.ImageWrapper>
           </LoginContainer.RightSection>
         </LoginContainer>

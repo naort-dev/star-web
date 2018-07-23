@@ -84,7 +84,7 @@ export default class VideoRecorder extends React.Component {
         this.setState({ extensionError: false,  play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        const allowedExtensions = /(\.mp4)$/i;
+        const allowedExtensions = /(\.mp4)|\.mov)$/i;
         if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
             this.setState({ extensionError: true })
         }

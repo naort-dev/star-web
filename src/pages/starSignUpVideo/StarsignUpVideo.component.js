@@ -47,7 +47,6 @@ export default class StarsignUpVideo extends React.Component {
   }
 
   render() {
-    console.log("propsssss", this.props)
     if (!this.props.isLoggedIn) {
       return <Redirect to={locations.signupType} />
     }
