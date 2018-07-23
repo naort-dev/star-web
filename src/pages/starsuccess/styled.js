@@ -35,6 +35,7 @@ LoginContainer.LeftSection = styled.div`
 LoginContainer.RightSection = styled.div`
   width: 100%;
   background-color:rgba(248, 248, 248, 1);
+  display:none;
   @media(min-width: 1025px){
     width: 55%;
     display:flex;
