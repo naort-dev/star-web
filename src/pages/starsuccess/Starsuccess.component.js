@@ -7,12 +7,18 @@ import { Link, Redirect } from 'react-router-dom'
 
 export default class Starsuccess extends React.Component {
 
+
+
     onContinueClick() {
+        if (localStorage) {
+            localStorage.removeItem("bioDetails")
+        }
         this.props.history.push('/')
     }
+
     render() {
-        if(!this.props.session.isLoggedIn){
-           return <Redirect to="/signuptype" />
+        if (!this.props.session.isLoggedIn) {
+            return <Redirect to="/signuptype" />
         }
         return (
             <LoginContainer.wrapper>
@@ -26,7 +32,7 @@ export default class Starsuccess extends React.Component {
                                 />
                             </Link>
                             <Link to="#">
-                                <HeaderSection.RightDiv>{this.props.session.auth_token.first_name}</HeaderSection.RightDiv>
+                                <HeaderSection.RightDiv>{this.props.session.auth_token.first_name} {this.props.session.auth_token.last_name}</HeaderSection.RightDiv>
                             </Link>
                         </HeaderSection>
 
@@ -48,9 +54,21 @@ export default class Starsuccess extends React.Component {
                     </LoginContainer.LeftSection>
                     <LoginContainer.RightSection>
                         <LoginContainer.ImageWrapper>
-                            <LoginContainer.FeaturedImage image={this.props.location.state.images.featuredImage} />
-                            <LoginContainer.FirstImage image={this.props.location.state.images.firstImage} />
-                            <LoginContainer.SecondImage image={this.props.location.state.images.secondImage} />
+                            <LoginContainer.FeaturedImage>
+                            <LoginContainer.FullScreenImageWrapper >
+                                <LoginContainer.Image src={this.props.imageViewer.featuredImage.imageURL} style={{transform: this.props.imageViewer.featuredImage.rotations}} />
+                                </LoginContainer.FullScreenImageWrapper >
+                            </LoginContainer.FeaturedImage>
+                            <LoginContainer.FirstImage>
+                            <LoginContainer.FullScreenImageWrapper >
+                                <LoginContainer.Image src={this.props.imageViewer.firstImage.imageURL}  style={{transform: this.props.imageViewer.firstImage.rotations}} />
+                                </LoginContainer.FullScreenImageWrapper >
+                            </LoginContainer.FirstImage>
+                            <LoginContainer.SecondImage>
+                            <LoginContainer.FullScreenImageWrapper >
+                                <LoginContainer.Image src={this.props.imageViewer.secondImage.imageURL}  style={{transform: this.props.imageViewer.secondImage.rotations}} />
+                                </LoginContainer.FullScreenImageWrapper >
+                            </LoginContainer.SecondImage>
                         </LoginContainer.ImageWrapper>
                     </LoginContainer.RightSection>
                 </LoginContainer>

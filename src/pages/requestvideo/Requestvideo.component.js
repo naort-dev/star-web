@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Request, HeaderSection } from '../../pages/requestvideo/styled';
 import { ImageStack } from '../../components/ImageStack';
@@ -9,10 +9,19 @@ export default class Requestvideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      loginRedirect: false,
     };
   }
   goBack = () => {
     this.props.history.goBack();
+  }
+  askQuestionFlow = () => { 
+    if (this.props.isLoggedIn) {
+    this.props.history.push(`/${this.props.match.params.id}/request/ask`);
+    } else{
+      this.props.setRedirectUrls(this.props.location.pathname);
+      this.setState({ loginRedirect: true });
+    }
   }
 
   render() {
@@ -49,6 +58,9 @@ export default class Requestvideo extends React.Component {
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
+    if (this.state.loginRedirect) {
+      return <Redirect to="/login" />;
+    }
     return (
       <Request.Wrapper>
         <Request.Content>
@@ -71,9 +83,9 @@ export default class Requestvideo extends React.Component {
                       What kind of video would you like to request?
                     </Request.HeaderText>
                     <Request.ButtonWrapper>
-                      {/* <Link to={`/${this.props.match.params.id}/request/ask`}>
-                        <Request.Button>Ask a Question</Request.Button>
-                      </Link> */}
+                    
+                      <Request.Button onClick={() => this.askQuestionFlow()}>Ask a Question</Request.Button>
+                     
                       <Link to={`/${this.props.match.params.id}/request/personal`}>
                         <Request.Button >Personalized Shout-Out</Request.Button>
                       </Link>

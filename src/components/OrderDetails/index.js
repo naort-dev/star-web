@@ -185,7 +185,7 @@ export default class OrderDetails extends React.Component {
                       <EmailShareButton
                         url={shareUrl}
                         subject={title}
-                        body="body"
+                        body={shareUrl}
                         className="Demo__some-network__share-button"
                       >
                         <EmailIcon

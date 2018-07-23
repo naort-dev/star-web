@@ -167,14 +167,33 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
   });
 };
 
+const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
+  return fetch.post(Api.starsonaVideo, {
+    video: filename,
+    stragramz_request: requestId,
+    duration,
+  }, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(paymentFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(paymentFetchFailed(exception));
+  });
+}
 
-export const requestVideo = (bookingData, publicStatus) => (dispatch, getState) => {
+export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   let requestDetails = {
     stargramto: bookingData.userName,
     stargramfrom: bookingData.hostName,
     relationship: bookingData.requestRelationshipData,
     show_relationship: true,
+    question: bookingData.question,
     specifically_for: bookingData.specification,
     important_info: bookingData.importantinfo,
     date: moment.utc(bookingData.date).format(),
@@ -183,18 +202,23 @@ export const requestVideo = (bookingData, publicStatus) => (dispatch, getState) 
   };
   let formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);
-  formData.append('occasion', bookingData.selectedValue);
+  if (bookingData.type !== 3) {
+    formData.append('occasion', bookingData.selectedValue);
+  }
   formData.append('public_request', publicStatus);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
   dispatch(paymentFetchStart());
-  return fetch.post(Api.requestVideo, formData, {
+  return fetch.post(Api.starsonaRequest, formData, {
     headers: {
       'Authorization': `token ${authToken}`,
     },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
+      if (bookingData.type === 3) {
+        starsonaVideo(authToken, bookingData.fileName, resp.data.data['stargramz_response'].id, "00:00", dispatch)
+      } //Q&A
       dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
     } else {
       dispatch(paymentFetchEnd());

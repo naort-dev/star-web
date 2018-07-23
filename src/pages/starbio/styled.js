@@ -1,12 +1,12 @@
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const LoginContainer = styled.div`
   background-color: white;
   display: flex;
-  padding: 0px 0px;
   flex-direction: column;
   height: 100%;
-  padding-bottom: 56px;
+  padding-bottom: 64px;
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
@@ -22,6 +22,57 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+
+LoginContainer.CropperWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-height: 80%;
+  @media(min-width: 768px) {
+    width: 100%;
+  }
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: auto;
+    max-height: 100%;
+  }
+`;
+
+LoginContainer.Cropper = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+`;
+
+LoginContainer.CropperButton = styled.div`
+  background-color: white;
+  margin-top: 10px;
+  color: #FF6C58;
+  padding: 4px 30px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+`;
+
+Request.ComponentWrapperScroll = styled(Scrollbars)`
+  .component-wrapper-scroll-wrapper {
+    overflow: hidden !important;
+    position: static !important;
+    background: #fff;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
+  }
+`;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
@@ -31,11 +82,15 @@ LoginContainer.LeftSection = styled.div`
     width: 45%;
     padding: 0px 0px;
     position: relative;
-    padding-bottom: 83px;
+    padding-bottom: 100px;
   }
 `;
 LoginContainer.RightSection = styled.div`
   width: 100%;
+  margin-top: 40px;
+  @media(min-width: 768px) {
+    margin-bottom: 80px;
+  }
   @media(min-width: 1025px){
     background-color:rgba(248, 248, 248, 1);
     width: 55%;
@@ -46,14 +101,45 @@ LoginContainer.RightSection = styled.div`
     position: relative;
     padding: 30px 30px;
     flex-wrap: wrap;
+    height: 100vh;
+    padding-top: 13vh;
+    margin-top: 0px;
   }
 `;
 
+LoginContainer.mutiSelectItemWrapper = styled.div`
+  display: inline-block;
+  border: 2px solid #FF6C58;
+  padding: 5px;
+  color: #FF6C58;
+  border-radius: 20px;
+  margin: 9px;
+  font-size: 14px;
+  @media(min-width: 1025px) {
+    margin: 7.5px;
+  }
+`
+LoginContainer.CloseButton = styled.input`
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-left: 10px;
+  cursor: pointer;
+  border: none;
+  background: url('assets/images/close-icon-orange.svg') no-repeat;
+`;
 LoginContainer.ImageWrapper = styled.div`
 display:flex;
 align-items: center;
-justify-content: center;
+justify-content: space-between;
 flex-wrap: wrap;
+
+@media(min-width: 768px){
+  justify-content: space-between;
+  position: relative;
+} 
+
+
   @media(min-width: 1025px){
     display:flex;
     align-items: flex-start;
@@ -61,25 +147,20 @@ flex-wrap: wrap;
     padding: 0px 0px;
     position: relative;
     flex-wrap: wrap;
-    height: 80%;
     width: 80%;
   }
 `;
 
 LoginContainer.FeaturedImage = styled.div`
- width: 90%;
+ width: 100%;
  display: flex;
  justify-content: center;
  align-items: center;
- height: 250px;
- margin: 10px 10px;
+ height: 175px;
  background-color: #cccccc;
- ${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-  }
+@media(min-width: 768px){
+  height: 365px; 
+}
 
 @media(min-width: 1025px){
  width: 98%;
@@ -95,22 +176,17 @@ LoginContainer.FeaturedImage = styled.div`
 `;
 
 LoginContainer.FirstImage = styled.div`
-width: 42%;
+width: 49vw;
 display: flex;
 justify-content: center;
 align-items: center;
-height: 150px;
-margin: 10px 10px;
+height: 175px;
+margin: 10px 0px;
 background-color: #cccccc;
-${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-}
 
 @media(min-width: 768px){
-   width: 45%;  
+   width: 49.5vw;
+   height: 365px;  
 }
 
 @media(min-width: 1025px){
@@ -124,22 +200,17 @@ ${props => props.image != null && ({
 `;
 
 LoginContainer.SecondImage = styled.div`
-width: 42%;
+width: 49vw;
 display: flex;
 justify-content: center;
 align-items: center;
-height:150px;
+height:175px;
 background-color: #cccccc;
-margin: 10px 10px;
-${props => props.image != null && ({
-    background: `url(${props.image}) no-repeat`,
-    backgroundPosition: "center",
-    backgroundSize: "cover",
-  })
-}
+margin: 10px 0px;
 
 @media(min-width: 768px){
-  width: 45%;  
+  width: 49.5vw;  
+  height: 365px;  
 }
 
 @media(min-width: 1025px){
@@ -154,31 +225,51 @@ ${props => props.image != null && ({
 `;
 
 LoginContainer.AvatarContainer = styled.div`
-height: 20%;
-width: 50%;
-`
+width: 100%;
+display: flex;
+justify-content: center;
+align-items: center;
+@media(min-width: 768px) {
+  position: absolute;
+  bottom: -64px;
+  left: 0;
+  right: 0;
+  flex-direction: column;
+}
+@media(min-width: 1025px){
+  bottom: -100px;
+}
+`;
 
-LoginContainer.Avatar = styled.div`
- padding: 20px;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- border: 4px solid black;
+LoginContainer.HeadingWrapper = styled.div`
+  display: inline-block;
+  margin-left: 20px;
+`;
+
+LoginContainer.Avatar = styled.span`
+ width: 100px;
+ height: 100px;
+ display: inline-block;
  border-radius: 50%;
- background-color: #cccccc;
  background: url('assets/images/blank-avatar.svg') no-repeat center;
  ${props => props.image != null && ({
+    border: "6px solid #333333",
     background: `url(${props.image}) no-repeat`,
     backgroundPosition: "center",
     backgroundSize: "cover",
     objectFit: "contain"
   })
   }
-  @media(min-width: 1025px){
-    position: absolute;
-    top: 90%;
-    left: 43%;
+  @media(min-width: 768px) {
+    background: url('assets/images/avatar-grey.svg') no-repeat center;
+  }
+  @media(min-width: 1025px) {
+    > div {
+      height: 100%;
+      input {
+        right: 0;
+      }
+    }
   }
 `;
 
@@ -186,35 +277,53 @@ LoginContainer.UploadWrapper = styled.div`
     position: relative;
     overflow: hidden;
     display: inline-block;
-    ${props => props.imageType == "avatar" && ({
+    ${props => props.type == "avatar" && ({
     height: "100%",
-    width: "100%",
-  })
-  }
+    width: "100%"
+
+    })
+    }
+    
+    @media(min-width: 768px) {
+      width: 100%;
+      height: auto;
+      text-align: center;
+    }
   }
 `;
 
 LoginContainer.UploadButton = styled.button`
-border: 1px solid black;
+background: url('assets/images/plus-icon.svg') no-repeat center;
 color: black;
 background-color: transparent;
-border-radius: 60px;
+cursor: pointer;
+border: 0;
+width: 40px;
+height: 40px;
 font-size: 20px;
 font-weight: bold;
 text-align: center;
-@media(min-width: 1025px){
 height: 40px;
 width: 40px;
+@media(min-width: 768px){
+  height: 40px;
+  width: 40px;
 }
 `;
 
 
 LoginContainer.UploadInput = styled.input`
-    font-size: 100px;
+    bottom: 0;
     position: absolute;
     left: 0;
     top: 0;
+    cursor: pointer;
     opacity: 0;
+    @media(min-width: 768px) {
+      left: initial;
+      right: 25%;
+      width: 100%;
+    }
   `;
 
 
@@ -430,10 +539,14 @@ LoginContainer.ErrorDiv = styled.div`
 `;
 LoginContainer.ErrorMsg = styled.div`
   color:red;
-  font-size: 11px;
+  font-size: 12px;
   margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
+  ${props => !props.isError && ({
+    color: "grey"
+  })
+  }
 `;
 LoginContainer.Label = styled.div`
   color:#333333;
@@ -449,7 +562,6 @@ LoginContainer.Label = styled.div`
     padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:13px;
     width:69%;
   
   }
@@ -557,12 +669,12 @@ LoginContainer.ImageStackLayout = styled.div`
 LoginContainer.FooterLayout = styled.div`
   padding: 0;
   @media(min-width:1025px){
-    padding: 0px 57px;
+    padding: 0px 40px;
     position: absolute;
-    bottom: 20px;
     left: 0;
     right: 0;
     width: 45%;
+    bottom: 0;
   }
   
 `;
@@ -603,12 +715,6 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
-  @media(min-width:1025px){
-    font-size:20px
-  }
-  @media(min-width:1920px){
-    font-size:22px;
-  }
 `;
 
 const FooterSection = styled.div`
@@ -686,6 +792,12 @@ border: 2px solid grey;
 `
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  .Select-multi-value-wrapper {
+    padding: 9px;
+    @media(min-width: 1025px) {
+      padding: 7.5px;
+    }
+  }
   @media(min-width:768px){
     width:100%;
   }
@@ -810,19 +922,18 @@ LoginContainer.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top:1%;
-  height:90px;
-
   @media(min-width:768px){
     flex-direction: row;
     align-items: flex-start;
+    margin: 0px 120px;
     margin-top:5%;
-    height:40px;
   }
   @media(min-width: 1025px) {
-    height:40px;
+    margin: 0px 0px;
     margin-top: 30px;
   }
   @media(min-width: 1920px) {
+    margin: 0px 0px;
     margin-top: 50px;
   }
 `;
@@ -876,11 +987,17 @@ flex-direction: column;
 align-items: center;
 justify-content: center;
 display: flex;
-`
+position: relative;
+`;
 LoginContainer.FeaturedText = styled.div`
 font-size: 16px;
-font-weight: 700;
-margin-top: 5%;
+font-family: Ubuntu-bold
+margin-top: 2%;
+
+@media(min-width:768px){
+  font-size: 23px;
+}
+
 @media(min-width:1025px){
 font-size: 24px;
 }
@@ -888,6 +1005,13 @@ font-size: 24px;
 
 LoginContainer.CaptionText = styled.div`
 font-size: 14px;
+font-family: Ubuntu-light;
+@media(min-width:768px){
+  font-size: 15px;
+}
+@media(min-width:1025px){
+  font-size: 16px;
+}
 `;
 
 LoginContainer.loaderWrapper = styled.div`
@@ -898,6 +1022,58 @@ left: 0;
 right: 0;
 bottom: 0;
 background-color: rgba(0,0,0, 0.3);
+`;
+
+LoginContainer.Image = styled.img`
+ height: 100%;
+ width: 100%;
+ object-fit: contain;
+`;
+
+LoginContainer.FullScreenUploadWrapper = styled.div`
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+LoginContainer.FullScreenUploadButton = styled.button`
+border: 1px solid black;
+color: black;
+background-color: transparent;
+border-radius: 60px;
+font-size: 20px;
+font-weight: bold;
+text-align: center;
+height: 100%;
+width: 100%;
+visibility: hidden;
+`;
+
+
+LoginContainer.FullScreenUploadInput = styled.input`
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+  `;
+
+
+LoginContainer.ErrorMessage = styled.span`
+color:  red;
+font-size: 16px;
+`;
+
+LoginContainer.ErrorText = styled.span`
+ color: red;
+ position: absolute;
+ bottom: 20px;
+ font-size: 14px;
 `;
 
 

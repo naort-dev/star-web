@@ -17,12 +17,14 @@ class Api {
   static otherRelation = 'request/other_relation/';
   static getEphemeralKey = 'payments/generatekey/';
   static createCharge = 'payments/createcharge/';
-  static requestVideo = 'request/stargramz/';
+  static starsonaRequest = 'request/stargramz/';
+  static starsonaVideo = 'request/stargramz_video/';
   static getSourceList = 'payments/stripe_cards/';
   static modifySourceList = 'payments/attach_detach_source/';
   static forgotPassword = 'user/forgotpassword/';
   static resetPassword = 'user/resetpassword/';
-  static getImageCredentials = 'user/signed_url/?extension=png&key=profile_images&file_type=image'
+  static getAWSVideo = 'user/get_signed_url/?key=stargram_videos&file_name=';
+  static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`
 }
 
 export default Api;

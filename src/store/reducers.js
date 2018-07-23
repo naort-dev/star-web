@@ -17,6 +17,8 @@ import redirectReferrer from '../store/shared/reducers/redirect';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
 import videoRecorder from '../store/shared/reducers/videoRecording'
+import videoUploader from '../store/shared/reducers/videoUploader'
+import imageViewer from '../store/shared/reducers/imageViewer'
 
 const rootReducer = combineReducers({
   session,
@@ -35,7 +37,9 @@ const rootReducer = combineReducers({
   otherRelation,
   redirectReferrer,
   paymentDetails,
-  videoRecorder
+  videoRecorder,
+  videoUploader,
+  imageViewer
 });
 
 export default rootReducer;

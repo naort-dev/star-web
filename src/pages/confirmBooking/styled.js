@@ -24,10 +24,6 @@ const Request = styled.section`
   height: 100%;
   background-color: #F8F8F8;
  }
- @media(min-width: 1920px) {
-  padding-top: 72px;
-}
- 
 `;
 Request.Wrapper = styled.div`
  height: 100vh;
@@ -66,7 +62,7 @@ Request.LeftSection = styled.div`
 Request.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
-  display:none;
+  display: none;
   height: calc(100% - 237px);
   min-height: calc(95vh - 54px);
   position: relative;
@@ -76,7 +72,8 @@ Request.RightSection = styled.div`
     padding-bottom: 58px;
   }
   @media(min-width: 1025px){
-    display:block;
+    display: ${props => (props.videoMode ? 'flex' : 'block')};
+    align-items: center;
     width:60%;
     padding: 27px 35px;
     padding-bottom: 0;
@@ -85,12 +82,27 @@ Request.RightSection = styled.div`
     padding-top: 48px;
   }
 `;
-Request.SmallScreenLayout = styled.div`
-  width:100%;
-  @media(min-width:1025px){
-    display:none;
+
+Request.smallScreenVideo = styled.div`
+  @media(min-width: 1025px) {
+    displaY: none;
+  }
+`
+
+Request.VideoContentWrapper = styled.div`
+  width: 100%;
+  height: 200px;
+  @media(min-width: 768px) {
+    height: 400px;
+  }
+  @media(min-width: 1025px) {
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    max-height: 480px;
   }
 `;
+
 
 Request.LargeScreenLayout = styled.div`
   display: none;
