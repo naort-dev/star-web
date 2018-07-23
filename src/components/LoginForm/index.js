@@ -135,14 +135,19 @@ export default class LoginForm extends React.Component {
 
 
   onSocialMediaLogin = (r, source) => {
-    console.log(r, source);
     if (source === 2) {
+      let userNameValue = ''
+      if (r.email === undefined || r.email === '') {
+        userNameValue = 'facebook';
+      } else {
+        userNameValue = r.email;
+      }
       this.setState({
 
         socialMedia: {
 
           ...this.state.socialMedia,
-          username: r.email === '' ? 'facebook' : r.email,
+          username: userNameValue,
           first_name: r.first_name,
           last_name: r.last_name,
           sign_up_source: source,
@@ -180,7 +185,6 @@ export default class LoginForm extends React.Component {
         },
       });
     }
-    console.log(this.state.socialMedia);
     this.props.socialMediaLogin(
       this.state.socialMedia.username,
       this.state.socialMedia.first_name,
@@ -211,6 +215,7 @@ export default class LoginForm extends React.Component {
       if (response.authResponse) {
         window.FB.api('/me', { locale: 'en_US', fields: 'name, email,first_name,last_name,picture' },
           function (response) {
+            console.log(response);
             that.onSocialMediaLogin(response, 2);
           });
       }
@@ -256,7 +261,6 @@ export default class LoginForm extends React.Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
   render() {
-    console.log(this.props.statusCode);
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.to;
     const to = this.props.redirectUrls.to || '/';
