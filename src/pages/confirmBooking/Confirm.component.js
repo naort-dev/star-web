@@ -4,6 +4,8 @@ import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBo
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
 import './confirmCss';
+import VideoPlayer from '../../components/VideoPlayer';
+import fetchAWSVideo from '../../services/getAwsVideo';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import StripeCheckout from '../../components/StripeCheckout';
 import renderStarProfessions from '../../utils/formatProfessions';
@@ -16,6 +18,10 @@ export default class Confirm extends React.Component {
       publicRequest: true,
       loginRedirect: false,
       requestEndRedirect: false,
+      QAVideo: {
+        url: null,
+        error: '',
+      },
     };
   }
   componentWillMount() {
@@ -30,6 +36,14 @@ export default class Confirm extends React.Component {
     } else {
       bookingData = this.props.bookingData;
     }
+    if (bookingData.type === 3) {
+      fetchAWSVideo(this.props.authToken, bookingData.fileName)
+        .then((videoUrl) => {
+          this.setState({ QAVideo: { ...this.state.QAVideo, url: videoUrl } });
+        }).catch((exception) => {
+          this.setState({ QAVideo: { ...this.state.QAVideo, error: "Something unexpected happened" } });
+        });
+    } //QA video
     this.updatePublicStatus(bookingData);
     this.setState({
       bookingData,
@@ -196,6 +210,13 @@ export default class Confirm extends React.Component {
           <Request.StarProfessions>{renderStarProfessions(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
         </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
+        <Request.smallScreenVideo>
+          <Request.VideoContentWrapper>
+            <VideoPlayer
+              src={this.state.QAVideo.url}
+            />
+          </Request.VideoContentWrapper>
+        </Request.smallScreenVideo>
         <Request.Questionwraps>
           <Request.Ask>
             {
@@ -294,13 +315,22 @@ export default class Confirm extends React.Component {
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                />
-              </Request.ImageStackWrapper>
+            <Request.RightSection videoMode={this.state.bookingData.type === 3}>
+              {
+                this.state.bookingData.type === 3 ?
+                  <Request.VideoContentWrapper>
+                    <VideoPlayer
+                      src={this.state.QAVideo.url}
+                    />
+                  </Request.VideoContentWrapper>
+                :
+                  <Request.ImageStackWrapper>
+                    <ImageStack
+                      featureImage={featuredImage}
+                      imageList={imageList}
+                    />
+                  </Request.ImageStackWrapper>
+              }
             </Request.RightSection>
           </Request>
         </Request.Content>
