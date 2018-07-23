@@ -173,8 +173,10 @@ export default class Starbio extends React.Component {
         }
         return { formData, url: response.data.data.url }
       })
-      .then(response => axios.post(response.url, response.formData))
-      .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
+      .then((response) =>{
+        axios.post(response.url, response.formData) 
+      })
+      .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details`, {
         'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
       })
       )

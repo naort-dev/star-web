@@ -163,7 +163,6 @@ onSignIn = (googleUser) => {
 }
 
 onSocialMediaLogin = (r, source) => {
-  console.log(r, source);
   if (source === 2) {
     this.setState({
       socialMedia: {
@@ -206,7 +205,6 @@ onSocialMediaLogin = (r, source) => {
       },
     });
   }
-  console.log(this.state.socialMedia);
   this.props.socialMediaLogin(
     this.state.socialMedia.username,
     this.state.socialMedia.first_name,
@@ -300,8 +298,6 @@ ShowPassword = () => {
 
 
 render() {
-  console.log(this.props.statusCode);
-
   const { redirectToReferrer } = this.state;
   if (redirectToReferrer) {
     if (this.props.location.state && this.props.location.state.type === 'fan') {
