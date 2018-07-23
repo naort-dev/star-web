@@ -1,14 +1,13 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations';
 import { ImageStack } from '../../components/ImageStack';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
-import VideoRecorder from '../../components/WebRTCVideoRecorder';
+import VideoRecorder from '../../components/QaVideoRecorder';
 
 export default class Askquestion extends React.Component {
   constructor(props) {
@@ -67,7 +66,7 @@ export default class Askquestion extends React.Component {
     // })
   }
   setQuestion = (question) => {
-    this.setState({question});
+    this.setState({ question });
   }
   createBookingObject = (fileNameValue) => {
     const bookingData = {
@@ -122,24 +121,24 @@ export default class Askquestion extends React.Component {
       <Request.Wrapper>
         <Request.Content>
           <Request>
+            <HeaderSection>
+              <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+              <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
+              <Link to={`/starDetail/${this.props.match.params.id}`}>
+                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
+              </Link>
+            </HeaderSection>
+            <Request.RightSection>
+              <Request.recorderWrapper>
+                <VideoRecorder {...this.props} />
+              </Request.recorderWrapper>
+            </Request.RightSection>
             <Request.LeftSection>
-              <HeaderSection>
-                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-                <Link to={`/starDetail/${this.props.match.params.id}`}>
-                  <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-                </Link>
-              </HeaderSection>
-              <Request.SmallScreenLayout>
-                <Request.ImageRenderDiv>
-                  <Request.ImageSection
-                    imageUrl={coverPhoto}
-                  />
-                </Request.ImageRenderDiv>
-              </Request.SmallScreenLayout>
-
               <Request.ComponentWrapper>
-                <Scrollbars>
+                <Request.ComponentWrapperScroll
+                  autoHide
+                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                >
                   <Request.Questionwraps>
                     <Request.Ask>
                       <Request.InputFieldsWrapper>
@@ -158,7 +157,7 @@ export default class Askquestion extends React.Component {
 
                     </Request.Ask>
                   </Request.Questionwraps>
-                </Scrollbars>
+                </Request.ComponentWrapperScroll>
                 <Request.PaymentControllerWrapper>
                   <PaymentFooterController
                     buttonName="Book"
@@ -169,11 +168,6 @@ export default class Askquestion extends React.Component {
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <VideoRecorder {...this.props} />
-              </Request.ImageStackWrapper>
-            </Request.RightSection>
           </Request>
         </Request.Content>
       </Request.Wrapper>
