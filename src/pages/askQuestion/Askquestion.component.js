@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations';
-import { ImageStack } from '../../components/ImageStack';
+import Loader from '../../components/Loader';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
 import VideoRecorder from '../../components/QaVideoRecorder';
@@ -15,6 +15,7 @@ export default class Askquestion extends React.Component {
     this.state = {
       loginRedirect: false,
       question: '',
+      loader: false,
     };
   }
   goBack = () => {
@@ -30,12 +31,14 @@ export default class Askquestion extends React.Component {
 
 
   handleBooking = () => {
+    this.setState({ loader: true });
     if (this.props.isLoggedIn) {
       const askVideo = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
       getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, askVideo)
         .then((response) => {
           if (response && response.filename) {
             axios.post(response.url, response.formData).then(() => {
+              this.setState({ loader: false });
               const bookObj = this.createBookingObject(response.filename);
               if (bookObj) {
                 localStorage.setItem('bookingData', JSON.stringify(bookObj));
@@ -121,6 +124,13 @@ export default class Askquestion extends React.Component {
 
       <Request.Wrapper>
         <Request.Content>
+          {this.state.loader ?
+            <Request.loaderWrapper>
+              <Loader />
+            </Request.loaderWrapper>
+            :
+            null
+          }
           <Request>
             <HeaderSection>
               <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
