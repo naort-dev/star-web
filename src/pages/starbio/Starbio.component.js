@@ -95,6 +95,7 @@ export default class Starbio extends React.Component {
       //   extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
       // })
       //   const exif = await this.getExif(file, type)
+        // const exif = await this.getExif(file, type)
         this.setState({cropMode: true, cropImage: e.target.result, currentImageType: type})
         this.setState({ [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
         // this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
