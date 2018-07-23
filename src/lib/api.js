@@ -23,7 +23,8 @@ class Api {
   static modifySourceList = 'payments/attach_detach_source/';
   static forgotPassword = 'user/forgotpassword/';
   static resetPassword = 'user/resetpassword/';
-  static getImageCredentials = 'user/signed_url/?extension=png&key=profile_images&file_type=image'
+  static getImageCredentials = 'user/signed_url/?extension=png&key=profile_images&file_type=image';
+  static getAWSVideo = 'user/get_signed_url/?key=stargram_videos&file_name=';
 }
 
 export default Api;
