@@ -10,7 +10,7 @@ export default class VideoRecorder extends React.Component {
     constructor(props) {
         super(props);
         this.state = { streamed: null, error: null, startUpload: false, browserSupport: false, play: false };
-        this.mediaSource = 'MediaSource' in window ? new MediaSource() : null ;
+        this.mediaSource = 'MediaSource' in window ? new MediaSource() : null;
         this.mediaRecorder = null;
         this.recordedBlobs = []
         this.handleDataAvailable = this.handleDataAvailable.bind(this)
@@ -32,7 +32,7 @@ export default class VideoRecorder extends React.Component {
                     aspectRatio: { ideal: 1.7777777778 }
                 }
             })
-                .then(() => { this.setState({browserSupport: true}) }, (err) => this.setState({ browserSupport: false }))
+                .then(() => { this.setState({ browserSupport: true }) }, (err) => this.setState({ browserSupport: false }))
 
         }
     }
@@ -81,37 +81,17 @@ export default class VideoRecorder extends React.Component {
     }
 
     fileUpload() {
-        this.setState({ extensionError: false,  play: false })
+        this.setState({ extensionError: false, play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        const allowedExtensions = /(\.mp4)$/i;
+        const allowedExtensions = /((\.mp4)|(\.mov))$/i;
         if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
             this.setState({ extensionError: true })
         }
         else {
             const fileURL = URL.createObjectURL(file)
-            this.setState({ play: true}, () => document.getElementById('fallback-video').src = fileURL)
-            this.props.onSaveVideo(file)
-            // reader.addEventListener("load", function () {
-            //     getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
-            //         .then(response => {
-            //             axios.post(response.url, response.formData)
-            //                 .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-            //                     ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
-            //                 },
-            //                     {
-            //                         "headers": {
-            //                             'Authorization': `token ${this.props.session.auth_token.authentication_token}`
-            //                         }
-            //                     }
-            //                 )
-            //                 )
-            //         })
-            //         .then(() => {
-            //             this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
-
-            //         })
-            // }.bind(this), false);
+            this.setState({ play: true }, () => document.getElementById('fallback-video').src = fileURL)
+            this.props.onSaveVideo({ videoFile: file, extension: file.type.split('/')[1] })
             if (file) {
                 reader.readAsDataURL(file)
             }
@@ -135,15 +115,19 @@ export default class VideoRecorder extends React.Component {
             }
         })
             .then(() => {
-                var options = { mimeType: 'video/mp4;codecs=vp9' };
-                if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                    options = { mimeType: 'video/mp4;codecs=vp8' };
-                    if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                        options = { mimeType: 'video/mp4' };
-                        if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                            options = { mimeType: '' };
-                        }
-                    }
+
+                let options
+                if (MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
+                    options = { mimeType: 'video/mp4;codecs=h264 ' }
+                }
+                else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+                    options = { mimeType: 'video/webm;codecs=vp9' };
+                    // if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                    //     options = { mimeType: 'video/webm' };
+                    //     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+                    //         options = { mimeType: '' };
+                    //     }
+                    // }
                 }
                 try {
                     this.mediaRecorder = new MediaRecorder(this.stream, options);
@@ -192,10 +176,10 @@ export default class VideoRecorder extends React.Component {
 
                     <VideoRecorderDiv>
                         <VideoRecorderDiv.VideoContainer>
-                            { this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> :  (
+                            {this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> : (
                                 this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format. Only MP4 is supported</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Kindly check your device or upload a video</VideoRecorderDiv.InfoText>
-                            )   }
-                      
+                            )}
+
                         </VideoRecorderDiv.VideoContainer>
 
                         <VideoRecorderDiv.UploadWrapper>

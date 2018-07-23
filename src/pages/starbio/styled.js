@@ -988,6 +988,7 @@ background-color: rgba(0,0,0, 0.3);
 LoginContainer.Image = styled.img`
  height: 100%;
  width: 100%;
+ object-fit: contain;
 `;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`
@@ -1024,6 +1025,10 @@ LoginContainer.FullScreenUploadInput = styled.input`
   `;
 
 
+LoginContainer.ErrorMessage = styled.span`
+color:  red;
+font-size: 16px;
+`;
 
 
 

@@ -22,7 +22,7 @@ export default class StarsignUpVideo extends React.Component {
       signupVideo = this.props.videoUploader.savedFile;
     }
     else {
-      signupVideo = new File([this.props.videoRecorder.recordedBuffer], 'signupVideo.mp4');
+      signupVideo = new File([this.props.videoRecorder.recordedBuffer], `signupVideo.${this.props.videoUploader.extension}`);
     }
   
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
@@ -47,7 +47,6 @@ export default class StarsignUpVideo extends React.Component {
   }
 
   render() {
-    console.log("propsssss", this.props)
     if (!this.props.isLoggedIn) {
       return <Redirect to={locations.signupType} />
     }
