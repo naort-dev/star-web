@@ -84,14 +84,14 @@ export default class VideoRecorder extends React.Component {
         this.setState({ extensionError: false, play: false })
         const file = document.getElementById("default-uploader").files[0];
         const reader = new FileReader();
-        const allowedExtensions = /((\.mp4) | (\.MOV))$/i;
+        const allowedExtensions = /((\.mp4)|(\.MOV))$/i;
         if (!allowedExtensions.exec(document.getElementById("default-uploader").value)) {
             this.setState({ extensionError: true })
         }
         else {
             const fileURL = URL.createObjectURL(file)
             this.setState({ play: true }, () => document.getElementById('fallback-video').src = fileURL)
-            this.props.onSaveVideo(file)
+            this.props.onSaveVideo({ videoFile: file, extension: file.type.split('/')[1] })
             // reader.addEventListener("load", function () {
             //     getAWSCredentials("user/signed_url/?extension=mp4&key=authentication_videos&file_type=video", this.props.session.auth_token.authentication_token, file)
             //         .then(response => {
