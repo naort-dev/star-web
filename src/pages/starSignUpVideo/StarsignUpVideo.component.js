@@ -21,8 +21,7 @@ export default class StarsignUpVideo extends React.Component {
     let signupVideo
     if (this.props.videoUploader.savedFile != null) {
       signupVideo = this.props.videoUploader.savedFile;
-    }
-    else {
+    } else {
       signupVideo = new File([this.props.videoRecorder.recordedBuffer], `signupVideo.${this.props.videoUploader.extension}`);
     }
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
@@ -81,7 +80,7 @@ export default class StarsignUpVideo extends React.Component {
           <SignupContainer.SocialMediaSignup>
             <SignupContainer.Container>
               <SignupContainer.Heading>Verify your identity!</SignupContainer.Heading>
-              <p>Please record a short video saying the following </p>
+              <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
             </SignupContainer.Container>
             <SignupContainer.Container>
               <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
