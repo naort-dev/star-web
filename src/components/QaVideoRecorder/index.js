@@ -174,11 +174,7 @@ export default class VideoRecorder extends React.Component {
                     <VideoRecorderDiv>
                         <VideoRecorderDiv.VideoContainer>
                             {this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> : (
-<<<<<<< HEAD
-                                this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format. Only MP4 is supported</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Pleasse upload your question video</VideoRecorderDiv.InfoText>
-=======
                                 this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Please upload your video</VideoRecorderDiv.InfoText>
->>>>>>> record fixes, cropper fixes
                             )}
 
                         </VideoRecorderDiv.VideoContainer>
