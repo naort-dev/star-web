@@ -27,9 +27,14 @@ LoginContainer.CropperWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-height: 80%;
+  @media(min-width: 768px) {
+    width: 100%;
+  }
   @media(min-width: 1025px) {
-    max-width: 80%;
-    max-height: 80%
+    width: 100%;
+    height: 100%;
   }
 `;
 
