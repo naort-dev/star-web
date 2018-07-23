@@ -27,6 +27,9 @@ LoginContainer.CropperWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media(min-width: 768px) {
+    width: 100%;
+  }
   @media(min-width: 1025px) {
     max-width: 80%;
     max-height: 80%
