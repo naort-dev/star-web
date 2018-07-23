@@ -118,20 +118,14 @@ export default class VideoRecorder extends React.Component {
 
                 let options = { mimeType: 'video/webm', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000 }
                 if (!MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
-                    options = { mimeType: 'video/webm;codecs=vp9 ' }
+                    options = { mimeType: 'video/webm;codecs=vp9 ', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000  }
                 }
                 else if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-                    options = { mimeType: 'video/webm;codecs=vp8' };
-                    // if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                    //     options = { mimeType: 'video/webm' };
-                    //     if (!MediaRecorder.isTypeSupported(options.mimeType)) {
-                    //         options = { mimeType: '' };
-                    //     }
-                    // }
+                    options = { mimeType: 'video/webm;codecs=vp8', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000  };
+                
                 }
                 //addition test
-                options = { mimeType: 'video/mp4;codecs=h264' };
-
+               
                 try {
                     this.mediaRecorder = new MediaRecorder(this.stream, options);
                     this.mediaRecorder.ondataavailable = this.handleDataAvailable

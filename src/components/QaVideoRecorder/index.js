@@ -134,28 +134,31 @@ export default class VideoRecorder extends React.Component {
                 aspectRatio: { ideal: 1.7777777778 }
             }
         })
-            .then(() => {
-                let options = { mimeType: 'video/mp4;codecs=h264', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000 }
-                if (!MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
-                    options = { mimeType: 'video/webm;codecs=vp9 ' }
-                }
-                else if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-                    options = { mimeType: 'video/webm;codecs=vp8' };
-                }
-             
-                try {
-                    this.mediaRecorder = new MediaRecorder(this.stream, options);
-                    this.mediaRecorder.ondataavailable = this.handleDataAvailable
-                    this.mediaRecorder.start(100);
-                    this.timerID = setTimeout(() => {
-                        this.stopRecording()
-                    }, 305000);
-                } catch (e) {
-                    this.setState({})
-                    return;
-                }
-            })
-            .catch(err => this.setState({ browserSupport: false }))
+        .then(() => {
+
+            let options = { mimeType: 'video/webm', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000 }
+            if (!MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
+                options = { mimeType: 'video/webm;codecs=vp9 ', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000  }
+            }
+            else if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
+                options = { mimeType: 'video/webm;codecs=vp8', audioBitsPerSecond: 128000, videoBitsPerSecond: 128000, bitsPerSecond: 128000  };
+            
+            }
+            //addition test
+           
+            try {
+                this.mediaRecorder = new MediaRecorder(this.stream, options);
+                this.mediaRecorder.ondataavailable = this.handleDataAvailable
+                this.mediaRecorder.start(100);
+                this.timerID = setTimeout(() => {
+                    this.stopRecording()
+                }, 305000);
+            } catch (e) {
+                this.setState({})
+                return;
+            }
+        })
+        .catch(err => this.setState({ browserSupport: false }))
 
     }
 
