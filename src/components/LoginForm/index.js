@@ -135,6 +135,7 @@ export default class LoginForm extends React.Component {
 
 
   onSocialMediaLogin = (r, source) => {
+    console.log(r, source);
     if (source === 2) {
       this.setState({
 
@@ -179,6 +180,7 @@ export default class LoginForm extends React.Component {
         },
       });
     }
+    console.log(this.state.socialMedia);
     this.props.socialMediaLogin(
       this.state.socialMedia.username,
       this.state.socialMedia.first_name,
@@ -254,6 +256,7 @@ export default class LoginForm extends React.Component {
     this.setState({ showPassword: !this.state.showPassword });
   }
   render() {
+    console.log(this.props.statusCode);
     const { email, password } = this.state;
     const loginToContinue = this.props.location.state && this.props.location.state.to;
     const to = this.props.redirectUrls.to || '/';
