@@ -23,6 +23,38 @@ LoginContainer.wrapper = styled.div`
   
 `;
 
+LoginContainer.CropperWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-height: 80%;
+  @media(min-width: 768px) {
+    width: 100%;
+  }
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+LoginContainer.CropperButton = styled.div`
+  background-color: white;
+  margin-top: 10px;
+  color: #FF6C58;
+  padding: 4px 30px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  cursor: pointer;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+`;
+
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     overflow: hidden !important;

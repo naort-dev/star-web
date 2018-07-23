@@ -20,7 +20,7 @@ export default class VideoRecorder extends React.Component {
     }
 
     // componentDidMount() {
-    //     if ((!window.navigator && window.navigator.mediaDevices.getUserMedia)  || window.MediaRecorder) {
+    //     if (!window.navigator && !window.navigator.mediaDevices.getUserMedia && !window.MediaRecorder) {
     //         this.setState({ browserSupport: false });
     //     }
     //     else {
@@ -174,7 +174,7 @@ export default class VideoRecorder extends React.Component {
                     <VideoRecorderDiv>
                         <VideoRecorderDiv.VideoContainer>
                             {this.state.play ? <VideoRecorderDiv.Video id="fallback-video" controls /> : (
-                                this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format. Only MP4 is supported</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Please upload a video to verify your identity</VideoRecorderDiv.InfoText>
+                                this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Please upload your video</VideoRecorderDiv.InfoText>
                             )}
 
                         </VideoRecorderDiv.VideoContainer>
@@ -184,8 +184,7 @@ export default class VideoRecorder extends React.Component {
                             <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => { this.fileUpload() }} type="file" />
                         </VideoRecorderDiv.UploadWrapper>
                     </VideoRecorderDiv>
-            //     }
-
+                // }
             // </React.Fragment>
 
 
