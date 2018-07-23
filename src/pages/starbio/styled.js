@@ -39,6 +39,12 @@ LoginContainer.CropperWrapper = styled.div`
   }
 `;
 
+LoginContainer.Cropper = styled.div`
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+`;
+
 LoginContainer.CropperButton = styled.div`
   background-color: white;
   margin-top: 10px;

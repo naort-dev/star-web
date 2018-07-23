@@ -328,11 +328,14 @@ export default class Starbio extends React.Component {
     return (
       <Popup closePopUp={() => this.setState({ cropMode: false })}>
         <LoginContainer.CropperWrapper>
-          <Cropper
-            src={this.state.cropImage}
-            ratio={this.imageRatios[this.state.currentImageType]}
-            ref={ref => { this.image = ref }}
-          />
+          <LoginContainer.Cropper>
+            <Cropper
+              src={this.state.cropImage}
+              ratio={this.imageRatios[this.state.currentImageType]}
+              ref={ref => { this.image = ref }}
+              styles={{display: 'none'}}
+            />
+          </LoginContainer.Cropper>
           <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
         </LoginContainer.CropperWrapper>
       </Popup>
