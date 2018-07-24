@@ -19,6 +19,7 @@ module.exports = {
     hot: true,
     contentBase: './dist',
     publicPath: '/',
+    useLocalIp: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
