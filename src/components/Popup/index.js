@@ -22,7 +22,7 @@ export default class Popup extends React.Component {
     document.body.style.position = 'initial';
     if (this.props.scrollTarget) {
       if (document.body.getBoundingClientRect().width < 1025) {
-        smoothScroll(this.props.scrollTarget);
+        this.props.scrollTarget.scrollIntoView();
       }
     }
   }
