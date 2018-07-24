@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageStackDiv from './styled';
+import { imageSizes } from '../../constants/imageSizes';
 
 export class ImageStack extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export class ImageStack extends React.Component {
         height: '50%',
       },
     };
-    this.featureImageRatio = (800 / 376);
+    this.featureImageRatio = imageSizes.featured;
   }
   componentDidMount() {
     this.setImagesHeight();

@@ -7,11 +7,12 @@ import { Link, Redirect } from 'react-router-dom'
 import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
 import Loader from '../../components/Loader';
-import Cropper from 'react-image-crop';
+import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import EXIF from 'exif-js'
 import Popup from '../../components/Popup';
-import { default as ReactLoader } from 'react-loader'
+import { imageSizes } from '../../constants/imageSizes';
+import { default as ReactLoader } from 'react-loader';
 
 export default class Starbio extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ export default class Starbio extends React.Component {
       cropValues: {
         x: 10,
         y: 10,
-        aspect: 800 / 376,
+        aspect: 1,
       },
       imageHeights: {
         featured: '100%',
@@ -57,11 +58,11 @@ export default class Starbio extends React.Component {
       extensions: { featuredImage: null, firstImage: null, secondImage: null, avatarImage: null }
     };
     this.imageRatios = {
-      featuredImage: 800 / 376,
-      firstImage: 400 / 400,
-      secondImage: 400 / 400,
-      avatar: 400 / 400,
-    }
+      featuredImage: imageSizes.featured,
+      firstImage: imageSizes.first,
+      secondImage: imageSizes.second,
+      avatar: imageSizes.profile,
+    };
     this.featuredImage = null;
     this.secondImage = null;
     this.firstImage = null;
@@ -330,6 +331,22 @@ export default class Starbio extends React.Component {
 
   setCropImage = (image) => {
     this.image = image;
+    const crop = makeAspectCrop({
+      x: 0,
+      y: 20,
+      aspect: this.imageRatios[this.state.currentImageType],
+      width: image.width,
+    }, image.width / image.height);
+    const pixelCrop = {
+      x: Math.round(image.naturalWidth * (crop.x / 100)),
+      y: Math.round(image.naturalHeight * (crop.y / 100)),
+      width: Math.round(image.naturalWidth * (crop.width / 100)),
+      height: Math.round(image.naturalHeight * (crop.height / 100))
+    };
+    this.setState({
+      cropValues: crop,
+    });
+    this.onCropChange(crop, pixelCrop);
   }
 
   handleCrop = () => {
@@ -351,25 +368,25 @@ export default class Starbio extends React.Component {
     const base64Image = canvas.toDataURL('image/jpeg');
     this.setState({ [this.state.currentImageType]: base64Image, cropMode: false });
   }
+  
 
-  onCropChange = (cropValues) => {
-    this.setState({ cropValues: { ...cropValues, aspect: this.imageRatios[this.state.currentImageType] } });
-  }
-
-  setPixelCrop = (crop, pixelCrop) => {
+  onCropChange = (cropValues, pixelCrop) => {
     this.pixelCrop = pixelCrop;
+    this.setState({ cropValues: { ...cropValues, aspect: this.imageRatios[this.state.currentImageType] } });
   }
 
   renderCropper = () => {
     return (
-      <Popup closePopUp={() => this.setState({ cropMode: false })}>
+      <Popup
+        scrollTarget={document.getElementById(this.state.currentImageType)}
+        closePopUp={() => this.setState({ cropMode: false })}
+      >
         <LoginContainer.CropperWrapper>
           <Cropper
             src={this.state.cropImage}
             crop={this.state.cropValues}
             keepSelection
             onImageLoaded={this.setCropImage}
-            onComplete={this.setPixelCrop}
             onChange={this.onCropChange}
           />
           <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
