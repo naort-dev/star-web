@@ -6,8 +6,9 @@ import Api from '../../lib/api';
 import { Link, Redirect } from 'react-router-dom'
 import MultiSelect from '../../components/MultiSelect'
 import SelectTags from '../../components/SelectTag'
-import Loader from '../../components/Loader'
-import { Cropper } from 'react-image-cropper';
+import Loader from '../../components/Loader';
+import Cropper from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import EXIF from 'exif-js'
 import Popup from '../../components/Popup';
 import { default as ReactLoader } from 'react-loader'
@@ -41,6 +42,11 @@ export default class Starbio extends React.Component {
         bookingPrice: false,
         bookingLimit: false,
 
+      },
+      cropValues: {
+        x: 10,
+        y: 10,
+        aspect: 800 / 376,
       },
       imageHeights: {
         featured: '100%',
@@ -321,22 +327,50 @@ export default class Starbio extends React.Component {
     }
   }
 
+  setCropImage = (image) => {
+    this.image = image;
+  }
+
   handleCrop = () => {
-    this.setState({ [this.state.currentImageType]: this.image.crop(), cropMode: false })
+    const canvas = document.createElement('canvas');
+    canvas.width = this.pixelCrop.width;
+    canvas.height = this.pixelCrop.height;
+    const ctx = canvas.getContext('2d');
+    ctx.drawImage(
+      this.image,
+      this.pixelCrop.x,
+      this.pixelCrop.y,
+      this.pixelCrop.width,
+      this.pixelCrop.height,
+      0,
+      0,
+      this.pixelCrop.width,
+      this.pixelCrop.height,
+    );
+    const base64Image = canvas.toDataURL('image/jpeg');
+    this.setState({ [this.state.currentImageType]: base64Image, cropMode: false });
+  }
+
+  onCropChange = (cropValues) => {
+    this.setState({ cropValues: { ...cropValues, aspect: this.imageRatios[this.state.currentImageType] } });
+  }
+
+  setPixelCrop = (crop, pixelCrop) => {
+    this.pixelCrop = pixelCrop;
   }
 
   renderCropper = () => {
     return (
       <Popup closePopUp={() => this.setState({ cropMode: false })}>
         <LoginContainer.CropperWrapper>
-          <LoginContainer.Cropper>
-            <Cropper
-              src={this.state.cropImage}
-              ratio={this.imageRatios[this.state.currentImageType]}
-              ref={ref => { this.image = ref }}
-              styles={{display: 'none'}}
-            />
-          </LoginContainer.Cropper>
+          <Cropper
+            src={this.state.cropImage}
+            crop={this.state.cropValues}
+            keepSelection
+            onImageLoaded={this.setCropImage}
+            onComplete={this.setPixelCrop}
+            onChange={this.onCropChange}
+          />
           <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
         </LoginContainer.CropperWrapper>
       </Popup>
