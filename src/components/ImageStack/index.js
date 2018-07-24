@@ -14,7 +14,7 @@ export class ImageStack extends React.Component {
         height: '50%',
       },
     };
-    this.featureImageRatio = (800 / 396);
+    this.featureImageRatio = (800 / 376);
   }
   componentDidMount() {
     this.setImagesHeight();
