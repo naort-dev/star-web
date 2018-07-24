@@ -6,7 +6,7 @@ const VideoRecorderDiv = styled.div`
   justify-content: center;
   flex-direction: column;
   @media(min-width: 1025px) {
-    height: 100%;
+    height: 90%;
   }
 `;
 
@@ -31,6 +31,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
 VideoRecorderDiv.Video = styled.video`
   height: 100%;
   width: 100%;
+  object-fit: contain;
   @media(min-width:1025px){
     width: 100%;
     height: 100%

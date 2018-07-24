@@ -59,7 +59,7 @@ VideoRecorderDiv.Button = styled.button`
   border-radius:5px;
   border: 2px solid #FF6C58;
   @media(min-width:1025px){
-    width: 150px;
+    min-width: 150px;
   }
 
 `;

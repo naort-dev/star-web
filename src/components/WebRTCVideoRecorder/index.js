@@ -70,9 +70,17 @@ export default class VideoRecorder extends React.Component {
     }
     else {
       const fileURL = URL.createObjectURL(file);
-      this.setState({ play: true }, function () {
-        document.getElementById('fallback-video').src = fileURL;
-      });
+      if (checkMediaRecorderSupport() && !getMobileOperatingSystem()){
+        this.setState({ play: true }, function () {
+          document.getElementById('video-player').src = fileURL;
+        });
+      }
+      else {
+        this.setState({ play: true }, function () {
+          document.getElementById('fallback-video').src = fileURL;
+        });
+      }
+      
       this.props.onSaveVideo({ videoFile: file, extension: file.type.split('/')[1] })
       if (file) {
         reader.readAsDataURL(file);
@@ -140,9 +148,8 @@ export default class VideoRecorder extends React.Component {
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                <VideoRecorderDiv.InfoText>
-                  Note: video from their webcam
-                </VideoRecorderDiv.InfoText> :
+                <VideoRecorderDiv.Video id="video-player" autoPlay controls={this.state.play} />
+               :
                 (!this.props.videoRecorder.recordedBlob ?
                   <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
                   :
