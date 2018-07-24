@@ -1,5 +1,6 @@
 import React from 'react';
 import PopupStyled from './styled';
+import smoothScroll from '../../utils/smoothScroll';
 
 export default class Popup extends React.Component {
   constructor(props) {
@@ -19,6 +20,11 @@ export default class Popup extends React.Component {
     window.removeEventListener('click', this.hidePopup);
     document.body.style.overflow = 'initial';
     document.body.style.position = 'initial';
+    if (this.props.scrollTarget) {
+      if (document.body.getBoundingClientRect().width < 1025) {
+        this.props.scrollTarget.scrollIntoView();
+      }
+    }
   }
   hidePopup = (e) => {
     if (this.popupContent && this.popupWrapper.contains(e.target) && !this.popupContent.contains(e.target)) {
