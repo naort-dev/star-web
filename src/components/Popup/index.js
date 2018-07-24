@@ -21,7 +21,9 @@ export default class Popup extends React.Component {
     document.body.style.overflow = 'initial';
     document.body.style.position = 'initial';
     if (this.props.scrollTarget) {
-      smoothScroll(this.props.scrollTarget);
+      if (document.body.getBoundingClientRect().width < 1025) {
+        smoothScroll(this.props.scrollTarget);
+      }
     }
   }
   hidePopup = (e) => {
