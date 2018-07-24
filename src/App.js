@@ -28,7 +28,8 @@ import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
-import Starsuccess from './pages/starsuccess/Starsuccess.container'
+import Starsuccess from './pages/starsuccess/Starsuccess.container';
+import Settings from './pages/accountSettings/accountSettings.container';
 
 class App extends React.Component {
   constructor(props) {
@@ -107,6 +108,7 @@ class App extends React.Component {
                 <Route path="/:id/request/event" component={Event} />
                 <Route path="/:id/request/personal" component={Personal} />
                 <Route path="/:id/request/confirm" component={Confirm} />
+                <Route path="/settings" component={Settings} />
 
                 {/* logged in areas */}
 
