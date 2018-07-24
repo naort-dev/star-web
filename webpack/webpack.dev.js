@@ -12,12 +12,13 @@ module.exports = {
   },
   devtool: 'cheap-eval-source-map',
   devServer: {
-    host: 'localhost',
+    host: '0.0.0.0',
     port: process.env.PORT || 8080,
     historyApiFallback: true,
     hot: true,
     contentBase: './dist',
     publicPath: '/',
+    useLocalIp: true,
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
