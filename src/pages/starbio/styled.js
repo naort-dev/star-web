@@ -98,6 +98,7 @@ LoginContainer.RightSection = styled.div`
     height: 100vh;
     padding-top: 13vh;
     margin-top: 0px;
+    overflow-y: auto;
   }
 `;
 
