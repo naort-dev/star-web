@@ -178,6 +178,7 @@ export default class StarRequests extends React.Component {
                   history={this.props.history}
                   menuActive={this.state.menuActive}
                   toggleMenu={this.activateMenu}
+                  selectedCategory={'requests'}
                 />
               </Scrollbars>
             </MyVideosStyled.sideSection>

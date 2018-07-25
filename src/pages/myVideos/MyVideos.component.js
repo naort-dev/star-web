@@ -180,6 +180,7 @@ export default class MyVideos extends React.Component {
                 <Sidebar
                   list={this.props.professionsList}
                   history={this.props.history}
+                  selectedCategory={this.props.selectedSideBarItem}
                   menuActive={this.state.menuActive}
                   toggleMenu={this.activateMenu}
                 />
@@ -192,7 +193,8 @@ export default class MyVideos extends React.Component {
                 <Tabs
                   labels={['Stars', 'Videos']}
                   disableTabs
-                  heading="My Videos"
+                  starMode={this.props.starMode}
+                  heading={this.props.starMode ? 'Accepting Requests' : 'My Videos'}
                   toggleFilter={this.toggleFilterSection}
                 />
                 {

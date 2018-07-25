@@ -128,8 +128,10 @@ class App extends React.Component {
                 <Route
                   path="/user/bookings"
                   component={protectRoute({
-                    RouteComponent: StarRequests,
-                    star: true,
+                    RouteComponent: MyVideos,
+                    selectedSideBarItem: 'requests',
+                    starMode: true,
+                    // roles: allUserRoles,
                   })}
                 />
                 {/*

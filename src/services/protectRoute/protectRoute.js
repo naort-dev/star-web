@@ -3,24 +3,28 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { protectedRoutes } from './protectedRoutes';
+import { protectedRoutes, fanRoutes, starRoutes } from './protectedRoutes';
 import { Page404 } from '../../pages/page404';
 
 export const protectRoute = ({
   RouteComponent,
-  star,
+  ...routeProps
 }) => {
   const ProtectedRoute = (props) => {
     const {
       location,
       // role,
-      sessionDetails,
+      starRole,
       isLoggedIn,
     } = props;
     const isProtectedRoute = protectedRoutes.includes(location.pathname);
     let hasRole;
-    if (star && isLoggedIn) {
-      hasRole = sessionDetails.celebrity;
+    if (isProtectedRoute) {
+      if (starRole) {
+        hasRole = starRoutes.includes(location.pathname);
+      } else {
+        hasRole = fanRoutes.includes(location.pathname);
+      }
     }
     // const hasRole = roles.length ? roles.includes(role) : true;
     const allowAccess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
@@ -29,7 +33,7 @@ export const protectRoute = ({
     const shouldAuthenticate = isProtectedRoute && !isLoggedIn;
 
     if (allowAccess) {
-      return <RouteComponent {...props} />;
+      return <RouteComponent {...props} {...routeProps} />;
     }
     else if (unAuthorized) {
       return (
@@ -73,8 +77,7 @@ export const protectRoute = ({
 
   const mapState = state => ({
     isLoggedIn: state.session.isLoggedIn,
-    role: state.session.role,
-    sessionDetails: state.session.auth_token,
+    starRole: state.session.starRole,
   });
 
   return connect(mapState)(ProtectedRoute);
