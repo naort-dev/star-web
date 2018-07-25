@@ -39,7 +39,7 @@ export default class AudioRecorder extends React.Component {
             backgroundColor="#FF6C58"
             save={this.props.audioRecorder.stop}
           />
-          <audios src={this.props.audioRecorder.recordedBlob} controls />
+          <audio src={this.props.audioRecorder.recordedBlob} controls />
           <AudioRecorderDiv.Button onClick={func} type="button">{buttonText}</AudioRecorderDiv.Button>
         </React.Fragment>
       </AudioRecorderDiv>
