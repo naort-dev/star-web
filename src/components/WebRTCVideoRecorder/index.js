@@ -160,16 +160,16 @@ export default class VideoRecorder extends React.Component {
             {this.state.error ?
               <h4> Unable to Record Video. Kindly refresh your browser </h4> :
               this.props.videoRecorder.start == null ?
-                <React.Fragment>
+                <VideoRecorderDiv.Wrapper>
                   <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                   <VideoRecorderDiv.UploadWrapper>
                     <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
                     <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                   </VideoRecorderDiv.UploadWrapper>
-                </React.Fragment>
+                  </VideoRecorderDiv.Wrapper>
                 : (this.props.videoRecorder.start == true ?
                   <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
-                  <React.Fragment>
+                  <VideoRecorderDiv.Wrapper>
                     <VideoRecorderDiv.UploadWrapper>
                     <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>
                     </VideoRecorderDiv.UploadWrapper>
@@ -177,7 +177,7 @@ export default class VideoRecorder extends React.Component {
                       <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
                       <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                     </VideoRecorderDiv.UploadWrapper>
-                  </React.Fragment>)
+                    </VideoRecorderDiv.Wrapper>)
             }
           </VideoRecorderDiv>
           :

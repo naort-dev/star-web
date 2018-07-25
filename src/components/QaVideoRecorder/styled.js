@@ -51,6 +51,7 @@ VideoRecorderDiv.Button = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  min-width: 150px;
 
 `;
 
@@ -95,6 +96,8 @@ VideoRecorderDiv.NoVideoButton = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  min-width: 150px;
+  margin-left: 5px;
 `;
 
 
@@ -133,6 +136,13 @@ VideoRecorderDiv.UploadInput = styled.input`
     font-family: 'Ubuntu-Medium';
     font-style: italic;
     text-align: center;
+  `;
+
+  VideoRecorderDiv.Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
   `;
 
 

@@ -113,8 +113,7 @@ font-family: 'Ubuntu-Bold';
 outline:none;
 border-radius:5px;
 border: 2px solid #FF6C58;
-
-
+margin-left: 50px;
 `;
 
 
@@ -160,5 +159,11 @@ VideoRecorderDiv.InfoText = styled.div`
     text-align: center;
   `;
 
+  VideoRecorderDiv.Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  `;
 
 export default VideoRecorderDiv;
