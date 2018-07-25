@@ -34,15 +34,23 @@ LayoutWrapper.LeftSection = styled.div`
 `;
 LayoutWrapper.RightSection = styled.div`
   width: 100%;
-  display: none;
-  background: url( 'assets/images/1297371108618082396.jpg' ) no-repeat ;
-  background-position: center; 
-  background-size:cover;
+  margin-top: 40px;
+  @media(min-width: 768px) {
+    margin-bottom: 80px;
+  }
   @media(min-width: 1025px){
+    background-color:rgba(248, 248, 248, 1);
     width: 55%;
-    display: block;
+    display:flex;
+    align-items: flex-start;
+    justify-content: center;
     padding: 0px 0px;
     position: relative;
+    padding: 30px 30px;
+    flex-wrap: wrap;
+    height: 100vh;
+    padding-top: 13vh;
+    margin-top: 0px;
   }
 `;
 export default LayoutWrapper;
