@@ -14,6 +14,7 @@ import {
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import OrderDetailsItem from './orderDetailsItem';
+import renderStarProfessions from '../../utils/formatProfessions';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
 
@@ -22,7 +23,7 @@ export default class OrderDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      
     };
   }
 
@@ -35,15 +36,15 @@ export default class OrderDetails extends React.Component {
           <OrderDetailsItem title="Occasion Date" value={props.occasionDate} />
         );
       case 2:
-        return <OrderDetailsItem title="What specifically for" value={props.specificallyFor} />;
+        return <OrderDetailsItem title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
       case 3:
-        return <OrderDetailsItem title="Person of honor" value={props.honoringFor} />;
+        return <OrderDetailsItem title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
       case 4:
-        return <OrderDetailsItem title={`${props.occasion} from`} value={props.fromWhere} />;
+        return <OrderDetailsItem title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
       case 6:
-        return <OrderDetailsItem title="Event Title" value={props.eventTitle} />;
+        return <OrderDetailsItem title="Event Title" value={props.orderDetails.request_details.event_title} />;
       case 7:
-        return <OrderDetailsItem title="Guest of honor" value={props.eventGuestHonor} />;
+        return <OrderDetailsItem title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
       default:
         return null;
     }
@@ -56,32 +57,32 @@ export default class OrderDetails extends React.Component {
         // Personal Shout-outs
         return (
           <React.Fragment>
-            <OrderDetailsItem title="Occasion" value={props.occasion} />
-            <OrderDetailsItem title="To" value={props.to} />
-            <OrderDetailsItem title="From" value={props.from} />
-            <OrderDetailsItem title={`${props.from} is ${props.to}'s`} value={props.relationShip} />
+            <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
+            <OrderDetailsItem title="To" value={props.orderDetails.request_details.stargramto} />
+            <OrderDetailsItem title="From" value={props.orderDetails.request_details.stargramfrom} />
+            <OrderDetailsItem title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
             {
-              this.getOccasionDetails(props.occasionType)
+              this.getOccasionDetails(props.orderDetails.occasion_type)
             }
-            <OrderDetailsItem title="Important Info" value={props.importantInfo} />
+            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
       case 2:
         // Event Announcement
         return (
           <React.Fragment>
-            <OrderDetailsItem title="Event" value={props.occasion} />
+            <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
             {
-              this.getOccasionDetails(props.occasionType)
+              this.getOccasionDetails(props.occasion_type)
             }
-            <OrderDetailsItem title="Host" value={props.eventHost} />
+            <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
             <OrderDetailsItem title="Event Date" value={props.occasionDate} />
-            <OrderDetailsItem title="Important Info" value={props.importantInfo} />
+            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
       case 3:
         // Q&A
-        return <OrderDetailsItem title="Title" value={props.question} />;
+        return <OrderDetailsItem title="Title" value={props.orderDetails.request_details.question} />;
       default: return null;
     }
   }
@@ -102,7 +103,7 @@ export default class OrderDetails extends React.Component {
     if (this.props.requestVideo) {
       const defaultUrl = this.props.requestVideo.video_url;
       shareUrl = `https://${defaultUrl}`;
-      title = this.props.bookingTitle;
+      title = props.orderDetails.booking_title;
     }
     return (
       <OrderStyled>
@@ -198,14 +199,14 @@ export default class OrderDetails extends React.Component {
                   </OrderStyled.SocialMediaWrapper>
                   <OrderStyled.VideoDetails>
                     <OrderStyled.VideoTitle>
-                      {props.bookingTitle}
+                      {props.orderDetails.booking_title}
                     </OrderStyled.VideoTitle>
                     <OrderStyled.VideoRequester>
                       <OrderStyled.VideoRequestImage
-                        imageUrl={props.fanPhoto}
+                        imageUrl={props.orderDetails.fan_photo && props.orderDetails.fan_photo.thumbnail_url}
                       />
                       <OrderStyled.VideoRequestName>
-                        {props.fanName}
+                        {props.orderDetails.fan}
                       </OrderStyled.VideoRequestName>
                     </OrderStyled.VideoRequester>
                     {
@@ -237,10 +238,10 @@ export default class OrderDetails extends React.Component {
             >
               <OrderStyled.ProfileImageWrapper>
                 <OrderStyled.ProfileImage
-                  imageUrl={props.starPhoto}
+                  imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
                 />
-                <OrderStyled.StarName>{props.celebrity}</OrderStyled.StarName>
-                <OrderStyled.StarProfessions>{props.starProfessions}</OrderStyled.StarProfessions>
+                <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+                <OrderStyled.StarProfessions>{renderStarProfessions(props.orderDetails.professions)}</OrderStyled.StarProfessions>
               </OrderStyled.ProfileImageWrapper>
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
               <OrderStyled.DetailsWrapper>
@@ -253,12 +254,12 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
                 {
-                  this.getEventDetails(props.requestTypeId)
+                  this.getEventDetails(props.orderDetails.request_type)
                 }
                 {/* Show Reason if request is cancelled */}
                 {
                   props.requestStatusId === 5 ?
-                    <OrderDetailsItem title="Decline Reason" value={props.comment} />
+                    <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
                     : null
                 }
                 <OrderStyled.DetailsItem>
