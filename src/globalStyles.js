@@ -24,7 +24,8 @@ injectGlobal`
 	}
 
 	a {
-		text-decoration: none;
+    text-decoration: none;
+    color: inherit;
   }
 
   input::-webkit-outer-spin-button,

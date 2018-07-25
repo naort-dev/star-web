@@ -1,11 +1,12 @@
-export const protectedRoutes = [
+export const fanRoutes = [
   '/user/favorites',
   '/user/myVideos',
+];
+export const starRoutes = [
+  ...fanRoutes,
   '/user/bookings',
-  '/login-history',
-  '/account-settings',
-  '/account-settings/change-password',
-  '/account-settings/edit-profile',
-  '/account-settings/apply-higher-limit',
-  '/kyc',
+];
+export const protectedRoutes = [
+  ...fanRoutes,
+  ...starRoutes,
 ];
