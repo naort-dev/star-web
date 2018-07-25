@@ -26,7 +26,6 @@ export default class AudioRecorder extends React.Component {
   }
 
   render() {
-    console.log("this", this.reactMic)
     const func = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
     const buttonText = this.props.audioRecorder.start ? "Stop" : "Start"
     return (
@@ -40,7 +39,7 @@ export default class AudioRecorder extends React.Component {
             backgroundColor="#FF6C58"
             save={this.props.audioRecorder.stop}
           />
-          <audio style={{height}} src={this.props.audioRecorder.recordedBlob} controls />
+          <audios src={this.props.audioRecorder.recordedBlob} controls />
           <AudioRecorderDiv.Button onClick={func} type="button">{buttonText}</AudioRecorderDiv.Button>
         </React.Fragment>
       </AudioRecorderDiv>
