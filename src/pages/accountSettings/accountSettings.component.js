@@ -1,5 +1,6 @@
 import React from 'react';
 import LayoutWrapper from './styled';
+import MyAccount from '../../components/MyAccount';
 import HeaderSection from '../../components/HeaderSection';
 import SettingsTab from '../../components/settingsTab';
 
@@ -8,7 +9,11 @@ export default class AccountSettings extends React.Component {
     super(props);
 
     this.state = {
+      selectedAccount: 'myAccount',
     };
+  }
+  changeAccountType = (selectedType) => {
+    this.setState({ selectedAccount: selectedType });
   }
   render() {
     return (
@@ -16,7 +21,11 @@ export default class AccountSettings extends React.Component {
         <LayoutWrapper.Container>
           <LayoutWrapper.LeftSection>
             <HeaderSection RightContent="Anu Shankar" />
-            <SettingsTab />
+            <SettingsTab
+              selected={this.state.selectedAccount}
+              changeAccountType={this.changeAccountType}
+            />
+            <MyAccount />
           </LayoutWrapper.LeftSection>
           <LayoutWrapper.RightSection>
             right
