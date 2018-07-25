@@ -35,6 +35,7 @@ LayoutWrapper.LeftSection = styled.div`
 LayoutWrapper.RightSection = styled.div`
   width: 100%;
   margin-top: 40px;
+  display:none;
   @media(min-width: 768px) {
     margin-bottom: 80px;
   }
