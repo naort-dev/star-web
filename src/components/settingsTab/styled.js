@@ -11,6 +11,7 @@ const Tabs = styled.div`
 Tabs.Ul = styled.ul`
   display: block;
   width: 100%;
+  margin-top:2%;
   overflow-x: auto;
   white-space: nowrap;
 `;

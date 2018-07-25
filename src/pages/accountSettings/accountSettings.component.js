@@ -1,6 +1,7 @@
 import React from 'react';
 import LayoutWrapper from './styled';
 import MyAccount from '../../components/MyAccount';
+import './accountCss';
 import HeaderSection from '../../components/HeaderSection';
 import SettingsTab from '../../components/settingsTab';
 
