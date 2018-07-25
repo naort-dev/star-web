@@ -8,32 +8,38 @@ import { Page404 } from '../../pages/page404';
 
 export const protectRoute = ({
   RouteComponent,
+  star,
 }) => {
   const ProtectedRoute = (props) => {
     const {
       location,
       // role,
+      sessionDetails,
       isLoggedIn,
     } = props;
     const isProtectedRoute = protectedRoutes.includes(location.pathname);
+    let hasRole;
+    if (star && isLoggedIn) {
+      hasRole = sessionDetails.celebrity;
+    }
     // const hasRole = roles.length ? roles.includes(role) : true;
-
-    // const allowAcceess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
-    const allowAccess = (isProtectedRoute && isLoggedIn);
-    // const unAuthorized = isLoggedIn && !hasRole;
+    const allowAccess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
+    // const allowAccess = (isProtectedRoute && isLoggedIn);
+    const unAuthorized = isLoggedIn && !hasRole;
     const shouldAuthenticate = isProtectedRoute && !isLoggedIn;
 
     if (allowAccess) {
       return <RouteComponent {...props} />;
     }
-    // else if (unAuthorized) {
-    //   return (
-    //     <Redirect
-    //       to={{
-    //         pathname: '/unauthorized',
-    //       }}
-    //     />
-    //   );
+    else if (unAuthorized) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/unauthorized',
+          }}
+        />
+      );
+    }
     // } else if (shouldAuthenticate) {
     //   return (
     //     <Redirect
@@ -68,6 +74,7 @@ export const protectRoute = ({
   const mapState = state => ({
     isLoggedIn: state.session.isLoggedIn,
     role: state.session.role,
+    sessionDetails: state.session.auth_token,
   });
 
   return connect(mapState)(ProtectedRoute);

@@ -18,6 +18,7 @@ import { SignupType } from './pages/signuptype';
 import { SignUp } from './pages/signup';
 import { Favourites } from './pages/favourites';
 import { MyVideos } from './pages/myVideos';
+import { StarRequests } from './pages/starRequests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
@@ -122,6 +123,13 @@ class App extends React.Component {
                   component={protectRoute({
                     RouteComponent: MyVideos,
                     // roles: allUserRoles,
+                  })}
+                />
+                <Route
+                  path="/user/bookings"
+                  component={protectRoute({
+                    RouteComponent: StarRequests,
+                    star: true,
                   })}
                 />
                 {/*

@@ -1,6 +1,7 @@
 export const protectedRoutes = [
   '/user/favorites',
   '/user/myVideos',
+  '/user/bookings',
   '/login-history',
   '/account-settings',
   '/account-settings/change-password',
