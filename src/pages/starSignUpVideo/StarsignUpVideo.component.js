@@ -1,6 +1,6 @@
 import React from 'react';
 import { SignupContainer, HeaderSection, FooterSection } from './styled';
-import VideoRecorder from '../../components/WebRTCVideoRecorder'
+import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
@@ -73,7 +73,7 @@ export default class StarsignUpVideo extends React.Component {
         </HeaderSection>
         <SignupContainer.RightSection>
           <SignupContainer.recorderWrapper>
-            <VideoRecorder {...this.props} />
+            <VideoRecorder {...this.props} duration={61000} />
           </SignupContainer.recorderWrapper>
         </SignupContainer.RightSection>
         <SignupContainer.LeftSection>

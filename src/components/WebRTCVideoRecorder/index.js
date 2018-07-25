@@ -132,7 +132,7 @@ export default class VideoRecorder extends React.Component {
           this.mediaRecorder.start(100);
           this.timerID = setTimeout(() => {
             this.stopRecording();
-          }, 61000);
+          }, this.props.duration);
 
         }
         catch (e) {
