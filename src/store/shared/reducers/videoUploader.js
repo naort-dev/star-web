@@ -1,27 +1,29 @@
-import { SAVE_VIDEO, UPLOAD_VIDEO} from '../actions/videoUploader';
-
+import { SAVE_VIDEO, UPLOAD_VIDEO, DELETE_VIDEO } from '../actions/videoUploader';
 
 const initalState = {
-   savedFile: null,
-   extension: null,
-   uploadStatus: null
+  savedFile: null,
+  extension: null,
+  uploadStatus: null,
 };
 
 export default (state = { ...initalState }, action) => {
-    switch (action.type) {
-        case SAVE_VIDEO:
-            return {
-                ...state,
-                savedFile: action.payload.videoFile,
-                extension: action.payload.extension
-            }
+  switch (action.type) {
+    case SAVE_VIDEO:
+      return {
+        ...state,
+        savedFile: action.payload.videoFile,
+        extension: action.payload.extension,
+      };
 
-        case UPLOAD_VIDEO:
-            return {...state, uploadStatus: true}
-        
-        default:
-            return state;
-    }
+    case UPLOAD_VIDEO:
+      return { ...state, uploadStatus: true };
+    
+    case DELETE_VIDEO:
+      return {
+        ...initalState,
+      };
+
+    default:
+      return state;
+  }
 };
-
-

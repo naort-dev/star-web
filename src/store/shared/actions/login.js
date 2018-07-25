@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { clearSessionDetails } from '../../../utils/clearSessionDetails';
 
 export const LOGIN = {
   start: 'session/ON_LOGIN',
@@ -47,6 +48,11 @@ export const updateLoginStatus = sessionDetails => ({
   type: LOGIN.updateLoginStatus,
   sessionDetails,
 });
+
+export const logOutUser = () => (dispatch) => {
+  dispatch(logOut());
+  clearSessionDetails();
+};
 
 export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => {
   dispatch(loginFetchStart());

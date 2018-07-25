@@ -26,6 +26,8 @@ export default class Askquestion extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
+    this.props.onClearStreams();
+    this.props.deleteVideo();
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
 

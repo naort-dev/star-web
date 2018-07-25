@@ -6,7 +6,7 @@ import HeaderSection from './styled';
 import Loader from '../Loader';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
-import { logOut } from '../../store/shared/actions/login';
+import { logOutUser } from '../../store/shared/actions/login';
 
 class Header extends React.Component {
   constructor(props) {
@@ -101,10 +101,7 @@ class Header extends React.Component {
     if (window.gapi.auth2) {
       window.gapi.auth2.getAuthInstance().signOut();
     }
-    if (localStorage) {
-      localStorage.removeItem('data');
-      this.props.logOut();
-    }
+    this.props.logOut();
   }
 
   renderSuggestionsList = () => {
@@ -256,7 +253,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
-  logOut: () => dispatch(logOut()),
+  logOut: () => dispatch(logOutUser()),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
 });
 

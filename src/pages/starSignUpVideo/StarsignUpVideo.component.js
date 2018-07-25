@@ -83,7 +83,7 @@ export default class StarsignUpVideo extends React.Component {
               <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
             </SignupContainer.Container>
             <SignupContainer.Container>
-              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
+              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that I am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
             </SignupContainer.Container>
           </SignupContainer.SocialMediaSignup>
           <SignupContainer.FooterLayout>

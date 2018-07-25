@@ -162,7 +162,7 @@ export default class VideoRecorder extends React.Component {
                 <VideoRecorderDiv.Wrapper>
                   <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                   <VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+                    <VideoRecorderDiv.NoVideoButton> Upload </VideoRecorderDiv.NoVideoButton>
                     <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                   </VideoRecorderDiv.UploadWrapper>
                   </VideoRecorderDiv.Wrapper>
@@ -188,7 +188,7 @@ export default class VideoRecorder extends React.Component {
               }
             </VideoRecorderDiv.VideoContainer>
             <VideoRecorderDiv.UploadWrapper>
-              <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+              <VideoRecorderDiv.NoVideoButton> Upload</VideoRecorderDiv.NoVideoButton>
               <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
             </VideoRecorderDiv.UploadWrapper>
           </VideoRecorderDiv>
