@@ -1,21 +1,20 @@
-import React from 'react'
+import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
-import { Link, Redirect } from 'react-router-dom'
-
 
 export default class Starsuccess extends React.Component {
 
   onContinueClick() {
     if (localStorage) {
-      localStorage.removeItem("bioDetails")
+      localStorage.removeItem('bioDetails');
     }
-    this.props.history.push('/')
+    this.props.history.push('/');
   }
 
   render() {
     if (!this.props.session.isLoggedIn) {
-      return <Redirect to="/signuptype" />
+      return <Redirect to="/signuptype" />;
     }
     return (
       <LoginContainer.wrapper>
