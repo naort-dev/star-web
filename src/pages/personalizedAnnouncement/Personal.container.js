@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Personal from './Personal.component';
 import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
+import { showRecorder, startAudioRecording, stopAudioRecording, saveAudioRecording, clearAll } from '../../store/shared/actions/audioRecorder';
 import { postOtherRelation } from '../../store/shared/actions/otherRelation';
 
 const mapStateToProps = state => ({
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({
   eventsDetails: state.occasionList.data,
   bookingData: state.bookingData,
   otherRelationData: state.otherRelation.data,
+  audioRecorder: state.audioRecorder,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -20,7 +22,11 @@ const mapDispatchToProps = dispatch => ({
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   postOtherRelation: other => dispatch(postOtherRelation(other)),
-
+  showRecorder: () => dispatch(showRecorder()),
+  startAudioRecording: () => dispatch(startAudioRecording()),
+  stopAudioRecording: () => dispatch(stopAudioRecording()),
+  saveAudioRecording: audio => dispatch(saveAudioRecording(audio)),
+  clearAll: () => dispatch(clearAll()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Personal);

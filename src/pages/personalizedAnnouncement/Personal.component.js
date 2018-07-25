@@ -7,6 +7,8 @@ import { ImageStack } from '../../components/ImageStack';
 import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
+import AudioRecorder from '../../components/AudioRecorder';
+
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ export default class Personal extends React.Component {
       whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
-      otherRelationValue: props.bookingData.otherRelationValue ==='' ? '' : props.bookingData.otherRelationValue,
+      otherRelationValue: props.bookingData.otherRelationValue === '' ? '' : props.bookingData.otherRelationValue,
     };
   }
   componentWillMount() {
@@ -168,7 +170,7 @@ export default class Personal extends React.Component {
       this.setState({ selectVideoerror: false });
     }
     if (this.state.selectedValue !== '0' && this.state.selectedPersonal !== '0') {
-      this.setState({ steps: false}, () => {
+      this.setState({ steps: false }, () => {
         this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
       });
     }
@@ -211,7 +213,10 @@ export default class Personal extends React.Component {
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
 
+
+
   render() {
+    // console.log("props", <AudioRecorder /> )
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -339,7 +344,8 @@ export default class Personal extends React.Component {
                               eventDate={this.state.eventDate}
                               starName={fullName}
                               otherRelationship={this.otherRelationship}
-                              otherRelationValue ={this.state.otherRelationValue}
+                              otherRelationValue={this.state.otherRelationValue}
+                              {...this.props}
                             />
                           </Request.EventStep2>
                           : null
@@ -364,12 +370,15 @@ export default class Personal extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                />
-              </Request.ImageStackWrapper>
+              {this.props.audioRecorder.showRecorder ?
+                <AudioRecorder {...this.props} />
+                :
+                <Request.ImageStackWrapper>
+                  <ImageStack
+                    featureImage={featuredImage}
+                    imageList={imageList}
+                  />
+                </Request.ImageStackWrapper>}
             </Request.RightSection>
           </Request>
         </Request.Content>

@@ -21,6 +21,11 @@ class RequestTemplates extends React.Component {
     });
     this.props.handleChange(date, 'date');
   }
+
+  audioRecorder() {
+    this.props.showRecorder();
+  }
+
   renderTemplates = () => {
     const relations = this.state.relationship;
     const optionItems = relations.map((relations) =>
@@ -67,6 +72,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredUserName}
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
+                  <button onClick={() => this.audioRecorder()}>record</button>
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -174,6 +180,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredUserName}
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
+                  <button onClick={() => this.audioRecorder()}>record</button>
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -282,6 +289,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     onBlur={this.props.checkRequiredUserName}
                   />
+                  <button onClick={() => this.audioRecorder()}>record</button>
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -403,6 +411,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     onBlur={this.props.checkRequiredUserName}
                   />
+                  <button onClick={() => this.audioRecorder()}>record</button>
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
