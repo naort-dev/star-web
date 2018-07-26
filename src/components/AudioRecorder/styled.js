@@ -26,5 +26,10 @@ background-repeat: no-repeat;
 background-position: center;
 `;
 
+AudioRecorderDiv.Label = styled.div`
+font-size: 24px;
+`;
+
+
 
 export { AudioRecorderDiv };

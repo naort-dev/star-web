@@ -8,6 +8,7 @@ const initalState = {
   re_record: null,
   play: null,
   showRecorder: null,
+  label: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -16,6 +17,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...initalState,
         showRecorder: true,
+        label: action.payload,
       };
     case START_AUDIO_RECORDING:
       return {

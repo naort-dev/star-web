@@ -2,6 +2,9 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Templates } from './styled';
+import Popup from '../Popup'
+import AudioRecorder from '../AudioRecorder'
+import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
 
 
 class RequestTemplates extends React.Component {
@@ -11,6 +14,7 @@ class RequestTemplates extends React.Component {
       type: props.type,
       relationship: props.relationship,
       user: props.user,
+      showPopup: true,
       eventname: props.eventName,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -22,9 +26,27 @@ class RequestTemplates extends React.Component {
     this.props.handleChange(date, 'date');
   }
 
-  audioRecorder() {
-    this.props.showRecorder();
+  audioRecorder(displayText) {
+    this.props.showRecorder(displayText);
   }
+
+  MobilePopup = () => {
+    return (
+      <Popup
+        closePopUp={() => this.setState({ showPopup: false })}>
+        <Templates.Popup>
+        <audio controls />
+        <Templates.UploadWrapper>
+          <Templates.NoVideoButton>
+            Upload Pronounication
+          </Templates.NoVideoButton>
+          <Templates.UploadInput type="file" accept="audio/*;capture=microphone" />
+        </Templates.UploadWrapper>
+        </Templates.Popup>
+      </Popup>
+    )
+  }
+
 
   renderTemplates = () => {
     const relations = this.state.relationship;
@@ -49,7 +71,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredHostName}
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video for?")} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -73,7 +95,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredUserName}
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video from?")} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -159,7 +181,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredHostName}
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video for?")} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -182,7 +204,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredUserName}
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video from?")} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -269,7 +291,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                     onBlur={this.props.checkRequiredHostName}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video for?")} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -292,7 +314,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     onBlur={this.props.checkRequiredUserName}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video from?")} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -392,7 +414,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                     onBlur={this.props.checkRequiredHostName}
                   />
-                       <Templates.RecordButton onClick={() => this.audioRecorder()}/>
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video for?")} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -415,7 +437,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     onBlur={this.props.checkRequiredUserName}
                   />
-                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
+                  <Templates.RecordButton onClick={() => this.audioRecorder("Who is the Starsona video from?")} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -641,6 +663,7 @@ class RequestTemplates extends React.Component {
   render() {
     return (
       <Templates>
+        {(this.props.audioRecorder.showRecorder && this.state.showPopup) && (!checkMediaRecorderSupport() || getMobileOperatingSystem()) ? this.MobilePopup() : null}
         {this.renderTemplates()}
       </Templates>
     );

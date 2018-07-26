@@ -26,11 +26,13 @@ export default class AudioRecorder extends React.Component {
   }
 
   render() {
+    console.log("props", this.props)
     const func = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
     const buttonText = this.props.audioRecorder.start ? "Stop" : "Start"
     return (
       <AudioRecorderDiv>
         <React.Fragment>
+          <AudioRecorderDiv.Label>{this.props.audioRecorder.label}</AudioRecorderDiv.Label>
           <ReactMic
             record={this.props.audioRecorder.start ? this.props.audioRecorder.start : false}
             className="sound-wave"

@@ -4,9 +4,10 @@ export const SAVE_RECORDINGS = 'saveAudio';
 export const CLEAR_ALL = 'clearAudio';
 export const SHOW_RECORDER = 'showAudioRecorder';
 
-export function showRecorder() {
+export function showRecorder(displayText) {
   return {
     type: SHOW_RECORDER,
+    payload: displayText,
   };
 }
 

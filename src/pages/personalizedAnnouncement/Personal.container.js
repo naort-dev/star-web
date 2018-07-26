@@ -22,7 +22,7 @@ const mapDispatchToProps = dispatch => ({
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   postOtherRelation: other => dispatch(postOtherRelation(other)),
-  showRecorder: () => dispatch(showRecorder()),
+  showRecorder: (displayText) => dispatch(showRecorder(displayText)),
   startAudioRecording: () => dispatch(startAudioRecording()),
   stopAudioRecording: () => dispatch(stopAudioRecording()),
   saveAudioRecording: audio => dispatch(saveAudioRecording(audio)),

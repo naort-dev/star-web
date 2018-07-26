@@ -150,6 +150,7 @@ Templates.Select = styled.select`
     height:40px;
   }
 `;
+
 Templates.RecordButton= styled.button`
 width: 30px;
 height: 30px;
@@ -165,5 +166,54 @@ background-size: 20px;
 background-repeat: no-repeat;
 background-position: center;
 `;
+
+Templates.NoVideoButton = styled.button`
+margin-top: 10px;
+background-color: #fff; 
+color: #FF6C58;
+padding: 4px 0px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+font-family: 'Ubuntu-Bold';
+outline:none;
+border-radius:5px;
+border: 2px solid #FF6C58;s
+`;
+
+
+Templates.UploadWrapper = styled.div`
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    cursor: pointer;
+  }
+`;
+
+
+
+Templates.UploadInput = styled.input`
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+    width:160px;
+    height:28px;
+    margin-top: 10px;
+
+  `;
+
+
+Templates.Popup = styled.div`
+ width: 100%;
+ height: 100%;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column
+`
 
 export { Templates };
