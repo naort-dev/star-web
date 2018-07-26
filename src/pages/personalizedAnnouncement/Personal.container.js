@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Personal from './Personal.component';
 import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { showRecorder, startAudioRecording, stopAudioRecording, saveAudioRecording, clearAll } from '../../store/shared/actions/audioRecorder';
+import { showRecorder, startAudioRecording, saveAudioRecording, stopAudioRecording, saveAudioFile, closeRecorder, clearAll } from '../../store/shared/actions/audioRecorder';
 import { postOtherRelation } from '../../store/shared/actions/otherRelation';
 
 const mapStateToProps = state => ({
@@ -22,10 +22,12 @@ const mapDispatchToProps = dispatch => ({
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   postOtherRelation: other => dispatch(postOtherRelation(other)),
-  showRecorder: (displayText) => dispatch(showRecorder(displayText)),
+  showRecorder: displayText => dispatch(showRecorder(displayText)),
   startAudioRecording: () => dispatch(startAudioRecording()),
   stopAudioRecording: () => dispatch(stopAudioRecording()),
+  saveAudioFile: audio => dispatch(saveAudioFile(audio)),
   saveAudioRecording: audio => dispatch(saveAudioRecording(audio)),
+  closeRecorder: () => dispatch(closeRecorder()),
   clearAll: () => dispatch(clearAll()),
 });
 
