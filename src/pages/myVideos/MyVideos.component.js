@@ -173,6 +173,7 @@ export default class MyVideos extends React.Component {
                     <ScrollList
                       dataList={this.props.myVideosList.data}
                       requestDetails
+                      starMode={this.props.starMode}
                       limit={this.props.myVideosList.limit}
                       totalCount={this.props.myVideosList.count}
                       offset={this.props.myVideosList.offset}

@@ -289,8 +289,10 @@ export default class ScrollList extends React.Component {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos videos={this.props.videos} key={index}>
           <RequestDetails
+            starMode={this.props.starMode}
             cover={item.request_video[0] && item.request_video[0].s3_thumbnail_url}
             celebId={item.celebrity_id}
+            orderId={item.order_details ? item.order_details.order : ''}
             videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={item.celebrity}
