@@ -15,6 +15,8 @@ import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import OrderDetailsItem from './orderDetailsItem';
 import renderStarProfessions from '../../utils/formatProfessions';
+import { PaymentFooterController } from '../PaymentFooterController';
+import { changeRequestStatus } from '../../services/changeRequestStatus';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
 
@@ -23,7 +25,7 @@ export default class OrderDetails extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+      showActions: false,
     };
   }
 
@@ -86,6 +88,11 @@ export default class OrderDetails extends React.Component {
       default: return null;
     }
   }
+
+  toggleActions = () => {
+    this.setState({ showActions: !this.state.showActions });
+  }
+
   downloadVideo = (videoId) => {
     const videoUrl = Api.downloadVideo(videoId);
     const element = document.createElement('a');
@@ -96,6 +103,23 @@ export default class OrderDetails extends React.Component {
     element.click();
     document.body.removeChild(element);
   }
+
+  modifyBooking = () => {
+    if (this.props.starMode) {
+    }
+  }
+
+  renderActionList = () => {
+    if (this.props.starMode) {
+      return (
+        <OrderStyled.MoreActionsList>
+          <OrderStyled.MoreActionsItem>Respond</OrderStyled.MoreActionsItem>
+          <OrderStyled.MoreActionsItem>Decline</OrderStyled.MoreActionsItem>
+        </OrderStyled.MoreActionsList>
+      );
+    }
+  }
+
   render() {
     const { props } = this;
     let shareUrl = '';
@@ -240,6 +264,13 @@ export default class OrderDetails extends React.Component {
                 <OrderStyled.ProfileImage
                   imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
                 />
+                <OrderStyled.MoreActionsWrapper>
+                  <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />
+                  {
+                    this.state.showActions &&
+                      this.renderActionList()
+                  }
+                </OrderStyled.MoreActionsWrapper>
                 <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
                 <OrderStyled.StarProfessions>{renderStarProfessions(props.orderDetails.professions)}</OrderStyled.StarProfessions>
               </OrderStyled.ProfileImageWrapper>
@@ -276,6 +307,15 @@ export default class OrderDetails extends React.Component {
                 </OrderStyled.DetailsItem>
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
+            <OrderStyled.ControlWrapper>
+              <PaymentFooterController
+                buttonMode
+                modifyBooking={this.modifyBooking}
+                handleBooking={this.handleBooking}
+                modifyButtonName={this.props.starMode ? "Cancel": "Edit Request"}
+                buttonName={!this.props.starMode ? "Cancel": "Send"}
+              />
+            </OrderStyled.ControlWrapper>
           </OrderStyled.leftContent>
         </OrderStyled.ContentWrapper>
       </OrderStyled>

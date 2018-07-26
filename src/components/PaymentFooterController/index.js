@@ -5,12 +5,19 @@ import FooterDiv from './styled';
 
 export const PaymentFooterController = props => (
   <FooterDiv>
-    <FooterDiv.BookingLeft>
-      <strong>{props.remainingBookings}</strong> {props.remainingBookings === '1' ? 'Booking Left' : 'Bookings Left'}
-    </FooterDiv.BookingLeft>
-    <FooterDiv.BookingPrice>
-      <strong>${props.rate}</strong>
-    </FooterDiv.BookingPrice>
+    {
+      props.buttonMode ?
+        <FooterDiv.Button onClick={props.modifyBooking}>{props.modifyButtonName}</FooterDiv.Button>
+      :
+        <React.Fragment>
+          <FooterDiv.BookingLeft>
+            <strong>{props.remainingBookings}</strong> {props.remainingBookings === '1' ? 'Booking Left' : 'Bookings Left'}
+          </FooterDiv.BookingLeft>
+          <FooterDiv.BookingPrice>
+            <strong>${props.rate}</strong>
+          </FooterDiv.BookingPrice>
+        </React.Fragment>
+    }
     <FooterDiv.Button onClick={props.handleBooking}>{props.buttonName}</FooterDiv.Button>
   </FooterDiv>
 );

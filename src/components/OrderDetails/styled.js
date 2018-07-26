@@ -52,7 +52,7 @@ OrderStyled.HeaderTitle = styled.span`
 `;
 
 OrderStyled.ContentWrapper = styled.div`
-  height: calc(100vh - 56px);
+  height: calc(100vh - 96px);
   overflow: auto;
   @media (min-width: 1025px) {
     overflow: initial;
@@ -169,9 +169,9 @@ OrderStyled.leftContent = styled.div`
     padding 20px 16px;
   }
   @media(min-width: 1025px) {
+    height: calc(100% - 94px);
     width: 40%;
     background-color: #fff;
-    height: 100%;
     padding: 27px 42px;
   }
   @media(min-width: 1920px) {
@@ -238,11 +238,39 @@ OrderStyled.MainTitle = styled.span`
 OrderStyled.ProfileImageWrapper = styled.div`
   width: 100%;
   text-align: center;
+  position: relative;
   @media(min-width: 1025px) {
     padding-bottom: 40px;
     border-bottom: 1px solid #333333;
   }
 `;
+
+OrderStyled.MoreActionsWrapper = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 10px;
+`;
+
+OrderStyled.MoreActionsIcon = styled.span`
+  background-image: url('assets/images/dots-vertical.svg');
+  background-repeat:no-repeat;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+`;
+
+OrderStyled.MoreActionsList = styled.ul`
+  position: absolute;
+  top: 20px;
+  right:10px;
+  background-color: rgb(248, 248, 248);
+  padding: 10px;
+`;
+
+OrderStyled.MoreActionsItem = styled.li`
+
+`;
+
 OrderStyled.ProfileImage = styled.span`
   border-radius: 50%;
   display: inline-block;
@@ -319,4 +347,19 @@ OrderStyled.Somenetwork = styled.div`
   margin-right: 30px;
   text-align: center;
 `;
+
+OrderStyled.ControlWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: #fff;
+  @media(min-width: 1025px) {
+    position: static;
+    padding: 27px 0;
+    border-top: solid #333333 1px;
+  }
+`;
+
 export default OrderStyled;

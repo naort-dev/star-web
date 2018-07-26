@@ -9,7 +9,6 @@ import OrderDetails from '../../components/OrderDetails';
 import Tabs from '../../components/Tabs';
 import MyVideosStyled from './styled';
 import { requestStatusList } from  '../../constants/requestStatusList';
-import { requestTypes } from  '../../constants/requestTypes';
 
 const moment = require('moment');
 
@@ -105,6 +104,7 @@ export default class MyVideos extends React.Component {
       <div>
         <div style={{ display: Object.keys(this.state.orderDetails).length ? 'block' : 'none' }}>
           <OrderDetails
+            starMode={this.props.starMode}
             orderDetails={this.state.orderDetails}
             history={this.props.history}
             requestStatus={requestStatus}
