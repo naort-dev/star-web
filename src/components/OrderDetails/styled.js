@@ -362,4 +362,56 @@ OrderStyled.ControlWrapper = styled.div`
   }
 `;
 
+OrderStyled.PopupWrapper = styled.div`
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #fff;
+`;
+
+OrderStyled.PopupHeader = styled.span`
+  font-size: 16px;
+  font-family: 'Ubuntu-Bold';
+`;
+
+OrderStyled.ReasonsWrapper = styled.ul`
+  line-height: 24px;
+  margin: 10px 0;
+  input {
+    margin-right: 10px;
+    display: table-cell;
+  }
+  span {
+    display: table-cell;
+  }
+`;
+
+OrderStyled.ReasonsItem = styled.li`
+  margin: 10px 0;
+  display: table;
+`;
+
+OrderStyled.ConfirmButton = styled.button`
+  background-color: #fff;
+  color: #FF6C58;
+  padding: 6px 18px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+`;
+
+OrderStyled.TextArea = styled.textarea`
+  margin: 10px 0;
+  height: 100px;
+`;
+
 export default OrderStyled;

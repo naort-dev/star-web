@@ -116,11 +116,14 @@ export default class RequestDetails extends React.Component {
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         >
-          <VideoRenderDiv.ProfileImageWrapper>
-            <VideoRenderDiv.ProfileImage
-              imageUrl={this.state.profileImage}
-            />
-          </VideoRenderDiv.ProfileImageWrapper>
+          {
+            !this.props.starMode &&
+              <VideoRenderDiv.ProfileImageWrapper>
+                <VideoRenderDiv.ProfileImage
+                  imageUrl={this.state.profileImage}
+                />
+              </VideoRenderDiv.ProfileImageWrapper>
+          }
           {/* <VideoRenderDiv.FavoriteButton /> */}
         </VideoRenderDiv.ImageSection>
         <VideoRenderDiv.ProfileContent>

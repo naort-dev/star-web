@@ -13,6 +13,8 @@ import {
 } from 'react-share';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
+import DeclinePopup from './declinePopup';
+import Popup from '../Popup';
 import OrderDetailsItem from './orderDetailsItem';
 import renderStarProfessions from '../../utils/formatProfessions';
 import { PaymentFooterController } from '../PaymentFooterController';
@@ -26,6 +28,8 @@ export default class OrderDetails extends React.Component {
     super(props);
     this.state = {
       showActions: false,
+      showPopup: false,
+      declinePopup: false,
     };
   }
 
@@ -106,7 +110,22 @@ export default class OrderDetails extends React.Component {
 
   modifyBooking = () => {
     if (this.props.starMode) {
+      this.setState({ showPopup: true, declinePopup: true });
     }
+  }
+
+  closePopup = () => {
+    this.setState({
+      showPopup: false,
+      declinePopup: false,
+    });
+  }
+
+  renderPopup = () => {
+    if (this.state.declinePopup) {
+      return <DeclinePopup requestType={this.props.requestType}/>;
+    }
+    return null;
   }
 
   renderActionList = () => {
@@ -131,6 +150,16 @@ export default class OrderDetails extends React.Component {
     }
     return (
       <OrderStyled>
+        {
+          this.state.showPopup &&
+            <Popup
+              closePopUp={this.closePopup}
+            >
+              {
+                this.renderPopup()
+              }
+            </Popup>
+        }
         <OrderStyled.Header>
           <OrderStyled.HeaderNavigation
             onClick={() => props.hideRequest()}
@@ -267,7 +296,7 @@ export default class OrderDetails extends React.Component {
                 <OrderStyled.MoreActionsWrapper>
                   <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />
                   {
-                    this.state.showActions &&
+                    this.state.showActions && !this.props.starMode &&
                       this.renderActionList()
                   }
                 </OrderStyled.MoreActionsWrapper>
