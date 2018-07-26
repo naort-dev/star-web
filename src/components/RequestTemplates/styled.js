@@ -150,5 +150,20 @@ Templates.Select = styled.select`
     height:40px;
   }
 `;
+Templates.RecordButton= styled.button`
+width: 30px;
+height: 30px;
+background-color: white ;
+margin-right: 5px;
+padding: 5px 20px;
+text-align: center;
+color: white;
+border: 2px solid #ef6a58;
+cursor: pointer;
+background-image: url('../../assets/images/mic.svg');
+background-size: 20px;
+background-repeat: no-repeat;
+background-position: center;
+`;
 
 export { Templates };

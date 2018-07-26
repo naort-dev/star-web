@@ -49,6 +49,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredHostName}
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -72,7 +73,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredUserName}
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
-                  <button onClick={() => this.audioRecorder()}>record</button>
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -158,6 +159,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredHostName}
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                   />
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -180,7 +182,7 @@ class RequestTemplates extends React.Component {
                     onBlur={this.props.checkRequiredUserName}
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                   />
-                  <button onClick={() => this.audioRecorder()}>record</button>
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -267,6 +269,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                     onBlur={this.props.checkRequiredHostName}
                   />
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -289,7 +292,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     onBlur={this.props.checkRequiredUserName}
                   />
-                  <button onClick={() => this.audioRecorder()}>record</button>
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -389,6 +392,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'hostName')}
                     onBlur={this.props.checkRequiredHostName}
                   />
+                       <Templates.RecordButton onClick={() => this.audioRecorder()}/>
                   {this.props.whoIsfor ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
@@ -411,7 +415,7 @@ class RequestTemplates extends React.Component {
                     onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     onBlur={this.props.checkRequiredUserName}
                   />
-                  <button onClick={() => this.audioRecorder()}>record</button>
+                  <Templates.RecordButton onClick={() => this.audioRecorder()} />
                   {this.props.whoIsfrom ?
                     <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                     :
