@@ -12,8 +12,6 @@ export default class AccountSettings extends React.Component {
     this.state = {
       selectedAccount: 'myAccount',
       userDetails: this.props.session.auth_token,
-      myAccountDetails: {},
-      starDetails: {},
     };
   }
   changeAccountType = (selectedType) => {
@@ -29,7 +27,7 @@ export default class AccountSettings extends React.Component {
               selected={this.state.selectedAccount}
               changeAccountType={this.changeAccountType}
             />
-            <MyAccount {...this.state}/>
+            <MyAccount accountDetails={this.state.userDetails} />
           </LayoutWrapper.LeftSection>
           <LayoutWrapper.RightSection>
             right
