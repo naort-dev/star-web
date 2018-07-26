@@ -23,6 +23,7 @@ Accounts.ComponentWrapperScroll = styled(Scrollbars)`
 Accounts.Questionwraps = styled.div`
   width:100%;
   height:100%;
+  padding-bottom:40px;
 `;
 Accounts.Ask = styled.div`
   padding: 25px 19px;
@@ -62,7 +63,7 @@ Accounts.OptionWrapper = styled.footer`
   }
 `;
 Accounts.CheckBoxWrapper = styled.div`
-  padding: 0px 0px;
+ 
 `;
 Accounts.Label = styled.div`
 `;
@@ -88,5 +89,15 @@ box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   right:0;
   bottom:0;
 }
+`;
+Accounts.WrapsInput = styled.div`
+  width:100%;
+  @media(min-width:768px){
+    width:100%;
+  }
+  @media(min-width:1025){
+    width:352px;
+  }
+
 `;
 export default Accounts;

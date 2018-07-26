@@ -26,7 +26,7 @@ LayoutWrapper.LeftSection = styled.div`
  
 
   @media(min-width: 1025px){
-    width: 45%;
+    width: 40%;
     padding: 0px 0px;
     position: relative;
     padding-bottom: 83px;
@@ -34,14 +34,11 @@ LayoutWrapper.LeftSection = styled.div`
 `;
 LayoutWrapper.RightSection = styled.div`
   width: 100%;
-  margin-top: 40px;
   display:none;
-  @media(min-width: 768px) {
-    margin-bottom: 80px;
-  }
+  height:100%;
   @media(min-width: 1025px){
     background-color:rgba(248, 248, 248, 1);
-    width: 55%;
+    width: 60%;
     display:flex;
     align-items: flex-start;
     justify-content: center;
@@ -49,8 +46,6 @@ LayoutWrapper.RightSection = styled.div`
     position: relative;
     padding: 30px 30px;
     flex-wrap: wrap;
-    height: 100vh;
-    padding-top: 13vh;
     margin-top: 0px;
   }
 `;
