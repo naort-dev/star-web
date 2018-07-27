@@ -675,7 +675,7 @@ class RequestTemplates extends React.Component {
   render() {
     return (
       <Templates>
-        {this.props.audioRecorder.showRecorder) &&  getMobileOperatingSystem() ? this.MobilePopup(this.props.audioRecorder.target) : null}
+        {this.props.audioRecorder.showRecorder &&  getMobileOperatingSystem() ? this.MobilePopup(this.props.audioRecorder.target) : null}
         {this.renderTemplates()}
       </Templates>
     );
