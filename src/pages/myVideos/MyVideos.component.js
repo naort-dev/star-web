@@ -163,6 +163,7 @@ export default class MyVideos extends React.Component {
                 {
                   this.state.filterSelected &&
                     <FilterSection
+                      starMode={this.props.starMode}
                       requestStatus
                       filterSelected={this.state.filterSelected}
                       toggleFilter={this.toggleFilterSection}

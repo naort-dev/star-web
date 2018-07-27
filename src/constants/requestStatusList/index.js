@@ -6,3 +6,5 @@ export const requestStatusList = {
   5: 'cancelled',
   6: 'completed',
 };
+
+export const openStatusList = [1, 2, 3];

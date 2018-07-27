@@ -13,7 +13,7 @@ import {
 } from 'react-share';
 import OrderStyled from './styled';
 
-const ShareView = ({title, shareUrl}) => (
+const ShareView = ({ title, shareUrl }) => (
   <OrderStyled.SocialMediaWrapper>
     <OrderStyled.Somenetwork>
       <FacebookShareButton

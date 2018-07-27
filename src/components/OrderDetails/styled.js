@@ -207,6 +207,7 @@ OrderStyled.rightContent = styled.div`
 OrderStyled.VideoDetails = styled.div`
   margin-top: 20px;
   padding: 10px 16px;
+  text-align: center;
 `;
 
 OrderStyled.CloseButton = styled.span`
@@ -341,6 +342,7 @@ OrderStyled.DetailsValue = styled.span`
 `;
 OrderStyled.SocialMediaWrapper = styled.div`
   margin-top:3%;
+  text-align: center;
 `;
 OrderStyled.Somenetwork = styled.div`
   vertical-align: top;

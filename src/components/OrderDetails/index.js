@@ -188,20 +188,22 @@ export default class OrderDetails extends React.Component {
           </OrderStyled.VideoDetails>
         </React.Fragment>
       );
+    } else if (!props.starMode) {
+      return (
+        <OrderStyled.NoVideoText>
+          {
+            props.requestStatusId !== 5 ?
+              'The request has been sent. Stay tuned!'
+              : 'This request has been cancelled.'
+          }
+        </OrderStyled.NoVideoText>
+      );
     }
-    return (
-      <OrderStyled.NoVideoText>
-        {
-          props.requestStatusId !== 5 ?
-            'The request has been sent. Stay tuned!'
-            : 'This request has been cancelled.'
-        }
-      </OrderStyled.NoVideoText>
-    );
+    return null;
   }
 
   renderVideoRecorder = (props) => {
-    if (props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
+    if (props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
           <VideoRecorder {...this.props} />
