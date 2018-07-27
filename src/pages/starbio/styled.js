@@ -154,6 +154,7 @@ flex-wrap: wrap;
     position: relative;
     flex-wrap: wrap;
     width: 80%;
+    height:100%;
   }
 `;
 
