@@ -1,17 +1,19 @@
-import React from 'react'
-import axios from 'axios'
-import { LoginContainer, HeaderSection, FooterSection } from './styled'
-import { fetch } from '../../services/fetch'
-import Api from '../../lib/api';
-import { Link, Redirect } from 'react-router-dom'
-import MultiSelect from '../../components/MultiSelect'
-import SelectTags from '../../components/SelectTag'
-import Loader from '../../components/Loader';
+import React from 'react';
+import axios from 'axios';
+import { Link, Redirect } from 'react-router-dom';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import EXIF from 'exif-js'
+import EXIF from 'exif-js';
+import { LoginContainer, FooterSection } from './styled';
+import { fetch } from '../../services/fetch';
+import Api from '../../lib/api';
+import MultiSelect from '../../components/MultiSelect';
+import SelectTags from '../../components/SelectTag';
+import Loader from '../../components/Loader';
 import Popup from '../../components/Popup';
+import HeaderSection from '../../components/HeaderSection';
 import { imageSizes } from '../../constants/imageSizes';
+import { SettingsFooter } from '../../components/SettingsFooter';
 import { default as ReactLoader } from 'react-loader';
 
 export default class Starbio extends React.Component {
@@ -31,11 +33,17 @@ export default class Starbio extends React.Component {
       avatarImageName: null,
       profession: [],
       searchTags: [],
-      bio: "",
-      bookingPrice: "",
-      bookingLimit: "",
-      imageError: {featuredImage: null, firstImage: null, secondImage: null, avatar: null },
+      bio: '',
+      bookingPrice: '',
+      bookingLimit: '',
+      imageError: {
+        featuredImage: null,
+        firstImage: null,
+        secondImage: null,
+        avatar: null,
+      },
       loaders: { featuredImage: null, firstImage: null, secondImage: null, avatar: null },
+      account: true,
       errors: {
         bio: false,
         profession: false,
@@ -71,13 +79,13 @@ export default class Starbio extends React.Component {
   setImageSize = () => {
     let featuredImageHeight, firstImageHeight, secondImageHeight;
     if (this.featuredImage) {
-      featuredImageHeight = this.featuredImage.clientWidth/this.imageRatios['featuredImage'];
+      featuredImageHeight = this.featuredImage.clientWidth / this.imageRatios['featuredImage'];
     }
     if (this.secondImage) {
-      secondImageHeight = this.secondImage.clientWidth/this.imageRatios['secondImage'];
+      secondImageHeight = this.secondImage.clientWidth / this.imageRatios['secondImage'];
     }
     if (this.firstImage) {
-      firstImageHeight = this.firstImage.clientWidth/this.imageRatios['firstImage'];
+      firstImageHeight = this.firstImage.clientWidth / this.imageRatios['firstImage'];
     }
     this.setState({
       imageHeights: {
@@ -113,14 +121,14 @@ export default class Starbio extends React.Component {
     window.removeEventListener('resize', this.setImageSize);
   }
   async onFileChange(type = "featuredImage") {
-    this.setState({ imageError: {...this.state.imageError, [`${type}`]: false}});
+    this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
     const file = document.getElementById(type).files[0];
     if (file) {
       const correctResolution = await this.checkResolution(file, type);
       if (correctResolution) {
         await this.getImageData(file, type)
       } else {
-        this.setState({ imageError: {...this.state.imageError, [`${type}`]: true}});
+        this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
       }
     }
   }
@@ -128,17 +136,18 @@ export default class Starbio extends React.Component {
   getImageData(file, type) {
     this.setState({ loaders: { ...this.state.loaders, [`${type}`]: false } })
     const reader = new FileReader();
-    const extensionType = type === 'avatar' ? 'avatarImage' : type; 
+    const extensionType = type === 'avatar' ? 'avatarImage' : type;
     reader.onload = async function (e) {
       const exif = await this.getExif(file, type)
       // this.setState({cropMode: true, cropImage: e.target.result, currentImageType: type})
-      this.setState({cropMode: true, cropImage: e.target.result, currentImageType: type,  [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true },
+      this.setState({
+        cropMode: true, cropImage: e.target.result, currentImageType: type, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true },
         extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
       })
       //   const exif = await this.getExif(file, type)
-        // const exif = await this.getExif(file, type)
-        // this.setState({ [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
-        // this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
+      // const exif = await this.getExif(file, type)
+      // this.setState({ [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
+      // this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
     }.bind(this)
     if (file) {
       reader.readAsDataURL(file)
@@ -227,9 +236,9 @@ export default class Starbio extends React.Component {
         return { formData, url: response.data.data.url }
       })
       .then(response => axios.post(response.url, response.formData))
-      // .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
-      //   'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
-      // })
+    // .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
+    //   'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
+    // })
   }
 
 
@@ -367,7 +376,7 @@ export default class Starbio extends React.Component {
     const base64Image = canvas.toDataURL('image/jpeg');
     this.setState({ [this.state.currentImageType]: base64Image, cropMode: false });
   }
-  
+
 
   onCropChange = (cropValues, pixelCrop) => {
     this.pixelCrop = pixelCrop;
@@ -441,11 +450,10 @@ export default class Starbio extends React.Component {
         <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
       </LoginContainer.FullScreenUploadWrapper>
     )
-
-
   }
 
   render() {
+    const isSettings = this.props.history.location.pathname === '/settings';
     const options = {
       color: '#000',
       zIndex: 2e9,
@@ -469,156 +477,166 @@ export default class Starbio extends React.Component {
           {
             this.state.cropMode ?
               this.renderCropper()
-            : null
+              : null
           }
           <LoginContainer.LeftSection>
-            <Request.ComponentWrapperScroll
-              autoHide
-              renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-            >
-              <HeaderSection>
-                <Link to="/">
-                  <HeaderSection.LogoImage
-                    src="assets/images/logo_starsona_large.svg"
-                    alt=""
-                  />
-                </Link>
-                <Link to="#">
-                  <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
-                </Link>
-              </HeaderSection>
+            {isSettings ?
+              <HeaderSection RightContent="Anu Shankar" /> :
+              <HeaderSection RightContent="I'M A STAR" />
+            }
+            {isSettings ?
+              null :
               <LoginContainer.Container>
                 <LoginContainer.Heading>Tell your fans about yourself</LoginContainer.Heading>
                 <LoginContainer.HeadingSubText>You can always update these later in your profile </LoginContainer.HeadingSubText>
               </LoginContainer.Container>
-              <LoginContainer.Ask>
-                <LoginContainer.InputwrapperDiv>
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.Label>Your bio</LoginContainer.Label>
-                    <LoginContainer.WrapsInput>
-
-                      <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
-
-                      <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
-                        {
-                          this.state.errors.bio ? 'Please enter a valid event title' :
-                            null
-                        }
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                </LoginContainer.InputwrapperDiv>
+            }
+            <LoginContainer.ComponentWrapper>
+              <LoginContainer.ComponentWrapperScroll
+                autoHide
+                renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+              >
+                <LoginContainer.Questionwraps>
 
 
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>Your industry</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
+                  <LoginContainer.Ask>
+                    <LoginContainer.InputwrapperDiv>
+                      <LoginContainer.InputWrapper>
+                        <LoginContainer.Label>Your bio</LoginContainer.Label>
+                        <LoginContainer.WrapsInput>
+
+                          <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
+
+                          <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
+                            {
+                              this.state.errors.bio ? 'Please enter a valid event title' :
+                                null
+                            }
+                          </LoginContainer.ErrorMsg>
+                        </LoginContainer.WrapsInput>
+                      </LoginContainer.InputWrapper>
+                    </LoginContainer.InputwrapperDiv>
 
 
-                    <MultiSelect
-                      otherOptions={{
-                        clearable: false,
-                        arrowRenderer: null,
-                        valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
-                      }}
-                      industry={this.state.industry}
-                      value={this.state.profession}
-                      profession={this.state.profession.join(',')}
-                      handleFieldChange={this.handleFieldChange.bind(this)}
-                    />
-                    <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
-                      {
-                        this.state.errors.profession ? 'Please choose your industry' :
-                          'You can choose a maximum of 3 industries'
-                      }
-                    </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Your industry</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
 
 
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>Search tags</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
+                        <MultiSelect
+                          otherOptions={{
+                            clearable: false,
+                            arrowRenderer: null,
+                            valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                          }}
+                          industry={this.state.industry}
+                          value={this.state.profession}
+                          profession={this.state.profession.join(',')}
+                          handleFieldChange={this.handleFieldChange.bind(this)}
+                        />
+                        <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
+                          {
+                            this.state.errors.profession ? 'Please choose your industry' :
+                              'You can choose a maximum of 3 industries'
+                          }
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
 
-                    <SelectTags
-                      otherOptions={{
-                        clearable: false,
-                        arrowRenderer: null,
-                        valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
-                      }}
-                      searchTags={this.state.searchTags}
-                      value={this.state.searchTags}
-                      handleFieldChange={this.handleFieldChange.bind(this)}
-                    />
-                    <LoginContainer.ErrorMsg isError={false}>
-                      Add hashtags to help Fans find you quicker
+
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Search tags</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
+
+                        <SelectTags
+                          otherOptions={{
+                            clearable: false,
+                            arrowRenderer: null,
+                            valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                          }}
+                          searchTags={this.state.searchTags}
+                          value={this.state.searchTags}
+                          handleFieldChange={this.handleFieldChange.bind(this)}
+                        />
+                        <LoginContainer.ErrorMsg isError={false}>
+                          Add hashtags to help Fans find you quicker
                                     </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
 
 
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>Your charity</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Your charity</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
 
-                    <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
+                        <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
 
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
-
-
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
-
-                    <LoginContainer.Input type="number" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                      onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
-                      value={this.state.bookingPrice} />
-                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
-                      {
-                        this.state.errors.bookingPrice ? 'Please enter your booking price' :
-                          'Our pricing engines will automatically maximize your earnings based on demand.'
-                      }
-                    </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
 
 
-                <LoginContainer.InputWrapper>
-                  <LoginContainer.Label>Booking limit</LoginContainer.Label>
-                  <LoginContainer.WrapsInput>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
 
-                    <LoginContainer.Input type="number" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                      value={this.state.bookingLimit}
-                      onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
-                    <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
-                      {
-                        this.state.errors.bookingLimit ? 'Please enter your booking limit' :
-                          'What\'s the maximum number of open bookings you want to offer at any given time?'
-                      }
-                    </LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
+                        <LoginContainer.Input type="number" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                          onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
+                          value={this.state.bookingPrice} />
+                        <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
+                          {
+                            this.state.errors.bookingPrice ? 'Please enter your booking price' :
+                              'Our pricing engines will automatically maximize your earnings based on demand.'
+                          }
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
 
-              </LoginContainer.Ask>
-            </Request.ComponentWrapperScroll>
+
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.Label>Booking limit</LoginContainer.Label>
+                      <LoginContainer.WrapsInput>
+
+                        <LoginContainer.Input type="number" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                          value={this.state.bookingLimit}
+                          onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
+                        <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
+                          {
+                            this.state.errors.bookingLimit ? 'Please enter your booking limit' :
+                              'What\'s the maximum number of open bookings you want to offer at any given time?'
+                          }
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+
+                  </LoginContainer.Ask>
+                </LoginContainer.Questionwraps>
+              </LoginContainer.ComponentWrapperScroll>
+            </LoginContainer.ComponentWrapper>
+            <LoginContainer.ButtonControllerWrapper>
+              {isSettings ?
+                <SettingsFooter />
+                :
+                <FooterSection>
+                  <FooterSection.LeftSection>
+                  </FooterSection.LeftSection>
+                  <FooterSection.RightSection>
+                    {this.state.featuredImage != null && (
+                      this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
+                    ) ?
+                      <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
+                        {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
+                      :
+                      <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick() }}>Continue </FooterSection.DisabledButton>
+                    }
+
+                  </FooterSection.RightSection>
+                </FooterSection>
+              }
+
+            </LoginContainer.ButtonControllerWrapper>
           </LoginContainer.LeftSection>
           <LoginContainer.FooterLayout>
-            <FooterSection>
-              <FooterSection.LeftSection>
-              </FooterSection.LeftSection>
-              <FooterSection.RightSection>
-                {this.state.featuredImage != null && (
-                  this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
-                ) ?
-                  <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
-                    {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
-                  :
-                  <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick() }}>Continue </FooterSection.DisabledButton>
-                }
 
-              </FooterSection.RightSection>
-            </FooterSection>
           </LoginContainer.FooterLayout>
 
 
@@ -627,8 +645,8 @@ export default class Starbio extends React.Component {
             {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
             <LoginContainer.ImageWrapper>
               <LoginContainer.FeaturedImage
-                style={{height: this.state.imageHeights.featured}}
-                innerRef={(node)=>this.featuredImage=node} imageType="featured" image={this.state.featuredImage}>
+                style={{ height: this.state.imageHeights.featured }}
+                innerRef={(node) => this.featuredImage = node} imageType="featured" image={this.state.featuredImage}>
                 {this.state.loaders.featuredImage === false ?
                   <ReactLoader loaded={false} className="spinner"
                     zIndex={2e9} options={options} /> :
@@ -643,15 +661,15 @@ export default class Starbio extends React.Component {
                         </LoginContainer.UploadWrapper>
                         <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
                         <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
-                        {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText>: null }
+                        {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                       </React.Fragment>
                     }
                   </LoginContainer.ImageInner>
                 }
               </LoginContainer.FeaturedImage>
               <LoginContainer.FirstImage
-                style={{height: this.state.imageHeights.first}}
-                innerRef={(node)=>this.firstImage=node} imageType="firstImage" image={this.state.firstImage}>
+                style={{ height: this.state.imageHeights.first }}
+                innerRef={(node) => this.firstImage = node} imageType="firstImage" image={this.state.firstImage}>
                 {this.state.loaders.firstImage === false ?
                   <ReactLoader loaded={false} className="spinner"
                     zIndex={2e9} options={options} /> :
@@ -665,15 +683,15 @@ export default class Starbio extends React.Component {
                         </LoginContainer.UploadWrapper>
                         <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
                         <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
-                        {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText>: null }
+                        {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                       </React.Fragment>
                     }
                   </LoginContainer.ImageInner>
                 }
               </LoginContainer.FirstImage>
               <LoginContainer.SecondImage
-                style={{height: this.state.imageHeights.second}}
-                innerRef={(node)=>this.secondImage=node} imageType="secondImage" image={this.state.secondImage}>
+                style={{ height: this.state.imageHeights.second }}
+                innerRef={(node) => this.secondImage = node} imageType="secondImage" image={this.state.secondImage}>
                 {this.state.loaders.secondImage === false ?
                   <ReactLoader loaded={false} className="spinner"
                     zIndex={2e9} options={options} /> :
@@ -688,7 +706,7 @@ export default class Starbio extends React.Component {
                         </LoginContainer.UploadWrapper>
                         <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
                         <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
-                        {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null }
+                        {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                       </React.Fragment>
                     }
                   </LoginContainer.ImageInner>

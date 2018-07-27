@@ -22,6 +22,11 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.Questionwraps = styled.div`
+  width:100%;
+  height:100%;
+  padding-bottom:40px;
+`;
 
 LoginContainer.CropperWrapper = styled.div`
   display: flex;
@@ -55,8 +60,14 @@ LoginContainer.CropperButton = styled.div`
   border-radius: 5px;
   border: 2px solid #FF6C58;
 `;
+LoginContainer.ComponentWrapper = styled.div`
+  @media(min-width:1025px){
+    height:calc(100% - 40px);
+  }
+  
+`;
 
-Request.ComponentWrapperScroll = styled(Scrollbars)`
+LoginContainer.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
@@ -518,6 +529,24 @@ LoginContainer.InputFieldsWrapper = styled.div`
 }
 @media(min-width:1025px){
  
+}
+`;
+LoginContainer.ButtonControllerWrapper = styled.div`
+position: fixed;
+left: 0;
+right: 0;
+bottom: 0;
+text-align:right;
+background-color: #fff;
+z-index: 5;
+box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+@media(min-width:1025px){
+  margin: 0 42px;
+  position:absolute;
+  box-shadow: none;
+  left:0;
+  right:0;
+  bottom:0;
 }
 `;
 LoginContainer.Ask = styled.div`

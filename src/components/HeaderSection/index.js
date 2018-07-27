@@ -10,9 +10,9 @@ const HeaderLogin = props => (
         alt=""
       />
     </Link>
-    <Link to="/signuptype">
-      <HeaderSection.RightDiv>{ props.RightContent }</HeaderSection.RightDiv>
-    </Link>
+   
+    <HeaderSection.RightDiv>{ props.RightContent }</HeaderSection.RightDiv>
+   
   </HeaderSection>
 );
 export default HeaderLogin;
