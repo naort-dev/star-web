@@ -1,17 +1,19 @@
 import React from 'react';
 import { Templates } from '../../components/RequestTemplates/styled';
 import Accounts from './styled';
-import { SettingsFooter } from '../SettingsFooter';
+import Avatar from '../avatar';
 
 export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       ...props.accountDetails
+
     };
   }
   render() {
     console.log(this.state);
+    const defaultImage = '../../assets/images/default-cover.jpg';
     return (
       <React.Fragment>
         <Accounts.ComponentWrapper>
@@ -22,17 +24,13 @@ export default class MyAccount extends React.Component {
             <Accounts.Questionwraps>
               <Accounts.Ask>
                 <Templates>
-                  <Templates.InputWrapper>
-                    <Templates.Label>Profile Image</Templates.Label>
-                    <Templates.WrapsInput>
-                      <Templates.Input
-                        placeholder="First Name"
-                        type="text"
-                       
-                      />
+                  <Accounts.InputWrapper>
+                    <Accounts.ImageLabel>Profile Image </Accounts.ImageLabel>
+                    <Accounts.WrapsInput>
+                      <Avatar image={this.state.avatar_photo ? this.state.avatar_photo.image_url : defaultImage} />
                       {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
-                    </Templates.WrapsInput>
-                  </Templates.InputWrapper>
+                    </Accounts.WrapsInput>
+                  </Accounts.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label>First Name</Templates.Label>
                     <Templates.WrapsInput>
@@ -87,6 +85,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="messagesFromStarsona"
                           type="checkbox"
+                          checked={this.state.notification_settings.fan_starsona_messages}
 
                         />
                         <Accounts.Span htmlFor="messagesFromStarsona" id="checkmark" />
@@ -102,6 +101,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="accountUpdates"
                           type="checkbox"
+                          checked={this.state.notification_settings.fan_account_updates}
                         />
                         <Accounts.Span htmlFor="accountUpdates" id="checkmark" />
                       </Accounts.Label>
@@ -116,6 +116,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="myStarsonaUpdates"
                           type="checkbox"
+                          checked={this.state.notification_settings.fan_starsona_videos}
                         />
                         <Accounts.Span htmlFor="myStarsonaUpdates" id="checkmark" />
                       </Accounts.Label>
@@ -130,6 +131,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="emailUpdates"
                           type="checkbox"
+                          checked={this.state.notification_settings.fan_email_starsona_videos}
                         />
                         <Accounts.Span htmlFor="emailUpdates" id="checkmark" />
                       </Accounts.Label>
@@ -144,6 +146,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="celebrityStarsonaRequest"
                           type="checkbox"
+                          checked={this.state.notification_settings.celebrity_starsona_request}
                         />
                         <Accounts.Span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                       </Accounts.Label>
@@ -158,6 +161,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="celebrityStarsonaMesssage"
                           type="checkbox"
+                          checked={this.state.notification_settings.celebrity_starsona_message}
                         />
                         <Accounts.Span htmlFor="celebrityStarsonaMesssage" id="checkmark" />
                       </Accounts.Label>
@@ -172,6 +176,7 @@ export default class MyAccount extends React.Component {
                         <Accounts.CheckBox
                           id="celebrityAccountUpdates"
                           type="checkbox"
+                          checked={this.state.notification_settings.celebrity_account_updates}
                         />
                         <Accounts.Span htmlFor="celebrityAccountUpdates" id="checkmark" />
                       </Accounts.Label>
@@ -183,10 +188,6 @@ export default class MyAccount extends React.Component {
             </Accounts.Questionwraps>
           </Accounts.ComponentWrapperScroll>
         </Accounts.ComponentWrapper>
-
-        <Accounts.ButtonControllerWrapper>
-          <SettingsFooter />
-        </Accounts.ButtonControllerWrapper>
       </React.Fragment>
 
     );

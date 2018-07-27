@@ -49,4 +49,22 @@ LayoutWrapper.RightSection = styled.div`
     margin-top: 0px;
   }
 `;
+LayoutWrapper.ButtonControllerWrapper = styled.div`
+position: fixed;
+left: 0;
+right: 0;
+bottom: 0;
+text-align:right;
+background-color: #fff;
+z-index: 5;
+box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+@media(min-width:1025px){
+  margin: 0 42px;
+  position:absolute;
+  box-shadow: none;
+  left:0;
+  right:0;
+  bottom:0;
+}
+`;
 export default LayoutWrapper;

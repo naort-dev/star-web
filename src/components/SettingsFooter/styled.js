@@ -15,6 +15,7 @@ const FooterSection = styled.div`
    box-shadow:none;
    border-top: 1px solid #222;
    padding: 11px 0px;
+   margin-bottom:3%;
   }
   
 `;
@@ -37,7 +38,7 @@ FooterSection.Button = styled.button`
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 10px;
+  font-size: 16px;
   font-family: 'Ubuntu-Bold';
   outline:none;
   border-radius:5px;
@@ -50,7 +51,7 @@ FooterSection.leftButton = styled.button`
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 10px;
+  font-size: 16px;
   font-family: 'Ubuntu-Bold';
   outline:none;
   border:none;
