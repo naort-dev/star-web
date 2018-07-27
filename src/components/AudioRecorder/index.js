@@ -15,7 +15,7 @@ export default class AudioRecorder extends React.Component {
 
 
   onStop = (recordedBlob) => {
-    this.props.saveAudioRecording(recordedBlob.blobURL);
+    this.props.saveAudioRecording(this.props.audioRecorder.target, { recordedBlob, recordedUrl: recordedBlob.blobURL });
   }
 
   stopRecording = () => {
@@ -27,7 +27,9 @@ export default class AudioRecorder extends React.Component {
   }
 
   render() {
-    console.log("props", this.props)
+    console.log("props", this.props.audioRecorder);
+    const target = this.props.audioRecorder.target;
+    const playbackURL = this.props.audioRecorder.recorded[target] ? this.props.audioRecorder.recorded[target].recordedUrl : null
     const func = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
     return (
       <AudioRecorderDiv>
@@ -42,16 +44,16 @@ export default class AudioRecorder extends React.Component {
               backgroundColor="#FF6C58"
               save={this.props.audioRecorder.stop}
             />
-            <audio src={this.props.audioRecorder.recordedBlob} controls />
+            <audio src={playbackURL} controls />
             <AudioRecorderDiv.Button onClick={func} type="button"></AudioRecorderDiv.Button>
           </React.Fragment>
           :
           <React.Fragment>
-            <audio controls/>
-              <button onClick={() => { }}> Upload Pronounciation </button> 
-        </React.Fragment>
-            }
+            <audio src={null} controls />
+            <AudioRecorderDiv.TextButton onClick={() => { }} type="button">Upload Pronounciation</AudioRecorderDiv.TextButton>
+          </React.Fragment>
+        }
       </AudioRecorderDiv>
     );
-      }
-    }
+  }
+}

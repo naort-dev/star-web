@@ -51,10 +51,16 @@ Templates.Label = styled.div`
 Templates.WrapsInput = styled.div`
   width:100%;
   @media(min-width:768px){
+    margin-top: 10px;
     width:100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
-  @media(min-width:1025){
-    width:352px;
+  @media(min-width:1025px){
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
   }
 
 `;
@@ -151,37 +157,55 @@ Templates.Select = styled.select`
   }
 `;
 
-Templates.RecordButton= styled.button`
-width: 30px;
+Templates.RecordButton = styled.button`
+width: auto;
 height: 30px;
 background-color: white ;
-margin-right: 5px;
+margin-top: 10px;
 padding: 5px 20px;
 text-align: center;
-color: white;
 border: 2px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/mic.svg');
 background-size: 20px;
 background-repeat: no-repeat;
-background-position: center;
+background-position: left;
+padding-left: 35px;
+font-family: 'Ubuntu-Bold';
+color: #FF6C58;
+border-radius: 5px;
+@media(min-width:768px){
+  margin-top:0;
+  height:40px;
+  margin-left: 50%;
+}
+@media(min-width:1025px){
+  margin-top:0;
+  height:33px;
+  font-size:13px;
+  margin-left: 50%;
+}
+@media(min-width:1920px){
+  font-size:16px;
+  height:40px;
+}
 `;
 
 Templates.NoVideoButton = styled.button`
-margin-top: 10px;
-background-color: #fff; 
+margin-top: 27px;
+background-color: #fff;
 color: #FF6C58;
-padding: 4px 0px;
+padding: 4px 30px;
 text-align: center;
+-webkit-text-decoration: none;
 text-decoration: none;
 display: inline-block;
 font-size: 14px;
 font-family: 'Ubuntu-Bold';
-outline:none;
-border-radius:5px;
-border: 2px solid #FF6C58;s
+outline: none;
+border-radius: 5px;
+border: 2px solid #FF6C58;
 `;
-
 
 Templates.UploadWrapper = styled.div`
     position: relative;
@@ -190,8 +214,6 @@ Templates.UploadWrapper = styled.div`
     cursor: pointer;
   }
 `;
-
-
 
 Templates.UploadInput = styled.input`
     font-size: 100px;
@@ -206,14 +228,42 @@ Templates.UploadInput = styled.input`
 
   `;
 
-
 Templates.Popup = styled.div`
  width: 100%;
  height: 100%;
  display: flex;
  align-items: center;
  justify-content: center;
- flex-direction: column
+ flex-direction: column;
 `
+
+Templates.PopupContainer = styled.div`
+width: 90%;
+height: 30%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-direction: column;
+background-color: white;
+border-radius: 15px;
+
+`;
+
+Templates.InputWrapperContainer = styled.div`
+
+display: flex;
+flex-direction: column;
+flex-wrap: wrap;
+width: 100%;
+@media(min-width:768px){
+  align-items: flex-start;
+}
+@media(min-width: 1025px) {
+  align-items: flex-end;
+}
+@media(min-width: 1920px) {
+}
+`;
+
 
 export { Templates };

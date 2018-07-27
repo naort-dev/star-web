@@ -1,8 +1,7 @@
 import { START_AUDIO_RECORDING, STOP_AUDIO_RECORDING, SAVE_RECORDINGS, SAVE_AUDIO_FILE, CLOSE_RECORDER, CLEAR_ALL, SHOW_RECORDER } from '../actions/audioRecorder';
 
 const initalState = {
-  recordedBlob: null,
-  recordedBuffer: null,
+ 
   start: null,
   stop: null,
   re_record: null,
@@ -10,7 +9,8 @@ const initalState = {
   showRecorder: null,
   label: null,
   target: null,
-  file: { from: null, to: null },
+  file: { from: null, for: null },
+  recorded: { from: null, for: null },
 };
 
 export default (state = { ...initalState }, action) => {
@@ -43,7 +43,7 @@ export default (state = { ...initalState }, action) => {
     case SAVE_RECORDINGS:
       return {
         ...state,
-        recordedBlob: action.payload,
+        recorded: { ...state.recorded, [action.payload.target]: action.payload.audio },
       };
       case SAVE_AUDIO_FILE:
       return {

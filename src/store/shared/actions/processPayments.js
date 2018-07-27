@@ -187,6 +187,7 @@ const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
 }
 
 export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getState) => {
+  console.log(bookingData)
   const { authentication_token: authToken } = getState().session.auth_token;
   let requestDetails = {
     stargramto: bookingData.userName,
@@ -199,6 +200,7 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
     date: moment.utc(bookingData.date).format(),
     event_title: bookingData.eventdetailName,
     event_guest_honor: bookingData.hostName,
+  
   };
   let formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);
@@ -208,6 +210,8 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
   formData.append('public_request', publicStatus);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
+  formData.append('from_audio_file', bookingData.from_audio_file);
+  formData.append('to_audio_file', bookingData.to_audio_file);
   dispatch(paymentFetchStart());
   return fetch.post(Api.starsonaRequest, formData, {
     headers: {

@@ -8,7 +8,7 @@ import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import AudioRecorder from '../../components/AudioRecorder';
-
+import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -114,7 +114,23 @@ export default class Personal extends React.Component {
     }
     return myselfValue;
   }
+
+  getAudio() {
+    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
+      const from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
+      const to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
+      return { from_audio_file, to_audio_file }
+    }
+    else {
+      const from_audio_file = this.props.audioRecorder.files.from ? this.props.audioRecorder.files.from : null
+      const to_audio_file = this.props.audioRecorder.files.for ? this.props.audioRecorder.files.for : null
+      return { from_audio_file, to_audio_file }
+
+    }
+  }
   createBookingObject = (obj) => {
+    const {from_audio_file, to_audio_file } = this.getAudio();
+    console.log("aaaaa", from_audio_file, to_audio_file  )
     const relationshipValue = obj.relationship;
     let relationsShipTitle = '';
     let relationshipName = relationshipValue.find((find) => {
@@ -126,6 +142,7 @@ export default class Personal extends React.Component {
     if (this.state.relationshipValue === 'otherRelation') {
       relationshipName = this.props.otherRelationData
     }
+
     const userNameValue = this.checkMyself('userName');
     const hostNameValue = this.checkMyself('hostName');
     const bookingData = {
@@ -147,6 +164,8 @@ export default class Personal extends React.Component {
       selectedValue: this.state.selectedValue,
       selectedPersonal: this.state.selectedPersonal,
       otherRelationValue: this.state.otherRelationValue,
+      from_audio_file,
+      to_audio_file,
     };
     return bookingData;
   }

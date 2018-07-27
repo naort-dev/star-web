@@ -25,10 +25,10 @@ export function stopAudioRecording() {
   };
 }
 
-export function saveAudioRecording(audio) {
+export function saveAudioRecording(target, audio) {
   return {
     type: SAVE_RECORDINGS,
-    payload: audio,
+    payload: { target, audio },
   };
 }
 
@@ -39,10 +39,10 @@ export function saveAudioFile(audio) {
   };
 }
 
-export function closeRecorder(){
+export function closeRecorder() {
   return {
     type: CLOSE_RECORDER,
-  }
+  };
 }
 
 export function clearAll() {

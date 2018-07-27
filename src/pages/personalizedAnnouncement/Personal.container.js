@@ -26,7 +26,7 @@ const mapDispatchToProps = dispatch => ({
   startAudioRecording: () => dispatch(startAudioRecording()),
   stopAudioRecording: () => dispatch(stopAudioRecording()),
   saveAudioFile: audio => dispatch(saveAudioFile(audio)),
-  saveAudioRecording: audio => dispatch(saveAudioRecording(audio)),
+  saveAudioRecording: (target, audio) => dispatch(saveAudioRecording(target, audio)),
   closeRecorder: () => dispatch(closeRecorder()),
   clearAll: () => dispatch(clearAll()),
 });
