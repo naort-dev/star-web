@@ -35,7 +35,7 @@ Accounts.Ask = styled.div`
 `;
 Accounts.PaymentLabel = styled.div`
   color:red;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Ubuntu-Regular';
   font-size:16px;
   text-align:left;
   padding:10px 0;
@@ -56,6 +56,32 @@ Accounts.PaymentLabel = styled.div`
   }
 
 `;
+Accounts.InputWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px; 
+  @media(min-width:768px){
+    flex-direction: row;
+    margin-top: 30px;
+    align-items: center;
+  }
+  @media(min-width: 1025px) {
+    margin-top: 30px;
+  }
+  @media(min-width: 1920px) {
+    margin-top: 50px;
+  }
+`;
+Accounts.WrapsInput = styled.div`
+  width:100%;
+  @media(min-width:768px){
+    width:100%;
+  }
+  @media(min-width:1025){
+    width:352px;
+  }
+
+`;
 Accounts.OptionWrapper = styled.footer`
   padding: 25px 19px;
   @media(min-width: 1025px) {
@@ -72,23 +98,30 @@ Accounts.CheckBox = styled.input`
 `;
 Accounts.Span = styled.label`
 `;
-Accounts.ButtonControllerWrapper = styled.div`
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-text-align:right;
-background-color: #fff;
-z-index: 5;
-box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-@media(min-width:1025px){
-  margin: 0 42px;
-  position:absolute;
-  box-shadow: none;
-  left:0;
-  right:0;
-  bottom:0;
-}
+Accounts.ImageLabel = styled.div`
+  display:none;
+  color:#333333;
+  font-family: 'Ubuntu-Bold';
+  font-size:16px;
+  text-align:left;
+  padding:10px 0;
+  @media(min-width:768px){
+    display:block;
+    width:55%;
+    display:flex;
+    align-items:center;
+    padding-right: 10px;
+    padding-bottom:0px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
+    width:69%;
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
 `;
 Accounts.WrapsInput = styled.div`
   width:100%;
