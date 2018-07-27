@@ -3,14 +3,14 @@ import FooterSection from './styled';
 
 
 export const SettingsFooter = props => (
-  <div>
+  <React.Fragment>
     <FooterSection>
       <FooterSection.LeftSection>
-        <FooterSection.leftButton>Cancel</FooterSection.leftButton>
+        <FooterSection.LeftButton>Cancel</FooterSection.LeftButton>
       </FooterSection.LeftSection>
       <FooterSection.RightSection>
         <FooterSection.Button>Save</FooterSection.Button>
       </FooterSection.RightSection>
     </FooterSection>
-  </div>
+  </React.Fragment>
 );

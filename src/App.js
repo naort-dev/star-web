@@ -108,7 +108,7 @@ class App extends React.Component {
                 <Route path="/:id/request/event" component={Event} />
                 <Route path="/:id/request/personal" component={Personal} />
                 <Route path="/:id/request/confirm" component={Confirm} />
-                <Route path="/settings" component={Settings} />
+                <Route path="/settings" component={Starbio} />
 
                 {/* logged in areas */}
 
