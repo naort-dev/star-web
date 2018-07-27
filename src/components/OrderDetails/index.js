@@ -18,7 +18,6 @@ import Popup from '../Popup';
 import OrderDetailsItem from './orderDetailsItem';
 import renderStarProfessions from '../../utils/formatProfessions';
 import { PaymentFooterController } from '../PaymentFooterController';
-import { changeRequestStatus } from '../../services/changeRequestStatus';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
 
@@ -121,9 +120,20 @@ export default class OrderDetails extends React.Component {
     });
   }
 
+  changeRequestStatus = (requestId, requestStatus, reason) => {
+    this.props.changeRequestStatus(requestId, requestStatus, reason);
+    this.closePopup();
+    this.props.hideRequest();
+  }
+
   renderPopup = () => {
     if (this.state.declinePopup) {
-      return <DeclinePopup requestType={this.props.requestType}/>;
+      return (
+        <DeclinePopup
+          changeRequestStatus={(reason) => this.changeRequestStatus(this.props.orderDetails.id, 5, reason)} // to cancel a request
+          requestType={this.props.orderDetails.request_type}
+        />
+      );
     }
     return null;
   }
@@ -336,15 +346,19 @@ export default class OrderDetails extends React.Component {
                 </OrderStyled.DetailsItem>
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
-            <OrderStyled.ControlWrapper>
-              <PaymentFooterController
-                buttonMode
-                modifyBooking={this.modifyBooking}
-                handleBooking={this.handleBooking}
-                modifyButtonName={this.props.starMode ? "Cancel": "Edit Request"}
-                buttonName={!this.props.starMode ? "Cancel": "Send"}
-              />
-            </OrderStyled.ControlWrapper>
+            {/* Show only if request is not cancelled */}
+            {
+              props.requestStatusId !== 5 &&
+                <OrderStyled.ControlWrapper>
+                  <PaymentFooterController
+                    buttonMode
+                    modifyBooking={this.modifyBooking}
+                    handleBooking={this.handleBooking}
+                    modifyButtonName={this.props.starMode ? "Cancel": "Edit Request"}
+                    buttonName={!this.props.starMode ? "Cancel": "Send"}
+                  />
+                </OrderStyled.ControlWrapper>
+            }
           </OrderStyled.leftContent>
         </OrderStyled.ContentWrapper>
       </OrderStyled>

@@ -16,9 +16,10 @@ import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
-import videoRecorder from '../store/shared/reducers/videoRecording'
-import videoUploader from '../store/shared/reducers/videoUploader'
-import imageViewer from '../store/shared/reducers/imageViewer'
+import videoRecorder from '../store/shared/reducers/videoRecording';
+import videoUploader from '../store/shared/reducers/videoUploader';
+import requestHandler from '../pages/myVideos/reducers/requestHandler';
+import imageViewer from '../store/shared/reducers/imageViewer';
 
 const rootReducer = combineReducers({
   session,
@@ -39,7 +40,8 @@ const rootReducer = combineReducers({
   paymentDetails,
   videoRecorder,
   videoUploader,
-  imageViewer
+  imageViewer,
+  requestHandler,
 });
 
 export default rootReducer;

@@ -17,7 +17,7 @@ export default class DeclinePopup extends React.Component {
 
   sendReason = () => {
     if (this.state.declineReason !== '') {
-
+      this.props.changeRequestStatus(this.state.declineReason);
     }
   }
 
