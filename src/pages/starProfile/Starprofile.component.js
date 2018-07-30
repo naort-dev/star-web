@@ -280,8 +280,8 @@ export default class Starprofile extends React.Component {
                             <VideoPlayer
                               videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
                               videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
-                              cover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
-                              src={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
+                              primaryCover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
+                              primarySrc={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
                             />
                           </Detail.VideoPlayer>
                           <Detail.VideoContent>
