@@ -127,20 +127,20 @@ export const modifySourceList = (source, customer, action) => (dispatch, getStat
     source,
     action,
   }, {
-    headers: {
-      'Authorization': `token ${authToken}`,
-    },
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(sourceListFetchEnd());
-      dispatch(fetchSourceList(resp.data.data.cards));
-    } else {
-      dispatch(sourceListFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(sourceListFetchFailed(exception));
-  });
+      headers: {
+        'Authorization': `token ${authToken}`,
+      },
+    }).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(sourceListFetchEnd());
+        dispatch(fetchSourceList(resp.data.data.cards));
+      } else {
+        dispatch(sourceListFetchEnd());
+      }
+    }).catch((exception) => {
+      dispatch(paymentFetchEnd());
+      dispatch(sourceListFetchFailed(exception));
+    });
 };
 
 export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
@@ -151,20 +151,20 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
     amount,
     source: tokenId,
   }, {
-    headers: {
-      'Authorization': `token ${authToken}`,
-    },
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
+      headers: {
+        'Authorization': `token ${authToken}`,
+      },
+    }).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(paymentFetchEnd());
+        dispatch(setPaymentStatus(resp.data.success));
+      } else {
+        dispatch(paymentFetchEnd());
+      }
+    }).catch((exception) => {
       dispatch(paymentFetchEnd());
-      dispatch(setPaymentStatus(resp.data.success));
-    } else {
-      dispatch(paymentFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
-  });
+      dispatch(paymentFetchFailed(exception));
+    });
 };
 
 const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
@@ -173,17 +173,17 @@ const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
     stragramz_request: requestId,
     duration,
   }, {
-    headers: {
-      'Authorization': `token ${authToken}`,
-    },
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
+      headers: {
+        'Authorization': `token ${authToken}`,
+      },
+    }).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(paymentFetchEnd());
+      }
+    }).catch((exception) => {
       dispatch(paymentFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
-  });
+      dispatch(paymentFetchFailed(exception));
+    });
 }
 
 export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getState) => {
@@ -199,6 +199,7 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
     date: moment.utc(bookingData.date).format(),
     event_title: bookingData.eventdetailName,
     event_guest_honor: bookingData.hostName,
+
   };
   let formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);
@@ -208,6 +209,12 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
   formData.append('public_request', publicStatus);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
+  if (bookingData.from_audio_file) {
+    formData.append('from_audio_file', bookingData.from_audio_file);
+  }
+  if (bookingData.from_audio_file) {
+    formData.append('to_audio_file', bookingData.to_audio_file);
+  }
   dispatch(paymentFetchStart());
   return fetch.post(Api.starsonaRequest, formData, {
     headers: {

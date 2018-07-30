@@ -7,6 +7,8 @@ import { ImageStack } from '../../components/ImageStack';
 import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
+import AudioRecorder from '../../components/AudioRecorder';
+import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -32,7 +34,7 @@ export default class Personal extends React.Component {
       whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
-      otherRelationValue: props.bookingData.otherRelationValue ==='' ? '' : props.bookingData.otherRelationValue,
+      otherRelationValue: props.bookingData.otherRelationValue === '' ? '' : props.bookingData.otherRelationValue,
     };
   }
   componentWillMount() {
@@ -112,7 +114,32 @@ export default class Personal extends React.Component {
     }
     return myselfValue;
   }
+
+  getAudio() {
+    let from_audio_file;
+    let to_audio_file;
+    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
+      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
+        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
+      }
+
+      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
+        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
+      }
+      return { from_audio_file, to_audio_file };
+    }
+    else {
+      from_audio_file = this.props.audioRecorder.files.from ? this.props.audioRecorder.files.from : null
+      to_audio_file = this.props.audioRecorder.files.for ? this.props.audioRecorder.files.for : null
+      return { from_audio_file, to_audio_file }
+
+    }
+  }
+
+
+
   createBookingObject = (obj) => {
+    const { from_audio_file, to_audio_file } = this.getAudio();
     const relationshipValue = obj.relationship;
     let relationsShipTitle = '';
     let relationshipName = relationshipValue.find((find) => {
@@ -124,6 +151,7 @@ export default class Personal extends React.Component {
     if (this.state.relationshipValue === 'otherRelation') {
       relationshipName = this.props.otherRelationData
     }
+
     const userNameValue = this.checkMyself('userName');
     const hostNameValue = this.checkMyself('hostName');
     const bookingData = {
@@ -145,6 +173,8 @@ export default class Personal extends React.Component {
       selectedValue: this.state.selectedValue,
       selectedPersonal: this.state.selectedPersonal,
       otherRelationValue: this.state.otherRelationValue,
+      from_audio_file,
+      to_audio_file,
     };
     return bookingData;
   }
@@ -168,7 +198,7 @@ export default class Personal extends React.Component {
       this.setState({ selectVideoerror: false });
     }
     if (this.state.selectedValue !== '0' && this.state.selectedPersonal !== '0') {
-      this.setState({ steps: false}, () => {
+      this.setState({ steps: false }, () => {
         this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
       });
     }
@@ -210,6 +240,8 @@ export default class Personal extends React.Component {
     this.props.cancelBookingDetails();
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
+
+
 
   render() {
     let coverPhoto;
@@ -339,7 +371,8 @@ export default class Personal extends React.Component {
                               eventDate={this.state.eventDate}
                               starName={fullName}
                               otherRelationship={this.otherRelationship}
-                              otherRelationValue ={this.state.otherRelationValue}
+                              otherRelationValue={this.state.otherRelationValue}
+                              {...this.props}
                             />
                           </Request.EventStep2>
                           : null
@@ -364,12 +397,15 @@ export default class Personal extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                />
-              </Request.ImageStackWrapper>
+              {this.props.audioRecorder.showRecorder && this.props.location.search === '?step=1' ?
+                <AudioRecorder {...this.props} />
+                :
+                <Request.ImageStackWrapper>
+                  <ImageStack
+                    featureImage={featuredImage}
+                    imageList={imageList}
+                  />
+                </Request.ImageStackWrapper>}
             </Request.RightSection>
           </Request>
         </Request.Content>
