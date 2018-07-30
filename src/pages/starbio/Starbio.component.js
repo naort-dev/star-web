@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
+import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import EXIF from 'exif-js';
@@ -17,7 +18,7 @@ import { SettingsFooter } from '../../components/SettingsFooter';
 import SettingsTab from '../../components/SettingsTab';
 import MyAccount from '../../components/MyAccount';
 import { ImageStack } from '../../components/ImageStack';
-import { default as ReactLoader } from 'react-loader';
+import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 
 export default class Starbio extends React.Component {
   constructor(props) {
@@ -48,8 +49,10 @@ export default class Starbio extends React.Component {
       loaders: { featuredImage: null, firstImage: null, secondImage: null, avatar: null },
       account: true,
       settingsObj: {
-        userDetails: this.props.session.auth_token,
+        userDetails: null,
+        starDetails: null,
         selectedAccount: 'myAccount',
+        isCelebrity: false,
       },
       errors: {
         bio: false,
@@ -70,7 +73,13 @@ export default class Starbio extends React.Component {
         second: '100%',
       },
       saving: false,
-      extensions: { featuredImage: null, firstImage: null, secondImage: null, avatarImage: null }
+      extensions: { featuredImage: null, firstImage: null, secondImage: null, avatarImage: null },
+      rotations: {
+        featuredImage: 'rotate(0deg)',
+        firstImage: 'rotate(0deg)',
+        secondImage: 'rotate(0deg)',
+        avatar: 'rotate(0deg)',
+      },
     };
     this.imageRatios = {
       featuredImage: imageSizes.featured,
@@ -101,6 +110,35 @@ export default class Starbio extends React.Component {
         first: firstImageHeight,
       },
     });
+  }
+
+  componentWillMount() {
+    // Settings tab init details
+    if (this.props.history.location.pathname === '/settings') {
+      const userDetails = this.props.userDetails.settings_userDetails;
+      const starDetails = this.props.userDetails.settings_celebrityDetails;
+      const settingsObj = {
+        userDetails,
+        starDetails,
+        selectedAccount: 'myAccount',
+        isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
+      };
+      const professionList = starDetails && starDetails.profession_details && starDetails.profession_details.length ? starDetails.profession_details.map(professionObj => professionObj.id) : [];
+      const stateObj = {
+        bio: starDetails && starDetails.description ? starDetails.description : '',
+        charity: starDetails && starDetails.charity ? starDetails.charity : '',
+        bookingLimit: starDetails && starDetails.weekly_limits ? starDetails.weekly_limits : '',
+        bookingPrice: starDetails && starDetails.rate ? starDetails.rate : '',
+        featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.image_url ? userDetails.featured_photo.image_url : null,
+        firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].image_url : null,
+        secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
+        avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
+        profession: professionList,
+        settingsObj,
+      };
+      this.setState({ ...stateObj });
+    }
+
   }
 
   componentDidMount() {
@@ -450,14 +488,15 @@ export default class Starbio extends React.Component {
   }
 
   FullscreenUploader = (type) => {
-    const borderRadius = type == "avatar" ? "100px" : "0px"
+    console.log('FULLSCREEN', type, this.state[type]);
+    const borderRadius = type === 'avatar' ? '100px' : '0px';
     return (
       <LoginContainer.FullScreenUploadWrapper >
         <LoginContainer.Image src={this.state[`${type}`]} style={{ transform: this.state.rotations[`${type}`], borderRadius }} />
         <LoginContainer.FullScreenUploadButton onClick={() => { }} />
         <LoginContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id={type} onChange={() => this.onFileChange(type)} type="file" />
       </LoginContainer.FullScreenUploadWrapper>
-    )
+    );
   }
 
   // Settings Function
@@ -465,23 +504,24 @@ export default class Starbio extends React.Component {
   changeAccountType = (selectedType) => {
     this.setImageSize();
     this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } });
-    
-    console.log(this.state);
+  }
+  changeUserStatus = () => {
+    this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } });
   }
 
   render() {
-    console.log('SelectedAccount', this.state.settingsObj.selectedAccount === 'myAccount');
     const isSettings = this.props.history.location.pathname === '/settings';
+    const isMyAccount = this.state.settingsObj.selectedAccount === 'myAccount';
     const options = {
       color: '#000',
       zIndex: 2e9,
       top: '50%',
       left: '0vw',
-      position: 'relative'
+      position: 'relative',
     };
 
     if (!this.props.session.isLoggedIn) {
-      return <Redirect to="/signuptype" />
+      return <Redirect to="/signuptype" />;
     }
 
     return (
@@ -518,157 +558,169 @@ export default class Starbio extends React.Component {
               :
               null
             }
-            {isSettings && this.state.settingsObj.selectedAccount === 'myAccount' ?
-              <MyAccount accountDetails={this.state.settingsObj.userDetails} />
-              :
-              <LoginContainer.ComponentWrapper>
-                <LoginContainer.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                >
-                  <LoginContainer.Questionwraps>
-
-
-                    <LoginContainer.Ask>
-                      <LoginContainer.InputwrapperDiv>
-                        <LoginContainer.InputWrapper>
-                          <LoginContainer.Label>Your bio</LoginContainer.Label>
-                          <LoginContainer.WrapsInput>
-
-                            <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
-
-                            <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
-                              {
-                                this.state.errors.bio ? 'Please enter a valid event title' :
-                                  null
-                              }
-                            </LoginContainer.ErrorMsg>
-                          </LoginContainer.WrapsInput>
-                        </LoginContainer.InputWrapper>
-                      </LoginContainer.InputwrapperDiv>
-
-
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Your industry</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-
-
-                          <MultiSelect
-                            otherOptions={{
-                              clearable: false,
-                              arrowRenderer: null,
-                              valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
-                            }}
-                            industry={this.state.industry}
-                            value={this.state.profession}
-                            profession={this.state.profession.join(',')}
-                            handleFieldChange={this.handleFieldChange.bind(this)}
-                          />
-                          <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
-                            {
-                              this.state.errors.profession ? 'Please choose your industry' :
-                                'You can choose a maximum of 3 industries'
-                            }
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-
-
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Search tags</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-
-                          <SelectTags
-                            otherOptions={{
-                              clearable: false,
-                              arrowRenderer: null,
-                              valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
-                            }}
-                            searchTags={this.state.searchTags}
-                            value={this.state.searchTags}
-                            handleFieldChange={this.handleFieldChange.bind(this)}
-                          />
-                          <LoginContainer.ErrorMsg isError={false}>
-                            Add hashtags to help Fans find you quicker
-                                    </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-
-
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Your charity</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-
-                          <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
-
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-
-
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-
-                          <LoginContainer.Input type="number" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                            onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
-                            value={this.state.bookingPrice} />
-                          <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
-                            {
-                              this.state.errors.bookingPrice ? 'Please enter your booking price' :
-                                'Our pricing engines will automatically maximize your earnings based on demand.'
-                            }
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-
-
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.Label>Booking limit</LoginContainer.Label>
-                        <LoginContainer.WrapsInput>
-
-                          <LoginContainer.Input type="number" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
-                            value={this.state.bookingLimit}
-                            onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
-                          <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
-                            {
-                              this.state.errors.bookingLimit ? 'Please enter your booking limit' :
-                                'What\'s the maximum number of open bookings you want to offer at any given time?'
-                            }
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-
-                    </LoginContainer.Ask>
-                  </LoginContainer.Questionwraps>
-                </LoginContainer.ComponentWrapperScroll>
-              </LoginContainer.ComponentWrapper>
-            }
-            <LoginContainer.ButtonControllerWrapper>
-              {isSettings ?
-                <SettingsFooter />
+            {
+              isSettings && isMyAccount ?
+                <MyAccount accountDetails={this.state.settingsObj.userDetails} />
                 :
-                <FooterSection>
-                  <FooterSection.LeftSection>
-                  </FooterSection.LeftSection>
-                  <FooterSection.RightSection>
-                    {this.state.featuredImage != null && (
-                      this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
-                    ) ?
-                      <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
-                        {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
-                      :
-                      <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick() }}>Continue </FooterSection.DisabledButton>
-                    }
+                <LoginContainer.ComponentWrapper>
+                  <LoginContainer.ComponentWrapperScroll
+                    autoHide
+                    renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                  >
+                    <LoginContainer.Questionwraps>
 
-                  </FooterSection.RightSection>
-                </FooterSection>
-              }
 
-            </LoginContainer.ButtonControllerWrapper>
+                      <LoginContainer.Ask>
+                        {!this.state.settingsObj.isCelebrity && isSettings ?
+                          <LoginTypeSelector isSignUp={false} handleChange={this.changeUserStatus} />
+                          :
+                          <React.Fragment>
+                            <LoginContainer.InputwrapperDiv>
+                              <LoginContainer.InputWrapper>
+                                <LoginContainer.Label>Your bio</LoginContainer.Label>
+                                <LoginContainer.WrapsInput>
+
+                                  <LoginContainer.InputArea placeholder="Have fun with it... no need to be serious" value={this.state.bio} onChange={event => { this.handleFieldChange('bio', event.target.value) }} />
+
+                                  <LoginContainer.ErrorMsg isError={this.state.errors.bio}>
+                                    {
+                                      this.state.errors.bio ? 'Please enter a valid event title' :
+                                        null
+                                    }
+                                  </LoginContainer.ErrorMsg>
+                                </LoginContainer.WrapsInput>
+                              </LoginContainer.InputWrapper>
+                            </LoginContainer.InputwrapperDiv>
+
+
+                            <LoginContainer.InputWrapper>
+                              <LoginContainer.Label>Your industry</LoginContainer.Label>
+                              <LoginContainer.WrapsInput>
+
+
+                                <MultiSelect
+                                  otherOptions={{
+                                    clearable: false,
+                                    arrowRenderer: null,
+                                    valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                                  }}
+                                  industry={this.state.industry}
+                                  value={this.state.profession}
+                                  profession={this.state.profession.join(',')}
+                                  handleFieldChange={this.handleFieldChange.bind(this)}
+                                />
+                                <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
+                                  {
+                                    this.state.errors.profession ? 'Please choose your industry' :
+                                      'You can choose a maximum of 3 industries'
+                                  }
+                                </LoginContainer.ErrorMsg>
+                              </LoginContainer.WrapsInput>
+                            </LoginContainer.InputWrapper>
+
+
+                            <LoginContainer.InputWrapper>
+                              <LoginContainer.Label>Search tags</LoginContainer.Label>
+                              <LoginContainer.WrapsInput>
+
+                                <SelectTags
+                                  otherOptions={{
+                                    clearable: false,
+                                    arrowRenderer: null,
+                                    valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                                  }}
+                                  searchTags={this.state.searchTags}
+                                  value={this.state.searchTags}
+                                  handleFieldChange={this.handleFieldChange.bind(this)}
+                                />
+                                <LoginContainer.ErrorMsg isError={false}>
+                                  Add hashtags to help Fans find you quicker
+                                    </LoginContainer.ErrorMsg>
+                              </LoginContainer.WrapsInput>
+                            </LoginContainer.InputWrapper>
+
+
+                            <LoginContainer.InputWrapper>
+                              <LoginContainer.Label>Your charity</LoginContainer.Label>
+                              <LoginContainer.WrapsInput>
+
+                                <LoginContainer.Input placeholder="Optional" value={this.state.charity} onChange={event => { this.handleFieldChange('charity', event.target.value) }} />
+
+                              </LoginContainer.WrapsInput>
+                            </LoginContainer.InputWrapper>
+
+
+                            <LoginContainer.InputWrapper>
+                              <LoginContainer.Label>Booking price minimum</LoginContainer.Label>
+                              <LoginContainer.WrapsInput>
+
+                                <LoginContainer.Input type="number" placeholder="$0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                  onChange={event => { this.handleFieldChange('bookingPrice', event.target.value) }} on
+                                  value={this.state.bookingPrice} />
+                                <LoginContainer.ErrorMsg isError={this.state.errors.bookingPrice}>
+                                  {
+                                    this.state.errors.bookingPrice ? 'Please enter your booking price' :
+                                      'Our pricing engines will automatically maximize your earnings based on demand.'
+                                  }
+                                </LoginContainer.ErrorMsg>
+                              </LoginContainer.WrapsInput>
+                            </LoginContainer.InputWrapper>
+
+
+                            <LoginContainer.InputWrapper>
+                              <LoginContainer.Label>Booking limit</LoginContainer.Label>
+                              <LoginContainer.WrapsInput>
+
+                                <LoginContainer.Input type="number" placeholder="0" onKeyDown={(event) => { return this.isNumberKey(event) }}
+                                  value={this.state.bookingLimit}
+                                  onChange={event => { this.handleFieldChange('bookingLimit', event.target.value) }} />
+                                <LoginContainer.ErrorMsg isError={this.state.errors.bookingLimit}>
+                                  {
+                                    this.state.errors.bookingLimit ? 'Please enter your booking limit' :
+                                      'What\'s the maximum number of open bookings you want to offer at any given time?'
+                                  }
+                                </LoginContainer.ErrorMsg>
+                              </LoginContainer.WrapsInput>
+                            </LoginContainer.InputWrapper>
+                          </React.Fragment>
+                        }
+                      </LoginContainer.Ask>
+                    </LoginContainer.Questionwraps>
+                  </LoginContainer.ComponentWrapperScroll>
+                </LoginContainer.ComponentWrapper>
+            }
+
+            {!this.state.settingsObj.isCelebrity && !isMyAccount ?
+              null
+              :
+              <LoginContainer.ButtonControllerWrapper>
+                {isSettings ?
+                  <SettingsFooter />
+                  :
+                  <FooterSection>
+                    <FooterSection.LeftSection>
+                    </FooterSection.LeftSection>
+                    <FooterSection.RightSection>
+                      {this.state.featuredImage != null && (
+                        this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
+                      ) ?
+                        <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
+                          {this.state.saving ? "Saving..." : "Continue"} </FooterSection.Button>
+                        :
+                        <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick() }}>Continue </FooterSection.DisabledButton>
+                      }
+
+                    </FooterSection.RightSection>
+                  </FooterSection>
+                }
+
+              </LoginContainer.ButtonControllerWrapper>
+            }
+
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
             {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
-            {isSettings && this.state.settingsObj.selectedAccount === 'myAccount' ?
+            {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
               <ImageStack
                 featureImage="assets/images/Stadium_800x376.jpg"
                 imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}

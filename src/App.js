@@ -29,6 +29,7 @@ import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
+import { fetchUserDetails } from './store/shared/actions/getUserDetails';
 import Settings from './pages/accountSettings/accountSettings.container';
 
 class App extends React.Component {
@@ -48,6 +49,7 @@ class App extends React.Component {
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
     if (!this.props.professionsList.professions.length) {
       this.setState({ showLoading: true });
@@ -178,6 +180,7 @@ const mapState = state => ({
 const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));
