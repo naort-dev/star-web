@@ -380,10 +380,8 @@ OrderStyled.PopupWrapper = styled.div`
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   background-color: #fff;
-  width: 50%;
-  border-radius: 12px;
+  width: 100%;
 `;
 
 OrderStyled.PopupHeader = styled.span`
