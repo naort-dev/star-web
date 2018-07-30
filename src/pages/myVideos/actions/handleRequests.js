@@ -48,3 +48,30 @@ export const changeRequestStatus = (requestId, requestStatus, comment) => (dispa
     dispatch(requestFetchFailed(exception));
   });
 };
+
+
+export const responseVideo = (requestId, fileName) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
+  const { status, offset } = getState().myVideosList;
+  dispatch(requestFetchStart());
+  return fetch.post(Api.starsonaVideo, {
+    video: fileName,
+    stragramz_request: requestId,
+    duration: '00:00',
+  }, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(requestFetchEnd());
+      dispatch(fetchMyVideosList(offset, true, status));
+    } else {
+      dispatch(requestFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(requestFetchEnd());
+    dispatch(requestFetchFailed(exception));
+  });
+};
+

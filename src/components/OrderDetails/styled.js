@@ -173,6 +173,7 @@ OrderStyled.leftContent = styled.div`
     width: 40%;
     background-color: #fff;
     padding: 27px 42px;
+    float: left;
   }
   @media(min-width: 1920px) {
     padding-top: 48px;
@@ -194,7 +195,7 @@ OrderStyled.rightContent = styled.div`
     width: 60%;
     float: right;
     height: 100%;
-    display: flex;
+    display: ${props => (props.notStar ? 'none' : 'flex')};
     align-items: center;
     justify-content: center;
     position: relative;
@@ -412,6 +413,24 @@ OrderStyled.ConfirmButton = styled.button`
 OrderStyled.TextArea = styled.textarea`
   margin: 10px 0;
   height: 100px;
+`;
+
+OrderStyled.VideoRecorder = styled.div`
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: 100%;
+  }
+`;
+
+OrderStyled.VideoContainer = styled.div`
+  display: none;
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 `;
 
 export default OrderStyled;

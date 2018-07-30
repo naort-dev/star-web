@@ -7,6 +7,7 @@ import ScrollList from '../../components/ScrollList';
 import FilterSection from '../../components/filterSection';
 import OrderDetails from '../../components/OrderDetails';
 import Tabs from '../../components/Tabs';
+import ActionLoader from '../../components/ActionLoader';
 import MyVideosStyled from './styled';
 import { requestStatusList } from '../../constants/requestStatusList';
 
@@ -51,6 +52,7 @@ export default class MyVideos extends React.Component {
     this.setState({ orderDetails: data });
   }
   hideRequest = () => {
+    this.props.onClearStreams();
     this.setState({ orderDetails: {} });
   }
   findRequestVideo = (list, videoStatus) => {
@@ -80,6 +82,8 @@ export default class MyVideos extends React.Component {
       if (Object.keys(requestStatusList).indexOf(requestStatusId+"") > -1) {
         if (this.state.orderDetails.request_type === 3) {
           requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 4);
+        } else {
+          requestVideo = this.state.orderDetails.request_video[0];
         }
       }
       requestStatus = requestStatusList[requestStatusId];
@@ -102,6 +106,11 @@ export default class MyVideos extends React.Component {
     }
     return (
       <div>
+        {
+          this.props.orderDetailsLoading ?
+            <ActionLoader />
+          : null
+        }
         <div style={{ display: Object.keys(this.state.orderDetails).length ? 'block' : 'none' }}>
           <OrderDetails
             {...this.props}

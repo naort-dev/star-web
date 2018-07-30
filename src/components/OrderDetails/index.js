@@ -1,21 +1,14 @@
 import React from 'react';
-import {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailShareButton,
-  WhatsappIcon,
-  FacebookIcon,
-  TwitterIcon,
-  GooglePlusIcon,
-  EmailIcon,
-} from 'react-share';
+import axios from 'axios';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
-import DeclinePopup from './declinePopup';
+import DeclinePopup from './DeclinePopup';
 import Popup from '../Popup';
+import ShareView from './ShareView';
+import VideoRecorder from '../WebRTCVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
+import { locations } from '../../constants/locations';
+import getAWSCredentials from '../../utils/AWSUpload';
 import renderStarProfessions from '../../utils/formatProfessions';
 import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
@@ -92,6 +85,20 @@ export default class OrderDetails extends React.Component {
     }
   }
 
+  uploadVideoToAWS = (video) => {
+    this.props.requestFetchStart();
+    getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, video)
+      .then((response) => {
+        if (response && response.filename) {
+          axios.post(response.url, response.formData).then(() => {
+            this.props.responseVideo(this.props.orderDetails.id, response.filename);
+            this.closePopup();
+            this.props.hideRequest();
+          });
+        }
+      });
+  }
+ 
   toggleActions = () => {
     this.setState({ showActions: !this.state.showActions });
   }
@@ -113,6 +120,20 @@ export default class OrderDetails extends React.Component {
     }
   }
 
+  handleBooking = () => {
+    if (this.props.starMode) {
+      let video;
+      if (this.props.videoUploader.savedFile != null) {
+        video = this.props.videoUploader.savedFile;
+      } else {
+        video = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
+      }
+      if (video) {
+        this.uploadVideoToAWS(video);
+      }
+    }
+  }
+
   closePopup = () => {
     this.setState({
       showPopup: false,
@@ -124,6 +145,70 @@ export default class OrderDetails extends React.Component {
     this.props.changeRequestStatus(requestId, requestStatus, reason);
     this.closePopup();
     this.props.hideRequest();
+  }
+
+
+  renderVideo = (props, title, shareUrl) => {
+    if (props.requestVideo) {
+      return (
+        <React.Fragment>
+          <OrderStyled.VideoContentWrapper width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
+            <VideoPlayer
+              videoWidth={'100%'}
+              videoHeight={'100%'}
+              cover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
+              src={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
+            />
+          </OrderStyled.VideoContentWrapper>
+          {/* Show Share only for completed videos */}
+          {
+            props.requestStatusId === 6 && <ShareView title={title} shareUrl={shareUrl} />
+          }
+          <OrderStyled.VideoDetails>
+            <OrderStyled.VideoTitle>
+              {props.orderDetails.booking_title}
+            </OrderStyled.VideoTitle>
+            <OrderStyled.VideoRequester>
+              <OrderStyled.VideoRequestImage
+                imageUrl={props.orderDetails.fan_photo && props.orderDetails.fan_photo.thumbnail_url}
+              />
+              <OrderStyled.VideoRequestName>
+                {props.orderDetails.fan}
+              </OrderStyled.VideoRequestName>
+            </OrderStyled.VideoRequester>
+            {
+              props.requestStatusId === 6 ?
+                <OrderStyled.DownloadVideo
+                  onClick={() => this.downloadVideo(props.requestVideo.video_id)}
+                >
+                  Download
+                </OrderStyled.DownloadVideo>
+                : null
+            }
+          </OrderStyled.VideoDetails>
+        </React.Fragment>
+      );
+    }
+    return (
+      <OrderStyled.NoVideoText>
+        {
+          props.requestStatusId !== 5 ?
+            'The request has been sent. Stay tuned!'
+            : 'This request has been cancelled.'
+        }
+      </OrderStyled.NoVideoText>
+    );
+  }
+
+  renderVideoRecorder = (props) => {
+    if (props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
+      return (
+        <OrderStyled.VideoRecorder>
+          <VideoRecorder {...this.props} />
+        </OrderStyled.VideoRecorder>
+      );
+    }
+    return null;
   }
 
   renderPopup = () => {
@@ -186,133 +271,36 @@ export default class OrderDetails extends React.Component {
           />
         </OrderStyled.DesktopHeader>
         <OrderStyled.ContentWrapper>
-          <OrderStyled.rightContent>
-            <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
-            {
-              props.requestVideo ?
-                <React.Fragment>
-                  <OrderStyled.VideoContentWrapper width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
-                    <VideoPlayer
-                      videoWidth={'100%'}
-                      videoHeight={'100%'}
-                      cover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
-                      src={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
-                    />
-                  </OrderStyled.VideoContentWrapper>
-                  <OrderStyled.SocialMediaWrapper>
-
-                    <OrderStyled.Somenetwork>
-                      <FacebookShareButton
-                        url={shareUrl}
-                        quote={title}
-                        className="Demo__some-network__share-button"
-                      >
-                        <FacebookIcon
-                          size={32}
-                          round
-                        />
-                      </FacebookShareButton>
-                    </OrderStyled.Somenetwork>
-                    <OrderStyled.Somenetwork>
-                      <GooglePlusShareButton
-                        url={shareUrl}
-                        className="Demo__some-network__share-button"
-                      >
-                        <GooglePlusIcon
-                          size={32}
-                          round />
-                      </GooglePlusShareButton>
-                    </OrderStyled.Somenetwork>
-                    <OrderStyled.Somenetwork>
-                      <TwitterShareButton
-                        url={shareUrl}
-                        title={title}
-                        className="Demo__some-network__share-button"
-                      >
-                        <TwitterIcon
-                          size={32}
-                          round
-                        />
-                      </TwitterShareButton>
-                    </OrderStyled.Somenetwork>
-                    <OrderStyled.Somenetwork>
-                      <WhatsappShareButton
-                        url={shareUrl}
-                        title={title}
-                        separator=":: "
-                        className="Demo__some-network__share-button"
-                      >
-                        <WhatsappIcon size={32} round />
-                      </WhatsappShareButton>
-                    </OrderStyled.Somenetwork>
-                    <OrderStyled.Somenetwork>
-                      <EmailShareButton
-                        url={shareUrl}
-                        subject={title}
-                        body={shareUrl}
-                        className="Demo__some-network__share-button"
-                      >
-                        <EmailIcon
-                          size={32}
-                          round
-                        />
-                      </EmailShareButton>
-                    </OrderStyled.Somenetwork>
-
-                  </OrderStyled.SocialMediaWrapper>
-                  <OrderStyled.VideoDetails>
-                    <OrderStyled.VideoTitle>
-                      {props.orderDetails.booking_title}
-                    </OrderStyled.VideoTitle>
-                    <OrderStyled.VideoRequester>
-                      <OrderStyled.VideoRequestImage
-                        imageUrl={props.orderDetails.fan_photo && props.orderDetails.fan_photo.thumbnail_url}
-                      />
-                      <OrderStyled.VideoRequestName>
-                        {props.orderDetails.fan}
-                      </OrderStyled.VideoRequestName>
-                    </OrderStyled.VideoRequester>
-                    {
-                      props.requestStatusId === 6 ?
-                        <OrderStyled.DownloadVideo
-                          onClick={() => this.downloadVideo(props.requestVideo.video_id)}
-                        >
-                          Download
-                        </OrderStyled.DownloadVideo>
-                        : null
-                    }
-                  </OrderStyled.VideoDetails>
-
-                </React.Fragment>
-                :
-                <OrderStyled.NoVideoText>
-                  {
-                    props.requestStatusId !== 5 ?
-                      'The request has been sent. Stay tuned!'
-                      : 'This request has been cancelled.'
-                  }
-                </OrderStyled.NoVideoText>
-            }
-          </OrderStyled.rightContent>
           <OrderStyled.leftContent>
             <OrderStyled.scrollWrapper
               autoHide
               renderView={props => <div {...props} className="order-details-scroll-wrapper" />}
             >
-              <OrderStyled.ProfileImageWrapper>
-                <OrderStyled.ProfileImage
-                  imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
-                />
-                <OrderStyled.MoreActionsWrapper>
-                  <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />
-                  {
-                    this.state.showActions && !this.props.starMode &&
-                      this.renderActionList()
-                  }
-                </OrderStyled.MoreActionsWrapper>
-                <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                <OrderStyled.StarProfessions>{renderStarProfessions(props.orderDetails.professions)}</OrderStyled.StarProfessions>
-              </OrderStyled.ProfileImageWrapper>
+              {
+                props.starMode ?
+                  this.renderVideo(props, title, shareUrl)
+                :
+                  <OrderStyled.rightContent notStar>
+                    {this.renderVideo(props, title, shareUrl)}
+                  </OrderStyled.rightContent>
+              }
+              {
+                !props.starMode &&
+                  <OrderStyled.ProfileImageWrapper>
+                    <OrderStyled.ProfileImage
+                      imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
+                    />
+                    <OrderStyled.MoreActionsWrapper>
+                      <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />
+                      {
+                        this.state.showActions && !this.props.starMode &&
+                          this.renderActionList()
+                      }
+                    </OrderStyled.MoreActionsWrapper>
+                    <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+                    <OrderStyled.StarProfessions>{renderStarProfessions(props.orderDetails.professions)}</OrderStyled.StarProfessions>
+                  </OrderStyled.ProfileImageWrapper>
+              }
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
               <OrderStyled.DetailsWrapper>
                 <OrderStyled.DetailsItem>
@@ -346,9 +334,9 @@ export default class OrderDetails extends React.Component {
                 </OrderStyled.DetailsItem>
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
-            {/* Show only if request is not cancelled */}
+            {/* Show only if request is not cancelled or completed */}
             {
-              props.requestStatusId !== 5 &&
+              props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
                 <OrderStyled.ControlWrapper>
                   <PaymentFooterController
                     buttonMode
@@ -360,6 +348,14 @@ export default class OrderDetails extends React.Component {
                 </OrderStyled.ControlWrapper>
             }
           </OrderStyled.leftContent>
+          <OrderStyled.rightContent>
+            <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
+            {
+              props.starMode ?
+                this.renderVideoRecorder(props)
+              : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
+            }
+          </OrderStyled.rightContent>
         </OrderStyled.ContentWrapper>
       </OrderStyled>
     );
