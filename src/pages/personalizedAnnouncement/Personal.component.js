@@ -129,8 +129,8 @@ export default class Personal extends React.Component {
       return { from_audio_file, to_audio_file };
     }
     else {
-      from_audio_file = this.props.audioRecorder.files.from ? this.props.audioRecorder.files.from : null
-      to_audio_file = this.props.audioRecorder.files.for ? this.props.audioRecorder.files.for : null
+      from_audio_file = this.props.audioRecorder.file.from ? this.props.audioRecorder.file.from : null
+      to_audio_file = this.props.audioRecorder.file.for ? this.props.audioRecorder.file.for : null
       return { from_audio_file, to_audio_file }
 
     }
