@@ -381,6 +381,8 @@ OrderStyled.PopupWrapper = styled.div`
   flex-direction: column;
   padding: 20px;
   background-color: #fff;
+  width: 50%;
+  border-radius: 12px;
 `;
 
 OrderStyled.PopupHeader = styled.span`
@@ -404,12 +406,13 @@ OrderStyled.ReasonsItem = styled.li`
   margin: 10px 0;
   display: table;
 `;
-
+OrderStyled.ConfirmButtonWrapper = styled.div`
+  text-align: center;
+`;
 OrderStyled.ConfirmButton = styled.button`
   background-color: #fff;
   color: #FF6C58;
   padding: 6px 18px;
-  text-align: center;
   -webkit-text-decoration: none;
   text-decoration: none;
   display: inline-block;
