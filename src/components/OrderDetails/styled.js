@@ -418,9 +418,11 @@ OrderStyled.TextArea = styled.textarea`
 `;
 
 OrderStyled.VideoRecorder = styled.div`
+  margin-bottom: 21px;
   @media(min-width: 1025px) {
     width: 100%;
     height: 100%;
+    margin-bottom: 0;
   }
 `;
 
