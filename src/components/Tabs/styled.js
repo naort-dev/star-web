@@ -152,6 +152,7 @@ TabStyled.CheckBoxWrapper = styled.div`
   padding: 0px 0px;
 `;
 TabStyled.Label = styled.div`
+
 `;
 TabStyled.CheckBox = styled.input`
   
