@@ -27,7 +27,6 @@ export default class Confirm extends React.Component {
   componentWillMount() {
     const StoreEmpty = this.checkDataInStore(this.props.bookingData);
     let bookingData;
-    console.log(this.props.bookingData);
     if (StoreEmpty) {
       if (localStorage && localStorage.getItem('bookingData')) {
         const localStorageValue = localStorage.getItem('bookingData');
