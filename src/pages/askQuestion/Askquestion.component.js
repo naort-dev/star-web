@@ -4,10 +4,11 @@ import axios from 'axios';
 import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations';
+import { recorder } from '../../constants/videoRecorder';
 import Loader from '../../components/Loader';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
-import VideoRecorder from '../../components/QaVideoRecorder';
+import VideoRecorder from '../../components/WebRTCVideoRecorder';
 
 export default class Askquestion extends React.Component {
   constructor(props) {
@@ -18,6 +19,9 @@ export default class Askquestion extends React.Component {
       loader: false,
     };
   }
+  componentWillUnmount() {
+    this.props.onClearStreams();
+  }
   goBack = () => {
     this.props.history.goBack();
   }
@@ -26,6 +30,8 @@ export default class Askquestion extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
+    this.props.onClearStreams();
+    this.props.deleteVideo();
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
 
@@ -58,22 +64,6 @@ export default class Askquestion extends React.Component {
       this.props.setRedirectUrls(this.props.location.pathname);
       this.setState({ loginRedirect: true });
     }
-    // const askVideo = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
-    // getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, askVideo)
-    // .then(response => console.log("response is", response))
-    // .then((response) => {
-    //   axios.post(response.url, response.formData)
-    //     .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-    //       ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
-    //     },
-    //       {
-    //         "headers": {
-    //           'Authorization': `token ${this.props.session.auth_token.authentication_token}`
-    //         }
-    //       }
-    //     )
-    //     )
-    // })
   }
   setQuestion = (question) => {
     this.setState({ question });
@@ -147,7 +137,7 @@ export default class Askquestion extends React.Component {
             </HeaderSection>
             <Request.RightSection>
               <Request.recorderWrapper>
-                <VideoRecorder {...this.props} />
+                <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
               </Request.recorderWrapper>
             </Request.RightSection>
             <Request.LeftSection>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { SignupContainer, HeaderSection, FooterSection } from './styled';
-import VideoRecorder from '../../components/WebRTCVideoRecorder'
+import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
 import { Link, Redirect } from 'react-router-dom';
+import { recorder } from '../../constants/videoRecorder';
 import { fetch } from '../../services/fetch'
 import Loader from '../../components/Loader'
 
@@ -14,7 +15,9 @@ export default class StarsignUpVideo extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.state = { upload: false }
   }
- 
+  componentWillUnmount() {
+    this.props.onClearStreams();
+  }
 
   onSubmit() {
     this.setState({ upload: true })
@@ -73,7 +76,7 @@ export default class StarsignUpVideo extends React.Component {
         </HeaderSection>
         <SignupContainer.RightSection>
           <SignupContainer.recorderWrapper>
-            <VideoRecorder {...this.props} />
+            <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
           </SignupContainer.recorderWrapper>
         </SignupContainer.RightSection>
         <SignupContainer.LeftSection>
@@ -83,7 +86,7 @@ export default class StarsignUpVideo extends React.Component {
               <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
             </SignupContainer.Container>
             <SignupContainer.Container>
-              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
+              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that I am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
             </SignupContainer.Container>
           </SignupContainer.SocialMediaSignup>
           <SignupContainer.FooterLayout>
