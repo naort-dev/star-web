@@ -2,9 +2,8 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Templates } from './styled';
-import Popup from '../Popup'
-import AudioRecorder from '../AudioRecorder'
-import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
+import Popup from '../Popup';
+import { getMobileOperatingSystem, checkDevice } from '../../utils/checkOS'
 
 
 class RequestTemplates extends React.Component {
@@ -27,7 +26,11 @@ class RequestTemplates extends React.Component {
   }
 
   audioRecorder(displayText) {
-    this.props.showRecorder(displayText);
+    return checkDevice()
+      .then(
+        () => this.props.showRecorder(displayText),
+        () => this.props.showFallback(displayText),
+      );
   }
 
   fileHandler(target) {
@@ -41,14 +44,15 @@ class RequestTemplates extends React.Component {
     }
   }
 
-
   MobilePopup = (target) => {
+    const url = this.props.audioRecorder.file[target] ? URL.createObjectURL(this.props.audioRecorder.file[target]) : null
     return (
       <Popup
-        closePopUp={() => this.props.closeRecorder()}>
+        closePopUp={() => this.props.closeRecorder() } 
+      >
         <Templates.Popup>
           <Templates.PopupContainer>
-            <audio id="recorded-audio" controls />
+            <audio id="recorded-audio" src={url} controls />
             <Templates.UploadWrapper>
               <Templates.NoVideoButton >
                 Upload Pronounication
@@ -96,7 +100,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
-                      {this.props.audioRecorder.recorded.for ? "Listen to Rec" : "Pronounciation"}
+                      {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                     </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
@@ -120,8 +124,8 @@ class RequestTemplates extends React.Component {
                       onChange={event => this.props.handleChange(event.target.value, 'userName')}
                     />
                     <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
-                    {this.props.audioRecorder.recorded.from ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                     {this.props.whoIsfrom ?
                       <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                       :
@@ -221,8 +225,8 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
-                    {this.props.audioRecorder.recorded.for ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -251,8 +255,8 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
-                    {this.props.audioRecorder.recorded.from ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -347,8 +351,8 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
-                    {this.props.audioRecorder.recorded.for ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -377,8 +381,8 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
-                    {this.props.audioRecorder.recorded.from ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -483,8 +487,8 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
-                    {this.props.audioRecorder.recorded.for ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -513,8 +517,8 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   <Templates.WrapsInput>
                     <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
-                    {this.props.audioRecorder.recorded.from ? "Listen to Rec" : "Pronounciation"}
-                  </Templates.RecordButton>
+                      {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                    </Templates.RecordButton>
                   </Templates.WrapsInput>
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>

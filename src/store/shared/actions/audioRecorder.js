@@ -5,10 +5,19 @@ export const CLEAR_ALL = 'clearAudio';
 export const SHOW_RECORDER = 'showAudioRecorder';
 export const CLOSE_RECORDER = 'closeRecorder';
 export const SAVE_AUDIO_FILE = 'saveFile';
+export const SHOW_FALLBACK = 'showFallback';
+
 
 export function showRecorder(displayText) {
   return {
     type: SHOW_RECORDER,
+    payload: displayText,
+  };
+}
+
+export function showFallback(displayText) {
+  return {
+    type: SHOW_FALLBACK,
     payload: displayText,
   };
 }

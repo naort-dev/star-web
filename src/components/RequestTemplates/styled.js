@@ -56,11 +56,13 @@ Templates.WrapsInput = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+    flex-direction: column;
   }
   @media(min-width:1025px){
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
+   
   }
 
 `;
@@ -116,6 +118,9 @@ Templates.ErrorMsg = styled.div`
   margin-top:4px;
   font-family: 'Ubuntu-light';
   text-align:left;
+  @media(min-width:768px){
+    width: 100%;
+  }
   
 `;
 Templates.Select = styled.select`
@@ -174,6 +179,7 @@ padding-left: 35px;
 font-family: 'Ubuntu-Bold';
 color: #FF6C58;
 border-radius: 5px;
+min-width: 150px;
 @media(min-width:768px){
   margin-top:0;
   height:40px;

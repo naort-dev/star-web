@@ -116,21 +116,30 @@ export default class Personal extends React.Component {
   }
 
   getAudio() {
+    let from_audio_file;
+    let to_audio_file;
     if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
-      const from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
-      const to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
-      return { from_audio_file, to_audio_file }
+      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
+        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
+      }
+
+      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
+        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
+      }
+      return { from_audio_file, to_audio_file };
     }
     else {
-      const from_audio_file = this.props.audioRecorder.files.from ? this.props.audioRecorder.files.from : null
-      const to_audio_file = this.props.audioRecorder.files.for ? this.props.audioRecorder.files.for : null
+      from_audio_file = this.props.audioRecorder.files.from ? this.props.audioRecorder.files.from : null
+      to_audio_file = this.props.audioRecorder.files.for ? this.props.audioRecorder.files.for : null
       return { from_audio_file, to_audio_file }
 
     }
   }
+
+
+
   createBookingObject = (obj) => {
-    const {from_audio_file, to_audio_file } = this.getAudio();
-    console.log("aaaaa", from_audio_file, to_audio_file  )
+    const { from_audio_file, to_audio_file } = this.getAudio();
     const relationshipValue = obj.relationship;
     let relationsShipTitle = '';
     let relationshipName = relationshipValue.find((find) => {
@@ -235,7 +244,6 @@ export default class Personal extends React.Component {
 
 
   render() {
-    // console.log("props", <AudioRecorder /> )
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -389,7 +397,7 @@ export default class Personal extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              {this.props.audioRecorder.showRecorder ?
+              {this.props.audioRecorder.showRecorder && this.props.location.search === '?step=1' ?
                 <AudioRecorder {...this.props} />
                 :
                 <Request.ImageStackWrapper>

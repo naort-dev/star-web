@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Personal from './Personal.component';
 import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { showRecorder, startAudioRecording, saveAudioRecording, stopAudioRecording, saveAudioFile, closeRecorder, clearAll } from '../../store/shared/actions/audioRecorder';
+import { showRecorder, startAudioRecording, saveAudioRecording, stopAudioRecording, showFallback, saveAudioFile, closeRecorder, clearAll } from '../../store/shared/actions/audioRecorder';
 import { postOtherRelation } from '../../store/shared/actions/otherRelation';
 
 const mapStateToProps = state => ({
@@ -23,6 +23,7 @@ const mapDispatchToProps = dispatch => ({
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   postOtherRelation: other => dispatch(postOtherRelation(other)),
   showRecorder: displayText => dispatch(showRecorder(displayText)),
+  showFallback: displayText => dispatch(showFallback(displayText)),
   startAudioRecording: () => dispatch(startAudioRecording()),
   stopAudioRecording: () => dispatch(stopAudioRecording()),
   saveAudioFile: audio => dispatch(saveAudioFile(audio)),

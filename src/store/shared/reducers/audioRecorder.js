@@ -1,12 +1,12 @@
-import { START_AUDIO_RECORDING, STOP_AUDIO_RECORDING, SAVE_RECORDINGS, SAVE_AUDIO_FILE, CLOSE_RECORDER, CLEAR_ALL, SHOW_RECORDER } from '../actions/audioRecorder';
+import { START_AUDIO_RECORDING, STOP_AUDIO_RECORDING, SAVE_RECORDINGS, SHOW_FALLBACK, SAVE_AUDIO_FILE, CLOSE_RECORDER, CLEAR_ALL, SHOW_RECORDER } from '../actions/audioRecorder';
 
 const initalState = {
- 
   start: null,
   stop: null,
   re_record: null,
   play: null,
   showRecorder: null,
+  showFallback: null,
   label: null,
   target: null,
   file: { from: null, for: null },
@@ -19,6 +19,13 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         showRecorder: true,
+        target: action.payload,
+        label: action.payload === "for" ? "who is the Starsona video for?" : "who is the Starsona video from?",
+      };
+      case SHOW_FALLBACK:
+      return {
+        ...state,
+        showFallback: true,
         target: action.payload,
         label: action.payload === "for" ? "who is the Starsona video for?" : "who is the Starsona video from?",
       };

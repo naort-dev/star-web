@@ -13,7 +13,6 @@ export default class AudioRecorder extends React.Component {
     };
   }
 
-
   onStop = (recordedBlob) => {
     this.props.saveAudioRecording(this.props.audioRecorder.target, { recordedBlob, recordedUrl: recordedBlob.blobURL });
   }
@@ -26,14 +25,40 @@ export default class AudioRecorder extends React.Component {
     this.props.startAudioRecording();
   }
 
+  audioUploader = (target) => {
+    const url = this.props.audioRecorder.file[target] ? URL.createObjectURL(this.props.audioRecorder.file[target]) : null
+    return (
+      <React.Fragment>
+        <audio id="uploaded-audio" controls />
+        <AudioRecorderDiv.UploadWrapper>
+          <AudioRecorderDiv.TextButton >
+            Upload Pronounication
+        </AudioRecorderDiv.TextButton>
+          <AudioRecorderDiv.UploadInput type="file" id={target} onChange={() => this.fileHandler(target)} accept="audio/*;capture=microphone" />
+        </AudioRecorderDiv.UploadWrapper>
+      </React.Fragment>
+    );
+  };
+
+  fileHandler(target) {
+    const file = document.getElementById(target).files[0];
+    const reader = new FileReader();
+    const fileURL = URL.createObjectURL(file);
+    document.getElementById('uploaded-audio').src = fileURL;
+    this.props.saveAudioFile({ [target]: file });
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
   render() {
-    console.log("props", this.props.audioRecorder);
     const target = this.props.audioRecorder.target;
     const playbackURL = this.props.audioRecorder.recorded[target] ? this.props.audioRecorder.recorded[target].recordedUrl : null
-    const func = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
+    const callbackFunction = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
+
     return (
       <AudioRecorderDiv>
-        {checkMediaRecorderSupport() ?
+        {checkMediaRecorderSupport() && this.props.audioRecorder.showRecorder ?
           <React.Fragment>
             <AudioRecorderDiv.Label>{this.props.audioRecorder.label}</AudioRecorderDiv.Label>
             <ReactMic
@@ -45,13 +70,12 @@ export default class AudioRecorder extends React.Component {
               save={this.props.audioRecorder.stop}
             />
             <audio src={playbackURL} controls />
-            <AudioRecorderDiv.Button onClick={func} type="button"></AudioRecorderDiv.Button>
+            {this.props.audioRecorder.start ?
+              <AudioRecorderDiv.CloseButton onClick={callbackFunction} type="button"></AudioRecorderDiv.CloseButton>
+              : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}
           </React.Fragment>
           :
-          <React.Fragment>
-            <audio src={null} controls />
-            <AudioRecorderDiv.TextButton onClick={() => { }} type="button">Upload Pronounciation</AudioRecorderDiv.TextButton>
-          </React.Fragment>
+          this.audioUploader(target)
         }
       </AudioRecorderDiv>
     );

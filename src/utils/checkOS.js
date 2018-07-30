@@ -20,3 +20,8 @@ export const checkMediaRecorderSupport = () => {
   }
   return false;
 };
+
+export const checkDevice = () => {
+  return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+    .then(() => true, () => false);
+};
