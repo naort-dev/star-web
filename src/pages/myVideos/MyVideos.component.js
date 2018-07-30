@@ -30,7 +30,7 @@ export default class MyVideos extends React.Component {
     };
   }
   componentWillMount() {
-    this.props.fetchMyVideosList(0, true);
+    this.props.fetchMyVideosList(0, true, this.state.requestStatus);
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });

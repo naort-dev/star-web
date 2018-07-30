@@ -65,7 +65,9 @@ export default class DeclinePopup extends React.Component {
               onChange={ event => this.setState({ declineReason: event.target.value })}
             />
         }
-        <OrderStyled.ConfirmButton onClick={() => this.sendReason()}>Decline</OrderStyled.ConfirmButton>
+        <OrderStyled.ConfirmButtonWrapper>
+          <OrderStyled.ConfirmButton onClick={() => this.sendReason()}>Decline</OrderStyled.ConfirmButton>
+        </OrderStyled.ConfirmButtonWrapper>
       </OrderStyled.PopupWrapper>
     );
   }
