@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Request, HeaderSection } from '../../pages/askQuestion/styled';
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations';
+import { recorder } from '../../constants/videoRecorder';
 import Loader from '../../components/Loader';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
@@ -17,6 +18,9 @@ export default class Askquestion extends React.Component {
       question: '',
       loader: false,
     };
+  }
+  componentWillUnmount() {
+    this.props.onClearStreams();
   }
   goBack = () => {
     this.props.history.goBack();
@@ -133,7 +137,7 @@ export default class Askquestion extends React.Component {
             </HeaderSection>
             <Request.RightSection>
               <Request.recorderWrapper>
-                <VideoRecorder {...this.props} duration={305000} />
+                <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
               </Request.recorderWrapper>
             </Request.RightSection>
             <Request.LeftSection>

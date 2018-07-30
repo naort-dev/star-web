@@ -5,6 +5,7 @@ import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
 import { Link, Redirect } from 'react-router-dom';
+import { recorder } from '../../constants/videoRecorder';
 import { fetch } from '../../services/fetch'
 import Loader from '../../components/Loader'
 
@@ -14,7 +15,9 @@ export default class StarsignUpVideo extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.state = { upload: false }
   }
- 
+  componentWillUnmount() {
+    this.props.onClearStreams();
+  }
 
   onSubmit() {
     this.setState({ upload: true })
@@ -73,7 +76,7 @@ export default class StarsignUpVideo extends React.Component {
         </HeaderSection>
         <SignupContainer.RightSection>
           <SignupContainer.recorderWrapper>
-            <VideoRecorder {...this.props} duration={61000} />
+            <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
           </SignupContainer.recorderWrapper>
         </SignupContainer.RightSection>
         <SignupContainer.LeftSection>
