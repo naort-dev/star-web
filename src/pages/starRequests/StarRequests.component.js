@@ -8,6 +8,7 @@ import FilterSection from '../../components/filterSection';
 import OrderDetails from '../../components/OrderDetails';
 import Tabs from '../../components/Tabs';
 import { requestTypes } from '../../constants/requestTypes';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import MyVideosStyled from './styled';
 
 const moment = require('moment');
@@ -55,17 +56,6 @@ export default class StarRequests extends React.Component {
     });
     return requestVideo;
   }
-  renderStarProfessions = (list) => {
-    let string = '';
-    list.forEach((professions, index) => {
-      if (index === list.length - 1) {
-        string += `${professions.title}`;
-      } else {
-        string += `${professions.title}\xa0|\xa0`;
-      }
-    });
-    return string;
-  }
   render() {
     let requestStatus, orderId, requestType, requestVideo, starPhoto, starProfessions, createdDate, occasion, price, isPrivate, from, requestTypeId;
     let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity, eventHost, honoringFor, eventGuestHonor, specificallyFor, occasionType;
@@ -89,7 +79,7 @@ export default class StarRequests extends React.Component {
       requestTypeId = this.state.orderDetails.request_type;
       starPhoto = this.state.orderDetails.avatar_photo && this.state.orderDetails.avatar_photo.thumbnail_url;
       fanPhoto = this.state.orderDetails.fan_photo && this.state.orderDetails.fan_photo.thumbnail_url;
-      starProfessions = this.renderStarProfessions(this.state.orderDetails.professions);
+      starProfessions = starProfessionsFormater(this.state.orderDetails.professions);
       createdDate = moment(this.state.orderDetails.created_date).format('LL');
       occasion = this.state.orderDetails.occasion;
       celebrity = this.state.orderDetails ? this.state.orderDetails.celebrity : '';

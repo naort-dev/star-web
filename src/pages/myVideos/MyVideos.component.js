@@ -62,17 +62,6 @@ export default class MyVideos extends React.Component {
     });
     return requestVideo;
   }
-  renderStarProfessions = (list) => {
-    let string = '';
-    list.forEach((professions, index) => {
-      if (index === list.length - 1) {
-        string += `${professions.title}`;
-      } else {
-        string += `${professions.title}\xa0|\xa0`;
-      }
-    });
-    return string;
-  }
   render() {
     let requestStatus, orderId, requestType, requestVideo, createdDate, price, isPrivate, requestTypeId;
     let occasionDate, relationShip;

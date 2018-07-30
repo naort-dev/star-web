@@ -9,7 +9,7 @@ import VideoRecorder from '../WebRTCVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
-import renderStarProfessions from '../../utils/formatProfessions';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
@@ -300,7 +300,7 @@ export default class OrderDetails extends React.Component {
                       }
                     </OrderStyled.MoreActionsWrapper>
                     <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                    <OrderStyled.StarProfessions>{renderStarProfessions(props.orderDetails.professions)}</OrderStyled.StarProfessions>
+                    <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
                   </OrderStyled.ProfileImageWrapper>
               }
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>

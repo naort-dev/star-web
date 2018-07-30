@@ -1,4 +1,4 @@
-const renderStarProfessions = (list) => {
+export const starProfessionsFormater = (list) => {
   let string = '';
   if (list) {
     list.forEach((professions, index) => {
@@ -11,5 +11,3 @@ const renderStarProfessions = (list) => {
     return string;
   }
 }
-
-export default renderStarProfessions;

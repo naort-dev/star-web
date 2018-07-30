@@ -164,7 +164,6 @@ OrderStyled.VideoRequestName = styled.span`
 `;
 
 OrderStyled.leftContent = styled.div`
-
   @media(min-width: 1025px) {
     position: relative;
     height: calc(100% - 6px);
