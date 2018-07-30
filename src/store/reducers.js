@@ -20,7 +20,6 @@ import videoRecorder from '../store/shared/reducers/videoRecording';
 import videoUploader from '../store/shared/reducers/videoUploader';
 import requestHandler from '../pages/myVideos/reducers/requestHandler';
 import imageViewer from '../store/shared/reducers/imageViewer';
-import imageViewer from '../store/shared/reducers/imageViewer';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
 
 const rootReducer = combineReducers({
