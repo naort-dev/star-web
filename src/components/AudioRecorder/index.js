@@ -29,7 +29,7 @@ export default class AudioRecorder extends React.Component {
     const url = this.props.audioRecorder.file[target] ? URL.createObjectURL(this.props.audioRecorder.file[target]) : null
     return (
       <React.Fragment>
-        <audio id="uploaded-audio" controls />
+        <AudioRecorderDiv.Audio id="uploaded-audio" controls />
         <AudioRecorderDiv.UploadWrapper>
           <AudioRecorderDiv.TextButton >
             Upload Pronounication
@@ -69,7 +69,7 @@ export default class AudioRecorder extends React.Component {
               backgroundColor="#FF6C58"
               save={this.props.audioRecorder.stop}
             />
-            <audio src={playbackURL} controls />
+            <AudioRecorderDiv.Audio  src={playbackURL} controls />
             {this.props.audioRecorder.start ?
               <AudioRecorderDiv.CloseButton onClick={callbackFunction} type="button"></AudioRecorderDiv.CloseButton>
               : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}

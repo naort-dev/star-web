@@ -87,5 +87,9 @@ background-position: center;
 margin-top: 10px;
 `;
 
+AudioRecorderDiv.Audio = styled.audio`
+  width: 50%;
+`;
+
 
 export { AudioRecorderDiv };
