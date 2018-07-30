@@ -164,16 +164,16 @@ OrderStyled.VideoRequestName = styled.span`
 `;
 
 OrderStyled.leftContent = styled.div`
-  padding: 10px 0;
-  @media(min-width: 768px) {
-    padding 20px 0;
-  }
+
   @media(min-width: 1025px) {
-    height: calc(100% - 94px);
+    position: relative;
+    height: calc(100% - 6px);
     width: 40%;
     background-color: #fff;
     padding: 27px 42px;
+    padding-bottom: 90px;
     float: left;
+    margin-top: 6px;
   }
   @media(min-width: 1920px) {
     padding-top: 48px;
@@ -365,7 +365,11 @@ OrderStyled.ControlWrapper = styled.div`
   padding: 10px;
   background: #fff;
   @media(min-width: 1025px) {
-    position: static;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 42px;
     padding: 27px 0;
     border-top: solid #333333 1px;
   }
