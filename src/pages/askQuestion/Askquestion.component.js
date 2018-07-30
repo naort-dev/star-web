@@ -137,7 +137,7 @@ export default class Askquestion extends React.Component {
             </HeaderSection>
             <Request.RightSection>
               <Request.recorderWrapper>
-                <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
+                <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
               </Request.recorderWrapper>
             </Request.RightSection>
             <Request.LeftSection>
