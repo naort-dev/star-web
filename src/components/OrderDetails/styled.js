@@ -164,9 +164,9 @@ OrderStyled.VideoRequestName = styled.span`
 `;
 
 OrderStyled.leftContent = styled.div`
-  padding: 10px 16px;
+  padding: 10px 0;
   @media(min-width: 768px) {
-    padding 20px 16px;
+    padding 20px 0;
   }
   @media(min-width: 1025px) {
     height: calc(100% - 94px);
@@ -241,7 +241,9 @@ OrderStyled.ProfileImageWrapper = styled.div`
   width: 100%;
   text-align: center;
   position: relative;
+  padding: 0 16px;
   @media(min-width: 1025px) {
+    padding: 0 0;
     padding-bottom: 40px;
     border-bottom: 1px solid #333333;
   }
@@ -311,6 +313,10 @@ OrderStyled.StarProfessions = styled.div`
 `;
 OrderStyled.DetailsWrapper = styled.ul`
   margin-top: 15px;
+  padding: 0 16px;
+  @media(min-width: 1025px) {
+    padding: 0 0;
+  }
 `;
 OrderStyled.DetailsItem = styled.li`
   display: table;
