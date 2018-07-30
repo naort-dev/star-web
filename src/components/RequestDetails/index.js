@@ -39,20 +39,24 @@ export default class RequestDetails extends React.Component {
   }
   findTime = () => {
     let timeString = 'Requested';
-    const currentDate = new Date();
-    const createdDate = new Date(this.props.createdDate);
-    const timeDiff = currentDate - createdDate;
-    const diffDays = Math.floor(timeDiff / 86400000); // days
-    const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
-    const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
-    if (diffDays >= 1) {
-      timeString = diffDays === 1 ? `${timeString} ${diffDays} day ago` : `${timeString} ${diffDays} days ago`;
-    } else if (diffHrs >= 1) {
-      timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : timeString = `${timeString} ${diffHrs} hours ago`;
-    } else if (diffMins >= 1) {
-      timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ago` : `${timeString} ${diffMins} minutes ago`;
+    if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
+      timeString = 'Completed';
     } else {
-      timeString = `${timeString} just now`;
+      const currentDate = new Date();
+      const createdDate = new Date(this.props.createdDate);
+      const timeDiff = currentDate - createdDate;
+      const diffDays = Math.floor(timeDiff / 86400000); // days
+      const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
+      const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
+      if (diffDays >= 1) {
+        timeString = diffDays === 1 ? `${timeString} ${diffDays} day ago` : `${timeString} ${diffDays} days ago`;
+      } else if (diffHrs >= 1) {
+        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : timeString = `${timeString} ${diffHrs} hours ago`;
+      } else if (diffMins >= 1) {
+        timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ago` : `${timeString} ${diffMins} minutes ago`;
+      } else {
+        timeString = `${timeString} just now`;
+      }
     }
     return timeString;
   }

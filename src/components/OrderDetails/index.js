@@ -10,6 +10,7 @@ import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
+import { recorder } from '../../constants/videoRecorder';
 import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
@@ -203,10 +204,11 @@ export default class OrderDetails extends React.Component {
   }
 
   renderVideoRecorder = (props) => {
-    if (props.requestStatusId !== 5 && props.requestStatusId !== 6) {
+    // Show only if request is not cancelled or not completed or not processing
+    if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <VideoRecorder {...this.props} />
+          <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
         </OrderStyled.VideoRecorder>
       );
     }
@@ -336,9 +338,9 @@ export default class OrderDetails extends React.Component {
                 </OrderStyled.DetailsItem>
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
-            {/* Show only if request is not cancelled or completed */}
+            {/* Show only if request is not cancelled or not completed or not processing */}
             {
-              props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
+              props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
                 <OrderStyled.ControlWrapper>
                   <PaymentFooterController
                     buttonMode
