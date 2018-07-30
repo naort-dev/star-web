@@ -73,6 +73,7 @@ OrderStyled.VideoContentWrapper = styled.div`
   @media(min-width: 1025px) {
     width: ${props => (props.width ? props.width : '100%')};
     height: ${props => (props.height ? props.height : '100%')};
+    height: ${props => (props.starMode ? '250px' : '100%')};
     max-width: 100%;
     max-height: 480px;
   }
@@ -233,7 +234,7 @@ OrderStyled.MainTitle = styled.span`
   text-align: center;
   font-size: 18px;
   @media(min-width: 1025px) {
-    margin: 44px 0;
+    margin: 19px 0;
   }
 `;
 OrderStyled.ProfileImageWrapper = styled.div`
