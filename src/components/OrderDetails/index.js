@@ -149,11 +149,11 @@ export default class OrderDetails extends React.Component {
   }
 
 
-  renderVideo = (props, title, shareUrl) => {
+  renderVideo = (props, title, shareUrl, starMode) => {
     if (props.requestVideo) {
       return (
         <React.Fragment>
-          <OrderStyled.VideoContentWrapper width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
+          <OrderStyled.VideoContentWrapper starMode={starMode} width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
             <VideoPlayer
               videoWidth={'100%'}
               videoHeight={'100%'}
@@ -281,8 +281,8 @@ export default class OrderDetails extends React.Component {
               renderView={props => <div {...props} className="order-details-scroll-wrapper" />}
             >
               {
-                props.starMode ?
-                  this.renderVideo(props, title, shareUrl)
+                props.starMode && props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+                  this.renderVideo(props, title, shareUrl, this.props.starMode)
                 :
                   <OrderStyled.rightContent notStar>
                     {this.renderVideo(props, title, shareUrl)}
@@ -355,7 +355,7 @@ export default class OrderDetails extends React.Component {
           <OrderStyled.rightContent>
             <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
             {
-              props.starMode ?
+              props.starMode && props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
                 this.renderVideoRecorder(props)
               : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
             }
