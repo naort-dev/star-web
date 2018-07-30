@@ -48,13 +48,13 @@ export default class VideoPlayer extends React.Component {
     const primary = this.state.secondary;
     const secondary = this.state.primary;
     this.setState({
-      primary:{
+      primary: {
         thumbnail: '',
         video: '',
       },
       fullScreen: true,
     });
-    setTimeout( () => this.setState({ primary, secondary, fullScreen: false }), 1000);
+    setTimeout( () => this.setState({ primary, secondary, fullScreen: false }), 500);
   }
 
   render() {
