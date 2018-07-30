@@ -252,6 +252,7 @@ export default class OrderDetails extends React.Component {
         {
           this.state.showPopup &&
             <Popup
+              smallPopup
               closePopUp={this.closePopup}
             >
               {

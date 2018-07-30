@@ -34,14 +34,26 @@ export default class Popup extends React.Component {
   render() {
     return (
       <PopupStyled innerRef={node => this.popupWrapper = node}>
-        <PopupStyled.Container innerRef={node => this.popupContent = node}>
-          {
-            this.props.children
-          }
-        </PopupStyled.Container>
-        <PopupStyled.CloseButton
-          onClick={() => this.props.closePopUp()}
-        />
+        {
+          this.props.smallPopup ?
+            <PopupStyled.SmallContainer innerRef={node => this.popupContent = node}>
+              <PopupStyled.CloseButton
+                onClick={() => this.props.closePopUp()}
+              />
+              {this.props.children}
+            </PopupStyled.SmallContainer>
+          :
+            <React.Fragment>
+              <PopupStyled.Container innerRef={node => this.popupContent = node}>
+                {
+                  this.props.children
+                }
+              </PopupStyled.Container>
+              <PopupStyled.CloseButton
+                onClick={() => this.props.closePopUp()}
+              />
+            </React.Fragment>
+        }
       </PopupStyled>
     );
   }
