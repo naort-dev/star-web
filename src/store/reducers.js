@@ -22,6 +22,7 @@ import requestHandler from '../pages/myVideos/reducers/requestHandler';
 import imageViewer from '../store/shared/reducers/imageViewer';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
 import popupData from './shared/reducers/popupData';
+import userDetails from '../store/shared/reducers/userDetails';
 
 const rootReducer = combineReducers({
   session,
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
   requestHandler,
   audioRecorder,
   popupData,
+  userDetails,
 });
 
 export default rootReducer;

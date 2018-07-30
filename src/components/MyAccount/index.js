@@ -13,6 +13,7 @@ export default class MyAccount extends React.Component {
   }
   render() {
     const defaultImage = '../../assets/images/default-cover.jpg';
+    console.log(this.state);
     return (
       <React.Fragment>
         <Accounts.ComponentWrapper>
