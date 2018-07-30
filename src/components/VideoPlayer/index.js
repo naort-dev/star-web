@@ -7,6 +7,7 @@ export default class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      primarySrc: this.props.primarySrc,
       primary: {
         thumbnail: this.props.primaryCover,
         video: this.props.primarySrc,
@@ -20,6 +21,23 @@ export default class VideoPlayer extends React.Component {
 
   componentDidMount() {
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
+  }
+
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    if (nextProps.primarySrc !== prevState.primarySrc) {
+      return {
+        primarySrc: nextProps.primarySrc,
+        primary: {
+          thumbnail: nextProps.primaryCover,
+          video: nextProps.primarySrc,
+        },
+        secondary: {
+          thumbnail: nextProps.secondaryCover,
+          video: nextProps.secondarySrc,
+        },
+      };
+    }
+    return null;
   }
 
   handleStateChange = (state) => {
