@@ -46,6 +46,19 @@ PopupStyled.Container = styled.div`
   }
 `;
 
+PopupStyled.SmallContainer = PopupStyled.Container.extend`
+  width: 80%;
+  height: auto;
+  padding: 45px 20px 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  @media(min-width: 768px) {
+    width: 50%;
+    max-width: 400px;
+    height: auto;
+  }
+`;
+
 PopupStyled.CloseButton = styled.span`
   position: absolute;
   top: 16px;
