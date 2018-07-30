@@ -1,5 +1,6 @@
 import React from 'react';
 import TabStyled from './styled';
+import './checkboxStyled';
 
 export default class Tabs extends React.Component {
   constructor(props) {
@@ -12,12 +13,30 @@ export default class Tabs extends React.Component {
       <TabStyled filterSelected={this.props.filterSelected}>
         {
           this.props.heading ?
-            <TabStyled.TitleControl titleLabel={this.props.Heading}>
-              <TabStyled.TitleLabel>
-                {this.props.heading}
-              </TabStyled.TitleLabel>
+            <TabStyled.TitleControl titleLabel={this.props.Heading} starMode={this.props.starMode}>
+              {
+                this.props.starMode ?
+                  <TabStyled.OptionWrapper>
+                    <TabStyled.CheckBoxWrapper>
+                      <TabStyled.Label id="checkbox_container">
+                        <span>Accepting Requests</span>
+                        <TabStyled.CheckBox
+                          id="accepting-requests"
+                          type="checkbox"
+                          checked={true}
+                          onChange={() => this.changePublicStatus()}
+                        />
+                        <TabStyled.Span htmlFor="private_video" id="checkmark" />
+                      </TabStyled.Label>
+                    </TabStyled.CheckBoxWrapper>
+                  </TabStyled.OptionWrapper>
+                :
+                  <TabStyled.TitleLabel>
+                    {this.props.heading}
+                  </TabStyled.TitleLabel>
+              }
             </TabStyled.TitleControl>
-          : null
+           : null
         }
         {
           !this.props.disableTabs ?

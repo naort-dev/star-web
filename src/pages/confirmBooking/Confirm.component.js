@@ -8,7 +8,7 @@ import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import StripeCheckout from '../../components/StripeCheckout';
-import renderStarProfessions from '../../utils/formatProfessions';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
 export default class Confirm extends React.Component {
   constructor(props) {
@@ -207,7 +207,7 @@ export default class Confirm extends React.Component {
             imageUrl={profilePhoto}
           />
           <Request.StarName>{fullName}</Request.StarName>
-          <Request.StarProfessions>{renderStarProfessions(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
+          <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
         </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
         <Request.smallScreenVideo>

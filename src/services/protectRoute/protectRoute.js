@@ -3,37 +3,47 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { protectedRoutes } from './protectedRoutes';
+import { protectedRoutes, fanRoutes, starRoutes } from './protectedRoutes';
 import { Page404 } from '../../pages/page404';
 
 export const protectRoute = ({
   RouteComponent,
+  ...routeProps
 }) => {
   const ProtectedRoute = (props) => {
     const {
       location,
       // role,
+      starRole,
       isLoggedIn,
     } = props;
     const isProtectedRoute = protectedRoutes.includes(location.pathname);
+    let hasRole;
+    if (isProtectedRoute) {
+      if (starRole) {
+        hasRole = starRoutes.includes(location.pathname);
+      } else {
+        hasRole = fanRoutes.includes(location.pathname);
+      }
+    }
     // const hasRole = roles.length ? roles.includes(role) : true;
-
-    // const allowAcceess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
-    const allowAccess = (isProtectedRoute && isLoggedIn);
-    // const unAuthorized = isLoggedIn && !hasRole;
+    const allowAccess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
+    // const allowAccess = (isProtectedRoute && isLoggedIn);
+    const unAuthorized = isLoggedIn && !hasRole;
     const shouldAuthenticate = isProtectedRoute && !isLoggedIn;
 
     if (allowAccess) {
-      return <RouteComponent {...props} />;
+      return <RouteComponent {...props} {...routeProps} />;
     }
-    // else if (unAuthorized) {
-    //   return (
-    //     <Redirect
-    //       to={{
-    //         pathname: '/unauthorized',
-    //       }}
-    //     />
-    //   );
+    else if (unAuthorized) {
+      return (
+        <Redirect
+          to={{
+            pathname: '/unauthorized',
+          }}
+        />
+      );
+    }
     // } else if (shouldAuthenticate) {
     //   return (
     //     <Redirect
@@ -67,7 +77,7 @@ export const protectRoute = ({
 
   const mapState = state => ({
     isLoggedIn: state.session.isLoggedIn,
-    role: state.session.role,
+    starRole: state.session.starRole,
   });
 
   return connect(mapState)(ProtectedRoute);

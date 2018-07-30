@@ -124,6 +124,15 @@ class App extends React.Component {
                     // roles: allUserRoles,
                   })}
                 />
+                <Route
+                  path="/user/bookings"
+                  component={protectRoute({
+                    RouteComponent: MyVideos,
+                    selectedSideBarItem: 'requests',
+                    starMode: true,
+                    // roles: allUserRoles,
+                  })}
+                />
                 {/*
                 <Route
                   exact

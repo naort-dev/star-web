@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { SidebarStyled } from './styled';
 import { Footer } from '../Footer';
 import { updateCategory } from '../../pages/landing/actions/updateFilters';
@@ -8,7 +9,7 @@ class Sidebar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      
     };
   }
 
@@ -78,15 +79,33 @@ class Sidebar extends React.Component {
       <SidebarStyled menuActive={this.props.menuActive}>
         <section>
           <SidebarStyled.FilterWrapper>
-            {/* <SidebarStyled.Filter>
-              <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
-              <SidebarStyled.Separator />
-              <SidebarStyled.ListWrapper>
-                <SidebarStyled.ListItem>Requests</SidebarStyled.ListItem>
-                <SidebarStyled.ListItem>Earnings</SidebarStyled.ListItem>
-                <SidebarStyled.ListItem>My Star Page</SidebarStyled.ListItem>
-              </SidebarStyled.ListWrapper>
-            </SidebarStyled.Filter> */}
+            {
+              this.props.starRole ?
+                <SidebarStyled.Filter>
+                  <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
+                  <SidebarStyled.Separator />
+                  <SidebarStyled.ListWrapper>
+                    <SidebarStyled.ListItem>
+                      <SidebarStyled.CategoryTitle
+                        selected={this.props.selectedCategory === 'requests'}
+                      >
+                        <Link to={'/user/bookings'}>Requests</Link>
+                      </SidebarStyled.CategoryTitle>
+                    </SidebarStyled.ListItem>
+                    <SidebarStyled.ListItem>
+                      <SidebarStyled.CategoryTitle>
+                        Earnings
+                      </SidebarStyled.CategoryTitle>
+                    </SidebarStyled.ListItem>
+                    <SidebarStyled.ListItem>
+                      <SidebarStyled.CategoryTitle>
+                        My Star Page
+                      </SidebarStyled.CategoryTitle>
+                    </SidebarStyled.ListItem>
+                  </SidebarStyled.ListWrapper>
+                </SidebarStyled.Filter>
+              : null
+            }
             <SidebarStyled.Filter>
               <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
               <SidebarStyled.Separator />
@@ -112,7 +131,7 @@ class Sidebar extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  // filters: state.filters,
+  starRole: state.session.starRole,
 });
 
 const mapDispatchToProps = dispatch => ({

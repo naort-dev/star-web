@@ -89,6 +89,9 @@ SidebarStyled.CategoryTitle = styled.span`
   padding: 0 40px;
   color: ${props => props.selected && '#FF6C58'};
   background-color: ${props => props.selected && '#F8F8F8'};
+  a {
+    display: block;
+  }
   &:hover {
     color: #FF6C58;
     background-color: #F8F8F8;

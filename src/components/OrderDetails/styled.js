@@ -52,7 +52,7 @@ OrderStyled.HeaderTitle = styled.span`
 `;
 
 OrderStyled.ContentWrapper = styled.div`
-  height: calc(100vh - 56px);
+  height: calc(100vh - 96px);
   overflow: auto;
   @media (min-width: 1025px) {
     overflow: initial;
@@ -164,15 +164,15 @@ OrderStyled.VideoRequestName = styled.span`
 `;
 
 OrderStyled.leftContent = styled.div`
-  padding: 10px 16px;
-  @media(min-width: 768px) {
-    padding 20px 16px;
-  }
   @media(min-width: 1025px) {
+    position: relative;
+    height: calc(100% - 6px);
     width: 40%;
     background-color: #fff;
-    height: 100%;
     padding: 27px 42px;
+    padding-bottom: 90px;
+    float: left;
+    margin-top: 6px;
   }
   @media(min-width: 1920px) {
     padding-top: 48px;
@@ -194,7 +194,7 @@ OrderStyled.rightContent = styled.div`
     width: 60%;
     float: right;
     height: 100%;
-    display: flex;
+    display: ${props => (props.notStar ? 'none' : 'flex')};
     align-items: center;
     justify-content: center;
     position: relative;
@@ -206,6 +206,7 @@ OrderStyled.rightContent = styled.div`
 OrderStyled.VideoDetails = styled.div`
   margin-top: 20px;
   padding: 10px 16px;
+  text-align: center;
 `;
 
 OrderStyled.CloseButton = styled.span`
@@ -238,11 +239,41 @@ OrderStyled.MainTitle = styled.span`
 OrderStyled.ProfileImageWrapper = styled.div`
   width: 100%;
   text-align: center;
+  position: relative;
+  padding: 0 16px;
   @media(min-width: 1025px) {
+    padding: 0 0;
     padding-bottom: 40px;
     border-bottom: 1px solid #333333;
   }
 `;
+
+OrderStyled.MoreActionsWrapper = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 10px;
+`;
+
+OrderStyled.MoreActionsIcon = styled.span`
+  background-image: url('assets/images/dots-vertical.svg');
+  background-repeat:no-repeat;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+`;
+
+OrderStyled.MoreActionsList = styled.ul`
+  position: absolute;
+  top: 20px;
+  right:10px;
+  background-color: rgb(248, 248, 248);
+  padding: 10px;
+`;
+
+OrderStyled.MoreActionsItem = styled.li`
+
+`;
+
 OrderStyled.ProfileImage = styled.span`
   border-radius: 50%;
   display: inline-block;
@@ -281,6 +312,10 @@ OrderStyled.StarProfessions = styled.div`
 `;
 OrderStyled.DetailsWrapper = styled.ul`
   margin-top: 15px;
+  padding: 0 16px;
+  @media(min-width: 1025px) {
+    padding: 0 0;
+  }
 `;
 OrderStyled.DetailsItem = styled.li`
   display: table;
@@ -312,6 +347,7 @@ OrderStyled.DetailsValue = styled.span`
 `;
 OrderStyled.SocialMediaWrapper = styled.div`
   margin-top:3%;
+  text-align: center;
 `;
 OrderStyled.Somenetwork = styled.div`
   vertical-align: top;
@@ -319,4 +355,95 @@ OrderStyled.Somenetwork = styled.div`
   margin-right: 30px;
   text-align: center;
 `;
+
+OrderStyled.ControlWrapper = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px;
+  background: #fff;
+  @media(min-width: 1025px) {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0 42px;
+    padding: 27px 0;
+    border-top: solid #333333 1px;
+  }
+`;
+
+OrderStyled.PopupWrapper = styled.div`
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #fff;
+`;
+
+OrderStyled.PopupHeader = styled.span`
+  font-size: 16px;
+  font-family: 'Ubuntu-Bold';
+`;
+
+OrderStyled.ReasonsWrapper = styled.ul`
+  line-height: 24px;
+  margin: 10px 0;
+  input {
+    margin-right: 10px;
+    display: table-cell;
+  }
+  span {
+    display: table-cell;
+  }
+`;
+
+OrderStyled.ReasonsItem = styled.li`
+  margin: 10px 0;
+  display: table;
+`;
+
+OrderStyled.ConfirmButton = styled.button`
+  background-color: #fff;
+  color: #FF6C58;
+  padding: 6px 18px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+`;
+
+OrderStyled.TextArea = styled.textarea`
+  margin: 10px 0;
+  height: 100px;
+`;
+
+OrderStyled.VideoRecorder = styled.div`
+  margin-bottom: 21px;
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: 100%;
+    margin-bottom: 0;
+  }
+`;
+
+OrderStyled.VideoContainer = styled.div`
+  display: none;
+  @media(min-width: 1025px) {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+
 export default OrderStyled;

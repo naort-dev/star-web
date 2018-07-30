@@ -24,7 +24,8 @@ class Api {
   static forgotPassword = 'user/forgotpassword/';
   static resetPassword = 'user/resetpassword/';
   static getAWSVideo = 'user/get_signed_url/?key=stargram_videos&file_name=';
-  static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`
+  static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
+  static changeRequestStatus = 'request/change_request_status/';
 }
 
 export default Api;
