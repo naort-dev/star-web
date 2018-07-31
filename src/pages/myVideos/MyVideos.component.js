@@ -100,23 +100,25 @@ export default class MyVideos extends React.Component {
             <ActionLoader />
           : null
         }
-        <div style={{ display: Object.keys(this.state.orderDetails).length ? 'block' : 'none' }}>
-          <OrderDetails
-            {...this.props}
-            orderDetails={this.state.orderDetails}
-            requestStatus={requestStatus}
-            requestStatusId={requestStatusId}
-            orderId={orderId}
-            requestType={requestType}
-            hideRequest={this.hideRequest}
-            requestVideo={requestVideo}
-            createdDate={createdDate}
-            price={price}
-            isPrivate={isPrivate}
-            relationShip={relationShip}
-            occasionDate={occasionDate}
-          />
-        </div>
+        {
+          Object.keys(this.state.orderDetails).length ?
+            <OrderDetails
+              {...this.props}
+              orderDetails={this.state.orderDetails}
+              requestStatus={requestStatus}
+              requestStatusId={requestStatusId}
+              orderId={orderId}
+              requestType={requestType}
+              hideRequest={this.hideRequest}
+              requestVideo={requestVideo}
+              createdDate={createdDate}
+              price={price}
+              isPrivate={isPrivate}
+              relationShip={relationShip}
+              occasionDate={occasionDate}
+            />
+          : null
+        }
         <MyVideosStyled style={{ display: Object.keys(this.state.orderDetails).length ? 'none' : 'block' }}>
           <Header
             menuActive={this.state.menuActive}

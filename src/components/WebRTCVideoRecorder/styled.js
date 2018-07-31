@@ -29,8 +29,8 @@ VideoRecorderDiv.VideoContainer = styled.div`
     height: 400px
   }
   @media(min-width:1025px){
-    height: 40%;
-    width: 60%;
+    height: 80%;
+    width: 80%;
   }
 
 `;

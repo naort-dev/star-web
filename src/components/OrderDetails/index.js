@@ -132,6 +132,8 @@ export default class OrderDetails extends React.Component {
       if (video) {
         this.uploadVideoToAWS(video);
       }
+    } else {
+      this.setState({ showPopup: true, declinePopup: true });
     }
   }
 
@@ -220,6 +222,8 @@ export default class OrderDetails extends React.Component {
       return (
         <DeclinePopup
           changeRequestStatus={(reason) => this.changeRequestStatus(this.props.orderDetails.id, 5, reason)} // to cancel a request
+          starMode={this.props.starMode}
+          closePopup={this.closePopup}
           requestType={this.props.orderDetails.request_type}
         />
       );
@@ -228,14 +232,16 @@ export default class OrderDetails extends React.Component {
   }
 
   renderActionList = () => {
-    if (this.props.starMode) {
+    if (this.props.requestStatusId === 6) {
       return (
         <OrderStyled.MoreActionsList>
-          <OrderStyled.MoreActionsItem>Respond</OrderStyled.MoreActionsItem>
-          <OrderStyled.MoreActionsItem>Decline</OrderStyled.MoreActionsItem>
+          <OrderStyled.MoreActionsItem>Celebrity Rating</OrderStyled.MoreActionsItem>
+          <OrderStyled.MoreActionsItem>Contact Support</OrderStyled.MoreActionsItem>
+          <OrderStyled.MoreActionsItem>Report Abuse</OrderStyled.MoreActionsItem>
         </OrderStyled.MoreActionsList>
       );
     }
+    return null;
   }
 
   render() {
