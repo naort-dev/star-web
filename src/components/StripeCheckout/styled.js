@@ -81,7 +81,7 @@ PaymentStyled.OptionSelectionWrapper = styled.div`
 `;
 
 PaymentStyled.OptionSelector = styled.div`
-  margin-bottom: 20px;
+  margin: 20px 0;
 `;
 
 PaymentStyled.OptionLabel = styled.label`
@@ -90,7 +90,8 @@ PaymentStyled.OptionLabel = styled.label`
 `;
 
 PaymentStyled.cardListWrapper = styled.ul`
-
+  height: 350px;
+  overflow-y: auto;
 `;
 
 PaymentStyled.cardListItem = styled.li`

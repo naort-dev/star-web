@@ -1,6 +1,7 @@
 import React from 'react';
 import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
+import Scrollbars from 'react-custom-scrollbars';
 import Checkout from './checkout';
 import Loader from '../Loader';
 import {
@@ -82,30 +83,34 @@ class StripeCheckout extends React.Component {
   renderCardList = () => {
     return (
       <PaymentStyled.cardListWrapper>
-        {
-          Object.keys(this.props.sourceList).map(index => (
-            <PaymentStyled.cardListItem
-              key={index}
-            >
-              <PaymentStyled.cardItemDetails
-                selected={this.state.selectedCardIndex === index}
-                onClick={() => this.setState({ selectedCardIndex: index })}
+        <Scrollbars
+          autoHide
+        >
+          {
+            Object.keys(this.props.sourceList).map(index => (
+              <PaymentStyled.cardListItem
+                key={index}
               >
-                <PaymentStyled.CardTypeIcon cardImage={cardTypeImageFinder(this.props.sourceList[index].brand)} />
-                <PaymentStyled.CardNumber>
-                  **** **** **** {this.props.sourceList[index].last4}
-                </PaymentStyled.CardNumber>
-              </PaymentStyled.cardItemDetails>
-              {
-                Object.keys(this.props.sourceList).length > 1 &&
-                  <PaymentStyled.removeCardListItem
-                    selected={this.state.selectedCardIndex === index}
-                    onClick={() => this.removeCard(this.props.sourceList[index].id)}
-                  />
-              }
-            </PaymentStyled.cardListItem>
-          ))
-        }
+                <PaymentStyled.cardItemDetails
+                  selected={this.state.selectedCardIndex === index}
+                  onClick={() => this.setState({ selectedCardIndex: index })}
+                >
+                  <PaymentStyled.CardTypeIcon cardImage={cardTypeImageFinder(this.props.sourceList[index].brand)} />
+                  <PaymentStyled.CardNumber>
+                    **** **** **** {this.props.sourceList[index].last4}
+                  </PaymentStyled.CardNumber>
+                </PaymentStyled.cardItemDetails>
+                {
+                  Object.keys(this.props.sourceList).length > 1 &&
+                    <PaymentStyled.removeCardListItem
+                      selected={this.state.selectedCardIndex === index}
+                      onClick={() => this.removeCard(this.props.sourceList[index].id)}
+                    />
+                }
+              </PaymentStyled.cardListItem>
+            ))
+          }
+        </Scrollbars>
       </PaymentStyled.cardListWrapper>
     );
   }
