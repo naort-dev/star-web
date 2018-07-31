@@ -13,6 +13,7 @@ import {
 import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
+import { cardTypeImageFinder } from '../../utils/itemImageFinder';
 
 class StripeCheckout extends React.Component {
   constructor(props) {
@@ -67,14 +68,13 @@ class StripeCheckout extends React.Component {
         .then((payload) => {
           this.props.paymentFetchSourceEnd();
           if (payload.source) {
-            this.props.modifySourceList(payload.source.id, this.state.customerId, true); // Add Card to list
-            this.chargeCreator(payload.source.id);
+            this.chargeCreator(payload.source.id, this.state.customerId);
           }
         });
     }
   }
-  chargeCreator = (tokenId) => {
-    this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId);
+  chargeCreator = (tokenId, customerId) => {
+    this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId, customerId);
   }
   removeCard = (source) => {
     this.props.modifySourceList(source, this.state.customerId, false);
@@ -91,7 +91,10 @@ class StripeCheckout extends React.Component {
                 selected={this.state.selectedCardIndex === index}
                 onClick={() => this.setState({ selectedCardIndex: index })}
               >
-                **** **** **** {this.props.sourceList[index].last4}
+                <PaymentStyled.CardTypeIcon cardImage={cardTypeImageFinder(this.props.sourceList[index].brand)} />
+                <PaymentStyled.CardNumber>
+                  **** **** **** {this.props.sourceList[index].last4}
+                </PaymentStyled.CardNumber>
               </PaymentStyled.cardItemDetails>
               {
                 Object.keys(this.props.sourceList).length > 1 &&
@@ -206,7 +209,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createCharge: (starsonaId, amount, tokenId) => dispatch((createCharge(starsonaId, amount, tokenId))),
+  createCharge: (starsonaId, amount, tokenId, customerId) => dispatch((createCharge(starsonaId, amount, tokenId, customerId))),
   paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),
