@@ -9,7 +9,7 @@ export const SettingsFooter = props => (
         <FooterSection.LeftButton>Cancel</FooterSection.LeftButton>
       </FooterSection.LeftSection>
       <FooterSection.RightSection>
-        <FooterSection.Button>Save</FooterSection.Button>
+        <FooterSection.Button onClick={() => props.onSave()}>Save</FooterSection.Button>
       </FooterSection.RightSection>
     </FooterSection>
   </React.Fragment>
