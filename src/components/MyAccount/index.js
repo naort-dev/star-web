@@ -8,12 +8,13 @@ export default class MyAccount extends React.Component {
     super(props);
     this.state = {
       ...props.accountDetails
-
     };
   }
   render() {
+    this.state = {
+      ...this.props.accountDetails,
+    };
     const defaultImage = '../../assets/images/default-cover.jpg';
-    console.log(this.state);
     return (
       <React.Fragment>
         <Accounts.ComponentWrapper>
@@ -28,7 +29,6 @@ export default class MyAccount extends React.Component {
                     <Accounts.ImageLabel>Profile Image </Accounts.ImageLabel>
                     <Accounts.WrapsInput>
                       <Avatar image={this.state.avatar_photo ? this.state.avatar_photo.image_url : defaultImage} />
-                      {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
                     </Accounts.WrapsInput>
                   </Accounts.InputWrapper>
                   <Templates.InputWrapper>
@@ -38,8 +38,13 @@ export default class MyAccount extends React.Component {
                         placeholder="First Name"
                         type="text"
                         value={this.state.first_name}
+                        onChange={event => { this.props.handleFieldChange('first_name', event.target.value) }}
                       />
-                      {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                      {this.props.errorDetails.first_name ?
+                      <Templates.ErrorMsg isError={this.props.errorDetails.first_name}>
+                      Required
+                      </Templates.ErrorMsg>
+                       : null}
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -49,8 +54,9 @@ export default class MyAccount extends React.Component {
                         placeholder="Last Name"
                         type="text"
                         value={this.state.last_name}
+                        onChange={event => { this.props.handleFieldChange('last_name', event.target.value) }}
                       />
-                      {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                      
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -60,15 +66,20 @@ export default class MyAccount extends React.Component {
                         placeholder="Email"
                         type="email"
                         value={this.state.email}
+                        onChange={event => { this.props.handleFieldChange('email', event.target.value) }}
                       />
-                      {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                      {this.props.errorDetails.email ?
+                      <Templates.ErrorMsg isError={this.props.errorDetails.email}>
+                      Required
+                      </Templates.ErrorMsg>
+                       : null}
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label>Password</Templates.Label>
                     <Templates.WrapsInput>
                       <Accounts.PaymentLabel>Manage your password</Accounts.PaymentLabel>
-                      {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                      
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -86,12 +97,12 @@ export default class MyAccount extends React.Component {
                           id="messagesFromStarsona"
                           type="checkbox"
                           checked={this.state.notification_settings.fan_starsona_messages}
-
+                          onChange={event => { console.log(event); this.props.handleFieldChange('fan_starsona_messages', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="messagesFromStarsona" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -102,11 +113,12 @@ export default class MyAccount extends React.Component {
                           id="accountUpdates"
                           type="checkbox"
                           checked={this.state.notification_settings.fan_account_updates}
+                          onChange={event => { this.props.handleFieldChange('fan_account_updates', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="accountUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -117,11 +129,12 @@ export default class MyAccount extends React.Component {
                           id="myStarsonaUpdates"
                           type="checkbox"
                           checked={this.state.notification_settings.fan_starsona_videos}
+                          onChange={event => { this.props.handleFieldChange('fan_starsona_videos', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="myStarsonaUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -132,11 +145,12 @@ export default class MyAccount extends React.Component {
                           id="emailUpdates"
                           type="checkbox"
                           checked={this.state.notification_settings.fan_email_starsona_videos}
+                          onChange={event => { this.props.handleFieldChange('fan_email_starsona_videos', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="emailUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -147,11 +161,12 @@ export default class MyAccount extends React.Component {
                           id="celebrityStarsonaRequest"
                           type="checkbox"
                           checked={this.state.notification_settings.celebrity_starsona_request}
+                          onChange={event => { this.props.handleFieldChange('celebrity_starsona_request', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -162,11 +177,12 @@ export default class MyAccount extends React.Component {
                           id="celebrityStarsonaMesssage"
                           type="checkbox"
                           checked={this.state.notification_settings.celebrity_starsona_message}
+                          onChange={event => { this.props.handleFieldChange('celebrity_starsona_message', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="celebrityStarsonaMesssage" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -177,11 +193,12 @@ export default class MyAccount extends React.Component {
                           id="celebrityAccountUpdates"
                           type="checkbox"
                           checked={this.state.notification_settings.celebrity_account_updates}
+                          onChange={event => { this.props.handleFieldChange('celebrity_account_updates', event.target.value) }}
                         />
                         <Accounts.Span htmlFor="celebrityAccountUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    {/* <Templates.ErrorMsg>Error</Templates.ErrorMsg> */}
+                    
                   </Templates.InputWrapper>
                 </Templates>
               </Accounts.Ask>
