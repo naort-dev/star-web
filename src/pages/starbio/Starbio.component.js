@@ -50,6 +50,10 @@ export default class Starbio extends React.Component {
       account: true,
       settingsObj: {
         userDetails: null,
+        myAccountErrors: {
+          first_name: false,
+          email: false
+        },
         starDetails: null,
         selectedAccount: 'myAccount',
         isCelebrity: false,
@@ -60,7 +64,6 @@ export default class Starbio extends React.Component {
         searchTags: false,
         bookingPrice: false,
         bookingLimit: false,
-
       },
       cropValues: {
         x: 10,
@@ -165,6 +168,7 @@ export default class Starbio extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
   }
+
   async onFileChange(type = "featuredImage") {
     this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
     const file = document.getElementById(type).files[0];
@@ -218,7 +222,6 @@ export default class Starbio extends React.Component {
       })
 
     })
-
   }
 
 
@@ -286,9 +289,16 @@ export default class Starbio extends React.Component {
     // })
   }
 
+  onMyAccountSave() {
+    if (this.validateIsEmpty('myAccount')) {
+      console.log('Saved', this.state.settingsObj.userDetails);
+    } else {
+      console.log('MYACCOUNTERRORS', this.state.settingsObj.myAccountErrors)
+    }
+  }
 
   onContinueClick() {
-    if (this.validateIsEmpty()) {
+    if (this.validateIsEmpty('starAccount')) {
       this.setState({ saving: true })
       const bioDetails = {
         profession: this.state.profession,
@@ -337,7 +347,6 @@ export default class Starbio extends React.Component {
 
         )
     }
-
   }
 
   handleOnChange(value) {
@@ -346,6 +355,33 @@ export default class Starbio extends React.Component {
       this.setState({ multiValue: value });
     } else {
       this.setState({ value });
+    }
+  }
+
+  // My Account form fields on change event
+  handleMyAccountFieldChange(fieldType, fieldValue) {
+    if (['first_name', 'last_name', 'email'].indexOf(fieldType) > -1) {
+      this.setState({
+        settingsObj: {
+          ...this.state.settingsObj,
+          userDetails: { ...this.state.settingsObj.userDetails, [fieldType]: fieldValue },
+          myAccountErrors: fieldType !== 'last_name' ?
+            { ...this.state.settingsObj.myAccountErrors, [fieldType]: false } : this.state.settingsObj.myAccountErrors
+        }
+      });
+    } else {
+     this.setState({
+        settingsObj: {
+          ...this.state.settingsObj,
+          userDetails: {
+            ...this.state.settingsObj.userDetails,
+            notification_settings: {
+              ...this.state.settingsObj.userDetails.notification_settings,
+              [fieldType]: !this.state.settingsObj.userDetails.notification_settings[fieldType]
+            }
+          },
+        }
+      });
     }
   }
 
@@ -358,7 +394,7 @@ export default class Starbio extends React.Component {
     } else if (fieldType === 'searchTags') {
       this.setState({ searchTags: fieldValue });
     } else {
-      this.setState({ [`${fieldType}`]: fieldValue, errors: { ...this.state.errors, [`${fieldType}`]: false } });
+      this.setState({ [fieldType]: fieldValue, errors: { ...this.state.errors, [fieldType]: false } });
     }
   }
 
@@ -450,27 +486,40 @@ export default class Starbio extends React.Component {
 
 
 
-  validateIsEmpty() {
-    if (!this.state.bio) {
-      this.setState({ errors: { ...this.state.errors, bio: true } })
-      return false
+  validateIsEmpty(formName) {
+    if(formName === 'starAccount') {
+      if (!this.state.bio) {
+        this.setState({ errors: { ...this.state.errors, bio: true } });
+        return false;
+      }
+      if (!this.state.profession || !this.state.profession[0]) {
+        this.setState({ errors: { ...this.state.errors, profession: true } });
+        return false;
+      }
+      if (!this.state.bookingPrice) {
+        this.setState({ errors: { ...this.state.errors, bookingPrice: true } });
+        return false;
+      }
+      if (!this.state.bookingLimit) {
+        this.setState({ errors: { ...this.state.errors, bookingLimit: true } });
+        return false;
+      }
+      return true
+    } else if(formName === 'myAccount') {
+      let settingsObj = { ...this.state.settingsObj };
+      if (!settingsObj.userDetails.first_name) {
+        settingsObj.myAccountErrors.first_name = true;
+        this.setState({ settingsObj });
+        return false;
+      }
+      if (!settingsObj.userDetails.email) {
+        settingsObj.myAccountErrors.email = true;
+        this.setState({ settingsObj });
+        return false;
+      }
+      return true;
     }
-    if (!this.state.profession || !this.state.profession[0]) {
-      this.setState({ errors: { ...this.state.errors, profession: true } })
-      return false
-    }
-
-    if (!this.state.bookingPrice) {
-      this.setState({ errors: { ...this.state.errors, bookingPrice: true } })
-      return false
-    }
-
-    if (!this.state.bookingLimit) {
-      this.setState({ errors: { ...this.state.errors, bookingLimit: true } })
-      return false
-    }
-
-    return true
+    
 
 
   }
@@ -488,7 +537,6 @@ export default class Starbio extends React.Component {
   }
 
   FullscreenUploader = (type) => {
-    console.log('FULLSCREEN', type, this.state[type]);
     const borderRadius = type === 'avatar' ? '100px' : '0px';
     return (
       <LoginContainer.FullScreenUploadWrapper >
@@ -560,7 +608,7 @@ export default class Starbio extends React.Component {
             }
             {
               isSettings && isMyAccount ?
-                <MyAccount accountDetails={this.state.settingsObj.userDetails} />
+                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{...this.state.settingsObj.myAccountErrors}} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} />
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
@@ -695,7 +743,7 @@ export default class Starbio extends React.Component {
               :
               <LoginContainer.ButtonControllerWrapper>
                 {isSettings ?
-                  <SettingsFooter />
+                  <SettingsFooter onSave={this.onMyAccountSave.bind(this)}/>
                   :
                   <FooterSection>
                     <FooterSection.LeftSection>
