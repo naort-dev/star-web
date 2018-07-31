@@ -213,7 +213,7 @@ export default class Confirm extends React.Component {
         <Request.smallScreenVideo>
           <Request.VideoContentWrapper>
             <VideoPlayer
-              src={this.state.QAVideo.url}
+              primarySrc={this.state.QAVideo.url}
             />
           </Request.VideoContentWrapper>
         </Request.smallScreenVideo>
@@ -320,7 +320,7 @@ export default class Confirm extends React.Component {
                 this.state.bookingData.type === 3 ?
                   <Request.VideoContentWrapper>
                     <VideoPlayer
-                      src={this.state.QAVideo.url}
+                      primarySrc={this.state.QAVideo.url}
                     />
                   </Request.VideoContentWrapper>
                 :

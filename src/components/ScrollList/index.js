@@ -101,6 +101,16 @@ export default class ScrollList extends React.Component {
 
   showVideoPopup = () => {
     const selectedVideo = this.props.dataList[this.state.selectedVideoIndex];
+    const videoPlayerProps = selectedVideo.question_answer_videos ? {
+      primaryCover: selectedVideo.question_answer_videos.question_thumb ? selectedVideo.question_answer_videos.question_thumb : '',
+      primarySrc: selectedVideo.question_answer_videos.answer ? selectedVideo.question_answer_videos.question : '',
+      secondaryCover: selectedVideo.question_answer_videos.answer_thumb ? selectedVideo.question_answer_videos.answer_thumb : '',
+      secondarySrc: selectedVideo.question_answer_videos.answer ? selectedVideo.question_answer_videos.answer : '',
+    } : {
+      primaryCover: selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : '',
+      primarySrc: selectedVideo.s3_video_url ? selectedVideo.s3_video_url : '',
+    };
+
     return (
       <Popup
         closePopUp={() => this.setState({ videoActive: false, sharePopup: false })}
@@ -130,10 +140,7 @@ export default class ScrollList extends React.Component {
                       </ListStyled.ShareButton>
                     </ListStyled.VideoRequester>
                   </ListStyled.VideoContent>
-                  <VideoPlayer
-                    cover={selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : ''}
-                    src={selectedVideo.s3_video_url ? selectedVideo.s3_video_url : ''}
-                  />
+                  <VideoPlayer {...videoPlayerProps} />
                 </ListStyled.VideoPlayer>
               </React.Fragment>
             : <Loader />

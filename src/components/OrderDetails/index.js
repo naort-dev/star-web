@@ -157,8 +157,8 @@ export default class OrderDetails extends React.Component {
             <VideoPlayer
               videoWidth={'100%'}
               videoHeight={'100%'}
-              cover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
-              src={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
+              primaryCover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
+              primarySrc={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
             />
           </OrderStyled.VideoContentWrapper>
           {/* Show Share only for completed videos */}
