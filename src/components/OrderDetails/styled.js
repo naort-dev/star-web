@@ -73,6 +73,7 @@ OrderStyled.VideoContentWrapper = styled.div`
   @media(min-width: 1025px) {
     width: ${props => (props.width ? props.width : '100%')};
     height: ${props => (props.height ? props.height : '100%')};
+    height: ${props => (props.starMode ? '250px' : '70%')};
     max-width: 100%;
     max-height: 480px;
   }
@@ -233,7 +234,7 @@ OrderStyled.MainTitle = styled.span`
   text-align: center;
   font-size: 18px;
   @media(min-width: 1025px) {
-    margin: 44px 0;
+    margin: 19px 0;
   }
 `;
 OrderStyled.ProfileImageWrapper = styled.div`
@@ -268,6 +269,10 @@ OrderStyled.MoreActionsList = styled.ul`
   right:10px;
   background-color: rgb(248, 248, 248);
   padding: 10px;
+  text-align: left;
+  width: 146px;
+  line-height: 26px;
+  border-radius: 13px;
 `;
 
 OrderStyled.MoreActionsItem = styled.li`
@@ -379,8 +384,8 @@ OrderStyled.PopupWrapper = styled.div`
   max-height: 100%;
   display: flex;
   flex-direction: column;
-  padding: 20px;
   background-color: #fff;
+  width: 100%;
 `;
 
 OrderStyled.PopupHeader = styled.span`
@@ -390,7 +395,7 @@ OrderStyled.PopupHeader = styled.span`
 
 OrderStyled.ReasonsWrapper = styled.ul`
   line-height: 24px;
-  margin: 10px 0;
+  margin-top: 10px;
   input {
     margin-right: 10px;
     display: table-cell;
@@ -404,12 +409,16 @@ OrderStyled.ReasonsItem = styled.li`
   margin: 10px 0;
   display: table;
 `;
-
+OrderStyled.ConfirmButtonWrapper = styled.div`
+  text-align: center;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
+`;
 OrderStyled.ConfirmButton = styled.button`
   background-color: #fff;
   color: #FF6C58;
   padding: 6px 18px;
-  text-align: center;
   -webkit-text-decoration: none;
   text-decoration: none;
   display: inline-block;
