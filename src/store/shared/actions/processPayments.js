@@ -143,7 +143,7 @@ export const modifySourceList = (source, customer, action) => (dispatch, getStat
     });
 };
 
-export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
+export const createCharge = (starsonaId, amount, tokenId, customerId) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   dispatch(paymentFetchStart());
   return fetch.post(Api.createCharge, {
@@ -151,20 +151,21 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
     amount,
     source: tokenId,
   }, {
-      headers: {
-        'Authorization': `token ${authToken}`,
-      },
-    }).then((resp) => {
-      if (resp.data && resp.data.success) {
-        dispatch(paymentFetchEnd());
-        dispatch(setPaymentStatus(resp.data.success));
-      } else {
-        dispatch(paymentFetchEnd());
-      }
-    }).catch((exception) => {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
-      dispatch(paymentFetchFailed(exception));
-    });
+      dispatch(setPaymentStatus(resp.data.success));
+      dispatch(modifySourceList(tokenId, customerId, true)); // Add Card to list
+    } else {
+      dispatch(paymentFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(paymentFetchEnd());
+    dispatch(paymentFetchFailed(exception));
+  });
 };
 
 const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
