@@ -73,7 +73,7 @@ OrderStyled.VideoContentWrapper = styled.div`
   @media(min-width: 1025px) {
     width: ${props => (props.width ? props.width : '100%')};
     height: ${props => (props.height ? props.height : '100%')};
-    height: ${props => (props.starMode ? '250px' : '100%')};
+    height: ${props => (props.starMode ? '250px' : '70%')};
     max-width: 100%;
     max-height: 480px;
   }
@@ -269,6 +269,10 @@ OrderStyled.MoreActionsList = styled.ul`
   right:10px;
   background-color: rgb(248, 248, 248);
   padding: 10px;
+  text-align: left;
+  width: 146px;
+  line-height: 26px;
+  border-radius: 13px;
 `;
 
 OrderStyled.MoreActionsItem = styled.li`
@@ -391,7 +395,7 @@ OrderStyled.PopupHeader = styled.span`
 
 OrderStyled.ReasonsWrapper = styled.ul`
   line-height: 24px;
-  margin: 10px 0;
+  margin-top: 10px;
   input {
     margin-right: 10px;
     display: table-cell;
@@ -407,6 +411,9 @@ OrderStyled.ReasonsItem = styled.li`
 `;
 OrderStyled.ConfirmButtonWrapper = styled.div`
   text-align: center;
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-around;
 `;
 OrderStyled.ConfirmButton = styled.button`
   background-color: #fff;
