@@ -20,6 +20,12 @@ export default class VideoRecorder extends React.Component {
     this.stream = null;
   }
 
+  componentWillUnmount(){
+    if( document.getElementById('video-player').srcObject != null){
+      this.closeStream();
+    }
+  }
+
   handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
