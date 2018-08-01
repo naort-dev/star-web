@@ -82,7 +82,7 @@ class Header extends React.Component {
     if (this.searchRef && !this.searchRef.contains(e.target)) {
       this.setState({ showSuggestions: false, searchActive: false });
     }
-    if (this.profileDropDown && !this.profileDropDown.contains(e.target)) {
+    if (this.profileDropDown && !this.profileButton.contains(e.target) && !this.profileDropDown.contains(e.target)) {
       this.setState({ profileDropdown: false });
     }
   }
@@ -207,6 +207,7 @@ class Header extends React.Component {
                   />
                   <HeaderSection.ProfileButton
                     profileUrl={this.state.profilePhoto}
+                    innerRef={(node) => { this.profileButton = node }}
                     hide={this.state.searchActive}
                     onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
                   />
