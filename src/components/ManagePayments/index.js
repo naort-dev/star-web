@@ -62,7 +62,7 @@ class ManagePayments extends React.Component {
       <ManagePaymentsStyled.cardListWrapper>
         <Scrollbars
           autoHeight
-          autoHeightMax={250}
+          autoHeightMax={200}
           autoHide
         >
           {

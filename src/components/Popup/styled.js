@@ -56,7 +56,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   @media(min-width: 768px) {
     width: 50%;
     max-width: 400px;
-    height: ${props => (props.popHeight ? props.popHeight : 'auto')};
+    height: auto;
   }
 `;
 

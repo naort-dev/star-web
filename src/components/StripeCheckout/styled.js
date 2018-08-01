@@ -106,6 +106,7 @@ PaymentStyled.cardItemDetails = styled.span`
   border-radius: 12px;
   padding: 10px;
   color: ${props => (props.selected ? '#fff' : '#333333')};
+  padding-right: 26px;
   width: 100%;
   display: block;
 `;
