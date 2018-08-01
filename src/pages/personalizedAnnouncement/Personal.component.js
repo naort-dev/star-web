@@ -9,6 +9,7 @@ import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import AudioRecorder from '../../components/AudioRecorder';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
+import Loader from '../../components/Loader';
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -397,8 +398,9 @@ export default class Personal extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              {this.props.audioRecorder.showRecorder && this.props.location.search === '?step=1' ?
-                <AudioRecorder {...this.props} />
+              {this.props.audioRecorder.status && this.props.location.search === '?step=1' ?
+                (this.props.audioRecorder.status == "checking" ? <Loader /> :
+                  <AudioRecorder {...this.props} />)
                 :
                 <Request.ImageStackWrapper>
                   <ImageStack

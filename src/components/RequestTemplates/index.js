@@ -3,7 +3,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Templates } from './styled';
 import Popup from '../Popup';
-import { getMobileOperatingSystem, checkDevice } from '../../utils/checkOS'
+import { getMobileOperatingSystem, checkDevice } from '../../utils/checkOS';
 
 
 class RequestTemplates extends React.Component {
@@ -26,11 +26,25 @@ class RequestTemplates extends React.Component {
   }
 
   audioRecorder(displayText) {
-    return checkDevice()
-      .then(
-        () => this.props.showRecorder(displayText),
-        () => this.props.showFallback(displayText),
-      );
+    if (!getMobileOperatingSystem()) {
+      this.props.deviceCheck("checking")
+      return checkDevice()
+        .then(
+          () => {
+            this.props.showRecorder(displayText),
+              this.props.deviceCheck("checked")
+          },
+          () => {
+            this.props.showFallback(displayText),
+              this.props.deviceCheck("checked")
+          }
+        );
+    }
+
+    else {
+      this.props.showRecorder(displayText)
+    }
+
   }
 
   fileHandler(target) {
@@ -48,7 +62,7 @@ class RequestTemplates extends React.Component {
     const url = this.props.audioRecorder.file[target] ? URL.createObjectURL(this.props.audioRecorder.file[target]) : null
     return (
       <Popup
-        closePopUp={() => this.props.closeRecorder() } 
+        closePopUp={() => this.props.closeRecorder()}
       >
         <Templates.Popup>
           <Templates.PopupContainer>
