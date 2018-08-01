@@ -20,10 +20,6 @@ export default class VideoRecorder extends React.Component {
     this.stream = null;
   }
 
-  componentWillUnmount() {
-    this.closeStream();
-  }
-
   handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
@@ -153,7 +149,9 @@ export default class VideoRecorder extends React.Component {
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                <VideoRecorderDiv.InfoText>Kindly record or upload your video</VideoRecorderDiv.InfoText>
+               (this.state.play ? <VideoRecorderDiv.Video id="video-player" controls />
+               : <VideoRecorderDiv.Video id="video-player"  />)
+                
                 :
                 (!this.props.videoRecorder.recordedBlob ?
                   <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
