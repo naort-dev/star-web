@@ -20,8 +20,16 @@ class Header extends React.Component {
       showSuggestions: false,
       profileDropdown: false,
       searchText,
+      profilePhoto: null,
     };
     this.suggestionsFetchDelay=undefined;
+  }
+
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      const profilePhoto = this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.thumbnail_url;
+      this.setState({ profilePhoto });
+    }
   }
 
   componentDidMount() {
@@ -195,6 +203,7 @@ class Header extends React.Component {
                     onClick={this.activateSearch}
                   />
                   <HeaderSection.ProfileButton
+                    profileUrl={this.state.profilePhoto}
                     hide={this.state.searchActive}
                     onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
                   />
