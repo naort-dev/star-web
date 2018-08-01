@@ -5,6 +5,8 @@ import { saveImage } from '../../store/shared/actions/imageViewer';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder'
 import { saveVideo, uploadVideo } from '../../store/shared/actions/videoUploader';
 import { fetchUserDetails, resetUserDetails } from '../../store/shared/actions/getUserDetails';
+import { updateUserDetails } from '../../store/shared/actions/saveSettings';
+import { updateNotification } from '../../store/shared/actions/updateNotification';
 
 const mapStateToProps = state => ({
   session: state.session,
@@ -25,6 +27,8 @@ const mapDispatchToProps = dispatch => ({
   onSaveVideo: (videoFile) => dispatch(saveVideo(videoFile)),
   uploadVideo: () => dispatch(uploadVideo()),
   onSaveImage: imageData => dispatch(saveImage(imageData)),
+  updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
+  updateNotification: obj => dispatch(updateNotification(obj)),
 
 });
 

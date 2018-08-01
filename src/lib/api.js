@@ -25,6 +25,7 @@ class Api {
   static resetPassword = 'user/resetpassword/';
   static getAWSVideo = 'user/get_signed_url/?key=stargram_videos&file_name=';
   static modifyUserDetails = 'user/user_details';
+  static updateNotification = 'user/notification_settings/';
   static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
   static changeRequestStatus = 'request/change_request_status/';
 }

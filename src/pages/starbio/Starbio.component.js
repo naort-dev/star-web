@@ -11,7 +11,7 @@ import Api from '../../lib/api';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import MultiSelect from '../../components/MultiSelect';
 import SelectTags from '../../components/SelectTag';
-import getAWSCredentials from '../../utils/AWSUpload'
+import getAWSCredentials from '../../utils/AWSUpload';
 import Loader from '../../components/Loader';
 import Popup from '../../components/Popup';
 import HeaderSection from '../../components/HeaderSection';
@@ -19,6 +19,7 @@ import { imageSizes } from '../../constants/imageSizes';
 import { SettingsFooter } from '../../components/SettingsFooter';
 import SettingsTab from '../../components/SettingsTab';
 import MyAccount from '../../components/MyAccount';
+import putFunction from '../../utils/putFunction';
 import { recorder } from '../../constants/videoRecorder';
 import { locations } from '../../constants/locations';
 import { ImageStack } from '../../components/ImageStack';
@@ -297,14 +298,47 @@ export default class Starbio extends React.Component {
   }
 
   onMyAccountSave() {
-    if (this.validateIsEmpty('myAccount')) {
-      if (this.state.settingsObj.isCelebrity) {
-        this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
-      } else {
-        console.log('SAVE');
+    const userValue = this.state.settingsObj.userDetails;
+    const notificationValue =this.state.settingsObj.userDetails.notification_settings;
+    const notificationUpdate = {
+      celebrity_starsona_request: notificationValue.celebrity_starsona_request,
+      celebrity_starsona_message: notificationValue.celebrity_starsona_message,
+      celebrity_account_updates: notificationValue.celebrity_account_updates,
+      fan_account_updates: notificationValue.fan_account_updates,
+      fan_starsona_messages: notificationValue.fan_starsona_messages,
+      fan_starsona_videos: notificationValue.fan_starsona_videos,
+      fan_email_starsona_videos: notificationValue.fan_email_starsona_videos,
+    };
+    const settingDetails = {
+      user_details: {
+        first_name: userValue.first_name,
+        last_name: userValue.last_name,
+        email: userValue.email,
+      },
+      celebrity_details: {
+        profession: this.state.profession,
+        description: this.state.bio,
+        charity: this.state.charity,
+        rate: this.state.bookingPrice,
+        weekly_limits: this.state.bookingLimit,
+      },
+    };
+    if (this.state.settingsObj.selectedAccount === 'myAccount') {
+      if (this.validateIsEmpty('myAccount')) {
+        if (this.state.settingsObj.isCelebrity) {
+          this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
+        } else {
+          this.props.updateUserDetails(userValue.id, settingDetails);
+          this.props.updateNotification(notificationUpdate);
+        }
       }
+    } else if (this.validateIsEmpty('starAccount')) {
+      this.props.updateUserDetails(userValue.id, settingDetails);
+      this.props.updateNotification(notificationUpdate);
     }
   }
+
+
 
   onContinueClick() {
     if (this.validateIsEmpty('starAccount')) {
@@ -356,8 +390,6 @@ export default class Starbio extends React.Component {
                 },
               },
             });
-          } else if (this.state.settingsObj.userDetails.celebrity) {
-            console.log('API call for FANSTAR');
           } else {
             this.setState({ settingsObj: { ...this.state.settingsObj, pageView: 'videoView' } });
           }
@@ -814,7 +846,7 @@ export default class Starbio extends React.Component {
             }
             {
               isSettings && isMyAccount ?
-                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} />
+                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} {...this.props} />
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
