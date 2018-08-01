@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import Event from './Event.component';
 import { fetchOccasionlist } from './actions/getOccasionList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
+import { showRecorder, startAudioRecording, saveAudioRecording, deviceCheck, stopAudioRecording, showFallback, saveAudioFile, closeRecorder, clearAll } from '../../store/shared/actions/audioRecorder';
 
 
 const mapStateToProps = state => ({
@@ -11,6 +12,7 @@ const mapStateToProps = state => ({
   userDetails: state.celebDetails.userDetails,
   eventsDetails: state.occasionList.data,
   bookingData: state.bookingData,
+  audioRecorder: state.audioRecorder,
 });
 
 const mapDispatchToProps = dispatch => ({
