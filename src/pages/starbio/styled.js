@@ -27,6 +27,29 @@ LoginContainer.Questionwraps = styled.div`
   height:100%;
   padding-bottom:40px;
 `;
+LoginContainer.VerificationText = styled.h4`
+  color: rgba(51, 51, 51, 1);
+  padding: 20px 0px;
+  font-family: 'Ubuntu-Medium';
+  height: 150px;
+  margin-top:5%;
+  font-size:16px;
+  @media(min-width:768px){
+    font-size:18px;
+  }
+  @media(min-width:1025px){
+    font-size:20px;
+  }
+  
+
+`;
+LoginContainer.recorderWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+LoginContainer.VideoContainerWrapper = styled.div`
+  margin-top:28%;
+`;
 
 LoginContainer.CropperWrapper = styled.div`
   display: flex;
@@ -368,7 +391,24 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 
 `;
+LoginContainer.paragraph = styled.div`
+  margin-top:1%;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align: center;
+  color:rgba(51, 51, 51, 1);
+`;
 LoginContainer.Container = styled.div`
+  margin-top: 5%;
+  margin-bottom: 2%;
+  @media(min-width: 768px) {
+    padding: 0 65px;
+  }
+  @media(min-width: 1025px) {
+    padding: 0 20px;
+  }
+`;
+LoginContainer.VideoContainer = styled.div`
   margin-top: 5%;
   margin-bottom: 2%;
   @media(min-width: 768px) {
