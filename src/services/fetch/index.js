@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import {
-  requestOnSuccess,
+  onRequest,
   requestOnFailed,
   responseOnSuccess,
   responseOnFailed,
@@ -20,7 +20,7 @@ const fetch = axios.create({
 
 const { CancelToken } = axios;
 
-fetch.interceptors.request.use(requestOnSuccess, requestOnFailed);
+fetch.interceptors.request.use(onRequest, requestOnFailed);
 fetch.interceptors.response.use(responseOnSuccess, responseOnFailed);
 
 export { fetch, CancelToken };

@@ -116,6 +116,9 @@ export default class MyVideos extends React.Component {
               isPrivate={isPrivate}
               relationShip={relationShip}
               occasionDate={occasionDate}
+              rateCelebrity={this.props.rateCelebrity}
+              contactSupport={this.props.contactSupport}
+              reportAbuse={this.props.reportAbuse}
             />
           : null
         }
