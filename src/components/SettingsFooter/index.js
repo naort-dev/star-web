@@ -9,7 +9,11 @@ export const SettingsFooter = props => (
         <FooterSection.LeftButton>Cancel</FooterSection.LeftButton>
       </FooterSection.LeftSection>
       <FooterSection.RightSection>
-        <FooterSection.Button onClick={() => props.onSave()}>Save</FooterSection.Button>
+        { props.isCelebrity && props.isMyAccount ?
+          <FooterSection.Button onClick={() => props.onSave()}>Next</FooterSection.Button>
+          :
+          <FooterSection.Button onClick={() => props.onSave()}>Save</FooterSection.Button>
+        }
       </FooterSection.RightSection>
     </FooterSection>
   </React.Fragment>
