@@ -28,14 +28,14 @@ export default (state = { ...initalState }, action) => {
         ...state,
         showRecorder: true,
         target: action.payload,
-        label: action.payload === "for" ? "who is the Starsona video for?" : "who is the Starsona video from?",
+        label: action.payload === "for" ? "Who is the Starsona video for?" : "Who is the Starsona video from?",
       };
       case SHOW_FALLBACK:
       return {
         ...state,
         showFallback: true,
         target: action.payload,
-        label: action.payload === "for" ? "who is the Starsona video for?" : "who is the Starsona video from?",
+        label: action.payload === "for" ? "Who is the Starsona video for?" : "Who is the Starsona video from?",
       };
     case START_AUDIO_RECORDING:
       return {

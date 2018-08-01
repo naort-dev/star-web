@@ -4,6 +4,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Templates } from './styled';
 import Popup from '../Popup';
 import { getMobileOperatingSystem, checkDevice } from '../../utils/checkOS';
+import AudioRecorder from '../AudioRecorder';
 
 
 class RequestTemplates extends React.Component {
@@ -66,13 +67,14 @@ class RequestTemplates extends React.Component {
       >
         <Templates.Popup>
           <Templates.PopupContainer>
-            <audio id="recorded-audio" src={url} controls />
+            {/* <audio id="recorded-audio" src={url} controls />
             <Templates.UploadWrapper>
               <Templates.NoVideoButton >
                 Upload Pronounication
           </Templates.NoVideoButton>
               <Templates.UploadInput type="file" onChange={() => this.fileHandler(target)} id={target} accept="audio/*;capture=microphone" />
-            </Templates.UploadWrapper>
+            </Templates.UploadWrapper> */}
+            <AudioRecorder {...this.props} />
           </Templates.PopupContainer>
         </Templates.Popup>
       </Popup>

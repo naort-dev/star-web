@@ -32,9 +32,9 @@ export default class AudioRecorder extends React.Component {
         <AudioRecorderDiv.Audio id="uploaded-audio" controls />
         <AudioRecorderDiv.UploadWrapper>
           <AudioRecorderDiv.TextButton >
-            Upload Pronounication
+            Record Pronounication
         </AudioRecorderDiv.TextButton>
-          <AudioRecorderDiv.UploadInput type="file" id={target} onChange={() => this.fileHandler(target)} accept="audio/*;capture=microphone" />
+          <AudioRecorderDiv.UploadInput type="file" id={target} onChange={() => this.fileHandler(target)} />
         </AudioRecorderDiv.UploadWrapper>
       </React.Fragment>
     );
