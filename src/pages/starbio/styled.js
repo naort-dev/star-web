@@ -22,6 +22,41 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.SuccessText = styled.p`
+  font-size: 18px;
+  margin-top: 5%;
+  color:rgba(51, 51, 51, 1);
+  font-family: 'Ubuntu-Regular';
+  margin-bottom: 5%;
+  text-align: left;
+  width: 100%;
+ `;
+
+ LoginContainer.SuccessTextBold = styled.p`
+ font-size: 18px;
+ margin-top: 5%;
+ font-family: 'Ubuntu-Bold';
+ margin-bottom: 5%;
+ text-align: left;
+ width: 100%;
+`;
+LoginContainer.SuccessContainer = styled.div`
+  height: 80%;
+  width: 100%;
+  padding: 0px 24px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  @media(min-width:768px){
+    padding: 0px 100px;
+    height:45%;
+  }
+  @media(min-width:1025px){
+    height:80%;
+    padding:0px 65px;
+  }
+ `;
 LoginContainer.Questionwraps = styled.div`
   width:100%;
   height:100%;

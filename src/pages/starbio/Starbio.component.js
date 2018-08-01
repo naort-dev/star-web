@@ -584,7 +584,14 @@ export default class Starbio extends React.Component {
       .then(response => {
         axios.post(response.url, response.formData)
           .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-            ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+            profession: this.state.profession,
+            searchTags: this.state.searchTags,
+            description: this.state.bio,
+            rate: this.state.bookingPrice,
+            weekly_limits: this.state.bookingLimit,
+            charity: this.state.charity,
+            profile_video: response.filename,
+            availability: true
           },
             {
               "headers": {
@@ -595,10 +602,15 @@ export default class Starbio extends React.Component {
           ).then(() => {
             this.props.fetchUserDetails(this.props.session.auth_token.id);
             this.setState({ upload: false })
-            this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+            this.setState({ settingsObj: { ...this.state.settingsObj, pageView: 'suceess' } });
           })
       })
-
+  }
+  onSucesssContinueClick = () => {
+    if (localStorage) {
+      localStorage.removeItem('bioDetails');
+    }
+    this.props.history.push('/');
   }
 
   renderButton = () => {
@@ -611,6 +623,16 @@ export default class Starbio extends React.Component {
             {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
               <FooterSection.Button onClick={this.onVideoSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
               : <FooterSection.DisabledButton onClick={() => this.onVideoSubmit}>Submit</FooterSection.DisabledButton>}
+          </FooterSection.RightSection>
+        </FooterSection>
+      );
+    } else if (this.state.settingsObj.pageView === 'suceess') {
+      return (
+        <FooterSection>
+          <FooterSection.LeftSection>
+          </FooterSection.LeftSection>
+          <FooterSection.RightSection>
+            <FooterSection.Button onClick={() => { this.onSucesssContinueClick(); }}>Continue</FooterSection.Button>
           </FooterSection.RightSection>
         </FooterSection>
       );
@@ -642,7 +664,12 @@ export default class Starbio extends React.Component {
         </LoginContainer.recorderWrapper>
       );
     } else if (this.state.settingsObj.pageView === 'suceess') {
-      return ('Sucesss');
+      return (
+        <ImageStack
+          featureImage="assets/images/Stadium_800x376.jpg"
+          imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+        />
+      );
     }
     return (
       <LoginContainer.ImageWrapper>
@@ -926,6 +953,17 @@ export default class Starbio extends React.Component {
                               </React.Fragment>
                               :
                               null
+                            }
+                            {
+                              this.state.settingsObj.pageView === 'suceess' ?
+                                <LoginContainer.SuccessContainer>
+                                  <LoginContainer.Heading> Your Star profile has been created </LoginContainer.Heading>
+                                  <LoginContainer.SuccessText>
+                                    Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</LoginContainer.SuccessText>
+                                  <LoginContainer.SuccessTextBold>-    Starsona Team</LoginContainer.SuccessTextBold>
+                                </LoginContainer.SuccessContainer>
+                                :
+                                null
                             }
                           </React.Fragment>
                         }
