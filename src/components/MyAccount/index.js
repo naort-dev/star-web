@@ -10,9 +10,6 @@ export default class MyAccount extends React.Component {
       ...props.accountDetails
     };
   }
-  handleInputChange =(data, type) => {
-    this.setState({ [type]: data });
-  }
   render() {
     this.state = {
       ...this.props.accountDetails,
@@ -31,7 +28,7 @@ export default class MyAccount extends React.Component {
                   <Accounts.InputWrapper>
                     <Accounts.ImageLabel>Profile Image </Accounts.ImageLabel>
                     <Accounts.WrapsInput>
-                      <Avatar image={this.state.avatar_photo ? this.state.avatar_photo.image_url : defaultImage} />
+                      <Avatar autoUpload={true} image={this.state.avatar_photo ? this.state.avatar_photo.image_url : defaultImage} {...this.props} />
                     </Accounts.WrapsInput>
                   </Accounts.InputWrapper>
                   <Templates.InputWrapper>
