@@ -20,6 +20,10 @@ export default class VideoRecorder extends React.Component {
     this.stream = null;
   }
 
+  componentWillUnmount() {
+    this.closeStream();
+  }
+
   handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
@@ -70,7 +74,7 @@ export default class VideoRecorder extends React.Component {
     }
     else {
       const fileURL = URL.createObjectURL(file);
-      if (checkMediaRecorderSupport() && !getMobileOperatingSystem()){
+      if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
         this.setState({ play: true }, function () {
           document.getElementById('video-player').src = fileURL;
         });
@@ -80,7 +84,7 @@ export default class VideoRecorder extends React.Component {
           document.getElementById('fallback-video').src = fileURL;
         });
       }
-      
+
       this.props.onSaveVideo({ videoFile: file, extension: file.type.split('/')[1] })
       if (file) {
         reader.readAsDataURL(file);
@@ -92,6 +96,7 @@ export default class VideoRecorder extends React.Component {
     if (rerecord === true) {
       this.props.onRerecord();
       this.recordedBlobs = [];
+      document.getElementById('video-player').src = null;
     }
     this.props.onStartRecording();
     return this.captureUserMedia({
@@ -144,12 +149,12 @@ export default class VideoRecorder extends React.Component {
   render() {
     return (
       <React.Fragment>
-        { checkMediaRecorderSupport() && !getMobileOperatingSystem() ?
+        {checkMediaRecorderSupport() && !getMobileOperatingSystem() ?
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                <VideoRecorderDiv.Video id="video-player" autoPlay controls={this.state.play} />
-               :
+                <VideoRecorderDiv.InfoText>Kindly record or upload your video</VideoRecorderDiv.InfoText>
+                :
                 (!this.props.videoRecorder.recordedBlob ?
                   <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
                   :
@@ -166,18 +171,18 @@ export default class VideoRecorder extends React.Component {
                     <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
                     <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                   </VideoRecorderDiv.UploadWrapper>
-                  </VideoRecorderDiv.Wrapper>
+                </VideoRecorderDiv.Wrapper>
                 : (this.props.videoRecorder.start == true ?
                   <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
                   <VideoRecorderDiv.Wrapper>
                     <VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>
+                      <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>
                     </VideoRecorderDiv.UploadWrapper>
                     <VideoRecorderDiv.UploadWrapper>
                       <VideoRecorderDiv.NoVideoButton>Upload</VideoRecorderDiv.NoVideoButton>
                       <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                     </VideoRecorderDiv.UploadWrapper>
-                    </VideoRecorderDiv.Wrapper>)
+                  </VideoRecorderDiv.Wrapper>)
             }
           </VideoRecorderDiv>
           :

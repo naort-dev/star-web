@@ -62,6 +62,7 @@ export default class AudioRecorder extends React.Component {
           <React.Fragment>
             <AudioRecorderDiv.Label>{this.props.audioRecorder.label}</AudioRecorderDiv.Label>
             <ReactMic
+              id="react-mic"
               record={this.props.audioRecorder.start ? this.props.audioRecorder.start : false}
               className="sound-wave"
               onStop={this.onStop}
@@ -69,7 +70,7 @@ export default class AudioRecorder extends React.Component {
               backgroundColor="#FF6C58"
               save={this.props.audioRecorder.stop}
             />
-            <AudioRecorderDiv.Audio  src={playbackURL} controls />
+            <AudioRecorderDiv.Audio id="audio-rec" src={playbackURL} controls />
             {this.props.audioRecorder.start ?
               <AudioRecorderDiv.CloseButton onClick={callbackFunction} type="button"></AudioRecorderDiv.CloseButton>
               : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}
