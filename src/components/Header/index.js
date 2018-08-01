@@ -82,6 +82,9 @@ class Header extends React.Component {
     if (this.searchRef && !this.searchRef.contains(e.target)) {
       this.setState({ showSuggestions: false, searchActive: false });
     }
+    if (this.profileDropDown && !this.profileDropDown.contains(e.target)) {
+      this.setState({ profileDropdown: false });
+    }
   }
 
   activateSearch = () => {
@@ -209,7 +212,7 @@ class Header extends React.Component {
                   />
                   {
                     this.state.profileDropdown &&
-                      <HeaderSection.ProfileDropdown>
+                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
                         <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
                           <Link to="/user/favorites">
