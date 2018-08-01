@@ -1,5 +1,6 @@
 import React from 'react';
 import { Templates } from '../../components/RequestTemplates/styled';
+import ManagePayments from '../ManagePayments';
 import Accounts from './styled';
 import Avatar from '../avatar';
 
@@ -7,19 +8,30 @@ export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.accountDetails
+      ...props.accountDetails,
+      managePayment: false,
     };
+  }
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      ...nextProps.accountDetails,
+      ...this.state,
+    });
   }
   handleInputChange =(data, type) => {
     this.setState({ [type]: data });
   }
   render() {
-    this.state = {
-      ...this.props.accountDetails,
-    };
     const defaultImage = '../../assets/images/default-cover.jpg';
     return (
       <React.Fragment>
+        {
+          this.state.managePayment ?
+            <ManagePayments 
+              onClosePayments={() => this.setState({ managePayment: false })}
+            />
+          : null
+        }
         <Accounts.ComponentWrapper>
           <Accounts.ComponentWrapperScroll
             autoHide
@@ -88,7 +100,11 @@ export default class MyAccount extends React.Component {
                   <Templates.InputWrapper>
                     <Templates.Label>Payment methods</Templates.Label>
                     <Templates.WrapsInput>
-                      <Accounts.PaymentLabel>Manage your payment methods</Accounts.PaymentLabel>
+                      <Accounts.PaymentLabel
+                        onClick={() => this.setState({ managePayment: true })}
+                      >
+                        Manage your payment methods
+                      </Accounts.PaymentLabel>
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>

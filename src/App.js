@@ -110,7 +110,6 @@ class App extends React.Component {
                 <Route path="/:id/request/event" component={Event} />
                 <Route path="/:id/request/personal" component={Personal} />
                 <Route path="/:id/request/confirm" component={Confirm} />
-                <Route path="/settings" component={Starbio} />
 
                 {/* logged in areas */}
 
@@ -118,6 +117,13 @@ class App extends React.Component {
                   path="/user/favorites"
                   component={protectRoute({
                     RouteComponent: Favourites,
+                    // roles: allUserRoles,
+                  })}
+                />
+                <Route
+                  path="/settings"
+                  component={protectRoute({
+                    RouteComponent: Starbio,
                     // roles: allUserRoles,
                   })}
                 />

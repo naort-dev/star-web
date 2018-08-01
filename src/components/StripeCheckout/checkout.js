@@ -36,7 +36,10 @@ class checkout extends React.Component {
     this.props.setStripe(this.props.stripe);
   }
   setErrorMsg = (event, element) => {
-    const cardTypeImage = event.brand && event.brand !== 'unknown' ? `assets/images/card-icons/${event.brand}.png` : null;
+    let { cardTypeImage } = this.state;
+    if (event.elementType === 'cardNumber') {
+      cardTypeImage = event.brand && event.brand !== 'unknown' ? `assets/images/card-icons/${event.brand}.png` : null;
+    }
     const errorMsg = event.error ? event.error.message : '';
     this.setState({ [element]: errorMsg, cardTypeImage });
   }
