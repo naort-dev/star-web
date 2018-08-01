@@ -40,7 +40,7 @@ Accounts.PaymentLabel = styled.div`
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
-    width:55%;
+    width:100%;
     display:flex;
     align-items:center;
     padding-right: 10px;
@@ -48,7 +48,7 @@ Accounts.PaymentLabel = styled.div`
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
+    
    
   }
   @media(min-width:1920px){

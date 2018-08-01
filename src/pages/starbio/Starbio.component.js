@@ -11,6 +11,7 @@ import Api from '../../lib/api';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import MultiSelect from '../../components/MultiSelect';
 import SelectTags from '../../components/SelectTag';
+import getAWSCredentials from '../../utils/AWSUpload'
 import Loader from '../../components/Loader';
 import Popup from '../../components/Popup';
 import HeaderSection from '../../components/HeaderSection';
@@ -19,6 +20,7 @@ import { SettingsFooter } from '../../components/SettingsFooter';
 import SettingsTab from '../../components/SettingsTab';
 import MyAccount from '../../components/MyAccount';
 import { recorder } from '../../constants/videoRecorder';
+import { locations } from '../../constants/locations';
 import { ImageStack } from '../../components/ImageStack';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 
@@ -42,6 +44,7 @@ export default class Starbio extends React.Component {
       bio: '',
       bookingPrice: '',
       bookingLimit: '',
+      upload: false,
       imageError: {
         featuredImage: null,
         firstImage: null,
@@ -59,7 +62,7 @@ export default class Starbio extends React.Component {
         starDetails: null,
         selectedAccount: 'myAccount',
         isCelebrity: false,
-        pageView: 'videoView',
+        pageView: 'starBio',
       },
       errors: {
         bio: false,
@@ -128,7 +131,7 @@ export default class Starbio extends React.Component {
         starDetails,
         selectedAccount: 'myAccount',
         isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
-        pageView: 'videoView',
+        pageView: 'starBio',
       };
       const professionList = starDetails && starDetails.profession_details && starDetails.profession_details.length ? starDetails.profession_details.map(professionObj => professionObj.id) : [];
       const stateObj = {
@@ -295,24 +298,26 @@ export default class Starbio extends React.Component {
 
   onMyAccountSave() {
     if (this.validateIsEmpty('myAccount')) {
-      console.log('Saved', this.state.settingsObj.userDetails);
-    } else {
-      console.log('MYACCOUNTERRORS', this.state.settingsObj.myAccountErrors)
+      if (this.state.settingsObj.isCelebrity) {
+        this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
+      } else {
+        console.log('SAVE');
+      }
     }
   }
 
   onContinueClick() {
     if (this.validateIsEmpty('starAccount')) {
-      this.setState({ saving: true })
+      this.setState({ saving: true });
       const bioDetails = {
         profession: this.state.profession,
         searchTags: this.state.searchTags,
         bio: this.state.bio,
         bookingPrice: this.state.bookingPrice,
         bookingLimit: this.state.bookingLimit,
-        charity: this.state.charity
+        charity: this.state.charity,
       }
-      localStorage.setItem("bioDetails", JSON.stringify(bioDetails));
+      localStorage.setItem('bioDetails', JSON.stringify(bioDetails));
       this.props.onSaveImage({
         avatar: { rotations: this.state.rotations.avatar, imageFile: this.state.avatarFile, imageURL: this.state.avatar },
         featuredImage: { rotations: this.state.rotations.featuredImage, imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage },
@@ -335,20 +340,28 @@ export default class Starbio extends React.Component {
                 'Authorization': `token ${this.props.session.auth_token.authentication_token}`
               }
             })
-          this.setState({ saving: false })
+          this.setState({ saving: false });
         })
-        .then(() => this.props.history.push({
-          pathname: '/recordvideo', state: {
-            bioDetails: {
-              charity: this.state.charity,
-              weekly_limits: this.state.bookingLimit,
-              rate: this.state.bookingPrice,
-              profession: this.state.profession,
-              description: this.state.bio
-            }
+        .then(() => {
+          if (!(this.props.history.location.pathname === '/settings')) {
+            this.props.history.push({
+              pathname: '/recordvideo',
+              state: {
+                bioDetails: {
+                  charity: this.state.charity,
+                  weekly_limits: this.state.bookingLimit,
+                  rate: this.state.bookingPrice,
+                  profession: this.state.profession,
+                  description: this.state.bio,
+                },
+              },
+            });
+          } else if (this.state.settingsObj.userDetails.celebrity) {
+            console.log('API call for FANSTAR');
+          } else {
+            this.setState({ settingsObj: { ...this.state.settingsObj, pageView: 'videoView' } });
           }
-        })
-        )
+        });
     }
   }
 
@@ -373,7 +386,7 @@ export default class Starbio extends React.Component {
         }
       });
     } else {
-     this.setState({
+      this.setState({
         settingsObj: {
           ...this.state.settingsObj,
           userDetails: {
@@ -490,7 +503,7 @@ export default class Starbio extends React.Component {
 
 
   validateIsEmpty(formName) {
-    if(formName === 'starAccount') {
+    if (formName === 'starAccount') {
       if (!this.state.bio) {
         this.setState({ errors: { ...this.state.errors, bio: true } });
         return false;
@@ -508,7 +521,7 @@ export default class Starbio extends React.Component {
         return false;
       }
       return true
-    } else if(formName === 'myAccount') {
+    } else if (formName === 'myAccount') {
       let settingsObj = { ...this.state.settingsObj };
       if (!settingsObj.userDetails.first_name) {
         settingsObj.myAccountErrors.first_name = true;
@@ -522,7 +535,7 @@ export default class Starbio extends React.Component {
       }
       return true;
     }
-    
+
 
 
   }
@@ -558,6 +571,169 @@ export default class Starbio extends React.Component {
   }
   changeUserStatus = () => {
     this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } });
+  }
+  onVideoSubmit = () => {
+    this.setState({ upload: true });
+    let signupVideo;
+    if (this.props.videoUploader.savedFile != null) {
+      signupVideo = this.props.videoUploader.savedFile;
+    } else {
+      signupVideo = new File([this.props.videoRecorder.recordedBuffer], `signupVideo.${this.props.videoUploader.extension}`);
+    }
+    getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
+      .then(response => {
+        axios.post(response.url, response.formData)
+          .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+            ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+          },
+            {
+              "headers": {
+                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+              }
+            }
+          )
+          ).then(() => {
+            this.props.fetchUserDetails(this.props.session.auth_token.id);
+            this.setState({ upload: false })
+            this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+          })
+      })
+
+  }
+
+  renderButton = () => {
+    if (this.state.settingsObj.pageView === 'videoView') {
+      return (
+        <FooterSection>
+          <FooterSection.LeftSection>
+          </FooterSection.LeftSection>
+          <FooterSection.RightSection>
+            {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
+              <FooterSection.Button onClick={this.onVideoSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
+              : <FooterSection.DisabledButton onClick={() => this.onVideoSubmit}>Submit</FooterSection.DisabledButton>}
+          </FooterSection.RightSection>
+        </FooterSection>
+      );
+    }
+    return (
+      <FooterSection>
+        <FooterSection.LeftSection>
+        </FooterSection.LeftSection>
+        <FooterSection.RightSection>
+          {this.state.featuredImage != null && (
+            this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
+          ) ?
+            <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
+              {this.state.saving ? 'Saving...' : 'Continue'}
+            </FooterSection.Button>
+            :
+            <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick(); }}>Continue </FooterSection.DisabledButton>
+          }
+
+        </FooterSection.RightSection>
+      </FooterSection>
+    );
+  }
+  renderRightView = (options) => {
+    if (this.state.settingsObj.pageView === 'videoView') {
+      return (
+        <LoginContainer.recorderWrapper>
+          <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
+        </LoginContainer.recorderWrapper>
+      );
+    } else if (this.state.settingsObj.pageView === 'suceess') {
+      return ('Sucesss');
+    }
+    return (
+      <LoginContainer.ImageWrapper>
+        <LoginContainer.FeaturedImage
+          style={{ height: this.state.imageHeights.featured }}
+          innerRef={(node) => this.featuredImage = node} imageType="featured" image={this.state.featuredImage}>
+          {this.state.loaders.featuredImage === false ?
+            <ReactLoader loaded={false} className="spinner"
+              zIndex={2e9} options={options} /> :
+            <LoginContainer.ImageInner>
+              {this.state.featuredImage != null ?
+
+                this.FullscreenUploader("featuredImage") :
+                <React.Fragment>
+                  <LoginContainer.UploadWrapper >
+                    <LoginContainer.UploadButton onClick={() => { }} />
+                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                  </LoginContainer.UploadWrapper>
+                  <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
+                  <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
+                  {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
+                </React.Fragment>
+              }
+            </LoginContainer.ImageInner>
+          }
+        </LoginContainer.FeaturedImage>
+        <LoginContainer.FirstImage
+          style={{ height: this.state.imageHeights.first }}
+          innerRef={(node) => this.firstImage = node} imageType="firstImage" image={this.state.firstImage}>
+          {this.state.loaders.firstImage === false ?
+            <ReactLoader loaded={false} className="spinner"
+              zIndex={2e9} options={options} /> :
+            <LoginContainer.ImageInner>
+              {this.state.firstImage != null ?
+                this.FullscreenUploader("firstImage") :
+                <React.Fragment>
+                  <LoginContainer.UploadWrapper>
+                    <LoginContainer.UploadButton onClick={() => { }} />
+                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+                  </LoginContainer.UploadWrapper>
+                  <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
+                  <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
+                  {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
+                </React.Fragment>
+              }
+            </LoginContainer.ImageInner>
+          }
+        </LoginContainer.FirstImage>
+        <LoginContainer.SecondImage
+          style={{ height: this.state.imageHeights.second }}
+          innerRef={(node) => this.secondImage = node} imageType="secondImage" image={this.state.secondImage}>
+          {this.state.loaders.secondImage === false ?
+            <ReactLoader loaded={false} className="spinner"
+              zIndex={2e9} options={options} /> :
+            <LoginContainer.ImageInner>
+              {this.state.secondImage != null ?
+
+                this.FullscreenUploader("secondImage") :
+                <React.Fragment>
+                  <LoginContainer.UploadWrapper>
+                    <LoginContainer.UploadButton onClick={() => { }} />
+                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                  </LoginContainer.UploadWrapper>
+                  <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
+                  <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
+                  {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
+                </React.Fragment>
+              }
+            </LoginContainer.ImageInner>
+          }
+
+        </LoginContainer.SecondImage>
+
+        <LoginContainer.AvatarContainer>
+          <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
+            {this.state.avatar != null ?
+              this.FullscreenUploader("avatar") :
+              <LoginContainer.UploadWrapper type="avatar">
+                <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
+                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
+              </LoginContainer.UploadWrapper>
+            }
+          </LoginContainer.Avatar>
+          <LoginContainer.HeadingWrapper>
+            <LoginContainer.FeaturedText> Profile Image </LoginContainer.FeaturedText>
+            <LoginContainer.CaptionText>At least 100x100 </LoginContainer.CaptionText>
+          </LoginContainer.HeadingWrapper>
+        </LoginContainer.AvatarContainer>
+
+      </LoginContainer.ImageWrapper>
+    );
   }
 
   render() {
@@ -611,7 +787,7 @@ export default class Starbio extends React.Component {
             }
             {
               isSettings && isMyAccount ?
-                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{...this.state.settingsObj.myAccountErrors}} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} />
+                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} />
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
@@ -637,6 +813,8 @@ export default class Starbio extends React.Component {
                                 </LoginContainer.Container>
                               </LoginContainer.VideoContainerWrapper>
                               :
+                              null}
+                            {this.state.settingsObj.pageView === 'starBio' ?
                               <React.Fragment>
                                 <LoginContainer.InputwrapperDiv>
                                   <LoginContainer.InputWrapper>
@@ -746,6 +924,8 @@ export default class Starbio extends React.Component {
                                   </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
                               </React.Fragment>
+                              :
+                              null
                             }
                           </React.Fragment>
                         }
@@ -759,28 +939,16 @@ export default class Starbio extends React.Component {
               null
               :
               <LoginContainer.ButtonControllerWrapper>
-              {!isSettings || (isSettings && !isMyAccount && !this.state.settingsObj.starDetails) ?
-                  <SettingsFooter onSave={this.onMyAccountSave.bind(this)}/>
-                  :
-                  <FooterSection>
-                    <FooterSection.LeftSection>
-                    </FooterSection.LeftSection>
-                    <FooterSection.RightSection>
-                      {this.state.featuredImage != null && (
-                        this.state.firstImage != null && this.state.secondImage != null && this.state.avatar != null
-                      ) ?
-                        <FooterSection.Button disabled={this.state.saving} onClick={() => { this.onContinueClick() }} >
-                          {this.state.saving ? 'Saving...' : 'Continue'}
-                        </FooterSection.Button>
-                        :
-                        <FooterSection.DisabledButton disabled={true} onClick={() => { this.onContinueClick(); }}>Continue </FooterSection.DisabledButton>
-                      }
 
-                    </FooterSection.RightSection>
-                  </FooterSection>
+                {!isSettings || (isSettings && !isMyAccount && !this.state.settingsObj.starDetails) ?
 
+                  this.renderButton()
                   :
-                  <SettingsFooter />
+                  <SettingsFooter
+                    isCelebrity={this.state.settingsObj.userDetails.celebrity}
+                    isMyAccount={isMyAccount}
+                    onSave={this.onMyAccountSave.bind(this)}
+                  />
 
 
                 }
@@ -791,111 +959,14 @@ export default class Starbio extends React.Component {
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection>
             {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
-            {this.state.settingsObj.pageView === 'videoView' ?
-              <React.Fragment>
-                <LoginContainer.recorderWrapper>
-                  <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
-                </LoginContainer.recorderWrapper>
-              </React.Fragment>
-              :
-              null
-
-            }
             {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
               <ImageStack
                 featureImage="assets/images/Stadium_800x376.jpg"
                 imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
               />
               :
+              this.renderRightView(options)
 
-              <LoginContainer.ImageWrapper>
-                <LoginContainer.FeaturedImage
-                  style={{ height: this.state.imageHeights.featured }}
-                  innerRef={(node) => this.featuredImage = node} imageType="featured" image={this.state.featuredImage}>
-                  {this.state.loaders.featuredImage === false ?
-                    <ReactLoader loaded={false} className="spinner"
-                      zIndex={2e9} options={options} /> :
-                    <LoginContainer.ImageInner>
-                      {this.state.featuredImage != null ?
-
-                        this.FullscreenUploader("featuredImage") :
-                        <React.Fragment>
-                          <LoginContainer.UploadWrapper >
-                            <LoginContainer.UploadButton onClick={() => { }} />
-                            <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
-                          </LoginContainer.UploadWrapper>
-                          <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
-                          <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
-                          {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
-                        </React.Fragment>
-                      }
-                    </LoginContainer.ImageInner>
-                  }
-                </LoginContainer.FeaturedImage>
-                <LoginContainer.FirstImage
-                  style={{ height: this.state.imageHeights.first }}
-                  innerRef={(node) => this.firstImage = node} imageType="firstImage" image={this.state.firstImage}>
-                  {this.state.loaders.firstImage === false ?
-                    <ReactLoader loaded={false} className="spinner"
-                      zIndex={2e9} options={options} /> :
-                    <LoginContainer.ImageInner>
-                      {this.state.firstImage != null ?
-                        this.FullscreenUploader("firstImage") :
-                        <React.Fragment>
-                          <LoginContainer.UploadWrapper>
-                            <LoginContainer.UploadButton onClick={() => { }} />
-                            <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
-                          </LoginContainer.UploadWrapper>
-                          <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
-                          <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
-                          {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
-                        </React.Fragment>
-                      }
-                    </LoginContainer.ImageInner>
-                  }
-                </LoginContainer.FirstImage>
-                <LoginContainer.SecondImage
-                  style={{ height: this.state.imageHeights.second }}
-                  innerRef={(node) => this.secondImage = node} imageType="secondImage" image={this.state.secondImage}>
-                  {this.state.loaders.secondImage === false ?
-                    <ReactLoader loaded={false} className="spinner"
-                      zIndex={2e9} options={options} /> :
-                    <LoginContainer.ImageInner>
-                      {this.state.secondImage != null ?
-
-                        this.FullscreenUploader("secondImage") :
-                        <React.Fragment>
-                          <LoginContainer.UploadWrapper>
-                            <LoginContainer.UploadButton onClick={() => { }} />
-                            <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
-                          </LoginContainer.UploadWrapper>
-                          <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
-                          <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
-                          {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
-                        </React.Fragment>
-                      }
-                    </LoginContainer.ImageInner>
-                  }
-
-                </LoginContainer.SecondImage>
-
-                <LoginContainer.AvatarContainer>
-                  <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
-                    {this.state.avatar != null ?
-                      this.FullscreenUploader("avatar") :
-                      <LoginContainer.UploadWrapper type="avatar">
-                        <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
-                        <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
-                      </LoginContainer.UploadWrapper>
-                    }
-                  </LoginContainer.Avatar>
-                  <LoginContainer.HeadingWrapper>
-                    <LoginContainer.FeaturedText> Profile Image </LoginContainer.FeaturedText>
-                    <LoginContainer.CaptionText>At least 100x100 </LoginContainer.CaptionText>
-                  </LoginContainer.HeadingWrapper>
-                </LoginContainer.AvatarContainer>
-
-              </LoginContainer.ImageWrapper>
             }
           </LoginContainer.RightSection>
         </LoginContainer>
