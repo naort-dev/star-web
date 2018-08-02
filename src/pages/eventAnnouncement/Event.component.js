@@ -162,7 +162,6 @@ export default class Event extends React.Component {
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
   render() {
-    console.log("props", this.props)
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
