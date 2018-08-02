@@ -25,7 +25,7 @@ export default class MyAccount extends React.Component {
                   <Accounts.InputWrapper>
                     <Accounts.ImageLabel>Profile Image </Accounts.ImageLabel>
                     <Accounts.WrapsInput>
-                      <Avatar autoUpload={true} image={this.state.avatar_photo ? this.state.avatar_photo.image_url : defaultImage} {...this.props} />
+                      <Avatar autoUpload={true} image={this.props.accountDetails.avatar_photo ? this.props.accountDetails.avatar_photo.image_url : defaultImage} {...this.props} />
                     </Accounts.WrapsInput>
                   </Accounts.InputWrapper>
                   <Templates.InputWrapper>
