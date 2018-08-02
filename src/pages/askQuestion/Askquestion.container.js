@@ -11,6 +11,7 @@ const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   videoRecorder: state.videoRecorder,
+  bookingData: state.bookingData,
   session: state.session,
   videoUploader: state.videoUploader,
 });

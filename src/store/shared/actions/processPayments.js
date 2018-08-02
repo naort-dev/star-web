@@ -217,11 +217,13 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
     formData.append('to_audio_file', bookingData.to_audio_file);
   }
   let ApiUrl = Api.starsonaRequest;
+  let method = 'post';
   if (bookingData.requestId) {
     ApiUrl = `${ApiUrl}${bookingData.requestId}/`;
+    method = 'put';
   }
   dispatch(paymentFetchStart());
-  return fetch.post(ApiUrl, formData, {
+  return fetch[method](ApiUrl, formData, {
     headers: {
       'Authorization': `token ${authToken}`,
     },

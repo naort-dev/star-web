@@ -163,6 +163,13 @@ export default class OrderDetails extends React.Component {
         to_audio_file: orderDetails.from_whereto_audio_file,
       };
       redirectUrl = `/${orderDetails.celebrity_id}/request/event`;
+    } else if (orderDetails.request_type === 3) { // Q&A
+      bookingData = {
+        ...bookingData,
+        question: orderDetails.booking_title,
+        requestVideo: orderDetails.request_video
+      };
+      redirectUrl = `/${orderDetails.celebrity_id}/request/ask`;
     }
     this.props.setBookingDetails(bookingData);
     this.props.history.push(redirectUrl);

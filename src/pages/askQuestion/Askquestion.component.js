@@ -15,7 +15,7 @@ export default class Askquestion extends React.Component {
     super(props);
     this.state = {
       loginRedirect: false,
-      question: '',
+      question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
     };
   }
@@ -137,7 +137,7 @@ export default class Askquestion extends React.Component {
             </HeaderSection>
             <Request.RightSection>
               <Request.recorderWrapper>
-                <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
+                <VideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} />
               </Request.recorderWrapper>
             </Request.RightSection>
             <Request.LeftSection>
