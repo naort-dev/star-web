@@ -121,7 +121,9 @@ HeaderSection.ProfileDropdownItem = styled.li`
   font-size: 15px;
   padding: 10px 0;
   border-bottom: 1px solid #ccc;
+  color: #333333;
   cursor: pointer;
+  text-decoration: none;
   &:hover {
     color: #FF6C58;
   }

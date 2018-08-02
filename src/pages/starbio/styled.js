@@ -22,6 +22,77 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.ImageStackWrapper = styled.div`
+  display:none;
+  width:100%;
+  height:100%;
+  @media(min-width:1025px){
+    display:block;
+  }
+`;
+LoginContainer.SuccessText = styled.p`
+  font-size: 18px;
+  margin-top: 5%;
+  color:rgba(51, 51, 51, 1);
+  font-family: 'Ubuntu-Regular';
+  margin-bottom: 5%;
+  text-align: left;
+  width: 100%;
+ `;
+
+ LoginContainer.SuccessTextBold = styled.p`
+ font-size: 18px;
+ margin-top: 5%;
+ font-family: 'Ubuntu-Bold';
+ margin-bottom: 5%;
+ text-align: left;
+ width: 100%;
+`;
+LoginContainer.SuccessContainer = styled.div`
+  height: 80%;
+  width: 100%;
+  padding: 0px 24px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  @media(min-width:768px){
+    padding: 0px 100px;
+    height:45%;
+  }
+  @media(min-width:1025px){
+    height:80%;
+    padding:0px 65px;
+  }
+ `;
+LoginContainer.Questionwraps = styled.div`
+  width:100%;
+  height:100%;
+  padding-bottom:40px;
+`;
+LoginContainer.VerificationText = styled.h4`
+  color: rgba(51, 51, 51, 1);
+  padding: 20px 0px;
+  font-family: 'Ubuntu-Medium';
+  height: 150px;
+  margin-top:5%;
+  font-size:16px;
+  @media(min-width:768px){
+    font-size:18px;
+  }
+  @media(min-width:1025px){
+    font-size:20px;
+  }
+  
+
+`;
+LoginContainer.recorderWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+LoginContainer.VideoContainerWrapper = styled.div`
+  margin-top:28%;
+`;
 
 LoginContainer.CropperWrapper = styled.div`
   display: flex;
@@ -55,8 +126,14 @@ LoginContainer.CropperButton = styled.div`
   border-radius: 5px;
   border: 2px solid #FF6C58;
 `;
+LoginContainer.ComponentWrapper = styled.div`
+  @media(min-width:1025px){
+    height:calc(100% - 40px);
+  }
+  
+`;
 
-Request.ComponentWrapperScroll = styled(Scrollbars)`
+LoginContainer.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
@@ -356,7 +433,24 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 
 `;
+LoginContainer.paragraph = styled.div`
+  margin-top:1%;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align: center;
+  color:rgba(51, 51, 51, 1);
+`;
 LoginContainer.Container = styled.div`
+  margin-top: 5%;
+  margin-bottom: 2%;
+  @media(min-width: 768px) {
+    padding: 0 65px;
+  }
+  @media(min-width: 1025px) {
+    padding: 0 20px;
+  }
+`;
+LoginContainer.VideoContainer = styled.div`
   margin-top: 5%;
   margin-bottom: 2%;
   @media(min-width: 768px) {
@@ -518,6 +612,24 @@ LoginContainer.InputFieldsWrapper = styled.div`
 }
 @media(min-width:1025px){
  
+}
+`;
+LoginContainer.ButtonControllerWrapper = styled.div`
+position: fixed;
+left: 0;
+right: 0;
+bottom: 0;
+text-align:right;
+background-color: #fff;
+z-index: 5;
+box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+@media(min-width:1025px){
+  margin: 0 42px;
+  position:absolute;
+  box-shadow: none;
+  left:0;
+  right:0;
+  bottom:0;
 }
 `;
 LoginContainer.Ask = styled.div`
@@ -1022,7 +1134,6 @@ background-color: rgba(0,0,0, 0.3);
 LoginContainer.Image = styled.img`
  height: 100%;
  width: 100%;
- object-fit: contain;
 `;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`

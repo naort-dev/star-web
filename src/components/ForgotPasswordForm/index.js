@@ -16,7 +16,7 @@ export default class ForgotPassword extends React.Component {
       message: '',
       loader: false,
       errorCondition: false,
-      successCondition: true,
+      successCondition: false,
     };
   }
   onForgotPassword = () => {
