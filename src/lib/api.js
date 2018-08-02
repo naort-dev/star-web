@@ -32,6 +32,8 @@ class Api {
   static rating = 'user/fan/celebrity_rating/';
   static contactSupport = 'user/contact_support/';
   static reportAbuse = 'user/fan/celebrity_abuse/'
+  static stripeRegistration = 'payments/getstripeurl/';
+  static checkStripe = 'payments/stripe_dashboard/';
 }
 
 export default Api;

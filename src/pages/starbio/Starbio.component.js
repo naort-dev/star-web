@@ -127,6 +127,9 @@ export default class Starbio extends React.Component {
     this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     if (this.props.history.location.pathname === '/settings') {
       const userDetails = this.props.userDetails.settings_userDetails;
+      if (userDetails.celebrity) {
+        this.props.checkStripe()
+      }
       const starDetails = this.props.userDetails.settings_celebrityDetails;
       const settingsObj = {
         userDetails,
@@ -147,7 +150,7 @@ export default class Starbio extends React.Component {
         secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
-        featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ?userDetails.featured_photo.photo : null,
+        featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo : null,
         secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : [],
         avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
         extensions: {
@@ -186,18 +189,25 @@ export default class Starbio extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
-
   }
+
 
   async onFileChange(type = "featuredImage") {
     this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
     const file = document.getElementById(type).files[0];
-    if (file) {
-      const correctResolution = await this.checkResolution(file, type);
-      if (correctResolution) {
-        await this.getImageData(file, type)
-      } else {
-        this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+    const allowedExtensions = /((\.jpeg)|(\.jpg) | (\.png))$/i;
+    if (!allowedExtensions.exec(document.getElementById(type).value)) {
+      this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+    }
+
+    else {
+      if (file) {
+        const correctResolution = await this.checkResolution(file, type);
+        if (correctResolution) {
+          await this.getImageData(file, type)
+        } else {
+          this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+        }
       }
     }
   }
@@ -269,12 +279,14 @@ export default class Starbio extends React.Component {
   }
 
   uploadImage(type) {
-    console.log("type", type)
+<<<<<<< ffc6ae73ca46cdb9f1b9daf81e6d04435e886a40
+=======
+    const file = type === "avatarImage" ? this.state.avatarFile : this.state[`${type}File`];
+>>>>>>> for settings page
     return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
       .then(response => {
-        console.log("response", response)
         let filename = response.data.data.fields.key.split('/')
         filename = filename[2]
         const formData = new FormData()
@@ -286,7 +298,7 @@ export default class Starbio extends React.Component {
         formData.append('policy', response.data.data.fields.policy);
         formData.append('key', response.data.data.fields.key);
         formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
-        formData.append('file', this.state[`${type}File`]);
+        formData.append('file', file);
 
         if (type == "featuredImage") {
           const featuredImageName = filename;
@@ -357,6 +369,8 @@ export default class Starbio extends React.Component {
           this.props.updateProfilePhoto(profilePhotos);
           this.props.updateUserDetails(userValue.id, settingDetails);
           this.props.updateNotification(notificationUpdate);
+          this.props.fetchUserDetails(userValue.id);
+          this.props.history.push('/');
         }
       }
     } else if (this.validateIsEmpty('starAccount')) {
@@ -365,7 +379,7 @@ export default class Starbio extends React.Component {
       if (this.state.featuredImageFile) {
         this.uploadImage("featuredImage")
       }
-     
+
       if (this.state.firstImageFile) {
         await this.uploadImage("firstImage")
       }
@@ -381,11 +395,14 @@ export default class Starbio extends React.Component {
         {
           images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
           avatar_photo: this.state.avatarImageName,
-          featured_image: this.state.featuredImageName
+          featured_image: this.state.featuredImageName,
         }, {
           "headers": {
             'Authorization': `token ${this.props.session.auth_token.authentication_token}`
           }
+        }).then(() => {
+          this.props.fetchUserDetails(userValue.id);
+          this.props.history.push('/');
         })
       this.setState({ saving: false });
     }
@@ -938,6 +955,12 @@ export default class Starbio extends React.Component {
     );
   }
 
+  getStripe() {
+    this.props.fetchURL()
+      .then(response => {
+        window.open(response.data.data.stripe_url, "StripeRegistration", "width=500,height=300");
+      })
+  }
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
     const isMyAccount = this.state.settingsObj.selectedAccount === 'myAccount';
@@ -1124,14 +1147,32 @@ export default class Starbio extends React.Component {
 
                                   </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
-                                <LoginContainer.InputWrapper>
-                                  <LoginContainer.Label>Manage Payment</LoginContainer.Label>
-                                  <LoginContainer.WrapsInput>
 
-                                   <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
+                                {this.state.settingsObj.isCelebrity && isSettings ?
+                                  <React.Fragment>
+                                    <LoginContainer.InputWrapper>
+                                      <LoginContainer.Label>Manage Payment</LoginContainer.Label>
+                                      <LoginContainer.WrapsInput onClick={() => this.getStripe()}>
 
-                                  </LoginContainer.WrapsInput>
-                                </LoginContainer.InputWrapper>
+                                        <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
+
+                                      </LoginContainer.WrapsInput>
+                                    </LoginContainer.InputWrapper>
+
+                                    <LoginContainer.InputWrapper>
+                                      <LoginContainer.Label></LoginContainer.Label>
+                                      <LoginContainer.WrapsInput>
+
+                                        <LoginContainer.PaymentLabel>{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
+
+                                      </LoginContainer.WrapsInput>
+                                    </LoginContainer.InputWrapper>
+                                  </React.Fragment>
+
+                                  : null}
+
+
+
                                 <LoginContainer.InputWrapper>
                                   <LoginContainer.Label>Stage Name</LoginContainer.Label>
                                   <LoginContainer.WrapsInput>
