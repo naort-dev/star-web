@@ -269,6 +269,7 @@ export default class Event extends React.Component {
                               checkRequiredUserName={this.checkRequiredUserName}
                               checkRequiredTitle={this.checkRequiredTitle}
                               checkRequiredDate={this.checkRequiredDate}
+                              {...this.props}
 
                             />
                           </Request.EventStep2>

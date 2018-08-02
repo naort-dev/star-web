@@ -6,7 +6,15 @@ export const SHOW_RECORDER = 'showAudioRecorder';
 export const CLOSE_RECORDER = 'closeRecorder';
 export const SAVE_AUDIO_FILE = 'saveFile';
 export const SHOW_FALLBACK = 'showFallback';
+export const DEVICE_CHECK = 'checkDevice';
 
+
+export function deviceCheck(status) {
+  return {
+    type: DEVICE_CHECK,
+    payload: status,
+  };
+}
 
 export function showRecorder(displayText) {
   return {

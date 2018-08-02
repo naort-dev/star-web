@@ -244,8 +244,8 @@ Templates.Popup = styled.div`
 `
 
 Templates.PopupContainer = styled.div`
-width: 90%;
-height: 30%;
+width: 100%;
+height: 60%;
 display: flex;
 align-items: center;
 justify-content: center;

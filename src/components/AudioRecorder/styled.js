@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
-const AudioRecorderDiv= styled.div`
+const AudioRecorderDiv = styled.div`
 width: 100%;
 height: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+margin-top:1%;
 `;
 
 AudioRecorderDiv.Button = styled.button`
@@ -42,10 +43,13 @@ margin-top: 15px;
 `;
 
 AudioRecorderDiv.Label = styled.div`
-font-size: 24px;
+font-size: 16px;
 color: #FF6C58;
 font-family: Ubuntu-bold;
 margin-bottom: 10px;
+@media(min-width:1025px){
+  font-size: 24px;
+}
 `;
 
 AudioRecorderDiv.UploadWrapper = styled.div`
@@ -88,7 +92,11 @@ margin-top: 10px;
 `;
 
 AudioRecorderDiv.Audio = styled.audio`
-  width: 50%;
+
+  @media(min-width:1025px){
+    width: 50%;
+    margin-top: 10px;
+  }
 `;
 
 
