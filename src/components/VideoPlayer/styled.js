@@ -18,5 +18,9 @@ VideoRenderDiv.answerVideo = styled.img`
   object-fit: contain
   z-index: 2;
   transition: ${props => (props.fullScreen ? 'top .5s, right .5s, height .5s' : 'unset')};
+  @media(min-width: 768px) {
+    right: ${props => (props.fullScreen ? '50%' : '48px')};
+    top: ${props => (props.fullScreen ? '50%' : '47px')};
+  }
 `;
 export default VideoRenderDiv;

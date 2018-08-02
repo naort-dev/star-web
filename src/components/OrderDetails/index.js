@@ -3,6 +3,7 @@ import axios from 'axios';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import DeclinePopup from './DeclinePopup';
+import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
 import VideoRecorder from '../WebRTCVideoRecorder';
@@ -99,7 +100,7 @@ export default class OrderDetails extends React.Component {
         }
       });
   }
- 
+
   toggleActions = () => {
     this.setState({ showActions: !this.state.showActions });
   }
@@ -141,6 +142,9 @@ export default class OrderDetails extends React.Component {
     this.setState({
       showPopup: false,
       declinePopup: false,
+      showRatingPopup: false,
+      showContactSupportPopup: false,
+      showReportAbusePopup: false,
     });
   }
 
@@ -157,8 +161,8 @@ export default class OrderDetails extends React.Component {
         <React.Fragment>
           <OrderStyled.VideoContentWrapper starMode={starMode} width={props.requestVideo.videoWidth} height={props.requestVideo.videoHeight}>
             <VideoPlayer
-              videoWidth={'100%'}
-              videoHeight={'100%'}
+              videoWidth="100%"
+              videoHeight="100%"
               primaryCover={props.requestVideo.s3_thumbnail_url ? props.requestVideo.s3_thumbnail_url : ''}
               primarySrc={props.requestVideo.s3_video_url ? props.requestVideo.s3_video_url : ''}
             />
@@ -221,28 +225,78 @@ export default class OrderDetails extends React.Component {
     if (this.state.declinePopup) {
       return (
         <DeclinePopup
-          changeRequestStatus={(reason) => this.changeRequestStatus(this.props.orderDetails.id, 5, reason)} // to cancel a request
+          changeRequestStatus={reason => this.changeRequestStatus(this.props.orderDetails.id, 5, reason)} // to cancel a request
           starMode={this.props.starMode}
           closePopup={this.closePopup}
           requestType={this.props.orderDetails.request_type}
+        />
+      );
+    } else if (this.state.showRatingPopup) {
+      return (
+        <SubmitPopup
+          heading="Rate video"
+          onSubmit={data => this.props.rateCelebrity({
+            celebrity: this.props.orderDetails.celebrity_id,
+            fan_rate: data.rating.toString(),
+            starsona: this.props.orderDetails.id,
+            comments: data.comment,
+          })}
+          closePopup={this.closePopup}
+        />
+      );
+    } else if (this.state.showContactSupportPopup) {
+      return (
+        <SubmitPopup
+          heading="Contact support"
+          onSubmit={data => this.props.contactSupport({ comments: data.comment })}
+          closePopup={this.closePopup}
+        />
+      );
+    } else if (this.state.showReportAbusePopup) {
+      return (
+        <SubmitPopup
+          heading="Report abuse"
+          onSubmit={data => this.props.reportAbuse({
+            celebrity: this.props.orderDetails.celebrity_id,
+            abuse_comment: data.comment,
+          })}
+          closePopup={this.closePopup}
         />
       );
     }
     return null;
   }
 
-  renderActionList = () => {
-    if (this.props.requestStatusId === 6) {
-      return (
-        <OrderStyled.MoreActionsList>
-          <OrderStyled.MoreActionsItem>Celebrity Rating</OrderStyled.MoreActionsItem>
-          <OrderStyled.MoreActionsItem>Contact Support</OrderStyled.MoreActionsItem>
-          <OrderStyled.MoreActionsItem>Report Abuse</OrderStyled.MoreActionsItem>
-        </OrderStyled.MoreActionsList>
-      );
-    }
-    return null;
-  }
+  renderActionList = () => (
+    <OrderStyled.MoreActionsList>
+      {!this.props.orderDetails.fan_rating && this.props.requestStatusId === 6 &&
+        <OrderStyled.MoreActionsItem
+          onClick={() => {
+            this.toggleActions();
+            this.setState({ showPopup: true, showRatingPopup: true });
+          }}
+        >
+          Rate celebrity
+        </OrderStyled.MoreActionsItem>}
+      <OrderStyled.MoreActionsItem
+        onClick={() => {
+          this.toggleActions();
+          this.setState({ showPopup: true, showContactSupportPopup: true });
+        }}
+      >
+        Contact support
+      </OrderStyled.MoreActionsItem>
+      {this.props.requestStatusId === 6 &&
+      <OrderStyled.MoreActionsItem
+        onClick={() => {
+          this.toggleActions();
+          this.setState({ showPopup: true, showReportAbusePopup: true });
+        }}
+      >
+        Report abuse
+      </OrderStyled.MoreActionsItem>}
+    </OrderStyled.MoreActionsList>
+  )
 
   render() {
     const { props } = this;
@@ -302,7 +356,7 @@ export default class OrderDetails extends React.Component {
                       imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
                     />
                     <OrderStyled.MoreActionsWrapper>
-                      <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />
+                      {this.props.requestStatusId !== 5 && <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />}
                       {
                         this.state.showActions && !this.props.starMode &&
                           this.renderActionList()
@@ -353,8 +407,8 @@ export default class OrderDetails extends React.Component {
                     buttonMode
                     modifyBooking={this.modifyBooking}
                     handleBooking={this.handleBooking}
-                    modifyButtonName={this.props.starMode ? "Cancel": "Edit Request"}
-                    buttonName={!this.props.starMode ? "Cancel": "Send"}
+                    modifyButtonName={this.props.starMode ? 'Cancel' : (this.props.orderDetails.editable ? 'Edit Request' : '')}
+                    buttonName={!this.props.starMode ? 'Cancel' : 'Send'}
                   />
                 </OrderStyled.ControlWrapper>
             }

@@ -251,7 +251,7 @@ OrderStyled.ProfileImageWrapper = styled.div`
 
 OrderStyled.MoreActionsWrapper = styled.div`
   position: absolute;
-  right: 0px;
+  left: 10px;
   top: 10px;
 `;
 
@@ -266,13 +266,16 @@ OrderStyled.MoreActionsIcon = styled.span`
 OrderStyled.MoreActionsList = styled.ul`
   position: absolute;
   top: 20px;
-  right:10px;
-  background-color: rgb(248, 248, 248);
+  left:10px;
+  background-color: #FFF;
   padding: 10px;
   text-align: left;
   width: 146px;
   line-height: 26px;
   border-radius: 13px;
+  @media(min-width: 1025px) {
+    background-color: rgb(248, 248, 248);
+  }
 `;
 
 OrderStyled.MoreActionsItem = styled.li`
@@ -417,7 +420,7 @@ OrderStyled.ConfirmButtonWrapper = styled.div`
 `;
 OrderStyled.ConfirmButton = styled.button`
   background-color: #fff;
-  color: #FF6C58;
+  color: ${props => (props.disabled ? '#ABABAB' : '#FF6C58')};
   padding: 6px 18px;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -427,12 +430,22 @@ OrderStyled.ConfirmButton = styled.button`
   font-family: 'Ubuntu-Bold';
   outline: none;
   border-radius: 5px;
-  border: 2px solid #FF6C58;
+  border: 2px solid ${props => (props.disabled ? '#ABABAB' : '#FF6C58')};
 `;
 
 OrderStyled.TextArea = styled.textarea`
   margin: 10px 0;
   height: 100px;
+`;
+
+OrderStyled.RatingTextArea = styled.textarea`
+  width: 100%;
+  height: 90px;
+  resize: none;
+  border-color: #ABABAB;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
 `;
 
 OrderStyled.VideoRecorder = styled.div`
@@ -453,6 +466,15 @@ OrderStyled.VideoContainer = styled.div`
     flex-direction: column;
     justify-content: center;
   }
+`;
+
+OrderStyled.ErrorMsg = styled.div`
+  color:red;
+  font-size: 11px;
+  margin-top:4px;
+  font-family: 'Ubuntu-light';
+  text-align:left;
+  
 `;
 
 export default OrderStyled;
