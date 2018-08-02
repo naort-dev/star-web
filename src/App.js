@@ -122,6 +122,13 @@ class App extends React.Component {
                   })}
                 />
                 <Route
+                  path="/settings"
+                  component={protectRoute({
+                    RouteComponent: Starbio,
+                    // roles: allUserRoles,
+                  })}
+                />
+                <Route
                   path="/user/myVideos"
                   component={protectRoute({
                     RouteComponent: MyVideos,

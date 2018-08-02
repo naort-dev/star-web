@@ -118,7 +118,7 @@ export const fetchSourceList = () => (dispatch, getState) => {
   });
 };
 
-export const modifySourceList = (source, customer, action) => (dispatch, getState) => {
+export const modifySourceList = (source, customer, action, callback) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   const { sourceList } = getState().paymentDetails;
   dispatch(sourceListFetchStart());
@@ -134,6 +134,9 @@ export const modifySourceList = (source, customer, action) => (dispatch, getStat
       if (resp.data && resp.data.success) {
         dispatch(sourceListFetchEnd());
         dispatch(fetchSourceList(resp.data.data.cards));
+        if (callback) {
+          callback();
+        }
       } else {
         dispatch(sourceListFetchEnd());
       }
