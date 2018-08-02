@@ -279,6 +279,7 @@ export default class Starbio extends React.Component {
   }
 
   uploadImage(type) {
+    const file = type === "avatarImage" ? this.state.avatarFile : this.state[`${type}File`];
     return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
@@ -294,7 +295,7 @@ export default class Starbio extends React.Component {
         formData.append('policy', response.data.data.fields.policy);
         formData.append('key', response.data.data.fields.key);
         formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
-        formData.append('file', this.state[`${type}File`]);
+        formData.append('file', file);
 
         if (type == "featuredImage") {
           const featuredImageName = filename;
@@ -365,6 +366,8 @@ export default class Starbio extends React.Component {
           this.props.updateProfilePhoto(profilePhotos);
           this.props.updateUserDetails(userValue.id, settingDetails);
           this.props.updateNotification(notificationUpdate);
+          this.props.fetchUserDetails(userValue.id);
+          this.props.history.push('/');
         }
       }
     } else if (this.validateIsEmpty('starAccount')) {
@@ -389,11 +392,14 @@ export default class Starbio extends React.Component {
         {
           images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
           avatar_photo: this.state.avatarImageName,
-          featured_image: this.state.featuredImageName
+          featured_image: this.state.featuredImageName,
         }, {
           "headers": {
             'Authorization': `token ${this.props.session.auth_token.authentication_token}`
           }
+        }).then(() => {
+          this.props.fetchUserDetails(userValue.id);
+          this.props.history.push('/');
         })
       this.setState({ saving: false });
     }
