@@ -147,6 +147,9 @@ export default class Starbio extends React.Component {
         secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
+        featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ?userDetails.featured_photo.photo : null,
+        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : null,
+        avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
         extensions: {
           featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo.split('.')[1] : null,
           firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].photo.split('.')[1] : "jpeg",
@@ -308,7 +311,7 @@ export default class Starbio extends React.Component {
     // })
   }
 
-  onMyAccountSave() {
+  async  onMyAccountSave() {
     const userValue = this.state.settingsObj.userDetails;
     const notificationValue = this.state.settingsObj.userDetails.notification_settings;
     const notificationUpdate = {
@@ -357,28 +360,35 @@ export default class Starbio extends React.Component {
     } else if (this.validateIsEmpty('starAccount')) {
       this.props.updateUserDetails(userValue.id, settingDetails);
       this.props.updateNotification(notificationUpdate);
-      this.uploadImage("featuredImage")
-        .then(async () => {
-          await this.uploadImage("firstImage")
-          await this.uploadImage("secondImage")
-          await this.uploadImage("avatarImage")
-        },
-      )
-        .then(() => {
-          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
-            {
-              images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
-              avatar_photo: this.state.avatarImageName,
-              featured_image: this.state.featuredImageName
-            }, {
-              "headers": {
-                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
-              }
-            })
-          this.setState({ saving: false });
-        });
+      if (this.state.featuredImageFile) {
+        this.uploadImage("featuredImage")
+      }
+     
+      if (this.state.firstImageFile) {
+        await this.uploadImage("firstImage")
+      }
+      if (this.state.secondImageFile) {
+        await this.uploadImage("secondImage")
+      }
+
+      if (this.state.avatarFile) {
+        await this.uploadImage("avatarImage")
+      }
+
+      return fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+        {
+          images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+          avatar_photo: this.state.avatarImageName,
+          featured_image: this.state.featuredImageName
+        }, {
+          "headers": {
+            'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+          }
+        })
+      this.setState({ saving: false });
     }
   }
+
   resetSettingsValue = () => {
     this.props.resetUserDetails();
     this.props.resetProfilePhoto();
@@ -616,9 +626,6 @@ export default class Starbio extends React.Component {
       }
       return true;
     }
-
-
-
   }
 
   renderMultiValueItems = (selectProps) => {
@@ -647,11 +654,14 @@ export default class Starbio extends React.Component {
   // Settings Function
 
   changeAccountType = (selectedType) => {
-    this.setImageSize();
-    this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } });
+    this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } }, () => {
+      this.setImageSize();
+    });
   }
   changeUserStatus = () => {
-    this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } });
+    this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } }, () => {
+      this.setImageSize();
+    });
   }
   onVideoSubmit = () => {
     this.setState({ upload: true });
@@ -871,6 +881,10 @@ export default class Starbio extends React.Component {
     let settingsUpdating;
     let settingsRedirect;
     let fullName = '';
+    let imageList = [];
+    let firstImage;
+    let secondImage;
+    let featuredImage;
     const settingsCheck = this.props.settingsSave;
     if (isSettings) {
       settingsUpdating = settingsCheck.photoUpdating || settingsCheck.notificationsUpdating || settingsCheck.userDetailsUpdating;
@@ -879,6 +893,16 @@ export default class Starbio extends React.Component {
       if (this.props.userDetails.settings_userDetails.first_name && this.props.userDetails.settings_userDetails.last_name) {
         fullName = this.props.userDetails.settings_userDetails.nick_name ? this.props.userDetails.settings_userDetails.nick_name
           : `${this.props.userDetails.settings_userDetails.first_name} ${this.props.userDetails.settings_userDetails.last_name}`;
+      }
+      if (this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images.length) {
+        firstImage = this.props.userDetails.settings_userDetails.images[0] ? this.props.userDetails.settings_userDetails.images[0].image_url : null;
+        secondImage = this.props.userDetails.settings_userDetails.images[1] ? this.props.userDetails.settings_userDetails.images[1].image_url : null;
+        imageList = [firstImage, secondImage];
+      }
+      if (this.props.userDetails.featured_photo) {
+        featuredImage = this.props.userDetails.settings_userDetails.featured_photo.image_url && this.props.userDetails.settings_userDetails.featured_photo.image_url
+      } else {
+        featuredImage = this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images[0] && this.props.userDetails.settings_userDetails.images[0].image_url
       }
     }
     if (!this.props.session.isLoggedIn) {
