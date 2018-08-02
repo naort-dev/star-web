@@ -1057,6 +1057,14 @@ export default class Starbio extends React.Component {
                                   </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
                                 <LoginContainer.InputWrapper>
+                                  <LoginContainer.Label>Manage Payment</LoginContainer.Label>
+                                  <LoginContainer.WrapsInput>
+
+                                   <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
+
+                                  </LoginContainer.WrapsInput>
+                                </LoginContainer.InputWrapper>
+                                <LoginContainer.InputWrapper>
                                   <LoginContainer.Label>Stage Name</LoginContainer.Label>
                                   <LoginContainer.WrapsInput>
 
