@@ -15,7 +15,7 @@ export default class VideoRecorder extends React.Component {
       play: false,
       deviceSupport: true,
     };
-    this.mediaRecorder = null;
+    this.mediaRecorder = "";
     this.recordedBlobs = [];
     this.handleDataAvailable = this.handleDataAvailable.bind(this);
     this.stopRecording = this.stopRecording.bind(this)
@@ -107,28 +107,12 @@ export default class VideoRecorder extends React.Component {
       .then(() => {
         document.getElementById('video-player').srcObject = this.state.stream;
         let options = {
-          mimeType: 'video/webm',
+          mimeType: 'video/webm;codecs=vp8',
           audioBitsPerSecond: 128000,
           videoBitsPerSecond: 128000,
           bitsPerSecond: 128000,
         };
-        if (!MediaRecorder.isTypeSupported('video/mp4;codecs=h264')) {
-          options = {
-            mimeType: 'video/webm;codecs=vp9 ',
-            audioBitsPerSecond: 128000,
-            videoBitsPerSecond: 128000,
-            bitsPerSecond: 128000,
-          };
-        }
-        else if (!MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-          options = {
-            mimeType: 'video/webm;codecs=vp8',
-            audioBitsPerSecond: 128000,
-            videoBitsPerSecond: 128000,
-            bitsPerSecond: 128000,
-          };
-        }
-
+  
         try {
           this.mediaRecorder = new MediaRecorder(this.state.stream, options);
           this.mediaRecorder.ondataavailable = this.handleDataAvailable;
