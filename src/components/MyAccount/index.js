@@ -3,6 +3,8 @@ import { Templates } from '../../components/RequestTemplates/styled';
 import Accounts from './styled';
 import Avatar from '../avatar';
 import ManagePayments from '../../components/ManagePayments';
+import Popup from '../Popup';
+import ChangePassword from './ChangePassword'
 
 export default class MyAccount extends React.Component {
   constructor(props) {
@@ -12,10 +14,25 @@ export default class MyAccount extends React.Component {
     };
   }
 
+  closePopup = () => {
+    this.setState({ showPopup: false });
+  }
+
+  renderPopup = () => (
+    <ChangePassword changePassword={this.props.changePassword} />
+  )
+
   render() {
     const defaultImage = '../../assets/images/default-cover.jpg';
     return (
       <React.Fragment>
+        {
+          this.state.showPopup &&
+            <Popup closePopUp={this.closePopup} smallPopup>
+              <Accounts.PopupWrapper>{this.renderPopup()}</Accounts.PopupWrapper >
+
+            </Popup>
+        }
         <Accounts.ComponentWrapper>
           {
             this.state.managePayment ?
@@ -71,7 +88,7 @@ export default class MyAccount extends React.Component {
                         placeholder="Email"
                         type="email"
                         value={this.props.accountDetails.email}
-                        onChange={(event) => { this.props.handleFieldChange('email', event.target.value) }}
+                        onChange={(event) => { this.props.handleFieldChange('email', event.target.value); }}
                       />
                       {this.props.errorDetails.email ?
                         <Templates.ErrorMsg isError={this.props.errorDetails.email}>
@@ -83,7 +100,8 @@ export default class MyAccount extends React.Component {
                   <Templates.InputWrapper>
                     <Templates.Label>Password</Templates.Label>
                     <Templates.WrapsInput>
-                      <Accounts.PaymentLabel>Manage your password</Accounts.PaymentLabel>
+                      <Accounts.PaymentLabel onClick={() => this.setState({ showPopup: true })}>Manage your password</Accounts.PaymentLabel>
+
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -112,7 +130,7 @@ export default class MyAccount extends React.Component {
                     </Accounts.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
-                    <Templates.Label></Templates.Label>
+                    <Templates.Label />
                     <Accounts.WrapsInput>
                       <Accounts.Label id="checkbox_container">
                         <span>Account updates</span>
@@ -127,7 +145,7 @@ export default class MyAccount extends React.Component {
                     </Accounts.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
-                    <Templates.Label></Templates.Label>
+                    <Templates.Label />
                     <Accounts.WrapsInput>
                       <Accounts.Label id="checkbox_container">
                         <span>My Starsona updates</span>
@@ -142,7 +160,7 @@ export default class MyAccount extends React.Component {
                     </Accounts.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
-                    <Templates.Label></Templates.Label>
+                    <Templates.Label />
                     <Accounts.WrapsInput>
                       <Accounts.Label id="checkbox_container">
                         <span>Email updates on Starsona</span>

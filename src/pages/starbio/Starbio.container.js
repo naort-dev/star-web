@@ -9,6 +9,8 @@ import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/
 import { updateNotification, resetNotification } from '../../store/shared/actions/updateNotification';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
 import { fetchURL, checkStripe } from '../../store/shared/actions/stripeRegistration'
+import { changePassword } from '../../store/shared/actions/changePassword';
+
 const mapStateToProps = state => ({
   session: state.session,
   imageViewer: state.imageViewer,
@@ -37,7 +39,7 @@ const mapDispatchToProps = dispatch => ({
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   fetchURL: () => dispatch(fetchURL()),
   checkStripe: () => dispatch(checkStripe()),
-
+  changePassword: data => dispatch(changePassword(data)),
 });
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Starbio));
