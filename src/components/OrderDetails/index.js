@@ -276,7 +276,7 @@ export default class OrderDetails extends React.Component {
             this.setState({ showPopup: true, showRatingPopup: true });
           }}
         >
-          Celebrity Rating
+          Rate celebrity
         </OrderStyled.MoreActionsItem>}
       <OrderStyled.MoreActionsItem
         onClick={() => {
@@ -284,7 +284,7 @@ export default class OrderDetails extends React.Component {
           this.setState({ showPopup: true, showContactSupportPopup: true });
         }}
       >
-        Contact Support
+        Contact support
       </OrderStyled.MoreActionsItem>
       {this.props.requestStatusId === 6 &&
       <OrderStyled.MoreActionsItem
@@ -293,7 +293,7 @@ export default class OrderDetails extends React.Component {
           this.setState({ showPopup: true, showReportAbusePopup: true });
         }}
       >
-        Report Abuse
+        Report abuse
       </OrderStyled.MoreActionsItem>}
     </OrderStyled.MoreActionsList>
   )
