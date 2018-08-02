@@ -11,6 +11,7 @@ export default class VideoRecorder extends React.Component {
       startUpload: false,
       browserSupport: false,
       play: false,
+      deviceSupport: true,
     };
     this.mediaRecorder = null;
     this.recordedBlobs = [];
@@ -18,6 +19,16 @@ export default class VideoRecorder extends React.Component {
     this.stopRecording = this.stopRecording.bind(this)
     this.timerID = null;
     this.stream = null;
+  }
+
+  componentWillMount() {
+    if (checkMediaRecorderSupport()) {
+      return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true})
+        .then(() => {})
+        .catch(() => {
+          this.setState({ deviceSupport: false });
+        });
+    }
   }
 
   handleDataAvailable(event) {
@@ -134,7 +145,7 @@ export default class VideoRecorder extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {checkMediaRecorderSupport() && !getMobileOperatingSystem() ?
+        {(checkMediaRecorderSupport() && !getMobileOperatingSystem()) && this.state.deviceSupport ?
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?

@@ -25,32 +25,6 @@ export default class AudioRecorder extends React.Component {
     this.props.startAudioRecording();
   }
 
-  audioUploader = (target) => {
-    const url = this.props.audioRecorder.file[target] ? URL.createObjectURL(this.props.audioRecorder.file[target]) : null
-    return (
-      <React.Fragment>
-        <AudioRecorderDiv.Audio id="uploaded-audio" controls />
-        <AudioRecorderDiv.UploadWrapper>
-          <AudioRecorderDiv.TextButton >
-            Record Pronounication
-        </AudioRecorderDiv.TextButton>
-          <AudioRecorderDiv.UploadInput type="file" id={target} onChange={() => this.fileHandler(target)} />
-        </AudioRecorderDiv.UploadWrapper>
-      </React.Fragment>
-    );
-  };
-
-  fileHandler(target) {
-    const file = document.getElementById(target).files[0];
-    const reader = new FileReader();
-    const fileURL = URL.createObjectURL(file);
-    document.getElementById('uploaded-audio').src = fileURL;
-    this.props.saveAudioFile({ [target]: file });
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  }
-
   render() {
     const target = this.props.audioRecorder.target;
     const playbackURL = this.props.audioRecorder.recorded[target] ? this.props.audioRecorder.recorded[target].recordedUrl : null
@@ -76,7 +50,7 @@ export default class AudioRecorder extends React.Component {
               : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}
           </React.Fragment>
           :
-          this.audioUploader(target)
+          null 
         }
       </AudioRecorderDiv>
     );

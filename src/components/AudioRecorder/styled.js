@@ -7,6 +7,7 @@ display: flex;
 align-items: center;
 justify-content: center;
 flex-direction: column;
+margin-top:1%;
 `;
 
 AudioRecorderDiv.Button = styled.button`
@@ -94,6 +95,7 @@ AudioRecorderDiv.Audio = styled.audio`
 
   @media(min-width:1025px){
     width: 50%;
+    margin-top: 10px;
   }
 `;
 
