@@ -8,7 +8,7 @@ import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
 import { updateNotification, resetNotification } from '../../store/shared/actions/updateNotification';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
-
+import { fetchURL, checkStripe } from '../../store/shared/actions/stripeRegistration'
 const mapStateToProps = state => ({
   session: state.session,
   imageViewer: state.imageViewer,
@@ -16,6 +16,7 @@ const mapStateToProps = state => ({
   videoRecorder: state.videoRecorder,
   videoUploader: state.videoUploader,
   settingsSave: state.saveSettings,
+  stripeRegistration: state.stripeRegistration,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -34,6 +35,8 @@ const mapDispatchToProps = dispatch => ({
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
   updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
+  fetchURL: () => dispatch(fetchURL()),
+  checkStripe: () => dispatch(checkStripe()),
 
 });
 

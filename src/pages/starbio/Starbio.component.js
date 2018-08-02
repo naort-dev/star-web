@@ -127,6 +127,9 @@ export default class Starbio extends React.Component {
     this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     if (this.props.history.location.pathname === '/settings') {
       const userDetails = this.props.userDetails.settings_userDetails;
+      if (userDetails.celebrity) {
+        this.props.checkStripe()
+      }
       const starDetails = this.props.userDetails.settings_celebrityDetails;
       const settingsObj = {
         userDetails,
@@ -147,7 +150,7 @@ export default class Starbio extends React.Component {
         secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
-        featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ?userDetails.featured_photo.photo : null,
+        featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo : null,
         secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : [],
         avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
         extensions: {
@@ -186,8 +189,8 @@ export default class Starbio extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
-
   }
+
 
   async onFileChange(type = "featuredImage") {
     this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
@@ -269,12 +272,10 @@ export default class Starbio extends React.Component {
   }
 
   uploadImage(type) {
-    console.log("type", type)
     return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
       .then(response => {
-        console.log("response", response)
         let filename = response.data.data.fields.key.split('/')
         filename = filename[2]
         const formData = new FormData()
@@ -365,7 +366,7 @@ export default class Starbio extends React.Component {
       if (this.state.featuredImageFile) {
         this.uploadImage("featuredImage")
       }
-     
+
       if (this.state.firstImageFile) {
         await this.uploadImage("firstImage")
       }
@@ -870,6 +871,12 @@ export default class Starbio extends React.Component {
     );
   }
 
+  getStripe() {
+    this.props.fetchURL()
+      .then(response => {
+        window.open(response.data.data.stripe_url, "StripeRegistration", "width=500,height=300");
+      })
+  }
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
     const isMyAccount = this.state.settingsObj.selectedAccount === 'myAccount';
@@ -1056,14 +1063,32 @@ export default class Starbio extends React.Component {
 
                                   </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
-                                <LoginContainer.InputWrapper>
-                                  <LoginContainer.Label>Manage Payment</LoginContainer.Label>
-                                  <LoginContainer.WrapsInput>
 
-                                   <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
+                                {this.state.settingsObj.isCelebrity && isSettings ?
+                                  <React.Fragment>
+                                    <LoginContainer.InputWrapper>
+                                      <LoginContainer.Label>Manage Payment</LoginContainer.Label>
+                                      <LoginContainer.WrapsInput onClick={() => this.getStripe()}>
 
-                                  </LoginContainer.WrapsInput>
-                                </LoginContainer.InputWrapper>
+                                        <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
+
+                                      </LoginContainer.WrapsInput>
+                                    </LoginContainer.InputWrapper>
+
+                                    <LoginContainer.InputWrapper>
+                                      <LoginContainer.Label></LoginContainer.Label>
+                                      <LoginContainer.WrapsInput>
+
+                                        <LoginContainer.PaymentLabel>{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
+
+                                      </LoginContainer.WrapsInput>
+                                    </LoginContainer.InputWrapper>
+                                  </React.Fragment>
+
+                                  : null}
+
+
+
                                 <LoginContainer.InputWrapper>
                                   <LoginContainer.Label>Stage Name</LoginContainer.Label>
                                   <LoginContainer.WrapsInput>
