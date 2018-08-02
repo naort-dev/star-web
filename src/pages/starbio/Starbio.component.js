@@ -195,7 +195,7 @@ export default class Starbio extends React.Component {
   async onFileChange(type = "featuredImage") {
     this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
     const file = document.getElementById(type).files[0];
-    const allowedExtensions = /((\.jpeg)|(\.jpg) | (\.png))$/i;
+    const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById(type).value)) {
       this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
     }
