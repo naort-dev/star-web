@@ -11,7 +11,7 @@ import Api from '../../lib/api';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import MultiSelect from '../../components/MultiSelect';
 import SelectTags from '../../components/SelectTag';
-import getAWSCredentials from '../../utils/AWSUpload'
+import getAWSCredentials from '../../utils/AWSUpload';
 import Loader from '../../components/Loader';
 import Popup from '../../components/Popup';
 import HeaderSection from '../../components/HeaderSection';
@@ -297,12 +297,71 @@ export default class Starbio extends React.Component {
   }
 
   onMyAccountSave() {
-    if (this.validateIsEmpty('myAccount')) {
-      if (this.state.settingsObj.isCelebrity) {
-        this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
-      } else {
-        console.log('SAVE');
+    console.log('hi')
+    const userValue = this.state.settingsObj.userDetails;
+    const notificationValue = this.state.settingsObj.userDetails.notification_settings;
+    const notificationUpdate = {
+      celebrity_starsona_request: notificationValue.celebrity_starsona_request,
+      celebrity_starsona_message: notificationValue.celebrity_starsona_message,
+      celebrity_account_updates: notificationValue.celebrity_account_updates,
+      fan_account_updates: notificationValue.fan_account_updates,
+      fan_starsona_messages: notificationValue.fan_starsona_messages,
+      fan_starsona_videos: notificationValue.fan_starsona_videos,
+      fan_email_starsona_videos: notificationValue.fan_email_starsona_videos,
+    };
+    let profilePhotos;
+    const settingDetails = {
+      user_details: {
+        first_name: userValue.first_name,
+        last_name: userValue.last_name,
+        email: userValue.email,
+      },
+      celebrity_details: {
+        profession: this.state.profession,
+        description: this.state.bio,
+        charity: this.state.charity,
+        rate: this.state.bookingPrice,
+        weekly_limits: this.state.bookingLimit,
+      },
+    };
+    if (this.state.settingsObj.selectedAccount === 'myAccount') {
+      if (localStorage) {
+        const profileImage = localStorage.getItem('avatarName');
+        profilePhotos = {
+          images: [profileImage],
+          avatar_photo: profileImage,
+        };
       }
+
+      if (this.validateIsEmpty('myAccount')) {
+        if (this.state.settingsObj.isCelebrity) {
+          this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
+        } else {
+          this.props.updateProfilePhoto(profilePhotos);
+          this.props.updateUserDetails(userValue.id, settingDetails);
+          this.props.updateNotification(notificationUpdate);
+        }
+      }
+    } else if (this.validateIsEmpty('starAccount')) {
+      this.props.updateUserDetails(userValue.id, settingDetails);
+      this.props.updateNotification(notificationUpdate);
+      this.uploadImage("featuredImage")
+        .then(() => this.uploadImage("firstImage"))
+        .then(() => this.uploadImage("secondImage"))
+        .then(() => this.uploadImage("avatarImage"))
+        .then(() => {
+          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+            {
+              images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+              avatar_photo: this.state.avatarImageName,
+              featured_image: this.state.featuredImageName
+            }, {
+              "headers": {
+                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+              }
+            })
+          this.setState({ saving: false });
+        });
     }
   }
 
@@ -356,8 +415,6 @@ export default class Starbio extends React.Component {
                 },
               },
             });
-          } else if (this.state.settingsObj.userDetails.celebrity) {
-            console.log('API call for FANSTAR');
           } else {
             this.setState({ settingsObj: { ...this.state.settingsObj, pageView: 'videoView' } });
           }
@@ -584,7 +641,14 @@ export default class Starbio extends React.Component {
       .then(response => {
         axios.post(response.url, response.formData)
           .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-            ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+            profession: this.state.profession,
+            searchTags: this.state.searchTags,
+            description: this.state.bio,
+            rate: this.state.bookingPrice,
+            weekly_limits: this.state.bookingLimit,
+            charity: this.state.charity,
+            profile_video: response.filename,
+            availability: true
           },
             {
               "headers": {
@@ -595,10 +659,15 @@ export default class Starbio extends React.Component {
           ).then(() => {
             this.props.fetchUserDetails(this.props.session.auth_token.id);
             this.setState({ upload: false })
-            this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+            this.setState({ settingsObj: { ...this.state.settingsObj, pageView: 'suceess' } });
           })
       })
-
+  }
+  onSucesssContinueClick = () => {
+    if (localStorage) {
+      localStorage.removeItem('bioDetails');
+    }
+    this.props.history.push('/');
   }
 
   renderButton = () => {
@@ -611,6 +680,16 @@ export default class Starbio extends React.Component {
             {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
               <FooterSection.Button onClick={this.onVideoSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
               : <FooterSection.DisabledButton onClick={() => this.onVideoSubmit}>Submit</FooterSection.DisabledButton>}
+          </FooterSection.RightSection>
+        </FooterSection>
+      );
+    } else if (this.state.settingsObj.pageView === 'suceess') {
+      return (
+        <FooterSection>
+          <FooterSection.LeftSection>
+          </FooterSection.LeftSection>
+          <FooterSection.RightSection>
+            <FooterSection.Button onClick={() => { this.onSucesssContinueClick(); }}>Continue</FooterSection.Button>
           </FooterSection.RightSection>
         </FooterSection>
       );
@@ -642,7 +721,12 @@ export default class Starbio extends React.Component {
         </LoginContainer.recorderWrapper>
       );
     } else if (this.state.settingsObj.pageView === 'suceess') {
-      return ('Sucesss');
+      return (
+        <ImageStack
+          featureImage="assets/images/Stadium_800x376.jpg"
+          imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+        />
+      );
     }
     return (
       <LoginContainer.ImageWrapper>
@@ -787,7 +871,7 @@ export default class Starbio extends React.Component {
             }
             {
               isSettings && isMyAccount ?
-                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} />
+                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} {...this.props} />
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
@@ -926,6 +1010,17 @@ export default class Starbio extends React.Component {
                               </React.Fragment>
                               :
                               null
+                            }
+                            {
+                              this.state.settingsObj.pageView === 'suceess' ?
+                                <LoginContainer.SuccessContainer>
+                                  <LoginContainer.Heading> Your Star profile has been created </LoginContainer.Heading>
+                                  <LoginContainer.SuccessText>
+                                    Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</LoginContainer.SuccessText>
+                                  <LoginContainer.SuccessTextBold>-    Starsona Team</LoginContainer.SuccessTextBold>
+                                </LoginContainer.SuccessContainer>
+                                :
+                                null
                             }
                           </React.Fragment>
                         }
