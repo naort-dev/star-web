@@ -407,7 +407,7 @@ export default class OrderDetails extends React.Component {
                     buttonMode
                     modifyBooking={this.modifyBooking}
                     handleBooking={this.handleBooking}
-                    modifyButtonName={this.props.starMode ? 'Cancel' : 'Edit Request'}
+                    modifyButtonName={this.props.starMode ? 'Cancel' : (this.props.orderDetails.editable ? 'Edit Request' : '')}
                     buttonName={!this.props.starMode ? 'Cancel' : 'Send'}
                   />
                 </OrderStyled.ControlWrapper>

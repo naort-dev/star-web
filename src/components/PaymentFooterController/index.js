@@ -4,10 +4,10 @@ import FooterDiv from './styled';
 
 
 export const PaymentFooterController = props => (
-  <FooterDiv>
+  <FooterDiv singleButton={!props.modifyButtonName}>
     {
       props.buttonMode ?
-        <FooterDiv.Button onClick={props.modifyBooking}>{props.modifyButtonName}</FooterDiv.Button>
+        props.modifyButtonName && <FooterDiv.Button onClick={props.modifyBooking}>{props.modifyButtonName}</FooterDiv.Button>
       :
         <React.Fragment>
           <FooterDiv.BookingLeft>
