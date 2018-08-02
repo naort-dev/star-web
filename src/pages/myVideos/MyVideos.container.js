@@ -5,7 +5,8 @@ import { fetchMyVideosList } from './actions/getMyVideosList';
 import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd } from './actions/handleRequests';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo } from '../../store/shared/actions/videoUploader';
-import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/actions/popupActions'
+import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/actions/popupActions';
+import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
@@ -31,6 +32,8 @@ const mapDispatchToProps = dispatch => ({
   rateCelebrity: data => dispatch(rateCelebrity(data)),
   contactSupport: data => dispatch(contactSupport(data)),
   reportAbuse: data => dispatch(reportAbuse(data)),
+  setBookingDetails: data => dispatch(setBookingDetails(data)),
+  cancelBookingDetails: () => dispatch(cancelBookingDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);

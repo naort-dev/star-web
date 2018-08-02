@@ -48,6 +48,17 @@ export default class Personal extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.bookingData.edit && nextProps.eventsDetails.length) {
+      const result = nextProps.eventsDetails.find((find) => {
+        return find.id === this.props.bookingData.occasionType;
+      });
+      this.setState({
+        relationship: result ? result.relationships : '0',
+      })
+    }
+  }
+
   setLoginUserName = () => {
     let userNameValue;
     if (this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name !== '') {

@@ -120,6 +120,35 @@ export default class OrderDetails extends React.Component {
     if (this.props.starMode) {
       this.setState({ showPopup: true, declinePopup: true });
     }
+    let bookingData;
+    const orderDetails = this.props.orderDetails;
+    switch (orderDetails.request_type) {
+      case 1:
+        bookingData = {
+          eventName: orderDetails.occasion,
+          edit: true,
+          hostName: orderDetails.request_details.stargramfrom,
+          userName: orderDetails.request_details.stargramto,
+          eventdetailName:"",
+          relationship:"",
+          relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          requestRelationshipData:undefined,
+          date: 'Aug 02,2018',
+          type: 1,
+          occasionType: orderDetails.occasion_type,
+          selectedValue: orderDetails.occasion_id,
+          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          specification: orderDetails.request_details.specifically_for,
+          importantinfo: orderDetails.request_details.important_info,
+          otherRelationValue:undefined,
+          from_audio_file:undefined,
+          to_audio_file:undefined,
+        };
+        this.props.setBookingDetails(bookingData);
+        this.props.history.push(`/${orderDetails.celebrity_id}/request/personal`);
+        break;
+      default: break;
+    }
   }
 
   handleBooking = () => {
