@@ -19,7 +19,6 @@ import { imageSizes } from '../../constants/imageSizes';
 import { SettingsFooter } from '../../components/SettingsFooter';
 import SettingsTab from '../../components/SettingsTab';
 import MyAccount from '../../components/MyAccount';
-import putFunction from '../../utils/putFunction';
 import { recorder } from '../../constants/videoRecorder';
 import { locations } from '../../constants/locations';
 import { ImageStack } from '../../components/ImageStack';
@@ -299,7 +298,7 @@ export default class Starbio extends React.Component {
 
   onMyAccountSave() {
     const userValue = this.state.settingsObj.userDetails;
-    const notificationValue =this.state.settingsObj.userDetails.notification_settings;
+    const notificationValue = this.state.settingsObj.userDetails.notification_settings;
     const notificationUpdate = {
       celebrity_starsona_request: notificationValue.celebrity_starsona_request,
       celebrity_starsona_message: notificationValue.celebrity_starsona_message,
@@ -309,6 +308,7 @@ export default class Starbio extends React.Component {
       fan_starsona_videos: notificationValue.fan_starsona_videos,
       fan_email_starsona_videos: notificationValue.fan_email_starsona_videos,
     };
+    let profilePhotos;
     const settingDetails = {
       user_details: {
         first_name: userValue.first_name,
@@ -324,10 +324,19 @@ export default class Starbio extends React.Component {
       },
     };
     if (this.state.settingsObj.selectedAccount === 'myAccount') {
+      if (localStorage) {
+        const profileImage = localStorage.getItem('avatarName');
+        profilePhotos = {
+          images: [profileImage],
+          avatar_photo: profileImage,
+        };
+      }
+
       if (this.validateIsEmpty('myAccount')) {
         if (this.state.settingsObj.isCelebrity) {
           this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
         } else {
+          this.props.updateProfilePhoto(profilePhotos);
           this.props.updateUserDetails(userValue.id, settingDetails);
           this.props.updateNotification(notificationUpdate);
         }
@@ -335,6 +344,23 @@ export default class Starbio extends React.Component {
     } else if (this.validateIsEmpty('starAccount')) {
       this.props.updateUserDetails(userValue.id, settingDetails);
       this.props.updateNotification(notificationUpdate);
+      this.uploadImage("featuredImage")
+        .then(() => this.uploadImage("firstImage"))
+        .then(() => this.uploadImage("secondImage"))
+        .then(() => this.uploadImage("avatarImage"))
+        .then(() => {
+          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+            {
+              images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+              avatar_photo: this.state.avatarImageName,
+              featured_image: this.state.featuredImageName
+            }, {
+              "headers": {
+                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+              }
+            })
+          this.setState({ saving: false });
+        });
     }
   }
 
