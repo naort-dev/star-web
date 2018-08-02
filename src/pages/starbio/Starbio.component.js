@@ -279,10 +279,7 @@ export default class Starbio extends React.Component {
   }
 
   uploadImage(type) {
-<<<<<<< ffc6ae73ca46cdb9f1b9daf81e6d04435e886a40
-=======
     const file = type === "avatarImage" ? this.state.avatarFile : this.state[`${type}File`];
->>>>>>> for settings page
     return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
