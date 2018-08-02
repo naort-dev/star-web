@@ -30,6 +30,30 @@ LoginContainer.ImageStackWrapper = styled.div`
     display:block;
   }
 `;
+LoginContainer.PaymentLabel = styled.div`
+  color:red;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align:left;
+  padding:10px 0;
+  cursor:pointer;
+  @media(min-width:768px){
+    width:100%;
+    display:flex;
+    align-items:center;
+    padding-right: 10px;
+    padding-bottom:0px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
+    
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
+`;
 LoginContainer.SuccessText = styled.p`
   font-size: 18px;
   margin-top: 5%;
