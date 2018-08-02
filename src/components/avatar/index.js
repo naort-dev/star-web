@@ -54,7 +54,7 @@ export default class Avatar extends React.Component {
     canvas.toBlob(file => {
       this.setState({ avatar: { ...this.state.avatar, file: file } })
       if (this.props.autoUpload) {
-        this.uploadImage(file, extension);
+        this.uploadImage(file, this.state.extension);
       }
     }, 'image/jpeg');
     this.setState({ avatar: { ...this.state.avatar, image: base64Image }, cropMode: false });
@@ -88,12 +88,9 @@ export default class Avatar extends React.Component {
   onFileChange() {
     const file = document.getElementById('avatar').files[0];
     const extension = file.type.split('/')[1];
-    // if(this.props.autoUpload){
-    //   this.uploadImage(file, extension);
-    // }
     const reader = new FileReader();
     reader.onload = () => {
-      this.setState({ avatar: { ...this.state.avatar, image: reader.result, file }, cropMode: true, cropImage: reader.result });
+      this.setState({ avatar: { ...this.state.avatar, image: reader.result, file }, cropMode: true, cropImage: reader.result, extension });
     };
     if (file) {
       reader.readAsDataURL(file);

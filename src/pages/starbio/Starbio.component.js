@@ -148,7 +148,7 @@ export default class Starbio extends React.Component {
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
         featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ?userDetails.featured_photo.photo : null,
-        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : null,
+        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : [],
         avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
         extensions: {
           featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo.split('.')[1] : null,
@@ -269,10 +269,12 @@ export default class Starbio extends React.Component {
   }
 
   uploadImage(type) {
+    console.log("type", type)
     return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
       .then(response => {
+        console.log("response", response)
         let filename = response.data.data.fields.key.split('/')
         filename = filename[2]
         const formData = new FormData()
