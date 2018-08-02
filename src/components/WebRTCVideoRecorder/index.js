@@ -149,27 +149,25 @@ export default class VideoRecorder extends React.Component {
                 )
               }
             </VideoRecorderDiv.VideoContainer>
-            {this.state.error ?
-              <h4> Unable to Record Video. Kindly refresh your browser </h4> :
-              this.props.videoRecorder.start == null ?
+            {this.props.videoRecorder.start == null ?
+              <VideoRecorderDiv.Wrapper>
+                <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
+                <VideoRecorderDiv.UploadWrapper>
+                  <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+                  <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
+                </VideoRecorderDiv.UploadWrapper>
+              </VideoRecorderDiv.Wrapper>
+              : (this.props.videoRecorder.start == true ?
+                <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
                 <VideoRecorderDiv.Wrapper>
-                  <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                   <VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>
+                  </VideoRecorderDiv.UploadWrapper>
+                  <VideoRecorderDiv.UploadWrapper>
+                    <VideoRecorderDiv.NoVideoButton>Upload</VideoRecorderDiv.NoVideoButton>
                     <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                   </VideoRecorderDiv.UploadWrapper>
-                </VideoRecorderDiv.Wrapper>
-                : (this.props.videoRecorder.start == true ?
-                  <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
-                  <VideoRecorderDiv.Wrapper>
-                    <VideoRecorderDiv.UploadWrapper>
-                      <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>
-                    </VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.UploadWrapper>
-                      <VideoRecorderDiv.NoVideoButton>Upload</VideoRecorderDiv.NoVideoButton>
-                      <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
-                    </VideoRecorderDiv.UploadWrapper>
-                  </VideoRecorderDiv.Wrapper>)
+                </VideoRecorderDiv.Wrapper>)
             }
           </VideoRecorderDiv>
           :

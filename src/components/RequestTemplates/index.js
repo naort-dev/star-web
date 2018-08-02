@@ -59,29 +59,6 @@ class RequestTemplates extends React.Component {
     }
   }
 
-  MobilePopup = (target) => {
-    const url = this.props.audioRecorder.file[target] ? URL.createObjectURL(this.props.audioRecorder.file[target]) : null
-    return (
-      <Popup
-        closePopUp={() => this.props.closeRecorder()}
-      >
-        <Templates.Popup>
-          <Templates.PopupContainer>
-            {/* <audio id="recorded-audio" src={url} controls />
-            <Templates.UploadWrapper>
-              <Templates.NoVideoButton >
-                Upload Pronounication
-          </Templates.NoVideoButton>
-              <Templates.UploadInput type="file" onChange={() => this.fileHandler(target)} id={target} accept="audio/*;capture=microphone" />
-            </Templates.UploadWrapper> */}
-            <AudioRecorder {...this.props} />
-          </Templates.PopupContainer>
-        </Templates.Popup>
-      </Popup>
-    )
-  }
-
-
   renderTemplates = () => {
     const relations = this.state.relationship;
     const optionItems = relations.map((relations) =>
@@ -770,7 +747,6 @@ class RequestTemplates extends React.Component {
   render() {
     return (
       <Templates>
-        {this.props.audioRecorder.showRecorder && getMobileOperatingSystem() ? this.MobilePopup(this.props.audioRecorder.target) : null}
         {this.renderTemplates()}
       </Templates>
     );
