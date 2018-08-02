@@ -18,6 +18,6 @@ export const PaymentFooterController = props => (
           </FooterDiv.BookingPrice>
         </React.Fragment>
     }
-    <FooterDiv.Button onClick={props.handleBooking}>{props.buttonName}</FooterDiv.Button>
+    <FooterDiv.Button disabled={props.disabled} onClick={props.handleBooking}>{props.buttonName}</FooterDiv.Button>
   </FooterDiv>
 );
