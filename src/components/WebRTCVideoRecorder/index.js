@@ -1,7 +1,9 @@
 import React from 'react';
 import VideoRecorderDiv from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
-import VideoPlayer from '../VideoPlayer'
+import VideoPlayer from '../VideoPlayer';
+
+
 export default class VideoRecorder extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +24,7 @@ export default class VideoRecorder extends React.Component {
   }
 
   componentWillMount() {
-    if (checkMediaRecorderSupport()) {
+    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
       return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true})
         .then(() => {})
         .catch(() => {
@@ -149,8 +151,8 @@ export default class VideoRecorder extends React.Component {
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                (this.state.play ? <VideoPlayer primarySrc={this.state.src} />
-                  : <VideoRecorderDiv.Video id="video-player" />)
+                (this.state.play ? <VideoPlayer  primarySrc={this.state.src} />
+                  : <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>)
 
                 :
                 (!this.props.videoRecorder.recordedBlob ?
@@ -164,7 +166,7 @@ export default class VideoRecorder extends React.Component {
               <VideoRecorderDiv.Wrapper>
                 <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
                 <VideoRecorderDiv.UploadWrapper>
-                  <VideoRecorderDiv.NoVideoButton> upload video </VideoRecorderDiv.NoVideoButton>
+                  <VideoRecorderDiv.NoVideoButton> Upload video </VideoRecorderDiv.NoVideoButton>
                   <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                 </VideoRecorderDiv.UploadWrapper>
               </VideoRecorderDiv.Wrapper>
