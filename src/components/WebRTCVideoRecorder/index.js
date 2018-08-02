@@ -25,8 +25,8 @@ export default class VideoRecorder extends React.Component {
 
   componentWillMount() {
     if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
-      return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true})
-        .then(() => {})
+      return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
+        .then(() => { })
         .catch(() => {
           this.setState({ deviceSupport: false });
         });
@@ -106,13 +106,12 @@ export default class VideoRecorder extends React.Component {
     })
       .then(() => {
         document.getElementById('video-player').srcObject = this.state.stream;
-        let options = {
+        const options = {
           mimeType: 'video/webm;codecs=vp8',
           audioBitsPerSecond: 128000,
           videoBitsPerSecond: 128000,
           bitsPerSecond: 128000,
         };
-  
         try {
           this.mediaRecorder = new MediaRecorder(this.state.stream, options);
           this.mediaRecorder.ondataavailable = this.handleDataAvailable;
@@ -135,7 +134,7 @@ export default class VideoRecorder extends React.Component {
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                (this.state.play ? <VideoPlayer  primarySrc={this.state.src} />
+                (this.state.play ? <VideoPlayer primarySrc={this.state.src} />
                   : <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>)
 
                 :
