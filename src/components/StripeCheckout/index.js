@@ -3,7 +3,6 @@ import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
 import Checkout from './checkout';
-import Loader from '../Loader';
 import {
   createCharge,
   paymentFetchSourceStart,
@@ -133,13 +132,6 @@ class StripeCheckout extends React.Component {
           autoHide
           renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
         >
-          {
-            this.props.loading ?
-              <PaymentStyled.loaderWrapper>
-                <Loader />
-              </PaymentStyled.loaderWrapper>
-            : null
-          }
           <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
           <PaymentStyled.StarDetailsWrapper>
             <PaymentStyled.StarNameWrapper>

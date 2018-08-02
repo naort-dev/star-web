@@ -9,7 +9,7 @@ import { starsonaRequest } from '../../store/shared/actions/processPayments';
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   authToken: state.session.auth_token.authentication_token,
-  loading: state.session.loading,
+  loading: state.paymentDetails.loading,
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   eventsDetails: state.occasionList.data,

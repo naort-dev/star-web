@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
+import Loader from '../../components/Loader';
 import './confirmCss';
 import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
@@ -302,6 +303,13 @@ export default class Confirm extends React.Component {
     }
     return (
       <Request.Wrapper>
+        {
+          this.props.loading ?
+            <ConfirmationModal.loaderWrapper>
+              <Loader />
+            </ConfirmationModal.loaderWrapper>
+          : null
+        }
         <Request.Content>
           <Request>
             <Request.LeftSection>
