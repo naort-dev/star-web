@@ -37,8 +37,8 @@ Accounts.PaymentLabel = styled.div`
   color:red;
   font-family: 'Ubuntu-Regular';
   font-size:16px;
-  cursor: pointer;
   text-align:left;
+  cursor:pointer;
   padding:10px 0;
   @media(min-width:768px){
     width:100%;

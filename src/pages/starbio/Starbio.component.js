@@ -42,6 +42,7 @@ export default class Starbio extends React.Component {
       profession: [],
       searchTags: [],
       bio: '',
+      nick_name: '',
       bookingPrice: '',
       bookingLimit: '',
       upload: false,
@@ -123,6 +124,7 @@ export default class Starbio extends React.Component {
 
   componentWillMount() {
     // Settings tab init details
+    this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     if (this.props.history.location.pathname === '/settings') {
       const userDetails = this.props.userDetails.settings_userDetails;
       const starDetails = this.props.userDetails.settings_celebrityDetails;
@@ -137,6 +139,7 @@ export default class Starbio extends React.Component {
       const stateObj = {
         bio: starDetails && starDetails.description ? starDetails.description : '',
         charity: starDetails && starDetails.charity ? starDetails.charity : '',
+        nick_name: starDetails && starDetails.nick_name ? starDetails.nick_name : '',
         bookingLimit: starDetails && starDetails.weekly_limits ? starDetails.weekly_limits : '',
         bookingPrice: starDetails && starDetails.rate ? starDetails.rate : '',
         featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.image_url ? userDetails.featured_photo.image_url : null,
@@ -144,6 +147,15 @@ export default class Starbio extends React.Component {
         secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
+        featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ?userDetails.featured_photo.photo : null,
+        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : [],
+        avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
+        extensions: {
+          featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo.split('.')[1] : null,
+          firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].photo.split('.')[1] : "jpeg",
+          secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].photo.split('.')[1] : "jpeg",
+          avatarImage: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo.split('.')[1] : "jpeg",
+        },
         settingsObj,
       };
       this.setState({ ...stateObj });
@@ -174,6 +186,7 @@ export default class Starbio extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
+
   }
 
   async onFileChange(type = "featuredImage") {
@@ -255,14 +268,13 @@ export default class Starbio extends React.Component {
     })
   }
 
-
-
-
   uploadImage(type) {
+    console.log("type", type)
     return fetch(Api.getImageCredentials(this.state.extensions[`${type}`]), {
       'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     })
       .then(response => {
+        console.log("response", response)
         let filename = response.data.data.fields.key.split('/')
         filename = filename[2]
         const formData = new FormData()
@@ -275,7 +287,12 @@ export default class Starbio extends React.Component {
         formData.append('key', response.data.data.fields.key);
         formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
         formData.append('file', this.state[`${type}File`]);
-        if (type == "firstImage") {
+
+        if (type == "featuredImage") {
+          const featuredImageName = filename;
+          this.setState({ featuredImageName })
+        }
+        else if (type == "firstImage") {
           const secondaryImageNames = [...this.state.secondaryImageNames]
           secondaryImageNames[0] = filename
           this.setState({ secondaryImageNames })
@@ -294,6 +311,90 @@ export default class Starbio extends React.Component {
     // .then(fetch(`user/user_details/${this.props.session.auth_token.id}/get_details/`, {
     //   'headers': { 'Authorization': `token ${this.props.session.auth_token.authentication_token}` }
     // })
+  }
+
+  async  onMyAccountSave() {
+    const userValue = this.state.settingsObj.userDetails;
+    const notificationValue = this.state.settingsObj.userDetails.notification_settings;
+    const notificationUpdate = {
+      celebrity_starsona_request: notificationValue.celebrity_starsona_request,
+      celebrity_starsona_message: notificationValue.celebrity_starsona_message,
+      celebrity_account_updates: notificationValue.celebrity_account_updates,
+      fan_account_updates: notificationValue.fan_account_updates,
+      fan_starsona_messages: notificationValue.fan_starsona_messages,
+      fan_starsona_videos: notificationValue.fan_starsona_videos,
+      fan_email_starsona_videos: notificationValue.fan_email_starsona_videos,
+    };
+    let profilePhotos;
+    const settingDetails = {
+      user_details: {
+        first_name: userValue.first_name,
+        last_name: userValue.last_name,
+        email: userValue.email,
+      },
+      celebrity_details: {
+        profession: this.state.profession,
+        description: this.state.bio,
+        charity: this.state.charity,
+        rate: this.state.bookingPrice,
+        nick_name: this.state.nick_name,
+        weekly_limits: this.state.bookingLimit,
+      },
+    };
+    if (this.state.settingsObj.selectedAccount === 'myAccount') {
+      if (localStorage) {
+        const profileImage = localStorage.getItem('avatarName');
+        profilePhotos = {
+          images: [profileImage],
+          avatar_photo: profileImage,
+        };
+      }
+
+      if (this.validateIsEmpty('myAccount')) {
+        if (this.state.settingsObj.isCelebrity) {
+          this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
+        } else {
+          this.props.updateProfilePhoto(profilePhotos);
+          this.props.updateUserDetails(userValue.id, settingDetails);
+          this.props.updateNotification(notificationUpdate);
+        }
+      }
+    } else if (this.validateIsEmpty('starAccount')) {
+      this.props.updateUserDetails(userValue.id, settingDetails);
+      this.props.updateNotification(notificationUpdate);
+      if (this.state.featuredImageFile) {
+        this.uploadImage("featuredImage")
+      }
+     
+      if (this.state.firstImageFile) {
+        await this.uploadImage("firstImage")
+      }
+      if (this.state.secondImageFile) {
+        await this.uploadImage("secondImage")
+      }
+
+      if (this.state.avatarFile) {
+        await this.uploadImage("avatarImage")
+      }
+
+      return fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+        {
+          images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+          avatar_photo: this.state.avatarImageName,
+          featured_image: this.state.featuredImageName
+        }, {
+          "headers": {
+            'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+          }
+        })
+      this.setState({ saving: false });
+    }
+  }
+
+  resetSettingsValue = () => {
+    this.props.resetUserDetails();
+    this.props.resetProfilePhoto();
+    this.props.resetNotification();
   }
 
   onMyAccountSave() {
@@ -528,6 +629,9 @@ export default class Starbio extends React.Component {
       this.pixelCrop.height,
     );
     const base64Image = canvas.toDataURL('image/jpeg');
+    canvas.toBlob(file => {
+      this.setState({ [`${this.state.currentImageType}File`]: file })
+    }, 'image/jpeg');
     this.setState({ [this.state.currentImageType]: base64Image, cropMode: false });
   }
 
@@ -592,9 +696,6 @@ export default class Starbio extends React.Component {
       }
       return true;
     }
-
-
-
   }
 
   renderMultiValueItems = (selectProps) => {
@@ -623,11 +724,14 @@ export default class Starbio extends React.Component {
   // Settings Function
 
   changeAccountType = (selectedType) => {
-    this.setImageSize();
-    this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } });
+    this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } }, () => {
+      this.setImageSize();
+    });
   }
   changeUserStatus = () => {
-    this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } });
+    this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } }, () => {
+      this.setImageSize();
+    });
   }
   onVideoSubmit = () => {
     this.setState({ upload: true });
@@ -721,10 +825,24 @@ export default class Starbio extends React.Component {
         </LoginContainer.recorderWrapper>
       );
     } else if (this.state.settingsObj.pageView === 'suceess') {
+      let imageList = [];
+      let firstImage;
+      let secondImage;
+      let featuredImage;
+      if (this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images.length) {
+        firstImage = this.props.userDetails.settings_userDetails.images[0] ? this.props.userDetails.settings_userDetails.images[0].image_url : null;
+        secondImage = this.props.userDetails.settings_userDetails.images[1] ? this.props.userDetails.settings_userDetails.images[1].image_url : null;
+        imageList = [firstImage, secondImage];
+      }
+      if (this.props.userDetails.featured_photo) {
+        featuredImage = this.props.userDetails.settings_userDetails.featured_photo.image_url && this.props.userDetails.settings_userDetails.featured_photo.image_url
+      } else {
+        featuredImage = this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images[0] && this.props.userDetails.settings_userDetails.images[0].image_url
+      }
       return (
         <ImageStack
-          featureImage="assets/images/Stadium_800x376.jpg"
-          imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+          featureImage={featuredImage}
+          imageList={imageList}
         />
       );
     }
@@ -830,13 +948,46 @@ export default class Starbio extends React.Component {
       left: '0vw',
       position: 'relative',
     };
-
+    let settingsUpdating;
+    let settingsRedirect;
+    let fullName = '';
+    let imageList = [];
+    let firstImage;
+    let secondImage;
+    let featuredImage;
+    const settingsCheck = this.props.settingsSave;
+    if (isSettings) {
+      settingsUpdating = settingsCheck.photoUpdating || settingsCheck.notificationsUpdating || settingsCheck.userDetailsUpdating;
+    }
+    if (isSettings) {
+      if (this.props.userDetails.settings_userDetails.first_name && this.props.userDetails.settings_userDetails.last_name) {
+        fullName = this.props.userDetails.settings_userDetails.nick_name ? this.props.userDetails.settings_userDetails.nick_name
+          : `${this.props.userDetails.settings_userDetails.first_name} ${this.props.userDetails.settings_userDetails.last_name}`;
+      }
+      if (this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images.length) {
+        firstImage = this.props.userDetails.settings_userDetails.images[0] ? this.props.userDetails.settings_userDetails.images[0].image_url : null;
+        secondImage = this.props.userDetails.settings_userDetails.images[1] ? this.props.userDetails.settings_userDetails.images[1].image_url : null;
+        imageList = [firstImage, secondImage];
+      }
+      if (this.props.userDetails.featured_photo) {
+        featuredImage = this.props.userDetails.settings_userDetails.featured_photo.image_url && this.props.userDetails.settings_userDetails.featured_photo.image_url
+      } else {
+        featuredImage = this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images[0] && this.props.userDetails.settings_userDetails.images[0].image_url
+      }
+    }
     if (!this.props.session.isLoggedIn) {
       return <Redirect to="/signuptype" />;
     }
 
     return (
       <LoginContainer.wrapper>
+        {
+          isSettings && settingsUpdating ?
+            <LoginContainer.loaderWrapper>
+              <Loader />
+            </LoginContainer.loaderWrapper>
+            : null
+        }
         <LoginContainer>
           {this.state.saving ?
             <LoginContainer.loaderWrapper>
@@ -850,7 +1001,7 @@ export default class Starbio extends React.Component {
           }
           <LoginContainer.LeftSection>
             {isSettings ?
-              <HeaderSection RightContent="Anu Shankar" /> :
+              <HeaderSection RightContent={fullName} /> :
               <HeaderSection RightContent="I'M A STAR" />
             }
 
@@ -973,6 +1124,22 @@ export default class Starbio extends React.Component {
 
                                   </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
+                                <LoginContainer.InputWrapper>
+                                  <LoginContainer.Label>Manage Payment</LoginContainer.Label>
+                                  <LoginContainer.WrapsInput>
+
+                                   <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
+
+                                  </LoginContainer.WrapsInput>
+                                </LoginContainer.InputWrapper>
+                                <LoginContainer.InputWrapper>
+                                  <LoginContainer.Label>Stage Name</LoginContainer.Label>
+                                  <LoginContainer.WrapsInput>
+
+                                    <LoginContainer.Input placeholder="Optional" value={this.state.nick_name} onChange={event => { this.handleFieldChange('nick_name', event.target.value) }} />
+
+                                  </LoginContainer.WrapsInput>
+                                </LoginContainer.InputWrapper>
 
 
                                 <LoginContainer.InputWrapper>
@@ -1055,10 +1222,12 @@ export default class Starbio extends React.Component {
           <LoginContainer.RightSection>
             {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
             {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
-              <ImageStack
-                featureImage="assets/images/Stadium_800x376.jpg"
-                imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
-              />
+              <LoginContainer.ImageStackWrapper>
+                <ImageStack
+                  featureImage="assets/images/Stadium_800x376.jpg"
+                  imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                />
+              </LoginContainer.ImageStackWrapper>
               :
               this.renderRightView(options)
 

@@ -1,7 +1,6 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails } from '../actions/getUserDetails';
 
 
 export const UPDATE_PROFILE_PHOTO = {
@@ -9,6 +8,7 @@ export const UPDATE_PROFILE_PHOTO = {
   end: 'fetch_end/update_profile_photo',
   success: 'fetch_success/update_profile_photo',
   failed: 'fetch_failed/update_profile_photo',
+  reset: 'reset/reset_update_profile_photo',
 };
 
 export const updateProfilePhotoFetchStart = () => ({
@@ -31,6 +31,9 @@ export const updateProfilePhotoFetchFailed = error => ({
   type: UPDATE_PROFILE_PHOTO.failed,
   error,
 });
+export const resetProfilePhoto = () => ({
+  type: UPDATE_PROFILE_PHOTO.reset,
+});
 
 
 export const updateProfilePhoto = obj => (dispatch, getState) => {
@@ -50,7 +53,6 @@ export const updateProfilePhoto = obj => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(updateProfilePhotoFetchEnd());
       dispatch(updateProfilePhotoFetchSuccess(resp.data.data));
-      dispatch(fetchUserDetails(auth_token.id));
     } else {
       dispatch(updateProfilePhotoFetchEnd());
       dispatch(updateProfilePhotoFetchFailed('404'));

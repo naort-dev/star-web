@@ -1,49 +1,40 @@
 import React from 'react';
 import { Templates } from '../../components/RequestTemplates/styled';
-import ManagePayments from '../ManagePayments';
 import Accounts from './styled';
 import Avatar from '../avatar';
+import ManagePayments from '../../components/ManagePayments';
 
 export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.accountDetails,
       managePayment: false,
     };
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState({
-      ...nextProps.accountDetails,
-      ...this.state,
-    });
-  }
-  handleInputChange =(data, type) => {
-    this.setState({ [type]: data });
-  }
+
   render() {
     const defaultImage = '../../assets/images/default-cover.jpg';
     return (
       <React.Fragment>
-        {
-          this.state.managePayment ?
-            <ManagePayments
-              onClosePayments={() => this.setState({ managePayment: false })}
-            />
-          : null
-        }
         <Accounts.ComponentWrapper>
+          {
+            this.state.managePayment ?
+              <ManagePayments
+                onClosePayments={() => this.setState({ managePayment: false })}
+              />
+            : null
+          }
           <Accounts.ComponentWrapperScroll
             autoHide
             renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
           >
             <Accounts.Questionwraps>
               <Accounts.Ask>
-                <Templates>   
+                <Templates>
                   <Accounts.InputWrapper>
                     <Accounts.ImageLabel>Profile Image </Accounts.ImageLabel>
                     <Accounts.WrapsInput>
-                      <Avatar autoUpload={true} image={this.props.accountDetails.avatar_photo ? this.props.accountDetails.avatar_photo.image_url : defaultImage} {...this.props} />
+                      <Avatar celebrity={this.props.accountDetails.celebrity} autoUpload={true} image={this.props.accountDetails.avatar_photo ? this.props.accountDetails.avatar_photo.image_url : defaultImage} {...this.props} />
                     </Accounts.WrapsInput>
                   </Accounts.InputWrapper>
                   <Templates.InputWrapper>
@@ -57,9 +48,9 @@ export default class MyAccount extends React.Component {
                       />
                       {this.props.errorDetails.first_name ?
                         <Templates.ErrorMsg isError={this.props.errorDetails.first_name}>
-                          Required
+                          First Name is required
                         </Templates.ErrorMsg>
-                       : null}
+                        : null}
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -71,7 +62,6 @@ export default class MyAccount extends React.Component {
                         value={this.props.accountDetails.last_name}
                         onChange={(event) => { this.props.handleFieldChange('last_name', event.target.value); }}
                       />
-                      
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -85,16 +75,15 @@ export default class MyAccount extends React.Component {
                       />
                       {this.props.errorDetails.email ?
                         <Templates.ErrorMsg isError={this.props.errorDetails.email}>
-                          Required
+                          Email is Required
                         </Templates.ErrorMsg>
-                       : null}
+                        : null}
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label>Password</Templates.Label>
                     <Templates.WrapsInput>
                       <Accounts.PaymentLabel>Manage your password</Accounts.PaymentLabel>
-                      
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -121,7 +110,6 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="messagesFromStarsona" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -137,7 +125,6 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="accountUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -153,7 +140,6 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="myStarsonaUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -169,56 +155,61 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="emailUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-                    
+
                   </Templates.InputWrapper>
-                  <Templates.InputWrapper>
-                    <Templates.Label></Templates.Label>
-                    <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
-                        <span>Celebrity Starsona request</span>
-                        <Accounts.CheckBox
-                          id="celebrityStarsonaRequest"
-                          type="checkbox"
-                          checked={this.props.accountDetails.notification_settings.celebrity_starsona_request}
-                          onChange={(event) => { this.props.handleFieldChange('celebrity_starsona_request', event.target.value); }}
-                        />
-                        <Accounts.Span htmlFor="celebrityStarsonaRequest" id="checkmark" />
-                      </Accounts.Label>
-                    </Accounts.WrapsInput>
-                    
-                  </Templates.InputWrapper>
-                  <Templates.InputWrapper>
-                    <Templates.Label></Templates.Label>
-                    <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
-                        <span>Celebrity Starsona message</span>
-                        <Accounts.CheckBox
-                          id="celebrityStarsonaMesssage"
-                          type="checkbox"
-                          checked={this.props.accountDetails.notification_settings.celebrity_starsona_message}
-                          onChange={(event) => { this.props.handleFieldChange('celebrity_starsona_message', event.target.value); }}
-                        />
-                        <Accounts.Span htmlFor="celebrityStarsonaMesssage" id="checkmark" />
-                      </Accounts.Label>
-                    </Accounts.WrapsInput>
-                    
-                  </Templates.InputWrapper>
-                  <Templates.InputWrapper>
-                    <Templates.Label></Templates.Label>
-                    <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
-                        <span>Celebrity Account updates</span>
-                        <Accounts.CheckBox
-                          id="celebrityAccountUpdates"
-                          type="checkbox"
-                          checked={this.props.accountDetails.notification_settings.celebrity_account_updates}
-                          onChange={(event) => { this.props.handleFieldChange('celebrity_account_updates', event.target.value); }}
-                        />
-                        <Accounts.Span htmlFor="celebrityAccountUpdates" id="checkmark" />
-                      </Accounts.Label>
-                    </Accounts.WrapsInput>
-                    
-                  </Templates.InputWrapper>
+                  {this.props.accountDetails.celebrity ?
+                    <React.Fragment>
+                      <Templates.InputWrapper>
+                        <Templates.Label></Templates.Label>
+                        <Accounts.WrapsInput>
+                          <Accounts.Label id="checkbox_container">
+                            <span>Celebrity Starsona request</span>
+                            <Accounts.CheckBox
+                              id="celebrityStarsonaRequest"
+                              type="checkbox"
+                              checked={this.props.accountDetails.notification_settings.celebrity_starsona_request}
+                              onChange={(event) => { this.props.handleFieldChange('celebrity_starsona_request', event.target.value); }}
+                            />
+                            <Accounts.Span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                          </Accounts.Label>
+                        </Accounts.WrapsInput>
+
+                      </Templates.InputWrapper>
+                      <Templates.InputWrapper>
+                        <Templates.Label></Templates.Label>
+                        <Accounts.WrapsInput>
+                          <Accounts.Label id="checkbox_container">
+                            <span>Celebrity Starsona message</span>
+                            <Accounts.CheckBox
+                              id="celebrityStarsonaMesssage"
+                              type="checkbox"
+                              checked={this.props.accountDetails.notification_settings.celebrity_starsona_message}
+                              onChange={(event) => { this.props.handleFieldChange('celebrity_starsona_message', event.target.value); }}
+                            />
+                            <Accounts.Span htmlFor="celebrityStarsonaMesssage" id="checkmark" />
+                          </Accounts.Label>
+                        </Accounts.WrapsInput>
+
+                      </Templates.InputWrapper>
+                      <Templates.InputWrapper>
+                        <Templates.Label></Templates.Label>
+                        <Accounts.WrapsInput>
+                          <Accounts.Label id="checkbox_container">
+                            <span>Celebrity Account updates</span>
+                            <Accounts.CheckBox
+                              id="celebrityAccountUpdates"
+                              type="checkbox"
+                              checked={this.props.accountDetails.notification_settings.celebrity_account_updates}
+                              onChange={(event) => { this.props.handleFieldChange('celebrity_account_updates', event.target.value); }}
+                            />
+                            <Accounts.Span htmlFor="celebrityAccountUpdates" id="checkmark" />
+                          </Accounts.Label>
+                        </Accounts.WrapsInput>
+
+                      </Templates.InputWrapper>
+                    </React.Fragment> :
+                    null
+                  }
                 </Templates>
               </Accounts.Ask>
             </Accounts.Questionwraps>

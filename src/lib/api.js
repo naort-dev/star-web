@@ -29,6 +29,9 @@ class Api {
   static updatePhoto = 'user/profileimages/';
   static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
   static changeRequestStatus = 'request/change_request_status/';
+  static rating = 'user/fan/celebrity_rating/';
+  static contactSupport = 'user/contact_support/';
+  static reportAbuse = 'user/fan/celebrity_abuse/'
 }
 
 export default Api;

@@ -22,6 +22,38 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.ImageStackWrapper = styled.div`
+  display:none;
+  width:100%;
+  height:100%;
+  @media(min-width:1025px){
+    display:block;
+  }
+`;
+LoginContainer.PaymentLabel = styled.div`
+  color:red;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align:left;
+  padding:10px 0;
+  cursor:pointer;
+  @media(min-width:768px){
+    width:100%;
+    display:flex;
+    align-items:center;
+    padding-right: 10px;
+    padding-bottom:0px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
+    
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
+`;
 LoginContainer.SuccessText = styled.p`
   font-size: 18px;
   margin-top: 5%;
@@ -1127,7 +1159,6 @@ background-color: rgba(0,0,0, 0.3);
 LoginContainer.Image = styled.img`
  height: 100%;
  width: 100%;
- object-fit: contain;
 `;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`

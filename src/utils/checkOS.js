@@ -14,7 +14,7 @@ export const getMobileOperatingSystem = () => {
 
 export const checkMediaRecorderSupport = () => {
   if (window.navigator && (window.navigator.mediaDevices && window.navigator.mediaDevices.getUserMedia)) {
-    if (window.MediaRecorder && window.MediaSource) {
+    if (window.MediaRecorder) {
       return true;
     }
   }
