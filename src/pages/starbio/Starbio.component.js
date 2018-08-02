@@ -42,6 +42,7 @@ export default class Starbio extends React.Component {
       profession: [],
       searchTags: [],
       bio: '',
+      nick_name: '',
       bookingPrice: '',
       bookingLimit: '',
       upload: false,
@@ -123,6 +124,7 @@ export default class Starbio extends React.Component {
 
   componentWillMount() {
     // Settings tab init details
+    this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     if (this.props.history.location.pathname === '/settings') {
       const userDetails = this.props.userDetails.settings_userDetails;
       const starDetails = this.props.userDetails.settings_celebrityDetails;
@@ -137,6 +139,7 @@ export default class Starbio extends React.Component {
       const stateObj = {
         bio: starDetails && starDetails.description ? starDetails.description : '',
         charity: starDetails && starDetails.charity ? starDetails.charity : '',
+        nick_name: starDetails && starDetails.nick_name ? starDetails.nick_name : '',
         bookingLimit: starDetails && starDetails.weekly_limits ? starDetails.weekly_limits : '',
         bookingPrice: starDetails && starDetails.rate ? starDetails.rate : '',
         featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.image_url ? userDetails.featured_photo.image_url : null,
@@ -174,6 +177,7 @@ export default class Starbio extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
+
   }
 
   async onFileChange(type = "featuredImage") {
@@ -275,7 +279,12 @@ export default class Starbio extends React.Component {
         formData.append('key', response.data.data.fields.key);
         formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
         formData.append('file', this.state[`${type}File`]);
-        if (type == "firstImage") {
+
+        if (type == "featuredImage") {
+          const featuredImageName = filename;
+          this.setState({ featuredImageName })
+        }
+        else if (type == "firstImage") {
           const secondaryImageNames = [...this.state.secondaryImageNames]
           secondaryImageNames[0] = filename
           this.setState({ secondaryImageNames })
@@ -286,6 +295,7 @@ export default class Starbio extends React.Component {
           this.setState({ secondaryImageNames })
         }
         else {
+          console.log(filename);
           this.setState({ [`${type}Name`]: filename })
         }
         return { formData, url: response.data.data.url }
@@ -320,6 +330,7 @@ export default class Starbio extends React.Component {
         description: this.state.bio,
         charity: this.state.charity,
         rate: this.state.bookingPrice,
+        nick_name: this.state.nick_name,
         weekly_limits: this.state.bookingLimit,
       },
     };
@@ -345,9 +356,12 @@ export default class Starbio extends React.Component {
       this.props.updateUserDetails(userValue.id, settingDetails);
       this.props.updateNotification(notificationUpdate);
       this.uploadImage("featuredImage")
-        .then(() => this.uploadImage("firstImage"))
-        .then(() => this.uploadImage("secondImage"))
-        .then(() => this.uploadImage("avatarImage"))
+        .then(async () => {
+          await this.uploadImage("firstImage")
+          await this.uploadImage("secondImage")
+          await this.uploadImage("avatarImage")
+        },
+        )
         .then(() => {
           fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
             {
@@ -363,7 +377,11 @@ export default class Starbio extends React.Component {
         });
     }
   }
-
+  resetSettingsValue = () => {
+    this.props.resetUserDetails();
+    this.props.resetProfilePhoto();
+    this.props.resetNotification();
+  }
 
 
   onContinueClick() {
@@ -831,13 +849,26 @@ export default class Starbio extends React.Component {
       left: '0vw',
       position: 'relative',
     };
-
+    let settingsUpdating;
+    let settingsRedirect;
+    const settingsCheck = this.props.settingsSave;
+    if (isSettings) {
+      settingsUpdating = settingsCheck.photoUpdating || settingsCheck.notificationsUpdating || settingsCheck.userDetailsUpdating;
+    }
+    
     if (!this.props.session.isLoggedIn) {
       return <Redirect to="/signuptype" />;
     }
 
     return (
       <LoginContainer.wrapper>
+        {
+          isSettings && settingsUpdating ?
+            <LoginContainer.loaderWrapper>
+              <Loader />
+            </LoginContainer.loaderWrapper>
+            : null
+        }
         <LoginContainer>
           {this.state.saving ?
             <LoginContainer.loaderWrapper>
@@ -974,6 +1005,14 @@ export default class Starbio extends React.Component {
 
                                   </LoginContainer.WrapsInput>
                                 </LoginContainer.InputWrapper>
+                                <LoginContainer.InputWrapper>
+                                  <LoginContainer.Label>Stage Name</LoginContainer.Label>
+                                  <LoginContainer.WrapsInput>
+
+                                    <LoginContainer.Input placeholder="Optional" value={this.state.nick_name} onChange={event => { this.handleFieldChange('nick_name', event.target.value) }} />
+
+                                  </LoginContainer.WrapsInput>
+                                </LoginContainer.InputWrapper>
 
 
                                 <LoginContainer.InputWrapper>
@@ -1056,10 +1095,12 @@ export default class Starbio extends React.Component {
           <LoginContainer.RightSection>
             {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
             {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
-              <ImageStack
-                featureImage="assets/images/Stadium_800x376.jpg"
-                imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
-              />
+              <LoginContainer.ImageStackWrapper>
+                <ImageStack
+                  featureImage="assets/images/Stadium_800x376.jpg"
+                  imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                />
+              </LoginContainer.ImageStackWrapper>
               :
               this.renderRightView(options)
 

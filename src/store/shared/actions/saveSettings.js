@@ -1,7 +1,6 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails } from '../actions/getUserDetails';
 
 
 export const UPDATE_USER_DETAILS = {
@@ -9,6 +8,7 @@ export const UPDATE_USER_DETAILS = {
   end: 'fetch_end/update_user_details',
   success: 'fetch_success/update_user_details',
   failed: 'fetch_failed/update_user_details',
+  reset: 'reset/reset_user_details',
 };
 
 export const updateUserDetailsFetchStart = () => ({
@@ -31,6 +31,9 @@ export const updateUserDetailsFetchFailed = error => ({
   type: UPDATE_USER_DETAILS.failed,
   error,
 });
+export const resetUserDetails = () => ({
+  type: UPDATE_USER_DETAILS.reset,
+});
 
 
 export const updateUserDetails = (id, obj) => (dispatch, getState) => {
@@ -50,7 +53,6 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(updateUserDetailsFetchEnd());
       dispatch(updateUserDetailsFetchSuccess(resp.data.data));
-      dispatch(fetchUserDetails(resp.data.data.user.id));
     } else {
       dispatch(updateUserDetailsFetchEnd());
       dispatch(updateUserDetailsFetchFailed('404'));

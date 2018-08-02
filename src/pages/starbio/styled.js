@@ -22,6 +22,14 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.ImageStackWrapper = styled.div`
+  display:none;
+  width:100%;
+  height:100%;
+  @media(min-width:1025px){
+    display:block;
+  }
+`;
 LoginContainer.SuccessText = styled.p`
   font-size: 18px;
   margin-top: 5%;
@@ -1127,7 +1135,6 @@ background-color: rgba(0,0,0, 0.3);
 LoginContainer.Image = styled.img`
  height: 100%;
  width: 100%;
- object-fit: contain;
 `;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`

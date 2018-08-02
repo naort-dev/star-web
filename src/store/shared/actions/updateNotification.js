@@ -1,7 +1,6 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails } from '../actions/getUserDetails';
 
 
 export const UPDATE_NOTIFICATION = {
@@ -9,6 +8,7 @@ export const UPDATE_NOTIFICATION = {
   end: 'fetch_end/update_notification',
   success: 'fetch_success/update_notification',
   failed: 'fetch_failed/update_notification',
+  reset: 'reset/reset_update_notification',
 };
 
 export const updateNotificationFetchStart = () => ({
@@ -31,6 +31,9 @@ export const updateNotificationFetchFailed = error => ({
   type: UPDATE_NOTIFICATION.failed,
   error,
 });
+export const resetNotification = () => ({
+  type: UPDATE_NOTIFICATION.reset,
+});
 
 
 export const updateNotification = obj => (dispatch, getState) => {
@@ -50,7 +53,6 @@ export const updateNotification = obj => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(updateNotificationFetchEnd());
       dispatch(updateNotificationFetchSuccess(resp.data.data));
-      dispatch(fetchUserDetails(resp.data.data.user.id));
     } else {
       dispatch(updateNotificationFetchEnd());
       dispatch(updateNotificationFetchFailed('404'));

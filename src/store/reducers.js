@@ -23,6 +23,7 @@ import imageViewer from '../store/shared/reducers/imageViewer';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
 import popupData from './shared/reducers/popupData';
 import userDetails from '../store/shared/reducers/userDetails';
+import saveSettings from '../store/shared/reducers/saveSettings';
 
 const rootReducer = combineReducers({
   session,
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   audioRecorder,
   popupData,
   userDetails,
+  saveSettings,
 });
 
 export default rootReducer;

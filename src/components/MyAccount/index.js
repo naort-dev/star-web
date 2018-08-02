@@ -39,7 +39,7 @@ export default class MyAccount extends React.Component {
                       />
                       {this.props.errorDetails.first_name ?
                         <Templates.ErrorMsg isError={this.props.errorDetails.first_name}>
-                          Required
+                          First Name is required
                         </Templates.ErrorMsg>
                        : null}
                     </Templates.WrapsInput>
@@ -67,7 +67,7 @@ export default class MyAccount extends React.Component {
                       />
                       {this.props.errorDetails.email ?
                         <Templates.ErrorMsg isError={this.props.errorDetails.email}>
-                          Required
+                          Email is Required
                         </Templates.ErrorMsg>
                        : null}
                     </Templates.WrapsInput>
