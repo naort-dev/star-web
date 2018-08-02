@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
-  starsonaRequest: (bookingData, publicStatus) => dispatch(starsonaRequest(bookingData, publicStatus)),
+  starsonaRequest: (bookingData, publicStatus, callback) => dispatch(starsonaRequest(bookingData, publicStatus, callback)),
   resetPaymentDetails: () => dispatch(resetPaymentDetails()),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
 });

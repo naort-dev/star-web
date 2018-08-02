@@ -121,14 +121,15 @@ export default class Confirm extends React.Component {
   }
 
   handleBooking = () => {
-    console.log(this.state.bookingData)
     if (this.props.isLoggedIn) {
-      this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
       if (this.state.bookingData.edit) {
-        localStorage.removeItem('bookingData');
-        this.props.cancelBookingDetails();
-        this.props.history.push('/user/myVideos');
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.history.push('/user/myVideos');
+          localStorage.removeItem('bookingData');
+          this.props.cancelBookingDetails();
+        });
       } else {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
         this.setState({ paymentMode: true });
       }
     } else {
