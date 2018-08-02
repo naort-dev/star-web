@@ -120,37 +120,52 @@ export default class OrderDetails extends React.Component {
     if (this.props.starMode) {
       this.setState({ showPopup: true, declinePopup: true });
     }
-    let bookingData;
     const orderDetails = this.props.orderDetails;
-    switch (orderDetails.request_type) {
-      case 1:
-        bookingData = {
-          eventName: orderDetails.occasion,
-          edit: true,
-          requestId: orderDetails.id,
-          hostName: orderDetails.request_details.stargramfrom,
-          userName: orderDetails.request_details.stargramto,
-          eventdetailName:"",
-          relationship:"",
-          relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
-          requestRelationshipData:undefined,
-          date: this.props.createdDate,
-          type: 1,
-          publicRequest: orderDetails.public_request,
-          occasionType: orderDetails.occasion_type,
-          selectedValue: orderDetails.occasion_id,
-          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
-          specification: orderDetails.request_details.specifically_for,
-          importantinfo: orderDetails.request_details.important_info,
-          otherRelationValue:undefined,
-          from_audio_file:undefined,
-          to_audio_file:undefined,
-        };
-        this.props.setBookingDetails(bookingData);
-        this.props.history.push(`/${orderDetails.celebrity_id}/request/personal`);
-        break;
-      default: break;
+    let bookingData = {
+      edit: true,
+      requestId: orderDetails.id,
+      hostName: orderDetails.request_details.stargramfrom,
+      userName: orderDetails.request_details.stargramto,
+      date: this.props.createdDate,
+    };
+    let redirectUrl = '';
+    if (orderDetails.request_type === 1) { // Shout Outs
+      bookingData = {
+        ...bookingData,
+        eventName: orderDetails.occasion,
+        relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+        type: 1,
+        publicRequest: orderDetails.public_request,
+        occasionType: orderDetails.occasion_type,
+        selectedValue: orderDetails.occasion_id,
+        selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+        specification: orderDetails.request_details.specifically_for,
+        importantinfo: orderDetails.request_details.important_info,
+        // otherRelationValue:undefined,
+        from_audio_file: orderDetails.from_audio_file,
+        to_audio_file: orderDetails.from_whereto_audio_file,
+      };
+      redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
+    } else if (orderDetails.request_type === 2) { // events
+      bookingData = {
+        ...bookingData,
+        eventName: orderDetails.occasion,
+        relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+        type: 1,
+        publicRequest: orderDetails.public_request,
+        occasionType: orderDetails.occasion_type,
+        selectedValue: orderDetails.occasion_id,
+        selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+        specification: orderDetails.request_details.specifically_for,
+        importantinfo: orderDetails.request_details.important_info,
+        // otherRelationValue:undefined,
+        from_audio_file: orderDetails.from_audio_file,
+        to_audio_file: orderDetails.from_whereto_audio_file,
+      };
+      redirectUrl = `/${orderDetails.celebrity_id}/request/event`;
     }
+    this.props.setBookingDetails(bookingData);
+    this.props.history.push(redirectUrl);
   }
 
   handleBooking = () => {
