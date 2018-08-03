@@ -342,13 +342,13 @@ export default class Starbio extends React.Component {
         first_name: userValue.first_name,
         last_name: userValue.last_name,
         email: userValue.email,
+        nick_name: this.state.nick_name,
       },
       celebrity_details: {
         profession: this.state.profession,
         description: this.state.bio,
         charity: this.state.charity,
         rate: this.state.bookingPrice,
-        nick_name: this.state.nick_name,
         weekly_limits: this.state.bookingLimit,
       },
     };
