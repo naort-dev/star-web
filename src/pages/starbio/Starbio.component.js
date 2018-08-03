@@ -1214,8 +1214,8 @@ export default class Starbio extends React.Component {
             {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
               <LoginContainer.ImageStackWrapper>
                 <ImageStack
-                  featureImage={featuredImage ? featuredImage :"assets/images/Stadium_800x376.jpg"}
-                  imageList={imageList ? imageList :['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                  featureImage={this.state.settingsObj.isCelebrity ? featuredImage :"assets/images/Stadium_800x376.jpg"}
+                  imageList={this.state.settingsObj.isCelebrity ? imageList : ['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
                 />
               </LoginContainer.ImageStackWrapper>
               :
