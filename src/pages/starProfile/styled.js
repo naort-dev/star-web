@@ -458,4 +458,24 @@ Detail.StoreIcon = styled.img`
   margin-left: 0;
   display: inline-block;
 `;
+
+Detail.PopupWrapper = styled.div`
+  width: 100%;
+  max-height: 100%;
+  min-height: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+`;
+
+Detail.PopupLabel = styled.div`
+font-size: 16px;
+text-align: center;
+@media(min-width: 1025px) {
+  font-size: 20px;
+}
+`;
 export { Detail };

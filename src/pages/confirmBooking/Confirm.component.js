@@ -1,14 +1,17 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
+import Loader from '../../components/Loader';
 import './confirmCss';
 import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
+import Popup from '../../components/Popup';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import StripeCheckout from '../../components/StripeCheckout';
-import renderStarProfessions from '../../utils/formatProfessions';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
 export default class Confirm extends React.Component {
   constructor(props) {
@@ -18,6 +21,7 @@ export default class Confirm extends React.Component {
       publicRequest: true,
       loginRedirect: false,
       requestEndRedirect: false,
+      audioUrl: null,
       QAVideo: {
         url: null,
         error: '',
@@ -57,7 +61,7 @@ export default class Confirm extends React.Component {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={that.date} />
+          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD,YYYY')} />
         );
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;
@@ -73,6 +77,7 @@ export default class Confirm extends React.Component {
         return null;
     }
   }
+
   getEventDetails = (eventType) => {
     const { props } = this;
     const that = props.bookingData;
@@ -82,8 +87,12 @@ export default class Confirm extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={that.eventName} />
-            <OrderDetailsItem title="To" value={that.hostName} />
-            <OrderDetailsItem title="From" value={that.userName} />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(that.hostName, props.toAudio && props.toAudio.recordedUrl)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(that.userName, props.fromAudio && props.fromAudio.recordedUrl)}
+            />
             <OrderDetailsItem title={`${that.userName} is ${that.hostName}'s`} value={that.relationship} />
             {
               this.getOccasionDetails(that.occasionType)
@@ -100,7 +109,7 @@ export default class Confirm extends React.Component {
               this.getOccasionDetails(that.occasionType)
             }
             <OrderDetailsItem title="Host" value={that.userName} />
-            <OrderDetailsItem title="Event Date" value={that.date} />
+            <OrderDetailsItem title="Event Date" value={moment(that.date).format('MMM DD,YYYY')} />
             <OrderDetailsItem title="Important Info" value={that.importantinfo} />
           </React.Fragment>
         );
@@ -110,6 +119,7 @@ export default class Confirm extends React.Component {
       default: return null;
     }
   }
+
   checkDataInStore = (obj) => {
     return Object.keys(obj).length === 0;
   }
@@ -122,8 +132,16 @@ export default class Confirm extends React.Component {
 
   handleBooking = () => {
     if (this.props.isLoggedIn) {
-      this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
-      this.setState({ paymentMode: true });
+      if (this.state.bookingData.edit) {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.history.push('/user/myVideos');
+          localStorage.removeItem('bookingData');
+          this.props.cancelBookingDetails();
+        });
+      } else {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
+        this.setState({ paymentMode: true });
+      }
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
       this.setState({loginRedirect: true})
@@ -172,7 +190,10 @@ export default class Confirm extends React.Component {
   }
 
   orderConfirmationView = fullName => (
-    <ConfirmationModal>
+    <Popup
+      closePopUp={this.closeRequestFlow}
+      smallPopup
+    >
       <ConfirmationModal.confirmationWrapper>
         <ConfirmationModal.Heading>Thank you! Your request has been sent</ConfirmationModal.Heading>
         <ConfirmationModal.description>
@@ -180,8 +201,26 @@ export default class Confirm extends React.Component {
         </ConfirmationModal.description>
         <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Done</ConfirmationModal.Button>
       </ConfirmationModal.confirmationWrapper>
-    </ConfirmationModal>
+    </Popup>
   )
+
+
+  renderStargramDestinationDetails = (text, audioSrc) => {
+    return (
+      <React.Fragment>
+        <span>
+          {text}
+        </span>
+        {
+          audioSrc &&
+            <Request.AudioIcon
+              src='assets/images/voice.png'
+              onClick={() => this.setState({ audioUrl: audioSrc })}
+            />
+        }
+      </React.Fragment>
+    );
+  }
 
   renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
     return (
@@ -207,13 +246,13 @@ export default class Confirm extends React.Component {
             imageUrl={profilePhoto}
           />
           <Request.StarName>{fullName}</Request.StarName>
-          <Request.StarProfessions>{renderStarProfessions(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
+          <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
         </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
         <Request.smallScreenVideo>
           <Request.VideoContentWrapper>
             <VideoPlayer
-              src={this.state.QAVideo.url}
+              primarySrc={this.state.QAVideo.url}
             />
           </Request.VideoContentWrapper>
         </Request.smallScreenVideo>
@@ -227,11 +266,11 @@ export default class Confirm extends React.Component {
         <Request.OptionWrapper>
           <Request.CheckBoxWrapper>
             <Request.Label id="checkbox_container">
-              <span>Make video private?</span>
+              <span>I give permission to {fullName} and Starsona to share my video on social media</span>
               <Request.CheckBox
                 id="private_video"
                 type="checkbox"
-                checked={!this.state.publicRequest}
+                checked={this.state.publicRequest}
                 onChange={() => this.changePublicStatus()}
               />
               <Request.Span htmlFor="private_video" id="checkmark" />
@@ -294,9 +333,25 @@ export default class Confirm extends React.Component {
     }
     return (
       <Request.Wrapper>
+        {
+          this.props.loading ?
+            <ConfirmationModal.loaderWrapper>
+              <Loader />
+            </ConfirmationModal.loaderWrapper>
+          : null
+        }
         <Request.Content>
           <Request>
             <Request.LeftSection>
+              {
+                this.state.audioUrl &&
+                  <Popup
+                    smallPopup
+                    closePopUp={()=>this.setState({audioUrl: null})}
+                  >
+                    <audio src={this.state.audioUrl} controls />
+                  </Popup>
+              }
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
@@ -320,7 +375,7 @@ export default class Confirm extends React.Component {
                 this.state.bookingData.type === 3 ?
                   <Request.VideoContentWrapper>
                     <VideoPlayer
-                      src={this.state.QAVideo.url}
+                      primarySrc={this.state.QAVideo.url}
                     />
                   </Request.VideoContentWrapper>
                 :

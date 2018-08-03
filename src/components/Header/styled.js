@@ -99,12 +99,14 @@ HeaderSection.SignInButtonMobile = styled.button`
 `;
 HeaderSection.ProfileButton = styled.button`
   display: ${props => (props.hide ? 'none' : 'inline-block')};
-  background-image: url( 'assets/images/icon_profile_40a.png' );
+  background-image: ${props => (props.profileUrl ? `url(${props.profileUrl})` : 'url(assets/images/icon_profile_40a.png)')};
   background-repeat:no-repeat;
   background-position: center;
   border:none;
+  outline: none;
   padding:18px;
-  background-size: 30px;
+  border-radius: 50%;
+  background-size: cover;
   background-color:white;
   cursor: pointer;
 `;
@@ -116,12 +118,15 @@ HeaderSection.ProfileDropdown = styled.ul`
   width: 200px;
   background: #fff;
   border-radius: 13px;
+  box-shadow: 0px 4px 8px 0px #cccccc;
 `;
 HeaderSection.ProfileDropdownItem = styled.li`
   font-size: 15px;
   padding: 10px 0;
   border-bottom: 1px solid #ccc;
+  color: #333333;
   cursor: pointer;
+  text-decoration: none;
   &:hover {
     color: #FF6C58;
   }

@@ -29,8 +29,8 @@ VideoRecorderDiv.VideoContainer = styled.div`
     height: 400px
   }
   @media(min-width:1025px){
-    height: 40%;
-    width: 60%;
+    height: 80%;
+    width: 80%;
   }
 
 `;
@@ -58,6 +58,9 @@ VideoRecorderDiv.Button = styled.button`
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  @media(min-width:1025px){
+    min-width: 150px;
+  }
 
 `;
 
@@ -110,7 +113,7 @@ font-family: 'Ubuntu-Bold';
 outline:none;
 border-radius:5px;
 border: 2px solid #FF6C58;
-
+margin-left: 50px;
 `;
 
 
@@ -137,24 +140,30 @@ VideoRecorderDiv.UploadInput = styled.input`
 
   `;
 
-  VideoRecorderDiv.LoaderWrapper = styled.div`
-  position: fixed;
-  top: 0;
-  z-index: 10;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0, 0.3);
+VideoRecorderDiv.LoaderWrapper = styled.div`
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.3);
   `;
 
 
-  VideoRecorderDiv.InfoText = styled.div`
-  font-size: 20px;
-  color: #FFFFFF;
-  font-family: 'Ubuntu-Medium';
-  font-style: italic;
-  text-align: center;
+VideoRecorderDiv.InfoText = styled.div`
+    font-size: 20px;
+    color: #FFFFFF;
+    font-family: 'Ubuntu-Medium';
+    font-style: italic;
+    text-align: center;
   `;
 
+  VideoRecorderDiv.Wrapper = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  `;
 
 export default VideoRecorderDiv;

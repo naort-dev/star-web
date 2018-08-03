@@ -1,6 +1,7 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Range } from 'rc-slider';
+import { openStatusList } from '../../constants/requestStatusList';
 import 'rc-slider/assets/index.css';
 import FilterStyled from './styled';
 
@@ -43,6 +44,8 @@ export default class FilterSection extends React.Component {
   }
   render() {
     if (this.props.requestStatus) {
+      const openStatuses = this.props.starMode ? openStatusList : [...openStatusList, 4]; // 4 = Admin Approval waiting
+      const completedStatus = this.props.starMode ? [4, 6] : [6]; // 6 = completed
       return (
         <FilterStyled filterActive={this.props.filterSelected}>
           <FilterStyled.CloseButton
@@ -62,8 +65,8 @@ export default class FilterSection extends React.Component {
                     All
                   </FilterStyled.filterItem>
                   <FilterStyled.filterItem
-                    selected={'1,2,3,4'.indexOf(this.props.selectedRequestStatus) > -1 ? true : false}
-                    onClick={() => this.filterSelection('request_status', '1,2,3,4')}
+                    selected={openStatuses.toString().indexOf(this.props.selectedRequestStatus) > -1 ? true : false}
+                    onClick={() => this.filterSelection('request_status', openStatuses.toString())}
                   >
                     Open
                   </FilterStyled.filterItem>
@@ -74,8 +77,8 @@ export default class FilterSection extends React.Component {
                     Cancelled
                   </FilterStyled.filterItem>
                   <FilterStyled.filterItem
-                    selected={this.props.selectedRequestStatus === 6 ? true : false}
-                    onClick={() => this.filterSelection('request_status', 6)}
+                    selected={completedStatus.toString().indexOf(this.props.selectedRequestStatus) > -1 ? true : false}
+                    onClick={() => this.filterSelection('request_status', completedStatus.toString())}
                   >
                     Completed
                   </FilterStyled.filterItem>

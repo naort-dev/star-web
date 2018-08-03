@@ -4,6 +4,7 @@ const initalState = {
   requestDetails: {},
   loading: false,
   paymentStatus: false,
+  serverUpdated: false,
   sourceList: {},
 };
 

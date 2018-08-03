@@ -16,6 +16,7 @@ class checkout extends React.Component {
       cardExpiryError: '',
       cvvError: '',
       zipCodeError: '',
+      cardTypeImage: null,
     };
     this.styles = {
       base: {
@@ -35,8 +36,12 @@ class checkout extends React.Component {
     this.props.setStripe(this.props.stripe);
   }
   setErrorMsg = (event, element) => {
+    let { cardTypeImage } = this.state;
+    if (event.elementType === 'cardNumber') {
+      cardTypeImage = event.brand && event.brand !== 'unknown' ? `assets/images/card-icons/${event.brand}.png` : null;
+    }
     const errorMsg = event.error ? event.error.message : '';
-    this.setState({ [element]: errorMsg });
+    this.setState({ [element]: errorMsg, cardTypeImage });
   }
   returnErrorMsg = (element) => {
     if (this.state[element] !== '') {
@@ -54,10 +59,13 @@ class checkout extends React.Component {
       <PaymentStyled onSubmit={this.handleSubmit}>
         <PaymentStyled.CardElementWrapper>
           <PaymentStyled.title>Card Number</PaymentStyled.title>
-          <CardNumberElement
-            onChange={event => this.setErrorMsg(event, 'cardNumberError')}
-            style={this.styles}
-          />
+          <PaymentStyled.CardInputWrapper>
+            <PaymentStyled.CardTypeIcon cardImage={this.state.cardTypeImage} />
+            <CardNumberElement
+              onChange={event => this.setErrorMsg(event, 'cardNumberError')}
+              style={this.styles}
+            />
+          </PaymentStyled.CardInputWrapper>
           { this.returnErrorMsg('cardNumberError') }
         </PaymentStyled.CardElementWrapper>
         <PaymentStyled.OtherDetailsWrapper>

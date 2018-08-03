@@ -16,9 +16,16 @@ import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
-import videoRecorder from '../store/shared/reducers/videoRecording'
-import videoUploader from '../store/shared/reducers/videoUploader'
-import imageViewer from '../store/shared/reducers/imageViewer'
+import videoRecorder from '../store/shared/reducers/videoRecording';
+import videoUploader from '../store/shared/reducers/videoUploader';
+import requestHandler from '../pages/myVideos/reducers/requestHandler';
+import imageViewer from '../store/shared/reducers/imageViewer';
+import audioRecorder from '../store/shared/reducers/audioRecorder';
+import popupData from './shared/reducers/popupData';
+import userDetails from '../store/shared/reducers/userDetails';
+import saveSettings from '../store/shared/reducers/saveSettings';
+import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
+import changePassword from '../store/shared/reducers/changePassword'
 
 const rootReducer = combineReducers({
   session,
@@ -39,7 +46,14 @@ const rootReducer = combineReducers({
   paymentDetails,
   videoRecorder,
   videoUploader,
-  imageViewer
+  imageViewer,
+  requestHandler,
+  audioRecorder,
+  popupData,
+  userDetails,
+  saveSettings,
+  stripeRegistration,
+  changePassword,
 });
 
 export default rootReducer;

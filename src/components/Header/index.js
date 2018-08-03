@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
+import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
-import { logOut } from '../../store/shared/actions/login';
+import { logOutUser } from '../../store/shared/actions/login';
 
 class Header extends React.Component {
   constructor(props) {
@@ -20,8 +21,18 @@ class Header extends React.Component {
       showSuggestions: false,
       profileDropdown: false,
       searchText,
+      profilePhoto: null,
     };
     this.suggestionsFetchDelay=undefined;
+  }
+
+  componentWillMount() {
+   
+    if (this.props.isLoggedIn) {
+      this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
+      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url;
+      this.setState({ profilePhoto });
+    }
   }
 
   componentDidMount() {
@@ -32,6 +43,11 @@ class Header extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.updateSearchParam('');
       this.setState({ searchText: '' });
+    }
+
+    if (JSON.stringify(nextProps.userDetails.avatar_photo) !== JSON.stringify(this.props.userDetails.avatar_photo)) {
+      const profilePhoto = nextProps.userDetails.avatar_photo && nextProps.userDetails.avatar_photo.thumbnail_url;
+      this.setState({ profilePhoto });
     }
   }
 
@@ -74,6 +90,9 @@ class Header extends React.Component {
     if (this.searchRef && !this.searchRef.contains(e.target)) {
       this.setState({ showSuggestions: false, searchActive: false });
     }
+    if (this.profileDropDown && !this.profileButton.contains(e.target) && !this.profileDropDown.contains(e.target)) {
+      this.setState({ profileDropdown: false });
+    }
   }
 
   activateSearch = () => {
@@ -101,10 +120,7 @@ class Header extends React.Component {
     if (window.gapi.auth2) {
       window.gapi.auth2.getAuthInstance().signOut();
     }
-    if (localStorage) {
-      localStorage.removeItem('data');
-      this.props.logOut();
-    }
+    this.props.logOut();
   }
 
   renderSuggestionsList = () => {
@@ -198,13 +214,15 @@ class Header extends React.Component {
                     onClick={this.activateSearch}
                   />
                   <HeaderSection.ProfileButton
+                    profileUrl={this.state.profilePhoto}
+                    innerRef={(node) => { this.profileButton = node }}
                     hide={this.state.searchActive}
                     onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
                   />
                   {
                     this.state.profileDropdown &&
-                      <HeaderSection.ProfileDropdown>
-                        <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
+                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
+                        <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
                           <Link to="/user/favorites">
                             Favourites
@@ -215,6 +233,10 @@ class Header extends React.Component {
                             My Videos
                           </Link>
                         </HeaderSection.UserLink>
+                        <HeaderSection.ProfileDropdownItem >
+                          <Link to="/settings">
+                            Settings
+                          </Link></HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
@@ -251,12 +273,14 @@ const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.session.auth_token,
   filters: state.filters,
+  userValue: state.userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
-  logOut: () => dispatch(logOut()),
+  logOut: () => dispatch(logOutUser()),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
 });
 

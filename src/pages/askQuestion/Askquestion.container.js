@@ -3,7 +3,7 @@ import Askquestion from './Askquestion.component';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { saveVideo } from '../../store/shared/actions/videoUploader';
+import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -11,20 +11,22 @@ const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   videoRecorder: state.videoRecorder,
+  bookingData: state.bookingData,
   session: state.session,
   videoUploader: state.videoUploader,
 });
 
 const mapDispatchToProps = dispatch => ({
   onStartRecording: () => dispatch(startRecording()),
-  onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
+  onStopRecording: recordedVideo => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),
   onRerecord: () => dispatch(reRecord()),
   onClearStreams: () => dispatch(clearStreams()),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
-  onSaveVideo: (videoFile) => dispatch(saveVideo(videoFile))
+  onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),
+  deleteVideo: () => dispatch(deleteVideo()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Askquestion);

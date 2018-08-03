@@ -23,7 +23,7 @@ export default class Event extends React.Component {
       relationshipName: '',
       specification: props.bookingData.specification ? props.bookingData.specification : '',
       importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
-      date: moment(),
+      date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
       eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       whoIsfor: false,
@@ -132,7 +132,7 @@ export default class Event extends React.Component {
       specification: this.state.specification,
       importantinfo: this.state.importantinfo,
       eventdetailName: this.state.eventdetailName,
-      date: this.state.date.format('MMM DD,YYYY'),
+      date: this.state.date,
       type: 2,
       occasionType: this.state.templateType,
       selectedValue: this.state.selectedValue,
@@ -269,6 +269,7 @@ export default class Event extends React.Component {
                               checkRequiredUserName={this.checkRequiredUserName}
                               checkRequiredTitle={this.checkRequiredTitle}
                               checkRequiredDate={this.checkRequiredDate}
+                              {...this.props}
 
                             />
                           </Request.EventStep2>

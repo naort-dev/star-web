@@ -7,7 +7,9 @@ import ScrollList from '../../components/ScrollList';
 import FilterSection from '../../components/filterSection';
 import OrderDetails from '../../components/OrderDetails';
 import Tabs from '../../components/Tabs';
+import ActionLoader from '../../components/ActionLoader';
 import MyVideosStyled from './styled';
+import { requestStatusList } from '../../constants/requestStatusList';
 
 const moment = require('moment');
 
@@ -26,9 +28,10 @@ export default class MyVideos extends React.Component {
       2: 'Event',
       1: 'Shout-outs',
     };
+    this.role = props.starMode ? 'celebrity_id' : 'fan_id';
   }
   componentWillMount() {
-    this.props.fetchMyVideosList(0, true);
+    this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
@@ -43,13 +46,25 @@ export default class MyVideos extends React.Component {
   }
   updateRequestStatus = (requestStatus) => {
     this.setState({ requestStatus }, () => {
-      this.props.fetchMyVideosList(0, true, this.state.requestStatus);
+      this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
     });
   }
   showRequest = (data) => {
     this.setState({ orderDetails: data });
   }
+  changeAvailability = () => {
+    const userId = this.props.userDetails.settings_userDetails.id;
+    const userDetailsData = {
+      user_details: {},
+      celebrity_details: {
+        ...this.props.userDetails.settings_celebrityDetails,
+        availability: !this.props.starAvailability,
+      },
+    };
+    this.props.updateUserDetails(userId, userDetailsData);
+  }
   hideRequest = () => {
+    this.props.onClearStreams();
     this.setState({ orderDetails: {} });
   }
   findRequestVideo = (list, videoStatus) => {
@@ -59,112 +74,68 @@ export default class MyVideos extends React.Component {
     });
     return requestVideo;
   }
-  renderStarProfessions = (list) => {
-    let string = '';
-    list.forEach((professions, index) => {
-      if (index === list.length - 1) {
-        string += `${professions.title}`;
-      } else {
-        string += `${professions.title}\xa0|\xa0`;
-      }
-    });
-    return string;
-  }
   render() {
-    let requestStatus, orderId, requestType, requestVideo, starPhoto, starProfessions, createdDate, occasion, price, isPrivate, from, requestTypeId;
-    let occasionDate, to, relationShip, importantInfo, eventTitle, celebrity, eventHost, honoringFor, eventGuestHonor, specificallyFor, occasionType;
-    let fromWhere, question, requestStatusId, comment, bookingTitle, fanName, fanPhoto;
+    let requestStatus, orderId, requestType, requestVideo, createdDate, price, isPrivate, requestTypeId;
+    let occasionDate, relationShip;
+    let requestStatusId;
     if (Object.keys(this.state.orderDetails).length) {
       requestStatusId = this.state.orderDetails.request_status;
-      if ([1, 2, 3, 4].indexOf(requestStatusId) > -1) {
-        if (this.state.orderDetails.request_type === 3) {
+      if (Object.keys(requestStatusList).indexOf(requestStatusId+"") > -1) {
+        if (this.state.orderDetails.request_type === 3 && requestStatusId === 6) { // completed video and Q&A video
+          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
+        } else if (requestStatusId !== 6) {
           requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 4);
+        } else {
+          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
         }
-        requestStatus = 'Open';
-      } else if (requestStatusId === 5) {
-        requestStatus = 'Cancelled';
-      } else if (requestStatusId === 6) {
-        requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
-        requestStatus = 'Completed';
       }
-      comment = this.state.orderDetails.comment ? this.state.orderDetails.comment : '';
+      requestStatus = requestStatusList[requestStatusId];
       orderId = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.order : '';
       requestType = this.requestType[this.state.orderDetails.request_type];
-      requestTypeId = this.state.orderDetails.request_type;
-      starPhoto = this.state.orderDetails.avatar_photo && this.state.orderDetails.avatar_photo.thumbnail_url;
-      fanPhoto = this.state.orderDetails.fan_photo && this.state.orderDetails.fan_photo.thumbnail_url;
-      starProfessions = this.renderStarProfessions(this.state.orderDetails.professions);
       createdDate = moment(this.state.orderDetails.created_date).format('LL');
-      occasion = this.state.orderDetails.occasion;
-      celebrity = this.state.orderDetails ? this.state.orderDetails.celebrity : '';
       price = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.amount : '';
       isPrivate = this.state.orderDetails.public_request ? 'No' : 'Yes';
-      occasionType = this.state.orderDetails.occasion_type ? this.state.orderDetails.occasion_type : '';
-      bookingTitle = this.state.orderDetails.booking_title ? this.state.orderDetails.booking_title : '';
-      fanName = this.state.orderDetails.fan ? this.state.orderDetails.fan : '';
       if (this.state.orderDetails.request_details) {
-        from = this.state.orderDetails.request_details.stargramfrom ? this.state.orderDetails.request_details.stargramfrom : '';
         occasionDate = this.state.orderDetails.request_details.date ? moment(this.state.orderDetails.request_details.date).format('LL') : '';
-        to = this.state.orderDetails.request_details.stargramto ? this.state.orderDetails.request_details.stargramto : '';
-        importantInfo = this.state.orderDetails.request_details.important_info ? this.state.orderDetails.request_details.important_info : '';
-        eventTitle = this.state.orderDetails.request_details.event_title ? this.state.orderDetails.request_details.event_title : '';
-        eventHost = this.state.orderDetails.request_details.event_host ? this.state.orderDetails.request_details.event_host : '';
-        honoringFor = this.state.orderDetails.request_details.honoring_for ? this.state.orderDetails.request_details.honoring_for : '';
-        eventGuestHonor = this.state.orderDetails.request_details.event_guest_honor ? this.state.orderDetails.request_details.event_guest_honor : '';
-        specificallyFor = this.state.orderDetails.request_details.specifically_for ? this.state.orderDetails.request_details.specifically_for : '';
-        fromWhere = this.state.orderDetails.request_details.from_where ? this.state.orderDetails.request_details.from_where : '';
-        question = this.state.orderDetails.request_details.question ? this.state.orderDetails.request_details.question : '';
         if (this.state.orderDetails.request_details.relationship) {
           relationShip = this.state.orderDetails.request_details.relationship.title ? this.state.orderDetails.request_details.relationship.title : '';
         } else {
           relationShip = '';
         }
       } else {
-        from = '';
         occasionDate = '';
-        to = '';
-        importantInfo = '';
         relationShip = '';
       }
     }
     return (
       <div>
-        <div style={{ display: Object.keys(this.state.orderDetails).length ? 'block' : 'none' }}>
-          <OrderDetails
-            history={this.props.history}
-            comment={comment}
-            fanName={fanName}
-            fanPhoto={fanPhoto}
-            bookingTitle={bookingTitle}
-            requestStatus={requestStatus}
-            requestStatusId={requestStatusId}
-            orderId={orderId}
-            celebrity={celebrity}
-            requestType={requestType}
-            occasionType={occasionType}
-            requestTypeId={requestTypeId}
-            hideRequest={this.hideRequest}
-            requestVideo={requestVideo}
-            starPhoto={starPhoto}
-            starProfessions={starProfessions}
-            createdDate={createdDate}
-            occasion={occasion}
-            price={price}
-            isPrivate={isPrivate}
-            from={from}
-            to={to}
-            relationShip={relationShip}
-            importantInfo={importantInfo}
-            occasionDate={occasionDate}
-            eventTitle={eventTitle}
-            eventHost={eventHost}
-            honoringFor={honoringFor}
-            eventGuestHonor={eventGuestHonor}
-            specificallyFor={specificallyFor}
-            fromWhere={fromWhere}
-            question={question}
-          />
-        </div>
+        {
+          this.props.orderDetailsLoading ?
+            <ActionLoader />
+          : null
+        }
+        {
+          Object.keys(this.state.orderDetails).length ?
+            <OrderDetails
+              {...this.props}
+              orderDetails={this.state.orderDetails}
+              requestStatus={requestStatus}
+              requestStatusId={requestStatusId}
+              orderId={orderId}
+              requestType={requestType}
+              hideRequest={this.hideRequest}
+              requestVideo={requestVideo}
+              createdDate={createdDate}
+              price={price}
+              isPrivate={isPrivate}
+              relationShip={relationShip}
+              occasionDate={occasionDate}
+              rateCelebrity={this.props.rateCelebrity}
+              contactSupport={this.props.contactSupport}
+              reportAbuse={this.props.reportAbuse}
+            />
+          : null
+        }
         <MyVideosStyled style={{ display: Object.keys(this.state.orderDetails).length ? 'none' : 'block' }}>
           <Header
             menuActive={this.state.menuActive}
@@ -180,6 +151,7 @@ export default class MyVideos extends React.Component {
                 <Sidebar
                   list={this.props.professionsList}
                   history={this.props.history}
+                  selectedCategory={this.props.selectedSideBarItem}
                   menuActive={this.state.menuActive}
                   toggleMenu={this.activateMenu}
                 />
@@ -192,12 +164,16 @@ export default class MyVideos extends React.Component {
                 <Tabs
                   labels={['Stars', 'Videos']}
                   disableTabs
-                  heading="My Videos"
+                  leftCheckSelection={this.props.starAvailability}
+                  changeleftCheckSelection={this.changeAvailability}
+                  starMode={this.props.starMode}
+                  heading={this.props.starMode ? 'Accepting Requests' : 'My Videos'}
                   toggleFilter={this.toggleFilterSection}
                 />
                 {
                   this.state.filterSelected &&
                     <FilterSection
+                      starMode={this.props.starMode}
                       requestStatus
                       filterSelected={this.state.filterSelected}
                       toggleFilter={this.toggleFilterSection}
@@ -216,6 +192,7 @@ export default class MyVideos extends React.Component {
                     <ScrollList
                       dataList={this.props.myVideosList.data}
                       requestDetails
+                      starMode={this.props.starMode}
                       limit={this.props.myVideosList.limit}
                       totalCount={this.props.myVideosList.count}
                       offset={this.props.myVideosList.offset}
