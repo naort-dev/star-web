@@ -21,6 +21,7 @@ export default class MyAccount extends React.Component {
         message: '',
       },
     };
+    this.props.resetChangePassord();
   }
 
   onChangePassword = () => {
@@ -60,7 +61,7 @@ export default class MyAccount extends React.Component {
       return false;
     }
 
-    if (this.state.password1.value !== this.state.password2.value) {
+    if (this.state.password1.value !== this.state.password2.value && this.state.password1.value !== '' && this.state.password2.value !== '') {
       this.setState({
         password1: { ...this.state.password1, message: "Password doesn't match" },
         password2: { ...this.state.password2, message: "Password doesn't match" },
@@ -74,13 +75,14 @@ export default class MyAccount extends React.Component {
 
   render() {
     const { oldPassword, password1, password2 } = this.state;
+    const {changePasswordData} = this.props
     return (
       <Fragment>
         <Accounts.PopupHeader>Change password</Accounts.PopupHeader>
         <Accounts.InputFieldsWrapper>
           <Accounts.InputWraps>
             <Accounts.Input
-              type="text"
+              type="password"
               name="old-password"
               value={oldPassword.value}
               placeholder="Old password"
@@ -122,10 +124,11 @@ export default class MyAccount extends React.Component {
           <Accounts.ButtonWrapper>
             <Accounts.SignIn
               onClick={this.onChangePassword}
-              disabled={this.props.loading}
+              disabled={changePasswordData.loading}
             >Change password
             </Accounts.SignIn>
           </Accounts.ButtonWrapper>
+          <Accounts.ApiErrorMsg>{changePasswordData.error ? changePasswordData.error.message : ''}</Accounts.ApiErrorMsg>
         </Accounts.InputFieldsWrapper>
       </Fragment>
     );

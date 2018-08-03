@@ -14,12 +14,23 @@ export default class MyAccount extends React.Component {
     };
   }
 
+  static getDerivedStateFromProps = (props, state) => {
+    if (props.changePasswordData.submitStatus) {
+      props.resetChangePassord();
+      return { showPopup: false };
+    }
+  }
+
   closePopup = () => {
     this.setState({ showPopup: false });
   }
 
   renderPopup = () => (
-    <ChangePassword changePassword={this.props.changePassword} />
+    <ChangePassword
+      changePassword={this.props.changePassword}
+      changePasswordData={this.props.changePasswordData}
+      resetChangePassord={this.props.resetChangePassord}
+    />
   )
 
   render() {

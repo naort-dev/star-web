@@ -998,6 +998,8 @@ export default class Starbio extends React.Component {
                   errorDetails={{ ...this.state.settingsObj.myAccountErrors }}
                   handleFieldChange={this.handleMyAccountFieldChange.bind(this)}
                   changePassword={this.props.changePassword}
+                  changePasswordData={this.props.changePasswordData}
+                  resetChangePassord={this.props.resetChangePassord}
                   {...this.props}
                 />
                 :

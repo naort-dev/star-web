@@ -217,6 +217,14 @@ Accounts.ErrorMsg = styled.div`
   
 `;
 
+Accounts.ApiErrorMsg = styled.div`
+color:red;
+font-size: 11px;
+margin-top: 10px;
+font-family: 'Ubuntu-light';
+text-align: center;
+`;
+
 Accounts.PasswordWrapper = styled.div`
   position:relative;
  

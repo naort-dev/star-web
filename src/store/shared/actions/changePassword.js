@@ -7,6 +7,7 @@ export const CHANGE_PASSWORD = {
   end: 'user/CHANGE_PASSWORD_END',
   success: 'user/CHANGE_PASSWORD_SUCCESS',
   failed: 'user/CHANGE_PASSWORD_FAILED',
+  reset: 'user/CHANGE_PASSWORD_RESET',
 };
 
 export const changePasswordStart = () => ({
@@ -34,9 +35,15 @@ export const changePassword = data => (dispatch) => {
     if (resp.data && resp.data.success) {
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(changePasswordSuccess(resp.data.data));
+    } else if (resp.data && resp.data.error) {
+      dispatch(changePasswordFailed(resp.data.error));
     }
   }).catch((exception) => {
     dispatch(changePasswordEnd());
     dispatch(changePasswordFailed(exception));
   });
 };
+
+export const resetChangePassord = () => ({
+  type: CHANGE_PASSWORD.reset,
+});
