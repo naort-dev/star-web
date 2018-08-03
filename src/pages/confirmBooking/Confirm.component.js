@@ -235,7 +235,7 @@ export default class Confirm extends React.Component {
               <Request.CheckBox
                 id="private_video"
                 type="checkbox"
-                checked={!this.state.publicRequest}
+                checked={this.state.publicRequest}
                 onChange={() => this.changePublicStatus()}
               />
               <Request.Span htmlFor="private_video" id="checkmark" />

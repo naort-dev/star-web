@@ -51,6 +51,17 @@ export default class MyVideos extends React.Component {
   showRequest = (data) => {
     this.setState({ orderDetails: data });
   }
+  changeAvailability = () => {
+    const userId = this.props.userDetails.settings_userDetails.id;
+    const userDetailsData = {
+      user_details: {},
+      celebrity_details: {
+        ...this.props.userDetails.settings_celebrityDetails,
+        availability: !this.props.starAvailability,
+      },
+    }
+    this.props.updateUserDetails(userId, userDetailsData);
+  }
   hideRequest = () => {
     this.props.onClearStreams();
     this.setState({ orderDetails: {} });
@@ -150,6 +161,8 @@ export default class MyVideos extends React.Component {
                 <Tabs
                   labels={['Stars', 'Videos']}
                   disableTabs
+                  leftCheckSelection={this.props.starAvailability}
+                  changeleftCheckSelection={this.changeAvailability}
                   starMode={this.props.starMode}
                   heading={this.props.starMode ? 'Accepting Requests' : 'My Videos'}
                   toggleFilter={this.toggleFilterSection}
