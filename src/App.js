@@ -30,7 +30,6 @@ import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
 import { fetchUserDetails } from './store/shared/actions/getUserDetails';
-import Settings from './pages/accountSettings/accountSettings.container';
 
 class App extends React.Component {
   constructor(props) {
