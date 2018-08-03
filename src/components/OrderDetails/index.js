@@ -128,7 +128,7 @@ export default class OrderDetails extends React.Component {
       if (this.props.videoUploader.savedFile != null) {
         video = this.props.videoUploader.savedFile;
       } else {
-        video = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
+        video = this.props.videoRecorder.recordedBuffer ? new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4') : null;
       }
       if (video) {
         this.uploadVideoToAWS(video);
