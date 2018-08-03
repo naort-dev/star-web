@@ -130,7 +130,7 @@ export default class LoginForm extends React.Component {
     } else {
       this.checkEmail();
       this.checkPassword();
-    }
+    } 
   }
 
 
@@ -339,10 +339,11 @@ export default class LoginForm extends React.Component {
               </LoginContainer.ForgotButtonWrapper>
               <LoginContainer.ButtonWrapper>
                 <LoginContainer.SignIn
+                  type="submit"
+                  value="Log In"
                   onClick={this.onLogin}
                   disabled={this.props.loading}
-                >Log In
-                </LoginContainer.SignIn>
+                />
               </LoginContainer.ButtonWrapper>
             </LoginContainer.InputContainer>
 
