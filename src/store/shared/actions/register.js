@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { fetchUserDetails } from '../actions/getUserDetails';
 
 export const REGISTER = {
   start: 'session/ON_LOGIN',
@@ -55,6 +56,8 @@ export const registerUser = (
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(registerFetchEnd());
       dispatch(registerFetchSuccess(resp.data.data));
+      dispatch(fetchUserDetails(resp.data.data.user.id));
+
       return resp
     } else {
       dispatch(registerFetchEnd());
