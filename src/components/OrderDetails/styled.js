@@ -20,6 +20,7 @@ OrderStyled.Header = styled.div`
 
 OrderStyled.DesktopHeader = styled.div`
   display: none;
+  z-index: 1;
   @media(min-width: 1025px) {
     display: block;
     position: fixed;

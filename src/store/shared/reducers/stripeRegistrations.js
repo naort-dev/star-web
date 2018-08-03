@@ -4,6 +4,7 @@ const initalState = {
     stripeURL: null,
     loading: false,
     cardDetails: null,
+    dashboardURL: null
 };
 
 export default (state = { ...initalState }, action) => {
@@ -43,7 +44,8 @@ export default (state = { ...initalState }, action) => {
             return {
                 ...state,
                 loading: false,
-                cardDetails: action.data,
+                cardDetails: action.data.card_details,
+                dashboardURL: action.data.stripe_details.url,
             };
 
         case CHECK_STRIPE_REGISTRATION.failed:

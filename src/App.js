@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
-import { updateLoginStatus } from './store/shared/actions/login';
+import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -45,6 +45,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    window.addEventListener('storage', this.updateSession);
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
@@ -77,6 +78,17 @@ class App extends React.Component {
     if (this.props.location !== prevProps.location) {
       window.scrollTo(0, 0);
     }
+  }
+
+  componentWillUnmount = () => {
+    window.removeEventListener('storage', this.updateSession);
+  }
+
+  updateSession = () => {
+    if (localStorage && localStorage.getItem('data') !== null) {
+      this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
+    } else this.props.logOut();
   }
 
   render() {
@@ -187,6 +199,7 @@ const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  logOut: () => dispatch(logOut()),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));
