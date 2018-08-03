@@ -142,7 +142,7 @@ export default class Starbio extends React.Component {
       const stateObj = {
         bio: starDetails && starDetails.description ? starDetails.description : '',
         charity: starDetails && starDetails.charity ? starDetails.charity : '',
-        nick_name: starDetails && starDetails.nick_name ? starDetails.nick_name : '',
+        nick_name: userDetails && userDetails.nick_name ? userDetails.nick_name : '',
         bookingLimit: starDetails && starDetails.weekly_limits ? starDetails.weekly_limits : '',
         bookingPrice: starDetails && starDetails.rate ? starDetails.rate : '',
         featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.image_url ? userDetails.featured_photo.image_url : null,
@@ -342,19 +342,19 @@ export default class Starbio extends React.Component {
         first_name: userValue.first_name,
         last_name: userValue.last_name,
         email: userValue.email,
+        nick_name: this.state.nick_name,
       },
       celebrity_details: {
         profession: this.state.profession,
         description: this.state.bio,
         charity: this.state.charity,
         rate: this.state.bookingPrice,
-        nick_name: this.state.nick_name,
         weekly_limits: this.state.bookingLimit,
       },
     };
     if (this.state.settingsObj.selectedAccount === 'myAccount') {
       if (localStorage) {
-        const profileImage = localStorage.getItem('avatarName') ? localStorage.getItem('avatarName') : this.state.stateObj.avatar;
+        const profileImage = localStorage.getItem('avatarName') ? localStorage.getItem('avatarName') : this.state.avatar;
         profilePhotos = {
           images: [profileImage],
           avatar_photo: profileImage,
@@ -362,7 +362,7 @@ export default class Starbio extends React.Component {
       }
 
       else {
-        const profileImage = this.state.stateObj.avatar;
+        const profileImage = this.state.avatar;
         profilePhotos = {
           images: [profileImage],
           avatar_photo: profileImage,
@@ -940,7 +940,7 @@ export default class Starbio extends React.Component {
         secondImage = this.props.userDetails.settings_userDetails.images[1] ? this.props.userDetails.settings_userDetails.images[1].image_url : null;
         imageList = [firstImage, secondImage];
       }
-      if (this.props.userDetails.featured_photo) {
+      if (this.props.userDetails.settings_userDetails.featured_photo) {
         featuredImage = this.props.userDetails.settings_userDetails.featured_photo.image_url && this.props.userDetails.settings_userDetails.featured_photo.image_url
       } else {
         featuredImage = this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images[0] && this.props.userDetails.settings_userDetails.images[0].image_url
@@ -993,7 +993,15 @@ export default class Starbio extends React.Component {
             }
             {
               isSettings && isMyAccount ?
-                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} {...this.props} />
+                <MyAccount
+                  accountDetails={this.state.settingsObj.userDetails}
+                  errorDetails={{ ...this.state.settingsObj.myAccountErrors }}
+                  handleFieldChange={this.handleMyAccountFieldChange.bind(this)}
+                  changePassword={this.props.changePassword}
+                  changePasswordData={this.props.changePasswordData}
+                  resetChangePassord={this.props.resetChangePassord}
+                  {...this.props}
+                />
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
@@ -1099,20 +1107,13 @@ export default class Starbio extends React.Component {
                                 {this.state.settingsObj.isCelebrity && isSettings ?
                                   <React.Fragment>
                                     <LoginContainer.InputWrapper>
-                                      <LoginContainer.Label>Manage Payment</LoginContainer.Label>
+                                      <LoginContainer.Label>Bank</LoginContainer.Label>
                                       <LoginContainer.WrapsInput onClick={() => this.getStripe()}>
-
-                                        <LoginContainer.PaymentLabel>Manage Stripe Account</LoginContainer.PaymentLabel>
-
-                                      </LoginContainer.WrapsInput>
-                                    </LoginContainer.InputWrapper>
-
-                                    <LoginContainer.InputWrapper>
-                                      <LoginContainer.Label></LoginContainer.Label>
-                                      <LoginContainer.WrapsInput>
-
+                                        {this.props.stripeRegistration.cardDetails? 
                                         <LoginContainer.PaymentLabel>{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
-
+                                         :
+                                        <LoginContainer.PaymentLabel>Setup Stripe account</LoginContainer.PaymentLabel>
+                                        }
                                       </LoginContainer.WrapsInput>
                                     </LoginContainer.InputWrapper>
                                   </React.Fragment>
@@ -1213,8 +1214,8 @@ export default class Starbio extends React.Component {
             {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
               <LoginContainer.ImageStackWrapper>
                 <ImageStack
-                  featureImage="assets/images/Stadium_800x376.jpg"
-                  imageList={['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                  featureImage={this.state.settingsObj.isCelebrity ? featuredImage :"assets/images/Stadium_800x376.jpg"}
+                  imageList={this.state.settingsObj.isCelebrity ? imageList : ['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
                 />
               </LoginContainer.ImageStackWrapper>
               :
