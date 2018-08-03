@@ -912,8 +912,14 @@ export default class Starbio extends React.Component {
   getStripe() {
     this.props.fetchURL()
       .then(response => {
-        window.open(response.data.data.stripe_url, "StripeRegistration", "width=500,height=300");
+        window.location = response.data.data.stripe_url
       })
+  }
+
+  getDashboard(){
+    if(this.props.stripeRegistration.dashboardURL){
+      window.open(this.props.stripeRegistration.dashboardURL, '_blank');
+    }
   }
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
@@ -1114,11 +1120,11 @@ export default class Starbio extends React.Component {
                                   <React.Fragment>
                                     <LoginContainer.InputWrapper>
                                       <LoginContainer.Label>Bank</LoginContainer.Label>
-                                      <LoginContainer.WrapsInput onClick={() => this.getStripe()}>
+                                      <LoginContainer.WrapsInput>
                                         {this.props.stripeRegistration.cardDetails ?
-                                          <LoginContainer.PaymentLabel>{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
+                                          <LoginContainer.PaymentLabel onClick={() => this.getDashboard()}  >{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
                                           :
-                                          <LoginContainer.PaymentLabel>Setup Stripe account</LoginContainer.PaymentLabel>
+                                          <LoginContainer.PaymentLabel onClick={() => this.getStripe()}>Setup Stripe account</LoginContainer.PaymentLabel>
                                         }
                                       </LoginContainer.WrapsInput>
                                     </LoginContainer.InputWrapper>
