@@ -491,4 +491,9 @@ OrderStyled.ErrorWrapper = styled.div`
   justify-content: center;
 `;
 
+OrderStyled.AudioIcon = styled.img`
+  vertical-align: top;
+  padding-left: 8px;
+`;
+
 export default OrderStyled;

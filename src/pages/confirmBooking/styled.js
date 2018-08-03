@@ -649,4 +649,8 @@ ConfirmationModal.Button = styled.button`
   border-radius: 5px;
   border: 2px solid #FF6C58;
 `;
+Request.AudioIcon = styled.img`
+  vertical-align: top;
+  padding-left: 8px;
+`;
 export { Request, HeaderSection, ConfirmationModal };
