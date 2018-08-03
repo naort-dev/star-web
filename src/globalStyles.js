@@ -40,7 +40,7 @@ injectGlobal`
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  text-align:center;
+  text-align:left;
   font-size: 14px;
   font-family: 'Ubuntu-Regular';
   -webkit-user-select: none;
