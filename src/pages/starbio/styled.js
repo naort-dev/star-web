@@ -75,6 +75,7 @@ LoginContainer.SuccessText = styled.p`
 LoginContainer.SuccessContainer = styled.div`
   height: 80%;
   width: 100%;
+  margin-top:10%;
   padding: 0px 24px;
   align-items: center;
   justify-content: center;
