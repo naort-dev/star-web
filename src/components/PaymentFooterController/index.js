@@ -4,7 +4,7 @@ import FooterDiv from './styled';
 
 
 export const PaymentFooterController = props => (
-  <FooterDiv singleButton={!props.modifyButtonName}>
+  <FooterDiv singleButton={props.modifyButtonName}>
     {
       props.buttonMode ?
         props.modifyButtonName && <FooterDiv.Button onClick={props.modifyBooking}>{props.modifyButtonName}</FooterDiv.Button>
