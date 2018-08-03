@@ -218,7 +218,7 @@ LoginContainer.InstagramContent = styled.span`
   }
  
 `;
-LoginContainer.InputFieldsWrapper = styled.div`
+LoginContainer.InputFieldsWrapper = styled.form`
   
   padding: 0px 25px;
   @media(min-width:768px){
@@ -351,7 +351,7 @@ LoginContainer.FooterRight = styled.div`
   width:40%;
   text-align:right;
 `;
-LoginContainer.SignIn = styled.button`
+LoginContainer.SignIn = styled.input`
 background-color:#FF6C58 ; 
 color: #fff;
 padding: 12px 30px;
