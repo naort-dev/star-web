@@ -12,7 +12,7 @@ import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   session: state.session,
-  starAvailability: state.userDetails.settings_celebrityDetails.availability,
+  starAvailability: state.userDetails.settings_celebrityDetails ? state.userDetails.settings_celebrityDetails.availability : false,
   userDetails: state.userDetails,
   myVideosList: state.myVideosList,
   videoRecorder: state.videoRecorder,
@@ -21,7 +21,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMyVideosList: (offset, refresh, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, requestStatus)),
+  fetchMyVideosList: (offset, refresh, role, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus)),
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),

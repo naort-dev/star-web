@@ -20,7 +20,7 @@ export const myVideosListFetchEnd = () => ({
   type: MY_VIDEOS_LIST.end,
 });
 
-export const myVideosListFetchSuccess = (list, offset, count, videoStatus) => {
+export const myVideosListFetchSuccess = (list, offset, count, videoStatus, role) => {
   return (
     {
       type: MY_VIDEOS_LIST.success,
@@ -28,6 +28,7 @@ export const myVideosListFetchSuccess = (list, offset, count, videoStatus) => {
       offset,
       count,
       videoStatus,
+      role,
     });
 };
 
@@ -36,16 +37,17 @@ export const myVideosListFetchFailed = error => ({
   error,
 });
 
-export const fetchMyVideosList = (offset, refresh, requestStatus) => (dispatch, getState) => {
+export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
-  const { status, limit } = getState().myVideosList;
+  const { status, limit, role } = getState().myVideosList;
   const videoStatus = requestStatus ? requestStatus : status;
+  const finalRole = currentRole ? currentRole: role;
   const source = CancelToken.source();
   if (typeof getState().myVideosList.token !== typeof undefined) {
     getState().myVideosList.token.cancel('Operation canceled due to new request.');
   }
   dispatch(myVideosListFetchStart(refresh, source));
-  return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}`, {
+  return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=${finalRole}`, {
     cancelToken: source.token,
     headers: {
       'Authorization': `token ${auth_token.authentication_token}`,
@@ -60,7 +62,7 @@ export const fetchMyVideosList = (offset, refresh, requestStatus) => (dispatch, 
       } else {
         list = [...list, ...resp.data.data.request_list];
       }
-      dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus));
+      dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus, role));
     } else {
       dispatch(myVideosListFetchEnd());
     }
