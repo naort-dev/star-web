@@ -83,8 +83,10 @@ export default class MyVideos extends React.Component {
       if (Object.keys(requestStatusList).indexOf(requestStatusId+"") > -1) {
         if (this.state.orderDetails.request_type === 3 && requestStatusId === 6) { // completed video and Q&A video
           requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
-        } else {
+        } else if (requestStatusId !== 6) {
           requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 4);
+        } else {
+          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
         }
       }
       requestStatus = requestStatusList[requestStatusId];

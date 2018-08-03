@@ -649,6 +649,17 @@ ConfirmationModal.Button = styled.button`
   border-radius: 5px;
   border: 2px solid #FF6C58;
 `;
+
+ConfirmationModal.loaderWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, 0.3);
+`;
+
 Request.AudioIcon = styled.img`
   vertical-align: top;
   padding-left: 8px;

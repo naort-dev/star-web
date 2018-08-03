@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
+import Loader from '../../components/Loader';
 import './confirmCss';
 import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
@@ -131,8 +132,16 @@ export default class Confirm extends React.Component {
 
   handleBooking = () => {
     if (this.props.isLoggedIn) {
-      this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
-      this.setState({ paymentMode: true });
+      if (this.state.bookingData.edit) {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.history.push('/user/myVideos');
+          localStorage.removeItem('bookingData');
+          this.props.cancelBookingDetails();
+        });
+      } else {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
+        this.setState({ paymentMode: true });
+      }
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
       this.setState({loginRedirect: true})
@@ -202,10 +211,13 @@ export default class Confirm extends React.Component {
         <span>
           {text}
         </span>
-        <Request.AudioIcon
-          src='assets/images/voice.png'
-          onClick={() => this.setState({audioUrl: audioSrc})}
-        />
+        {
+          audioSrc &&
+            <Request.AudioIcon
+              src='assets/images/voice.png'
+              onClick={() => this.setState({ audioUrl: audioSrc })}
+            />
+        }
       </React.Fragment>
     );
   }
@@ -321,6 +333,13 @@ export default class Confirm extends React.Component {
     }
     return (
       <Request.Wrapper>
+        {
+          this.props.loading ?
+            <ConfirmationModal.loaderWrapper>
+              <Loader />
+            </ConfirmationModal.loaderWrapper>
+          : null
+        }
         <Request.Content>
           <Request>
             <Request.LeftSection>

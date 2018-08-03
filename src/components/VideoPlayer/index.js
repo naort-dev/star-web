@@ -76,7 +76,7 @@ export default class VideoPlayer extends React.Component {
             autoPlay={false}
           >
             <LoadingSpinner />
-            <BigPlayButton position="center"/>
+            <BigPlayButton position="center" />
           </Player>
         </div>
       </VideoRenderDiv>

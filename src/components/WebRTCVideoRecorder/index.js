@@ -135,6 +135,15 @@ export default class VideoRecorder extends React.Component {
       });
   }
 
+   editVideo = () => {
+    if(this.props.src){
+      return <VideoPlayer primarySrc={this.props.src} />
+    }
+    else {
+    return <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>
+    }
+
+  }
   render() {
     return (
       <React.Fragment>
@@ -142,8 +151,8 @@ export default class VideoRecorder extends React.Component {
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                (this.state.play ? <VideoPlayer primarySrc={this.state.src} />
-                  : <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>)
+                (this.state.play ? <VideoPlayer  primarySrc={this.state.src} />
+                  : this.editVideo())
 
                 :
                 (!this.props.videoRecorder.recordedBlob ?
