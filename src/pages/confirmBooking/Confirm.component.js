@@ -7,6 +7,7 @@ import Loader from '../../components/Loader';
 import './confirmCss';
 import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
+import Popup from '../../components/Popup';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import StripeCheckout from '../../components/StripeCheckout';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
@@ -181,7 +182,10 @@ export default class Confirm extends React.Component {
   }
 
   orderConfirmationView = fullName => (
-    <ConfirmationModal>
+    <Popup
+      closePopUp={this.closeRequestFlow}
+      smallPopup
+    >
       <ConfirmationModal.confirmationWrapper>
         <ConfirmationModal.Heading>Thank you! Your request has been sent</ConfirmationModal.Heading>
         <ConfirmationModal.description>
@@ -189,7 +193,7 @@ export default class Confirm extends React.Component {
         </ConfirmationModal.description>
         <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Done</ConfirmationModal.Button>
       </ConfirmationModal.confirmationWrapper>
-    </ConfirmationModal>
+    </Popup>
   )
 
   renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {

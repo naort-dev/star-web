@@ -86,6 +86,8 @@ class StripeCheckout extends React.Component {
     return (
       <PaymentStyled.cardListWrapper>
         <Scrollbars
+          autoHeight
+          autoHeightMax={350}
           autoHide
         >
           {
