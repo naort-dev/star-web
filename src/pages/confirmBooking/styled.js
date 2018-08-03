@@ -616,6 +616,10 @@ Request.ContinueButton = styled.button`
   }
 `;
 
+const ConfirmationModal = styled.div`
+
+`;
+
 ConfirmationModal.confirmationWrapper = styled.div`
   display: flex;
   flex-direction: column;
