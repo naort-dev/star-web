@@ -64,7 +64,7 @@ export default class Confirm extends React.Component {
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;
       case 3:
-        return <OrderDetailsItem title="Person of honor" value={that.hostName} />;
+        return <OrderDetailsItem title="Person of honor" value={that.specification} />;
       case 4:
         return <OrderDetailsItem title={`${that.eventName} from`} value={that.specification} />;
       case 6:
