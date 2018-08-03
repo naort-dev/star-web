@@ -211,10 +211,13 @@ export default class Confirm extends React.Component {
         <span>
           {text}
         </span>
-        <Request.AudioIcon
-          src='assets/images/voice.png'
-          onClick={() => this.setState({audioUrl: audioSrc})}
-        />
+        {
+          audioSrc &&
+            <Request.AudioIcon
+              src='assets/images/voice.png'
+              onClick={() => this.setState({ audioUrl: audioSrc })}
+            />
+        }
       </React.Fragment>
     );
   }
