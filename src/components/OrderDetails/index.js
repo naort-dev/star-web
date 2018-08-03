@@ -218,7 +218,13 @@ export default class OrderDetails extends React.Component {
         </OrderStyled.VideoRecorder>
       );
     }
-    return null;
+    return (
+      <OrderStyled.NoVideoText>
+        Your Video upload is complete and is now being processed for 
+        better streaming. This will take a few minutes. The requester will be notified as 
+        soon as it is ready.
+      </OrderStyled.NoVideoText>
+    );
   }
 
   renderPopup = () => {
@@ -343,7 +349,7 @@ export default class OrderDetails extends React.Component {
               renderView={props => <div {...props} className="order-details-scroll-wrapper" />}
             >
               {
-                props.starMode && props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+                props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
                   this.renderVideo(props, title, shareUrl, this.props.starMode)
                 :
                   <OrderStyled.rightContent notStar>
@@ -417,7 +423,7 @@ export default class OrderDetails extends React.Component {
           <OrderStyled.rightContent>
             <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
             {
-              props.starMode && props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+              props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
                 this.renderVideoRecorder(props)
               : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
             }
