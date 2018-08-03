@@ -239,6 +239,7 @@ export default class Personal extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
+    this.props.clearAll();
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
 
