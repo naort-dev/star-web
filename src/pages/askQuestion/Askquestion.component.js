@@ -48,6 +48,7 @@ export default class Askquestion extends React.Component {
       }
       getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
         .then((response) => {
+          console.log("response for aws credentials", response)
           if (response && response.filename) {
             axios.post(response.url, response.formData).then(() => {
               this.setState({ loader: false });

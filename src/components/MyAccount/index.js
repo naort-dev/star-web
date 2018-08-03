@@ -2,12 +2,13 @@ import React from 'react';
 import { Templates } from '../../components/RequestTemplates/styled';
 import Accounts from './styled';
 import Avatar from '../avatar';
+import ManagePayments from '../../components/ManagePayments';
 
 export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      managePayment: false,
     };
   }
 
@@ -16,6 +17,13 @@ export default class MyAccount extends React.Component {
     return (
       <React.Fragment>
         <Accounts.ComponentWrapper>
+          {
+            this.state.managePayment ?
+              <ManagePayments
+                onClosePayments={() => this.setState({ managePayment: false })}
+              />
+            : null
+          }
           <Accounts.ComponentWrapperScroll
             autoHide
             renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
@@ -54,7 +62,6 @@ export default class MyAccount extends React.Component {
                         value={this.props.accountDetails.last_name}
                         onChange={(event) => { this.props.handleFieldChange('last_name', event.target.value); }}
                       />
-
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -77,13 +84,16 @@ export default class MyAccount extends React.Component {
                     <Templates.Label>Password</Templates.Label>
                     <Templates.WrapsInput>
                       <Accounts.PaymentLabel>Manage your password</Accounts.PaymentLabel>
-
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label>Payment methods</Templates.Label>
                     <Templates.WrapsInput>
-                      <Accounts.PaymentLabel>Manage your payment methods</Accounts.PaymentLabel>
+                      <Accounts.PaymentLabel
+                        onClick={() => this.setState({ managePayment: true })}
+                      >
+                        Manage your payment methods
+                      </Accounts.PaymentLabel>
                     </Templates.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
@@ -100,7 +110,6 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="messagesFromStarsona" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -116,7 +125,6 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="accountUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>
@@ -132,7 +140,6 @@ export default class MyAccount extends React.Component {
                         <Accounts.Span htmlFor="myStarsonaUpdates" id="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
-
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label></Templates.Label>

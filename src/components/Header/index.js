@@ -20,8 +20,16 @@ class Header extends React.Component {
       showSuggestions: false,
       profileDropdown: false,
       searchText,
+      profilePhoto: null,
     };
     this.suggestionsFetchDelay=undefined;
+  }
+
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      const profilePhoto = this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.thumbnail_url;
+      this.setState({ profilePhoto });
+    }
   }
 
   componentDidMount() {
@@ -73,6 +81,9 @@ class Header extends React.Component {
   removeSuggestions = (e) => {
     if (this.searchRef && !this.searchRef.contains(e.target)) {
       this.setState({ showSuggestions: false, searchActive: false });
+    }
+    if (this.profileDropDown && !this.profileButton.contains(e.target) && !this.profileDropDown.contains(e.target)) {
+      this.setState({ profileDropdown: false });
     }
   }
 
@@ -195,12 +206,14 @@ class Header extends React.Component {
                     onClick={this.activateSearch}
                   />
                   <HeaderSection.ProfileButton
+                    profileUrl={this.state.profilePhoto}
+                    innerRef={(node) => { this.profileButton = node }}
                     hide={this.state.searchActive}
                     onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
                   />
                   {
                     this.state.profileDropdown &&
-                      <HeaderSection.ProfileDropdown>
+                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
                         <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
                           <Link to="/user/favorites">

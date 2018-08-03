@@ -411,6 +411,74 @@ export default class Starbio extends React.Component {
     this.props.resetNotification();
   }
 
+  onMyAccountSave() {
+    console.log('hi')
+    const userValue = this.state.settingsObj.userDetails;
+    const notificationValue = this.state.settingsObj.userDetails.notification_settings;
+    const notificationUpdate = {
+      celebrity_starsona_request: notificationValue.celebrity_starsona_request,
+      celebrity_starsona_message: notificationValue.celebrity_starsona_message,
+      celebrity_account_updates: notificationValue.celebrity_account_updates,
+      fan_account_updates: notificationValue.fan_account_updates,
+      fan_starsona_messages: notificationValue.fan_starsona_messages,
+      fan_starsona_videos: notificationValue.fan_starsona_videos,
+      fan_email_starsona_videos: notificationValue.fan_email_starsona_videos,
+    };
+    let profilePhotos;
+    const settingDetails = {
+      user_details: {
+        first_name: userValue.first_name,
+        last_name: userValue.last_name,
+        email: userValue.email,
+      },
+      celebrity_details: {
+        profession: this.state.profession,
+        description: this.state.bio,
+        charity: this.state.charity,
+        rate: this.state.bookingPrice,
+        weekly_limits: this.state.bookingLimit,
+      },
+    };
+    if (this.state.settingsObj.selectedAccount === 'myAccount') {
+      if (localStorage) {
+        const profileImage = localStorage.getItem('avatarName');
+        profilePhotos = {
+          images: [profileImage],
+          avatar_photo: profileImage,
+        };
+      }
+
+      if (this.validateIsEmpty('myAccount')) {
+        if (this.state.settingsObj.isCelebrity) {
+          this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
+        } else {
+          this.props.updateProfilePhoto(profilePhotos);
+          this.props.updateUserDetails(userValue.id, settingDetails);
+          this.props.updateNotification(notificationUpdate);
+        }
+      }
+    } else if (this.validateIsEmpty('starAccount')) {
+      this.props.updateUserDetails(userValue.id, settingDetails);
+      this.props.updateNotification(notificationUpdate);
+      this.uploadImage("featuredImage")
+        .then(() => this.uploadImage("firstImage"))
+        .then(() => this.uploadImage("secondImage"))
+        .then(() => this.uploadImage("avatarImage"))
+        .then(() => {
+          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+            {
+              images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+              avatar_photo: this.state.avatarImageName,
+              featured_image: this.state.featuredImageName
+            }, {
+              "headers": {
+                'Authorization': `token ${this.props.session.auth_token.authentication_token}`
+              }
+            })
+          this.setState({ saving: false });
+        });
+    }
+  }
 
   onContinueClick() {
     if (this.validateIsEmpty('starAccount')) {
