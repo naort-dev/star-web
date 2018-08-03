@@ -10,6 +10,8 @@ const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   authToken: state.session.auth_token.authentication_token,
   loading: state.paymentDetails.loading,
+  fromAudio: state.audioRecorder.recorded.from,
+  toAudio: state.audioRecorder.recorded.for,
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   eventsDetails: state.occasionList.data,

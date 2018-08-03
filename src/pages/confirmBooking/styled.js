@@ -660,4 +660,8 @@ ConfirmationModal.loaderWrapper = styled.div`
   background-color: rgba(0,0,0, 0.3);
 `;
 
+Request.AudioIcon = styled.img`
+  vertical-align: top;
+  padding-left: 8px;
+`;
 export { Request, HeaderSection, ConfirmationModal };

@@ -24,6 +24,7 @@ export default class OrderDetails extends React.Component {
       showActions: false,
       showPopup: false,
       declinePopup: false,
+      audioUrl: null,
     };
   }
 
@@ -58,8 +59,12 @@ export default class OrderDetails extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="To" value={props.orderDetails.request_details.stargramto} />
-            <OrderDetailsItem title="From" value={props.orderDetails.request_details.stargramfrom} />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
+            />
             <OrderDetailsItem title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
@@ -198,6 +203,7 @@ export default class OrderDetails extends React.Component {
       showRatingPopup: false,
       showContactSupportPopup: false,
       showReportAbusePopup: false,
+      audioUrl: null,
     });
   }
 
@@ -207,6 +213,19 @@ export default class OrderDetails extends React.Component {
     this.props.hideRequest();
   }
 
+  renderStargramDestinationDetails = (text, audioSrc) => {
+    return (
+      <React.Fragment>
+        <span>
+          {text}
+        </span>
+        <OrderStyled.AudioIcon
+          src='assets/images/voice.png'
+          onClick={() => this.setState({audioUrl: audioSrc, showPopup: true})}
+        />
+      </React.Fragment>
+    );
+  }
 
   renderVideo = (props, title, shareUrl, starMode) => {
     if (props.requestVideo) {
@@ -322,6 +341,10 @@ export default class OrderDetails extends React.Component {
           })}
           closePopup={this.closePopup}
         />
+      );
+    } else if (this.state.audioUrl) {
+      return (
+        <audio src={this.state.audioUrl} controls />
       );
     }
     return null;
