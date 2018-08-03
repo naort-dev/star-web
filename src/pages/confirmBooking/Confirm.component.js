@@ -231,7 +231,7 @@ export default class Confirm extends React.Component {
         <Request.OptionWrapper>
           <Request.CheckBoxWrapper>
             <Request.Label id="checkbox_container">
-              <span>Make video private?</span>
+              <span>I give permission to ${fullName} and Starsona to share my video on social media</span>
               <Request.CheckBox
                 id="private_video"
                 type="checkbox"
