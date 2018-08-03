@@ -20,6 +20,7 @@ export default class Confirm extends React.Component {
       publicRequest: true,
       loginRedirect: false,
       requestEndRedirect: false,
+      audioUrl: null,
       QAVideo: {
         url: null,
         error: '',
@@ -75,6 +76,7 @@ export default class Confirm extends React.Component {
         return null;
     }
   }
+
   getEventDetails = (eventType) => {
     const { props } = this;
     const that = props.bookingData;
@@ -84,8 +86,12 @@ export default class Confirm extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={that.eventName} />
-            <OrderDetailsItem title="To" value={that.hostName} />
-            <OrderDetailsItem title="From" value={that.userName} />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(that.hostName, props.toAudio && props.toAudio.recordedUrl)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(that.userName, props.fromAudio && props.fromAudio.recordedUrl)}
+            />
             <OrderDetailsItem title={`${that.userName} is ${that.hostName}'s`} value={that.relationship} />
             {
               this.getOccasionDetails(that.occasionType)
@@ -112,6 +118,7 @@ export default class Confirm extends React.Component {
       default: return null;
     }
   }
+
   checkDataInStore = (obj) => {
     return Object.keys(obj).length === 0;
   }
@@ -187,6 +194,21 @@ export default class Confirm extends React.Component {
       </ConfirmationModal.confirmationWrapper>
     </Popup>
   )
+
+
+  renderStargramDestinationDetails = (text, audioSrc) => {
+    return (
+      <React.Fragment>
+        <span>
+          {text}
+        </span>
+        <Request.AudioIcon
+          src='assets/images/voice.png'
+          onClick={() => this.setState({audioUrl: audioSrc})}
+        />
+      </React.Fragment>
+    );
+  }
 
   renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
     return (
@@ -302,6 +324,15 @@ export default class Confirm extends React.Component {
         <Request.Content>
           <Request>
             <Request.LeftSection>
+              {
+                this.state.audioUrl &&
+                  <Popup
+                    smallPopup
+                    closePopUp={()=>this.setState({audioUrl: null})}
+                  >
+                    <audio src={this.state.audioUrl} controls />
+                  </Popup>
+              }
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
