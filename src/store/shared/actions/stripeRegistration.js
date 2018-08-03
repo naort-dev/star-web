@@ -27,6 +27,7 @@ export const stripeRegistrationEnd = () => ({
 });
 
 export const stripeRegistrationSuccess = (data) => {
+
     return (
         {
             type: STRIPE_REGISTRATIONS.success,
@@ -92,7 +93,7 @@ export const checkStripe = () => (dispatch, getState) => {
         },
     }).then((resp) => {
         if (resp.data && resp.data.success) {
-            dispatch(checkStripeRegistrationSuccess(resp.data.data.card_details));
+            dispatch(checkStripeRegistrationSuccess(resp.data.data));
             dispatch(checkStripeRegistrationEnd());
             return resp;
         } else {
