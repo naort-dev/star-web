@@ -20,7 +20,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMyVideosList: (offset, refresh, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, requestStatus)),
+  fetchMyVideosList: (offset, refresh, role, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus)),
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),
