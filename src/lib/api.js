@@ -34,6 +34,7 @@ class Api {
   static reportAbuse = 'user/fan/celebrity_abuse/'
   static stripeRegistration = 'payments/getstripeurl/';
   static checkStripe = 'payments/stripe_dashboard/';
+  static changePassword = 'user/changepassword/';
 }
 
 export default Api;
