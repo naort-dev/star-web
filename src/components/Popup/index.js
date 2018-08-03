@@ -41,6 +41,7 @@ export default class Popup extends React.Component {
               innerRef={node => this.popupContent = node}
             >
               <PopupStyled.CloseButton
+                smallPopup={this.props.smallPopup}
                 onClick={() => this.props.closePopUp()}
               />
               <PopupStyled.SmallContent>

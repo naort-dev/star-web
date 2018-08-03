@@ -90,8 +90,6 @@ PaymentStyled.OptionLabel = styled.label`
 `;
 
 PaymentStyled.cardListWrapper = styled.ul`
-  height: 350px;
-  overflow-y: auto;
 `;
 
 PaymentStyled.cardListItem = styled.li`
