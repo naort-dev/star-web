@@ -805,7 +805,7 @@ export default class Starbio extends React.Component {
         secondImage = this.props.userDetails.settings_userDetails.images[1] ? this.props.userDetails.settings_userDetails.images[1].image_url : null;
         imageList = [firstImage, secondImage];
       }
-      if (this.props.userDetails.featured_photo) {
+      if (this.props.userDetails.settings_userDetails.featured_photo) {
         featuredImage = this.props.userDetails.settings_userDetails.featured_photo.image_url && this.props.userDetails.settings_userDetails.featured_photo.image_url
       } else {
         featuredImage = this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images[0] && this.props.userDetails.settings_userDetails.images[0].image_url
