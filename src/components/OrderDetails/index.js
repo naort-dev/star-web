@@ -126,7 +126,7 @@ export default class OrderDetails extends React.Component {
       requestId: orderDetails.id,
       hostName: orderDetails.request_details.stargramfrom,
       userName: orderDetails.request_details.stargramto,
-      date: this.props.createdDate,
+      date: orderDetails.request_details.date,
     };
     let redirectUrl = '';
     if (orderDetails.request_type === 1) { // Shout Outs
