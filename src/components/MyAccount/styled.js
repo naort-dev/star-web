@@ -140,7 +140,7 @@ Accounts.InputWrapper = styled.div`
 `;
 
 Accounts.PopupWrapper = styled.div`
-  width: 100%;
+  width: 300px;
   max-width: 100%;
   max-height: 100%;
   display: flex;
