@@ -84,6 +84,7 @@ OrderStyled.NoVideoText = styled.span`
   @media(min-width: 1025px) {
     font-family: 'Ubuntu-Bold';
     display: block;
+    line-height: 27px;
   }
 `;
 
