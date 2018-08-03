@@ -124,61 +124,62 @@ export default class OrderDetails extends React.Component {
   modifyBooking = () => {
     if (this.props.starMode) {
       this.setState({ showPopup: true, declinePopup: true });
+    } else {
+      const orderDetails = this.props.orderDetails;
+      let bookingData = {
+        edit: true,
+        requestId: orderDetails.id,
+        hostName: orderDetails.request_details.stargramfrom,
+        userName: orderDetails.request_details.stargramto,
+        date: orderDetails.request_details.date,
+      };
+      this.props.fetchCelebDetails(orderDetails.celebrity_id);
+      let redirectUrl = '';
+      if (orderDetails.request_type === 1) { // Shout Outs
+        bookingData = {
+          ...bookingData,
+          eventName: orderDetails.occasion,
+          relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          type: 1,
+          publicRequest: orderDetails.public_request,
+          occasionType: orderDetails.occasion_type,
+          selectedValue: orderDetails.occasion_id,
+          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          specification: orderDetails.request_details.specifically_for,
+          importantinfo: orderDetails.request_details.important_info,
+          // otherRelationValue:undefined,
+          from_audio_file: orderDetails.from_audio_file,
+          to_audio_file: orderDetails.from_whereto_audio_file,
+        };
+        redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
+      } else if (orderDetails.request_type === 2) { // events
+        bookingData = {
+          ...bookingData,
+          eventName: orderDetails.occasion,
+          relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          type: 1,
+          publicRequest: orderDetails.public_request,
+          occasionType: orderDetails.occasion_type,
+          selectedValue: orderDetails.occasion_id,
+          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          specification: orderDetails.request_details.specifically_for,
+          importantinfo: orderDetails.request_details.important_info,
+          // otherRelationValue:undefined,
+          from_audio_file: orderDetails.from_audio_file,
+          to_audio_file: orderDetails.from_whereto_audio_file,
+        };
+        redirectUrl = `/${orderDetails.celebrity_id}/request/event`;
+      } else if (orderDetails.request_type === 3) { // Q&A
+        bookingData = {
+          ...bookingData,
+          question: orderDetails.booking_title,
+          requestVideo: orderDetails.request_video
+        };
+        redirectUrl = `/${orderDetails.celebrity_id}/request/ask`;
+      }
+      this.props.setBookingDetails(bookingData);
+      this.props.history.push(redirectUrl);
     }
-    const orderDetails = this.props.orderDetails;
-    let bookingData = {
-      edit: true,
-      requestId: orderDetails.id,
-      hostName: orderDetails.request_details.stargramfrom,
-      userName: orderDetails.request_details.stargramto,
-      date: orderDetails.request_details.date,
-    };
-    this.props.fetchCelebDetails(orderDetails.celebrity_id);
-    let redirectUrl = '';
-    if (orderDetails.request_type === 1) { // Shout Outs
-      bookingData = {
-        ...bookingData,
-        eventName: orderDetails.occasion,
-        relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
-        type: 1,
-        publicRequest: orderDetails.public_request,
-        occasionType: orderDetails.occasion_type,
-        selectedValue: orderDetails.occasion_id,
-        selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
-        specification: orderDetails.request_details.specifically_for,
-        importantinfo: orderDetails.request_details.important_info,
-        // otherRelationValue:undefined,
-        from_audio_file: orderDetails.from_audio_file,
-        to_audio_file: orderDetails.from_whereto_audio_file,
-      };
-      redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
-    } else if (orderDetails.request_type === 2) { // events
-      bookingData = {
-        ...bookingData,
-        eventName: orderDetails.occasion,
-        relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
-        type: 1,
-        publicRequest: orderDetails.public_request,
-        occasionType: orderDetails.occasion_type,
-        selectedValue: orderDetails.occasion_id,
-        selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
-        specification: orderDetails.request_details.specifically_for,
-        importantinfo: orderDetails.request_details.important_info,
-        // otherRelationValue:undefined,
-        from_audio_file: orderDetails.from_audio_file,
-        to_audio_file: orderDetails.from_whereto_audio_file,
-      };
-      redirectUrl = `/${orderDetails.celebrity_id}/request/event`;
-    } else if (orderDetails.request_type === 3) { // Q&A
-      bookingData = {
-        ...bookingData,
-        question: orderDetails.booking_title,
-        requestVideo: orderDetails.request_video
-      };
-      redirectUrl = `/${orderDetails.celebrity_id}/request/ask`;
-    }
-    this.props.setBookingDetails(bookingData);
-    this.props.history.push(redirectUrl);
   }
 
   handleBooking = () => {
@@ -215,15 +216,19 @@ export default class OrderDetails extends React.Component {
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
+    console.log(audioSrc)
     return (
       <React.Fragment>
         <span>
           {text}
         </span>
-        <OrderStyled.AudioIcon
-          src='assets/images/voice.png'
-          onClick={() => this.setState({audioUrl: audioSrc, showPopup: true})}
-        />
+        {
+          audioSrc &&
+            <OrderStyled.AudioIcon
+              src='assets/images/voice.png'
+              onClick={() => this.setState({audioUrl: audioSrc, showPopup: true})}
+            />
+        }
       </React.Fragment>
     );
   }
