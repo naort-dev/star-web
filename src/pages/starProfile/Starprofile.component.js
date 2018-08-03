@@ -11,6 +11,8 @@ import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
 import { ImageStack } from '../../components/ImageStack';
+import Popup from '../../components/Popup'
+import { fetch } from '../../services/fetch'
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ export default class Starprofile extends React.Component {
       videoActive: props.match.params.videoId ? true : false,
       selectedVideoItem: {},
       relatedVideos: [],
+      showPopup: null,
     };
   }
   componentWillMount() {
@@ -137,11 +140,27 @@ export default class Starprofile extends React.Component {
       </Detail.RelatedVideosItem>
     ));
   }
+
+
   handleRequest = () => {
-    if (!this.props.loading && this.props.userDetails.user_id) {
-      this.props.history.push(`/${this.props.userDetails.user_id}/request`);
+    if (this.props.celebrityDetails.remaining_limit > 0) {
+      if (!this.props.loading && this.props.userDetails.user_id) {
+        this.props.history.push(`/${this.props.userDetails.user_id}/request`);
+      }
+    }
+    else {
+      fetch.post('user/alert_fan/', {
+        celebrity: this.props.userDetails.id,
+      })
+        .then(response => {
+          if (response.status == 200) {
+            this.setState({ showPopup: true })
+          }
+        });
     }
   }
+
+
   renderList = () => {
     if (this.props.videosList.data.length) {
       return (
@@ -187,8 +206,8 @@ export default class Starprofile extends React.Component {
     let coverPhoto;
     let profilePhoto;
     let fullName = '';
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit: 0;
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
+    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
@@ -208,6 +227,16 @@ export default class Starprofile extends React.Component {
     }
     return (
       <Detail.Wrapper>
+        {this.state.showPopup ?
+          <Popup
+            smallPopup
+            closePopUp={() => this.setState({ showPopup: false })}>
+            <Detail.PopupWrapper>
+              <Detail.PopupLabel>
+                We'll let you know immediately when the star is accepting booking requests
+              </Detail.PopupLabel>
+            </Detail.PopupWrapper>
+          </Popup> : null}
         <Detail.Content>
           <Header
             menuActive={this.state.menuActive}
@@ -274,12 +303,12 @@ export default class Starprofile extends React.Component {
                       >
                         <Detail.VideoPlayerContent>
                           <Detail.VideoPlayer
-                            videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
-                            videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
+                            videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width : '100%'}
+                            videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height : '100%'}
                           >
                             <VideoPlayer
-                              videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width: '100%'}
-                              videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height: '100%'}
+                              videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width : '100%'}
+                              videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height : '100%'}
                               primaryCover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
                               primarySrc={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
                             />
@@ -291,7 +320,7 @@ export default class Starprofile extends React.Component {
                             <Detail.VideoRequester>
                               <Detail.VideoRequestImage
                                 imageUrl={this.state.selectedVideoItem.fan_avatar_photo &&
-                                    this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
+                                  this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
                                 }
                               />
                               <Detail.VideoRequestName>
@@ -316,12 +345,12 @@ export default class Starprofile extends React.Component {
                       </Scrollbars>
                     </Detail.VideoPlayerSection>
                   </Detail.VideoPlayWrapper>
-                : null
+                  : null
               }
               {
                 !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width > 1025 && this.state.selectedTab === 'All' ?
                   null
-                :
+                  :
                   <Tabs
                     starsPage
                     labels={this.state.tabList}
@@ -336,11 +365,11 @@ export default class Starprofile extends React.Component {
                     {
                       !this.props.videosList.data.length && this.props.videosList.loading ?
                         <Loader />
-                      :
+                        :
                         this.renderList()
                     }
                   </Detail.ScrollListWrapper>
-                :
+                  :
                   <Detail.AboutDetailsWrapper>
                     {
                       this.props.celebrityDetails.description && this.props.celebrityDetails.description !== '' ?
@@ -350,7 +379,7 @@ export default class Starprofile extends React.Component {
                             {this.props.celebrityDetails.description}
                           </Detail.AboutDetailContent>
                         </div>
-                      : null
+                        : null
                     }
                     {
                       this.props.celebrityDetails.charity && this.props.celebrityDetails.charity !== '' ?
@@ -360,11 +389,11 @@ export default class Starprofile extends React.Component {
                             {this.props.celebrityDetails.charity}
                           </Detail.AboutDetailContent>
                         </div>
-                      : null
+                        : null
                     }
                   </Detail.AboutDetailsWrapper>
               }
-            </Detail.RightSection> 
+            </Detail.RightSection>
           </Detail>
         </Detail.Content>
       </Detail.Wrapper>

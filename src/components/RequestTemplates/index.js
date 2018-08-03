@@ -23,7 +23,6 @@ class RequestTemplates extends React.Component {
     this.setState({
       startDate: this.props.date,
     });
-    console.log(date);
     this.props.handleChange(date, 'date');
   }
 
