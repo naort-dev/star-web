@@ -133,6 +133,7 @@ export default class OrderDetails extends React.Component {
       userName: orderDetails.request_details.stargramto,
       date: orderDetails.request_details.date,
     };
+    this.props.fetchCelebDetails(orderDetails.celebrity_id);
     let redirectUrl = '';
     if (orderDetails.request_type === 1) { // Shout Outs
       bookingData = {
