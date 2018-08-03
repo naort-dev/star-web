@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const FooterDiv = styled.div`
   display:flex;
-  justify-content: space-between;
+  justify-content: ${props => (props.singleButton ? 'flex-end' : 'space-between')};
   align-items: center; 
   `;
 FooterDiv.BookingLeft = styled.div`

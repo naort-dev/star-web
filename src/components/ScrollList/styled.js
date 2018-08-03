@@ -191,6 +191,9 @@ ListStyled.ShareButton = styled.span`
   padding-top: 10px;
   color: #fff;
   cursor: pointer;
+  width: 30px;
+  height: 30px;
+  background: url( 'assets/images/icons8-share-50.svg' ) no-repeat left;
 `;
 
 ListStyled.VideoRequester = styled.div`

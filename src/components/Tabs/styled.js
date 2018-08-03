@@ -142,6 +142,21 @@ TabStyled.TitleControl = TabStyled.FilterControl.extend`
   }
   @media(min-width: 1025px) {
     position: relative;
+    top: ${props => props.starMode && '4px'};
   }
+`;
+TabStyled.OptionWrapper = styled.footer`
+
+`;
+TabStyled.CheckBoxWrapper = styled.div`
+  padding: 0px 0px;
+`;
+TabStyled.Label = styled.div`
+
+`;
+TabStyled.CheckBox = styled.input`
+  
+`;
+TabStyled.Span = styled.label`
 `;
 export default TabStyled;

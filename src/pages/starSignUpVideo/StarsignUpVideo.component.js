@@ -1,10 +1,11 @@
 import React from 'react';
 import { SignupContainer, HeaderSection, FooterSection } from './styled';
-import VideoRecorder from '../../components/WebRTCVideoRecorder'
+import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
 import { Link, Redirect } from 'react-router-dom';
+import { recorder } from '../../constants/videoRecorder';
 import { fetch } from '../../services/fetch'
 import Loader from '../../components/Loader'
 
@@ -14,7 +15,9 @@ export default class StarsignUpVideo extends React.Component {
     this.onSubmit = this.onSubmit.bind(this)
     this.state = { upload: false }
   }
- 
+  componentWillUnmount() {
+    this.props.onClearStreams();
+  }
 
   onSubmit() {
     this.setState({ upload: true })
@@ -37,6 +40,7 @@ export default class StarsignUpVideo extends React.Component {
             }
           )
           ).then(() => {
+            this.props.fetchUserDetails(this.props.session.auth_token.id);
             this.setState({ upload: false })
             this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
           })
@@ -49,56 +53,58 @@ export default class StarsignUpVideo extends React.Component {
       return <Redirect to={locations.signupType} />
     }
 
-    if (!this.props.location.state ) {
+    if (!this.props.location.state) {
       return <Redirect to="/starbio" />
     }
     return (
-      <SignupContainer>
-        {this.state.upload ?
-          <SignupContainer.loaderWrapper>
-            <Loader />
-          </SignupContainer.loaderWrapper>
-          : null}
-        <HeaderSection>
-          <Link to="/">
-            <HeaderSection.LogoImage
-              src="assets/images/logo_starsona_large.svg"
-              alt=""
-            />
-          </Link>
+      <SignupContainer.wrapper>
+        <SignupContainer>
+          {this.state.upload ?
+            <SignupContainer.loaderWrapper>
+              <Loader />
+            </SignupContainer.loaderWrapper>
+            : null}
+          <HeaderSection>
+            <Link to="/">
+              <HeaderSection.LogoImage
+                src="assets/images/logo_starsona_large.svg"
+                alt=""
+              />
+            </Link>
 
-          <Link to="#">
-            <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
-          </Link>
-        </HeaderSection>
-        <SignupContainer.RightSection>
-          <SignupContainer.recorderWrapper>
-            <VideoRecorder {...this.props} />
-          </SignupContainer.recorderWrapper>
-        </SignupContainer.RightSection>
-        <SignupContainer.LeftSection>
-          <SignupContainer.SocialMediaSignup>
-            <SignupContainer.Container>
-              <SignupContainer.Heading>Verify your identity!</SignupContainer.Heading>
-              <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
-            </SignupContainer.Container>
-            <SignupContainer.Container>
-              <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that i am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
-            </SignupContainer.Container>
-          </SignupContainer.SocialMediaSignup>
-          <SignupContainer.FooterLayout>
-            <FooterSection>
-              <FooterSection.LeftSection>
-              </FooterSection.LeftSection>
-              <FooterSection.RightSection>
-                {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
-                  <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
-                  : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
-              </FooterSection.RightSection>
-            </FooterSection>
-          </SignupContainer.FooterLayout>
-        </SignupContainer.LeftSection>
-      </SignupContainer>
+            <Link to="#">
+              <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
+            </Link>
+          </HeaderSection>
+          <SignupContainer.RightSection>
+            <SignupContainer.recorderWrapper>
+              <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
+            </SignupContainer.recorderWrapper>
+          </SignupContainer.RightSection>
+          <SignupContainer.LeftSection>
+            <SignupContainer.SocialMediaSignup>
+              <SignupContainer.Container>
+                <SignupContainer.Heading>Verify your identity!</SignupContainer.Heading>
+                <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
+              </SignupContainer.Container>
+              <SignupContainer.Container>
+                <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that I am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
+              </SignupContainer.Container>
+            </SignupContainer.SocialMediaSignup>
+            <SignupContainer.FooterLayout>
+              <FooterSection>
+                <FooterSection.LeftSection>
+                </FooterSection.LeftSection>
+                <FooterSection.RightSection>
+                  {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
+                    <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
+                    : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
+                </FooterSection.RightSection>
+              </FooterSection>
+            </SignupContainer.FooterLayout>
+          </SignupContainer.LeftSection>
+        </SignupContainer>
+      </SignupContainer.wrapper>
     );
   }
 }

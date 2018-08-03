@@ -6,6 +6,7 @@ const initalState = {
   offset: -1,
   count: 0,
   limit: 20,
+  role: 'fan_id',
   status: 'all',
 };
 
@@ -33,6 +34,7 @@ export default (state = { ...initalState }, action) => {
         data: action.list,
         count: action.count,
         status: action.videoStatus,
+        role: action.role,
       };
 
     case MY_VIDEOS_LIST.failed:
