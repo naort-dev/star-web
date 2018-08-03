@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { fetchMyVideosList } from '../../../pages/myVideos/actions/getMyVideosList';
 
 export const CLEAR_ERROR = 'popup/CLEAR_ERROR'
 export const RATING = {
@@ -53,6 +54,7 @@ export const rateCelebrity = data => (dispatch) => {
     dispatch(ratingEnd());
     if (resp.data && resp.data.success) {
       dispatch(ratingSuccess(resp.data.data));
+      dispatch(fetchMyVideosList(0, true));
     }
   }).catch((exception) => {
     dispatch(ratingEnd());

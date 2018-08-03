@@ -242,6 +242,7 @@ export default class OrderDetails extends React.Component {
             comments: data.comment,
           })}
           closePopup={this.closePopup}
+          onRatingSuccess={() => this.setState({ hideRating: true })}
         />
       );
     } else if (this.state.showContactSupportPopup) {
@@ -269,7 +270,7 @@ export default class OrderDetails extends React.Component {
 
   renderActionList = () => (
     <OrderStyled.MoreActionsList>
-      {!this.props.orderDetails.fan_rating && this.props.requestStatusId === 6 &&
+      {!this.props.orderDetails.fan_rating && this.props.requestStatusId === 6 && !this.state.hideRating &&
         <OrderStyled.MoreActionsItem
           onClick={() => {
             this.toggleActions();
