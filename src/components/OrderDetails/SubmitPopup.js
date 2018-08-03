@@ -44,9 +44,11 @@ export default class SubmitPopup extends React.Component {
 
   static getDerivedStateFromProps = (props, state) => {
     if (props.submitStatus) {
+      if (props.heading === 'Rate video') props.onRatingSuccess();
       props.clearPopupError();
       props.closePopup();
     }
+    return null;
   }
 
   sendReason = () => {
@@ -64,11 +66,14 @@ export default class SubmitPopup extends React.Component {
           onChange={event => this.setState({ comment: event.target.value })}
         />
         {this.props.heading === 'Rate video' && <StarRating onClick={rating => this.setState({ rating })} />}
-        <OrderStyled.ConfirmButtonWrapper>
+        <OrderStyled.ErrorWrapper>
           {this.props.error && <OrderStyled.ErrorMsg>{this.props.error}</OrderStyled.ErrorMsg>}
-        </OrderStyled.ConfirmButtonWrapper>
+        </OrderStyled.ErrorWrapper>
         <OrderStyled.ConfirmButtonWrapper>
-          <OrderStyled.ConfirmButton onClick={this.sendReason} disabled={!this.state.rating && this.props.heading === 'Rate video'}>
+          <OrderStyled.ConfirmButton
+            onClick={this.sendReason}
+            disabled={!this.state.rating && this.props.heading === 'Rate video' || this.props.heading !== 'Rate video' && !this.state.comment}
+          >
             Submit
           </OrderStyled.ConfirmButton>
         </OrderStyled.ConfirmButtonWrapper>
