@@ -92,7 +92,7 @@ class RequestTemplates extends React.Component {
 
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    < Templates.WrapsInput >
+                    <Templates.WrapsInput>
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
@@ -127,7 +127,9 @@ class RequestTemplates extends React.Component {
 
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                     <Templates.WrapsInput>
-                      <Templates.RecordButton onClick={() => this.audioRecorder("from")} />
+                      <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
+                      {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
                     </Templates.WrapsInput>
                     : null}
                 </Templates.InputWrapperContainer>
