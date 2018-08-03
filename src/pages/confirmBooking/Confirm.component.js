@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
@@ -58,7 +59,7 @@ export default class Confirm extends React.Component {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={that.date} />
+          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD,YYYY')} />
         );
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;
@@ -101,7 +102,7 @@ export default class Confirm extends React.Component {
               this.getOccasionDetails(that.occasionType)
             }
             <OrderDetailsItem title="Host" value={that.userName} />
-            <OrderDetailsItem title="Event Date" value={that.date} />
+            <OrderDetailsItem title="Event Date" value={moment(that.date).format('MMM DD,YYYY')} />
             <OrderDetailsItem title="Important Info" value={that.importantinfo} />
           </React.Fragment>
         );
@@ -231,7 +232,7 @@ export default class Confirm extends React.Component {
         <Request.OptionWrapper>
           <Request.CheckBoxWrapper>
             <Request.Label id="checkbox_container">
-              <span>I give permission to ${fullName} and Starsona to share my video on social media</span>
+              <span>I give permission to {fullName} and Starsona to share my video on social media</span>
               <Request.CheckBox
                 id="private_video"
                 type="checkbox"
