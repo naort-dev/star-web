@@ -7,10 +7,13 @@ import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from
 import { saveVideo } from '../../store/shared/actions/videoUploader';
 import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/actions/popupActions';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
+import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   session: state.session,
+  starAvailability: state.userDetails.settings_celebrityDetails.availability,
+  userDetails: state.userDetails,
   myVideosList: state.myVideosList,
   videoRecorder: state.videoRecorder,
   videoUploader: state.videoUploader,
@@ -34,6 +37,7 @@ const mapDispatchToProps = dispatch => ({
   reportAbuse: data => dispatch(reportAbuse(data)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
+  updateUserDetails: (id, data) => dispatch(updateUserDetails(id, data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);

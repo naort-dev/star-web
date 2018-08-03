@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
+import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
@@ -26,8 +27,10 @@ class Header extends React.Component {
   }
 
   componentWillMount() {
+   
     if (this.props.isLoggedIn) {
-      const profilePhoto = this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.thumbnail_url;
+      this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
+      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url;
       this.setState({ profilePhoto });
     }
   }
@@ -214,7 +217,7 @@ class Header extends React.Component {
                   {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
-                        <HeaderSection.UserProfileName>{this.props.userDetails.first_name} {this.props.userDetails.last_name}</HeaderSection.UserProfileName>
+                        <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
                           <Link to="/user/favorites">
                             Favourites
@@ -265,9 +268,11 @@ const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.session.auth_token,
   filters: state.filters,
+  userValue: state.userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   logOut: () => dispatch(logOutUser()),

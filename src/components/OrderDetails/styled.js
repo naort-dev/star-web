@@ -250,6 +250,7 @@ OrderStyled.ProfileImageWrapper = styled.div`
 `;
 
 OrderStyled.MoreActionsWrapper = styled.div`
+  cursor: pointer;
   position: absolute;
   left: 10px;
   top: 10px;
@@ -264,6 +265,7 @@ OrderStyled.MoreActionsIcon = styled.span`
 `;
 
 OrderStyled.MoreActionsList = styled.ul`
+  cursor: pointer;
   position: absolute;
   top: 20px;
   left:10px;
@@ -273,13 +275,15 @@ OrderStyled.MoreActionsList = styled.ul`
   width: 146px;
   line-height: 26px;
   border-radius: 13px;
-  @media(min-width: 1025px) {
-    background-color: rgb(248, 248, 248);
-  }
+  box-shadow: 0px 4px 8px 0px #cccccc;
 `;
 
 OrderStyled.MoreActionsItem = styled.li`
-
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+    :last-child {
+      border-bottom: none;
+  }
 `;
 
 OrderStyled.ProfileImage = styled.span`
@@ -388,7 +392,7 @@ OrderStyled.PopupWrapper = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #fff;
-  width: 100%;
+  width: 300px;
 `;
 
 OrderStyled.PopupHeader = styled.span`
@@ -436,6 +440,7 @@ OrderStyled.ConfirmButton = styled.button`
 OrderStyled.TextArea = styled.textarea`
   margin: 10px 0;
   height: 100px;
+  font-family: 'Ubuntu-light';
 `;
 
 OrderStyled.RatingTextArea = styled.textarea`
@@ -446,6 +451,7 @@ OrderStyled.RatingTextArea = styled.textarea`
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 14px;
+  font-family: 'Ubuntu-light';
 `;
 
 OrderStyled.VideoRecorder = styled.div`
@@ -475,6 +481,12 @@ OrderStyled.ErrorMsg = styled.div`
   font-family: 'Ubuntu-light';
   text-align:left;
   
+`;
+
+OrderStyled.ErrorWrapper = styled.div`
+  text-align: center;
+  display: flex;
+  justify-content: center;
 `;
 
 export default OrderStyled;

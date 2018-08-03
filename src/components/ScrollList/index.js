@@ -135,9 +135,7 @@ export default class ScrollList extends React.Component {
                       </Link>
                       <ListStyled.ShareButton
                         onClick={() => this.setState({sharePopup: !this.state.sharePopup})}
-                      >
-                        Share
-                      </ListStyled.ShareButton>
+                      />
                     </ListStyled.VideoRequester>
                   </ListStyled.VideoContent>
                   <VideoPlayer {...videoPlayerProps} />

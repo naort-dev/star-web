@@ -1,5 +1,6 @@
 import React from 'react';
-import { LoginContainer } from './styled';
+import { Link } from 'react-router-dom';
+import { LoginContainer, HeaderSection } from './styled';
 import HeaderLogin from '../../components/HeaderSection';
 import MainLoader from '../../components/MainLoader';
 import LoginForm from '../../components/LoginForm';
@@ -13,7 +14,7 @@ export default class Login extends React.Component {
     this.state = {
     };
   }
- 
+
   render() {
     const path = this.props.location.pathname;
     return (
@@ -26,7 +27,17 @@ export default class Login extends React.Component {
 
               <LoginContainer>
                 <LoginContainer.LeftSection>
-                  <HeaderLogin RightContent="SIGNUP" />
+                  <HeaderSection>
+                    <Link to="/">
+                      <HeaderSection.LogoImage
+                        src="assets/images/logo_starsona_large.svg"
+                        alt=""
+                      />
+                    </Link>
+                    <Link to="/signuptype">
+                      <HeaderSection.RightDiv>SIGNUP</HeaderSection.RightDiv>
+                    </Link>
+                  </HeaderSection>
                   <LoginContainer.CoverImage />
                   {path === '/forgotpassword' ?
                     <ForgotPassword {...this.props} />
