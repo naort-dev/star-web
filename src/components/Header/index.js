@@ -225,6 +225,10 @@ class Header extends React.Component {
                             My Videos
                           </Link>
                         </HeaderSection.UserLink>
+                        <HeaderSection.ProfileDropdownItem >
+                          <Link to="/settings">
+                            Settings
+                          </Link></HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }

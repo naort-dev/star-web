@@ -104,6 +104,7 @@ PaymentStyled.cardItemDetails = styled.span`
   border-radius: 12px;
   padding: 10px;
   color: ${props => (props.selected ? '#fff' : '#333333')};
+  padding-right: 26px;
   width: 100%;
   display: block;
 `;
@@ -118,9 +119,9 @@ PaymentStyled.CardNumber = styled.span`
 PaymentStyled.removeCardListItem = styled.span`
   position:absolute;
   right: 10px;
-  top: 15px;
-  width: 20px;
-  height: 20px;
+  top: 19px;
+  width: 15px;
+  height: 15px;
   display: block;
   background: ${props => (props.selected ? 'url(assets/images/close-icon-white.svg)' : 'url(assets/images/close-icon-orange.svg)')};
   background-repeat: no-repeat;
@@ -192,6 +193,7 @@ PaymentStyled.ErrorElement = styled.span`
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
   margin-top: 30px;
+  flex-wrap: wrap;
   .StripeElement {
     margin-right: 30px;
     padding: 10px 5px;

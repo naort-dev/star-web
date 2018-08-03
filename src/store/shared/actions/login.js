@@ -2,6 +2,7 @@
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { clearSessionDetails } from '../../../utils/clearSessionDetails';
+import { fetchUserDetails } from '../actions/getUserDetails';
 
 export const LOGIN = {
   start: 'session/ON_LOGIN',
@@ -64,6 +65,7 @@ export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => 
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(loginFetchEnd());
       dispatch(loginFetchSuccess(resp.data.data));
+      dispatch(fetchUserDetails(resp.data.data.user.id));
     } else {
       dispatch(loginFetchEnd());
     }

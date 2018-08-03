@@ -40,6 +40,7 @@ export default class StarsignUpVideo extends React.Component {
             }
           )
           ).then(() => {
+            this.props.fetchUserDetails(this.props.session.auth_token.id);
             this.setState({ upload: false })
             this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
           })
@@ -52,7 +53,7 @@ export default class StarsignUpVideo extends React.Component {
       return <Redirect to={locations.signupType} />
     }
 
-    if (!this.props.location.state ) {
+    if (!this.props.location.state) {
       return <Redirect to="/starbio" />
     }
     return (

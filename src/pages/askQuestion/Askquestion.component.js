@@ -48,6 +48,7 @@ export default class Askquestion extends React.Component {
       }
       getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
         .then((response) => {
+          console.log("response for aws credentials", response)
           if (response && response.filename) {
             axios.post(response.url, response.formData).then(() => {
               this.setState({ loader: false });
@@ -80,6 +81,7 @@ export default class Askquestion extends React.Component {
     return bookingData;
   }
   render() {
+    
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -87,6 +89,7 @@ export default class Askquestion extends React.Component {
     let featuredImage;
     let firstImage;
     let secondImage;
+    const disabled = this.props.videoRecorder.recordedBlob || this.props.videoUploader.savedFile ? false : true
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
@@ -166,11 +169,13 @@ export default class Askquestion extends React.Component {
                   </Request.Questionwraps>
                 </Request.ComponentWrapperScroll>
                 <Request.PaymentControllerWrapper>
+                
                   <PaymentFooterController
                     buttonName="Book"
                     rate={rate}
                     remainingBookings={remainingBookings}
                     handleBooking={this.handleBooking}
+                    disabled={disabled}
                   />
                 </Request.PaymentControllerWrapper>
               </Request.ComponentWrapper>
