@@ -5,12 +5,15 @@ import FooterDiv from './styled';
 
 export const RequestController = props => (
   <FooterDiv>
-    <FooterDiv.BookingLeft>
-      <strong>{props.remainingBookings}</strong> {props.remainingBookings === '1' ? 'Booking Left' : 'Bookings Left'}
-    </FooterDiv.BookingLeft>
+    {props.remainingBookings > 0 ?
+      <FooterDiv.BookingLeft>
+        <strong>{props.remainingBookings}</strong> {props.remainingBookings === '1' ? 'Booking Left' : 'Bookings Left'}
+      </FooterDiv.BookingLeft>
+      : null
+    }
     <FooterDiv.BookingPrice>
-      <strong>${props.rate}</strong>
+      <strong>{props.remainingBookings > 0 ? `${props.rate}` : null}</strong>
     </FooterDiv.BookingPrice>
-    <FooterDiv.Button onClick={() => props.handleRequest()}>Request a Video</FooterDiv.Button>
+    <FooterDiv.Button onClick={() => props.handleRequest()}>{props.remainingBookings > 0 ? 'Request a Video' : 'Alert Me'}</FooterDiv.Button>
   </FooterDiv>
-);
+        );

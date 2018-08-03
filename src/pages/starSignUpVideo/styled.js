@@ -28,6 +28,15 @@ SignupContainer.LeftSection = styled.div`
     padding-bottom: 83px;
   }
 `;
+SignupContainer.wrapper = styled.div`
+  height:100%;
+  @media(min-width:1025px){
+    height: 100vh;
+    overflow:auto;
+    background-color:white;
+  }
+  
+`;
 
 SignupContainer.RightSection = styled.div`
   width:100%;

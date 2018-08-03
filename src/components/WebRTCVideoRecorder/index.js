@@ -15,7 +15,7 @@ export default class VideoRecorder extends React.Component {
       play: false,
       deviceSupport: true,
     };
-    this.mediaRecorder = null;
+    this.mediaRecorder = "";
     this.recordedBlobs = [];
     this.handleDataAvailable = this.handleDataAvailable.bind(this);
     this.stopRecording = this.stopRecording.bind(this)

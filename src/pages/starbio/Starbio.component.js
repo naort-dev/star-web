@@ -163,7 +163,7 @@ export default class Starbio extends React.Component {
       };
       this.setState({ ...stateObj });
     }
-     
+
     this.props.onClearStreams();
   }
 
@@ -337,14 +337,20 @@ export default class Starbio extends React.Component {
       fan_email_starsona_videos: notificationValue.fan_email_starsona_videos,
     };
     let profilePhotos;
+    let nickName = false;
+    if (this.state.nick_name) {
+      nickName = true;
+    }
     const settingDetails = {
       user_details: {
         first_name: userValue.first_name,
         last_name: userValue.last_name,
         email: userValue.email,
         nick_name: this.state.nick_name,
+        show_nick_name: nickName,
       },
       celebrity_details: {
+
         profession: this.state.profession,
         description: this.state.bio,
         charity: this.state.charity,
@@ -799,7 +805,7 @@ export default class Starbio extends React.Component {
         secondImage = this.props.userDetails.settings_userDetails.images[1] ? this.props.userDetails.settings_userDetails.images[1].image_url : null;
         imageList = [firstImage, secondImage];
       }
-      if (this.props.userDetails.featured_photo) {
+      if (this.props.userDetails.settings_userDetails.featured_photo) {
         featuredImage = this.props.userDetails.settings_userDetails.featured_photo.image_url && this.props.userDetails.settings_userDetails.featured_photo.image_url
       } else {
         featuredImage = this.props.userDetails.settings_userDetails.images && this.props.userDetails.settings_userDetails.images[0] && this.props.userDetails.settings_userDetails.images[0].image_url
@@ -906,8 +912,14 @@ export default class Starbio extends React.Component {
   getStripe() {
     this.props.fetchURL()
       .then(response => {
-        window.open(response.data.data.stripe_url, "StripeRegistration", "width=500,height=300");
+        window.location = response.data.data.stripe_url
       })
+  }
+
+  getDashboard(){
+    if(this.props.stripeRegistration.dashboardURL){
+      window.open(this.props.stripeRegistration.dashboardURL, '_blank');
+    }
   }
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
@@ -1108,11 +1120,11 @@ export default class Starbio extends React.Component {
                                   <React.Fragment>
                                     <LoginContainer.InputWrapper>
                                       <LoginContainer.Label>Bank</LoginContainer.Label>
-                                      <LoginContainer.WrapsInput onClick={() => this.getStripe()}>
-                                        {this.props.stripeRegistration.cardDetails? 
-                                        <LoginContainer.PaymentLabel>{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
-                                         :
-                                        <LoginContainer.PaymentLabel>Setup Stripe account</LoginContainer.PaymentLabel>
+                                      <LoginContainer.WrapsInput>
+                                        {this.props.stripeRegistration.cardDetails ?
+                                          <LoginContainer.PaymentLabel onClick={() => this.getDashboard()}  >{this.props.stripeRegistration.cardDetails}</LoginContainer.PaymentLabel>
+                                          :
+                                          <LoginContainer.PaymentLabel onClick={() => this.getStripe()}>Setup Stripe account</LoginContainer.PaymentLabel>
                                         }
                                       </LoginContainer.WrapsInput>
                                     </LoginContainer.InputWrapper>
@@ -1214,7 +1226,7 @@ export default class Starbio extends React.Component {
             {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
               <LoginContainer.ImageStackWrapper>
                 <ImageStack
-                  featureImage={this.state.settingsObj.isCelebrity ? featuredImage :"assets/images/Stadium_800x376.jpg"}
+                  featureImage={this.state.settingsObj.isCelebrity ? featuredImage : "assets/images/Stadium_800x376.jpg"}
                   imageList={this.state.settingsObj.isCelebrity ? imageList : ['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
                 />
               </LoginContainer.ImageStackWrapper>
