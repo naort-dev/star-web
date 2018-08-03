@@ -993,7 +993,15 @@ export default class Starbio extends React.Component {
             }
             {
               isSettings && isMyAccount ?
-                <MyAccount accountDetails={this.state.settingsObj.userDetails} errorDetails={{ ...this.state.settingsObj.myAccountErrors }} handleFieldChange={this.handleMyAccountFieldChange.bind(this)} {...this.props} />
+                <MyAccount
+                  accountDetails={this.state.settingsObj.userDetails}
+                  errorDetails={{ ...this.state.settingsObj.myAccountErrors }}
+                  handleFieldChange={this.handleMyAccountFieldChange.bind(this)}
+                  changePassword={this.props.changePassword}
+                  changePasswordData={this.props.changePasswordData}
+                  resetChangePassord={this.props.resetChangePassord}
+                  {...this.props}
+                />
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
