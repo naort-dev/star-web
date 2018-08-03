@@ -354,7 +354,7 @@ export default class Starbio extends React.Component {
     };
     if (this.state.settingsObj.selectedAccount === 'myAccount') {
       if (localStorage) {
-        const profileImage = localStorage.getItem('avatarName') ? localStorage.getItem('avatarName') : this.state.stateObj.avatar;
+        const profileImage = localStorage.getItem('avatarName') ? localStorage.getItem('avatarName') : this.state.avatar;
         profilePhotos = {
           images: [profileImage],
           avatar_photo: profileImage,
@@ -362,7 +362,7 @@ export default class Starbio extends React.Component {
       }
 
       else {
-        const profileImage = this.state.stateObj.avatar;
+        const profileImage = this.state.avatar;
         profilePhotos = {
           images: [profileImage],
           avatar_photo: profileImage,

@@ -135,9 +135,6 @@ Accounts.WrapsInput = styled.div`
 
 `;
 
-Accounts.InputWrapper = styled.div`
-  width:100%;
-`;
 
 Accounts.PopupWrapper = styled.div`
   width: 300px;
