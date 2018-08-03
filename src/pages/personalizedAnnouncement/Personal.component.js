@@ -243,6 +243,7 @@ export default class Personal extends React.Component {
   }
   goBack = () => {
     this.setState({ steps: true });
+    this.props.clearAll();
     this.props.history.goBack();
   }
   cancel = () => {
