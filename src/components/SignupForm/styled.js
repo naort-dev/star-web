@@ -33,6 +33,12 @@ LoginContainer.LeftSection = styled.div`
     padding-bottom: 83px;
   }
 `;
+LoginContainer.Anchor = styled.a`
+  &:visited{
+    color:#333333;
+  }
+  color: #333333;
+`;
 LoginContainer.RightSection = styled.div`
   width: 100%;
   display: none;
