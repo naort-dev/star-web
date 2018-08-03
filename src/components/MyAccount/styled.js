@@ -5,7 +5,7 @@ const Accounts = styled.div`
 `;
 Accounts.ComponentWrapper = styled.div`
   @media(min-width:1025px){
-    height:calc(100% - 40px);
+    height:calc(100% - 150px);
   }
   
 `;
