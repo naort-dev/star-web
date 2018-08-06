@@ -8,6 +8,7 @@ const AboutContentDiv = styled.div`
   }
 `;
 AboutContentDiv.ProfileMainContent = styled.div`
+  position: relative;
   text-align:center;
   height: 100%;
 `;
