@@ -24,6 +24,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   @media(min-width:768px){
     width: 100%;
     height: 400px
@@ -165,5 +166,16 @@ VideoRecorderDiv.InfoText = styled.div`
   align-items: center;
   justify-content: center;
   `;
+
+  VideoRecorderDiv.Icon = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  background: url('assets/images/video-rec.gif') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 40px;
+  width: 40px;
+  `
 
 export default VideoRecorderDiv;
