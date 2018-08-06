@@ -161,7 +161,6 @@ export const createCharge = (starsonaId, amount, tokenId, customerId) => (dispat
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
       dispatch(setPaymentStatus(resp.data.success));
-      dispatch(modifySourceList(tokenId, customerId, true)); // Add Card to list
     } else {
       dispatch(paymentFetchEnd());
     }
