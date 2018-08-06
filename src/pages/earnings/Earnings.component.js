@@ -13,7 +13,7 @@ export default class Earnings extends React.Component {
     };
   }
   componentWillMount() {
-
+    this.props.fetchEarningsList();
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
