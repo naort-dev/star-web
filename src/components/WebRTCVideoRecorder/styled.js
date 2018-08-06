@@ -114,7 +114,10 @@ font-family: 'Ubuntu-Bold';
 outline:none;
 border-radius:5px;
 border: 2px solid #FF6C58;
-margin-left: 50px;
+ @media(min-width:1025px){
+  margin-left: 50px;
+  }
+
 `;
 
 
