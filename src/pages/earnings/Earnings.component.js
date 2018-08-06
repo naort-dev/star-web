@@ -3,6 +3,7 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
+import EarningsList from '../../components/EarningsList';
 import EarningStyled from './styled';
 
 export default class Earnings extends React.Component {
@@ -10,6 +11,7 @@ export default class Earnings extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
+      listData: props.pendingList,
     };
   }
   componentWillMount() {
@@ -42,7 +44,14 @@ export default class Earnings extends React.Component {
             </Scrollbars>
           </EarningStyled.sideSection>
           <EarningStyled.mainSection menuActive={this.state.menuActive}>
-
+            <EarningStyled.Overview>
+              <EarningStyled.OverviewItem>
+                <span>$35,000</span>
+              </EarningStyled.OverviewItem>
+            </EarningStyled.Overview>
+            <EarningsList
+              dataList={this.props.pendingList}
+            />
           </EarningStyled.mainSection>
         </EarningStyled.sectionWrapper>
       </EarningStyled>

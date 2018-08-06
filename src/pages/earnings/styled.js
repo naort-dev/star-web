@@ -57,6 +57,17 @@ EarningStyled.mainSection = styled.section`
   }
 `;
 
+EarningStyled.Overview = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+`;
+
+EarningStyled.OverviewItem = styled.li`
+
+`;
+
 EarningStyled.loaderWrapper = styled.div`
   height: calc(100% - 95px);
   padding: 20px 16px;

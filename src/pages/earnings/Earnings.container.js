@@ -4,6 +4,8 @@ import { fetchEarningsList } from './actions/getEarningsList';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
+  paidList: state.earningsList.paidList,
+  pendingList: state.earningsList.pendingList,
 
 });
 
