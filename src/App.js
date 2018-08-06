@@ -28,6 +28,7 @@ import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
+import { Earnings } from './pages/earnings';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
 import { fetchUserDetails } from './store/shared/actions/getUserDetails';
 
@@ -152,6 +153,13 @@ class App extends React.Component {
                     RouteComponent: MyVideos,
                     selectedSideBarItem: 'requests',
                     starMode: true,
+                    // roles: allUserRoles,
+                  })}
+                />
+                <Route
+                  path="/user/earnings"
+                  component={protectRoute({
+                    RouteComponent: Earnings,
                     // roles: allUserRoles,
                   })}
                 />

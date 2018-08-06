@@ -93,8 +93,10 @@ class Sidebar extends React.Component {
                       </SidebarStyled.CategoryTitle>
                     </SidebarStyled.ListItem>
                     <SidebarStyled.ListItem>
-                      <SidebarStyled.CategoryTitle>
-                        Earnings
+                      <SidebarStyled.CategoryTitle
+                        selected={this.props.selectedCategory === 'earnings'}
+                      >
+                        <Link to={'/user/earnings'}>Earnings</Link>
                       </SidebarStyled.CategoryTitle>
                     </SidebarStyled.ListItem>
                     <SidebarStyled.ListItem>
