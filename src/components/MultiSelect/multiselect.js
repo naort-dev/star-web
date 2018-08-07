@@ -327,7 +327,8 @@ injectGlobal`
 }
 .Select--multi .Select-input {
   vertical-align: middle;
-  margin-left: 10px;
+  margin-top: -7px;
+  margin-left:0 !important;
   padding: 0;
 }
 .Select--multi.Select--rtl .Select-input {
