@@ -45,8 +45,8 @@ class Header extends React.Component {
       this.setState({ searchText: '' });
     }
 
-    if (JSON.stringify(nextProps.userDetails.avatar_photo) !== JSON.stringify(this.props.userDetails.avatar_photo)) {
-      const profilePhoto = nextProps.userDetails.avatar_photo && nextProps.userDetails.avatar_photo.thumbnail_url;
+    if (JSON.stringify(nextProps.userValue.settings_userDetails.avatar_photo) !== JSON.stringify(this.props.userValue.settings_userDetails.avatar_photo)) {
+      const profilePhoto = nextProps.userValue.settings_userDetails.avatar_photo && nextProps.userValue.settings_userDetails.avatar_photo.thumbnail_url;
       this.setState({ profilePhoto });
     }
   }

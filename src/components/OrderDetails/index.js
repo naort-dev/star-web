@@ -59,11 +59,11 @@ export default class OrderDetails extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="To"
-              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
-            />
             <OrderDetailsItem title="From"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
+            />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
             />
             <OrderDetailsItem title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
             {

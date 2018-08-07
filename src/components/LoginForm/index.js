@@ -119,18 +119,9 @@ export default class LoginForm extends React.Component {
       this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
         this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
       });
-    } else if (this.checkEmail()) {
-      if (this.isFormValid()) {
-        this.props.loginUser(this.state.email.value, this.state.password.value);
-      } else {
-        this.checkEmail();
-        this.checkPassword();
-      }
-
-    } else {
-      this.checkEmail();
-      this.checkPassword();
-    } 
+    } else if (this.isFormValid()) {
+      this.props.loginUser(this.state.email.value, this.state.password.value);
+    }
   }
 
 
@@ -245,7 +236,7 @@ export default class LoginForm extends React.Component {
     return true;
   }
   isFormValid = () => {
-    if (this.state.email.isValid && this.state.password.isValid) {
+    if (this.checkEmail() && this.checkPassword()) {
       return true;
     }
     return false;
@@ -292,7 +283,7 @@ export default class LoginForm extends React.Component {
           <LoginContainer.SignupLine>
             <span>or log in with email</span>
           </LoginContainer.SignupLine>
-          <LoginContainer.InputFieldsWrapper>
+          <LoginContainer.InputFieldsWrapper >
             <LoginContainer.InputContainer>
               <LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>

@@ -71,6 +71,7 @@ class StripeCheckout extends React.Component {
         .then((payload) => {
           this.props.paymentFetchSourceEnd();
           if (payload.source) {
+            this.props.modifySourceList(payload.source.id, this.state.customerId, true); // Add Card to list
             this.chargeCreator(payload.source.id, this.state.customerId);
           }
         });
