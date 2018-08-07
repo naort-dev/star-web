@@ -65,9 +65,9 @@ export default class Starprofile extends React.Component {
   }
   setTabList = () => {
     if (document.body.getBoundingClientRect().width < 1025) {
-      this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs', 'About'] });
+      this.setState({ tabList: ['All', 'Shout-outs', 'Events', 'Q&A', 'About'] });
     } else {
-      this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs'] });
+      this.setState({ tabList: ['All', 'Shout-outs', 'Events', 'Q&A'] });
     }
   }
   findVideoItem = (dataList, bookingId) => {
