@@ -226,6 +226,7 @@ export default class Personal extends React.Component {
     if (this.props.isLoggedIn) {
       this.setLoginUserName();
     }
+    this.props.clearAll();
     this.setState({
       hostName: '',
       relationshipValue: 0,
@@ -249,16 +250,17 @@ export default class Personal extends React.Component {
     this.setState({ [type]: data });
   }
   goBack = () => {
+    if (this.state.steps === true) {
+      this.props.clearAll();
+      this.props.cancelBookingDetails();
+    }
     this.setState({ steps: true });
-    this.props.clearAll();
     this.props.history.goBack();
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
       localStorage.removeItem('bookingData');
     }
-    this.props.cancelBookingDetails();
-    this.props.clearAll();
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
 
