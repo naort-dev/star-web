@@ -120,14 +120,14 @@ class RequestTemplates extends React.Component {
 
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.for ?
                         <Templates.MicAction onClick={() => this.deleteRecording("for")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -157,14 +157,14 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
 
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.for ?
                         <Templates.MicAction onClick={() => this.deleteRecording("from")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -255,14 +255,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.for ?
                         <Templates.MicAction onClick={() => this.deleteRecording("for")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -290,14 +290,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.from ?
                         <Templates.MicAction onClick={() => this.deleteRecording("from")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -391,14 +391,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.for ?
                         <Templates.MicAction onClick={() => this.deleteRecording("for")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -426,14 +426,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.from ?
                         <Templates.MicAction onClick={() => this.deleteRecording("from")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -537,14 +537,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.for ?
                         <Templates.MicAction onClick={() => this.deleteRecording("for")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -572,14 +572,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
                       {this.props.audioRecorder.recorded.from ?
                         <Templates.MicAction onClick={() => this.deleteRecording("from")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
