@@ -141,6 +141,7 @@ export default class Confirm extends React.Component {
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
         this.setState({ paymentMode: true });
+        this.props.clearAudio();
       }
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
@@ -282,7 +283,7 @@ export default class Confirm extends React.Component {
         <PaymentFooterController
           rate={rate}
           remainingBookings={remainingBookings}
-          buttonName="Purchase"
+          buttonName={bookingData.edit ? "save" : "Purchase"}
           handleBooking={this.handleBooking}
         />
       </Request.PaymentControllerWrapper>

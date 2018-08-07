@@ -147,10 +147,11 @@ export default class OrderDetails extends React.Component {
           selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
           specification: orderDetails.request_details.specifically_for,
           importantinfo: orderDetails.request_details.important_info,
-          // otherRelationValue:undefined,
           from_audio_file: orderDetails.from_audio_file,
-          to_audio_file: orderDetails.from_whereto_audio_file,
+          to_audio_file: orderDetails.to_audio_file,
         };
+        this.props.saveAudioRecording('from', { recordedBlob: null, recordedUrl: orderDetails.from_audio_file }); // update from audio in request flow
+        this.props.saveAudioRecording('for', { recordedBlob: null, recordedUrl: orderDetails.to_audio_file }); // update to audio in request flow
         redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
       } else if (orderDetails.request_type === 2) { // events
         bookingData = {
@@ -216,7 +217,6 @@ export default class OrderDetails extends React.Component {
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
-    console.log(audioSrc)
     return (
       <React.Fragment>
         <span>

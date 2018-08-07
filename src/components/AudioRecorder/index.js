@@ -2,6 +2,7 @@ import React from 'react'
 import { ReactMic } from 'react-mic';
 import { AudioRecorderDiv } from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
+import { playerActions } from 'video-react';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
@@ -26,8 +27,9 @@ export default class AudioRecorder extends React.Component {
   }
 
   render() {
+ 
     const target = this.props.audioRecorder.target;
-    const playbackURL = this.props.audioRecorder.recorded[target] ? this.props.audioRecorder.recorded[target].recordedUrl : null
+    const playbackURL = this.props.audioRecorder.recorded[target] != null ? this.props.audioRecorder.recorded[target].recordedUrl : null
     const callbackFunction = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
 
     return (

@@ -36,6 +36,7 @@ export const resetCelebDetails = () => ({
 });
 
 export const fetchCelebDetails = id => (dispatch, getState) => {
+  if (!id) return null;
   const { isLoggedIn, auth_token } = getState().session;
   let API_URL;
   let options;

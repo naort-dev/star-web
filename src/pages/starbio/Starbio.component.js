@@ -4,8 +4,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { parse } from 'query-string';
 import EXIF from 'exif-js';
-import { LoginContainer, FooterSection } from './styled';
+import { LoginContainer, FooterSection, SectionHeader } from './styled';
 import { fetch } from '../../services/fetch';
 import Api from '../../lib/api';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
@@ -61,7 +62,7 @@ export default class Starbio extends React.Component {
           email: false
         },
         starDetails: null,
-        selectedAccount: 'myAccount',
+        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
         isCelebrity: false,
         pageView: 'starBio',
       },
@@ -134,7 +135,7 @@ export default class Starbio extends React.Component {
       const settingsObj = {
         userDetails,
         starDetails,
-        selectedAccount: 'myAccount',
+        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
         isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
         pageView: 'starBio',
       };
@@ -916,10 +917,16 @@ export default class Starbio extends React.Component {
       })
   }
 
-  getDashboard(){
-    if(this.props.stripeRegistration.dashboardURL){
+  getDashboard() {
+    if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
+  }
+  goBack =() => {
+    this.props.history.push('/');
+  }
+  SignOut = () =>{
+    this.props.logOut();
   }
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
@@ -959,7 +966,7 @@ export default class Starbio extends React.Component {
       }
     }
     if (!this.props.session.isLoggedIn) {
-      return <Redirect to="/signuptype" />;
+      return <Redirect to="/" />;
     }
 
     return (
@@ -984,7 +991,13 @@ export default class Starbio extends React.Component {
           }
           <LoginContainer.LeftSection>
             {isSettings ?
-              <HeaderSection RightContent={fullName} /> :
+              <SectionHeader>
+                <SectionHeader.HeaderNavigation onClick={() => this.goBack()} />
+                <SectionHeader.MiddleDiv> {fullName}</SectionHeader.MiddleDiv>
+
+                <SectionHeader.RightDiv onClick={() => this.SignOut()}>Sign Out</SectionHeader.RightDiv>
+              </SectionHeader>
+              :
               <HeaderSection RightContent="I'M A STAR" />
             }
 

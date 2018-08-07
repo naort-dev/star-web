@@ -64,7 +64,6 @@ Templates.WrapsInput = styled.div`
     align-items: flex-end;
    
   }
-
 `;
 
 Templates.Input = styled.input`
@@ -183,13 +182,11 @@ min-width: 150px;
 @media(min-width:768px){
   margin-top:0;
   height:40px;
-  margin-left: 50%;
 }
 @media(min-width:1025px){
   margin-top:0;
   height:33px;
   font-size:13px;
-  margin-left: 50%;
 }
 @media(min-width:1920px){
   font-size:16px;
@@ -245,7 +242,7 @@ Templates.Popup = styled.div`
 
 Templates.PopupContainer = styled.div`
 width: 100%;
-height: 60%;
+height: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -271,5 +268,81 @@ width: 100%;
 }
 `;
 
+Templates.MicAction = styled.button`
+border: 2px solid #FF6c58;
+background-color: #fff;
+color: #FF6C58;
+height: 32px;
+padding: 5px 0px;
+border-radius: 5px;
+width: 30px;
+margin-right: 10px;
+background: url('assets/images/close-icon-orange.svg') no-repeat;
+background-position: center;
+`
+
+Templates.ConfirmDeleteText = styled.div`
+font-size: 24px;
+text-align: center;
+margin: 10px 0px;
+`;
+
+Templates.ConfirmYes = styled.button`
+height: 40px;
+color: #FF6C58;
+background-color: white;
+width: 60px;
+border-radius: 5px;
+border: 2px solid #FF6C58;
+cursor: pointer;
+margin-right: 10px;
+font-family: Ubuntu-bold;
+`;
+
+Templates.ConfirmNo = styled.button`
+height: 40px;
+color: #FF6C58;
+background-color: white;
+width: 60px;
+border-radius: 5px;
+border: 2px solid #FF6C58;
+cursor: pointer;
+margin-left: 10px;
+font-family: Ubuntu-bold;
+`;
+
+Templates.ActionsContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+margin-top: 20px;
+`;
+
+Templates.WrapsAudioInput = styled.div`
+  width:100%;
+  @media(min-width:768px){
+    margin-top: 10px;
+    width:100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
+  }
+  @media(min-width:1025px){
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+   
+  }
+`;
+
+Templates.RelationshipLabelWrapper = styled.div`
+width: 69%;
+`;
+
+Templates.DetailedRelation = styled.span`
+font-size: 12px;
+`;
 
 export { Templates };

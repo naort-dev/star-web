@@ -99,7 +99,7 @@ class Sidebar extends React.Component {
                     </SidebarStyled.ListItem>
                     <SidebarStyled.ListItem>
                       <SidebarStyled.CategoryTitle>
-                        My Star Page
+                        <Link to="/myStar">My Star Page</Link>
                       </SidebarStyled.CategoryTitle>
                     </SidebarStyled.ListItem>
                   </SidebarStyled.ListWrapper>
