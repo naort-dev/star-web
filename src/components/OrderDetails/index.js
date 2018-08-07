@@ -216,7 +216,6 @@ export default class OrderDetails extends React.Component {
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
-    console.log(audioSrc)
     return (
       <React.Fragment>
         <span>

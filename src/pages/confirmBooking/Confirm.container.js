@@ -4,6 +4,7 @@ import { setBookingDetails, cancelBookingDetails } from '../../store/shared/acti
 import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
+import { clearAll } from '../../store/shared/actions/audioRecorder';
 
 
 const mapStateToProps = state => ({
@@ -17,6 +18,7 @@ const mapStateToProps = state => ({
   eventsDetails: state.occasionList.data,
   bookingData: state.bookingData,
   paymentStatus: state.paymentDetails.paymentStatus,
+  audioRecorder: state.audioRecorder,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -25,6 +27,8 @@ const mapDispatchToProps = dispatch => ({
   starsonaRequest: (bookingData, publicStatus, callback) => dispatch(starsonaRequest(bookingData, publicStatus, callback)),
   resetPaymentDetails: () => dispatch(resetPaymentDetails()),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
+  clearAudio: () => dispatch(clearAll()),
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Confirm);
