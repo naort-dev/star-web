@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
-import { Detail } from '../starProfile/styled';
+import { Detail, HeaderSection } from '../starProfile/styled';
 import Loader from '../../components/Loader';
 import VideoPlayer from '../../components/VideoPlayer';
 import VideoRender from '../../components/VideoRender';
@@ -248,6 +248,9 @@ export default class Starprofile extends React.Component {
             <Detail.LeftSection>
               <Detail.SmallScreenLayout>
                 <Detail.ImageRenderDiv>
+                  <HeaderSection.Small>
+                    <HeaderSection.HeaderNavigationMobile onClick={() => this.props.history.goBack()} />
+                  </HeaderSection.Small>
                   <Detail.ImageSection imageUrl={coverPhoto}>
                     <Detail.CoverImage alt="" src={coverPhoto} />
                     <Detail.ProfileImageWrapper>
@@ -272,6 +275,9 @@ export default class Starprofile extends React.Component {
                 </Detail.ImageRenderDiv>
               </Detail.SmallScreenLayout>
               <Detail.LargeScreenLayout>
+                <HeaderSection>
+                  <HeaderSection.HeaderNavigation onClick={() => this.props.history.goBack()} />
+                </HeaderSection>
                 <AboutContent
                   profilePhoto={profilePhoto}
                   loading={this.props.detailsLoading}
