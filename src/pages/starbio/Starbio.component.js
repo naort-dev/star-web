@@ -4,6 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { parse } from 'query-string';
 import EXIF from 'exif-js';
 import { LoginContainer, FooterSection } from './styled';
 import { fetch } from '../../services/fetch';
@@ -61,7 +62,7 @@ export default class Starbio extends React.Component {
           email: false
         },
         starDetails: null,
-        selectedAccount: 'myAccount',
+        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
         isCelebrity: false,
         pageView: 'starBio',
       },
@@ -134,7 +135,7 @@ export default class Starbio extends React.Component {
       const settingsObj = {
         userDetails,
         starDetails,
-        selectedAccount: 'myAccount',
+        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
         isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
         pageView: 'starBio',
       };
