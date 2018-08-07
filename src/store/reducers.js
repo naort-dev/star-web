@@ -25,7 +25,8 @@ import popupData from './shared/reducers/popupData';
 import userDetails from '../store/shared/reducers/userDetails';
 import saveSettings from '../store/shared/reducers/saveSettings';
 import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
-import changePassword from '../store/shared/reducers/changePassword'
+import changePassword from '../store/shared/reducers/changePassword';
+import socialMediaData from '../store/shared/reducers/socialMediaState';
 
 const rootReducer = combineReducers({
   session,
@@ -54,6 +55,7 @@ const rootReducer = combineReducers({
   saveSettings,
   stripeRegistration,
   changePassword,
+  socialMediaData,
 });
 
 export default rootReducer;

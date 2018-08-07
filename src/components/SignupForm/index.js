@@ -6,7 +6,7 @@ import axios from 'axios';
 import config from '../../lib/config';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
-import { ROLES } from '../../constants/usertype'
+import { ROLES } from '../../constants/usertype';
 
 
 export default class SignUp extends React.Component {

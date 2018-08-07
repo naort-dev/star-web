@@ -61,6 +61,8 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
         dispatch(socialMediaLoginFetchIncorrect(resp.data.error.message, resp.data.status));
       } else if (resp.data.status === '410') {
         dispatch(socialMediaLoginFetchIncorrect(resp.data.error.message, resp.data.status));
+      } else if (resp.data.status === '310') {
+        dispatch(socialMediaLoginFetchIncorrect(resp.data.error.message, resp.data.status));
       }
     }
   }).catch((exception) => {
