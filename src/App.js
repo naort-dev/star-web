@@ -69,6 +69,9 @@ class App extends React.Component {
     //   this.setState({ showLoading: false });
     //   this.timer && window.clearTimeout(this.timer)
     // }
+    if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      this.props.fetchProfessionsList();
+    }
     if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
       this.setState({ showLoading: false });
     }
@@ -193,7 +196,8 @@ App.propTypes = {
 };
 
 const mapState = state => ({
-  professionsList: state.professionsList
+  professionsList: state.professionsList,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapProps = dispatch => ({
