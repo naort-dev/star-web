@@ -141,7 +141,6 @@ export default class Confirm extends React.Component {
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
         this.setState({ paymentMode: true });
-        this.props.clearAudio();
       }
     } else {
       this.props.setRedirectUrls(this.props.location.pathname);
@@ -187,6 +186,7 @@ export default class Confirm extends React.Component {
   closeRequestFlow = () => {
     this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
+    this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
   }
 
