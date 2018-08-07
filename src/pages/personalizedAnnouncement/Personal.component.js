@@ -314,7 +314,7 @@ export default class Personal extends React.Component {
                   autoHide
                   renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                 >
-                  <Request.Heading>What is the event</Request.Heading>
+                  <Request.Heading>What is the Occasion</Request.Heading>
                   <Request.Questionwraps>
                     <Request.Ask>
                       {
