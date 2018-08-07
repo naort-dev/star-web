@@ -46,7 +46,7 @@ export default class AudioRecorder extends React.Component {
               backgroundColor="#FF6C58"
               save={this.props.audioRecorder.stop}
             />
-            <AudioRecorderDiv.Audio id="audio-rec" src={playbackURL} controls />
+            <AudioRecorderDiv.Audio id="audio-rec" src={playbackURL} controls controlsList="nodownload" />
             {this.props.audioRecorder.start ?
               <AudioRecorderDiv.CloseButton onClick={callbackFunction} type="button"></AudioRecorderDiv.CloseButton>
               : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}
