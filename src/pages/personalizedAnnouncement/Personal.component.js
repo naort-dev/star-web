@@ -36,6 +36,7 @@ export default class Personal extends React.Component {
       eventTitle: false,
       eventDate: false,
       otherRelationValue: props.bookingData.otherRelationValue === '' ? '' : props.bookingData.otherRelationValue,
+      removeAudios: [],
     };
   }
   componentWillMount() {
@@ -128,8 +129,8 @@ export default class Personal extends React.Component {
   }
 
   getAudio() {
-    let from_audio_file;
-    let to_audio_file;
+    let from_audio_file = null;
+    let to_audio_file = null;
     if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
       if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
         from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
@@ -140,18 +141,23 @@ export default class Personal extends React.Component {
       }
       return { from_audio_file, to_audio_file };
     }
-    else {
-      from_audio_file = this.props.audioRecorder.file.from ? this.props.audioRecorder.file.from : null
-      to_audio_file = this.props.audioRecorder.file.for ? this.props.audioRecorder.file.for : null
-      return { from_audio_file, to_audio_file }
-
-    }
   }
 
 
 
   createBookingObject = (obj) => {
     const { from_audio_file, to_audio_file } = this.getAudio();
+    let removeAudios = [];
+    const old_from_audio = this.props.bookingData.from_audio_file;
+    const old_to_audio = this.props.bookingData.to_audio_file;
+    if (this.props.bookingData.edit) {
+      if (!this.props.audioRecorder.recorded.from && this.props.bookingData.from_audio_file) {
+        removeAudios = [...removeAudios, 'from_audio_file'];
+      }
+      if (!this.props.audioRecorder.recorded.for && this.props.bookingData.to_audio_file) {
+        removeAudios = [...removeAudios, 'to_audio_file'];
+      }
+    }
     const relationshipValue = obj.relationship;
     let relationsShipTitle = '';
     let relationshipName = relationshipValue.find((find) => {
@@ -187,6 +193,7 @@ export default class Personal extends React.Component {
       otherRelationValue: this.state.otherRelationValue,
       from_audio_file,
       to_audio_file,
+      remove_audios: removeAudios,
     };
     return bookingData;
   }
