@@ -20,7 +20,7 @@ export default class MyVideos extends React.Component {
       menuActive: false,
       filterSelected: false,
       tabsClientHeight: 0,
-      requestStatus: 'all',
+      requestStatus: props.starMode ? '1,2,3' : '1,2,3,4',
       orderDetails: {},
     };
     this.requestType = {

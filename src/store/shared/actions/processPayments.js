@@ -161,7 +161,6 @@ export const createCharge = (starsonaId, amount, tokenId, customerId) => (dispat
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
       dispatch(setPaymentStatus(resp.data.success));
-      dispatch(modifySourceList(tokenId, customerId, true)); // Add Card to list
     } else {
       dispatch(paymentFetchEnd());
     }
@@ -196,8 +195,8 @@ const starsonaVideo = (authToken, filename, requestId, duration, dispatch, callb
 export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   let requestDetails = {
-    stargramto: bookingData.userName,
-    stargramfrom: bookingData.hostName,
+    stargramto: bookingData.hostName,
+    stargramfrom: bookingData.userName,
     relationship: bookingData.requestRelationshipData,
     show_relationship: true,
     question: bookingData.question,

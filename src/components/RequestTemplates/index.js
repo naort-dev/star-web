@@ -218,7 +218,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -353,7 +353,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -500,7 +500,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -634,7 +634,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -706,7 +706,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -779,7 +779,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
