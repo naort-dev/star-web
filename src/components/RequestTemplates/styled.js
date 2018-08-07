@@ -56,7 +56,7 @@ Templates.WrapsInput = styled.div`
     display: flex;
     justify-content: flex-end;
     align-items: flex-end;
-    flex-direction: row;
+    flex-direction: column;
   }
   @media(min-width:1025px){
     display: flex;
@@ -64,7 +64,6 @@ Templates.WrapsInput = styled.div`
     align-items: flex-end;
    
   }
-
 `;
 
 Templates.Input = styled.input`
@@ -273,10 +272,10 @@ Templates.MicAction = styled.button`
 border: 2px solid #FF6c58;
 background-color: #fff;
 color: #FF6C58;
-height: 33px;
+height: 32px;
 padding: 5px 0px;
 border-radius: 5px;
-width: 24px;
+width: 30px;
 margin-right: 10px;
 background: url('assets/images/close-icon-orange.svg') no-repeat;
 background-position: center;
@@ -318,6 +317,24 @@ flex-direction: row;
 align-items: center;
 justify-content: center;
 margin-top: 20px;
+`;
+
+Templates.WrapsAudioInput = styled.div`
+  width:100%;
+  @media(min-width:768px){
+    margin-top: 10px;
+    width:100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
+  }
+  @media(min-width:1025px){
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+   
+  }
 `;
 
 
