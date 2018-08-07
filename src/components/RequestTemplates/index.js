@@ -158,7 +158,7 @@ class RequestTemplates extends React.Component {
 
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                     <Templates.WrapsAudioInput>
-                      {this.props.audioRecorder.recorded.for ?
+                      {this.props.audioRecorder.recorded.from ?
                         <Templates.MicAction onClick={() => this.deleteRecording("from")} />
                         : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
