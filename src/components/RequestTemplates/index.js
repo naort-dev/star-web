@@ -488,7 +488,7 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  readOnly
+                  // readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
@@ -637,7 +637,7 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  readOnly
+                  // readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
@@ -703,7 +703,7 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  readOnly
+                  // readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
@@ -776,7 +776,7 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  readOnly
+                  // readOnly
                   customInput={<Templates.Input />}
                   popperPlacement="top"
                   selected={this.props.date}
