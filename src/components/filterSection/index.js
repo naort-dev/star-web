@@ -112,10 +112,10 @@ export default class FilterSection extends React.Component {
                       All
                     </FilterStyled.filterItem>
                     <FilterStyled.filterItem
-                      selected={this.props.selectedVideoType === 3 ? true : false}
-                      onClick={() => this.filterSelection('video_type', 3)}
+                      selected={this.props.selectedVideoType === 1 ? true : false}
+                      onClick={() => this.filterSelection('video_type', 1)}
                     >
-                      Q&A
+                      Shout-outs
                     </FilterStyled.filterItem>
                     <FilterStyled.filterItem
                       selected={this.props.selectedVideoType === 2 ? true : false}
@@ -124,10 +124,10 @@ export default class FilterSection extends React.Component {
                       Event Announcement
                     </FilterStyled.filterItem>
                     <FilterStyled.filterItem
-                      selected={this.props.selectedVideoType === 1 ? true : false}
-                      onClick={() => this.filterSelection('video_type', 1)}
+                      selected={this.props.selectedVideoType === 3 ? true : false}
+                      onClick={() => this.filterSelection('video_type', 3)}
                     >
-                      Shout-outs
+                      Q&A
                     </FilterStyled.filterItem>
                   </FilterStyled.filterItemWrapper>
                 </FilterStyled.filterSection>
