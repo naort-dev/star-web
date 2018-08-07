@@ -272,10 +272,10 @@ Templates.MicAction = styled.button`
 border: 2px solid #FF6c58;
 background-color: #fff;
 color: #FF6C58;
-height: 33px;
+height: 32px;
 padding: 5px 0px;
 border-radius: 5px;
-width: 24px;
+width: 30px;
 margin-right: 10px;
 background: url('assets/images/close-icon-orange.svg') no-repeat;
 background-position: center;
