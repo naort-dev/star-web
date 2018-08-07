@@ -329,7 +329,7 @@ export default class Personal extends React.Component {
                           <Request.EventStep1>
                             <Request.InputFieldsWrapper>
                               <Request.InputWrapper>
-                                <Request.Label>Event Type</Request.Label>
+                                <Request.Label>What is the occasion</Request.Label>
                                 <Request.WrapsInput>
                                   <Request.Select
                                     value={this.state.selectedValue}

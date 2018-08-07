@@ -337,5 +337,12 @@ Templates.WrapsAudioInput = styled.div`
   }
 `;
 
+Templates.RelationshipLabelWrapper = styled.div`
+width: 69%;
+`;
+
+Templates.DetailedRelation = styled.span`
+font-size: 12px;
+`;
 
 export { Templates };
