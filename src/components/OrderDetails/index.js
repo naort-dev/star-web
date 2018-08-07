@@ -59,11 +59,11 @@ export default class OrderDetails extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="From"
-              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
-            />
             <OrderDetailsItem title="To"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
             />
             <OrderDetailsItem title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
             {
@@ -147,10 +147,11 @@ export default class OrderDetails extends React.Component {
           selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
           specification: orderDetails.request_details.specifically_for,
           importantinfo: orderDetails.request_details.important_info,
-          // otherRelationValue:undefined,
           from_audio_file: orderDetails.from_audio_file,
-          to_audio_file: orderDetails.from_whereto_audio_file,
+          to_audio_file: orderDetails.to_audio_file,
         };
+        this.props.saveAudioRecording('from', { recordedBlob: null, recordedUrl: orderDetails.from_audio_file }); // update from audio in request flow
+        this.props.saveAudioRecording('for', { recordedBlob: null, recordedUrl: orderDetails.to_audio_file }); // update to audio in request flow
         redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
       } else if (orderDetails.request_type === 2) { // events
         bookingData = {

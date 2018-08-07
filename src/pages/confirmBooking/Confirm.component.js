@@ -283,7 +283,7 @@ export default class Confirm extends React.Component {
         <PaymentFooterController
           rate={rate}
           remainingBookings={remainingBookings}
-          buttonName="Purchase"
+          buttonName={bookingData.edit ? "save" : "Purchase"}
           handleBooking={this.handleBooking}
         />
       </Request.PaymentControllerWrapper>

@@ -221,6 +221,9 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
   if (bookingData.from_audio_file) {
     formData.append('to_audio_file', bookingData.to_audio_file);
   }
+  if (bookingData.remove_audios) {
+    formData.append('remove_audios', bookingData.remove_audios);
+  }
   let ApiUrl = Api.starsonaRequest;
   let method = 'post';
   if (bookingData.requestId) {
