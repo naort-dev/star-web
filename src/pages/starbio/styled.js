@@ -206,9 +206,10 @@ LoginContainer.RightSection = styled.div`
 
 LoginContainer.mutiSelectItemWrapper = styled.div`
   display: inline-block;
-  border: 2px solid #FF6C58;
+  border: 2px solid white;
   padding: 5px;
   color: white;
+  background-color: #FF6C58;
   border-radius: 20px;
   margin: 9px;
   font-size: 14px;
@@ -224,7 +225,7 @@ LoginContainer.CloseButton = styled.input`
   margin-left: 10px;
   cursor: pointer;
   border: none;
-  background: url('assets/images/icon-close-white.svg') no-repeat;
+  background: url('assets/images/close-icon-white.svg') no-repeat;
 `;
 LoginContainer.ImageWrapper = styled.div`
 display:flex;
