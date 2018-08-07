@@ -6,7 +6,7 @@ import axios from 'axios';
 import config from '../../lib/config';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
 import { ImageStack } from '../../components/ImageStack';
-import { ROLES } from '../../constants/usertype'
+import { ROLES } from '../../constants/usertype';
 
 
 export default class SignUp extends React.Component {
@@ -19,7 +19,7 @@ export default class SignUp extends React.Component {
       password: { value: '', isValid: false, message: '' },
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
-      role: this.props.location.state.type == "fan" ? ROLES.fan : ROLES.star,
+      role: this.props.location.state.type == 'fan' ? ROLES.fan : ROLES.star,
       socialMedia: {
         username: '',
         first_name: '',
@@ -30,7 +30,7 @@ export default class SignUp extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
-        role: this.props.location.state.type == "fan" ? ROLES.fan : ROLES.star,
+        role: this.props.location.state.type == 'fan' ? ROLES.fan : ROLES.star,
       },
     };
   }
@@ -53,10 +53,11 @@ export default class SignUp extends React.Component {
       };
     };
     (function (d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
+      let js, 
+fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
+      js.src = 'https://connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
     const token = this.props.location.hash;
@@ -65,20 +66,20 @@ export default class SignUp extends React.Component {
     const that = this;
     if (authToken !== undefined) {
       axios.get(instaUrl)
-        .then(function (response) {
+        .then((response) => {
           that.onSocialMediaLogin(response.data.data, 4);
         })
-        .catch(function (error) {
+        .catch((error) => {
 
         });
     }
     if (!this.props.isLoggedIn) {
       gapi.signin2.render('g-sign-in', {
-        'scope': 'profile email',
-        'width': 200,
-        'height': 50,
-        'theme': 'dark',
-        'onsuccess': this.onSignIn,
+        scope: 'profile email',
+        width: 200,
+        height: 50,
+        theme: 'dark',
+        onsuccess: this.onSignIn,
       });
     }
   }
@@ -93,7 +94,7 @@ export default class SignUp extends React.Component {
       this.setState({
         redirectToReferrer: nextProps.isLoggedIn,
       });
-      if (this.props.location.state && this.props.location.state.type === "fan") {
+      if (this.props.location.state && this.props.location.state.type === 'fan') {
         const followData = this.props.followCelebData;
         if (followData.celebId) {
           this.props.followCelebrity(
@@ -125,30 +126,20 @@ export default class SignUp extends React.Component {
       this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
         this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
       });
-    } else if (this.checkEmail()) {
-      if (this.isFormValid()) {
-        this.props.registerUser(
-          this.state.firstName.value,
-          this.state.lastName.value,
-          this.state.email.value,
-          this.state.password.value,
-          this.state.role,
-        ).then((response) => {
-          if (response != undefined) {
-            if (this.props.location.state && this.props.location.state.type === "star") {
-              this.props.history.push('/starbio')
-            }
+    } else if (this.checkEmail() && this.checkPassword() && this.checkRequired()) {
+      this.props.registerUser(
+        this.state.firstName.value,
+        this.state.lastName.value,
+        this.state.email.value,
+        this.state.password.value,
+        this.state.role,
+      ).then((response) => {
+        if (response != undefined) {
+          if (this.props.location.state && this.props.location.state.type === 'star') {
+            this.props.history.push('/starbio');
           }
-
-        })
-
-      }
-    }
-    else {
-      this.checkEmail();
-      this.checkPassword();
-      this.checkRequired();
-
+        }
+      });
     }
   }
 
@@ -226,12 +217,12 @@ export default class SignUp extends React.Component {
   onInstagramLogin = () => {
     const clientId = env('instaId');
     const redirectUri = env('signupInstaRedirectUri');
-    const url = env('instaAuthUrl') + '?client_id=' + clientId + '&redirect_uri=' + redirectUri + '&response_type=token';
+    const url = `${env('instaAuthUrl')  }?client_id=${  clientId  }&redirect_uri=${  redirectUri  }&response_type=token`;
     window.location.href = url;
   }
   OnFBlogin = () => {
     const that = this;
-    window.FB.login(function (response) {
+    window.FB.login((response) => {
       if (response.authResponse) {
         window.FB.api('/me', { locale: 'en_US', fields: 'name, email,first_name,last_name,picture' },
           function (response) {
@@ -244,7 +235,6 @@ export default class SignUp extends React.Component {
 
   saveFormEntries = (event, type) => {
     this.setState({ [type]: { ...this.state[type], value: event.target.value } });
-
   }
 
   checkEmail = () => {
@@ -304,11 +294,11 @@ export default class SignUp extends React.Component {
         const to = this.props.redirectUrls.to || '/';
         return <Redirect to={to} />
       }
-      else {
+      
         const to = '/starbio';
         return <Redirect to={to} />
 
-      }
+      
     }
 
     return (
@@ -436,7 +426,7 @@ export default class SignUp extends React.Component {
 
 
               <LoginContainer.ButtonWrapper>
-                <FooterSection.Button onClick={this.onRegister.bind(this)}>SIGNUP</FooterSection.Button>
+                <FooterSection.Button type="submit" value="SIGNUP" onClick={this.onRegister} />
               </LoginContainer.ButtonWrapper>
               <LoginContainer.PrivacyContent>
                 By creating an account you agree to Starsona’s

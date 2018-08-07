@@ -173,7 +173,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -306,7 +309,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.InputWrapperContainer>
                   <Templates.WrapsInput>
                     <Templates.Select
@@ -442,7 +448,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -588,7 +597,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}

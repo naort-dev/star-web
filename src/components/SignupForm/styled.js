@@ -235,7 +235,7 @@ LoginContainer.Line = styled.hr`
    display:none;
   }
 `;
-LoginContainer.InputFieldsWrapper = styled.div`
+LoginContainer.InputFieldsWrapper = styled.form`
   
   padding: 0px 25px;
   @media(min-width:768px){
@@ -447,7 +447,7 @@ FooterSection.RightSection = styled.div`
     width:50%;
   }
 `;
-FooterSection.Button = styled.button`
+FooterSection.Button = styled.input`
   background-color:#FF6C58 ; 
   color: #fff;
   padding: 12px 30px;
