@@ -279,6 +279,11 @@ width: 30px;
 margin-right: 10px;
 background: url('assets/images/close-icon-orange.svg') no-repeat;
 background-position: center;
+height:33px;
+@media(min-width:1920px){
+  font-size:16px;
+  height:40px;
+}
 `
 
 Templates.ConfirmDeleteText = styled.div`
