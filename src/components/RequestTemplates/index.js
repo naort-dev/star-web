@@ -76,7 +76,7 @@ class RequestTemplates extends React.Component {
         closePopUp={() => this.setState({ showConfirm: false })}>
         <Templates.Popup>
           <Templates.PopupContainer >
-            <Templates.ConfirmDeleteText> Are you sure to delete the recording? </Templates.ConfirmDeleteText>
+            <Templates.ConfirmDeleteText> Are you sure you want to delete the audio? </Templates.ConfirmDeleteText>
             <Templates.ActionsContainer>
               <Templates.ConfirmYes onClick={() => this.resetRecording(target)}>Yes </Templates.ConfirmYes>
               <Templates.ConfirmNo onClick={() => this.setState({ showConfirm: false })}>No </Templates.ConfirmNo>
