@@ -34,9 +34,20 @@ EarningsListStyled.ListItem = styled.li`
   font-family: ${props => (props.light ? 'Ubuntu-Light' : 'Ubuntu-Medium')};
   display: ${props => (props.tabletView || props.desktopView ? 'none' : 'block')};
   @media (min-width: 768px) {
-    width: calc(100% / 5);
+    width: ${props => (props.large ? '20%' : 'calc(60% / 3)')};
     display: ${props => (props.desktopView ? 'none' : 'block')};
+  }
+  @media (min-width: 1025px) {
+    display: block;
+    width: ${props => (props.large ? '20%' : 'calc(60% / 4)')};
   }
 `;
 
+EarningsListStyled.ListDescription = EarningsListStyled.ListItem.extend `
+  @media (min-width: 768px) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+`;
 export default EarningsListStyled;

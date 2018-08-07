@@ -64,8 +64,31 @@ EarningStyled.Overview = styled.ul`
   padding: 16px;
 `;
 
-EarningStyled.OverviewItem = styled.li`
+EarningStyled.OverviewAmount = styled.span`
+  display: block;
+  border-bottom: 1px solid #333333;
+  font-size: 16px;
+  font-family: 'Ubuntu-Bold';
+  padding-bottom: 8px;
+`;
 
+EarningStyled.OverViewText = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Bold';
+  font-size: 14px;
+  margin-top: 10px;
+`;
+
+EarningStyled.OverViewSubText = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Light';
+  font-size: 12px;
+  margin-top: 10px;
+`;
+
+EarningStyled.OverviewItem = styled.li`
+  text-align: center;
+  width: calc((100% / 3) - 10px);
 `;
 
 EarningStyled.loaderWrapper = styled.div`

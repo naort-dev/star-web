@@ -46,7 +46,19 @@ export default class Earnings extends React.Component {
           <EarningStyled.mainSection menuActive={this.state.menuActive}>
             <EarningStyled.Overview>
               <EarningStyled.OverviewItem>
-                <span>$35,000</span>
+                <EarningStyled.OverviewAmount>$35,000</EarningStyled.OverviewAmount>
+                <EarningStyled.OverViewText>Total Video Sales</EarningStyled.OverViewText>
+                <EarningStyled.OverViewSubText>You have created 70 videos</EarningStyled.OverViewSubText>
+              </EarningStyled.OverviewItem>
+              <EarningStyled.OverviewItem>
+                <EarningStyled.OverviewAmount>$2000</EarningStyled.OverviewAmount>
+                <EarningStyled.OverViewText>Pending Videos</EarningStyled.OverViewText>
+                <EarningStyled.OverViewSubText>You have 7 videos to fulfill</EarningStyled.OverViewSubText>
+              </EarningStyled.OverviewItem>
+              <EarningStyled.OverviewItem>
+                <EarningStyled.OverviewAmount>$500</EarningStyled.OverviewAmount>
+                <EarningStyled.OverViewText>Scheduled Payment</EarningStyled.OverViewText>
+                <EarningStyled.OverViewSubText>will be paid out on 4/5/2018</EarningStyled.OverViewSubText>
               </EarningStyled.OverviewItem>
             </EarningStyled.Overview>
             <EarningsList

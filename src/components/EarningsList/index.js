@@ -8,10 +8,10 @@ const EarningsList = (props) => {
       <EarningsListStyled.Header>
         <EarningsListStyled.ListItem>Revenue</EarningsListStyled.ListItem>
         <EarningsListStyled.ListItem tabletView>VideoType</EarningsListStyled.ListItem>
-        <EarningsListStyled.ListItem tabletView>Description</EarningsListStyled.ListItem>
+        <EarningsListStyled.ListDescription large tabletView>Description</EarningsListStyled.ListDescription>
         <EarningsListStyled.ListItem desktopView>Customer</EarningsListStyled.ListItem>
         <EarningsListStyled.ListItem>Order #</EarningsListStyled.ListItem>
-        <EarningsListStyled.ListItem>Date</EarningsListStyled.ListItem>
+        <EarningsListStyled.ListItem large>Date</EarningsListStyled.ListItem>
       </EarningsListStyled.Header>
       <EarningsListStyled.ContentWrapper>
         {
@@ -20,10 +20,10 @@ const EarningsList = (props) => {
                 <EarningsListStyled.Content key={index}>
                   <EarningsListStyled.ListItem amount>${item.amount}</EarningsListStyled.ListItem>
                   <EarningsListStyled.ListItem light tabletView>{item.starsona.occasion}</EarningsListStyled.ListItem>
-                  <EarningsListStyled.ListItem light tabletView>sadsad</EarningsListStyled.ListItem>
+                  <EarningsListStyled.ListDescription large light tabletView>Lorem Lorem Lorem Lorem Lorem Lorem</EarningsListStyled.ListDescription>
                   <EarningsListStyled.ListItem light desktopView>{item.starsona.fan}</EarningsListStyled.ListItem>
                   <EarningsListStyled.ListItem light>{item.id}</EarningsListStyled.ListItem>
-                  <EarningsListStyled.ListItem light>{moment(item.created_date).format('LL')}</EarningsListStyled.ListItem>
+                  <EarningsListStyled.ListItem large light>{moment(item.created_date).format('LL')}</EarningsListStyled.ListItem>
                 </EarningsListStyled.Content>
               );
             })
