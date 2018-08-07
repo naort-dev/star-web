@@ -34,9 +34,9 @@ export default class VideoRecorder extends React.Component {
   }
 
   componentWillUnmount() {
-    if(!getMobileOperatingSystem() && checkMediaRecorderSupport()) {
-      if(!this.props.videoRecorder.recordedBlobs && this.props.videoRecorder.start){
-         this.closeStream();
+    if (!getMobileOperatingSystem() && checkMediaRecorderSupport()) {
+      if (!this.props.videoRecorder.recordedBlobs && this.props.videoRecorder.start) {
+        this.closeStream();
       }
     }
   }
@@ -135,12 +135,12 @@ export default class VideoRecorder extends React.Component {
       });
   }
 
-   editVideo = () => {
-    if(this.props.src){
+  editVideo = () => {
+    if (this.props.src) {
       return <VideoPlayer primarySrc={this.props.src} />
     }
     else {
-    return <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>
+      return <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>
     }
 
   }
@@ -151,12 +151,15 @@ export default class VideoRecorder extends React.Component {
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               {this.props.videoRecorder.start == null ?
-                (this.state.play ? <VideoPlayer  primarySrc={this.state.src} />
+                (this.state.play ? <VideoPlayer primarySrc={this.state.src} />
                   : this.editVideo())
 
                 :
                 (!this.props.videoRecorder.recordedBlob ?
-                  <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
+                  <React.Fragment>
+                    <VideoRecorderDiv.Icon></VideoRecorderDiv.Icon>
+                    <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
+                  </React.Fragment>
                   :
                   <VideoPlayer primarySrc={this.props.videoRecorder.recordedBlob} />
                 )

@@ -59,6 +59,34 @@ class RequestTemplates extends React.Component {
     }
   }
 
+  deleteRecording(target) {
+    this.setState({ showConfirm: true, target })
+  }
+
+  resetRecording(target){
+    this.props.resetRecording(target)
+    this.setState({ showConfirm: false})
+
+  }
+
+  confirmDelete = (target) => {
+    return (
+      <Popup
+        smallPopup
+        closePopUp={() => this.setState({ showConfirm: false })}>
+        <Templates.Popup>
+          <Templates.PopupContainer >
+            <Templates.ConfirmDeleteText> Are you sure you want to delete the audio? </Templates.ConfirmDeleteText>
+            <Templates.ActionsContainer>
+              <Templates.ConfirmYes onClick={() => this.resetRecording(target)}>Yes </Templates.ConfirmYes>
+              <Templates.ConfirmNo onClick={() => this.setState({ showConfirm: false })}>No </Templates.ConfirmNo>
+          </Templates.ActionsContainer>
+          </Templates.PopupContainer>
+        </Templates.Popup>
+      </Popup>
+    )
+  }
+
   renderTemplates = () => {
     const relations = this.state.relationship;
     const optionItems = relations.map((relations) =>
@@ -92,11 +120,14 @@ class RequestTemplates extends React.Component {
 
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -126,11 +157,14 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
 
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
-                      {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                        {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -139,7 +173,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -184,7 +221,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -221,11 +258,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -253,11 +293,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.from ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -266,7 +309,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.InputWrapperContainer>
                   <Templates.WrapsInput>
                     <Templates.Select
@@ -313,7 +359,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -351,11 +397,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -383,11 +432,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.from ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -396,7 +448,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -454,7 +509,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -491,11 +546,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
                         {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -523,11 +581,14 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
-                    <Templates.WrapsInput>
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.from ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
                       <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
                         {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
                       </Templates.RecordButton>
-                    </Templates.WrapsInput>
+                    </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
@@ -536,7 +597,10 @@ class RequestTemplates extends React.Component {
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -582,7 +646,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -654,7 +718,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -727,7 +791,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -749,6 +813,7 @@ class RequestTemplates extends React.Component {
   render() {
     return (
       <Templates>
+        {this.state.showConfirm ? this.confirmDelete(this.state.target) : null}
         {this.renderTemplates()}
       </Templates>
     );
