@@ -15,7 +15,7 @@ export default class AudioRecorder extends React.Component {
   }
 
   onStop = (recordedBlob) => {
-    this.props.saveAudioRecording(this.props.audioRecorder.target, { recordedBlob, recordedUrl: recordedBlob.blobURL });
+    this.props.saveAudioRecording(this.props.audioRecorder.target, { recordedBlob: recordedBlob.blob, recordedUrl: recordedBlob.blobURL });
   }
 
   stopRecording = () => {
