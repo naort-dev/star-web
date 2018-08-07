@@ -151,6 +151,9 @@ export default class Event extends React.Component {
     });
   }
   goBack = () => {
+    if (this.state.steps === true) {
+      this.props.cancelBookingDetails();
+    }
     this.setState({ steps: true });
     this.props.history.goBack();
   }
