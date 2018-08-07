@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { Link } from 'react-router-dom';
 import Loader from '../Loader';
 import AboutContentDiv from './styled';
 
@@ -10,6 +11,20 @@ export const AboutContent = props => (
   >
     <AboutContentDiv>
       <AboutContentDiv.ProfileMainContent>
+        {props.showEdit &&
+          <Link
+            to="/settings?star=true"
+            style={{
+            position: 'absolute',
+            top: '10px',
+            right: '10px',
+            fontSize: '12px',
+            textDecoration: 'underline',
+          }}
+          >
+          Edit Profile
+          </Link>
+      }
         <AboutContentDiv.ProfileImage
           imgUrl={props.profilePhoto}
         />

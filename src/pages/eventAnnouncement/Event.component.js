@@ -23,7 +23,7 @@ export default class Event extends React.Component {
       relationshipName: '',
       specification: props.bookingData.specification ? props.bookingData.specification : '',
       importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
-      date: moment(),
+      date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
       eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       whoIsfor: false,
@@ -132,7 +132,7 @@ export default class Event extends React.Component {
       specification: this.state.specification,
       importantinfo: this.state.importantinfo,
       eventdetailName: this.state.eventdetailName,
-      date: this.state.date.format('MMM DD,YYYY'),
+      date: this.state.date,
       type: 2,
       occasionType: this.state.templateType,
       selectedValue: this.state.selectedValue,
@@ -172,7 +172,7 @@ export default class Event extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
-      fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
+      fullName = this.props.userDetails.show_nick_name && this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
     if (this.props.userDetails.avatar_photo) {
@@ -265,10 +265,12 @@ export default class Event extends React.Component {
                               whoIsfrom={this.state.whoIsfrom}
                               eventTitle={this.state.eventTitle}
                               eventDate={this.state.eventDate}
+                              starName={fullName}
                               checkRequiredHostName={this.checkRequiredHostName}
                               checkRequiredUserName={this.checkRequiredUserName}
                               checkRequiredTitle={this.checkRequiredTitle}
                               checkRequiredDate={this.checkRequiredDate}
+                              {...this.props}
 
                             />
                           </Request.EventStep2>

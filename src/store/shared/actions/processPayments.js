@@ -118,7 +118,7 @@ export const fetchSourceList = () => (dispatch, getState) => {
   });
 };
 
-export const modifySourceList = (source, customer, action) => (dispatch, getState) => {
+export const modifySourceList = (source, customer, action, callback) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   const { sourceList } = getState().paymentDetails;
   dispatch(sourceListFetchStart());
@@ -127,23 +127,26 @@ export const modifySourceList = (source, customer, action) => (dispatch, getStat
     source,
     action,
   }, {
-    headers: {
-      'Authorization': `token ${authToken}`,
-    },
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(sourceListFetchEnd());
-      dispatch(fetchSourceList(resp.data.data.cards));
-    } else {
-      dispatch(sourceListFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(sourceListFetchFailed(exception));
-  });
+      headers: {
+        'Authorization': `token ${authToken}`,
+      },
+    }).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(sourceListFetchEnd());
+        dispatch(fetchSourceList(resp.data.data.cards));
+        if (callback) {
+          callback();
+        }
+      } else {
+        dispatch(sourceListFetchEnd());
+      }
+    }).catch((exception) => {
+      dispatch(paymentFetchEnd());
+      dispatch(sourceListFetchFailed(exception));
+    });
 };
 
-export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState) => {
+export const createCharge = (starsonaId, amount, tokenId, customerId) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   dispatch(paymentFetchStart());
   return fetch.post(Api.createCharge, {
@@ -167,30 +170,33 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch, getState
   });
 };
 
-const starsonaVideo = (authToken, filename, requestId, duration, dispatch) => {
+const starsonaVideo = (authToken, filename, requestId, duration, dispatch, callback) => {
   return fetch.post(Api.starsonaVideo, {
     video: filename,
     stragramz_request: requestId,
     duration,
   }, {
-    headers: {
-      'Authorization': `token ${authToken}`,
-    },
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
+      headers: {
+        'Authorization': `token ${authToken}`,
+      },
+    }).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(paymentFetchEnd());
+        if (callback) {
+          callback();
+        }
+      }
+    }).catch((exception) => {
       dispatch(paymentFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
-  });
+      dispatch(paymentFetchFailed(exception));
+    });
 }
 
-export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getState) => {
+export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   let requestDetails = {
-    stargramto: bookingData.userName,
-    stargramfrom: bookingData.hostName,
+    stargramto: bookingData.hostName,
+    stargramfrom: bookingData.userName,
     relationship: bookingData.requestRelationshipData,
     show_relationship: true,
     question: bookingData.question,
@@ -199,6 +205,7 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
     date: moment.utc(bookingData.date).format(),
     event_title: bookingData.eventdetailName,
     event_guest_honor: bookingData.hostName,
+
   };
   let formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);
@@ -208,8 +215,23 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
   formData.append('public_request', publicStatus);
   formData.append('request_details', JSON.stringify(requestDetails));
   formData.append('request_type', bookingData.type);
+  if (bookingData.from_audio_file) {
+    formData.append('from_audio_file', bookingData.from_audio_file);
+  }
+  if (bookingData.from_audio_file) {
+    formData.append('to_audio_file', bookingData.to_audio_file);
+  }
+  if (bookingData.remove_audios) {
+    formData.append('remove_audios', bookingData.remove_audios);
+  }
+  let ApiUrl = Api.starsonaRequest;
+  let method = 'post';
+  if (bookingData.requestId) {
+    ApiUrl = `${ApiUrl}${bookingData.requestId}/`;
+    method = 'put';
+  }
   dispatch(paymentFetchStart());
-  return fetch.post(Api.starsonaRequest, formData, {
+  return fetch[method](ApiUrl, formData, {
     headers: {
       'Authorization': `token ${authToken}`,
     },
@@ -217,8 +239,11 @@ export const starsonaRequest = (bookingData, publicStatus) => (dispatch, getStat
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
       if (bookingData.type === 3) {
-        starsonaVideo(authToken, bookingData.fileName, resp.data.data['stargramz_response'].id, "00:00", dispatch)
-      } //Q&A
+        starsonaVideo(authToken, bookingData.fileName, resp.data.data['stargramz_response'].id, "00:00", dispatch, callback);
+        //Q&A
+      } else if (callback) {
+        callback();
+      }
       dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
     } else {
       dispatch(paymentFetchEnd());

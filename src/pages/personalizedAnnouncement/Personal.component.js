@@ -7,6 +7,9 @@ import { ImageStack } from '../../components/ImageStack';
 import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
+import AudioRecorder from '../../components/AudioRecorder';
+import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
+import Loader from '../../components/Loader';
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -24,7 +27,7 @@ export default class Personal extends React.Component {
       relationshipObjName: '',
       specification: props.bookingData.specification ? props.bookingData.specification : '',
       importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
-      date: moment(),
+      date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
       eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       selectVideoerror: false,
@@ -32,7 +35,8 @@ export default class Personal extends React.Component {
       whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
-      otherRelationValue: props.bookingData.otherRelationValue ==='' ? '' : props.bookingData.otherRelationValue,
+      otherRelationValue: props.bookingData.otherRelationValue === '' ? '' : props.bookingData.otherRelationValue,
+      removeAudios: [],
     };
   }
   componentWillMount() {
@@ -42,6 +46,17 @@ export default class Personal extends React.Component {
     this.setState({ step: parsedQuery });
     if (this.props.isLoggedIn) {
       this.setLoginUserName();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.bookingData.edit && nextProps.eventsDetails.length) {
+      const result = nextProps.eventsDetails.find((find) => {
+        return find.id === this.props.bookingData.occasionType;
+      });
+      this.setState({
+        relationship: result ? result.relationships : '0',
+      })
     }
   }
 
@@ -112,7 +127,37 @@ export default class Personal extends React.Component {
     }
     return myselfValue;
   }
+
+  getAudio() {
+    let from_audio_file = null;
+    let to_audio_file = null;
+    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
+      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
+        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
+      }
+
+      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
+        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
+      }
+      return { from_audio_file, to_audio_file };
+    }
+  }
+
+
+
   createBookingObject = (obj) => {
+    const { from_audio_file, to_audio_file } = this.getAudio();
+    let removeAudios = [];
+    const old_from_audio = this.props.bookingData.from_audio_file;
+    const old_to_audio = this.props.bookingData.to_audio_file;
+    if (this.props.bookingData.edit) {
+      if (!this.props.audioRecorder.recorded.from && this.props.bookingData.from_audio_file) {
+        removeAudios = [...removeAudios, 'from_audio_file'];
+      }
+      if (!this.props.audioRecorder.recorded.for && this.props.bookingData.to_audio_file) {
+        removeAudios = [...removeAudios, 'to_audio_file'];
+      }
+    }
     const relationshipValue = obj.relationship;
     let relationsShipTitle = '';
     let relationshipName = relationshipValue.find((find) => {
@@ -124,6 +169,7 @@ export default class Personal extends React.Component {
     if (this.state.relationshipValue === 'otherRelation') {
       relationshipName = this.props.otherRelationData
     }
+
     const userNameValue = this.checkMyself('userName');
     const hostNameValue = this.checkMyself('hostName');
     const bookingData = {
@@ -139,12 +185,15 @@ export default class Personal extends React.Component {
       relationshipArray: this.state.relationship,
       relationshipValue: this.state.relationshipValue,
       requestRelationshipData: relationshipName,
-      date: this.state.date.format('MMM DD,YYYY'),
+      date: this.state.date,
       type: 1,
       occasionType: this.state.templateType,
       selectedValue: this.state.selectedValue,
       selectedPersonal: this.state.selectedPersonal,
       otherRelationValue: this.state.otherRelationValue,
+      from_audio_file,
+      to_audio_file,
+      remove_audios: removeAudios,
     };
     return bookingData;
   }
@@ -168,7 +217,7 @@ export default class Personal extends React.Component {
       this.setState({ selectVideoerror: false });
     }
     if (this.state.selectedValue !== '0' && this.state.selectedPersonal !== '0') {
-      this.setState({ steps: false}, () => {
+      this.setState({ steps: false }, () => {
         this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
       });
     }
@@ -201,6 +250,7 @@ export default class Personal extends React.Component {
   }
   goBack = () => {
     this.setState({ steps: true });
+    this.props.clearAll();
     this.props.history.goBack();
   }
   cancel = () => {
@@ -208,8 +258,11 @@ export default class Personal extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
+    this.props.clearAll();
     this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
+
+
 
   render() {
     let coverPhoto;
@@ -222,7 +275,7 @@ export default class Personal extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
-      fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
+      fullName = this.props.userDetails.show_nick_name && this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
     if (this.props.userDetails.avatar_photo) {
@@ -268,7 +321,7 @@ export default class Personal extends React.Component {
                   autoHide
                   renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                 >
-                  <Request.Heading>What is the event</Request.Heading>
+                  <Request.Heading>What is the Occasion</Request.Heading>
                   <Request.Questionwraps>
                     <Request.Ask>
                       {
@@ -276,7 +329,7 @@ export default class Personal extends React.Component {
                           <Request.EventStep1>
                             <Request.InputFieldsWrapper>
                               <Request.InputWrapper>
-                                <Request.Label>Event Type</Request.Label>
+                                <Request.Label>What is the occasion</Request.Label>
                                 <Request.WrapsInput>
                                   <Request.Select
                                     value={this.state.selectedValue}
@@ -339,7 +392,8 @@ export default class Personal extends React.Component {
                               eventDate={this.state.eventDate}
                               starName={fullName}
                               otherRelationship={this.otherRelationship}
-                              otherRelationValue ={this.state.otherRelationValue}
+                              otherRelationValue={this.state.otherRelationValue}
+                              {...this.props}
                             />
                           </Request.EventStep2>
                           : null
@@ -364,12 +418,16 @@ export default class Personal extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                />
-              </Request.ImageStackWrapper>
+              {this.props.audioRecorder.status && this.props.location.search === '?step=1' ?
+                (this.props.audioRecorder.status == "checking" ? <Loader /> :
+                  <AudioRecorder {...this.props} />)
+                :
+                <Request.ImageStackWrapper>
+                  <ImageStack
+                    featureImage={featuredImage}
+                    imageList={imageList}
+                  />
+                </Request.ImageStackWrapper>}
             </Request.RightSection>
           </Request>
         </Request.Content>

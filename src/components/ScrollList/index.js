@@ -18,6 +18,7 @@ import ListStyled from './styled';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
 import VideoPlayer from '../VideoPlayer';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
 import Loader from '../Loader';
@@ -100,6 +101,16 @@ export default class ScrollList extends React.Component {
 
   showVideoPopup = () => {
     const selectedVideo = this.props.dataList[this.state.selectedVideoIndex];
+    const videoPlayerProps = selectedVideo.question_answer_videos ? {
+      primaryCover: selectedVideo.question_answer_videos.question_thumb ? selectedVideo.question_answer_videos.question_thumb : '',
+      primarySrc: selectedVideo.question_answer_videos.answer ? selectedVideo.question_answer_videos.question : '',
+      secondaryCover: selectedVideo.question_answer_videos.answer_thumb ? selectedVideo.question_answer_videos.answer_thumb : '',
+      secondarySrc: selectedVideo.question_answer_videos.answer ? selectedVideo.question_answer_videos.answer : '',
+    } : {
+      primaryCover: selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : '',
+      primarySrc: selectedVideo.s3_video_url ? selectedVideo.s3_video_url : '',
+    };
+
     return (
       <Popup
         closePopUp={() => this.setState({ videoActive: false, sharePopup: false })}
@@ -118,21 +129,16 @@ export default class ScrollList extends React.Component {
                         <ListStyled.VideoRequestName>
                           {selectedVideo.full_name}
                           <ListStyled.VideoTitle>
-                            {this.renderStarProfessions(selectedVideo.professions)}
+                            {starProfessionsFormater(selectedVideo.professions)}
                           </ListStyled.VideoTitle>
                         </ListStyled.VideoRequestName>
                       </Link>
                       <ListStyled.ShareButton
                         onClick={() => this.setState({sharePopup: !this.state.sharePopup})}
-                      >
-                        Share
-                      </ListStyled.ShareButton>
+                      />
                     </ListStyled.VideoRequester>
                   </ListStyled.VideoContent>
-                  <VideoPlayer
-                    cover={selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : ''}
-                    src={selectedVideo.s3_video_url ? selectedVideo.s3_video_url : ''}
-                  />
+                  <VideoPlayer {...videoPlayerProps} />
                 </ListStyled.VideoPlayer>
               </React.Fragment>
             : <Loader />
@@ -250,18 +256,6 @@ export default class ScrollList extends React.Component {
     );
   }
 
-  renderStarProfessions = (list) => {
-    let string = '';
-    list.forEach((professions, index) => {
-      if (index === list.length - 1) {
-        string += `${professions.title}`;
-      } else {
-        string += `${professions.title}\xa0|\xa0`;
-      }
-    });
-    return string;
-  }
-
   renderList() {
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
@@ -273,7 +267,7 @@ export default class ScrollList extends React.Component {
             cover={item.s3_thumbnail_url}
             fanName={item.fan_name}
             fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}
-            celebProfessions={this.renderStarProfessions(item.professions)}
+            celebProfessions={starProfessionsFormater(item.professions)}
             videoUrl={item.s3_video_url}
             videoCover={item.s3_thumbnail_url}
             celebId={item.user_id}
@@ -289,8 +283,10 @@ export default class ScrollList extends React.Component {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos videos={this.props.videos} key={index}>
           <RequestDetails
+            starMode={this.props.starMode}
             cover={item.request_video[0] && item.request_video[0].s3_thumbnail_url}
             celebId={item.celebrity_id}
+            orderId={item.order_details ? item.order_details.order : ''}
             videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
             starName={item.celebrity}
@@ -328,7 +324,7 @@ export default class ScrollList extends React.Component {
             celebrityProfessions={item.celebrity_profession}
             profile={profilePhoto}
             starName={item.get_short_name}
-            details={this.renderStarProfessions(item.celebrity_profession)}
+            details={starProfessionsFormater(item.celebrity_profession)}
           />
         </ListStyled.listItem>
       );

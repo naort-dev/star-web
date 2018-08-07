@@ -458,4 +458,54 @@ Detail.StoreIcon = styled.img`
   margin-left: 0;
   display: inline-block;
 `;
-export { Detail };
+
+Detail.PopupWrapper = styled.div`
+  width: 100%;
+  max-height: 100%;
+  min-height: 40%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: #fff;
+`;
+
+Detail.PopupLabel = styled.div`
+font-size: 16px;
+text-align: center;
+@media(min-width: 1025px) {
+  font-size: 20px;
+}
+`;
+
+const HeaderSection = styled.div`
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  
+`;
+
+HeaderSection.HeaderNavigation = styled.button`
+  background-image: url( 'assets/images/icon_back_40a.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  border:none;
+  padding:20px;
+  background-size: 26px;
+  background-color:white;
+  cursor: pointer;
+  outline:none;
+`;
+
+HeaderSection.Small = HeaderSection.extend`
+background-image: linear-gradient(0deg,rgba(0,0,0,0) 0%,rgba(34,34,34,0.1),rgba(34,34,34,.3) 100%);
+width: 100%;
+position: absolute;
+z-index: 2;
+`;
+HeaderSection.HeaderNavigationMobile = HeaderSection.HeaderNavigation.extend`
+background-image: url( 'assets/images/icon_back_40_white.svg' );
+background-color: initial;
+`;
+export { Detail, HeaderSection };

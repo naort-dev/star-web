@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
-import { updateLoginStatus } from './store/shared/actions/login';
+import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
@@ -28,7 +28,8 @@ import { Event } from './pages/eventAnnouncement';
 import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
-import Starsuccess from './pages/starsuccess/Starsuccess.container'
+import Starsuccess from './pages/starsuccess/Starsuccess.container';
+import { fetchUserDetails } from './store/shared/actions/getUserDetails';
 
 class App extends React.Component {
   constructor(props) {
@@ -44,9 +45,11 @@ class App extends React.Component {
   }
 
   componentWillMount() {
+    window.addEventListener('storage', this.updateSession);
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
     if (!this.props.professionsList.professions.length) {
       this.setState({ showLoading: true });
@@ -77,6 +80,17 @@ class App extends React.Component {
     }
   }
 
+  componentWillUnmount = () => {
+    window.removeEventListener('storage', this.updateSession);
+  }
+
+  updateSession = () => {
+    if (localStorage && localStorage.getItem('data') !== null) {
+      this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
+    } else this.props.logOut();
+  }
+
   render() {
     const { showLoading } = this.state;
     const showRoutes = !showLoading;
@@ -97,6 +111,7 @@ class App extends React.Component {
                 <Route path="/forgotpassword" component={Login} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/starDetail/:id/:videoId?" component={Starprofile} />
+                <Route path="/myStar/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starbio" component={Starbio} />
@@ -107,6 +122,7 @@ class App extends React.Component {
                 <Route path="/:id/request/event" component={Event} />
                 <Route path="/:id/request/personal" component={Personal} />
                 <Route path="/:id/request/confirm" component={Confirm} />
+                <Route path="/settings" component={Starbio} />
 
                 {/* logged in areas */}
 
@@ -118,9 +134,25 @@ class App extends React.Component {
                   })}
                 />
                 <Route
+                  path="/settings"
+                  component={protectRoute({
+                    RouteComponent: Starbio,
+                    // roles: allUserRoles,
+                  })}
+                />
+                <Route
                   path="/user/myVideos"
                   component={protectRoute({
                     RouteComponent: MyVideos,
+                    // roles: allUserRoles,
+                  })}
+                />
+                <Route
+                  path="/user/bookings"
+                  component={protectRoute({
+                    RouteComponent: MyVideos,
+                    selectedSideBarItem: 'requests',
+                    starMode: true,
                     // roles: allUserRoles,
                   })}
                 />
@@ -167,6 +199,8 @@ const mapState = state => ({
 const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  logOut: () => dispatch(logOut()),
 });
 
 export default withRouter(connect(mapState, mapProps)(App));

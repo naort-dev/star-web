@@ -2,6 +2,9 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Templates } from './styled';
+import Popup from '../Popup';
+import { getMobileOperatingSystem, checkMediaRecorderSupport, checkDevice } from '../../utils/checkOS';
+import AudioRecorder from '../AudioRecorder';
 
 
 class RequestTemplates extends React.Component {
@@ -11,6 +14,7 @@ class RequestTemplates extends React.Component {
       type: props.type,
       relationship: props.relationship,
       user: props.user,
+      showPopup: true,
       eventname: props.eventName,
     };
     this.handleChange = this.handleChange.bind(this);
@@ -21,6 +25,68 @@ class RequestTemplates extends React.Component {
     });
     this.props.handleChange(date, 'date');
   }
+
+  audioRecorder(displayText) {
+    if (!getMobileOperatingSystem() && checkMediaRecorderSupport()) {
+      this.props.deviceCheck("checking")
+      return checkDevice()
+        .then(
+          () => {
+            this.props.showRecorder(displayText),
+              this.props.deviceCheck("checked")
+          },
+          () => {
+            this.props.showFallback(displayText),
+              this.props.deviceCheck("checked")
+          }
+        );
+    }
+
+    else {
+      this.props.showRecorder(displayText)
+    }
+
+  }
+
+  fileHandler(target) {
+    const file = document.getElementById(target).files[0];
+    const reader = new FileReader();
+    const fileURL = URL.createObjectURL(file);
+    document.getElementById('recorded-audio').src = fileURL;
+    this.props.saveAudioFile({ [`${target}`]: file });
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
+
+  deleteRecording(target) {
+    this.setState({ showConfirm: true, target })
+  }
+
+  resetRecording(target){
+    this.props.resetRecording(target)
+    this.setState({ showConfirm: false})
+
+  }
+
+  confirmDelete = (target) => {
+    return (
+      <Popup
+        smallPopup
+        closePopUp={() => this.setState({ showConfirm: false })}>
+        <Templates.Popup>
+          <Templates.PopupContainer >
+            <Templates.ConfirmDeleteText> Are you sure you want to delete the audio? </Templates.ConfirmDeleteText>
+            <Templates.ActionsContainer>
+              <Templates.ConfirmYes onClick={() => this.resetRecording(target)}>Yes </Templates.ConfirmYes>
+              <Templates.ConfirmNo onClick={() => this.setState({ showConfirm: false })}>No </Templates.ConfirmNo>
+          </Templates.ActionsContainer>
+          </Templates.PopupContainer>
+        </Templates.Popup>
+      </Popup>
+    )
+  }
+
   renderTemplates = () => {
     const relations = this.state.relationship;
     const optionItems = relations.map((relations) =>
@@ -35,51 +101,82 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter host name"
-                    type="text"
-                    name="hostName"
-                    value={this.props.hostName}
-                    onBlur={this.props.checkRequiredHostName}
-                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                  />
-                  {this.props.whoIsfor ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
 
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter host name"
+                      type="text"
+                      name="hostName"
+                      value={this.props.hostName}
+                      onBlur={this.props.checkRequiredHostName}
+                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
+                    />
+                    {this.props.whoIsfor ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
+                        {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
+
+
               :
               null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter name"
-                    type="text"
-                    name="userName"
-                    value={this.props.userName}
-                    onBlur={this.props.checkRequiredUserName}
-                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                  />
-                  {this.props.whoIsfrom ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter name"
+                      type="text"
+                      name="userName"
+                      value={this.props.userName}
+                      onBlur={this.props.checkRequiredUserName}
+                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
+                    />
+                    {this.props.whoIsfrom ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
+                        {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -124,7 +221,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -143,21 +240,34 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter host name"
-                    type="text"
-                    name="hostName"
-                    value={this.props.hostName}
-                    onBlur={this.props.checkRequiredHostName}
-                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                  />
-                  {this.props.whoIsfor ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter host name"
+                      type="text"
+                      name="hostName"
+                      value={this.props.hostName}
+                      onBlur={this.props.checkRequiredHostName}
+                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
+                    />
+
+                    {this.props.whoIsfor ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
+                        {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
@@ -165,38 +275,56 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter name"
-                    type="text"
-                    name="userName"
-                    value={this.props.userName}
-                    onBlur={this.props.checkRequiredUserName}
-                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                  />
-                  {this.props.whoIsfrom ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter name"
+                      type="text"
+                      name="userName"
+                      value={this.props.userName}
+                      onBlur={this.props.checkRequiredUserName}
+                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
+                    />
+
+                    {this.props.whoIsfrom ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.from ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
+                        {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Select
-                    value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
-                  >
-                    <option value="0" key="0">Choose One</option>
-                    {optionItems}
-                    <option value="otherRelation" key="otherRelation">Other</option>
-                  </Templates.Select>
-                </Templates.WrapsInput>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Select
+                      value={this.props.relationshipValue}
+                      onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
+                    >
+                      <option value="0" key="0">Choose One</option>
+                      {optionItems}
+                      <option value="otherRelation" key="otherRelation">Other</option>
+                    </Templates.Select>
+                  </Templates.WrapsInput>
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
@@ -231,7 +359,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -251,21 +379,34 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter name"
-                    type="text"
-                    name="hostName"
-                    value={this.props.hostName}
-                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                    onBlur={this.props.checkRequiredHostName}
-                  />
-                  {this.props.whoIsfor ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter name"
+                      type="text"
+                      name="hostName"
+                      value={this.props.hostName}
+                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
+                      onBlur={this.props.checkRequiredHostName}
+                    />
+
+                    {this.props.whoIsfor ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
+                        {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
@@ -273,28 +414,44 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter name"
-                    type="text"
-                    value={this.props.userName}
-                    name="userName"
-                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                    onBlur={this.props.checkRequiredUserName}
-                  />
-                  {this.props.whoIsfrom ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter name"
+                      type="text"
+                      value={this.props.userName}
+                      name="userName"
+                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
+                      onBlur={this.props.checkRequiredUserName}
+                    />
+
+                    {this.props.whoIsfrom ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.from ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
+                        {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -352,7 +509,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -372,21 +529,33 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter name"
-                    type="text"
-                    name="hostName"
-                    value={this.props.hostName}
-                    onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                    onBlur={this.props.checkRequiredHostName}
-                  />
-                  {this.props.whoIsfor ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter name"
+                      type="text"
+                      name="hostName"
+                      value={this.props.hostName}
+                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
+                      onBlur={this.props.checkRequiredHostName}
+                    />
+                    {this.props.whoIsfor ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.for ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("for")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("for")}>
+                        {this.props.audioRecorder.recorded.for || this.props.audioRecorder.file.for ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
@@ -394,28 +563,44 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter name"
-                    type="text"
-                    name="userName"
-                    value={this.props.userName}
-                    onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                    onBlur={this.props.checkRequiredUserName}
-                  />
-                  {this.props.whoIsfrom ?
-                    <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                    :
-                    null
-                  }
-                </Templates.WrapsInput>
+                <Templates.InputWrapperContainer>
+                  <Templates.WrapsInput>
+                    <Templates.Input
+                      placeholder="Enter name"
+                      type="text"
+                      name="userName"
+                      value={this.props.userName}
+                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
+                      onBlur={this.props.checkRequiredUserName}
+                    />
+
+                    {this.props.whoIsfrom ?
+                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
+                      :
+                      null
+                    }
+                  </Templates.WrapsInput>
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    <Templates.WrapsAudioInput>
+                      {this.props.audioRecorder.recorded.from ?
+                        <Templates.MicAction onClick={() => this.deleteRecording("from")} />
+                        : null}
+                      <Templates.RecordButton onClick={() => this.audioRecorder("from")}>
+                        {this.props.audioRecorder.recorded.from || this.props.audioRecorder.file.from ? "Listen to Rec" : "Pronounciation"}
+                      </Templates.RecordButton>
+                    </Templates.WrapsAudioInput>
+                    : null}
+                </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
               :
               null
             }
             {this.state.user === '2' ?
               <Templates.InputWrapper>
-                <Templates.Label>Relationship</Templates.Label>
+                <Templates.RelationshipLabelWrapper>
+                  <Templates.Label>Relationship</Templates.Label>
+                  { this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
+                </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
                     value={this.props.relationshipValue}
@@ -461,7 +646,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -533,7 +718,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -606,7 +791,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Important Info for {this.props.starName} to know?</Templates.Label>
+              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -628,6 +813,7 @@ class RequestTemplates extends React.Component {
   render() {
     return (
       <Templates>
+        {this.state.showConfirm ? this.confirmDelete(this.state.target) : null}
         {this.renderTemplates()}
       </Templates>
     );

@@ -10,6 +10,7 @@ const initialState = {
     message: '',
   },
   statusCode: undefined,
+  starRole: false,
 };
 
 export default (state = { ...initialState }, action) => {
@@ -29,6 +30,7 @@ export default (state = { ...initialState }, action) => {
         loading: false,
         statusCode: undefined,
         auth_token: action.data.user,
+        starRole: action.data.user.celebrity,
       };
 
     case LOGIN.incorrect:
@@ -56,6 +58,7 @@ export default (state = { ...initialState }, action) => {
       return {
         ...state,
         auth_token: action.sessionDetails,
+        starRole: action.sessionDetails.celebrity,
         isLoggedIn: true,
       };
     case LOGIN.logout:

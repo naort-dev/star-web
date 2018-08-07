@@ -81,7 +81,7 @@ PaymentStyled.OptionSelectionWrapper = styled.div`
 `;
 
 PaymentStyled.OptionSelector = styled.div`
-  margin-bottom: 20px;
+  margin: 20px 0;
 `;
 
 PaymentStyled.OptionLabel = styled.label`
@@ -90,7 +90,6 @@ PaymentStyled.OptionLabel = styled.label`
 `;
 
 PaymentStyled.cardListWrapper = styled.ul`
-
 `;
 
 PaymentStyled.cardListItem = styled.li`
@@ -102,20 +101,29 @@ PaymentStyled.cardListItem = styled.li`
 
 PaymentStyled.cardItemDetails = styled.span`
   background-color: ${props => (props.selected ? '#FF6C58' : 'rgb(248,248,248)')};
+  border-radius: 12px;
   padding: 10px;
   color: ${props => (props.selected ? '#fff' : '#333333')};
+  padding-right: 26px;
   width: 100%;
   display: block;
+`;
+
+PaymentStyled.CardNumber = styled.span`
+  margin-left: 10px;
+  display: inline-block;
+  margin-top: 8px;
+  vertical-align: top;
 `;
 
 PaymentStyled.removeCardListItem = styled.span`
   position:absolute;
   right: 10px;
-  top: 10px;
-  width: 20px;
-  height: 20px;
+  top: 19px;
+  width: 15px;
+  height: 15px;
   display: block;
-  background: ${props => (props.selected ? 'url(assets/images/close-icon.svg)' : 'url(assets/images/close-icon-orange.svg)')};
+  background: ${props => (props.selected ? 'url(assets/images/close-icon-white.svg)' : 'url(assets/images/close-icon-orange.svg)')};
   background-repeat: no-repeat;
 `;
 
@@ -128,8 +136,8 @@ PaymentStyled.ElementsWrapper = styled.div`
     font-size: 1em;
     font-family: 'Ubuntu-Regular';
     background-color: white;
-    border: 1px solid #d0d2d3;
     border-radius: 2px;
+    border: 1px solid #d0d2d3;
     outline: 0;
   }
 `;
@@ -149,10 +157,30 @@ PaymentStyled.ComponentWrapperScroll = styled(Scrollbars)`
 
 PaymentStyled.CardElementWrapper = PaymentStyled.ElementsWrapper.extend`
   .StripeElement {
-    margin: 10px 0;
-    margin-bottom: 0;
+    margin: 0;
+    border: none;
+    width: calc(100% - 42.6px);
+    padding: 0;
+    padding-left: 10px;
+    display: inline-block;
   }
 `;
+PaymentStyled.CardInputWrapper = styled.div`
+  border: 1px solid #d0d2d3;
+  margin: 10px 0;
+  padding: 3px 8px;
+  display: flex;
+  align-items: center;
+`;
+
+PaymentStyled.CardTypeIcon = styled.span`
+  width: 42.6px;
+  height: 26.6px;
+  background: ${props => (props.cardImage ? `url(${props.cardImage})` : 'url(assets/images/card-icons/default-icon.svg)')} no-repeat;
+  background-size: 100% 100%;
+  display: inline-block;
+`;
+
 PaymentStyled.ErrorElement = styled.span`
   color:red;
   font-size: 11px;
@@ -165,6 +193,7 @@ PaymentStyled.ErrorElement = styled.span`
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
   margin-top: 30px;
+  flex-wrap: wrap;
   .StripeElement {
     margin-right: 30px;
     padding: 10px 5px;

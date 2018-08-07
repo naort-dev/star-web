@@ -1,4 +1,4 @@
-import styled, {keyframes}  from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 
 const popupEnter = keyframes`
   0% {
@@ -15,15 +15,12 @@ const PopupStyled = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  padding-top: 46px;
+  padding-top: ${props => (props.smallPopup ? 0 : '46px')};
   background-color: rgba(0,0,0,.6);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 10;
-  @media(min-width: 1025px) {
-    top: 60px;
-  }
 `;
 
 PopupStyled.Container = styled.div`
@@ -46,10 +43,29 @@ PopupStyled.Container = styled.div`
   }
 `;
 
+PopupStyled.SmallContainer = PopupStyled.Container.extend`
+  max-height: 80%;
+  width: 80%;
+  height: ${props => (props.popHeight ? props.popHeight : 'auto')};
+  padding: 45px 20px 20px;
+  border-radius: 12px;
+  background-color: #fff;
+  @media(min-width: 768px) {
+    width: 50%;
+    max-width: 400px;
+    height: auto;
+  }
+`;
+
+PopupStyled.SmallContent = styled.div`
+  height: 100%;
+  overflow-y: auto;
+`;
+
 PopupStyled.CloseButton = styled.span`
   position: absolute;
-  top: 16px;
-  right: 18px;
+  top: ${props => (props.smallPopup ? '7px' : '16px')};
+  right: ${props => (props.smallPopup ? '7px' : '18px')};
   display: inline-block;
   width: 30px;
   height: 30px;

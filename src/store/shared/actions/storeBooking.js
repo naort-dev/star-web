@@ -9,8 +9,3 @@ export const cancelBookingDetails = data => ({
   type: CANCEL_BOOKING_DATA,
   payload: data,
 });
-
-
-// export const storeBookingDetails = data => (dispatch) => {
-//   dispatch(bookFetchStart(data));
-// };

@@ -22,6 +22,102 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.ImageStackWrapper = styled.div`
+  display:none;
+  width:100%;
+  height:100%;
+  @media(min-width:1025px){
+    display:block;
+  }
+`;
+LoginContainer.PaymentLabel = styled.div`
+  color:red;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align:left;
+  padding:10px 0;
+  cursor:pointer;
+  @media(min-width:768px){
+    width:100%;
+    display:flex;
+    align-items:center;
+    padding-right: 10px;
+    padding-bottom:0px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
+    
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
+`;
+LoginContainer.SuccessText = styled.p`
+  font-size: 18px;
+  margin-top: 5%;
+  color:rgba(51, 51, 51, 1);
+  font-family: 'Ubuntu-Regular';
+  margin-bottom: 5%;
+  text-align: left;
+  width: 100%;
+ `;
+
+ LoginContainer.SuccessTextBold = styled.p`
+ font-size: 18px;
+ margin-top: 5%;
+ font-family: 'Ubuntu-Bold';
+ margin-bottom: 5%;
+ text-align: left;
+ width: 100%;
+`;
+LoginContainer.SuccessContainer = styled.div`
+  height: 80%;
+  width: 100%;
+  margin-top:10%;
+  padding: 0px 24px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  @media(min-width:768px){
+    padding: 0px 100px;
+    height:45%;
+  }
+  @media(min-width:1025px){
+    height:80%;
+    padding:0px 65px;
+  }
+ `;
+LoginContainer.Questionwraps = styled.div`
+  width:100%;
+  height:100%;
+  padding-bottom:40px;
+`;
+LoginContainer.VerificationText = styled.h4`
+  color: rgba(51, 51, 51, 1);
+  padding: 20px 0px;
+  font-family: 'Ubuntu-Medium';
+  height: 150px;
+  margin-top:5%;
+  font-size:16px;
+  @media(min-width:768px){
+    font-size:18px;
+  }
+  @media(min-width:1025px){
+    font-size:20px;
+  }
+  
+
+`;
+LoginContainer.recorderWrapper = styled.div`
+  width:100%;
+  height:100%;
+`;
+LoginContainer.VideoContainerWrapper = styled.div`
+  margin-top:28%;
+`;
 
 LoginContainer.CropperWrapper = styled.div`
   display: flex;
@@ -55,8 +151,14 @@ LoginContainer.CropperButton = styled.div`
   border-radius: 5px;
   border: 2px solid #FF6C58;
 `;
+LoginContainer.ComponentWrapper = styled.div`
+  @media(min-width:1025px){
+    height:calc(100% - 160px);
+  }
+  
+`;
 
-Request.ComponentWrapperScroll = styled(Scrollbars)`
+LoginContainer.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
@@ -104,12 +206,14 @@ LoginContainer.RightSection = styled.div`
 
 LoginContainer.mutiSelectItemWrapper = styled.div`
   display: inline-block;
-  border: 2px solid #FF6C58;
+  border: 2px solid white;
   padding: 5px;
-  color: #FF6C58;
+  color: white;
+  background-color: #FF6C58;
   border-radius: 20px;
   margin: 9px;
   font-size: 14px;
+  background-color: #FF6C58;
   @media(min-width: 1025px) {
     margin: 7.5px;
   }
@@ -121,7 +225,7 @@ LoginContainer.CloseButton = styled.input`
   margin-left: 10px;
   cursor: pointer;
   border: none;
-  background: url('assets/images/close-icon-orange.svg') no-repeat;
+  background: url('assets/images/close-icon-white.svg') no-repeat;
 `;
 LoginContainer.ImageWrapper = styled.div`
 display:flex;
@@ -356,7 +460,24 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 
 `;
+LoginContainer.paragraph = styled.div`
+  margin-top:1%;
+  font-family: 'Ubuntu-Regular';
+  font-size:16px;
+  text-align: center;
+  color:rgba(51, 51, 51, 1);
+`;
 LoginContainer.Container = styled.div`
+  margin-top: 5%;
+  margin-bottom: 2%;
+  @media(min-width: 768px) {
+    padding: 0 65px;
+  }
+  @media(min-width: 1025px) {
+    padding: 0 20px;
+  }
+`;
+LoginContainer.VideoContainer = styled.div`
   margin-top: 5%;
   margin-bottom: 2%;
   @media(min-width: 768px) {
@@ -520,6 +641,24 @@ LoginContainer.InputFieldsWrapper = styled.div`
  
 }
 `;
+LoginContainer.ButtonControllerWrapper = styled.div`
+position: fixed;
+left: 0;
+right: 0;
+bottom: 0;
+text-align:right;
+background-color: #fff;
+z-index: 5;
+box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+@media(min-width:1025px){
+  margin: 0 42px;
+  position:absolute;
+  box-shadow: none;
+  left:0;
+  right:0;
+  bottom:0;
+}
+`;
 LoginContainer.Ask = styled.div`
   padding: 25px 19px;
   height:100%;
@@ -673,14 +812,14 @@ LoginContainer.FooterLayout = styled.div`
   }
   
 `;
-const HeaderSection = styled.div`
+const HeaderSections = styled.div`
   padding: 3px 15px;
   display:flex;
   justify-content: space-between;
   align-items: center;
 `;
 
-HeaderSection.LogoImage = styled.img`
+HeaderSections.LogoImage = styled.img`
   width:100px;
   height:45px;
   @media(min-width:1025px){
@@ -688,7 +827,7 @@ HeaderSection.LogoImage = styled.img`
     height:60px;
   }
 `;
-HeaderSection.MiddleDiv = styled.div`
+HeaderSections.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;
   @media(min-width:1920px){
@@ -697,7 +836,7 @@ HeaderSection.MiddleDiv = styled.div`
   
 
 `;
-HeaderSection.RightDiv = styled.button`
+HeaderSections.RightDiv = styled.button`
   background-color: #fff; 
   margin-right: 5px;
   color: #333333;
@@ -1022,7 +1161,6 @@ background-color: rgba(0,0,0, 0.3);
 LoginContainer.Image = styled.img`
  height: 100%;
  width: 100%;
- object-fit: contain;
 `;
 
 LoginContainer.FullScreenUploadWrapper = styled.div`
@@ -1070,8 +1208,64 @@ LoginContainer.ErrorText = styled.span`
  bottom: 20px;
  font-size: 14px;
 `;
+const SectionHeader = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  display:flex;
+  padding: 3px 15px;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  z-index: 9;
+  @media(min-width: 1025px) {
+    left: initial;
+    right: initial;
+    width: 45%;
+  }
+  margin-bottom:5%;
+  
+`;
+SectionHeader.HeaderNavigation = styled.button`
+  background-image: url( 'assets/images/icon_back_40a.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+  border:none;
+  padding:20px;
+  background-size: 26px;
+  background-color:white;
+  cursor: pointer;
+  outline:none;
+`;
+SectionHeader.MiddleDiv = styled.div`
+  font-family: 'Ubuntu-Bold';
+  font-size : 16px;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
+`;
+SectionHeader.RightDiv = styled.button`
+  background-color: #fff; 
+  margin-right: 5px;
+  color: black;
+  
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Ubuntu-Light';
+  display: inline-block;
+  font-size: 12px;
+  border: none;
+  cursor: pointer;
+  outline:none;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+`;
 
 
 
 
-export { LoginContainer, HeaderSection, FooterSection };
+export { LoginContainer, FooterSection, SectionHeader };
