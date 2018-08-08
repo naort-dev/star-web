@@ -105,11 +105,8 @@ Resources:
           Environment:
           - { Name: API_URL, Value: !Ref 'ApiURL' }
           - { Name: SERVER_URL, Value: !Ref 'ServerURL' }
-          - { Name: STRIPE_PUBLISH_KEY, Value: !Ref 'StripePublishKey'}
-          - Name: DOMAIN_NAME
-            Value:
-              Fn::ImportValue:
-                !Join [':', [!Ref 'StackName', 'DomainName']]
+          - { Name: STRIPE_PUBLISH_KEY, Value: !Ref 'StripePublishKey' }
+          - { Name: DOMAIN_NAME, Value: !Ref 'DomainName' }
 
   WebService:
     Type: AWS::ECS::Service
