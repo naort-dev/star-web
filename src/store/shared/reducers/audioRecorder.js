@@ -1,7 +1,10 @@
 import { START_AUDIO_RECORDING, STOP_AUDIO_RECORDING, SAVE_RECORDINGS, DEVICE_CHECK, SHOW_FALLBACK, SAVE_AUDIO_FILE, CLOSE_RECORDER, CLEAR_ALL, SHOW_RECORDER, RESET_RECORDING } from '../actions/audioRecorder';
 
 const initalState = {
-  start: null,
+  start: {
+    from: null,
+    for: null,
+  },
   status: null,
   stop: null,
   re_record: null,
@@ -40,7 +43,8 @@ export default (state = { ...initalState }, action) => {
     case START_AUDIO_RECORDING:
       return {
         ...state,
-        start: true,
+        start: {...state.start, [action.payload]: true },
+        target: action.payload,
       };
     case STOP_AUDIO_RECORDING:
       return {

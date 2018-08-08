@@ -8,10 +8,11 @@ export default class AudioRecorder extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      record: false,
-      recordedBlob: null,
-      save: false,
+      start: false,
+      play: false,
+      resume: false,
     };
+    this.audio = null;
   }
 
   onStop = (recordedBlob) => {
@@ -20,39 +21,78 @@ export default class AudioRecorder extends React.Component {
 
   stopRecording = () => {
     this.props.stopAudioRecording();
+    this.setState({ start: false})
   }
 
   startRecording = () => {
-    this.props.startAudioRecording();
+    this.setState({ start: true})
+    this.props.startAudioRecording(this.props.target);
+  }
+
+  deleteRecording(target) {
+    this.props.resetRecording(target);
+  }
+
+  playRecording(target) {
+    this.url = this.props.audioRecorder.recorded[target].recordedUrl
+    this.audio = new Audio(this.url);
+    this.audio.play();
+    this.setState({ play: true})
+  }
+
+  toggleMic(callbackFunction) {
+    if(this.props.audioRecorder.start[this.props.target]){
+     return (
+      <AudioRecorderDiv.RippleButton onClick={callbackFunction} type="button"></AudioRecorderDiv.RippleButton>
+     )
+    }
+    else {
+      return (
+        <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>
+      )
+    }
+  }
+
+  pauseRecording() {
+    this.audio.pause();
+    this.setState({ play: false, resume: true});
   }
 
   render() {
- 
-    const target = this.props.audioRecorder.target;
-    const playbackURL = this.props.audioRecorder.recorded[target] != null ? this.props.audioRecorder.recorded[target].recordedUrl : null
-    const callbackFunction = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
-
+    const target = this.props.target
+    const callbackFunction = this.props.audioRecorder.start[target] ? this.stopRecording : this.startRecording
     return (
       <AudioRecorderDiv>
-        {checkMediaRecorderSupport() && this.props.audioRecorder.showRecorder ?
+        {checkMediaRecorderSupport() ?
           <React.Fragment>
-            <AudioRecorderDiv.Label>{this.props.audioRecorder.label}</AudioRecorderDiv.Label>
-            <ReactMic
-              id="react-mic"
-              record={this.props.audioRecorder.start ? this.props.audioRecorder.start : false}
-              className="sound-wave"
-              onStop={this.onStop}
-              strokeColor="white"
-              backgroundColor="#FF6C58"
-              save={this.props.audioRecorder.stop}
-            />
-            <AudioRecorderDiv.Audio id="audio-rec" src={playbackURL} controls controlsList="nodownload" />
-            {this.props.audioRecorder.start ?
-              <AudioRecorderDiv.CloseButton onClick={callbackFunction} type="button"></AudioRecorderDiv.CloseButton>
-              : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}
+            <div style={{ display: "none" }}>
+              <ReactMic
+                id="react-mic"
+                record={this.props.audioRecorder.start[target] ? this.props.audioRecorder.start[target] : false}
+                className="sound-wave"
+                onStop={this.onStop}
+                strokeColor="white"
+                backgroundColor="#FF6C58"
+                save={this.props.audioRecorder.stop}
+              />
+            </div>
+            <AudioRecorderDiv.ControlWrapper>
+              {this.toggleMic(callbackFunction)}
+              { (this.props.audioRecorder.recorded[target] && this.props.audioRecorder.recorded[target].recordedBlob) && !this.state.start  ?
+                <React.Fragment>
+                  {!this.state.play ? 
+                  <AudioRecorderDiv.PlayButton onClick={() => this.playRecording(target)} />
+                  : 
+                  <AudioRecorderDiv.PauseButton onClick={() => this.pauseRecording()} />
+                  }
+                   <AudioRecorderDiv.CloseButton onClick={() => this.deleteRecording(target)} />
+                   </React.Fragment> : 
+              null}
+            </AudioRecorderDiv.ControlWrapper>
+
           </React.Fragment>
           :
-          null 
+          null
         }
       </AudioRecorderDiv>
     );

@@ -24,7 +24,7 @@ const mapDispatchToProps = dispatch => ({
   postOtherRelation: other => dispatch(postOtherRelation(other)),
   showRecorder: displayText => dispatch(showRecorder(displayText)),
   showFallback: displayText => dispatch(showFallback(displayText)),
-  startAudioRecording: () => dispatch(startAudioRecording()),
+  startAudioRecording: (target) => dispatch(startAudioRecording(target)),
   stopAudioRecording: () => dispatch(stopAudioRecording()),
   saveAudioFile: audio => dispatch(saveAudioFile(audio)),
   saveAudioRecording: (target, audio) => dispatch(saveAudioRecording(target, audio)),

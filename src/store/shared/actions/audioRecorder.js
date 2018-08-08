@@ -31,9 +31,10 @@ export function showFallback(displayText) {
   };
 }
 
-export function startAudioRecording() {
+export function startAudioRecording(data) {
   return {
     type: START_AUDIO_RECORDING,
+    payload: data,
   };
 }
 
