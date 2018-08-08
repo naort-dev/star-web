@@ -16,7 +16,6 @@ const Request = styled.section`
  flex-direction: column;
  padding-bottom: 40px;
  max-width: 1920px;
- padding-top: 40px;
  background: #fff;
  @media(min-width: 1025px){
   flex-direction: row;
@@ -26,7 +25,7 @@ const Request = styled.section`
  } 
 `;
 Request.Wrapper = styled.div`
- height: 100vh;
+ height: 100%;
 `;
 
 Request.Content = styled.div`
@@ -53,20 +52,28 @@ Request.LeftSection = styled.div`
   background-color: #fff;
   position:relative;
   animation: ${menuEnter} 0.3s linear;
+  height: 100%;
+  @media(min-width: 768px) {
+    position: static;
+  }
   @media(min-width: 1025px){
-    width:40%;
     padding: 0px 0px;
   }
 
 `;
 Request.RightSection = styled.div`
-  width:100%;
+  width:100%
+  padding: 0px 0px;
+  display:none;
+  height: calc(100% - 237px);
+  min-height: calc(95vh - 54px);
   position: relative;
   @media(min-width: 768px) {
+    height: calc(100% - 426px);
+    min-height: calc(100vh - 60px);
     padding-bottom: 58px;
   }
   @media(min-width: 1025px){
-    order: 2;
     display:block;
     width:60%;
     padding: 27px 35px;
@@ -109,7 +116,6 @@ Request.RequestControllerWrapper = styled.div`
     margin: 0 42px;
     position:relative;
     box-shadow: none;
-    border-top: 1px solid #333333;
   }
 `;
 Request.CloseButton = styled.span`
@@ -402,6 +408,30 @@ Request.OptionWrapper = styled.footer`
     padding: 165px 188px;
   }
 `;
+Request.ContinueButton = styled.button`
+  background-color: rgb(255, 108, 88);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Ubuntu-Bold;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 108, 88);
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
+  }
+`;
 Request.HeaderText = styled.div`
   text-align:center;
   color:#FF6C58;
@@ -550,11 +580,9 @@ Request.WrapsInput = styled.div`
   width:100%;
   @media(min-width:768px){
     width:100%;
-    height:30px;
   }
   @media(min-width:1025){
     width:352px;
-    height:25px;
   }
 
 `;
@@ -629,7 +657,6 @@ box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   margin: 0 42px;
   position:absolute;
   box-shadow: none;
-  border-top: solid #333333 1px;
 }
 `;
 Request.loaderWrapper = styled.div`

@@ -280,12 +280,15 @@ export default class Confirm extends React.Component {
         </Request.OptionWrapper>
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
-        <PaymentFooterController
+        <Request.ContinueButton onClick={() => this.handleBooking()}>
+          {bookingData.edit ? 'save' : 'Purchase'}
+        </Request.ContinueButton>
+        {/* <PaymentFooterController
           rate={rate}
           remainingBookings={remainingBookings}
           buttonName={bookingData.edit ? "save" : "Purchase"}
           handleBooking={this.handleBooking}
-        />
+        /> */}
       </Request.PaymentControllerWrapper>
     </React.Fragment>
   )
@@ -353,12 +356,12 @@ export default class Confirm extends React.Component {
                     <audio src={this.state.audioUrl} controls />
                   </Popup>
               }
-              <HeaderSection>
+              {/* <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
 
-              </HeaderSection>
+              </HeaderSection> */}
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
@@ -371,7 +374,7 @@ export default class Confirm extends React.Component {
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            <Request.RightSection videoMode={this.state.bookingData.type === 3}>
+            {/* <Request.RightSection videoMode={this.state.bookingData.type === 3}>
               {
                 this.state.bookingData.type === 3 ?
                   <Request.VideoContentWrapper>
@@ -387,7 +390,7 @@ export default class Confirm extends React.Component {
                     />
                   </Request.ImageStackWrapper>
               }
-            </Request.RightSection>
+            </Request.RightSection> */}
           </Request>
         </Request.Content>
       </Request.Wrapper>

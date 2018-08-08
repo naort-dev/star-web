@@ -7,6 +7,7 @@ import { ImageStack } from '../../components/ImageStack';
 import './event';
 import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
+import { Confirm } from '../confirmBooking';
 
 export default class Event extends React.Component {
   constructor(props) {
@@ -30,6 +31,7 @@ export default class Event extends React.Component {
       whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
+      showConfirm: false,
     };
   }
   componentWillMount() {
@@ -87,7 +89,7 @@ export default class Event extends React.Component {
       if (bookObj) {
         localStorage.setItem('bookingData', JSON.stringify(bookObj));
         this.props.setBookingDetails(bookObj);
-        this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+        this.setState({ showConfirm: true });
       }
     }
   }
@@ -207,20 +209,26 @@ export default class Event extends React.Component {
       return <Redirect to="/" />;
     }
     return (
-      <Request.Wrapper>
-        <Request.Content>
-          <Request>
-            <Request.LeftSection>
-              <HeaderSection>
+      <React.Fragment>
+        {
+          this.state.showConfirm ?
+            <Confirm {...this.props} />
+          :
+        
+        <Request.Wrapper>
+          <Request.Content>
+            <Request>
+              <Request.LeftSection>
+                {/* <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-              </HeaderSection>
-              <Request.ComponentWrapper>
-                <Request.ComponentWrapperScroll
+              </HeaderSection> */}
+                <Request.ComponentWrapper>
+                  {/* <Request.ComponentWrapperScroll
                   autoHide
                   renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                >
+                > */}
                   <Request.Heading>What is the event</Request.Heading>
                   <Request.Questionwraps>
                     <Request.Ask>
@@ -281,36 +289,25 @@ export default class Event extends React.Component {
                       }
                     </Request.Ask>
                   </Request.Questionwraps>
-                </Request.ComponentWrapperScroll>
-                <Request.PaymentControllerWrapper>
-                  {parsedQuery.step === '1' ?
-                    <PaymentFooterController
-                      rate={rate}
-                      remainingBookings={remainingBookings}
-                      buttonName="Book"
-                      handleBooking={this.handleBooking}
-                    />
-                    :
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-                  }
-
-
-                </Request.PaymentControllerWrapper>
-              </Request.ComponentWrapper>
-            </Request.LeftSection>
-            <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                />
-              </Request.ImageStackWrapper>
-            </Request.RightSection>
-          </Request>
-        </Request.Content>
-      </Request.Wrapper>
+                  {/* </Request.ComponentWrapperScroll> */}
+                  <Request.PaymentControllerWrapper>
+                    {parsedQuery.step === '1' ?
+                      <Request.ContinueButton onClick={() => this.handleBooking()}>
+                        Book
+                      </Request.ContinueButton>
+                      :
+                      <Request.ContinueButton onClick={() => this.steps()}>
+                        Next
+                      </Request.ContinueButton>
+                    }
+                  </Request.PaymentControllerWrapper>
+                </Request.ComponentWrapper>
+              </Request.LeftSection>
+            </Request>
+          </Request.Content>
+        </Request.Wrapper>
+        }
+      </React.Fragment>
     );
   }
 }

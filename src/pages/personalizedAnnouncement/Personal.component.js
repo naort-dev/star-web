@@ -5,11 +5,12 @@ import moment from 'moment';
 import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
 import './personal';
+import Popup from '../../components/Popup';
 import RequestTemplates from '../../components/RequestTemplates';
-import { PaymentFooterController } from '../../components/PaymentFooterController';
 import AudioRecorder from '../../components/AudioRecorder';
-import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
+import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
 import Loader from '../../components/Loader';
+import { Confirm } from '../confirmBooking';
 
 export default class Personal extends React.Component {
   constructor(props) {
@@ -37,6 +38,7 @@ export default class Personal extends React.Component {
       eventDate: false,
       otherRelationValue: props.bookingData.otherRelationValue === '' ? '' : props.bookingData.otherRelationValue,
       removeAudios: [],
+      showConfirm: false,
     };
   }
   componentWillMount() {
@@ -94,7 +96,8 @@ export default class Personal extends React.Component {
           localStorage.setItem('bookingData', JSON.stringify(bookObj));
         }
         this.props.setBookingDetails(bookObj);
-        this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+        this.setState({ showConfirm: true });
+        // this.props.history.push(`/${this.props.match.params.id}/confirm`);
       }
     }
   }
@@ -139,8 +142,8 @@ export default class Personal extends React.Component {
       if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
         to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
       }
-      return { from_audio_file, to_audio_file };
     }
+    return { from_audio_file, to_audio_file };
   }
 
 
@@ -309,131 +312,135 @@ export default class Personal extends React.Component {
       return <Redirect to="/" />;
     }
     return (
-      <Request.Wrapper>
-        <Request.Content>
-          <Request>
-            <Request.LeftSection>
-              <HeaderSection>
-                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-              </HeaderSection>
-              <Request.ComponentWrapper>
-                <Request.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                >
-                  <Request.Heading>What is the Occasion</Request.Heading>
-                  <Request.Questionwraps>
-                    <Request.Ask>
-                      {
-                        !Object.keys(parsedQuery).length ?
-                          <Request.EventStep1>
-                            <Request.InputFieldsWrapper>
-                              <Request.InputWrapper>
-                                <Request.Label>What is the occasion</Request.Label>
-                                <Request.WrapsInput>
-                                  <Request.Select
-                                    value={this.state.selectedValue}
-                                    onChange={this.handleChange}
-                                  >
-                                    <option value="0" key="0">Choose One</option>
-                                    {optionItems}
-                                  </Request.Select>
-                                  {this.state.selectEventerror ?
-                                    <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
-                                    :
-                                    null
-                                  }
+      <React.Fragment>
+        {
+          this.state.showConfirm ?
+            <Confirm {...this.props} />
+          :
+            <Request.Wrapper>
+              <Request.Content>
+                <Request>
+                  <Request.LeftSection>
+                    {/* <HeaderSection>
+                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                      <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
+                      <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
+                    </HeaderSection> */}
+                    <Request.ComponentWrapper>
+                      {/* <Request.ComponentWrapperScroll
+                        autoHide
+                        renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                      > */}
+                        <Request.Heading>What is the Occasion</Request.Heading>
+                        <Request.Questionwraps>
+                          <Request.Ask>
+                            {
+                              !Object.keys(parsedQuery).length ?
+                                <Request.EventStep1>
+                                  <Request.InputFieldsWrapper>
+                                    <Request.InputWrapper>
+                                      <Request.Label>What is the occasion</Request.Label>
+                                      <Request.WrapsInput>
+                                        <Request.Select
+                                          value={this.state.selectedValue}
+                                          onChange={this.handleChange}
+                                        >
+                                          <option value="0" key="0">Choose One</option>
+                                          {optionItems}
+                                        </Request.Select>
+                                        {this.state.selectEventerror ?
+                                          <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
+                                          :
+                                          null
+                                        }
 
-                                </Request.WrapsInput>
-                              </Request.InputWrapper>
-                              <Request.InputWrapper>
-                                <Request.Label>Who is the video for ?</Request.Label>
-                                <Request.WrapsInput>
-                                  <Request.Select
-                                    value={this.state.selectedPersonal}
-                                    onChange={this.handleChangePersonal}
-                                  >
-                                    <option value="0" key="0">Choose One</option>
-                                    <option value="1" key="1">Myself</option>
-                                    <option value="2" key="2">For someone else</option>
-                                  </Request.Select>
-                                  {this.state.selectVideoerror ?
-                                    <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
-                                    :
-                                    null
-                                  }
-                                </Request.WrapsInput>
-                              </Request.InputWrapper>
-                            </Request.InputFieldsWrapper>
-                          </Request.EventStep1>
-                          : null
-                      }
-                      {
-                        parsedQuery.step === '1' ?
-                          <Request.EventStep2>
-                            <RequestTemplates
-                              type={this.state.templateType}
-                              relationship={this.state.relationship}
-                              user={this.state.selectedPersonal}
-                              eventName={this.state.eventName}
-                              handleChange={this.handleInput}
-                              hostName={this.state.hostName}
-                              userName={this.state.userName}
-                              relationshipValue={this.state.relationshipValue}
-                              specification={this.state.specification}
-                              importantinfo={this.state.importantinfo}
-                              date={this.state.date}
-                              eventdetailName={this.state.eventdetailName}
-                              checkRequiredHostName={this.checkRequiredHostName}
-                              checkRequiredUserName={this.checkRequiredUserName}
-                              whoIsfor={this.state.whoIsfor}
-                              whoIsfrom={this.state.whoIsfrom}
-                              eventTitle={this.state.eventTitle}
-                              eventDate={this.state.eventDate}
-                              starName={fullName}
-                              otherRelationship={this.otherRelationship}
-                              otherRelationValue={this.state.otherRelationValue}
-                              {...this.props}
-                            />
-                          </Request.EventStep2>
-                          : null
-                      }
-                    </Request.Ask>
-                  </Request.Questionwraps>
-                </Request.ComponentWrapperScroll>
-                <Request.PaymentControllerWrapper>
-                  {parsedQuery.step === '1' ?
-                    <PaymentFooterController
-                      rate={rate}
-                      remainingBookings={remainingBookings}
-                      buttonName="Book"
-                      handleBooking={this.handleBooking}
-                    />
-                    :
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-                  }
-                </Request.PaymentControllerWrapper>
-              </Request.ComponentWrapper>
-            </Request.LeftSection>
-            <Request.RightSection>
-              {this.props.audioRecorder.status && this.props.location.search === '?step=1' ?
-                (this.props.audioRecorder.status == "checking" ? <Loader /> :
-                  <AudioRecorder {...this.props} />)
-                :
-                <Request.ImageStackWrapper>
-                  <ImageStack
-                    featureImage={featuredImage}
-                    imageList={imageList}
-                  />
-                </Request.ImageStackWrapper>}
-            </Request.RightSection>
-          </Request>
-        </Request.Content>
-      </Request.Wrapper>
+                                      </Request.WrapsInput>
+                                    </Request.InputWrapper>
+                                    <Request.InputWrapper>
+                                      <Request.Label>Who is the video for ?</Request.Label>
+                                      <Request.WrapsInput>
+                                        <Request.Select
+                                          value={this.state.selectedPersonal}
+                                          onChange={this.handleChangePersonal}
+                                        >
+                                          <option value="0" key="0">Choose One</option>
+                                          <option value="1" key="1">Myself</option>
+                                          <option value="2" key="2">For someone else</option>
+                                        </Request.Select>
+                                        {this.state.selectVideoerror ?
+                                          <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
+                                          :
+                                          null
+                                        }
+                                      </Request.WrapsInput>
+                                    </Request.InputWrapper>
+                                  </Request.InputFieldsWrapper>
+                                </Request.EventStep1>
+                                : null
+                            }
+                            {
+                              parsedQuery.step === '1' ?
+                                <Request.EventStep2>
+                                  <RequestTemplates
+                                    type={this.state.templateType}
+                                    relationship={this.state.relationship}
+                                    user={this.state.selectedPersonal}
+                                    eventName={this.state.eventName}
+                                    handleChange={this.handleInput}
+                                    hostName={this.state.hostName}
+                                    userName={this.state.userName}
+                                    relationshipValue={this.state.relationshipValue}
+                                    specification={this.state.specification}
+                                    importantinfo={this.state.importantinfo}
+                                    date={this.state.date}
+                                    eventdetailName={this.state.eventdetailName}
+                                    checkRequiredHostName={this.checkRequiredHostName}
+                                    checkRequiredUserName={this.checkRequiredUserName}
+                                    whoIsfor={this.state.whoIsfor}
+                                    whoIsfrom={this.state.whoIsfrom}
+                                    eventTitle={this.state.eventTitle}
+                                    eventDate={this.state.eventDate}
+                                    starName={fullName}
+                                    otherRelationship={this.otherRelationship}
+                                    otherRelationValue={this.state.otherRelationValue}
+                                    {...this.props}
+                                  />
+                                </Request.EventStep2>
+                                : null
+                            }
+                          </Request.Ask>
+                        </Request.Questionwraps>
+                      {/* </Request.ComponentWrapperScroll> */}
+                      <Request.PaymentControllerWrapper>
+                        {parsedQuery.step === '1' ?
+                          <Request.ContinueButton onClick={() => this.handleBooking()}>
+                            Book
+                          </Request.ContinueButton>
+                          :
+                          <Request.ContinueButton onClick={() => this.steps()}>
+                            Next
+                          </Request.ContinueButton>
+                        }
+                      </Request.PaymentControllerWrapper>
+                    </Request.ComponentWrapper>
+                  </Request.LeftSection>
+                  {/* <Request.RightSection>
+                    {this.props.audioRecorder.status && this.props.location.search === '?step=1' ?
+                      (this.props.audioRecorder.status == "checking" ? <Loader /> :
+                        <AudioRecorder {...this.props} />)
+                      :
+                      <Request.ImageStackWrapper>
+                        <ImageStack
+                          featureImage={featuredImage}
+                          imageList={imageList}
+                        />
+                      </Request.ImageStackWrapper>}
+                  </Request.RightSection> */}
+                </Request>
+              </Request.Content>
+            </Request.Wrapper>
+        }
+      </React.Fragment>
     );
   }
 }

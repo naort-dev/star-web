@@ -9,7 +9,6 @@ PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
   padding-bottom: 22px;
   @media(min-width: 1025px) {
     height: calc(100vh - 40px);
-    padding-bottom: 90px;
   }
 `;
 
@@ -57,22 +56,51 @@ PaymentStyled.SubTitle = styled.span`
   font-family: 'Ubuntu-Light';
 `;
 
-PaymentStyled.PaymentController = styled.div`
+PaymentStyled.PaymentControllerWrapper = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
-  padding: 13px;
+  bottom: 10px;
+  text-align:center;
+  padding: 7px 16px;
   background-color: #fff;
-  z-index: 5;  
-  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
+  z-index: 5;
+  @media(min-width: 768px) {
+    position: absolute;
+    padding: 13px;
+  }
   @media(min-width:1025px){
-    padding: 27px 0;
-    border-top: 1px solid rgba(51, 51, 51, 1);
     margin: 0 42px;
-    position:absolute;
-    bottom:0;
+
     box-shadow: none;
+    left:0;
+    right:0;
+    bottom:0;
+  }
+`;
+
+PaymentStyled.ContinueButton = styled.button`
+  background-color: rgb(255, 108, 88);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Ubuntu-Bold;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 108, 88);
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
   }
 `;
 

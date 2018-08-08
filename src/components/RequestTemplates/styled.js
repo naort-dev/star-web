@@ -27,8 +27,8 @@ Templates.InputWrapper = styled.div`
 `;
 Templates.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
@@ -67,9 +67,9 @@ Templates.WrapsInput = styled.div`
 `;
 
 Templates.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   width: 100%;
@@ -93,9 +93,9 @@ Templates.Input = styled.input`
   }
 `;
 Templates.InputArea = styled.textarea`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   width: 100%;
@@ -136,9 +136,9 @@ Templates.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   height: 34px;
@@ -347,7 +347,9 @@ width: 69%;
 `;
 
 Templates.DetailedRelation = styled.span`
-font-size: 12px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  display: inline-block;
 `;
 
 export { Templates };

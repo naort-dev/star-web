@@ -382,7 +382,7 @@ export default class Starprofile extends React.Component {
                   : null
               }
               {
-                !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width > 1025 && this.state.selectedTab === 'All' ?
+                !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
                   null
                   :
                   <Tabs
