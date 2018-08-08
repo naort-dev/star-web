@@ -353,12 +353,12 @@ export default class Confirm extends React.Component {
                     <audio src={this.state.audioUrl} controls />
                   </Popup>
               }
-              <HeaderSection>
+              {/* <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
 
-              </HeaderSection>
+              </HeaderSection> */}
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?

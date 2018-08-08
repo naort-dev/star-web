@@ -44,7 +44,7 @@ PopupStyled.Container = styled.div`
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
   width: 100%;
   height: 100%;
-  padding: 45px 20px 20px;
+  padding: 45px 7px 20px;
   background-color: #fff;
   @media(min-width: 768px) {
     width: 50%;
