@@ -14,7 +14,6 @@ const menuEnter = keyframes`
 const Request = styled.section`
  display:flex;
  flex-direction: column;
- padding-bottom: 40px;
  height: 100%;
  max-width: 1920px;
  @media(min-width: 1025px){
@@ -25,11 +24,11 @@ const Request = styled.section`
  }
 `;
 Request.Wrapper = styled.div`
- height: 100vh;
+height: 100%;
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -54,7 +53,6 @@ Request.LeftSection = styled.div`
   animation: ${menuEnter} 0.3s linear;
   height: 100%;
   @media(min-width: 1025px){
-    width:40%;
     padding: 0px 0px;
   }
 
@@ -97,10 +95,7 @@ Request.LargeScreenLayout = styled.div`
   }
 `;
 Request.RequestControllerWrapper = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
@@ -359,7 +354,6 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  padding-bottom: 46px;
   @media(min-width:1025px){
     height:calc(100% - 40px);
     position:relative;
@@ -375,28 +369,6 @@ Request.ComponentWrapperScroll = styled(Scrollbars)`
       overflow: scroll !important;
       position: absolute !important;
     }
-  }
-`;
-Request.PaymentControllerWrapper = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin-left: 4%;
-  padding: 7px 16px;
-  background-color: #fff;
-  z-index: 5;
-  
-  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-  @media(min-width: 768px) {
-    padding: 13px 44px;
-  }
-  @media(min-width:1025px){
-    border-top: 2px solid rgba(51, 51, 51, 1);
-    padding: 25px 48px;
-    position:absolute;
-    bottom:0;
-    box-shadow: none;
   }
 `;
 Request.OptionWrapper = styled.footer`
@@ -473,6 +445,7 @@ Request.Ask = styled.div`
   padding: 25px 19px;
   height:100%;
   position:relative;
+  padding-bottom: 68px;
   @media(min-width:1025px){
     padding: 25px 48px;
   }
@@ -675,18 +648,17 @@ Request.PaymentControllerWrapper = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
-  text-align:right;
+  bottom: 10px;
+  text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
-  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   @media(min-width: 768px) {
     padding: 13px;
   }
   @media(min-width:1025px){
     margin: 0 42px;
-    position:absolute;
+
     box-shadow: none;
     left:0;
     right:0;
@@ -695,18 +667,22 @@ Request.PaymentControllerWrapper = styled.div`
   }
 `;
 Request.ContinueButton = styled.button`
-  background-color: #fff; 
-  color: #FF6C58;
-  padding: 6px 41px;
+  background-color: rgb(255, 108, 88);
+  color: rgb(255, 255, 255);
+  width: 100%;
   text-align: center;
-  text-decoration: none;
   display: inline-block;
-  cursor: pointer;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
-  outline:none;
-  border-radius:5px;
-  border: 2px solid #FF6C58;
+  font-family: Ubuntu-Bold;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 108, 88);
+  border-image: initial;
   @media(min-width: 1920px) {
     font-size: 20px;
   }

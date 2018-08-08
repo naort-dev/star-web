@@ -1,9 +1,12 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, Route, Switch } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
+import RequesFlowPopup from '../../components/RequestFlowPopup';
 import { Request, HeaderSection } from '../../pages/requestvideo/styled';
 import { ImageStack } from '../../components/ImageStack';
-
+import { Askquestion } from '../../pages/askQuestion';
+import { Event } from '../../pages/eventAnnouncement';
+import { Personal } from '../../pages/personalizedAnnouncement';
 
 export default class Requestvideo extends React.Component {
   constructor(props) {
@@ -15,13 +18,17 @@ export default class Requestvideo extends React.Component {
   goBack = () => {
     this.props.history.goBack();
   }
-  askQuestionFlow = () => { 
+  requestFlowCheck = (url) => { 
     if (this.props.isLoggedIn) {
-    this.props.history.push(`/${this.props.match.params.id}/request/ask`);
+    this.props.history.push(`/${this.props.match.params.id}/request${url}`);
     } else{
       this.props.setRedirectUrls(this.props.location.pathname);
       this.setState({ loginRedirect: true });
     }
+  }
+
+  closeRequestFlow = () => {
+    this.props.history.replace(`/${this.props.match.params.id}/request`);
   }
 
   render() {
@@ -83,18 +90,29 @@ export default class Requestvideo extends React.Component {
                       What kind of video would you like to request?
                     </Request.HeaderText>
                     <Request.ButtonWrapper>
-                      <Link to={`/${this.props.match.params.id}/request/personal`}>
-                        <Request.Button >Personalized Shout-Out</Request.Button>
-                      </Link>
-                      <Link to={`/${this.props.match.params.id}/request/event/`}>
-                        <Request.Button >Event Announcement</Request.Button>
-                      </Link>
-                      <Request.Button onClick={() => this.askQuestionFlow()}>Ask a Question</Request.Button>
+                      <Request.Button onClick={() => this.requestFlowCheck('/personal')} >Personalized Shout-Out</Request.Button>
+                      <Request.Button onClick={() => this.requestFlowCheck('/event')}>Event Announcement</Request.Button>
+                      <Request.Button onClick={() => this.requestFlowCheck('/ask')}>Ask a Question</Request.Button>
                     </Request.ButtonWrapper>
                   </Request.OptionWrapper>
                 </Request.ComponentWrapperScroll>
               </Request.ComponentWrapper>
             </Request.LeftSection>
+            <Switch>
+              <Route path="/:id/request/ask" component={Askquestion} />
+              <Route path="/:id/request/event" component={Event} />
+              <Route
+                path="/:id/request/personal"
+                render={props => (
+                  <RequesFlowPopup
+                    closePopUp={this.closeRequestFlow}
+                    smallPopup
+                  >
+                    <Personal {...props} />
+                  </RequesFlowPopup>
+                )}
+              />
+            </Switch>
             <Request.RightSection>
               <Request.ImageStackWrapper>
                 <ImageStack
