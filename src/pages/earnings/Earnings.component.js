@@ -5,7 +5,7 @@ import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
 import EarningsList from '../../components/EarningsList';
 import EarningStyled from './styled';
-
+import Chart from '../../components/Chart'
 export default class Earnings extends React.Component {
   constructor(props) {
     super(props);
@@ -23,6 +23,7 @@ export default class Earnings extends React.Component {
   render() {
     return (
       <EarningStyled>
+        <Chart />
         <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
