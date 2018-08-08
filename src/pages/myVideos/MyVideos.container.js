@@ -9,6 +9,8 @@ import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/a
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
+import { saveAudioRecording } from '../../store/shared/actions/audioRecorder';
+
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
@@ -35,6 +37,7 @@ const mapDispatchToProps = dispatch => ({
   responseVideo: (requestId, fileName) => dispatch(responseVideo(requestId, fileName)),
   rateCelebrity: data => dispatch(rateCelebrity(data)),
   contactSupport: data => dispatch(contactSupport(data)),
+  saveAudioRecording: (target, audio) => dispatch(saveAudioRecording(target, audio)),
   reportAbuse: data => dispatch(reportAbuse(data)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),

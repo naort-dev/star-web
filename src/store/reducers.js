@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { LOGIN } from './shared/actions/login';
 
 import session from './shared/reducers/session';
 import celebList from '../pages/landing/reducers/celebList';
@@ -28,7 +29,7 @@ import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
 import changePassword from '../store/shared/reducers/changePassword';
 import socialMediaData from '../store/shared/reducers/socialMediaState';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   session,
   celebList,
   professionsList,
@@ -57,5 +58,13 @@ const rootReducer = combineReducers({
   changePassword,
   socialMediaData,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === LOGIN.logout) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 export default rootReducer;

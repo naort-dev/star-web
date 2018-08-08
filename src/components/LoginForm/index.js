@@ -266,7 +266,7 @@ export default class LoginForm extends React.Component {
     return true;
   }
   isFormValid = () => {
-    if (this.state.email.isValid && this.state.password.isValid) {
+    if (this.checkEmail() && this.checkPassword()) {
       return true;
     }
     return false;

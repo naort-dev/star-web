@@ -151,6 +151,9 @@ export default class Event extends React.Component {
     });
   }
   goBack = () => {
+    if (this.state.steps === true) {
+      this.props.cancelBookingDetails();
+    }
     this.setState({ steps: true });
     this.props.history.goBack();
   }
@@ -172,7 +175,7 @@ export default class Event extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
-      fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
+      fullName = this.props.userDetails.show_nick_name && this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
     if (this.props.userDetails.avatar_photo) {
@@ -265,6 +268,7 @@ export default class Event extends React.Component {
                               whoIsfrom={this.state.whoIsfrom}
                               eventTitle={this.state.eventTitle}
                               eventDate={this.state.eventDate}
+                              starName={fullName}
                               checkRequiredHostName={this.checkRequiredHostName}
                               checkRequiredUserName={this.checkRequiredUserName}
                               checkRequiredTitle={this.checkRequiredTitle}

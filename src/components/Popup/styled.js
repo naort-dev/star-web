@@ -21,9 +21,6 @@ const PopupStyled = styled.div`
   justify-content: center;
   align-items: center;
   z-index: 10;
-  @media(min-width: 1025px) {
-    top: 60px;
-  }
 `;
 
 PopupStyled.Container = styled.div`

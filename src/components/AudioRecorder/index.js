@@ -2,6 +2,7 @@ import React from 'react'
 import { ReactMic } from 'react-mic';
 import { AudioRecorderDiv } from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS'
+import { playerActions } from 'video-react';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ export default class AudioRecorder extends React.Component {
   }
 
   onStop = (recordedBlob) => {
-    this.props.saveAudioRecording(this.props.audioRecorder.target, { recordedBlob, recordedUrl: recordedBlob.blobURL });
+    this.props.saveAudioRecording(this.props.audioRecorder.target, { recordedBlob: recordedBlob.blob, recordedUrl: recordedBlob.blobURL });
   }
 
   stopRecording = () => {
@@ -26,8 +27,9 @@ export default class AudioRecorder extends React.Component {
   }
 
   render() {
+ 
     const target = this.props.audioRecorder.target;
-    const playbackURL = this.props.audioRecorder.recorded[target] ? this.props.audioRecorder.recorded[target].recordedUrl : null
+    const playbackURL = this.props.audioRecorder.recorded[target] != null ? this.props.audioRecorder.recorded[target].recordedUrl : null
     const callbackFunction = this.props.audioRecorder.start ? this.stopRecording : this.startRecording
 
     return (
@@ -44,7 +46,7 @@ export default class AudioRecorder extends React.Component {
               backgroundColor="#FF6C58"
               save={this.props.audioRecorder.stop}
             />
-            <AudioRecorderDiv.Audio id="audio-rec" src={playbackURL} controls />
+            <AudioRecorderDiv.Audio id="audio-rec" src={playbackURL} controls controlsList="nodownload" />
             {this.props.audioRecorder.start ?
               <AudioRecorderDiv.CloseButton onClick={callbackFunction} type="button"></AudioRecorderDiv.CloseButton>
               : <AudioRecorderDiv.Button onClick={callbackFunction} type="button"></AudioRecorderDiv.Button>}
