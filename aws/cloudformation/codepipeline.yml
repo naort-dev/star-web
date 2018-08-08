@@ -121,24 +121,6 @@ Resources:
           Name: Staging
           Actions:
             -
-              Name: vpc
-              InputArtifacts:
-                - Name: source
-                - Name: build
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Version: 1
-                Provider: CloudFormation
-              Configuration:
-                ActionMode: CREATE_UPDATE
-                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
-                Capabilities: CAPABILITY_IAM
-                StackName: staging-web-vpc
-                TemplateConfiguration: build::staging-vpc.json
-                TemplatePath: source::aws/cloudformation/vpc.yml
-              RunOrder: 1
-            -
               Name: app
               InputArtifacts:
                 - Name: source
@@ -155,7 +137,7 @@ Resources:
                 StackName: staging-web-app
                 TemplateConfiguration: build::staging-web.json
                 TemplatePath: source::aws/cloudformation/web.yml
-              RunOrder: 2
+              RunOrder: 1
 
       ArtifactStore:
         Type: S3

@@ -3,8 +3,15 @@ Description: Deploy a service on AWS Fargate, hosted in a private subnet, but ac
 Parameters:
   StackName:
     Type: String
-    Description: The name of the parent Fargate networking stack that you created. Necessary
-                 to locate and reference resources created by that stack.
+    Description: The name of the parent networking stack
+
+  DomainName:
+    Type: String
+    Description: Domain name for ALB host based routing
+
+  PriorityPrefix:
+    Type: Number
+    Description: Prefix for ALB routing priorities
 
   ApiURL:
     Type: String
@@ -31,20 +38,7 @@ Parameters:
   HttpPort:
     Type: Number
     Default: 80
-    Description: What port number the application inside the docker container is binding to
 
-  Path:
-    Type: String
-    Default: "*"
-    Description: A path on the public load balancer that this service
-                 should be connected to. Use * to send all load balancer
-                 traffic to this service.
-  Priority:
-    Type: Number
-    Default: 1
-    Description: The priority for the routing rule added to the load balancer.
-                 This only applies if your have multiple services which have been
-                 assigned to different paths on the load balancer.
   DesiredCount:
     Type: Number
     Default: 2
@@ -123,7 +117,7 @@ Resources:
     - WebLoadBalancerRuleHTTP
     - WebLoadBalancerRuleHTTPS
     Properties:
-      ServiceName: 'web'
+      ServiceName: !Join ['-', [!Ref 'AWS::StackName', 'web']]
       Cluster:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'ClusterName']]
@@ -158,7 +152,7 @@ Resources:
       HealthCheckTimeoutSeconds: 5
       HealthyThresholdCount: 2
       TargetType: ip
-      Name: !Join ['-', [!Ref 'AWS::StackName', 'web']]
+      #Name: !Join ['-', [!Ref 'AWS::StackName', 'web']]
       Port: !Ref 'HttpPort'
       Protocol: HTTP
       UnhealthyThresholdCount: 2
@@ -173,12 +167,14 @@ Resources:
         - TargetGroupArn: !Ref 'WebTargetGroup'
           Type: 'forward'
       Conditions:
+        - Field: host-header
+          Values: [!Ref 'DomainName']
         - Field: path-pattern
-          Values: [!Ref 'Path']
+          Values: ['*']
       ListenerArn:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTP']]
-      Priority: !Ref 'Priority'
+      Priority: !Join ['', [!Ref 'PriorityPrefix', '01']]
 
   WebLoadBalancerRuleHTTPS:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
@@ -187,10 +183,12 @@ Resources:
         - TargetGroupArn: !Ref 'WebTargetGroup'
           Type: 'forward'
       Conditions:
+        - Field: host-header
+          Values: [!Ref 'DomainName']
         - Field: path-pattern
-          Values: [!Ref 'Path']
+          Values: ['*']
       ListenerArn:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTPS']]
-      Priority: !Ref 'Priority'
+      Priority: !Join ['', [!Ref 'PriorityPrefix', '01']]
 
