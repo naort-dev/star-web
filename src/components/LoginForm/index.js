@@ -26,6 +26,7 @@ export default class LoginForm extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
+        ...this.props.data,
       },
     };
   }
@@ -73,7 +74,7 @@ export default class LoginForm extends React.Component {
 
         });
     }
-    if (!this.props.isLoggedIn) {
+    if (!this.props.isLoggedIn && this.gSignIn) {
       gapi.signin2.render('g-sign-in', {
         'scope': 'profile email',
         'width': 200,
@@ -99,6 +100,14 @@ export default class LoginForm extends React.Component {
         );
       }
     }
+    if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          ...this.props.data,
+        },
+      });
+    }
   }
   componentWillUnmount() {
     if (this.props.isLoggedIn) {
@@ -116,14 +125,14 @@ export default class LoginForm extends React.Component {
     e.preventDefault();
     if (this.props.statusCode === '410') {
       if (this.checkEmail) {
-        this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.state.email.value } }, () => {
+        this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.props.data.username || this.state.email.value } }, () => {
           this.props.socialMediaLogin(
-            this.state.socialMedia.username,
+            this.props.data.username || this.state.socialMedia.username,
             this.state.socialMedia.first_name,
             this.state.socialMedia.last_name,
             this.state.socialMedia.sign_up_source,
             this.state.socialMedia.profile_photo,
-            this.state.socialMedia.role,
+            this.props.data.role || this.state.socialMedia.role,
             this.state.socialMedia.fb_id,
             this.state.socialMedia.gp_id,
             this.state.socialMedia.in_id,
@@ -151,7 +160,7 @@ export default class LoginForm extends React.Component {
         socialMedia: {
 
           ...this.state.socialMedia,
-          username: !r.email || r.email === '' ? 'facebook' : r.email,
+          username: !r.email ? 'facebook' : r.email,
           first_name: r.first_name,
           last_name: r.last_name,
           sign_up_source: source,
@@ -229,6 +238,7 @@ export default class LoginForm extends React.Component {
 
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
+    this.props.saveData({ username:  e.target.value });
   }
   acceptPasswordHandler = (e) => {
     this.setState({ password: { ...this.state.password, value: e.target.value } });
@@ -263,19 +273,19 @@ export default class LoginForm extends React.Component {
   }
   setRoleDetails = (role) => {
     const roleType = role === 'FAN' ? ROLES.fan : ROLES.star;
-    this.setState({ socialMedia: { ...this.props.socialMediaStore, role: roleType } }, () => {
-      this.props.socialMediaLogin(
-        this.state.socialMedia.username,
-        this.state.socialMedia.first_name,
-        this.state.socialMedia.last_name,
-        this.state.socialMedia.sign_up_source,
-        this.state.socialMedia.profile_photo,
-        this.state.socialMedia.role,
-        this.state.socialMedia.fb_id,
-        this.state.socialMedia.gp_id,
-        this.state.socialMedia.in_id,
-      );
-    });
+    this.setState({ socialMedia: { ...this.props.socialMediaStore, role: roleType } });
+    this.props.socialMediaLogin(
+      this.props.socialMediaStore.username,
+      this.props.socialMediaStore.first_name,
+      this.props.socialMediaStore.last_name,
+      this.props.socialMediaStore.sign_up_source,
+      this.props.socialMediaStore.profile_photo,
+      roleType,
+      this.props.socialMediaStore.fb_id,
+      this.props.socialMediaStore.gp_id,
+      this.props.socialMediaStore.in_id,
+    );
+    this.props.saveData({ role: roleType });
   }
   ShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
@@ -315,7 +325,7 @@ export default class LoginForm extends React.Component {
                   </LoginContainer.Button>
 
                   <LoginContainer.Button onClick={() => this.onGmail()} >
-                    <LoginContainer.GoogleWrapper id="g-sign-in" />
+                    <LoginContainer.GoogleWrapper id="g-sign-in" ref={gSignIn => this.gSignIn = gSignIn}/>
                     <LoginContainer.GoogleContent>Google</LoginContainer.GoogleContent>
                   </LoginContainer.Button>
 
