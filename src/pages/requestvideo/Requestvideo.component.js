@@ -99,8 +99,28 @@ export default class Requestvideo extends React.Component {
               </Request.ComponentWrapper>
             </Request.LeftSection>
             <Switch>
-              <Route path="/:id/request/ask" component={Askquestion} />
-              <Route path="/:id/request/event" component={Event} />
+              <Route
+                path="/:id/request/ask"
+                render={props => (
+                  <RequesFlowPopup
+                    closePopUp={this.closeRequestFlow}
+                    smallPopup
+                  >
+                    <Askquestion {...props} />
+                  </RequesFlowPopup>
+                )}
+              />
+              <Route
+                path="/:id/request/event"
+                render={props => (
+                  <RequesFlowPopup
+                    closePopUp={this.closeRequestFlow}
+                    smallPopup
+                  >
+                    <Event {...props} />
+                  </RequesFlowPopup>
+                )}
+              />
               <Route
                 path="/:id/request/personal"
                 render={props => (

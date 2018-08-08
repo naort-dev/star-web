@@ -48,8 +48,9 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   background-color: #fff;
   @media(min-width: 768px) {
     width: 90%;
+    max-width: 600px;
     border-radius: 12px;
-    height: 90%;
+    height: 80%;
   }
 `;
 

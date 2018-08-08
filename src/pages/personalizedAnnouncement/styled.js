@@ -359,7 +359,6 @@ Request.ContentWrapper = styled.div`
 Request.ComponentWrapper = styled.div`
   @media(min-width:1025px){
     height:calc(100% - 40px);
-    position:relative;
   }
 `;
 
@@ -451,6 +450,7 @@ Request.Ask = styled.div`
   padding-bottom: 68px;
   @media(min-width:1025px){
     padding: 25px 48px;
+    padding-bottom: 80px;
   }
 `;
 Request.Questionwraps = styled.div`
@@ -461,7 +461,7 @@ Request.Heading = styled.div`
   font-size: 20px;
   text-align: center;
   color: #FF6C58;
-  margin-top:10%;
+  margin-top: 20px;
   
   @media(min-width:768px){
     font-size: 32px;
@@ -662,12 +662,9 @@ Request.PaymentControllerWrapper = styled.div`
   }
   @media(min-width:1025px){
     margin: 0 42px;
-
     box-shadow: none;
     left:0;
     right:0;
-    bottom:0;
-    border-top: solid #333333 1px;
   }
 `;
 Request.ContinueButton = styled.button`

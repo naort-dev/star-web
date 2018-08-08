@@ -9,7 +9,6 @@ PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
   padding-bottom: 22px;
   @media(min-width: 1025px) {
     height: calc(100vh - 40px);
-    padding-bottom: 90px;
   }
 `;
 
@@ -77,7 +76,6 @@ PaymentStyled.PaymentControllerWrapper = styled.div`
     left:0;
     right:0;
     bottom:0;
-    border-top: solid #333333 1px;
   }
 `;
 

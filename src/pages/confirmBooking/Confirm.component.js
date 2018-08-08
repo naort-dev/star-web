@@ -374,7 +374,7 @@ export default class Confirm extends React.Component {
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            <Request.RightSection videoMode={this.state.bookingData.type === 3}>
+            {/* <Request.RightSection videoMode={this.state.bookingData.type === 3}>
               {
                 this.state.bookingData.type === 3 ?
                   <Request.VideoContentWrapper>
@@ -390,7 +390,7 @@ export default class Confirm extends React.Component {
                     />
                   </Request.ImageStackWrapper>
               }
-            </Request.RightSection>
+            </Request.RightSection> */}
           </Request>
         </Request.Content>
       </Request.Wrapper>

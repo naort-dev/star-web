@@ -26,7 +26,7 @@ const Request = styled.section`
  }
 `;
 Request.Wrapper = styled.div`
- height: 100vh;
+ height: 100%;
 `;
 
 Request.Content = styled.div`
@@ -57,7 +57,6 @@ Request.LeftSection = styled.div`
     position: static;
   }
   @media(min-width: 1025px){
-    width:40%;
     padding: 0px 0px;
   }
 
@@ -425,8 +424,6 @@ Request.ComponentWrapper = styled.div`
   padding-bottom: 46px;
   @media(min-width:1025px){
     height:calc(100% - 40px);
-    position:relative;
-    padding-bottom: 59px;
   }
 `;
 
@@ -455,12 +452,9 @@ Request.PaymentControllerWrapper = styled.div`
   }
   @media(min-width:1025px){
     margin: 0 42px;
-
     box-shadow: none;
     left:0;
     right:0;
-    bottom:0;
-    border-top: solid #333333 1px;
   }
 `;
 Request.OptionWrapper = styled.footer`
