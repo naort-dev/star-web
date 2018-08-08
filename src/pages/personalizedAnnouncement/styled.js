@@ -52,6 +52,9 @@ Request.LeftSection = styled.div`
   position:relative;
   animation: ${menuEnter} 0.3s linear;
   height: 100%;
+  @media(min-width: 768px) {
+    position: static;
+  }
   @media(min-width: 1025px){
     padding: 0px 0px;
   }
@@ -549,8 +552,8 @@ Request.WrapsInput = styled.div`
 `;
 Request.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
@@ -569,9 +572,9 @@ Request.Label = styled.div`
 
 `;
 Request.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   border: 2px solid rgba(51, 51, 51, 1);
@@ -615,9 +618,9 @@ Request.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   height: 34px;
@@ -654,6 +657,7 @@ Request.PaymentControllerWrapper = styled.div`
   background-color: #fff;
   z-index: 5;
   @media(min-width: 768px) {
+    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){

@@ -53,12 +53,41 @@ Request.LeftSection = styled.div`
   background-color: #fff;
   position:relative;
   animation: ${menuEnter} 0.3s linear;
+  @media(min-width: 768px) {
+    position: static;
+  }
   @media(min-width: 1025px){
     width:40%;
     padding: 0px 0px;
   }
 
 `;
+
+Request.ContinueButton = styled.button`
+  background-color: rgb(255, 108, 88);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Ubuntu-Bold;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 108, 88);
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
+  }
+`;
+
 Request.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
@@ -415,22 +444,23 @@ Request.PaymentControllerWrapper = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  bottom: 0;
-  margin-left: 4%;
+  bottom: 10px;
+  text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
-  
-  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   @media(min-width: 768px) {
-    padding: 13px 44px;
+    position: absolute;
+    padding: 13px;
   }
   @media(min-width:1025px){
-    border-top: 2px solid rgba(51, 51, 51, 1);
-    padding: 25px 48px;
-    position:absolute;
-    bottom:0;
+    margin: 0 42px;
+
     box-shadow: none;
+    left:0;
+    right:0;
+    bottom:0;
+    border-top: solid #333333 1px;
   }
 `;
 Request.OptionWrapper = styled.footer`
@@ -572,50 +602,6 @@ Request.EventStep1 = styled.div`
 Request.EventStep2 = styled.div`
 
 `;
-Request.PaymentControllerWrapper = styled.div`
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-text-align:right;
-padding: 7px 16px;
-background-color: #fff;
-z-index: 5;
-box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-@media(min-width: 768px) {
-  padding: 13px;
-}
-@media(min-width:1025px){
-  margin: 0 42px;
-  position:absolute;
-  box-shadow: none;
-  left:0;
-  right:0;
-  bottom:0;
-  border-top: solid #333333 1px;
-}
-`;
-Request.ContinueButton = styled.button`
-  background-color: #fff; 
-  color: #FF6C58;
-  padding: 6px 41px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: 'Ubuntu-Bold';
-  outline:none;
-  border-radius:5px;
-  border: 2px solid #FF6C58;
-  @media(min-width: 1920px) {
-    font-size: 20px;
-  }
-  a{
-    color: #FF6C58;
-  }
-`;
-
 const ConfirmationModal = styled.div`
 
 `;

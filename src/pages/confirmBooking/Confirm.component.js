@@ -280,12 +280,15 @@ export default class Confirm extends React.Component {
         </Request.OptionWrapper>
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
-        <PaymentFooterController
+        <Request.ContinueButton onClick={() => this.handleBooking()}>
+          {bookingData.edit ? 'save' : 'Purchase'}
+        </Request.ContinueButton>
+        {/* <PaymentFooterController
           rate={rate}
           remainingBookings={remainingBookings}
           buttonName={bookingData.edit ? "save" : "Purchase"}
           handleBooking={this.handleBooking}
-        />
+        /> */}
       </Request.PaymentControllerWrapper>
     </React.Fragment>
   )

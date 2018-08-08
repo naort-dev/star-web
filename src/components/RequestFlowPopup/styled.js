@@ -47,16 +47,16 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   padding: 45px 7px 20px;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: 50%;
-    max-width: 400px;
+    width: 90%;
     border-radius: 12px;
-    height: auto;
+    height: 90%;
   }
 `;
 
 PopupStyled.SmallContent = styled.div`
   height: 100%;
   overflow-y: auto;
+  width: 100%;
 `;
 
 PopupStyled.CloseButton = styled.span`
