@@ -305,6 +305,8 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  top: 3px;
   
 `;
 HeaderSection.HeaderNavigation = styled.button`

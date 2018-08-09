@@ -8,7 +8,7 @@ const PaymentStyled = styled.form`
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
   padding-bottom: 22px;
   @media(min-width: 1025px) {
-    height: calc(100vh - 40px);
+    height: 100%;
   }
 `;
 
@@ -75,7 +75,6 @@ PaymentStyled.PaymentControllerWrapper = styled.div`
     box-shadow: none;
     left:0;
     right:0;
-    bottom:0;
   }
 `;
 

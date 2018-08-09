@@ -321,11 +321,14 @@ export default class Personal extends React.Component {
               <Request.Content>
                 <Request>
                   <Request.LeftSection>
-                    {/* <HeaderSection>
-                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                      <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-                      <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-                    </HeaderSection> */}
+                    {
+                      parsedQuery.step === '1' &&
+                        <HeaderSection>
+                          <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                          {/* <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
+                          <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv> */}
+                        </HeaderSection>
+                    }
                     <Request.ComponentWrapper>
                       {/* <Request.ComponentWrapperScroll
                         autoHide

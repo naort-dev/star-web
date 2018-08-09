@@ -370,6 +370,8 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  top: 3px;
 `;
 HeaderSection.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
@@ -423,7 +425,7 @@ Request.ContentWrapper = styled.div`
 Request.ComponentWrapper = styled.div`
   padding-bottom: 46px;
   @media(min-width:1025px){
-    height:calc(100% - 40px);
+    height: 100%;
   }
 `;
 
