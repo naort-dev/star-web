@@ -14,7 +14,6 @@ Templates.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    flex-direction: row;
     margin-top: 30px;
     align-items: flex-start;
   }

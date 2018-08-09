@@ -566,7 +566,6 @@ Request.InputWrapper = styled.div`
   flex-direction: column;
   margin-top:1%;
   @media(min-width:768px){
-    flex-direction: row;
     margin-top:5%;
   }
   @media(min-width: 1025px) {
@@ -593,15 +592,11 @@ Request.Label = styled.div`
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
-    width:55%;
     display:flex;
     align-items:center;
-    padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:13px;
-    width:69%;
-   
+    font-size:13px;  
   }
   @media(min-width:1920px){
     font-size:16px;

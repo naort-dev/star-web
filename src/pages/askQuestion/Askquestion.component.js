@@ -18,14 +18,11 @@ export default class Askquestion extends React.Component {
       loginRedirect: false,
       question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
-      showConfirm: false,
+      // showConfirm: false,
     };
   }
-  componentWillUnmount() {
-    this.props.onClearStreams();
-  }
   goBack = () => {
-    this.props.history.goBack();
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
@@ -57,6 +54,7 @@ export default class Askquestion extends React.Component {
               if (bookObj) {
                 localStorage.setItem('bookingData', JSON.stringify(bookObj));
                 this.props.setBookingDetails(bookObj);
+                this.props.changeStep(this.props.currentStepCount + 1);
                 this.setState({ showConfirm: true });
               }
             });
@@ -123,8 +121,8 @@ export default class Askquestion extends React.Component {
     return (
       <React.Fragment>
         {
-          this.state.showConfirm ?
-            <Confirm {...this.props} />
+          this.props.currentStepCount >= 2 ?
+            <Confirm {...this.props} changeStep={this.props.changeStep} currentStepCount={this.props.currentStepCount}/>
             :
             <Request.Wrapper>
               <Request.Content>

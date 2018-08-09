@@ -14,7 +14,6 @@ export default class Event extends React.Component {
     super(props);
     this.state = {
       selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0', // for default state (choose one)
-      steps: true,
       templateType: props.bookingData.occasionType ? props.bookingData.occasionType : '',
       relationship: [],
       eventName: props.bookingData.eventName ? props.bookingData.eventName : '',
@@ -31,14 +30,11 @@ export default class Event extends React.Component {
       whoIsfrom: false,
       eventTitle: false,
       eventDate: false,
-      showConfirm: false,
     };
   }
   componentWillMount() {
     // 2 is used to specify the request was event announcement
     this.props.fetchOccasionlist(2);
-    const parsedQuery = qs.parse(this.props.location.search)
-    this.setState({ step: parsedQuery });
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
@@ -61,9 +57,7 @@ export default class Event extends React.Component {
       this.setState({ selectEventerror: false });
     }
     if (this.state.selectedValue !== '0') {
-      this.setState({ steps: false }, () => {
-        this.props.history.push(`/${this.props.match.params.id}/request/event?step=1`);
-      });
+      this.props.changeStep(this.props.currentStepCount + 1);
     }
   }
   handleInput = (data, type) => {
@@ -89,7 +83,7 @@ export default class Event extends React.Component {
       if (bookObj) {
         localStorage.setItem('bookingData', JSON.stringify(bookObj));
         this.props.setBookingDetails(bookObj);
-        this.setState({ showConfirm: true });
+        this.props.changeStep(this.props.currentStepCount + 1);
       }
     }
   }
@@ -153,11 +147,10 @@ export default class Event extends React.Component {
     });
   }
   goBack = () => {
-    if (this.state.steps === true) {
-      this.props.cancelBookingDetails();
-    }
-    this.setState({ steps: true });
-    this.props.history.goBack();
+    // if (this.state.steps === true) {
+    //   this.props.cancelBookingDetails();
+    // }
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
@@ -201,29 +194,26 @@ export default class Event extends React.Component {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
     const eventNames = this.props.eventsDetails;
-    const parsedQuery = qs.parse(this.props.location.search)
     const optionItems = eventNames.map(eventNames =>
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
-    if (parsedQuery.step && (this.state.selectedValue === '0')) {
-      return <Redirect to="/" />;
-    }
     return (
       <React.Fragment>
         {
-          this.state.showConfirm ?
-            <Confirm {...this.props} />
+          this.props.currentStepCount >=3 ?
+            <Confirm {...this.props} changeStep={this.props.changeStep} currentStepCount={this.props.currentStepCount} />
           :
         
         <Request.Wrapper>
           <Request.Content>
             <Request>
               <Request.LeftSection>
-                {/* <HeaderSection>
-                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-              </HeaderSection> */}
+                {
+                  this.props.currentStepCount === 2 &&
+                    <HeaderSection>
+                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                    </HeaderSection>
+                }
                 <Request.ComponentWrapper>
                   {/* <Request.ComponentWrapperScroll
                   autoHide
@@ -233,7 +223,7 @@ export default class Event extends React.Component {
                   <Request.Questionwraps>
                     <Request.Ask>
                       {
-                        !Object.keys(parsedQuery).length ?
+                        this.props.currentStepCount === 1 ?
                           <Request.EventStep1>
                             <Request.InputFieldsWrapper>
                               <Request.InputWrapper>
@@ -258,7 +248,7 @@ export default class Event extends React.Component {
                           : null
                       }
                       {
-                        parsedQuery.step === '1' ?
+                        this.props.currentStepCount === 2 ?
                           <Request.EventStep2>
                             <RequestTemplates
                               type={this.state.templateType}
@@ -291,7 +281,7 @@ export default class Event extends React.Component {
                   </Request.Questionwraps>
                   {/* </Request.ComponentWrapperScroll> */}
                   <Request.PaymentControllerWrapper>
-                    {parsedQuery.step === '1' ?
+                    {this.props.currentStepCount === 2 ?
                       <Request.ContinueButton onClick={() => this.handleBooking()}>
                         Book
                       </Request.ContinueButton>

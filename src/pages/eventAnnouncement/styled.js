@@ -49,7 +49,6 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
   animation: ${menuEnter} 0.3s linear;
   height: 100%;
   @media(min-width: 768px) {
@@ -305,6 +304,8 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  top: 3px;
   
 `;
 HeaderSection.HeaderNavigation = styled.button`
@@ -531,7 +532,6 @@ Request.InputWrapper = styled.div`
   margin-top: 10px; 
   @media(min-width:768px){
     margin-top: 30px;
-    flex-direction: row;
   }
   @media(min-width: 1025px) {
     margin-top: 30px;
@@ -557,14 +557,12 @@ Request.Label = styled.div`
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
-    width:55%;
+    width:100%;
     display:flex;
     align-items:center;
-    padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
   }
   @media(min-width:1920px){
     font-size:16px;

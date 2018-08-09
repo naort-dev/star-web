@@ -60,6 +60,23 @@ PopupStyled.SmallContent = styled.div`
   width: 100%;
 `;
 
+PopupStyled.SliderDotsWrapper = styled.div`
+  position: absolute;
+  top: 11px;
+`;
+
+PopupStyled.SliderDots = styled.span`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #d0d2d3;
+  background: ${props => (props.selected ? 'black' : 'transparent')};
+  border-radius: 50%;
+  margin-right: 5px;
+  cursor: pointer;
+`;
+
+
 PopupStyled.CloseButton = styled.span`
   position: absolute;
   top: ${props => (props.smallPopup ? '7px' : '16px')};
