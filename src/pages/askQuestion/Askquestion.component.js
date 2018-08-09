@@ -152,11 +152,12 @@ export default class Askquestion extends React.Component {
                         autoHide
                         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                       >
+                      <Request.Heading>What’s your question? </Request.Heading>
                         <Request.Questionwraps>
                           <Request.Ask>
                             <Request.InputFieldsWrapper>
                               <Request.InputWrapper>
-                                <Request.Label>What’s your question ?</Request.Label>
+                                <Request.Label>Tell {fullName} a little about your question</Request.Label>
                                 <Request.WrapsInput>
                                   <Request.InputQuestion
                                     placeholder="Best to start your question with “What”, “How” or “Why”."

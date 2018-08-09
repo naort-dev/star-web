@@ -14,7 +14,7 @@ const menuEnter = keyframes`
 const Request = styled.section`
  display:flex;
  flex-direction: column;
- padding-bottom: 40px;
+ padding-bottom: 53px;
  max-width: 1920px;
  height: 100%;
  background: #fff;
@@ -51,7 +51,6 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
   animation: ${menuEnter} 0.3s linear;
   height: 100%;
   @media(min-width: 768px) {
@@ -309,7 +308,7 @@ Request.ScrollBar = styled.div`
 
 Request.recorderWrapper = styled.div`
   width:100%;
-  height:100%;
+  height:60%;
 `;
 
 const HeaderSection = styled.div`
@@ -410,8 +409,8 @@ Request.ContinueButton = styled.button`
   width: 100%;
   text-align: center;
   display: inline-block;
-  font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;
@@ -493,22 +492,40 @@ Request.Questionwraps = styled.div`
   height:100%;
 `;
 Request.Heading = styled.div`
-  color:rgba(51, 51, 51, 1);
-  font-size:16px;
   font-family: 'Ubuntu-Regular';
-  text-align: left;
-  padding-bottom:10px;
+  font-size: 20px;
+  text-align: center;
+  color: #333333;
+  margin-top: 20px;
+  
+  @media(min-width:768px){
+    font-size: 32px;
+  }
+  @media(min-width:1025px){
+    font-size:22px;
+  }
+  @media(min-width:1920px){
+    font-size:32px;
+  }
 `;
 Request.InputQuestion = styled.textarea`
-  background-color: white;
-  border: 1px solid #d0d2d3;
-  border-radius: 2px;
+font-family: 'Ubuntu-Light';
+color: #333333;
+font-size:14px;
+text-align:left;
+outline:none;
+width: 100%;
+height: 70px;
+padding: 8px 8px;
+resize: none;
+border: 1px solid #d0d2d3;
+background-color: white;
+@media(min-width:1025px){
+  font-size:13px;
+}
+@media(min-width:1920px){
   font-size:16px;
-  font-family: 'Ubuntu-Regular';
-  width:100%;
-  padding:6px 9px;
-  height:100px;
-  resize: none;
+}
 
 `;
 Request.OptionWrapper = styled.div`
@@ -547,20 +564,15 @@ Request.CheckBox = styled.input`
 Request.Span = styled.label`
 `;
 Request.InputFieldsWrapper = styled.div`
-  
-  
+  margin-bottom: 13px;
   @media(min-width:768px){
     padding: 0px 0px;
-   
-  }
-  @media(min-width:1025px){
-   
   }
 `;
 Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-top: 10px; 
   @media(min-width:768px){
     margin-top: 20px;
   }
@@ -577,16 +589,17 @@ Request.WrapsInput = styled.div`
 `;
 Request.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
+    width:100%;
     display:flex;
     align-items:center;
   }
   @media(min-width:1025px){
-    font-size:13px;  
+    font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;

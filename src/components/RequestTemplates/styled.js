@@ -51,7 +51,7 @@ Templates.WrapsInput = styled.div`
   @media(min-width:1025px){
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: flex-start;
    
   }
 `;
