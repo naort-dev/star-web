@@ -14,33 +14,23 @@ Templates.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    flex-direction: row;
-    margin-top: 30px;
+    margin-top: 20px;
     align-items: flex-start;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
   }
 `;
 Templates.Label = styled.div`
   color:#333333;
   font-family: 'Ubuntu-Light';
   font-size:14px;
+  display:inline-block;
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
-    width:55%;
-    display:flex;
-    align-items:center;
     padding-right: 10px;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
    
   }
   @media(min-width:1920px){
@@ -55,7 +45,7 @@ Templates.WrapsInput = styled.div`
     width:100%;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: flex-start;
     flex-direction: column;
   }
   @media(min-width:1025px){
@@ -103,7 +93,7 @@ Templates.InputArea = styled.textarea`
   padding: 8px 8px;
   resize: none;
   border: 1px solid #d0d2d3;
-  background-color:rgba(248, 248, 248, 1);
+  background-color: white;
   @media(min-width:1025px){
     font-size:13px;
   }

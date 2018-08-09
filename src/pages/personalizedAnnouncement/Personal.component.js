@@ -17,7 +17,6 @@ export default class Personal extends React.Component {
     super(props);
     this.state = {
       selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0',
-      steps: true,
       selectedPersonal: props.bookingData.selectedPersonal ? props.bookingData.selectedPersonal : '0',
       templateType: props.bookingData.occasionType ? props.bookingData.occasionType : '',
       relationship: props.bookingData.relationshipArray ? props.bookingData.relationshipArray : [],
@@ -38,14 +37,11 @@ export default class Personal extends React.Component {
       eventDate: false,
       otherRelationValue: props.bookingData.otherRelationValue === '' ? '' : props.bookingData.otherRelationValue,
       removeAudios: [],
-      showConfirm: false,
     };
   }
   componentWillMount() {
     // 1 is used to specify the request was personal announcement
     this.props.fetchOccasionlist(1);
-    const parsedQuery = qs.parse(this.props.location.search)
-    this.setState({ step: parsedQuery });
     if (this.props.isLoggedIn) {
       this.setLoginUserName();
     }
@@ -96,7 +92,7 @@ export default class Personal extends React.Component {
           localStorage.setItem('bookingData', JSON.stringify(bookObj));
         }
         this.props.setBookingDetails(bookObj);
-        this.setState({ showConfirm: true });
+        this.props.changeStep(this.props.currentStepCount + 1);
         // this.props.history.push(`/${this.props.match.params.id}/confirm`);
       }
     }
@@ -220,9 +216,7 @@ export default class Personal extends React.Component {
       this.setState({ selectVideoerror: false });
     }
     if (this.state.selectedValue !== '0' && this.state.selectedPersonal !== '0') {
-      this.setState({ steps: false }, () => {
-        this.props.history.push(`/${this.props.match.params.id}/request/personal?step=1`);
-      });
+      this.props.changeStep(this.props.currentStepCount + 1);
     }
   }
   emptyTemplateDetails = () => {
@@ -257,8 +251,7 @@ export default class Personal extends React.Component {
       this.props.clearAll();
       this.props.cancelBookingDetails();
     }
-    this.setState({ steps: true });
-    this.props.history.goBack();
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
@@ -304,38 +297,36 @@ export default class Personal extends React.Component {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
     const eventNames = this.props.eventsDetails;
-    const parsedQuery = qs.parse(this.props.location.search)
     const optionItems = eventNames.map((eventNames) =>
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
-    if (parsedQuery.step && (this.state.selectedValue === '0' || this.state.selectedPersonal === '0')) {
-      return <Redirect to="/" />;
-    }
+    console.log(this.props.currentStepCount);
     return (
       <React.Fragment>
         {
-          this.state.showConfirm ?
-            <Confirm {...this.props} />
+          this.props.currentStepCount >= 3 ?
+            <Confirm {...this.props} changeStep={this.props.changeStep} currentStepCount={this.props.currentStepCount} />
           :
             <Request.Wrapper>
               <Request.Content>
                 <Request>
                   <Request.LeftSection>
-                    {/* <HeaderSection>
-                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                      <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-                      <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-                    </HeaderSection> */}
+                    {
+                      this.props.currentStepCount === 2 &&
+                        <HeaderSection>
+                          <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                        </HeaderSection>
+                    }
                     <Request.ComponentWrapper>
-                      {/* <Request.ComponentWrapperScroll
+                      <Request.ComponentWrapperScroll
                         autoHide
                         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                      > */}
+                      >
                         <Request.Heading>What is the Occasion</Request.Heading>
                         <Request.Questionwraps>
                           <Request.Ask>
                             {
-                              !Object.keys(parsedQuery).length ?
+                              this.props.currentStepCount === 1 ?
                                 <Request.EventStep1>
                                   <Request.InputFieldsWrapper>
                                     <Request.InputWrapper>
@@ -379,7 +370,7 @@ export default class Personal extends React.Component {
                                 : null
                             }
                             {
-                              parsedQuery.step === '1' ?
+                              this.props.currentStepCount === 2 ?
                                 <Request.EventStep2>
                                   <RequestTemplates
                                     type={this.state.templateType}
@@ -410,9 +401,9 @@ export default class Personal extends React.Component {
                             }
                           </Request.Ask>
                         </Request.Questionwraps>
-                      {/* </Request.ComponentWrapperScroll> */}
+                      </Request.ComponentWrapperScroll>
                       <Request.PaymentControllerWrapper>
-                        {parsedQuery.step === '1' ?
+                        {this.props.currentStepCount === 2 ?
                           <Request.ContinueButton onClick={() => this.handleBooking()}>
                             Book
                           </Request.ContinueButton>

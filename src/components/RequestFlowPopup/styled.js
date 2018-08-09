@@ -56,17 +56,33 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
 
 PopupStyled.SmallContent = styled.div`
   height: 100%;
-  overflow-y: auto;
   width: 100%;
 `;
 
+PopupStyled.SliderDotsWrapper = styled.div`
+  position: absolute;
+  top: 11px;
+`;
+
+PopupStyled.SliderDots = styled.span`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #d0d2d3;
+  background: ${props => (props.selected ? '#d0d2d3' : 'transparent')};
+  border-radius: 50%;
+  margin-right: 5px;
+  cursor: pointer;
+`;
+
+
 PopupStyled.CloseButton = styled.span`
   position: absolute;
-  top: ${props => (props.smallPopup ? '7px' : '16px')};
+  top: ${props => (props.smallPopup ? '10px' : '16px')};
   right: ${props => (props.smallPopup ? '7px' : '18px')};
   display: inline-block;
-  width: 30px;
-  height: 30px;
+  width: 17px;
+  height: 17px;
   cursor:pointer;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: cover;

@@ -31,12 +31,28 @@ export default class RequestFlowPopup extends React.Component {
       this.props.closePopUp();
     }
   }
+  renderSliderDots = () => {
+    const DotsArray = Array(this.props.dotsCount).fill('');
+    const selectedDot = this.props.selectedDot ? this.props.selectedDot - 1 : 0;
+    return (
+      DotsArray.map((item, index) => {
+        return (
+          <PopupStyled.SliderDots selected={selectedDot===index} key={index} />
+        );
+      })
+    );
+  }
   render() {
     return (
       <PopupStyled innerRef={node => this.popupWrapper = node}>
         <PopupStyled.SmallContainer
           innerRef={node => this.popupContent = node}
         >
+          <PopupStyled.SliderDotsWrapper>
+            {
+              this.renderSliderDots()
+            }
+          </PopupStyled.SliderDotsWrapper>
           <PopupStyled.CloseButton
             smallPopup={this.props.smallPopup}
             onClick={() => this.props.closePopUp()}

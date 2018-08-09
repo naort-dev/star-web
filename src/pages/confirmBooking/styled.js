@@ -14,7 +14,7 @@ const menuEnter = keyframes`
 const Request = styled.section`
  display:flex;
  flex-direction: column;
- padding-bottom: 40px;
+ padding-bottom: 61px;
  height: 100%;
  max-width: 1920px;
  background-color: #fff;
@@ -51,8 +51,8 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
   animation: ${menuEnter} 0.3s linear;
+  height: 100%;
   @media(min-width: 768px) {
     position: static;
   }
@@ -193,7 +193,7 @@ Request.ProfileImageWrapper = styled.div`
   text-align: center;
   margin-top: 10px;
   @media(min-width: 1025px) {
-    padding-bottom: 40px;
+    padding-bottom: 26px;
     border-bottom: 1px solid #333333;
     margin: 0 auto;
     margin-top: 20px;
@@ -370,6 +370,8 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  top: 3px;
 `;
 HeaderSection.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
@@ -421,20 +423,12 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  padding-bottom: 46px;
-  @media(min-width:1025px){
-    height:calc(100% - 40px);
-  }
+  height: 100%
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+    padding: 0 10px;
   }
 `;
 Request.PaymentControllerWrapper = styled.div`
@@ -458,9 +452,9 @@ Request.PaymentControllerWrapper = styled.div`
   }
 `;
 Request.OptionWrapper = styled.footer`
-  padding: 25px 19px;
+  padding: 0 19px;
   @media(min-width: 1025px) {
-    padding: 25px 48px;
+    padding: 0 48px;
   }
 `;
 Request.HeaderText = styled.div`
@@ -534,6 +528,7 @@ Request.Heading = styled.div`
   font-size: 18px;
   @media(min-width: 1025px) {
     margin: 10px 0;
+    margin-top: 26px;
   }
 `;
 Request.InputQuestion = styled.textarea`

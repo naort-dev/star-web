@@ -49,7 +49,6 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
   animation: ${menuEnter} 0.3s linear;
   height: 100%;
   @media(min-width: 768px) {
@@ -305,6 +304,8 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
   align-items: center;
+  position: absolute;
+  top: 3px;
   
 `;
 HeaderSection.HeaderNavigation = styled.button`
@@ -357,6 +358,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
+  height: 100%;
   @media(min-width:1025px){
     height:calc(100% - 40px);
   }
@@ -364,13 +366,7 @@ Request.ComponentWrapper = styled.div`
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    background: #fff;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+    padding: 0 10px;
   }
 `;
 Request.OptionWrapper = styled.footer`
@@ -457,10 +453,10 @@ Request.Questionwraps = styled.div`
 
 `;
 Request.Heading = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Ubuntu-Regular';
   font-size: 20px;
   text-align: center;
-  color: #FF6C58;
+  color: #333333;
   margin-top: 20px;
   
   @media(min-width:768px){
@@ -512,8 +508,6 @@ Request.QuestionButton = styled.button`
 Request.CheckBoxWrapper = styled.div`
   padding: 0px 0px;
 `;
-Request.Label = styled.div`
-`;
 Request.CheckBox = styled.input`
   
 `;
@@ -530,11 +524,7 @@ Request.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    margin-top: 30px;
-    flex-direction: row;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
+    margin-top: 20px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;
@@ -557,14 +547,11 @@ Request.Label = styled.div`
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
-    width:55%;
     display:flex;
     align-items:center;
-    padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -648,7 +635,7 @@ Request.EventStep2 = styled.div`
 
 `;
 Request.PaymentControllerWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 10px;
@@ -673,8 +660,8 @@ Request.ContinueButton = styled.button`
   width: 100%;
   text-align: center;
   display: inline-block;
-  font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;

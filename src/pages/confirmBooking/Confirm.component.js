@@ -140,6 +140,7 @@ export default class Confirm extends React.Component {
         });
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
+        this.props.changeStep(this.props.currentStepCount + 1)
         this.setState({ paymentMode: true });
       }
     } else {
@@ -158,9 +159,11 @@ export default class Confirm extends React.Component {
   goBack = () => {
     if (this.state.paymentMode) {
       this.setState({ paymentMode: false });
-    } else {
-      this.props.history.goBack();
     }
+    //  else {
+    //   this.props.history.goBack();
+    // }
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
 
   updatePublicStatus = (bookingData) => {
@@ -250,13 +253,16 @@ export default class Confirm extends React.Component {
           <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
         </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
-        <Request.smallScreenVideo>
-          <Request.VideoContentWrapper>
-            <VideoPlayer
-              primarySrc={this.state.QAVideo.url}
-            />
-          </Request.VideoContentWrapper>
-        </Request.smallScreenVideo>
+        {
+          this.state.bookingData.type === 3 &&
+            <Request.smallScreenVideo>
+              <Request.VideoContentWrapper>
+                <VideoPlayer
+                  primarySrc={this.state.QAVideo.url}
+                />
+              </Request.VideoContentWrapper>
+            </Request.smallScreenVideo>
+        }
         <Request.Questionwraps>
           <Request.Ask>
             {
@@ -356,12 +362,12 @@ export default class Confirm extends React.Component {
                     <audio src={this.state.audioUrl} controls />
                   </Popup>
               }
-              {/* <HeaderSection>
+              <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
+                {/* <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
+                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv> */}
 
-              </HeaderSection> */}
+              </HeaderSection>
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?

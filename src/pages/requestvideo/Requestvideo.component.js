@@ -13,11 +13,21 @@ export default class Requestvideo extends React.Component {
     super(props);
     this.state = {
       loginRedirect: false,
+      stepCount: 1,
     };
+    this.personalSteps = 4;
+    this.eventSteps = 4;
+    this.askSteps = 3;
   }
   goBack = () => {
     this.props.history.goBack();
   }
+
+  changeStep = (step) => {
+    const newStep = step ? step : this.state.stepCount;
+    this.setState({ stepCount: newStep });
+  }
+
   requestFlowCheck = (url) => { 
     if (this.props.isLoggedIn) {
     this.props.history.push(`/${this.props.match.params.id}/request${url}`);
@@ -29,6 +39,9 @@ export default class Requestvideo extends React.Component {
 
   closeRequestFlow = () => {
     this.props.history.replace(`/${this.props.match.params.id}/request`);
+    this.props.cancelBookingDetails();
+    this.props.clearAll();
+    this.setState({ stepCount: 1 });
   }
 
   render() {
@@ -103,10 +116,12 @@ export default class Requestvideo extends React.Component {
                 path="/:id/request/ask"
                 render={props => (
                   <RequesFlowPopup
+                    dotsCount={this.askSteps}
+                    selectedDot={this.state.stepCount}
                     closePopUp={this.closeRequestFlow}
                     smallPopup
                   >
-                    <Askquestion {...props} />
+                    <Askquestion {...props} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
                   </RequesFlowPopup>
                 )}
               />
@@ -114,10 +129,12 @@ export default class Requestvideo extends React.Component {
                 path="/:id/request/event"
                 render={props => (
                   <RequesFlowPopup
+                    dotsCount={this.eventSteps}
+                    selectedDot={this.state.stepCount}
                     closePopUp={this.closeRequestFlow}
                     smallPopup
                   >
-                    <Event {...props} />
+                    <Event {...props} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
                   </RequesFlowPopup>
                 )}
               />
@@ -125,10 +142,12 @@ export default class Requestvideo extends React.Component {
                 path="/:id/request/personal"
                 render={props => (
                   <RequesFlowPopup
+                    dotsCount={this.personalSteps}
+                    selectedDot={this.state.stepCount}
                     closePopUp={this.closeRequestFlow}
                     smallPopup
                   >
-                    <Personal {...props} />
+                    <Personal {...props} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
                   </RequesFlowPopup>
                 )}
               />

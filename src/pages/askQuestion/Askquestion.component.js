@@ -18,14 +18,11 @@ export default class Askquestion extends React.Component {
       loginRedirect: false,
       question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
-      showConfirm: false,
+      // showConfirm: false,
     };
   }
-  componentWillUnmount() {
-    this.props.onClearStreams();
-  }
   goBack = () => {
-    this.props.history.goBack();
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
@@ -57,6 +54,7 @@ export default class Askquestion extends React.Component {
               if (bookObj) {
                 localStorage.setItem('bookingData', JSON.stringify(bookObj));
                 this.props.setBookingDetails(bookObj);
+                this.props.changeStep(this.props.currentStepCount + 1);
                 this.setState({ showConfirm: true });
               }
             });
@@ -123,8 +121,8 @@ export default class Askquestion extends React.Component {
     return (
       <React.Fragment>
         {
-          this.state.showConfirm ?
-            <Confirm {...this.props} />
+          this.props.currentStepCount >= 2 ?
+            <Confirm {...this.props} changeStep={this.props.changeStep} currentStepCount={this.props.currentStepCount}/>
             :
             <Request.Wrapper>
               <Request.Content>
@@ -150,38 +148,38 @@ export default class Askquestion extends React.Component {
             </Request.RightSection> */}
                   <Request.LeftSection>
                     <Request.ComponentWrapper>
-                      {/* <Request.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                > */}
-                      <Request.Questionwraps>
-                        <Request.Ask>
-                          <Request.InputFieldsWrapper>
-                            <Request.InputWrapper>
-                              <Request.Label>What’s your question ?</Request.Label>
-                              <Request.WrapsInput>
-                                <Request.InputQuestion
-                                  placeholder="Best to start your question with “What”, “How” or “Why”."
-                                  value={this.state.question}
-                                  onChange={event => this.setQuestion(event.target.value)}
-                                />
-                                <Request.ErrorMsg></Request.ErrorMsg>
-                              </Request.WrapsInput>
-                            </Request.InputWrapper>
-                          </Request.InputFieldsWrapper>
+                      <Request.ComponentWrapperScroll
+                        autoHide
+                        renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                      >
+                        <Request.Questionwraps>
+                          <Request.Ask>
+                            <Request.InputFieldsWrapper>
+                              <Request.InputWrapper>
+                                <Request.Label>What’s your question ?</Request.Label>
+                                <Request.WrapsInput>
+                                  <Request.InputQuestion
+                                    placeholder="Best to start your question with “What”, “How” or “Why”."
+                                    value={this.state.question}
+                                    onChange={event => this.setQuestion(event.target.value)}
+                                  />
+                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                </Request.WrapsInput>
+                              </Request.InputWrapper>
+                            </Request.InputFieldsWrapper>
 
-                          <Request.recorderWrapper>
-                            <VideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} />
-                          </Request.recorderWrapper>
+                            <Request.recorderWrapper>
+                              <VideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} />
+                            </Request.recorderWrapper>
 
 
-                        </Request.Ask>
-                      </Request.Questionwraps>
-                      {/* </Request.ComponentWrapperScroll> */}
+                          </Request.Ask>
+                        </Request.Questionwraps>
+                      </Request.ComponentWrapperScroll>
                       <Request.PaymentControllerWrapper>
                         <Request.ContinueButton onClick={() => this.handleBooking()}>
                           Book
-                    </Request.ContinueButton>
+                      </Request.ContinueButton>
                       </Request.PaymentControllerWrapper>
                     </Request.ComponentWrapper>
                   </Request.LeftSection>

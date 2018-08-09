@@ -16,6 +16,7 @@ const Request = styled.section`
  flex-direction: column;
  padding-bottom: 40px;
  max-width: 1920px;
+ height: 100%;
  background: #fff;
  @media(min-width: 1025px){
   flex-direction: row;
@@ -378,6 +379,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
+  height: 100%;
   @media(min-width:1025px){
     height:calc(100% - 40px);
   }
@@ -386,13 +388,7 @@ Request.ComponentWrapper = styled.div`
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    background: #fff;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+    padding: 0 10px;
   }
 `;
 
@@ -499,7 +495,7 @@ Request.Questionwraps = styled.div`
 Request.Heading = styled.div`
   color:rgba(51, 51, 51, 1);
   font-size:16px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Ubuntu-Regular';
   text-align: left;
   padding-bottom:10px;
 `;
@@ -564,16 +560,9 @@ Request.InputFieldsWrapper = styled.div`
 Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
+  margin-top: 10px;
   @media(min-width:768px){
-    flex-direction: row;
-    margin-top:5%;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
+    margin-top: 20px;
   }
 `;
 Request.WrapsInput = styled.div`
@@ -593,15 +582,11 @@ Request.Label = styled.div`
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
-    width:55%;
     display:flex;
     align-items:center;
-    padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:13px;
-    width:69%;
-   
+    font-size:13px;  
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -642,22 +627,24 @@ Request.ErrorMsg = styled.div`
   
 `;
 Request.PaymentControllerWrapper = styled.div`
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-padding: 7px 16px;
-background-color: #fff;
-z-index: 5;
-box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-@media(min-width: 768px) {
-  padding: 13px;
-}
-@media(min-width:1025px){
-  margin: 0 42px;
-  position:absolute;
-  box-shadow: none;
-}
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align:center;
+  padding: 7px 16px;
+  background-color: #fff;
+  z-index: 5;
+  @media(min-width: 768px) {
+    position: absolute;
+    padding: 13px;
+  }
+  @media(min-width:1025px){
+    margin: 0 42px;
+    box-shadow: none;
+    left:0;
+    right:0;
+  }
 `;
 Request.loaderWrapper = styled.div`
   position: fixed;
