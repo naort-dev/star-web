@@ -215,71 +215,71 @@ export default class Event extends React.Component {
                     </HeaderSection>
                 }
                 <Request.ComponentWrapper>
-                  {/* <Request.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                > */}
-                  <Request.Heading>What is the event</Request.Heading>
-                  <Request.Questionwraps>
-                    <Request.Ask>
-                      {
-                        this.props.currentStepCount === 1 ?
-                          <Request.EventStep1>
-                            <Request.InputFieldsWrapper>
-                              <Request.InputWrapper>
-                                <Request.Label>Event Type</Request.Label>
-                                <Request.WrapsInput>
-                                  <Request.Select
-                                    value={this.state.selectedValue}
-                                    onChange={this.handleChange}
-                                  >
-                                    <option value="0" key="0">Choose One</option>
-                                    {optionItems}
-                                  </Request.Select>
-                                  {this.state.selectEventerror ?
-                                    <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
-                                    :
-                                    null
-                                  }
-                                </Request.WrapsInput>
-                              </Request.InputWrapper>
-                            </Request.InputFieldsWrapper>
-                          </Request.EventStep1>
-                          : null
-                      }
-                      {
-                        this.props.currentStepCount === 2 ?
-                          <Request.EventStep2>
-                            <RequestTemplates
-                              type={this.state.templateType}
-                              relationship={this.state.relationship}
-                              eventName={this.state.eventName}
-                              handleChange={this.handleInput}
-                              hostName={this.state.hostName}
-                              userName={this.state.userName}
-                              relationshipValue={this.state.relationshipValue}
-                              specification={this.state.specification}
-                              importantinfo={this.state.importantinfo}
-                              date={this.state.date}
-                              eventdetailName={this.state.eventdetailName}
-                              whoIsfor={this.state.whoIsfor}
-                              whoIsfrom={this.state.whoIsfrom}
-                              eventTitle={this.state.eventTitle}
-                              eventDate={this.state.eventDate}
-                              starName={fullName}
-                              checkRequiredHostName={this.checkRequiredHostName}
-                              checkRequiredUserName={this.checkRequiredUserName}
-                              checkRequiredTitle={this.checkRequiredTitle}
-                              checkRequiredDate={this.checkRequiredDate}
-                              {...this.props}
+                  <Request.ComponentWrapperScroll
+                    autoHide
+                    renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                  >
+                    <Request.Heading>What is the event</Request.Heading>
+                    <Request.Questionwraps>
+                      <Request.Ask>
+                        {
+                          this.props.currentStepCount === 1 ?
+                            <Request.EventStep1>
+                              <Request.InputFieldsWrapper>
+                                <Request.InputWrapper>
+                                  <Request.Label>Event Type</Request.Label>
+                                  <Request.WrapsInput>
+                                    <Request.Select
+                                      value={this.state.selectedValue}
+                                      onChange={this.handleChange}
+                                    >
+                                      <option value="0" key="0">Choose One</option>
+                                      {optionItems}
+                                    </Request.Select>
+                                    {this.state.selectEventerror ?
+                                      <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
+                                      :
+                                      null
+                                    }
+                                  </Request.WrapsInput>
+                                </Request.InputWrapper>
+                              </Request.InputFieldsWrapper>
+                            </Request.EventStep1>
+                            : null
+                        }
+                        {
+                          this.props.currentStepCount === 2 ?
+                            <Request.EventStep2>
+                              <RequestTemplates
+                                type={this.state.templateType}
+                                relationship={this.state.relationship}
+                                eventName={this.state.eventName}
+                                handleChange={this.handleInput}
+                                hostName={this.state.hostName}
+                                userName={this.state.userName}
+                                relationshipValue={this.state.relationshipValue}
+                                specification={this.state.specification}
+                                importantinfo={this.state.importantinfo}
+                                date={this.state.date}
+                                eventdetailName={this.state.eventdetailName}
+                                whoIsfor={this.state.whoIsfor}
+                                whoIsfrom={this.state.whoIsfrom}
+                                eventTitle={this.state.eventTitle}
+                                eventDate={this.state.eventDate}
+                                starName={fullName}
+                                checkRequiredHostName={this.checkRequiredHostName}
+                                checkRequiredUserName={this.checkRequiredUserName}
+                                checkRequiredTitle={this.checkRequiredTitle}
+                                checkRequiredDate={this.checkRequiredDate}
+                                {...this.props}
 
-                            />
-                          </Request.EventStep2>
-                          : null
-                      }
-                    </Request.Ask>
-                  </Request.Questionwraps>
-                  {/* </Request.ComponentWrapperScroll> */}
+                              />
+                            </Request.EventStep2>
+                            : null
+                        }
+                      </Request.Ask>
+                    </Request.Questionwraps>
+                  </Request.ComponentWrapperScroll>
                   <Request.PaymentControllerWrapper>
                     {this.props.currentStepCount === 2 ?
                       <Request.ContinueButton onClick={() => this.handleBooking()}>

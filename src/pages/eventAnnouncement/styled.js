@@ -358,6 +358,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
+  height: 100%;
   @media(min-width:1025px){
     height:calc(100% - 40px);
   }
@@ -365,13 +366,7 @@ Request.ComponentWrapper = styled.div`
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    background: #fff;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+    padding: 0 10px;
   }
 `;
 Request.OptionWrapper = styled.footer`
@@ -458,10 +453,10 @@ Request.Questionwraps = styled.div`
 
 `;
 Request.Heading = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Ubuntu-Regular';
   font-size: 20px;
   text-align: center;
-  color: #FF6C58;
+  color: #333333;
   margin-top: 20px;
   
   @media(min-width:768px){
@@ -531,13 +526,7 @@ Request.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    margin-top: 30px;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
+    margin-top: 20px;
   }
 `;
 Request.WrapsInput = styled.div`
@@ -646,7 +635,7 @@ Request.EventStep2 = styled.div`
 
 `;
 Request.PaymentControllerWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
   bottom: 10px;
@@ -671,8 +660,8 @@ Request.ContinueButton = styled.button`
   width: 100%;
   text-align: center;
   display: inline-block;
-  font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;

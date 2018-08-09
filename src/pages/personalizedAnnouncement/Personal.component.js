@@ -318,10 +318,10 @@ export default class Personal extends React.Component {
                         </HeaderSection>
                     }
                     <Request.ComponentWrapper>
-                      {/* <Request.ComponentWrapperScroll
+                      <Request.ComponentWrapperScroll
                         autoHide
                         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                      > */}
+                      >
                         <Request.Heading>What is the Occasion</Request.Heading>
                         <Request.Questionwraps>
                           <Request.Ask>
@@ -401,7 +401,7 @@ export default class Personal extends React.Component {
                             }
                           </Request.Ask>
                         </Request.Questionwraps>
-                      {/* </Request.ComponentWrapperScroll> */}
+                      </Request.ComponentWrapperScroll>
                       <Request.PaymentControllerWrapper>
                         {this.props.currentStepCount === 2 ?
                           <Request.ContinueButton onClick={() => this.handleBooking()}>
