@@ -4,15 +4,18 @@ const initalState = {
   savedFile: null,
   extension: null,
   uploadStatus: null,
+  src: null,
 };
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
     case SAVE_VIDEO:
+    console.log("action", action.payload)
       return {
         ...state,
         savedFile: action.payload.videoFile,
         extension: action.payload.extension,
+        url: action.payload.url,
       };
 
     case UPLOAD_VIDEO:

@@ -91,7 +91,7 @@ export default class VideoRecorder extends React.Component {
     else {
       const fileURL = URL.createObjectURL(file);
       this.setState({ play: true, src: fileURL });
-      this.props.onSaveVideo({ videoFile: file, extension: file.type.split('/')[1] });
+      this.props.onSaveVideo({ videoFile: file, url: fileURL, extension: file.type.split('/')[1] });
       if (file) {
         reader.readAsDataURL(file);
       }
@@ -142,8 +142,36 @@ export default class VideoRecorder extends React.Component {
     else {
       return <VideoRecorderDiv.InfoText>Please record or upload your video</VideoRecorderDiv.InfoText>
     }
-
   }
+
+  renderUploader =  () => {
+    if(this.props.videoUploader.url){
+      return(
+        <VideoPlayer primarySrc={this.props.videoUploader.src}/>
+      )
+    }
+    else {
+      if(this.state.play) {
+        return(
+        <VideoPlayer id="video-player" primarySrc={this.state.src} />
+        )
+      }
+      else {
+        if(this.state.extensionError){
+          return(
+              <VideoRecorderDiv.InfoText>Invalid file format</VideoRecorderDiv.InfoText>
+          )
+        }
+        else {
+          return (
+              <VideoRecorderDiv.InfoText>Please upload your video</VideoRecorderDiv.InfoText>
+          )
+        }   
+      }
+    }
+  }
+
+
   render() {
     return (
       <React.Fragment>
@@ -189,9 +217,7 @@ export default class VideoRecorder extends React.Component {
           :
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
-              {this.state.play ? <VideoPlayer id="video-player" primarySrc={this.state.src} /> : (
-                this.state.extensionError ? <VideoRecorderDiv.InfoText>Invalid file format</VideoRecorderDiv.InfoText> : <VideoRecorderDiv.InfoText>Please upload your video</VideoRecorderDiv.InfoText>
-              )}
+              {this.renderUploader()}
             </VideoRecorderDiv.VideoContainer>
             <VideoRecorderDiv.UploadWrapper>
               <VideoRecorderDiv.NoVideoButton>Upload</VideoRecorderDiv.NoVideoButton>
