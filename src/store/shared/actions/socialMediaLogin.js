@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { fetchUserDetails } from './getUserDetails';
 
 export const SOCIALMEDIALOGIN = {
   start: 'session/ON_LOGIN',
@@ -55,6 +56,7 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(socialMediaLoginFetchEnd());
       dispatch(socialMediaLoginFetchSuccess(resp.data.data));
+      dispatch(fetchUserDetails(resp.data.data.user.id));
     } else {
       dispatch(socialMediaLoginFetchEnd());
       if (resp.data.status === '400') {
