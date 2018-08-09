@@ -38,9 +38,10 @@ export function startAudioRecording(data) {
   };
 }
 
-export function stopAudioRecording() {
+export function stopAudioRecording(data) {
   return {
     type: STOP_AUDIO_RECORDING,
+    payload: data,
   };
 }
 

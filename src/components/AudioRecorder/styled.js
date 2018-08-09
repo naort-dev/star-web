@@ -35,6 +35,7 @@ background-repeat: no-repeat;
 background-position: center;
 margin-top: 10px;
 position: relative;
+order:1
 &:before,
 &:after {
   content:'';

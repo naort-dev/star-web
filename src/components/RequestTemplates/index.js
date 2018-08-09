@@ -91,9 +91,10 @@ class RequestTemplates extends React.Component {
                     }
 
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {
+                    !getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                     <Templates.WrapsAudioInput>
-                      <AudioRecorder target="for"  {...this.props}/>
+                      <AudioRecorder key="for" target="for"  {...this.props}/>
                     </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -125,7 +126,7 @@ class RequestTemplates extends React.Component {
 
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                       <Templates.WrapsAudioInput>
-                        <AudioRecorder target="from" {...this.props} />
+                        <AudioRecorder key="from" target="from" {...this.props} />
                     </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -221,7 +222,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                     <Templates.WrapsAudioInput>
-                     <AudioRecorder target="for" {...this.props}/>
+                     <AudioRecorder key="for" target="for" {...this.props}/>
                     </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -251,7 +252,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                      <Templates.WrapsAudioInput>
-                     <AudioRecorder target="from" {...this.props} />
+                     <AudioRecorder key= "from" target="from" {...this.props} />
                  </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -350,7 +351,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                      <Templates.WrapsAudioInput>
-                     <AudioRecorder target="for" {...this.props} />
+                     <AudioRecorder key="for" target="for" {...this.props} />
                  </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -380,7 +381,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                     <Templates.WrapsAudioInput>
-                    <AudioRecorder target="from" {...this.props} />
+                    <AudioRecorder key="from" target="from" {...this.props} />
                 </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -489,7 +490,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                     <Templates.WrapsAudioInput>
-                    <AudioRecorder target="for" {...this.props} />
+                    <AudioRecorder key="for" target="for" {...this.props} />
                     </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
@@ -519,7 +520,7 @@ class RequestTemplates extends React.Component {
                   </Templates.WrapsInput>
                   {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
                      <Templates.WrapsAudioInput>
-                     <AudioRecorder target="from" {...this.props} />
+                     <AudioRecorder key="from" target="from" {...this.props} />
                  </Templates.WrapsAudioInput>
                     : null}
                 </Templates.InputWrapperContainer>
