@@ -31,12 +31,6 @@ export default class LoginForm extends React.Component {
     };
   }
 
-  componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.setState({ redirectToReferrer: true });
-    }
-  }
-
 
   componentDidMount() {
     window.fbAsyncInit = () => {
@@ -83,6 +77,12 @@ export default class LoginForm extends React.Component {
         'onsuccess': this.onSignIn,
       });
     }
+  }
+
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      this.setState({ redirectToReferrer: true });
+    } else this.props.resetSessionError();
   }
 
   componentWillReceiveProps(nextProps) {

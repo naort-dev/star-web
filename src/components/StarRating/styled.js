@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const RatingStyled = styled.div`
 display: flex;
-justify-content: center;
+justify-content: ${props => (props.center ? 'center' : 'flex-start')};
 `;
 
 RatingStyled.Rating = styled.label`

@@ -46,7 +46,7 @@ export default class SubmitPopup extends React.Component {
     if (props.submitStatus) {
       if (props.heading === 'Rate video') props.onRatingSuccess();
       props.clearPopupError();
-      props.closePopup();
+      props.closePopup(state.rating);
     }
     return null;
   }
@@ -60,23 +60,25 @@ export default class SubmitPopup extends React.Component {
   render() {
     return (
       <OrderStyled.PopupWrapper>
-        <OrderStyled.PopupHeader>{this.props.heading}</OrderStyled.PopupHeader>
-        <OrderStyled.RatingTextArea
-          placeholder={this.props.heading === 'Rate video' ? 'Comment' : ''}
-          onChange={event => this.setState({ comment: event.target.value })}
-        />
-        {this.props.heading === 'Rate video' && <StarRating onClick={rating => this.setState({ rating })} />}
-        <OrderStyled.ErrorWrapper>
-          {this.props.error && <OrderStyled.ErrorMsg>{this.props.error}</OrderStyled.ErrorMsg>}
-        </OrderStyled.ErrorWrapper>
-        <OrderStyled.ConfirmButtonWrapper>
-          <OrderStyled.ConfirmButton
-            onClick={this.sendReason}
-            disabled={!this.state.rating && this.props.heading === 'Rate video' || this.props.heading !== 'Rate video' && !this.state.comment}
-          >
-            Submit
-          </OrderStyled.ConfirmButton>
-        </OrderStyled.ConfirmButtonWrapper>
+        <div>
+          <OrderStyled.PopupHeader>{this.props.heading}</OrderStyled.PopupHeader>
+          <OrderStyled.RatingTextArea
+            placeholder={this.props.heading === 'Rate video' ? 'Comment' : ''}
+            onChange={event => this.setState({ comment: event.target.value })}
+          />
+          {this.props.heading === 'Rate video' && <StarRating onClick={rating => this.setState({ rating })} center />}
+          <OrderStyled.ErrorWrapper>
+            {this.props.error && <OrderStyled.ErrorMsg>{this.props.error}</OrderStyled.ErrorMsg>}
+          </OrderStyled.ErrorWrapper>
+          <OrderStyled.ConfirmButtonWrapper>
+            <OrderStyled.ConfirmButton
+              onClick={this.sendReason}
+              disabled={!this.state.rating && this.props.heading === 'Rate video' || this.props.heading !== 'Rate video' && !this.state.comment}
+            >
+              Submit
+            </OrderStyled.ConfirmButton>
+          </OrderStyled.ConfirmButtonWrapper>
+        </div>
       </OrderStyled.PopupWrapper>
     );
   }

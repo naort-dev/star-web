@@ -22,4 +22,5 @@ ForgotPasswordWrap.MailContent = styled.div`
   font-family: 'Ubuntu-Regular';
 `;
 
+
 export { ForgotPasswordWrap };

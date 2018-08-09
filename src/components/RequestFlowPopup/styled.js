@@ -15,7 +15,7 @@ const PopupStyled = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  padding-top: ${props => (props.smallPopup ? 0 : '46px')};
+  padding-top: 0;
   background-color: rgba(0,0,0,.6);
   display: flex;
   justify-content: center;
@@ -27,8 +27,6 @@ PopupStyled.Container = styled.div`
   display: flex;
   max-width: 100%;
   max-height: 100%;
-  width: 100%;
-  height: 100%;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -44,23 +42,39 @@ PopupStyled.Container = styled.div`
 `;
 
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
-  max-height: 80%;
-  width: 80%;
-  height: ${props => (props.popHeight ? props.popHeight : 'auto')};
-  padding: 45px 20px 20px;
-  border-radius: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 45px 7px 20px;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: 50%;
-    max-width: 400px;
-    height: auto;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 12px;
+    height: 80%;
   }
 `;
 
 PopupStyled.SmallContent = styled.div`
   height: 100%;
-  overflow-y: auto;
+  width: 100%;
 `;
+
+PopupStyled.SliderDotsWrapper = styled.div`
+  position: absolute;
+  top: 11px;
+`;
+
+PopupStyled.SliderDots = styled.span`
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 1px solid #d0d2d3;
+  background: ${props => (props.selected ? '#d0d2d3' : 'transparent')};
+  border-radius: 50%;
+  margin-right: 5px;
+  cursor: pointer;
+`;
+
 
 PopupStyled.CloseButton = styled.span`
   position: absolute;

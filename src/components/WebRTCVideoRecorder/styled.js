@@ -1,24 +1,24 @@
 import styled from 'styled-components';
 
 const VideoRecorderDiv = styled.div`
-  height: 80%;
-  width: 100vw;
+  height: 301px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%;
+    height: 400px;
   }
   @media(min-width:768px){
     width: 100%;
-    height: 90%;
+    height: 400px;
   }
 `;
 
 VideoRecorderDiv.VideoContainer = styled.div`
-  height: 300px;
+  height: 250px;
   width: 100%;
   background-color: black;
   display: flex;
@@ -27,7 +27,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
   position: relative;
   @media(min-width:768px){
     width: 100%;
-    height: 400px
+    height: 300px
   }
   @media(min-width:1025px){
     height: 80%;
@@ -114,9 +114,6 @@ font-family: 'Ubuntu-Bold';
 outline:none;
 border-radius:5px;
 border: 2px solid #FF6C58;
- @media(min-width:1025px){
-  margin-left: 50px;
-  }
 
 `;
 
@@ -158,8 +155,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFFFFF;
-    font-family: 'Ubuntu-Medium';
-    font-style: italic;
+    font-family: 'Ubuntu-Regular';
     text-align: center;
   `;
 
