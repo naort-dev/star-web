@@ -300,7 +300,6 @@ export default class Personal extends React.Component {
     const optionItems = eventNames.map((eventNames) =>
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
-    console.log(this.props.currentStepCount);
     return (
       <React.Fragment>
         {

@@ -155,8 +155,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFFFFF;
-    font-family: 'Ubuntu-Medium';
-    font-style: italic;
+    font-family: 'Ubuntu-Regular';
     text-align: center;
   `;
 

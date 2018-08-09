@@ -14,7 +14,7 @@ Templates.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    margin-top: 20px;
+    margin-top: 10px;
     align-items: flex-start;
   }
 `;
