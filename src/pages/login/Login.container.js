@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { loginUser } from '../../store/shared/actions/login';
+import { loginUser, resetSessionError } from '../../store/shared/actions/login';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
@@ -20,6 +20,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, role, fbId, gId, instId)),
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
+  resetSessionError: () => dispatch(resetSessionError()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);
