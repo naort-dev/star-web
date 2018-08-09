@@ -490,7 +490,7 @@ class RequestTemplates extends React.Component {
                   dateFormat="LL"
                   // readOnly
                   customInput={<Templates.Input />}
-                  popperPlacement="top"
+                  popperPlacement="bottom"
                   selected={this.props.date}
                   onChange={this.handleChange}
                 />
@@ -639,7 +639,7 @@ class RequestTemplates extends React.Component {
                   dateFormat="LL"
                   // readOnly
                   customInput={<Templates.Input />}
-                  popperPlacement="top"
+                  popperPlacement="bottom"
                   selected={this.props.date}
                   onChange={this.handleChange}
                 />
@@ -705,7 +705,7 @@ class RequestTemplates extends React.Component {
                   dateFormat="LL"
                   // readOnly
                   customInput={<Templates.Input />}
-                  popperPlacement="top"
+                  popperPlacement="bottom"
                   selected={this.props.date}
                   onChange={this.handleChange}
                   onBlur={this.props.checkRequiredDate}
@@ -778,7 +778,7 @@ class RequestTemplates extends React.Component {
                   dateFormat="LL"
                   // readOnly
                   customInput={<Templates.Input />}
-                  popperPlacement="top"
+                  popperPlacement="bottom"
                   selected={this.props.date}
                   onChange={this.handleChange}
                   onBlur={this.props.checkRequiredDate}
