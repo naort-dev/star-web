@@ -152,6 +152,7 @@ LoginContainer.Button = styled.button`
   border-radius: 2px;
   cursor: pointer;
   margin-right:8px;
+  -webkit-appearance: none;
   &:hover {
     color :#FF6C58;
     border-color:#FF6C58;
