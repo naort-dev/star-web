@@ -75,7 +75,7 @@ export default class AudioRecorder extends React.Component {
                 <AudioRecorderDiv.Button onClick={() => this.startRecording()} type="button"></AudioRecorderDiv.Button>
 
               }
-              {(this.props.audioRecorder.recorded[target] && this.props.audioRecorder.recorded[target].recordedBlob) && !this.state.start?
+              {(this.props.audioRecorder.recorded[target] && this.props.audioRecorder.recorded[target].recordedBlob) || (this.props.audioRecorder.recorded[target] && this.props.audioRecorder.recorded[target].recordedUrl) ?
                 <React.Fragment>
                   {!this.state.play || this.audio.ended ?
                     <AudioRecorderDiv.PlayButton onClick={() => this.playRecording(target)} />

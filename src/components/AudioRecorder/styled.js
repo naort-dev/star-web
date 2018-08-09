@@ -4,7 +4,7 @@ const AudioRecorderDiv = styled.div`
 width: 100%;
 height: 100%;
 display: flex;
-align-items: center;
+align-items: flex-end;
 justify-content: center;
 flex-direction: column;
 margin-top:1%;
@@ -19,21 +19,19 @@ const ripple = keyframes`
 
 
 AudioRecorderDiv.RippleButton = styled.button`
-width: 30px;
-height: 30px;
+width: 22px;
+height: 22px;
 background-color: white ;
 margin-right: 5px;
-padding: 5px 14px;
 text-align: center;
 color: white;
 border-radius: 50%
-border: 2px solid #ef6a58;
+border: 1px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/mic.svg');
-background-size: 17px;
+background-size: 12px;
 background-repeat: no-repeat;
 background-position: center;
-margin-top: 10px;
 position: relative;
 order:1
 &:before,
@@ -57,21 +55,19 @@ order:1
 `;
 
 AudioRecorderDiv.Button = styled.button`
-width: 30px;
-height: 30px;
+width: 22px;
+height: 22px;
 background-color: white ;
 margin-right: 5px;
-padding: 5px 14px;
 text-align: center;
 color: white;
 border-radius: 50%
-border: 2px solid #ef6a58;
+border: 1px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/mic.svg');
-background-size: 17px;
+background-size: 12px;
 background-repeat: no-repeat;
 background-position: center;
-margin-top: 10px;
 position: relative;
 order: 1;
 `;
@@ -124,26 +120,23 @@ AudioRecorderDiv.UploadInput = styled.input`
   `;
 
 AudioRecorderDiv.CloseButton = styled.button`
-width: 30px;
-height: 30px;
+width: 22px;
+height: 22px;
 background-color: white ;
 margin-right: 5px;
-padding: 5px 14px;
 text-align: center;
 color: white;
 border-radius: 50%
-border: 2px solid #ef6a58;
+border: 1px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/delete.svg');
-background-size: 17px;
+background-size: 10px;
 background-repeat: no-repeat;
 background-position: center;
-margin-top: 10px;
 order: 2;
 `;
 
 AudioRecorderDiv.Audio = styled.audio`
-
   @media(min-width:1025px){
     width: 50%;
     margin-top: 10px;
@@ -158,40 +151,36 @@ AudioRecorderDiv.ControlWrapper = styled.div`
 `;
 
 AudioRecorderDiv.PlayButton = styled.button`
-width: 30px;
-height: 30px;
+width: 22px;
+height: 22px;
 background-color: white ;
 margin-right: 5px;
-padding: 5px 14px;
 text-align: center;
 color: white;
 border-radius: 50%
-border: 2px solid #ef6a58;
+border: 1px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/play.svg');
-background-size: 17px;
+background-size: 12px;
 background-repeat: no-repeat;
 background-position: center;
-margin-top: 10px;
 order: 0;
 `;
 
 AudioRecorderDiv.PauseButton = styled.button`
-width: 30px;
-height: 30px;
+width: 22px;
+height: 22px;
 background-color: white ;
 margin-right: 5px;
-padding: 5px 14px;
 text-align: center;
 color: white;
 border-radius: 50%
 border: 2px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/pause.svg');
-background-size: 17px;
+background-size: 12px;
 background-repeat: no-repeat;
 background-position: center;
-margin-top: 10px;
 order: 0;
 `;
 

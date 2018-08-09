@@ -30,7 +30,7 @@ Request.Wrapper = styled.div`
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -423,7 +423,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height: 100%
+  height: 100%;
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`

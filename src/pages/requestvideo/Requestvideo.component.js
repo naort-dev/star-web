@@ -19,6 +19,20 @@ export default class Requestvideo extends React.Component {
     this.eventSteps = 4;
     this.askSteps = 3;
   }
+  componentWillMount() {
+    const location = this.props.location;
+    if (!this.props.isLoggedIn) {
+      if (location.pathname === `/${this.props.match.params.id}/request/personal` ||
+      location.pathname === `/${this.props.match.params.id}/request/event` ||
+      location.pathname === `/${this.props.match.params.id}/request/ask`
+      ) {
+        this.setState({loginRedirect : true});
+      }
+    }
+    if (!Object.keys(this.props.celebrityDetails).length || !Object.keys(this.props.celebrityDetails).userDetails) {
+      this.props.fetchCelebDetails(this.props.match.params.id);
+    }
+  }
   goBack = () => {
     this.props.history.goBack();
   }
@@ -32,7 +46,7 @@ export default class Requestvideo extends React.Component {
     if (this.props.isLoggedIn) {
     this.props.history.push(`/${this.props.match.params.id}/request${url}`);
     } else{
-      this.props.setRedirectUrls(this.props.location.pathname);
+      this.props.setRedirectUrls(`/${this.props.match.params.id}/request${url}`);
       this.setState({ loginRedirect: true });
     }
   }
