@@ -1,5 +1,5 @@
 import React from 'react';
-import { Templates } from '../../components/RequestTemplates/styled';
+import { Templates } from './templateStyled';
 import Accounts from './styled';
 import Avatar from '../avatar';
 import ManagePayments from '../../components/ManagePayments';

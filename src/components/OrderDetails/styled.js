@@ -232,7 +232,7 @@ OrderStyled.CloseButton = styled.span`
 OrderStyled.MainTitle = styled.span`
   display: block;
   margin: 20px 0;
-  color: #FF6C58;
+  color: #FF953C;
   text-align: center;
   font-size: 18px;
   @media(min-width: 1025px) {
