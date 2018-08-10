@@ -110,9 +110,11 @@ injectGlobal`
   }
   .react-datepicker__portal .react-datepicker__navigation--next {
     border-left-color:  #FF6C58 !important;
+    outline: none !important;
   }
   .react-datepicker__portal .react-datepicker__navigation--previous {
     border-right-color: #FF6C58 !important;
+    outline: none !important;
   }
   .react-datepicker__day-names, .react-datepicker__week {
     white-space: nowrap;
