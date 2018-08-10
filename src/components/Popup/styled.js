@@ -57,7 +57,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
     padding: 28px 20px 20px;
   }
   @media(min-width:1025px){
-    padding: 5px 20px 20px;
+    padding: 18px 20px 20px;
   }
 `;
 
