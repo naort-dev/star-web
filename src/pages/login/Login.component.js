@@ -13,6 +13,9 @@ export default class Login extends React.Component {
     this.state = {
       socialData: {},
     };
+    if (!this.props.isLoggedIn) {    
+      this.props.resetSessionError();
+    }
   }
 
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });

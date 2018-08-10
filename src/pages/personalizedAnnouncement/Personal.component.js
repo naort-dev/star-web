@@ -49,9 +49,18 @@ export default class Personal extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.bookingData.edit && nextProps.eventsDetails.length) {
-      const result = nextProps.eventsDetails.find((find) => {
+      let result = nextProps.eventsDetails.find((find) => {
         return find.id === this.props.bookingData.occasionType;
       });
+      let foundRelation = result.relationships && result.relationships.find((find) => {
+        return find.id === this.props.bookingData.relationshipValue;
+      });
+      if (!foundRelation && result.relationships) {
+        result.relationships.push({
+          id: this.props.bookingData.relationshipValue,
+          title: this.props.bookingData.otherRelationValue,
+        });
+      }
       this.setState({
         relationship: result ? result.relationships : '0',
       })

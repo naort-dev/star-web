@@ -6,7 +6,7 @@ const VideoRecorderDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column-reverse;
   @media(min-width:1025px){
     width: 100%;
     height: 400px;
@@ -47,10 +47,11 @@ VideoRecorderDiv.Video = styled.video`
 `;
 
 VideoRecorderDiv.Button = styled.button`
-  margin-top: 10px;
+  margin: 10px 5px;
   background-color: #fff; 
   color: #FF6C58;
   padding: 4px 30px;
+  height: 30px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -58,10 +59,18 @@ VideoRecorderDiv.Button = styled.button`
   font-family: 'Ubuntu-Bold';
   outline:none;
   border-radius:5px;
-  border: 2px solid #FF6C58;
-  @media(min-width:1025px){
-    min-width: 150px;
+  background-image: url('../../assets/images/rec-icon.svg');
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  ${props => props.stop && ({
+    backgroundImage: 'url(../../assets/images/pause.svg)',
+    backgroundSize: '20px',
+  })
   }
+
 
 `;
 
@@ -102,7 +111,8 @@ color: #FF6C58;
 `;
 
 VideoRecorderDiv.NoVideoButton = styled.button`
-margin-top: 10px;
+margin: 10px 0px;
+height: 30px;
 background-color: #fff; 
 color: #FF6C58;
 padding: 4px 30px;
@@ -113,7 +123,13 @@ font-size: 14px;
 font-family: 'Ubuntu-Bold';
 outline:none;
 border-radius:5px;
-border: 2px solid #FF6C58;
+border: 1px solid #FF6C58;
+background-image: url('../../assets/images/upload.svg');
+background-size: 30px;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+cursor: pointer
 
 `;
 
@@ -169,12 +185,12 @@ VideoRecorderDiv.InfoText = styled.div`
   VideoRecorderDiv.Icon = styled.div`
   position: absolute;
   top: 10%;
-  left: 90%;
-  background: url('assets/images/video-rec.gif') no-repeat;
+  left: 85%;
+  background: url('assets/images/video-record.gif') no-repeat;
   background-size: cover;
   background-position: center center;
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   `
 
 export default VideoRecorderDiv;
