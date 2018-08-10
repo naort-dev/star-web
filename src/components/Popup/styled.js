@@ -71,8 +71,8 @@ PopupStyled.CloseButton = styled.span`
   top: ${props => (props.smallPopup ? '10px' : '16px')};
   right: ${props => (props.smallPopup ? '7px' : '18px')};
   display: inline-block;
-  width: 17px;
-  height: 17px;
+  width: ${props => (props.smallPopup ? '17px' : '30px')};
+  height: ${props => (props.smallPopup ? '17px' : '30px')};
   cursor:pointer;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: cover;
