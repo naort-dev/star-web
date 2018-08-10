@@ -42,7 +42,7 @@ export default class Personal extends React.Component {
   componentWillMount() {
     // 1 is used to specify the request was personal announcement
     this.props.fetchOccasionlist(1);
-    if (this.props.isLoggedIn) {
+    if (this.props.isLoggedIn && (this.state.userName === '' || !this.state.userName)) {
       this.setLoginUserName();
     }
   }

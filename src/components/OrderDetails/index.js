@@ -79,7 +79,7 @@ export default class OrderDetails extends React.Component {
           <React.Fragment>
             <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
             {
-              this.getOccasionDetails(props.occasion_type)
+              this.getOccasionDetails(props.orderDetails.occasion_type)
             }
             <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
             <OrderDetailsItem title="Event Date" value={props.occasionDate} />
@@ -130,8 +130,8 @@ export default class OrderDetails extends React.Component {
       let bookingData = {
         edit: true,
         requestId: orderDetails.id,
-        hostName: orderDetails.request_details.stargramfrom,
-        userName: orderDetails.request_details.stargramto,
+        hostName: orderDetails.request_details.stargramto,
+        userName: orderDetails.request_details.stargramfrom,
         date: orderDetails.request_details.date,
       };
       this.props.fetchCelebDetails(orderDetails.celebrity_id);
