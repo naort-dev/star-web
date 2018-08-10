@@ -69,7 +69,7 @@ Request.ContinueButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-family: Ubuntu-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;
@@ -112,9 +112,6 @@ Request.RightSection = styled.div`
 `;
 
 Request.smallScreenVideo = styled.div`
-  @media(min-width: 1025px) {
-    displaY: none;
-  }
 `
 
 Request.VideoContentWrapper = styled.div`
@@ -154,7 +151,7 @@ Request.RequestControllerWrapper = styled.div`
   }
   @media(min-width:1025px){
     padding: 27px 0;
-    margin: 0 42px;
+    padding: 7px 42px;
     position:relative;
     box-shadow: none;
     border-top: 1px solid #333333;
@@ -423,7 +420,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 90px);
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
@@ -445,7 +442,7 @@ Request.PaymentControllerWrapper = styled.div`
     padding: 13px;
   }
   @media(min-width:1025px){
-    margin: 0 42px;
+    padding: 7px 42px;
     box-shadow: none;
     left:0;
     right:0;
@@ -603,9 +600,17 @@ ConfirmationModal.confirmationWrapper = styled.div`
 
 ConfirmationModal.Heading = Request.Heading.extend`
   margin: 0;
+  font-size:16px;
+  font-family: 'Ubuntu-Medium';
+  margin-top:1%;
+  @media(min-width:1025px){
+    margin-top:0;
+  }
 `;
 ConfirmationModal.description = styled.p`
-  font-size: 16px;
+  font-size: 12px;
+  text-align:center;
+  line-height: 1.5em; 
   font-family: 'Ubuntu-Regular';
 `;
 ConfirmationModal.Button = styled.button`
@@ -618,8 +623,8 @@ ConfirmationModal.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
-  font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-size: 12px;
+  font-family: 'Ubuntu-Medium';
   outline: none;
   border-radius: 5px;
   border: 2px solid #FF6C58;

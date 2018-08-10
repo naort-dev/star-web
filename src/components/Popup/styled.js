@@ -47,13 +47,17 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   max-height: 80%;
   width: 80%;
   height: ${props => (props.popHeight ? props.popHeight : 'auto')};
-  padding: 45px 20px 20px;
+  padding: 20px 20px 20px;
   border-radius: 12px;
   background-color: #fff;
   @media(min-width: 768px) {
     width: 50%;
     max-width: 400px;
     height: auto;
+    padding: 28px 20px 20px;
+  }
+  @media(min-width:1025px){
+    padding: 18px 20px 20px;
   }
 `;
 
@@ -67,8 +71,8 @@ PopupStyled.CloseButton = styled.span`
   top: ${props => (props.smallPopup ? '10px' : '16px')};
   right: ${props => (props.smallPopup ? '7px' : '18px')};
   display: inline-block;
-  width: 17px;
-  height: 17px;
+  width: ${props => (props.smallPopup ? '17px' : '30px')};
+  height: ${props => (props.smallPopup ? '17px' : '30px')};
   cursor:pointer;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: cover;
