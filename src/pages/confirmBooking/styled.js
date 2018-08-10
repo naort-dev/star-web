@@ -639,5 +639,6 @@ Request.AudioIcon = styled.img`
   vertical-align: top;
   padding-left: 8px;
   width: 24px;
+  cursor: pointer;
 `;
 export { Request, HeaderSection, ConfirmationModal };

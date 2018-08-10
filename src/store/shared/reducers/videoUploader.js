@@ -10,7 +10,6 @@ const initalState = {
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
     case SAVE_VIDEO:
-    console.log("action", action.payload)
       return {
         ...state,
         savedFile: action.payload.videoFile,

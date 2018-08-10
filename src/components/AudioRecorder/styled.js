@@ -175,10 +175,10 @@ margin-right: 5px;
 text-align: center;
 color: white;
 border-radius: 50%
-border: 2px solid #ef6a58;
+border: 1px solid #ef6a58;
 cursor: pointer;
 background-image: url('../../assets/images/pause.svg');
-background-size: 12px;
+background-size: 8px;
 background-repeat: no-repeat;
 background-position: center;
 order: 0;

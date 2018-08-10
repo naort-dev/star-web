@@ -209,6 +209,11 @@ export default class Confirm extends React.Component {
   )
 
 
+  playAudio(audioSrc){
+    const audio = new Audio(audioSrc)
+    audio.play()
+  }
+
   renderStargramDestinationDetails = (text, audioSrc) => {
     return (
       <React.Fragment>
@@ -219,7 +224,7 @@ export default class Confirm extends React.Component {
           audioSrc &&
             <Request.AudioIcon
               src='assets/images/voice.png'
-              onClick={() => this.setState({ audioUrl: audioSrc })}
+              onClick={() => this.playAudio(audioSrc)}
             />
         }
       </React.Fragment>

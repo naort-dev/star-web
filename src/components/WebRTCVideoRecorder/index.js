@@ -144,29 +144,27 @@ export default class VideoRecorder extends React.Component {
     }
   }
 
-  renderUploader =  () => {
-    if(this.props.videoUploader.url){
-      return(
-        <VideoPlayer primarySrc={this.props.videoUploader.src}/>
-      )
+  renderUploader = () => {
+    if (this.props.src && !this.state.play) {
+      return <VideoPlayer primarySrc={this.props.src} />
     }
     else {
-      if(this.state.play) {
-        return(
-        <VideoPlayer id="video-player" primarySrc={this.state.src} />
+      if (this.state.play) {
+        return (
+          <VideoPlayer id="video-player" primarySrc={this.state.src} />
         )
       }
       else {
-        if(this.state.extensionError){
-          return(
-              <VideoRecorderDiv.InfoText>Invalid file format</VideoRecorderDiv.InfoText>
+        if (this.state.extensionError) {
+          return (
+            <VideoRecorderDiv.InfoText>Invalid file format</VideoRecorderDiv.InfoText>
           )
         }
         else {
           return (
-              <VideoRecorderDiv.InfoText>Please upload your video</VideoRecorderDiv.InfoText>
+            <VideoRecorderDiv.InfoText>Please upload your video</VideoRecorderDiv.InfoText>
           )
-        }   
+        }
       }
     }
   }
@@ -195,20 +193,20 @@ export default class VideoRecorder extends React.Component {
             </VideoRecorderDiv.VideoContainer>
             {this.props.videoRecorder.start == null ?
               <VideoRecorderDiv.Wrapper>
-                <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)}> Record </VideoRecorderDiv.Button>
+                <VideoRecorderDiv.Button onClick={this.startRecording.bind(this)} />
                 <VideoRecorderDiv.UploadWrapper>
-                  <VideoRecorderDiv.NoVideoButton> Upload video </VideoRecorderDiv.NoVideoButton>
+                  <VideoRecorderDiv.NoVideoButton />
                   <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                 </VideoRecorderDiv.UploadWrapper>
               </VideoRecorderDiv.Wrapper>
               : (this.props.videoRecorder.start == true ?
-                <VideoRecorderDiv.Button onClick={this.stopRecording}> Stop Recording </VideoRecorderDiv.Button> :
+                <VideoRecorderDiv.Button stop={true} onClick={this.stopRecording} /> :
                 <VideoRecorderDiv.Wrapper>
                   <VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.Button onClick={this.startRecording.bind(this, true)}> Re Record </VideoRecorderDiv.Button>
+                    <VideoRecorderDiv.Button title= "recorder" onClick={this.startRecording.bind(this, true)} />
                   </VideoRecorderDiv.UploadWrapper>
                   <VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.NoVideoButton>Upload</VideoRecorderDiv.NoVideoButton>
+                    <VideoRecorderDiv.NoVideoButton />
                     <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                   </VideoRecorderDiv.UploadWrapper>
                 </VideoRecorderDiv.Wrapper>)
@@ -220,7 +218,7 @@ export default class VideoRecorder extends React.Component {
               {this.renderUploader()}
             </VideoRecorderDiv.VideoContainer>
             <VideoRecorderDiv.UploadWrapper>
-              <VideoRecorderDiv.NoVideoButton>Upload</VideoRecorderDiv.NoVideoButton>
+              <VideoRecorderDiv.NoVideoButton/>
               <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
             </VideoRecorderDiv.UploadWrapper>
           </VideoRecorderDiv>
