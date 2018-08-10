@@ -380,7 +380,7 @@ Request.ContentWrapper = styled.div`
 Request.ComponentWrapper = styled.div`
   height: 100%;
   @media(min-width:1025px){
-    height:calc(100% - 40px);
+    height: calc(100% - 58px);
   }
   
 `;

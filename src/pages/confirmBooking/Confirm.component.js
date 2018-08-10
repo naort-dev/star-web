@@ -364,9 +364,6 @@ export default class Confirm extends React.Component {
               }
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                {/* <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv> */}
-
               </HeaderSection>
               <Request.ComponentWrapper>
                 {

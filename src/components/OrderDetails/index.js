@@ -145,7 +145,7 @@ export default class OrderDetails extends React.Component {
           publicRequest: orderDetails.public_request,
           occasionType: orderDetails.occasion_type,
           selectedValue: orderDetails.occasion_id,
-          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          selectedPersonal: orderDetails.request_details.stargramto !== 'Myself' ? '2' : '1',
           specification: orderDetails.request_details.specifically_for,
           importantinfo: orderDetails.request_details.important_info,
           from_audio_file: orderDetails.from_audio_file,
@@ -457,12 +457,14 @@ export default class OrderDetails extends React.Component {
                     <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
                   </OrderStyled.ProfileImageWrapper>
               }
-              <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
-              <OrderStyled.DetailsWrapper>
-                <OrderStyled.DetailsItem>
+              <OrderStyled.RequestStatusWrapper>
+                <OrderStyled.RequestStatus>
                   <OrderStyled.DetailsTitle>Status:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.requestStatus}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
+                </OrderStyled.RequestStatus>
+              </OrderStyled.RequestStatusWrapper>
+              <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
+              <OrderStyled.DetailsWrapper>
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Requested:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>

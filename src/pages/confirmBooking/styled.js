@@ -112,9 +112,6 @@ Request.RightSection = styled.div`
 `;
 
 Request.smallScreenVideo = styled.div`
-  @media(min-width: 1025px) {
-    displaY: none;
-  }
 `
 
 Request.VideoContentWrapper = styled.div`
@@ -154,7 +151,7 @@ Request.RequestControllerWrapper = styled.div`
   }
   @media(min-width:1025px){
     padding: 27px 0;
-    margin: 0 42px;
+    padding: 7px 42px;
     position:relative;
     box-shadow: none;
     border-top: 1px solid #333333;
@@ -423,7 +420,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 90px);
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
@@ -445,7 +442,7 @@ Request.PaymentControllerWrapper = styled.div`
     padding: 13px;
   }
   @media(min-width:1025px){
-    margin: 0 42px;
+    padding: 7px 42px;
     box-shadow: none;
     left:0;
     right:0;

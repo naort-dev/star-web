@@ -37,7 +37,7 @@ OrderStyled.HeaderNavigation = styled.span`
   border:none;
   padding:20px;
   background-size: 26px;
-  background-color:white;
+  background-color:transparent;
   cursor: pointer;
   outline:none;
   position: absolute;
@@ -50,6 +50,15 @@ OrderStyled.HeaderTitle = styled.span`
   @media(min-width:1920px){
     font-size:16px;
   }
+`;
+
+OrderStyled.RequestStatusWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+OrderStyled.RequestStatus = styled.div`
+
 `;
 
 OrderStyled.ContentWrapper = styled.div`
