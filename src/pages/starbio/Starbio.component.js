@@ -944,7 +944,7 @@ export default class Starbio extends React.Component {
     smallPopup
     closePopUp = { () => this.setState({ imageError: false})}
     >
-   <p> {errorMessage} </p>
+   <LoginContainer.PopupErrorText> {errorMessage} </LoginContainer.PopupErrorText>
     </Popup>
     )
   }
