@@ -7,7 +7,7 @@ display: flex;
 align-items: flex-end;
 justify-content: center;
 flex-direction: column;
-margin-top:1%;
+margin-top:3%;
 `;
 
 const ripple = keyframes`

@@ -608,7 +608,7 @@ ConfirmationModal.Heading = Request.Heading.extend`
   }
 `;
 ConfirmationModal.description = styled.p`
-  font-size: 12px;
+  font-size: 13px;
   text-align:center;
   line-height: 1.5em; 
   font-family: 'Ubuntu-Regular';
