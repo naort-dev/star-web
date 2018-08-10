@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    window.addEventListener('storage', this.updateSession);
+    // window.addEventListener('storage', this.updateSession);
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
