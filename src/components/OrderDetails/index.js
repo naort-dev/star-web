@@ -79,7 +79,7 @@ export default class OrderDetails extends React.Component {
           <React.Fragment>
             <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
             {
-              this.getOccasionDetails(props.occasion_type)
+              this.getOccasionDetails(props.orderDetails.occasion_type)
             }
             <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
             <OrderDetailsItem title="Event Date" value={props.occasionDate} />
@@ -130,8 +130,8 @@ export default class OrderDetails extends React.Component {
       let bookingData = {
         edit: true,
         requestId: orderDetails.id,
-        hostName: orderDetails.request_details.stargramfrom,
-        userName: orderDetails.request_details.stargramto,
+        hostName: orderDetails.request_details.stargramto,
+        userName: orderDetails.request_details.stargramfrom,
         date: orderDetails.request_details.date,
       };
       this.props.fetchCelebDetails(orderDetails.celebrity_id);
@@ -145,7 +145,7 @@ export default class OrderDetails extends React.Component {
           publicRequest: orderDetails.public_request,
           occasionType: orderDetails.occasion_type,
           selectedValue: orderDetails.occasion_id,
-          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          selectedPersonal: orderDetails.request_details.stargramto !== 'Myself' ? '2' : '1',
           specification: orderDetails.request_details.specifically_for,
           importantinfo: orderDetails.request_details.important_info,
           from_audio_file: orderDetails.from_audio_file,
@@ -457,12 +457,14 @@ export default class OrderDetails extends React.Component {
                     <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
                   </OrderStyled.ProfileImageWrapper>
               }
+              <OrderStyled.RequestStatusWrapper>
+                <OrderStyled.RequestStatus>
+                  <OrderStyled.RequestStatusTitle>Status:  </OrderStyled.RequestStatusTitle>
+                  <OrderStyled.RequestStatusValue>{props.requestStatus}</OrderStyled.RequestStatusValue>
+                </OrderStyled.RequestStatus>
+              </OrderStyled.RequestStatusWrapper>
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
               <OrderStyled.DetailsWrapper>
-                <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Status:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.requestStatus}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Requested:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
