@@ -6,8 +6,12 @@ const PaymentStyled = styled.form`
 `;
 
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
+  padding: 25px 17px;
   padding-bottom: 22px;
   height: 100%;
+  @media(min-width:768px){
+    padding:25px 48px;
+  }
 `;
 
 PaymentStyled.Heading = styled.span`
@@ -83,7 +87,7 @@ PaymentStyled.ContinueButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-family: Ubuntu-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;

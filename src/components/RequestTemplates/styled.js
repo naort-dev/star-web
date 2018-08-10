@@ -14,7 +14,7 @@ Templates.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    margin-top: 10px;
+    margin-top: 5px;
     align-items: flex-start;
   }
 `;
@@ -27,6 +27,26 @@ Templates.Label = styled.div`
   padding:10px 0;
   @media(min-width:768px){
     padding-right: 10px;
+    padding-bottom:0px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
+`;
+Templates.RelationLabel = styled.div`
+  color:#333333;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
+  display:inline-block;
+  text-align:left;
+  padding:10px 0;
+  @media(min-width:768px){
+    padding-right: 2px;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
@@ -317,7 +337,6 @@ margin-top: 20px;
 Templates.WrapsAudioInput = styled.div`
   width:100%;
   @media(min-width:768px){
-    margin-top: 10px;
     width:100%;
     display: flex;
     justify-content: flex-end;
@@ -338,7 +357,6 @@ width: 69%;
 
 Templates.DetailedRelation = styled.span`
   font-size: 12px;
-  margin-bottom: 10px;
   display: inline-block;
 `;
 

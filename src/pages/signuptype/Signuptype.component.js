@@ -23,8 +23,8 @@ export default class SignupType extends React.Component {
                   alt=""
                 />
               </Link>
-              <Link to="/signuptype">
-                <HeaderSection.RightDiv>SIGNUP</HeaderSection.RightDiv>
+              <Link to="/login">
+                <HeaderSection.RightDiv>LOGIN</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
             <LoginContainer.BannerImage />
