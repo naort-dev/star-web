@@ -202,7 +202,7 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
     question: bookingData.question,
     specifically_for: bookingData.specification,
     important_info: bookingData.importantinfo,
-    date: moment.utc(bookingData.date).format(),
+    date: `${moment.utc(bookingData.date).format("YYYY-MM-DDTHH:mm:SS.SSS")}Z`,
     event_title: bookingData.eventdetailName,
     event_guest_honor: bookingData.hostName,
 
