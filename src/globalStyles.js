@@ -96,6 +96,29 @@ injectGlobal`
       display: block;
   }
   /* Style the checkmark/indicator */
+  .react-datepicker__current-month, .react-datepicker-time__header {
+    margin-top: 0;
+    color: #FF6C58 !important;
+    font-weight: normal !important;
+    font-family: 'Ubuntu-Medium';
+    font-size: 0.944rem;
+  }
+  .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
+    border-radius: 0.3rem;
+    background-color: #FF6C58 !important;
+    color: #fff;
+  }
+  .react-datepicker__portal .react-datepicker__navigation--next {
+    border-left-color:  #FF6C58 !important;
+  }
+  .react-datepicker__portal .react-datepicker__navigation--previous {
+    border-right-color: #FF6C58 !important;
+  }
+  .react-datepicker__day-names, .react-datepicker__week {
+    white-space: nowrap;
+    font-family: 'Ubuntu-Regular';
+  }
+  
   #checkbox_container #checkmark:after {
       left: 4px;
       top: 4px;
