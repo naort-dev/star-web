@@ -327,7 +327,7 @@ export default class Starprofile extends React.Component {
               {
                 this.state.videoActive ?
                   <Detail.VideoPlayWrapper>
-                    <Link to={`/starDetail/${this.getUserId(this.props)}`}>
+                    <Link to={`/star/${this.getUserId(this.props)}`}>
                       <Detail.CloseButton />
                     </Link>
                     <Detail.VideoPlayerSection>

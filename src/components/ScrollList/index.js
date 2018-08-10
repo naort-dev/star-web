@@ -122,7 +122,7 @@ export default class ScrollList extends React.Component {
                 <ListStyled.VideoPlayer>
                   <ListStyled.VideoContent>
                     <ListStyled.VideoRequester>
-                      <Link to={`/starDetail/${selectedVideo.user_id}`} >
+                      <Link to={`/star/${selectedVideo.user_id}`} >
                         <ListStyled.VideoRequestImage
                           imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
                         />
