@@ -5,11 +5,12 @@ import {
 } from 'react-router-dom';
 import validator from 'validator';
 import { LoginContainer } from './styled';
+import { LoginTypeSelector } from '../LoginTypeSelector';
+import { ROLES } from '../../constants/usertype';
 
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       redirectToReferrer: false,
       email: { value: '', isValid: false, message: '' },
@@ -25,10 +26,9 @@ export default class LoginForm extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
-        role: 'R1001',
+        ...this.props.data,
       },
     };
-
   }
 
 
@@ -68,7 +68,7 @@ export default class LoginForm extends React.Component {
 
         });
     }
-    if (!this.props.isLoggedIn) {
+    if (!this.props.isLoggedIn && this.gSignIn) {
       gapi.signin2.render('g-sign-in', {
         'scope': 'profile email',
         'width': 200,
@@ -82,7 +82,7 @@ export default class LoginForm extends React.Component {
   componentWillMount() {
     if (this.props.isLoggedIn) {
       this.setState({ redirectToReferrer: true });
-    }
+    } else this.props.resetSessionError();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -100,6 +100,14 @@ export default class LoginForm extends React.Component {
         );
       }
     }
+    if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          ...this.props.data,
+        },
+      });
+    }
   }
   componentWillUnmount() {
     if (this.props.isLoggedIn) {
@@ -116,11 +124,32 @@ export default class LoginForm extends React.Component {
     /* Status code 410 means Socialmedia account doesn't have email id */
     e.preventDefault();
     if (this.props.statusCode === '410') {
-      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
-        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
-      });
-    } else if (this.isFormValid()) {
-      this.props.loginUser(this.state.email.value, this.state.password.value);
+      if (this.checkEmail) {
+        this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.props.data.username || this.state.email.value } }, () => {
+          this.props.socialMediaLogin(
+            this.props.data.username || this.state.socialMedia.username,
+            this.state.socialMedia.first_name,
+            this.state.socialMedia.last_name,
+            this.state.socialMedia.sign_up_source,
+            this.state.socialMedia.profile_photo,
+            this.props.data.role || this.state.socialMedia.role,
+            this.state.socialMedia.fb_id,
+            this.state.socialMedia.gp_id,
+            this.state.socialMedia.in_id,
+          );
+        });
+      }
+    } else if (this.checkEmail()) {
+      if (this.isFormValid()) {
+        this.props.loginUser(this.state.email.value, this.state.password.value);
+      } else {
+        this.checkEmail();
+        this.checkPassword();
+      }
+
+    } else {
+      this.checkEmail();
+      this.checkPassword();
     }
   }
 
@@ -128,11 +157,10 @@ export default class LoginForm extends React.Component {
   onSocialMediaLogin = (r, source) => {
     if (source === 2) {
       this.setState({
-
         socialMedia: {
 
           ...this.state.socialMedia,
-          username: r.email === '' ? 'facebook' : r.email,
+          username: !r.email ? 'facebook' : r.email,
           first_name: r.first_name,
           last_name: r.last_name,
           sign_up_source: source,
@@ -170,6 +198,7 @@ export default class LoginForm extends React.Component {
         },
       });
     }
+    this.props.setSocialMediaData(this.state.socialMedia);
     this.props.socialMediaLogin(
       this.state.socialMedia.username,
       this.state.socialMedia.first_name,
@@ -209,6 +238,7 @@ export default class LoginForm extends React.Component {
 
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
+    this.props.saveData({ username:  e.target.value });
   }
   acceptPasswordHandler = (e) => {
     this.setState({ password: { ...this.state.password, value: e.target.value } });
@@ -241,6 +271,22 @@ export default class LoginForm extends React.Component {
     }
     return false;
   }
+  setRoleDetails = (role) => {
+    const roleType = role === 'FAN' ? ROLES.fan : ROLES.star;
+    this.setState({ socialMedia: { ...this.props.socialMediaStore, role: roleType } });
+    this.props.socialMediaLogin(
+      this.props.socialMediaStore.username,
+      this.props.socialMediaStore.first_name,
+      this.props.socialMediaStore.last_name,
+      this.props.socialMediaStore.sign_up_source,
+      this.props.socialMediaStore.profile_photo,
+      roleType,
+      this.props.socialMediaStore.fb_id,
+      this.props.socialMediaStore.gp_id,
+      this.props.socialMediaStore.in_id,
+    );
+    this.props.saveData({ role: roleType });
+  }
   ShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
   }
@@ -253,104 +299,120 @@ export default class LoginForm extends React.Component {
       return <Redirect to={to} />;
     }
     return (
-      <LoginContainer.SocialMediaSignup>
-        <LoginContainer.Container>
-          <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
-          <LoginContainer.SocialMediaMessage>Don't have an account?
-            <Link to="/signuptype">
-              <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
-            </Link>
-          </LoginContainer.SocialMediaMessage>
-          <LoginContainer.SignupLine>
-            <span>Login using social</span>
-          </LoginContainer.SignupLine>
-          <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={() => this.onFBlogin()}>
-              <LoginContainer.FacebookContent>Facebook
-              </LoginContainer.FacebookContent>
-            </LoginContainer.Button>
+      <React.Fragment>
+        {this.props.statusCode === '310' ?
+          <React.Fragment>
+            <LoginTypeSelector isLogin setRoleDetails={this.setRoleDetails} />
+          </React.Fragment>
+          :
+          <React.Fragment>
+            <LoginContainer.SocialMediaSignup>
+              <LoginContainer.Container>
+                <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
+                <LoginContainer.SocialMediaMessage>Don't have an account?
+                <Link to="/signuptype">
+                    <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
+                  </Link>
+                </LoginContainer.SocialMediaMessage>
+                <LoginContainer.SignupLine>
+                  <span>Login using social</span>
+                </LoginContainer.SignupLine>
 
-            <LoginContainer.Button onClick={() => this.onGmail()} >
-              <LoginContainer.GoogleWrapper id="g-sign-in" />
-              <LoginContainer.GoogleContent>Google</LoginContainer.GoogleContent>
-            </LoginContainer.Button>
+                <LoginContainer.ButtonDiv>
+                  <LoginContainer.Button onClick={() => this.onFBlogin()}>
+                    <LoginContainer.FacebookContent>Facebook
+                  </LoginContainer.FacebookContent>
+                  </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-              <LoginContainer.InstagramContent>Instagram
-              </LoginContainer.InstagramContent>
-            </LoginContainer.Button>
-          </LoginContainer.ButtonDiv>
-          <LoginContainer.SignupLine>
-            <span>or log in with email</span>
-          </LoginContainer.SignupLine>
-          <LoginContainer.InputFieldsWrapper >
-            <LoginContainer.InputContainer>
-              <LoginContainer.InputWrapper>
-                <LoginContainer.WrapsInput>
-                  <LoginContainer.Input
-                    type="text"
-                    name="email"
-                    value={email.value}
-                    placeholder="Email"
-                    onChange={this.acceptEmailHandler}
-                    onBlur={this.checkEmail}
-                  />
-                  <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.InputWrapper>
-              {
-                this.props.statusCode === '410' ?
-                  <LoginContainer.EmptyDiv />
+                  <LoginContainer.Button onClick={() => this.onGmail()} >
+                    <LoginContainer.GoogleWrapper id="g-sign-in" ref={gSignIn => this.gSignIn = gSignIn}/>
+                    <LoginContainer.GoogleContent>Google</LoginContainer.GoogleContent>
+                  </LoginContainer.Button>
 
-                  :
-                  <LoginContainer.InputWrapper>
+                  <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+                    <LoginContainer.InstagramContent>Instagram
+                  </LoginContainer.InstagramContent>
+                  </LoginContainer.Button>
+                </LoginContainer.ButtonDiv>
 
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.PasswordWrapper>
+                <LoginContainer.SignupLine>
+                  <span>or log in with email</span>
+                </LoginContainer.SignupLine>
+                <LoginContainer.InputFieldsWrapper>
+                  <LoginContainer.InputContainer>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
                         <LoginContainer.Input
-                          type={this.state.showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={password.value}
-                          placeholder="Password"
-                          onChange={this.acceptPasswordHandler}
-                          onBlur={this.checkPassword}
+                          type="text"
+                          name="email"
+                          value={email.value}
+                          placeholder={this.props.statusCode === '410' ? 'Please enter an email' : 'Email'}
+                          onChange={this.acceptEmailHandler}
+                          onBlur={this.checkEmail}
                         />
-                        <LoginContainer.ShowPassword onClick={this.ShowPassword} />
-                      </LoginContainer.PasswordWrapper>
+                        <LoginContainer.ErrorMsg>{email.message}</LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                    {
+                      this.props.statusCode === '410' ?
+                        <LoginContainer.EmptyDiv />
 
-                      <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
+                        :
+                        <LoginContainer.InputWrapper>
 
-              }
-              <LoginContainer.ForgotButtonWrapper>
-                <Link to="/forgotpassword">
-                  <LoginContainer.ForgotButtonSpan> Forgot your password?</LoginContainer.ForgotButtonSpan>
-                </Link>
-              </LoginContainer.ForgotButtonWrapper>
-              <LoginContainer.ButtonWrapper>
-                <LoginContainer.SignIn
-                  type="submit"
-                  value="Log In"
-                  onClick={this.onLogin}
-                  disabled={this.props.loading}
-                />
-              </LoginContainer.ButtonWrapper>
-            </LoginContainer.InputContainer>
+                          <LoginContainer.WrapsInput>
+                            <LoginContainer.PasswordWrapper>
+                              <LoginContainer.Input
+                                type={this.state.showPassword ? 'text' : 'password'}
+                                name="password"
+                                value={password.value}
+                                placeholder="Password"
+                                onChange={this.acceptPasswordHandler}
+                                onBlur={this.checkPassword}
+                              />
+                              <LoginContainer.ShowPassword onClick={this.ShowPassword} />
+                            </LoginContainer.PasswordWrapper>
 
-          </LoginContainer.InputFieldsWrapper>
+                            <LoginContainer.ErrorMsg>{password.message}</LoginContainer.ErrorMsg>
+                          </LoginContainer.WrapsInput>
+                        </LoginContainer.InputWrapper>
 
-          <LoginContainer.WrapsInput>
-            {this.props.statusCode === '410' ?
-              <LoginContainer.EmptyDiv />
+                    }
+                    {this.props.statusCode === '410' ?
+                      <React.Fragment></React.Fragment>
+                      :
+                      <LoginContainer.ForgotButtonWrapper>
+                        <Link to="/forgotpassword">
+                          <LoginContainer.ForgotButtonSpan> Forgot your password?</LoginContainer.ForgotButtonSpan>
+                        </Link>
+                      </LoginContainer.ForgotButtonWrapper>
+                    }
+                    <LoginContainer.ButtonWrapper>
+                      <LoginContainer.SignIn
+                        type="submit"
+                        value="Log In"
+                        onClick={this.onLogin}
+                        disabled={this.props.loading}
+                      />
+                    </LoginContainer.ButtonWrapper>
+                  </LoginContainer.InputContainer>
 
-              :
-              <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-            }
+                </LoginContainer.InputFieldsWrapper>
 
-          </LoginContainer.WrapsInput>
-        </LoginContainer.Container>
-      </LoginContainer.SocialMediaSignup>
+                <LoginContainer.WrapsInput>
+                  {this.props.statusCode === '410' || '310' ?
+                    <LoginContainer.EmptyDiv />
+
+                    :
+                    <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                  }
+
+                </LoginContainer.WrapsInput>
+              </LoginContainer.Container>
+            </LoginContainer.SocialMediaSignup>
+          </React.Fragment>
+        }
+      </React.Fragment>
     );
   }
 }

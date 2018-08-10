@@ -27,6 +27,7 @@ import userDetails from '../store/shared/reducers/userDetails';
 import saveSettings from '../store/shared/reducers/saveSettings';
 import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
 import changePassword from '../store/shared/reducers/changePassword';
+import socialMediaData from '../store/shared/reducers/socialMediaState';
 
 const appReducer = combineReducers({
   session,
@@ -55,6 +56,7 @@ const appReducer = combineReducers({
   saveSettings,
   stripeRegistration,
   changePassword,
+  socialMediaData,
 });
 
 const rootReducer = (state, action) => {

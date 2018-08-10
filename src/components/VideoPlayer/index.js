@@ -73,7 +73,7 @@ export default class VideoPlayer extends React.Component {
             src={this.state.primary.video}
             fluid
             aspectRatio="auto"
-            autoPlay={false}
+            autoPlay={this.state.primary.video === this.props.secondarySrc}
           >
             <LoadingSpinner />
             <BigPlayButton position="center" />

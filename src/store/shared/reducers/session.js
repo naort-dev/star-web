@@ -65,6 +65,8 @@ export default (state = { ...initialState }, action) => {
       return {
         ...initialState,
       };
+    case LOGIN.reset:
+      return initialState;
 
     default:
       return state;
