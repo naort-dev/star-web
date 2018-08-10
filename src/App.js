@@ -45,7 +45,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    window.addEventListener('storage', this.updateSession);
+    // window.addEventListener('storage', this.updateSession);
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
@@ -124,8 +124,8 @@ class App extends React.Component {
                 {/* <Route path="/:id/request/ask" component={Askquestion} />
                 <Route path="/:id/request/event" component={Event} />
                 <Route path="/:id/request/personal" component={Personal} /> */}
-                <Route path="/:id/confirm" component={Confirm} />
-                <Route path="/settings" component={Starbio} />
+                {/* <Route path="/:id/confirm" component={Confirm} /> */}
+                {/* <Route path="/settings" component={Starbio} /> */}
 
                 {/* logged in areas */}
 
