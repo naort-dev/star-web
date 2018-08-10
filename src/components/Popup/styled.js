@@ -47,13 +47,17 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   max-height: 80%;
   width: 80%;
   height: ${props => (props.popHeight ? props.popHeight : 'auto')};
-  padding: 45px 20px 20px;
+  padding: 20px 20px 20px;
   border-radius: 12px;
   background-color: #fff;
   @media(min-width: 768px) {
     width: 50%;
     max-width: 400px;
     height: auto;
+    padding: 28px 20px 20px;
+  }
+  @media(min-width:1025px){
+    padding: 5px 20px 20px;
   }
 `;
 

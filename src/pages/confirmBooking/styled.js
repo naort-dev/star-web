@@ -69,7 +69,7 @@ Request.ContinueButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-family: Ubuntu-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;
@@ -603,9 +603,15 @@ ConfirmationModal.confirmationWrapper = styled.div`
 
 ConfirmationModal.Heading = Request.Heading.extend`
   margin: 0;
+  font-size:16px;
+  font-family: 'Ubuntu-Medium';
+  margin-top:1%;
+  @media(min-width:1025px){
+    margin-top:0;
+  }
 `;
 ConfirmationModal.description = styled.p`
-  font-size: 16px;
+  font-size: 12px;
   font-family: 'Ubuntu-Regular';
 `;
 ConfirmationModal.Button = styled.button`
@@ -618,8 +624,8 @@ ConfirmationModal.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
-  font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-size: 12px;
+  font-family: 'Ubuntu-Medium';
   outline: none;
   border-radius: 5px;
   border: 2px solid #FF6C58;

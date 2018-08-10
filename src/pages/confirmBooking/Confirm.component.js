@@ -287,7 +287,7 @@ export default class Confirm extends React.Component {
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
         <Request.ContinueButton onClick={() => this.handleBooking()}>
-          {bookingData.edit ? 'save' : 'Purchase'}
+          {bookingData.edit ? 'Save' : 'Purchase'}
         </Request.ContinueButton>
         {/* <PaymentFooterController
           rate={rate}
