@@ -19,6 +19,7 @@ export default class MyAccount extends React.Component {
       props.resetChangePassord();
       return { showPopup: false };
     }
+    return null;
   }
 
   closePopup = () => {

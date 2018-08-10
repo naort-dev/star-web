@@ -19,6 +19,10 @@ class RequestTemplates extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
   }
+  componentDidMount() {
+    const datePicker=document.getElementsByClassName("react-datepicker__input-container")[0];
+    datePicker.childNodes[0].setAttribute("readOnly",true);
+  }
   handleChange(date) {
     this.setState({
       startDate: this.props.date,
