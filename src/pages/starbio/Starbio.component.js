@@ -190,6 +190,7 @@ export default class Starbio extends React.Component {
 
 
   async onFileChange(type = "featuredImage") {
+    this.setState({ imageError: false })
     const file = document.getElementById(type).files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById(type).value)) {
@@ -934,17 +935,17 @@ export default class Starbio extends React.Component {
   renderErrorPopup = () => {
     let errorMessage;
     if(this.state.imageError.extensionError){
-      errorMessage = "Invalid file format. Please upload image in .png, .jpg, or .jpeg format"
+      errorMessage = "Invalid file format. Please upload image in .png, .jpg, or .jpeg format."
     }
     else {
-      errorMessage = "Please check the image dimension displayed and upload an image with minimum required dimension"
+      errorMessage = "Please check the image dimension displayed and upload an image with minimum required dimension."
     }
     return(
     <Popup 
     smallPopup
     closePopUp = { () => this.setState({ imageError: false})}
     >
-   <p> {errorMessage} </p>
+   <LoginContainer.PopupErrorText> {errorMessage} </LoginContainer.PopupErrorText>
     </Popup>
     )
   }
