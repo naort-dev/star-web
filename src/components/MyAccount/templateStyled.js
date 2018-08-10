@@ -14,23 +14,33 @@ Templates.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    margin-top: 10px;
+    flex-direction: row;
+    margin-top: 30px;
     align-items: flex-start;
+  }
+  @media(min-width: 1025px) {
+    margin-top: 30px;
+  }
+  @media(min-width: 1920px) {
+    margin-top: 50px;
   }
 `;
 Templates.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Light';
-  font-size:14px;
-  display:inline-block;
+  font-family: 'Ubuntu-Bold';
+  font-size:16px;
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
+    width:55%;
+    display:flex;
+    align-items:center;
     padding-right: 10px;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
+    width:69%;
    
   }
   @media(min-width:1920px){
@@ -45,21 +55,21 @@ Templates.WrapsInput = styled.div`
     width:100%;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-start;
+    align-items: flex-end;
     flex-direction: column;
   }
   @media(min-width:1025px){
     display: flex;
     justify-content: flex-end;
-    align-items: flex-start;
+    align-items: flex-end;
    
   }
 `;
 
 Templates.Input = styled.input`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Ubuntu-Regular';
   color: #333333;
-  font-size:14px;
+  font-size:16px;
   text-align:left;
   outline:none;
   width: 100%;
@@ -83,9 +93,9 @@ Templates.Input = styled.input`
   }
 `;
 Templates.InputArea = styled.textarea`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Ubuntu-Regular';
   color: #333333;
-  font-size:14px;
+  font-size:16px;
   text-align:left;
   outline:none;
   width: 100%;
@@ -93,7 +103,7 @@ Templates.InputArea = styled.textarea`
   padding: 8px 8px;
   resize: none;
   border: 1px solid #d0d2d3;
-  background-color: white;
+  background-color:rgba(248, 248, 248, 1);
   @media(min-width:1025px){
     font-size:13px;
   }
@@ -126,9 +136,9 @@ Templates.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Ubuntu-Regular';
   color: #333333;
-  font-size:14px;
+  font-size:16px;
   text-align:left;
   outline:none;
   height: 34px;
@@ -337,9 +347,7 @@ width: 69%;
 `;
 
 Templates.DetailedRelation = styled.span`
-  font-size: 12px;
-  margin-bottom: 10px;
-  display: inline-block;
+font-size: 12px;
 `;
 
 export { Templates };

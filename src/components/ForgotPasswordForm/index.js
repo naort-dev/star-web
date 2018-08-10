@@ -19,13 +19,16 @@ export default class ForgotPassword extends React.Component {
       successCondition: false,
     };
   }
-  onForgotPassword = () => {
+  onForgotPassword = (e) => {
+    e.preventDefault();
     this.setState({ loader: true });
+    if (this.checkEmail){
     forgotPassword(Api.forgotPassword, { email: this.state.email.value }).then((response) => {
       this.setState({ message: response.data.data, successCondition: true, errorCondition: false, loader: false });
     }).catch((exception) => {
       this.setState({ message: exception.response.data.error.message, successCondition: false, errorCondition: true, loader: false });
     });
+  }
   }
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
@@ -98,8 +101,9 @@ export default class ForgotPassword extends React.Component {
                         <LoginContainer.SignIn
                           onClick={this.onForgotPassword}
                           disabled={this.props.loading}
-                        >Continue
-                        </LoginContainer.SignIn>
+                          value="Continue"
+                          type="submit"
+                        />
                       </LoginContainer.ButtonWrapper>
                       <LoginContainer.ErrorMsg>{this.state.errorCondition ? this.state.message : null}</LoginContainer.ErrorMsg>
                     </ForgotPasswordWrap>

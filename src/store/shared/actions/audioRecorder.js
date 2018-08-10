@@ -31,15 +31,17 @@ export function showFallback(displayText) {
   };
 }
 
-export function startAudioRecording() {
+export function startAudioRecording(data) {
   return {
     type: START_AUDIO_RECORDING,
+    payload: data,
   };
 }
 
-export function stopAudioRecording() {
+export function stopAudioRecording(data) {
   return {
     type: STOP_AUDIO_RECORDING,
+    payload: data,
   };
 }
 

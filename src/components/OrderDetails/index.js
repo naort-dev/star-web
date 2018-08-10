@@ -15,6 +15,7 @@ import { recorder } from '../../constants/videoRecorder';
 import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
+import StarRating from '../StarRating';
 
 
 export default class OrderDetails extends React.Component {
@@ -199,7 +200,7 @@ export default class OrderDetails extends React.Component {
     }
   }
 
-  closePopup = () => {
+  closePopup = (rate) => {
     this.setState({
       showPopup: false,
       declinePopup: false,
@@ -207,6 +208,7 @@ export default class OrderDetails extends React.Component {
       showContactSupportPopup: false,
       showReportAbusePopup: false,
       audioUrl: null,
+      rate,
     });
   }
 
@@ -486,6 +488,11 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
+                {this.props.requestStatusId === 6 &&
+                <OrderStyled.DetailsItem>
+                  <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
+                  <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+                </OrderStyled.DetailsItem>}
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
             {/* Show only if request is not cancelled or not completed or not processing */}
