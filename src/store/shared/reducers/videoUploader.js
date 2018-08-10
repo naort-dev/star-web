@@ -4,6 +4,7 @@ const initalState = {
   savedFile: null,
   extension: null,
   uploadStatus: null,
+  src: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -13,6 +14,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         savedFile: action.payload.videoFile,
         extension: action.payload.extension,
+        url: action.payload.url,
       };
 
     case UPLOAD_VIDEO:

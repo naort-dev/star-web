@@ -143,5 +143,11 @@ injectGlobal`
       }
   }
 
+  input[type='file']{
+    opacity: 0;
+    cursor: pointer;
+    font-size: 0;
+}
+
 `
 ;

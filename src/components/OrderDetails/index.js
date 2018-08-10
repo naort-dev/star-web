@@ -219,6 +219,11 @@ export default class OrderDetails extends React.Component {
     this.props.hideRequest();
   }
 
+  playAudio(audioSrc){
+    const audio = new Audio(audioSrc)
+    audio.play()
+  }
+
   renderStargramDestinationDetails = (text, audioSrc) => {
     return (
       <React.Fragment>
@@ -229,7 +234,7 @@ export default class OrderDetails extends React.Component {
           audioSrc &&
             <OrderStyled.AudioIcon
               src='assets/images/voice.png'
-              onClick={() => this.setState({audioUrl: audioSrc, showPopup: true})}
+              onClick={() => this.playAudio(audioSrc)}
             />
         }
       </React.Fragment>
