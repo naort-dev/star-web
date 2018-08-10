@@ -31,7 +31,7 @@ export default class Askquestion extends React.Component {
     this.props.cancelBookingDetails();
     this.props.onClearStreams();
     this.props.deleteVideo();
-    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
+    this.props.history.push(`/star/${this.props.match.params.id}`);
   }
 
 
@@ -137,7 +137,7 @@ export default class Askquestion extends React.Component {
                   {/* <HeaderSection>
               <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
               <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-              <Link to={`/starDetail/${this.props.match.params.id}`}>
+              <Link to={`/star/${this.props.match.params.id}`}>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </Link>
             </HeaderSection> */}

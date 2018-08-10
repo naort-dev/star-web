@@ -132,7 +132,7 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                <Link to={`/starDetail/${item.id}`}>
+                <Link to={`/star/${item.id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>
