@@ -459,8 +459,8 @@ export default class OrderDetails extends React.Component {
               }
               <OrderStyled.RequestStatusWrapper>
                 <OrderStyled.RequestStatus>
-                  <OrderStyled.DetailsTitle>Status:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.requestStatus}</OrderStyled.DetailsValue>
+                  <OrderStyled.RequestStatusTitle>Status:  </OrderStyled.RequestStatusTitle>
+                  <OrderStyled.RequestStatusValue>{props.requestStatus}</OrderStyled.RequestStatusValue>
                 </OrderStyled.RequestStatus>
               </OrderStyled.RequestStatusWrapper>
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
