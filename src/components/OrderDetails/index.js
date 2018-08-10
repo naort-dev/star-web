@@ -141,6 +141,7 @@ export default class OrderDetails extends React.Component {
           ...bookingData,
           eventName: orderDetails.occasion,
           relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          otherRelationValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.title,
           type: 1,
           publicRequest: orderDetails.public_request,
           occasionType: orderDetails.occasion_type,
