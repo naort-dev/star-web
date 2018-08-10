@@ -66,7 +66,8 @@ VideoRecorderDiv.Button = styled.button`
   border: none;
   cursor: pointer;
   ${props => props.stop && ({
-    backgroundImage: `url('../../assets/images/pause.svg')`,
+    backgroundImage: 'url(../../assets/images/pause.svg)',
+    backgroundSize: '20px',
   })
   }
 
@@ -184,12 +185,12 @@ VideoRecorderDiv.InfoText = styled.div`
   VideoRecorderDiv.Icon = styled.div`
   position: absolute;
   top: 10%;
-  left: 90%;
-  background: url('assets/images/video-rec.gif') no-repeat;
+  left: 85%;
+  background: url('assets/images/video-record.gif') no-repeat;
   background-size: cover;
   background-position: center center;
-  height: 40px;
-  width: 40px;
+  height: 30px;
+  width: 30px;
   `
 
 export default VideoRecorderDiv;

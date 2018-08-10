@@ -200,14 +200,14 @@ export default class VideoRecorder extends React.Component {
                 </VideoRecorderDiv.UploadWrapper>
               </VideoRecorderDiv.Wrapper>
               : (this.props.videoRecorder.start == true ?
-                <VideoRecorderDiv.Button stop={true} onClick={this.stopRecording} /> :
+                <VideoRecorderDiv.Button title= "Stop recording" stop={true} onClick={this.stopRecording} /> :
                 <VideoRecorderDiv.Wrapper>
                   <VideoRecorderDiv.UploadWrapper>
-                    <VideoRecorderDiv.Button title= "recorder" onClick={this.startRecording.bind(this, true)} />
+                    <VideoRecorderDiv.Button title= "Record video" onClick={this.startRecording.bind(this, true)} />
                   </VideoRecorderDiv.UploadWrapper>
                   <VideoRecorderDiv.UploadWrapper>
                     <VideoRecorderDiv.NoVideoButton />
-                    <VideoRecorderDiv.UploadInput id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
+                    <VideoRecorderDiv.UploadInput  title= "Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                   </VideoRecorderDiv.UploadWrapper>
                 </VideoRecorderDiv.Wrapper>)
             }
