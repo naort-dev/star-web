@@ -70,7 +70,7 @@ class ImageRender extends React.Component {
       this.props.followCelebrity(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
       this.setState({ favouriteSelected: !this.state.favouriteSelected });
     } else {
-      this.props.setRedirectUrls(`starDetail/${this.props.id}`);
+      this.props.setRedirectUrls(`star/${this.props.id}`);
       this.props.updateFavouritesQueue(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
       this.props.history.push('/login');
     }
@@ -84,7 +84,7 @@ class ImageRender extends React.Component {
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         >
-          <Link to={`/starDetail/${props.id}`} style={{ display: 'block', height: '100%' }}>
+          <Link to={`/star/${props.id}`} style={{ display: 'block', height: '100%' }}>
             <ImageRenderDiv.ProfileImageWrapper>
               <ImageRenderDiv.ProfileImage
                 imageUrl={this.state.profileImage}
@@ -96,7 +96,7 @@ class ImageRender extends React.Component {
             selected={this.state.favouriteSelected}
           />
         </ImageRenderDiv.ImageSection>
-        <Link to={`/starDetail/${props.id}`} style={{ display: 'block', height: '100%' }}>
+        <Link to={`/star/${props.id}`} style={{ display: 'block', height: '100%' }}>
           <ImageRenderDiv.ProfileContent>
             <ImageRenderDiv.Span>
               <ImageRenderDiv.StarName>
