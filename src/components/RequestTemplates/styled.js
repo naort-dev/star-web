@@ -358,6 +358,10 @@ width: 69%;
 Templates.DetailedRelation = styled.span`
   font-size: 12px;
   display: inline-block;
+  font-family: 'Ubuntu-Light';
+  @media(min-width: 1920px) {
+    font-size: 14px;
+  }
 `;
 
 export { Templates };
