@@ -157,7 +157,7 @@ export default class Event extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
-    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
+    this.props.history.push(`/star/${this.props.match.params.id}`);
   }
   render() {
     let coverPhoto;
