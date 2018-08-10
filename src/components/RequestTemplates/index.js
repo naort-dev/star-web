@@ -137,7 +137,7 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
-                  <Templates.Label>Relationship</Templates.Label>
+                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
@@ -263,7 +263,7 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
-                  <Templates.Label>Relationship</Templates.Label>
+                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.InputWrapperContainer>
@@ -392,7 +392,7 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
-                  <Templates.Label>Relationship</Templates.Label>
+                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
@@ -431,7 +431,8 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  // readOnly
+                  readOnly
+                  withPortal
                   customInput={<Templates.Input />}
                   popperPlacement="bottom"
                   selected={this.props.date}
@@ -531,7 +532,7 @@ class RequestTemplates extends React.Component {
             {this.state.user === '2' ?
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
-                  <Templates.Label>Relationship</Templates.Label>
+                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
@@ -570,7 +571,8 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  // readOnly
+                  readOnly
+                  withPortal
                   customInput={<Templates.Input />}
                   popperPlacement="bottom"
                   selected={this.props.date}
@@ -636,7 +638,8 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  // readOnly
+                  readOnly
+                  withPortal
                   customInput={<Templates.Input />}
                   popperPlacement="bottom"
                   selected={this.props.date}
@@ -709,7 +712,8 @@ class RequestTemplates extends React.Component {
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
-                  // readOnly
+                  readOnly
+                  withPortal
                   customInput={<Templates.Input />}
                   popperPlacement="bottom"
                   selected={this.props.date}

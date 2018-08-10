@@ -37,7 +37,7 @@ OrderStyled.HeaderNavigation = styled.span`
   border:none;
   padding:20px;
   background-size: 26px;
-  background-color:white;
+  background-color:transparent;
   cursor: pointer;
   outline:none;
   position: absolute;
@@ -52,6 +52,15 @@ OrderStyled.HeaderTitle = styled.span`
   }
 `;
 
+OrderStyled.RequestStatusWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+`;
+
+OrderStyled.RequestStatus = styled.div`
+
+`;
 OrderStyled.ContentWrapper = styled.div`
   height: calc(100vh - 96px);
   overflow: auto;
@@ -348,6 +357,12 @@ OrderStyled.DetailsTitle = styled.span`
     font-size:16px;
   }
 `;
+
+OrderStyled.RequestStatusTitle = OrderStyled.DetailsTitle.extend`
+  display: inline-block;
+  margin-right: 10px;
+`;
+
 OrderStyled.DetailsValue = styled.span`
   display: table-cell;
   width: 50%;
@@ -359,6 +374,12 @@ OrderStyled.DetailsValue = styled.span`
     font-size:16px;
   }
 `;
+
+OrderStyled.RequestStatusValue = OrderStyled.DetailsValue.extend`
+  display: inline-block;
+  width: auto;
+`;
+
 OrderStyled.SocialMediaWrapper = styled.div`
   margin-top:3%;
   text-align: center;

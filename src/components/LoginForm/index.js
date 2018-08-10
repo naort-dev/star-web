@@ -82,7 +82,7 @@ export default class LoginForm extends React.Component {
   componentWillMount() {
     if (this.props.isLoggedIn) {
       this.setState({ redirectToReferrer: true });
-    } else this.props.resetSessionError();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -400,7 +400,7 @@ export default class LoginForm extends React.Component {
                 </LoginContainer.InputFieldsWrapper>
 
                 <LoginContainer.WrapsInput>
-                  {this.props.statusCode === '410' || '310' ?
+                  {this.props.statusCode === '410' || this.props.statusCode === '310' ?
                     <LoginContainer.EmptyDiv />
 
                     :

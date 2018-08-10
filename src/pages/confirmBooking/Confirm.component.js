@@ -292,7 +292,7 @@ export default class Confirm extends React.Component {
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
         <Request.ContinueButton onClick={() => this.handleBooking()}>
-          {bookingData.edit ? 'save' : 'Purchase'}
+          {bookingData.edit ? 'Save' : 'Purchase'}
         </Request.ContinueButton>
         {/* <PaymentFooterController
           rate={rate}
@@ -369,9 +369,6 @@ export default class Confirm extends React.Component {
               }
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                {/* <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv> */}
-
               </HeaderSection>
               <Request.ComponentWrapper>
                 {
