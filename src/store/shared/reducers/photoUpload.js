@@ -3,6 +3,7 @@ import { UPDATE_PROFILE_PHOTO } from '../actions/updateProfilePhoto';
 const initalState = {
   loading: false,
   error: '',
+  profileUploadStatus: false,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -11,6 +12,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: true,
+        profileUploadStatus: false,
       };
 
     case UPDATE_PROFILE_PHOTO.end:
@@ -23,6 +25,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+        profileUploadStatus: true,
       };
 
     case UPDATE_PROFILE_PHOTO.failed:

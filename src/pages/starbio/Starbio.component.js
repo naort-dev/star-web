@@ -47,12 +47,7 @@ export default class Starbio extends React.Component {
       bookingPrice: '',
       bookingLimit: '',
       upload: false,
-      imageError: {
-        featuredImage: null,
-        firstImage: null,
-        secondImage: null,
-        avatar: null,
-      },
+      imageError: false,
       loaders: { featuredImage: null, firstImage: null, secondImage: null, avatar: null },
       account: true,
       settingsObj: {
@@ -168,6 +163,12 @@ export default class Starbio extends React.Component {
     this.props.onClearStreams();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
+      this.props.fetchUserDetails(this.props.session.auth_token.id);
+    }
+  }
+
   componentDidMount() {
     this.setImageSize();
     window.addEventListener('resize', this.setImageSize)
@@ -195,11 +196,11 @@ export default class Starbio extends React.Component {
 
 
   async onFileChange(type = "featuredImage") {
-    this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
+    this.setState({ imageError: false })
     const file = document.getElementById(type).files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById(type).value)) {
-      this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+      this.setState({ imageError: { extensionError: true} });
     }
 
     else {
@@ -208,7 +209,7 @@ export default class Starbio extends React.Component {
         if (correctResolution) {
           await this.getImageData(file, type)
         } else {
-          this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+          this.setState({ imageError: {sizeError: true}});
         }
       }
     }
@@ -243,11 +244,23 @@ export default class Starbio extends React.Component {
         const exif = EXIF.getTag(this, "Orientation")
         switch (exif) {
           case 3:
-            resolve('rotate(180deg)')
+            resolve('rotate(180deg)');
+            break;
+          case 4:
+            resolve('rotate(180deg)');
+            break;
+          case 5:
+            resolve('rotate(90deg)');
+            break;
           case 6:
-            resolve('rotate(90deg)')
-          case 9:
-            resolve('rotate(270deg)')
+            resolve('rotate(90deg)');
+            break;
+          case 7:
+            resolve('rotate(270deg)');
+            break;
+          case 8:
+            resolve('rotate(270deg)');
+            break;
           default:
             resolve('rotate(0deg)')
         }
@@ -324,8 +337,7 @@ export default class Starbio extends React.Component {
     // })
   }
 
-  async  onMyAccountSave() {
-
+  async onMyAccountSave() {
     const userValue = this.state.settingsObj.userDetails;
     const notificationValue = this.state.settingsObj.userDetails.notification_settings;
     const notificationUpdate = {
@@ -837,7 +849,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
-                  {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                 </React.Fragment>
               }
             </LoginContainer.ImageInner>
@@ -859,7 +870,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
-                  {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                 </React.Fragment>
               }
             </LoginContainer.ImageInner>
@@ -882,7 +892,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
-                  {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                 </React.Fragment>
               }
             </LoginContainer.ImageInner>
@@ -922,12 +931,32 @@ export default class Starbio extends React.Component {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
   }
-  goBack =() => {
+  goBack = () => {
     this.props.history.push('/');
   }
-  SignOut = () =>{
+  SignOut = () => {
     this.props.logOut();
   }
+
+  renderErrorPopup = () => {
+    let errorMessage;
+    if(this.state.imageError.extensionError){
+      errorMessage = "Invalid file format. Please upload image in .png, .jpg, or .jpeg format."
+    }
+    else {
+      errorMessage = "Please check the image dimension displayed and upload an image with minimum required dimension."
+    }
+    return(
+    <Popup 
+    smallPopup
+    closePopUp = { () => this.setState({ imageError: false})}
+    >
+   <LoginContainer.PopupErrorText> {errorMessage} </LoginContainer.PopupErrorText>
+    </Popup>
+    )
+  }
+
+
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
     const isMyAccount = this.state.settingsObj.selectedAccount === 'myAccount';
@@ -971,12 +1000,18 @@ export default class Starbio extends React.Component {
 
     return (
       <LoginContainer.wrapper>
+
         {
           isSettings && settingsUpdating ?
             <LoginContainer.loaderWrapper>
               <Loader />
             </LoginContainer.loaderWrapper>
             : null
+        }
+
+        {this.state.imageError.extensionError || this.state.imageError.sizeError ?
+           this.renderErrorPopup()
+        : null 
         }
         <LoginContainer>
           {this.state.saving ?
