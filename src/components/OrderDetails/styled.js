@@ -194,6 +194,7 @@ OrderStyled.scrollWrapper = styled(Scrollbars)`
   .order-details-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
+    padding-bottom: 15px;
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;
