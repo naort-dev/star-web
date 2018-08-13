@@ -360,6 +360,7 @@ OrderStyled.DetailsTitle = styled.span`
 
 OrderStyled.RequestStatusTitle = OrderStyled.DetailsTitle.extend`
   display: inline-block;
+  width: auto;
   margin-right: 10px;
 `;
 
