@@ -52,10 +52,6 @@ export default class StarsignUpVideo extends React.Component {
     if (!this.props.isLoggedIn) {
       return <Redirect to={locations.signupType} />
     }
-
-    if (!this.props.location.state) {
-      return <Redirect to="/starbio" />
-    }
     return (
       <SignupContainer.wrapper>
         <SignupContainer>
@@ -64,23 +60,6 @@ export default class StarsignUpVideo extends React.Component {
               <Loader />
             </SignupContainer.loaderWrapper>
             : null}
-          <HeaderSection>
-            <Link to="/">
-              <HeaderSection.LogoImage
-                src="assets/images/logo_starsona_large.svg"
-                alt=""
-              />
-            </Link>
-
-            <Link to="#">
-              <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
-            </Link>
-          </HeaderSection>
-          <SignupContainer.RightSection>
-            <SignupContainer.recorderWrapper>
-              <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
-            </SignupContainer.recorderWrapper>
-          </SignupContainer.RightSection>
           <SignupContainer.LeftSection>
             <SignupContainer.SocialMediaSignup>
               <SignupContainer.Container>
@@ -103,6 +82,11 @@ export default class StarsignUpVideo extends React.Component {
               </FooterSection>
             </SignupContainer.FooterLayout>
           </SignupContainer.LeftSection>
+          <SignupContainer.RightSection>
+            <SignupContainer.recorderWrapper>
+              <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
+            </SignupContainer.recorderWrapper>
+          </SignupContainer.RightSection>
         </SignupContainer>
       </SignupContainer.wrapper>
     );

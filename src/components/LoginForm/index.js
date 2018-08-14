@@ -12,7 +12,6 @@ export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectToReferrer: false,
       email: { value: '', isValid: false, message: '' },
       password: { value: '', isValid: false, message: '' },
       showPassword: false,
@@ -81,15 +80,13 @@ export default class LoginForm extends React.Component {
 
   componentWillMount() {
     if (this.props.isLoggedIn) {
-      this.setState({ redirectToReferrer: true });
+      this.props.onLoginComplete();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      this.setState({
-        redirectToReferrer: nextProps.isLoggedIn,
-      });
+      this.props.onLoginComplete();
       const followData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
@@ -292,12 +289,6 @@ export default class LoginForm extends React.Component {
   }
   render() {
     const { email, password } = this.state;
-    const loginToContinue = this.props.location.state && this.props.location.state.to;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
     return (
       <React.Fragment>
         {this.props.statusCode === '310' ?
@@ -310,9 +301,9 @@ export default class LoginForm extends React.Component {
               <LoginContainer.Container>
                 <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
                 <LoginContainer.SocialMediaMessage>Don't have an account?
-                <Link to="/signuptype">
+                  <span onClick={() => this.props.toggleSignup(true)}>
                     <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
-                  </Link>
+                  </span>
                 </LoginContainer.SocialMediaMessage>
                 <LoginContainer.SignupLine>
                   <span>Login using social</span>
@@ -382,9 +373,9 @@ export default class LoginForm extends React.Component {
                       <React.Fragment></React.Fragment>
                       :
                       <LoginContainer.ForgotButtonWrapper>
-                        <Link to="/forgotpassword">
+                        <LoginContainer.actionText onClick={() => this.props.changeView('forgotpassword')}>
                           <LoginContainer.ForgotButtonSpan> Forgot your password?</LoginContainer.ForgotButtonSpan>
-                        </Link>
+                        </LoginContainer.actionText>
                       </LoginContainer.ForgotButtonWrapper>
                     }
                     <LoginContainer.ButtonWrapper>

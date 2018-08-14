@@ -6,6 +6,7 @@ const LoginContainer = styled.div`
   padding: 0px 0px;
   flex-direction: column;
   height: 100%;
+  overflow: auto;
   padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
@@ -15,24 +16,15 @@ const LoginContainer = styled.div`
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
-    height: 100vh;
     overflow:auto;
     background-color:white;
   }
   
 `;
-
-LoginContainer.actionText = styled.span`
-  cursor: pointer;
-`;
-
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
- 
-
   @media(min-width: 1025px){
-    width: 45%;
     padding: 0px 0px;
     position: relative;
     padding-bottom: 83px;
@@ -137,7 +129,7 @@ LoginContainer.ButtonDiv = styled.div`
 LoginContainer.Button = styled.button`
   padding: 12px 10px;
   outline:none;
-  border: 1.5px solid rgba(51, 51, 51, 1); 
+  border: 2px solid rgba(51, 51, 51, 1); 
   background-color: white;
   margin-top: 6%;
   font-family: 'Ubuntu-Medium';
@@ -154,7 +146,7 @@ LoginContainer.Button = styled.button`
   }
   @media(min-width : 768px){
     font-size:16px;
-    border: 1.5px solid #333333; 
+    border: 2px solid #333333; 
     width: 180px;
   }
   @media(min-width: 1025px){
@@ -223,11 +215,12 @@ LoginContainer.InstagramContent = styled.span`
   }
  
 `;
-LoginContainer.InputFieldsWrapper = styled.form`
+LoginContainer.InputFieldsWrapper = styled.div`
   
   padding: 0px 25px;
   @media(min-width:768px){
     padding: 0px 0px;
+    margin-top: 6%;
   }
 `;
 LoginContainer.Label = styled.div`
@@ -356,7 +349,7 @@ LoginContainer.FooterRight = styled.div`
   width:40%;
   text-align:right;
 `;
-LoginContainer.SignIn = styled.input`
+LoginContainer.SignIn = styled.button`
 background-color:#FF6C58 ; 
 color: #fff;
 padding: 12px 30px;
@@ -370,8 +363,6 @@ outline:none;
 cursor: pointer;
 border-radius:5px;
 border: 2px solid #FF6C58;
-margin-top:3%;
--webkit-appearance: none;
 @media(min-width:1920px){
   font-size:20px;
 }
@@ -379,7 +370,7 @@ margin-top:3%;
 `;
 LoginContainer.ForgotButtonWrapper = styled.div`
   text-align:left;
-  margin-top:4%;
+  margin-top:3%;
 `;
 LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;
@@ -433,7 +424,7 @@ LoginContainer.ErrorMsg = styled.div`
 const HeaderSection = styled.div`
   padding: 3px 15px;
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   
 `;
@@ -477,11 +468,14 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
+  &:hover {
+    color :#FF6C58;
+  }
   @media(min-width:1025px){
-    font-size:20px
+    font-size:14px
   }
   @media(min-width:1920px){
-    font-size:22px;
+    font-size:18px;
   }
 `;
 LoginContainer.WrapsInput = styled.div`
@@ -512,7 +506,7 @@ LoginContainer.ShowPassword = styled.span`
   background-size:19px;
   padding: 14px;
   right: 7px;
-  top: 12px;
+  top: 6px;
   cursor:pointer;
   @media(min-width:1025px){
     top:5px;

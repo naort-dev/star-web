@@ -13,13 +13,12 @@ export default class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectToReferrer: false,
       firstName: { value: '', isValid: false, message: '' },
       lastName: { value: '', isValid: true, message: '' },
       password: { value: '', isValid: false, message: '' },
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
-      role: this.props.location.state.type == 'fan' ? ROLES.fan : ROLES.star,
+      role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
       socialMedia: {
         username: '',
         first_name: '',
@@ -30,7 +29,7 @@ export default class SignUp extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
-        role: this.props.location.state.type == 'fan' ? ROLES.fan : ROLES.star,
+        role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
       },
     };
   }
@@ -85,16 +84,16 @@ fjs = d.getElementsByTagName(s)[0];
   }
   componentWillMount() {
     if (this.props.isLoggedIn) {
-      this.setState({ redirectToReferrer: true });
+      this.props.toggleSignup(false);
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      this.setState({
-        redirectToReferrer: nextProps.isLoggedIn,
-      });
-      if (this.props.location.state && this.props.location.state.type === 'fan') {
+      if (this.props.signupRole === 'fan') {
+        this.props.toggleSignup(false);
+      }
+      if (this.props.signupRole === 'fan') {
         const followData = this.props.followCelebData;
         if (followData.celebId) {
           this.props.followCelebrity(
@@ -135,8 +134,8 @@ fjs = d.getElementsByTagName(s)[0];
         this.state.role,
       ).then((response) => {
         if (response != undefined) {
-          if (this.props.location.state && this.props.location.state.type === 'star') {
-            this.props.history.push('/starbio');
+          if (this.props.signupRole === 'star') {
+            this.props.changeStep(this.props.currentStep + 1);
           }
         }
       });
@@ -288,27 +287,14 @@ fjs = d.getElementsByTagName(s)[0];
 
 
   render() {
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      if (this.props.location.state && this.props.location.state.type === 'fan') {
-        const to = this.props.redirectUrls.to || '/';
-        return <Redirect to={to} />
-      }
-      
-        const to = '/starbio';
-        return <Redirect to={to} />
-
-      
-    }
-
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
           <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
           <LoginContainer.SocialMediaMessage>Already have an account?
-                  <Link to="/login">
+            <span onClick={() => this.props.toggleLogin(true)}>
               <LoginContainer.LoginDiv>Log In</LoginContainer.LoginDiv>
-            </Link>
+            </span>
           </LoginContainer.SocialMediaMessage>
           <LoginContainer.SignupLine>
             <span>Signup using social</span>

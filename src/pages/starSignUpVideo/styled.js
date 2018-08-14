@@ -10,18 +10,18 @@ const SignupContainer = styled.div`
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
-    width: 100vw;
+    width: 100%;
     padding-bottom: 56px;
   }
 `;
 SignupContainer.wrapper = styled.div`
-  height: 100vh;
+  height: 100%;
   
 `;
 SignupContainer.LeftSection = styled.div`
   width: 100%;
   background-color:white;
-  width: 100vw;
+  width: 100%;
   @media(min-width: 1025px){
     width: 45%;
     padding: 0px 0px;
@@ -31,7 +31,7 @@ SignupContainer.LeftSection = styled.div`
 SignupContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
-    height: 100vh;
+    height: 100%;
     overflow:auto;
     background-color:white;
   }
