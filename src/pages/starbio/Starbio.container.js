@@ -21,6 +21,7 @@ const mapStateToProps = state => ({
   settingsSave: state.saveSettings,
   stripeRegistration: state.stripeRegistration,
   changePasswordData: state.changePassword,
+  profileUploadStatus: state.photoUpload.profileUploadStatus,
 });
 
 const mapDispatchToProps = dispatch => ({

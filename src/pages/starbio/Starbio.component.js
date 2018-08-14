@@ -160,6 +160,12 @@ export default class Starbio extends React.Component {
     this.props.onClearStreams();
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
+      this.props.fetchUserDetails(this.props.session.auth_token.id);
+    }
+  }
+
   componentDidMount() {
     this.setImageSize();
     window.addEventListener('resize', this.setImageSize)
