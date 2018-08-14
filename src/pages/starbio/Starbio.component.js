@@ -91,8 +91,11 @@ export default class Starbio extends React.Component {
     this.secondImage = null;
     this.firstImage = null;
     this.currentExif = null;
-    this.imageNaturalHeight =  null;
+    this.imageNaturalHeight = null;
     this.imageNaturalWidth = null;
+    this.originalHeight = null;
+    this.originalWidth = null;
+    this.base64Image = null;
   }
 
   setImageSize = () => {
@@ -212,16 +215,84 @@ export default class Starbio extends React.Component {
     }
   }
 
-  getImageData(file, type) {
+  convertBeforeCrop = (imageURL) => {
+    const image = new Image();
+    image.onload = function () {
+      const width = 600;
+      const height = 400;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = 600;
+      canvas.height = 400;
+      switch (this.currentExif) {
+        case 2:
+          ctx.translate(this.imageNaturalWidth, 0);
+          ctx.scale(-1, 1);
+          break;
+
+        case 3:
+          ctx.translate(width, height);
+          ctx.rotate(180 * Math.PI / 180);
+          break;
+
+        case 4:
+          ctx.translate(0, height);
+          ctx.scale(1, -1);
+          break;
+
+        case 5:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(90 * Math.PI / 180);
+          ctx.scale(1, -1);
+          break;
+
+        case 6:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(90 * Math.PI / 180);
+          ctx.translate(0, -height);
+          break;
+
+        case 7:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(-90 * Math.PI / 180);
+          ctx.translate(-width, height);
+          ctx.scale(1, -1);
+          break;
+
+        case 8:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.translate(0, width);
+          ctx.rotate(-90 * Math.PI / 180);
+          break;
+      }
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        600,
+        400,
+      );
+      const base64Image = canvas.toDataURL('image/jpeg');
+      this.setState({ cropImage: base64Image })
+    }.bind(this);
+    image.src = imageURL;
+  }
+
+
+  async getImageData(file, type) {
     this.setState({ loaders: { ...this.state.loaders, [`${type}`]: false } })
     const reader = new FileReader();
     const extensionType = type === 'avatar' ? 'avatarImage' : type;
+    const exif = await this.getExif(file, type)
+    this.currentExif = exif;
     reader.onload = async function (e) {
-      const exif = await this.getExif(file, type)
-      this.currentExif = exif;
-      // this.setState({cropMode: true, cropImage: e.target.result, currentImageType: type})
+      this.convertBeforeCrop(e.target.result)
       this.setState({
-        cropMode: true, cropImage: e.target.result, currentImageType: type, [`${type}File`]: file, loaders: { ...this.state.loaders, [`${type}`]: true },
+        cropMode: true, currentImageType: type, [`${type}File`]: file, loaders: { ...this.state.loaders, [`${type}`]: true },
         extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
       });
     }.bind(this)
@@ -267,12 +338,14 @@ export default class Starbio extends React.Component {
 
   checkResolution(file, type) {
     let correctResolution = false;
-    var img = new Image();
+    const img = new Image();
     img.src = window.URL.createObjectURL(file);
     return new Promise((resolve, reject) => {
       img.onload = () => {
-        var width = img.naturalWidth;
-        var height = img.naturalHeight;
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        this.originalHeight = img.height;
+        this.originalWidth = img.width;
         window.URL.revokeObjectURL(img.src);
         if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
           (type === 'firstImage' && width >= 400 && height >= 400) ||
@@ -458,8 +531,8 @@ export default class Starbio extends React.Component {
       localStorage.setItem('bioDetails', JSON.stringify(bioDetails));
       this.props.onSaveImage({
         avatar: { imageFile: this.state.avatarFile, imageURL: this.state.avatar },
-        featuredImage: {imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage },
-        firstImage: {imageFile: this.state.firstImageFile, imageURL: this.state.firstImage },
+        featuredImage: { imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage },
+        firstImage: { imageFile: this.state.firstImageFile, imageURL: this.state.firstImage },
         secondImage: { imageFile: this.state.secondImageFile, imageURL: this.state.secondImage }
 
       })
@@ -596,40 +669,9 @@ export default class Starbio extends React.Component {
 
   handleCrop = () => {
     const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
     canvas.width = this.pixelCrop.width;
     canvas.height = this.pixelCrop.height;
-    // if(this.currentExif == 6){
-    //   canvas.width = this.pixelCrop.height;
-    //   canvas.height = this.pixelCrop.width;
-    // }
-
-    // console.log("height", canvas.height)
-    const ctx = canvas.getContext('2d');
-  //   switch (this.currentExif) {
-  //     case 2:
-  //         ctx.transform(-1, 0, 0, 1, canvas.width, 0);
-  //         break;
-  //     case 3:
-  //         ctx.transform(-1, 0, 0, -1, canvas.width, canvas.height);
-  //         break;
-  //     case 4:
-  //         ctx.transform(1, 0, 0, -1, 0, canvas.height);
-  //         break;
-  //     case 5:
-  //         ctx.transform(0, 1, 1, 0, 0, 0);
-  //         break;
-  //     case 6:
-  //     ctx.transform(0, 1, -1, 0, canvas.width, 0);
-  //         break;
-  //     case 7:
-  //         ctx.transform(0, -1, -1, 0, canvas.height, canvas.width);
-  //         break;
-  //     case 8:
-  //         ctx.transform(0, -1, 1, 0, 0, canvas.width);
-  //         break;
-  //     default:
-  //         ctx.transform(1, 0, 0, 1, 0, 0);
-  // }
     ctx.drawImage(
       this.image,
       this.pixelCrop.x,
@@ -660,7 +702,7 @@ export default class Starbio extends React.Component {
         scrollTarget={document.getElementById(this.state.currentImageType)}
         closePopUp={() => this.setState({ cropMode: false })}
       >
-        <LoginContainer.CropperWrapper>
+        <LoginContainer.CropperWrapper id="croppie">
           <Cropper
             src={this.state.cropImage}
             crop={this.state.cropValues}
@@ -673,8 +715,6 @@ export default class Starbio extends React.Component {
       </Popup>
     );
   }
-
-
 
   validateIsEmpty(formName) {
     if (formName === 'starAccount') {
