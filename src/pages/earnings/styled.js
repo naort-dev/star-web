@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const EarningStyled = styled.div`
   margin-top: 60px;
   height: calc(100vh - 60px);
-  background-color: #FFF;
+  background-color: #f8f8f8;
   @media(min-width: 1920px) {
     margin-top: 72px;
     height: calc(100vh - 72px);
@@ -59,6 +59,7 @@ EarningStyled.mainSection = styled.section`
 
 EarningStyled.Overview = styled.ul`
   width: 100%;
+  background-color: #FFF;
   justify-content: space-between;
   padding: 16px;
   display: none;
@@ -114,6 +115,7 @@ EarningStyled.OverviewMobile = styled.ul`
   justify-content: space-between;
   padding: 16px;
   flex-direction: column;
+  background-color: #FFF;
   @media(min-width: 768px) {
     display: none;
   }
@@ -137,9 +139,9 @@ color: ${props => props.headingColor}
 EarningStyled.EarningsListStyled = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #FFFFFF;
   font-family: 'Ubuntu-Medium';
   font-size: 14px;
+  background-color: #FFF;
 `;
 
 const FlexStyles = styled.ul`
@@ -149,7 +151,6 @@ const FlexStyles = styled.ul`
 `;
 
 EarningStyled.Header = FlexStyles.extend`
-  margin-right: 16px;
   margin-top: 20px;
   border-top: 1px solid #CCCCCC;
   border-bottom: 1px solid #CCCCCC;
@@ -195,8 +196,8 @@ EarningStyled.heading = styled.h1`
 `;
 
 EarningStyled.AllEarningsWrapper = styled.div`
-  padding-left: 16px;
-  padding-right: 16px;
+  padding: 16px;
+  background-color: #fff;
 `;
 
 EarningStyled.errorMessage = styled.span`
