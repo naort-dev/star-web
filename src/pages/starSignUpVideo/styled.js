@@ -5,8 +5,7 @@ const SignupContainer = styled.div`
   display: flex;
   padding: 0px 0px;
   flex-direction: column;
-  padding-top: 40px;
-  height: 100vh;
+  height: 100%;
   @media(min-width: 1025px){
     flex-direction: row;
     padding-bottom: 0;
@@ -14,28 +13,18 @@ const SignupContainer = styled.div`
     padding-bottom: 56px;
   }
 `;
-SignupContainer.wrapper = styled.div`
-  height: 100%;
-  
-`;
 SignupContainer.LeftSection = styled.div`
   width: 100%;
   background-color:white;
   width: 100%;
   @media(min-width: 1025px){
-    width: 45%;
     padding: 0px 0px;
     padding-bottom: 83px;
   }
 `;
 SignupContainer.wrapper = styled.div`
   height:100%;
-  @media(min-width:1025px){
-    height: 100%;
-    overflow:auto;
-    background-color:white;
-  }
-  
+  padding-bottom: 60px;  
 `;
 
 SignupContainer.RightSection = styled.div`
@@ -44,7 +33,6 @@ SignupContainer.RightSection = styled.div`
   @media(min-width: 1025px){
     order: 2;
     display:block;
-    width:60%;
     padding: 27px 35px;
     padding-bottom: 0;
   }
@@ -68,7 +56,6 @@ SignupContainer.SocialMediaSignup = styled.div`
     padding-bottom: 20px;  
   }
   @media(min-width: 1025px) { 
-    margin-top:30%;
     padding: 0px 37px;
     padding-bottom: 69px;
     display: flex;
@@ -148,7 +135,6 @@ SignupContainer.ImageStackLayout = styled.div`
 SignupContainer.FooterLayout = styled.div`
   padding: 0;
   @media(min-width:1025px){
-    padding: 0px 57px;
     position: absolute;
     bottom: 20px;
     left: 0;
@@ -209,41 +195,27 @@ HeaderSection.RightDiv = styled.button`
 const FooterSection = styled.div`
   position:fixed;
   bottom: 0;
+  left: 0;
   background-color:#FFFFFF;
   z-index:1;
-  width: 100vw;
+  right:0;
   display:flex;
   padding:13px 12px;
-  box-shadow: 0px 0px 12px 0px rgba(34, 34, 34, 0.4);
+  @media(min-width:768px){
+    position:absolute;
+  }
   @media(min-width:1025px){
-   box-shadow:none;
-   position: relative;
+  margin: 0 26px;
    padding: 26px 0px;
-   border-top: 1px solid #222;
-   width:40%;
+   padding-bottom: 0;
   }
   
 `;
-FooterSection.LeftSection = styled.div`
-  display:none;
-  text-align:left;
-  @media(min-width:768px){
-    display:block;
-    width:50%;
-  }
-`;
-
-FooterSection.RightSection = styled.div`
-  width:100%;
-  text-align:right; 
-  @media(min-width:768px){
-    width:50%;
-  }
-`;
 FooterSection.Button = styled.button`
-  background-color: #fff; 
-  color: #FF6C58;
-  padding: 4px 30px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -259,9 +231,10 @@ FooterSection.Button = styled.button`
 `;
 
 FooterSection.DisabledButton = styled.button`
-  background-color: white; 
-  color: grey;
-  padding: 4px 30px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -270,7 +243,7 @@ FooterSection.DisabledButton = styled.button`
   outline:none;
   cursor: pointer;
   border-radius:5px;
-  border: 2px solid grey;
+  border: 2px solid #FF6C58;
   @media(min-width:1920px){
     font-size:20px;
   }
@@ -280,8 +253,6 @@ SignupContainer.VerificationText = styled.h4`
   color: rgba(51, 51, 51, 1);
   padding: 20px 0px;
   font-family: 'Ubuntu-Medium';
-  height: 150px;
-  margin-top:5%;
   font-size:16px;
   @media(min-width:768px){
     font-size:18px;

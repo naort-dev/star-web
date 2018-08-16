@@ -5,14 +5,15 @@ import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
-import { Starbio } from '../../pages/starbio';
+import { StarbioPopup } from '../../pages/starbioPopup';
 import { StarsignUpVideo } from '../../pages/starSignUpVideo';
 import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
-import { LoginContainer  } from './styled';
-import { HeaderSection } from '../loginFlow/styled';
+import { LoginContainer, HeaderSection } from './styled';
+// import { HeaderSection } from '../loginFlow/styled';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
+import Starsuccess from '../../pages/starsuccess/Starsuccess.container';
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -30,17 +31,25 @@ class SignupFlow extends React.Component {
       this.setState({ stepCount: this.starRegistrationSteps });
     }
   }
+  getBioDetails = bioDetails => {
+    this.setState({bioDetails: bioDetails})
+  }
+  // goBack = () => {
+  //   console.log(this.state.currentStep)
+  //   this.setState({ currentStep: this.state.currentStep - 1 });
+  // }
   changeStep = (step) => {
     this.setState({ currentStep: step });
   }
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
-      return <SignUpForm {...this.props} signupRole={this.state.selectedType} />
+      return <SignUpForm {...this.props} signupRole={this.state.selectedType} />;
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
         case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} changeStep={this.changeStep} signupRole={this.state.selectedType} />;
-        // case 2: return <Starbio />;
-        case 2: return <StarsignUpVideo />;
+        case 2: return <StarbioPopup currentStep={this.state.currentStep} changeStep={this.changeStep} getBioDetails={this.getBioDetails} />;
+        case 3: return <StarsignUpVideo currentStep={this.state.currentStep} changeStep={this.changeStep} bioDetails={this.state.bioDetails} />;
+        case 4: return <Starsuccess closeSignupFlow={() => this.props.toggleSignup(false)} />;
         default: return null;
       }
     }
@@ -58,6 +67,11 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             <LoginContainer.LeftSection>
               <HeaderSection>
+                {/* {
+                  this.state.currentStep > 1 ?
+                    <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                  : null
+                } */}
                 <Link to="/">
                   <HeaderSection.LogoImage
                     src="assets/images/logo_starsona_large.svg"
@@ -69,7 +83,11 @@ class SignupFlow extends React.Component {
                 !this.state.selectedType ?
                   <LoginTypeSelector isSignUp changeSignUpRole={this.changeSignUpRole} />
                 :
-                  this.renderSteps()
+                  <LoginContainer.SignupFlow>
+                    {
+                      this.renderSteps()
+                    }
+                  </LoginContainer.SignupFlow>
               }
             </LoginContainer.LeftSection>
           </LoginContainer>

@@ -13,38 +13,15 @@ const LoginContainer = styled.div`
 `;
 LoginContainer.wrapper = styled.div`
   height:100%;
-  @media(min-width:1025px){
-    height: 100vh;
-    overflow:auto;
-    background-color:white;
-  }
+  padding-bottom: 7px;
   
 `;
 LoginContainer.LeftSection = styled.div`
-  width: 100vw;
-  height: 100vh;
- 
-
+  width: 100%;
+  height: 100%;
   @media(min-width: 1025px){
-    width: 45%;
     padding: 0px;
     position: relative;
-  }
-`;
-
-LoginContainer.RightSection = styled.div`
-  width: 100%;
-  background-color:rgba(248, 248, 248, 1);
-  display:none;
-  @media(min-width: 1025px){
-    width: 55%;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0px 0px;
-    position: relative;
-    padding: 30px 30px;
-    flex-wrap: wrap;
   }
 `;
 
@@ -142,10 +119,10 @@ LoginContainer.Heading = styled.div`
     font-size: 32px;
   }
   @media(min-width:1025px){
-    font-size:35px;
+    font-size:32px;
   }
   @media(min-width:1920px){
-    font-size:38px;
+    font-size:32px;
   }
   
 `;
@@ -442,54 +419,44 @@ const FooterSection = styled.div`
   bottom: 0;
   background-color:#FFFFFF;
   z-index:1;
-  width:100%;
+  right:0;
+  left:0;
   display:flex;
   padding:13px 12px;
-  box-shadow: 0px 0px 12px 0px rgba(34, 34, 34, 0.4);
+  @media(min-width:768px){
+    position:absolute;
+  }
   @media(min-width:1025px){
-   box-shadow:none;
-   position: relative;
    padding: 26px 0px;
-   border-top: 1px solid #222;
+   padding-bottom: 0;
   }
   
 `;
-FooterSection.LeftSection = styled.div`
-  display:none;
-  text-align:left;
-  @media(min-width:768px){
-    display:block;
-    width:50%;
-  }
-`;
+
 FooterSection.Agreement = styled.div`
   text-align:left;
   color:rgba(112, 112, 112, 1);
   font-family: 'Ubuntu-Regular';
   font-size:12px;
 `;
-FooterSection.RightSection = styled.div`
-  width:100%;
-  text-align:right; 
-  @media(min-width:768px){
-    width:50%;
-  }
-`;
+
 FooterSection.Button = styled.button`
-background-color: #fff; 
-color: #FF6C58;
-padding: 4px 30px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size:14px;
-font-family: 'Ubuntu-Bold';
-outline:none;
-cursor: pointer;
-border-radius:5px;
-border: 2px solid #FF6C58;
-@media(min-width:1920px){
-  font-size:20px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width:1920px){
+    font-size:20px;
+  }
 `;
 
 LoginContainer.WrapsInput = styled.div`
@@ -591,7 +558,6 @@ LoginContainer.SignupLine = styled.div`
 `;
 
  LoginContainer.SuccessContainer = styled.div`
-  height: 80%;
   width: 100%;
   padding: 0px 24px;
   align-items: center;
@@ -600,11 +566,9 @@ LoginContainer.SignupLine = styled.div`
   flex-direction: column;
   @media(min-width:768px){
     padding: 0px 100px;
-    height:45%;
   }
   @media(min-width:1025px){
-    height:80%;
-    padding:0px 65px;
+    padding:0px 20px;
   }
  `;
 

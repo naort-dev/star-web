@@ -75,14 +75,14 @@ LoginContainer.LastNameWrapper = styled.div`
 `;
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
+  height: 100%;
   @media(min-width:768px){
     padding: 5px 0;
-    padding-bottom: 20px;  
+    padding-bottom: 0;  
   }
   @media(min-width: 1025px) {
-    height: 100%;    
     padding: 5px 37px;
-    padding-bottom: 69px;
+    padding-bottom: 0;
   }
 `;
 LoginContainer.Container = styled.div`
@@ -98,7 +98,6 @@ LoginContainer.Heading = styled.div`
   font-size: 25px;
   text-align: center;
   color: #FF6C58;
-  margin-top:10%;
   
   @media(min-width:768px){
     font-size: 32px;
@@ -470,11 +469,9 @@ LoginContainer.WrapsInput = styled.div`
   width:100%;
   @media(min-width:768px){
     width:100%;
-    height:30px;
   }
   @media(min-width:1025){
     width:352px;
-    height:25px;
   }
 
 `;

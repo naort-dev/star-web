@@ -5,7 +5,6 @@ const LoginContainer = styled.div`
     display:flex;
     padding: 0px 0px;
     flex-direction: column;
-    overflow: auto;
     height: 100%;
     @media(min-width: 1025px){
       flex-direction: row;
@@ -35,10 +34,14 @@ LoginContainer.LeftSection = styled.div`
   height: 100%;
   @media(min-width: 1025px){
     padding: 0px 0px;
-    position: relative;
-    padding-bottom: 83px;
+    padding-bottom: 0;
   }
 `;
+
+LoginContainer.SignupFlow = styled.div`
+  height: calc(100% - 60px);
+`;
+
 LoginContainer.RightSection = styled.div`
   width: 100%;
   display: none;
@@ -61,7 +64,7 @@ LoginContainer.ImageStackLayout = styled.div`
 const HeaderSection = styled.div`
   padding: 3px 15px;
   display:flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   
 `;
@@ -75,7 +78,20 @@ HeaderSection.HeaderNavigation = styled.button`
   background-color:white;
   cursor: pointer;
   outline:none;
+  position: absolute;
+  top: 0;
+  left: 14px;
 `;
+
+HeaderSection.LogoImage = styled.img`
+  width:100px;
+  height:45px;
+  @media(min-width:1025px){
+    width:160px;
+    height:60px;
+  }
+`;
+
 HeaderSection.MiddleDiv = styled.div`
   font-family: 'Ubuntu-Bold';
   font-size : 13px;

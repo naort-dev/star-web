@@ -33,6 +33,11 @@ export default class SignUp extends React.Component {
       },
     };
   }
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      this.props.toggleSignup(false);
+    }
+  }
 
 
   componentDidMount() {
@@ -52,8 +57,8 @@ export default class SignUp extends React.Component {
       };
     };
     (function (d, s, id) {
-      let js, 
-fjs = d.getElementsByTagName(s)[0];
+      let js,
+      fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
@@ -82,12 +87,6 @@ fjs = d.getElementsByTagName(s)[0];
       });
     }
   }
-  componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.props.toggleSignup(false);
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
       if (this.props.signupRole === 'fan') {
@@ -133,7 +132,7 @@ fjs = d.getElementsByTagName(s)[0];
         this.state.password.value,
         this.state.role,
       ).then((response) => {
-        if (response != undefined) {
+        if (response != undefined) {        
           if (this.props.signupRole === 'star') {
             this.props.changeStep(this.props.currentStep + 1);
           }
@@ -216,7 +215,7 @@ fjs = d.getElementsByTagName(s)[0];
   onInstagramLogin = () => {
     const clientId = env('instaId');
     const redirectUri = env('signupInstaRedirectUri');
-    const url = `${env('instaAuthUrl')  }?client_id=${  clientId  }&redirect_uri=${  redirectUri  }&response_type=token`;
+    const url = `${env('instaAuthUrl')}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
     window.location.href = url;
   }
   OnFBlogin = () => {
@@ -289,146 +288,148 @@ fjs = d.getElementsByTagName(s)[0];
   render() {
     return (
       <LoginContainer.SocialMediaSignup>
-        <LoginContainer.Container>
-          <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
-          <LoginContainer.SocialMediaMessage>Already have an account?
-            <span onClick={() => this.props.toggleLogin(true)}>
-              <LoginContainer.LoginDiv>Log In</LoginContainer.LoginDiv>
-            </span>
-          </LoginContainer.SocialMediaMessage>
-          <LoginContainer.SignupLine>
-            <span>Signup using social</span>
-          </LoginContainer.SignupLine>
-          <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={() => this.OnFBlogin()}>
-              <LoginContainer.FacebookContent> Facebook
-                    </LoginContainer.FacebookContent>
-            </LoginContainer.Button>
+        <Scrollbars autoHide>
+          <LoginContainer.Container>
+            <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
+            <LoginContainer.SocialMediaMessage>Already have an account?
+              <span onClick={() => this.props.toggleLogin(true)}>
+                <LoginContainer.LoginDiv>Log In</LoginContainer.LoginDiv>
+              </span>
+            </LoginContainer.SocialMediaMessage>
+            <LoginContainer.SignupLine>
+              <span>Signup using social</span>
+            </LoginContainer.SignupLine>
+            <LoginContainer.ButtonDiv>
+              <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+                <LoginContainer.FacebookContent> Facebook
+                      </LoginContainer.FacebookContent>
+              </LoginContainer.Button>
 
-            <LoginContainer.GoogleWrapper id="g-sign-in" />
-            <LoginContainer.Button onClick={() => this.onGmail()}>
-              <LoginContainer.GoogleContent> Google</LoginContainer.GoogleContent>
-            </LoginContainer.Button>
+              <LoginContainer.GoogleWrapper id="g-sign-in" />
+              <LoginContainer.Button onClick={() => this.onGmail()}>
+                <LoginContainer.GoogleContent> Google</LoginContainer.GoogleContent>
+              </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-              <LoginContainer.InstagramContent>Instagram
-                    </LoginContainer.InstagramContent>
-            </LoginContainer.Button>
-          </LoginContainer.ButtonDiv>
-          <LoginContainer.SignupLine>
-            <span>or signup with email</span>
-          </LoginContainer.SignupLine>
-          <LoginContainer.InputFieldsWrapper>
+              <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+                <LoginContainer.InstagramContent>Instagram
+                      </LoginContainer.InstagramContent>
+              </LoginContainer.Button>
+            </LoginContainer.ButtonDiv>
+            <LoginContainer.SignupLine>
+              <span>or signup with email</span>
+            </LoginContainer.SignupLine>
+            <LoginContainer.InputFieldsWrapper>
 
-            <LoginContainer.InputContainer>
-              <LoginContainer.FirstLastNameWrapper>
+              <LoginContainer.InputContainer>
+                <LoginContainer.FirstLastNameWrapper>
+                  {
+                    this.props.statusCode === '410' ?
+                      <LoginContainer.EmptyDiv />
+
+                      :
+                      <LoginContainer.FirstNameWrapper >
+                        <LoginContainer.InputWrapper>
+
+                          <LoginContainer.WrapsInput>
+                            <LoginContainer.Input
+                              placeholder="First name"
+                              type="text"
+                              name="firstName"
+                              value={this.state.firstName.value}
+                              onChange={(event) => this.saveFormEntries(event, "firstName")}
+                              onBlur={this.checkRequired}
+                            />
+                            <LoginContainer.ErrorMsg>
+                              {this.state.firstName.message}
+                            </LoginContainer.ErrorMsg>
+                          </LoginContainer.WrapsInput>
+                        </LoginContainer.InputWrapper>
+                      </LoginContainer.FirstNameWrapper>
+                  }
+                  {
+                    this.props.statusCode === '410' ?
+                      <LoginContainer.EmptyDiv />
+
+                      :
+                      <LoginContainer.LastNameWrapper>
+                        <LoginContainer.InputWrapper>
+
+                          <LoginContainer.WrapsInput>
+                            <LoginContainer.Input
+                              placeholder="Last name"
+                              type="text"
+                              name="lastName"
+                              value={this.state.lastName.value}
+                              onChange={(event) => this.saveFormEntries(event, "lastName")}
+                            />
+                            <LoginContainer.ErrorMsg>
+                              {this.state.lastName.message}
+                            </LoginContainer.ErrorMsg>
+                          </LoginContainer.WrapsInput>
+                        </LoginContainer.InputWrapper>
+                      </LoginContainer.LastNameWrapper>
+                  }
+                </LoginContainer.FirstLastNameWrapper>
+                <LoginContainer.InputWrapper>
+
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      placeholder="Email"
+                      type="email"
+                      name="email"
+                      value={this.state.email.value}
+                      onChange={(event) => this.saveFormEntries(event, "email")}
+                      onBlur={this.checkEmail}
+                    />
+                    <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
                 {
                   this.props.statusCode === '410' ?
                     <LoginContainer.EmptyDiv />
-
                     :
-                    <LoginContainer.FirstNameWrapper >
-                      <LoginContainer.InputWrapper>
+                    <LoginContainer.InputWrapper>
 
-                        <LoginContainer.WrapsInput>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.PasswordWrapper>
                           <LoginContainer.Input
-                            placeholder="First name"
-                            type="text"
-                            name="firstName"
-                            value={this.state.firstName.value}
-                            onChange={(event) => this.saveFormEntries(event, "firstName")}
-                            onBlur={this.checkRequired}
+                            placeholder="Password"
+                            type={this.state.showPassword ? 'text' : 'password'}
+                            name="password"
+                            value={this.state.password.value}
+                            onChange={(event) => this.saveFormEntries(event, "password")}
+                            onBlur={this.checkPassword}
                           />
-                          <LoginContainer.ErrorMsg>
-                            {this.state.firstName.message}
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-                    </LoginContainer.FirstNameWrapper>
+                          <LoginContainer.ShowPassword onClick={this.ShowPassword} />
+                        </LoginContainer.PasswordWrapper>
+                        <LoginContainer.ErrorMsg>
+                          {this.state.password.message}
+                        </LoginContainer.ErrorMsg>
+
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
                 }
-                {
-                  this.props.statusCode === '410' ?
-                    <LoginContainer.EmptyDiv />
 
-                    :
-                    <LoginContainer.LastNameWrapper>
-                      <LoginContainer.InputWrapper>
 
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.Input
-                            placeholder="Last name"
-                            type="text"
-                            name="lastName"
-                            value={this.state.lastName.value}
-                            onChange={(event) => this.saveFormEntries(event, "lastName")}
-                          />
-                          <LoginContainer.ErrorMsg>
-                            {this.state.lastName.message}
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-                    </LoginContainer.LastNameWrapper>
-                }
-              </LoginContainer.FirstLastNameWrapper>
-              <LoginContainer.InputWrapper>
-
-                <LoginContainer.WrapsInput>
-                  <LoginContainer.Input
-                    placeholder="Email"
-                    type="email"
-                    name="email"
-                    value={this.state.email.value}
-                    onChange={(event) => this.saveFormEntries(event, "email")}
-                    onBlur={this.checkEmail}
-                  />
-                  <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.InputWrapper>
-              {
-                this.props.statusCode === '410' ?
-                  <LoginContainer.EmptyDiv />
-                  :
-                  <LoginContainer.InputWrapper>
-
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.PasswordWrapper>
-                        <LoginContainer.Input
-                          placeholder="Password"
-                          type={this.state.showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={this.state.password.value}
-                          onChange={(event) => this.saveFormEntries(event, "password")}
-                          onBlur={this.checkPassword}
-                        />
-                        <LoginContainer.ShowPassword onClick={this.ShowPassword} />
-                      </LoginContainer.PasswordWrapper>
-                      <LoginContainer.ErrorMsg>
-                        {this.state.password.message}
-                      </LoginContainer.ErrorMsg>
-
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
+                <LoginContainer.ButtonWrapper>
+                  <FooterSection.Button type="submit" value="SIGNUP" onClick={this.onRegister} />
+                </LoginContainer.ButtonWrapper>
+                <LoginContainer.PrivacyContent>
+                  By creating an account you agree to Starsona’s
+                  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> <strong> Privacy Policy </strong></LoginContainer.Anchor>
+                  and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"><strong> Terms of Service</strong></LoginContainer.Anchor>
+                </LoginContainer.PrivacyContent>
+              </LoginContainer.InputContainer>
+            </LoginContainer.InputFieldsWrapper>
+            <LoginContainer.WrapsInput>
+              {this.props.statusCode === undefined ?
+                <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                :
+                <LoginContainer.EmptyDiv />
               }
-
-
-              <LoginContainer.ButtonWrapper>
-                <FooterSection.Button type="submit" value="SIGNUP" onClick={this.onRegister} />
-              </LoginContainer.ButtonWrapper>
-              <LoginContainer.PrivacyContent>
-                By creating an account you agree to Starsona’s
-                <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> <strong> Privacy Policy </strong></LoginContainer.Anchor>
-                and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"><strong> Terms of Service</strong></LoginContainer.Anchor>
-              </LoginContainer.PrivacyContent>
-            </LoginContainer.InputContainer>
-          </LoginContainer.InputFieldsWrapper>
-          <LoginContainer.WrapsInput>
-            {this.props.statusCode === undefined ?
-              <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-              :
-              <LoginContainer.EmptyDiv />
-            }
-          </LoginContainer.WrapsInput>
-        </LoginContainer.Container>
+            </LoginContainer.WrapsInput>
+          </LoginContainer.Container>
+        </Scrollbars>
       </LoginContainer.SocialMediaSignup>
     );
   }
