@@ -462,6 +462,7 @@ FooterSection.Button = styled.input`
   cursor: pointer;
   border-radius:5px;
   border: 2px solid #FF6C58;
+  -webkit-appearance: none;
   @media(min-width:1920px){
     font-size:20px;
   }
