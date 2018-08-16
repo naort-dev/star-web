@@ -275,7 +275,7 @@ LoginContainer.FeaturedImage = styled.div`
 `;
 
 LoginContainer.FirstImage = styled.div`
-width: 49vw;
+width: calc(50% - 10px);
 display: flex;
 justify-content: center;
 align-items: center;
@@ -284,7 +284,6 @@ margin: 10px 0px;
 background-color: #cccccc;
 
 @media(min-width: 768px){
-   width: 49.5vw;
    height: 365px;  
 }
 
@@ -299,7 +298,7 @@ background-color: #cccccc;
 `;
 
 LoginContainer.SecondImage = styled.div`
-width: 49vw;
+width: calc(50% - 10px);
 display: flex;
 justify-content: center;
 align-items: center;
@@ -307,8 +306,7 @@ height:175px;
 background-color: #cccccc;
 margin: 10px 0px;
 
-@media(min-width: 768px){
-  width: 49.5vw;  
+@media(min-width: 768px){ 
   height: 365px;  
 }
 

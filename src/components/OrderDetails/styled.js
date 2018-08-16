@@ -194,6 +194,7 @@ OrderStyled.scrollWrapper = styled(Scrollbars)`
   .order-details-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
+    padding-bottom: 15px;
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;
@@ -360,6 +361,7 @@ OrderStyled.DetailsTitle = styled.span`
 
 OrderStyled.RequestStatusTitle = OrderStyled.DetailsTitle.extend`
   display: inline-block;
+  width: auto;
   margin-right: 10px;
 `;
 
