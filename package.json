@@ -6,7 +6,6 @@
   "dependencies": {
     "axios": "^0.18.0",
     "babel-polyfill": "^6.26.0",
-    "chart.js": "^2.7.2",
     "css-loader": "^0.28.11",
     "exif-js": "^2.3.0",
     "history": "^4.7.2",
@@ -16,7 +15,6 @@
     "query-string": "^6.1.0",
     "rc-slider": "^8.6.1",
     "react": "^16.3.1",
-    "react-chartjs-2": "^2.7.4",
     "react-custom-scrollbars": "^4.2.1",
     "react-datepicker": "^1.5.0",
     "react-dom": "^16.3.1",
