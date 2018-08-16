@@ -457,7 +457,6 @@ export default class Starbio extends React.Component {
           this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
         } else {
           this.setState({ saving: true })
-          console.log(settingDetails)
           let saveCompletion = Promise.all([
             
             this.props.updateProfilePhoto(profilePhotos),
