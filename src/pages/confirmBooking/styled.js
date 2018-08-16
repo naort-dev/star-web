@@ -420,12 +420,13 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height: calc(100% - 90px);
+  height: 100%;
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     padding: 0 10px;
+    padding-bottom: 10px;
   }
 `;
 Request.PaymentControllerWrapper = styled.div`
