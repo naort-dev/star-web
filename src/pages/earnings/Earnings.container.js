@@ -22,6 +22,7 @@ const mapStateToProps = state => ({
   paidOffset: state.earningsList.paidOffset,
   paidLoading: state.earningsList.paidLoading,
   pendingLoading: state.earningsList.pendingLoading,
+  loading: state.earningsList.loading,
 });
 
 const mapDispatchToProps = dispatch => ({

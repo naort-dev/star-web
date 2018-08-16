@@ -16,30 +16,17 @@ export default class Earnings extends React.Component {
       menuActive: false,
       selectedTab: 'All',
     };
+    if (JSON.stringify(this.props.list) === '{}' && !this.props.loading) this.props.fetchEarningsList({});
+    if (this.props.pendingList.length === 0 && !this.props.pendingLoading) this.props.fetchEarningsList({ offset: this.props.pendingOffset, status: 1, limit: 15 });
+    if (this.props.paidList.length === 0 && !this.props.paidLoading) this.props.fetchEarningsList({ offset: this.props.paidOffset, status: 2, limit: 15 });
   }
-  componentWillMount() {
-    this.props.fetchEarningsList({});
-    this.props.fetchEarningsList({ offset: 0, status: 1, limit: 15 });
-    this.props.fetchEarningsList({ offset: 0, status: 2, limit: 15 });
-  }
+
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
 
   switchTab = (tab) => {
     this.setState({ selectedTab: tab });
-    switch (tab) {
-      case 'All':
-        if (JSON.stringify(this.props.list) === '{}') this.props.fetchEarningsList({});
-        break;
-      case 'Pending':
-        if (this.props.pendingList.length === 0) this.props.fetchEarningsList({ offset: 0, status: 1, limit: 15 });
-        break;
-      case 'Paid':
-        if (this.props.paidList.length === 0) this.props.fetchEarningsList({ offset: 0, status: 2, limit: 15 });
-        break;
-      default: break;
-    }
   }
 
   renderOverview = (amount, mainHead, subHead) => (
@@ -139,6 +126,7 @@ export default class Earnings extends React.Component {
       pendingCount,
       paidCount,
       paidOffset,
+      pendingOffset,
       list,
       pendingLoading,
       paidLoading
@@ -192,10 +180,14 @@ export default class Earnings extends React.Component {
                   limit={15}
                   earnings
                   totalCount={selectedTab === 'Paid' ? paidCount : pendingCount}
-                  offset={selectedTab === 'Paid' ? paidOffset : paidOffset}
+                  offset={selectedTab === 'Paid' ? paidOffset : pendingOffset}
                   loading={selectedTab === 'Paid' ? paidLoading : pendingLoading}
                   noDataText="None at this time"
-                  fetchData={(offset, refresh) => this.props.fetchEarningsList({ offset, status: selectedTab === 'Paid' ? 2 : 1 })}
+                  fetchData={(offset, refresh) => this.props.fetchEarningsList({
+                    offset,
+                    status: selectedTab === 'Paid' ? 2 : 1,
+                    limit: 15,
+                  })}
                 />
               </EarningStyled.ContentWrapper>}
               {selectedTab === 'All' && (list.Paid || list.Pending) &&
