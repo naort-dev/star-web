@@ -299,7 +299,6 @@ export default class Starbio extends React.Component {
     if (file) {
       reader.readAsDataURL(file)
     }
-
   }
 
 
@@ -662,8 +661,6 @@ export default class Starbio extends React.Component {
     });
     this.onCropChange(crop, pixelCrop);
   }
-
-
 
   handleCrop = () => {
     const canvas = document.createElement('canvas');
