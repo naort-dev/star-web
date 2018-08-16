@@ -21,6 +21,7 @@ import VideoPlayer from '../VideoPlayer';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
+import EarningsList from '../EarningsList';
 import Loader from '../Loader';
 
 export default class ScrollList extends React.Component {
@@ -297,6 +298,15 @@ export default class ScrollList extends React.Component {
             selectItem={() => this.props.selectItem(item)}
           />
         </ListStyled.listVideos>
+      ));
+    } else if (this.props.earnings) {
+      return this.props.dataList.map((item, index) => (
+        <EarningsList
+          item={item}
+          index={index}
+          key={item.created_date}
+        />
+
       ));
     }
     return this.props.dataList.map((item, index) => {
