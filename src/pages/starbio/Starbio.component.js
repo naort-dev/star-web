@@ -404,7 +404,6 @@ export default class Starbio extends React.Component {
           if (localStorage) {
             localStorage.removeItem('avatarName');
           }
-          this.props.history.push('/');
         }
       }
     } else if (this.validateIsEmpty('starAccount')) {
@@ -439,7 +438,6 @@ export default class Starbio extends React.Component {
         }).then(() => {
           this.props.fetchUserDetails(userValue.id);
           this.setState({ saving: false });
-          this.props.history.push('/');
         })
 
     }
