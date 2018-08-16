@@ -1,29 +1,153 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
-import Loader from '../../components/Loader';
+import moment from 'moment';
+import Tabs from '../../components/Tabs';
 import EarningsList from '../../components/EarningsList';
+import Dollar from '../../components/Dollar';
+import ScrollList from '../../components/ScrollList';
 import EarningStyled from './styled';
-import Chart from '../../components/Chart'
+
 export default class Earnings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       menuActive: false,
-      listData: props.pendingList,
+      selectedTab: 'All',
     };
   }
   componentWillMount() {
-    this.props.fetchEarningsList();
+    this.props.fetchEarningsList({});
+    this.props.fetchEarningsList({ offset: 0, status: 1, limit: 15 });
+    this.props.fetchEarningsList({ offset: 0, status: 2, limit: 15 });
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
+
+  switchTab = (tab) => {
+    this.setState({ selectedTab: tab });
+    switch (tab) {
+      case 'All':
+        if (JSON.stringify(this.props.list) === '{}') this.props.fetchEarningsList({});
+        break;
+      case 'Pending':
+        if (this.props.pendingList.length === 0) this.props.fetchEarningsList({ offset: 0, status: 1, limit: 15 });
+        break;
+      case 'Paid':
+        if (this.props.paidList.length === 0) this.props.fetchEarningsList({ offset: 0, status: 2, limit: 15 });
+        break;
+      default: break;
+    }
+  }
+
+  renderOverview = (amount, mainHead, subHead) => (
+    <EarningStyled.OverviewItem>
+      <EarningStyled.OverviewAmount>${amount}</EarningStyled.OverviewAmount>
+      <EarningStyled.OverViewText>{mainHead}</EarningStyled.OverViewText>
+      <EarningStyled.OverViewSubText>{subHead}</EarningStyled.OverViewSubText>
+    </EarningStyled.OverviewItem>
+  )
+
+  renderOverviewMobile = (amount, heading, size, headingColor) => (
+    <EarningStyled.OverviewMobileItem size={size}>
+      <EarningStyled.OverViewTextMobile headingColor={headingColor}>{heading}</EarningStyled.OverViewTextMobile>
+      <Dollar amount={amount} size={size} color="#FF6C58" />
+    </EarningStyled.OverviewMobileItem>
+  )
+
+  renderOverviews = () => {
+    const {
+      totalAmount,
+      paidAmount,
+      pendingAmount,
+      totalAmountPendingPage,
+      paidAmountPendingPage,
+      pendingAmountPendingPage,
+      totalAmountPaidPage,
+      paidAmountPaidPage,
+      pendingAmountPaidPage,
+    } = this.props;
+    let total;
+    let paid;
+    let pending;
+    let showOverview = true;
+    switch (this.state.selectedTab) {
+      case 'All':
+        total = totalAmount;
+        paid = paidAmount;
+        pending = pendingAmount;
+        showOverview = totalAmount !== 0;
+        break;
+      case 'Pending':
+        total = totalAmountPendingPage;
+        paid = paidAmountPendingPage;
+        pending = pendingAmountPendingPage;
+        showOverview = pendingAmountPendingPage !== 0;
+        break;
+      case 'Paid':
+        total = totalAmountPaidPage;
+        paid = paidAmountPaidPage;
+        pending = pendingAmountPaidPage;
+        showOverview = paidAmountPaidPage !== 0;
+        break;
+      default: break;
+    }
+    return showOverview && (
+      <EarningStyled.OverviewMobile>
+        {this.renderOverviewMobile(total, 'My total earnings', 24)}
+        <EarningStyled.mobileOverviewContainer>
+          {this.renderOverviewMobile(paid, 'Paid', 14, '#b5b5b5')}
+          {this.renderOverviewMobile(pending, 'Pending payout', 14, '#b5b5b5')}
+        </EarningStyled.mobileOverviewContainer>
+      </EarningStyled.OverviewMobile>
+    );
+  }
+
+  renderEarningList = list => (
+    <EarningStyled.ContentWrapper>
+      {list && !list.length && <EarningStyled.errorMessage>None at this time</EarningStyled.errorMessage>}
+      {list && list.map((item, index) => (
+        <EarningsList
+          item={item}
+          index={index}
+          key={item.created_date}
+        />))}
+
+    </EarningStyled.ContentWrapper>
+  )
+
+  renderHeader = () => (
+    <EarningStyled.Header>
+      <EarningStyled.ListItem>Revenue</EarningStyled.ListItem>
+      <EarningStyled.ListItem tabletView>VideoType</EarningStyled.ListItem>
+      <EarningStyled.ListDescription large tabletView>Description</EarningStyled.ListDescription>
+      <EarningStyled.ListItem desktopView>Customer</EarningStyled.ListItem>
+      <EarningStyled.ListItem>Order #</EarningStyled.ListItem>
+      <EarningStyled.ListItem large>Date</EarningStyled.ListItem>
+    </EarningStyled.Header>
+  )
+
   render() {
+    const {
+      paidList,
+      pendingList,
+      paidAmount,
+      pendingAmount,
+      totalAmount,
+      pendingCount,
+      paidCount,
+      paidOffset,
+      list,
+      pendingLoading,
+      paidLoading
+    } = this.props;
+    const { selectedTab } = this.state;
+    const selectedItemCount = selectedTab === 'Paid' ? paidCount : pendingCount;
+
     return (
       <EarningStyled>
-        <Chart />
         <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
@@ -38,33 +162,55 @@ export default class Earnings extends React.Component {
               <Sidebar
                 list={this.props.professionsList}
                 history={this.props.history}
-                selectedCategory={'earnings'}
+                selectedCategory="earnings"
                 menuActive={this.state.menuActive}
                 toggleMenu={this.activateMenu}
               />
             </Scrollbars>
           </EarningStyled.sideSection>
+          <EarningStyled.tabsWapper>
+            <Tabs
+              labels={['All', 'Paid', 'Pending']}
+              switchTab={this.switchTab}
+              disableFilter
+              selected={this.state.selectedTab}
+            />
+          </EarningStyled.tabsWapper>
           <EarningStyled.mainSection menuActive={this.state.menuActive}>
             <EarningStyled.Overview>
-              <EarningStyled.OverviewItem>
-                <EarningStyled.OverviewAmount>$35,000</EarningStyled.OverviewAmount>
-                <EarningStyled.OverViewText>Total Video Sales</EarningStyled.OverViewText>
-                <EarningStyled.OverViewSubText>You have created 70 videos</EarningStyled.OverViewSubText>
-              </EarningStyled.OverviewItem>
-              <EarningStyled.OverviewItem>
-                <EarningStyled.OverviewAmount>$2000</EarningStyled.OverviewAmount>
-                <EarningStyled.OverViewText>Pending Videos</EarningStyled.OverViewText>
-                <EarningStyled.OverViewSubText>You have 7 videos to fulfill</EarningStyled.OverViewSubText>
-              </EarningStyled.OverviewItem>
-              <EarningStyled.OverviewItem>
-                <EarningStyled.OverviewAmount>$500</EarningStyled.OverviewAmount>
-                <EarningStyled.OverViewText>Scheduled Payment</EarningStyled.OverViewText>
-                <EarningStyled.OverViewSubText>will be paid out on 4/5/2018</EarningStyled.OverViewSubText>
-              </EarningStyled.OverviewItem>
+              {this.renderOverview(totalAmount, 'Total Video Sales', `You have created ${paidCount + pendingCount} videos`)}
+              {this.renderOverview(pendingAmount, 'Pending Videos', `You have ${pendingCount} videos to fulfill`)}
+              {this.renderOverview(paidAmount, 'Scheduled Payment', `will be paid out on ${moment().add(1, 'months').startOf('month').format('DD/MM/YYYY')}`)}
             </EarningStyled.Overview>
-            <EarningsList
-              dataList={this.props.pendingList}
-            />
+            {this.renderOverviews()}
+            <EarningStyled.EarningsListStyled>
+              {(selectedTab === 'Paid' || selectedTab === 'Pending') &&
+              <EarningStyled.ContentWrapper>
+                {selectedItemCount != 0 && this.renderHeader()}
+                <ScrollList
+                  dataList={selectedTab === 'Paid' ? paidList : pendingList}
+                  limit={15}
+                  earnings
+                  totalCount={selectedTab === 'Paid' ? paidCount : pendingCount}
+                  offset={selectedTab === 'Paid' ? paidOffset : paidOffset}
+                  loading={selectedTab === 'Paid' ? paidLoading : pendingLoading}
+                  noDataText="None at this time"
+                  fetchData={(offset, refresh) => this.props.fetchEarningsList({ offset, status: selectedTab === 'Paid' ? 2 : 1 })}
+                />
+              </EarningStyled.ContentWrapper>}
+              {selectedTab === 'All' && (list.Paid || list.Pending) &&
+              <EarningStyled.AllEarningsWrapper>
+                <EarningStyled.heading>Paid</EarningStyled.heading >
+                {list.Paid.length != 0 && this.renderHeader()}
+                {this.renderEarningList(list.Paid)}
+                {list.Paid.length != 0 && <EarningStyled.MoreButton onClick={() => this.switchTab('Paid')}>More...</EarningStyled.MoreButton>}
+                <EarningStyled.heading>Pending</EarningStyled.heading >
+                {list.Pending.length !=0 && this.renderHeader()}
+                {this.renderEarningList(list.Pending)}
+                {list.Pending.length !=0 && <EarningStyled.MoreButton onClick={() => this.switchTab('Pending')}>More...</EarningStyled.MoreButton>}
+              </EarningStyled.AllEarningsWrapper>
+              }
+            </EarningStyled.EarningsListStyled>
           </EarningStyled.mainSection>
         </EarningStyled.sectionWrapper>
       </EarningStyled>

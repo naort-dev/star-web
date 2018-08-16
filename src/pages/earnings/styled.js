@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const EarningStyled = styled.div`
   margin-top: 60px;
   height: calc(100vh - 60px);
-  background-color: #F8F8F8;
+  background-color: #FFF;
   @media(min-width: 1920px) {
     margin-top: 72px;
     height: calc(100vh - 72px);
@@ -59,9 +59,12 @@ EarningStyled.mainSection = styled.section`
 
 EarningStyled.Overview = styled.ul`
   width: 100%;
-  display: flex;
   justify-content: space-between;
   padding: 16px;
+  display: none;
+  @media(min-width: 768px) {
+    display: flex;
+  }
 `;
 
 EarningStyled.OverviewAmount = styled.span`
@@ -105,4 +108,115 @@ EarningStyled.loaderWrapper = styled.div`
   }
 `;
 
+EarningStyled.OverviewMobile = styled.ul`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  flex-direction: column;
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
+EarningStyled.mobileOverviewContainer = styled.div`
+display: flex;
+width: 100%;
+margin-top: 16px;
+`;
+
+EarningStyled.OverviewMobileItem = styled.li`
+min-width: 50%;
+font-family: 'Ubuntu-Regular';
+font-size: ${props => `${props.size}px`};
+`;
+EarningStyled.OverViewTextMobile = styled.span`
+color: ${props => props.headingColor}
+`;
+
+EarningStyled.EarningsListStyled = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  font-family: 'Ubuntu-Medium';
+  font-size: 14px;
+`;
+
+const FlexStyles = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+`;
+
+EarningStyled.Header = FlexStyles.extend`
+  margin-right: 16px;
+  margin-top: 20px;
+  border-top: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+  display: none;
+  @media (min-width: 768px) {
+    display: flex;
+  }
+`;
+
+EarningStyled.ContentWrapper = styled.div`
+height: calc(100% - 55px);
+`;
+
+EarningStyled.ListItem = styled.li`
+  width: calc(100% / 3);
+  word-break: break-word;
+  padding-right: 20px;
+  color: ${props => (props.amount ? '#FF6C58' : '#333333')};
+  font-family: ${props => (props.light ? 'Ubuntu-Light' : 'Ubuntu-Medium')};
+  display: ${props => (props.tabletView || props.desktopView ? 'none' : 'block')};
+  @media (min-width: 768px) {
+    width: ${props => (props.large ? '20%' : 'calc(60% / 3)')};
+    display: ${props => (props.desktopView ? 'none' : 'block')};
+  }
+  @media (min-width: 1025px) {
+    display: block;
+    width: ${props => (props.large ? '20%' : 'calc(60% / 4)')};
+  }
+`;
+
+EarningStyled.ListDescription = EarningStyled.ListItem.extend `
+  @media (min-width: 768px) {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+`;
+
+EarningStyled.heading = styled.h1`
+  font-family: 'Ubuntu-Regular';
+  font-size: 24px;
+  margin-top: 20px;
+`;
+
+EarningStyled.AllEarningsWrapper = styled.div`
+  padding-left: 16px;
+  padding-right: 16px;
+`;
+
+EarningStyled.errorMessage = styled.span`
+  font-family: 'Ubuntu-Light';
+  font-size: 14px;
+  color: #b5b5b5;
+  display: block;
+  margin-top: 20px;
+`;
+
+EarningStyled.tabsWapper = styled.section`
+  @media (min-width: 768px) {
+    width: 75%;
+    float: right;
+    margin-top: 30px;
+  }
+`;
+
+EarningStyled.MoreButton = styled.span`
+  color: #FF6C58;
+  float: right;
+`;
 export default EarningStyled;
