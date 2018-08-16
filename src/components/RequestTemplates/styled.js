@@ -14,33 +14,43 @@ Templates.InputWrapper = styled.div`
   flex-direction: column;
   margin-top: 10px; 
   @media(min-width:768px){
-    flex-direction: row;
-    margin-top: 30px;
+    margin-top: 5px;
     align-items: flex-start;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
   }
 `;
 Templates.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
+  display:inline-block;
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
-    width:55%;
-    display:flex;
-    align-items:center;
     padding-right: 10px;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+
+`;
+Templates.RelationLabel = styled.div`
+  color:#333333;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
+  display:inline-block;
+  text-align:left;
+  padding:10px 0;
+  @media(min-width:768px){
+    padding-right: 2px;
+    padding-bottom:0px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
    
   }
   @media(min-width:1920px){
@@ -55,22 +65,21 @@ Templates.WrapsInput = styled.div`
     width:100%;
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: flex-start;
     flex-direction: column;
   }
   @media(min-width:1025px){
     display: flex;
     justify-content: flex-end;
-    align-items: flex-end;
+    align-items: flex-start;
    
   }
-
 `;
 
 Templates.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   width: 100%;
@@ -94,9 +103,9 @@ Templates.Input = styled.input`
   }
 `;
 Templates.InputArea = styled.textarea`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   width: 100%;
@@ -104,7 +113,7 @@ Templates.InputArea = styled.textarea`
   padding: 8px 8px;
   resize: none;
   border: 1px solid #d0d2d3;
-  background-color:rgba(248, 248, 248, 1);
+  background-color: white;
   @media(min-width:1025px){
     font-size:13px;
   }
@@ -137,9 +146,9 @@ Templates.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Ubuntu-Light';
   color: #333333;
-  font-size:16px;
+  font-size:14px;
   text-align:left;
   outline:none;
   height: 34px;
@@ -183,13 +192,11 @@ min-width: 150px;
 @media(min-width:768px){
   margin-top:0;
   height:40px;
-  margin-left: 50%;
 }
 @media(min-width:1025px){
   margin-top:0;
   height:33px;
   font-size:13px;
-  margin-left: 50%;
 }
 @media(min-width:1920px){
   font-size:16px;
@@ -245,7 +252,7 @@ Templates.Popup = styled.div`
 
 Templates.PopupContainer = styled.div`
 width: 100%;
-height: 60%;
+height: 100%;
 display: flex;
 align-items: center;
 justify-content: center;
@@ -271,5 +278,90 @@ width: 100%;
 }
 `;
 
+Templates.MicAction = styled.button`
+border: 2px solid #FF6c58;
+background-color: #fff;
+color: #FF6C58;
+height: 32px;
+padding: 5px 0px;
+border-radius: 5px;
+width: 30px;
+margin-right: 10px;
+background: url('assets/images/close-icon-orange.svg') no-repeat;
+background-position: center;
+height:33px;
+@media(min-width:1920px){
+  font-size:16px;
+  height:40px;
+}
+`
+
+Templates.ConfirmDeleteText = styled.div`
+font-size: 24px;
+text-align: center;
+margin: 10px 0px;
+`;
+
+Templates.ConfirmYes = styled.button`
+height: 40px;
+color: #FF6C58;
+background-color: white;
+width: 60px;
+border-radius: 5px;
+border: 2px solid #FF6C58;
+cursor: pointer;
+margin-right: 10px;
+font-family: Ubuntu-bold;
+`;
+
+Templates.ConfirmNo = styled.button`
+height: 40px;
+color: #FF6C58;
+background-color: white;
+width: 60px;
+border-radius: 5px;
+border: 2px solid #FF6C58;
+cursor: pointer;
+margin-left: 10px;
+font-family: Ubuntu-bold;
+`;
+
+Templates.ActionsContainer = styled.div`
+display: flex;
+flex-direction: row;
+align-items: center;
+justify-content: center;
+margin-top: 20px;
+`;
+
+Templates.WrapsAudioInput = styled.div`
+  width:100%;
+  @media(min-width:768px){
+    width:100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: row;
+  }
+  @media(min-width:1025px){
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+   
+  }
+`;
+
+Templates.RelationshipLabelWrapper = styled.div`
+width: 69%;
+`;
+
+Templates.DetailedRelation = styled.span`
+  font-size: 12px;
+  display: inline-block;
+  font-family: 'Ubuntu-Light';
+  @media(min-width: 1920px) {
+    font-size: 14px;
+  }
+`;
 
 export { Templates };

@@ -15,6 +15,7 @@ import { recorder } from '../../constants/videoRecorder';
 import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
+import StarRating from '../StarRating';
 
 
 export default class OrderDetails extends React.Component {
@@ -78,7 +79,7 @@ export default class OrderDetails extends React.Component {
           <React.Fragment>
             <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
             {
-              this.getOccasionDetails(props.occasion_type)
+              this.getOccasionDetails(props.orderDetails.occasion_type)
             }
             <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
             <OrderDetailsItem title="Event Date" value={props.occasionDate} />
@@ -129,8 +130,8 @@ export default class OrderDetails extends React.Component {
       let bookingData = {
         edit: true,
         requestId: orderDetails.id,
-        hostName: orderDetails.request_details.stargramfrom,
-        userName: orderDetails.request_details.stargramto,
+        hostName: orderDetails.request_details.stargramto,
+        userName: orderDetails.request_details.stargramfrom,
         date: orderDetails.request_details.date,
       };
       this.props.fetchCelebDetails(orderDetails.celebrity_id);
@@ -140,17 +141,19 @@ export default class OrderDetails extends React.Component {
           ...bookingData,
           eventName: orderDetails.occasion,
           relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          otherRelationValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.title,
           type: 1,
           publicRequest: orderDetails.public_request,
           occasionType: orderDetails.occasion_type,
           selectedValue: orderDetails.occasion_id,
-          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          selectedPersonal: orderDetails.request_details.stargramto !== 'Myself' ? '2' : '1',
           specification: orderDetails.request_details.specifically_for,
           importantinfo: orderDetails.request_details.important_info,
-          // otherRelationValue:undefined,
           from_audio_file: orderDetails.from_audio_file,
-          to_audio_file: orderDetails.from_whereto_audio_file,
+          to_audio_file: orderDetails.to_audio_file,
         };
+        this.props.saveAudioRecording('from', { recordedBlob: null, recordedUrl: orderDetails.from_audio_file }); // update from audio in request flow
+        this.props.saveAudioRecording('for', { recordedBlob: null, recordedUrl: orderDetails.to_audio_file }); // update to audio in request flow
         redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
       } else if (orderDetails.request_type === 2) { // events
         bookingData = {
@@ -198,7 +201,7 @@ export default class OrderDetails extends React.Component {
     }
   }
 
-  closePopup = () => {
+  closePopup = (rate) => {
     this.setState({
       showPopup: false,
       declinePopup: false,
@@ -206,6 +209,7 @@ export default class OrderDetails extends React.Component {
       showContactSupportPopup: false,
       showReportAbusePopup: false,
       audioUrl: null,
+      rate,
     });
   }
 
@@ -215,8 +219,12 @@ export default class OrderDetails extends React.Component {
     this.props.hideRequest();
   }
 
+  playAudio(audioSrc){
+    const audio = new Audio(audioSrc)
+    audio.play()
+  }
+
   renderStargramDestinationDetails = (text, audioSrc) => {
-    console.log(audioSrc)
     return (
       <React.Fragment>
         <span>
@@ -226,7 +234,7 @@ export default class OrderDetails extends React.Component {
           audioSrc &&
             <OrderStyled.AudioIcon
               src='assets/images/voice.png'
-              onClick={() => this.setState({audioUrl: audioSrc, showPopup: true})}
+              onClick={() => this.playAudio(audioSrc)}
             />
         }
       </React.Fragment>
@@ -455,12 +463,14 @@ export default class OrderDetails extends React.Component {
                     <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
                   </OrderStyled.ProfileImageWrapper>
               }
+              <OrderStyled.RequestStatusWrapper>
+                <OrderStyled.RequestStatus>
+                  <OrderStyled.RequestStatusTitle>Status:  </OrderStyled.RequestStatusTitle>
+                  <OrderStyled.RequestStatusValue>{props.requestStatus}</OrderStyled.RequestStatusValue>
+                </OrderStyled.RequestStatus>
+              </OrderStyled.RequestStatusWrapper>
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
               <OrderStyled.DetailsWrapper>
-                <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Status:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.requestStatus}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Requested:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
@@ -486,6 +496,11 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
+                {this.props.requestStatusId === 6 &&
+                <OrderStyled.DetailsItem>
+                  <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
+                  <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+                </OrderStyled.DetailsItem>}
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
             {/* Show only if request is not cancelled or not completed or not processing */}

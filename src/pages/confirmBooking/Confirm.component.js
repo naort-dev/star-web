@@ -140,6 +140,7 @@ export default class Confirm extends React.Component {
         });
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
+        this.props.changeStep(this.props.currentStepCount + 1)
         this.setState({ paymentMode: true });
       }
     } else {
@@ -158,9 +159,11 @@ export default class Confirm extends React.Component {
   goBack = () => {
     if (this.state.paymentMode) {
       this.setState({ paymentMode: false });
-    } else {
-      this.props.history.goBack();
     }
+    //  else {
+    //   this.props.history.goBack();
+    // }
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
 
   updatePublicStatus = (bookingData) => {
@@ -186,6 +189,7 @@ export default class Confirm extends React.Component {
   closeRequestFlow = () => {
     this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
+    this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
   }
 
@@ -205,6 +209,11 @@ export default class Confirm extends React.Component {
   )
 
 
+  playAudio(audioSrc){
+    const audio = new Audio(audioSrc)
+    audio.play()
+  }
+
   renderStargramDestinationDetails = (text, audioSrc) => {
     return (
       <React.Fragment>
@@ -215,7 +224,7 @@ export default class Confirm extends React.Component {
           audioSrc &&
             <Request.AudioIcon
               src='assets/images/voice.png'
-              onClick={() => this.setState({ audioUrl: audioSrc })}
+              onClick={() => this.playAudio(audioSrc)}
             />
         }
       </React.Fragment>
@@ -249,13 +258,16 @@ export default class Confirm extends React.Component {
           <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
         </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
-        <Request.smallScreenVideo>
-          <Request.VideoContentWrapper>
-            <VideoPlayer
-              primarySrc={this.state.QAVideo.url}
-            />
-          </Request.VideoContentWrapper>
-        </Request.smallScreenVideo>
+        {
+          this.state.bookingData.type === 3 &&
+            <Request.smallScreenVideo>
+              <Request.VideoContentWrapper>
+                <VideoPlayer
+                  primarySrc={this.state.QAVideo.url}
+                />
+              </Request.VideoContentWrapper>
+            </Request.smallScreenVideo>
+        }
         <Request.Questionwraps>
           <Request.Ask>
             {
@@ -279,12 +291,15 @@ export default class Confirm extends React.Component {
         </Request.OptionWrapper>
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
-        <PaymentFooterController
+        <Request.ContinueButton onClick={() => this.handleBooking()}>
+          {bookingData.edit ? 'Save' : 'Purchase'}
+        </Request.ContinueButton>
+        {/* <PaymentFooterController
           rate={rate}
           remainingBookings={remainingBookings}
-          buttonName="Purchase"
+          buttonName={bookingData.edit ? "save" : "Purchase"}
           handleBooking={this.handleBooking}
-        />
+        /> */}
       </Request.PaymentControllerWrapper>
     </React.Fragment>
   )
@@ -354,9 +369,6 @@ export default class Confirm extends React.Component {
               }
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-
               </HeaderSection>
               <Request.ComponentWrapper>
                 {
@@ -370,7 +382,7 @@ export default class Confirm extends React.Component {
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            <Request.RightSection videoMode={this.state.bookingData.type === 3}>
+            {/* <Request.RightSection videoMode={this.state.bookingData.type === 3}>
               {
                 this.state.bookingData.type === 3 ?
                   <Request.VideoContentWrapper>
@@ -386,7 +398,7 @@ export default class Confirm extends React.Component {
                     />
                   </Request.ImageStackWrapper>
               }
-            </Request.RightSection>
+            </Request.RightSection> */}
           </Request>
         </Request.Content>
       </Request.Wrapper>

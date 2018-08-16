@@ -4,8 +4,9 @@ import { Link, Redirect } from 'react-router-dom';
 import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { parse } from 'query-string';
 import EXIF from 'exif-js';
-import { LoginContainer, FooterSection } from './styled';
+import { LoginContainer, FooterSection, SectionHeader } from './styled';
 import { fetch } from '../../services/fetch';
 import Api from '../../lib/api';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
@@ -46,12 +47,7 @@ export default class Starbio extends React.Component {
       bookingPrice: '',
       bookingLimit: '',
       upload: false,
-      imageError: {
-        featuredImage: null,
-        firstImage: null,
-        secondImage: null,
-        avatar: null,
-      },
+      imageError: false,
       loaders: { featuredImage: null, firstImage: null, secondImage: null, avatar: null },
       account: true,
       settingsObj: {
@@ -61,7 +57,7 @@ export default class Starbio extends React.Component {
           email: false
         },
         starDetails: null,
-        selectedAccount: 'myAccount',
+        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
         isCelebrity: false,
         pageView: 'starBio',
       },
@@ -134,7 +130,7 @@ export default class Starbio extends React.Component {
       const settingsObj = {
         userDetails,
         starDetails,
-        selectedAccount: 'myAccount',
+        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
         isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
         pageView: 'starBio',
       };
@@ -146,17 +142,17 @@ export default class Starbio extends React.Component {
         bookingLimit: starDetails && starDetails.weekly_limits ? starDetails.weekly_limits : '',
         bookingPrice: starDetails && starDetails.rate ? starDetails.rate : '',
         featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.image_url ? userDetails.featured_photo.image_url : null,
-        firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].image_url : null,
-        secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
+        firstImage: userDetails && userDetails.images && userDetails.images[0] ? userDetails.images[0].image_url : null,
+        secondImage: userDetails && userDetails.images && userDetails.images[1] ? userDetails.images[1].image_url : null,
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
         featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo : null,
-        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : [],
+        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0] && userDetails.images[0].photo, userDetails.images[1] && userDetails.images[1].photo] : [],
         avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
         extensions: {
           featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo.split('.')[1] : null,
-          firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].photo.split('.')[1] : "jpeg",
-          secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].photo.split('.')[1] : "jpeg",
+          firstImage: userDetails && userDetails.images && userDetails.images.length && userDetails.images[0] ? userDetails.images[0].photo.split('.')[1] : "jpeg",
+          secondImage: userDetails && userDetails.images && userDetails.images.length && userDetails.images[1] ? userDetails.images[1].photo.split('.')[1] : "jpeg",
           avatarImage: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo.split('.')[1] : "jpeg",
         },
         settingsObj,
@@ -165,6 +161,12 @@ export default class Starbio extends React.Component {
     }
 
     this.props.onClearStreams();
+  }
+
+  componentDidUpdate(prevProps) {
+    // if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
+    //   this.props.fetchUserDetails(this.props.session.auth_token.id);
+    // }
   }
 
   componentDidMount() {
@@ -194,11 +196,11 @@ export default class Starbio extends React.Component {
 
 
   async onFileChange(type = "featuredImage") {
-    this.setState({ imageError: { ...this.state.imageError, [`${type}`]: false } });
+    this.setState({ imageError: false })
     const file = document.getElementById(type).files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById(type).value)) {
-      this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+      this.setState({ imageError: { extensionError: true} });
     }
 
     else {
@@ -207,7 +209,7 @@ export default class Starbio extends React.Component {
         if (correctResolution) {
           await this.getImageData(file, type)
         } else {
-          this.setState({ imageError: { ...this.state.imageError, [`${type}`]: true } });
+          this.setState({ imageError: {sizeError: true}});
         }
       }
     }
@@ -242,11 +244,23 @@ export default class Starbio extends React.Component {
         const exif = EXIF.getTag(this, "Orientation")
         switch (exif) {
           case 3:
-            resolve('rotate(180deg)')
+            resolve('rotate(180deg)');
+            break;
+          case 4:
+            resolve('rotate(180deg)');
+            break;
+          case 5:
+            resolve('rotate(90deg)');
+            break;
           case 6:
-            resolve('rotate(90deg)')
-          case 9:
-            resolve('rotate(270deg)')
+            resolve('rotate(90deg)');
+            break;
+          case 7:
+            resolve('rotate(270deg)');
+            break;
+          case 8:
+            resolve('rotate(270deg)');
+            break;
           default:
             resolve('rotate(0deg)')
         }
@@ -323,8 +337,7 @@ export default class Starbio extends React.Component {
     // })
   }
 
-  async  onMyAccountSave() {
-
+  async onMyAccountSave() {
     const userValue = this.state.settingsObj.userDetails;
     const notificationValue = this.state.settingsObj.userDetails.notification_settings;
     const notificationUpdate = {
@@ -380,10 +393,13 @@ export default class Starbio extends React.Component {
           this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
         } else {
           this.setState({ saving: true })
-          this.props.updateProfilePhoto(profilePhotos);
-          this.props.updateUserDetails(userValue.id, settingDetails);
-          this.props.updateNotification(notificationUpdate);
-          this.props.fetchUserDetails(userValue.id);
+          let saveCompletion = promise.all([
+            this.props.updateProfilePhoto(profilePhotos),
+            this.props.updateUserDetails(userValue.id, settingDetails),
+            this.props.updateNotification(notificationUpdate),
+          ]).then(() => {       
+            this.props.fetchUserDetails(userValue.id);
+          });     
           this.setState({ saving: false })
           if (localStorage) {
             localStorage.removeItem('avatarName');
@@ -836,7 +852,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
-                  {this.state.imageError.featuredImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                 </React.Fragment>
               }
             </LoginContainer.ImageInner>
@@ -858,7 +873,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
-                  {this.state.imageError.firstImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                 </React.Fragment>
               }
             </LoginContainer.ImageInner>
@@ -881,7 +895,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
-                  {this.state.imageError.secondImage ? <LoginContainer.ErrorText> Unsupported file format   </LoginContainer.ErrorText> : null}
                 </React.Fragment>
               }
             </LoginContainer.ImageInner>
@@ -916,11 +929,37 @@ export default class Starbio extends React.Component {
       })
   }
 
-  getDashboard(){
-    if(this.props.stripeRegistration.dashboardURL){
+  getDashboard() {
+    if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
   }
+  goBack = () => {
+    this.props.history.push('/');
+  }
+  SignOut = () => {
+    this.props.logOut();
+  }
+
+  renderErrorPopup = () => {
+    let errorMessage;
+    if(this.state.imageError.extensionError){
+      errorMessage = "Invalid file format. Please upload image in .png, .jpg, or .jpeg format."
+    }
+    else {
+      errorMessage = "Please check the image dimension displayed and upload an image with minimum required dimension."
+    }
+    return(
+    <Popup 
+    smallPopup
+    closePopUp = { () => this.setState({ imageError: false})}
+    >
+   <LoginContainer.PopupErrorText> {errorMessage} </LoginContainer.PopupErrorText>
+    </Popup>
+    )
+  }
+
+
   render() {
     const isSettings = this.props.history.location.pathname === '/settings';
     const isMyAccount = this.state.settingsObj.selectedAccount === 'myAccount';
@@ -959,17 +998,23 @@ export default class Starbio extends React.Component {
       }
     }
     if (!this.props.session.isLoggedIn) {
-      return <Redirect to="/signuptype" />;
+      return <Redirect to="/" />;
     }
 
     return (
       <LoginContainer.wrapper>
+
         {
           isSettings && settingsUpdating ?
             <LoginContainer.loaderWrapper>
               <Loader />
             </LoginContainer.loaderWrapper>
             : null
+        }
+
+        {this.state.imageError.extensionError || this.state.imageError.sizeError ?
+           this.renderErrorPopup()
+        : null 
         }
         <LoginContainer>
           {this.state.saving ?
@@ -984,7 +1029,13 @@ export default class Starbio extends React.Component {
           }
           <LoginContainer.LeftSection>
             {isSettings ?
-              <HeaderSection RightContent={fullName} /> :
+              <SectionHeader>
+                <SectionHeader.HeaderNavigation onClick={() => this.goBack()} />
+                <SectionHeader.MiddleDiv> {fullName}</SectionHeader.MiddleDiv>
+
+                <SectionHeader.RightDiv onClick={() => this.SignOut()}>Sign Out</SectionHeader.RightDiv>
+              </SectionHeader>
+              :
               <HeaderSection RightContent="I'M A STAR" />
             }
 

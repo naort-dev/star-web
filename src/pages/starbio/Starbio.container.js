@@ -10,6 +10,7 @@ import { updateNotification, resetNotification } from '../../store/shared/action
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
 import { fetchURL, checkStripe } from '../../store/shared/actions/stripeRegistration'
 import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
+import { logOutUser } from '../../store/shared/actions/login';
 
 const mapStateToProps = state => ({
   session: state.session,
@@ -20,6 +21,7 @@ const mapStateToProps = state => ({
   settingsSave: state.saveSettings,
   stripeRegistration: state.stripeRegistration,
   changePasswordData: state.changePassword,
+  profileUploadStatus: state.photoUpload.profileUploadStatus,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -41,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
   fetchURL: () => dispatch(fetchURL()),
   checkStripe: () => dispatch(checkStripe()),
   changePassword: data => dispatch(changePassword(data)),
+  logOut: () => dispatch(logOutUser()),
   resetChangePassord: () => dispatch(resetChangePassord()),
 });
 

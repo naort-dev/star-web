@@ -1,9 +1,15 @@
 import React from 'react';
 import RatingStyled from './styled';
+
 export default class StarRating extends React.Component {
   state = {
-    rating: this.props.rating || null,
+    rating: this.props.rating - 1 || null,
     finalRating: null,
+  }
+
+  static getDerivedStateFromProps = (props, state) => {
+    if (props.rating && props.rating !== state.rating) { return ({ rating: props.rating - 1 }); }
+    return null;
   }
 
   rate(rating) {
@@ -27,6 +33,11 @@ export default class StarRating extends React.Component {
 
   renderStars = () => {
     const stars = Array(5).fill('');
+    const actions = index => (this.props.readOnly ? ({}) : ({
+      onClick: () => this.rate(index),
+      onMouseOver: () => this.starOver(index),
+      onMouseOut: () => this.starOut(),
+    }));
     return (
       stars.map((stars, index) => {
         let selected = false;
@@ -37,9 +48,7 @@ export default class StarRating extends React.Component {
           <RatingStyled.Rating
             key={index}
             selected={selected}
-            onClick={() => this.rate(index)}
-            onMouseOver={() => this.starOver(index)}
-            onMouseOut={() => this.starOut()}
+            {...actions(index)}
           >
             ★
           </RatingStyled.Rating>
@@ -50,7 +59,7 @@ export default class StarRating extends React.Component {
 
   render() {
     return (
-      <RatingStyled>
+      <RatingStyled center={this.props.center}>
         {this.renderStars()}
       </RatingStyled>
     );

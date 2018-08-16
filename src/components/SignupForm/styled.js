@@ -152,6 +152,7 @@ LoginContainer.Button = styled.button`
   border-radius: 2px;
   cursor: pointer;
   margin-right:8px;
+  -webkit-appearance: none;
   &:hover {
     color :#FF6C58;
     border-color:#FF6C58;
@@ -235,7 +236,7 @@ LoginContainer.Line = styled.hr`
    display:none;
   }
 `;
-LoginContainer.InputFieldsWrapper = styled.div`
+LoginContainer.InputFieldsWrapper = styled.form`
   
   padding: 0px 25px;
   @media(min-width:768px){
@@ -447,7 +448,7 @@ FooterSection.RightSection = styled.div`
     width:50%;
   }
 `;
-FooterSection.Button = styled.button`
+FooterSection.Button = styled.input`
   background-color:#FF6C58 ; 
   color: #fff;
   padding: 12px 30px;

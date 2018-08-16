@@ -14,9 +14,9 @@ const menuEnter = keyframes`
 const Request = styled.section`
  display:flex;
  flex-direction: column;
- padding-bottom: 40px;
+ padding-bottom: 53px;
  max-width: 1920px;
- padding-top: 40px;
+ height: 100%;
  background: #fff;
  @media(min-width: 1025px){
   flex-direction: row;
@@ -26,7 +26,7 @@ const Request = styled.section`
  } 
 `;
 Request.Wrapper = styled.div`
- height: 100vh;
+ height: 100%;
 `;
 
 Request.Content = styled.div`
@@ -51,22 +51,29 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
   animation: ${menuEnter} 0.3s linear;
+  height: 100%;
+  @media(min-width: 768px) {
+    position: static;
+  }
   @media(min-width: 1025px){
-    width:40%;
     padding: 0px 0px;
   }
 
 `;
 Request.RightSection = styled.div`
-  width:100%;
+  width:100%
+  padding: 0px 0px;
+  display:none;
+  height: calc(100% - 237px);
+  min-height: calc(95vh - 54px);
   position: relative;
   @media(min-width: 768px) {
+    height: calc(100% - 426px);
+    min-height: calc(100vh - 60px);
     padding-bottom: 58px;
   }
   @media(min-width: 1025px){
-    order: 2;
     display:block;
     width:60%;
     padding: 27px 35px;
@@ -109,7 +116,6 @@ Request.RequestControllerWrapper = styled.div`
     margin: 0 42px;
     position:relative;
     box-shadow: none;
-    border-top: 1px solid #333333;
   }
 `;
 Request.CloseButton = styled.span`
@@ -302,7 +308,7 @@ Request.ScrollBar = styled.div`
 
 Request.recorderWrapper = styled.div`
   width:100%;
-  height:100%;
+  height:60%;
 `;
 
 const HeaderSection = styled.div`
@@ -372,21 +378,16 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
+  height: 100%;
   @media(min-width:1025px){
-    height:calc(100% - 40px);
+    height: calc(100% - 58px);
   }
   
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    background: #fff;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+    padding: 0 10px;
   }
 `;
 
@@ -400,6 +401,30 @@ Request.OptionWrapper = styled.footer`
   }
   @media(min-width: 1920px){
     padding: 165px 188px;
+  }
+`;
+Request.ContinueButton = styled.button`
+  background-color: rgb(255, 108, 88);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 108, 88);
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
   }
 `;
 Request.HeaderText = styled.div`
@@ -467,22 +492,40 @@ Request.Questionwraps = styled.div`
   height:100%;
 `;
 Request.Heading = styled.div`
-  color:rgba(51, 51, 51, 1);
-  font-size:16px;
-  font-family: 'Ubuntu-Bold';
-  text-align: left;
-  padding-bottom:10px;
+  font-family: 'Ubuntu-Regular';
+  font-size: 20px;
+  text-align: center;
+  color: #333333;
+  margin-top: 20px;
+  
+  @media(min-width:768px){
+    font-size: 32px;
+  }
+  @media(min-width:1025px){
+    font-size:22px;
+  }
+  @media(min-width:1920px){
+    font-size:32px;
+  }
 `;
 Request.InputQuestion = styled.textarea`
-  background-color: white;
-  border: 1px solid #d0d2d3;
-  border-radius: 2px;
+font-family: 'Ubuntu-Light';
+color: #333333;
+font-size:14px;
+text-align:left;
+outline:none;
+width: 100%;
+height: 70px;
+padding: 8px 8px;
+resize: none;
+border: 1px solid #d0d2d3;
+background-color: white;
+@media(min-width:1025px){
+  font-size:13px;
+}
+@media(min-width:1920px){
   font-size:16px;
-  font-family: 'Ubuntu-Regular';
-  width:100%;
-  padding:6px 9px;
-  height:100px;
-  resize: none;
+}
 
 `;
 Request.OptionWrapper = styled.div`
@@ -521,59 +564,42 @@ Request.CheckBox = styled.input`
 Request.Span = styled.label`
 `;
 Request.InputFieldsWrapper = styled.div`
-  
-  
+  margin-bottom: 13px;
   @media(min-width:768px){
     padding: 0px 0px;
-   
-  }
-  @media(min-width:1025px){
-   
   }
 `;
 Request.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
+  margin-top: 10px; 
   @media(min-width:768px){
-    flex-direction: row;
-    margin-top:5%;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 30px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
+    margin-top: 20px;
   }
 `;
 Request.WrapsInput = styled.div`
   width:100%;
   @media(min-width:768px){
     width:100%;
-    height:30px;
   }
   @media(min-width:1025){
     width:352px;
-    height:25px;
   }
 
 `;
 Request.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
-  font-size:16px;
+  font-family: 'Ubuntu-Light';
+  font-size:14px;
   text-align:left;
   padding-bottom:10px;
   @media(min-width:768px){
-    width:55%;
+    width:100%;
     display:flex;
     align-items:center;
-    padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
-   
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -614,23 +640,24 @@ Request.ErrorMsg = styled.div`
   
 `;
 Request.PaymentControllerWrapper = styled.div`
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-padding: 7px 16px;
-background-color: #fff;
-z-index: 5;
-box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-@media(min-width: 768px) {
-  padding: 13px;
-}
-@media(min-width:1025px){
-  margin: 0 42px;
-  position:absolute;
-  box-shadow: none;
-  border-top: solid #333333 1px;
-}
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 10px;
+  text-align:center;
+  padding: 7px 16px;
+  background-color: #fff;
+  z-index: 5;
+  @media(min-width: 768px) {
+    position: absolute;
+    padding: 13px;
+  }
+  @media(min-width:1025px){
+    margin: 0 42px;
+    box-shadow: none;
+    left:0;
+    right:0;
+  }
 `;
 Request.loaderWrapper = styled.div`
   position: fixed;

@@ -30,7 +30,7 @@ class Header extends React.Component {
    
     if (this.props.isLoggedIn) {
       this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
-      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url;
+      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && (this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url || this.props.userValue.settings_userDetails.avatar_photo.image_url);
       this.setState({ profilePhoto });
     }
   }
@@ -45,8 +45,8 @@ class Header extends React.Component {
       this.setState({ searchText: '' });
     }
 
-    if (JSON.stringify(nextProps.userDetails.avatar_photo) !== JSON.stringify(this.props.userDetails.avatar_photo)) {
-      const profilePhoto = nextProps.userDetails.avatar_photo && nextProps.userDetails.avatar_photo.thumbnail_url;
+    if (JSON.stringify(nextProps.userValue.settings_userDetails.avatar_photo) !== JSON.stringify(this.props.userValue.settings_userDetails.avatar_photo)) {
+      const profilePhoto = nextProps.userValue.settings_userDetails.avatar_photo && (nextProps.userValue.settings_userDetails.avatar_photo.thumbnail_url || nextProps.userValue.settings_userDetails.avatar_photo.image_url);
       this.setState({ profilePhoto });
     }
   }
@@ -132,7 +132,7 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                <Link to={`/starDetail/${item.id}`}>
+                <Link to={`/star/${item.user_id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>

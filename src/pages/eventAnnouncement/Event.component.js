@@ -7,13 +7,13 @@ import { ImageStack } from '../../components/ImageStack';
 import './event';
 import RequestTemplates from '../../components/RequestTemplates';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
+import { Confirm } from '../confirmBooking';
 
 export default class Event extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0', // for default state (choose one)
-      steps: true,
       templateType: props.bookingData.occasionType ? props.bookingData.occasionType : '',
       relationship: [],
       eventName: props.bookingData.eventName ? props.bookingData.eventName : '',
@@ -35,8 +35,6 @@ export default class Event extends React.Component {
   componentWillMount() {
     // 2 is used to specify the request was event announcement
     this.props.fetchOccasionlist(2);
-    const parsedQuery = qs.parse(this.props.location.search)
-    this.setState({ step: parsedQuery });
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;
@@ -59,9 +57,7 @@ export default class Event extends React.Component {
       this.setState({ selectEventerror: false });
     }
     if (this.state.selectedValue !== '0') {
-      this.setState({ steps: false }, () => {
-        this.props.history.push(`/${this.props.match.params.id}/request/event?step=1`);
-      });
+      this.props.changeStep(this.props.currentStepCount + 1);
     }
   }
   handleInput = (data, type) => {
@@ -87,7 +83,7 @@ export default class Event extends React.Component {
       if (bookObj) {
         localStorage.setItem('bookingData', JSON.stringify(bookObj));
         this.props.setBookingDetails(bookObj);
-        this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+        this.props.changeStep(this.props.currentStepCount + 1);
       }
     }
   }
@@ -151,15 +147,17 @@ export default class Event extends React.Component {
     });
   }
   goBack = () => {
-    this.setState({ steps: true });
-    this.props.history.goBack();
+    // if (this.state.steps === true) {
+    //   this.props.cancelBookingDetails();
+    // }
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
-    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
+    this.props.history.push(`/star/${this.props.match.params.id}`);
   }
   render() {
     let coverPhoto;
@@ -172,7 +170,7 @@ export default class Event extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
-      fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
+      fullName = this.props.userDetails.show_nick_name && this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
     if (this.props.userDetails.avatar_photo) {
@@ -196,117 +194,110 @@ export default class Event extends React.Component {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
     const eventNames = this.props.eventsDetails;
-    const parsedQuery = qs.parse(this.props.location.search)
     const optionItems = eventNames.map(eventNames =>
       <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
     );
-    if (parsedQuery.step && (this.state.selectedValue === '0')) {
-      return <Redirect to="/" />;
-    }
     return (
-      <Request.Wrapper>
-        <Request.Content>
-          <Request>
-            <Request.LeftSection>
-              <HeaderSection>
-                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-              </HeaderSection>
-              <Request.ComponentWrapper>
-                <Request.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                >
-                  <Request.Heading>What is the event</Request.Heading>
-                  <Request.Questionwraps>
-                    <Request.Ask>
-                      {
-                        !Object.keys(parsedQuery).length ?
-                          <Request.EventStep1>
-                            <Request.InputFieldsWrapper>
-                              <Request.InputWrapper>
-                                <Request.Label>Event Type</Request.Label>
-                                <Request.WrapsInput>
-                                  <Request.Select
-                                    value={this.state.selectedValue}
-                                    onChange={this.handleChange}
-                                  >
-                                    <option value="0" key="0">Choose One</option>
-                                    {optionItems}
-                                  </Request.Select>
-                                  {this.state.selectEventerror ?
-                                    <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
-                                    :
-                                    null
-                                  }
-                                </Request.WrapsInput>
-                              </Request.InputWrapper>
-                            </Request.InputFieldsWrapper>
-                          </Request.EventStep1>
-                          : null
-                      }
-                      {
-                        parsedQuery.step === '1' ?
-                          <Request.EventStep2>
-                            <RequestTemplates
-                              type={this.state.templateType}
-                              relationship={this.state.relationship}
-                              eventName={this.state.eventName}
-                              handleChange={this.handleInput}
-                              hostName={this.state.hostName}
-                              userName={this.state.userName}
-                              relationshipValue={this.state.relationshipValue}
-                              specification={this.state.specification}
-                              importantinfo={this.state.importantinfo}
-                              date={this.state.date}
-                              eventdetailName={this.state.eventdetailName}
-                              whoIsfor={this.state.whoIsfor}
-                              whoIsfrom={this.state.whoIsfrom}
-                              eventTitle={this.state.eventTitle}
-                              eventDate={this.state.eventDate}
-                              checkRequiredHostName={this.checkRequiredHostName}
-                              checkRequiredUserName={this.checkRequiredUserName}
-                              checkRequiredTitle={this.checkRequiredTitle}
-                              checkRequiredDate={this.checkRequiredDate}
-                              {...this.props}
+      <React.Fragment>
+        {
+          this.props.currentStepCount >=3 ?
+            <Confirm {...this.props} changeStep={this.props.changeStep} currentStepCount={this.props.currentStepCount} />
+          :
+        
+        <Request.Wrapper>
+          <Request.Content>
+            <Request>
+              <Request.LeftSection>
+                {
+                  this.props.currentStepCount === 2 &&
+                    <HeaderSection>
+                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                    </HeaderSection>
+                }
+                <Request.ComponentWrapper>
+                  <Request.ComponentWrapperScroll
+                    autoHide
+                    renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                  >
+                    <Request.Heading>What is the event</Request.Heading>
+                    <Request.Questionwraps>
+                      <Request.Ask>
+                        {
+                          this.props.currentStepCount === 1 ?
+                            <Request.EventStep1>
+                              <Request.InputFieldsWrapper>
+                                <Request.InputWrapper>
+                                  <Request.Label>Event Type</Request.Label>
+                                  <Request.WrapsInput>
+                                    <Request.Select
+                                      value={this.state.selectedValue}
+                                      onChange={this.handleChange}
+                                    >
+                                      <option value="0" key="0">Choose One</option>
+                                      {optionItems}
+                                    </Request.Select>
+                                    {this.state.selectEventerror ?
+                                      <Request.ErrorMsg>Please select an option</Request.ErrorMsg>
+                                      :
+                                      null
+                                    }
+                                  </Request.WrapsInput>
+                                </Request.InputWrapper>
+                              </Request.InputFieldsWrapper>
+                            </Request.EventStep1>
+                            : null
+                        }
+                        {
+                          this.props.currentStepCount === 2 ?
+                            <Request.EventStep2>
+                              <RequestTemplates
+                                type={this.state.templateType}
+                                relationship={this.state.relationship}
+                                eventName={this.state.eventName}
+                                handleChange={this.handleInput}
+                                hostName={this.state.hostName}
+                                userName={this.state.userName}
+                                relationshipValue={this.state.relationshipValue}
+                                specification={this.state.specification}
+                                importantinfo={this.state.importantinfo}
+                                date={this.state.date}
+                                eventdetailName={this.state.eventdetailName}
+                                whoIsfor={this.state.whoIsfor}
+                                whoIsfrom={this.state.whoIsfrom}
+                                eventTitle={this.state.eventTitle}
+                                eventDate={this.state.eventDate}
+                                starName={fullName}
+                                checkRequiredHostName={this.checkRequiredHostName}
+                                checkRequiredUserName={this.checkRequiredUserName}
+                                checkRequiredTitle={this.checkRequiredTitle}
+                                checkRequiredDate={this.checkRequiredDate}
+                                {...this.props}
 
-                            />
-                          </Request.EventStep2>
-                          : null
-                      }
-                    </Request.Ask>
-                  </Request.Questionwraps>
-                </Request.ComponentWrapperScroll>
-                <Request.PaymentControllerWrapper>
-                  {parsedQuery.step === '1' ?
-                    <PaymentFooterController
-                      rate={rate}
-                      remainingBookings={remainingBookings}
-                      buttonName="Book"
-                      handleBooking={this.handleBooking}
-                    />
-                    :
-                    <Request.ContinueButton onClick={() => this.steps()}>
-                      Continue
-                    </Request.ContinueButton>
-                  }
-
-
-                </Request.PaymentControllerWrapper>
-              </Request.ComponentWrapper>
-            </Request.LeftSection>
-            <Request.RightSection>
-              <Request.ImageStackWrapper>
-                <ImageStack
-                  featureImage={featuredImage}
-                  imageList={imageList}
-                />
-              </Request.ImageStackWrapper>
-            </Request.RightSection>
-          </Request>
-        </Request.Content>
-      </Request.Wrapper>
+                              />
+                            </Request.EventStep2>
+                            : null
+                        }
+                      </Request.Ask>
+                    </Request.Questionwraps>
+                  </Request.ComponentWrapperScroll>
+                  <Request.PaymentControllerWrapper>
+                    {this.props.currentStepCount === 2 ?
+                      <Request.ContinueButton onClick={() => this.handleBooking()}>
+                        Book
+                      </Request.ContinueButton>
+                      :
+                      <Request.ContinueButton onClick={() => this.steps()}>
+                        Next
+                      </Request.ContinueButton>
+                    }
+                  </Request.PaymentControllerWrapper>
+                </Request.ComponentWrapper>
+              </Request.LeftSection>
+            </Request>
+          </Request.Content>
+        </Request.Wrapper>
+        }
+      </React.Fragment>
     );
   }
 }

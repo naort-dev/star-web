@@ -1,32 +1,33 @@
 import styled from 'styled-components';
 
 const VideoRecorderDiv = styled.div`
-  height: 80%;
-  width: 100vw;
+  height: 301px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: column-reverse;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%;
+    height: 400px;
   }
   @media(min-width:768px){
     width: 100%;
-    height: 90%;
+    height: 400px;
   }
 `;
 
 VideoRecorderDiv.VideoContainer = styled.div`
-  height: 300px;
+  height: 250px;
   width: 100%;
   background-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
   @media(min-width:768px){
     width: 100%;
-    height: 400px
+    height: 300px
   }
   @media(min-width:1025px){
     height: 80%;
@@ -46,10 +47,11 @@ VideoRecorderDiv.Video = styled.video`
 `;
 
 VideoRecorderDiv.Button = styled.button`
-  margin-top: 10px;
+  margin: 10px 5px;
   background-color: #fff; 
   color: #FF6C58;
   padding: 4px 30px;
+  height: 30px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -57,10 +59,18 @@ VideoRecorderDiv.Button = styled.button`
   font-family: 'Ubuntu-Bold';
   outline:none;
   border-radius:5px;
-  border: 2px solid #FF6C58;
-  @media(min-width:1025px){
-    min-width: 150px;
+  background-image: url('../../assets/images/rec-icon.svg');
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  ${props => props.stop && ({
+    backgroundImage: 'url(../../assets/images/pause.svg)',
+    backgroundSize: '20px',
+  })
   }
+
 
 `;
 
@@ -101,7 +111,8 @@ color: #FF6C58;
 `;
 
 VideoRecorderDiv.NoVideoButton = styled.button`
-margin-top: 10px;
+margin: 10px 0px;
+height: 30px;
 background-color: #fff; 
 color: #FF6C58;
 padding: 4px 30px;
@@ -112,8 +123,14 @@ font-size: 14px;
 font-family: 'Ubuntu-Bold';
 outline:none;
 border-radius:5px;
-border: 2px solid #FF6C58;
-margin-left: 50px;
+border: 1px solid #FF6C58;
+background-image: url('../../assets/images/upload.svg');
+background-size: 30px;
+background-repeat: no-repeat;
+background-position: center;
+border: none;
+cursor: pointer
+
 `;
 
 
@@ -154,8 +171,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFFFFF;
-    font-family: 'Ubuntu-Medium';
-    font-style: italic;
+    font-family: 'Ubuntu-Regular';
     text-align: center;
   `;
 
@@ -165,5 +181,16 @@ VideoRecorderDiv.InfoText = styled.div`
   align-items: center;
   justify-content: center;
   `;
+
+  VideoRecorderDiv.Icon = styled.div`
+  position: absolute;
+  top: 10%;
+  left: 85%;
+  background: url('assets/images/video-record.gif') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  height: 30px;
+  width: 30px;
+  `
 
 export default VideoRecorderDiv;

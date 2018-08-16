@@ -23,9 +23,9 @@ import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
 import { StarsignUpVideo } from './pages/starSignUpVideo';
 import { Requestvideo } from './pages/requestvideo';
-import { Askquestion } from './pages/askQuestion';
-import { Event } from './pages/eventAnnouncement';
-import { Personal } from './pages/personalizedAnnouncement';
+// import { Askquestion } from './pages/askQuestion';
+// import { Event } from './pages/eventAnnouncement';
+// import { Personal } from './pages/personalizedAnnouncement';
 import { Confirm } from './pages/confirmBooking';
 import { Starbio } from './pages/starbio';
 import { Earnings } from './pages/earnings';
@@ -46,7 +46,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    window.addEventListener('storage', this.updateSession);
+    // window.addEventListener('storage', this.updateSession);
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
@@ -70,6 +70,9 @@ class App extends React.Component {
     //   this.setState({ showLoading: false });
     //   this.timer && window.clearTimeout(this.timer)
     // }
+    if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      this.props.fetchProfessionsList();
+    }
     if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
       this.setState({ showLoading: false });
     }
@@ -111,18 +114,19 @@ class App extends React.Component {
                 <Route path="/login" component={Login} />
                 <Route path="/forgotpassword" component={Login} />
                 <Route path="/resetpassword" component={Login} />
-                <Route path="/starDetail/:id/:videoId?" component={Starprofile} />
+                <Route path="/star/:id/:videoId?" component={Starprofile} />
+                <Route path="/myStar/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
                 <Route path="/starbio" component={Starbio} />
                 <Route path="/starsuccess" component={Starsuccess} />
                 <Route path="/recordvideo" component={StarsignUpVideo} />
-                <Route exact path="/:id/request" component={Requestvideo} />
-                <Route path="/:id/request/ask" component={Askquestion} />
+                <Route path="/:id/request" component={Requestvideo} />
+                {/* <Route path="/:id/request/ask" component={Askquestion} />
                 <Route path="/:id/request/event" component={Event} />
-                <Route path="/:id/request/personal" component={Personal} />
-                <Route path="/:id/request/confirm" component={Confirm} />
-                <Route path="/settings" component={Starbio} />
+                <Route path="/:id/request/personal" component={Personal} /> */}
+                {/* <Route path="/:id/confirm" component={Confirm} /> */}
+                {/* <Route path="/settings" component={Starbio} /> */}
 
                 {/* logged in areas */}
 
@@ -200,7 +204,8 @@ App.propTypes = {
 };
 
 const mapState = state => ({
-  professionsList: state.professionsList
+  professionsList: state.professionsList,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapProps = dispatch => ({

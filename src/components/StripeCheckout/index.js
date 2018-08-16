@@ -10,7 +10,6 @@ import {
   fetchSourceList,
   modifySourceList,
 } from '../../store/shared/actions/processPayments';
-import { PaymentFooterController } from '../PaymentFooterController';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 import { cardTypeImageFinder } from '../../utils/itemImageFinder';
@@ -71,6 +70,7 @@ class StripeCheckout extends React.Component {
         .then((payload) => {
           this.props.paymentFetchSourceEnd();
           if (payload.source) {
+            this.props.modifySourceList(payload.source.id, this.state.customerId, true); // Add Card to list
             this.chargeCreator(payload.source.id, this.state.customerId);
           }
         });
@@ -190,14 +190,11 @@ class StripeCheckout extends React.Component {
             <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
           </PaymentStyled.StripeLogoWrapper>
         </PaymentStyled.ComponentWrapperScroll>
-        <PaymentStyled.PaymentController>
-          <PaymentFooterController
-            rate={this.props.rate}
-            remainingBookings={this.props.remainingBookings}
-            buttonName="Pay"
-            handleBooking={this.handleBooking}
-          />
-        </PaymentStyled.PaymentController>
+        <PaymentStyled.PaymentControllerWrapper>
+          <PaymentStyled.ContinueButton onClick={() => this.handleBooking()}>
+             Pay
+          </PaymentStyled.ContinueButton>
+        </PaymentStyled.PaymentControllerWrapper>
       </PaymentStyled.wrapper>
     );
   }
