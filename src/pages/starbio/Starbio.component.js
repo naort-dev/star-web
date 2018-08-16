@@ -218,15 +218,15 @@ export default class Starbio extends React.Component {
   convertBeforeCrop = (imageURL) => {
     const image = new Image();
     image.onload = function () {
-      const width = 600;
-      const height = 400;
+      const width = this.originalWidth;
+      const height = this.originalHeight;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
-      canvas.width = 600;
-      canvas.height = 400;
+      canvas.width = width;
+      canvas.height = height;
       switch (this.currentExif) {
         case 2:
-          ctx.translate(this.imageNaturalWidth, 0);
+          ctx.translate(height, 0);
           ctx.scale(-1, 1);
           break;
 
@@ -273,8 +273,8 @@ export default class Starbio extends React.Component {
         image,
         0,
         0,
-        600,
-        400,
+        this.originalWidth,
+        this.originalHeight,
       );
       const base64Image = canvas.toDataURL('image/jpeg');
       this.setState({ cropImage: base64Image })
@@ -334,14 +334,12 @@ export default class Starbio extends React.Component {
     })
   }
 
-
-
   checkResolution(file, type) {
     let correctResolution = false;
     const img = new Image();
     img.src = window.URL.createObjectURL(file);
     return new Promise((resolve, reject) => {
-      img.onload = () => {
+      img.onload = function () {
         const width = img.naturalWidth;
         const height = img.naturalHeight;
         this.originalHeight = img.height;
@@ -355,7 +353,7 @@ export default class Starbio extends React.Component {
           correctResolution = true;
         }
         resolve(correctResolution)
-      }
+      }.bind(this);
 
     })
   }
