@@ -142,17 +142,17 @@ export default class Starbio extends React.Component {
         bookingLimit: starDetails && starDetails.weekly_limits ? starDetails.weekly_limits : '',
         bookingPrice: starDetails && starDetails.rate ? starDetails.rate : '',
         featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.image_url ? userDetails.featured_photo.image_url : null,
-        firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].image_url : null,
-        secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].image_url : null,
+        firstImage: userDetails && userDetails.images && userDetails.images[0] ? userDetails.images[0].image_url : null,
+        secondImage: userDetails && userDetails.images && userDetails.images[1] ? userDetails.images[1].image_url : null,
         avatar: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.image_url ? userDetails.avatar_photo.image_url : null,
         profession: professionList,
         featuredImageName: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo : null,
-        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0].photo, userDetails.images[1].photo] : [],
+        secondaryImageNames: userDetails && userDetails.images && userDetails.images.length ? [userDetails.images[0] && userDetails.images[0].photo, userDetails.images[1] && userDetails.images[1].photo] : [],
         avatarImageName: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo : null,
         extensions: {
           featuredImage: userDetails && userDetails.featured_photo && userDetails.featured_photo.photo ? userDetails.featured_photo.photo.split('.')[1] : null,
-          firstImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[0].photo.split('.')[1] : "jpeg",
-          secondImage: userDetails && userDetails.images && userDetails.images.length ? userDetails.images[1].photo.split('.')[1] : "jpeg",
+          firstImage: userDetails && userDetails.images && userDetails.images.length && userDetails.images[0] ? userDetails.images[0].photo.split('.')[1] : "jpeg",
+          secondImage: userDetails && userDetails.images && userDetails.images.length && userDetails.images[1] ? userDetails.images[1].photo.split('.')[1] : "jpeg",
           avatarImage: userDetails && userDetails.avatar_photo && userDetails.avatar_photo.photo ? userDetails.avatar_photo.photo.split('.')[1] : "jpeg",
         },
         settingsObj,
@@ -164,9 +164,9 @@ export default class Starbio extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
-      this.props.fetchUserDetails(this.props.session.auth_token.id);
-    }
+    // if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
+    //   this.props.fetchUserDetails(this.props.session.auth_token.id);
+    // }
   }
 
   componentDidMount() {
@@ -457,15 +457,19 @@ export default class Starbio extends React.Component {
           this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: 'starAccount' } });
         } else {
           this.setState({ saving: true })
-          this.props.updateProfilePhoto(profilePhotos);
-          this.props.updateUserDetails(userValue.id, settingDetails);
-          this.props.updateNotification(notificationUpdate);
-          this.props.fetchUserDetails(userValue.id);
+          console.log(settingDetails)
+          let saveCompletion = Promise.all([
+            
+            this.props.updateProfilePhoto(profilePhotos),
+            this.props.updateUserDetails(userValue.id, settingDetails),
+            this.props.updateNotification(notificationUpdate),
+          ]).then(() => {       
+            this.props.fetchUserDetails(userValue.id);
+          });     
           this.setState({ saving: false })
           if (localStorage) {
             localStorage.removeItem('avatarName');
           }
-          this.props.history.push('/');
         }
       }
     } else if (this.validateIsEmpty('starAccount')) {
@@ -500,7 +504,6 @@ export default class Starbio extends React.Component {
         }).then(() => {
           this.props.fetchUserDetails(userValue.id);
           this.setState({ saving: false });
-          this.props.history.push('/');
         })
 
     }
