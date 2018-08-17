@@ -46,7 +46,7 @@ class SignupFlow extends React.Component {
       return <SignUpForm {...this.props} signupRole={this.state.selectedType} />;
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} changeStep={this.changeStep} signupRole={this.state.selectedType} />;
+        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} />;
         case 2: return <StarbioPopup currentStep={this.state.currentStep} changeStep={this.changeStep} getBioDetails={this.getBioDetails} />;
         case 3: return <StarsignUpVideo currentStep={this.state.currentStep} changeStep={this.changeStep} bioDetails={this.state.bioDetails} />;
         case 4: return <Starsuccess closeSignupFlow={() => this.props.toggleSignup(false)} />;

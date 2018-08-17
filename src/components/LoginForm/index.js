@@ -29,6 +29,12 @@ export default class LoginForm extends React.Component {
       },
     };
   }
+  
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      this.props.onLoginComplete();
+    }
+  }
 
 
   componentDidMount() {
@@ -75,12 +81,6 @@ export default class LoginForm extends React.Component {
         'theme': 'dark',
         'onsuccess': this.onSignIn,
       });
-    }
-  }
-
-  componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.props.onLoginComplete();
     }
   }
 

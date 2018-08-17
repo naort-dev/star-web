@@ -58,7 +58,7 @@ export default class SignUp extends React.Component {
     };
     (function (d, s, id) {
       let js,
-      fjs = d.getElementsByTagName(s)[0];
+        fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) { return; }
       js = d.createElement(s); js.id = id;
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
@@ -132,18 +132,13 @@ export default class SignUp extends React.Component {
         this.state.password.value,
         this.state.role,
       ).then((response) => {
-        if (response != undefined) {        
+        if (response != undefined) {
           if (this.props.signupRole === 'star') {
             this.props.changeStep(this.props.currentStep + 1);
           }
-        }
+        };
       });
     }
-  }
-
-
-  componentWillUnmount() {
-    this.props.resetRedirectUrls();
   }
 
   onSignIn = (googleUser) => {
@@ -166,9 +161,9 @@ export default class SignUp extends React.Component {
         },
       });
     } else if (source === 3) {
-      const name = r.getName();
-      const firstName = name.split('')[0];
-      const lastName = name.split('')[1];
+      const name = r.getName().trim().split('');
+      const firstName = name[0];
+      const lastName = name[1];
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
@@ -204,7 +199,17 @@ export default class SignUp extends React.Component {
       this.state.socialMedia.fb_id,
       this.state.socialMedia.gp_id,
       this.state.socialMedia.in_id,
-    );
+    ).then((response) => {
+      if (response.status === 200) {
+        if (response.data.data && response.data.data.user) {
+          if (response.data.data.user.role_details.role_name === 'Celebrity' && response.data.data.user.role_details.is_complete === false) {
+            this.props.changeStep(this.props.currentStep + 1);
+          } else {
+            this.props.closeSignupFlow();
+          }
+        }
+      }
+    });
   }
 
 
