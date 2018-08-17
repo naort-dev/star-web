@@ -458,13 +458,13 @@ export default class Starbio extends React.Component {
         } else {
           this.setState({ saving: true })
           let saveCompletion = Promise.all([
-            
+
             this.props.updateProfilePhoto(profilePhotos),
             this.props.updateUserDetails(userValue.id, settingDetails),
             this.props.updateNotification(notificationUpdate),
-          ]).then(() => {       
+          ]).then(() => {
             this.props.fetchUserDetails(userValue.id);
-          });     
+          });
           this.setState({ saving: false })
           if (localStorage) {
             localStorage.removeItem('avatarName');
@@ -1119,17 +1119,20 @@ export default class Starbio extends React.Component {
               :
               null
             }
+            <LoginContainer.MyAccount show={isSettings && isMyAccount}>
+              <MyAccount
+                accountDetails={this.state.settingsObj.userDetails}
+                errorDetails={{ ...this.state.settingsObj.myAccountErrors }}
+                handleFieldChange={this.handleMyAccountFieldChange.bind(this)}
+                changePassword={this.props.changePassword}
+                changePasswordData={this.props.changePasswordData}
+                resetChangePassord={this.props.resetChangePassord}
+                {...this.props}
+              />
+            </LoginContainer.MyAccount>
             {
               isSettings && isMyAccount ?
-                <MyAccount
-                  accountDetails={this.state.settingsObj.userDetails}
-                  errorDetails={{ ...this.state.settingsObj.myAccountErrors }}
-                  handleFieldChange={this.handleMyAccountFieldChange.bind(this)}
-                  changePassword={this.props.changePassword}
-                  changePasswordData={this.props.changePasswordData}
-                  resetChangePassord={this.props.resetChangePassord}
-                  {...this.props}
-                />
+                null
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
@@ -1314,7 +1317,6 @@ export default class Starbio extends React.Component {
                   </LoginContainer.ComponentWrapperScroll>
                 </LoginContainer.ComponentWrapper>
             }
-
             {!this.state.settingsObj.isCelebrity && !isMyAccount ?
               null
               :

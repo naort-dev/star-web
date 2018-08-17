@@ -1146,6 +1146,11 @@ font-family: Ubuntu-light;
 }
 `;
 
+LoginContainer.MyAccount = styled.div`
+  display: ${props => (props.show ? 'block' : 'none')};
+  height: 100%;
+`;
+
 LoginContainer.loaderWrapper = styled.div`
 position: fixed;
 top: 0;
