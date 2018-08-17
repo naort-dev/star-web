@@ -6,6 +6,7 @@ export const fanRoutes = [
 export const starRoutes = [
   ...fanRoutes,
   '/user/bookings',
+  '/user/earnings',
 ];
 export const protectedRoutes = [
   ...fanRoutes,
