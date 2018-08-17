@@ -80,6 +80,7 @@ margin-top: 10px;
 
 EarningsListStyled.ListItemMobile = styled.li`
   width: ${props => (props.light ? 'auto' : '77%')};
+  font-size: 15px;
   word-break: break-word;
   padding-right: 20px;
   color: ${props => (props.light ? '#b5b5b5' : '#3b3b3b')};
