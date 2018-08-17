@@ -85,8 +85,8 @@ export default class Earnings extends React.Component {
       <EarningStyled.OverviewMobile>
         {this.renderOverviewMobile(total, 'My total earnings', 24)}
         <EarningStyled.mobileOverviewContainer>
-          {this.renderOverviewMobile(paid, 'Paid', 14, '#b5b5b5')}
-          {this.renderOverviewMobile(pending, 'Pending payout', 14, '#b5b5b5')}
+          {this.renderOverviewMobile(paid, 'Paid', 16, '#b5b5b5')}
+          {this.renderOverviewMobile(pending, 'Pending payout', 16, '#b5b5b5')}
         </EarningStyled.mobileOverviewContainer>
       </EarningStyled.OverviewMobile>
     );
@@ -158,7 +158,7 @@ export default class Earnings extends React.Component {
           </EarningStyled.sideSection>
           <EarningStyled.tabsWapper>
             <Tabs
-              labels={['All', 'Paid', 'Pending']}
+              labels={['All', 'Pending', 'Paid']}
               switchTab={this.switchTab}
               disableFilter
               selected={this.state.selectedTab}

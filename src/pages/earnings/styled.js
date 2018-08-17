@@ -114,6 +114,7 @@ EarningStyled.OverviewMobile = styled.ul`
   display: flex;
   justify-content: space-between;
   padding: 16px;
+  padding-top: 30px;
   flex-direction: column;
   background-color: #FFF;
   @media(min-width: 768px) {
