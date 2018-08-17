@@ -187,7 +187,7 @@ export default class Starprofile extends React.Component {
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
+          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.userDetails.id)}
         />
       );
     }
@@ -386,7 +386,7 @@ export default class Starprofile extends React.Component {
                   : null
               }
               {
-                !this.props.videosList.data.length && this.props.videosList.loading && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
+                (!this.props.videosList.data.length || this.props.videosList.loading) && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
                   null
                   :
                   <Tabs
