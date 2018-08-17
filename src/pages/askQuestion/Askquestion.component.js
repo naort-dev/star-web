@@ -34,7 +34,6 @@ export default class Askquestion extends React.Component {
     this.props.history.push(`/star/${this.props.match.params.id}`);
   }
 
-
   handleBooking = () => {
     this.setState({ loader: true });
     if (this.props.isLoggedIn) {
@@ -178,7 +177,7 @@ export default class Askquestion extends React.Component {
                         </Request.Questionwraps>
                       </Request.ComponentWrapperScroll>
                       <Request.PaymentControllerWrapper>
-                        <Request.ContinueButton onClick={() => this.handleBooking()}>
+                        <Request.ContinueButton disabled={disabled} onClick={() => this.handleBooking()}>
                           Book
                       </Request.ContinueButton>
                       </Request.PaymentControllerWrapper>

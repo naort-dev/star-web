@@ -15,10 +15,6 @@ export default class InstaLogin extends React.Component {
     window.close();
   }
   render() {
-    return (
-      <div>
-        Insta Login
-      </div>
-    );
+    return null;
   }
 }
