@@ -64,19 +64,20 @@ export default class SignUp extends React.Component {
       js.src = 'https://connect.facebook.net/en_US/sdk.js';
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-    const token = this.props.location.hash;
-    const authToken = token.split('=')[1];
-    const instaUrl = env('instaUrl') + authToken;
-    const that = this;
-    if (authToken !== undefined) {
-      axios.get(instaUrl)
-        .then((response) => {
-          that.onSocialMediaLogin(response.data.data, 4);
-        })
-        .catch((error) => {
+    window.addEventListener('storage', this.getInstaAccessToken);
+    // const token = this.props.location.hash;
+    // const authToken = token.split('=')[1];
+    // const instaUrl = env('instaUrl') + authToken;
+    // const that = this;
+    // if (authToken !== undefined) {
+    //   axios.get(instaUrl)
+    //     .then((response) => {
+    //       that.onSocialMediaLogin(response.data.data, 4);
+    //     })
+    //     .catch((error) => {
 
-        });
-    }
+    //     });
+    // }
     if (!this.props.isLoggedIn) {
       gapi.signin2.render('g-sign-in', {
         scope: 'profile email',
@@ -110,6 +111,7 @@ export default class SignUp extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
+    window.removeEventListener('Storage', this.getInstaAccessToken);
   }
 
   onSignIn = (googleUser) => {
@@ -121,8 +123,28 @@ export default class SignUp extends React.Component {
   onRegister = (e) => {
     e.preventDefault();
     if (this.props.statusCode === '410') {
-      this.setState({ socialMedia: { ...this.state.socialMedia, username: this.state.email.value } }, () => {
-        this.onSocialMediaLogin(this.state.socialMedia, this.state.socialMedia.sign_up_source);
+      this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.state.email.value } }, () => {
+        this.props.socialMediaLogin(
+          this.props.data.username || this.state.socialMedia.username,
+          this.state.socialMedia.first_name,
+          this.state.socialMedia.last_name,
+          this.state.socialMedia.sign_up_source,
+          this.state.socialMedia.profile_photo,
+          this.props.data.role || this.state.socialMedia.role,
+          this.state.socialMedia.fb_id,
+          this.state.socialMedia.gp_id,
+          this.state.socialMedia.in_id,
+        ).then((response) => {
+          if (response.status === 200) {
+            if (response.data.data && response.data.data.user) {
+              if (response.data.data.user.role_details.role_name === 'Celebrity' && response.data.data.user.role_details.is_complete === false) {
+                this.props.changeStep(this.props.currentStep + 1);
+              } else {
+                this.props.closeSignupFlow();
+              }
+            }
+          }
+        });
       });
     } else if (this.checkEmail() && this.checkPassword() && this.checkRequired()) {
       this.props.registerUser(
@@ -178,10 +200,15 @@ export default class SignUp extends React.Component {
       });
     } else {
       const val = r;
+      const name = val.full_name.trim().split(' ');
+      const firstName = name[0];
+      const lastName = name[1];
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
           username: val.username,
+          first_name: firstName,
+          last_name: lastName,
           sign_up_source: source,
           nick_name: val.full_name,
           profile_photo: val.profile_picture,
@@ -189,6 +216,7 @@ export default class SignUp extends React.Component {
         },
       });
     }
+    this.props.setSocialMediaData(this.state.socialMedia);
     this.props.socialMediaLogin(
       this.state.socialMedia.username,
       this.state.socialMedia.first_name,
@@ -221,7 +249,7 @@ export default class SignUp extends React.Component {
     const clientId = env('instaId');
     const redirectUri = env('signupInstaRedirectUri');
     const url = `${env('instaAuthUrl')}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
-    window.location.href = url;
+    window.open(url, '_blank');
   }
   OnFBlogin = () => {
     const that = this;
@@ -235,6 +263,20 @@ export default class SignUp extends React.Component {
     }, { scope: 'email', return_scopes: true });
   }
 
+  getInstaAccessToken = () => {
+    if (localStorage.getItem('InstaAccessToken')) {
+      const instaUrl = env('instaUrl') + localStorage.getItem('InstaAccessToken');
+      const that = this;
+      axios.get(instaUrl)
+        .then(function (response) {
+          that.onSocialMediaLogin(response.data.data, 4);
+          localStorage.removeItem('InstaAccessToken');
+        })
+        .catch(function (error) {
+
+        });
+    }
+  }
 
   saveFormEntries = (event, type) => {
     this.setState({ [type]: { ...this.state[type], value: event.target.value } });
