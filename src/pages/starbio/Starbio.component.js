@@ -514,8 +514,6 @@ export default class Starbio extends React.Component {
     this.props.resetNotification();
   }
 
-
-
   onContinueClick() {
     if (this.validateIsEmpty('starAccount')) {
       this.setState({ saving: true });
@@ -699,7 +697,7 @@ export default class Starbio extends React.Component {
         scrollTarget={document.getElementById(this.state.currentImageType)}
         closePopUp={() => this.setState({ cropMode: false })}
       >
-        <LoginContainer.CropperWrapper id="croppie">
+        <LoginContainer.CropperWrapper>
           <Cropper
             src={this.state.cropImage}
             crop={this.state.cropValues}
