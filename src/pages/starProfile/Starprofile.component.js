@@ -38,8 +38,10 @@ export default class Starprofile extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
+      this.props.resetCelebDetails();
       this.props.fetchCelebDetails(this.getUserId(nextProps));
-      this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
+      this.props.celebVideosListFetchStart();
+      // this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchCelebDetails(this.getUserId(nextProps));
