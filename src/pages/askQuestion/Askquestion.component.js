@@ -34,9 +34,7 @@ export default class Askquestion extends React.Component {
     this.props.history.push(`/star/${this.props.match.params.id}`);
   }
 
-
   handleBooking = () => {
-    console.log("handle booking called");
     this.setState({ loader: true });
     if (this.props.isLoggedIn) {
       let uploadVideo;
