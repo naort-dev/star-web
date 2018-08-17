@@ -22,7 +22,7 @@ const EarningsList = (props) => {
         <EarningsListStyled.ListItemMobile light>{moment(item.created_date).format('LL')}</EarningsListStyled.ListItemMobile>
         <EarningsListStyled.DataRowWrapperMobile>
           <EarningsListStyled.ListItemMobile>{item.starsona.fan} · {item.starsona.occasion}</EarningsListStyled.ListItemMobile>
-          <Dollar amount={parseFloat(item.amount)} size={14} color="#b5b5b5" />
+          <Dollar amount={parseFloat(item.amount)} size={15} color="#b5b5b5" />
         </EarningsListStyled.DataRowWrapperMobile>
       </EarningsListStyled.ContentMobile>
     </EarningsListStyled.ContainerMobile>
