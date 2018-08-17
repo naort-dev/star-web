@@ -39,7 +39,7 @@ export default class Starprofile extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
       this.props.fetchCelebDetails(this.getUserId(nextProps));
-      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
+      this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchCelebDetails(this.getUserId(nextProps));
@@ -116,12 +116,12 @@ export default class Starprofile extends React.Component {
         break;
       default: break;
     }
-    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props), requestId);
+    this.props.fetchCelebVideosList(0, true, this.props.userDetails.id, requestId);
   }
   handleWindowResize = (e) => {
     if (this.state.selectedTab === 'About' && document.body.getBoundingClientRect().width >= 1025) {
       this.setState({ selectedTab: 'All' }, () => {
-        this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
+        this.props.fetchCelebVideosList(0, true, this.props.userDetails.id);
       });
     }
     this.setTabList();
