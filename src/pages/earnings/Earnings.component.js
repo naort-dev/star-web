@@ -31,7 +31,7 @@ export default class Earnings extends React.Component {
 
   renderOverview = (amount, mainHead, subHead) => (
     <EarningStyled.OverviewItem>
-      <EarningStyled.OverviewAmount>${amount}</EarningStyled.OverviewAmount>
+      <EarningStyled.OverviewAmount><Dollar amount={amount} size={16} bold /></EarningStyled.OverviewAmount>
       <EarningStyled.OverViewText>{mainHead}</EarningStyled.OverViewText>
       <EarningStyled.OverViewSubText>{subHead}</EarningStyled.OverViewSubText>
     </EarningStyled.OverviewItem>
