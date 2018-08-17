@@ -131,9 +131,12 @@ EarningStyled.OverviewMobileItem = styled.li`
 min-width: 50%;
 font-family: 'Ubuntu-Regular';
 font-size: ${props => `${props.size}px`};
+display: flex;
+flex-direction: column;
 `;
 EarningStyled.OverViewTextMobile = styled.span`
-color: ${props => props.headingColor}
+color: ${props => props.headingColor};
+margin-bottom: 0.1em;
 `;
 
 EarningStyled.EarningsListStyled = styled.div`
