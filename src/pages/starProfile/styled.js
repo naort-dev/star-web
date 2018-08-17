@@ -342,7 +342,7 @@ Detail.ImageSection = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
-  min-height: 177px;
+  min-height: 120px;
   @media(min-width: 768px) {
     min-height: 300px;
   }
