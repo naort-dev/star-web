@@ -13,14 +13,14 @@ export const LoginTypeSelector = props => (
     {props.isSignUp ?
       <React.Fragment>
         <div>
-          <Link to={{ pathname: "/signup", state: { type: "fan" } }}>
+          <span onClick={() => props.changeSignUpRole('fan')}>
             <TypeSelectorWrapper.Button>I’m a Fan</TypeSelectorWrapper.Button>
-          </Link>
+          </span>
         </div>
         <div>
-          <Link to={{ pathname: "/signup", state: { type: "star" } }}>
+          <span onClick={() => props.changeSignUpRole('star')}>
             <TypeSelectorWrapper.Button>I’m a Star</TypeSelectorWrapper.Button>
-          </Link>
+          </span>
         </div>
       </React.Fragment>
       :

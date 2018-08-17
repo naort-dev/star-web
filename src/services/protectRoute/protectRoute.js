@@ -58,7 +58,7 @@ export const protectRoute = ({
       return (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/',
             state: { from: location },
           }}
         />
