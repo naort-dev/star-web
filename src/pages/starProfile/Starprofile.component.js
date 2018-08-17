@@ -31,17 +31,23 @@ export default class Starprofile extends React.Component {
   componentWillMount() {
     this.props.resetCelebDetails();
     this.props.fetchCelebDetails(this.getUserId(this.props));
-    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
+    this.props.celebVideosListFetchStart();
+    // this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
     window.addEventListener('resize', this.handleWindowResize);
     this.setTabList();
   }
   componentWillReceiveProps(nextProps) {
     if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
+      this.props.resetCelebDetails();
       this.props.fetchCelebDetails(this.getUserId(nextProps));
-      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
+      this.props.celebVideosListFetchStart();
+      // this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchCelebDetails(this.getUserId(nextProps));
+    }
+    if (Object.keys(nextProps.userDetails).length && Object.keys(this.props.userDetails).length !== Object.keys(nextProps.userDetails).length) {
+      this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
     }
     if (!nextProps.match.params.videoId) {
       this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
@@ -112,12 +118,12 @@ export default class Starprofile extends React.Component {
         break;
       default: break;
     }
-    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props), requestId);
+    this.props.fetchCelebVideosList(0, true, this.props.userDetails.id, requestId);
   }
   handleWindowResize = (e) => {
     if (this.state.selectedTab === 'About' && document.body.getBoundingClientRect().width >= 1025) {
       this.setState({ selectedTab: 'All' }, () => {
-        this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
+        this.props.fetchCelebVideosList(0, true, this.props.userDetails.id);
       });
     }
     this.setTabList();
@@ -183,7 +189,7 @@ export default class Starprofile extends React.Component {
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
+          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.userDetails.id)}
         />
       );
     }
@@ -382,7 +388,7 @@ export default class Starprofile extends React.Component {
                   : null
               }
               {
-                !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
+                (!this.props.videosList.data.length || this.props.videosList.loading) && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
                   null
                   :
                   <Tabs
