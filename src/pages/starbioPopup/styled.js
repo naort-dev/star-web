@@ -5,19 +5,12 @@ const LoginContainer = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding-bottom: 64px;
-  @media(min-width: 1025px){
-    flex-direction: row;
-    padding-bottom: 0;
-    overflow: hidden;
-  }
+  overflow: auto;
+  height: calc(100% - 64px);
 `;
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
-    height: 100vh;
-    overflow:auto;
     background-color:white;
   }
   
@@ -171,14 +164,8 @@ LoginContainer.ComponentWrapperScroll = styled(Scrollbars)`
 `;
 LoginContainer.LeftSection = styled.div`
   width: 100%;
-  height: 100%;
- 
-
   @media(min-width: 1025px){
-    width: 45%;
     padding: 0px 0px;
-    position: relative;
-    padding-bottom: 100px;
   }
 `;
 LoginContainer.RightSection = styled.div`
@@ -187,21 +174,7 @@ LoginContainer.RightSection = styled.div`
   @media(min-width: 768px) {
     margin-bottom: 80px;
   }
-  @media(min-width: 1025px){
-    background-color:rgba(248, 248, 248, 1);
-    width: 55%;
-    display:flex;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 0px 0px;
-    position: relative;
-    padding: 30px 30px;
-    flex-wrap: wrap;
-    height: 100vh;
-    padding-top: 13vh;
-    margin-top: 0px;
-    overflow-y: auto;
-  }
+l
 `;
 
 LoginContainer.mutiSelectItemWrapper = styled.div`
@@ -232,22 +205,6 @@ display:flex;
 align-items: center;
 justify-content: space-between;
 flex-wrap: wrap;
-
-@media(min-width: 768px){
-  justify-content: space-between;
-  position: relative;
-} 
-
-
-  @media(min-width: 1025px){
-    display:flex;
-    align-items: flex-start;
-    justify-content: space-around;
-    padding: 0px 0px;
-    position: relative;
-    flex-wrap: wrap;
-    width: 80%;
-  }
 `;
 
 LoginContainer.FeaturedImage = styled.div`
@@ -261,17 +218,6 @@ LoginContainer.FeaturedImage = styled.div`
   height: 365px; 
 }
 
-@media(min-width: 1025px){
- width: 98%;
- height: 50%;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- margin: 0 0;
- margin-bottom:10px;
-}
-
 `;
 
 LoginContainer.FirstImage = styled.div`
@@ -283,18 +229,6 @@ height: 175px;
 margin: 10px 0px;
 background-color: #cccccc;
 
-@media(min-width: 768px){
-   height: 365px;  
-}
-
-@media(min-width: 1025px){
- width: 48%;
- height: 50%;
- display: flex;
- justify-content: center;
- align-items: center;
- margin:  0 0;
-}
 `;
 
 LoginContainer.SecondImage = styled.div`
@@ -305,20 +239,6 @@ align-items: center;
 height:175px;
 background-color: #cccccc;
 margin: 10px 0px;
-
-@media(min-width: 768px){ 
-  height: 365px;  
-}
-
-@media(min-width: 1025px){
- width: 48%;
- height: 50%;
- background-color: #cccccc;
- display: flex;
- justify-content: center;
- align-items: center;
- margin: 0 0;
-}
 `;
 
 LoginContainer.AvatarContainer = styled.div`
@@ -326,16 +246,6 @@ width: 100%;
 display: flex;
 justify-content: center;
 align-items: center;
-@media(min-width: 768px) {
-  position: absolute;
-  bottom: -64px;
-  left: 0;
-  right: 0;
-  flex-direction: column;
-}
-@media(min-width: 1025px){
-  bottom: -100px;
-}
 `;
 
 LoginContainer.HeadingWrapper = styled.div`
@@ -640,22 +550,7 @@ LoginContainer.InputFieldsWrapper = styled.div`
 }
 `;
 LoginContainer.ButtonControllerWrapper = styled.div`
-position: fixed;
-left: 0;
-right: 0;
-bottom: 0;
-text-align:right;
-background-color: #fff;
-z-index: 5;
-box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-@media(min-width:1025px){
-  margin: 0 42px;
-  position:absolute;
-  box-shadow: none;
-  left:0;
-  right:0;
-  bottom:0;
-}
+
 `;
 LoginContainer.Ask = styled.div`
   padding: 25px 19px;
@@ -852,17 +747,17 @@ HeaderSections.RightDiv = styled.button`
 const FooterSection = styled.div`
   position:fixed;
   bottom: 0;
+  left: 0;
+  right: 0;
   background-color:#FFFFFF;
   z-index:1;
-  width:100%;
   display:flex;
+  justify-content: center;
   padding:13px 12px;
   box-shadow: 0px 0px 12px 0px rgba(34, 34, 34, 0.4);
-  @media(min-width:1025px){
+  @media(min-width: 768px){
    box-shadow:none;
-   position: relative;
-   padding: 26px 0px;
-   border-top: 1px solid #222;
+   position: absolute;
   }
   
 `;
@@ -889,39 +784,42 @@ FooterSection.RightSection = styled.div`
   }
 `;
 FooterSection.Button = styled.button`
-background-color: #fff; 
-color: #FF6C58;
-padding: 4px 30px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size:14px;
-font-family: 'Ubuntu-Bold';
-outline:none;
-cursor: pointer;
-border-radius:5px;
-border: 2px solid #FF6C58;
-@media(min-width:1920px){
-  font-size:20px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width:1920px){
+    font-size:20px;
+  }
 `;
 
 FooterSection.DisabledButton = styled.button`
-background-color: white; 
-color: grey;
-padding: 4px 30px;
-text-align: center;
-text-decoration: none;
-display: inline-block;
-font-size:14px;
-font-family: 'Ubuntu-Bold';
-outline:none;
-cursor: pointer;
-border-radius:5px;
-border: 2px solid grey;
-@media(min-width:1920px){
-  font-size:20px;
-}
-`
+  background-color:#747474 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border-radius:5px;
+  border: 2px solid #747474;
+  @media(min-width:1920px){
+    font-size:20px;
+  }
+`;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
   .Select-multi-value-wrapper {
@@ -1057,7 +955,7 @@ LoginContainer.InputWrapper = styled.div`
   @media(min-width:768px){
     flex-direction: row;
     align-items: flex-start;
-    margin: 0px 120px;
+    margin: 0;
     margin-top:5%;
   }
   @media(min-width: 1025px) {
@@ -1144,11 +1042,6 @@ font-family: Ubuntu-light;
 @media(min-width:1025px){
   font-size: 16px;
 }
-`;
-
-LoginContainer.MyAccount = styled.div`
-  display: ${props => (props.show ? 'block' : 'none')};
-  height: 100%;
 `;
 
 LoginContainer.loaderWrapper = styled.div`

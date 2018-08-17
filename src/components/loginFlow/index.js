@@ -1,0 +1,110 @@
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import RequestFlowPopup from '../RequestFlowPopup';
+import { LoginContainer, HeaderSection } from './styled';
+import { loginUser, resetSessionError } from '../../store/shared/actions/login';
+import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
+import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
+import { followCelebrity } from '../../store/shared/actions/followCelebrity';
+import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
+import Loader from '../../components/Loader';
+import LoginForm from '../../components/LoginForm';
+import ForgotPassword from '../../components/ForgotPasswordForm';
+import ResetPassword from '../../components/ResetPasswordForm';
+import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
+
+class LoginFlow extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      socialData: {},
+      selectedView: 'login',
+    };
+    if (!this.props.isLoggedIn) {
+      this.props.resetSessionError();
+    }
+  }
+
+  changeView = (view) => {
+    this.setState({ selectedView: view })
+  }
+
+  saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
+
+  render() {
+    const path = this.props.location.pathname;
+    return (
+      <React.Fragment>
+        <RequestFlowPopup
+          dotsCount={0}
+          selectedDot={1}
+          closePopUp={() => this.props.toggleLogin(false)}
+          smallPopup
+        >
+          {
+            this.props.loading ?
+              <Loader />
+              :
+              <LoginContainer.wrapper>
+
+                <LoginContainer>
+                  <LoginContainer.LeftSection>
+                    <HeaderSection>
+                      <Link to="/" onClick={() => this.props.toggleLogin(false)}>
+                        <HeaderSection.LogoImage
+                          src="assets/images/logo_starsona_large.svg"
+                          alt=""
+                        />
+                      </Link>
+                    </HeaderSection>
+                    {this.state.selectedView === 'forgotpassword' ?
+                      <ForgotPassword {...this.props} />
+                      :
+                      null
+                    }
+                    {this.state.selectedView === 'login' ?
+                      <LoginForm {...this.props} onLoginComplete={() => this.props.toggleLogin(false)} changeView={this.changeView} data={this.state.socialData} saveData={this.saveData} />
+                      :
+                      null
+                    }
+                    {path === '/resetpassword' ?
+                      <ResetPassword {...this.props} />
+                      :
+                      null
+                    }
+
+
+                  </LoginContainer.LeftSection>
+                </LoginContainer>
+              </LoginContainer.wrapper>
+          }
+        </RequestFlowPopup>
+      </React.Fragment>
+    );
+  }
+}
+const mapStateToProps = state => ({
+  isLoggedIn: state.session.isLoggedIn,
+  loading: state.session.loading,
+  error: state.session.incorrectError,
+  statusCode: state.session.statusCode,
+  redirectUrls: state.redirectReferrer,
+  followCelebData: state.followCelebrityStatus,
+  socialMediaStore: state.socialMediaData,
+});
+
+const mapDispatchToProps = dispatch => ({
+  loginUser: (email, password) => dispatch(loginUser(email, password)),
+  socialMediaLogin: (userName, firstName, lastName, signUpSource, profilePhoto, role, fbId, gId, instId) =>
+    dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, role, fbId, gId, instId)),
+  resetRedirectUrls: () => dispatch(resetRedirectUrls()),
+  setSocialMediaData: data => dispatch(setSocialMediaData(data)),
+  resetSocialMediaData: () => dispatch(resetSocialMediaData()),
+  followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
+  resetSessionError: () => dispatch(resetSessionError()),
+  toggleLogin: state => dispatch(toggleLogin(state)),
+  toggleSignup: state => dispatch(toggleSignup(state)),
+});
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginFlow));

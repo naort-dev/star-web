@@ -21,6 +21,11 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+
+LoginContainer.actionText = styled.span`
+  cursor: pointer;
+`;
+
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;

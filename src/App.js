@@ -23,10 +23,8 @@ import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
 import { StarsignUpVideo } from './pages/starSignUpVideo';
 import { Requestvideo } from './pages/requestvideo';
-// import { Askquestion } from './pages/askQuestion';
-// import { Event } from './pages/eventAnnouncement';
-// import { Personal } from './pages/personalizedAnnouncement';
-import { Confirm } from './pages/confirmBooking';
+import LoginFlow from './components/loginFlow';
+import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
 import { Earnings } from './pages/earnings';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
@@ -103,6 +101,16 @@ class App extends React.Component {
       <div>
         <div id="content-wrapper">
           {
+            this.props.loginModal ?
+              <LoginFlow />
+            : null
+          }
+          {
+            this.props.signUpModal ?
+              <SignupFlow />
+            : null
+          }
+          {
             showLoading && <ComponentLoading timedOut={this.state.timedOut} />
           }
           {
@@ -111,8 +119,8 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                <Route path="/login" component={Login} />
-                <Route path="/forgotpassword" component={Login} />
+                {/* <Route path="/login" component={Login} /> */}
+                {/* <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/star/:id/:videoId?" component={Starprofile} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
@@ -206,6 +214,8 @@ App.propTypes = {
 const mapState = state => ({
   professionsList: state.professionsList,
   isLoggedIn: state.session.isLoggedIn,
+  loginModal: state.modals.loginModal,
+  signUpModal: state.modals.signUpModal,
 });
 
 const mapProps = dispatch => ({
