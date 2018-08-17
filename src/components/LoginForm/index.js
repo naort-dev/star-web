@@ -3,6 +3,7 @@ import {
   Redirect,
   Link,
 } from 'react-router-dom';
+import axios from 'axios';
 import validator from 'validator';
 import { LoginContainer } from './styled';
 import { LoginTypeSelector } from '../LoginTypeSelector';
@@ -12,7 +13,6 @@ export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      redirectToReferrer: false,
       email: { value: '', isValid: false, message: '' },
       password: { value: '', isValid: false, message: '' },
       showPassword: false,
@@ -26,9 +26,16 @@ export default class LoginForm extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
+        role: ROLES.fan,
         ...this.props.data,
       },
     };
+  }
+  
+  componentWillMount() {
+    if (this.props.isLoggedIn) {
+      this.props.onLoginComplete();
+    }
   }
 
 
@@ -55,19 +62,20 @@ export default class LoginForm extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     }(document, 'script', 'facebook-jssdk'));
-    const token = this.props.location.hash;
-    const authToken = token.split('=')[1];
-    const instaUrl = env('instaUrl') + authToken;
-    const that = this;
-    if (authToken !== undefined) {
-      axios.get(instaUrl)
-        .then(function (response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-        })
-        .catch(function (error) {
+    // const token = this.props.location.hash;
+    // const authToken = token.split('=')[1];
+    window.addEventListener('storage', this.getInstaAccessToken);
+    // const instaUrl = env('instaUrl') + authToken;
+    // const that = this;
+    // if (authToken !== undefined) {
+    //   axios.get(instaUrl)
+    //     .then(function (response) {
+    //       that.onSocialMediaLogin(response.data.data, 4);
+    //     })
+    //     .catch(function (error) {
 
-        });
-    }
+    //     });
+    // }
     if (!this.props.isLoggedIn && this.gSignIn) {
       gapi.signin2.render('g-sign-in', {
         'scope': 'profile email',
@@ -79,17 +87,9 @@ export default class LoginForm extends React.Component {
     }
   }
 
-  componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.setState({ redirectToReferrer: true });
-    }
-  }
-
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      this.setState({
-        redirectToReferrer: nextProps.isLoggedIn,
-      });
+      this.props.onLoginComplete();
       const followData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
@@ -113,6 +113,7 @@ export default class LoginForm extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
+    window.removeEventListener('Storage', this.getInstaAccessToken);
   }
 
   onSignIn = (googleUser) => {
@@ -216,7 +217,7 @@ export default class LoginForm extends React.Component {
     const clientId = env('instaId');
     const redirectUri = env('loginInstaRedirectUri');
     const url = env('instaAuthUrl') + '?client_id=' + clientId + '&redirect_uri=' + redirectUri + '&response_type=token';
-    window.location.href = url;
+    window.open(url, '_blank');
   }
   onGmail = () => {
     const check = document.getElementsByClassName('abcRioButtonIcon');
@@ -235,6 +236,20 @@ export default class LoginForm extends React.Component {
     }, { scope: 'email', return_scopes: true });
   }
 
+  getInstaAccessToken = () => {
+    if (localStorage.getItem('InstaAccessToken')) {
+      const instaUrl = env('instaUrl') + localStorage.getItem('InstaAccessToken');
+      const that = this;
+      axios.get(instaUrl)
+        .then(function (response) {
+          that.onSocialMediaLogin(response.data.data, 4);
+          localStorage.removeItem('InstaAccessToken');
+        })
+        .catch(function (error) {
+
+        });
+    }
+  }
 
   acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
@@ -292,27 +307,16 @@ export default class LoginForm extends React.Component {
   }
   render() {
     const { email, password } = this.state;
-    const loginToContinue = this.props.location.state && this.props.location.state.to;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
     return (
-      <React.Fragment>
-        {this.props.statusCode === '310' ?
-          <React.Fragment>
-            <LoginTypeSelector isLogin setRoleDetails={this.setRoleDetails} />
-          </React.Fragment>
-          :
+
           <React.Fragment>
             <LoginContainer.SocialMediaSignup>
               <LoginContainer.Container>
                 <LoginContainer.Heading>Welcome back to Starsona!</LoginContainer.Heading>
                 <LoginContainer.SocialMediaMessage>Don't have an account?
-                <Link to="/signuptype">
+                  <span onClick={() => this.props.toggleSignup(true)}>
                     <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
-                  </Link>
+                  </span>
                 </LoginContainer.SocialMediaMessage>
                 <LoginContainer.SignupLine>
                   <span>Login using social</span>
@@ -382,9 +386,9 @@ export default class LoginForm extends React.Component {
                       <React.Fragment></React.Fragment>
                       :
                       <LoginContainer.ForgotButtonWrapper>
-                        <Link to="/forgotpassword">
+                        <LoginContainer.actionText onClick={() => this.props.changeView('forgotpassword')}>
                           <LoginContainer.ForgotButtonSpan> Forgot your password?</LoginContainer.ForgotButtonSpan>
-                        </Link>
+                        </LoginContainer.actionText>
                       </LoginContainer.ForgotButtonWrapper>
                     }
                     <LoginContainer.ButtonWrapper>
@@ -411,8 +415,7 @@ export default class LoginForm extends React.Component {
               </LoginContainer.Container>
             </LoginContainer.SocialMediaSignup>
           </React.Fragment>
-        }
-      </React.Fragment>
+
     );
   }
 }
