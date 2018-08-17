@@ -26,6 +26,7 @@ import { Requestvideo } from './pages/requestvideo';
 import LoginFlow from './components/loginFlow';
 import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
+import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
 import { fetchUserDetails } from './store/shared/actions/getUserDetails';
@@ -130,6 +131,7 @@ class App extends React.Component {
                 <Route path="/starsuccess" component={Starsuccess} />
                 <Route path="/recordvideo" component={StarsignUpVideo} />
                 <Route path="/:id/request" component={Requestvideo} />
+                <Route path="/instalogin" component={InstaLogin} />
                 {/* <Route path="/:id/request/ask" component={Askquestion} />
                 <Route path="/:id/request/event" component={Event} />
                 <Route path="/:id/request/personal" component={Personal} /> */}
