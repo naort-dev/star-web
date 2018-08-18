@@ -430,8 +430,8 @@ fjs = d.getElementsByTagName(s)[0];
               </LoginContainer.ButtonWrapper>
               <LoginContainer.PrivacyContent>
                 By creating an account you agree to Starsona’s
-                <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> <strong> Privacy Policy </strong></LoginContainer.Anchor>
-                and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"><strong> Terms of Service</strong></LoginContainer.Anchor>
+                <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/privacy-policy/"> <strong> Privacy Policy </strong></LoginContainer.Anchor>
+                and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/terms-service/"><strong> Terms of Service</strong></LoginContainer.Anchor>
               </LoginContainer.PrivacyContent>
             </LoginContainer.InputContainer>
           </LoginContainer.InputFieldsWrapper>
