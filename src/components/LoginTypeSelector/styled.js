@@ -8,7 +8,7 @@ const TypeSelectorWrapper = styled.div`
   }
 `;
 TypeSelectorWrapper.Content = styled.div`
-  padding: 28px 0px;
+  padding: 0px 0px;
 `;
 
 TypeSelectorWrapper.heading = styled.div`
@@ -64,7 +64,7 @@ TypeSelectorWrapper.SocialMediaMessage = styled.div`
     font-size:14px;
   }
   @media(min-width:1920px){
-    font-size:28px;
+    font-size:18px;
   }
 `;
 TypeSelectorWrapper.Button = styled.button`
