@@ -12,7 +12,7 @@ export const RequestController = props => (
       : null
     }
     <FooterDiv.BookingPrice>
-      <strong>{props.remainingBookings > 0 ? `${props.rate}` : null}</strong>
+      <strong>{props.remainingBookings > 0 ? `$ ${props.rate}` : null}</strong>
     </FooterDiv.BookingPrice>
     <FooterDiv.Button onClick={() => props.handleRequest()}>{props.remainingBookings > 0 ? 'Request a Video' : 'Alert Me'}</FooterDiv.Button>
   </FooterDiv>
