@@ -32,7 +32,9 @@ class ImageRender extends React.Component {
     window.addEventListener('resize', this.setImagesHeight);
   }
   componentWillReceiveProps(nextProps) {
-    this.setImagesHeight();
+    setTimeout(() => {
+      this.setImagesHeight();
+    }, 100);
     if (nextProps.celebrityFollow !== this.state.favouriteSelected) {
       this.setState({ favouriteSelected: nextProps.celebrityFollow });
     }
