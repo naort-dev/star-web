@@ -696,7 +696,7 @@ export default class Starbio extends React.Component {
         scrollTarget={document.getElementById(this.state.currentImageType)}
         closePopUp={() => this.setState({ cropMode: false })}
       >
-        <LoginContainer.CropperWrapper id="croppie">
+        <LoginContainer.CropperWrapper>
           <Cropper
             src={this.state.cropImage}
             crop={this.state.cropValues}
