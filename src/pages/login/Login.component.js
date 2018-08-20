@@ -39,9 +39,9 @@ export default class Login extends React.Component {
                         alt=""
                       />
                     </Link>
-                    <Link to="/signuptype">
+                    {/* <Link to="/signuptype">
                       <HeaderSection.RightDiv>SIGNUP</HeaderSection.RightDiv>
-                    </Link>
+                    </Link> */}
                   </HeaderSection>
                   <LoginContainer.CoverImage />
                   {path === '/forgotpassword' ?
