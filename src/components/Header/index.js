@@ -118,6 +118,7 @@ class Header extends React.Component {
   }
 
   logoutUser = () => {
+    this.setState({ profileDropdown: false });
     if (window.gapi.auth2) {
       window.gapi.auth2.getAuthInstance().signOut();
     }
@@ -153,6 +154,7 @@ class Header extends React.Component {
 
   render() {
     const { props } = this;
+    console.log(this.state.profileDropdown)
     return (
       <HeaderSection>
         <HeaderSection.HeaderDiv >
