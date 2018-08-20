@@ -13,14 +13,8 @@ TypeSelectorWrapper.Content = styled.div`
 
 TypeSelectorWrapper.heading = styled.div`
   font-family: 'Ubuntu-Bold';
-  font-size: 14px;
+  font-size: 25px;
   color:#FF6C58;
-  @media(min-width : 768px){
-    font-size: 32px;
-  }
-  @media(min-width: 1025px){
-    font-size: 32px;
-  }
   @media(min-width:1920px){
     font-size:32px;
   }

@@ -432,7 +432,7 @@ HeaderSection.LogoImage = styled.img`
   width:100px;
   height:45px;
   @media(min-width:1025px){
-    width:160px;
+    width:120px;
     height:60px;
   }
 `;
