@@ -2,6 +2,7 @@ import React from 'react';
 import VideoRecorderDiv from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
 import VideoPlayer from '../VideoPlayer';
+import smoothScroll from '../../utils/smoothScroll';
 
 
 export default class VideoRecorder extends React.Component {
@@ -114,7 +115,9 @@ export default class VideoRecorder extends React.Component {
       },
     })
       .then(() => {
-        document.getElementById('video-player').srcObject = this.state.stream;
+        const videoElem = document.getElementById('video-player');
+        smoothScroll(videoElem);
+        videoElem.srcObject = this.state.stream;
         const options = {
           mimeType: 'video/webm;codecs=vp8',
           audioBitsPerSecond: 128000,
@@ -170,6 +173,14 @@ export default class VideoRecorder extends React.Component {
     }
   }
 
+  scrollTo() {
+    window.scrollBy({ 
+      top: 100, // could be negative value
+      left: 0, 
+      behavior: 'smooth' 
+    });
+  }
+
 
   render() {
     return (
@@ -201,7 +212,10 @@ export default class VideoRecorder extends React.Component {
                 </VideoRecorderDiv.UploadWrapper>
               </VideoRecorderDiv.Wrapper>
               : (this.props.videoRecorder.start == true ?
-                <VideoRecorderDiv.Button title="Stop recording" stop={true} onClick={this.stopRecording} /> :
+                <React.Fragment>
+                <VideoRecorderDiv.Button title="Stop recording" stop={true} onClick={this.stopRecording} />
+                <VideoRecorderDiv.StopRecorderText> Stop recording </VideoRecorderDiv.StopRecorderText>
+                </React.Fragment> :
                 <VideoRecorderDiv.Wrapper>
                   <VideoRecorderDiv.UploadWrapper>
                     <VideoRecorderDiv.Button title="Record video" onClick={this.startRecording.bind(this, true)} />
