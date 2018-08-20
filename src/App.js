@@ -23,11 +23,10 @@ import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
 import { StarsignUpVideo } from './pages/starSignUpVideo';
 import { Requestvideo } from './pages/requestvideo';
-// import { Askquestion } from './pages/askQuestion';
-// import { Event } from './pages/eventAnnouncement';
-// import { Personal } from './pages/personalizedAnnouncement';
-import { Confirm } from './pages/confirmBooking';
+import LoginFlow from './components/loginFlow';
+import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
+import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
 import { fetchUserDetails } from './store/shared/actions/getUserDetails';
@@ -103,6 +102,16 @@ class App extends React.Component {
       <div>
         <div id="content-wrapper">
           {
+            this.props.loginModal ?
+              <LoginFlow />
+            : null
+          }
+          {
+            this.props.signUpModal ?
+              <SignupFlow />
+            : null
+          }
+          {
             showLoading && <ComponentLoading timedOut={this.state.timedOut} />
           }
           {
@@ -111,8 +120,8 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                <Route path="/login" component={Login} />
-                <Route path="/forgotpassword" component={Login} />
+                {/* <Route path="/login" component={Login} /> */}
+                {/* <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
                 <Route exact path="/star/:id" component={Starprofile} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
@@ -122,6 +131,12 @@ class App extends React.Component {
                 <Route path="/starsuccess" component={Starsuccess} />
                 <Route path="/recordvideo" component={StarsignUpVideo} />
                 <Route path="/:id/request" component={Requestvideo} />
+                <Route path="/instalogin" component={InstaLogin} />
+                {/* <Route path="/:id/request/ask" component={Askquestion} />
+                <Route path="/:id/request/event" component={Event} />
+                <Route path="/:id/request/personal" component={Personal} /> */}
+                {/* <Route path="/:id/confirm" component={Confirm} /> */}
+                {/* <Route path="/settings" component={Starbio} /> */}
 
                 {/* logged in areas */}
 
@@ -196,6 +211,8 @@ App.propTypes = {
 const mapState = state => ({
   professionsList: state.professionsList,
   isLoggedIn: state.session.isLoggedIn,
+  loginModal: state.modals.loginModal,
+  signUpModal: state.modals.signUpModal,
 });
 
 const mapProps = dispatch => ({

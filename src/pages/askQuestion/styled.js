@@ -174,7 +174,7 @@ Request.ImageRenderDiv = styled.div`
 Request.ImageSection = styled.div`
   right:0;
   position:relative;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/default-cover.jpg)'};
+  background-image: ${props => props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/default-cover.jpg)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
@@ -200,7 +200,7 @@ Request.ProfileImageWrapper = styled.div`
 Request.ProfileImage = styled.span`
   border-radius: 50%;
   display: inline-block;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-image: ${props => props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/profile.png)'};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
@@ -420,6 +420,13 @@ Request.ContinueButton = styled.button`
   border-style: solid;
   border-color: rgb(255, 108, 88);
   border-image: initial;
+  ${props => props.disabled && ({
+    border: '2px solid grey',
+    color: 'grey',
+    backgroundColor: 'white',
+  })
+  }
+  
   @media(min-width: 1920px) {
     font-size: 20px;
   }
