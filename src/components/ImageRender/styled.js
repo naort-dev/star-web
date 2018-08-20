@@ -92,4 +92,11 @@ ImageRenderDiv.StarDetails = styled.p`
   }
 `;
 
+ImageRenderDiv.Rating = styled.span`
+  position: absolute;
+  bottom: 4px;
+  color: #FFF;
+  left: 8px;
+`;
+
 export default ImageRenderDiv;

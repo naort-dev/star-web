@@ -214,7 +214,7 @@ PaymentStyled.ErrorElement = styled.span`
 
 PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
   display: flex;
-  margin-top: 30px;
+  margin-top: 20px;
   flex-wrap: wrap;
   .StripeElement {
     margin-right: 30px;

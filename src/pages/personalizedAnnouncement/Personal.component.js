@@ -413,11 +413,11 @@ export default class Personal extends React.Component {
                       <Request.PaymentControllerWrapper>
                         {this.props.currentStepCount === 2 ?
                           <Request.ContinueButton onClick={() => this.handleBooking()}>
-                            Book
+                            Continue
                           </Request.ContinueButton>
                           :
                           <Request.ContinueButton onClick={() => this.steps()}>
-                            Next
+                            Continue
                           </Request.ContinueButton>
                         }
                       </Request.PaymentControllerWrapper>
