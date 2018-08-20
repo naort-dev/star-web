@@ -19,17 +19,18 @@ export default class SignUp extends React.Component {
       email: { value: "", isValid: false, message: "" },
       role: props.signupRole === "fan" ? ROLES.fan : ROLES.star,
       socialMedia: {
-        username: "",
-        first_name: "",
-        last_name: "",
-        sign_up_source: "",
-        profile_photo: "",
-        nick_name: "",
-        fb_id: "",
-        gp_id: "",
-        in_id: "",
-        role: props.signupRole === "fan" ? ROLES.fan : ROLES.star
-      }
+        username: '',
+        first_name: '',
+        last_name: '',
+        sign_up_source: '',
+        profile_photo: '',
+        nick_name: '',
+        fb_id: '',
+        gp_id: '',
+        in_id: '',
+        role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
+      },
+      gmailClick: false,
     };
   }
   componentWillMount() {
@@ -115,10 +116,12 @@ export default class SignUp extends React.Component {
     window.removeEventListener("Storage", this.getInstaAccessToken);
   }
 
-  onSignIn = googleUser => {
-    const profile = googleUser.getBasicProfile();
-    this.onSocialMediaLogin(profile, 3);
-  };
+  onSignIn = (googleUser) => {
+    if (this.state.gmailClick) {
+      const profile = googleUser.getBasicProfile();
+      this.onSocialMediaLogin(profile, 3);
+    }
+  }
 
   onRegister = e => {
     e.preventDefault();
