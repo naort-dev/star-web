@@ -416,6 +416,7 @@ LoginContainer.UploadInput = styled.input`
     top: 0;
     cursor: pointer;
     opacity: 0;
+    width: 100%;
     @media(min-width: 768px) {
       left: initial;
       right: 25%;
