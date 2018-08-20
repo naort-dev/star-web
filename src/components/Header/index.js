@@ -161,6 +161,7 @@ class Header extends React.Component {
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
+                onClick={() => props.enableMenu()}
               />
             </Link>
             {

@@ -335,4 +335,15 @@ AvatarContainer.CropperButton = styled.div`
   border: 2px solid #FF6C58;
 `;
 
+
+AvatarContainer.PopupErrorText = styled.p`
+line-height: 1.5;
+font-size: 13px;
+margin-top: 5px;
+padding: 5px 5px;
+@media(min-width:1025px){
+  font-size:16px;
+}
+`;
+
 export { AvatarContainer };
