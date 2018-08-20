@@ -69,7 +69,7 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
   @media(min-width: 1025px) {
     height: 100%;    
-    padding: 5px 37px;
+    padding: 5px 0;
     padding-bottom: 69px;
   }
 `;
@@ -486,7 +486,7 @@ LoginContainer.WrapsInput = styled.div`
     height:30px;
   }
   @media(min-width:1025){
-    width:352px;
+    width:100%;
     height:25px;
   }
 
