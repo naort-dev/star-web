@@ -376,6 +376,7 @@ LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;
   font-family: 'Ubuntu-Regular';
   font-size:12px;
+  margin-top:0.5%;
 `;
 LoginContainer.ButtonWrapper = styled.div`
   margin-top:3%;
