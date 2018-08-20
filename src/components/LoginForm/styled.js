@@ -134,7 +134,7 @@ LoginContainer.Button = styled.button`
   font-family: 'Ubuntu-Medium';
   font-size:16px;
   color: rgba(84, 84, 84, 1);
-  width: 100%;
+  width: calc(100% - 8px);
   max-width: 320px;
   text-align:center;
   border-radius: 2px;

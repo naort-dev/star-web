@@ -1013,7 +1013,7 @@ export default class StarbioPopup extends React.Component {
           : null
         }
         <LoginContainer>
-          {/* <Scrollbars autoHide> */}
+          <Scrollbars autoHide>
           {this.state.saving ?
             <LoginContainer.loaderWrapper>
               <Loader />
@@ -1238,7 +1238,23 @@ export default class StarbioPopup extends React.Component {
                   </LoginContainer.Ask>
                 </LoginContainer.Questionwraps>
             }
-            {!this.state.settingsObj.isCelebrity && !isMyAccount ?
+          </LoginContainer.LeftSection>
+          <LoginContainer.RightSection>
+            {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
+            {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
+              <LoginContainer.ImageStackWrapper>
+                <ImageStack
+                  featureImage={this.state.settingsObj.isCelebrity ? featuredImage : "assets/images/Stadium_800x376.jpg"}
+                  imageList={this.state.settingsObj.isCelebrity ? imageList : ['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
+                />
+              </LoginContainer.ImageStackWrapper>
+              :
+              this.renderRightView(options)
+
+            }
+          </LoginContainer.RightSection>
+          </Scrollbars>
+          {!this.state.settingsObj.isCelebrity && !isMyAccount ?
               null
               :
               <LoginContainer.ButtonControllerWrapper>
@@ -1258,22 +1274,6 @@ export default class StarbioPopup extends React.Component {
 
               </LoginContainer.ButtonControllerWrapper>
             }
-          </LoginContainer.LeftSection>
-          <LoginContainer.RightSection>
-            {/* {this.state.imageError ? <LoginContainer.ErrorMessage>{this.state.imageError} </LoginContainer.ErrorMessage> : null} */}
-            {isSettings && (isMyAccount || (!this.state.settingsObj.isCelebrity && !isMyAccount)) ?
-              <LoginContainer.ImageStackWrapper>
-                <ImageStack
-                  featureImage={this.state.settingsObj.isCelebrity ? featuredImage : "assets/images/Stadium_800x376.jpg"}
-                  imageList={this.state.settingsObj.isCelebrity ? imageList : ['assets/images/Stage_396x376.jpg', 'assets/images/Star_396x376.jpg']}
-                />
-              </LoginContainer.ImageStackWrapper>
-              :
-              this.renderRightView(options)
-
-            }
-          </LoginContainer.RightSection>
-          {/* </Scrollbars> */}
         </LoginContainer>
       </LoginContainer.wrapper>
     );
