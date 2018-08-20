@@ -9,6 +9,16 @@ export const LoginTypeSelector = props => (
       <TypeSelectorWrapper.heading>{props.isSignUp || props.isLogin ? 'Create your free account' : 'Ready to create videos for your fans?'}</TypeSelectorWrapper.heading>
       <TypeSelectorWrapper.subheading>{props.isSignUp || props.isLogin ? 'Choose your account type to get started' : 'Starsona is an easy way for you to connect with fans, make people incredibly happy, and earn money or fund raise for a cause you’re passionate about.'}
       </TypeSelectorWrapper.subheading>
+      {props.isSignUp || props.isLogin ?
+        <TypeSelectorWrapper.SocialMediaMessage>
+          Already have an account?
+          <span onClick={() => props.toggleLogin(true)}>
+            <TypeSelectorWrapper.LoginDiv>Log In</TypeSelectorWrapper.LoginDiv>
+          </span>
+        </TypeSelectorWrapper.SocialMediaMessage>
+        :
+        null
+      }
     </TypeSelectorWrapper.Content>
     {props.isSignUp ?
       <React.Fragment>
