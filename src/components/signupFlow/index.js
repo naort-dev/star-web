@@ -84,7 +84,7 @@ class SignupFlow extends React.Component {
               </HeaderSection>
               {
                 !this.state.selectedType ?
-                  <LoginTypeSelector isSignUp changeSignUpRole={this.changeSignUpRole} />
+                  <LoginTypeSelector {...this.props} isSignUp changeSignUpRole={this.changeSignUpRole} />
                 :
                   <LoginContainer.SignupFlow>
                     {

@@ -123,7 +123,7 @@ class App extends React.Component {
                 {/* <Route path="/login" component={Login} /> */}
                 {/* <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
-                <Route path="/star/:id/:videoId?" component={Starprofile} />
+                <Route exact path="/star/:id" component={Starprofile} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
                 <Route path="/signuptype" component={SignupType} />
                 <Route path="/signup" component={SignUp} />
@@ -144,21 +144,18 @@ class App extends React.Component {
                   path="/user/favorites"
                   component={protectRoute({
                     RouteComponent: Favourites,
-                    // roles: allUserRoles,
                   })}
                 />
                 <Route
                   path="/settings"
                   component={protectRoute({
                     RouteComponent: Starbio,
-                    // roles: allUserRoles,
                   })}
                 />
                 <Route
                   path="/user/myVideos"
                   component={protectRoute({
                     RouteComponent: MyVideos,
-                    // roles: allUserRoles,
                   })}
                 />
                 <Route
@@ -167,14 +164,12 @@ class App extends React.Component {
                     RouteComponent: MyVideos,
                     selectedSideBarItem: 'requests',
                     starMode: true,
-                    // roles: allUserRoles,
                   })}
                 />
                 <Route
                   path="/user/earnings"
                   component={protectRoute({
                     RouteComponent: Earnings,
-                    // roles: allUserRoles,
                   })}
                 />
                 {/*
