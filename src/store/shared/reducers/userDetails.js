@@ -4,6 +4,7 @@ const initalState = {
   settings_celebrityDetails: {},
   settings_userDetails: {},
   loading: false,
+  starRole: false,
   error: '',
 };
 
@@ -27,6 +28,7 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         settings_celebrityDetails: action.details.celebrity_details,
         settings_userDetails: action.details.user,
+        starRole: action.details.user.celebrity,
       };
 
     case USER_DETAILS.failed:
@@ -41,6 +43,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         settings_celebrityDetails: {},
         settings_userDetails: {},
+        starRole: false,
       };
 
     default:
