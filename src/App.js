@@ -120,8 +120,11 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                {/* <Route path="/login" component={Login} /> */}
-                {/* <Route path="/forgotpassword" component={Login} /> */}
+                <Route path="/privacy-policy" component={() => window.location = 'https://about.starsona.com/privacy-policy'}/>
+                <Route path="/terms-service" component={() => window.location = 'https://about.starsona.com/terms-service'}/>
+                <Route path="/contact" component={() => window.location = 'https://about.starsona.com/contact'}/>
+                {/* <Route path="/login" component={Login} />
+                <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
                 <Route exact path="/star/:id" component={Starprofile} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />

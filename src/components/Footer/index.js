@@ -5,13 +5,13 @@ export const Footer = () => (
   <FooterStyled>
     <FooterStyled.Separator />
     <FooterStyled.list>
-      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/contact/">
+      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/contact/">
         <FooterStyled.listItem>Contact</FooterStyled.listItem>
       </FooterStyled.Anchor>
-      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/">
+      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/privacy-policy/">
         <FooterStyled.listItem>Privacy Policy</FooterStyled.listItem>
       </FooterStyled.Anchor>
-      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/">
+      <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/terms-service/">
         <FooterStyled.listItem>Terms of Service</FooterStyled.listItem>
       </FooterStyled.Anchor>
     </FooterStyled.list>
