@@ -514,8 +514,6 @@ export default class Starbio extends React.Component {
     this.props.resetNotification();
   }
 
-
-
   onContinueClick() {
     if (this.validateIsEmpty('starAccount')) {
       this.setState({ saving: true });
@@ -532,9 +530,8 @@ export default class Starbio extends React.Component {
         avatar: { imageFile: this.state.avatarFile, imageURL: this.state.avatar },
         featuredImage: { imageFile: this.state.featuredImageFile, imageURL: this.state.featuredImage },
         firstImage: { imageFile: this.state.firstImageFile, imageURL: this.state.firstImage },
-        secondImage: { imageFile: this.state.secondImageFile, imageURL: this.state.secondImage }
-
-      })
+        secondImage: { imageFile: this.state.secondImageFile, imageURL: this.state.secondImage },
+      });
       this.uploadImage("featuredImage")
         .then(() => this.uploadImage("firstImage"))
         .then(() => this.uploadImage("secondImage"))
