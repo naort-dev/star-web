@@ -31,6 +31,7 @@ export default class SignUp extends React.Component {
         in_id: '',
         role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
       },
+      gmailClick: false,
     };
   }
   componentWillMount() {
@@ -115,8 +116,10 @@ export default class SignUp extends React.Component {
   }
 
   onSignIn = (googleUser) => {
-    const profile = googleUser.getBasicProfile();
-    this.onSocialMediaLogin(profile, 3);
+    if (this.state.gmailClick) {
+      const profile = googleUser.getBasicProfile();
+      this.onSocialMediaLogin(profile, 3);
+    }
   }
 
 
