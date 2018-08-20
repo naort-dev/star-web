@@ -67,6 +67,7 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
         dispatch(socialMediaLoginFetchIncorrect(resp.data.error.message, resp.data.status));
       }
     }
+    return resp;
   }).catch((exception) => {
     dispatch(socialMediaLoginFetchEnd());
     dispatch(socialMediaLoginFetchFailed(exception));

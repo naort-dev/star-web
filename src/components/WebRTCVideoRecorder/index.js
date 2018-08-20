@@ -35,8 +35,9 @@ export default class VideoRecorder extends React.Component {
 
   componentWillUnmount() {
     if (!getMobileOperatingSystem() && checkMediaRecorderSupport()) {
-      if (!this.props.videoRecorder.recordedBlobs && this.props.videoRecorder.start) {
+      if (!this.props.videoRecorder.recordedBlob  && this.props.videoRecorder.start) {
         this.closeStream();
+        this.props.onClearStreams();
       }
     }
   }

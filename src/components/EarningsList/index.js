@@ -6,7 +6,7 @@ import Dollar from '../Dollar';
 const EarningsList = (props) => {
   const renderList = (item, index) => (
     <EarningsListStyled.Content key={`2_${index}`}>
-      <EarningsListStyled.ListItem amount>${item.amount}</EarningsListStyled.ListItem>
+      <EarningsListStyled.ListItem amount><Dollar amount={parseFloat(item.amount)} size={14} color="#FF6C58" /></EarningsListStyled.ListItem>
       <EarningsListStyled.ListItem light tabletView>{item.starsona.occasion}</EarningsListStyled.ListItem>
       <EarningsListStyled.ListDescription large light tabletView title={item.starsona.booking_title}>{item.starsona.booking_title}</EarningsListStyled.ListDescription>
       <EarningsListStyled.ListItem light desktopView>{item.starsona.fan}</EarningsListStyled.ListItem>
@@ -22,7 +22,7 @@ const EarningsList = (props) => {
         <EarningsListStyled.ListItemMobile light>{moment(item.created_date).format('LL')}</EarningsListStyled.ListItemMobile>
         <EarningsListStyled.DataRowWrapperMobile>
           <EarningsListStyled.ListItemMobile>{item.starsona.fan} · {item.starsona.occasion}</EarningsListStyled.ListItemMobile>
-          <Dollar amount={parseFloat(item.amount)} size={14} color="#b5b5b5" />
+          <Dollar amount={parseFloat(item.amount)} size={15} color="#b5b5b5" />
         </EarningsListStyled.DataRowWrapperMobile>
       </EarningsListStyled.ContentMobile>
     </EarningsListStyled.ContainerMobile>

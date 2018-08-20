@@ -3,11 +3,11 @@ import Loadable from 'react-loadable';
 import Loader from '../../components/Loader';
 
 const LoadableComponent = Loadable({
-  loader: () => import('./StarsignUpVideo.container'),
+  loader: () => import('./StarbioPopup.container'),
   loading: () => <Loader />,
   timeout: 5000,
 });
 
-export const StarsignUpVideo = props => <LoadableComponent {...props} />;
+export const StarbioPopup = props => <LoadableComponent {...props} />;
 
-StarsignUpVideo.displayName = 'StarsignUpVideo';
+StarbioPopup.displayName = 'StarbioPopup';
