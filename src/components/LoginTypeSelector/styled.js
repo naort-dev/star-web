@@ -33,6 +33,40 @@ TypeSelectorWrapper.subheading = styled.div`
     font-size:16px;
   }
 `;
+TypeSelectorWrapper.LoginDiv = styled.button`
+  background-color: #fff; 
+  margin-right: 5px;
+  color: #007FAA;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Ubuntu-Light';
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  outline:none;
+  border: none;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+`;
+TypeSelectorWrapper.SocialMediaMessage = styled.div`
+  font-family: 'Ubuntu-Medium';
+  font-size: 14px;
+  text-align: center;
+  color: #333333;
+  margin-top:3%;
+  margin-bottom:5%;
+  @media(min-width:768px){
+    font-size: 18px;
+  }
+  @media(min-width:1025px){
+    font-size:14px;
+  }
+  @media(min-width:1920px){
+    font-size:28px;
+  }
+`;
 TypeSelectorWrapper.Button = styled.button`
   padding: 10px 10px;
   outline:none;
