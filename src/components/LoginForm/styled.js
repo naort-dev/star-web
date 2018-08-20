@@ -112,7 +112,7 @@ LoginContainer.SocialMediaMessage = styled.div`
     font-size:14px;
   }
   @media(min-width:1920px){
-    font-size:28px;
+    font-size:18px;
   }
 `;
 LoginContainer.ButtonIcon = styled.img`
