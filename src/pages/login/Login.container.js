@@ -4,6 +4,7 @@ import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
+import { toggleLogin } from '../../store/shared/actions/toggleModals';
 import Login from './Login.component';
 
 const mapStateToProps = state => ({
@@ -23,6 +24,7 @@ const mapDispatchToProps = dispatch => ({
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
+  toggleLogin: state => dispatch(toggleLogin(state)),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
   resetSessionError: () => dispatch(resetSessionError()),
 });
