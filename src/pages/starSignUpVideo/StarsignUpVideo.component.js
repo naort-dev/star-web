@@ -1,6 +1,7 @@
 import React from 'react';
 import { SignupContainer, HeaderSection, FooterSection } from './styled';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
+import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios'
 import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations'
@@ -31,7 +32,7 @@ export default class StarsignUpVideo extends React.Component {
       .then(response => {
         axios.post(response.url, response.formData)
           .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
-            ...this.props.location.state.bioDetails, profile_video: response.filename, availability: true
+            ...this.props.bioDetails, profile_video: response.filename, availability: true
           },
             {
               "headers": {
@@ -42,68 +43,49 @@ export default class StarsignUpVideo extends React.Component {
           ).then(() => {
             this.props.fetchUserDetails(this.props.session.auth_token.id);
             this.setState({ upload: false })
-            this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
+            this.props.changeStep(this.props.currentStep + 1);
+            // this.props.history.push({ pathname: "/starsuccess", state: { images: this.props.location.state.images } })
           })
       })
 
   }
 
   render() {
-    if (!this.props.isLoggedIn) {
-      return <Redirect to={locations.signupType} />
-    }
-
-    if (!this.props.location.state) {
-      return <Redirect to="/starbio" />
-    }
+    // if (!this.props.isLoggedIn) {
+    //   return <Redirect to={locations.signupType} />
+    // }
     return (
       <SignupContainer.wrapper>
-        <SignupContainer>
-          {this.state.upload ?
-            <SignupContainer.loaderWrapper>
-              <Loader />
-            </SignupContainer.loaderWrapper>
-            : null}
-          <HeaderSection>
-            <Link to="/">
-              <HeaderSection.LogoImage
-                src="assets/images/logo_starsona_large.svg"
-                alt=""
-              />
-            </Link>
-
-            <Link to="#">
-              <HeaderSection.RightDiv>I'M A STAR</HeaderSection.RightDiv>
-            </Link>
-          </HeaderSection>
-          <SignupContainer.RightSection>
-            <SignupContainer.recorderWrapper>
-              <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
-            </SignupContainer.recorderWrapper>
-          </SignupContainer.RightSection>
-          <SignupContainer.LeftSection>
-            <SignupContainer.SocialMediaSignup>
-              <SignupContainer.Container>
-                <SignupContainer.Heading>Verify your identity!</SignupContainer.Heading>
-                <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
-              </SignupContainer.Container>
-              <SignupContainer.Container>
-                <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that I am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
-              </SignupContainer.Container>
-            </SignupContainer.SocialMediaSignup>
-            <SignupContainer.FooterLayout>
-              <FooterSection>
-                <FooterSection.LeftSection>
-                </FooterSection.LeftSection>
-                <FooterSection.RightSection>
-                  {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
-                    <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
-                    : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
-                </FooterSection.RightSection>
-              </FooterSection>
-            </SignupContainer.FooterLayout>
-          </SignupContainer.LeftSection>
-        </SignupContainer>
+        <Scrollbars autoHide>
+          <SignupContainer>
+            {this.state.upload ?
+              <SignupContainer.loaderWrapper>
+                <Loader />
+              </SignupContainer.loaderWrapper>
+              : null}
+            <SignupContainer.LeftSection>
+              <SignupContainer.SocialMediaSignup>
+                <SignupContainer.Container>
+                  <SignupContainer.Heading>Verify your identity!</SignupContainer.Heading>
+                  <SignupContainer.paragraph>Please record a short video saying the following </SignupContainer.paragraph>
+                </SignupContainer.Container>
+                <SignupContainer.Container>
+                  <SignupContainer.VerificationText>Hi Starsona team, this is a quick video to verify that I am "the real" <SignupContainer.Username>{this.props.session.auth_token.first_name} </SignupContainer.Username>  </SignupContainer.VerificationText>
+                </SignupContainer.Container>
+                <SignupContainer.recorderWrapper>
+                  <VideoRecorder {...this.props} duration={recorder.signUpTimeOut} />
+                </SignupContainer.recorderWrapper>
+              </SignupContainer.SocialMediaSignup>
+            </SignupContainer.LeftSection>
+          </SignupContainer>
+        </Scrollbars>
+        <SignupContainer.FooterLayout>
+          <FooterSection>
+            {this.props.videoRecorder.stop || this.props.videoUploader.savedFile != null ?
+              <FooterSection.Button onClick={this.onSubmit}>{this.state.upload ? "Saving..." : "Submit"}</FooterSection.Button>
+              : <FooterSection.DisabledButton onClick={this.onSubmit}>Submit</FooterSection.DisabledButton>}
+          </FooterSection>
+        </SignupContainer.FooterLayout>
       </SignupContainer.wrapper>
     );
   }

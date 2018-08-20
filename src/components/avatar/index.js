@@ -2,6 +2,7 @@ import React from 'react';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import { AvatarContainer } from './styled';
 import { getAWSCredentials } from '../../utils/AWSUpload';
+import Loader from '../Loader';
 import Popup from '../Popup';
 import Api from '../../lib/api';
 import { fetch } from '../../services/fetch';
@@ -10,7 +11,7 @@ import axios from 'axios';
 export default class Avatar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { avatar: { image: this.props.image, file: null }, cropMode: false };
+    this.state = { avatar: { image: this.props.image, file: null }, cropMode: false, avatarUploading: false };
   }
 
 
@@ -54,7 +55,13 @@ export default class Avatar extends React.Component {
     canvas.toBlob(file => {
       this.setState({ avatar: { ...this.state.avatar, file: file } })
       if (this.props.autoUpload) {
-        this.uploadImage(file, this.state.extension);
+        this.setState({ avatarUploading: true });
+        this.uploadImage(file, this.state.extension)
+        .then(() => {
+          this.setState({
+            avatarUploading: false,
+          })
+        })
       }
     }, 'image/jpeg');
     this.setState({ avatar: { ...this.state.avatar, image: base64Image }, cropMode: false });
@@ -90,7 +97,7 @@ export default class Avatar extends React.Component {
     const extension = file.type.split('/')[1];
     const reader = new FileReader();
     reader.onload = () => {
-      this.setState({ avatar: { ...this.state.avatar, image: reader.result, file }, cropMode: true, cropImage: reader.result, extension });
+      this.setState({ cropMode: true, cropImage: reader.result, extension });
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -140,6 +147,12 @@ export default class Avatar extends React.Component {
   render() {
     return (
       <AvatarContainer.AvatarContainer>
+        {
+          this.state.avatarUploading &&
+            <AvatarContainer.loaderWrapper>
+              <Loader />
+            </AvatarContainer.loaderWrapper>
+        }
         {
           this.state.cropMode && this.renderCropper()
         }

@@ -3,6 +3,7 @@ import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
+import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import SignUp from './Signup.component';
 
 const mapStateToProps = state => ({
@@ -19,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(registerUser(firstName, lastName, email, password, role)),
   socialMediaLogin: (userName, firstName, lastName, signUpSource, profilePhoto, fbId) =>
     dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, fbId)),
+    setSocialMediaData: data => dispatch(setSocialMediaData(data)),
+    resetSocialMediaData: () => dispatch(resetSocialMediaData()),
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
 });

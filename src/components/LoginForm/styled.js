@@ -21,11 +21,14 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+
+LoginContainer.actionText = styled.span`
+  cursor: pointer;
+`;
+
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
- 
-
   @media(min-width: 1025px){
     width: 45%;
     padding: 0px 0px;
@@ -66,6 +69,7 @@ LoginContainer.LoginDiv = styled.button`
 
 LoginContainer.SocialMediaSignup = styled.div`
   text-align:center;
+  height: 100%;
   @media(min-width:768px){
     padding: 5px 0;
     padding-bottom: 20px;  
@@ -89,16 +93,8 @@ LoginContainer.Heading = styled.div`
   font-size: 25px;
   text-align: center;
   color: #FF6C58;
-  margin-top:10%;
-  
-  @media(min-width:768px){
-    font-size: 32px;
-  }
-  @media(min-width:1025px){
-    font-size:35px;
-  }
   @media(min-width:1920px){
-    font-size:38px;
+    font-size:32px;
   }
   
 `;
@@ -127,18 +123,19 @@ LoginContainer.ButtonIcon = styled.img`
 `;
 LoginContainer.ButtonDiv = styled.div`
     width:100%;
-    margin-bottom:8%;
 `;
 LoginContainer.Button = styled.button`
   padding: 12px 10px;
   outline:none;
   border: 1.5px solid rgba(51, 51, 51, 1); 
   background-color: white;
-  margin-top: 6%;
+  margin-top: 5px;
+  margin-bottom: 5px;
   font-family: 'Ubuntu-Medium';
   font-size:16px;
   color: rgba(84, 84, 84, 1);
-  width: 320px;
+  width: 100%;
+  max-width: 320px;
   text-align:center;
   border-radius: 2px;
   cursor: pointer;
@@ -484,11 +481,10 @@ LoginContainer.WrapsInput = styled.div`
   height:60px;
   @media(min-width:768px){
     width:100%;
-    height:30px;
   }
-  @media(min-width:1025){
+  @media(min-width:1025px){
     width:352px;
-    height:25px;
+    height:32px;
   }
 
 `;
@@ -507,7 +503,7 @@ LoginContainer.ShowPassword = styled.span`
   background-size:19px;
   padding: 14px;
   right: 7px;
-  top: 12px;
+  bottom: 6px;
   cursor:pointer;
   @media(min-width:1025px){
     top:5px;
@@ -527,6 +523,7 @@ LoginContainer.InputContainer = styled.div`
     display: inline-block;
     width:75%;
     margin: 20px 20px;
+    margin-top: 0;
   }
 `;
 LoginContainer.SignupLine = styled.div`

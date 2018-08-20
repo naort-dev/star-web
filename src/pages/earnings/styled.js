@@ -114,6 +114,7 @@ EarningStyled.OverviewMobile = styled.ul`
   display: flex;
   justify-content: space-between;
   padding: 16px;
+  padding-top: 30px;
   flex-direction: column;
   background-color: #FFF;
   @media(min-width: 768px) {
@@ -131,9 +132,12 @@ EarningStyled.OverviewMobileItem = styled.li`
 min-width: 50%;
 font-family: 'Ubuntu-Regular';
 font-size: ${props => `${props.size}px`};
+display: flex;
+flex-direction: column;
 `;
 EarningStyled.OverViewTextMobile = styled.span`
-color: ${props => props.headingColor}
+color: ${props => props.headingColor};
+margin-bottom: 0.1em;
 `;
 
 EarningStyled.EarningsListStyled = styled.div`
