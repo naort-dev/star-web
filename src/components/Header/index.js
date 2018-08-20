@@ -154,7 +154,6 @@ class Header extends React.Component {
 
   render() {
     const { props } = this;
-    console.log(this.state.profileDropdown)
     return (
       <HeaderSection>
         <HeaderSection.HeaderDiv >
