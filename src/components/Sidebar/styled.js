@@ -35,7 +35,7 @@ const SidebarStyled = styled.div`
   @media(min-width: 1025px) {
     margin: 0;
     padding-top: 30px;
-    display: ${props => (props.menuActive ? 'inline-block' : 'none')};
+    display: inline-block;
     float: left;
     width: 100%;
   }
@@ -109,9 +109,10 @@ SidebarStyled.CategoryTitle = styled.span`
 
 SidebarStyled.SubCategoryList = styled.ul`
   margin-left: 60px;
-  width: 100%;
+  width: calc(100% - 60px);
   @media(min-width: 768px) {
     margin-left: 20px;
+    width: calc(100% - 20px);
   }
 `;
 
@@ -158,7 +159,7 @@ SidebarStyled.ApplyButton = styled.button`
   cursor: pointer;
   border: 2px solid #FF6C58;
   margin-top:3%;
-  @media(min-width:1925px){
+  @media(min-width:1025px){
     display: none;
   }
   @media(min-width: 768px) {

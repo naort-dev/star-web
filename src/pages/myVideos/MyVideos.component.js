@@ -145,7 +145,6 @@ export default class MyVideos extends React.Component {
           <MyVideosStyled.sectionWrapper>
             <MyVideosStyled.sideSection menuActive={this.state.menuActive}>
               <Scrollbars
-                autoHide
                 renderView={props => <div {...props} className="view" />}
               >
                 <Sidebar

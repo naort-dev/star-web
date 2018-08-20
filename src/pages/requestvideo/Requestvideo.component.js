@@ -119,7 +119,6 @@ export default class Requestvideo extends React.Component {
               </HeaderSection>               
               <Request.ComponentWrapper>
                 <Request.ComponentWrapperScroll
-                  autoHide
                   renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                 >
                   <Request.OptionWrapper>
