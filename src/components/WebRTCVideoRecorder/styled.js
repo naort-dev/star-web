@@ -193,4 +193,11 @@ VideoRecorderDiv.InfoText = styled.div`
   width: 30px;
   `
 
+  VideoRecorderDiv.StopRecorderText = styled.div`
+  font-size: 18px;
+  color: #FF6C58;
+  font-family: 'Ubuntu-Regular';
+  text-align: center;
+  `;
+
 export default VideoRecorderDiv;

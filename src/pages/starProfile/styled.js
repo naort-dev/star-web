@@ -64,8 +64,8 @@ Detail.LeftSection = styled.div`
 Detail.RightSection = styled.div`
   width:100%
   padding: 0px 0px;
-  height: calc(100% - 237px);
-  min-height: calc(95vh - 54px);
+  height: ${props => (props.isNotEmpty ? 'calc(100% - 237px)' : '170px')};
+  min-height: ${props => (props.isNotEmpty ? 'calc(95vh - 54px)' : 'auto')};
   position: relative;
   @media(min-width: 768px) {
     height: calc(100% - 426px);

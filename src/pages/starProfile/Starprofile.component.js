@@ -60,7 +60,7 @@ export default class Starprofile extends React.Component {
       if (userDetails) {
         return userDetails.user.user_id;
       }
-      this.props.history.push('/login');
+      this.props.toggleLogin(true);
     }
     return props.match.params.id;
   }
@@ -286,7 +286,7 @@ export default class Starprofile extends React.Component {
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
-            <Detail.RightSection>
+            <Detail.RightSection isNotEmpty={this.props.videosList.data.length}>
               {
                 (!this.props.videosList.data.length || this.props.videosList.loading) && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
                   null

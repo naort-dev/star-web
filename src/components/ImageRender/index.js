@@ -43,6 +43,9 @@ class ImageRender extends React.Component {
     window.removeEventListener('resize', this.setImagesHeight);
     this.mounted = false;
   }
+  componentWillReceiveProps(nextProps) {
+    this.setImagesHeight();
+  }
   setImages = (cover, profile) => {
     this.coverImage.onload = () => {
       if (this.mounted) {
@@ -92,6 +95,7 @@ class ImageRender extends React.Component {
               />
             </ImageRenderDiv.ProfileImageWrapper>
           </Link>
+          <ImageRenderDiv.Rating>${this.props.rate}</ImageRenderDiv.Rating>
           <ImageRenderDiv.FavoriteButton
             onClick={e => this.updateFavouriteSelection(e)}
             selected={this.state.favouriteSelected}

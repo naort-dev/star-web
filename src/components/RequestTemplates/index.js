@@ -144,6 +144,7 @@ class RequestTemplates extends React.Component {
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
                   <Templates.RelationLabel>Relationship</Templates.RelationLabel>
+                  {' '}
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
@@ -270,6 +271,7 @@ class RequestTemplates extends React.Component {
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
                   <Templates.RelationLabel>Relationship</Templates.RelationLabel>
+                  {' '}
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.InputWrapperContainer>
@@ -399,6 +401,7 @@ class RequestTemplates extends React.Component {
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
                   <Templates.RelationLabel>Relationship</Templates.RelationLabel>
+                  {' '}
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
@@ -538,6 +541,7 @@ class RequestTemplates extends React.Component {
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
                   <Templates.RelationLabel>Relationship</Templates.RelationLabel>
+                  {' '}
                   {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
