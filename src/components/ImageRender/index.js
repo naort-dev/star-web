@@ -43,6 +43,9 @@ class ImageRender extends React.Component {
     window.removeEventListener('resize', this.setImagesHeight);
     this.mounted = false;
   }
+  componentWillReceiveProps(nextProps) {
+    this.setImagesHeight();
+  }
   setImages = (cover, profile) => {
     this.coverImage.onload = () => {
       if (this.mounted) {

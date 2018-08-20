@@ -60,7 +60,7 @@ export default class Starprofile extends React.Component {
       if (userDetails) {
         return userDetails.user.user_id;
       }
-      this.props.history.push('/login');
+      this.props.toggleLogin(true);
     }
     return props.match.params.id;
   }

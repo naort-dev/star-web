@@ -328,6 +328,7 @@ export default class ScrollList extends React.Component {
         <ListStyled.listItem key={index}>
           <ImageRender
             id={item.user_id}
+            menuActive={this.props.menuActive}
             dbId={item.id}
             cover={coverPhoto}
             celebrityFollow={item.celebrity_follow}
