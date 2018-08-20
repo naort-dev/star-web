@@ -329,6 +329,7 @@ export default class ScrollList extends React.Component {
           <ImageRender
             id={item.user_id}
             dbId={item.id}
+            rate={item.celebrity_user.rate}
             cover={coverPhoto}
             celebrityFollow={item.celebrity_follow}
             celebrityProfessions={item.celebrity_profession}

@@ -142,4 +142,28 @@ SidebarStyled.Separator = styled.span`
   }
 `;
 
+SidebarStyled.ApplyButton = styled.button`
+  position: fixed;
+  bottom: 0px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border: 2px solid #FF6C58;
+  margin-top:3%;
+  @media(min-width:1920px){
+    font-size:20px;
+  }
+  @media(min-width: 768px) {
+    display: none;
+  }
+`;
+
 export { SidebarStyled };

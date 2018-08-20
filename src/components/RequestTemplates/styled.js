@@ -359,6 +359,10 @@ Templates.DetailedRelation = styled.span`
   font-size: 12px;
   display: inline-block;
   font-family: 'Ubuntu-Light';
+  padding-bottom: 10px;
+  @media(min-width:768px){
+    padding-bottom: 0px;
+  }
   @media(min-width: 1920px) {
     font-size: 14px;
   }

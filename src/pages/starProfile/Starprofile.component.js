@@ -329,7 +329,7 @@ export default class Starprofile extends React.Component {
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
-            <Detail.RightSection>
+            <Detail.RightSection isNotEmpty={this.props.videosList.data.length}>
               {
                 this.state.videoActive ?
                   <Detail.VideoPlayWrapper>

@@ -91,6 +91,7 @@ class ImageRender extends React.Component {
               />
             </ImageRenderDiv.ProfileImageWrapper>
           </Link>
+          <ImageRenderDiv.Rating>${this.props.rate}</ImageRenderDiv.Rating>
           <ImageRenderDiv.FavoriteButton
             onClick={e => this.updateFavouriteSelection(e)}
             selected={this.state.favouriteSelected}

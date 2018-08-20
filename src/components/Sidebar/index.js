@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
 
   selectCategory = (label, id) => {
     if (window.outerWidth<=1024) {
-      this.props.toggleMenu();
+      if (label === 'featured') this.props.toggleMenu();
     }
     this.props.updateCategory(label, id);
     if (this.props.updateMainCategory) {
@@ -128,6 +128,7 @@ class Sidebar extends React.Component {
           </SidebarStyled.FilterWrapper>
         </section>
         <Footer />
+        <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
       </SidebarStyled>
     );
   }
