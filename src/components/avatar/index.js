@@ -1,5 +1,6 @@
 import React from 'react';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
+import EXIF from 'exif-js';
 import { AvatarContainer } from './styled';
 import { getAWSCredentials } from '../../utils/AWSUpload';
 import Loader from '../Loader';
@@ -11,7 +12,10 @@ import axios from 'axios';
 export default class Avatar extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { avatar: { image: this.props.image, file: null }, cropMode: false, avatarUploading: false };
+    this.state = { avatar: { image: this.props.image, file: null }, cropMode: false, avatarUploading: false, imageError: false };
+    this.currentExif = null;
+    this.originalHeight = null;
+    this.originalWidth = null;
   }
 
 
@@ -57,11 +61,11 @@ export default class Avatar extends React.Component {
       if (this.props.autoUpload) {
         this.setState({ avatarUploading: true });
         this.uploadImage(file, this.state.extension)
-        .then(() => {
-          this.setState({
-            avatarUploading: false,
+          .then(() => {
+            this.setState({
+              avatarUploading: false,
+            })
           })
-        })
       }
     }, 'image/jpeg');
     this.setState({ avatar: { ...this.state.avatar, image: base64Image }, cropMode: false });
@@ -92,16 +96,158 @@ export default class Avatar extends React.Component {
     );
   }
 
-  onFileChange() {
+  async onFileChange() {
+    this.setState({ imageError: false })
     const file = document.getElementById('avatar').files[0];
+    const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
+    if (!allowedExtensions.exec(document.getElementById('avatar').value)) {
+      this.setState({ imageError: { extensionError: true } });
+    }
+
+    else {
+      if (file) {
+        const correctResolution = await this.checkResolution(file);
+        if (correctResolution) {
+          await this.getImageData(file)
+        } else {
+          this.setState({ imageError: { sizeError: true } });
+        }
+      }
+    }
+  }
+
+
+
+  async getImageData(file) {
     const extension = file.type.split('/')[1];
     const reader = new FileReader();
+    const exif = await this.getExif(file);
+    this.currentExif = exif;
     reader.onload = () => {
+      this.convertBeforeCrop(reader.result);
       this.setState({ cropMode: true, cropImage: reader.result, extension });
     };
     if (file) {
       reader.readAsDataURL(file);
     }
+  }
+
+  checkResolution(file) {
+    let correctResolution = false;
+    const img = new Image();
+    img.src = window.URL.createObjectURL(file);
+    return new Promise((resolve, reject) => {
+      img.onload = function () {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        this.originalHeight = img.height;
+        this.originalWidth = img.width;
+        window.URL.revokeObjectURL(img.src);
+        if (width >= 100 && height >= 100) {
+          correctResolution = true;
+        }
+        resolve(correctResolution)
+      }.bind(this);
+    });
+  }
+
+  convertBeforeCrop = (imageURL) => {
+    const image = new Image();
+    image.onload = function () {
+      const width = this.originalWidth;
+      const height = this.originalHeight;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = width;
+      canvas.height = height;
+      switch (this.currentExif) {
+        case 2:
+          ctx.translate(height, 0);
+          ctx.scale(-1, 1);
+          break;
+
+        case 3:
+          ctx.translate(width, height);
+          ctx.rotate(180 * Math.PI / 180);
+          break;
+
+        case 4:
+          ctx.translate(0, height);
+          ctx.scale(1, -1);
+          break;
+
+        case 5:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(90 * Math.PI / 180);
+          ctx.scale(1, -1);
+          break;
+
+        case 6:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(90 * Math.PI / 180);
+          ctx.translate(0, -height);
+          break;
+
+        case 7:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(-90 * Math.PI / 180);
+          ctx.translate(-width, height);
+          ctx.scale(1, -1);
+          break;
+
+        case 8:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.translate(0, width);
+          ctx.rotate(-90 * Math.PI / 180);
+          break;
+      }
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        this.originalWidth,
+        this.originalHeight,
+      );
+      const base64Image = canvas.toDataURL('image/jpeg');
+      this.setState({ cropImage: base64Image })
+    }.bind(this);
+    image.src = imageURL;
+  }
+
+
+  getExif = (file) => {
+    return new Promise((resolve, reject) => {
+      EXIF.getData(file, function () {
+        const exif = EXIF.getTag(this, "Orientation")
+        switch (exif) {
+          case 3:
+            resolve(3)
+            break;
+          case 4:
+            resolve(4);
+            break;
+          case 5:
+            resolve(5);
+            break;
+          case 6:
+            resolve(6);
+            break;
+          case 7:
+            resolve(7);
+            break;
+          case 8:
+            resolve(8);
+            break;
+          default:
+            resolve(9);
+        }
+      })
+
+    })
   }
 
   uploadImage(file, extension) {
@@ -136,22 +282,43 @@ export default class Avatar extends React.Component {
       <AvatarContainer.FullScreenUploadWrapper >
         <AvatarContainer.Image src={this.state.avatar.image} style={{ borderRadius }} />
         <AvatarContainer.FullScreenUploadButton onClick={() => { }} />
-        {  this.props.celebrity ? null
-        :
-        <AvatarContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />
+        {this.props.celebrity ? null
+          :
+          <AvatarContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />
         }
       </AvatarContainer.FullScreenUploadWrapper>
     );
   }
 
+  renderErrorPopup = () => {
+    let errorMessage;
+    if (this.state.imageError.extensionError) {
+      errorMessage = "Invalid file format. Please upload image in .png, .jpg, or .jpeg format."
+    }
+    else {
+      errorMessage = "Please check the image dimension displayed and upload an image with minimum required dimension."
+    }
+    return (
+      <Popup
+        smallPopup
+        closePopUp={() => this.setState({ imageError: false })}
+      >
+        <AvatarContainer.PopupErrorText> {errorMessage} </AvatarContainer.PopupErrorText>
+      </Popup>
+    );
+  }
   render() {
     return (
       <AvatarContainer.AvatarContainer>
         {
           this.state.avatarUploading &&
-            <AvatarContainer.loaderWrapper>
-              <Loader />
-            </AvatarContainer.loaderWrapper>
+          <AvatarContainer.loaderWrapper>
+            <Loader />
+          </AvatarContainer.loaderWrapper>
+        }
+        {this.state.imageError.extensionError || this.state.imageError.sizeError ?
+          this.renderErrorPopup()
+          : null
         }
         {
           this.state.cropMode && this.renderCropper()
@@ -161,7 +328,7 @@ export default class Avatar extends React.Component {
             this.FullscreenUploader() :
             <AvatarContainer.UploadWrapper>
               <AvatarContainer.UploadButton style={{ visibility: 'hidden' }} onClick={() => { }} />
-              {  this.props.celebrity ? null
+              {this.props.celebrity ? null
                 :
                 <AvatarContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />}
 
