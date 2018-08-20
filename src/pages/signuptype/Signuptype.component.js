@@ -27,7 +27,6 @@ export default class SignupType extends React.Component {
                 <HeaderSection.RightDiv>LOGIN</HeaderSection.RightDiv>
               </Link>
             </HeaderSection>
-            <LoginContainer.BannerImage />
             <LoginTypeSelector isSignUp />
           </LoginContainer.LeftSection>
           <LoginContainer.RightSection />

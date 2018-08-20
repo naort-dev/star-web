@@ -4,7 +4,7 @@ const TypeSelectorWrapper = styled.div`
   padding: 0px 25px;
   text-align: center;
   @media(min-width: 1025px){
-    padding: 63px 25px;
+    padding: 0px 25px;
   }
 `;
 TypeSelectorWrapper.Content = styled.div`

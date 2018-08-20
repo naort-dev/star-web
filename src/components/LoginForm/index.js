@@ -188,10 +188,15 @@ export default class LoginForm extends React.Component {
       });
     } else {
       const val = r;
+      const name = val.full_name.trim().split(' ');
+      const firstName = name[0];
+      const lastName = name[1];
       this.setState({
         socialMedia: {
           ...this.state.socialMedia,
           username: val.username,
+          first_name: firstName,
+          last_name: lastName,
           sign_up_source: source,
           nick_name: val.full_name,
           profile_photo: val.profile_picture,
