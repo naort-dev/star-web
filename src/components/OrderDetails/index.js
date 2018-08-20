@@ -435,7 +435,6 @@ export default class OrderDetails extends React.Component {
         <OrderStyled.ContentWrapper>
           <OrderStyled.leftContent>
             <OrderStyled.scrollWrapper
-              autoHide
               renderView={props => <div {...props} className="order-details-scroll-wrapper" />}
             >
               {

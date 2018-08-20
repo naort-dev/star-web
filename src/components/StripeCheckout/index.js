@@ -88,7 +88,6 @@ class StripeCheckout extends React.Component {
         <Scrollbars
           autoHeight
           autoHeightMax={350}
-          autoHide
         >
           {
             Object.keys(this.props.sourceList).map(index => (
@@ -131,7 +130,6 @@ class StripeCheckout extends React.Component {
     return (
       <PaymentStyled.wrapper>
         <PaymentStyled.ComponentWrapperScroll
-          autoHide
           renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
         >
           <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>

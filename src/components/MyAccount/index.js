@@ -54,7 +54,6 @@ export default class MyAccount extends React.Component {
             : null
           }
           <Accounts.ComponentWrapperScroll
-            autoHide
             renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
           >
             <Accounts.Questionwraps>

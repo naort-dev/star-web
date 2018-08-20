@@ -144,7 +144,6 @@ export default class Earnings extends React.Component {
         <EarningStyled.sectionWrapper>
           <EarningStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
-              autoHide
               renderView={props => <div {...props} className="view" />}
             >
               <Sidebar

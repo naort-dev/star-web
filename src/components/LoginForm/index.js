@@ -350,7 +350,7 @@ export default class LoginForm extends React.Component {
     return (
       <React.Fragment>
         <LoginContainer.SocialMediaSignup>
-          <Scrollbars autoHide>
+          <Scrollbars>
             <LoginContainer.Container>
               <LoginContainer.Heading>
                 Welcome back to Starsona!

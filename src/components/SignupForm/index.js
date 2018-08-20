@@ -335,7 +335,7 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <LoginContainer.SocialMediaSignup>
-        <Scrollbars autoHide>
+        <Scrollbars>
           <LoginContainer.Container>
             <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
             <LoginContainer.SocialMediaMessage>Already have an account?
