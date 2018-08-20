@@ -356,7 +356,7 @@ width: 69%;
 `;
 
 Templates.DetailedRelation = styled.span`
-  font-size: 12px;
+  font-size: 14px;
   display: inline-block;
   font-family: 'Ubuntu-Light';
   padding-bottom: 10px;
@@ -365,6 +365,13 @@ Templates.DetailedRelation = styled.span`
   }
   @media(min-width: 1920px) {
     font-size: 14px;
+  }
+  @media(min-width:1025px){
+    font-size:13px;
+   
+  }
+  @media(min-width:1920px){
+    font-size:16px;
   }
 `;
 

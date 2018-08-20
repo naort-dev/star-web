@@ -27,7 +27,7 @@ const SidebarStyled = styled.div`
   @media(min-width: 768px) {
     padding: 0;
     padding-top: 40px;
-    display: flex;
+    display: ${props => (props.menuActive ? 'flex' : 'none')};
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
@@ -35,7 +35,7 @@ const SidebarStyled = styled.div`
   @media(min-width: 1025px) {
     margin: 0;
     padding-top: 30px;
-    display: inline-block;
+    display: ${props => (props.menuActive ? 'inline-block' : 'none')};
     float: left;
     width: 100%;
   }
@@ -158,11 +158,14 @@ SidebarStyled.ApplyButton = styled.button`
   cursor: pointer;
   border: 2px solid #FF6C58;
   margin-top:3%;
-  @media(min-width:1920px){
-    font-size:20px;
+  @media(min-width:1925px){
+    display: none;
   }
   @media(min-width: 768px) {
-    display: none;
+    bottom: unset;
+    top: 75px;
+    right: 40px;
+    width: 100px;
   }
 `;
 
