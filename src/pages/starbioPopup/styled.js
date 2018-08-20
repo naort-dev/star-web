@@ -221,7 +221,7 @@ LoginContainer.FeaturedImage = styled.div`
 `;
 
 LoginContainer.FirstImage = styled.div`
-width: calc(50% - 10px);
+width: calc(50% - 5px);
 display: flex;
 justify-content: center;
 align-items: center;
@@ -232,7 +232,7 @@ background-color: #cccccc;
 `;
 
 LoginContainer.SecondImage = styled.div`
-width: calc(50% - 10px);
+width: calc(50% - 5px);
 display: flex;
 justify-content: center;
 align-items: center;

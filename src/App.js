@@ -128,11 +128,11 @@ class App extends React.Component {
                 <Route path="/resetpassword" component={Login} />
                 <Route exact path="/star/:id" component={Starprofile} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
-                <Route path="/signuptype" component={SignupType} />
-                <Route path="/signup" component={SignUp} />
+                {/* <Route path="/signuptype" component={SignupType} /> */}
+                {/* <Route path="/signup" component={SignUp} />
                 <Route path="/starbio" component={Starbio} />
                 <Route path="/starsuccess" component={Starsuccess} />
-                <Route path="/recordvideo" component={StarsignUpVideo} />
+                <Route path="/recordvideo" component={StarsignUpVideo} /> */}
                 <Route path="/:id/request" component={Requestvideo} />
                 <Route path="/instalogin" component={InstaLogin} />
                 {/* <Route path="/:id/request/ask" component={Askquestion} />

@@ -32,6 +32,9 @@ class ImageRender extends React.Component {
     window.addEventListener('resize', this.setImagesHeight);
   }
   componentWillReceiveProps(nextProps) {
+    setTimeout(() => {
+      this.setImagesHeight();
+    }, 100);
     if (nextProps.celebrityFollow !== this.state.favouriteSelected) {
       this.setState({ favouriteSelected: nextProps.celebrityFollow });
     }
@@ -42,9 +45,6 @@ class ImageRender extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImagesHeight);
     this.mounted = false;
-  }
-  componentWillReceiveProps(nextProps) {
-    this.setImagesHeight();
   }
   setImages = (cover, profile) => {
     this.coverImage.onload = () => {

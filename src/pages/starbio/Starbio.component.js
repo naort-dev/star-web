@@ -1133,7 +1133,6 @@ export default class Starbio extends React.Component {
                 :
                 <LoginContainer.ComponentWrapper>
                   <LoginContainer.ComponentWrapperScroll
-                    autoHide
                     renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                   >
                     <LoginContainer.Questionwraps>

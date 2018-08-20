@@ -63,7 +63,6 @@ class ManagePayments extends React.Component {
         <Scrollbars
           autoHeight
           autoHeightMax={200}
-          autoHide
         >
           {
             Object.keys(this.props.sourceList).map(index => (

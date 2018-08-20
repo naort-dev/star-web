@@ -56,7 +56,7 @@ export default class StarsignUpVideo extends React.Component {
     // }
     return (
       <SignupContainer.wrapper>
-        <Scrollbars autoHide>
+        <Scrollbars>
           <SignupContainer>
             {this.state.upload ?
               <SignupContainer.loaderWrapper>

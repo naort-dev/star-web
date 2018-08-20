@@ -158,6 +158,7 @@ export default class Landing extends React.Component {
       return (
         <ScrollList
           dataList={this.props.celebList.data}
+          menuActive={this.state.menuActive}
           limit={this.props.celebList.limit}
           totalCount={this.props.celebList.count}
           offset={this.props.celebList.offset}
@@ -191,7 +192,6 @@ export default class Landing extends React.Component {
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
-              autoHide
               renderView={props => <div {...props} className="view" />}
             >
               <Sidebar

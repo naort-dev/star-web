@@ -247,7 +247,7 @@ export default class Confirm extends React.Component {
   renderConfirmDetails = (bookingData, rate, remainingBookings, profilePhoto, fullName) => (
     <React.Fragment>
       <Request.ComponentWrapperScroll
-        autoHide
+      
         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
       >
         <Request.ProfileImageWrapper>

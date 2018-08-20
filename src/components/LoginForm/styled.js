@@ -77,7 +77,6 @@ LoginContainer.SocialMediaSignup = styled.div`
   @media(min-width: 1025px) {
     height: 100%;    
     padding: 5px 37px;
-    padding-bottom: 69px;
   }
 `;
 LoginContainer.Container = styled.div`
@@ -112,7 +111,7 @@ LoginContainer.SocialMediaMessage = styled.div`
     font-size:14px;
   }
   @media(min-width:1920px){
-    font-size:28px;
+    font-size:18px;
   }
 `;
 LoginContainer.ButtonIcon = styled.img`
@@ -134,7 +133,7 @@ LoginContainer.Button = styled.button`
   font-family: 'Ubuntu-Medium';
   font-size:16px;
   color: rgba(84, 84, 84, 1);
-  width: 100%;
+  width: calc(100% - 8px);
   max-width: 320px;
   text-align:center;
   border-radius: 2px;
@@ -377,6 +376,7 @@ LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;
   font-family: 'Ubuntu-Regular';
   font-size:12px;
+  margin-top:0.5%;
 `;
 LoginContainer.ButtonWrapper = styled.div`
   margin-top:3%;
