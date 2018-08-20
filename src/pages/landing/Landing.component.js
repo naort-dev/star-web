@@ -192,6 +192,7 @@ export default class Landing extends React.Component {
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
+              autoHide
               renderView={props => <div {...props} className="view" />}
             >
               <Sidebar
