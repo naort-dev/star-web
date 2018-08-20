@@ -8,6 +8,7 @@ import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
+import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
 
 class Header extends React.Component {
   constructor(props) {
@@ -245,10 +246,10 @@ class Header extends React.Component {
             :
                 <div>
                   <HeaderSection.SearchButton onClick={this.activateSearch} />
-                  <Link to="/login">
+                  <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignInButtonMobile />
-                  </Link>
-                  <Link to="/login">
+                  </span>
+                  <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignIn>
                       Log In
                     </HeaderSection.SignIn>
@@ -256,10 +257,10 @@ class Header extends React.Component {
                       src="assets/images/icon_profile_40a.png"
                       alt=""
                     />
-                  </Link>
-                  <Link to="/signuptype">
+                  </span>
+                  <span onClick={() => this.props.toggleSignup(true)}>
                     <HeaderSection.Join>Sign Up!</HeaderSection.Join>
-                  </Link>
+                  </span>
                 </div>
             }
           </HeaderSection.HeaderRight>
@@ -283,6 +284,8 @@ const mapDispatchToProps = dispatch => ({
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   logOut: () => dispatch(logOutUser()),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
+  toggleLogin: state => dispatch(toggleLogin(state)),
+  toggleSignup: state => dispatch(toggleSignup(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

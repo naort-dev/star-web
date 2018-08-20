@@ -21,9 +21,6 @@ export default class Starprofile extends React.Component {
       menuActive: false,
       selectedTab: 'All',
       tabList: [],
-      videoActive: !!props.match.params.videoId,
-      selectedVideoItem: {},
-      relatedVideos: [],
       showPopup: null,
     };
   }
@@ -40,6 +37,9 @@ export default class Starprofile extends React.Component {
     if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
       this.props.resetCelebDetails();
       this.props.fetchCelebDetails(this.getUserId(nextProps));
+      this.setState({
+        selectedTab: 'All',
+      });
       this.props.celebVideosListFetchStart();
       // this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
     }
@@ -48,23 +48,6 @@ export default class Starprofile extends React.Component {
     }
     if (Object.keys(nextProps.userDetails).length && Object.keys(this.props.userDetails).length !== Object.keys(nextProps.userDetails).length) {
       this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
-    }
-    if (!nextProps.match.params.videoId) {
-      this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
-    }
-    if (nextProps.match.params.videoId !== this.props.match.params.videoId) {
-      if (document.getElementById('player')) {
-        document.getElementById('player').scrollIntoView();
-      }
-      if (!nextProps.match.params.videoId) {
-        this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
-      } else {
-        this.setState({ videoActive: true });
-        this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
-      }
-    }
-    if (this.state.videoActive && nextProps.videosList.data.length) {
-      this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
     }
   }
   componentWillUnmount() {
@@ -92,17 +75,6 @@ export default class Starprofile extends React.Component {
 
   isMyStarPage = () => this.props.location.pathname.includes('myStar')
 
-  findVideoItem = (dataList, bookingId) => {
-    dataList.forEach((item) => {
-      if (item.booking_id === bookingId) {
-        this.setState({ selectedVideoItem: item });
-      }
-    });
-    const relatedVideos = dataList.filter((item) => item.booking_id !== bookingId);
-    this.setState({ relatedVideos: [] }, () => {
-      this.setState({ relatedVideos });
-    });
-  }
   switchTab = (tab) => {
     this.setState({ selectedTab: tab });
     let requestId;
@@ -144,21 +116,6 @@ export default class Starprofile extends React.Component {
     }
     return string;
   }
-  // To be Deleted //
-  renderRelatedVideosList = (dataList) => dataList.map((item, index) => (
-      <Detail.RelatedVideosItem key={index}>
-        <VideoRender
-          cover={item.s3_thumbnail_url}
-          videoUrl={item.s3_video_url}
-          celebId={item.celebrity_id}
-          videoId={item.booking_id}
-          profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-          starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
-          details={item.booking_title}
-        />
-      </Detail.RelatedVideosItem>
-    ))
-
 
   handleRequest = () => {
     if (this.props.celebrityDetails.remaining_limit > 0) {
@@ -330,63 +287,6 @@ export default class Starprofile extends React.Component {
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
             <Detail.RightSection isNotEmpty={this.props.videosList.data.length}>
-              {
-                this.state.videoActive ?
-                  <Detail.VideoPlayWrapper>
-                    <Link to={`/star/${this.getUserId(this.props)}`}>
-                      <Detail.CloseButton />
-                    </Link>
-                    <Detail.VideoPlayerSection>
-                      <Scrollbars
-                        autoHide
-                        renderView={props => <div {...props} id="video-scroll-section" />}
-                      >
-                        <Detail.VideoPlayerContent>
-                          <Detail.VideoPlayer
-                            videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width : '100%'}
-                            videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height : '100%'}
-                          >
-                            <VideoPlayer
-                              videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width : '100%'}
-                              videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height : '100%'}
-                              primaryCover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
-                              primarySrc={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
-                            />
-                          </Detail.VideoPlayer>
-                          <Detail.VideoContent>
-                            <Detail.VideoTitle>
-                              {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
-                            </Detail.VideoTitle>
-                            <Detail.VideoRequester>
-                              <Detail.VideoRequestImage
-                                imageUrl={this.state.selectedVideoItem.fan_avatar_photo &&
-                                  this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
-                                }
-                              />
-                              <Detail.VideoRequestName>
-                                {this.state.selectedVideoItem.fan_name ? this.state.selectedVideoItem.fan_name : ''}
-                              </Detail.VideoRequestName>
-                            </Detail.VideoRequester>
-                          </Detail.VideoContent>
-                          <Detail.RelatedVideos>
-                            <ScrollList
-                              dataList={this.state.relatedVideos}
-                              scrollTarget="video-scroll-section"
-                              videos
-                              starsPage
-                              limit={this.props.videosList.limit}
-                              totalCount={this.props.videosList.count - 1}
-                              offset={this.props.videosList.offset}
-                              loading={this.props.videosList.loading}
-                              fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
-                            />
-                          </Detail.RelatedVideos>
-                        </Detail.VideoPlayerContent>
-                      </Scrollbars>
-                    </Detail.VideoPlayerSection>
-                  </Detail.VideoPlayWrapper>
-                  : null
-              }
               {
                 (!this.props.videosList.data.length || this.props.videosList.loading) && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
                   null

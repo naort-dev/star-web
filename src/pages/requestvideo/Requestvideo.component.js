@@ -12,8 +12,8 @@ export default class Requestvideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginRedirect: false,
       stepCount: 1,
+      selectedRequest: null,
     };
     this.personalSteps = 4;
     this.eventSteps = 4;
@@ -26,11 +26,17 @@ export default class Requestvideo extends React.Component {
       location.pathname === `/${this.props.match.params.id}/request/event` ||
       location.pathname === `/${this.props.match.params.id}/request/ask`
       ) {
-        this.setState({loginRedirect : true});
+        this.props.toggleLogin(true);
       }
     }
     if (!Object.keys(this.props.celebrityDetails).length || !Object.keys(this.props.celebrityDetails).userDetails) {
       this.props.fetchCelebDetails(this.props.match.params.id);
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (this.props.isLoggedIn && this.state.selectedRequest) {
+      this.props.history.push(this.state.selectedRequest);
+      this.setState({ selectedRequest: null });
     }
   }
   goBack = () => {
@@ -47,7 +53,8 @@ export default class Requestvideo extends React.Component {
     this.props.history.push(`/${this.props.match.params.id}/request${url}`);
     } else{
       this.props.setRedirectUrls(`/${this.props.match.params.id}/request${url}`);
-      this.setState({ loginRedirect: true });
+      this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
+      this.props.toggleLogin(true);
     }
   }
 
@@ -91,9 +98,6 @@ export default class Requestvideo extends React.Component {
       featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
-    }
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
     }
     return (
       <Request.Wrapper>

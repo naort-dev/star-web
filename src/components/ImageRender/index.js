@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import ImageRenderDiv from './styled';
 import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
+import { toggleLogin } from '../../store/shared/actions/toggleModals';
 
 class ImageRender extends React.Component {
   constructor(props) {
@@ -72,7 +73,7 @@ class ImageRender extends React.Component {
     } else {
       this.props.setRedirectUrls(`star/${this.props.id}`);
       this.props.updateFavouritesQueue(this.props.dbId, this.props.celebrityProfessions, !this.state.favouriteSelected);
-      this.props.history.push('/login');
+      this.props.toggleLogin(true);
     }
   }
   render() {
@@ -121,6 +122,7 @@ const mapDispatchToProps = dispatch => ({
   followCelebrity: (celebId, celebProfessions, follow) => dispatch(followCelebrity(celebId, celebProfessions, follow)),
   updateFavouritesQueue: (celebId, celebProfessions, follow) => dispatch(updateFavouritesQueue(celebId, celebProfessions, follow)),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
+  toggleLogin: state => dispatch(toggleLogin(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(ImageRender));
