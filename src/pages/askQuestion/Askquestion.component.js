@@ -148,7 +148,6 @@ export default class Askquestion extends React.Component {
                   <Request.LeftSection>
                     <Request.ComponentWrapper>
                       <Request.ComponentWrapperScroll
-                        autoHide
                         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                       >
                       <Request.Heading>What’s your question? </Request.Heading>
