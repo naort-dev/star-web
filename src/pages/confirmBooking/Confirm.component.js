@@ -19,7 +19,6 @@ export default class Confirm extends React.Component {
     this.state = {
       bookingData: {},
       publicRequest: true,
-      loginRedirect: false,
       requestEndRedirect: false,
       audioUrl: null,
       QAVideo: {
@@ -61,7 +60,7 @@ export default class Confirm extends React.Component {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD,YYYY')} />
+          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD, YYYY')} />
         );
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;
@@ -109,7 +108,7 @@ export default class Confirm extends React.Component {
               this.getOccasionDetails(that.occasionType)
             }
             <OrderDetailsItem title="Host" value={that.userName} />
-            <OrderDetailsItem title="Event Date" value={moment(that.date).format('MMM DD,YYYY')} />
+            <OrderDetailsItem title="Event Date" value={moment(that.date).format('MMM DD, YYYY')} />
             <OrderDetailsItem title="Important Info" value={that.importantinfo} />
           </React.Fragment>
         );
@@ -144,8 +143,9 @@ export default class Confirm extends React.Component {
         this.setState({ paymentMode: true });
       }
     } else {
-      this.props.setRedirectUrls(this.props.location.pathname);
-      this.setState({loginRedirect: true})
+      this.props.redirectToLogin();
+      // this.props.setRedirectUrls(this.props.location.pathname);
+      // this.setState({loginRedirect: true})
     }
   }
 
@@ -292,7 +292,7 @@ export default class Confirm extends React.Component {
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
         <Request.ContinueButton onClick={() => this.handleBooking()}>
-          {bookingData.edit ? 'Save' : 'Purchase'}
+          {bookingData.edit ? 'Save' : 'Continue'}
         </Request.ContinueButton>
         {/* <PaymentFooterController
           rate={rate}
@@ -339,9 +339,6 @@ export default class Confirm extends React.Component {
       featuredImage = bookingData.starDetail.featured_photo.image_url && bookingData.starDetail.featured_photo.image_url
     } else {
       featuredImage = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url
-    }
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
     }
     if (this.state.requestEndRedirect) {
       return <Redirect to="/" />;

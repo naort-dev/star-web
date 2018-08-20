@@ -421,9 +421,9 @@ Request.ContinueButton = styled.button`
   border-color: rgb(255, 108, 88);
   border-image: initial;
   ${props => props.disabled && ({
-    border: '2px solid grey',
-    color: 'grey',
-    backgroundColor: 'white',
+    border: '2px solid #b6b6b6',
+    color: '#fff',
+    backgroundColor: '#b6b6b6',
   })
   }
   

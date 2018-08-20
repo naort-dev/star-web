@@ -4,8 +4,8 @@ import { Redirect } from "react-router-dom";
 import * as qs from "query-string";
 import Api from "../../lib/api";
 import resetPassword from "../../utils/resetPassword";
-import { LoginContainer } from "../../components/LoginForm/styled";
-import { ForgotPasswordWrap } from "../../components/ForgotPasswordForm/styled";
+import { LoginContainer } from './styled';
+import { ForgotPasswordWrap } from '../../components/ForgotPasswordForm/styled';
 
 export default class ResetPassword extends React.Component {
   constructor(props) {
@@ -30,6 +30,7 @@ export default class ResetPassword extends React.Component {
           .then(response => {
             if (response.status === 200) {
               this.setState({ redirect: true });
+              this.props.toggleLogin(true);
             }
           })
           .catch(exception => {
@@ -93,7 +94,7 @@ export default class ResetPassword extends React.Component {
   render() {
     const { redirect } = this.state;
     if (redirect) {
-      return <Redirect to="/login" />;
+      return <Redirect to="/" />;
     }
     return (
       <LoginContainer.SocialMediaSignup>

@@ -21,14 +21,14 @@ export default class Requestvideo extends React.Component {
   }
   componentWillMount() {
     const location = this.props.location;
-    if (!this.props.isLoggedIn) {
-      if (location.pathname === `/${this.props.match.params.id}/request/personal` ||
-      location.pathname === `/${this.props.match.params.id}/request/event` ||
-      location.pathname === `/${this.props.match.params.id}/request/ask`
-      ) {
-        this.props.toggleLogin(true);
-      }
-    }
+    // if (!this.props.isLoggedIn) {
+    //   if (location.pathname === `/${this.props.match.params.id}/request/personal` ||
+    //   location.pathname === `/${this.props.match.params.id}/request/event` ||
+    //   location.pathname === `/${this.props.match.params.id}/request/ask`
+    //   ) {
+    //     this.props.toggleLogin(true);
+    //   }
+    // }
     if (!Object.keys(this.props.celebrityDetails).length || !Object.keys(this.props.celebrityDetails).userDetails) {
       this.props.fetchCelebDetails(this.props.match.params.id);
     }
@@ -49,13 +49,19 @@ export default class Requestvideo extends React.Component {
   }
 
   requestFlowCheck = (url) => { 
-    if (this.props.isLoggedIn) {
+    // if (this.props.isLoggedIn) {
     this.props.history.push(`/${this.props.match.params.id}/request${url}`);
-    } else{
-      this.props.setRedirectUrls(`/${this.props.match.params.id}/request${url}`);
-      this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
-      this.props.toggleLogin(true);
-    }
+    this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
+    // } else{
+    //   this.props.setRedirectUrls(`/${this.props.match.params.id}/request${url}`);
+    //   this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
+    //   this.props.toggleLogin(true);
+    // }
+  }
+
+  redirectToLogin = () => {
+    this.props.history.replace(`/${this.props.match.params.id}/request`);
+    this.props.toggleLogin(true);
   }
 
   closeRequestFlow = () => {
@@ -139,7 +145,7 @@ export default class Requestvideo extends React.Component {
                     closePopUp={this.closeRequestFlow}
                     smallPopup
                   >
-                    <Askquestion {...props} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
+                    <Askquestion {...props} redirectToLogin={this.redirectToLogin} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
                   </RequesFlowPopup>
                 )}
               />
@@ -152,7 +158,7 @@ export default class Requestvideo extends React.Component {
                     closePopUp={this.closeRequestFlow}
                     smallPopup
                   >
-                    <Event {...props} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
+                    <Event {...props} redirectToLogin={this.redirectToLogin} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
                   </RequesFlowPopup>
                 )}
               />
@@ -165,7 +171,7 @@ export default class Requestvideo extends React.Component {
                     closePopUp={this.closeRequestFlow}
                     smallPopup
                   >
-                    <Personal {...props} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
+                    <Personal {...props} redirectToLogin={this.redirectToLogin} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
                   </RequesFlowPopup>
                 )}
               />
