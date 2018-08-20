@@ -97,6 +97,12 @@ export default class StarbioPopup extends React.Component {
     this.featuredImage = null;
     this.secondImage = null;
     this.firstImage = null;
+    this.currentExif = null;
+    this.imageNaturalHeight = null;
+    this.imageNaturalWidth = null;
+    this.originalHeight = null;
+    this.originalWidth = null;
+    this.base64Image = null;
   }
 
   setImageSize = () => {
@@ -195,7 +201,6 @@ export default class StarbioPopup extends React.Component {
     window.removeEventListener('resize', this.setImageSize);
   }
 
-
   async onFileChange(type = "featuredImage") {
     this.setState({ imageError: false })
     const file = document.getElementById(type).files[0];
@@ -216,26 +221,90 @@ export default class StarbioPopup extends React.Component {
     }
   }
 
-  getImageData(file, type) {
+  convertBeforeCrop = (imageURL) => {
+    const image = new Image();
+    image.onload = function () {
+      const width = this.originalWidth;
+      const height = this.originalHeight;
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = width;
+      canvas.height = height;
+      switch (this.currentExif) {
+        case 2:
+          ctx.translate(height, 0);
+          ctx.scale(-1, 1);
+          break;
+
+        case 3:
+          ctx.translate(width, height);
+          ctx.rotate(180 * Math.PI / 180);
+          break;
+
+        case 4:
+          ctx.translate(0, height);
+          ctx.scale(1, -1);
+          break;
+
+        case 5:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(90 * Math.PI / 180);
+          ctx.scale(1, -1);
+          break;
+
+        case 6:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(90 * Math.PI / 180);
+          ctx.translate(0, -height);
+          break;
+
+        case 7:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.rotate(-90 * Math.PI / 180);
+          ctx.translate(-width, height);
+          ctx.scale(1, -1);
+          break;
+
+        case 8:
+          canvas.width = height;
+          canvas.height = width;
+          ctx.translate(0, width);
+          ctx.rotate(-90 * Math.PI / 180);
+          break;
+      }
+      ctx.drawImage(
+        image,
+        0,
+        0,
+        this.originalWidth,
+        this.originalHeight,
+      );
+      const base64Image = canvas.toDataURL('image/jpeg');
+      this.setState({ cropImage: base64Image })
+    }.bind(this);
+    image.src = imageURL;
+  }
+
+
+  async getImageData(file, type) {
     this.setState({ loaders: { ...this.state.loaders, [`${type}`]: false } })
     const reader = new FileReader();
     const extensionType = type === 'avatar' ? 'avatarImage' : type;
+    const exif = await this.getExif(file, type)
+    this.currentExif = exif;
     reader.onload = async function (e) {
-      const exif = await this.getExif(file, type)
-      // this.setState({cropMode: true, cropImage: e.target.result, currentImageType: type})
+      this.convertBeforeCrop(e.target.result)
       this.setState({
-        cropMode: true, cropImage: e.target.result, currentImageType: type, [`${type}File`]: file, rotations: { ...this.state.rotations, [`${type}`]: exif }, loaders: { ...this.state.loaders, [`${type}`]: true },
+        cropMode: true, currentImageType: type, [`${type}File`]: file, loaders: { ...this.state.loaders, [`${type}`]: true },
         extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
-      })
-      //   const exif = await this.getExif(file, type)
-      // const exif = await this.getExif(file, type)
-      // this.setState({ [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
-      // this.setState({ [type]: reader.result, [`${type}File`]: file, rotations: {...this.state.rotations, [`${type}`]: exif}, loaders: {...this.state.loaders, [`${type}`]: true}})
+      });
     }.bind(this)
     if (file) {
       reader.readAsDataURL(file)
     }
-
   }
 
 
@@ -245,41 +314,41 @@ export default class StarbioPopup extends React.Component {
         const exif = EXIF.getTag(this, "Orientation")
         switch (exif) {
           case 3:
-            resolve('rotate(180deg)');
+            resolve(3)
             break;
           case 4:
-            resolve('rotate(180deg)');
+            resolve(4);
             break;
           case 5:
-            resolve('rotate(90deg)');
+            resolve(5);
             break;
           case 6:
-            resolve('rotate(90deg)');
+            resolve(6);
             break;
           case 7:
-            resolve('rotate(270deg)');
+            resolve(7);
             break;
           case 8:
-            resolve('rotate(270deg)');
+            resolve(8);
             break;
           default:
-            resolve('rotate(0deg)')
+            resolve(9);
         }
       })
 
     })
   }
 
-
-
   checkResolution(file, type) {
     let correctResolution = false;
-    var img = new Image();
+    const img = new Image();
     img.src = window.URL.createObjectURL(file);
     return new Promise((resolve, reject) => {
-      img.onload = () => {
-        var width = img.naturalWidth;
-        var height = img.naturalHeight;
+      img.onload = function () {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+        this.originalHeight = img.height;
+        this.originalWidth = img.width;
         window.URL.revokeObjectURL(img.src);
         if ((type === 'featuredImage' && width >= 800 && height >= 376) ||
           (type === 'firstImage' && width >= 400 && height >= 400) ||
@@ -289,7 +358,7 @@ export default class StarbioPopup extends React.Component {
           correctResolution = true;
         }
         resolve(correctResolution)
-      }
+      }.bind(this);
 
     })
   }
