@@ -15,7 +15,12 @@ class Sidebar extends React.Component {
 
   selectCategory = (label, id) => {
     if (label === 'featured') this.setState({ showSubCategory: false });
-    else this.setState({ showSubCategory: this.props.selectedCategory === id ? !this.state.showSubCategory : true });
+    if (this.props.selectedCategory === id) {
+      this.setState({ showSubCategory: !this.state.showSubCategory});
+      return;
+    }
+    this.setState({ showSubCategory: true });
+
     if (window.outerWidth<=1024) {
       if (label === 'featured') this.props.toggleMenu();
     }
