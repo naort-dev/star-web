@@ -110,7 +110,7 @@ export default class Requestvideo extends React.Component {
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
                 <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <Link to={`/star/${this.props.match.params.id}`}>
+                <Link to={`/${this.props.match.params.id}`}>
                   <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
                 </Link>
               </HeaderSection>               
