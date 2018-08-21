@@ -355,12 +355,7 @@ export default class SignUp extends React.Component {
       return false;
     }
     if (!pattern.test(this.state.password.value)) {
-      this.setState({
-        password: {
-          ...this.state.password,
-          message: "Enter a valid password with atleast one symbol"
-        }
-      });
+      this.setState({ password: { ...this.state.password, message: 'Enter a valid password with at least one symbol' } });
       return false;
     }
     this.setState({
