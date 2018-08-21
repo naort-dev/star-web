@@ -15,7 +15,6 @@ export default class Askquestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginRedirect: false,
       question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
       // showConfirm: false,
@@ -59,9 +58,6 @@ export default class Askquestion extends React.Component {
             });
           }
         });
-    } else {
-      this.props.setRedirectUrls(this.props.location.pathname);
-      this.setState({ loginRedirect: true });
     }
   }
   setQuestion = (question) => {
@@ -113,9 +109,6 @@ export default class Askquestion extends React.Component {
       featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
-    }
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
     }
     return (
       <React.Fragment>
