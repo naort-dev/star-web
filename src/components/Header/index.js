@@ -30,7 +30,7 @@ class Header extends React.Component {
   componentWillMount() {
    
     if (this.props.isLoggedIn) {
-      this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
+      // this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
       const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && (this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url || this.props.userValue.settings_userDetails.avatar_photo.image_url);
       this.setState({ profilePhoto });
     }
