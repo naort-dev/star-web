@@ -1,6 +1,6 @@
 export const locations = {
   login: "/login",
-  starDetails: "/star/:id/:videoId?",
+  starDetails: "/:id",
   signupType: "/signuptype",
   signUp: "/signup",
   recordVideo: "/recordvideo",
