@@ -6,9 +6,7 @@ import AboutContentDiv from './styled';
 
 
 export const AboutContent = props => (
-  <Scrollbars
-    autoHide
-  >
+  <Scrollbars>
     <AboutContentDiv>
       <AboutContentDiv.ProfileMainContent>
         {props.showEdit &&

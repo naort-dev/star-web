@@ -120,23 +120,10 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                {/* <Route path="/login" component={Login} /> */}
-                {/* <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
-                <Route exact path="/star/:id" component={Starprofile} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
-                <Route path="/signuptype" component={SignupType} />
-                <Route path="/signup" component={SignUp} />
-                <Route path="/starbio" component={Starbio} />
-                <Route path="/starsuccess" component={Starsuccess} />
-                <Route path="/recordvideo" component={StarsignUpVideo} />
                 <Route path="/:id/request" component={Requestvideo} />
                 <Route path="/instalogin" component={InstaLogin} />
-                {/* <Route path="/:id/request/ask" component={Askquestion} />
-                <Route path="/:id/request/event" component={Event} />
-                <Route path="/:id/request/personal" component={Personal} /> */}
-                {/* <Route path="/:id/confirm" component={Confirm} /> */}
-                {/* <Route path="/settings" component={Starbio} /> */}
 
                 {/* logged in areas */}
 
@@ -192,7 +179,7 @@ class App extends React.Component {
                 */}
 
                 {/* fallbacks, keep it last */}
-
+                <Route exact path="/:id" component={Starprofile} />
                 <Route path="/unauthorized" component={Unauthorized} />
                 <Route path="/not-found" component={Page404} />
                 <Route component={Page404} />

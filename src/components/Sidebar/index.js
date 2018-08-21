@@ -136,7 +136,7 @@ class Sidebar extends React.Component {
   }
 }
 const mapStateToProps = state => ({
-  starRole: state.session.starRole,
+  starRole: state.userDetails.starRole,
 });
 
 const mapDispatchToProps = dispatch => ({

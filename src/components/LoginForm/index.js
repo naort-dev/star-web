@@ -26,7 +26,8 @@ export default class LoginForm extends React.Component {
         in_id: "",
         role: ROLES.fan,
         ...this.props.data
-      }
+      },
+      gmailClick: false,
     };
   }
 
@@ -52,7 +53,7 @@ export default class LoginForm extends React.Component {
         }
       };
     };
-    (function(d, s, id) {
+    (function (d, s, id) {
       var js,
         fjs = d.getElementsByTagName(s)[0];
       if (d.getElementById(id)) {
@@ -117,9 +118,11 @@ export default class LoginForm extends React.Component {
     window.removeEventListener("Storage", this.getInstaAccessToken);
   }
 
-  onSignIn = googleUser => {
-    const profile = googleUser.getBasicProfile();
-    this.onSocialMediaLogin(profile, 3);
+  onSignIn = (googleUser) => {
+    if (this.state.gmailClick) {
+      const profile = googleUser.getBasicProfile();
+      this.onSocialMediaLogin(profile, 3);
+    }
   };
 
   onLogin = e => {
@@ -174,7 +177,7 @@ export default class LoginForm extends React.Component {
           nick_name: r.name,
           profile_photo: r.picture.data.url,
           fb_id: r.id
-        }
+        },
       });
     } else if (source === 3) {
       const name = r.getName();
@@ -190,7 +193,7 @@ export default class LoginForm extends React.Component {
           nick_name: r.getName(),
           profile_photo: r.getImageUrl(),
           gp_id: r.getId()
-        }
+        },
       });
     } else {
       const val = r;
@@ -207,7 +210,7 @@ export default class LoginForm extends React.Component {
           nick_name: val.full_name,
           profile_photo: val.profile_picture,
           in_id: val.id
-        }
+        },
       });
     }
     this.props.setSocialMediaData(this.state.socialMedia);
@@ -239,12 +242,13 @@ export default class LoginForm extends React.Component {
   onGmail = () => {
     const check = document.getElementsByClassName("abcRioButtonIcon");
     check[0].click();
+    this.setState({ gmailClick: true });
   };
 
   onFBlogin = () => {
     const that = this;
     window.FB.login(
-      function(response) {
+      function (response) {
         if (response.authResponse) {
           window.FB.api(
             "/me",
@@ -252,7 +256,7 @@ export default class LoginForm extends React.Component {
               locale: "en_US",
               fields: "name, email,first_name,last_name,picture"
             },
-            function(response) {
+            function (response) {
               that.onSocialMediaLogin(response, 2);
             }
           );
@@ -269,11 +273,11 @@ export default class LoginForm extends React.Component {
       const that = this;
       axios
         .get(instaUrl)
-        .then(function(response) {
+        .then(function (response) {
           that.onSocialMediaLogin(response.data.data, 4);
           localStorage.removeItem("InstaAccessToken");
         })
-        .catch(function(error) {});
+        .catch(function (error) { });
     }
   };
 
@@ -350,7 +354,7 @@ export default class LoginForm extends React.Component {
     return (
       <React.Fragment>
         <LoginContainer.SocialMediaSignup>
-          <Scrollbars autoHide>
+          <Scrollbars>
             <LoginContainer.Container>
               <LoginContainer.Heading>
                 Welcome back to Starsona!
@@ -416,42 +420,42 @@ export default class LoginForm extends React.Component {
                   {this.props.statusCode === "410" ? (
                     <LoginContainer.EmptyDiv />
                   ) : (
-                    <LoginContainer.InputWrapper>
-                      <LoginContainer.WrapsInput>
-                        <LoginContainer.PasswordWrapper>
-                          <LoginContainer.Input
-                            type={this.state.showPassword ? "text" : "password"}
-                            name="password"
-                            value={password.value}
-                            placeholder="Password"
-                            onChange={this.acceptPasswordHandler}
-                            onBlur={this.checkPassword}
-                          />
-                          <LoginContainer.ShowPassword
-                            onClick={this.ShowPassword}
-                          />
-                        </LoginContainer.PasswordWrapper>
+                      <LoginContainer.InputWrapper>
+                        <LoginContainer.WrapsInput>
+                          <LoginContainer.PasswordWrapper>
+                            <LoginContainer.Input
+                              type={this.state.showPassword ? "text" : "password"}
+                              name="password"
+                              value={password.value}
+                              placeholder="Password"
+                              onChange={this.acceptPasswordHandler}
+                              onBlur={this.checkPassword}
+                            />
+                            <LoginContainer.ShowPassword
+                              onClick={this.ShowPassword}
+                            />
+                          </LoginContainer.PasswordWrapper>
 
-                        <LoginContainer.ErrorMsg>
-                          {password.message}
-                        </LoginContainer.ErrorMsg>
-                      </LoginContainer.WrapsInput>
-                    </LoginContainer.InputWrapper>
-                  )}
+                          <LoginContainer.ErrorMsg>
+                            {password.message}
+                          </LoginContainer.ErrorMsg>
+                        </LoginContainer.WrapsInput>
+                      </LoginContainer.InputWrapper>
+                    )}
                   {this.props.statusCode === "410" ? (
                     <React.Fragment />
                   ) : (
-                    <LoginContainer.ForgotButtonWrapper>
-                      <LoginContainer.actionText
-                        onClick={() => this.props.changeView("forgotpassword")}
-                      >
-                        <LoginContainer.ForgotButtonSpan>
-                          {" "}
-                          Forgot your password?
+                      <LoginContainer.ForgotButtonWrapper>
+                        <LoginContainer.actionText
+                          onClick={() => this.props.changeView("forgotpassword")}
+                        >
+                          <LoginContainer.ForgotButtonSpan>
+                            {" "}
+                            Forgot your password?
                         </LoginContainer.ForgotButtonSpan>
-                      </LoginContainer.actionText>
-                    </LoginContainer.ForgotButtonWrapper>
-                  )}
+                        </LoginContainer.actionText>
+                      </LoginContainer.ForgotButtonWrapper>
+                    )}
                   <LoginContainer.ButtonWrapper>
                     <LoginContainer.SignIn
                       type="submit"
@@ -465,13 +469,13 @@ export default class LoginForm extends React.Component {
 
               <LoginContainer.WrapsInput>
                 {this.props.statusCode === "410" ||
-                this.props.statusCode === "310" ? (
-                  <LoginContainer.EmptyDiv />
-                ) : (
-                  <LoginContainer.ErrorMsg>
-                    {this.props.error}
-                  </LoginContainer.ErrorMsg>
-                )}
+                  this.props.statusCode === "310" ? (
+                    <LoginContainer.EmptyDiv />
+                  ) : (
+                    <LoginContainer.ErrorMsg>
+                      {this.props.error}
+                    </LoginContainer.ErrorMsg>
+                  )}
               </LoginContainer.WrapsInput>
             </LoginContainer.Container>
           </Scrollbars>

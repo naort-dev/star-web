@@ -2,6 +2,7 @@ import React from 'react';
 import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
+import { requestTypes } from '../../constants/requestTypes';
 import Checkout from './checkout';
 import {
   createCharge,
@@ -88,7 +89,6 @@ class StripeCheckout extends React.Component {
         <Scrollbars
           autoHeight
           autoHeightMax={350}
-          autoHide
         >
           {
             Object.keys(this.props.sourceList).map(index => (
@@ -131,20 +131,27 @@ class StripeCheckout extends React.Component {
     return (
       <PaymentStyled.wrapper>
         <PaymentStyled.ComponentWrapperScroll
-          autoHide
           renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
         >
           <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
           <PaymentStyled.StarDetailsWrapper>
             <PaymentStyled.StarNameWrapper>
-              <PaymentStyled.SubTitle>
-                Starsona booking for
-              </PaymentStyled.SubTitle>
-              {this.props.fullName}
+              <PaymentStyled.StarPhoto 
+                imageUrl={this.props.profilePhoto}
+              />
+              <PaymentStyled.RequestDetails>
+                <PaymentStyled.SubTitle>
+                  Starsona booking
+                </PaymentStyled.SubTitle>
+                {this.props.fullName}
+                <PaymentStyled.RequestType>
+                  {requestTypes[this.props.requestType]}
+                </PaymentStyled.RequestType>
+              </PaymentStyled.RequestDetails>
             </PaymentStyled.StarNameWrapper>
-            <PaymentStyled.StarPhoto 
-              imageUrl={this.props.profilePhoto}
-            />
+            <PaymentStyled.BookingRate>
+              ${this.props.rate}
+            </PaymentStyled.BookingRate>
           </PaymentStyled.StarDetailsWrapper>
           <PaymentStyled.OptionSelectionWrapper>
             {
@@ -186,14 +193,17 @@ class StripeCheckout extends React.Component {
           {
             !this.state.cardSelection && this.renderAddCard()
           }
-          <PaymentStyled.StripeLogoWrapper>
+          {/* <PaymentStyled.StripeLogoWrapper>
             <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
-          </PaymentStyled.StripeLogoWrapper>
+          </PaymentStyled.StripeLogoWrapper> */}
         </PaymentStyled.ComponentWrapperScroll>
         <PaymentStyled.PaymentControllerWrapper>
           <PaymentStyled.ContinueButton onClick={() => this.handleBooking()}>
-             Pay
+             Confirm Booking  -  ${this.props.rate}
           </PaymentStyled.ContinueButton>
+          <PaymentStyled.StripeLogoWrapper>
+            <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
+          </PaymentStyled.StripeLogoWrapper>
         </PaymentStyled.PaymentControllerWrapper>
       </PaymentStyled.wrapper>
     );

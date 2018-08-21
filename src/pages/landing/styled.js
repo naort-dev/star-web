@@ -36,7 +36,7 @@ LandingStyled.sideSection = styled.section`
 
 LandingStyled.mainSection = styled.section`
   height: 100%;
-  display: ${props => (props.menuActive ? 'none' : 'block')}
+  display: ${props => (props.menuActive ? 'none' : 'block')};
   @media(min-width: 768px) {
     padding-top: 40px;
   }

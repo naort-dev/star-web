@@ -32,6 +32,9 @@ class ImageRender extends React.Component {
     window.addEventListener('resize', this.setImagesHeight);
   }
   componentWillReceiveProps(nextProps) {
+    setTimeout(() => {
+      this.setImagesHeight();
+    }, 100);
     if (nextProps.celebrityFollow !== this.state.favouriteSelected) {
       this.setState({ favouriteSelected: nextProps.celebrityFollow });
     }
@@ -42,9 +45,6 @@ class ImageRender extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImagesHeight);
     this.mounted = false;
-  }
-  componentWillReceiveProps(nextProps) {
-    this.setImagesHeight();
   }
   setImages = (cover, profile) => {
     this.coverImage.onload = () => {
@@ -88,7 +88,7 @@ class ImageRender extends React.Component {
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         >
-          <Link to={`/star/${props.id}`} style={{ display: 'block', height: '100%' }}>
+          <Link to={`/${props.id}`} style={{ display: 'block', height: '100%' }}>
             <ImageRenderDiv.ProfileImageWrapper>
               <ImageRenderDiv.ProfileImage
                 imageUrl={this.state.profileImage}
@@ -101,7 +101,7 @@ class ImageRender extends React.Component {
             selected={this.state.favouriteSelected}
           />
         </ImageRenderDiv.ImageSection>
-        <Link to={`/star/${props.id}`} style={{ display: 'block', height: '100%' }}>
+        <Link to={`/${props.id}`} style={{ display: 'block', height: '100%' }}>
           <ImageRenderDiv.ProfileContent>
             <ImageRenderDiv.Span>
               <ImageRenderDiv.StarName>

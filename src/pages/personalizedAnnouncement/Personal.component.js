@@ -266,7 +266,7 @@ export default class Personal extends React.Component {
     if (localStorage && localStorage.getItem('bookingData')) {
       localStorage.removeItem('bookingData');
     }
-    this.props.history.push(`/star/${this.props.match.params.id}`);
+    this.props.history.push(`/${this.props.match.params.id}`);
   }
 
 
@@ -327,7 +327,6 @@ export default class Personal extends React.Component {
                     }
                     <Request.ComponentWrapper>
                       <Request.ComponentWrapperScroll
-                        autoHide
                         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                       >
                         <Request.Heading>What is the Occasion</Request.Heading>

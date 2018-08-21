@@ -421,6 +421,9 @@ Request.ContentWrapper = styled.div`
 `;
 Request.ComponentWrapper = styled.div`
   height: 100%;
+  @media(min-width: 768px) {
+    height: calc(100% - 48px);
+  }
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`

@@ -28,8 +28,7 @@ export default class Starprofile extends React.Component {
   componentWillMount() {
     this.props.resetCelebDetails();
     this.props.fetchCelebDetails(this.getUserId(this.props));
-    this.props.celebVideosListFetchStart();
-    // this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
+    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
     window.addEventListener('resize', this.handleWindowResize);
     this.setTabList();
   }
@@ -40,14 +39,13 @@ export default class Starprofile extends React.Component {
       this.setState({
         selectedTab: 'All',
       });
-      this.props.celebVideosListFetchStart();
-      // this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
+      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchCelebDetails(this.getUserId(nextProps));
     }
     if (Object.keys(nextProps.userDetails).length && Object.keys(this.props.userDetails).length !== Object.keys(nextProps.userDetails).length) {
-      this.props.fetchCelebVideosList(0, true, nextProps.userDetails.id);
+      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
     }
   }
   componentWillUnmount() {
@@ -90,7 +88,7 @@ export default class Starprofile extends React.Component {
         break;
       default: break;
     }
-    this.props.fetchCelebVideosList(0, true, this.props.userDetails.id, requestId);
+    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props), requestId);
   }
   handleWindowResize = (e) => {
     if (this.state.selectedTab === 'About' && document.body.getBoundingClientRect().width >= 1025) {
@@ -146,7 +144,7 @@ export default class Starprofile extends React.Component {
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.userDetails.id)}
+          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
         />
       );
     }

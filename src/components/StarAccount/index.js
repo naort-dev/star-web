@@ -13,7 +13,6 @@ export default class StarAccount extends React.Component {
       <React.Fragment>
         <Accounts.ComponentWrapper>
           <Accounts.ComponentWrapperScroll
-            autoHide
             renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
           >
             <Accounts.Questionwraps>

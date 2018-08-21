@@ -31,6 +31,7 @@ export default class SignUp extends React.Component {
         in_id: '',
         role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
       },
+      gmailClick: false,
     };
   }
   componentWillMount() {
@@ -115,8 +116,10 @@ export default class SignUp extends React.Component {
   }
 
   onSignIn = (googleUser) => {
-    const profile = googleUser.getBasicProfile();
-    this.onSocialMediaLogin(profile, 3);
+    if (this.state.gmailClick) {
+      const profile = googleUser.getBasicProfile();
+      this.onSocialMediaLogin(profile, 3);
+    }
   }
 
 
@@ -304,7 +307,7 @@ export default class SignUp extends React.Component {
       return false;
     }
     if (!pattern.test(this.state.password.value)) {
-      this.setState({ password: { ...this.state.password, message: 'Enter a valid password with atleast one symbol' } });
+      this.setState({ password: { ...this.state.password, message: 'Enter a valid password with at least one symbol' } });
       return false;
     }
     this.setState({ password: { ...this.state.password, message: '', isValid: true } });
@@ -335,7 +338,7 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <LoginContainer.SocialMediaSignup>
-        <Scrollbars autoHide>
+        <Scrollbars>
           <LoginContainer.Container>
             <LoginContainer.Heading>Make it quick and easy!</LoginContainer.Heading>
             <LoginContainer.SocialMediaMessage>Already have an account?

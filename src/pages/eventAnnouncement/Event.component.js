@@ -157,7 +157,7 @@ export default class Event extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
-    this.props.history.push(`/star/${this.props.match.params.id}`);
+    this.props.history.push(`/${this.props.match.params.id}`);
   }
   render() {
     let coverPhoto;
@@ -216,7 +216,6 @@ export default class Event extends React.Component {
                 }
                 <Request.ComponentWrapper>
                   <Request.ComponentWrapperScroll
-                    autoHide
                     renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
                   >
                     <Request.Heading>What is the event</Request.Heading>

@@ -31,7 +31,6 @@ export default class Favourites extends React.Component {
         <FavouriteStyled.sectionWrapper>
           <FavouriteStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
-              autoHide
               renderView={props => <div {...props} className="view" />}
             >
               <Sidebar
