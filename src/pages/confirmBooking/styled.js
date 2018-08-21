@@ -420,7 +420,7 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 90px);
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`

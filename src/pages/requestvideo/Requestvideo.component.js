@@ -21,14 +21,9 @@ export default class Requestvideo extends React.Component {
   }
   componentWillMount() {
     const location = this.props.location;
-    // if (!this.props.isLoggedIn) {
-    //   if (location.pathname === `/${this.props.match.params.id}/request/personal` ||
-    //   location.pathname === `/${this.props.match.params.id}/request/event` ||
-    //   location.pathname === `/${this.props.match.params.id}/request/ask`
-    //   ) {
-    //     this.props.toggleLogin(true);
-    //   }
-    // }
+    if (!this.props.isLoggedIn && location.pathname === `/${this.props.match.params.id}/request/ask`) {
+      this.props.toggleLogin(true);
+    }
     if (!Object.keys(this.props.celebrityDetails).length || !Object.keys(this.props.celebrityDetails).userDetails) {
       this.props.fetchCelebDetails(this.props.match.params.id);
     }
@@ -49,14 +44,16 @@ export default class Requestvideo extends React.Component {
   }
 
   requestFlowCheck = (url) => { 
-    // if (this.props.isLoggedIn) {
-    this.props.history.push(`/${this.props.match.params.id}/request${url}`);
-    this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
-    // } else{
-    //   this.props.setRedirectUrls(`/${this.props.match.params.id}/request${url}`);
-    //   this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
-    //   this.props.toggleLogin(true);
-    // }
+    if (this.props.isLoggedIn) {
+      this.props.history.push(`/${this.props.match.params.id}/request${url}`);
+      this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
+    } else if (url === '/ask') {
+      this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
+      this.props.toggleLogin(true);
+    } else {
+      this.props.history.push(`/${this.props.match.params.id}/request${url}`);
+      this.setState({ selectedRequest: `/${this.props.match.params.id}/request${url}` })
+    }
   }
 
   redirectToLogin = () => {
