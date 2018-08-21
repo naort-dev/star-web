@@ -65,10 +65,21 @@ export default class Requestvideo extends React.Component {
   }
 
   closeRequestFlow = () => {
+    this.clearStream();
     this.props.history.replace(`/${this.props.match.params.id}/request`);
     this.props.cancelBookingDetails();
     this.props.clearAll();
     this.setState({ stepCount: 1 });
+  }
+
+  clearStream = () => {
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    this.props.onClearStreams();
   }
 
   render() {
