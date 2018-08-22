@@ -25,14 +25,14 @@ class Header extends React.Component {
       profilePhoto: null,
     };
     this.suggestionsFetchDelay=undefined;
+    this.profileImage = new Image();
+    this.mounted = true;
   }
 
-  componentWillMount() {
-   
+  componentWillMount() { 
     if (this.props.isLoggedIn) {
-      this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
       const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && (this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url || this.props.userValue.settings_userDetails.avatar_photo.image_url);
-      this.setState({ profilePhoto });
+      this.setProfileImage(profilePhoto);
     }
   }
 
@@ -48,12 +48,23 @@ class Header extends React.Component {
 
     if (JSON.stringify(nextProps.userValue.settings_userDetails.avatar_photo) !== JSON.stringify(this.props.userValue.settings_userDetails.avatar_photo)) {
       const profilePhoto = nextProps.userValue.settings_userDetails.avatar_photo && (nextProps.userValue.settings_userDetails.avatar_photo.thumbnail_url || nextProps.userValue.settings_userDetails.avatar_photo.image_url);
-      this.setState({ profilePhoto });
+      this.setProfileImage(profilePhoto);
+      this.setState({ profilePhoto: null });
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
+    this.mounted = false;
+  }
+
+  setProfileImage = (photo) => {
+    this.profileImage.src = photo;
+    this.profileImage.onload = () => {
+      if (this.mounted) {
+        this.setState({ profilePhoto: this.profileImage.src });
+      }
+    };
   }
 
   handleSearchChange = (e) => {
@@ -134,7 +145,7 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                <Link to={`/star/${item.user_id}`}>
+                <Link to={`/${item.user_id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>

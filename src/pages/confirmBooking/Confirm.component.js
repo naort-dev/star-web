@@ -242,11 +242,12 @@ export default class Confirm extends React.Component {
     );
   }
 
-  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
+  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings, requestType) => {
     return (
       <StripeCheckout
         rate={rate}
         fullName={fullName}
+        requestType={requestType}
         profilePhoto={profilePhoto}
         authToken={props.authToken}
         remainingBookings={remainingBookings}
@@ -381,7 +382,7 @@ export default class Confirm extends React.Component {
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
-                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
+                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings, this.state.bookingData.type)
                   :
                     this.renderConfirmDetails(bookingData, rate, remainingBookings, profilePhoto, fullName)
                 }

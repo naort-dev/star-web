@@ -15,7 +15,6 @@ export default class Askquestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginRedirect: false,
       question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
       // showConfirm: false,
@@ -31,7 +30,7 @@ export default class Askquestion extends React.Component {
     this.props.cancelBookingDetails();
     this.props.onClearStreams();
     this.props.deleteVideo();
-    this.props.history.push(`/star/${this.props.match.params.id}`);
+    this.props.history.push(`/${this.props.match.params.id}`);
   }
 
   handleBooking = () => {
@@ -59,9 +58,6 @@ export default class Askquestion extends React.Component {
             });
           }
         });
-    } else {
-      this.props.setRedirectUrls(this.props.location.pathname);
-      this.setState({ loginRedirect: true });
     }
   }
 
@@ -116,9 +112,6 @@ export default class Askquestion extends React.Component {
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
-    }
     return (
       <React.Fragment>
         {
@@ -138,7 +131,7 @@ export default class Askquestion extends React.Component {
                   {/* <HeaderSection>
               <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
               <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-              <Link to={`/star/${this.props.match.params.id}`}>
+              <Link to={`/${this.props.match.params.id}`}>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </Link>
             </HeaderSection> */}
