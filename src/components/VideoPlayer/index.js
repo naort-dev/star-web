@@ -58,7 +58,7 @@ export default class VideoPlayer extends React.Component {
   }
 
   render() {
-    console.log("fill")
+   
     return (
       <VideoRenderDiv>
         {this.state.secondary.thumbnail && <VideoRenderDiv.answerVideo

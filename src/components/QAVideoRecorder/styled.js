@@ -242,14 +242,16 @@ VideoRecorderDiv.InfoText = styled.div`
   background-color: rgba(0,0,0,.2);
   `;
 
-  VideoRecorderDiv.ControlUploadWrapper = styled.div`
+  VideoRecorderDiv.UploadTextWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: 15%;
+  top:0px;
+  position: absolute;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: black;
+
   `;
 
   VideoRecorderDiv.IndicationText = styled.div`
@@ -273,6 +275,16 @@ VideoRecorderDiv.InfoText = styled.div`
   height: 90%;
   `;
 
+  VideoRecorderDiv.UploadControlWrapper = styled.div`
+  width: 100%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgba(0,0,0,.2);
+`;
+
   VideoRecorderDiv.ActionButton = styled.div`
   display: flex;
   width: 100%;
@@ -281,6 +293,15 @@ VideoRecorderDiv.InfoText = styled.div`
   align-items: center;
   justify-content: center;
   bottom: 10%;
+  `;
+
+  VideoRecorderDiv.UploadActionButton = styled.div`
+  margin-top: 10px;
+  display: flex;
+  width: 100%;
+  height: 10%;
+  align-items: center;
+  justify-content: center;
   `;
 
   VideoRecorderDiv.RecordInfoButton = styled.div`
