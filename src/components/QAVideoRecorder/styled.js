@@ -56,6 +56,7 @@ VideoRecorderDiv.Video = styled.video`
   height: 100%;
   width: 100%;
   object-fit: fill;
+  background-color: black;
   @media(min-width:1025px){
     width: 100%;
     height: 100%
@@ -225,7 +226,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
-    color: #FFFFFF;
+    color: #FFF;
     font-family: 'Ubuntu-Regular';
     text-align: center;
   `;
@@ -239,6 +240,16 @@ VideoRecorderDiv.InfoText = styled.div`
   justify-content: center;
   flex-direction: column;
   background-color: rgba(0,0,0,.2);
+  `;
+
+  VideoRecorderDiv.ControlUploadWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: black;
   `;
 
   VideoRecorderDiv.IndicationText = styled.div`
@@ -282,6 +293,7 @@ VideoRecorderDiv.InfoText = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 5px;
   `
 
   VideoRecorderDiv.VideoHeading = styled.div`
@@ -289,6 +301,16 @@ VideoRecorderDiv.InfoText = styled.div`
   color: #fff;
   font-size: 24px;
   height: 35%;
+  `;
+
+  
+  VideoRecorderDiv.UploadHeading = styled.div`
+  font-family: 'Ubuntu-bold';
+  color: #fff;
+  font-size: 24px;
+  height: 35%;
+  top: 5%;
+  position: absolute;
   `;
 
 export default VideoRecorderDiv;

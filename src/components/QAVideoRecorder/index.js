@@ -2,8 +2,6 @@ import React from 'react';
 import VideoRecorderDiv from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
 import VideoPlayer from '../VideoPlayer';
-import smoothScroll from '../../utils/smoothScroll';
-
 
 export default class QAVideoRecorder extends React.Component {
   constructor(props) {
@@ -25,7 +23,9 @@ export default class QAVideoRecorder extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchStream();
+      this.fetchStream();
+    
+
   }
 
   fetchStream() {
@@ -34,7 +34,10 @@ export default class QAVideoRecorder extends React.Component {
         return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
           .then(stream => {
             window.stream = stream
-            document.getElementById('video-player').srcObject = window.stream;
+            if(!this.props.src){
+              document.getElementById('video-player').srcObject = window.stream;
+
+            }
           })
           .catch((err) => {
             this.setState({ deviceSupport: false });
@@ -124,7 +127,9 @@ export default class QAVideoRecorder extends React.Component {
     })
       .then(() => {
         const videoElem = document.getElementById('video-player');
-        smoothScroll(videoElem);
+        if(this.props.src){
+          videoElem.src = null;
+        }
         videoElem.srcObject = this.state.stream;
         const options = {
           mimeType: 'video/webm;codecs=vp8',
@@ -214,23 +219,50 @@ export default class QAVideoRecorder extends React.Component {
     }
   }
 
-  renderPreview() {
-    if (!this.props.videoRecorder.start && this.state.play) {
+  renderEditPreview(){
+    if (this.props.src && !this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoPlayer fill primarySrc={this.state.src} />;
-        <VideoRecorderDiv.ActionButton>
-            <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => {
-              this.setState({ play: false })
-              this.fetchStream();
+          <VideoRecorderDiv.IndicationText>Recording</VideoRecorderDiv.IndicationText>
+          <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
+          <VideoRecorderDiv.ActionButton>
+            <VideoRecorderDiv.Button title="Stop recording" stop onClick={this.stopRecording} />
+          </VideoRecorderDiv.ActionButton>
+        </VideoRecorderDiv.ControlWrapper>
+      );
+    }
 
-            }} />
+    if (this.props.src && this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
+      return (
+        <VideoRecorderDiv.ControlWrapper>
+          <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} controls />
+          <VideoRecorderDiv.ActionButton>
+            <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
             <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
       );
     }
 
+
+if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
+    return (
+      <VideoRecorderDiv.ControlWrapper>
+        <VideoRecorderDiv.Wrapper>
+          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}  </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.RecordInfoButton> Ready to record </VideoRecorderDiv.RecordInfoButton>
+        </VideoRecorderDiv.Wrapper>
+        <VideoRecorderDiv.Video id="video-player" src={this.props.src} controls />
+        <VideoRecorderDiv.ActionButton>
+            <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
+            <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
+          </VideoRecorderDiv.ActionButton>
+      </VideoRecorderDiv.ControlWrapper>
+    );
+  }
+}
+  
+  renderPreview() {
     if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
@@ -246,7 +278,7 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoPlayer fill primarySrc={this.props.videoRecorder.recordedBlob} />
+          <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} controls />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
             <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
@@ -264,10 +296,6 @@ export default class QAVideoRecorder extends React.Component {
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
           <VideoRecorderDiv.Button title="Record video" onClick={this.startRecording.bind(this)} />
-          <VideoRecorderDiv.UploadWrapper>
-            <VideoRecorderDiv.NoVideoButton />
-            <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
-          </VideoRecorderDiv.UploadWrapper>
         </VideoRecorderDiv.ActionButton>
       </VideoRecorderDiv.ControlWrapper>
     );
@@ -279,7 +307,8 @@ export default class QAVideoRecorder extends React.Component {
         {(checkMediaRecorderSupport() && !getMobileOperatingSystem()) && this.state.deviceSupport ?
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
-              {this.renderPreview()}
+              
+              {this.props.src ? this.renderEditPreview() : this.renderPreview()}
             </VideoRecorderDiv.VideoContainer>
           </VideoRecorderDiv>
           :

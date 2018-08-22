@@ -170,7 +170,7 @@ export default class Askquestion extends React.Component {
                             </Request.InputFieldsWrapper> */}
 
                             <Request.recorderWrapper>
-                              <QAVideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} onSubmit={this.handleBooking.bind(this)} />
+                              <QAVideoRecorder star={fullName} {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} onSubmit={this.handleBooking.bind(this)} />
                             </Request.recorderWrapper>
                           </Request.Ask>
                         </Request.Questionwraps>
