@@ -6,7 +6,7 @@ import DeclinePopup from './DeclinePopup';
 import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
-import QAVideoRecorder from '../QAVideoRecorder';
+import VideoRecorder from '../WebRTCVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
@@ -301,7 +301,7 @@ export default class OrderDetails extends React.Component {
     if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <QAVideoRecorder {...this.props} duration={recorder.askTimeOut} />
+          <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
         </OrderStyled.VideoRecorder>
       );
     }
