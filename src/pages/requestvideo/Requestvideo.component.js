@@ -150,30 +150,27 @@ export default class Requestvideo extends React.Component {
                             What kind of video would you like to request?
                           </Request.HeaderText>
                           <Request.ButtonWrapper>
-                            <div class="container">
-
-                              <h2>Tomorrow I want some:</h2>
-
-                              <ul>
-                                <li>
+                            <div className="container">
+                              <ul className="list">
+                                <li className="list">
                                   <input type="radio" id="f-option" name="selector" />
-                                  <label for="f-option">Pizza</label>
+                                  <label htmlFor="f-option">Personalized Shout-Out</label>
 
-                                  <div class="check"></div>
+                                  <div className="check" />
                                 </li>
 
                                 <li>
                                   <input type="radio" id="s-option" name="selector" />
-                                  <label for="s-option">Bacon</label>
+                                  <label htmlFor="s-option">Event Announcement</label>
 
-                                  <div class="check"><div class="inside"></div></div>
+                                  <div className="check"><div className="inside"></div></div>
                                 </li>
 
                                 <li>
                                   <input type="radio" id="t-option" name="selector" />
-                                  <label for="t-option">Cats</label>
+                                  <label htmlFor="t-option">Ask a Question</label>
 
-                                  <div class="check"><div class="inside"></div></div>
+                                  <div className="check"><div className="inside"></div></div>
                                 </li>
                               </ul>
                             </div>

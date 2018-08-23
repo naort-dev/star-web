@@ -8,26 +8,24 @@ injectGlobal`
 	overflow: auto;
 }
 
-.list{
+ul li{
   color: #AAAAAA;
   display: block;
   position: relative;
   float: left;
   width: 100%;
   height: 100px;
-	border-bottom: 1px solid #333;
 }
 
-.list input[type=radio]{
+ul li input[type=radio]{
   position: absolute;
   visibility: hidden;
 }
 
-.list label{
+ul li label{
   display: block;
   position: relative;
-  font-weight: 300;
-  font-size: 1.35em;
+  font-size: 12px;
   padding: 25px 25px 25px 80px;
   margin: 10px auto;
   height: 30px;
@@ -36,11 +34,7 @@ injectGlobal`
   -webkit-transition: all 0.25s linear;
 }
 
-.list:hover label{
-	color: #FFFFFF;
-}
-
-.list .check{
+ul li .check{
   display: block;
   position: absolute;
   border: 5px solid #AAAAAA;
@@ -54,19 +48,16 @@ injectGlobal`
 	-webkit-transition: border .25s linear;
 }
 
-.list:hover .check {
-  border: 5px solid #FFFFFF;
-}
 
-.list .check::before {
+ul li .check::before {
   display: block;
   position: absolute;
 	content: '';
   border-radius: 100%;
-  height: 15px;
-  width: 15px;
-  top: 5px;
-	left: 5px;
+  height: 10px;
+  width: 10px;
+  top: 2px;
+	left: 3px;
   margin: auto;
 	transition: background 0.25s linear;
 	-webkit-transition: background 0.25s linear;
@@ -83,5 +74,6 @@ input[type=radio]:checked ~ .check::before{
 input[type=radio]:checked ~ label{
   color: #0DFF92;
 }
+
 
 `;
