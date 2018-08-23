@@ -5,6 +5,7 @@ import { cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { clearStreams } from '../../store/shared/actions/videoRecorder';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
+import { deleteVideo } from '../../store/shared/actions/videoUploader';
 import { toggleLogin, resetRequestFlow, setRequestFlow, toggleRequestFlow } from '../../store/shared/actions/toggleModals';
 
 const mapStateToProps = state => ({
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   resetRequestFlow: () => dispatch(resetRequestFlow()),
   toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
+  deleteVideo: () => dispatch(deleteVideo()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requestvideo);
