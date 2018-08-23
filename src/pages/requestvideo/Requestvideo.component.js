@@ -157,20 +157,23 @@ export default class Requestvideo extends React.Component {
                                   <label htmlFor="f-option">Personalized Shout-Out</label>
 
                                   <div className="check" />
+                                  <p>Celebrate everyday moments with a personalized video greeting from Star Name.  Birthdays, encouragement, graduations… you pick.</p>
                                 </li>
 
-                                <li>
+                                <li className="list">
                                   <input type="radio" id="s-option" name="selector" />
                                   <label htmlFor="s-option">Event Announcement</label>
 
                                   <div className="check"><div className="inside"></div></div>
+                                  <p>Celebrate everyday moments with a personalized video greeting from Star Name.  Birthdays, encouragement, graduations… you pick.</p>
                                 </li>
 
-                                <li>
+                                <li className="list">
                                   <input type="radio" id="t-option" name="selector" />
                                   <label htmlFor="t-option">Ask a Question</label>
 
                                   <div className="check"><div className="inside"></div></div>
+                                  <p>Celebrate everyday moments with a personalized video greeting from Star Name.  Birthdays, encouragement, graduations… you pick.</p>
                                 </li>
                               </ul>
                             </div>
