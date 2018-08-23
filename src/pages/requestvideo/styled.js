@@ -28,11 +28,11 @@ const Request = styled.section`
  
 `;
 Request.Wrapper = styled.div`
- height: 100vh;
+ height: 100%;
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -53,13 +53,8 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
+  height: 100%;
   animation: ${menuEnter} 0.3s linear;
-  @media(min-width: 1025px){
-    width:40%;
-    padding: 0px 0px;
-  }
-
 `;
 Request.RightSection = styled.div`
   width:100%
@@ -367,74 +362,105 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
+  height: 100%;
   @media(min-width:1025px){
     height:calc(100% - 40px);
-    position:relative;
   }
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+
+  }
+`;
+Request.ContinueButton = styled.button`
+  background-color: rgb(255, 108, 88);
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: rgb(255, 108, 88);
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
+  }
+`;
+Request.DiasableButton = styled.button`
+  background-color: #b6b6b6;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #b6b6b6;
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
   }
 `;
 Request.PaymentControllerWrapper = styled.div`
-  position: fixed;
+  position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
-  margin-left: 4%;
+  bottom: 10px;
+  text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
-  
-  box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
   @media(min-width: 768px) {
-    padding: 13px 44px;
+    position: absolute;
+    padding: 13px;
   }
   @media(min-width:1025px){
-    border-top: 2px solid rgba(51, 51, 51, 1);
-    padding: 25px 48px;
-    position:absolute;
-    bottom:0;
+    margin: 0 42px;
     box-shadow: none;
+    left:0;
+    right:0;
   }
 `;
 Request.OptionWrapper = styled.footer`
-  padding: 28px 29px;
+  padding: 28px 0;
   @media(min-width:768px){
-    padding:63px 50px;
-  }
-  @media(min-width:1025px){
-    padding: 110px 95px;
-  }
-  @media(min-width: 1920px){
-    padding: 165px 188px;
+    padding: 10px 29px;
   }
 `;
 Request.HeaderText = styled.div`
   text-align:center;
-  color:#FF6C58;
+  color:#676767;
   font-size:20px;
   font-family: 'Ubuntu-Bold';
   @media(min-width:768px){
     font-size:32px;
   }
   @media(min-width:1025px){
-    font-size:20px;
+    font-size:24px;
   }
 `;
 Request.ButtonWrapper = styled.div`
-  padding-top:29px;
   text-align:center;
-  @media(min-width: 768px){
-    padding-top:52px;
-  }
 `;
 Request.Button = styled.button`
   width:100%;
@@ -468,5 +494,26 @@ Request.Button = styled.button`
   @media(min-width:1920px){
     max-width: 475px;
   }
+`;
+Request.UL = styled.ul`
+  color: #AAAAAA;
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #333;
+`;
+Request.LI = styled.li`
+  color: #AAAAAA;
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #333;
+`;
+
+Request.InsideDiv = styled.div`
 `;
 export { Request, HeaderSection };

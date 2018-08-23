@@ -15,7 +15,7 @@ VideoRenderDiv.answerVideo = styled.img`
   max-width: ${props => (props.fullScreen ? '100%' : '100px')};
   max-height: ${props => (props.fullScreen ? '100%' : '100px')};
   transform: ${props => (props.fullScreen ? 'translate(50%, -50%)' : 'none')};
-  object-fit: contain
+  object-fit: contain;
   z-index: 2;
   transition: ${props => (props.fullScreen ? 'top .5s, right .5s, height .5s' : 'unset')};
   @media(min-width: 768px) {

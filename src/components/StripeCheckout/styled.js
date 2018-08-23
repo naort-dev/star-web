@@ -6,11 +6,11 @@ const PaymentStyled = styled.form`
 `;
 
 PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
-  padding: 25px 17px;
+  padding: 25px 0;
   padding-bottom: 22px;
   height: 100%;
   @media(min-width:768px){
-    padding:25px 48px;
+    padding:25px 42px;
   }
 `;
 
@@ -35,27 +35,55 @@ PaymentStyled.Heading = styled.span`
 
 PaymentStyled.StarDetailsWrapper = styled.div`
   display: flex;
+  padding: 0 8px;
+  align-items: center;
   justify-content: space-between;
+
 `;
 
 PaymentStyled.StarNameWrapper = styled.div`
   font-family: 'Ubuntu-Bold';
   line-height: 22px;
+  display: flex;
+  align-items: center;
 `;
 
 PaymentStyled.StarPhoto = styled.span`
+  width: 104px;
+  height: 78px;
   display: inline-block;
-  width: 100px;
-  height: 100px;
+  border-radius: 50%;
+  border: 1.5px solid black;
   background: ${props => props.imageUrl && `url(${props.imageUrl})`};
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+  @media(min-width: 768px) {
+    width: 100px;
+    height: 100px;
+  }
+`;
+
+PaymentStyled.RequestDetails = styled.div`
+  display: inline-block;
+  margin-left: 10px;
 `;
 
 PaymentStyled.SubTitle = styled.span`
   display: block;
   font-family: 'Ubuntu-Light';
+`;
+
+PaymentStyled.RequestType = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Medium';
+`;
+
+PaymentStyled.BookingRate = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Bold';
+  font-size: 22px;
+  margin-left: 30px;
 `;
 
 PaymentStyled.PaymentControllerWrapper = styled.div`
@@ -174,6 +202,7 @@ PaymentStyled.ElementsWrapper = styled.div`
 PaymentStyled.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
     padding: 0 10px;
+    padding-bottom: 19px;
   }
 `;
 
@@ -262,7 +291,7 @@ PaymentStyled.confirmationWrapper = styled.div`
 `;
 
 PaymentStyled.StripeLogoWrapper = styled.div`
-  margin-top:10%;
+  margin-top: 10px;
   text-align: center;
 `;
 

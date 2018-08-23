@@ -14,7 +14,6 @@ const menuEnter = keyframes`
 const Request = styled.section`
  display:flex;
  flex-direction: column;
- padding-bottom: 53px;
  max-width: 1920px;
  height: 100%;
  background: #fff;
@@ -308,7 +307,7 @@ Request.ScrollBar = styled.div`
 
 Request.recorderWrapper = styled.div`
   width:100%;
-  height:60%;
+  height:100%;
 `;
 
 const HeaderSection = styled.div`
@@ -380,7 +379,7 @@ Request.ContentWrapper = styled.div`
 Request.ComponentWrapper = styled.div`
   height: 100%;
   @media(min-width:1025px){
-    height: calc(100% - 58px);
+    height: 100%;
   }
   
 `;
@@ -487,11 +486,11 @@ Request.Button = styled.button`
   }
 `;
 Request.Ask = styled.div`
-  padding: 25px 19px;
+  // padding: 25px 19px;
   height:100%;
   position:relative;
   @media(min-width:1025px){
-    padding: 25px 48px;
+    // padding: 25px 48px;
   }
 `;
 Request.Questionwraps = styled.div`
