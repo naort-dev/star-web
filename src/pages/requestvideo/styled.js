@@ -28,11 +28,11 @@ const Request = styled.section`
  
 `;
 Request.Wrapper = styled.div`
- height: 100vh;
+ height: 100%;
 `;
 
 Request.Content = styled.div`
- height: 100%;24px
+ height: 100%;
 `;
 
 Request.sideSection = styled.section`
@@ -55,11 +55,6 @@ Request.LeftSection = styled.div`
   background-color: #fff;
   position:relative;
   animation: ${menuEnter} 0.3s linear;
-  @media(min-width: 1025px){
-    width:40%;
-    padding: 0px 0px;
-  }
-
 `;
 Request.RightSection = styled.div`
   width:100%
