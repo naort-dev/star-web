@@ -370,10 +370,8 @@ export default class LoginForm extends React.Component {
               </LoginContainer.SignupLine>
 
               <LoginContainer.ButtonDiv>
-                <LoginContainer.Button onClick={() => this.onFBlogin()}>
-                  <LoginContainer.FacebookContent>
-                    Facebook
-                  </LoginContainer.FacebookContent>
+                <LoginContainer.Button >
+                  <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />
                 </LoginContainer.Button>
 
                 <LoginContainer.Button onClick={() => this.onGmail()}>
@@ -381,15 +379,13 @@ export default class LoginForm extends React.Component {
                     id="g-sign-in"
                     ref={gSignIn => (this.gSignIn = gSignIn)}
                   />
-                  <LoginContainer.GoogleContent>
-                    Google
-                  </LoginContainer.GoogleContent>
+                  <LoginContainer.GoogleContent />
+                   
+                 
                 </LoginContainer.Button>
 
                 <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-                  <LoginContainer.InstagramContent>
-                    Instagram
-                  </LoginContainer.InstagramContent>
+                  <LoginContainer.InstagramContent />
                 </LoginContainer.Button>
               </LoginContainer.ButtonDiv>
 
