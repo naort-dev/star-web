@@ -44,24 +44,25 @@ export default class Requestvideo extends React.Component {
     this.props.history.goBack();
   };
 
-  changeStep = step => {
+  changeStep = (step) => {
     const newStep = step ? step : props.stepCount;
     this.props.setRequestFlow(
       this.props.celebId,
       this.props.requestType,
-      newStep
+      newStep,
     );
   };
 
-  requestFlowCheck = url => {
+  requestFlowCheck = (requestType) => {
     if (this.props.isLoggedIn) {
-      this.props.setRequestFlow(this.props.celebId, url, 1);
-      // this.props.history.push(`/${this.props.celebId}/request${url}`);
-    } else if (url === "/ask") {
-      this.props.toggleLogin(true);
+      this.props.setRequestFlow(this.props.celebId, requestType, 1);
+      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
+    } else if (requestType === "ask") {
+      this.props.setRequestFlow(this.props.celebId, requestType, 1);
+      this.redirectToLogin();
     } else {
-      // this.props.history.push(`/${this.props.celebId}/request${url}`);
-      this.props.setRequestFlow(this.props.celebId, url, 1);
+      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
+      this.props.setRequestFlow(this.props.celebId, requestType, 1);
     }
   };
 
@@ -119,7 +120,6 @@ export default class Requestvideo extends React.Component {
   };
 
   render() {
-    console.log(this.props);
     let coverPhoto;
     let imageList = [];
     let profilePhoto;

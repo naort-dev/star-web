@@ -53,7 +53,7 @@ Request.sideSection = styled.section`
 Request.LeftSection = styled.div`
   width:100%;
   background-color: #fff;
-  position:relative;
+  height: 100%;
   animation: ${menuEnter} 0.3s linear;
 `;
 Request.RightSection = styled.div`
@@ -362,20 +362,15 @@ Request.ContentWrapper = styled.div`
   }
 `;
 Request.ComponentWrapper = styled.div`
+  height: 100%;
   @media(min-width:1025px){
     height:calc(100% - 40px);
-    position:relative;
   }
 `;
 
 Request.ComponentWrapperScroll = styled(Scrollbars)`
   .component-wrapper-scroll-wrapper {
-    overflow: hidden !important;
-    position: static !important;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
+
   }
 `;
 Request.ContinueButton = styled.button`
@@ -447,9 +442,9 @@ Request.PaymentControllerWrapper = styled.div`
   }
 `;
 Request.OptionWrapper = styled.footer`
-  padding: 28px 29px;
+  padding: 28px 0;
   @media(min-width:768px){
-    padding:63px 29px;
+    padding: 10px 29px;
   }
 `;
 Request.HeaderText = styled.div`
@@ -465,7 +460,6 @@ Request.HeaderText = styled.div`
   }
 `;
 Request.ButtonWrapper = styled.div`
-  padding-top:29px;
   text-align:center;
 `;
 Request.Button = styled.button`

@@ -216,7 +216,7 @@ export default class Confirm extends React.Component {
         <ConfirmationModal.description>
           {fullName} now has a week to complete your personalized video. We'll notify as soon as it's done.
         </ConfirmationModal.description>
-        <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Done</ConfirmationModal.Button>
+        <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Close</ConfirmationModal.Button>
       </ConfirmationModal.confirmationWrapper>
     </Popup>
   )
