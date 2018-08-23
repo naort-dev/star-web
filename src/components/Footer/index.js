@@ -19,13 +19,13 @@ export const Footer = () => (
       <span>Download the App</span>
     </FooterStyled.DownloadLabel>
     <FooterStyled.shareIconWrapper>
-      <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/starsonahq/">
+      <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/getstarsona/">
         <FooterStyled.shareIcon alt="playsore icon" src="assets/images/fb-icon.svg" />
       </a>
-      <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/starsonahq">
+      <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/getstarsona">
         <FooterStyled.shareIcon alt="playsore icon" src="assets/images/twitter-icon.svg" />
       </a>
-      <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/starsonahq/">
+      <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/getstarsona/">
         <FooterStyled.shareIcon alt="playsore icon" src="assets/images/insta-icon.svg" />
       </a>
       <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCmmN9QPqAGE18yWENxsw7jQ">
