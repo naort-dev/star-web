@@ -6,7 +6,7 @@ import DeclinePopup from './DeclinePopup';
 import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
-import VideoRecorder from '../WebRTCVideoRecorder';
+import QAVideoRecorder from '../QAVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
@@ -135,7 +135,7 @@ export default class OrderDetails extends React.Component {
         date: orderDetails.request_details.date,
       };
       this.props.fetchCelebDetails(orderDetails.celebrity_id);
-      let redirectUrl = '';
+      let selectedRequestType = '';
       if (orderDetails.request_type === 1) { // Shout Outs
         bookingData = {
           ...bookingData,
@@ -154,7 +154,7 @@ export default class OrderDetails extends React.Component {
         };
         this.props.saveAudioRecording('from', { recordedBlob: null, recordedUrl: orderDetails.from_audio_file }); // update from audio in request flow
         this.props.saveAudioRecording('for', { recordedBlob: null, recordedUrl: orderDetails.to_audio_file }); // update to audio in request flow
-        redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
+        selectedRequestType = 'personal';
       } else if (orderDetails.request_type === 2) { // events
         bookingData = {
           ...bookingData,
@@ -171,17 +171,18 @@ export default class OrderDetails extends React.Component {
           from_audio_file: orderDetails.from_audio_file,
           to_audio_file: orderDetails.from_whereto_audio_file,
         };
-        redirectUrl = `/${orderDetails.celebrity_id}/request/event`;
+        selectedRequestType = 'event';
       } else if (orderDetails.request_type === 3) { // Q&A
         bookingData = {
           ...bookingData,
           question: orderDetails.booking_title,
           requestVideo: orderDetails.request_video
         };
-        redirectUrl = `/${orderDetails.celebrity_id}/request/ask`;
+        selectedRequestType = 'ask';
       }
       this.props.setBookingDetails(bookingData);
-      this.props.history.push(redirectUrl);
+      this.props.history.push(`/${orderDetails.celebrity_id}`);
+      this.props.setRequestFlow(orderDetails.celebrity_id, selectedRequestType, 1);
     }
   }
 
@@ -300,7 +301,7 @@ export default class OrderDetails extends React.Component {
     if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
+          <QAVideoRecorder {...this.props} duration={recorder.askTimeOut} />
         </OrderStyled.VideoRecorder>
       );
     }

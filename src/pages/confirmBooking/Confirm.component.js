@@ -65,7 +65,7 @@ export default class Confirm extends React.Component {
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;
       case 3:
-        return <OrderDetailsItem title="Person of honor" value={that.hostName} />;
+        return <OrderDetailsItem title="Person of honor" value={that.specification} />;
       case 4:
         return <OrderDetailsItem title={`${that.eventName} from`} value={that.specification} />;
       case 6:
@@ -133,6 +133,7 @@ export default class Confirm extends React.Component {
     if (this.props.isLoggedIn) {
       if (this.state.bookingData.edit) {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.resetRequestFlow();
           this.props.history.push('/user/myVideos');
           localStorage.removeItem('bookingData');
           this.props.cancelBookingDetails();
@@ -187,10 +188,22 @@ export default class Confirm extends React.Component {
   }
 
   closeRequestFlow = () => {
+    this.clearStream();
+    this.props.resetRequestFlow();
     this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
     this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
+  }
+
+  clearStream = () => {
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    this.props.onClearStreams();
   }
 
   orderConfirmationView = fullName => (
@@ -203,7 +216,7 @@ export default class Confirm extends React.Component {
         <ConfirmationModal.description>
           {fullName} now has a week to complete your personalized video. We'll notify as soon as it's done.
         </ConfirmationModal.description>
-        <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Done</ConfirmationModal.Button>
+        <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Close</ConfirmationModal.Button>
       </ConfirmationModal.confirmationWrapper>
     </Popup>
   )
@@ -231,11 +244,12 @@ export default class Confirm extends React.Component {
     );
   }
 
-  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
+  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings, requestType) => {
     return (
       <StripeCheckout
         rate={rate}
         fullName={fullName}
+        requestType={requestType}
         profilePhoto={profilePhoto}
         authToken={props.authToken}
         remainingBookings={remainingBookings}
@@ -370,7 +384,7 @@ export default class Confirm extends React.Component {
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
-                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
+                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings, this.state.bookingData.type)
                   :
                     this.renderConfirmDetails(bookingData, rate, remainingBookings, profilePhoto, fullName)
                 }

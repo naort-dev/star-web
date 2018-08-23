@@ -112,6 +112,11 @@ class App extends React.Component {
             : null
           }
           {
+            this.props.requestFlow ?
+              <Requestvideo />
+            : null
+          }
+          {
             showLoading && <ComponentLoading timedOut={this.state.timedOut} />
           }
           {
@@ -127,7 +132,7 @@ class App extends React.Component {
                 <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
-                <Route path="/:id/request" component={Requestvideo} />
+                {/* <Route path="/:id/request" component={Requestvideo} /> */}
                 <Route path="/instalogin" component={InstaLogin} />
 
                 {/* logged in areas */}
@@ -205,6 +210,7 @@ const mapState = state => ({
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
+  requestFlow: state.modals.requestFlow,
 });
 
 const mapProps = dispatch => ({
