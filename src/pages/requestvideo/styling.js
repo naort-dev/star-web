@@ -55,10 +55,10 @@ ul li .check::before {
   position: absolute;
 	content: '';
   border-radius: 100%;
-  height: 10px;
-  width: 10px;
-  top: 5px;
-	left: 5px;
+  height: 15px;
+  width: 15px;
+  top: 3px;
+	left: 3px;
   margin: auto;
 	transition: background 0.25s linear;
 	-webkit-transition: background 0.25s linear;
