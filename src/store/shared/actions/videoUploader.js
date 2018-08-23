@@ -1,6 +1,6 @@
 export const SAVE_VIDEO = 'saveRecording';
 export const UPLOAD_VIDEO = 'uploadVideo';
-export const DELETE_VIDEO = 'uploadVideo';
+export const DELETE_VIDEO = 'deleteVideo';
 
 export function saveVideo(videoData) {
   return {

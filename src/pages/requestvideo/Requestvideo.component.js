@@ -87,6 +87,7 @@ export default class Requestvideo extends React.Component {
       });
     }
     this.props.onClearStreams();
+    this.props.deleteVideo();
   };
   setRequestType = (value) => {
     this.setState({ requestType: value, requestTypeStatus: true });

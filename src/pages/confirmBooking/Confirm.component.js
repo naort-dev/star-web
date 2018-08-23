@@ -191,6 +191,7 @@ export default class Confirm extends React.Component {
     this.clearStream();
     this.props.resetRequestFlow();
     this.props.resetPaymentDetails();
+    this.props.deleteVideo();
     this.props.cancelBookingDetails();
     this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
