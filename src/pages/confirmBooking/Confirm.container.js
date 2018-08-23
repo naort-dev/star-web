@@ -5,6 +5,7 @@ import { resetPaymentDetails } from '../../store/shared/actions/processPayments'
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
+import { deleteVideo } from '../../store/shared/actions/videoUploader';
 import { clearStreams } from '../../store/shared/actions/videoRecorder'
 import { resetRequestFlow } from '../../store/shared/actions/toggleModals';
 
@@ -31,8 +32,8 @@ const mapDispatchToProps = dispatch => ({
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
   resetRequestFlow: () => dispatch(resetRequestFlow()),
   clearAudio: () => dispatch(clearAll()),
-  onClearStreams: () => dispatch(clearStreams())
-
+  onClearStreams: () => dispatch(clearStreams()),
+  deleteVideo: () => dispatch(deleteVideo()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Confirm);
