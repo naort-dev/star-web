@@ -5,13 +5,16 @@ import { cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { clearStreams } from '../../store/shared/actions/videoRecorder';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
-import { toggleLogin } from '../../store/shared/actions/toggleModals';
+import { toggleLogin, resetRequestFlow, setRequestFlow, toggleRequestFlow } from '../../store/shared/actions/toggleModals';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   loading: state.session.loading,
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
+  celebId: state.modals.requestFlowDetails.celebId,
+  requestType: state.modals.requestFlowDetails.type,
+  stepCount: state.modals.requestFlowDetails.step
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -21,6 +24,9 @@ const mapDispatchToProps = dispatch => ({
   toggleLogin: state => dispatch(toggleLogin(state)),
   clearAll: () => dispatch(clearAll()),
   onClearStreams: () => dispatch(clearStreams()),
+  resetRequestFlow: () => dispatch(resetRequestFlow()),
+  toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
+  setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requestvideo);

@@ -133,6 +133,7 @@ export default class Confirm extends React.Component {
     if (this.props.isLoggedIn) {
       if (this.state.bookingData.edit) {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.resetRequestFlow();
           this.props.history.push('/user/myVideos');
           localStorage.removeItem('bookingData');
           this.props.cancelBookingDetails();
@@ -187,10 +188,22 @@ export default class Confirm extends React.Component {
   }
 
   closeRequestFlow = () => {
+    this.clearStream();
+    this.props.resetRequestFlow();
     this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
     this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
+  }
+
+  clearStream = () => {
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    this.props.onClearStreams();
   }
 
   orderConfirmationView = fullName => (

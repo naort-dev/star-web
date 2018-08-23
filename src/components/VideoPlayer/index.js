@@ -54,10 +54,11 @@ export default class VideoPlayer extends React.Component {
       },
       fullScreen: true,
     });
-    setTimeout( () => this.setState({ primary, secondary, fullScreen: false }), 500);
+    setTimeout(() => this.setState({ primary, secondary, fullScreen: false }), 500);
   }
 
   render() {
+   
     return (
       <VideoRenderDiv>
         {this.state.secondary.thumbnail && <VideoRenderDiv.answerVideo
@@ -74,6 +75,7 @@ export default class VideoPlayer extends React.Component {
             fluid
             aspectRatio="auto"
             autoPlay={this.state.primary.video === this.props.secondarySrc}
+            
           >
             <LoadingSpinner />
             <BigPlayButton position="center" />
