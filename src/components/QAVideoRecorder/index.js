@@ -42,9 +42,10 @@ export default class QAVideoRecorder extends React.Component {
             }
           })
           .catch((err) => {
-            console.log
             this.setState({ deviceSupport: false, streamed: true });
           });
+      } else {
+        this.setState({ streamed: true });
       }
     }
   }
@@ -179,7 +180,22 @@ export default class QAVideoRecorder extends React.Component {
                   <VideoRecorderDiv.RerecordButton />
                   <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                 </VideoRecorderDiv.UploadWrapper>
-            <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
+            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.props.onSubmit()} />
+          </VideoRecorderDiv.ActionButton>
+        </VideoRecorderDiv.ControlWrapper>
+      );
+    }
+
+    if (this.props.videoUploader.url) {
+      return (
+        <VideoRecorderDiv.ControlWrapper>
+          <VideoRecorderDiv.Video id="video-player" controls src={this.props.videoUploader.url} />
+          <VideoRecorderDiv.ActionButton>
+          <VideoRecorderDiv.UploadWrapper>
+                  <VideoRecorderDiv.RerecordButton />
+                  <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
+                </VideoRecorderDiv.UploadWrapper>
+            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.props.onSubmit()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
       );
@@ -194,11 +210,12 @@ export default class QAVideoRecorder extends React.Component {
                   <VideoRecorderDiv.RerecordButton />
                   <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
                 </VideoRecorderDiv.UploadWrapper>
-            <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
+            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.props.onSubmit()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
       );
     }
+
     else {
       if (this.state.play) {
         return (
@@ -215,9 +232,9 @@ export default class QAVideoRecorder extends React.Component {
           return (
             <VideoRecorderDiv.UploadControlWrapper>
                 <VideoRecorderDiv.UploadTextWrapper>
-          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}  </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}?  </VideoRecorderDiv.VideoHeading>
         </VideoRecorderDiv.UploadTextWrapper>
-              <VideoRecorderDiv.InfoText>Your browser doesn't support video recording or media capturing devices are not found. Please upload your video</VideoRecorderDiv.InfoText>
+              <VideoRecorderDiv.InfoText>Your browser doesn't support video recording or media capturing devices were not found. Please upload your video</VideoRecorderDiv.InfoText>
               <VideoRecorderDiv.UploadActionButton>
                 <VideoRecorderDiv.UploadWrapper>
                   <VideoRecorderDiv.NoVideoButton />
@@ -250,7 +267,7 @@ export default class QAVideoRecorder extends React.Component {
           <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} controls />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
-            <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
+            <VideoRecorderDiv.SubmitButton title="Delete & re-record" onClick={() => this.props.onSubmit()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
       );
@@ -261,12 +278,12 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     return (
       <VideoRecorderDiv.ControlWrapper>
         <VideoRecorderDiv.Wrapper>
-          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}  </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}?  </VideoRecorderDiv.VideoHeading>
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" src={this.props.src} controls />
         <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
-            <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
+            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.props.onSubmit()} />
           </VideoRecorderDiv.ActionButton>
       </VideoRecorderDiv.ControlWrapper>
     );
@@ -292,7 +309,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
           <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} controls />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
-            <VideoRecorderDiv.SubmitButton title="Save video" onClick={() => this.props.onSubmit()} />
+            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.props.onSubmit()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
       );
@@ -301,12 +318,12 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     return (
       <VideoRecorderDiv.ControlWrapper>
         <VideoRecorderDiv.Wrapper>
-            <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star} </VideoRecorderDiv.VideoHeading>
-          <VideoRecorderDiv.RecordInfoButton> Ready to record </VideoRecorderDiv.RecordInfoButton>
+            <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}? </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.RecordInfoButton> Waiting to start recording… </VideoRecorderDiv.RecordInfoButton>
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
-          <VideoRecorderDiv.Button title="Record video" onClick={this.startRecording.bind(this)} />
+          <VideoRecorderDiv.Button title="Record your question" onClick={this.startRecording.bind(this)} />
         </VideoRecorderDiv.ActionButton>
       </VideoRecorderDiv.ControlWrapper>
     );

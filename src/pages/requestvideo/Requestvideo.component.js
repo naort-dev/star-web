@@ -14,7 +14,8 @@ export default class Requestvideo extends React.Component {
     this.state = {
       stepCount: props.stepCount ? props.stepCount : 0,
       selectedRequest: null,
-      requestType:'',
+      requestType: "",
+      requestTypeStatus: false
     };
     this.personal = 4;
     this.event = 4;
@@ -43,24 +44,25 @@ export default class Requestvideo extends React.Component {
     this.props.history.goBack();
   };
 
-  changeStep = step => {
+  changeStep = (step) => {
     const newStep = step ? step : props.stepCount;
     this.props.setRequestFlow(
       this.props.celebId,
       this.props.requestType,
-      newStep
+      newStep,
     );
   };
 
-  requestFlowCheck = url => {
+  requestFlowCheck = (requestType) => {
     if (this.props.isLoggedIn) {
-      this.props.setRequestFlow(this.props.celebId, url, 1);
-      // this.props.history.push(`/${this.props.celebId}/request${url}`);
-    } else if (url === "/ask") {
-      this.props.toggleLogin(true);
+      this.props.setRequestFlow(this.props.celebId, requestType, 1);
+      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
+    } else if (requestType === "ask") {
+      this.props.setRequestFlow(this.props.celebId, requestType, 1);
+      this.redirectToLogin();
     } else {
-      // this.props.history.push(`/${this.props.celebId}/request${url}`);
-      this.props.setRequestFlow(this.props.celebId, url, 1);
+      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
+      this.props.setRequestFlow(this.props.celebId, requestType, 1);
     }
   };
 
@@ -87,7 +89,7 @@ export default class Requestvideo extends React.Component {
     this.props.onClearStreams();
   };
   setRequestType = (value) => {
-    this.setState({ requestType: value });
+    this.setState({ requestType: value, requestTypeStatus: true });
   };
 
   renderRequest = () => {
@@ -227,8 +229,8 @@ export default class Requestvideo extends React.Component {
                                     Personalized Shout-Out
                                     <div className="request_content">
                                       Celebrate everyday moments with a
-                                      personalized video greeting from Star
-                                      Name. Birthdays, encouragement,
+                                      personalized video greeting from{" "}
+                                      {fullName}. Birthdays, encouragement,
                                       graduations… you pick.
                                     </div>
                                   </label>
@@ -250,10 +252,9 @@ export default class Requestvideo extends React.Component {
                                   <label htmlFor="s-option">
                                     Event Announcement
                                     <div className="request_content">
-                                      Celebrate everyday moments with a
-                                      personalized video greeting from Star
-                                      Name. Birthdays, encouragement,
-                                      graduations… you pick.
+                                      Have {fullName} invite everyone over for
+                                      your book club, the big game, fundraiser,
+                                      bachelor/ette party, reunion… any event.
                                     </div>
                                   </label>
                                   <div className="check" />
@@ -274,10 +275,10 @@ export default class Requestvideo extends React.Component {
                                   <label htmlFor="t-option">
                                     Ask a Question
                                     <div className="request_content">
-                                      Celebrate everyday moments with a
-                                      personalized video greeting from Star
-                                      Name. Birthdays, encouragement,
-                                      graduations… you pick.
+                                      Video yourself asking {fullName} a
+                                      question. When they respond, we’ll stitch
+                                      the two videos together so you get a great
+                                      Q&A interaction.
                                     </div>
                                   </label>
                                   <div className="check" />
@@ -292,11 +293,19 @@ export default class Requestvideo extends React.Component {
                       </Request.OptionWrapper>
                     </Request.ComponentWrapperScroll>
                     <Request.PaymentControllerWrapper>
-                      <Request.ContinueButton
-                        onClick={() => this.requestTypeFinder()}
-                      >
-                        Next
-                      </Request.ContinueButton>
+                      {this.state.requestTypeStatus ? (
+                        <Request.ContinueButton
+                          onClick={() =>
+                            this.requestFlowCheck(this.state.requestType)
+                          }
+                        >
+                          Next
+                        </Request.ContinueButton>
+                      ) : (
+                        <Request.DiasableButton disabled>
+                          Next
+                        </Request.DiasableButton>
+                      )}
                     </Request.PaymentControllerWrapper>
                   </Request.ComponentWrapper>
                 </Request.LeftSection>

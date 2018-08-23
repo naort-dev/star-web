@@ -38,6 +38,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
+  background-color: rgba(0,0,0,0.8);
   justify-content: center;
   align-items: center;
   position: relative;
@@ -231,58 +232,56 @@ VideoRecorderDiv.InfoText = styled.div`
     text-align: center;
   `;
 
-  VideoRecorderDiv.Wrapper = styled.div`
+VideoRecorderDiv.Wrapper = styled.div`
   display: flex;
   width: 100%;
   height: 15%;
+  padding: 0 10px;
   position: absolute;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   background-color: rgba(0,0,0,.2);
-  `;
+`;
 
-  VideoRecorderDiv.UploadTextWrapper = styled.div`
+VideoRecorderDiv.UploadTextWrapper = styled.div`
   display: flex;
   width: 100%;
   height: 15%;
+  padding: 0 10px;
   top:0px;
   position: absolute;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+`;
 
-  `;
-
-  VideoRecorderDiv.IndicationText = styled.div`
+VideoRecorderDiv.IndicationText = styled.div`
   position: absolute;
-  top: 10%;
-  left: 85%;
+  top: 5%;
+  right: 20px;
   color: red;
-  height: 30px;
-  width: 30px;
-  `
+`;
 
-  VideoRecorderDiv.StopRecorderText = styled.div`
+VideoRecorderDiv.StopRecorderText = styled.div`
   font-size: 18px;
   color: #FF6C58;
   font-family: 'Ubuntu-Regular';
   text-align: center;
-  `;
+`;
 
-  VideoRecorderDiv.ControlWrapper = styled.div`
+VideoRecorderDiv.ControlWrapper = styled.div`
   width: 100%;
   height: 90%;
-  `;
+`;
 
-  VideoRecorderDiv.UploadControlWrapper = styled.div`
+VideoRecorderDiv.UploadControlWrapper = styled.div`
   width: 100%;
   height: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: rgba(0,0,0,.2);
 `;
 
   VideoRecorderDiv.ActionButton = styled.div`
@@ -305,12 +304,8 @@ VideoRecorderDiv.InfoText = styled.div`
   `;
 
   VideoRecorderDiv.RecordInfoButton = styled.div`
-  border: 1px solid #fff;
-  width: 30%;
-  border-radius: 10px;
   color: #fff;
   font-size: 16px;
-  height: 35%;
   display: flex;
   justify-content: center;
   align-items: center;
