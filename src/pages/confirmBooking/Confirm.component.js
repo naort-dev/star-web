@@ -187,10 +187,21 @@ export default class Confirm extends React.Component {
   }
 
   closeRequestFlow = () => {
+    this.clearStream();
     this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
     this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
+  }
+
+  clearStream = () => {
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    this.props.onClearStreams();
   }
 
   orderConfirmationView = fullName => (

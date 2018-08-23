@@ -5,6 +5,7 @@ import { resetPaymentDetails } from '../../store/shared/actions/processPayments'
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
+import { clearStreams } from '../../store/shared/actions/videoRecorder'
 
 
 const mapStateToProps = state => ({
@@ -28,6 +29,7 @@ const mapDispatchToProps = dispatch => ({
   resetPaymentDetails: () => dispatch(resetPaymentDetails()),
   setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
   clearAudio: () => dispatch(clearAll()),
+  onClearStreams: () => dispatch(clearStreams())
 
 });
 
