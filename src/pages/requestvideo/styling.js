@@ -1,41 +1,30 @@
 import { injectGlobal } from 'styled-components';
 /* eslint-disable */
 injectGlobal`
-.container ul{
-  list-style: none;
-  margin: 0;
-  padding: 0;
-	overflow: auto;
-}
-
-ul li{
-  color: #AAAAAA;
+.round-radio ul li{
   display: block;
   position: relative;
-  float: left;
   width: 100%;
-  height: 100px;
 }
 
-ul li input[type=radio]{
+.round-radio ul li input[type=radio]{
   position: absolute;
   visibility: hidden;
 }
 
-ul li label{
+.round-radio ul li label{
   display: block;
   position: relative;
   font-size: 18px;
   font-family: 'Ubuntu-Medium';
   padding: 25px 25px 25px 80px;
   margin: 10px auto;
-  height: 30px;
-  z-index: 9;
   cursor: pointer;
+  text-align: left;
   -webkit-transition: all 0.25s linear;
 }
 
-ul li .check{
+.round-radio ul li .check{
   display: block;
   position: absolute;
   border: 2px solid #AAAAAA;
@@ -50,7 +39,7 @@ ul li .check{
 }
 
 
-ul li .check::before {
+.round-radio ul li .check::before {
   display: block;
   position: absolute;
 	content: '';
@@ -64,17 +53,15 @@ ul li .check::before {
 	-webkit-transition: background 0.25s linear;
 }
 
-input[type=radio]:checked ~ .check {
+.round-radio input[type=radio]:checked ~ .check {
   border: 2px solid #AAAAAA;
 }
 
-input[type=radio]:checked ~ .check::before{
+.round-radio input[type=radio]:checked ~ .check::before{
   background: #FF6C58;
 }
-
-input[type=radio]:checked ~ label{
-  color: #FF6C58;
+.request_content{
+  font-family: 'Ubuntu-Light';
+  font-size:15px;
 }
-
-
 `;
