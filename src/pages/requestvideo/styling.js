@@ -25,7 +25,8 @@ ul li input[type=radio]{
 ul li label{
   display: block;
   position: relative;
-  font-size: 12px;
+  font-size: 18px;
+  font-family: 'Ubuntu-Medium';
   padding: 25px 25px 25px 80px;
   margin: 10px auto;
   height: 30px;
@@ -37,7 +38,7 @@ ul li label{
 ul li .check{
   display: block;
   position: absolute;
-  border: 5px solid #AAAAAA;
+  border: 2px solid #AAAAAA;
   border-radius: 100%;
   height: 25px;
   width: 25px;
@@ -56,23 +57,23 @@ ul li .check::before {
   border-radius: 100%;
   height: 10px;
   width: 10px;
-  top: 2px;
-	left: 3px;
+  top: 5px;
+	left: 5px;
   margin: auto;
 	transition: background 0.25s linear;
 	-webkit-transition: background 0.25s linear;
 }
 
 input[type=radio]:checked ~ .check {
-  border: 5px solid #0DFF92;
+  border: 2px solid #AAAAAA;
 }
 
 input[type=radio]:checked ~ .check::before{
-  background: #0DFF92;
+  background: #FF6C58;
 }
 
 input[type=radio]:checked ~ label{
-  color: #0DFF92;
+  color: #FF6C58;
 }
 
 
