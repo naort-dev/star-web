@@ -402,6 +402,30 @@ Request.ContinueButton = styled.button`
     color: #FF6C58;
   }
 `;
+Request.DiasableButton = styled.button`
+  background-color: #b6b6b6;
+  color: rgb(255, 255, 255);
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+  font-size: 16px;
+  font-family: Ubuntu-Medium;
+  cursor: pointer;
+  padding: 12px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #b6b6b6;
+  border-image: initial;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+  a{
+    color: #FF6C58;
+  }
+`;
 Request.PaymentControllerWrapper = styled.div`
   position: absolute;
   left: 0;
