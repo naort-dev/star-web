@@ -42,6 +42,9 @@ export default class Starprofile extends React.Component {
       this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      if (nextProps.isLoggedIn && nextProps.requestFlowDetails) {
+        this.props.toggleRequestFlow(true);
+      }
       this.props.fetchCelebDetails(this.getUserId(nextProps));
     }
     if (Object.keys(nextProps.userDetails).length && Object.keys(this.props.userDetails).length !== Object.keys(nextProps.userDetails).length) {
@@ -118,7 +121,8 @@ export default class Starprofile extends React.Component {
   handleRequest = () => {
     if (this.props.celebrityDetails.remaining_limit > 0) {
       if (!this.props.loading && this.props.userDetails.user_id) {
-        this.props.history.push(`/${this.props.userDetails.user_id}/request`);
+        this.props.setRequestFlow(this.props.userDetails.user_id);
+        // this.props.history.push(`/${this.props.userDetails.user_id}/request`);
       }
     } else {
       fetch.post('user/alert_fan/', {

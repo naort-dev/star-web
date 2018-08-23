@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Starprofile from './Starprofile.component';
 import { fetchCelebDetails, resetCelebDetails } from './actions/getCelebDetails';
 import { fetchCelebVideosList } from './actions/getCelebVideos';
-import { toggleLogin } from '../../store/shared/actions/toggleModals';
+import { toggleLogin, toggleRequestFlow, setRequestFlow } from '../../store/shared/actions/toggleModals';
 
 const mapStateToProps = state => ({
   celebrityDetails: state.celebDetails.celebrityDetails,
@@ -11,7 +11,8 @@ const mapStateToProps = state => ({
   detailsLoading: state.celebDetails.loading,
   detailsError: state.celebDetails.error,
   videosList: state.celebVideos,
-  isLoggedIn: state.session,
+  requestFlowDetails: state.modals.requestFlowDetails,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -19,6 +20,8 @@ const mapDispatchToProps = dispatch => ({
   resetCelebDetails: () => dispatch(resetCelebDetails()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   fetchCelebVideosList: (offset, refresh, id, requestType) => dispatch(fetchCelebVideosList(offset, refresh, id, requestType)),
+  toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
+  setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Starprofile);
