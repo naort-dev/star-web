@@ -58,7 +58,7 @@ export const protectRoute = ({
       return (
         <Redirect
           to={{
-            pathname: '/login',
+            pathname: '/',
             state: { from: location },
           }}
         />
@@ -77,7 +77,7 @@ export const protectRoute = ({
 
   const mapState = state => ({
     isLoggedIn: state.session.isLoggedIn,
-    starRole: state.session.starRole,
+    starRole: state.userDetails.starRole,
   });
 
   return connect(mapState)(ProtectedRoute);

@@ -8,6 +8,7 @@ import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
+import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
 
 class Header extends React.Component {
   constructor(props) {
@@ -24,14 +25,14 @@ class Header extends React.Component {
       profilePhoto: null,
     };
     this.suggestionsFetchDelay=undefined;
+    this.profileImage = new Image();
+    this.mounted = true;
   }
 
-  componentWillMount() {
-   
+  componentWillMount() { 
     if (this.props.isLoggedIn) {
-      this.props.fetchUserDetails(this.props.userValue.settings_userDetails.id);
-      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url;
-      this.setState({ profilePhoto });
+      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && (this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url || this.props.userValue.settings_userDetails.avatar_photo.image_url);
+      this.setProfileImage(profilePhoto);
     }
   }
 
@@ -45,14 +46,25 @@ class Header extends React.Component {
       this.setState({ searchText: '' });
     }
 
-    if (JSON.stringify(nextProps.userDetails.avatar_photo) !== JSON.stringify(this.props.userDetails.avatar_photo)) {
-      const profilePhoto = nextProps.userDetails.avatar_photo && nextProps.userDetails.avatar_photo.thumbnail_url;
-      this.setState({ profilePhoto });
+    if (JSON.stringify(nextProps.userValue.settings_userDetails.avatar_photo) !== JSON.stringify(this.props.userValue.settings_userDetails.avatar_photo)) {
+      const profilePhoto = nextProps.userValue.settings_userDetails.avatar_photo && (nextProps.userValue.settings_userDetails.avatar_photo.thumbnail_url || nextProps.userValue.settings_userDetails.avatar_photo.image_url);
+      this.setProfileImage(profilePhoto);
+      this.setState({ profilePhoto: null });
     }
   }
 
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
+    this.mounted = false;
+  }
+
+  setProfileImage = (photo) => {
+    this.profileImage.src = photo;
+    this.profileImage.onload = () => {
+      if (this.mounted) {
+        this.setState({ profilePhoto: this.profileImage.src });
+      }
+    };
   }
 
   handleSearchChange = (e) => {
@@ -117,6 +129,7 @@ class Header extends React.Component {
   }
 
   logoutUser = () => {
+    this.setState({ profileDropdown: false });
     if (window.gapi.auth2) {
       window.gapi.auth2.getAuthInstance().signOut();
     }
@@ -132,7 +145,7 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 key={index}
               >
-                <Link to={`/starDetail/${item.id}`}>
+                <Link to={`/${item.user_id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                     {item.get_short_name}
                   </HeaderSection.SuggestionListContent>
@@ -160,6 +173,7 @@ class Header extends React.Component {
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
+                onClick={() => props.enableMenu()}
               />
             </Link>
             {
@@ -244,10 +258,10 @@ class Header extends React.Component {
             :
                 <div>
                   <HeaderSection.SearchButton onClick={this.activateSearch} />
-                  <Link to="/login">
+                  <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignInButtonMobile />
-                  </Link>
-                  <Link to="/login">
+                  </span>
+                  <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignIn>
                       Log In
                     </HeaderSection.SignIn>
@@ -255,10 +269,10 @@ class Header extends React.Component {
                       src="assets/images/icon_profile_40a.png"
                       alt=""
                     />
-                  </Link>
-                  <Link to="/signuptype">
+                  </span>
+                  <span onClick={() => this.props.toggleSignup(true)}>
                     <HeaderSection.Join>Sign Up!</HeaderSection.Join>
-                  </Link>
+                  </span>
                 </div>
             }
           </HeaderSection.HeaderRight>
@@ -282,6 +296,8 @@ const mapDispatchToProps = dispatch => ({
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   logOut: () => dispatch(logOutUser()),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
+  toggleLogin: state => dispatch(toggleLogin(state)),
+  toggleSignup: state => dispatch(toggleSignup(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

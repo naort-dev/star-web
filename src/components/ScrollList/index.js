@@ -21,6 +21,7 @@ import VideoPlayer from '../VideoPlayer';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
+import EarningsList from '../EarningsList';
 import Loader from '../Loader';
 
 export default class ScrollList extends React.Component {
@@ -122,7 +123,7 @@ export default class ScrollList extends React.Component {
                 <ListStyled.VideoPlayer>
                   <ListStyled.VideoContent>
                     <ListStyled.VideoRequester>
-                      <Link to={`/starDetail/${selectedVideo.user_id}`} >
+                      <Link to={`/${selectedVideo.user_id}`} >
                         <ListStyled.VideoRequestImage
                           imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
                         />
@@ -298,6 +299,15 @@ export default class ScrollList extends React.Component {
           />
         </ListStyled.listVideos>
       ));
+    } else if (this.props.earnings) {
+      return this.props.dataList.map((item, index) => (
+        <EarningsList
+          item={item}
+          index={index}
+          key={item.created_date}
+        />
+
+      ));
     }
     return this.props.dataList.map((item, index) => {
       let coverPhoto;
@@ -318,7 +328,9 @@ export default class ScrollList extends React.Component {
         <ListStyled.listItem key={index}>
           <ImageRender
             id={item.user_id}
+            menuActive={this.props.menuActive}
             dbId={item.id}
+            rate={item.celebrity_user.rate}
             cover={coverPhoto}
             celebrityFollow={item.celebrity_follow}
             celebrityProfessions={item.celebrity_profession}

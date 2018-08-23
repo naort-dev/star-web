@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
 import { ImageStack } from '../../components/ImageStack';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
+import Loader from '../../components/Loader';
 import './confirmCss';
 import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
@@ -18,8 +19,8 @@ export default class Confirm extends React.Component {
     this.state = {
       bookingData: {},
       publicRequest: true,
-      loginRedirect: false,
       requestEndRedirect: false,
+      audioUrl: null,
       QAVideo: {
         url: null,
         error: '',
@@ -59,7 +60,7 @@ export default class Confirm extends React.Component {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD,YYYY')} />
+          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD, YYYY')} />
         );
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;
@@ -75,6 +76,7 @@ export default class Confirm extends React.Component {
         return null;
     }
   }
+
   getEventDetails = (eventType) => {
     const { props } = this;
     const that = props.bookingData;
@@ -84,8 +86,12 @@ export default class Confirm extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={that.eventName} />
-            <OrderDetailsItem title="To" value={that.hostName} />
-            <OrderDetailsItem title="From" value={that.userName} />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(that.hostName, props.toAudio && props.toAudio.recordedUrl)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(that.userName, props.fromAudio && props.fromAudio.recordedUrl)}
+            />
             <OrderDetailsItem title={`${that.userName} is ${that.hostName}'s`} value={that.relationship} />
             {
               this.getOccasionDetails(that.occasionType)
@@ -102,7 +108,7 @@ export default class Confirm extends React.Component {
               this.getOccasionDetails(that.occasionType)
             }
             <OrderDetailsItem title="Host" value={that.userName} />
-            <OrderDetailsItem title="Event Date" value={moment(that.date).format('MMM DD,YYYY')} />
+            <OrderDetailsItem title="Event Date" value={moment(that.date).format('MMM DD, YYYY')} />
             <OrderDetailsItem title="Important Info" value={that.importantinfo} />
           </React.Fragment>
         );
@@ -112,6 +118,7 @@ export default class Confirm extends React.Component {
       default: return null;
     }
   }
+
   checkDataInStore = (obj) => {
     return Object.keys(obj).length === 0;
   }
@@ -124,11 +131,21 @@ export default class Confirm extends React.Component {
 
   handleBooking = () => {
     if (this.props.isLoggedIn) {
-      this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
-      this.setState({ paymentMode: true });
+      if (this.state.bookingData.edit) {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.history.push('/user/myVideos');
+          localStorage.removeItem('bookingData');
+          this.props.cancelBookingDetails();
+        });
+      } else {
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
+        this.props.changeStep(this.props.currentStepCount + 1)
+        this.setState({ paymentMode: true });
+      }
     } else {
-      this.props.setRedirectUrls(this.props.location.pathname);
-      this.setState({loginRedirect: true})
+      this.props.redirectToLogin();
+      // this.props.setRedirectUrls(this.props.location.pathname);
+      // this.setState({loginRedirect: true})
     }
   }
 
@@ -142,9 +159,11 @@ export default class Confirm extends React.Component {
   goBack = () => {
     if (this.state.paymentMode) {
       this.setState({ paymentMode: false });
-    } else {
-      this.props.history.goBack();
     }
+    //  else {
+    //   this.props.history.goBack();
+    // }
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
 
   updatePublicStatus = (bookingData) => {
@@ -170,6 +189,7 @@ export default class Confirm extends React.Component {
   closeRequestFlow = () => {
     this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
+    this.props.clearAudio();
     this.setState({ requestEndRedirect: true });
   }
 
@@ -188,11 +208,35 @@ export default class Confirm extends React.Component {
     </Popup>
   )
 
-  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings) => {
+
+  playAudio(audioSrc){
+    const audio = new Audio(audioSrc)
+    audio.play()
+  }
+
+  renderStargramDestinationDetails = (text, audioSrc) => {
+    return (
+      <React.Fragment>
+        <span>
+          {text}
+        </span>
+        {
+          audioSrc &&
+            <Request.AudioIcon
+              src='assets/images/voice.png'
+              onClick={() => this.playAudio(audioSrc)}
+            />
+        }
+      </React.Fragment>
+    );
+  }
+
+  renderPaymentDetails = (props, rate, fullName, profilePhoto, remainingBookings, requestType) => {
     return (
       <StripeCheckout
         rate={rate}
         fullName={fullName}
+        requestType={requestType}
         profilePhoto={profilePhoto}
         authToken={props.authToken}
         remainingBookings={remainingBookings}
@@ -204,7 +248,7 @@ export default class Confirm extends React.Component {
   renderConfirmDetails = (bookingData, rate, remainingBookings, profilePhoto, fullName) => (
     <React.Fragment>
       <Request.ComponentWrapperScroll
-        autoHide
+      
         renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
       >
         <Request.ProfileImageWrapper>
@@ -215,13 +259,16 @@ export default class Confirm extends React.Component {
           <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
         </Request.ProfileImageWrapper>
         <Request.Heading>Confirm Booking</Request.Heading>
-        <Request.smallScreenVideo>
-          <Request.VideoContentWrapper>
-            <VideoPlayer
-              primarySrc={this.state.QAVideo.url}
-            />
-          </Request.VideoContentWrapper>
-        </Request.smallScreenVideo>
+        {
+          this.state.bookingData.type === 3 &&
+            <Request.smallScreenVideo>
+              <Request.VideoContentWrapper>
+                <VideoPlayer
+                  primarySrc={this.state.QAVideo.url}
+                />
+              </Request.VideoContentWrapper>
+            </Request.smallScreenVideo>
+        }
         <Request.Questionwraps>
           <Request.Ask>
             {
@@ -245,12 +292,15 @@ export default class Confirm extends React.Component {
         </Request.OptionWrapper>
       </Request.ComponentWrapperScroll>
       <Request.PaymentControllerWrapper>
-        <PaymentFooterController
+        <Request.ContinueButton onClick={() => this.handleBooking()}>
+          {bookingData.edit ? 'Save' : 'Continue'}
+        </Request.ContinueButton>
+        {/* <PaymentFooterController
           rate={rate}
           remainingBookings={remainingBookings}
-          buttonName="Purchase"
+          buttonName={bookingData.edit ? "save" : "Purchase"}
           handleBooking={this.handleBooking}
-        />
+        /> */}
       </Request.PaymentControllerWrapper>
     </React.Fragment>
   )
@@ -291,27 +341,37 @@ export default class Confirm extends React.Component {
     } else {
       featuredImage = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url
     }
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
-    }
     if (this.state.requestEndRedirect) {
       return <Redirect to="/" />;
     }
     return (
       <Request.Wrapper>
+        {
+          this.props.loading ?
+            <ConfirmationModal.loaderWrapper>
+              <Loader />
+            </ConfirmationModal.loaderWrapper>
+          : null
+        }
         <Request.Content>
           <Request>
             <Request.LeftSection>
+              {
+                this.state.audioUrl &&
+                  <Popup
+                    smallPopup
+                    closePopUp={()=>this.setState({audioUrl: null})}
+                  >
+                    <audio src={this.state.audioUrl} controls />
+                  </Popup>
+              }
               <HeaderSection>
                 <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-
               </HeaderSection>
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
-                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings)
+                    this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings, this.state.bookingData.type)
                   :
                     this.renderConfirmDetails(bookingData, rate, remainingBookings, profilePhoto, fullName)
                 }
@@ -320,7 +380,7 @@ export default class Confirm extends React.Component {
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            <Request.RightSection videoMode={this.state.bookingData.type === 3}>
+            {/* <Request.RightSection videoMode={this.state.bookingData.type === 3}>
               {
                 this.state.bookingData.type === 3 ?
                   <Request.VideoContentWrapper>
@@ -336,7 +396,7 @@ export default class Confirm extends React.Component {
                     />
                   </Request.ImageStackWrapper>
               }
-            </Request.RightSection>
+            </Request.RightSection> */}
           </Request>
         </Request.Content>
       </Request.Wrapper>

@@ -15,6 +15,7 @@ import { recorder } from '../../constants/videoRecorder';
 import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
+import StarRating from '../StarRating';
 
 
 export default class OrderDetails extends React.Component {
@@ -24,6 +25,7 @@ export default class OrderDetails extends React.Component {
       showActions: false,
       showPopup: false,
       declinePopup: false,
+      audioUrl: null,
     };
   }
 
@@ -58,8 +60,12 @@ export default class OrderDetails extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="To" value={props.orderDetails.request_details.stargramto} />
-            <OrderDetailsItem title="From" value={props.orderDetails.request_details.stargramfrom} />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
+            />
             <OrderDetailsItem title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
@@ -73,7 +79,7 @@ export default class OrderDetails extends React.Component {
           <React.Fragment>
             <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
             {
-              this.getOccasionDetails(props.occasion_type)
+              this.getOccasionDetails(props.orderDetails.occasion_type)
             }
             <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
             <OrderDetailsItem title="Event Date" value={props.occasionDate} />
@@ -119,6 +125,63 @@ export default class OrderDetails extends React.Component {
   modifyBooking = () => {
     if (this.props.starMode) {
       this.setState({ showPopup: true, declinePopup: true });
+    } else {
+      const orderDetails = this.props.orderDetails;
+      let bookingData = {
+        edit: true,
+        requestId: orderDetails.id,
+        hostName: orderDetails.request_details.stargramto,
+        userName: orderDetails.request_details.stargramfrom,
+        date: orderDetails.request_details.date,
+      };
+      this.props.fetchCelebDetails(orderDetails.celebrity_id);
+      let redirectUrl = '';
+      if (orderDetails.request_type === 1) { // Shout Outs
+        bookingData = {
+          ...bookingData,
+          eventName: orderDetails.occasion,
+          relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          otherRelationValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.title,
+          type: 1,
+          publicRequest: orderDetails.public_request,
+          occasionType: orderDetails.occasion_type,
+          selectedValue: orderDetails.occasion_id,
+          selectedPersonal: orderDetails.request_details.stargramto !== 'Myself' ? '2' : '1',
+          specification: orderDetails.request_details.specifically_for,
+          importantinfo: orderDetails.request_details.important_info,
+          from_audio_file: orderDetails.from_audio_file,
+          to_audio_file: orderDetails.to_audio_file,
+        };
+        this.props.saveAudioRecording('from', { recordedBlob: null, recordedUrl: orderDetails.from_audio_file }); // update from audio in request flow
+        this.props.saveAudioRecording('for', { recordedBlob: null, recordedUrl: orderDetails.to_audio_file }); // update to audio in request flow
+        redirectUrl = `/${orderDetails.celebrity_id}/request/personal`;
+      } else if (orderDetails.request_type === 2) { // events
+        bookingData = {
+          ...bookingData,
+          eventName: orderDetails.occasion,
+          relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+          type: 1,
+          publicRequest: orderDetails.public_request,
+          occasionType: orderDetails.occasion_type,
+          selectedValue: orderDetails.occasion_id,
+          selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+          specification: orderDetails.request_details.specifically_for,
+          importantinfo: orderDetails.request_details.important_info,
+          // otherRelationValue:undefined,
+          from_audio_file: orderDetails.from_audio_file,
+          to_audio_file: orderDetails.from_whereto_audio_file,
+        };
+        redirectUrl = `/${orderDetails.celebrity_id}/request/event`;
+      } else if (orderDetails.request_type === 3) { // Q&A
+        bookingData = {
+          ...bookingData,
+          question: orderDetails.booking_title,
+          requestVideo: orderDetails.request_video
+        };
+        redirectUrl = `/${orderDetails.celebrity_id}/request/ask`;
+      }
+      this.props.setBookingDetails(bookingData);
+      this.props.history.push(redirectUrl);
     }
   }
 
@@ -138,13 +201,15 @@ export default class OrderDetails extends React.Component {
     }
   }
 
-  closePopup = () => {
+  closePopup = (rate) => {
     this.setState({
       showPopup: false,
       declinePopup: false,
       showRatingPopup: false,
       showContactSupportPopup: false,
       showReportAbusePopup: false,
+      audioUrl: null,
+      rate,
     });
   }
 
@@ -154,6 +219,27 @@ export default class OrderDetails extends React.Component {
     this.props.hideRequest();
   }
 
+  playAudio(audioSrc){
+    const audio = new Audio(audioSrc)
+    audio.play()
+  }
+
+  renderStargramDestinationDetails = (text, audioSrc) => {
+    return (
+      <React.Fragment>
+        <span>
+          {text}
+        </span>
+        {
+          audioSrc &&
+            <OrderStyled.AudioIcon
+              src='assets/images/voice.png'
+              onClick={() => this.playAudio(audioSrc)}
+            />
+        }
+      </React.Fragment>
+    );
+  }
 
   renderVideo = (props, title, shareUrl, starMode) => {
     if (props.requestVideo) {
@@ -218,7 +304,13 @@ export default class OrderDetails extends React.Component {
         </OrderStyled.VideoRecorder>
       );
     }
-    return null;
+    return (
+      <OrderStyled.NoVideoText>
+        Your Video upload is complete and is now being processed for 
+        better streaming. This will take a few minutes. The requester will be notified as 
+        soon as it is ready.
+      </OrderStyled.NoVideoText>
+    );
   }
 
   renderPopup = () => {
@@ -263,6 +355,10 @@ export default class OrderDetails extends React.Component {
           })}
           closePopup={this.closePopup}
         />
+      );
+    } else if (this.state.audioUrl) {
+      return (
+        <audio src={this.state.audioUrl} controls />
       );
     }
     return null;
@@ -339,11 +435,10 @@ export default class OrderDetails extends React.Component {
         <OrderStyled.ContentWrapper>
           <OrderStyled.leftContent>
             <OrderStyled.scrollWrapper
-              autoHide
               renderView={props => <div {...props} className="order-details-scroll-wrapper" />}
             >
               {
-                props.starMode && props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+                props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
                   this.renderVideo(props, title, shareUrl, this.props.starMode)
                 :
                   <OrderStyled.rightContent notStar>
@@ -367,12 +462,14 @@ export default class OrderDetails extends React.Component {
                     <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
                   </OrderStyled.ProfileImageWrapper>
               }
+              <OrderStyled.RequestStatusWrapper>
+                <OrderStyled.RequestStatus>
+                  <OrderStyled.RequestStatusTitle>Status:  </OrderStyled.RequestStatusTitle>
+                  <OrderStyled.RequestStatusValue>{props.requestStatus}</OrderStyled.RequestStatusValue>
+                </OrderStyled.RequestStatus>
+              </OrderStyled.RequestStatusWrapper>
               <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
               <OrderStyled.DetailsWrapper>
-                <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Status:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.requestStatus}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Requested:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
@@ -398,6 +495,11 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
+                {this.props.requestStatusId === 6 &&
+                <OrderStyled.DetailsItem>
+                  <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
+                  <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+                </OrderStyled.DetailsItem>}
               </OrderStyled.DetailsWrapper>
             </OrderStyled.scrollWrapper>
             {/* Show only if request is not cancelled or not completed or not processing */}
@@ -417,7 +519,7 @@ export default class OrderDetails extends React.Component {
           <OrderStyled.rightContent>
             <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
             {
-              props.starMode && props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+              props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
                 this.renderVideoRecorder(props)
               : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
             }

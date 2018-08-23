@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Personal from './Personal.component';
 import { fetchOccasionlist } from '../eventAnnouncement/actions/getOccasionList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { showRecorder, startAudioRecording, saveAudioRecording, deviceCheck, stopAudioRecording, showFallback, saveAudioFile, closeRecorder, clearAll } from '../../store/shared/actions/audioRecorder';
+import { showRecorder, resetRecording, startAudioRecording, saveAudioRecording, deviceCheck, stopAudioRecording, showFallback, saveAudioFile, closeRecorder, clearAll } from '../../store/shared/actions/audioRecorder';
 import { postOtherRelation } from '../../store/shared/actions/otherRelation';
 
 const mapStateToProps = state => ({
@@ -24,13 +24,11 @@ const mapDispatchToProps = dispatch => ({
   postOtherRelation: other => dispatch(postOtherRelation(other)),
   showRecorder: displayText => dispatch(showRecorder(displayText)),
   showFallback: displayText => dispatch(showFallback(displayText)),
-  startAudioRecording: () => dispatch(startAudioRecording()),
-  stopAudioRecording: () => dispatch(stopAudioRecording()),
-  saveAudioFile: audio => dispatch(saveAudioFile(audio)),
   saveAudioRecording: (target, audio) => dispatch(saveAudioRecording(target, audio)),
   closeRecorder: () => dispatch(closeRecorder()),
   clearAll: () => dispatch(clearAll()),
-  deviceCheck: (status) => dispatch(deviceCheck(status)),
+  deviceCheck: status => dispatch(deviceCheck(status)),
+  resetRecording: target => dispatch(resetRecording(target)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Personal);

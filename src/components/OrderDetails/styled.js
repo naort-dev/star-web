@@ -37,7 +37,7 @@ OrderStyled.HeaderNavigation = styled.span`
   border:none;
   padding:20px;
   background-size: 26px;
-  background-color:white;
+  background-color:transparent;
   cursor: pointer;
   outline:none;
   position: absolute;
@@ -52,6 +52,15 @@ OrderStyled.HeaderTitle = styled.span`
   }
 `;
 
+OrderStyled.RequestStatusWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+`;
+
+OrderStyled.RequestStatus = styled.div`
+
+`;
 OrderStyled.ContentWrapper = styled.div`
   height: calc(100vh - 96px);
   overflow: auto;
@@ -85,6 +94,7 @@ OrderStyled.NoVideoText = styled.span`
   @media(min-width: 1025px) {
     font-family: 'Ubuntu-Bold';
     display: block;
+    line-height: 27px;
   }
 `;
 
@@ -184,6 +194,7 @@ OrderStyled.scrollWrapper = styled(Scrollbars)`
   .order-details-scroll-wrapper {
     overflow: hidden !important;
     position: static !important;
+    padding-bottom: 15px;
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;
@@ -231,7 +242,7 @@ OrderStyled.CloseButton = styled.span`
 OrderStyled.MainTitle = styled.span`
   display: block;
   margin: 20px 0;
-  color: #FF6C58;
+  color: #FF953C;
   text-align: center;
   font-size: 18px;
   @media(min-width: 1025px) {
@@ -347,6 +358,13 @@ OrderStyled.DetailsTitle = styled.span`
     font-size:16px;
   }
 `;
+
+OrderStyled.RequestStatusTitle = OrderStyled.DetailsTitle.extend`
+  display: inline-block;
+  width: auto;
+  margin-right: 10px;
+`;
+
 OrderStyled.DetailsValue = styled.span`
   display: table-cell;
   width: 50%;
@@ -358,6 +376,12 @@ OrderStyled.DetailsValue = styled.span`
     font-size:16px;
   }
 `;
+
+OrderStyled.RequestStatusValue = OrderStyled.DetailsValue.extend`
+  display: inline-block;
+  width: auto;
+`;
+
 OrderStyled.SocialMediaWrapper = styled.div`
   margin-top:3%;
   text-align: center;
@@ -488,6 +512,13 @@ OrderStyled.ErrorWrapper = styled.div`
   text-align: center;
   display: flex;
   justify-content: center;
+`;
+
+OrderStyled.AudioIcon = styled.img`
+  vertical-align: top;
+  padding-left: 8px;
+  width: 24px;
+  cursor: pointer;
 `;
 
 export default OrderStyled;

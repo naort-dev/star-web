@@ -28,9 +28,10 @@ export default class MyVideos extends React.Component {
       2: 'Event',
       1: 'Shout-outs',
     };
+    this.role = props.starMode ? 'celebrity_id' : 'fan_id';
   }
   componentWillMount() {
-    this.props.fetchMyVideosList(0, true, this.state.requestStatus);
+    this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
@@ -45,7 +46,7 @@ export default class MyVideos extends React.Component {
   }
   updateRequestStatus = (requestStatus) => {
     this.setState({ requestStatus }, () => {
-      this.props.fetchMyVideosList(0, true, this.state.requestStatus);
+      this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
     });
   }
   showRequest = (data) => {
@@ -59,7 +60,7 @@ export default class MyVideos extends React.Component {
         ...this.props.userDetails.settings_celebrityDetails,
         availability: !this.props.starAvailability,
       },
-    }
+    };
     this.props.updateUserDetails(userId, userDetailsData);
   }
   hideRequest = () => {
@@ -80,10 +81,12 @@ export default class MyVideos extends React.Component {
     if (Object.keys(this.state.orderDetails).length) {
       requestStatusId = this.state.orderDetails.request_status;
       if (Object.keys(requestStatusList).indexOf(requestStatusId+"") > -1) {
-        if (this.state.orderDetails.request_type === 3) {
+        if (this.state.orderDetails.request_type === 3 && requestStatusId === 6) { // completed video and Q&A video
+          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
+        } else if (requestStatusId !== 6) {
           requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 4);
         } else {
-          requestVideo = this.state.orderDetails.request_video[0];
+          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
         }
       }
       requestStatus = requestStatusList[requestStatusId];
@@ -142,7 +145,6 @@ export default class MyVideos extends React.Component {
           <MyVideosStyled.sectionWrapper>
             <MyVideosStyled.sideSection menuActive={this.state.menuActive}>
               <Scrollbars
-                autoHide
                 renderView={props => <div {...props} className="view" />}
               >
                 <Sidebar

@@ -10,10 +10,15 @@ import ResetPassword from '../../components/ResetPasswordForm';
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
+      socialData: {},
     };
+    if (!this.props.isLoggedIn) {    
+      this.props.resetSessionError();
+    }
   }
+
+  saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   render() {
     const path = this.props.location.pathname;
@@ -34,9 +39,9 @@ export default class Login extends React.Component {
                         alt=""
                       />
                     </Link>
-                    <Link to="/signuptype">
+                    {/* <Link to="/signuptype">
                       <HeaderSection.RightDiv>SIGNUP</HeaderSection.RightDiv>
-                    </Link>
+                    </Link> */}
                   </HeaderSection>
                   <LoginContainer.CoverImage />
                   {path === '/forgotpassword' ?
@@ -45,7 +50,7 @@ export default class Login extends React.Component {
                     null
                   }
                   {path === '/login' ?
-                    <LoginForm {...this.props} />
+                    <LoginForm {...this.props} data={this.state.socialData} saveData={this.saveData} />
                     :
                     null
                   }

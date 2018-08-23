@@ -27,7 +27,7 @@ const SidebarStyled = styled.div`
   @media(min-width: 768px) {
     padding: 0;
     padding-top: 40px;
-    display: flex;
+    display: ${props => (props.menuActive ? 'flex' : 'none')};
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
@@ -109,9 +109,10 @@ SidebarStyled.CategoryTitle = styled.span`
 
 SidebarStyled.SubCategoryList = styled.ul`
   margin-left: 60px;
-  width: 100%;
+  width: calc(100% - 60px);
   @media(min-width: 768px) {
     margin-left: 20px;
+    width: calc(100% - 20px);
   }
 `;
 
@@ -139,6 +140,33 @@ SidebarStyled.Separator = styled.span`
   margin: 0 40px;
   @media(min-width: 768px) {
     display: none;
+  }
+`;
+
+SidebarStyled.ApplyButton = styled.button`
+  position: fixed;
+  bottom: 0px;
+  background-color:#FF6C58 ; 
+  color: #fff;
+  padding: 12px 30px;
+  width:100%;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  cursor: pointer;
+  border: 2px solid #FF6C58;
+  margin-top:3%;
+  @media(min-width:1025px){
+    display: none;
+  }
+  @media(min-width: 768px) {
+    bottom: unset;
+    top: 75px;
+    right: 40px;
+    width: 100px;
   }
 `;
 

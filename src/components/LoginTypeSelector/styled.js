@@ -4,23 +4,17 @@ const TypeSelectorWrapper = styled.div`
   padding: 0px 25px;
   text-align: center;
   @media(min-width: 1025px){
-    padding: 63px 25px;
+    padding: 0px 25px;
   }
 `;
 TypeSelectorWrapper.Content = styled.div`
-  padding: 28px 0px;
+  padding: 0px 0px;
 `;
 
 TypeSelectorWrapper.heading = styled.div`
   font-family: 'Ubuntu-Bold';
-  font-size: 14px;
+  font-size: 25px;
   color:#FF6C58;
-  @media(min-width : 768px){
-    font-size: 32px;
-  }
-  @media(min-width: 1025px){
-    font-size: 32px;
-  }
   @media(min-width:1920px){
     font-size:32px;
   }
@@ -37,6 +31,40 @@ TypeSelectorWrapper.subheading = styled.div`
   }
   @media(min-width:1920px){
     font-size:16px;
+  }
+`;
+TypeSelectorWrapper.LoginDiv = styled.button`
+  background-color: #fff; 
+  margin-right: 5px;
+  color: #007FAA;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  font-family: 'Ubuntu-Light';
+  display: inline-block;
+  font-size: 12px;
+  cursor: pointer;
+  outline:none;
+  border: none;
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+`;
+TypeSelectorWrapper.SocialMediaMessage = styled.div`
+  font-family: 'Ubuntu-Medium';
+  font-size: 14px;
+  text-align: center;
+  color: #333333;
+  margin-top:3%;
+  margin-bottom:5%;
+  @media(min-width:768px){
+    font-size: 18px;
+  }
+  @media(min-width:1025px){
+    font-size:14px;
+  }
+  @media(min-width:1920px){
+    font-size:18px;
   }
 `;
 TypeSelectorWrapper.Button = styled.button`

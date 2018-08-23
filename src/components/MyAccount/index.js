@@ -1,5 +1,5 @@
 import React from 'react';
-import { Templates } from '../../components/RequestTemplates/styled';
+import { Templates } from './templateStyled';
 import Accounts from './styled';
 import Avatar from '../avatar';
 import ManagePayments from '../../components/ManagePayments';
@@ -19,6 +19,7 @@ export default class MyAccount extends React.Component {
       props.resetChangePassord();
       return { showPopup: false };
     }
+    return null;
   }
 
   closePopup = () => {
@@ -53,7 +54,6 @@ export default class MyAccount extends React.Component {
             : null
           }
           <Accounts.ComponentWrapperScroll
-            autoHide
             renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
           >
             <Accounts.Questionwraps>

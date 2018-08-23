@@ -1,11 +1,11 @@
 import React from 'react';
 import Loadable from 'react-loadable';
-import { ComponentLoading } from '../../components/ComponentLoading';
+import Loader from '../../components/Loader';
 
 const LoadableComponent = Loadable({
-    loader: () => import('./StarsignUpVideo.container'),
-    loading: ComponentLoading,
-    timeout: 5000,
+  loader: () => import('./StarsignUpVideo.container'),
+  loading: () => <Loader />,
+  timeout: 5000,
 });
 
 export const StarsignUpVideo = props => <LoadableComponent {...props} />;

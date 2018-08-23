@@ -35,6 +35,7 @@ class Api {
   static stripeRegistration = 'payments/getstripeurl/';
   static checkStripe = 'payments/stripe_dashboard/';
   static changePassword = 'user/changepassword/';
+  static getEarningsList = 'payments/earnings_list/';
 }
 
 export default Api;

@@ -14,8 +14,15 @@ class Sidebar extends React.Component {
   }
 
   selectCategory = (label, id) => {
+    if (label === 'featured') this.setState({ showSubCategory: false });
+    if (this.props.selectedCategory === id) {
+      this.setState({ showSubCategory: !this.state.showSubCategory});
+      return;
+    }
+    this.setState({ showSubCategory: true });
+
     if (window.outerWidth<=1024) {
-      this.props.toggleMenu();
+      if (label === 'featured') this.props.toggleMenu();
     }
     this.props.updateCategory(label, id);
     if (this.props.updateMainCategory) {
@@ -48,7 +55,7 @@ class Sidebar extends React.Component {
           {item.title}
         </SidebarStyled.CategoryTitle>
         {
-          this.props.selectedCategory === item.id ?
+          (this.props.selectedCategory === item.id && this.state.showSubCategory) ?
             <SidebarStyled.SubCategoryList>
               <SidebarStyled.SubCategoryListItem
                 selected={this.props.selectedSubCategories && Object.keys(this.props.selectedSubCategories).length ? false : true}
@@ -93,13 +100,15 @@ class Sidebar extends React.Component {
                       </SidebarStyled.CategoryTitle>
                     </SidebarStyled.ListItem>
                     <SidebarStyled.ListItem>
-                      <SidebarStyled.CategoryTitle>
-                        Earnings
+                      <SidebarStyled.CategoryTitle
+                        selected={this.props.selectedCategory === 'earnings'}
+                      >
+                        <Link to={'/user/earnings'}>Earnings</Link>
                       </SidebarStyled.CategoryTitle>
                     </SidebarStyled.ListItem>
                     <SidebarStyled.ListItem>
                       <SidebarStyled.CategoryTitle>
-                        My Star Page
+                        <Link to="/myStar">My Star Page</Link>
                       </SidebarStyled.CategoryTitle>
                     </SidebarStyled.ListItem>
                   </SidebarStyled.ListWrapper>
@@ -126,12 +135,13 @@ class Sidebar extends React.Component {
           </SidebarStyled.FilterWrapper>
         </section>
         <Footer />
+        <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
       </SidebarStyled>
     );
   }
 }
 const mapStateToProps = state => ({
-  starRole: state.session.starRole,
+  starRole: state.userDetails.starRole,
 });
 
 const mapDispatchToProps = dispatch => ({

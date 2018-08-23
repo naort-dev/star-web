@@ -13,6 +13,16 @@ const AvatarContainer = styled.div`
   }
 `;
 
+AvatarContainer.loaderWrapper = styled.div`
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0, 0.3);
+`;
+
 
 AvatarContainer.CropperWrapper = styled.div`
   display: flex;
@@ -323,6 +333,17 @@ AvatarContainer.CropperButton = styled.div`
   cursor: pointer;
   border-radius: 5px;
   border: 2px solid #FF6C58;
+`;
+
+
+AvatarContainer.PopupErrorText = styled.p`
+line-height: 1.5;
+font-size: 13px;
+margin-top: 5px;
+padding: 5px 5px;
+@media(min-width:1025px){
+  font-size:16px;
+}
 `;
 
 export { AvatarContainer };

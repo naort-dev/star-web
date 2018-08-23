@@ -7,6 +7,7 @@ export const CLOSE_RECORDER = 'closeRecorder';
 export const SAVE_AUDIO_FILE = 'saveFile';
 export const SHOW_FALLBACK = 'showFallback';
 export const DEVICE_CHECK = 'checkDevice';
+export const RESET_RECORDING = 'resetRecording';
 
 
 export function deviceCheck(status) {
@@ -30,15 +31,17 @@ export function showFallback(displayText) {
   };
 }
 
-export function startAudioRecording() {
+export function startAudioRecording(data) {
   return {
     type: START_AUDIO_RECORDING,
+    payload: data,
   };
 }
 
-export function stopAudioRecording() {
+export function stopAudioRecording(data) {
   return {
     type: STOP_AUDIO_RECORDING,
+    payload: data,
   };
 }
 
@@ -46,6 +49,13 @@ export function saveAudioRecording(target, audio) {
   return {
     type: SAVE_RECORDINGS,
     payload: { target, audio },
+  };
+}
+
+export function resetRecording(target) {
+  return {
+    type: RESET_RECORDING,
+    payload: target,
   };
 }
 

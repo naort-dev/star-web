@@ -6,12 +6,16 @@ import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd 
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo } from '../../store/shared/actions/videoUploader';
 import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/actions/popupActions';
+import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { updateUserDetails } from '../../store/shared/actions/saveSettings';
+import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
+import { saveAudioRecording } from '../../store/shared/actions/audioRecorder';
+
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   session: state.session,
-  starAvailability: state.userDetails.settings_celebrityDetails.availability,
+  starAvailability: state.userDetails.settings_celebrityDetails ? state.userDetails.settings_celebrityDetails.availability : false,
   userDetails: state.userDetails,
   myVideosList: state.myVideosList,
   videoRecorder: state.videoRecorder,
@@ -20,7 +24,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMyVideosList: (offset, refresh, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, requestStatus)),
+  fetchMyVideosList: (offset, refresh, role, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus)),
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),
@@ -33,8 +37,12 @@ const mapDispatchToProps = dispatch => ({
   responseVideo: (requestId, fileName) => dispatch(responseVideo(requestId, fileName)),
   rateCelebrity: data => dispatch(rateCelebrity(data)),
   contactSupport: data => dispatch(contactSupport(data)),
+  saveAudioRecording: (target, audio) => dispatch(saveAudioRecording(target, audio)),
   reportAbuse: data => dispatch(reportAbuse(data)),
+  setBookingDetails: data => dispatch(setBookingDetails(data)),
+  cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   updateUserDetails: (id, data) => dispatch(updateUserDetails(id, data)),
+  fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);

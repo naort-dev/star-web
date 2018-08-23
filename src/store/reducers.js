@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { LOGIN } from './shared/actions/login';
 
 import session from './shared/reducers/session';
 import celebList from '../pages/landing/reducers/celebList';
@@ -12,6 +13,7 @@ import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 import myVideosList from '../pages/myVideos/reducers/myVideosList';
+import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
 import otherRelation from '../store/shared/reducers/other';
@@ -25,9 +27,12 @@ import popupData from './shared/reducers/popupData';
 import userDetails from '../store/shared/reducers/userDetails';
 import saveSettings from '../store/shared/reducers/saveSettings';
 import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
-import changePassword from '../store/shared/reducers/changePassword'
+import changePassword from '../store/shared/reducers/changePassword';
+import socialMediaData from '../store/shared/reducers/socialMediaState';
+import photoUpload from './shared/reducers/photoUpload';
+import modals from './shared/reducers/modals';
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   session,
   celebList,
   professionsList,
@@ -54,6 +59,18 @@ const rootReducer = combineReducers({
   saveSettings,
   stripeRegistration,
   changePassword,
+  earningsList,
+  socialMediaData,
+  photoUpload,
+  modals,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === LOGIN.logout) {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 export default rootReducer;

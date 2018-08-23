@@ -9,21 +9,19 @@ import Loader from '../../components/Loader';
 import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
+import { Confirm } from '../confirmBooking';
 
 export default class Askquestion extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      loginRedirect: false,
-      question: '',
+      question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
+      // showConfirm: false,
     };
   }
-  componentWillUnmount() {
-    this.props.onClearStreams();
-  }
   goBack = () => {
-    this.props.history.goBack();
+    this.props.changeStep(this.props.currentStepCount - 1);
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
@@ -32,9 +30,8 @@ export default class Askquestion extends React.Component {
     this.props.cancelBookingDetails();
     this.props.onClearStreams();
     this.props.deleteVideo();
-    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
+    this.props.history.push(`/${this.props.match.params.id}`);
   }
-
 
   handleBooking = () => {
     this.setState({ loader: true });
@@ -55,14 +52,12 @@ export default class Askquestion extends React.Component {
               if (bookObj) {
                 localStorage.setItem('bookingData', JSON.stringify(bookObj));
                 this.props.setBookingDetails(bookObj);
-                this.props.history.push(`/${this.props.match.params.id}/request/confirm`);
+                this.props.changeStep(this.props.currentStepCount + 1);
+                this.setState({ showConfirm: true });
               }
             });
           }
         });
-    } else {
-      this.props.setRedirectUrls(this.props.location.pathname);
-      this.setState({ loginRedirect: true });
     }
   }
   setQuestion = (question) => {
@@ -80,7 +75,7 @@ export default class Askquestion extends React.Component {
     return bookingData;
   }
   render() {
-    
+
     let coverPhoto;
     let imageList = [];
     let profilePhoto;
@@ -115,73 +110,76 @@ export default class Askquestion extends React.Component {
     } else {
       featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
-    if (this.state.loginRedirect) {
-      return <Redirect to="/login" />;
-    }
     return (
-
-      <Request.Wrapper>
-        <Request.Content>
-          {this.state.loader ?
-            <Request.loaderWrapper>
-              <Loader />
-            </Request.loaderWrapper>
+      <React.Fragment>
+        {
+          this.props.currentStepCount >= 2 ?
+            <Confirm {...this.props} changeStep={this.props.changeStep} currentStepCount={this.props.currentStepCount}/>
             :
-            null
-          }
-          <Request>
-            <HeaderSection>
+            <Request.Wrapper>
+              <Request.Content>
+                {this.state.loader ?
+                  <Request.loaderWrapper>
+                    <Loader />
+                  </Request.loaderWrapper>
+                  :
+                  null
+                }
+                <Request>
+                  {/* <HeaderSection>
               <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
               <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-              <Link to={`/starDetail/${this.props.match.params.id}`}>
+              <Link to={`/${this.props.match.params.id}`}>
                 <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
               </Link>
-            </HeaderSection>
-            <Request.RightSection>
+            </HeaderSection> */}
+                  {/* <Request.RightSection>
               <Request.recorderWrapper>
-                <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
+                <VideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} />
               </Request.recorderWrapper>
-            </Request.RightSection>
-            <Request.LeftSection>
-              <Request.ComponentWrapper>
-                <Request.ComponentWrapperScroll
-                  autoHide
-                  renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                >
-                  <Request.Questionwraps>
-                    <Request.Ask>
-                      <Request.InputFieldsWrapper>
-                        <Request.InputWrapper>
-                          <Request.Label>What’s your question ?</Request.Label>
-                          <Request.WrapsInput>
-                            <Request.InputQuestion
-                              placeholder="Best to start your question with “What”, “How” or “Why”."
-                              value={this.state.question}
-                              onChange={event => this.setQuestion(event.target.value)}
-                            />
-                            <Request.ErrorMsg></Request.ErrorMsg>
-                          </Request.WrapsInput>
-                        </Request.InputWrapper>
-                      </Request.InputFieldsWrapper>
+            </Request.RightSection> */}
+                  <Request.LeftSection>
+                    <Request.ComponentWrapper>
+                      <Request.ComponentWrapperScroll
+                        renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
+                      >
+                      <Request.Heading>What’s your question? </Request.Heading>
+                        <Request.Questionwraps>
+                          <Request.Ask>
+                            <Request.InputFieldsWrapper>
+                              <Request.InputWrapper>
+                                <Request.Label>Tell {fullName} a little about your question</Request.Label>
+                                <Request.WrapsInput>
+                                  <Request.InputQuestion
+                                    placeholder="Best to start your question with “What”, “How” or “Why”."
+                                    value={this.state.question}
+                                    onChange={event => this.setQuestion(event.target.value)}
+                                  />
+                                  <Request.ErrorMsg></Request.ErrorMsg>
+                                </Request.WrapsInput>
+                              </Request.InputWrapper>
+                            </Request.InputFieldsWrapper>
 
-                    </Request.Ask>
-                  </Request.Questionwraps>
-                </Request.ComponentWrapperScroll>
-                <Request.PaymentControllerWrapper>
-                
-                  <PaymentFooterController
-                    buttonName="Book"
-                    rate={rate}
-                    remainingBookings={remainingBookings}
-                    handleBooking={this.handleBooking}
-                    disabled={disabled}
-                  />
-                </Request.PaymentControllerWrapper>
-              </Request.ComponentWrapper>
-            </Request.LeftSection>
-          </Request>
-        </Request.Content>
-      </Request.Wrapper>
+                            <Request.recorderWrapper>
+                              <VideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} />
+                            </Request.recorderWrapper>
+
+
+                          </Request.Ask>
+                        </Request.Questionwraps>
+                      </Request.ComponentWrapperScroll>
+                      <Request.PaymentControllerWrapper>
+                        <Request.ContinueButton disabled={disabled} onClick={() => this.handleBooking()}>
+                          Book
+                      </Request.ContinueButton>
+                      </Request.PaymentControllerWrapper>
+                    </Request.ComponentWrapper>
+                  </Request.LeftSection>
+                </Request>
+              </Request.Content>
+            </Request.Wrapper>
+        }
+      </React.Fragment>
     );
   }
 }

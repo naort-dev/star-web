@@ -3,7 +3,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
-import { Detail } from '../starProfile/styled';
+import { Detail, HeaderSection } from '../starProfile/styled';
 import Loader from '../../components/Loader';
 import VideoPlayer from '../../components/VideoPlayer';
 import VideoRender from '../../components/VideoRender';
@@ -11,8 +11,8 @@ import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
 import { ImageStack } from '../../components/ImageStack';
-import Popup from '../../components/Popup'
-import { fetch } from '../../services/fetch'
+import Popup from '../../components/Popup';
+import { fetch } from '../../services/fetch';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -21,68 +21,58 @@ export default class Starprofile extends React.Component {
       menuActive: false,
       selectedTab: 'All',
       tabList: [],
-      videoActive: props.match.params.videoId ? true : false,
-      selectedVideoItem: {},
-      relatedVideos: [],
       showPopup: null,
     };
   }
+
   componentWillMount() {
     this.props.resetCelebDetails();
-    this.props.fetchCelebDetails(this.props.match.params.id);
-    this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
+    this.props.fetchCelebDetails(this.getUserId(this.props));
+    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
     window.addEventListener('resize', this.handleWindowResize);
     this.setTabList();
   }
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.id !== nextProps.match.params.id) {
-      this.props.fetchCelebDetails(nextProps.match.params.id);
-      this.props.fetchCelebVideosList(0, true, nextProps.match.params.id);
+    if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
+      this.props.resetCelebDetails();
+      this.props.fetchCelebDetails(this.getUserId(nextProps));
+      this.setState({
+        selectedTab: 'All',
+      });
+      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
-      this.props.fetchCelebDetails(nextProps.match.params.id);
+      this.props.fetchCelebDetails(this.getUserId(nextProps));
     }
-    if (!nextProps.match.params.videoId) {
-      this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
-    }
-    if (nextProps.match.params.videoId !== this.props.match.params.videoId) {
-      if (document.getElementById('player')) {
-        document.getElementById('player').scrollIntoView();
-      }
-      if (!nextProps.match.params.videoId) {
-        this.setState({ videoActive: false, selectedVideoItem: {}, relatedVideos: [] });
-      } else {
-        this.setState({ videoActive: true });
-        this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
-      }
-    }
-    if (this.state.videoActive && nextProps.videosList.data.length) {
-      this.findVideoItem(nextProps.videosList.data, nextProps.match.params.videoId);
+    if (Object.keys(nextProps.userDetails).length && Object.keys(this.props.userDetails).length !== Object.keys(nextProps.userDetails).length) {
+      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
     }
   }
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleWindowResize);
   }
+
+  getUserId = (props) => {
+    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
+    if (this.isMyStarPage()) {
+      if (userDetails) {
+        return userDetails.user.user_id;
+      }
+      this.props.toggleLogin(true);
+    }
+    return props.match.params.id;
+  }
+
   setTabList = () => {
     if (document.body.getBoundingClientRect().width < 1025) {
-      this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs', 'About'] });
+      this.setState({ tabList: ['All', 'Shout-outs', 'Events', 'Q&A', 'About'] });
     } else {
-      this.setState({ tabList: ['All', 'Q&A', 'Events', 'Shout-outs'] });
+      this.setState({ tabList: ['All', 'Shout-outs', 'Events', 'Q&A'] });
     }
   }
-  findVideoItem = (dataList, bookingId) => {
-    dataList.forEach((item) => {
-      if (item.booking_id === bookingId) {
-        this.setState({ selectedVideoItem: item });
-      }
-    });
-    const relatedVideos = dataList.filter((item) => {
-      return item.booking_id !== bookingId;
-    });
-    this.setState({ relatedVideos: [] }, () => {
-      this.setState({ relatedVideos });
-    });
-  }
+
+  isMyStarPage = () => this.props.location.pathname.includes('myStar')
+
   switchTab = (tab) => {
     this.setState({ selectedTab: tab });
     let requestId;
@@ -98,12 +88,12 @@ export default class Starprofile extends React.Component {
         break;
       default: break;
     }
-    this.props.fetchCelebVideosList(0, true, this.props.match.params.id, requestId);
+    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props), requestId);
   }
   handleWindowResize = (e) => {
     if (this.state.selectedTab === 'About' && document.body.getBoundingClientRect().width >= 1025) {
       this.setState({ selectedTab: 'All' }, () => {
-        this.props.fetchCelebVideosList(0, true, this.props.match.params.id);
+        this.props.fetchCelebVideosList(0, true, this.props.userDetails.id);
       });
     }
     this.setTabList();
@@ -124,37 +114,19 @@ export default class Starprofile extends React.Component {
     }
     return string;
   }
-  // To be Deleted //
-  renderRelatedVideosList = (dataList) => {
-    return dataList.map((item, index) => (
-      <Detail.RelatedVideosItem key={index}>
-        <VideoRender
-          cover={item.s3_thumbnail_url}
-          videoUrl={item.s3_video_url}
-          celebId={item.celebrity_id}
-          videoId={item.booking_id}
-          profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-          starName={this.props.starsPage ? this.getVideoType(item.booking_type) : item.full_name}
-          details={item.booking_title}
-        />
-      </Detail.RelatedVideosItem>
-    ));
-  }
-
 
   handleRequest = () => {
     if (this.props.celebrityDetails.remaining_limit > 0) {
       if (!this.props.loading && this.props.userDetails.user_id) {
         this.props.history.push(`/${this.props.userDetails.user_id}/request`);
       }
-    }
-    else {
+    } else {
       fetch.post('user/alert_fan/', {
         celebrity: this.props.userDetails.id,
       })
-        .then(response => {
+        .then((response) => {
           if (response.status == 200) {
-            this.setState({ showPopup: true })
+            this.setState({ showPopup: true });
           }
         });
     }
@@ -172,7 +144,7 @@ export default class Starprofile extends React.Component {
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
+          fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
         />
       );
     }
@@ -186,9 +158,9 @@ export default class Starprofile extends React.Component {
       imageList = [firstImage, secondImage];
     }
     if (this.props.userDetails.featured_photo) {
-      featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url
+      featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url;
     } else {
-      featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
+      featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
     }
     if (document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All') {
       return (
@@ -207,7 +179,7 @@ export default class Starprofile extends React.Component {
     let profilePhoto;
     let fullName = '';
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
+    const remainingBookings = this.props.celebrityDetails.remaining_limit != null || this.props.celebrityDetails.remaining_limit != undefined ? this.props.celebrityDetails.remaining_limit : 1;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
@@ -230,7 +202,8 @@ export default class Starprofile extends React.Component {
         {this.state.showPopup ?
           <Popup
             smallPopup
-            closePopUp={() => this.setState({ showPopup: false })}>
+            closePopUp={() => this.setState({ showPopup: false })}
+          >
             <Detail.PopupWrapper>
               <Detail.PopupLabel>
                 We'll let you know immediately when the star is accepting booking requests
@@ -248,8 +221,26 @@ export default class Starprofile extends React.Component {
             <Detail.LeftSection>
               <Detail.SmallScreenLayout>
                 <Detail.ImageRenderDiv>
+                  <HeaderSection.Small>
+                    <HeaderSection.HeaderNavigationMobile onClick={() => this.props.history.goBack()} />
+                  </HeaderSection.Small>
                   <Detail.ImageSection imageUrl={coverPhoto}>
                     <Detail.CoverImage alt="" src={coverPhoto} />
+                    {this.isMyStarPage() &&
+                    <Link
+                      to="/settings?star=true"
+                      style={{
+                        position: 'absolute',
+                        bottom: '10px',
+                        left: '10px',
+                        zIndex: 2,
+                        color: '#FFF',
+                        textDecoration: 'underline',
+                      }}
+                    >
+                      Edit Profile
+                    </Link>
+                  }
                     <Detail.ProfileImageWrapper>
                       <Detail.ProfileImage
                         imageUrl={profilePhoto}
@@ -272,12 +263,16 @@ export default class Starprofile extends React.Component {
                 </Detail.ImageRenderDiv>
               </Detail.SmallScreenLayout>
               <Detail.LargeScreenLayout>
+                <HeaderSection>
+                  <HeaderSection.HeaderNavigation onClick={() => this.props.history.goBack()} />
+                </HeaderSection>
                 <AboutContent
                   profilePhoto={profilePhoto}
                   loading={this.props.detailsLoading}
                   description={this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}
                   charity={this.props.celebrityDetails.charity ? this.props.celebrityDetails.charity : ''}
                   fullName={fullName}
+                  showEdit={this.isMyStarPage()}
                   starDetails={this.generateStarDetails()}
                 />
               </Detail.LargeScreenLayout>
@@ -289,66 +284,9 @@ export default class Starprofile extends React.Component {
                 />
               </Detail.RequestControllerWrapper>
             </Detail.LeftSection>
-            <Detail.RightSection>
+            <Detail.RightSection isNotEmpty={this.props.videosList.data.length}>
               {
-                this.state.videoActive ?
-                  <Detail.VideoPlayWrapper>
-                    <Link to={`/starDetail/${this.props.match.params.id}`}>
-                      <Detail.CloseButton />
-                    </Link>
-                    <Detail.VideoPlayerSection>
-                      <Scrollbars
-                        autoHide
-                        renderView={props => <div {...props} id="video-scroll-section" />}
-                      >
-                        <Detail.VideoPlayerContent>
-                          <Detail.VideoPlayer
-                            videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width : '100%'}
-                            videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height : '100%'}
-                          >
-                            <VideoPlayer
-                              videoWidth={this.state.selectedVideoItem.width ? this.state.selectedVideoItem.width : '100%'}
-                              videoHeight={this.state.selectedVideoItem.height ? this.state.selectedVideoItem.height : '100%'}
-                              primaryCover={this.state.selectedVideoItem.s3_thumbnail_url ? this.state.selectedVideoItem.s3_thumbnail_url : ''}
-                              primarySrc={this.state.selectedVideoItem.s3_video_url ? this.state.selectedVideoItem.s3_video_url : ''}
-                            />
-                          </Detail.VideoPlayer>
-                          <Detail.VideoContent>
-                            <Detail.VideoTitle>
-                              {this.state.selectedVideoItem.booking_title ? this.state.selectedVideoItem.booking_title : ''}
-                            </Detail.VideoTitle>
-                            <Detail.VideoRequester>
-                              <Detail.VideoRequestImage
-                                imageUrl={this.state.selectedVideoItem.fan_avatar_photo &&
-                                  this.state.selectedVideoItem.fan_avatar_photo.thumbnail_url
-                                }
-                              />
-                              <Detail.VideoRequestName>
-                                {this.state.selectedVideoItem.fan_name ? this.state.selectedVideoItem.fan_name : ''}
-                              </Detail.VideoRequestName>
-                            </Detail.VideoRequester>
-                          </Detail.VideoContent>
-                          <Detail.RelatedVideos>
-                            <ScrollList
-                              dataList={this.state.relatedVideos}
-                              scrollTarget="video-scroll-section"
-                              videos
-                              starsPage
-                              limit={this.props.videosList.limit}
-                              totalCount={this.props.videosList.count - 1}
-                              offset={this.props.videosList.offset}
-                              loading={this.props.videosList.loading}
-                              fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.props.match.params.id)}
-                            />
-                          </Detail.RelatedVideos>
-                        </Detail.VideoPlayerContent>
-                      </Scrollbars>
-                    </Detail.VideoPlayerSection>
-                  </Detail.VideoPlayWrapper>
-                  : null
-              }
-              {
-                !this.props.videosList.data.length && !this.props.videosList.loading && document.body.getBoundingClientRect().width > 1025 && this.state.selectedTab === 'All' ?
+                (!this.props.videosList.data.length || this.props.videosList.loading) && document.body.getBoundingClientRect().width >= 1025 && this.state.selectedTab === 'All' ?
                   null
                   :
                   <Tabs

@@ -12,6 +12,7 @@ export const LOGIN = {
   incorrect: 'session/ON_LOGIN_INCORRECT',
   logout: 'session/ON_LOGOUT',
   updateLoginStatus: 'session/ON_UPDATE_LOGIN_STATUS',
+  reset: 'session/ON_SESSION_ERROR_RESET',
 };
 
 export const loginFetchStart = () => ({
@@ -78,3 +79,7 @@ export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => 
     }
   });
 };
+
+export const resetSessionError = () => ({
+  type: LOGIN.reset,
+});
