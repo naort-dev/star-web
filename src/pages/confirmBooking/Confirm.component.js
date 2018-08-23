@@ -133,6 +133,7 @@ export default class Confirm extends React.Component {
     if (this.props.isLoggedIn) {
       if (this.state.bookingData.edit) {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
+          this.props.resetRequestFlow();
           this.props.history.push('/user/myVideos');
           localStorage.removeItem('bookingData');
           this.props.cancelBookingDetails();

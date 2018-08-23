@@ -5,7 +5,7 @@ import { cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { clearStreams } from '../../store/shared/actions/videoRecorder';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
-import { toggleLogin, resetRequestFlow, setRequestFlow, toggleRequestFlow} from '../../store/shared/actions/toggleModals';
+import { toggleLogin, resetRequestFlow, setRequestFlow, toggleRequestFlow } from '../../store/shared/actions/toggleModals';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,

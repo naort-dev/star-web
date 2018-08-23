@@ -10,6 +10,7 @@ import { setBookingDetails, cancelBookingDetails } from '../../store/shared/acti
 import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { saveAudioRecording } from '../../store/shared/actions/audioRecorder';
+import { setRequestFlow } from '../../store/shared/actions/toggleModals';
 
 
 const mapStateToProps = state => ({
@@ -43,6 +44,7 @@ const mapDispatchToProps = dispatch => ({
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   updateUserDetails: (id, data) => dispatch(updateUserDetails(id, data)),
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
+  setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);
