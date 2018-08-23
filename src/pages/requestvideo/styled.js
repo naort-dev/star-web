@@ -406,22 +406,22 @@ Request.OptionWrapper = styled.footer`
     padding:63px 50px;
   }
   @media(min-width:1025px){
-    padding: 110px 95px;
+    padding: 40px 95px;
   }
   @media(min-width: 1920px){
-    padding: 165px 188px;
+    padding: 45px 188px;
   }
 `;
 Request.HeaderText = styled.div`
   text-align:center;
-  color:#FF6C58;
+  color:#676767;
   font-size:20px;
   font-family: 'Ubuntu-Bold';
   @media(min-width:768px){
     font-size:32px;
   }
   @media(min-width:1025px){
-    font-size:20px;
+    font-size:24px;
   }
 `;
 Request.ButtonWrapper = styled.div`
@@ -463,5 +463,26 @@ Request.Button = styled.button`
   @media(min-width:1920px){
     max-width: 475px;
   }
+`;
+Request.UL = styled.ul`
+  color: #AAAAAA;
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #333;
+`;
+Request.LI = styled.li`
+  color: #AAAAAA;
+  display: block;
+  position: relative;
+  float: left;
+  width: 100%;
+  height: 100px;
+  border-bottom: 1px solid #333;
+`;
+
+Request.InsideDiv = styled.div`
 `;
 export { Request, HeaderSection };

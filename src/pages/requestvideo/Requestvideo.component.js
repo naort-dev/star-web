@@ -6,12 +6,13 @@ import { ImageStack } from '../../components/ImageStack';
 import { Askquestion } from '../../pages/askQuestion';
 import { Event } from '../../pages/eventAnnouncement';
 import { Personal } from '../../pages/personalizedAnnouncement';
+import './styling';
 
 export default class Requestvideo extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      stepCount: props.stepCount? props.stepCount : 0,
+      stepCount: props.stepCount ? props.stepCount : 0,
       selectedRequest: null,
     };
     this.personal = 4;
@@ -42,7 +43,7 @@ export default class Requestvideo extends React.Component {
     this.props.setRequestFlow(this.props.celebId, this.props.requestType, newStep);
   }
 
-  requestFlowCheck = (url) => { 
+  requestFlowCheck = (url) => {
     if (this.props.isLoggedIn) {
       this.props.setRequestFlow(this.props.celebId, url, 1);
       // this.props.history.push(`/${this.props.celebId}/request${url}`);
@@ -94,8 +95,8 @@ export default class Requestvideo extends React.Component {
     let featuredImage;
     let firstImage;
     let secondImage;
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate: 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit: 0;
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
+    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
@@ -149,9 +150,36 @@ export default class Requestvideo extends React.Component {
                             What kind of video would you like to request?
                           </Request.HeaderText>
                           <Request.ButtonWrapper>
-                            <Request.Button onClick={() => this.requestFlowCheck('personal')} >Personalized Shout-Out</Request.Button>
+                            <div class="container">
+
+                              <h2>Tomorrow I want some:</h2>
+
+                              <ul>
+                                <li>
+                                  <input type="radio" id="f-option" name="selector" />
+                                  <label for="f-option">Pizza</label>
+
+                                  <div class="check"></div>
+                                </li>
+
+                                <li>
+                                  <input type="radio" id="s-option" name="selector" />
+                                  <label for="s-option">Bacon</label>
+
+                                  <div class="check"><div class="inside"></div></div>
+                                </li>
+
+                                <li>
+                                  <input type="radio" id="t-option" name="selector" />
+                                  <label for="t-option">Cats</label>
+
+                                  <div class="check"><div class="inside"></div></div>
+                                </li>
+                              </ul>
+                            </div>
+                            {/* <Request.Button onClick={() => this.requestFlowCheck('personal')} >Personalized Shout-Out</Request.Button>
                             <Request.Button onClick={() => this.requestFlowCheck('event')}>Event Announcement</Request.Button>
-                            <Request.Button onClick={() => this.requestFlowCheck('ask')}>Ask a Question</Request.Button>
+                            <Request.Button onClick={() => this.requestFlowCheck('ask')}>Ask a Question</Request.Button> */}
                           </Request.ButtonWrapper>
                         </Request.OptionWrapper>
                       </Request.ComponentWrapperScroll>
@@ -209,7 +237,7 @@ export default class Requestvideo extends React.Component {
                 </Request>
               </Request.Content>
             </Request.Wrapper>
-          : this.renderRequest()
+            : this.renderRequest()
         }
       </RequestFlowPopup>
     );
