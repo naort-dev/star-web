@@ -1,13 +1,9 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import validator from 'validator';
 import axios from 'axios';
-import config from '../../lib/config';
 import { LoginContainer, HeaderSection, FooterSection } from './styled';
-import { ImageStack } from '../../components/ImageStack';
 import { ROLES } from '../../constants/usertype';
-
 
 export default class SignUp extends React.Component {
   constructor(props) {
@@ -351,18 +347,16 @@ export default class SignUp extends React.Component {
             </LoginContainer.SignupLine>
             <LoginContainer.ButtonDiv>
               <LoginContainer.Button onClick={() => this.OnFBlogin()}>
-                <LoginContainer.FacebookContent> Facebook
-                      </LoginContainer.FacebookContent>
+                <LoginContainer.FacebookContent /> 
               </LoginContainer.Button>
 
               <LoginContainer.GoogleWrapper id="g-sign-in" />
               <LoginContainer.Button onClick={() => this.onGmail()}>
-                <LoginContainer.GoogleContent> Google</LoginContainer.GoogleContent>
+                <LoginContainer.GoogleContent />
               </LoginContainer.Button>
 
               <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-                <LoginContainer.InstagramContent>Instagram
-                      </LoginContainer.InstagramContent>
+                <LoginContainer.InstagramContent />
               </LoginContainer.Button>
             </LoginContainer.ButtonDiv>
             <LoginContainer.SignupLine>

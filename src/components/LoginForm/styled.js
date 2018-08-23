@@ -124,36 +124,13 @@ LoginContainer.ButtonDiv = styled.div`
     width:100%;
 `;
 LoginContainer.Button = styled.button`
-  padding: 12px 10px;
+  font-size:100%;
+  font-family:inherit;
+  border:0;
+  padding:20px;
   outline:none;
-  border: 1.5px solid rgba(51, 51, 51, 1); 
-  background-color: white;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  font-family: 'Ubuntu-Medium';
-  font-size:16px;
-  color: rgba(84, 84, 84, 1);
-  width: calc(100% - 8px);
-  max-width: 320px;
-  text-align:center;
-  border-radius: 2px;
-  cursor: pointer;
-  margin-right:8px;
-  &:hover {
-    color :#FF6C58;
-    border-color:#FF6C58;
-  }
-  @media(min-width : 768px){
-    font-size:16px;
-    border: 1.5px solid #333333; 
-    width: 180px;
-  }
-  @media(min-width: 1025px){
-    padding: 9px 10px;
-    font-size: 12px;
-    width: 130px;
-    
-  }
+  background-color:white;
+  cursor:pointer;
 `;
 LoginContainer.FacebookContent = styled.span`
   position:relative;
@@ -168,15 +145,15 @@ LoginContainer.FacebookContent = styled.span`
     right:0;
     top:-6px;
     bottom:0;
-    background: url( 'assets/images/icon_social_FB.svg' ) no-repeat left;
+    background: url( 'assets/images/facebook.svg' ) no-repeat left;
     padding: 10px;  
-    height: 4px;
+    height: 10px;
   }
   
 `;
 LoginContainer.GoogleContent = styled.span`
   position:relative;
-  padding-left: 14px;
+  padding-left: 32px;
   width:100%;
   height:100%;
   display:block;
@@ -187,9 +164,9 @@ LoginContainer.GoogleContent = styled.span`
     right:0;
     top:-6px;
     bottom:0;
-    background: url( 'assets/images/icon_social_google-25x25.svg' ) no-repeat left;
+    background: url( 'assets/images/search.svg' ) no-repeat left;
     padding: 10px;  
-    height: 4px;
+    height: 10px;
     
   }
   
@@ -207,9 +184,9 @@ LoginContainer.InstagramContent = styled.span`
     right:0;
     top:-6px;
     bottom:0;
-    background: url( 'assets/images/icon_social_insta.svg' ) no-repeat left;
+    background: url( 'assets/images/instagram.svg' ) no-repeat left;
     padding: 10px;  
-    height: 4px;
+    height: 10px;
     
   }
  
