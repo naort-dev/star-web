@@ -1,12 +1,9 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import { Detail, HeaderSection } from '../starProfile/styled';
 import Loader from '../../components/Loader';
-import VideoPlayer from '../../components/VideoPlayer';
-import VideoRender from '../../components/VideoRender';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
@@ -63,7 +60,7 @@ export default class Starprofile extends React.Component {
       }
       this.props.toggleLogin(true);
     }
-    return props.match.params.id;
+    return props.match.params.id.toLowerCase();
   }
 
   setTabList = () => {

@@ -9,7 +9,7 @@ import OrderDetails from '../../components/OrderDetails';
 import Tabs from '../../components/Tabs';
 import ActionLoader from '../../components/ActionLoader';
 import MyVideosStyled from './styled';
-import { requestStatusList } from '../../constants/requestStatusList';
+import { requestStatusList, celebRequestStatusList } from '../../constants/requestStatusList';
 
 const moment = require('moment');
 
@@ -89,7 +89,7 @@ export default class MyVideos extends React.Component {
           requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
         }
       }
-      requestStatus = requestStatusList[requestStatusId];
+      requestStatus = this.props.starMode ? celebRequestStatusList[requestStatusId] : requestStatusList[requestStatusId];
       orderId = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.order : '';
       requestType = this.requestType[this.state.orderDetails.request_type];
       createdDate = moment(this.state.orderDetails.created_date).format('LL');
