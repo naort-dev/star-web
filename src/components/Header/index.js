@@ -9,6 +9,7 @@ import { fetchSuggestionList, resetSearchParam } from '../../store/shared/action
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
 class Header extends React.Component {
   constructor(props) {
@@ -138,6 +139,7 @@ class Header extends React.Component {
 
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
+      console.log(this.props.suggestionsList)
       return (
         <HeaderSection.SuggestionList>
           {
@@ -147,7 +149,15 @@ class Header extends React.Component {
               >
                 <Link to={`/${item.user_id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                    {item.get_short_name}
+                    <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
+                    <HeaderSection.SuggestionListName>
+                      {item.get_short_name}
+                      <HeaderSection.SuggestionDetails>
+                        {
+                          starProfessionsFormater(item.celebrity_profession)
+                        }
+                      </HeaderSection.SuggestionDetails>
+                    </HeaderSection.SuggestionListName>
                   </HeaderSection.SuggestionListContent>
                 </Link>
               </HeaderSection.SuggestionListItem>

@@ -21,6 +21,7 @@ export default class MyVideos extends React.Component {
       filterSelected: false,
       tabsClientHeight: 0,
       requestStatus: 'all',
+      starAvailability: props.starAvailability,
       orderDetails: {},
     };
     this.requestType = {
@@ -32,6 +33,11 @@ export default class MyVideos extends React.Component {
   }
   componentWillMount() {
     this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.starAvailability !== nextProps.starAvailability && nextProps.starAvailability !== this.state.starAvailability) {
+      this.setState({ starAvailability: nextProps.starAvailability });
+    }
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
@@ -61,6 +67,7 @@ export default class MyVideos extends React.Component {
         availability: !this.props.starAvailability,
       },
     };
+    this.setState({ starAvailability: !this.state.starAvailability });
     this.props.updateUserDetails(userId, userDetailsData);
   }
   hideRequest = () => {
@@ -170,7 +177,7 @@ export default class MyVideos extends React.Component {
                 <Tabs
                   labels={['Stars', 'Videos']}
                   disableTabs
-                  leftCheckSelection={this.props.starAvailability}
+                  leftCheckSelection={this.state.starAvailability}
                   changeleftCheckSelection={this.changeAvailability}
                   starMode={this.props.starMode}
                   heading={this.props.starMode ? 'Accepting Requests' : 'My Videos'}

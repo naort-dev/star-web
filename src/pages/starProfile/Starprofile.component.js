@@ -25,6 +25,7 @@ export default class Starprofile extends React.Component {
   componentWillMount() {
     this.props.resetCelebDetails();
     this.props.fetchCelebDetails(this.getUserId(this.props));
+    this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
     this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
     window.addEventListener('resize', this.handleWindowResize);
     this.setTabList();
