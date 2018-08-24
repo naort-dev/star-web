@@ -65,6 +65,13 @@ export default class MyVideos extends React.Component {
   }
   hideRequest = () => {
     this.props.onClearStreams();
+    this.props.deleteVideo();
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach(track => {
+        track.stop();
+      });
+    }
     this.setState({ orderDetails: {} });
   }
   findRequestVideo = (list, videoStatus) => {

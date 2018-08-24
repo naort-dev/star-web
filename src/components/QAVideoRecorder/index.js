@@ -21,6 +21,7 @@ export default class QAVideoRecorder extends React.Component {
     this.stopRecording = this.stopRecording.bind(this)
     this.timerID = null;
     this.stream = null;
+    this.mounted = true;
   }
 
   componentDidMount() {
@@ -33,12 +34,14 @@ export default class QAVideoRecorder extends React.Component {
         this.setState({ streamed: false})
         return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
           .then(stream => {
-            window.stream = stream
-            if(!this.props.src){
-              this.setState({ streamed: true }, () =>  document.getElementById('video-player').srcObject = window.stream)
-            }
-            else {
-            this.setState({ streamed: true })
+            if (this.mounted) {
+              window.stream = stream
+              if(!this.props.src){
+                this.setState({ streamed: true }, () =>  document.getElementById('video-player').srcObject = window.stream)
+              }
+              else {
+                this.setState({ streamed: true })
+              }              
             }
           })
           .catch((err) => {
@@ -52,6 +55,7 @@ export default class QAVideoRecorder extends React.Component {
 
 
   componentWillUnmount() {
+    this.mounted = false;
     if (!getMobileOperatingSystem() && checkMediaRecorderSupport()) {
       if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
         this.closeStream();
@@ -232,7 +236,13 @@ export default class QAVideoRecorder extends React.Component {
           return (
             <VideoRecorderDiv.UploadControlWrapper>
                 <VideoRecorderDiv.UploadTextWrapper>
-          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}?  </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.VideoHeading>
+            {
+              this.props.responseMode ?
+                `Answer ${this.props.star}’s question`
+              : `What's your question to ${this.props.star}?` 
+            }
+          </VideoRecorderDiv.VideoHeading>
         </VideoRecorderDiv.UploadTextWrapper>
               <VideoRecorderDiv.InfoText>Your browser doesn't support video recording or media capturing devices were not found. Please upload your video</VideoRecorderDiv.InfoText>
               <VideoRecorderDiv.UploadActionButton>
@@ -278,7 +288,13 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     return (
       <VideoRecorderDiv.ControlWrapper>
         <VideoRecorderDiv.Wrapper>
-          <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}?  </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.VideoHeading>
+            {
+              this.props.responseMode ?
+                `Answer ${this.props.star}’s question`
+              : `What's your question to ${this.props.star}?` 
+            }
+          </VideoRecorderDiv.VideoHeading>
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" src={this.props.src} controls />
         <VideoRecorderDiv.ActionButton>
@@ -318,7 +334,13 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     return (
       <VideoRecorderDiv.ControlWrapper>
         <VideoRecorderDiv.Wrapper>
-            <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}? </VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.VideoHeading>
+            {
+              this.props.responseMode ?
+                `Answer ${this.props.star}’s question`
+              : `What's your question to ${this.props.star}?` 
+            }
+          </VideoRecorderDiv.VideoHeading>
           <VideoRecorderDiv.RecordInfoButton> Waiting to start recording… </VideoRecorderDiv.RecordInfoButton>
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />

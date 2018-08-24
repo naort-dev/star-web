@@ -8,6 +8,8 @@ export const requestStatusList = {
 };
 
 export const celebRequestStatusList = {
+  2: 'open',
+  3: 'open',
   4: 'Completed',
   5: 'Cancelled',
   6: 'Completed',
