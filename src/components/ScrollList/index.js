@@ -313,7 +313,7 @@ export default class ScrollList extends React.Component {
       let coverPhoto;
       let profilePhoto;
       if (item.avatar_photo) {
-        profilePhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
+        profilePhoto = item.avatar_photo && item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
       } else {
         profilePhoto = item.images && item.images[0] && item.images[0].thumbnail_url;
       }
@@ -322,7 +322,7 @@ export default class ScrollList extends React.Component {
       } else if (item.images && item.images[0] && Object.keys(item.images[0]).length) {
         coverPhoto = item.images && item.images[0] && item.images[0].image_url;
       } else {
-        coverPhoto = item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
+        coverPhoto = item.avatar_photo && item.avatar_photo.thumbnail_url && item.avatar_photo.thumbnail_url;
       }
       return (
         <ListStyled.listItem key={index}>

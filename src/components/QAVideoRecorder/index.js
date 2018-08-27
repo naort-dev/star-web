@@ -289,7 +289,6 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     );
   }
 }
-  
   renderPreview() {
     if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
@@ -306,7 +305,8 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     if (this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} controls />
+          <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} ref="vidRef" />
+          <button onClick={() => this.refs.vidRef.pause()} >Play</button>
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
             <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.props.onSubmit()} />
@@ -319,7 +319,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
       <VideoRecorderDiv.ControlWrapper>
         <VideoRecorderDiv.Wrapper>
             <VideoRecorderDiv.VideoHeading> What's your question to {this.props.star}? </VideoRecorderDiv.VideoHeading>
-          <VideoRecorderDiv.RecordInfoButton> Waiting to start recording… </VideoRecorderDiv.RecordInfoButton>
+          <VideoRecorderDiv.RecordInfoButton> Ready to record </VideoRecorderDiv.RecordInfoButton>
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
