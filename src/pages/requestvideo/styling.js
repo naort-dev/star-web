@@ -26,6 +26,9 @@ injectGlobal`
   @media(min-width: 768px) {
     padding: 25px 25px 25px 80px;
   }
+  @media(min-width:1025px){
+    font-size:20px;
+  }
 }
 
 .round-radio ul li .check{
@@ -66,6 +69,11 @@ injectGlobal`
 }
 .request_content{
   font-family: 'Ubuntu-Light';
+  color: #AAAAAA;
+  margin-top: 15px;
   font-size:15px;
+  @media(min-width:1025px){
+    font-size:18px;
+  }
 }
 `;
