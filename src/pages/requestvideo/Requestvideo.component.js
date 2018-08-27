@@ -32,18 +32,15 @@ export default class Requestvideo extends React.Component {
   requestFlowCheck = (requestType) => {
     if (this.props.isLoggedIn) {
       this.props.setRequestFlow(this.props.celebId, requestType, 1);
-      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
     } else if (requestType === "ask") {
       this.props.setRequestFlow(this.props.celebId, requestType, 1);
       this.redirectToLogin();
     } else {
-      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
       this.props.setRequestFlow(this.props.celebId, requestType, 1);
     }
   };
 
   redirectToLogin = () => {
-    // this.props.history.replace(`/${this.props.celebId}/request`);
     this.props.toggleRequestFlow(false);
     this.props.toggleLogin(true);
   };
