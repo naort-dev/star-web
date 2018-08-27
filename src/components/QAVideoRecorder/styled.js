@@ -83,6 +83,16 @@ VideoRecorderDiv.Button = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
+  @media(min-width: 1920px) {
+    height: 100px;
+    width: 100px;
+    background-size: 50px;
+  };
   ${props => props.stop && ({
     backgroundColor: 'red',
   })
@@ -90,7 +100,7 @@ VideoRecorderDiv.Button = styled.button`
 `;
 
 VideoRecorderDiv.RerecordButton = styled.button`
-  margin: 10px 5px;
+  margin: 10px 20px;
   background-color: red; 
   color: #FF6C58;
   height: 50px;
@@ -103,15 +113,59 @@ VideoRecorderDiv.RerecordButton = styled.button`
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/close-white.svg');
-  background-size: 30px;
+  background-size: 20px;
   background-repeat: no-repeat;
   background-position: center;
   border: none;
   cursor: pointer;
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
+  @media(min-width: 1920px) {
+    height: 100px;
+    width: 100px;
+    background-size: 40px;
+  }
+`;
+
+VideoRecorderDiv.ControlButton = styled.button`
+  background-color: #0000007a; 
+  color: #FF6C58;
+  height: 50px;
+  width: 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  border-radius: 100%;
+  background-size: 20px;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  cursor: pointer;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-image: ${props => (props.paused ? "url('../../assets/images/icon-play.svg')" : "url('../../assets/images/pause-button.svg')")};
+  transform: translate(-50%, -50%);
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
+  @media(min-width: 1920px) {
+    height: 100px;
+    width: 100px;
+    background-size: 40px;
+  } 
 `;
 
 VideoRecorderDiv.SubmitButton = styled.button`
-  margin: 10px 5px;
+  margin: 10px 20px;
   background-color: green; 
   color: #FF6C58;
   height: 50px;
@@ -129,6 +183,16 @@ VideoRecorderDiv.SubmitButton = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
+  @media(min-width: 1920px) {
+    height: 100px;
+    width: 100px;
+    background-size: 50px;
+  }
 `;
 
 VideoRecorderDiv.NoVideoContainer = styled.div`
@@ -186,7 +250,17 @@ background-size: 30px;
 background-repeat: no-repeat;
 background-position: center;
 border: none;
-cursor: pointer
+cursor: pointer,
+@media(min-width:768px){
+  height: 70px;
+  width: 70px;
+  background-size: 30px;
+}
+@media(min-width: 1920px) {
+  height: 100px;
+  width: 100px;
+  background-size: 50px;
+}
 
 `;
 
@@ -229,26 +303,27 @@ VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFF;
     font-family: 'Ubuntu-Regular';
+    padding: 0 10px;
     text-align: center;
   `;
 
 VideoRecorderDiv.Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 15%;
   padding: 0 10px;
   position: absolute;
+  line-height: 41px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: rgba(0,0,0,.2);
+  background-image: linear-gradient(rgba(0,0,0,.4), rgba(0,0,0,0));
 `;
 
 VideoRecorderDiv.UploadTextWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 15%;
   padding: 0 10px;
+  margin-top: 14px;
   top:0px;
   position: absolute;
   align-items: center;

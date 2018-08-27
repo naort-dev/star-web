@@ -593,45 +593,44 @@ Request.EventStep2 = styled.div`
 
 `;
 const ConfirmationModal = styled.div`
-
+  display: flex;
+  height: 100%;
+  align-items: center;
+  position: relative;
 `;
 
 ConfirmationModal.confirmationWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  padding: 20px;
 `;
 
 ConfirmationModal.Heading = Request.Heading.extend`
-  margin: 0;
-  font-size:16px;
-  font-family: 'Ubuntu-Medium';
-  margin-top:1%;
-  @media(min-width:1025px){
-    margin-top:0;
-  }
+  font-size: 25px;
+  font-family: 'Ubuntu-Bold';
+  color: #5C5C5C;
 `;
 ConfirmationModal.description = styled.p`
-  font-size: 13px;
+  font-size: 16px;
   text-align:center;
   line-height: 1.5em; 
   font-family: 'Ubuntu-Regular';
+  padding: 0 25px;
 `;
-ConfirmationModal.Button = styled.button`
-  background-color: #fff;
-  color: #FF6C58;
-  padding: 6px 18px;
+
+ConfirmationModal.ButtonWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   text-align: center;
-  margin-top:5%;
-  -webkit-text-decoration: none;
-  text-decoration: none;
+`;
+
+ConfirmationModal.Button = styled.span`
+  color: #C7C7C7;
+  padding: 6px 18px;
   display: inline-block;
   cursor: pointer;
-  font-size: 12px;
-  font-family: 'Ubuntu-Medium';
-  outline: none;
-  border-radius: 5px;
-  border: 2px solid #FF6C58;
+  font-size: 18px;
+  font-family: 'Ubuntu-Light';
 `;
 
 ConfirmationModal.loaderWrapper = styled.div`

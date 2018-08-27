@@ -87,7 +87,7 @@ export const fetchVideosList = (offset, refresh) => (dispatch, getState) => {
       dispatch(videosListFetchEnd());
     }
   }).catch((exception) => {
-    if (!axios.isCancel(exception)) {
+    if (axios.isCancel(exception)) {
       dispatch(videosListFetchEnd());
     }
     dispatch(videosListFetchFailed(exception));

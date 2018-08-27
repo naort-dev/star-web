@@ -87,7 +87,7 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
       dispatch(celebVideosListFetchEnd());
     }
   }).catch((exception) => {
-    if (!axios.isCancel(exception)) {
+    if (axios.isCancel(exception)) {
       dispatch(celebVideosListFetchEnd());
     }
     dispatch(celebVideosListFetchFailed(exception));

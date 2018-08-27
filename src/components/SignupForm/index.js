@@ -273,13 +273,11 @@ export default class SignUp extends React.Component {
     check[0].click();
   };
   onInstagramLogin = () => {
-    const clientId = env("instaId");
-    const redirectUri = env("signupInstaRedirectUri");
-    const url = `${env(
-      "instaAuthUrl"
-    )}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
-    window.open(url, "_blank");
-  };
+    const clientId = env('instaId');
+    const redirectUri = env('loginInstaRedirectUri');
+    const url = `${env('instaAuthUrl')}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
+    window.open(url, '_blank');
+  }
   OnFBlogin = () => {
     const that = this;
     window.FB.login(

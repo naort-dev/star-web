@@ -154,7 +154,7 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
       dispatch(celebListFetchEnd());
     }
   }).catch((exception) => {
-    if (!axios.isCancel(exception)) {
+    if (axios.isCancel(exception)) {
       dispatch(celebListFetchEnd());
     }
     dispatch(celebListFetchFailed(exception));
