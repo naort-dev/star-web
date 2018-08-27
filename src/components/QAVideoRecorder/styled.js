@@ -229,15 +229,16 @@ VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFF;
     font-family: 'Ubuntu-Regular';
+    padding: 0 10px;
     text-align: center;
   `;
 
 VideoRecorderDiv.Wrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 15%;
   padding: 0 10px;
   position: absolute;
+  line-height: 41px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -247,8 +248,8 @@ VideoRecorderDiv.Wrapper = styled.div`
 VideoRecorderDiv.UploadTextWrapper = styled.div`
   display: flex;
   width: 100%;
-  height: 15%;
   padding: 0 10px;
+  margin-top: 14px;
   top:0px;
   position: absolute;
   align-items: center;

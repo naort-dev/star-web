@@ -18,6 +18,10 @@ export const PaymentFooterController = props => (
           </FooterDiv.BookingPrice>
         </React.Fragment>
     }
-    <FooterDiv.Button disabled={props.disabled} onClick={props.handleBooking}>{props.buttonName}</FooterDiv.Button>
+    {
+      props.buttonName ? 
+        <FooterDiv.Button disabled={props.disabled} onClick={props.handleBooking}>{props.buttonName}</FooterDiv.Button>
+      : null
+    }
   </FooterDiv>
 );
