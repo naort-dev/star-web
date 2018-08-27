@@ -83,6 +83,11 @@ VideoRecorderDiv.Button = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
   @media(min-width: 1920px) {
     height: 100px;
     width: 100px;
@@ -113,6 +118,11 @@ VideoRecorderDiv.RerecordButton = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
   @media(min-width: 1920px) {
     height: 100px;
     width: 100px;
@@ -121,8 +131,7 @@ VideoRecorderDiv.RerecordButton = styled.button`
 `;
 
 VideoRecorderDiv.ControlButton = styled.button`
-  margin: 10px 20px;
-  background-color: red; 
+  background-color: #0000007a; 
   color: #FF6C58;
   height: 50px;
   width: 50px;
@@ -138,11 +147,21 @@ VideoRecorderDiv.ControlButton = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background-image: ${props => (props.paused ? "url('../../assets/images/icon-play.svg')" : "url('../../assets/images/pause-button.svg')")};
+  transform: translate(-50%, -50%);
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
   @media(min-width: 1920px) {
     height: 100px;
     width: 100px;
     background-size: 40px;
-  }
+  } 
 `;
 
 VideoRecorderDiv.SubmitButton = styled.button`
@@ -164,6 +183,11 @@ VideoRecorderDiv.SubmitButton = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  @media(min-width:768px){
+    height: 70px;
+    width: 70px;
+    background-size: 30px;
+  }
   @media(min-width: 1920px) {
     height: 100px;
     width: 100px;
@@ -227,6 +251,11 @@ background-repeat: no-repeat;
 background-position: center;
 border: none;
 cursor: pointer,
+@media(min-width:768px){
+  height: 70px;
+  width: 70px;
+  background-size: 30px;
+}
 @media(min-width: 1920px) {
   height: 100px;
   width: 100px;

@@ -14,6 +14,7 @@ export default class QAVideoRecorder extends React.Component {
       browserSupport: false,
       play: false,
       deviceSupport: true,
+      isVideoPaused: true,
     };
     this.mediaRecorder = "";
     this.recordedBlobs = [];
@@ -167,6 +168,20 @@ export default class QAVideoRecorder extends React.Component {
       (
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
       )
+    }
+  }
+
+  playPauseVideo = () => {
+    if (this.state.isVideoPaused) {
+      this.previewVideo.play();
+      this.setState({
+        isVideoPaused: false,
+      });
+    } else {
+      this.previewVideo.pause();
+      this.setState({
+        isVideoPaused: true,
+      });
     }
   }
 
@@ -324,12 +339,8 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     if (this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-<<<<<<< HEAD
-          <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} ref="vidRef" />
-          <button onClick={() => this.refs.vidRef.pause()} >Play</button>
-=======
-          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} controls />
->>>>>>> origin/develop
+          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
+          <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
             <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo()} />
