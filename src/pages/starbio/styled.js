@@ -153,7 +153,7 @@ LoginContainer.CropperButton = styled.div`
 `;
 LoginContainer.ComponentWrapper = styled.div`
   @media(min-width:1025px){
-    height:calc(100% - 160px);
+    height:calc(100% - 59px);
   }
   
 `;
@@ -744,7 +744,7 @@ LoginContainer.SectionHeading = styled.div`
   font-size: 14px;
   text-align: center;
   color: #737373;
-  margin-top:2%;
+  margin-top: 20px;
   @media(min-width:768px){
     font-size: 18px;
   }
@@ -1227,9 +1227,7 @@ const SectionHeader = styled.div`
     left: initial;
     right: initial;
     width: 45%;
-  }
-  margin-bottom:5%;
-  
+  }  
 `;
 SectionHeader.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
