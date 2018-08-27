@@ -19,7 +19,6 @@ export default class Confirm extends React.Component {
     this.state = {
       bookingData: {},
       publicRequest: true,
-      requestEndRedirect: false,
       audioUrl: null,
       QAVideo: {
         url: null,
@@ -51,6 +50,12 @@ export default class Confirm extends React.Component {
     this.setState({
       bookingData,
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.paymentStatus !== nextProps.paymentStatus && nextProps.paymentStatus) {
+      this.props.changeStep(this.props.currentStepCount + 1);
+    }
   }
 
   getOccasionDetails = (occasionType) => {
@@ -140,13 +145,11 @@ export default class Confirm extends React.Component {
         });
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
-        this.props.changeStep(this.props.currentStepCount + 1)
+        this.props.changeStep(this.props.currentStepCount + 1);
         this.setState({ paymentMode: true });
       }
     } else {
       this.props.redirectToLogin();
-      // this.props.setRedirectUrls(this.props.location.pathname);
-      // this.setState({loginRedirect: true})
     }
   }
 
@@ -161,9 +164,6 @@ export default class Confirm extends React.Component {
     if (this.state.paymentMode) {
       this.setState({ paymentMode: false });
     }
-    //  else {
-    //   this.props.history.goBack();
-    // }
     this.props.changeStep(this.props.currentStepCount - 1);
   }
 
@@ -194,7 +194,6 @@ export default class Confirm extends React.Component {
     this.props.deleteVideo();
     this.props.cancelBookingDetails();
     this.props.clearAudio();
-    this.setState({ requestEndRedirect: true });
   }
 
   clearStream = () => {
@@ -207,19 +206,28 @@ export default class Confirm extends React.Component {
     this.props.onClearStreams();
   }
 
+  getRequestType = () => {
+    const { type } = this.state.bookingData
+    switch (type) {
+      case 1: return 'personalized video';
+      case 2: return 'event announcement';
+      case 3: return 'live question and answer';
+      default: return null;
+    }
+  }
+
   orderConfirmationView = fullName => (
-    <Popup
-      closePopUp={this.closeRequestFlow}
-      smallPopup
-    >
+    <ConfirmationModal>
       <ConfirmationModal.confirmationWrapper>
-        <ConfirmationModal.Heading>Thank you! Your request has been sent</ConfirmationModal.Heading>
+        <ConfirmationModal.Heading>Thank you! Your request has been submitted</ConfirmationModal.Heading>
         <ConfirmationModal.description>
-          {fullName} now has a week to complete your personalized video. We'll notify as soon as it's done.
+          {fullName} now has a week to complete your {this.getRequestType()}. We'll notify you as soon as it's done.
         </ConfirmationModal.description>
-        <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Close</ConfirmationModal.Button>
+        <ConfirmationModal.ButtonWrapper>
+          <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Close</ConfirmationModal.Button>
+        </ConfirmationModal.ButtonWrapper>
       </ConfirmationModal.confirmationWrapper>
-    </Popup>
+    </ConfirmationModal>
   )
 
 
@@ -355,9 +363,6 @@ export default class Confirm extends React.Component {
     } else {
       featuredImage = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url
     }
-    if (this.state.requestEndRedirect) {
-      return <Redirect to="/" />;
-    }
     return (
       <Request.Wrapper>
         {
@@ -380,13 +385,18 @@ export default class Confirm extends React.Component {
                   </Popup>
               }
               <HeaderSection>
-                <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                {
+                  !this.props.paymentStatus && <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                }
               </HeaderSection>
               <Request.ComponentWrapper>
                 {
                   this.state.paymentMode ?
                     this.renderPaymentDetails(props, rate, fullName, profilePhoto, remainingBookings, this.state.bookingData.type)
-                  :
+                  : null
+                }
+                {
+                  !this.state.paymentMode && !this.props.paymentStatus &&
                     this.renderConfirmDetails(bookingData, rate, remainingBookings, profilePhoto, fullName)
                 }
                 {
