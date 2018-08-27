@@ -1,12 +1,10 @@
-import React from "react";
-import { Link, Route, Switch } from "react-router-dom";
-import RequestFlowPopup from "../../components/RequestFlowPopup";
-import { Request, HeaderSection } from "../../pages/requestvideo/styled";
-import { ImageStack } from "../../components/ImageStack";
-import { Askquestion } from "../../pages/askQuestion";
-import { Event } from "../../pages/eventAnnouncement";
-import { Personal } from "../../pages/personalizedAnnouncement";
-import "./styling";
+import React from 'react';
+import RequestFlowPopup from '../../components/RequestFlowPopup';
+import { Request, HeaderSection } from '../../pages/requestvideo/styled';
+import { Askquestion } from '../../pages/askQuestion';
+import { Event } from '../../pages/eventAnnouncement';
+import { Personal } from '../../pages/personalizedAnnouncement';
+import './styling';
 
 export default class Requestvideo extends React.Component {
   constructor(props) {
@@ -17,22 +15,12 @@ export default class Requestvideo extends React.Component {
       requestType: "",
       requestTypeStatus: false
     };
-    this.personal = 4;
-    this.event = 4;
-    this.ask = 3;
-  }
-  componentWillMount() {
-    // const location = this.props.location;
-    // if (!this.props.isLoggedIn && location.pathname === `/${this.props.celebId}/request/ask`) {
-    //   this.props.toggleLogin(true);
-    // }
-    // if (!Object.keys(this.props.celebrityDetails).length || !Object.keys(this.props.celebrityDetails).userDetails) {
-    //   this.props.fetchCelebDetails(this.props.celebId);
-    // }
+    this.personal = 5;
+    this.event = 5;
+    this.ask = 4;
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn && this.state.selectedRequest) {
-      // this.props.history.push(this.state.selectedRequest);
       this.props.setRequestFlow(
         this.props.celebId,
         this.props.requestType,
@@ -40,34 +28,19 @@ export default class Requestvideo extends React.Component {
       );
     }
   }
-  goBack = () => {
-    this.props.history.goBack();
-  };
-
-  changeStep = (step) => {
-    const newStep = step ? step : props.stepCount;
-    this.props.setRequestFlow(
-      this.props.celebId,
-      this.props.requestType,
-      newStep,
-    );
-  };
 
   requestFlowCheck = (requestType) => {
     if (this.props.isLoggedIn) {
       this.props.setRequestFlow(this.props.celebId, requestType, 1);
-      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
     } else if (requestType === "ask") {
       this.props.setRequestFlow(this.props.celebId, requestType, 1);
       this.redirectToLogin();
     } else {
-      // this.props.history.push(`/${this.props.celebId}/request${requestType}`);
       this.props.setRequestFlow(this.props.celebId, requestType, 1);
     }
   };
 
   redirectToLogin = () => {
-    // this.props.history.replace(`/${this.props.celebId}/request`);
     this.props.toggleRequestFlow(false);
     this.props.toggleLogin(true);
   };
@@ -75,6 +48,7 @@ export default class Requestvideo extends React.Component {
   closeRequestFlow = () => {
     this.clearStream();
     this.props.resetRequestFlow();
+    this.props.resetPaymentDetails();
     this.props.cancelBookingDetails();
     this.props.clearAll();
   };
@@ -93,8 +67,17 @@ export default class Requestvideo extends React.Component {
     this.setState({ requestType: value, requestTypeStatus: true });
   };
 
+  changeStep = (step) => {
+    const newStep = step ? step : this.props.stepCount;
+    this.props.setRequestFlow(
+      this.props.celebId,
+      this.props.requestType,
+      newStep,
+    );
+  };
+
   renderRequest = () => {
-    if (this.props.requestType === "personal") {
+    if (this.props.requestType === 'personal') {
       return (
         <Personal
           redirectToLogin={this.redirectToLogin}
@@ -102,7 +85,7 @@ export default class Requestvideo extends React.Component {
           currentStepCount={this.props.stepCount}
         />
       );
-    } else if (this.props.requestType === "event") {
+    } else if (this.props.requestType === 'event') {
       return (
         <Event
           redirectToLogin={this.redirectToLogin}
@@ -121,64 +104,13 @@ export default class Requestvideo extends React.Component {
   };
 
   render() {
-    let coverPhoto;
-    let imageList = [];
-    let profilePhoto;
     let fullName = "";
-    let featuredImage;
-    let firstImage;
-    let secondImage;
-    const rate = this.props.celebrityDetails.rate
-      ? this.props.celebrityDetails.rate
-      : 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit
-      ? this.props.celebrityDetails.remaining_limit
-      : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name
         ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${
-            this.props.userDetails.last_name
-          }`;
-    }
-    if (this.props.userDetails.avatar_photo) {
-      profilePhoto =
-        this.props.userDetails.avatar_photo.thumbnail_url &&
-        this.props.userDetails.avatar_photo.thumbnail_url;
-    } else {
-      profilePhoto =
-        this.props.userDetails.images &&
-        this.props.userDetails.images[0] &&
-        this.props.userDetails.images[0].thumbnail_url;
-    }
-    if (this.props.userDetails.featured_photo) {
-      coverPhoto =
-        this.props.userDetails.featured_photo.image_url &&
-        this.props.userDetails.featured_photo.image_url;
-    } else {
-      coverPhoto =
-        this.props.userDetails.images &&
-        this.props.userDetails.images[0] &&
-        this.props.userDetails.images[0].image_url;
-    }
-    if (this.props.userDetails.images && this.props.userDetails.images.length) {
-      firstImage = this.props.userDetails.images[0]
-        ? this.props.userDetails.images[0].image_url
-        : null;
-      secondImage = this.props.userDetails.images[1]
-        ? this.props.userDetails.images[1].image_url
-        : null;
-      imageList = [firstImage, secondImage];
-    }
-    if (this.props.userDetails.featured_photo) {
-      featuredImage =
-        this.props.userDetails.featured_photo.image_url &&
-        this.props.userDetails.featured_photo.image_url;
-    } else {
-      featuredImage =
-        this.props.userDetails.images &&
-        this.props.userDetails.images[0] &&
-        this.props.userDetails.images[0].image_url;
+          this.props.userDetails.last_name
+        }`;
     }
     return (
       <RequestFlowPopup
@@ -192,13 +124,6 @@ export default class Requestvideo extends React.Component {
             <Request.Content>
               <Request>
                 <Request.LeftSection>
-                  {/* <HeaderSection>
-                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                      <HeaderSection.MiddleDiv> {fullName} </HeaderSection.MiddleDiv>
-                      <Link to={`/${this.props.celebId}`}>
-                        <HeaderSection.RightDiv>Cancel</HeaderSection.RightDiv>
-                      </Link>
-                    </HeaderSection>                */}
                   <Request.ComponentWrapper>
                     <Request.ComponentWrapperScroll
                       renderView={props => (
@@ -287,9 +212,6 @@ export default class Requestvideo extends React.Component {
                               </li>
                             </ul>
                           </div>
-                          {/* <Request.Button onClick={() => this.requestFlowCheck('personal')} >Personalized Shout-Out</Request.Button>
-                            <Request.Button onClick={() => this.requestFlowCheck('event')}>Event Announcement</Request.Button>
-                            <Request.Button onClick={() => this.requestFlowCheck('ask')}>Ask a Question</Request.Button> */}
                         </Request.ButtonWrapper>
                       </Request.OptionWrapper>
                     </Request.ComponentWrapperScroll>
@@ -310,55 +232,6 @@ export default class Requestvideo extends React.Component {
                     </Request.PaymentControllerWrapper>
                   </Request.ComponentWrapper>
                 </Request.LeftSection>
-                {/* <Switch>
-                    <Route
-                      path="/:id/request/ask"
-                      render={props => (
-                        <RequestFlowPopup
-                          dotsCount={this.askSteps}
-                          selectedDot={this.state.stepCount}
-                          closePopUp={this.closeRequestFlow}
-                          smallPopup
-                        >
-                          <Askquestion {...props} redirectToLogin={this.redirectToLogin} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
-                        </RequestFlowPopup>
-                      )}
-                    />
-                    <Route
-                      path="/:id/request/event"
-                      render={props => (
-                        <RequestFlowPopup
-                          dotsCount={this.eventSteps}
-                          selectedDot={this.state.stepCount}
-                          closePopUp={this.closeRequestFlow}
-                          smallPopup
-                        >
-                          <Event {...props} redirectToLogin={this.redirectToLogin} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
-                        </RequestFlowPopup>
-                      )}
-                    />
-                    <Route
-                      path="/:id/request/personal"
-                      render={props => (
-                        <RequestFlowPopup
-                          dotsCount={this.personalSteps}
-                          selectedDot={this.state.stepCount}
-                          closePopUp={this.closeRequestFlow}
-                          smallPopup
-                        >
-                          <Personal {...props} redirectToLogin={this.redirectToLogin} changeStep={this.changeStep} currentStepCount={this.state.stepCount} />
-                        </RequestFlowPopup>
-                      )}
-                    />
-                  </Switch> */}
-                {/* <Request.RightSection>
-                    <Request.ImageStackWrapper>
-                      <ImageStack
-                        featureImage={featuredImage}
-                        imageList={imageList}
-                      />
-                    </Request.ImageStackWrapper>
-                  </Request.RightSection> */}
               </Request>
             </Request.Content>
           </Request.Wrapper>

@@ -58,7 +58,7 @@ export function GmailLogin() {
 
 export function onInstagramLogin()  {
     const clientId = env('instaId');
-    const redirectUri = env('signupInstaRedirectUri');
+    const redirectUri = env('loginInstaRedirectUri');
     const url = env('instaAuthUrl') + '?client_id=' + clientId + '&redirect_uri=' + redirectUri + '&response_type=token';
     window.location.href = url;
 }

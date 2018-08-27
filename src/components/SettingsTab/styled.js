@@ -7,18 +7,11 @@ const Tabs = styled.div`
   text-align:center;
   justify-content: space-between;
   position: relative;
-  margin-top:10%;
-  @media(min-width:768px){
-    margin-top:5%;
-  }
-  @media(min-width:1025px){
-    margin-top:5%;
-  }
+  margin-top: 34px;
 `;
 Tabs.Ul = styled.ul`
   display: block;
   width: 100%;
-  margin-top:2%;
   overflow-x: auto;
   white-space: nowrap;
 `;
