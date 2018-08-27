@@ -6,7 +6,7 @@ import DeclinePopup from './DeclinePopup';
 import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
-import VideoRecorder from '../WebRTCVideoRecorder';
+import QAVideoRecorder from '../QAVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
@@ -256,7 +256,9 @@ export default class OrderDetails extends React.Component {
           </OrderStyled.VideoContentWrapper>
           {/* Show Share only for completed videos */}
           {
-            props.requestStatusId === 6 && <ShareView title={title} shareUrl={shareUrl} />
+            props.requestStatusId === 6 && ((!props.starMode) || (props.starMode && props.orderDetails.public_request)) ?
+              <ShareView title={title} shareUrl={shareUrl} />
+            : null
           }
           <OrderStyled.VideoDetails>
             <OrderStyled.VideoTitle>
@@ -271,7 +273,7 @@ export default class OrderDetails extends React.Component {
               </OrderStyled.VideoRequestName>
             </OrderStyled.VideoRequester>
             {
-              props.requestStatusId === 6 ?
+              props.requestStatusId === 6 && ((!props.starMode) || (props.starMode && props.orderDetails.public_request)) ?
                 <OrderStyled.DownloadVideo
                   onClick={() => this.downloadVideo(props.requestVideo.video_id)}
                 >
@@ -301,7 +303,7 @@ export default class OrderDetails extends React.Component {
     if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <VideoRecorder {...this.props} duration={recorder.askTimeOut} />
+          <QAVideoRecorder responseMode star={props.orderDetails.fan} {...this.props} duration={recorder.askTimeOut} onSubmit={() => this.handleBooking()} />
         </OrderStyled.VideoRecorder>
       );
     }
@@ -507,13 +509,20 @@ export default class OrderDetails extends React.Component {
             {
               props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
                 <OrderStyled.ControlWrapper>
-                  <PaymentFooterController
-                    buttonMode
-                    modifyBooking={this.modifyBooking}
-                    handleBooking={this.handleBooking}
-                    modifyButtonName={this.props.starMode ? 'Cancel' : (this.props.orderDetails.editable ? 'Edit Request' : '')}
-                    buttonName={!this.props.starMode ? 'Cancel' : 'Send'}
-                  />
+                  {
+                    this.props.starMode ?
+                      <OrderStyled.ActionButtonWrapper>
+                        <OrderStyled.ActionButton onClick={() => this.modifyBooking()}>Cancel Request</OrderStyled.ActionButton>
+                      </OrderStyled.ActionButtonWrapper>
+                    :
+                      <PaymentFooterController
+                        buttonMode
+                        modifyBooking={this.modifyBooking}
+                        handleBooking={this.handleBooking}
+                        modifyButtonName={this.props.orderDetails.editable ? 'Edit Request' : ''}
+                        buttonName="Cancel"
+                      />
+                  }
                 </OrderStyled.ControlWrapper>
             }
           </OrderStyled.leftContent>

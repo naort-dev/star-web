@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import Requestvideo from './Requestvideo.component';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
+import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { clearStreams } from '../../store/shared/actions/videoRecorder';
@@ -24,6 +25,7 @@ const mapDispatchToProps = dispatch => ({
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   clearAll: () => dispatch(clearAll()),
+  resetPaymentDetails: () => dispatch(resetPaymentDetails()),
   onClearStreams: () => dispatch(clearStreams()),
   resetRequestFlow: () => dispatch(resetRequestFlow()),
   toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),

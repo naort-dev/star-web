@@ -6,7 +6,7 @@ const ActionLoaderStyled = styled.div`
   right: 0;
   bottom: 0;
   top: 0;
-  z-index: 10;
+  z-index: 12;
   background-color: rgba(0,0,0,.6);
 `;
 

@@ -1,9 +1,8 @@
 import { connect } from 'react-redux';
 import Confirm from './Confirm.component';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
-import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
-import { starsonaRequest } from '../../store/shared/actions/processPayments';
+import { starsonaRequest, resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { deleteVideo } from '../../store/shared/actions/videoUploader';
 import { clearStreams } from '../../store/shared/actions/videoRecorder'

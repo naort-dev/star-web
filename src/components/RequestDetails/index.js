@@ -115,7 +115,6 @@ export default class RequestDetails extends React.Component {
     const { props } = this;
     return (
       <VideoRenderDiv onClick={() => this.props.selectItem()}>
-        {/* <Link to={`/${props.celebId}/${props.videoId}`} onClick={e => this.checkRoute(e)}> */}
         <VideoRenderDiv.ImageSection
           height={props.imageHeight}
           imageUrl={this.state.coverImage}

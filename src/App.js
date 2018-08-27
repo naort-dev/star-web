@@ -184,9 +184,9 @@ class App extends React.Component {
                 */}
 
                 {/* fallbacks, keep it last */}
-                <Route exact path="/:id" component={Starprofile} />
                 <Route path="/unauthorized" component={Unauthorized} />
                 <Route path="/not-found" component={Page404} />
+                <Route exact path="/:id" component={Starprofile} />
                 <Route component={Page404} />
               </Switch>
             )
