@@ -14,6 +14,7 @@ export default class QAVideoRecorder extends React.Component {
       browserSupport: false,
       play: false,
       deviceSupport: true,
+      isVideoPaused: true,
     };
     this.mediaRecorder = "";
     this.recordedBlobs = [];
@@ -170,8 +171,23 @@ export default class QAVideoRecorder extends React.Component {
     }
   }
 
+  playPauseVideo = () => {
+    if (this.state.isVideoPaused) {
+      this.previewVideo.play();
+      this.setState({
+        isVideoPaused: false,
+      });
+    } else {
+      this.previewVideo.pause();
+      this.setState({
+        isVideoPaused: true,
+      });
+    }
+  }
+
   submitVideo() {
     if (this.previewVideo) {
+      this.setState({ isVideoPaused: true });
       this.previewVideo.pause();
     }
     this.props.onSubmit();
@@ -308,7 +324,6 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     );
   }
 }
-  
   renderPreview() {
     if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
@@ -325,7 +340,8 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
     if (this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} controls />
+          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
+          <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
             <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo()} />
@@ -344,7 +360,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
               : `What's your question to ${this.props.star}?` 
             }
           </VideoRecorderDiv.VideoHeading>
-          <VideoRecorderDiv.RecordInfoButton> Waiting to start recording… </VideoRecorderDiv.RecordInfoButton>
+          <VideoRecorderDiv.RecordInfoButton> Ready to record </VideoRecorderDiv.RecordInfoButton>
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>

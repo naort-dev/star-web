@@ -399,7 +399,7 @@ Request.ContinueButton = styled.button`
 `;
 Request.DiasableButton = styled.button`
   background-color: #b6b6b6;
-  color: rgb(255, 255, 255);
+  color: #676767;
   width: 100%;
   text-align: center;
   display: inline-block;
@@ -456,7 +456,7 @@ Request.HeaderText = styled.div`
     font-size:32px;
   }
   @media(min-width:1025px){
-    font-size:24px;
+    font-size:38px;
   }
 `;
 Request.ButtonWrapper = styled.div`
