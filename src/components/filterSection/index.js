@@ -1,7 +1,7 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Range } from 'rc-slider';
-import { openStatusList } from '../../constants/requestStatusList';
+import { openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 import 'rc-slider/assets/index.css';
 import FilterStyled from './styled';
 
@@ -44,8 +44,8 @@ export default class FilterSection extends React.Component {
   }
   render() {
     if (this.props.requestStatus) {
-      const openStatuses = this.props.starMode ? openStatusList : [...openStatusList, 4]; // 4 = Admin Approval waiting
-      const completedStatus = this.props.starMode ? [4, 6] : [6]; // 6 = completed
+      const openStatuses = this.props.starMode ? celebOpenStatusList : openStatusList;
+      const completedStatus = this.props.starMode ? celebCompletedStatusList : completedStatusList; // 6 = completed
       return (
         <FilterStyled filterActive={this.props.filterSelected}>
           <FilterStyled.CloseButton

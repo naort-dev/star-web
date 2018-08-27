@@ -4,14 +4,13 @@ import MyVideos from './MyVideos.component';
 import { fetchMyVideosList } from './actions/getMyVideosList';
 import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd } from './actions/handleRequests';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
-import { saveVideo } from '../../store/shared/actions/videoUploader';
+import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/actions/popupActions';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { saveAudioRecording } from '../../store/shared/actions/audioRecorder';
 import { setRequestFlow } from '../../store/shared/actions/toggleModals';
-
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
@@ -44,6 +43,7 @@ const mapDispatchToProps = dispatch => ({
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   updateUserDetails: (id, data) => dispatch(updateUserDetails(id, data)),
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
+  deleteVideo: () => dispatch(deleteVideo()),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
 });
 
