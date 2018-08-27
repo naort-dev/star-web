@@ -9,6 +9,11 @@ Parameters:
     Type: String
     Description: Domain name for ALB host based routing
 
+  HTPasswd:
+    Type: String
+    Default: ""
+    Description: Password protection .htpasswd
+
   PriorityPrefix:
     Type: Number
     Description: Prefix for ALB routing priorities
@@ -107,6 +112,7 @@ Resources:
           - { Name: SERVER_URL, Value: !Ref 'ServerURL' }
           - { Name: STRIPE_PUBLISH_KEY, Value: !Ref 'StripePublishKey' }
           - { Name: DOMAIN_NAME, Value: !Ref 'DomainName' }
+          - { Name: HTPASSWD, Value: !Ref 'HTPasswd' }
 
   WebService:
     Type: AWS::ECS::Service
