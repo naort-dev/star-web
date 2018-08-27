@@ -206,12 +206,22 @@ export default class Confirm extends React.Component {
     this.props.onClearStreams();
   }
 
+  getRequestType = () => {
+    const { type } = this.state.bookingData
+    switch (type) {
+      case 1: return 'personalized video';
+      case 2: return 'event announcement';
+      case 3: return 'live question and answer';
+      default: return null;
+    }
+  }
+
   orderConfirmationView = fullName => (
     <ConfirmationModal>
       <ConfirmationModal.confirmationWrapper>
         <ConfirmationModal.Heading>Thank you! Your request has been submitted</ConfirmationModal.Heading>
         <ConfirmationModal.description>
-          {fullName} now has a week to complete your personalized video. We'll notify you as soon as it's done.
+          {fullName} now has a week to complete your {this.getRequestType()}. We'll notify you as soon as it's done.
         </ConfirmationModal.description>
         <ConfirmationModal.ButtonWrapper>
           <ConfirmationModal.Button onClick={() => this.closeRequestFlow()}>Close</ConfirmationModal.Button>
