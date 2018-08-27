@@ -196,7 +196,8 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.videoUploader.savedFile && this.state.play) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video id="video-player" controls src={this.state.src} />
+          <VideoRecorderDiv.Video id="video-player" innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
+          <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
           <VideoRecorderDiv.UploadWrapper>
                   <VideoRecorderDiv.RerecordButton />
@@ -211,7 +212,8 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.videoUploader.url) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video id="video-player" controls src={this.props.videoUploader.url} />
+          <VideoRecorderDiv.Video id="video-player" innerRef={(node) => { this.previewVideo = node; }} src={this.props.videoUploader.url} />
+          <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
           <VideoRecorderDiv.UploadWrapper>
                   <VideoRecorderDiv.RerecordButton />
@@ -226,7 +228,8 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.src && !this.state.play) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video id="video-player" controls src={this.props.src} />
+          <VideoRecorderDiv.Video id="video-player" innerRef={(node) => { this.previewVideo = node; }} src={this.props.src} />
+          <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
           <VideoRecorderDiv.UploadWrapper>
                   <VideoRecorderDiv.RerecordButton />
