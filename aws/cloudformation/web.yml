@@ -179,6 +179,22 @@ Resources:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTP']]
       Priority: !Join ['', [!Ref 'PriorityPrefix', '01']]
 
+  WWWLoadBalancerRuleHTTP:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - TargetGroupArn: !Ref 'WebTargetGroup'
+          Type: 'forward'
+      Conditions:
+        - Field: host-header
+          Values: [!Join ['.', ['www', !Ref 'DomainName']]]
+        - Field: path-pattern
+          Values: ['*']
+      ListenerArn:
+        Fn::ImportValue:
+          !Join [':', [!Ref 'StackName', 'PublicListenerHTTP']]
+      Priority: !Join ['', [!Ref 'PriorityPrefix', '02']]
+
   WebLoadBalancerRuleHTTPS:
     Type: AWS::ElasticLoadBalancingV2::ListenerRule
     Properties:
@@ -195,3 +211,18 @@ Resources:
           !Join [':', [!Ref 'StackName', 'PublicListenerHTTPS']]
       Priority: !Join ['', [!Ref 'PriorityPrefix', '01']]
 
+  WWWLoadBalancerRuleHTTPS:
+    Type: AWS::ElasticLoadBalancingV2::ListenerRule
+    Properties:
+      Actions:
+        - TargetGroupArn: !Ref 'WebTargetGroup'
+          Type: 'forward'
+      Conditions:
+        - Field: host-header
+          Values: [!Join ['.', ['www', !Ref 'DomainName']]]
+        - Field: path-pattern
+          Values: ['*']
+      ListenerArn:
+        Fn::ImportValue:
+          !Join [':', [!Ref 'StackName', 'PublicListenerHTTPS']]
+      Priority: !Join ['', [!Ref 'PriorityPrefix', '02']]
