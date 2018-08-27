@@ -20,7 +20,7 @@ export const responseOnFailed = (error) => {
 
     if (status === 401) {
       localStorage.clear();
-      window.location.pathname = 'login';
+      window.location.pathname = '/';
     }
   }
 
