@@ -211,7 +211,7 @@ OrderStyled.rightContent = styled.div`
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 150px 44px 58px;
+    padding: 70px 44px 58px;
     flex-direction: column;
   }
 `;
@@ -399,6 +399,7 @@ OrderStyled.ControlWrapper = styled.div`
   left: 0;
   right: 0;
   padding: 10px;
+  z-index: 1;
   background: #fff;
   @media(min-width: 1025px) {
     position: absolute;
@@ -408,6 +409,28 @@ OrderStyled.ControlWrapper = styled.div`
     margin: 0 42px;
     padding: 27px 0;
     border-top: solid #333333 1px;
+  }
+`;
+
+OrderStyled.ActionButtonWrapper = styled.div`
+  text-align: center;
+`;
+
+OrderStyled.ActionButton = styled.button`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 6px 18px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width: 1920px) {
+    font-size: 20px;
   }
 `;
 
@@ -480,7 +503,14 @@ OrderStyled.RatingTextArea = styled.textarea`
 `;
 
 OrderStyled.VideoRecorder = styled.div`
+  margin: 0 auto;
   margin-bottom: 21px;
+  height: 400px;
+  max-width: 480px;
+  @media(min-width: 768px) {
+    height: 800px;
+    max-width: 600px;
+  }
   @media(min-width: 1025px) {
     width: 100%;
     height: 100%;

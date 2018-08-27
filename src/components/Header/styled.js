@@ -205,7 +205,6 @@ HeaderSection.SearchBar = styled.div`
 `;
 HeaderSection.AutoSuggest = styled.div`
   height: 100%;
-  padding: 20px 0;
   @media(min-width: 1025px) {
     box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   }
@@ -239,7 +238,7 @@ HeaderSection.SuggestionListWrapper = styled.div`
   }
 `;
 HeaderSection.SuggestionList = styled.ul`
-  padding: 0 10px;
+  padding: 16px 10px;
 `;
 HeaderSection.noDataWrapper = styled.div`
   display: table;
@@ -254,7 +253,6 @@ HeaderSection.noDataText = styled.span`
 `;
 HeaderSection.SuggestionListItem = styled.li`
   width: 100%;
-  height: 30px;
   padding: 0 16px;
   margin-top: 20px;
   cursor: pointer;
@@ -272,9 +270,33 @@ HeaderSection.SuggestionListItem = styled.li`
 `;
 HeaderSection.SuggestionListContent = styled.span`
   color: #333333;
-  display: block;
-  height: 100%;
+  display: flex;
+  width: 100%;
+  align-items: center;
 `;
+
+HeaderSection.SuggestionDetails = styled.p`
+  font-size: 12px;
+  color:rgba(34, 34, 34, 0.7);
+  font-family: 'Ubuntu-Light';
+  @media(min-width: 768px) {
+    font-size: 14px;
+  }
+`;
+
+HeaderSection.SuggestionListImage = styled.span`
+  width: 50px;
+  height: 50px;
+  background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/profile.png)')};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  border-radius: 50%;
+`;
+HeaderSection.SuggestionListName = styled.span`
+  margin-left: 10px;
+`;
+
 HeaderSection.InputWrapper = styled.div`
   width: 100%;
   height: 100%;
