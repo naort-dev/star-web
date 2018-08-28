@@ -16,6 +16,7 @@ export default class AudioRecorder extends React.Component {
     this.audio = new Audio();
     this.user = props.target;
     this.onAudioEnded = this.onAudioEnded.bind(this);
+    this.saveRecording = this.saveRecording.bind(this)
   }
 
   componentDidMount() {
@@ -50,6 +51,11 @@ export default class AudioRecorder extends React.Component {
     this.setState({ play: false });
   }
 
+  saveRecording(recordedBlob) {
+    this.setState({ active: false });
+    this.props.saveAudioRecording(this.user, { recordedBlob: recordedBlob.blob, recordedUrl: recordedBlob.blobURL });
+  }
+
   renderAudio = (target) => {
     if (checkMediaRecorderSupport()) {
       return (
@@ -60,10 +66,7 @@ export default class AudioRecorder extends React.Component {
               <ReactMic
                 record={this.state.start}
                 className="sound-wave"
-                onStop={(recordedBlob) => {
-                  this.setState({ active: false });
-                  this.props.saveAudioRecording(target, { recordedBlob: recordedBlob.blob, recordedUrl: recordedBlob.blobURL });
-                }}
+                onStop={this.saveRecording}
                 strokeColor="white"
                 backgroundColor="#FF6C58"
                 save={this.state.stop && this.state.status == 'completed'}
