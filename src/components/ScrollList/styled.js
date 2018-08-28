@@ -39,9 +39,10 @@ ListStyled.Banner = styled.div`
   background-position: center center;
   width: calc(100% - 17px);
   margin-bottom: 15px;
-  padding: 10px;
+  padding: 10px 15px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100px;
 `;
 
@@ -54,6 +55,18 @@ ListStyled.BannerHeading = styled.span`
 
 ListStyled.BannerSubHeading = styled.span`
   display: block;
+  font-family: 'Ubuntu-Regular';
+  font-size: 20px;
+`;
+
+ListStyled.BannerPlayButton = styled.span`
+  display: inline-block;
+  background: url('assets/images/play-button.png') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  cursor: pointer;
+  width: 47px;
+  height: 46px;
 `;
 
 ListStyled.NoDataText = styled.div`

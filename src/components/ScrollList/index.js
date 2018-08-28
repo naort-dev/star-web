@@ -378,9 +378,10 @@ export default class ScrollList extends React.Component {
                 this.props.banner &&
                   <ListStyled.Banner>
                     <ListStyled.BannerHeading>
-                      Personalized video shoutouts
+                      Personalized Video Shout-Outs
                       <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
                     </ListStyled.BannerHeading>
+                    <ListStyled.BannerPlayButton />
                   </ListStyled.Banner>
               }
               {
