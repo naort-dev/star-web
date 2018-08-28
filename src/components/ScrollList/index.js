@@ -14,6 +14,7 @@ import {
 } from 'react-share';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { locations } from '../../constants/locations';
 import ListStyled from './styled';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
@@ -374,7 +375,7 @@ export default class ScrollList extends React.Component {
               <ListStyled.VideoPlayer>
                 <VideoPlayer
                   autoPlay
-                  primarySrc="https://doc-0s-8o-docs.googleusercontent.com/docs/securesc/fjb3g81ef6u7j4up9g5c7534vmdhonih/ec6tmpoceuskou13voahv9br6oufom3a/1535436000000/00460025513600275141/16142575661362655670/1REmCIyvbioAMBGNm5v83Plzw9VYiNO_3?e=download&h=13198734564428550580&nonce=km1k4496g6sue&user=16142575661362655670&hash=7dqk92kbvio9q80q863qnonjkbrmhmuu"
+                  primarySrc={locations.bannerVideo}
                 />
               </ListStyled.VideoPlayer>
             </Popup>
@@ -393,7 +394,11 @@ export default class ScrollList extends React.Component {
                       Personalized Video Shout-Outs
                       <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
                     </ListStyled.BannerHeading>
-                    <ListStyled.BannerPlayButton onClick={() => this.setState({ bannerVideo: true })} />
+                    <ListStyled.BannerPlayButton
+                      alt="banner-video"
+                      src="assets/images/play-button.png"
+                      onClick={() => this.setState({ bannerVideo: true })}
+                    />
                   </ListStyled.Banner>
               }
               {

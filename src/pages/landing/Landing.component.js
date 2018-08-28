@@ -170,7 +170,6 @@ export default class Landing extends React.Component {
     } else if (this.props.filters.selectedTab === 'Videos') {
       return (
         <ScrollList
-          banner
           dataList={this.props.videosList.data}
           videos
           limit={this.props.videosList.limit}

@@ -87,14 +87,11 @@ ListStyled.BannerSubHeading = styled.span`
   }
 `;
 
-ListStyled.BannerPlayButton = styled.span`
+ListStyled.BannerPlayButton = styled.img`
   display: inline-block;
-  background: url('assets/images/play-button.png') no-repeat;
-  background-size: cover;
-  background-position: center center;
   cursor: pointer;
-  width: 31px;
-  height: 28px;
+  width: 33px;
+  height: 32px;
   @media(min-width: 768px) {
     width: 47px;
     height: 46px;
