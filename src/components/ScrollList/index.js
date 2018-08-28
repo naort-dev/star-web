@@ -30,6 +30,7 @@ export default class ScrollList extends React.Component {
     this.state = {
       hasMore: true,
       videoActive: false,
+      bannerVideo: false,
       selectedVideoIndex: null,
       videoPopupLoading: false,
       sharePopup: false,
@@ -368,6 +369,17 @@ export default class ScrollList extends React.Component {
           this.state.videoActive && this.showVideoPopup()
         }
         {
+          this.state.bannerVideo &&
+            <Popup closePopUp={() => this.setState({ bannerVideo: false })}>
+              <ListStyled.VideoPlayer>
+                <VideoPlayer
+                  autoPlay
+                  primarySrc="https://doc-0s-8o-docs.googleusercontent.com/docs/securesc/fjb3g81ef6u7j4up9g5c7534vmdhonih/ec6tmpoceuskou13voahv9br6oufom3a/1535436000000/00460025513600275141/16142575661362655670/1REmCIyvbioAMBGNm5v83Plzw9VYiNO_3?e=download&h=13198734564428550580&nonce=km1k4496g6sue&user=16142575661362655670&hash=7dqk92kbvio9q80q863qnonjkbrmhmuu"
+                />
+              </ListStyled.VideoPlayer>
+            </Popup>
+        }
+        {
           this.props.scrollTarget ?
             this.infiniteScrollList(this.props.scrollTarget)
           :
@@ -381,7 +393,7 @@ export default class ScrollList extends React.Component {
                       Personalized Video Shout-Outs
                       <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
                     </ListStyled.BannerHeading>
-                    <ListStyled.BannerPlayButton />
+                    <ListStyled.BannerPlayButton onClick={() => this.setState({ bannerVideo: true })} />
                   </ListStyled.Banner>
               }
               {
