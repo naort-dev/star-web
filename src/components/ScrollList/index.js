@@ -375,6 +375,15 @@ export default class ScrollList extends React.Component {
               renderView={props => <div {...props} className="view" id="scrollable-target" />}
             >
               {
+                this.props.banner &&
+                  <ListStyled.Banner>
+                    <ListStyled.BannerHeading>
+                      Personalized video shoutouts
+                      <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
+                    </ListStyled.BannerHeading>
+                  </ListStyled.Banner>
+              }
+              {
                 this.infiniteScrollList('scrollable-target')
               }
             </Scrollbars>

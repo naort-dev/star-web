@@ -33,6 +33,29 @@ const ListStyled = styled.section`
   }
 `;
 
+ListStyled.Banner = styled.div`
+  background: url('assets/images/banner-background.png') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  width: calc(100% - 17px);
+  margin-bottom: 15px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  height: 100px;
+`;
+
+ListStyled.BannerHeading = styled.span`
+  font-family: 'Ubuntu-Bold';
+  display: block;
+  font-size: 22px;
+  color: white;
+`;
+
+ListStyled.BannerSubHeading = styled.span`
+  display: block;
+`;
+
 ListStyled.NoDataText = styled.div`
   position: absolute;
   left: 0;
