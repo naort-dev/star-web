@@ -141,7 +141,7 @@ Templates.Select = styled.select`
   appearance: none;
   cursor: pointer;
   width: 100%;
-  background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat;
+  background:url('assets/images/br_down.png') no-repeat;
   background-position: 97% 8px;
   background-size: 16px;
   padding-right: 40px;
