@@ -33,6 +33,71 @@ const ListStyled = styled.section`
   }
 `;
 
+ListStyled.Banner = styled.div`
+  background: url('assets/images/banner-background.png') no-repeat;
+  background-size: cover;
+  background-position: center center;
+  width: calc(100% - 11px);
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  @media(min-width: 768px) {
+    width: calc(100% - 17px);
+    height: 128px;
+    padding-right: 56px;
+  }
+  @media(min-width: 1920px) {
+    height: 180px;
+  }
+`;
+
+ListStyled.BannerHeading = styled.span`
+  font-family: 'Ubuntu-Bold';
+  display: block;
+  font-size: 16px;
+  color: white;
+  @media(min-width: 768px) {
+    font-size: 22px;
+  }
+  @media(min-width: 1025px) {
+    font-size: 27px;
+    padding: 18px 24px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 37px;
+  }
+`;
+
+ListStyled.BannerSubHeading = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Regular';
+  font-size: 16px;
+  margin-top: 5px;
+  @media(min-width: 768px) {
+    font-size: 20px;
+  }
+  @media(min-width: 1025px) {
+    font-size: 26px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 34px;
+  }
+`;
+
+ListStyled.BannerPlayButton = styled.img`
+  display: inline-block;
+  cursor: pointer;
+  width: 33px;
+  height: 32px;
+  @media(min-width: 768px) {
+    width: 47px;
+    height: 46px;
+  }
+`;
+
 ListStyled.NoDataText = styled.div`
   position: absolute;
   left: 0;

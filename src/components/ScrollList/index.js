@@ -14,6 +14,7 @@ import {
 } from 'react-share';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { locations } from '../../constants/locations';
 import ListStyled from './styled';
 import VideoRender from '../VideoRender';
 import ImageRender from '../ImageRender';
@@ -30,6 +31,7 @@ export default class ScrollList extends React.Component {
     this.state = {
       hasMore: true,
       videoActive: false,
+      bannerVideo: false,
       selectedVideoIndex: null,
       videoPopupLoading: false,
       sharePopup: false,
@@ -368,12 +370,37 @@ export default class ScrollList extends React.Component {
           this.state.videoActive && this.showVideoPopup()
         }
         {
+          this.state.bannerVideo &&
+            <Popup closePopUp={() => this.setState({ bannerVideo: false })}>
+              <ListStyled.VideoPlayer>
+                <VideoPlayer
+                  autoPlay
+                  primarySrc={locations.bannerVideo}
+                />
+              </ListStyled.VideoPlayer>
+            </Popup>
+        }
+        {
           this.props.scrollTarget ?
             this.infiniteScrollList(this.props.scrollTarget)
           :
             <Scrollbars
               renderView={props => <div {...props} className="view" id="scrollable-target" />}
             >
+              {
+                this.props.banner &&
+                  <ListStyled.Banner>
+                    <ListStyled.BannerHeading>
+                      Personalized Video Shout-Outs
+                      <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
+                    </ListStyled.BannerHeading>
+                    <ListStyled.BannerPlayButton
+                      alt="banner-video"
+                      src="assets/images/play-button.png"
+                      onClick={() => this.setState({ bannerVideo: true })}
+                    />
+                  </ListStyled.Banner>
+              }
               {
                 this.infiniteScrollList('scrollable-target')
               }
