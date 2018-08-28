@@ -36,7 +36,7 @@ export const LoginTypeSelector = props => (
       :
       <div>
         {!props.isLogin ?
-          <TypeSelectorWrapper.Button onClick={() => { props.handleChange(); }}>I’m a Star</TypeSelectorWrapper.Button>
+          <TypeSelectorWrapper.Button onClick={() => { window.location = 'https://about.starsona.com/#star-highlight'; }}>I’m a Star</TypeSelectorWrapper.Button>
           :
           null
         }
