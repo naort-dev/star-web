@@ -157,6 +157,7 @@ export default class Landing extends React.Component {
     if (this.props.filters.selectedTab === 'Stars') {
       return (
         <ScrollList
+          banner
           dataList={this.props.celebList.data}
           menuActive={this.state.menuActive}
           limit={this.props.celebList.limit}
