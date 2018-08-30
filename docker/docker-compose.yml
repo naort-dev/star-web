@@ -19,6 +19,7 @@ services:
     - STRIPE_PUBLISH_KEY
     - DOMAIN_NAME=$SSL_SERVER_NAME
     - HTPASSWD=starsona:$$apr1$$i8bVNw8I$$yl2tggOZBh8.oBeVQ26b50
+    - PRERENDER_TOKEN
 
 networks:
   overlay:
