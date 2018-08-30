@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import Header from '../../components/Header';
 import Tabs from '../../components/Tabs';
 import { Detail, HeaderSection } from '../starProfile/styled';
@@ -7,6 +8,7 @@ import Loader from '../../components/Loader';
 import { AboutContent } from '../../components/AboutContent';
 import { RequestController } from '../../components/RequestController';
 import ScrollList from '../../components/ScrollList';
+import { setMetaTags } from '../../utils/setMetaTags';
 import { ImageStack } from '../../components/ImageStack';
 import Popup from '../../components/Popup';
 import { fetch } from '../../services/fetch';
@@ -203,6 +205,14 @@ export default class Starprofile extends React.Component {
     }
     return (
       <Detail.Wrapper>
+        <Helmet
+          title={fullName}
+          meta={setMetaTags(
+            fullName,
+            profilePhoto,
+            `Get your personalized video from ${fullName}`,
+          )}
+			  />
         {this.state.showPopup ?
           <Popup
             smallPopup

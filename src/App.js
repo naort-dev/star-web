@@ -5,17 +5,17 @@ import {
   withRouter,
 } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Helmet from 'react-helmet';
 import PropTypes from 'prop-types';
 
 import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
+import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
-import { SignupType } from './pages/signuptype';
-import { SignUp } from './pages/signup';
 import { Favourites } from './pages/favourites';
 import { MyVideos } from './pages/myVideos';
 import { Page404 } from './pages/page404';
@@ -34,7 +34,6 @@ import { fetchUserDetails } from './store/shared/actions/getUserDetails';
 class App extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       // showLoading: true,
       showLoading: false,
@@ -116,6 +115,14 @@ class App extends React.Component {
               <Requestvideo />
             : null
           }
+          <Helmet
+            title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
+            meta={setMetaTags(
+              'Starsona ~ Personalized Video Grams & Shout-Outs from the Stars',
+              'https://starsona.com/assets/images/logo_starsona.png',
+              'Starsona - personalized video grams and shout-outs from the stars, to help you celebrate everyday moments. Find actors, athletes, musicians, YouTubers and more with the Starsona app. Select a star, and request a personalized video shout-out. Then share your shout-out via SMS, email, or social media!',
+            )}
+          />
           {
             showLoading && <ComponentLoading timedOut={this.state.timedOut} />
           }
