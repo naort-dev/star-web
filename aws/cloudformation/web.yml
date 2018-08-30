@@ -14,6 +14,11 @@ Parameters:
     Default: ""
     Description: Password protection .htpasswd
 
+  PrerenderToken:
+    Type: String
+    Default: ""
+    Description: Prerender.io token
+
   PriorityPrefix:
     Type: Number
     Description: Prefix for ALB routing priorities
@@ -113,6 +118,7 @@ Resources:
           - { Name: STRIPE_PUBLISH_KEY, Value: !Ref 'StripePublishKey' }
           - { Name: DOMAIN_NAME, Value: !Ref 'DomainName' }
           - { Name: HTPASSWD, Value: !Ref 'HTPasswd' }
+          - { Name: PRERENDER_TOKEN, Value: !Ref 'PrerenderToken' }
 
   WebService:
     Type: AWS::ECS::Service
