@@ -464,10 +464,9 @@ Detail.PopupWrapper = styled.div`
   max-height: 100%;
   min-height: 40%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   background-color: #fff;
 `;
 
@@ -479,6 +478,24 @@ text-align: center;
 }
 `;
 
+Detail.PopupButton = styled.button`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 6px 13px;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+`
 const HeaderSection = styled.div`
   display:flex;
   justify-content: space-between;
