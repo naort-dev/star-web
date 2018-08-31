@@ -13,6 +13,7 @@ import { setMetaTags } from '../../utils/setMetaTags';
 import { ImageStack } from '../../components/ImageStack';
 import Popup from '../../components/Popup';
 import { fetch } from '../../services/fetch';
+import { checkPrerender } from '../../utils/checkOS';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -141,7 +142,7 @@ export default class Starprofile extends React.Component {
 
 
   renderList = () => {
-    if (this.props.videosList.data.length) {
+    if (this.props.videosList.data.length && !checkPrerender()) {
       return (
         <ScrollList
           dataList={this.props.videosList.data}
