@@ -10,6 +10,7 @@ const AppBanner = props => (
       android: `${env('androidAppId')}://${props.androidUrl}`,
       ios: `${env('androidAppId')}://${props.iosUrl}`,
     }}
+    onClose={() => props.hideAppBanner()}
     onInstall={() => {
       setTimeout(() => {
         if (/Android/i.test(navigator.userAgent)) {

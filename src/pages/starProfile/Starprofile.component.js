@@ -22,6 +22,7 @@ export default class Starprofile extends React.Component {
       selectedTab: 'All',
       tabList: [],
       showPopup: null,
+      showAppBanner: true,
     };
   }
 
@@ -119,7 +120,7 @@ export default class Starprofile extends React.Component {
   }
 
   handleRequest = () => {
-    if (this.props.celebrityDetails.remaining_limit > 0) {
+    if (this.props.celebrityDetails.availability && this.props.celebrityDetails.remaining_limit > 0) {
       if (!this.props.loading && this.props.userDetails.user_id) {
         this.props.setRequestFlow(this.props.userDetails.user_id);
         // this.props.history.push(`/${this.props.userDetails.user_id}/request`);
@@ -204,10 +205,11 @@ export default class Starprofile extends React.Component {
     return (
       <Detail.Wrapper>
         {
-          !this.isMyStarPage() && Object.keys(this.props.userDetails).length && Object.keys(this.props.celebrityDetails).length ?
+          this.state.showAppBanner && !this.isMyStarPage() && Object.keys(this.props.userDetails).length && Object.keys(this.props.celebrityDetails).length ?
             <AppBanner
               androidUrl={`profile/${this.props.match.params.id.toLowerCase()}`}
               iosUrl={`profile/?profile_id=${this.props.match.params.id.toLowerCase()}`}
+              hideAppBanner={() => this.setState({ showAppBanner: false })}
             />
           : null
         }
@@ -300,6 +302,7 @@ export default class Starprofile extends React.Component {
                 <RequestController
                   rate={rate}
                   remainingBookings={remainingBookings}
+                  availability={this.props.celebrityDetails.availability}
                   handleRequest={this.handleRequest}
                 />
               </Detail.RequestControllerWrapper>

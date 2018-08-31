@@ -153,7 +153,7 @@ LoginContainer.CropperButton = styled.div`
 `;
 LoginContainer.ComponentWrapper = styled.div`
   @media(min-width:1025px){
-    height:calc(100% - 59px);
+    height:calc(100% - 90px);
   }
   
 `;
