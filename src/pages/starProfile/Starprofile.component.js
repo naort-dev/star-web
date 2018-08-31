@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import Header from '../../components/Header';
+import AppBanner from '../../components/AppBanner';
 import Tabs from '../../components/Tabs';
 import { Detail, HeaderSection } from '../starProfile/styled';
 import Loader from '../../components/Loader';
@@ -48,9 +49,6 @@ export default class Starprofile extends React.Component {
         this.props.toggleRequestFlow(true);
       }
       this.props.fetchCelebDetails(this.getUserId(nextProps));
-    }
-    if (Object.keys(nextProps.userDetails).length && Object.keys(this.props.userDetails).length !== Object.keys(nextProps.userDetails).length) {
-      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
     }
   }
   componentWillUnmount() {
@@ -205,6 +203,14 @@ export default class Starprofile extends React.Component {
     }
     return (
       <Detail.Wrapper>
+        {
+          !this.isMyStarPage() && Object.keys(this.props.userDetails).length && Object.keys(this.props.celebrityDetails).length ?
+            <AppBanner
+              androidUrl={`profile/${this.props.match.params.id.toLowerCase()}`}
+              iosUrl={`profile/?profile_id=${this.props.match.params.id.toLowerCase()}`}
+            />
+          : null
+        }
         <Helmet
           title={fullName}
           meta={setMetaTags(

@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
+import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
 
 import { protectRoute } from './services/protectRoute';
