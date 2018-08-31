@@ -230,6 +230,7 @@ export default class Starprofile extends React.Component {
               <Detail.PopupLabel>
                 We'll let you know immediately when the star is accepting booking requests
               </Detail.PopupLabel>
+              <Detail.PopupButton onClick={() => this.setState({ showPopup: false })}>Ok</Detail.PopupButton>
             </Detail.PopupWrapper>
           </Popup> : null}
         <Detail.Content>
