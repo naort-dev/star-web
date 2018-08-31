@@ -13,5 +13,7 @@ export const setMetaTags = (title, imageUrl, description) => (
     { property: 'twitter:site', content: 'Starsona' },
     { property: 'twitter:image', content: imageUrl },
     { property: 'twitter:creator', content: 'Starsona' },
+    { property: 'google-play-app', content: `app-id=${env('androidAppId')}` },
+    { property: 'apple-itunes-app', content: `app-id=${env('iosAppId')}` },
   ]
 );
