@@ -20,7 +20,7 @@ const PopupStyled = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 12;
 `;
 
 PopupStyled.Container = styled.div`

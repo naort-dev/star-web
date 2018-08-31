@@ -7,7 +7,7 @@ const Tabs = styled.div`
   text-align:center;
   justify-content: space-between;
   position: relative;
-  margin-top: 34px;
+  margin-top: 51px;
 `;
 Tabs.Ul = styled.ul`
   display: block;
