@@ -29,6 +29,7 @@
     "react-router-dom": "^4.2.2",
     "react-select": "^1.2.1",
     "react-share": "^2.2.0",
+    "react-smartbanner": "^5.0.6",
     "react-stripe-elements": "^2.0.0",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.1",
