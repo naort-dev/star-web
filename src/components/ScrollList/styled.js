@@ -34,7 +34,7 @@ const ListStyled = styled.section`
 `;
 
 ListStyled.Banner = styled.div`
-  background: url('assets/images/banner-background.png') no-repeat;
+  background: url('assets/images/banner-background.jpg') no-repeat;
   background-size: cover;
   background-position: center center;
   width: calc(100% - 11px);

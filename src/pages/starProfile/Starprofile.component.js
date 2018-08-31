@@ -125,6 +125,8 @@ export default class Starprofile extends React.Component {
         this.props.setRequestFlow(this.props.userDetails.user_id);
         // this.props.history.push(`/${this.props.userDetails.user_id}/request`);
       }
+    } else if (!this.props.isLoggedIn) {
+      this.props.toggleLogin(true);
     } else {
       fetch.post('user/alert_fan/', {
         celebrity: this.props.userDetails.id,
