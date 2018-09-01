@@ -12,6 +12,7 @@
   instaUrl: 'https://api.instagram.com/v1/users/self/?access_token=',
   instaAuthUrl: 'https://api.instagram.com/oauth/authorize/',
   stripe_api_version: '2017-08-15',
+  GOOGLE_TAG_MANAGER_ID: 'GTM-NHBZLQ9',
   };
   window.env = key => config[key] || undefined;
   }(this || {}));

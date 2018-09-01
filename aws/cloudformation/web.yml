@@ -19,6 +19,10 @@ Parameters:
     Default: ""
     Description: Prerender.io token
 
+  GoogleTagManagerId:
+    Type: String
+    Description: Google tag manager ID token
+
   PriorityPrefix:
     Type: Number
     Description: Prefix for ALB routing priorities
@@ -119,6 +123,7 @@ Resources:
           - { Name: DOMAIN_NAME, Value: !Ref 'DomainName' }
           - { Name: HTPASSWD, Value: !Ref 'HTPasswd' }
           - { Name: PRERENDER_TOKEN, Value: !Ref 'PrerenderToken' }
+          - { Name: GOOGLE_TAG_MANAGER_ID, Value: !Ref 'GoogleTagManagerId' }
 
   WebService:
     Type: AWS::ECS::Service
