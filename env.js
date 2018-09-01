@@ -6,7 +6,7 @@
   STRIPE_PUBLISH_KEY: 'pk_test_RBSzULFNLChp2ACqsYRkMJPV',
   fbId: '1638565172829009',
   instaId: '8bea5765428248eca3a09d288ef7e4c2',
-  androidAppId: 'com.starsona.development.app',
+  androidAppId: 'com.starsona.app',
   iosAppId: '1294478616',
   loginInstaRedirectUri: window.location.origin+'/instalogin',
   instaUrl: 'https://api.instagram.com/v1/users/self/?access_token=',
