@@ -1,4 +1,3 @@
-import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Starbio from './Starbio.component';
 import { saveImage } from '../../store/shared/actions/imageViewer';
@@ -30,11 +29,11 @@ const mapDispatchToProps = dispatch => ({
   resetNotification: () => dispatch(resetNotification()),
   resetProfilePhoto: () => dispatch(resetProfilePhoto()),
   onStartRecording: () => dispatch(startRecording()),
-  onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
+  onStopRecording: recordedVideo => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),
   onRerecord: () => dispatch(reRecord()),
   onClearStreams: () => dispatch(clearStreams()),
-  onSaveVideo: (videoFile) => dispatch(saveVideo(videoFile)),
+  onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),
   uploadVideo: () => dispatch(uploadVideo()),
   onSaveImage: imageData => dispatch(saveImage(imageData)),
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
@@ -47,5 +46,5 @@ const mapDispatchToProps = dispatch => ({
   resetChangePassord: () => dispatch(resetChangePassord()),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Starbio));
+export default connect(mapStateToProps, mapDispatchToProps)(Starbio);
 

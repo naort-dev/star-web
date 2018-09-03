@@ -2,7 +2,6 @@ import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Templates } from './styled';
-import Popup from '../Popup';
 import { getMobileOperatingSystem, checkMediaRecorderSupport, checkDevice } from '../../utils/checkOS';
 import AudioRecorder from '../AudioRecorder';
 
@@ -98,7 +97,7 @@ class RequestTemplates extends React.Component {
 
                   </Templates.WrapsInput>
                   {
-                    !getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                    !getMobileOperatingSystem() && checkMediaRecorderSupport() && (window.navigator.indexOf("MSIE ") > -1 || window.navigator.indexOf("Trident/") > -1) ?
                     <Templates.WrapsAudioInput>
                       <AudioRecorder key="for" target="for"  {...this.props}/>
                     </Templates.WrapsAudioInput>

@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { parse } from 'query-string';
+// import { parse } from 'query-string';
 import EXIF from 'exif-js';
 import { LoginContainer, FooterSection, SectionHeader } from './styled';
 import { fetch } from '../../services/fetch';
@@ -57,7 +57,7 @@ export default class Starbio extends React.Component {
           email: false
         },
         starDetails: null,
-        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
+        selectedAccount: this.getSelectedTab(),
         isCelebrity: false,
         pageView: 'starBio',
       },
@@ -130,7 +130,7 @@ export default class Starbio extends React.Component {
       const settingsObj = {
         userDetails,
         starDetails,
-        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
+        selectedAccount: this.getSelectedTab(),
         isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
         pageView: 'starBio',
       };
@@ -163,12 +163,6 @@ export default class Starbio extends React.Component {
     this.props.onClearStreams();
   }
 
-  componentDidUpdate(prevProps) {
-    // if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
-    //   this.props.fetchUserDetails(this.props.session.auth_token.id);
-    // }
-  }
-
   componentDidMount() {
     this.setImageSize();
     window.addEventListener('resize', this.setImageSize)
@@ -192,6 +186,17 @@ export default class Starbio extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
+  }
+
+  getSelectedTab = () => {
+    if (this.props.location.search) {
+      const queryParams = this.props.location.search.split('?')[1];
+      const starParam = queryParams.split('=')[0];
+      if (starParam === 'star' && queryParams.split('=')[1]) {
+        return 'starAccount';
+      }
+    }
+    return 'myAccount';    
   }
 
 
