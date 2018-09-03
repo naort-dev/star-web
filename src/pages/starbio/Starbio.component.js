@@ -683,9 +683,9 @@ export default class Starbio extends React.Component {
       this.pixelCrop.height,
     );
     const base64Image = canvas.toDataURL('image/jpeg');
-    canvas.toBlob(file => {
-      this.setState({ [`${this.state.currentImageType}File`]: file })
-    }, 'image/jpeg');
+    // canvas.toBlob(file => {
+    //   this.setState({ [`${this.state.currentImageType}File`]: file })
+    // }, 'image/jpeg');
     this.setState({ [this.state.currentImageType]: base64Image, cropMode: false });
   }
 

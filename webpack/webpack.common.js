@@ -38,6 +38,8 @@ module.exports = {
       to: 'assets'
     }, {
         from: 'env.js'
+    },{
+      from: 'canvasToBlob.js'
     }], {
       force: true,
       flatten: true

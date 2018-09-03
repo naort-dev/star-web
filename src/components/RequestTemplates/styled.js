@@ -136,6 +136,10 @@ Templates.Select = styled.select`
   margin: 0;
   outline: none;
   display: inline-block;
+  &::-ms-expand {
+    display: none;
+  }
+  -ms-appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
