@@ -3,12 +3,12 @@
         "apps": [],
         "details": [
             {
-                "appID": "2RAH5ZZCTZ.com.starsona.development.app",
+                "appID": "2RAH5ZZCTZ.com.starsona.app",
                 "paths": ["*"]
             }
         ]
     },
     "webcredentials": {
-        "apps": ["2RAH5ZZCTZ.com.starsona.development.app"]
+        "apps": ["2RAH5ZZCTZ.com.starsona.app"]
     }
 }
