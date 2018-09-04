@@ -78,29 +78,32 @@ export default class Avatar extends React.Component {
   }
 
   renderCropper = () => {
-    return (
-      <Popup
-        closePopUp={() => this.setState({ cropMode: false })}
-      >
-        <AvatarContainer.CropperWrapper>
-          <Cropper
-            src={this.state.cropImage}
-            crop={this.state.cropValues}
-            keepSelection
-            onImageLoaded={this.setCropImage}
-            onChange={this.onCropChange}
-          />
-          <AvatarContainer.CropperButton onClick={this.handleCrop}>Crop</AvatarContainer.CropperButton>
-        </AvatarContainer.CropperWrapper>
-      </Popup>
-    );
+    if (this.state.cropImage) {
+      return (
+        <Popup
+          closePopUp={() => this.setState({ cropMode: false })}
+        >
+          <AvatarContainer.CropperWrapper>
+            <Cropper
+              src={this.state.cropImage}
+              crop={this.state.cropValues}
+              keepSelection
+              onImageLoaded={this.setCropImage}
+              onChange={this.onCropChange}
+            />
+            <AvatarContainer.CropperButton onClick={this.handleCrop}>Crop</AvatarContainer.CropperButton>
+          </AvatarContainer.CropperWrapper>
+        </Popup>
+      );
+    }
+    return null;
   }
 
   async onFileChange() {
     this.setState({ imageError: false })
-    const file = document.getElementById('avatar').files[0];
+    const file = document.getElementById('profile').files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
-    if (!allowedExtensions.exec(document.getElementById('avatar').value)) {
+    if (!allowedExtensions.exec(document.getElementById('profile').value)) {
       this.setState({ imageError: { extensionError: true } });
     }
 
@@ -125,7 +128,7 @@ export default class Avatar extends React.Component {
     this.currentExif = exif;
     reader.onload = () => {
       this.convertBeforeCrop(reader.result);
-      this.setState({ cropMode: true, cropImage: reader.result, extension });
+      this.setState({ cropMode: true, extension });
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -154,8 +157,9 @@ export default class Avatar extends React.Component {
   convertBeforeCrop = (imageURL) => {
     const image = new Image();
     image.onload = function () {
-      const width = this.originalWidth;
-      const height = this.originalHeight;
+      let imageRatio = this.originalWidth/this.originalHeight;
+      const width = 500; // Fixed width for image crop view
+      const height = 500/imageRatio;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;
@@ -209,8 +213,8 @@ export default class Avatar extends React.Component {
         image,
         0,
         0,
-        this.originalWidth,
-        this.originalHeight,
+        width,
+        height,
       );
       const base64Image = canvas.toDataURL('image/jpeg');
       this.setState({ cropImage: base64Image })
@@ -284,7 +288,7 @@ export default class Avatar extends React.Component {
         <AvatarContainer.FullScreenUploadButton onClick={() => { }} />
         {this.props.celebrity ? null
           :
-          <AvatarContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />
+          <AvatarContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
         }
       </AvatarContainer.FullScreenUploadWrapper>
     );
@@ -330,7 +334,7 @@ export default class Avatar extends React.Component {
               <AvatarContainer.UploadButton style={{ visibility: 'hidden' }} onClick={() => { }} />
               {this.props.celebrity ? null
                 :
-                <AvatarContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />}
+                <AvatarContainer.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />}
 
             </AvatarContainer.UploadWrapper>
           }

@@ -184,6 +184,10 @@ ListStyled.listVideos = ListStyled.listItem.extend`
       margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 0)};
     }
   }
+  @media ((min-device-width: 1025px) and (-ms-high-contrast: none) and (-ms-high-contrast: active)) {
+    width: ${props => (props.starsPage ? 'calc(85% / 3)' : 'calc(80% / 4)')};
+  } 
+  
 `;
 
 ListStyled.VideoContentWrapper = styled.div`
