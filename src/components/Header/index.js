@@ -139,7 +139,6 @@ class Header extends React.Component {
 
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
-      console.log(this.props.suggestionsList)
       return (
         <HeaderSection.SuggestionList>
           {
