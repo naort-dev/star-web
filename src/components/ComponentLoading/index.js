@@ -11,7 +11,6 @@ export const ComponentLoading = ({
   pastDelay,
 }) => {
   if (error) {
-    console.log(error)
     return (
       <Mask>
         <Placeholder message="Failed to load page! Try refreshing." status="error" />

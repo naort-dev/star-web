@@ -123,7 +123,6 @@ ListStyled.listWrapper = styled.ul`
     justify-content: flex-start;
   }
   @media(min-width: 1025px) {
-    width: auto;
     margin-right: 15px;
   }
 `;

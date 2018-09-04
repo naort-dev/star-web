@@ -136,7 +136,7 @@ LoginContainer.FacebookContent = styled.span`
   position:relative;
   padding-left: 32px;
   width:100%;
-  height:100%;
+  height: 10px;
   display:block;
   &:before{
     content:'';
@@ -155,7 +155,7 @@ LoginContainer.GoogleContent = styled.span`
   position:relative;
   padding-left: 32px;
   width:100%;
-  height:100%;
+  height: 10px;
   display:block;
   &:before{
     content:'';
@@ -175,7 +175,7 @@ LoginContainer.InstagramContent = styled.span`
   position:relative;
   padding-left: 32px;
   width:100%;
-  height:100%;
+  height: 10px;
   display:block;
   &:before{
     content:'';
