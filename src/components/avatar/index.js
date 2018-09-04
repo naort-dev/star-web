@@ -78,25 +78,25 @@ export default class Avatar extends React.Component {
   }
 
   renderCropper = () => {
-    if (this.state.cropImage) {
-      return (
-        <Popup
-          closePopUp={() => this.setState({ cropMode: false })}
-        >
-          <AvatarContainer.CropperWrapper>
-            <Cropper
-              src={this.state.cropImage}
-              crop={this.state.cropValues}
-              keepSelection
-              onImageLoaded={this.setCropImage}
-              onChange={this.onCropChange}
-            />
-            <AvatarContainer.CropperButton onClick={this.handleCrop}>Crop</AvatarContainer.CropperButton>
-          </AvatarContainer.CropperWrapper>
-        </Popup>
-      );
-    }
-    return null;
+    return (
+      <Popup
+        closePopUp={() => this.setState({ cropMode: false })}
+      >
+        <AvatarContainer.CropperWrapper innerRef={(node) => {this.cropperWrapper = node}}>
+          {
+            this.state.cropImage &&
+              <Cropper
+                src={this.state.cropImage}
+                crop={this.state.cropValues}
+                keepSelection
+                onImageLoaded={this.setCropImage}
+                onChange={this.onCropChange}
+              />
+          }
+          <AvatarContainer.CropperButton onClick={this.handleCrop}>Crop</AvatarContainer.CropperButton>
+        </AvatarContainer.CropperWrapper>
+      </Popup>
+    );
   }
 
   async onFileChange() {
@@ -158,8 +158,8 @@ export default class Avatar extends React.Component {
     const image = new Image();
     image.onload = function () {
       let imageRatio = this.originalWidth/this.originalHeight;
-      const width = 500; // Fixed width for image crop view
-      const height = 500/imageRatio;
+      const height = this.originalHeight > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : this.originalHeight;
+      const width = height*imageRatio;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;

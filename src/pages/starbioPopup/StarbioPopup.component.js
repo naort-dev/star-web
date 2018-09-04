@@ -224,10 +224,8 @@ export default class StarbioPopup extends React.Component {
     const image = new Image();
     image.onload = function () {
       let imageRatio = this.originalWidth/this.originalHeight;
-      const width = 500; // Fixed width for image crop view
-      const height = 500/imageRatio;
-      // const width = this.originalWidth;
-      // const height = this.originalHeight;
+      const height = this.originalHeight > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : this.originalHeight;
+      const width = height*imageRatio;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;
@@ -567,18 +565,6 @@ export default class StarbioPopup extends React.Component {
               profession: this.state.profession,
               description: this.state.bio,
             });
-            // this.props.history.push({
-            //   pathname: '/recordvideo',
-            //   state: {
-            //     bioDetails: {
-            //       charity: this.state.charity,
-            //       weekly_limits: this.state.bookingLimit,
-            //       rate: this.state.bookingPrice,
-            //       profession: this.state.profession,
-            //       description: this.state.bio,
-            //     },
-            //   },
-            // });
           } else {
             this.setState({ settingsObj: { ...this.state.settingsObj, pageView: 'videoView' } });
           }
@@ -705,26 +691,26 @@ export default class StarbioPopup extends React.Component {
   }
 
   renderCropper = () => {
-    if (this.state.cropImage) {
-      return (
-        <Popup
-          scrollTarget={document.getElementById(this.state.currentImageType)}
-          closePopUp={() => this.setState({ cropMode: false })}
-        >
-          <LoginContainer.CropperWrapper>
-            <Cropper
-              src={this.state.cropImage}
-              crop={this.state.cropValues}
-              keepSelection
-              onImageLoaded={this.setCropImage}
-              onChange={this.onCropChange}
-            />
-            <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
-          </LoginContainer.CropperWrapper>
-        </Popup>
-      );
-    }
-    return null;
+    return (
+      <Popup
+        scrollTarget={document.getElementById(this.state.currentImageType)}
+        closePopUp={() => this.setState({ cropMode: false })}
+      >
+        <LoginContainer.CropperWrapper innerRef={(node) => {this.cropperWrapper = node}}>
+          {
+            this.state.cropImage &&
+              <Cropper
+                src={this.state.cropImage}
+                crop={this.state.cropValues}
+                keepSelection
+                onImageLoaded={this.setCropImage}
+                onChange={this.onCropChange}
+              />
+          }
+          <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
+        </LoginContainer.CropperWrapper>
+      </Popup>
+    );
   }
 
 
