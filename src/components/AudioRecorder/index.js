@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactMic } from 'react-mic';
+// import { ReactMic } from 'react-mic';
 import { AudioRecorderDiv } from './styled';
 import { checkMediaRecorderSupport } from '../../utils/checkOS'
 
@@ -17,6 +17,13 @@ export default class AudioRecorder extends React.Component {
     this.user = props.target;
     this.onAudioEnded = this.onAudioEnded.bind(this);
     this.saveRecording = this.saveRecording.bind(this)
+  }
+
+  componentWillMount() {
+    if (!window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1) {
+      const { ReactMic } = require('react-mic');
+      this.ReactMic = ReactMic
+    }
   }
 
   componentDidMount() {
@@ -61,9 +68,9 @@ export default class AudioRecorder extends React.Component {
       return (
         <React.Fragment>
           {
-            this.state.active &&
+            this.state.active && this.ReactMic &&
             <div style={{ display: 'none' }}>
-              <ReactMic
+              <this.ReactMic
                 record={this.state.start}
                 className="sound-wave"
                 onStop={this.saveRecording}

@@ -1,7 +1,6 @@
 import React from "react";
 import validator from "validator";
 import { Redirect } from "react-router-dom";
-import * as qs from "query-string";
 import Api from "../../lib/api";
 import resetPassword from "../../utils/resetPassword";
 import { LoginContainer } from './styled';
@@ -18,22 +17,24 @@ export default class ResetPassword extends React.Component {
       redirect: false
     };
   }
-  onResetPassword = e => {
+  onResetPassword = (e) => {
     e.preventDefault();
     if (this.checkPassword) {
-      if (this.state.newPassword.isValid && this.state.retypePassword.isValid) {
-        const parsedQuery = qs.parse(this.props.location.search);
+      if (this.state.newPassword.isValid && this.state.retypePassword.isValid && this.props.location.search) {
+        const queryParams = this.props.location.search.split('?')[1];
+        const resetQuery = queryParams.split('&')[0];
+        const resetId = resetQuery.split('=')[1];
         resetPassword(Api.resetPassword, {
           password: this.state.newPassword.value,
-          reset_id: parsedQuery.reset_id
+          reset_id: resetId
         })
-          .then(response => {
+          .then((response) => {
             if (response.status === 200) {
               this.setState({ redirect: true });
               this.props.toggleLogin(true);
             }
           })
-          .catch(exception => {
+          .catch((exception) => {
             this.setState({ errorMsg: exception.response.data.error.message });
           });
       } else {
