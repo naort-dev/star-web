@@ -921,7 +921,12 @@ export default class Starbio extends React.Component {
                 <React.Fragment>
                   <LoginContainer.UploadWrapper >
                     <LoginContainer.UploadButton onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                    <LoginContainer.UploadInput
+                      accept=".png, .jpeg, .jpg"
+                      id="featuredImage"
+                      onChange={() => this.onFileChange("featuredImage")}
+                      type="file"
+                    />
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
@@ -942,7 +947,12 @@ export default class Starbio extends React.Component {
                 <React.Fragment>
                   <LoginContainer.UploadWrapper>
                     <LoginContainer.UploadButton onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+                    <LoginContainer.UploadInput
+                      accept=".png, .jpeg, .jpg"
+                      id="firstImage"
+                      onChange={() => this.onFileChange("firstImage")}
+                      type="file"
+                    />
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
@@ -964,7 +974,12 @@ export default class Starbio extends React.Component {
                 <React.Fragment>
                   <LoginContainer.UploadWrapper>
                     <LoginContainer.UploadButton onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                    <LoginContainer.UploadInput
+                      accept=".png, .jpeg, .jpg"
+                      id="secondImage"
+                      onChange={() => this.onFileChange("secondImage")}
+                      type="file"
+                    />
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
@@ -981,7 +996,12 @@ export default class Starbio extends React.Component {
               this.FullscreenUploader("avatar") :
               <LoginContainer.UploadWrapper type="avatar">
                 <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
-                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
+                <LoginContainer.UploadInput
+                  accept=".png, .jpeg, .jpg"
+                  id="avatar"
+                  onChange={() => this.onFileChange("avatar")}
+                  type="file"
+                />
               </LoginContainer.UploadWrapper>
             }
           </LoginContainer.Avatar>
