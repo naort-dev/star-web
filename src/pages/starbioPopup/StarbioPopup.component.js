@@ -224,8 +224,11 @@ export default class StarbioPopup extends React.Component {
   convertBeforeCrop = (imageURL) => {
     const image = new Image();
     image.onload = function () {
-      const width = this.originalWidth;
-      const height = this.originalHeight;
+      let imageRatio = this.originalWidth/this.originalHeight;
+      const width = 500; // Fixed width for image crop view
+      const height = 500/imageRatio;
+      // const width = this.originalWidth;
+      // const height = this.originalHeight;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;
@@ -279,8 +282,8 @@ export default class StarbioPopup extends React.Component {
         image,
         0,
         0,
-        this.originalWidth,
-        this.originalHeight,
+        width,
+        height,
       );
       const base64Image = canvas.toDataURL('image/jpeg');
       this.setState({ cropImage: base64Image })
