@@ -192,6 +192,7 @@ export default class QAVideoRecorder extends React.Component {
   }
 
   endVideo() {
+    this.previewVideo.pause();
     this.setState({
       isVideoPaused: true,
     });
