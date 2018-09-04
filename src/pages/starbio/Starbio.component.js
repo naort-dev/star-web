@@ -226,8 +226,8 @@ export default class Starbio extends React.Component {
     const image = new Image();
     image.onload = function () {
       let imageRatio = this.originalWidth/this.originalHeight;
-      const width = 500; // Fixed width for image crop view
-      const height = 500/imageRatio;
+      const height = this.originalHeight > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : this.originalHeight;
+      const width = height*imageRatio;
       // const width = this.originalWidth;
       // const height = this.originalHeight;
       const canvas = document.createElement('canvas');
@@ -702,26 +702,26 @@ export default class Starbio extends React.Component {
   }
 
   renderCropper = () => {
-    if (this.state.cropImage) {
-      return (
-        <Popup
-          scrollTarget={document.getElementById(this.state.currentImageType)}
-          closePopUp={() => this.setState({ cropMode: false })}
-        >
-          <LoginContainer.CropperWrapper>
-            <Cropper
-              src={this.state.cropImage}
-              crop={this.state.cropValues}
-              keepSelection
-              onImageLoaded={this.setCropImage}
-              onChange={this.onCropChange}
-            />
-            <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
-          </LoginContainer.CropperWrapper>
-        </Popup>
-      );
-    }
-    return null;
+    return (
+      <Popup
+        scrollTarget={document.getElementById(this.state.currentImageType)}
+        closePopUp={() => this.setState({ cropMode: false })}
+      >
+        <LoginContainer.CropperWrapper innerRef={(node) => {this.cropperWrapper = node}}>
+          {
+            this.state.cropImage &&
+              <Cropper
+                src={this.state.cropImage}
+                crop={this.state.cropValues}
+                keepSelection
+                onImageLoaded={this.setCropImage}
+                onChange={this.onCropChange}
+              />
+          }
+          <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
+        </LoginContainer.CropperWrapper>
+      </Popup>
+    );
   }
 
   validateIsEmpty(formName) {
