@@ -32,7 +32,11 @@ injectGlobal`
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-}
+  }
+  input::-ms-clear,
+  input::-ms-reveal {
+    display: none;
+  }
 
 #checkbox_container{
   display: inline-block;

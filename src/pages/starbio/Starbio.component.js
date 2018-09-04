@@ -199,8 +199,8 @@ export default class Starbio extends React.Component {
   }
 
 
-  async onFileChange(type = "featuredImage") {
-    this.setState({ imageError: false })
+  onFileChange(type = "featuredImage") {
+    this.setState({ imageError: false }, async () => {
     const file = document.getElementById(type).files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById(type).value)) {
@@ -217,6 +217,9 @@ export default class Starbio extends React.Component {
         }
       }
     }
+
+    })
+    
   }
 
   convertBeforeCrop = (imageURL) => {
@@ -991,17 +994,12 @@ export default class Starbio extends React.Component {
         </LoginContainer.SecondImage>
 
         <LoginContainer.AvatarContainer>
-          <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
+          <LoginContainer.Avatar image={this.state.avatar}>
             {this.state.avatar != null ?
               this.FullscreenUploader("avatar") :
-              <LoginContainer.UploadWrapper type="avatar">
-                <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
-                <LoginContainer.UploadInput
-                  accept=".png, .jpeg, .jpg"
-                  id="avatar"
-                  onChange={() => this.onFileChange("avatar")}
-                  type="file"
-                />
+              <LoginContainer.UploadWrapper>
+                {/* <LoginContainer.UploadButton onClick={() => { }} /> */}
+                <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
               </LoginContainer.UploadWrapper>
             }
           </LoginContainer.Avatar>

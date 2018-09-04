@@ -101,9 +101,9 @@ export default class Avatar extends React.Component {
 
   async onFileChange() {
     this.setState({ imageError: false })
-    const file = document.getElementById('avatar').files[0];
+    const file = document.getElementById('profile').files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
-    if (!allowedExtensions.exec(document.getElementById('avatar').value)) {
+    if (!allowedExtensions.exec(document.getElementById('profile').value)) {
       this.setState({ imageError: { extensionError: true } });
     }
 
@@ -288,7 +288,7 @@ export default class Avatar extends React.Component {
         <AvatarContainer.FullScreenUploadButton onClick={() => { }} />
         {this.props.celebrity ? null
           :
-          <AvatarContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />
+          <AvatarContainer.FullScreenUploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
         }
       </AvatarContainer.FullScreenUploadWrapper>
     );
@@ -334,7 +334,7 @@ export default class Avatar extends React.Component {
               <AvatarContainer.UploadButton style={{ visibility: 'hidden' }} onClick={() => { }} />
               {this.props.celebrity ? null
                 :
-                <AvatarContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange()} type="file" />}
+                <AvatarContainer.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />}
 
             </AvatarContainer.UploadWrapper>
           }
