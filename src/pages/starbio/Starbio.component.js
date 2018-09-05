@@ -103,10 +103,11 @@ export default class Starbio extends React.Component {
       featuredImageHeight = this.featuredImage.clientWidth / this.imageRatios['featuredImage'];
     }
     if (this.secondImage) {
-      secondImageHeight = this.secondImage.clientWidth / this.imageRatios['secondImage'];
+      console.log(this.featuredImage.clientWidth)
+      secondImageHeight = this.featuredImage.clientWidth / (this.imageRatios['secondImage']*2);
     }
     if (this.firstImage) {
-      firstImageHeight = this.firstImage.clientWidth / this.imageRatios['firstImage'];
+      firstImageHeight = this.featuredImage.clientWidth / (this.imageRatios['firstImage']*2);
     }
     this.setState({
       imageHeights: {
@@ -181,6 +182,21 @@ export default class Starbio extends React.Component {
 
       .then(industryItem => this.setState({ industry: industryItem }))
 
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.settingsObj.selectedAccount !== this.state.settingsObj.selectedAccount ||
+      prevState.settingsObj.isCelebrity !== this.state.settingsObj.isCelebrity
+    ) {
+      this.setImageSize();
+      if (window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1) {
+        setTimeout(() => {
+          if (this.featuredImage) {
+            this.setImageSize();
+          }
+        }, 0);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -788,12 +804,12 @@ export default class Starbio extends React.Component {
 
   changeAccountType = (selectedType) => {
     this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } }, () => {
-      this.setImageSize();
+      // this.setImageSize();
     });
   }
   changeUserStatus = () => {
     this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } }, () => {
-      this.setImageSize();
+      // this.setImageSize();
     });
   }
   onVideoSubmit = () => {
@@ -1091,7 +1107,6 @@ export default class Starbio extends React.Component {
     if (!this.props.session.isLoggedIn) {
       return <Redirect to="/" />;
     }
-
     return (
       <LoginContainer.wrapper>
 
