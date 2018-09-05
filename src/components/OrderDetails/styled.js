@@ -551,4 +551,15 @@ OrderStyled.AudioIcon = styled.img`
   cursor: pointer;
 `;
 
+OrderStyled.Copy = styled.span`
+  width: 32px;
+  height: 32px;
+  display: block;
+  background-image: url('../../assets/images/content_copy_48px.svg');
+  background-repeat: no-repeat;
+  background-color: #4a000d;
+  background-position: center;
+  border-radius: 32px;
+`;
+
 export default OrderStyled;

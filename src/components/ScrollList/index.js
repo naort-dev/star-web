@@ -24,6 +24,7 @@ import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
 import EarningsList from '../EarningsList';
 import Loader from '../Loader';
+import copy from 'copy-to-clipboard';
 
 export default class ScrollList extends React.Component {
   constructor(props) {
@@ -254,6 +255,9 @@ export default class ScrollList extends React.Component {
               round
             />
           </EmailShareButton>
+        </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <ListStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} /> 
         </ListStyled.Somenetwork>
       </React.Fragment>
     );
