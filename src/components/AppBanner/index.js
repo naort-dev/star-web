@@ -16,7 +16,7 @@ const AppBanner = props => (
         if (/Android/i.test(navigator.userAgent)) {
           window.location = `http://play.google.com/store/apps/details?id=${env('androidAppId')}`;
         } else if (/iPad|iPhone|iPod/i.test(navigator.userAgent)) {
-          window.location = `https://itunes.apple.com/app/id${env('iosAppId')}`;
+          window.location = `itms-apps://itunes.apple.com/app/id${env('iosAppId')}`;
         }
       }, 1000);
     }}
