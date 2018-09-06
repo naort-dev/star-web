@@ -103,11 +103,10 @@ export default class Starbio extends React.Component {
       featuredImageHeight = this.featuredImage.clientWidth / this.imageRatios['featuredImage'];
     }
     if (this.secondImage) {
-      console.log(this.featuredImage.clientWidth)
-      secondImageHeight = this.featuredImage.clientWidth / (this.imageRatios['secondImage']*2);
+      secondImageHeight = this.featuredImage.clientWidth / (this.imageRatios['secondImage'] * 2);
     }
     if (this.firstImage) {
-      firstImageHeight = this.featuredImage.clientWidth / (this.imageRatios['firstImage']*2);
+      firstImageHeight = this.featuredImage.clientWidth / (this.imageRatios['firstImage'] * 2);
     }
     this.setState({
       imageHeights: {

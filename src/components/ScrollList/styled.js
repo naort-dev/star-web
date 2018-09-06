@@ -225,7 +225,7 @@ ListStyled.SocialMediaWrapper = styled.div`
     top: 0;
     display: ${props => (props.visible ? 'block' : 'none')};
     right: ${props => (props.visible ? '-52px' : '0')};
-    left: initial;
+    left: auto;
   }
 `;
 
