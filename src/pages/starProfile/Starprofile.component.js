@@ -218,11 +218,18 @@ export default class Starprofile extends React.Component {
         }
         <Helmet
           title={fullName}
-          meta={setMetaTags(
+          meta={[...setMetaTags(
             fullName,
             profilePhoto,
             `Get your personalized video from ${fullName}`,
-          )}
+          ),
+          { property: 'al:ios:app_store_id', content: env('iosAppId') },
+          { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:ios:app_name', content: 'Starsona' },
+          { property: 'al:android:package', content: env('androidAppId') },
+          { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:android:app_name', content: 'Starsona' },
+          ]}
 			  />
         {this.state.showPopup ?
           <Popup
