@@ -1,13 +1,10 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import * as qs from 'query-string';
 import moment from 'moment';
 import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
 import './personal';
-import Popup from '../../components/Popup';
 import RequestTemplates from '../../components/RequestTemplates';
-import AudioRecorder from '../../components/AudioRecorder';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
 import Loader from '../../components/Loader';
 import { Confirm } from '../confirmBooking';

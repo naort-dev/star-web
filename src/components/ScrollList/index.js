@@ -24,6 +24,7 @@ import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
 import EarningsList from '../EarningsList';
 import Loader from '../Loader';
+import copy from 'copy-to-clipboard';
 
 export default class ScrollList extends React.Component {
   constructor(props) {
@@ -255,6 +256,9 @@ export default class ScrollList extends React.Component {
             />
           </EmailShareButton>
         </ListStyled.Somenetwork>
+        <ListStyled.Somenetwork>
+          <ListStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} /> 
+        </ListStyled.Somenetwork>
       </React.Fragment>
     );
   }
@@ -389,7 +393,9 @@ export default class ScrollList extends React.Component {
             >
               {
                 this.props.banner &&
-                  <ListStyled.Banner>
+                  <ListStyled.Banner
+                    onClick={() => this.setState({ bannerVideo: true })}
+                  >
                     <ListStyled.BannerHeading>
                       Personalized Video Shout-Outs
                       <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
@@ -397,7 +403,6 @@ export default class ScrollList extends React.Component {
                     <ListStyled.BannerPlayButton
                       alt="banner-video"
                       src="assets/images/play-button.png"
-                      onClick={() => this.setState({ bannerVideo: true })}
                     />
                   </ListStyled.Banner>
               }

@@ -26,7 +26,6 @@ export default class Landing extends React.Component {
 
   onBackButtonEvent = (event) => event.preventDefault()
 
-
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':

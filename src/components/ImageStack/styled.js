@@ -22,6 +22,8 @@ ImageStackDiv.FeatureImage = styled.div`
     background-position: center center;
     background-size: cover;
     margin-bottom: 10px;
+    min-width: ${props => (props.width === '100%' ? '800px' : 'none')}
+    min-height: ${props => (props.height === '50%' ? '396px' : 'none')};
     max-width: 800px;
     max-height: 396px;
   }

@@ -62,6 +62,9 @@ PopupStyled.SmallContent = styled.div`
 PopupStyled.SliderDotsWrapper = styled.div`
   position: absolute;
   top: 11px;
+  left: 0;
+  right: 0;
+  text-align: center;
 `;
 
 PopupStyled.SliderDots = styled.span`

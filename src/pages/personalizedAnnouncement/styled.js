@@ -595,8 +595,12 @@ Request.Select = styled.select`
   margin: 0;
   outline: none;
   display: inline-block;
+  &::-ms-expand {
+    display: none;
+  }
   -webkit-appearance: none;
   -moz-appearance: none;
+  -ms-appearance: none;
   appearance: none;
   cursor: pointer;
   width: 100%;
