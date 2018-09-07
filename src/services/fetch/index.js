@@ -12,8 +12,8 @@ const fetch = axios.create({
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
-    'device': 'ios',
-    'version': '4.1',
+    'device': env('device'),
+    'version': env('ApiVersion'),
   },
 });
 

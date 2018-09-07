@@ -228,21 +228,17 @@ LoginContainer.CloseButton = styled.input`
   background: url('assets/images/close-icon-white.svg') no-repeat;
 `;
 LoginContainer.ImageWrapper = styled.div`
-display:flex;
-align-items: center;
-justify-content: space-between;
-flex-wrap: wrap;
-
-@media(min-width: 768px){
+  display:flex;
+  align-items: center;
   justify-content: space-between;
-  position: relative;
-} 
-
-
+  flex-wrap: wrap;
+  @media(min-width: 768px){
+    justify-content: space-between;
+    position: relative;
+  } 
   @media(min-width: 1025px){
     display:flex;
     align-items: flex-start;
-    justify-content: space-around;
     padding: 0px 0px;
     position: relative;
     flex-wrap: wrap;
@@ -262,7 +258,7 @@ LoginContainer.FeaturedImage = styled.div`
 }
 
 @media(min-width: 1025px){
- width: 98%;
+ width: 100%;
  height: 50%;
  background-color: #cccccc;
  display: flex;
@@ -288,12 +284,13 @@ background-color: #cccccc;
 }
 
 @media(min-width: 1025px){
- width: 48%;
+ width: calc(50% - 5px);
  height: 50%;
  display: flex;
  justify-content: center;
  align-items: center;
  margin:  0 0;
+ margin-right: 5px;
 }
 `;
 
@@ -311,13 +308,14 @@ margin: 10px 0px;
 }
 
 @media(min-width: 1025px){
- width: 48%;
+ width: calc(50% - 5px);
  height: 50%;
  background-color: #cccccc;
  display: flex;
  justify-content: center;
  align-items: center;
  margin: 0 0;
+ margin-left: 5px;
 }
 `;
 

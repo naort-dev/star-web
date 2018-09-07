@@ -34,6 +34,7 @@ const ListStyled = styled.section`
 `;
 
 ListStyled.Banner = styled.div`
+  cursor: pointer;
   background: url('assets/images/banner-background.jpg') no-repeat;
   background-size: cover;
   background-position: center center;
@@ -89,7 +90,6 @@ ListStyled.BannerSubHeading = styled.span`
 
 ListStyled.BannerPlayButton = styled.img`
   display: inline-block;
-  cursor: pointer;
   width: 33px;
   height: 32px;
   @media(min-width: 768px) {
@@ -225,7 +225,7 @@ ListStyled.SocialMediaWrapper = styled.div`
     top: 0;
     display: ${props => (props.visible ? 'block' : 'none')};
     right: ${props => (props.visible ? '-52px' : '0')};
-    left: initial;
+    left: auto;
   }
 `;
 
