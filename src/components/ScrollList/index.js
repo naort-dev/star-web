@@ -389,7 +389,9 @@ export default class ScrollList extends React.Component {
             >
               {
                 this.props.banner &&
-                  <ListStyled.Banner>
+                  <ListStyled.Banner
+                    onClick={() => this.setState({ bannerVideo: true })}
+                  >
                     <ListStyled.BannerHeading>
                       Personalized Video Shout-Outs
                       <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
@@ -397,7 +399,6 @@ export default class ScrollList extends React.Component {
                     <ListStyled.BannerPlayButton
                       alt="banner-video"
                       src="assets/images/play-button.png"
-                      onClick={() => this.setState({ bannerVideo: true })}
                     />
                   </ListStyled.Banner>
               }
