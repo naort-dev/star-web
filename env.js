@@ -16,5 +16,7 @@
   stripe_api_version: '2017-08-15',
   GOOGLE_TAG_MANAGER_ID: 'GTM-NHBZLQ9',
   };
-  window.env = key => config[key] || undefined;
+  window.env = function(key) {
+    return config[key] || undefined;
+  }
   }(this || {}));
