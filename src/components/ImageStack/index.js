@@ -52,6 +52,8 @@ export class ImageStack extends React.Component {
       <ImageStackDiv innerRef={(node) => { this.imageStack = node; }}>
         <ImageStackDiv.FeatureImage
           style={{ width: this.state.featureImage.width, height: this.state.featureImage.height }}
+          width={this.state.featureImage.width}
+          height={this.state.featureImage.height}
           imageUrl={props.featureImage}
         />
         <ImageStackDiv.ExtraImagesLayout>

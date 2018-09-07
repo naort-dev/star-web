@@ -4,7 +4,6 @@ import { Link, Redirect } from 'react-router-dom';
 import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { parse } from 'query-string';
 import EXIF from 'exif-js';
 import { LoginContainer, FooterSection, SectionHeader } from './styled';
 import { fetch } from '../../services/fetch';
@@ -57,7 +56,7 @@ export default class Starbio extends React.Component {
           email: false
         },
         starDetails: null,
-        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
+        selectedAccount: this.getSelectedTab(),
         isCelebrity: false,
         pageView: 'starBio',
       },
@@ -104,10 +103,10 @@ export default class Starbio extends React.Component {
       featuredImageHeight = this.featuredImage.clientWidth / this.imageRatios['featuredImage'];
     }
     if (this.secondImage) {
-      secondImageHeight = this.secondImage.clientWidth / this.imageRatios['secondImage'];
+      secondImageHeight = this.featuredImage.clientWidth / (this.imageRatios['secondImage'] * 2);
     }
     if (this.firstImage) {
-      firstImageHeight = this.firstImage.clientWidth / this.imageRatios['firstImage'];
+      firstImageHeight = this.featuredImage.clientWidth / (this.imageRatios['firstImage'] * 2);
     }
     this.setState({
       imageHeights: {
@@ -130,7 +129,7 @@ export default class Starbio extends React.Component {
       const settingsObj = {
         userDetails,
         starDetails,
-        selectedAccount: parse(this.props.location.search).star ? 'starAccount' : 'myAccount',
+        selectedAccount: this.getSelectedTab(),
         isCelebrity: this.props.userDetails.settings_userDetails.celebrity,
         pageView: 'starBio',
       };
@@ -163,12 +162,6 @@ export default class Starbio extends React.Component {
     this.props.onClearStreams();
   }
 
-  componentDidUpdate(prevProps) {
-    // if (prevProps.profileUploadStatus === false && this.props.profileUploadStatus === true) {
-    //   this.props.fetchUserDetails(this.props.session.auth_token.id);
-    // }
-  }
-
   componentDidMount() {
     this.setImageSize();
     window.addEventListener('resize', this.setImageSize)
@@ -190,13 +183,39 @@ export default class Starbio extends React.Component {
 
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.settingsObj.selectedAccount !== this.state.settingsObj.selectedAccount ||
+      prevState.settingsObj.isCelebrity !== this.state.settingsObj.isCelebrity
+    ) {
+      this.setImageSize();
+      if (window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1) {
+        setTimeout(() => {
+          if (this.featuredImage) {
+            this.setImageSize();
+          }
+        }, 0);
+      }
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
   }
 
+  getSelectedTab = () => {
+    if (this.props.location.search) {
+      const queryParams = this.props.location.search.split('?')[1];
+      const starParam = queryParams.split('=')[0];
+      if (starParam === 'star' && queryParams.split('=')[1]) {
+        return 'starAccount';
+      }
+    }
+    return 'myAccount';
+  }
 
-  async onFileChange(type = "featuredImage") {
-    this.setState({ imageError: false })
+
+  onFileChange(type = "featuredImage") {
+    this.setState({ imageError: false }, async () => {
     const file = document.getElementById(type).files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById(type).value)) {
@@ -213,13 +232,19 @@ export default class Starbio extends React.Component {
         }
       }
     }
+
+    })
+    
   }
 
   convertBeforeCrop = (imageURL) => {
     const image = new Image();
     image.onload = function () {
-      const width = this.originalWidth;
-      const height = this.originalHeight;
+      let imageRatio = this.originalWidth/this.originalHeight;
+      const height = this.originalHeight > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : this.originalHeight;
+      const width = height*imageRatio;
+      // const width = this.originalWidth;
+      // const height = this.originalHeight;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;
@@ -268,13 +293,14 @@ export default class Starbio extends React.Component {
           ctx.translate(0, width);
           ctx.rotate(-90 * Math.PI / 180);
           break;
+        
       }
       ctx.drawImage(
         image,
         0,
         0,
-        this.originalWidth,
-        this.originalHeight,
+        width,
+        height,
       );
       const base64Image = canvas.toDataURL('image/jpeg');
       this.setState({ cropImage: base64Image })
@@ -290,7 +316,7 @@ export default class Starbio extends React.Component {
     const exif = await this.getExif(file, type)
     this.currentExif = exif;
     reader.onload = async function (e) {
-      this.convertBeforeCrop(e.target.result)
+      this.convertBeforeCrop(e.target.result);
       this.setState({
         cropMode: true, currentImageType: type, [`${type}File`]: file, loaders: { ...this.state.loaders, [`${type}`]: true },
         extensions: { ...this.state.extensions, [`${extensionType}`]: file.type.split('/')[1] }
@@ -696,14 +722,17 @@ export default class Starbio extends React.Component {
         scrollTarget={document.getElementById(this.state.currentImageType)}
         closePopUp={() => this.setState({ cropMode: false })}
       >
-        <LoginContainer.CropperWrapper>
-          <Cropper
-            src={this.state.cropImage}
-            crop={this.state.cropValues}
-            keepSelection
-            onImageLoaded={this.setCropImage}
-            onChange={this.onCropChange}
-          />
+        <LoginContainer.CropperWrapper innerRef={(node) => {this.cropperWrapper = node}}>
+          {
+            this.state.cropImage &&
+              <Cropper
+                src={this.state.cropImage}
+                crop={this.state.cropValues}
+                keepSelection
+                onImageLoaded={this.setCropImage}
+                onChange={this.onCropChange}
+              />
+          }
           <LoginContainer.CropperButton onClick={this.handleCrop}>Crop</LoginContainer.CropperButton>
         </LoginContainer.CropperWrapper>
       </Popup>
@@ -774,12 +803,12 @@ export default class Starbio extends React.Component {
 
   changeAccountType = (selectedType) => {
     this.setState({ settingsObj: { ...this.state.settingsObj, selectedAccount: selectedType } }, () => {
-      this.setImageSize();
+      // this.setImageSize();
     });
   }
   changeUserStatus = () => {
     this.setState({ settingsObj: { ...this.state.settingsObj, isCelebrity: true } }, () => {
-      this.setImageSize();
+      // this.setImageSize();
     });
   }
   onVideoSubmit = () => {
@@ -910,7 +939,12 @@ export default class Starbio extends React.Component {
                 <React.Fragment>
                   <LoginContainer.UploadWrapper >
                     <LoginContainer.UploadButton onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="featuredImage" onChange={() => this.onFileChange("featuredImage")} type="file" />
+                    <LoginContainer.UploadInput
+                      accept=".png, .jpeg, .jpg"
+                      id="featuredImage"
+                      onChange={() => this.onFileChange("featuredImage")}
+                      type="file"
+                    />
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Featured Banner </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText> At least 800x376 or larger   </LoginContainer.CaptionText>
@@ -931,7 +965,12 @@ export default class Starbio extends React.Component {
                 <React.Fragment>
                   <LoginContainer.UploadWrapper>
                     <LoginContainer.UploadButton onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="firstImage" onChange={() => this.onFileChange("firstImage")} type="file" />
+                    <LoginContainer.UploadInput
+                      accept=".png, .jpeg, .jpg"
+                      id="firstImage"
+                      onChange={() => this.onFileChange("firstImage")}
+                      type="file"
+                    />
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText> Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400 </LoginContainer.CaptionText>
@@ -953,7 +992,12 @@ export default class Starbio extends React.Component {
                 <React.Fragment>
                   <LoginContainer.UploadWrapper>
                     <LoginContainer.UploadButton onClick={() => { }} />
-                    <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="secondImage" onChange={() => this.onFileChange("secondImage")} type="file" />
+                    <LoginContainer.UploadInput
+                      accept=".png, .jpeg, .jpg"
+                      id="secondImage"
+                      onChange={() => this.onFileChange("secondImage")}
+                      type="file"
+                    />
                   </LoginContainer.UploadWrapper>
                   <LoginContainer.FeaturedText>Secondary Image </LoginContainer.FeaturedText>
                   <LoginContainer.CaptionText>At least 400x400  </LoginContainer.CaptionText>
@@ -965,11 +1009,11 @@ export default class Starbio extends React.Component {
         </LoginContainer.SecondImage>
 
         <LoginContainer.AvatarContainer>
-          <LoginContainer.Avatar imageType="avatar" image={this.state.avatar}>
+          <LoginContainer.Avatar image={this.state.avatar}>
             {this.state.avatar != null ?
               this.FullscreenUploader("avatar") :
-              <LoginContainer.UploadWrapper type="avatar">
-                <LoginContainer.UploadButton style={{ visibility: "hidden" }} onClick={() => { }} />
+              <LoginContainer.UploadWrapper>
+                {/* <LoginContainer.UploadButton onClick={() => { }} /> */}
                 <LoginContainer.UploadInput accept=".png, .jpeg, .jpg" id="avatar" onChange={() => this.onFileChange("avatar")} type="file" />
               </LoginContainer.UploadWrapper>
             }
@@ -1062,7 +1106,6 @@ export default class Starbio extends React.Component {
     if (!this.props.session.isLoggedIn) {
       return <Redirect to="/" />;
     }
-
     return (
       <LoginContainer.wrapper>
 

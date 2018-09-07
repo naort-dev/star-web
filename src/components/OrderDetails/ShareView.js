@@ -11,6 +11,7 @@ import {
   GooglePlusIcon,
   EmailIcon,
 } from 'react-share';
+import copy from 'copy-to-clipboard';
 import OrderStyled from './styled';
 
 const ShareView = ({ title, shareUrl }) => (
@@ -71,6 +72,9 @@ const ShareView = ({ title, shareUrl }) => (
           round
         />
       </EmailShareButton>
+    </OrderStyled.Somenetwork>
+    <OrderStyled.Somenetwork>
+      <OrderStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} /> 
     </OrderStyled.Somenetwork>
   </OrderStyled.SocialMediaWrapper>
 );

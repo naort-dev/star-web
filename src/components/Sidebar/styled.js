@@ -163,7 +163,7 @@ SidebarStyled.ApplyButton = styled.button`
     display: none;
   }
   @media(min-width: 768px) {
-    bottom: unset;
+    bottom: auto;
     top: 75px;
     right: 40px;
     width: 100px;

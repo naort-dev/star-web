@@ -34,6 +34,7 @@ const ListStyled = styled.section`
 `;
 
 ListStyled.Banner = styled.div`
+  cursor: pointer;
   background: url('assets/images/banner-background.jpg') no-repeat;
   background-size: cover;
   background-position: center center;
@@ -89,7 +90,6 @@ ListStyled.BannerSubHeading = styled.span`
 
 ListStyled.BannerPlayButton = styled.img`
   display: inline-block;
-  cursor: pointer;
   width: 33px;
   height: 32px;
   @media(min-width: 768px) {
@@ -123,7 +123,6 @@ ListStyled.listWrapper = styled.ul`
     justify-content: flex-start;
   }
   @media(min-width: 1025px) {
-    width: auto;
     margin-right: 15px;
   }
 `;
@@ -185,6 +184,10 @@ ListStyled.listVideos = ListStyled.listItem.extend`
       margin-right: ${props => (props.starsPage ? 'calc(15% / 2)' : 0)};
     }
   }
+  @media ((min-device-width: 1025px) and (-ms-high-contrast: none) and (-ms-high-contrast: active)) {
+    width: ${props => (props.starsPage ? 'calc(85% / 3)' : 'calc(80% / 4)')};
+  } 
+  
 `;
 
 ListStyled.VideoContentWrapper = styled.div`
@@ -222,7 +225,7 @@ ListStyled.SocialMediaWrapper = styled.div`
     top: 0;
     display: ${props => (props.visible ? 'block' : 'none')};
     right: ${props => (props.visible ? '-52px' : '0')};
-    left: initial;
+    left: auto;
   }
 `;
 
@@ -330,6 +333,17 @@ ListStyled.RightSliderArrow = ListStyled.SliderArrows.extend`
   border-left: 6px solid;
   transform: rotate(-135deg);
   right: 15px;
+`;
+
+ListStyled.Copy = styled.span`
+  width: 32px;
+  height: 32px;
+  display: block;
+  background-image: url('../../assets/images/content_copy_48px.svg');
+  background-repeat: no-repeat;
+  background-color: #4a000d;
+  background-position: center;
+  border-radius: 32px;
 `;
 
 

@@ -282,8 +282,8 @@ VideoRecorderDiv.UploadInput = styled.input`
     top: 0;
     opacity: 0;
     cursor: pointer;
-    width:160px;
-    height:28px;
+    width: 100%;
+    height: 100%;
     margin-top: 10px;
 
   `;
@@ -305,6 +305,7 @@ VideoRecorderDiv.InfoText = styled.div`
     font-family: 'Ubuntu-Regular';
     padding: 0 10px;
     text-align: center;
+    width: 100%;
   `;
 
 VideoRecorderDiv.Wrapper = styled.div`
@@ -325,6 +326,8 @@ VideoRecorderDiv.UploadTextWrapper = styled.div`
   padding: 0 10px;
   margin-top: 14px;
   top:0px;
+  left: 0;
+  right: 0;
   position: absolute;
   align-items: center;
   justify-content: center;

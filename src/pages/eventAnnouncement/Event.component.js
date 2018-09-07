@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import moment from 'moment';
-import * as qs from 'query-string';
 import { Request, HeaderSection } from '../../pages/eventAnnouncement/styled';
 import { ImageStack } from '../../components/ImageStack';
 import './event';
