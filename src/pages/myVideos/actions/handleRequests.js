@@ -26,7 +26,7 @@ export const requestFetchFailed = error => ({
 
 export const changeRequestStatus = (requestId, requestStatus, comment) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
-  const { status, offset } = getState().myVideosList;
+  const { status, offset, role } = getState().myVideosList;
   dispatch(requestFetchStart());
   return fetch.post(Api.changeRequestStatus, {
     id: requestId,
@@ -39,7 +39,7 @@ export const changeRequestStatus = (requestId, requestStatus, comment) => (dispa
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(requestFetchEnd());
-      dispatch(fetchMyVideosList(offset, true, status));
+      dispatch(fetchMyVideosList(offset, true, role, status));
     } else {
       dispatch(requestFetchEnd());
     }
@@ -52,7 +52,7 @@ export const changeRequestStatus = (requestId, requestStatus, comment) => (dispa
 
 export const responseVideo = (requestId, fileName) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
-  const { status, offset } = getState().myVideosList;
+  const { status, offset, role } = getState().myVideosList;
   dispatch(requestFetchStart());
   return fetch.post(Api.starsonaVideo, {
     video: fileName,
@@ -65,7 +65,7 @@ export const responseVideo = (requestId, fileName) => (dispatch, getState) => {
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(requestFetchEnd());
-      dispatch(fetchMyVideosList(offset, true, status));
+      dispatch(fetchMyVideosList(offset, true, role, status));
     } else {
       dispatch(requestFetchEnd());
     }
