@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import copy from 'copy-to-clipboard';
+import ReferralStyled from './styled';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { toggleRefer } from '../../store/shared/actions/toggleModals';
 
@@ -11,22 +13,56 @@ class ReferStar extends React.Component {
     };
   }
 
+  renderReferralDetails = (props) => {
+    if (!props.userDetails.has_requested_referral) {
+      return <ReferralStyled.RequestReferral>Request your Referral Code</ReferralStyled.RequestReferral>
+    } else if (!props.userDetails.promo_code) {
+      return (
+        <ReferralStyled.ReferralStatus>
+          Your Request for a referral code has been submitted.
+            If you don't receive your code within 48 hours, please contact Starsona support.
+        </ReferralStyled.ReferralStatus>
+      );
+    }
+    return (
+      <ReferralStyled.ReferralDetailsWrapper>
+        <ReferralStyled.ReferralDetailsHeading>
+          Referral Code
+        </ReferralStyled.ReferralDetailsHeading>
+        <ReferralStyled.ReferralCode>
+          {props.userDetails.promo_code}
+        </ReferralStyled.ReferralCode>
+        <ReferralStyled.CopyReferral onClick={() => copy(props.userDetails.promo_code)}>
+          Copy
+        </ReferralStyled.CopyReferral>
+      </ReferralStyled.ReferralDetailsWrapper>
+    );
+  }
+
   render() {
+    const { props } = this;
     return (
       <RequestFlowPopup
         dotsCount={0}
         selectedDot={1}
-        closePopUp={() => this.props.toggleRefer(false)}
+        closePopUp={() => props.toggleRefer(false)}
         smallPopup
       >
-        <div>sadsad</div>
+        <ReferralStyled>
+          <ReferralStyled.Heading>
+              Refer a Star
+          </ReferralStyled.Heading>
+          {
+            this.renderReferralDetails(props)
+          }
+        </ReferralStyled>
       </RequestFlowPopup>
     );
   }
 }
 
 const mapStateToProps = state => ({
-
+  userDetails: state.userDetails.settings_userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({

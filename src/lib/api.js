@@ -36,6 +36,7 @@ class Api {
   static checkStripe = 'payments/stripe_dashboard/';
   static changePassword = 'user/changepassword/';
   static getEarningsList = 'payments/earnings_list/';
+  static requestReferral = 'user/referral_request/';
 }
 
 export default Api;

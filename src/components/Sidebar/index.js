@@ -135,13 +135,14 @@ class Sidebar extends React.Component {
             </SidebarStyled.Filter>
           </SidebarStyled.FilterWrapper>
         </section>
-        <Footer toggleRefer={this.props.toggleRefer}/>
+        <Footer toggleRefer={this.props.toggleRefer} isLoggedIn={this.props.isLoggedIn}/>
         <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
       </SidebarStyled>
     );
   }
 }
 const mapStateToProps = state => ({
+  isLoggedIn: state.session.isLoggedIn,
   starRole: state.userDetails.starRole,
 });
 
