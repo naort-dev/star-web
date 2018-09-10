@@ -336,6 +336,7 @@ export default class ScrollList extends React.Component {
         <ReferralList
           data={item}
           index={index}
+          key={index}
         />
       ));
     }
