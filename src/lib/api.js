@@ -37,6 +37,7 @@ class Api {
   static changePassword = 'user/changepassword/';
   static getEarningsList = 'payments/earnings_list/';
   static requestReferral = 'user/referral_request/';
+  static getReferralList = 'user/referral_list/';
 }
 
 export default Api;

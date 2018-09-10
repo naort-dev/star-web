@@ -56,7 +56,8 @@ ReferralStyled.ReferralCode = styled.span`
   font-size: 23px;
   display: block;
   color: #FF6C58;
-  margin: 17px 0;
+  margin-top: 10px;
+  margin-bottom: 17px;
   font-family: Ubuntu-Medium;
 `;
 
