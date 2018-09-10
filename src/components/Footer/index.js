@@ -1,10 +1,11 @@
 import React from 'react';
 import { FooterStyled } from './styled';
 
-export const Footer = () => (
+export const Footer = props => (
   <FooterStyled>
     <FooterStyled.Separator />
     <FooterStyled.list>
+      <FooterStyled.listItem onClick={() => props.toggleRefer(true)}>Refer a Star</FooterStyled.listItem>
       <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/contact/">
         <FooterStyled.listItem>Contact</FooterStyled.listItem>
       </FooterStyled.Anchor>
