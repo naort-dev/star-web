@@ -1,5 +1,6 @@
 import React from 'react';
 import { SignupContainer, HeaderSection, FooterSection } from './styled';
+import Api from '../../lib/api';
 import VideoRecorder from '../../components/WebRTCVideoRecorder';
 import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios'
@@ -31,7 +32,7 @@ export default class StarsignUpVideo extends React.Component {
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
       .then(response => {
         axios.post(response.url, response.formData)
-          .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+          .then(() => fetch.post(Api.celebrityProfile, {
             ...this.props.bioDetails, profile_video: response.filename, availability: true
           },
             {
