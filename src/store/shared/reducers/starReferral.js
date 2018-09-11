@@ -22,6 +22,7 @@ export default (state = { ...initialState }, action) => {
 
     case STAR_REFERRAL.success:
       return {
+        ...state,
         referralList: action.data.referral_list,
         count: action.data.count,
         offset: action.offset,

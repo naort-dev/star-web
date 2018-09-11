@@ -19,7 +19,7 @@ class ReferStar extends React.Component {
 
   componentWillMount() {
     this.props.fetchUserDetails(this.props.sessionDetails.id);
-    this.props.getReferralList();
+    this.props.getReferralList(0);
   }
 
   renderReferralDetails = (props) => {
@@ -99,7 +99,7 @@ const mapDispatchToProps = dispatch => ({
   toggleRefer: state => dispatch(toggleRefer(state)),
   requestReferral: id => dispatch(requestReferral(id)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
-  getReferralList: () => dispatch(getReferralList()),
+  getReferralList: offset => dispatch(getReferralList(offset)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReferStar);
