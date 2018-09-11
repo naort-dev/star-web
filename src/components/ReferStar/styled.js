@@ -65,4 +65,46 @@ ReferralStyled.CopyReferral = styled.span`
   cursor: pointer;
 `;
 
+ReferralStyled.Somenetwork = styled.div`
+  vertical-align: top;
+  display: inline-block;
+  margin-right: 30px;
+  margin-top: 10px;
+  text-align: center;
+  cursor: pointer;
+`;
+
+ReferralStyled.Copy = styled.span`
+  width: 32px;
+  height: 32px;
+  display: block;
+  background-image: url('../../assets/images/content_copy_48px.svg');
+  background-repeat: no-repeat;
+  background-color: #4a000d;
+  background-position: center;
+  border-radius: 32px;
+`;
+
+ReferralStyled.IconWrapper = styled.div`
+  margin: 20px;
+`;
+
+ReferralStyled.referButton = styled.button`
+  background-color: #FF6C58;
+  color: #FFF;
+  padding: 4px 30px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  height: 40px;
+  width: 80%;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  cursor: pointer;
+  border-radius: 19px;
+  border: 2px solid #FF6C58;
+`;
+
 export default ReferralStyled;

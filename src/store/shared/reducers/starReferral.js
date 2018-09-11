@@ -42,7 +42,11 @@ export default (state = { ...initialState }, action) => {
         ...state,
         loading: false,
       };
-
+    case STAR_REFERRAL.setReferralLink:
+      return {
+        ...state,
+        link: action.link,
+      };
     default:
       return state;
   }

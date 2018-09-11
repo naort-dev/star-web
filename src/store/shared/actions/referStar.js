@@ -1,9 +1,11 @@
+import axios from 'axios';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { fetchUserDetails } from './getUserDetails';
 
 export const STAR_REFERRAL = {
   requestReferral: 'starReferral/REQUEST_REFERRAL',
+  setReferralLink: 'starReferral/SET_REFERRAL_LINK',
   start: 'starReferral/REFERRAL_LIST',
   end: 'starReferral/REFERRAL_LIST_END',
   success: 'starReferral/REFERRAL_LIST_SUCCESS',
@@ -18,24 +20,46 @@ export const referralListFetchEnd = () => ({
   type: STAR_REFERRAL.end,
 });
 
-export const referralListFetchSuccess = (data, offset) => {
-  return (
-    {
-      type: STAR_REFERRAL.success,
-      data,
-      offset,
-    });
-};
+export const referralListFetchSuccess = (data, offset) => (
+  {
+    type: STAR_REFERRAL.success,
+    data,
+    offset,
+  });
 
 export const referralListFetchFailed = error => ({
   type: STAR_REFERRAL.failed,
   error,
 });
 
-export const requestReferral = id => (dispatch, getState) => {
-  return fetch.post(Api.requestReferral).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(fetchUserDetails(id));
+export const requestReferral = id => (dispatch, getState) => fetch.post(Api.requestReferral).then((resp) => {
+  if (resp.data && resp.data.success) {
+    dispatch(fetchUserDetails(id));
+  }
+});
+
+export const setReferralLink = link => ({
+  type: STAR_REFERRAL.setReferralLink,
+  link,
+});
+
+export const getReferalLink = data => (dispatch) => {
+  const dataAValues = {
+    branch_key: 'key_test_jns5cyvoqDZSrm9kudg6Aikpxzmkoeqs',
+    data: {
+      $deeplink_path: 'invite/?invite_code=JACKS637',
+      $desktop_url: 'https://stargramz.qburst.build/applinks/invite/JACKS637',
+      $ios_deeplink_path: 'invite/?invite_code=JACKS637',
+      $android_deeplink_path: 'invite/?invite_code=JACKS637',
+      nav_to: 'invite',
+      $canonical_identifier: 'invite/JACKS637',
+      $canonical_url: 'https://stargramz.qburst.build/applinks/invite/JACKS637',
+      invite_code: data.code,
+    },
+  };
+  return axios.post('https://api.branch.io/v1/url', dataAValues).then((resp) => {
+    if (resp.data && resp.data.url) {
+      dispatch(setReferralLink(resp.data.url));
     }
   });
 };
