@@ -32,6 +32,7 @@ import changePassword from '../store/shared/reducers/changePassword';
 import socialMediaData from '../store/shared/reducers/socialMediaState';
 import photoUpload from './shared/reducers/photoUpload';
 import modals from './shared/reducers/modals';
+import commentsList from '../store/shared/reducers/commentsList';
 
 const appReducer = combineReducers({
   session,
@@ -63,6 +64,7 @@ const appReducer = combineReducers({
   earningsList,
   socialMediaData,
   referralDetails,
+  commentsList,
   photoUpload,
   modals,
 });
