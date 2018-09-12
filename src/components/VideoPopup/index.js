@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -27,12 +26,27 @@ class VideoPopup extends React.Component {
     super(props);
     this.state = {
       sharePopup: false,
+      hasMore: true,
     };
   }
 
   componentWillMount() {
-    console.log(this.props.selectedVideo)
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id) {
+      this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
+    }
+  }
+
+  loadMoreComments = () => {
+    if (this.props.commentList.data.length >= this.props.commentList.count) {
+      this.setState({ hasMore: false })
+    } else {
+      const { offset, limit } = this.props.commentList;
+      this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset + limit);
+    }
   }
 
   renderSocialIcons = (selectedVideo) => {
@@ -135,7 +149,7 @@ class VideoPopup extends React.Component {
                   </VideoPopupStyled.VideoPlayerWrapper>
                   <VideoPopupStyled.VideoContent>
                     <VideoPopupStyled.VideoRequester>
-                      <Link to={`/${props.selectedVideo.user_id}`} >
+                      <VideoPopupStyled.StarLink to={`/${props.selectedVideo.user_id}`}>
                         <VideoPopupStyled.VideoRequestImage
                           imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
                         />
@@ -145,30 +159,76 @@ class VideoPopup extends React.Component {
                             {starProfessionsFormater(props.selectedVideo.professions)}
                           </VideoPopupStyled.VideoTitle>
                         </VideoPopupStyled.VideoRequestName>
-                      </Link>
+                      </VideoPopupStyled.StarLink>
                     </VideoPopupStyled.VideoRequester>
-                    <VideoPopupStyled.ShareButton
-                      onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
-                    />
+                    <VideoPopupStyled.PopupActions>
+                      <VideoPopupStyled.ShareButton
+                        onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
+                      />
+                      <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+                        {this.renderSocialIcons(props.selectedVideo)}
+                      </VideoPopupStyled.SocialMediaWrapper>
+                      <VideoPopupStyled.CommentBox
+                        placeholder="Enter your comment"
+                      />
+                    </VideoPopupStyled.PopupActions>
                     {
-                      this.state.sharePopup &&
-                        <VideoPopupStyled.SocialMediaWrapper>
-                          {this.renderSocialIcons(props.selectedVideo)}
-                        </VideoPopupStyled.SocialMediaWrapper>
+                      !this.props.commentList.loading || this.props.commentList.data.length ?
+                        <VideoPopupStyled.CommentsList>
+                          <VideoPopupStyled.commentListScrollbar
+                            renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
+                          >
+                            {/* <VideoPopupStyled.commentItem>
+                              <VideoPopupStyled.CommentBox
+                                placeholder="Enter your comment"
+                              />
+                            </VideoPopupStyled.commentItem> */}
+                            {
+                              this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                                <VideoPopupStyled.commentItem>
+                                  <VideoPopupStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
+                                    Load more comments
+                                  </VideoPopupStyled.loadMoreComments>
+                                </VideoPopupStyled.commentItem>
+                              : null
+                            }
+                            {
+                              this.props.commentList.data.length && this.props.commentList.loading ?
+                                <VideoPopupStyled.loaderWrapper>
+                                  <Loader />
+                                </VideoPopupStyled.loaderWrapper>
+                              : null
+                            }
+                            {
+                              props.commentList.data.map((item, index) => (
+                                <VideoPopupStyled.commentItem key={index}>
+                                  <VideoPopupStyled.commenterImage
+                                    imageUrl={item.user && item.user.image_url}
+                                  />
+                                  <VideoPopupStyled.commenterName>
+                                    {item.user && item.user.get_short_name}
+                                    <VideoPopupStyled.comment>
+                                      {item.comments}
+                                    </VideoPopupStyled.comment>
+                                    <VideoPopupStyled.commentDate>
+                                      {moment(item.created_date).format('MMM DD, YYYY')}
+                                    </VideoPopupStyled.commentDate>
+                                  </VideoPopupStyled.commenterName>
+                                </VideoPopupStyled.commentItem>
+                              ))
+                            }
+                            {
+                              !this.props.commentList.loading && !this.props.commentList.data.length ?
+                                <VideoPopupStyled.commentItem>No Comments yet</VideoPopupStyled.commentItem>
+                              : null
+                            }
+                          </VideoPopupStyled.commentListScrollbar>
+                        </VideoPopupStyled.CommentsList>
+                      :
+                        <VideoPopupStyled.loaderWrapper>
+                          <Loader />
+                        </VideoPopupStyled.loaderWrapper>
                     }
-                    <VideoPopupStyled.CommentsList>
-                      <Scrollbars
-                        renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
-                      >
-                        {
-                          props.commentList.data.map((item, index) => (
-                            <VideoPopupStyled.commentItem key={index}>
-                              {item.id}
-                            </VideoPopupStyled.commentItem>
-                          ))
-                        }
-                      </Scrollbars>
-                    </VideoPopupStyled.CommentsList>
                   </VideoPopupStyled.VideoContent>
                 </VideoPopupStyled.VideoPlayer>
               </React.Fragment>

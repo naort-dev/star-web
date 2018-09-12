@@ -38,7 +38,7 @@ export const fetchCommentsList = (videoId, offset, refresh) => (dispatch, getSta
   return fetch.get(`${Api.getCommentsList}/${videoId}/?limit=${limit}&offset=${offset}`).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(commentsListFetchEnd());
-      let list = getState().videosList.data;
+      let list = getState().commentsList.data;
       const { count } = resp.data.data;
       if (refresh) {
         list = resp.data.data.comment_list;

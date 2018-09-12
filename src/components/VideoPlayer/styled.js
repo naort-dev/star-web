@@ -10,10 +10,10 @@ VideoRenderDiv.answerVideo = styled.img`
   position: absolute;
   border: ${props => (props.fullScreen ? 'none' : '2px solid white')};
   right: ${props => (props.fullScreen ? '50%' : '10px')};
-  top: ${props => (props.fullScreen ? '50%' : '60px')};
+  top: ${props => (props.fullScreen ? '50%' : '7px')};
   height: ${props => (props.fullScreen ? '100%' : '100px')};
-  max-width: ${props => (props.fullScreen ? '100%' : '100px')};
-  max-height: ${props => (props.fullScreen ? '100%' : '100px')};
+  max-width: ${props => (props.fullScreen ? '100%' : '68px')};
+  max-height: ${props => (props.fullScreen ? '100%' : '62px')};
   transform: ${props => (props.fullScreen ? 'translate(50%, -50%)' : 'none')};
   object-fit: contain;
   z-index: 2;
@@ -21,6 +21,12 @@ VideoRenderDiv.answerVideo = styled.img`
   @media(min-width: 768px) {
     right: ${props => (props.fullScreen ? '50%' : '48px')};
     top: ${props => (props.fullScreen ? '50%' : '47px')};
+  }
+  @media(min-width: 1025px) {
+    max-width: ${props => (props.fullScreen ? '100%' : '100px')};
+    max-height: ${props => (props.fullScreen ? '100%' : '100px')};
+    right: ${props => (props.fullScreen ? '50%' : '27px')};
+    top: ${props => (props.fullScreen ? '50%' : '9px')};
   }
 `;
 export default VideoRenderDiv;

@@ -1,16 +1,21 @@
 import styled from 'styled-components';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { Link } from 'react-router-dom';
 
 const VideoPopupStyled = styled.div`
 
 `;
 VideoPopupStyled.VideoContentWrapper = styled.div`
   width: 100%;
-  position: relative;
   height: 100%;
   max-width: 100%;
   cursor: initial;
+  overflow-y: auto
   @media(min-width: 768px) {
     display: flex;
+  }
+  @media(min-width: 1025px) {
+    overflow: hidden;
   }
 `;
 
@@ -18,17 +23,29 @@ VideoPopupStyled.VideoPlayerWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 45%;
+  @media(min-width: 1025px) {
+    width: 50%;
+    display: inline-block;
+    height: 100%;
+  }
 `;
 
 VideoPopupStyled.VideoPlayer = styled.div`
   width: 100%;
   height: 100%;
-  position: relative;
 `;
 VideoPopupStyled.VideoContent = styled.section`
   padding: 10px 0;
   background-color: #fff;
-  height: 55%;
+  @media(min-width: 1025px) {
+    width: 50%;
+    display: inline-block;
+    height: 100%;
+    position: relative;
+    vertical-align: top;
+    padding: 10px 20px;
+    padding-top: 0;
+  }
 `;
 
 VideoPopupStyled.VideoTitle = styled.span`
@@ -37,18 +54,47 @@ VideoPopupStyled.VideoTitle = styled.span`
   font-family: 'Ubuntu-Regular';
 `;
 
+VideoPopupStyled.PopupActions = styled.div`
+  padding: 10px;
+  @media(min-width: 1025px) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 20px;
+  }
+`;
+
+VideoPopupStyled.CommentBox = styled.input`
+  display: block;
+  padding-left: 10px;;
+  width: 100%;
+  outline: none;
+  height: 50px;
+  font-family: 'Ubuntu-Light';
+  font-size: 14px;
+  border-radius: 5px;
+  margin-top: 6px;
+  background: transparent;
+`;
+
 VideoPopupStyled.ShareButton = styled.span`
   padding-top: 10px;
   display: inline-block;
   cursor: pointer;
   width: 30px;
   height: 30px;
-  background: url( 'assets/images/icons8-share-50.svg' ) no-repeat left;
+  background: url( 'assets/images/upload.svg' ) no-repeat left;
+`;
+
+VideoPopupStyled.StarLink = styled(Link)`
+  width: 100%;
 `;
 
 VideoPopupStyled.VideoRequester = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 `;
 VideoPopupStyled.VideoRequestImage = styled.span`
   border-radius: 50%;
@@ -68,8 +114,8 @@ VideoPopupStyled.VideoRequestImage = styled.span`
     height: 40px;
   }
   @media(min-width: 1025px) {
-    width: 35px;
-    height: 35px;
+    width: 60px;
+    height: 60px;
     margin-right: 11px;
   }
 `;
@@ -83,6 +129,7 @@ VideoPopupStyled.VideoRequestName = styled.span`
   @media(min-width: 1025px) {
     padding-top: 9px;
     font-size: 14px;
+    width: calc(100% - 71px);
   }
 `;
 VideoPopupStyled.SliderArrows = styled.span`
@@ -104,16 +151,18 @@ VideoPopupStyled.SliderArrows = styled.span`
 `;
 
 VideoPopupStyled.SocialMediaWrapper = styled.div`
+  position: absolute;
+  transition: 0.2s bottom ease-out;
   padding: 10px;
+  padding-top: 0;
+  background: rgb(248, 248, 248);
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: ${props => (props.visible ? '0' : '-100%')};
   @media(min-width: 768px) {
-    position: absolute;
-    background: transparent;
-    width: 50px;
-    bottom: 0;
-    top: 0;
+    position: static;
     display: ${props => (props.visible ? 'block' : 'none')};
-    right: ${props => (props.visible ? '-52px' : '0')};
-    left: auto;
   }
 `;
 
@@ -151,12 +200,84 @@ VideoPopupStyled.Copy = styled.span`
   border-radius: 32px;
 `;
 
+VideoPopupStyled.commentListScrollbar = styled(Scrollbars)`
+  .comments-list-scrollbar {
+    overflow: hidden !important;
+    position: static !important;
+    padding-bottom: 15px;
+    @media(min-width: 1025px) {
+      overflow: scroll !important;
+      position: absolute !important;
+    }
+  }
+`;
+
 VideoPopupStyled.CommentsList = styled.ul`
   width: 100%;
-  height: calc(100% - 50px);
+  height: calc(100% - 92px);
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  padding: 5px 0;
+  @media(min-width: 1025px) {
+    height: calc(100% - 160px);
+  }
 `;
 
 VideoPopupStyled.commentItem = styled.li`
   padding: 10px 0;
+  @media(min-width: 1025px) {
+    padding: 10px;
+  }
 `;
+
+VideoPopupStyled.commenterName = styled.span`
+  font-size: 14px;
+  font-family: 'Ubuntu-medium';
+  vertical-align: top;
+  display: inline-block;
+  padding-top: 3px;
+  width: calc(100% - 51px);
+`;
+
+VideoPopupStyled.comment = styled.span`
+  font-size: 13px;
+  padding-left: 10px;
+  font-family: 'Ubuntu-Regular';
+`;
+
+VideoPopupStyled.commentDate = styled.span`
+  display: block;
+  font-size: 11px;
+  font-family: 'Ubuntu-Light';
+`;
+
+VideoPopupStyled.loadMoreComments = styled.button`
+  background-color: #F8F8F8;
+  padding: 6px 0;
+  width: 155px;
+  margin: 0 auto;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  cursor: pointer;
+  border-radius: 24px;
+  border: 2px solid #F8F8F8;
+  -webkit-appearance: none;
+`;
+
+VideoPopupStyled.commenterImage = VideoPopupStyled.VideoRequestImage.extend`
+  @media(min-width: 1025px) {
+    width: 30px;
+    height: 30px;
+  }
+`;
+
+VideoPopupStyled.loaderWrapper = styled.div`
+  width: 100%;
+  height: 100px;
+`;
+
 export default VideoPopupStyled;
