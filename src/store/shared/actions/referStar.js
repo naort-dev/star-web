@@ -47,13 +47,13 @@ export const getReferalLink = data => (dispatch) => {
   const dataAValues = {
     branch_key: 'key_test_jns5cyvoqDZSrm9kudg6Aikpxzmkoeqs',
     data: {
-      $deeplink_path: 'invite/?invite_code=JACKS637',
-      $desktop_url: 'https://stargramz.qburst.build/applinks/invite/JACKS637',
-      $ios_deeplink_path: 'invite/?invite_code=JACKS637',
-      $android_deeplink_path: 'invite/?invite_code=JACKS637',
+      $deeplink_path: `invite/?invite_code=${data.code}`,
+      $desktop_url: `https://stargramz.qburst.build/applinks/invite/${data.code}`,
+      $ios_deeplink_path: `invite/?invite_code=${data.code}`,
+      $android_deeplink_path: `invite/?invite_code=${data.code}`,
       nav_to: 'invite',
-      $canonical_identifier: 'invite/JACKS637',
-      $canonical_url: 'https://stargramz.qburst.build/applinks/invite/JACKS637',
+      $canonical_identifier: `invite/${data.code}`,
+      $canonical_url: `https://stargramz.qburst.build/applinks/invite/${data.code}`,
       invite_code: data.code,
     },
   };

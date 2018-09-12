@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { SidebarStyled } from './styled';
 import { Footer } from '../Footer';
 import { updateCategory } from '../../pages/landing/actions/updateFilters';
-import { toggleRefer } from '../../store/shared/actions/toggleModals';
 
 class Sidebar extends React.Component {
   constructor(props) {
@@ -135,7 +134,7 @@ class Sidebar extends React.Component {
             </SidebarStyled.Filter>
           </SidebarStyled.FilterWrapper>
         </section>
-        <Footer toggleRefer={this.props.toggleRefer} isLoggedIn={this.props.isLoggedIn}/>
+        <Footer isLoggedIn={this.props.isLoggedIn}/>
         <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
       </SidebarStyled>
     );
@@ -148,7 +147,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value) => dispatch(updateCategory(label, value)),
-  toggleRefer: state => dispatch(toggleRefer(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

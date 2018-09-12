@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ReferralStyled = styled.div`
-
+  margin-top: 150px;
 `;
 
 ReferralStyled.Heading = styled.span`
@@ -105,6 +105,32 @@ ReferralStyled.referButton = styled.button`
   cursor: pointer;
   border-radius: 19px;
   border: 2px solid #FF6C58;
+`;
+
+ReferralStyled.Banner = styled.span`
+  width: 100%;
+  height: 200px;
+  display: block;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  top: 0;
+  left: 0;
+`;
+
+ReferralStyled.Broadcast = styled.span`
+  top: 70px;
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  display: block;
+  background-image: url('../../assets/images/broadcast@3x.png');
+  background-size: contain;
+`;
+
+ReferralStyled.SupportLink = styled.span`
+  color: blue;
+  cursor: pointer;
 `;
 
 export default ReferralStyled;
