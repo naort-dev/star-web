@@ -20,7 +20,8 @@ import VideoPlayer from '../VideoPlayer';
 import Loader from '../Loader';
 import RequestFlowPopup from '../RequestFlowPopup';
 import VideoPopupStyled from './styled';
-import { fetchCommentsList, resetCommentsList } from '../../store/shared/actions/getVideoComments'
+import { fetchCommentsList, resetCommentsList } from '../../store/shared/actions/getVideoComments';
+import { toggleLogin } from '../../store/shared/actions/toggleModals';
 
 class VideoPopup extends React.Component {
   constructor(props) {
@@ -48,8 +49,36 @@ class VideoPopup extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.commentList.count - prevProps.commentList.count === 1 && this.scrollBarRef) {
+      this.scrollBarRef.scrollToBottom();
+    }
+  }
+
   componentWillUnmount() {
     this.props.resetCommentsList();
+  }
+
+  findTime = (commentDate) => {
+    let timeString = '';
+    const currentDate = new Date();
+    const createdDate = new Date(commentDate);
+    const timeDiff = currentDate - createdDate;
+    const diffDays = Math.floor(timeDiff / 86400000); // days
+    const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
+    const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
+    if (diffDays >= 30) {
+      timeString = moment(commentDate).format('MMM DD, YYYY')
+    } else if (diffDays >= 1) {
+      timeString = diffDays === 1 ? `${diffDays} day ago` : `${diffDays} days ago`;
+    } else if (diffHrs >= 1) {
+      timeString = diffHrs === 1 ? `${diffHrs} hour ago` : `${diffHrs} hours ago`;
+    } else if (diffMins >= 1) {
+      timeString = diffMins === 1 ? `${diffMins} minute ago` : `${diffMins} minutes ago`;
+    } else {
+      timeString = 'just now';
+    }
+    return timeString;
   }
 
   loadMoreComments = () => {
@@ -62,13 +91,15 @@ class VideoPopup extends React.Component {
   }
 
   addVideoComment = (videoId, comment) => {
-    addVideoComment(videoId, comment)
-      .then(() => {
-        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
-        if (this.scrollBarRef) {
-          this.scrollBarRef.scrollToBottom();
-        }
-      });
+    if (this.props.isLoggedIn) {
+      addVideoComment(videoId, comment)
+        .then(() => {
+          this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+        });
+    } else {
+      this.props.closePopUp();
+      this.props.toggleLogin(true);
+    }
   }
 
   handleCommentAdd = (event) => {
@@ -76,7 +107,7 @@ class VideoPopup extends React.Component {
   }
 
   handleCommentEnter = (event) => {
-    if (event.keyCode === 13) {
+    if (event.keyCode === 13 && this.state.commentText !== '') {
       this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
       this.setState({ commentText: '' });
     }
@@ -193,14 +224,16 @@ class VideoPopup extends React.Component {
                           </VideoPopupStyled.VideoTitle>
                         </VideoPopupStyled.VideoRequestName>
                       </VideoPopupStyled.StarLink>
+                      <VideoPopupStyled.UserActions>
+                        <VideoPopupStyled.ShareButton
+                          onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
+                        />
+                        <VideoPopupStyled.ChatIcon
+                          onClick={() => this.commentInput && this.commentInput.focus()}
+                          chatCount={this.props.commentList.count}
+                        />
+                      </VideoPopupStyled.UserActions>
                     </VideoPopupStyled.VideoRequester>
-                    <VideoPopupStyled.ShareButton
-                      onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
-                    />
-                    <VideoPopupStyled.ChatIcon
-                      onClick={() => this.commentInput && this.commentInput.focus()}
-                      chatCount={this.props.commentList.count}
-                    />
                     <VideoPopupStyled.PopupActions>
                       <VideoPopupStyled.CommentBox
                         innerRef={(node) => { this.commentInput = node }}
@@ -250,7 +283,7 @@ class VideoPopup extends React.Component {
                                       {item.comments}
                                     </VideoPopupStyled.comment>
                                     <VideoPopupStyled.commentDate>
-                                      {moment(item.created_date).format('MMM DD, YYYY')}
+                                      {this.findTime(item.created_date)}
                                     </VideoPopupStyled.commentDate>
                                   </VideoPopupStyled.commenterName>
                                 </VideoPopupStyled.commentItem>
@@ -284,11 +317,13 @@ class VideoPopup extends React.Component {
 
 const mapStateToProps = state => ({
   commentList: state.commentsList,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchCommentsList: (videoId, offset, refresh) => dispatch((fetchCommentsList(videoId, offset, refresh))),
   resetCommentsList: () => dispatch(resetCommentsList()),
+  toggleLogin: state => dispatch(toggleLogin(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoPopup);

@@ -74,31 +74,43 @@ VideoPopupStyled.CommentBox = styled.input`
   font-family: 'Ubuntu-Light';
   font-size: 14px;
   border-radius: 5px;
+  border: 1px solid #A4A4A4;
   background: transparent;
   @media(min-width: 1025px) {
     margin-top: 6px;
   }
 `;
 
+VideoPopupStyled.UserActions = styled.span`
+  display: inline-block;
+  text-align: right;
+  padding-top: 11px;
+`;
+
 VideoPopupStyled.ShareButton = styled.span`
   display: inline-block;
   cursor: pointer;
   vertical-align: top;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   background: url( 'assets/images/upload.svg' ) no-repeat left;
+  background-size: contain;
 `;
 
 VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
   padding-top: 10px;
   background: url( 'assets/images/chat-icon.png') no-repeat left;
   background-size: contain;
+  position: relative;
   vertical-align: unset;
   margin-left: 10px;
   margin-top: 3px;
+  margin-right: 23px;
   &::after {
-    content: ${props => (props.chatCount ? `'${props.chatCount}'` : '')};
-    margin-top: 19px;
+    content: ${props => (props.chatCount ? `'${props.chatCount}'` : `'0'`)};
+    right: -20px;
+    top: 2px;
+    position: absolute;
     display: block;
     font-size: 12px;
     text-align: center;
@@ -107,7 +119,7 @@ VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
 `;
 
 VideoPopupStyled.StarLink = styled(Link)`
-  width: 100%;
+  width: calc(100% - 86px);
 `;
 
 VideoPopupStyled.VideoRequester = styled.div`
@@ -240,11 +252,11 @@ VideoPopupStyled.commentListScrollbar = styled(Scrollbars)`
 VideoPopupStyled.CommentsList = styled.ul`
   width: 100%;
   height: calc(100% - 92px);
-  border-top: 1px solid;
-  border-bottom: 1px solid;
+  border-top: 1px solid #A4A4A4;
+  border-bottom: 1px solid #A4A4A4;
   padding: 5px 0;
   @media(min-width: 1025px) {
-    height: calc(100% - 170px);
+    height: calc(100% - 113px);
     margin: 10px 0;
   }
 `;
@@ -262,7 +274,9 @@ VideoPopupStyled.commenterName = styled.span`
   font-family: 'Ubuntu-medium';
   vertical-align: top;
   display: inline-block;
-  padding-top: 3px;
+  background: #F8F8F8;
+  border-radius: 9px;
+  padding: 11px;
   width: calc(100% - 51px);
 `;
 
