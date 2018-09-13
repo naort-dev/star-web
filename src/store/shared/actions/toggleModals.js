@@ -1,6 +1,7 @@
 export const TOGGLE_MODALS = {
   toggleLogin: 'toggleLogin/TOGGLEMODAL',
   toggleSignup: 'toggleSignup/TOGGLEMODAL',
+  toggleRefer: 'toggleRefer/TOGGLEREFER',
   setRequestFlow: 'setRequestFlow/TOGGLEMODAL',
   toggleRequestFlow: 'toggleRequestFlow/TOGGLEMODAL',
   resetRequestFlow: 'resetRequestFlow/TOGGLEMODAL',
@@ -13,6 +14,11 @@ export const toggleLogin = state => ({
 
 export const toggleSignup = state => ({
   type: TOGGLE_MODALS.toggleSignup,
+  state,
+});
+
+export const toggleRefer = state => ({
+  type: TOGGLE_MODALS.toggleRefer,
   state,
 });
 

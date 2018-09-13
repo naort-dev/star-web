@@ -17,6 +17,7 @@ const ListStyled = styled.section`
   overflow: auto;
   padding-top: 20px;
   padding-bottom: 20px;
+  position: relative;
   @media(min-width: 768px) {
     padding: 0 44px;
     padding-right: 38px;
