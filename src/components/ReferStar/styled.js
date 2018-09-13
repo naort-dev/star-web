@@ -133,4 +133,12 @@ ReferralStyled.SupportLink = styled.span`
   cursor: pointer;
 `;
 
+ReferralStyled.ScrollView = styled.div`
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+`;
+
 export default ReferralStyled;
