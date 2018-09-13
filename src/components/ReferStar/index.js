@@ -38,7 +38,7 @@ class ReferStar extends React.Component {
     const data = {
       code: this.props.userDetails.promo_code,
     };
-    this.props.getReferalLink(data);
+    if (data.code) this.props.getReferalLink(data);
   }
 
   onClickSupport = () => {
