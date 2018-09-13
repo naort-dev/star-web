@@ -14,6 +14,7 @@ import {
   EmailIcon,
 } from 'react-share';
 import copy from 'copy-to-clipboard';
+import addVideoComment from '../../services/addVideoComment';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import VideoPlayer from '../VideoPlayer';
 import Loader from '../Loader';
@@ -27,6 +28,7 @@ class VideoPopup extends React.Component {
     this.state = {
       sharePopup: false,
       hasMore: true,
+      commentText: '',
     };
   }
 
@@ -37,6 +39,11 @@ class VideoPopup extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id) {
       this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
+      this.setState({
+        commentText: '',
+        sharePopup: false,
+        hasMore: true,
+      })
     }
   }
 
@@ -46,6 +53,27 @@ class VideoPopup extends React.Component {
     } else {
       const { offset, limit } = this.props.commentList;
       this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset + limit);
+    }
+  }
+
+  addVideoComment = (videoId, comment) => {
+    addVideoComment(videoId, comment)
+      .then(() => {
+        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+        if (this.scrollBarRef) {
+          this.scrollBarRef.scrollToBottom();
+        }
+      });
+  }
+
+  handleCommentAdd = (event) => {
+    this.setState({ commentText: event.target.value })
+  }
+
+  handleCommentEnter = (event) => {
+    if (event.keyCode === 13) {
+      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+      this.setState({ commentText: '' });
     }
   }
 
@@ -161,21 +189,25 @@ class VideoPopup extends React.Component {
                         </VideoPopupStyled.VideoRequestName>
                       </VideoPopupStyled.StarLink>
                     </VideoPopupStyled.VideoRequester>
+                    <VideoPopupStyled.ShareButton
+                      onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
+                    />
                     <VideoPopupStyled.PopupActions>
-                      <VideoPopupStyled.ShareButton
-                        onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
-                      />
                       <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
                         {this.renderSocialIcons(props.selectedVideo)}
                       </VideoPopupStyled.SocialMediaWrapper>
                       <VideoPopupStyled.CommentBox
                         placeholder="Enter your comment"
+                        value={this.state.commentText}
+                        onKeyUp={event => this.handleCommentEnter(event)}
+                        onInput={event => this.handleCommentAdd(event)}
                       />
                     </VideoPopupStyled.PopupActions>
                     {
                       !this.props.commentList.loading || this.props.commentList.data.length ?
                         <VideoPopupStyled.CommentsList>
                           <VideoPopupStyled.commentListScrollbar
+                            innerRef={(node) => { this.scrollBarRef = node }}
                             renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
                           >
                             {/* <VideoPopupStyled.commentItem>

@@ -70,7 +70,7 @@ VideoPopupStyled.CommentBox = styled.input`
   padding-left: 10px;;
   width: 100%;
   outline: none;
-  height: 50px;
+  height: 40px;
   font-family: 'Ubuntu-Light';
   font-size: 14px;
   border-radius: 5px;

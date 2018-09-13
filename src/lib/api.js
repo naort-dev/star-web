@@ -40,6 +40,7 @@ class Api {
   static requestReferral = 'user/referral_request/';
   static getReferralList = 'user/referral_list/';
   static getCommentsList = 'request/comments';
+  static addComment = 'request/comments/';
 }
 
 export default Api;
