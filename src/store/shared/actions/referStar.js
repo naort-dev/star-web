@@ -45,7 +45,7 @@ export const setReferralLink = link => ({
 
 export const getReferalLink = data => (dispatch) => {
   const dataAValues = {
-    branch_key: 'key_test_jns5cyvoqDZSrm9kudg6Aikpxzmkoeqs',
+    branch_key: env('BRANCH_KEY'),
     data: {
       $deeplink_path: `invite/?invite_code=${data.code}`,
       $desktop_url: `${window.location.origin}/applinks/invite/${data.code}`,
