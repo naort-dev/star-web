@@ -290,6 +290,7 @@ VideoPopupStyled.commentDate = styled.span`
   display: block;
   font-size: 11px;
   font-family: 'Ubuntu-Light';
+  padding-top: 2px;
 `;
 
 VideoPopupStyled.loadMoreComments = styled.button`

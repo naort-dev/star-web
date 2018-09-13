@@ -85,8 +85,8 @@ class VideoPopup extends React.Component {
     if (this.props.commentList.data.length >= this.props.commentList.count) {
       this.setState({ hasMore: false })
     } else {
-      const { offset, limit } = this.props.commentList;
-      this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset + limit);
+      const offset = this.props.commentList.data[0].id;
+      this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset);
     }
   }
 

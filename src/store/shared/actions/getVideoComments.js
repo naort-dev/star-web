@@ -38,19 +38,19 @@ export const resetCommentsList = () => ({
 });
 
 export const fetchCommentsList = (videoId, offset, refresh) => (dispatch, getState) => {
-  const { limit } = getState().commentsList;
+  const { limit, count } = getState().commentsList;
   dispatch(commentsListFetchStart(refresh));
-  return fetch.get(`${Api.getCommentsList}/${videoId}/?limit=${limit}&offset=${offset}`).then((resp) => {
+  return fetch.get(`${Api.getCommentsList}/${videoId}/?limit=${limit}&last_comment=${offset}`).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(commentsListFetchEnd());
       let list = getState().commentsList.data;
-      const { count } = resp.data.data;
+      const newCount = offset === 0 ? resp.data.data.count : count;
       if (refresh) {
         list = resp.data.data.comment_list;
       } else {
         list = [...resp.data.data.comment_list, ...list];
       }
-      dispatch(commentsListFetchSuccess(list, count, offset));
+      dispatch(commentsListFetchSuccess(list, newCount, offset));
     } else {
       dispatch(commentsListFetchEnd());
     }
