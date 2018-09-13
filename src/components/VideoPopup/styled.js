@@ -82,9 +82,20 @@ VideoPopupStyled.ShareButton = styled.span`
   padding-top: 10px;
   display: inline-block;
   cursor: pointer;
+  vertical-align: top;
   width: 30px;
   height: 30px;
   background: url( 'assets/images/upload.svg' ) no-repeat left;
+`;
+
+VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
+  background: url( 'assets/images/chat-icon.png') no-repeat left;
+  background-size: contain;
+  vertical-align: auto;
+  margin-left: 10px;
+  &::after {
+    content: 'asdasd';
+  }
 `;
 
 VideoPopupStyled.StarLink = styled(Link)`
@@ -161,8 +172,15 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
   right: 0;
   bottom: ${props => (props.visible ? '0' : '-100%')};
   @media(min-width: 768px) {
-    position: static;
+    position: absolute;
+    background: transparent;
+    width: 50px;
+    bottom: 0;
+    top: 0;
     display: ${props => (props.visible ? 'block' : 'none')};
+    right: ${props => (props.visible ? '-52px' : '0')};
+    left: auto;
+
   }
 `;
 

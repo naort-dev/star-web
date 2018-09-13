@@ -192,10 +192,10 @@ class VideoPopup extends React.Component {
                     <VideoPopupStyled.ShareButton
                       onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
                     />
+                    <VideoPopupStyled.ChatIcon>
+
+                    </VideoPopupStyled.ChatIcon>
                     <VideoPopupStyled.PopupActions>
-                      <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
-                        {this.renderSocialIcons(props.selectedVideo)}
-                      </VideoPopupStyled.SocialMediaWrapper>
                       <VideoPopupStyled.CommentBox
                         placeholder="Enter your comment"
                         value={this.state.commentText}
@@ -262,6 +262,9 @@ class VideoPopup extends React.Component {
                         </VideoPopupStyled.loaderWrapper>
                     }
                   </VideoPopupStyled.VideoContent>
+                  <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+                    {this.renderSocialIcons(props.selectedVideo)}
+                  </VideoPopupStyled.SocialMediaWrapper>
                 </VideoPopupStyled.VideoPlayer>
               </React.Fragment>
             : <Loader />
