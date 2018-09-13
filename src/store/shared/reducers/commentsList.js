@@ -39,6 +39,11 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case COMMENTS_LIST.reset:
+      return {
+        ...initalState,
+      };
+
     default:
       return state;
   }

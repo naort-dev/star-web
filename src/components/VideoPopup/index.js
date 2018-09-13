@@ -20,7 +20,7 @@ import VideoPlayer from '../VideoPlayer';
 import Loader from '../Loader';
 import RequestFlowPopup from '../RequestFlowPopup';
 import VideoPopupStyled from './styled';
-import { fetchCommentsList } from '../../store/shared/actions/getVideoComments'
+import { fetchCommentsList, resetCommentsList } from '../../store/shared/actions/getVideoComments'
 
 class VideoPopup extends React.Component {
   constructor(props) {
@@ -38,6 +38,7 @@ class VideoPopup extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id) {
+      this.props.resetCommentsList();
       this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
       this.setState({
         commentText: '',
@@ -45,6 +46,10 @@ class VideoPopup extends React.Component {
         hasMore: true,
       })
     }
+  }
+
+  componentWillUnmount() {
+    this.props.resetCommentsList();
   }
 
   loadMoreComments = () => {
@@ -192,11 +197,13 @@ class VideoPopup extends React.Component {
                     <VideoPopupStyled.ShareButton
                       onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
                     />
-                    <VideoPopupStyled.ChatIcon>
-
-                    </VideoPopupStyled.ChatIcon>
+                    <VideoPopupStyled.ChatIcon
+                      onClick={() => this.commentInput && this.commentInput.focus()}
+                      chatCount={this.props.commentList.count}
+                    />
                     <VideoPopupStyled.PopupActions>
                       <VideoPopupStyled.CommentBox
+                        innerRef={(node) => { this.commentInput = node }}
                         placeholder="Enter your comment"
                         value={this.state.commentText}
                         onKeyUp={event => this.handleCommentEnter(event)}
@@ -281,6 +288,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCommentsList: (videoId, offset, refresh) => dispatch((fetchCommentsList(videoId, offset, refresh))),
+  resetCommentsList: () => dispatch(resetCommentsList()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoPopup);

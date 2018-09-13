@@ -6,6 +6,7 @@ export const COMMENTS_LIST = {
   end: 'fetch_end/comments_list',
   success: 'fetch_success/comments_list',
   failed: 'fetch_failed/comments_list',
+  reset: 'reset/comments_list',
 };
 
 export const commentsListFetchStart = refresh => ({
@@ -30,6 +31,10 @@ export const commentsListFetchSuccess = (commentsList, count, offset) => {
 export const commentsListtFetchFailed = error => ({
   type: COMMENTS_LIST.failed,
   error,
+});
+
+export const resetCommentsList = () => ({
+  type: COMMENTS_LIST.reset,
 });
 
 export const fetchCommentsList = (videoId, offset, refresh) => (dispatch, getState) => {

@@ -55,13 +55,13 @@ VideoPopupStyled.VideoTitle = styled.span`
 `;
 
 VideoPopupStyled.PopupActions = styled.div`
-  padding: 10px;
+  padding: 10px 0;
   @media(min-width: 1025px) {
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
-    padding: 10px 20px;
+    padding: 0px 20px;
   }
 `;
 
@@ -74,12 +74,13 @@ VideoPopupStyled.CommentBox = styled.input`
   font-family: 'Ubuntu-Light';
   font-size: 14px;
   border-radius: 5px;
-  margin-top: 6px;
   background: transparent;
+  @media(min-width: 1025px) {
+    margin-top: 6px;
+  }
 `;
 
 VideoPopupStyled.ShareButton = styled.span`
-  padding-top: 10px;
   display: inline-block;
   cursor: pointer;
   vertical-align: top;
@@ -89,12 +90,19 @@ VideoPopupStyled.ShareButton = styled.span`
 `;
 
 VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
+  padding-top: 10px;
   background: url( 'assets/images/chat-icon.png') no-repeat left;
   background-size: contain;
-  vertical-align: auto;
+  vertical-align: unset;
   margin-left: 10px;
+  margin-top: 3px;
   &::after {
-    content: 'asdasd';
+    content: ${props => (props.chatCount ? `'${props.chatCount}'` : '')};
+    margin-top: 19px;
+    display: block;
+    font-size: 12px;
+    text-align: center;
+    font-family: Ubuntu-Light;
   }
 `;
 
@@ -222,7 +230,6 @@ VideoPopupStyled.commentListScrollbar = styled(Scrollbars)`
   .comments-list-scrollbar {
     overflow: hidden !important;
     position: static !important;
-    padding-bottom: 15px;
     @media(min-width: 1025px) {
       overflow: scroll !important;
       position: absolute !important;
@@ -237,7 +244,8 @@ VideoPopupStyled.CommentsList = styled.ul`
   border-bottom: 1px solid;
   padding: 5px 0;
   @media(min-width: 1025px) {
-    height: calc(100% - 160px);
+    height: calc(100% - 170px);
+    margin: 10px 0;
   }
 `;
 
@@ -245,6 +253,7 @@ VideoPopupStyled.commentItem = styled.li`
   padding: 10px 0;
   @media(min-width: 1025px) {
     padding: 10px;
+    padding-left: 4px;
   }
 `;
 
