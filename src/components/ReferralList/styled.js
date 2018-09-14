@@ -29,6 +29,7 @@ ReferralListItem.referralDetails = styled.p`
   color:rgba(34, 34, 34, 0.7);
   font-family: 'Ubuntu-Light';
   line-height: 18px;
+  margin-top: 3px;
   @media(min-width: 768px) {
     font-size: 14px;
   }

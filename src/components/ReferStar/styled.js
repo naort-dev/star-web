@@ -21,14 +21,22 @@ ReferralStyled.RequestReferral = styled.button`
   text-align: center;
   -webkit-text-decoration: none;
   text-decoration: none;
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
   font-size: 14px;
+  max-width: 300px;
   font-family: 'Ubuntu-Bold';
   outline: none;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 19px;
   border: 2px solid #FF6C58;
   -webkit-appearance: none;
+`;
+
+ReferralStyled.Link = styled.a`
+  color: #FF6C58;
+  font-family: 'Ubuntu-Regular';
+  font-family: 14px;
 `;
 
 ReferralStyled.ReferralStatus = styled.span`
@@ -44,6 +52,7 @@ ReferralStyled.ReferralDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 40px;
 `;
 
 ReferralStyled.ReferralDetailsHeading = styled.span`
@@ -86,12 +95,13 @@ ReferralStyled.Copy = styled.span`
 `;
 
 ReferralStyled.IconWrapper = styled.div`
-  margin: 20px;
+  margin: 0 20px 15px;
 `;
 
 ReferralStyled.referButton = styled.button`
   background-color: #FF6C58;
   color: #FFF;
+  margin: 10px 0;
   padding: 4px 30px;
   text-align: center;
   -webkit-text-decoration: none;
