@@ -6,6 +6,7 @@ const initialState = {
   count: 0,
   offset: -1,
   limit: 15,
+  link: null,
   error: {
     has: false,
     message: '',

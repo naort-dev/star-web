@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -29,8 +30,9 @@ class ReferStar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      copyStatus: null,
     };
+    this.copyInterval = null;
   }
 
   componentWillMount() {
@@ -42,9 +44,50 @@ class ReferStar extends React.Component {
     if (data.code) this.props.getReferalLink(data);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.userDetails.promo_code !== nextProps.userDetails.promo_code && nextProps.userDetails.promo_code) {
+      const data = {
+        code: nextProps.userDetails.promo_code,
+      };
+      if (data.code) this.props.getReferalLink(data);
+    }
+  }
+
   onClickSupport = () => {
     // this.props.toggleRefer(false);
     this.setState({ openSupport: true });
+  }
+
+  copy = (data, type) => {
+    copy(data);
+    this.setState({ copyStatus: type }, () => {
+      clearInterval(this.copyInterval);
+      this.copyInterval = setTimeout(() => {
+        this.setState({
+          copyStatus: null,
+        });
+      }, 1000);
+    });
+  }
+
+  renderReferralList = () => {
+    if (this.props.referralListLoading) {
+      return <Loader />;
+    } else if (this.props.referralDetails.referralList.length) {
+      return (
+        <ScrollList
+          dataList={this.props.referralDetails.referralList}
+          scrollTarget="referral-wrapper"
+          referralList
+          limit={this.props.referralDetails.limit}
+          totalCount={this.props.referralDetails.count}
+          offset={this.props.referralDetails.offset}
+          loading={this.props.referralDetails.loading}
+          fetchData={(offset, refresh) => this.props.referralDetails(offset, refresh)}
+        />
+      );
+    }
+    return null;
   }
 
   renderSocialIcons = shareUrl => (
@@ -104,7 +147,7 @@ class ReferStar extends React.Component {
         </EmailShareButton>
       </ReferralStyled.Somenetwork>
       <ReferralStyled.Somenetwork>
-        <ReferralStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} />
+        <ReferralStyled.Copy title="Copy to Clipboard" onClick={() => this.copy(shareUrl, 'link')} />
       </ReferralStyled.Somenetwork>
     </React.Fragment>
   )
@@ -136,25 +179,20 @@ class ReferStar extends React.Component {
           <ReferralStyled.ReferralCode>
             {props.userDetails.promo_code}
           </ReferralStyled.ReferralCode>
-          {this.props.referralDetails.link && <ReferralStyled.referButton onClick={() => this.setState({ share: !this.state.share })}>Invite a star</ReferralStyled.referButton>}
-          <ReferralStyled.IconWrapper>{ this.state.share && this.renderSocialIcons(this.props.referralDetails.link)}</ReferralStyled.IconWrapper>
-          <ReferralStyled.CopyReferral onClick={() => copy(props.userDetails.promo_code)}>
-            Copy
+          <ReferralStyled.CopyReferral onClick={() => this.copy(props.userDetails.promo_code, 'promo')}>
+            {this.state.copyStatus === 'promo' ? 'Copied' : 'Copy'}
           </ReferralStyled.CopyReferral>
+          {this.props.referralDetails.link && <ReferralStyled.referButton onClick={() => this.setState({ share: !this.state.share })}>Invite a star</ReferralStyled.referButton>}
           {
-            !props.referralListLoading ?
-              <ScrollList
-                dataList={props.referralDetails.referralList}
-                scrollTarget="referral-wrapper"
-                referralList
-                limit={this.props.referralDetails.limit}
-                totalCount={this.props.referralDetails.count}
-                offset={this.props.referralDetails.offset}
-                loading={this.props.referralDetails.loading}
-                fetchData={(offset, refresh) => this.props.referralDetails(offset, refresh)}
-              />
-            : <Loader />
+            this.state.share &&
+              <ReferralStyled.IconWrapper>{ this.renderSocialIcons(this.props.referralDetails.link)}</ReferralStyled.IconWrapper>
           }
+          {
+            this.renderReferralList()
+          }
+          <ReferralStyled.Link href="https://about.starsona.com/referral-program/" target="_blank" rel="noopener noreferrer">
+            Terms and conditions
+          </ReferralStyled.Link>
         </ReferralStyled.ReferralDetailsWrapper>
       );
     } else if (!props.userDetails.has_requested_referral) {
@@ -162,7 +200,7 @@ class ReferStar extends React.Component {
     }
     return (
       <ReferralStyled.ReferralStatus>
-        Your Request for a referral code has been submitted.
+        Your request for a referral code has been submitted.
           If you don't receive your code within 48 hours, please contact
         <ReferralStyled.SupportLink onClick={this.onClickSupport}> Starsona support.</ReferralStyled.SupportLink>
       </ReferralStyled.ReferralStatus>
