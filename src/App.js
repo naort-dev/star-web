@@ -25,6 +25,7 @@ import { Starprofile } from './pages/starProfile';
 import { StarsignUpVideo } from './pages/starSignUpVideo';
 import { Requestvideo } from './pages/requestvideo';
 import LoginFlow from './components/loginFlow';
+import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
 import { InstaLogin } from './pages/instalogin';
@@ -114,6 +115,11 @@ class App extends React.Component {
           {
             this.props.requestFlow ?
               <Requestvideo />
+            : null
+          }
+          {
+            this.props.referModal ?
+              <ReferStar />
             : null
           }
           <Helmet
@@ -219,6 +225,7 @@ const mapState = state => ({
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
   requestFlow: state.modals.requestFlow,
+  referModal: state.modals.referModal,
 });
 
 const mapProps = dispatch => ({

@@ -3,6 +3,7 @@ import { TOGGLE_MODALS } from '../actions/toggleModals';
 const initialState = {
   loginModal: false,
   signUpModal: false,
+  referModal: false,
   requestFlow: false,
   requestFlowDetails: null,
 };
@@ -21,6 +22,14 @@ export default (state = { ...initialState }, action) => {
         ...state,
         signUpModal: action.state,
         loginModal: false,
+      };
+
+    case TOGGLE_MODALS.toggleRefer:
+      return {
+        ...state,
+        referModal: action.state,
+        loginModal: false,
+        signUpModal: false,
       };
 
     case TOGGLE_MODALS.toggleRequestFlow:

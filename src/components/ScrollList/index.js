@@ -23,6 +23,7 @@ import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Popup from '../Popup';
 import RequestDetails from '../RequestDetails';
 import EarningsList from '../EarningsList';
+import ReferralList from '../ReferralList';
 import Loader from '../Loader';
 import copy from 'copy-to-clipboard';
 
@@ -192,6 +193,23 @@ export default class ScrollList extends React.Component {
     this.setState({ videoActive: true, selectedVideoIndex: index });
   }
 
+  findRequestVideoThumbnail = (requestVideo) => {
+    let completedVideo;
+    let questionVideo;
+    requestVideo.forEach((video) => {
+      if (video.video_status === 1) {
+        completedVideo = video;
+      } else if (video.video_status === 4) {
+        questionVideo = video;
+      }
+    })
+    if (completedVideo) {
+      return completedVideo.s3_thumbnail_url;
+    } else if (questionVideo) {
+      return questionVideo.s3_thumbnail_url;
+    }
+    return null;
+  }
 
   renderSocialIcons = (selectedVideo) => {
     const defaultUrl = selectedVideo.video_url;
@@ -263,24 +281,6 @@ export default class ScrollList extends React.Component {
     );
   }
 
-  findRequestVideoThumbnail = (requestVideo) => {
-    let completedVideo;
-    let questionVideo;
-    requestVideo.forEach((video) => {
-      if (video.video_status === 1) {
-        completedVideo = video;
-      } else if (video.video_status === 4) {
-        questionVideo = video;
-      }
-    })
-    if (completedVideo) {
-      return completedVideo.s3_thumbnail_url;
-    } else if (questionVideo) {
-      return questionVideo.s3_thumbnail_url;
-    }
-    return null;
-  }
-
   renderList() {
     if (this.props.videos) {
       return this.props.dataList.map((item, index) => (
@@ -330,7 +330,14 @@ export default class ScrollList extends React.Component {
           index={index}
           key={item.created_date}
         />
-
+      ));
+    } else if (this.props.referralList) {
+      return this.props.dataList.map((item, index) => (
+        <ReferralList
+          data={item}
+          index={index}
+          key={index}
+        />
       ));
     }
     return this.props.dataList.map((item, index) => {

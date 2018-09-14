@@ -83,11 +83,12 @@ PopupStyled.CloseButton = styled.span`
   position: absolute;
   top: ${props => (props.smallPopup ? '10px' : '16px')};
   right: ${props => (props.smallPopup ? '7px' : '18px')};
+  z-index: 2;
   display: inline-block;
   width: 17px;
   height: 17px;
   cursor:pointer;
-  background: url('assets/images/close-icon-orange.svg') no-repeat;
+  background: ${props => (props.closeIconColor === 'white' ? "url('assets/images/icon-close-white.svg') no-repeat" : "url('assets/images/close-icon-orange.svg') no-repeat")};
   background-size: cover;
   background-position: center center;
 `;
