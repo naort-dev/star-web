@@ -44,12 +44,10 @@ PaymentStyled.StarDetailsWrapper = styled.div`
 PaymentStyled.StarNameWrapper = styled.div`
   font-family: 'Ubuntu-Bold';
   line-height: 22px;
-  display: flex;
-  align-items: center;
 `;
 
 PaymentStyled.StarPhoto = styled.span`
-  width: 104px;
+  width: 78px;
   height: 78px;
   display: inline-block;
   border-radius: 50%;
