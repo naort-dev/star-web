@@ -3,6 +3,7 @@
   const config = {
   API_URL: 'https://app.staging.starsona.com/api/v1/',
   SERVER_URL: 'https://app.staging.starsona.com/',
+  BRANCH_KEY: 'key_test_jns5cyvoqDZSrm9kudg6Aikpxzmkoeqs',
   STRIPE_PUBLISH_KEY: 'pk_test_RBSzULFNLChp2ACqsYRkMJPV',
   fbId: '1638565172829009',
   device: 'web',
