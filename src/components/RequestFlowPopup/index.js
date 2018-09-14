@@ -56,6 +56,7 @@ export default class RequestFlowPopup extends React.Component {
           <PopupStyled.CloseButton
             smallPopup={this.props.smallPopup}
             onClick={() => this.props.closePopUp()}
+            closeIconColor={this.props.closeIconColor}
           />
           <PopupStyled.SmallContent>
             {this.props.children}

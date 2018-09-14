@@ -23,6 +23,7 @@ import videoUploader from '../store/shared/reducers/videoUploader';
 import requestHandler from '../pages/myVideos/reducers/requestHandler';
 import imageViewer from '../store/shared/reducers/imageViewer';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
+import referralDetails from '../store/shared/reducers/starReferral';
 import popupData from './shared/reducers/popupData';
 import userDetails from '../store/shared/reducers/userDetails';
 import saveSettings from '../store/shared/reducers/saveSettings';
@@ -61,6 +62,7 @@ const appReducer = combineReducers({
   changePassword,
   earningsList,
   socialMediaData,
+  referralDetails,
   photoUpload,
   modals,
 });

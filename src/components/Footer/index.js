@@ -1,7 +1,7 @@
 import React from 'react';
 import { FooterStyled } from './styled';
 
-export const Footer = () => (
+export const Footer = props => (
   <FooterStyled>
     <FooterStyled.Separator />
     <FooterStyled.list>
