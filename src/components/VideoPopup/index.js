@@ -71,7 +71,7 @@ class VideoPopup extends React.Component {
     const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
     const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
     if (diffDays >= 30) {
-      timeString = moment(commentDate).format('MMM DD, YYYY')
+      timeString = moment(commentDate).format('MMM DD, YYYY');
     } else if (diffDays >= 1) {
       timeString = diffDays === 1 ? `${diffDays} day ago` : `${diffDays} days ago`;
     } else if (diffHrs >= 1) {
