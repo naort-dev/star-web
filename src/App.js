@@ -142,6 +142,7 @@ class App extends React.Component {
                 <Route path="/privacy-policy" component={() => window.location = 'https://about.starsona.com/privacy-policy'}/>
                 <Route path="/terms-service" component={() => window.location = 'https://about.starsona.com/terms-service'}/>
                 <Route path="/contact" component={() => window.location = 'https://about.starsona.com/contact'}/>
+                <Route path="/faq" component={() => window.location = 'https://about.starsona.com/faq'}/>
                 {/* <Route path="/login" component={Login} />
                 <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
