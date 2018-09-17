@@ -35,7 +35,7 @@ VideoPopupStyled.VideoPlayer = styled.div`
   height: 100%;
 `;
 VideoPopupStyled.VideoContent = styled.section`
-  padding: 10px 0;
+  padding-top: 10px;
   background-color: #fff;
   @media(min-width: 1025px) {
     width: 50%;
@@ -65,20 +65,40 @@ VideoPopupStyled.PopupActions = styled.div`
   }
 `;
 
-VideoPopupStyled.CommentBox = styled.input`
-  display: block;
-  padding-left: 10px;;
+VideoPopupStyled.CommentBoxWrapper = styled.div`
   width: 100%;
-  outline: none;
-  height: 40px;
-  font-family: 'Ubuntu-Light';
-  font-size: 14px;
+  position: relative;
   border-radius: 5px;
   border: 1px solid #A4A4A4;
-  background: transparent;
+  padding-right: 35px;
+  padding-left: 10px;
+  height: 40px;
   @media(min-width: 1025px) {
     margin-top: 6px;
   }
+`;
+
+VideoPopupStyled.CommentSendIcon = styled.span`
+  display: block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: absolute;
+  right: 7px;
+  top: 9px;
+  background: url(assets/images/send-icon.png) no-repeat;
+  background-size: contain;
+`;
+
+VideoPopupStyled.CommentBox = styled.input`
+  display: block;
+  width: 100%;
+  outline: none;
+  border: none;
+  height: 100%;
+  font-family: 'Ubuntu-Light';
+  font-size: 14px;
+  background: transparent;
 `;
 
 VideoPopupStyled.UserActions = styled.span`

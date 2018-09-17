@@ -52,6 +52,9 @@ class VideoPopup extends React.Component {
   componentDidUpdate(prevProps) {
     if (this.props.commentList.count - prevProps.commentList.count === 1 && this.scrollBarRef) {
       this.scrollBarRef.scrollToBottom();
+      if (this.commentInput) {
+        this.commentInput.focus();
+      }
     }
   }
 
@@ -102,14 +105,24 @@ class VideoPopup extends React.Component {
     }
   }
 
+  selectCommentField = () => {
+    if (this.commentInput) {
+      this.commentInput.focus();
+    }
+  }
+
   handleCommentAdd = (event) => {
     this.setState({ commentText: event.target.value })
   }
 
+  commentAdder = () => {
+    this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+    this.setState({ commentText: '' });
+  }
+
   handleCommentEnter = (event) => {
     if (event.keyCode === 13 && this.state.commentText !== '') {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
-      this.setState({ commentText: '' });
+      this.commentAdder();
     }
   }
 
@@ -229,20 +242,11 @@ class VideoPopup extends React.Component {
                           onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
                         />
                         <VideoPopupStyled.ChatIcon
-                          onClick={() => this.commentInput && this.commentInput.focus()}
+                          onClick={() => this.selectCommentField()}
                           chatCount={this.props.commentList.count}
                         />
                       </VideoPopupStyled.UserActions>
                     </VideoPopupStyled.VideoRequester>
-                    <VideoPopupStyled.PopupActions>
-                      <VideoPopupStyled.CommentBox
-                        innerRef={(node) => { this.commentInput = node }}
-                        placeholder="Enter your comment"
-                        value={this.state.commentText}
-                        onKeyUp={event => this.handleCommentEnter(event)}
-                        onInput={event => this.handleCommentAdd(event)}
-                      />
-                    </VideoPopupStyled.PopupActions>
                     {
                       !this.props.commentList.loading || this.props.commentList.data.length ?
                         <VideoPopupStyled.CommentsList>
@@ -301,6 +305,20 @@ class VideoPopup extends React.Component {
                           <Loader />
                         </VideoPopupStyled.loaderWrapper>
                     }
+                    <VideoPopupStyled.PopupActions>
+                      <VideoPopupStyled.CommentBoxWrapper>
+                        <VideoPopupStyled.CommentSendIcon
+                          onClick={() => this.commentAdder()}
+                        />
+                        <VideoPopupStyled.CommentBox
+                          innerRef={(node) => { this.commentInput = node }}
+                          placeholder="Enter your comment"
+                          value={this.state.commentText}
+                          onKeyUp={event => this.handleCommentEnter(event)}
+                          onInput={event => this.handleCommentAdd(event)}
+                        />
+                      </VideoPopupStyled.CommentBoxWrapper>
+                    </VideoPopupStyled.PopupActions>
                   </VideoPopupStyled.VideoContent>
                   <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
                     {this.renderSocialIcons(props.selectedVideo)}
