@@ -116,12 +116,14 @@ class VideoPopup extends React.Component {
   }
 
   commentAdder = () => {
-    this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
-    this.setState({ commentText: '' });
+    if (this.state.commentText !== '') {
+      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+      this.setState({ commentText: '' });
+    }
   }
 
   handleCommentEnter = (event) => {
-    if (event.keyCode === 13 && this.state.commentText !== '') {
+    if (event.keyCode === 13) {
       this.commentAdder();
     }
   }
