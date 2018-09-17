@@ -1088,7 +1088,10 @@ export default class Starbio extends React.Component {
       settingsUpdating = settingsCheck.photoUpdating && settingsCheck.notificationsUpdating && settingsCheck.userDetailsUpdating;
     }
     if (isSettings) {
-      if (this.props.userDetails.settings_userDetails.first_name && this.props.userDetails.settings_userDetails.last_name) {
+      if (this.props.userDetails.settings_userDetails.nick_name ||
+          this.props.userDetails.settings_userDetails.first_name ||
+          this.props.userDetails.settings_userDetails.last_name
+      ) {
         fullName = this.props.userDetails.settings_userDetails.nick_name ? this.props.userDetails.settings_userDetails.nick_name
           : `${this.props.userDetails.settings_userDetails.first_name} ${this.props.userDetails.settings_userDetails.last_name}`;
       }
