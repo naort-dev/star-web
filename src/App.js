@@ -73,7 +73,9 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
     }
-    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
+    if ((this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) &&
+      (!nextProps.isLoggedIn || Object.keys(nextProps.userDetails).length)
+    ) {
       this.setState({ showLoading: false });
     }
   }
@@ -216,6 +218,7 @@ App.propTypes = {
 
 const mapState = state => ({
   professionsList: state.professionsList,
+  userDetails: state.userDetails.settings_userDetails,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
