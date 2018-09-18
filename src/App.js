@@ -52,7 +52,7 @@ class App extends React.Component {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
       this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
-    if (!this.props.professionsList.professions.length || !Object.keys(this.props.userDetails).length) {
+    if (!this.props.professionsList.professions.length) {
       this.setState({ showLoading: true });
     }
   }
@@ -73,9 +73,7 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
     }
-    if ((this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) &&
-      Object.keys(nextProps.userDetails).length
-    ) {
+    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
       this.setState({ showLoading: false });
     }
   }
