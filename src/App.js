@@ -98,7 +98,6 @@ class App extends React.Component {
   render() {
     const { showLoading } = this.state;
     const showRoutes = !showLoading;
-
     return (
       <div>
         <div id="content-wrapper">
@@ -213,7 +212,6 @@ App.propTypes = {
 
 const mapState = state => ({
   professionsList: state.professionsList,
-  userDetails: state.userDetails.settings_userDetails,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
