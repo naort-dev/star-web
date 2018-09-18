@@ -52,7 +52,7 @@ class App extends React.Component {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
       this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
-    if (!this.props.professionsList.professions.length) {
+    if (!this.props.professionsList.professions.length || !Object.keys(this.props.userDetails).length) {
       this.setState({ showLoading: true });
     }
   }
@@ -73,7 +73,9 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
     }
-    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
+    if ((this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) &&
+      Object.keys(nextProps.userDetails).length
+    ) {
       this.setState({ showLoading: false });
     }
   }
@@ -147,7 +149,6 @@ class App extends React.Component {
                 <Route path="/forgotpassword" component={Login} /> */}
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/myStar/:videoId?" component={Starprofile} />
-                {/* <Route path="/:id/request" component={Requestvideo} /> */}
                 <Route path="/instalogin" component={InstaLogin} />
 
                 {/* logged in areas */}
@@ -193,14 +194,6 @@ class App extends React.Component {
                     roles: allUserRolesExcept([userRoles.BOT]),
                   })}
                 />
-                <Route
-                  exact
-                  path="/account-settings"
-                  component={protectRoute({
-                    RouteComponent: AccountSettings,
-                    roles: [userRoles.BOT, userRoles.KYC],
-                  })}
-                />
                 */}
 
                 {/* fallbacks, keep it last */}
@@ -222,6 +215,7 @@ App.propTypes = {
 
 const mapState = state => ({
   professionsList: state.professionsList,
+  userDetails: state.userDetails.settings_userDetails,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
