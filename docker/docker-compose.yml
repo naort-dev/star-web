@@ -17,6 +17,7 @@ services:
     - API_URL
     - SERVER_URL
     - STRIPE_PUBLISH_KEY
+    - BRANCH_IO_KEY
     - DOMAIN_NAME=$SSL_SERVER_NAME
     - HTPASSWD=starsona:$$apr1$$i8bVNw8I$$yl2tggOZBh8.oBeVQ26b50
     - PRERENDER_TOKEN

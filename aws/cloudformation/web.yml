@@ -39,6 +39,9 @@ Parameters:
     Type: String
     Description: Stripe publish key
 
+  BranchIOKey:
+    Type: String
+
   ImageRepository:
     Type: String
     Default: 376169159073.dkr.ecr.us-east-1.amazonaws.com/
@@ -124,6 +127,7 @@ Resources:
           - { Name: HTPASSWD, Value: !Ref 'HTPasswd' }
           - { Name: PRERENDER_TOKEN, Value: !Ref 'PrerenderToken' }
           - { Name: GOOGLE_TAG_MANAGER_ID, Value: !Ref 'GoogleTagManagerId' }
+          - { Name: BRANCH_IO_KEY, Value: !Ref 'BranchIOKey' }
 
   WebService:
     Type: AWS::ECS::Service
