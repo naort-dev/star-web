@@ -48,7 +48,8 @@ export const getReferalLink = data => (dispatch) => {
     branch_key: env('BRANCH_KEY'),
     data: {
       $deeplink_path: `invite/?invite_code=${data.code}`,
-      $desktop_url: `${window.location.origin}/applinks/invite/${data.code}`,
+      $desktop_url: `${window.location.origin}`,
+      // $desktop_url: `${window.location.origin}/applinks/invite/${data.code}`,
       $ios_deeplink_path: `invite/?invite_code=${data.code}`,
       $android_deeplink_path: `invite/?invite_code=${data.code}`,
       nav_to: 'invite',
