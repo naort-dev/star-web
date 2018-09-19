@@ -23,7 +23,6 @@ export default class Starprofile extends React.Component {
       tabList: [],
       showPopup: null,
       showAppBanner: true,
-      defaultTabSelect: false,
     };
   }
 
@@ -51,12 +50,6 @@ export default class Starprofile extends React.Component {
         this.props.toggleRequestFlow(true);
       }
       this.props.fetchCelebDetails(this.getUserId(nextProps));
-    }
-    if (document.body.getBoundingClientRect().width < 1025 && !nextProps.videosList.data.length && !nextProps.videosList.loading && this.state.defaultTabSelect === false) {
-      this.setState({
-        selectedTab: 'About',
-        defaultTabSelect: true,
-      });
     }
   }
   componentWillUnmount() {
