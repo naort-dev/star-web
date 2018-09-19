@@ -79,7 +79,6 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
-      dispatch(celebVideosListFetchEnd());
       let list = getState().videosList.data;
       const { count } = resp.data.data;
       if (refresh) {
@@ -88,6 +87,7 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
         list = [...list, ...resp.data.data.featured_videos];
       }
       dispatch(celebVideosListFetchSuccess(list, offset, count));
+      dispatch(celebVideosListFetchEnd());
     } else {
       dispatch(celebVideosListFetchEnd());
     }
