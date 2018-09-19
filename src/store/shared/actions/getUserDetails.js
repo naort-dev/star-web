@@ -7,6 +7,7 @@ export const USER_DETAILS = {
   end: 'fetch_end/user_details',
   success: 'fetch_success/user_details',
   failed: 'fetch_failed/user_details',
+  updateStarRole: 'update_role/user_details',
   reset: 'reset/user_details',
 };
 
@@ -33,6 +34,11 @@ export const userDetailsFetchFailed = error => ({
 
 export const resetUserDetails = () => ({
   type: USER_DETAILS.reset,
+});
+
+export const updateStarRole = role => ({
+  type: USER_DETAILS.updateStarRole,
+  role,
 });
 
 export const fetchUserDetails = id => (dispatch, getState) => {

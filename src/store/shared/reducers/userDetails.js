@@ -38,6 +38,12 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case USER_DETAILS.updateStarRole:
+      return {
+        ...state,
+        starRole: action.role,
+      };
+
     case USER_DETAILS.reset:
       return {
         ...state,
