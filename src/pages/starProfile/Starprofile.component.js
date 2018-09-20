@@ -53,7 +53,7 @@ export default class Starprofile extends React.Component {
       }
       this.props.fetchCelebDetails(this.getUserId(nextProps));
     }
-    if (document.body.getBoundingClientRect().width < 1025 && !nextProps.videosList.data.length && !nextProps.videosList.loading && this.state.defaultTabSelect === false) {
+    if (this.state.selectedTab === 'All' && document.body.getBoundingClientRect().width < 1025 && !nextProps.videosList.data.length && !nextProps.videosList.loading && this.state.defaultTabSelect === false) {
       this.setState({
         selectedTab: 'About',
         defaultTabSelect: true,
