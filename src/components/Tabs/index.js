@@ -8,6 +8,24 @@ export default class Tabs extends React.Component {
     this.state = {
     };
   }
+
+  componentWillReceiveProps = (props) => {
+    if (props.selected) { 
+      this.adjustPosition(this[props.selected]);
+    }
+  }
+
+  adjustPosition = (e) => {
+    const extraSpace = this.tabList.getBoundingClientRect().x;
+    const targetRect = e.getBoundingClientRect();
+    const tabsWidth = this.tabList.getBoundingClientRect().width;
+    if (targetRect.x < extraSpace) {
+      this.tabList.scrollLeft= this.tabList.scrollLeft + targetRect.x - extraSpace;
+    } else if (targetRect.x + targetRect.width > tabsWidth) {
+      this.tabList.scrollLeft= this.tabList.scrollLeft - tabsWidth + targetRect.x + targetRect.width;
+    }
+  }
+
   render() {
     return (
       <TabStyled filterSelected={this.props.filterSelected}>
@@ -40,13 +58,14 @@ export default class Tabs extends React.Component {
         }
         {
           !this.props.disableTabs ?
-            <TabStyled.tabList disableFilter={this.props.disableFilter}>
+            <TabStyled.tabList disableFilter={this.props.disableFilter} innerRef={node => this.tabList = node}>
               {
                 this.props.labels.map((item, index) => (
                   <TabStyled.tabListItem
                     starsPage={this.props.starsPage}
                     disableFilter={this.props.disableFilter}
                     key={index}
+                    innerRef={node => this[item] = node}
                     onClick={() => this.props.switchTab(item)}
                     selected={this.props.selected === item}
                   >
