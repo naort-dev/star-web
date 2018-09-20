@@ -31,7 +31,7 @@ import { Starbio } from './pages/starbio';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
-import { fetchUserDetails } from './store/shared/actions/getUserDetails';
+import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
 
 class App extends React.Component {
   constructor(props) {
@@ -50,6 +50,7 @@ class App extends React.Component {
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.updateStarRole(JSON.parse(localStorage.getItem('data')).user.celebrity);
       this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
     if (!this.props.professionsList.professions.length) {
@@ -226,6 +227,7 @@ const mapState = state => ({
 const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  updateStarRole: role => dispatch(updateStarRole(role)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   logOut: () => dispatch(logOut()),
 });
