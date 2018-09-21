@@ -490,10 +490,13 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsTitle>Booking Price:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
-                <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
+                {
+                  !props.starMode &&
+                    <OrderStyled.DetailsItem>
+                      <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
+                      <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
+                    </OrderStyled.DetailsItem>
+                }
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
