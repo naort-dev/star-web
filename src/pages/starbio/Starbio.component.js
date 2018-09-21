@@ -517,9 +517,19 @@ export default class Starbio extends React.Component {
         await this.uploadImage("avatarImage")
       }
 
-      return fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+      let secondaryImageNames = [];
+
+      if (this.state.firstImage && this.state.secondImage) {
+        secondaryImageNames = this.state.secondaryImageNames
+      } else if (this.state.firstImage) {
+        secondaryImageNames[0] = this.state.secondaryImageNames[0]
+      } else if (this.state.secondImage) {
+        secondaryImageNames[0] = this.state.secondaryImageNames[1]
+      }
+
+      return fetch.post(Api.updatePhoto,
         {
-          images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
+          images: [...secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
           avatar_photo: this.state.avatarImageName,
           featured_image: this.state.featuredImageName,
         }, {
@@ -563,7 +573,7 @@ export default class Starbio extends React.Component {
         .then(() => this.uploadImage("secondImage"))
         .then(() => this.uploadImage("avatarImage"))
         .then(() => {
-          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+          fetch.post(Api.updatePhoto,
             {
               images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
               avatar_photo: this.state.avatarImageName,
@@ -822,7 +832,7 @@ export default class Starbio extends React.Component {
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
       .then(response => {
         axios.post(response.url, response.formData)
-          .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+          .then(() => fetch.post(Api.celebrityProfile, {
             profession: this.state.profession,
             searchTags: this.state.searchTags,
             description: this.state.bio,
@@ -956,6 +966,12 @@ export default class Starbio extends React.Component {
         <LoginContainer.FirstImage
           style={{ height: this.state.imageHeights.first }}
           innerRef={(node) => this.firstImage = node} imageType="firstImage" image={this.state.firstImage}>
+          {
+            this.state.firstImage &&
+              <LoginContainer.RemoveImage
+                onClick={() => this.setState({ firstImage: null })}
+              />
+          }
           {this.state.loaders.firstImage === false ?
             <ReactLoader loaded={false} className="spinner"
               zIndex={2e9} options={options} /> :
@@ -982,6 +998,12 @@ export default class Starbio extends React.Component {
         <LoginContainer.SecondImage
           style={{ height: this.state.imageHeights.second }}
           innerRef={(node) => this.secondImage = node} imageType="secondImage" image={this.state.secondImage}>
+          {
+            this.state.secondImage &&
+              <LoginContainer.RemoveImage
+                onClick={() => this.setState({ secondImage: null })}
+              />
+          }
           {this.state.loaders.secondImage === false ?
             <ReactLoader loaded={false} className="spinner"
               zIndex={2e9} options={options} /> :
