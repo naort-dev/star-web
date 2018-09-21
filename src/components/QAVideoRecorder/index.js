@@ -274,7 +274,7 @@ export default class QAVideoRecorder extends React.Component {
           <VideoRecorderDiv.VideoHeading>
             {
               this.props.responseMode ?
-                `Answer ${this.props.star}’s question`
+                this.props.recordTitle()
               : `What's your question to ${this.props.star}?` 
             }
           </VideoRecorderDiv.VideoHeading>
@@ -326,7 +326,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
           <VideoRecorderDiv.VideoHeading>
             {
               this.props.responseMode ?
-                `Answer ${this.props.star}’s question`
+                this.props.recordTitle()
               : `What's your question to ${this.props.star}?` 
             }
           </VideoRecorderDiv.VideoHeading>
@@ -372,7 +372,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
           <VideoRecorderDiv.VideoHeading>
             {
               this.props.responseMode ?
-                `Answer ${this.props.star}’s question`
+                this.props.recordTitle()
               : `What's your question to ${this.props.star}?` 
             }
           </VideoRecorderDiv.VideoHeading>
