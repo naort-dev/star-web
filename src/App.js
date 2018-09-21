@@ -141,11 +141,17 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/resetpassword" component={Login} />
-                <Route path="/myStar/:videoId?" component={Starprofile} />
                 {/* <Route path="/:id/request" component={Requestvideo} /> */}
                 <Route path="/instalogin" component={InstaLogin} />
 
                 {/* logged in areas */}
+
+                <Route
+                  path="/myStar/:videoId?"
+                  component={protectRoute({
+                    RouteComponent: Starprofile,
+                  })}
+                />
 
                 <Route
                   path="/user/favorites"
