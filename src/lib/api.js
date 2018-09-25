@@ -27,6 +27,7 @@ class Api {
   static modifyUserDetails = 'user/user_details';
   static updateNotification = 'user/notification_settings/';
   static updatePhoto = 'user/profileimages/';
+  static celebrityProfile = 'user/profileimages/';
   static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
   static changeRequestStatus = 'request/change_request_status/';
   static rating = 'user/fan/celebrity_rating/';
@@ -38,6 +39,8 @@ class Api {
   static getEarningsList = 'payments/earnings_list/';
   static requestReferral = 'user/referral_request/';
   static getReferralList = 'user/referral_list/';
+  static getCommentsList = 'request/comments';
+  static addComment = 'request/comments/';
 }
 
 export default Api;

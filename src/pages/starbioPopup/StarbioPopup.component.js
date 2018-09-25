@@ -494,7 +494,7 @@ export default class StarbioPopup extends React.Component {
         await this.uploadImage("avatarImage")
       }
 
-      return fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+      return fetch.post(Api.updatePhoto,
         {
           images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
           avatar_photo: this.state.avatarImageName,
@@ -543,7 +543,7 @@ export default class StarbioPopup extends React.Component {
         .then(() => this.uploadImage("secondImage"))
         .then(() => this.uploadImage("avatarImage"))
         .then(() => {
-          fetch.post('https://app.staging.starsona.com/api/v1/user/profileimages/',
+          fetch.post(Api.updatePhoto,
             {
               images: [...this.state.secondaryImageNames, this.state.featuredImageName, this.state.avatarImageName],
               avatar_photo: this.state.avatarImageName,
@@ -796,7 +796,7 @@ export default class StarbioPopup extends React.Component {
     getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, signupVideo)
       .then(response => {
         axios.post(response.url, response.formData)
-          .then(() => fetch.post('https://app.staging.starsona.com/api/v1/user/celebrity_profile/', {
+          .then(() => fetch.post(Api.celebrityProfile, {
             profession: this.state.profession,
             searchTags: this.state.searchTags,
             description: this.state.bio,
