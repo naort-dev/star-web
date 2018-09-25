@@ -20,12 +20,6 @@ export default class Landing extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.onpopstate = this.onBackButtonEvent;
-  }
-
-  onBackButtonEvent = (event) => event.preventDefault()
-
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
@@ -47,6 +41,11 @@ export default class Landing extends React.Component {
     }
     window.addEventListener('resize', this.setScrollHeight);
   }
+
+  componentDidMount() {
+    window.onpopstate = this.onBackButtonEvent;
+  }
+
   componentWillReceiveProps(nextProps) {
     const loginChange = this.props.isLoggedIn !== nextProps.isLoggedIn;
     const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
@@ -95,6 +94,8 @@ export default class Landing extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.setScrollHeight);
   }
+  onBackButtonEvent = (event) => event.preventDefault()
+
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
