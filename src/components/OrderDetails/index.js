@@ -230,6 +230,15 @@ export default class OrderDetails extends React.Component {
     audio.play()
   }
 
+  renderRecordTitle = () => {
+    if (this.props.orderDetails.request_type === 1) {
+      return `Shout-out request from ${this.props.orderDetails.fan}`
+    } else if (this.props.orderDetails.request_type === 2) {
+      return `Announcement request from ${this.props.orderDetails.fan}`
+    }
+    return `Answer ${this.props.orderDetails.fan}'s question`;
+  }
+
   renderStargramDestinationDetails = (text, audioSrc) => {
     return (
       <React.Fragment>
@@ -308,7 +317,13 @@ export default class OrderDetails extends React.Component {
     if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <QAVideoRecorder responseMode star={props.orderDetails.fan} {...this.props} duration={recorder.askTimeOut} onSubmit={() => this.handleBooking()} />
+          <QAVideoRecorder
+            responseMode
+            recordTitle={this.renderRecordTitle}
+            {...this.props}
+            duration={recorder.askTimeOut}
+            onSubmit={() => this.handleBooking()}
+          />
         </OrderStyled.VideoRecorder>
       );
     }
@@ -500,10 +515,13 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsTitle>Booking Price:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
-                <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
+                {
+                  !props.starMode &&
+                    <OrderStyled.DetailsItem>
+                      <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
+                      <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
+                    </OrderStyled.DetailsItem>
+                }
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
