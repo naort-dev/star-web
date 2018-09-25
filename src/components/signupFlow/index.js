@@ -27,14 +27,14 @@ class SignupFlow extends React.Component {
     };
     this.starRegistrationSteps = 4;
   }
+  getBioDetails = (bioDetails) => {
+    this.setState({ bioDetails });
+  }
   changeSignUpRole = (role) => {
     this.setState({ selectedType: role });
     if (role === 'star') {
       this.setState({ stepCount: this.starRegistrationSteps });
     }
-  }
-  getBioDetails = bioDetails => {
-    this.setState({bioDetails: bioDetails})
   }
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
   // goBack = () => {
@@ -55,6 +55,8 @@ class SignupFlow extends React.Component {
         case 4: return <Starsuccess closeSignupFlow={() => this.props.toggleSignup(false)} />;
         default: return null;
       }
+    } else if (this.state.selectedType === 'group') {
+      return <SignUpForm {...this.props} signupRole={this.state.selectedType} data={this.state.socialData} />;
     }
     return null;
   }

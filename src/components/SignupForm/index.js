@@ -14,7 +14,7 @@ export default class SignUp extends React.Component {
       password: { value: '', isValid: false, message: '' },
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
-      role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
+      role: ROLES[props.signupRole],
       socialMedia: {
         username: '',
         first_name: '',
@@ -312,7 +312,8 @@ export default class SignUp extends React.Component {
 
   checkRequired = () => {
     if (validator.isEmpty(this.state.firstName.value)) {
-      this.setState({ firstName: { ...this.state.firstName, message: 'Enter a Firstname' } });
+      const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a Firstname';
+      this.setState({ firstName: { ...this.state.firstName, message: firstNameMsg } });
       return false;
     }
     this.setState({ firstName: { ...this.state.firstName, message: '', isValid: true } });
@@ -371,12 +372,12 @@ export default class SignUp extends React.Component {
                       <LoginContainer.EmptyDiv />
 
                       :
-                      <LoginContainer.FirstNameWrapper >
+                      <LoginContainer.FirstNameWrapper groupSignup={this.props.signupRole === 'group'} >
                         <LoginContainer.InputWrapper>
 
                           <LoginContainer.WrapsInput>
                             <LoginContainer.Input
-                              placeholder="First name"
+                              placeholder={this.props.signupRole === 'group' ? 'Group name' : 'First name'}
                               type="text"
                               name="firstName"
                               value={this.state.firstName.value}
@@ -391,7 +392,7 @@ export default class SignUp extends React.Component {
                       </LoginContainer.FirstNameWrapper>
                   }
                   {
-                    this.props.statusCode === '410' ?
+                    this.props.statusCode === '410' || this.props.signupRole === 'group' ?
                       <LoginContainer.EmptyDiv />
 
                       :

@@ -64,7 +64,7 @@ LoginContainer.FirstLastNameWrapper = styled.div`
 LoginContainer.FirstNameWrapper = styled.div`
   width:100%;
   @media(min-width:768px){
-    width:49%
+    width: ${props => (props.groupSignup ? '100%' : '49%')};
   }
 `;
 LoginContainer.LastNameWrapper = styled.div`
