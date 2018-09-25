@@ -56,13 +56,6 @@ VideoPopupStyled.VideoTitle = styled.span`
 
 VideoPopupStyled.PopupActions = styled.div`
   padding: 10px 0;
-  @media(min-width: 1025px) {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0px 20px;
-  }
 `;
 
 VideoPopupStyled.CommentBoxWrapper = styled.div`
@@ -273,11 +266,9 @@ VideoPopupStyled.CommentsList = styled.ul`
   width: 100%;
   height: calc(100% - 92px);
   border-top: 1px solid #A4A4A4;
-  border-bottom: 1px solid #A4A4A4;
   padding: 5px 0;
   @media(min-width: 1025px) {
     height: calc(100% - 113px);
-    margin: 10px 0;
   }
 `;
 

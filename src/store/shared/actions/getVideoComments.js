@@ -46,9 +46,9 @@ export const fetchCommentsList = (videoId, offset, refresh) => (dispatch, getSta
       let list = getState().commentsList.data;
       const newCount = offset === 0 ? resp.data.data.count : count;
       if (refresh) {
-        list = resp.data.data.comment_list;
+        list = resp.data.data.comment_list.reverse();
       } else {
-        list = [...resp.data.data.comment_list, ...list];
+        list = [...list, ...resp.data.data.comment_list.reverse()];
       }
       dispatch(commentsListFetchSuccess(list, newCount, offset));
     } else {
