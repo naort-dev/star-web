@@ -1,17 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailShareButton,
-  WhatsappIcon,
-  FacebookIcon,
-  TwitterIcon,
-  GooglePlusIcon,
-  EmailIcon,
-} from 'react-share';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { locations } from '../../constants/locations';
@@ -25,7 +12,7 @@ import RequestDetails from '../RequestDetails';
 import EarningsList from '../EarningsList';
 import ReferralList from '../ReferralList';
 import Loader from '../Loader';
-import copy from 'copy-to-clipboard';
+import VideoPopup from '../VideoPopup';
 
 export default class ScrollList extends React.Component {
   constructor(props) {
@@ -36,7 +23,6 @@ export default class ScrollList extends React.Component {
       bannerVideo: false,
       selectedVideoIndex: null,
       videoPopupLoading: false,
-      sharePopup: false,
     };
   }
 
@@ -104,61 +90,6 @@ export default class ScrollList extends React.Component {
     }
   }
 
-  showVideoPopup = () => {
-    const selectedVideo = this.props.dataList[this.state.selectedVideoIndex];
-    const videoPlayerProps = selectedVideo.question_answer_videos ? {
-      primaryCover: selectedVideo.question_answer_videos.question_thumb ? selectedVideo.question_answer_videos.question_thumb : '',
-      primarySrc: selectedVideo.question_answer_videos.answer ? selectedVideo.question_answer_videos.question : '',
-      secondaryCover: selectedVideo.question_answer_videos.answer_thumb ? selectedVideo.question_answer_videos.answer_thumb : '',
-      secondarySrc: selectedVideo.question_answer_videos.answer ? selectedVideo.question_answer_videos.answer : '',
-    } : {
-      primaryCover: selectedVideo.s3_thumbnail_url ? selectedVideo.s3_thumbnail_url : '',
-      primarySrc: selectedVideo.s3_video_url ? selectedVideo.s3_video_url : '',
-    };
-
-    return (
-      <Popup
-        closePopUp={() => this.setState({ videoActive: false, sharePopup: false })}
-      >
-        <ListStyled.VideoContentWrapper>
-          {
-            !this.state.videoPopupLoading ?
-              <React.Fragment>
-                <ListStyled.VideoPlayer>
-                  <ListStyled.VideoContent>
-                    <ListStyled.VideoRequester>
-                      <Link to={`/${selectedVideo.user_id}`} >
-                        <ListStyled.VideoRequestImage
-                          imageUrl={selectedVideo.avatar_photo && selectedVideo.avatar_photo.thumbnail_url}
-                        />
-                        <ListStyled.VideoRequestName>
-                          {selectedVideo.full_name}
-                          <ListStyled.VideoTitle>
-                            {starProfessionsFormater(selectedVideo.professions)}
-                          </ListStyled.VideoTitle>
-                        </ListStyled.VideoRequestName>
-                      </Link>
-                      <ListStyled.ShareButton
-                        onClick={() => this.setState({sharePopup: !this.state.sharePopup})}
-                      />
-                    </ListStyled.VideoRequester>
-                  </ListStyled.VideoContent>
-                  <VideoPlayer {...videoPlayerProps} />
-                </ListStyled.VideoPlayer>
-              </React.Fragment>
-            : <Loader />
-          }
-          <ListStyled.SocialMediaWrapper visible={this.state.sharePopup}>
-            {this.renderSocialIcons(selectedVideo)}
-          </ListStyled.SocialMediaWrapper>
-          <ListStyled.LeftSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex-1)} />
-          <ListStyled.RightSliderArrow onClick={() => this.changeVideo(this.state.selectedVideoIndex+1)} />
-        </ListStyled.VideoContentWrapper>
-      </Popup>
-    );
-  }
-
-
   infiniteScrollList = (scrollTarget) => {
     return (
       <InfiniteScroll
@@ -209,76 +140,6 @@ export default class ScrollList extends React.Component {
       return questionVideo.s3_thumbnail_url;
     }
     return null;
-  }
-
-  renderSocialIcons = (selectedVideo) => {
-    const defaultUrl = selectedVideo.video_url;
-    const shareUrl = `https://${defaultUrl}`;
-    const title = selectedVideo.booking_title
-    return (
-      <React.Fragment>
-        <ListStyled.Somenetwork>
-          <FacebookShareButton
-            url={shareUrl}
-            quote={title}
-            className="Demo__some-network__share-button"
-          >
-            <FacebookIcon
-              size={32}
-              round
-            />
-          </FacebookShareButton>
-        </ListStyled.Somenetwork>
-        <ListStyled.Somenetwork>
-          <GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round />
-          </GooglePlusShareButton>
-        </ListStyled.Somenetwork>
-        <ListStyled.Somenetwork>
-          <TwitterShareButton
-            url={shareUrl}
-            title={title}
-            className="Demo__some-network__share-button"
-          >
-            <TwitterIcon
-              size={32}
-              round
-            />
-          </TwitterShareButton>
-        </ListStyled.Somenetwork>
-        <ListStyled.Somenetwork>
-          <WhatsappShareButton
-            url={shareUrl}
-            title={title}
-            separator=":: "
-            className="Demo__some-network__share-button"
-          >
-            <WhatsappIcon size={32} round />
-          </WhatsappShareButton>
-        </ListStyled.Somenetwork>
-        <ListStyled.Somenetwork>
-          <EmailShareButton
-            url={shareUrl}
-            subject={title}
-            body={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <EmailIcon
-              size={32}
-              round
-            />
-          </EmailShareButton>
-        </ListStyled.Somenetwork>
-        <ListStyled.Somenetwork>
-          <ListStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} /> 
-        </ListStyled.Somenetwork>
-      </React.Fragment>
-    );
   }
 
   renderList() {
@@ -378,7 +239,14 @@ export default class ScrollList extends React.Component {
     return (
       <ListStyled>
         {
-          this.state.videoActive && this.showVideoPopup()
+          this.state.videoActive &&
+            <VideoPopup
+              videoPopupLoading={this.state.videoPopupLoading}
+              selectedVideo={this.props.dataList[this.state.selectedVideoIndex]}
+              selectedVideoIndex={this.state.selectedVideoIndex}
+              changeVideo={this.changeVideo}
+              closePopUp={() => this.setState({ videoActive: false })}
+            />
         }
         {
           this.state.bannerVideo &&

@@ -3,6 +3,7 @@ import axios from 'axios';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import DeclinePopup from './DeclinePopup';
+import AlertPopup from './AlertPopup';
 import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
@@ -100,8 +101,10 @@ export default class OrderDetails extends React.Component {
         if (response && response.filename) {
           axios.post(response.url, response.formData).then(() => {
             this.props.responseVideo(this.props.orderDetails.id, response.filename);
-            this.closePopup();
-            this.props.hideRequest();
+            this.setState({
+              showPopup: true,
+              uploadSuccess: true,
+            });
           });
         }
       });
@@ -203,6 +206,7 @@ export default class OrderDetails extends React.Component {
   }
 
   closePopup = (rate) => {
+    if (this.state.uploadSuccess) this.props.hideRequest();
     this.setState({
       showPopup: false,
       declinePopup: false,
@@ -210,6 +214,7 @@ export default class OrderDetails extends React.Component {
       showContactSupportPopup: false,
       showReportAbusePopup: false,
       audioUrl: null,
+      uploadSuccess: false,
       rate,
     });
   }
@@ -223,6 +228,15 @@ export default class OrderDetails extends React.Component {
   playAudio(audioSrc){
     const audio = new Audio(audioSrc)
     audio.play()
+  }
+
+  renderRecordTitle = () => {
+    if (this.props.orderDetails.request_type === 1) {
+      return `Shout-out request from ${this.props.orderDetails.fan}`
+    } else if (this.props.orderDetails.request_type === 2) {
+      return `Announcement request from ${this.props.orderDetails.fan}`
+    }
+    return `Answer ${this.props.orderDetails.fan}'s question`;
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
@@ -303,7 +317,13 @@ export default class OrderDetails extends React.Component {
     if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <QAVideoRecorder responseMode star={props.orderDetails.fan} {...this.props} duration={recorder.askTimeOut} onSubmit={() => this.handleBooking()} />
+          <QAVideoRecorder
+            responseMode
+            recordTitle={this.renderRecordTitle}
+            {...this.props}
+            duration={recorder.askTimeOut}
+            onSubmit={() => this.handleBooking()}
+          />
         </OrderStyled.VideoRecorder>
       );
     }
@@ -326,6 +346,11 @@ export default class OrderDetails extends React.Component {
           requestType={this.props.orderDetails.request_type}
         />
       );
+    } else if (this.state.uploadSuccess) {
+      return (<AlertPopup
+        message={`Thank you! Your video has been sent to ${this.props.orderDetails.fan}`}
+        closePopup={this.closePopup}
+      />);
     } else if (this.state.showRatingPopup) {
       return (
         <SubmitPopup
@@ -490,10 +515,13 @@ export default class OrderDetails extends React.Component {
                   <OrderStyled.DetailsTitle>Booking Price:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
-                <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
-                  <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
-                </OrderStyled.DetailsItem>
+                {
+                  !props.starMode &&
+                    <OrderStyled.DetailsItem>
+                      <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
+                      <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
+                    </OrderStyled.DetailsItem>
+                }
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>

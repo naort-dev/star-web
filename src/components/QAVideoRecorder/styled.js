@@ -84,9 +84,9 @@ VideoRecorderDiv.Button = styled.button`
   border: none;
   cursor: pointer;
   @media(min-width:768px){
-    height: 70px;
-    width: 70px;
-    background-size: 30px;
+    height: 50px;
+    width: 50px;
+    background-size: 20px;
   }
   @media(min-width: 1920px) {
     height: 100px;
@@ -119,9 +119,9 @@ VideoRecorderDiv.RerecordButton = styled.button`
   border: none;
   cursor: pointer;
   @media(min-width:768px){
-    height: 70px;
-    width: 70px;
-    background-size: 30px;
+    height: 50px;
+    width: 50px;
+    background-size: 20px;
   }
   @media(min-width: 1920px) {
     height: 100px;
@@ -153,9 +153,9 @@ VideoRecorderDiv.ControlButton = styled.button`
   background-image: ${props => (props.paused ? "url('../../assets/images/icon-play.svg')" : "url('../../assets/images/pause-button.svg')")};
   transform: translate(-50%, -50%);
   @media(min-width:768px){
-    height: 70px;
-    width: 70px;
-    background-size: 30px;
+    height: 50px;
+    width: 50px;
+    background-size: 20px;
   }
   @media(min-width: 1920px) {
     height: 100px;
@@ -184,9 +184,9 @@ VideoRecorderDiv.SubmitButton = styled.button`
   border: none;
   cursor: pointer;
   @media(min-width:768px){
-    height: 70px;
-    width: 70px;
-    background-size: 30px;
+    height: 50px;
+    width: 50px;
+    background-size: 20px;
   }
   @media(min-width: 1920px) {
     height: 100px;
@@ -252,9 +252,9 @@ background-position: center;
 border: none;
 cursor: pointer,
 @media(min-width:768px){
-  height: 70px;
-  width: 70px;
-  background-size: 30px;
+  height: 50px;
+  width: 50px;
+  background-size: 20px;
 }
 @media(min-width: 1920px) {
   height: 100px;

@@ -51,7 +51,7 @@ export default class RequestDetails extends React.Component {
       if (diffDays >= 1) {
         timeString = diffDays === 1 ? `${timeString} ${diffDays} day ago` : `${timeString} ${diffDays} days ago`;
       } else if (diffHrs >= 1) {
-        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : timeString = `${timeString} ${diffHrs} hours ago`;
+        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : `${timeString} ${diffHrs} hours ago`;
       } else if (diffMins >= 1) {
         timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ago` : `${timeString} ${diffMins} minutes ago`;
       } else {
