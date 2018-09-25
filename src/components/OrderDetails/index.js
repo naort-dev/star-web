@@ -3,6 +3,7 @@ import axios from 'axios';
 import VideoPlayer from '../VideoPlayer';
 import Header from '../Header';
 import DeclinePopup from './DeclinePopup';
+import AlertPopup from './AlertPopup';
 import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
@@ -100,8 +101,10 @@ export default class OrderDetails extends React.Component {
         if (response && response.filename) {
           axios.post(response.url, response.formData).then(() => {
             this.props.responseVideo(this.props.orderDetails.id, response.filename);
-            this.closePopup();
-            this.props.hideRequest();
+            this.setState({
+              showPopup: true,
+              uploadSuccess: true,
+            });
           });
         }
       });
@@ -203,6 +206,7 @@ export default class OrderDetails extends React.Component {
   }
 
   closePopup = (rate) => {
+    if (this.state.uploadSuccess) this.props.hideRequest();
     this.setState({
       showPopup: false,
       declinePopup: false,
@@ -210,6 +214,7 @@ export default class OrderDetails extends React.Component {
       showContactSupportPopup: false,
       showReportAbusePopup: false,
       audioUrl: null,
+      uploadSuccess: false,
       rate,
     });
   }
@@ -341,6 +346,11 @@ export default class OrderDetails extends React.Component {
           requestType={this.props.orderDetails.request_type}
         />
       );
+    } else if (this.state.uploadSuccess) {
+      return (<AlertPopup
+        message={`Thank you! Your video has been sent to ${this.props.orderDetails.fan}`}
+        closePopup={this.closePopup}
+      />);
     } else if (this.state.showRatingPopup) {
       return (
         <SubmitPopup

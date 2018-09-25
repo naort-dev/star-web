@@ -15,6 +15,7 @@ export default class QAVideoRecorder extends React.Component {
       play: false,
       deviceSupport: true,
       isVideoPaused: true,
+      recordedBlob: false,
     };
     this.mediaRecorder = "";
     this.recordedBlobs = [];
@@ -27,6 +28,12 @@ export default class QAVideoRecorder extends React.Component {
 
   componentDidMount() {
     this.fetchStream();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.videoRecorder.recordedBlob && !nextProps.videoRecorder.recordedBlob) {
+      this.fetchStream(nextProps);
+    }
   }
 
   componentDidUpdate() {
@@ -46,15 +53,17 @@ export default class QAVideoRecorder extends React.Component {
     }
   }
 
-  fetchStream() {
+  stopStream = () => window.stream.getTracks().forEach(track => track.stop())
+
+  fetchStream(props = this.props) {
     if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
-      if (!this.props.videoRecorder.recordedBlob || this.props.videoUploader.savedFile) {
+      if (!props.videoRecorder.recordedBlob || props.videoUploader.savedFile) {
         this.setState({ streamed: false})
         return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
           .then((stream) => {
             if (this.mounted) {
               window.stream = stream;
-              if (!this.props.src) {
+              if (!props.src) {
                 this.setState({ streamed: true }, () => { document.getElementById('video-player').srcObject = window.stream; });
               } else {
                 this.setState({ streamed: true });
@@ -97,6 +106,7 @@ export default class QAVideoRecorder extends React.Component {
     this.props.onStopRecording({ videoSrc, superBuffer });
     this.mediaRecorder.stop();
     this.closeStream();
+    this.stopStream();
   }
 
   closeStream() {
@@ -131,7 +141,8 @@ export default class QAVideoRecorder extends React.Component {
   async startRecording(rerecord = false) {
     if (rerecord === true) {
       this.props.onRerecord();
-      this.recordedBlobs = [];
+      this.recordedBlobs = []; 
+      return;
     }
     this.props.onStartRecording();
     return this.captureUserMedia({
