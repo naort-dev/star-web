@@ -339,7 +339,7 @@ export default class Confirm extends React.Component {
     const { bookingData } = this.state;
     const rate = bookingData.starPrice.rate ? bookingData.starPrice.rate : 0;
     const remainingBookings = bookingData.starPrice.remaining_limit ? bookingData.starPrice.remaining_limit : 0;
-    if (bookingData.starDetail.first_name && bookingData.starDetail.last_name) {
+    if (bookingData.starDetail.nick_name || bookingData.starDetail.first_name || bookingData.starDetail.last_name) {
       fullName = bookingData.starDetail.nick_name ? bookingData.starDetail.nick_name
         : `${bookingData.starDetail.first_name} ${bookingData.starDetail.last_name}`;
     }

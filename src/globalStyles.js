@@ -70,6 +70,7 @@ injectGlobal`
     position: absolute;
     top: -2px;
     left: 0;
+    cursor: pointer;
     height: 20px;
     width: 20px;
     background-color: white;
@@ -126,25 +127,29 @@ injectGlobal`
   }
   
   #checkbox_container #checkmark:after {
+    left: 4px;
+    top: 1px;
+    width: 5px;
+    height: 7px;
+    border: solid black;
+    cursor: pointer;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+    @media(min-width: 768px) {
+      left: 7px;
+      top: 2px;
+      width: 5px;
+      height: 9px;
+    }
+    @media(min-width:1025px){
       left: 4px;
-      top: 4px;
-      width: 8px;
-      height: 8px;
-      background: #FF6C58;
-      border: none;
-      border-radius: 8px;
-      @media(min-width: 768px) {
-        left: 6px;
-        top: 5px;
-        width: 10px;
-        height: 10px;
-      }
-      @media(min-width: 1025px) {
-        left: 4px;
-        top: 3px;
-        width: 7px;
-        height: 7px;
-      }
+      width: 3px;
+      height: 6px;
+      top: 1px;
+    }
+
   }
 
   input[type='file']{

@@ -46,6 +46,7 @@ export default class RequestFlowPopup extends React.Component {
     return (
       <PopupStyled innerRef={node => this.popupWrapper = node}>
         <PopupStyled.SmallContainer
+          largePopup={this.props.largePopup}
           innerRef={node => this.popupContent = node}
         >
           <PopupStyled.SliderDotsWrapper>
@@ -54,7 +55,7 @@ export default class RequestFlowPopup extends React.Component {
             }
           </PopupStyled.SliderDotsWrapper>
           <PopupStyled.CloseButton
-            smallPopup={this.props.smallPopup}
+            smallPopup={this.props.smallPopup || this.props.largePopup}
             onClick={() => this.props.closePopUp()}
             closeIconColor={this.props.closeIconColor}
           />

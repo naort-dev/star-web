@@ -270,11 +270,26 @@ LoginContainer.FeaturedImage = styled.div`
 
 `;
 
+LoginContainer.RemoveImage = styled.span`
+  position: absolute;
+  top: 6px;
+  right: 5px;
+  z-index: 1;
+  display: inline-block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  background: url(assets/images/close-icon-orange.svg) no-repeat;
+  background-size: cover;
+  background-position: center center;
+`;
+
 LoginContainer.FirstImage = styled.div`
 width: calc(50% - 10px);
 display: flex;
 justify-content: center;
 align-items: center;
+position: relative;
 height: 175px;
 margin: 10px 0px;
 background-color: #cccccc;
@@ -299,6 +314,7 @@ width: calc(50% - 10px);
 display: flex;
 justify-content: center;
 align-items: center;
+position: relative;
 height:175px;
 background-color: #cccccc;
 margin: 10px 0px;
