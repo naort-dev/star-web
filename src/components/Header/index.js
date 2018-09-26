@@ -42,9 +42,14 @@ class Header extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.updateSearchParam('');
       this.setState({ searchText: '' });
+    }
+
+    if (categoryChange) {
+      this.handleSearchItemClick();
     }
 
     if (JSON.stringify(nextProps.userValue.settings_userDetails.avatar_photo) !== JSON.stringify(this.props.userValue.settings_userDetails.avatar_photo)) {
@@ -178,7 +183,7 @@ class Header extends React.Component {
       <HeaderSection>
         <HeaderSection.HeaderDiv >
           <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <Link to="/">
+            <Link to="/" onClick={() => this.handleSearchItemClick()}>
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
