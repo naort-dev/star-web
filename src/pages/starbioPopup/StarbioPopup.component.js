@@ -1171,12 +1171,12 @@ export default class StarbioPopup extends React.Component {
                                   otherOptions={{
                                     clearable: false,
                                     arrowRenderer: null,
-                                    valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                                    valueComponent: selectProps => this.renderMultiValueItems(selectProps),
+                                    placeholder: 'Select your industry',
                                   }}
-                                  industry={this.state.industry}
-                                  value={this.state.profession}
-                                  profession={this.state.profession.join(',')}
-                                  handleFieldChange={this.handleFieldChange.bind(this)}
+                                  dataValues={this.state.industry}
+                                  value={this.state.profession.join(',')}
+                                  handleFieldChange={value => this.handleFieldChange('profession', value)}
                                 />
                                 <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
                                   {

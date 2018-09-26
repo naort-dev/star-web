@@ -2,6 +2,7 @@ class Api {
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
   static getProfessionsList = 'user/filtered_professions/';
+  static getGroupTypes = 'user/group_types/';
   static getVideosList = 'request/featured_videos/';
   static login = 'user/login/';
   static register = 'user/register/'
