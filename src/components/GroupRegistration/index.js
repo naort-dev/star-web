@@ -288,5 +288,4 @@ const mapDispatchToProps = dispatch => ({
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
 });
 
-
 export default connect(mapStateToProps, mapDispatchToProps)(GroupRegistration);

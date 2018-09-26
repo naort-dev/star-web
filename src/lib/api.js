@@ -26,6 +26,7 @@ class Api {
   static resetPassword = 'user/resetpassword/';
   static getAWSVideo = 'user/get_signed_url/?key=stargram_videos&file_name=';
   static modifyUserDetails = 'user/user_details';
+  static updateGroupAccount = 'user/group_account/';
   static updateNotification = 'user/notification_settings/';
   static updatePhoto = 'user/profileimages/';
   static celebrityProfile = 'user/celebrity_profile/';
