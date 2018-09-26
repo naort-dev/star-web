@@ -11,6 +11,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import { LoginContainer, HeaderSection } from './styled';
 // import { HeaderSection } from '../loginFlow/styled';
+import GroupRegistration from '../GroupRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
@@ -26,6 +27,7 @@ class SignupFlow extends React.Component {
       currentStep: 1,
     };
     this.starRegistrationSteps = 4;
+    this.groupRegistrationSteps = 5;
   }
   getBioDetails = (bioDetails) => {
     this.setState({ bioDetails });
@@ -34,13 +36,12 @@ class SignupFlow extends React.Component {
     this.setState({ selectedType: role });
     if (role === 'star') {
       this.setState({ stepCount: this.starRegistrationSteps });
+    } else if (role === 'group') {
+      this.setState({ stepCount: this.groupRegistrationSteps });
     }
   }
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
-  // goBack = () => {
-  //   console.log(this.state.currentStep)
-  //   this.setState({ currentStep: this.state.currentStep - 1 });
-  // }
+
   changeStep = (step) => {
     this.setState({ currentStep: step });
   }
@@ -56,7 +57,11 @@ class SignupFlow extends React.Component {
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
-      return <SignUpForm {...this.props} signupRole={this.state.selectedType} data={this.state.socialData} />;
+      switch (this.state.currentStep) {
+        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+        case 2: return <GroupRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} />;
+        default: return null;
+      }
     }
     return null;
   }

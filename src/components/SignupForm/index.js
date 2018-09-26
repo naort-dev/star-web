@@ -25,7 +25,7 @@ export default class SignUp extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
-        role: props.signupRole === 'fan' ? ROLES.fan : ROLES.star,
+        role: ROLES[props.signupRole],
       },
       gmailClick: false,
     };
@@ -136,7 +136,9 @@ export default class SignUp extends React.Component {
         ).then((response) => {
           if (response.status === 200) {
             if (response.data.data && response.data.data.user) {
-              if (response.data.data.user.role_details.role_name === 'Celebrity' && response.data.data.user.role_details.is_complete === false) {
+              if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
+                response.data.data.user.role_details.is_complete === false
+              ) {
                 this.props.changeStep(this.props.currentStep + 1);
               } else {
                 this.props.closeSignupFlow();
@@ -153,8 +155,8 @@ export default class SignUp extends React.Component {
         this.state.password.value,
         this.state.role,
       ).then((response) => {
-        if (response != undefined) {
-          if (this.props.signupRole === 'star') {
+        if (response !== undefined) {
+          if (this.props.signupRole === 'star' || this.props.signupRole === 'group') {
             this.props.changeStep(this.props.currentStep + 1);
           }
         };
