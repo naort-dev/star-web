@@ -59,7 +59,9 @@ class SignupFlow extends React.Component {
     } else if (this.state.selectedType === 'group') {
       switch (this.state.currentStep) {
         case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
-        case 2: return <GroupRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} />;
+        case 2: 
+        case 3: 
+        case 4: return <GroupRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} />;
         default: return null;
       }
     }

@@ -3,10 +3,16 @@ import styled from 'styled-components';
 const GroupStyled = styled.div`
   height: 100%;
   padding-bottom: 30px;
+  @media(min-width: 1025px) {
+    padding-bottom: 77px;
+  }
 `;
 
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
+  @media(min-width: 1025px) {
+    padding: 0 40px;
+  }
 `;
 
 GroupStyled.HeadingWrapper = styled.div`
@@ -28,6 +34,49 @@ GroupStyled.SubHeadingDescription = styled.span`
   font-family: 'Ubuntu-Light';
 `;
 
+GroupStyled.Select = styled.select`
+  margin: 0;
+  outline: none;
+  display: inline-block;
+  &::-ms-expand {
+    display: none;
+  }
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  background: url('assets/images/br_down.png') no-repeat;
+  background-position: 97% 8px;
+  background-size: 16px;
+  padding-right: 40px;
+  background-color: #fff;
+  font-family: 'Ubuntu-Light';
+  color: #333333;
+  font-size:14px;
+  text-align:left;
+  outline:none;
+  height: 34px;
+  text-indent: 10px;
+  background-color: white;
+  border: 1px solid #d0d2d3;
+  border-radius: 2px;
+  @media(min-width:768px){
+    margin-top:0;
+    height:40px;
+  }
+  @media(min-width:1025px){
+    margin-top:0;
+    height:33px;
+    font-size:13px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+    height:40px;
+  }
+`;
+
 GroupStyled.InputwrapperDiv = styled.div`
 
 `;
@@ -39,12 +88,8 @@ GroupStyled.InputWrapper = styled.div`
   @media(min-width:768px){
     align-items: flex-start;
     margin: 0;
-  }
-  @media(min-width: 1025px) {
-    margin: 0px 0px;
-  }
-  @media(min-width: 1920px) {
-    margin: 0px 0px;
+    flex-direction: row;
+    margin: 20px 0;
   }
 `;
 
@@ -56,6 +101,7 @@ GroupStyled.Label = styled.div`
   padding:10px 0;
   @media(min-width:768px){
     display:flex;
+    width: 40%;
     align-items:center;
     padding-right: 10px;
     padding-bottom: 10px;
@@ -74,7 +120,7 @@ GroupStyled.WrapsInput = styled.div`
     }
   }
   @media(min-width:768px){
-    width:100%;
+    width: 60%;
   }
   @media(min-width:1025){
     width:352px;
@@ -174,21 +220,24 @@ GroupStyled.ControlWrapper = styled.div`
   justify-content: flex-end;
   @media(min-width: 1025px) {
     box-shadow: none;
-    position: relative;
-    padding: 26px 0px;
+    padding: 26px 12px;
+    margin: 0 28px;
+    left: auto;
+    right: auto;
+    width: calc(100% - 75px);
     border-top: 1px solid rgb(34, 34, 34);
   }
 `;
 
 GroupStyled.ControlButton = styled.button`
-  background-color: rgb(255, 255, 255);
-  color: rgb(255, 108, 88);
+  background-color: rgb(255,108,88);
+  color: rgb(255,255,255);
   text-align: center;
   display: inline-block;
   font-size: 14px;
   font-family: Ubuntu-Bold;
   cursor: pointer;
-  padding: 4px 30px;
+  padding: 10px 30px;
   text-decoration: none;
   outline: none;
   border-radius: 5px;
@@ -196,13 +245,24 @@ GroupStyled.ControlButton = styled.button`
   border-style: solid;
   border-color: rgb(255, 108, 88);
   border-image: initial;
+  &:disabled {
+    background-color: #b6b6b6;
+    color: #676767;
+    border-color: #b6b6b6;
+  }
 `;
 
-GroupStyled.OptionWrapper = styled.footer`
-
+GroupStyled.OptionWrapper = styled.div`
+  @media(min-width: 768px) {
+    display: flex;
+    justify-content: flex-end;
+  }
 `;
 GroupStyled.CheckBoxWrapper = styled.div`
   padding: 10px 0;
+  @media(min-width: 768px) {
+    width: 60%;
+  }
 `;
 GroupStyled.CheckBoxLabel = styled.div`
 

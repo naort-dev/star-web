@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import MultiSelect from '../../components/MultiSelect';
+import { updateGroupAccount } from '../../services/groupRegistration';
 import SelectTags from '../SelectTag';
 import GroupStyled from './styled';
 import { fetchGroupTypes } from '../../store/shared/actions/getGroupTypes';
@@ -10,8 +10,16 @@ class GroupRegistration extends React.Component {
   state = {
     bio: '',
     website: '',
+    firstName: '',
+    lastName: '',
+    phNo: '',
     searchTags: [],
-    groupTypes: [],
+    groupType: '',
+    address: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
     errors: {
       bio: false,
       website: false,
@@ -26,16 +34,39 @@ class GroupRegistration extends React.Component {
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
-    if (fieldType === 'groupTypes') {
-      const groupTypesArray = fieldValue.split(',');
-      if (groupTypesArray.length <= 3) {
-        this.setState({ groupTypes: groupTypesArray, errors: { ...this.state.errors, groupTypes: false } });
-      }
-    } else if (fieldType === 'searchTags') {
+    if (fieldType === 'searchTags') {
       this.setState({ searchTags: fieldValue });
+    } else if (fieldType === 'phNo1' || fieldType === 'phNo2' || fieldType === 'phNo3') {
+      this.setState({ [fieldType]: fieldValue }, () => {
+        const phNo = `${this.state.phNo1}-${this.state.phNo2}=${this.state.phNo3}`;
+        this.setState({})
+      });
     } else {
       this.setState({ [fieldType]: fieldValue, errors: { ...this.state.errors, [fieldType]: false } });
     }
+  }
+
+  submitGroupAccountDetails = () => {
+    const data = {
+      'contact_first_name': this.state.firstName,
+      'contact_last_name': this.state.lastName,
+      'description': this.state.bio,
+      'tags': ' #search',
+      'website': this.state.website,
+      'phone': '968-5895-888',
+      'address': this.state.address,
+      'address_2': this.state.address2,
+      'city': this.state.city,
+      'state': this.state.street,
+      'zip': this.state.zip,
+      'group_type': this.state.groupType,
+    };
+    updateGroupAccount(data)
+      .then((success) => {
+        if (success) {
+          this.props.changeStep(this.props.currentStep + 1);
+        }
+      });
   }
 
   renderMultiValueItems = (selectProps) => {
@@ -50,7 +81,6 @@ class GroupRegistration extends React.Component {
     );
   }
 
-
   render() {
     return (
       <GroupStyled>
@@ -59,7 +89,7 @@ class GroupRegistration extends React.Component {
             <GroupStyled.HeadingWrapper>
               <GroupStyled.SubHeading>Public information</GroupStyled.SubHeading>
               <GroupStyled.SubHeadingDescription>
-                This information will be shared on your profile and you can always update these later in your profile.
+                This information will be shared on your profile.
               </GroupStyled.SubHeadingDescription>
             </GroupStyled.HeadingWrapper>
             <GroupStyled.InputwrapperDiv>
@@ -83,23 +113,23 @@ class GroupRegistration extends React.Component {
               <GroupStyled.InputWrapper>
                 <GroupStyled.Label>Group Type</GroupStyled.Label>
                 <GroupStyled.WrapsInput>
-                  <MultiSelect
-                    otherOptions={{
-                      clearable: false,
-                      arrowRenderer: null,
-                      valueComponent: selectProps => this.renderMultiValueItems(selectProps),
-                      placeholder: 'Select group type',
-                    }}
-                    dataValues={this.props.groupTypes}
-                    value={this.state.groupTypes.join(',')}
-                    handleFieldChange={value => this.handleFieldChange('groupTypes', value)}
-                  />
-                  <GroupStyled.ErrorMsg isError={this.state.errors.profession}>
+                  <GroupStyled.Select
+                    value={this.state.groupType}
+                    onChange={event => this.handleFieldChange('groupType', event.target.value)}
+                  >
+                    <option value="0" key="0">Choose One</option>
+                    {
+                      this.props.groupTypes.map((item, index) => (
+                        <option value={item.value} key={index}>{item.label}</option>
+                      ))
+                    }
+                  </GroupStyled.Select>
+                  {/* <GroupStyled.ErrorMsg isError={this.state.errors.profession}>
                     {
                       this.state.errors.profession ? 'Please choose your Group Type' :
                         'You can choose a maximum of 3 categories'
                     }
-                  </GroupStyled.ErrorMsg>
+                  </GroupStyled.ErrorMsg> */}
                 </GroupStyled.WrapsInput>
               </GroupStyled.InputWrapper>
               <GroupStyled.InputWrapper>
@@ -137,6 +167,41 @@ class GroupRegistration extends React.Component {
                   </GroupStyled.ErrorMsg>
                 </GroupStyled.WrapsInput>
               </GroupStyled.InputWrapper>
+              <GroupStyled.InputWrapper>
+                <GroupStyled.Label>Social Links</GroupStyled.Label>
+                <GroupStyled.WrapsInput>
+                  <GroupStyled.InputArea
+                    small
+                    placeholder="www.facebook.com"
+                    value={this.state.firstName}
+                    onChange={event => { this.handleFieldChange('firstName', event.target.value) }}
+                  />
+                  <GroupStyled.InputArea
+                    small
+                    placeholder="www.twitter.com"
+                    value={this.state.lastName}
+                    onChange={event => { this.handleFieldChange('lastName', event.target.value) }}
+                  />
+                  <GroupStyled.InputArea
+                    small
+                    placeholder="www.instagram.com"
+                    value={this.state.lastName}
+                    onChange={event => { this.handleFieldChange('lastName', event.target.value) }}
+                  />
+                  <GroupStyled.InputArea
+                    small
+                    placeholder="www.youtube.com"
+                    value={this.state.lastName}
+                    onChange={event => { this.handleFieldChange('lastName', event.target.value) }}
+                  />
+                  {/* <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
+                    {
+                      this.state.errors.bio ? 'Please enter a valid event title' :
+                        null
+                    }
+                  </GroupStyled.ErrorMsg> */}
+                </GroupStyled.WrapsInput>
+              </GroupStyled.InputWrapper>
             </GroupStyled.InputwrapperDiv>
             <GroupStyled.HeadingWrapper>
               <GroupStyled.SubHeading>Private information</GroupStyled.SubHeading>
@@ -172,7 +237,7 @@ class GroupRegistration extends React.Component {
               <GroupStyled.WrapsInput>
                 <GroupStyled.PhoneNo
                   small
-                  type="number"
+                  type="tel"
                   maxLength="3"
                   placeholder="***"
                   value={this.state.phNo1}
@@ -180,7 +245,7 @@ class GroupRegistration extends React.Component {
                 />
                 <GroupStyled.PhoneNo
                   small
-                  type="number"
+                  type="tel"
                   maxLength="3"
                   placeholder="***"
                   value={this.state.phNo2}
@@ -217,14 +282,6 @@ class GroupRegistration extends React.Component {
                   value={this.state.address2}
                   onChange={event => { this.handleFieldChange('address2', event.target.value) }}
                 />
-                {/* <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
-                  {
-                    this.state.errors.bio ? 'Please enter a valid event title' :
-                      null
-                  }
-                </GroupStyled.ErrorMsg> */}
-              </GroupStyled.WrapsInput>
-              <GroupStyled.WrapsInput>
                 <GroupStyled.CityInfo
                   small
                   placeholder="City"
@@ -233,14 +290,14 @@ class GroupRegistration extends React.Component {
                 />
                 <GroupStyled.AddressDetails
                   small
-                  placeholder="ST"
-                  value={this.state.street}
-                  onChange={event => { this.handleFieldChange('street', event.target.value) }}
+                  placeholder="State"
+                  value={this.state.state}
+                  onChange={event => { this.handleFieldChange('state', event.target.value) }}
                 />
                 <GroupStyled.AddressDetails
                   small
                   placeholder="Zip"
-                  type="number"
+                  type="tel"
                   value={this.state.zip}
                   onChange={event => { this.handleFieldChange('zip', event.target.value) }}
                 />
@@ -271,7 +328,10 @@ class GroupRegistration extends React.Component {
           </GroupStyled.ContentWrapper>
         </Scrollbars>
         <GroupStyled.ControlWrapper>
-          <GroupStyled.ControlButton>
+          <GroupStyled.ControlButton
+            disabled={!this.state.userConfirmation}
+            onClick={() => this.submitGroupAccountDetails()}
+          >
             Continue
           </GroupStyled.ControlButton>
         </GroupStyled.ControlWrapper>
