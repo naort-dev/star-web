@@ -276,6 +276,12 @@ GroupStyled.CoverImage = styled.div`
   background-size: cover;
 `;
 
+GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
+  width: 100%;
+  height: 300px;
+  margin: 10px 0;
+`;
+
 GroupStyled.ProfileInputWrapper = styled.span`
   background: url('assets/images/upload.svg') no-repeat;
   width: 28px;

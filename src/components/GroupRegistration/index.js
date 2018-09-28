@@ -62,6 +62,7 @@ class GroupRegistration extends React.Component {
       images: [this.state.profileImage.fileName, this.state.featuredImage.fileName],
     };
     this.props.updateProfilePhoto(profileImage);
+    this.props.changeStep(this.props.currentStep + 1);
   }
 
   render() {

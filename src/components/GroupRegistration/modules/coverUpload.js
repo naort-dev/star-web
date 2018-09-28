@@ -10,14 +10,16 @@ export default class CoverUpload extends React.Component {
   state = {
     cropImage: null,
     cropMode: false,
-    finalImage: null,
+    currentImage: null,
+    featuredImage: null,
+    secondaryImages: [],
   }
 
-  async onFileChange() {
+  async onFileChange(event) {
     this.setState({ imageError: false })
-    const file = document.getElementById('profile').files[0];
+    const file = event.target.files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
-    if (!allowedExtensions.exec(document.getElementById('profile').value)) {
+    if (!allowedExtensions.exec(event.target.value)) {
       this.setState({ imageError: { extensionError: true } });
     } else if (file) {
       const correctResolution = await this.checkResolution(file);
@@ -30,11 +32,22 @@ export default class CoverUpload extends React.Component {
   }
 
   getCroppedImage = (file, image) => {
-    this.setState({ finalImage: image });
     awsImageUpload(file, this.state.extension)
-    .then((resp) => {
-      this.props.onComplete('featuredImage', resp, image);
-    })
+      .then((resp) => {
+        if (this.state.currentImage.indexOf('secondaryImage') > -1) {
+          let { secondaryImages } = this.state;
+          const index = this.state.currentImage.split('-')[1];
+          secondaryImages[index] = {
+            fileName: resp,
+            image,
+          };
+          this.setState({ secondaryImages });
+        } else {
+          this.props.onComplete(this.state.currentImage, resp, image);
+          this.setState({ [this.state.currentImage]: image });
+        }
+        this.setState({ currentImage: null })
+      })
   }
 
   async getImageData(file) {
@@ -104,6 +117,28 @@ export default class CoverUpload extends React.Component {
     this.setState({ cropImage: null, cropMode: false })
   }
 
+  addNewCover = () => {
+    let { secondaryImages } = this.state;
+    if (!secondaryImages.length || secondaryImages[secondaryImages.length - 1].image !== null) {
+      secondaryImages.push({
+        fileName: null,
+        image: null,
+      });
+      this.setState({ secondaryImages });
+    }
+  }
+
+  renderSecondaryImages = () => {
+    return this.state.secondaryImages.map((item, index) => {
+      return (
+        <GroupStyled.SecondaryCoverImage imageUrl={item.image}>
+          <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })}>
+            <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+          </GroupStyled.ProfileInputWrapper>
+        </GroupStyled.SecondaryCoverImage> 
+      );
+    });
+  }
 
   render() {
     return (
@@ -117,16 +152,21 @@ export default class CoverUpload extends React.Component {
           </GroupStyled.InnerDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.CoverLayout>
-          <GroupStyled.CoverImage imageUrl={this.state.finalImage}>
-            {
-              !this.state.finalImage &&
-                <GroupStyled.ProfileInputWrapper>
-                  <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
-                </GroupStyled.ProfileInputWrapper>
-            }
+          <GroupStyled.CoverImage imageUrl={this.state.featuredImage}>
+            <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: 'featuredImage' })}>
+              <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+            </GroupStyled.ProfileInputWrapper>
             <GroupStyled.ProfileImage imageUrl={this.props.profileImage} />
           </GroupStyled.CoverImage> 
         </GroupStyled.CoverLayout>
+        {
+          this.renderSecondaryImages()
+        }
+        {
+          this.state.featuredImage && this.state.secondaryImages.length < 2 ?
+            <button onClick={() => this.addNewCover()}>Add cover</button>
+          : null
+        }
         {
           this.state.cropMode && this.state.cropImage &&
             <ImageCropper
