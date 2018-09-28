@@ -2,10 +2,6 @@ import styled from 'styled-components';
 
 const GroupStyled = styled.div`
   height: 100%;
-  padding-bottom: 30px;
-  @media(min-width: 1025px) {
-    padding-bottom: 77px;
-  }
 `;
 
 GroupStyled.ContentWrapper = styled.div`
@@ -28,6 +24,20 @@ GroupStyled.SubHeading = styled.span`
 `;
 
 GroupStyled.SubHeadingDescription = styled.span`
+  display: block;
+  font-size: 14px;
+  margin-top: 5px;
+  font-family: 'Ubuntu-Light';
+`;
+
+GroupStyled.InnerHeading = styled.span`
+  display: block;
+  font-size: 16px;
+  margin-top: 5px;
+  font-family: 'Ubuntu-Regular';
+`;
+
+GroupStyled.InnerDescription = styled.span`
   display: block;
   font-size: 14px;
   margin-top: 5px;
@@ -156,7 +166,7 @@ GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
   width: ${props => (props.lastDigit ? '53px' : '50px')};;
   height: 32px;
   margin-right: 12px;
-`;
+`.withComponent('input');
 
 GroupStyled.CityInfo = GroupStyled.InputArea.extend`
   width: 50%;
@@ -168,6 +178,10 @@ GroupStyled.AddressDetails = GroupStyled.InputArea.extend`
   height: 40px;
   margin-left: 10px;
 `;
+
+GroupStyled.ZipCode = GroupStyled.AddressDetails.extend`
+  vertical-align: top;
+`.withComponent('input');
 
 GroupStyled.ErrorMsg = styled.div`
   color:red;
@@ -207,24 +221,15 @@ GroupStyled.CloseButton = styled.input`
 `;
 
 GroupStyled.ControlWrapper = styled.div`
-  position: absolute;
-  bottom: 0px;
-  left: 0;
-  right: 0;
   background-color: rgb(255, 255, 255);
   z-index: 1;
   width: 100%;
   display: flex;
-  box-shadow: rgba(34, 34, 34, 0.4) 0px 0px 12px 0px;
   padding: 13px 12px;
   justify-content: flex-end;
   @media(min-width: 1025px) {
     box-shadow: none;
     padding: 26px 12px;
-    margin: 0 28px;
-    left: auto;
-    right: auto;
-    width: calc(100% - 75px);
     border-top: 1px solid rgb(34, 34, 34);
   }
 `;
@@ -250,6 +255,50 @@ GroupStyled.ControlButton = styled.button`
     color: #676767;
     border-color: #b6b6b6;
   }
+`;
+
+GroupStyled.CoverLayout = styled.div`
+  width: 100%;
+  height: 300px;
+  border: 1px solid #d0d2d3;
+  border-radius: 10px;
+`;
+
+GroupStyled.CoverImage = styled.div`
+  position: relative;
+  height: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
+GroupStyled.ProfileInputWrapper = styled.span`
+  background: url('assets/images/upload.svg') no-repeat;
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+`;
+
+GroupStyled.ProfileImage = styled.span`
+  position: absolute;
+  bottom: -29px;
+  left: 6px;
+  width: 70px;
+  height: 70px;
+  display: inline-block;
+  border-radius: 50%;
+  background: ${props => (props.imageUrl && `url(${props.imageUrl})`)};
+  background-repeat: no-repeat;
+  background-size: cover;
+`;
+
+GroupStyled.UploadInput = styled.input`
+  width: 100%;
+  height: 100%;
 `;
 
 GroupStyled.OptionWrapper = styled.div`
