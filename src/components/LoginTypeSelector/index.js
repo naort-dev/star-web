@@ -28,7 +28,7 @@ export const LoginTypeSelector = props => (
           </span>
         </div>
         <div>
-          <span onClick={() => window.location = 'https://about.starsona.com/#star-highlight'}>
+          <span onClick={() => props.changeSignUpRole('star')}>
             <TypeSelectorWrapper.Button>I’m a Star</TypeSelectorWrapper.Button>
           </span>
         </div>
