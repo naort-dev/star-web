@@ -13,6 +13,19 @@ export default class CoverUpload extends React.Component {
     currentImage: null,
     featuredImage: null,
     secondaryImages: [],
+    coverImageHeight: 100,
+  }
+
+  componentWillMount() {
+    window.addEventListener('resize', this.setImageSize);
+  }
+
+  componentDidMount() {
+    this.setImageSize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setImageSize);
   }
 
   async onFileChange(event) {
@@ -31,11 +44,21 @@ export default class CoverUpload extends React.Component {
     }
   }
 
+  setImageSize = () => {
+    let coverImageHeight;
+    if (this.coverImage) {
+      coverImageHeight = this.coverImage.clientWidth / imageSizes.groupCover;
+    }
+    this.setState({
+      coverImageHeight,
+    });
+  }
+
   getCroppedImage = (file, image) => {
     awsImageUpload(file, this.state.extension)
       .then((resp) => {
         if (this.state.currentImage.indexOf('secondaryImage') > -1) {
-          let { secondaryImages } = this.state;
+          const { secondaryImages } = this.state;
           const index = this.state.currentImage.split('-')[1];
           secondaryImages[index] = {
             fileName: resp,
@@ -118,7 +141,7 @@ export default class CoverUpload extends React.Component {
   }
 
   addNewCover = () => {
-    let { secondaryImages } = this.state;
+    const { secondaryImages } = this.state;
     if (!secondaryImages.length || secondaryImages[secondaryImages.length - 1].image !== null) {
       secondaryImages.push({
         fileName: null,
@@ -131,7 +154,11 @@ export default class CoverUpload extends React.Component {
   renderSecondaryImages = () => {
     return this.state.secondaryImages.map((item, index) => {
       return (
-        <GroupStyled.SecondaryCoverImage imageUrl={item.image}>
+        <GroupStyled.SecondaryCoverImage
+          key={index}
+          style={{ height: this.state.coverImageHeight }}
+          imageUrl={item.image}
+        >
           <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })}>
             <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
           </GroupStyled.ProfileInputWrapper>
@@ -151,20 +178,28 @@ export default class CoverUpload extends React.Component {
             Supporters who visit your profile will see it. Showcase your best visuals.
           </GroupStyled.InnerDescription>
         </GroupStyled.HeadingWrapper>
-        <GroupStyled.CoverLayout>
-          <GroupStyled.CoverImage imageUrl={this.state.featuredImage}>
+        <GroupStyled.CoverLayout
+          style={{ height: this.state.coverImageHeight * 2 }}
+        >
+          <GroupStyled.CoverImage
+            innerRef={(node) => { this.coverImage = node; }}
+            imageUrl={this.state.featuredImage}
+          >
             <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: 'featuredImage' })}>
               <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
             </GroupStyled.ProfileInputWrapper>
             <GroupStyled.ProfileImage imageUrl={this.props.profileImage} />
-          </GroupStyled.CoverImage> 
+          </GroupStyled.CoverImage>
+          <GroupStyled.GroupName>
+            {this.props.groupName}
+          </GroupStyled.GroupName>
         </GroupStyled.CoverLayout>
         {
           this.renderSecondaryImages()
         }
         {
           this.state.featuredImage && this.state.secondaryImages.length < 2 ?
-            <button onClick={() => this.addNewCover()}>Add cover</button>
+            <GroupStyled.AddCoverButton onClick={() => this.addNewCover()}>Add cover</GroupStyled.AddCoverButton>
           : null
         }
         {
@@ -177,9 +212,13 @@ export default class CoverUpload extends React.Component {
               cropImage={this.state.cropImage}
             />
         }
-        <GroupStyled.ControlWrapper>
+        <GroupStyled.ControlWrapper multiple>
+          <GroupStyled.SkipStep onClick={() => this.props.onImageUpload(this.state.secondaryImages)}>
+            Skip this step
+          </GroupStyled.SkipStep>
           <GroupStyled.ControlButton
-            onClick={() => this.props.onImageUpload()}
+            disabled={!this.state.featuredImage}
+            onClick={() => this.props.onImageUpload(this.state.secondaryImages)}
           >
             Continue
           </GroupStyled.ControlButton>

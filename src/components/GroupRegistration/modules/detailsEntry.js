@@ -1,21 +1,24 @@
 import React from 'react';
 import SelectTags from '../../SelectTag';
+import validator from 'validator';
 import GroupStyled from '../styled';
 
 export default class DetailsEntry extends React.Component {
   state = {
-    bio: "",
-    website: "",
-    firstName: "",
-    lastName: "",
-    phNo: "",
+    bio: '',
+    website: '',
+    firstName: '',
+    lastName: '',
     searchTags: [],
-    groupType: "",
-    address: "",
-    address2: "",
-    city: "",
-    state: "",
-    zip: "",
+    groupType: '',
+    phNo1: '',
+    phNo2: '',
+    phNo3: '',
+    address: '',
+    address2: '',
+    city: '',
+    state: '',
+    zip: '',
     socialMedia: {
       facebook: '',
       twitter: '',
@@ -24,43 +27,82 @@ export default class DetailsEntry extends React.Component {
     },
     errors: {
       bio: false,
-      website: false,
       searchTags: false,
-      groupTypes: false
+      groupType: false,
+      name: false,
+      addressField: false,
+      phNo: false,
     },
-    userConfirmation: false
+    userConfirmation: false,
   };
 
   handleFieldChange = (fieldType, fieldValue) => {
-    if (fieldType === "searchTags") {
+    if (fieldType === 'searchTags') {
       this.setState({ searchTags: fieldValue });
     } else {
       this.setState({
         [fieldType]: fieldValue,
-        errors: { ...this.state.errors, [fieldType]: false }
+        errors: { ...this.state.errors, [fieldType]: false },
       });
     }
   };
+
+  validateFields = () => {
+    let { groupType, phone, addressField, name, bio } = this.state.errors;
+    if (this.state.groupType === '') {
+      groupType = true;
+    }
+    if (this.state.bio === '') {
+      bio = true;
+    }
+    if (!validator.isNumeric(this.state.phNo1, { no_symbols: true })
+      || !validator.isNumeric(this.state.phNo2, { no_symbols: true })
+      || !validator.isNumeric(this.state.phNo3, { no_symbols: true })
+      || this.state.phNo1.length + this.state.phNo2.length + this.state.phNo3.length !== 10) {
+      phone = true;
+    } else {
+      phone = false;
+    }
+    if (!validator.isLength(this.state.zip, { min: 6, max: 6 })
+      || !validator.isNumeric(this.state.zip, { no_symbols: true })
+      || validator.isEmpty(this.state.address, { ignore_whitespace: true })
+      || validator.isEmpty(this.state.address2, { ignore_whitespace: true })
+      || validator.isEmpty(this.state.city, { ignore_whitespace: true })
+      || validator.isEmpty(this.state.state, { ignore_whitespace: true })) {
+      addressField = true;
+    } else {
+      addressField = false;
+    }
+    if (validator.isEmpty(this.state.firstName, { ignore_whitespace: true }) || validator.isEmpty(this.state.lastName, { ignore_whitespace: true })) {
+      name = true;
+    } else {
+      name = false;
+    }
+    this.setState({ errors: { ...this.state.errors, phone, groupType, addressField, name, bio } });
+    return !phone && !groupType && !addressField && !name && !bio;
+  }
 
   submitGroupAccountDetails = () => {
     const searchTags = this.state.searchTags.map(item => (
       item.value
     )).join(',');
-    const data = {
-      contact_first_name: this.state.firstName,
-      contact_last_name: this.state.lastName,
-      description: this.state.bio,
-      tags: searchTags,
-      website: this.state.website,
-      phone: `${this.state.phNo1}-${this.state.phNo2}-${this.state.phNo3}`,
-      address: this.state.address,
-      address_2: this.state.address2,
-      city: this.state.city,
-      state: this.state.street,
-      zip: this.state.zip,
-      group_type: this.state.groupType,
-    };
-    this.props.submitGroupDetails(data);
+    if (this.validateFields()) {
+      const data = {
+        contact_first_name: this.state.firstName,
+        contact_last_name: this.state.lastName,
+        description: this.state.bio,
+        tags: searchTags,
+        website: this.state.website,
+        phone: `${this.state.phNo1}-${this.state.phNo2}-${this.state.phNo3}`,
+        address: this.state.address,
+        address_2: this.state.address2,
+        city: this.state.city,
+        state: this.state.street,
+        zip: this.state.zip,
+        group_type: this.state.groupType,
+      };
+      this.props.submitGroupDetails(data);
+    }
   };
 
   renderMultiValueItems = (selectProps) => {
@@ -78,6 +120,11 @@ export default class DetailsEntry extends React.Component {
   render() {
     return (
       <React.Fragment>
+        <GroupStyled.HeadingWrapper>
+          <GroupStyled.InnerHeading>
+            Create your profile
+          </GroupStyled.InnerHeading>
+        </GroupStyled.HeadingWrapper>
         <GroupStyled.HeadingWrapper>
           <GroupStyled.SubHeading>
             Public information
@@ -100,7 +147,7 @@ export default class DetailsEntry extends React.Component {
               />
               <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
-                  ? "Please enter a valid group bio"
+                  ? 'Please enter a valid group bio'
                   : null}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
@@ -117,7 +164,7 @@ export default class DetailsEntry extends React.Component {
                   )
                 }
               >
-                <option value="0" key="0">
+                <option value="" key="0">
                   Choose One
                 </option>
                 {this.props.groupTypes.map((item, index) => (
@@ -126,12 +173,12 @@ export default class DetailsEntry extends React.Component {
                   </option>
                 ))}
               </GroupStyled.Select>
-              {/* <GroupStyled.ErrorMsg isError={this.state.errors.profession}>
+              <GroupStyled.ErrorMsg isError={this.state.errors.groupType}>
                 {
-                  this.state.errors.profession ? 'Please choose your Group Type' :
-                    'You can choose a maximum of 3 categories'
+                  this.state.errors.groupType ? 'Please choose your group type' :
+                    null
                 }
-              </GroupStyled.ErrorMsg> */}
+              </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
@@ -255,12 +302,12 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange("lastName", event.target.value);
               }}
             />
-            {/* <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
+            <GroupStyled.ErrorMsg isError={this.state.errors.name}>
               {
-                this.state.errors.bio ? 'Please enter a valid event title' :
+                this.state.errors.name ? 'Please enter a first name and last name' :
                   null
               }
-            </GroupStyled.ErrorMsg> */}
+            </GroupStyled.ErrorMsg>
           </GroupStyled.WrapsInput>
         </GroupStyled.InputWrapper>
         <GroupStyled.InputWrapper>
@@ -268,7 +315,7 @@ export default class DetailsEntry extends React.Component {
           <GroupStyled.WrapsInput>
             <GroupStyled.PhoneNo
               small
-              type="number"
+              type="tel"
               maxLength="3"
               placeholder="***"
               value={this.state.phNo1}
@@ -278,7 +325,7 @@ export default class DetailsEntry extends React.Component {
             />
             <GroupStyled.PhoneNo
               small
-              type="number"
+              type="tel"
               maxLength="3"
               placeholder="***"
               value={this.state.phNo2}
@@ -289,6 +336,7 @@ export default class DetailsEntry extends React.Component {
             <GroupStyled.PhoneNo
               small
               lastDigit
+              type="tel"
               maxLength="4"
               placeholder="****"
               value={this.state.phNo3}
@@ -296,12 +344,12 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange("phNo3", event.target.value);
               }}
             />
-            {/* <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
+            <GroupStyled.ErrorMsg isError={this.state.errors.phone}>
               {
-                this.state.errors.bio ? 'Please enter a valid event title' :
+                this.state.errors.phone ? 'Please enter a valid phone number' :
                   null
               }
-            </GroupStyled.ErrorMsg> */}
+            </GroupStyled.ErrorMsg>
           </GroupStyled.WrapsInput>
         </GroupStyled.InputWrapper>
         <GroupStyled.InputWrapper>
@@ -342,19 +390,19 @@ export default class DetailsEntry extends React.Component {
             <GroupStyled.ZipCode
               small
               placeholder="Zip"
-              type="number"
+              type="tel"
               maxLength="6"
               value={this.state.zip}
               onChange={(event) => {
                 this.handleFieldChange("zip", event.target.value);
               }}
             />
-            {/* <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
+            <GroupStyled.ErrorMsg isError={this.state.errors.addressField}>
               {
-                this.state.errors.bio ? 'Please enter a valid event title' :
+                this.state.errors.addressField ? 'Please enter a valid address' :
                   null
               }
-            </GroupStyled.ErrorMsg> */}
+            </GroupStyled.ErrorMsg>
           </GroupStyled.WrapsInput>
         </GroupStyled.InputWrapper>
         <GroupStyled.OptionWrapper>

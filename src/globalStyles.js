@@ -155,7 +155,6 @@ injectGlobal`
   input[type='file']{
     opacity: 0;
     cursor: pointer;
-    font-size: 0;
 }
 
 .round-radio ul li{
@@ -181,7 +180,7 @@ injectGlobal`
   z-index: 1;
   -webkit-transition: all 0.25s linear;
   @media(min-width: 768px) {
-    padding: 25px 25px 25px 80px;
+    padding: 25px 25px 9px 80px;
   }
   @media(min-width:1025px){
     font-size:20px;

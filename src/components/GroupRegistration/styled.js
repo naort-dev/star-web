@@ -6,7 +6,7 @@ const GroupStyled = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
-  @media(min-width: 1025px) {
+  @media(min-width: 768px) {
     padding: 0 40px;
   }
 `;
@@ -14,6 +14,10 @@ GroupStyled.ContentWrapper = styled.div`
 GroupStyled.HeadingWrapper = styled.div`
   text-align: center;
   margin: 10px 0;
+  margin-bottom: 30px;
+  @media(min-width: 768px) {
+    margin: 20px 0;
+  }
 `;
 
 GroupStyled.SubHeading = styled.span`
@@ -25,15 +29,13 @@ GroupStyled.SubHeading = styled.span`
 
 GroupStyled.SubHeadingDescription = styled.span`
   display: block;
-  font-size: 14px;
+  font-size: 17px;
   margin-top: 5px;
   font-family: 'Ubuntu-Light';
 `;
 
-GroupStyled.InnerHeading = styled.span`
-  display: block;
-  font-size: 16px;
-  margin-top: 5px;
+GroupStyled.InnerHeading = GroupStyled.SubHeadingDescription.extend`
+  color: #7B797A;
   font-family: 'Ubuntu-Regular';
 `;
 
@@ -155,6 +157,7 @@ GroupStyled.InputArea = styled.textarea`
   }
   @media(min-width:1025px){
     margin-top:0;
+    margin: 4px 0;
     font-size:13px;
   }
   @media(min-width:1920px){
@@ -166,7 +169,10 @@ GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
   width: ${props => (props.lastDigit ? '53px' : '50px')};;
   height: 32px;
   margin-right: 12px;
-`.withComponent('input');
+  @media(min-width: 1025px) {
+    margin-right: 12px;
+  }
+`;
 
 GroupStyled.CityInfo = GroupStyled.InputArea.extend`
   width: 50%;
@@ -177,11 +183,14 @@ GroupStyled.AddressDetails = GroupStyled.InputArea.extend`
   width: calc(25% - 10px);
   height: 40px;
   margin-left: 10px;
+  @media(min-width: 1025px) {
+    margin-left: 10px;
+  }
 `;
 
 GroupStyled.ZipCode = GroupStyled.AddressDetails.extend`
   vertical-align: top;
-`.withComponent('input');
+`;
 
 GroupStyled.ErrorMsg = styled.div`
   color:red;
@@ -226,12 +235,19 @@ GroupStyled.ControlWrapper = styled.div`
   width: 100%;
   display: flex;
   padding: 13px 12px;
-  justify-content: flex-end;
+  justify-content: ${props => (props.multiple ? 'space-between' : 'flex-end')};
   @media(min-width: 1025px) {
     box-shadow: none;
-    padding: 26px 12px;
-    border-top: 1px solid rgb(34, 34, 34);
+    padding: 26px 0;
+    border-top: ${props => (props.multiple ? 'none' : '1px solid rgb(34, 34, 34)')};
   }
+`;
+
+GroupStyled.SkipStep = styled.span`
+  font-family: 'Ubuntu-Light';
+  padding: 10px 0;
+  color: #E5E5E5;
+  cursor: pointer;
 `;
 
 GroupStyled.ControlButton = styled.button`
@@ -254,6 +270,17 @@ GroupStyled.ControlButton = styled.button`
     background-color: #b6b6b6;
     color: #676767;
     border-color: #b6b6b6;
+  }
+`;
+
+GroupStyled.GroupName = styled.span`
+  display: block;
+  padding: 20px;
+  height: 50%;
+  font-family: 'Ubuntu-Bold';
+  font-size: 16px;
+  @media(min-width: 768px) {
+    padding: 30px;
   }
 `;
 
@@ -286,25 +313,77 @@ GroupStyled.ProfileInputWrapper = styled.span`
   background: url('assets/images/upload.svg') no-repeat;
   width: 28px;
   height: 28px;
-  display: inline-block;
+  display: block;
+  margin: 0 auto;
 `;
 
 GroupStyled.ProfileImage = styled.span`
   position: absolute;
-  bottom: -29px;
-  left: 6px;
-  width: 70px;
-  height: 70px;
+  bottom: -18px;
+  left: 17px;
+  width: 40px;
+  height: 40px;
   display: inline-block;
   border-radius: 50%;
   background: ${props => (props.imageUrl && `url(${props.imageUrl})`)};
   background-repeat: no-repeat;
   background-size: cover;
+  @media(min-width: 768px) {
+    bottom: -29px;
+    left: 27px;
+    width: 70px;
+    height: 70px;
+  }
+`;
+
+GroupStyled.ConfirmationWrapper = styled.div`
+  font-family: Ubuntu-Light;
+  margin-top: 40px;
+  color: #565656;
+`;
+
+GroupStyled.ConfirmationHead = styled.span`
+
+`;
+
+GroupStyled.confirmationSteps = styled.span`
+  margin: 10px 0;
+  margin-left: 15px;
+  display: block;
+`;
+
+GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
+  margin: 10px 0;
+`;
+
+GroupStyled.DoneButtonWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+`;
+
+GroupStyled.DoneButton = styled.button`
+  background-color: #fff;
+  color: #FF6C58;
+  padding: 6px 50px;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
 `;
 
 GroupStyled.UploadInput = styled.input`
   width: 100%;
   height: 100%;
+  cursor: pointer;
 `;
 
 GroupStyled.OptionWrapper = styled.div`
