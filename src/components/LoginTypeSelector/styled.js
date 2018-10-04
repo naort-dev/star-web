@@ -113,7 +113,7 @@ TypeSelectorWrapper.ComponentWrapperScroll = styled(Scrollbars)`
   }
 `;
 TypeSelectorWrapper.ContinueButton = styled.button`
-  background-color: rgb(255, 108, 88);
+  background-color: #e44740;
   color: rgb(255, 255, 255);
   width: 100%;
   text-align: center;
@@ -125,10 +125,7 @@ TypeSelectorWrapper.ContinueButton = styled.button`
   text-decoration: none;
   outline: none;
   border-radius: 5px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: rgb(255, 108, 88);
-  border-image: initial;
+  border: 2px solid #e44740;
   @media(min-width: 1920px) {
     font-size: 20px;
   }

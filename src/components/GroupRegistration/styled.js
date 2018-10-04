@@ -6,8 +6,11 @@ const GroupStyled = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
+`;
+
+GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
   @media(min-width: 768px) {
-    padding: 0 40px;
+    padding: 0 60px;
   }
 `;
 
@@ -76,7 +79,7 @@ GroupStyled.Select = styled.select`
   border-radius: 2px;
   @media(min-width:768px){
     margin-top:0;
-    height:40px;
+    height:35px;
   }
   @media(min-width:1025px){
     margin-top:0;
@@ -101,19 +104,19 @@ GroupStyled.InputWrapper = styled.div`
     align-items: flex-start;
     margin: 0;
     flex-direction: row;
+    justify-content: flex-end;
     margin: 20px 0;
   }
 `;
 
 GroupStyled.Label = styled.div`
-  color:#333333;
-  font-family: 'Ubuntu-Bold';
+  color:#797979;
+  font-family: 'Ubuntu-Regular';
   font-size:13px;
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
     display:flex;
-    width: 40%;
     align-items:center;
     padding-right: 10px;
     padding-bottom: 10px;
@@ -132,7 +135,7 @@ GroupStyled.WrapsInput = styled.div`
     }
   }
   @media(min-width:768px){
-    width: 60%;
+    width: 77%;
   }
   @media(min-width:1025){
     width:352px;
@@ -142,11 +145,12 @@ GroupStyled.WrapsInput = styled.div`
 GroupStyled.InputArea = styled.textarea`
   font-family: 'Ubuntu-Regular';
   color: #333333;
-  font-size:13px;
+  font-size: 14px;
   text-align:left;
   outline:none;
   width: 100%;
-  height: ${props => (props.small ? 'auto' : '60px')};
+  height: ${props => (props.small ? '40px' : '80px')};
+  margin: 4px 0;
   padding: 8px 8px;
   resize: none;
   background-color: white;
@@ -157,8 +161,6 @@ GroupStyled.InputArea = styled.textarea`
   }
   @media(min-width:1025px){
     margin-top:0;
-    margin: 4px 0;
-    font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -166,8 +168,8 @@ GroupStyled.InputArea = styled.textarea`
 `;
 
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
-  width: ${props => (props.lastDigit ? '53px' : '50px')};;
-  height: 32px;
+  width: ${props => (props.lastDigit ? '58px' : '53px')};;
+  height: 35px;
   margin-right: 12px;
   @media(min-width: 1025px) {
     margin-right: 12px;
@@ -251,7 +253,7 @@ GroupStyled.SkipStep = styled.span`
 `;
 
 GroupStyled.ControlButton = styled.button`
-  background-color: rgb(255,108,88);
+  background-color: #e44740;
   color: rgb(255,255,255);
   text-align: center;
   display: inline-block;
@@ -262,9 +264,7 @@ GroupStyled.ControlButton = styled.button`
   text-decoration: none;
   outline: none;
   border-radius: 5px;
-  border-width: 2px;
-  border-style: solid;
-  border-color: rgb(255, 108, 88);
+  border: 2px solid #e44740;
   border-image: initial;
   &:disabled {
     background-color: #b6b6b6;
@@ -395,7 +395,7 @@ GroupStyled.OptionWrapper = styled.div`
 GroupStyled.CheckBoxWrapper = styled.div`
   padding: 10px 0;
   @media(min-width: 768px) {
-    width: 60%;
+    width: 76%;
   }
 `;
 GroupStyled.CheckBoxLabel = styled.div`

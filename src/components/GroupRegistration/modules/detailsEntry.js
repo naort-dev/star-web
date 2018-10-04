@@ -1,6 +1,6 @@
 import React from 'react';
-import SelectTags from '../../SelectTag';
 import validator from 'validator';
+import SelectTags from '../../SelectTag';
 import GroupStyled from '../styled';
 
 export default class DetailsEntry extends React.Component {
@@ -63,7 +63,7 @@ export default class DetailsEntry extends React.Component {
     } else {
       phone = false;
     }
-    if (!validator.isLength(this.state.zip, { min: 6, max: 6 })
+    if (!validator.isLength(this.state.zip, { min: 5, max: 5 })
       || !validator.isNumeric(this.state.zip, { no_symbols: true })
       || validator.isEmpty(this.state.address, { ignore_whitespace: true })
       || validator.isEmpty(this.state.address2, { ignore_whitespace: true })
@@ -119,7 +119,7 @@ export default class DetailsEntry extends React.Component {
 
   render() {
     return (
-      <React.Fragment>
+      <GroupStyled.DetailsWrapper>
         <GroupStyled.HeadingWrapper>
           <GroupStyled.InnerHeading>
             Create your profile
@@ -147,7 +147,7 @@ export default class DetailsEntry extends React.Component {
               />
               <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
-                  ? 'Please enter a valid group bio'
+                  ? 'Please enter a group bio'
                   : null}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
@@ -182,18 +182,19 @@ export default class DetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Group Website</GroupStyled.Label>
+            <GroupStyled.Label>Website</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.InputArea
+                small
                 placeholder="www.yoursite.org"
                 value={this.state.website}
                 onChange={(event) => {
-                  this.handleFieldChange("website", event.target.value);
+                  this.handleFieldChange('website', event.target.value);
                 }}
               />
               <GroupStyled.ErrorMsg isError={this.state.errors.website}>
                 {this.state.errors.website
-                  ? "Please enter a valid event title"
+                  ? 'Please enter a valid event title'
                   : null}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
@@ -265,12 +266,6 @@ export default class DetailsEntry extends React.Component {
                   );
                 }}
               />
-              {/* <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
-                {
-                  this.state.errors.bio ? 'Please enter a valid event title' :
-                    null
-                }
-              </GroupStyled.ErrorMsg> */}
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
         </GroupStyled.InputwrapperDiv>
@@ -291,7 +286,7 @@ export default class DetailsEntry extends React.Component {
               placeholder="First name"
               value={this.state.firstName}
               onChange={(event) => {
-                this.handleFieldChange("firstName", event.target.value);
+                this.handleFieldChange('firstName', event.target.value);
               }}
             />
             <GroupStyled.InputArea
@@ -299,7 +294,7 @@ export default class DetailsEntry extends React.Component {
               placeholder="Last name"
               value={this.state.lastName}
               onChange={(event) => {
-                this.handleFieldChange("lastName", event.target.value);
+                this.handleFieldChange('lastName', event.target.value);
               }}
             />
             <GroupStyled.ErrorMsg isError={this.state.errors.name}>
@@ -317,20 +312,20 @@ export default class DetailsEntry extends React.Component {
               small
               type="tel"
               maxLength="3"
-              placeholder="***"
+              placeholder="###"
               value={this.state.phNo1}
               onChange={(event) => {
-                this.handleFieldChange("phNo1", event.target.value);
+                this.handleFieldChange('phNo1', event.target.value);
               }}
             />
             <GroupStyled.PhoneNo
               small
               type="tel"
               maxLength="3"
-              placeholder="***"
+              placeholder="###"
               value={this.state.phNo2}
               onChange={(event) => {
-                this.handleFieldChange("phNo2", event.target.value);
+                this.handleFieldChange('phNo2', event.target.value);
               }}
             />
             <GroupStyled.PhoneNo
@@ -338,10 +333,10 @@ export default class DetailsEntry extends React.Component {
               lastDigit
               type="tel"
               maxLength="4"
-              placeholder="****"
+              placeholder="####"
               value={this.state.phNo3}
               onChange={(event) => {
-                this.handleFieldChange("phNo3", event.target.value);
+                this.handleFieldChange('phNo3', event.target.value);
               }}
             />
             <GroupStyled.ErrorMsg isError={this.state.errors.phone}>
@@ -360,7 +355,7 @@ export default class DetailsEntry extends React.Component {
               placeholder="123 Main stl"
               value={this.state.address}
               onChange={(event) => {
-                this.handleFieldChange("address", event.target.value);
+                this.handleFieldChange('address', event.target.value);
               }}
             />
             <GroupStyled.InputArea
@@ -368,7 +363,7 @@ export default class DetailsEntry extends React.Component {
               placeholder="Address 2"
               value={this.state.address2}
               onChange={(event) => {
-                this.handleFieldChange("address2", event.target.value);
+                this.handleFieldChange('address2', event.target.value);
               }}
             />
             <GroupStyled.CityInfo
@@ -376,7 +371,7 @@ export default class DetailsEntry extends React.Component {
               placeholder="City"
               value={this.state.city}
               onChange={(event) => {
-                this.handleFieldChange("city", event.target.value);
+                this.handleFieldChange('city', event.target.value);
               }}
             />
             <GroupStyled.AddressDetails
@@ -384,17 +379,17 @@ export default class DetailsEntry extends React.Component {
               placeholder="State"
               value={this.state.state}
               onChange={(event) => {
-                this.handleFieldChange("state", event.target.value);
+                this.handleFieldChange('state', event.target.value);
               }}
             />
             <GroupStyled.ZipCode
               small
               placeholder="Zip"
               type="tel"
-              maxLength="6"
+              maxLength="5"
               value={this.state.zip}
               onChange={(event) => {
-                this.handleFieldChange("zip", event.target.value);
+                this.handleFieldChange('zip', event.target.value);
               }}
             />
             <GroupStyled.ErrorMsg isError={this.state.errors.addressField}>
@@ -411,7 +406,7 @@ export default class DetailsEntry extends React.Component {
               id="checkbox_container"
               onClick={() =>
                 this.setState({
-                  userConfirmation: !this.state.userConfirmation
+                  userConfirmation: !this.state.userConfirmation,
                 })
               }
             >
@@ -440,7 +435,7 @@ export default class DetailsEntry extends React.Component {
             Continue
           </GroupStyled.ControlButton>
         </GroupStyled.ControlWrapper>
-      </React.Fragment>
+      </GroupStyled.DetailsWrapper>
     );
   }
 }

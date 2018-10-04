@@ -162,7 +162,7 @@ export default class CoverUpload extends React.Component {
           <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })}>
             <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
           </GroupStyled.ProfileInputWrapper>
-        </GroupStyled.SecondaryCoverImage> 
+        </GroupStyled.SecondaryCoverImage>
       );
     });
   }
