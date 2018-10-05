@@ -97,7 +97,7 @@ class RequestTemplates extends React.Component {
 
                   </Templates.WrapsInput>
                   {
-                    !getMobileOperatingSystem() && checkMediaRecorderSupport() && (window.navigator.indexOf("MSIE ") > -1 || window.navigator.indexOf("Trident/") > -1) ?
+                    !getMobileOperatingSystem() && checkMediaRecorderSupport() && (window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1) ?
                     <Templates.WrapsAudioInput>
                       <AudioRecorder key="for" target="for"  {...this.props}/>
                     </Templates.WrapsAudioInput>
