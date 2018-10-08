@@ -60,16 +60,23 @@ export default class CoverUpload extends React.Component {
         if (this.state.currentImage.indexOf('secondaryImage') > -1) {
           const { secondaryImages } = this.state;
           const index = this.state.currentImage.split('-')[1];
-          secondaryImages[index] = {
-            fileName: resp,
-            image,
-          };
+          if (!secondaryImages.length) {
+            secondaryImages.push({
+              fileName: resp,
+              image,
+            });
+          } else {
+            secondaryImages[index] = {
+              fileName: resp,
+              image,
+            };
+          }
           this.setState({ secondaryImages });
         } else {
           this.props.onComplete(this.state.currentImage, resp, image);
           this.setState({ [this.state.currentImage]: image });
         }
-        this.setState({ currentImage: null })
+        this.setState({ currentImage: null });
       })
   }
 
@@ -142,13 +149,15 @@ export default class CoverUpload extends React.Component {
 
   addNewCover = () => {
     const { secondaryImages } = this.state;
-    if (!secondaryImages.length || secondaryImages[secondaryImages.length - 1].image !== null) {
-      secondaryImages.push({
-        fileName: null,
-        image: null,
-      });
-      this.setState({ secondaryImages });
-    }
+    this.inputRef.click();
+    this.setState({ currentImage: `secondaryImage-${secondaryImages.length}` });
+    // if (!secondaryImages.length || secondaryImages[secondaryImages.length - 1].image !== null) {
+    //   secondaryImages.push({
+    //     fileName: null,
+    //     image: null,
+    //   });
+    //   this.setState({ secondaryImages });
+    // }
   }
 
   renderSecondaryImages = () => {
@@ -186,7 +195,7 @@ export default class CoverUpload extends React.Component {
             imageUrl={this.state.featuredImage}
           >
             <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: 'featuredImage' })}>
-              <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+              <GroupStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
             </GroupStyled.ProfileInputWrapper>
             <GroupStyled.ProfileImage imageUrl={this.props.profileImage} />
           </GroupStyled.CoverImage>

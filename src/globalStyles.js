@@ -194,9 +194,8 @@ injectGlobal`
   border-radius: 100%;
   height: 25px;
   width: 25px;
-  top: 30px;
+  top: 25px;
   left: 20px;
-
 	transition: border .25s linear;
 	-webkit-transition: border .25s linear;
 }

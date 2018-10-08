@@ -116,9 +116,11 @@ export default class ProfileUpload extends React.Component {
             Have your group logo? Upload it now.
           </GroupStyled.InnerDescription>
         </GroupStyled.HeadingWrapper>
-        <GroupStyled.ProfileInputWrapper>
-          <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
-        </GroupStyled.ProfileInputWrapper>
+        <GroupStyled.ProfileInputButton>
+          <GroupStyled.ProfileInputWrapper>
+            <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+          </GroupStyled.ProfileInputWrapper>
+        </GroupStyled.ProfileInputButton>
         {
           this.state.cropMode && this.state.cropImage &&
             <ImageCropper

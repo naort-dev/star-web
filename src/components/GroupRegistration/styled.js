@@ -6,6 +6,7 @@ const GroupStyled = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
+  height: 100%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -142,6 +143,26 @@ GroupStyled.WrapsInput = styled.div`
   }
 `;
 
+GroupStyled.CustomInput = styled.div`
+  width: 100%;
+  position: relative;
+`;
+
+GroupStyled.CustomPlaceholder = styled.span`
+  position: absolute;
+  left: 10px;
+  right: 0;
+  top: 10px;
+  font-family: 'Ubuntu-Regular';
+  color: #6d6d6d;
+  font-size: 14px;
+  pointer-events: none;
+`;
+
+GroupStyled.HighlightText = styled.span`
+  color: #FF6C58;
+`;
+
 GroupStyled.InputArea = styled.textarea`
   font-family: 'Ubuntu-Regular';
   color: #333333;
@@ -179,20 +200,28 @@ GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
 GroupStyled.CityInfo = GroupStyled.InputArea.extend`
   width: 50%;
   height: 40px;
-`;
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
+`.withComponent('div');
 
 GroupStyled.AddressDetails = GroupStyled.InputArea.extend`
   width: calc(25% - 10px);
   height: 40px;
   margin-left: 10px;
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
   @media(min-width: 1025px) {
     margin-left: 10px;
   }
-`;
+`.withComponent('div');
 
 GroupStyled.ZipCode = GroupStyled.AddressDetails.extend`
   vertical-align: top;
-`;
+  display: inline-block;
+  padding: 0;
+`.withComponent('div');
 
 GroupStyled.ErrorMsg = styled.div`
   color:red;
@@ -201,7 +230,7 @@ GroupStyled.ErrorMsg = styled.div`
   font-family: 'Ubuntu-light';
   text-align:left;
   ${props => !props.isError && ({
-    color: "grey"
+    color: 'grey',
   })
   }
 `;
@@ -253,7 +282,7 @@ GroupStyled.SkipStep = styled.span`
 `;
 
 GroupStyled.ControlButton = styled.button`
-  background-color: #e44740;
+  background-color: #FF6C58;
   color: rgb(255,255,255);
   text-align: center;
   display: inline-block;
@@ -264,7 +293,7 @@ GroupStyled.ControlButton = styled.button`
   text-decoration: none;
   outline: none;
   border-radius: 5px;
-  border: 2px solid #e44740;
+  border: 2px solid #FF6C58;
   border-image: initial;
   &:disabled {
     background-color: #b6b6b6;
@@ -310,11 +339,22 @@ GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
 `;
 
 GroupStyled.ProfileInputWrapper = styled.span`
-  background: url('assets/images/upload.svg') no-repeat;
+  background: url('assets/images/plus-icon.svg') no-repeat;
   width: 28px;
   height: 28px;
   display: block;
   margin: 0 auto;
+`;
+
+GroupStyled.ProfileInputButton = styled.div`
+  display: flex;
+  height: calc(100% - 86px);
+  align-items: center;
+  justify-content: center;
+  ${GroupStyled.ProfileInputWrapper} {
+    width: 60px;
+    height: 60px;
+  }
 `;
 
 GroupStyled.ProfileImage = styled.span`

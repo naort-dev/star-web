@@ -1,5 +1,6 @@
 import React from 'react';
 import validator from 'validator';
+import PlacesAutoComplete from '../../PlacesAutoComplete';
 import SelectTags from '../../SelectTag';
 import GroupStyled from '../styled';
 
@@ -36,6 +37,13 @@ export default class DetailsEntry extends React.Component {
     userConfirmation: false,
   };
 
+  setAddress = (address) => {
+    const zip = address.zip ? address.zip : '';
+    const state = address.state ? address.state : '';
+    const city = address.city ? address.city : '';
+    this.setState({ zip, state, city });
+  }
+
   handleFieldChange = (fieldType, fieldValue) => {
     if (fieldType === 'searchTags') {
       this.setState({ searchTags: fieldValue });
@@ -44,6 +52,11 @@ export default class DetailsEntry extends React.Component {
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
       });
+      if (fieldType === 'phNo1' && fieldValue.length === 3) {
+        this.phNo2.focus();
+      } else if (fieldType === 'phNo2' && fieldValue.length === 3) {
+        this.phNo3.focus();
+      }
     }
   };
 
@@ -63,18 +76,22 @@ export default class DetailsEntry extends React.Component {
     } else {
       phone = false;
     }
-    if (!validator.isLength(this.state.zip, { min: 5, max: 5 })
-      || !validator.isNumeric(this.state.zip, { no_symbols: true })
-      || validator.isEmpty(this.state.address, { ignore_whitespace: true })
-      || validator.isEmpty(this.state.address2, { ignore_whitespace: true })
-      || validator.isEmpty(this.state.city, { ignore_whitespace: true })
-      || validator.isEmpty(this.state.state, { ignore_whitespace: true })) {
-      addressField = true;
+    if (validator.isEmpty(this.state.address, { ignore_whitespace: true })) {
+      addressField = 'Please enter an Address';
+    } else if (validator.isEmpty(this.state.city, { ignore_whitespace: true })) {
+      addressField = 'Please enter a city';
+    } else if (validator.isEmpty(this.state.state, { ignore_whitespace: true })) {
+      addressField = 'Please enter a state';
+    } else if (!validator.isLength(this.state.zip, { min: 5, max: 5 })
+    || !validator.isNumeric(this.state.zip, { no_symbols: true })) {
+      addressField = 'Please enter a zip code';
     } else {
       addressField = false;
     }
-    if (validator.isEmpty(this.state.firstName, { ignore_whitespace: true }) || validator.isEmpty(this.state.lastName, { ignore_whitespace: true })) {
-      name = true;
+    if (validator.isEmpty(this.state.firstName, { ignore_whitespace: true })) {
+      name = 'Please Enter a first name';
+    } else if (validator.isEmpty(this.state.lastName, { ignore_whitespace: true })) {
+      name = 'Please Enter a last name';
     } else {
       name = false;
     }
@@ -137,14 +154,22 @@ export default class DetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Group bio</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
-                placeholder="Enter information about your group.
-                Note: Help Fans and Stars find you in search by including terms associated with your group."
-                value={this.state.bio}
-                onChange={(event) => {
-                  this.handleFieldChange('bio', event.target.value);
-                }}
-              />
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  value={this.state.bio}
+                  onChange={(event) => {
+                    this.handleFieldChange('bio', event.target.value);
+                  }}
+                />
+                {
+                  !this.state.bio ?
+                    <GroupStyled.CustomPlaceholder>
+                      Enter information about your group.<br />
+                      Note: Help Fans and Stars find you in search by including terms associated with your group.
+                    </GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
               <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
                   ? 'Please enter a group bio'
@@ -199,7 +224,7 @@ export default class DetailsEntry extends React.Component {
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
-          <GroupStyled.InputWrapper>
+          {/* <GroupStyled.InputWrapper>
             <GroupStyled.Label>Search tags</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <SelectTags
@@ -218,54 +243,78 @@ export default class DetailsEntry extends React.Component {
                 Add hashtags to help Fans find you quicker
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper>
+          </GroupStyled.InputWrapper> */}
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Social Links</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
-                small
-                placeholder="www.facebook.com"
-                value={this.state.socialMedia.facebook}
-                onChange={(event) => {
-                  this.handleFieldChange(
-                    'socialMedia',
-                    { facebook: event.target.value }
-                  );
-                }}
-              />
-              <GroupStyled.InputArea
-                small
-                placeholder="www.twitter.com"
-                value={this.state.socialMedia.twitter}
-                onChange={(event) => {
-                  this.handleFieldChange(
-                    'socialMedia',
-                    { twitter: event.target.value }
-                  );
-                }}
-              />
-              <GroupStyled.InputArea
-                small
-                placeholder="www.instagram.com"
-                value={this.state.socialMedia.instagram}
-                onChange={(event) => {
-                  this.handleFieldChange(
-                    'socialMedia',
-                    { instagram: event.target.value }
-                  );
-                }}
-              />
-              <GroupStyled.InputArea
-                small
-                placeholder="www.youtube.com"
-                value={this.state.socialMedia.youtube}
-                onChange={(event) => {
-                  this.handleFieldChange(
-                    'socialMedia',
-                    { youtube: event.target.value }
-                  );
-                }}
-              />
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  value={this.state.socialMedia.facebook}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { facebook: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  !this.state.socialMedia.facebook ?
+                    <GroupStyled.CustomPlaceholder>www.facebook.com/<GroupStyled.HighlightText>add facebook</GroupStyled.HighlightText></GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  value={this.state.socialMedia.twitter}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { twitter: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  !this.state.socialMedia.twitter ?
+                    <GroupStyled.CustomPlaceholder>www.twitter.com/<GroupStyled.HighlightText>add twitter</GroupStyled.HighlightText></GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  value={this.state.socialMedia.instagram}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { instagram: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  !this.state.socialMedia.instagram ?
+                    <GroupStyled.CustomPlaceholder>www.instagram.com/<GroupStyled.HighlightText>add instagram</GroupStyled.HighlightText></GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  value={this.state.socialMedia.youtube}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { youtube: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  !this.state.socialMedia.youtube ?
+                    <GroupStyled.CustomPlaceholder>www.youtube.com/<GroupStyled.HighlightText>add youtube</GroupStyled.HighlightText></GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
         </GroupStyled.InputwrapperDiv>
@@ -299,7 +348,7 @@ export default class DetailsEntry extends React.Component {
             />
             <GroupStyled.ErrorMsg isError={this.state.errors.name}>
               {
-                this.state.errors.name ? 'Please enter a first name and last name' :
+                this.state.errors.name ? this.state.errors.name :
                   null
               }
             </GroupStyled.ErrorMsg>
@@ -311,6 +360,7 @@ export default class DetailsEntry extends React.Component {
             <GroupStyled.PhoneNo
               small
               type="tel"
+              innerRef={(node) => { this.phNo1 = node; }}
               maxLength="3"
               placeholder="###"
               value={this.state.phNo1}
@@ -323,6 +373,7 @@ export default class DetailsEntry extends React.Component {
               type="tel"
               maxLength="3"
               placeholder="###"
+              innerRef={(node) => { this.phNo2 = node; }}
               value={this.state.phNo2}
               onChange={(event) => {
                 this.handleFieldChange('phNo2', event.target.value);
@@ -333,6 +384,7 @@ export default class DetailsEntry extends React.Component {
               lastDigit
               type="tel"
               maxLength="4"
+              innerRef={(node) => { this.phNo3 = node; }}
               placeholder="####"
               value={this.state.phNo3}
               onChange={(event) => {
@@ -352,7 +404,7 @@ export default class DetailsEntry extends React.Component {
           <GroupStyled.WrapsInput>
             <GroupStyled.InputArea
               small
-              placeholder="123 Main stl"
+              placeholder="Address 1"
               value={this.state.address}
               onChange={(event) => {
                 this.handleFieldChange('address', event.target.value);
@@ -366,23 +418,55 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('address2', event.target.value);
               }}
             />
-            <GroupStyled.CityInfo
+            <GroupStyled.CityInfo>
+              <PlacesAutoComplete
+                placeholder="City"
+                value={this.state.city}
+                getAddress={this.setAddress}
+                onChange={(value) => {
+                  this.handleFieldChange('city', value);
+                }}
+              />
+            </GroupStyled.CityInfo>
+            {/* <GroupStyled.CityInfo
               small
               placeholder="City"
               value={this.state.city}
               onChange={(event) => {
                 this.handleFieldChange('city', event.target.value);
               }}
-            />
-            <GroupStyled.AddressDetails
+            /> */}
+            <GroupStyled.AddressDetails>
+              <PlacesAutoComplete
+                placeholder="State"
+                value={this.state.state}
+                getAddress={this.setAddress}
+                onChange={(value) => {
+                  this.handleFieldChange('state', value);
+                }}
+              />
+            </GroupStyled.AddressDetails>
+            {/* <GroupStyled.AddressDetails
               small
               placeholder="State"
               value={this.state.state}
               onChange={(event) => {
                 this.handleFieldChange('state', event.target.value);
               }}
-            />
-            <GroupStyled.ZipCode
+            /> */}
+            <GroupStyled.ZipCode>
+              <PlacesAutoComplete
+                placeholder="Zip"
+                type="tel"
+                maxLength="5"
+                value={this.state.zip}
+                getAddress={this.setAddress}
+                onChange={(value) => {
+                  this.handleFieldChange('zip', value);
+                }}
+              />
+            </GroupStyled.ZipCode>
+            {/* <GroupStyled.ZipCode
               small
               placeholder="Zip"
               type="tel"
@@ -391,10 +475,10 @@ export default class DetailsEntry extends React.Component {
               onChange={(event) => {
                 this.handleFieldChange('zip', event.target.value);
               }}
-            />
+            /> */}
             <GroupStyled.ErrorMsg isError={this.state.errors.addressField}>
               {
-                this.state.errors.addressField ? 'Please enter a valid address' :
+                this.state.errors.addressField ? this.state.errors.addressField :
                   null
               }
             </GroupStyled.ErrorMsg>
