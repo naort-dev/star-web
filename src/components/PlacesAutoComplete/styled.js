@@ -12,6 +12,9 @@ PlacesStyled.Input = styled.input`
   border: none;
   outline: none;
   padding: 8px 8px;
+  font-family: 'Ubuntu-Regular';
+  font-size: 14px;
+  color: #333333;
 `;
 
 PlacesStyled.ListWrapper = styled.ul`

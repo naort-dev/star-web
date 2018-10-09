@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { updateGroupAccount } from '../../services/groupRegistration';
+import { updateGroupAccount, updateSocialLinks } from '../../services/userRegistration';
 import GroupStyled from './styled';
 import DetailsEntry from './modules/detailsEntry';
 import ProfileUpload from './modules/profileUpload';
@@ -48,12 +48,15 @@ class GroupRegistration extends React.Component {
     });
   }
   
-  submitGroupAccountDetails = (data) => {
-    updateGroupAccount(data).then((success) => {
-      if (success) {
-        this.props.changeStep(this.props.currentStep + 1);
-      }
-    });
+  submitGroupAccountDetails = (accountDetails, socialLinks) => {
+    const groupUpdate = updateGroupAccount(accountDetails);
+    const socialUpdate = updateSocialLinks(socialLinks);
+    Promise.all([groupUpdate, socialUpdate])
+      .then((success) => {
+        if (success) {
+          this.props.changeStep(this.props.currentStep + 1);
+        }
+      });
   };
 
   imageUpload = (secondaryImages) => {

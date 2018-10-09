@@ -156,11 +156,12 @@ GroupStyled.CustomPlaceholder = styled.span`
   font-family: 'Ubuntu-Regular';
   color: #6d6d6d;
   font-size: 14px;
-  pointer-events: none;
+  pointer-events: ${props => (props.activePlaceHolder ? 'auto' : 'none')};
 `;
 
 GroupStyled.HighlightText = styled.span`
   color: #FF6C58;
+  pointer-events: auto;
 `;
 
 GroupStyled.InputArea = styled.textarea`
@@ -277,7 +278,7 @@ GroupStyled.ControlWrapper = styled.div`
 GroupStyled.SkipStep = styled.span`
   font-family: 'Ubuntu-Light';
   padding: 10px 0;
-  color: #E5E5E5;
+  color: #969696;
   cursor: pointer;
 `;
 

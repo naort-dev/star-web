@@ -7,3 +7,10 @@ export const updateGroupAccount = (data) => {
   }).then(resp => resp.data.success)
   );
 };
+
+export const updateSocialLinks = (data) => {
+  return (fetch.post(Api.modifySocialLinks, {
+    ...data,
+  }).then(resp => resp.data.success)
+  );
+};

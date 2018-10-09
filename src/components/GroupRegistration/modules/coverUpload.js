@@ -223,7 +223,7 @@ export default class CoverUpload extends React.Component {
         }
         <GroupStyled.ControlWrapper multiple>
           <GroupStyled.SkipStep onClick={() => this.props.onImageUpload(this.state.secondaryImages)}>
-            Skip this step
+            Skip for now
           </GroupStyled.SkipStep>
           <GroupStyled.ControlButton
             disabled={!this.state.featuredImage}
