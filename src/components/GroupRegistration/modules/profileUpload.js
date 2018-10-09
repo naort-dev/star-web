@@ -3,6 +3,7 @@ import EXIF from 'exif-js';
 import { awsImageUpload } from '../../../services/awsImageUpload';
 import { imageSizes } from '../../../constants/imageSizes';
 import ImageCropper from '../../ImageCropper';
+import Loader from '../../Loader';
 import GroupStyled from '../styled';
 
 export default class ProfileUpload extends React.Component {
@@ -11,6 +12,7 @@ export default class ProfileUpload extends React.Component {
     cropImage: null,
     cropMode: false,
     finalImage: null,
+    finalFile: null,
   }
 
   async onFileChange() {
@@ -22,9 +24,10 @@ export default class ProfileUpload extends React.Component {
     } else if (file) {
       const correctResolution = await this.checkResolution(file);
       if (correctResolution) {
+        this.setState({ imageLoading: true });
         await this.getImageData(file);
       } else {
-        this.setState({ imageError: { sizeError: true } });
+        this.setState({ imageError: { sizeError: true }, imageLoading: false });
       }
     }
   }
@@ -33,7 +36,7 @@ export default class ProfileUpload extends React.Component {
     this.setState({ finalImage: image });
     awsImageUpload(file, this.state.extension)
     .then((resp) => {
-      this.props.onComplete(resp, image);
+      this.setState({finalImage: image, finalFile: resp})
     })
   }
 
@@ -43,7 +46,7 @@ export default class ProfileUpload extends React.Component {
     const exif = await this.getExif(file);
     this.currentExif = exif;
     reader.onload = () => {
-      this.setState({ cropMode: true, cropImage: reader.result, extension });
+      this.setState({ cropMode: true, cropImage: reader.result, extension, imageLoading: false });
     };
     if (file) {
       reader.readAsDataURL(file);
@@ -108,28 +111,47 @@ export default class ProfileUpload extends React.Component {
   render() {
     return (
       <GroupStyled.ContentWrapper>
-        <GroupStyled.HeadingWrapper>
-          <GroupStyled.InnerHeading>
-            Pick a profile picture
-          </GroupStyled.InnerHeading>
-          <GroupStyled.InnerDescription>
-            Have your group logo? Upload it now.
-          </GroupStyled.InnerDescription>
-        </GroupStyled.HeadingWrapper>
-        <GroupStyled.ProfileInputButton>
-          <GroupStyled.ProfileInputWrapper>
-            <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
-          </GroupStyled.ProfileInputWrapper>
-        </GroupStyled.ProfileInputButton>
         {
-          this.state.cropMode && this.state.cropImage &&
-            <ImageCropper
-              exifData={this.currentExif}
-              aspectRatio={imageSizes.profile}
-              afterCrop={this.getCroppedImage}
-              closeCropper={() => this.closeCropper()}
-              cropImage={this.state.cropImage}
-            />
+          this.state.imageLoading ?
+            <Loader />
+          :
+            <React.Fragment>
+              <GroupStyled.HeadingWrapper>
+                <GroupStyled.InnerHeading>
+                  Pick a profile picture
+                </GroupStyled.InnerHeading>
+                <GroupStyled.InnerDescription>
+                  Have your group logo? Upload it now.
+                </GroupStyled.InnerDescription>
+              </GroupStyled.HeadingWrapper>
+              <GroupStyled.ProfileInputButton>
+                <GroupStyled.ProfileImageWrapper
+                  imageUrl={this.state.finalImage}
+                >
+                  <GroupStyled.ProfileInputWrapper>
+                    <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+                  </GroupStyled.ProfileInputWrapper>
+                </GroupStyled.ProfileImageWrapper>
+              </GroupStyled.ProfileInputButton>
+              {
+                this.state.cropMode && this.state.cropImage &&
+                  <ImageCropper
+                    exifData={this.currentExif}
+                    aspectRatio={imageSizes.profile}
+                    afterCrop={this.getCroppedImage}
+                    closeCropper={() => this.closeCropper()}
+                    cropImage={this.state.cropImage}
+                  />
+              }
+              <GroupStyled.ControlWrapper>
+                <GroupStyled.ControlButton
+                  disabled={!this.state.finalImage}
+                  onClick={() => this.props.onComplete(this.state.finalFile, this.state.finalImage)}
+                >
+                  Continue
+                </GroupStyled.ControlButton>
+              </GroupStyled.ControlWrapper>
+          </React.Fragment>
         }
       </GroupStyled.ContentWrapper>
     );

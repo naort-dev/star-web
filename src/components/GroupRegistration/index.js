@@ -123,7 +123,7 @@ class GroupRegistration extends React.Component {
                   <GroupStyled.ConfirmationWrapper>
                     <GroupStyled.ConfirmationHead>Most groups choose to do 3 things:</GroupStyled.ConfirmationHead>
                     <GroupStyled.confirmationSteps>
-                      1.  Invite your stars who are already on Starsona to join your group.
+                      1.  Invite your Stars who are already on Starsona to join your group.
                     </GroupStyled.confirmationSteps>
                     <GroupStyled.confirmationSteps>
                       2.  Invite other Stars who support you to join Starsona.

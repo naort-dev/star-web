@@ -178,7 +178,7 @@ injectGlobal`
   cursor: pointer;
   text-align: left;
   z-index: 1;
-  -webkit-transition: all 0.25s linear;
+
   @media(min-width: 768px) {
     padding: 25px 25px 9px 80px;
   }

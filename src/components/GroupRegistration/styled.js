@@ -6,7 +6,7 @@ const GroupStyled = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
-  height: 100%;
+  height: 96%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -190,13 +190,13 @@ GroupStyled.InputArea = styled.textarea`
 `;
 
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
-  width: ${props => (props.lastDigit ? '58px' : '53px')};;
+  width: ${props => (props.lastDigit ? '64px' : '53px')};;
   height: 35px;
   margin-right: 12px;
   @media(min-width: 1025px) {
     margin-right: 12px;
   }
-`;
+`.withComponent('input');
 
 GroupStyled.CityInfo = GroupStyled.InputArea.extend`
   width: 50%;
@@ -333,10 +333,32 @@ GroupStyled.CoverImage = styled.div`
   background-size: cover;
 `;
 
+GroupStyled.CloseButton = styled.span`
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  display: block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  background: url(assets/images/close-icon-orange.svg) center center / cover no-repeat;
+  background-position: center center;
+`;
+
 GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
   width: 100%;
   height: 300px;
   margin: 10px 0;
+`;
+
+GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
+  width: 200px;
+  height: 200px;
+  border: ${props => (props.imageUrl ? 'none' : '2px dashed #FF6C58')};
+  border-radius: 50%;
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#fff')};
+  background-repeat: no-repeat;
+  background-size: cover;
 `;
 
 GroupStyled.ProfileInputWrapper = styled.span`
@@ -349,7 +371,7 @@ GroupStyled.ProfileInputWrapper = styled.span`
 
 GroupStyled.ProfileInputButton = styled.div`
   display: flex;
-  height: calc(100% - 86px);
+  height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
   ${GroupStyled.ProfileInputWrapper} {
@@ -380,6 +402,7 @@ GroupStyled.ProfileImage = styled.span`
 GroupStyled.ConfirmationWrapper = styled.div`
   font-family: Ubuntu-Light;
   margin-top: 40px;
+  padding-left: 40px;
   color: #565656;
 `;
 

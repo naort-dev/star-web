@@ -413,7 +413,7 @@ FooterSection.RightSection = styled.div`
   }
 `;
 FooterSection.Button = styled.input`
-  background-color:#e44740 ; 
+  background-color:#FF6C58 ; 
   color: #fff;
   padding: 12px 30px;
   width:100%;
@@ -425,7 +425,7 @@ FooterSection.Button = styled.input`
   outline:none;
   cursor: pointer;
   border-radius:5px;
-  border: 2px solid #e44740;
+  border: 2px solid #FF6C58;
   -webkit-appearance: none;
   @media(min-width:1920px){
     font-size:20px;
