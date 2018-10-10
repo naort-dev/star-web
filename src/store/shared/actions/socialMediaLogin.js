@@ -54,7 +54,7 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
    
     if (resp.data && resp.data.success) {
       if (resp.data.data.user.celebrity) {
-        window.location = 'https://about.starsona.com';
+        window.location = 'https://about.starsona.com/#star-highlight';
       } else {
         localStorage.setItem('data', JSON.stringify(resp.data.data));
         dispatch(socialMediaLoginFetchEnd());

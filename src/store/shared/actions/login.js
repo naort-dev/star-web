@@ -64,7 +64,7 @@ export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => 
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       if (resp.data.data.user.celebrity) {
-        window.location = 'https://about.starsona.com';
+        window.location = 'https://about.starsona.com/#star-highlight';
       } else {
         dispatch(loginFetchEnd());
         localStorage.setItem('data', JSON.stringify(resp.data.data));
