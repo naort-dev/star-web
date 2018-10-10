@@ -236,6 +236,18 @@ GroupStyled.ErrorMsg = styled.div`
   }
 `;
 
+GroupStyled.CloseButton = styled.span`
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  display: block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  background: url(assets/images/close-icon-orange.svg) center center / cover no-repeat;
+  background-position: center center;
+`;
+
 GroupStyled.mutiSelectItemWrapper = styled.div`
   display: inline-block;
   border: 2px solid white;
@@ -246,19 +258,15 @@ GroupStyled.mutiSelectItemWrapper = styled.div`
   margin: 9px;
   font-size: 14px;
   background-color: #FF6C58;
+  ${GroupStyled.CloseButton} {
+    position: static;
+    width: 12px;
+    height: 12px;
+    margin-left: 10px;
+  }
   @media(min-width: 1025px) {
     margin: 7.5px;
   }
-`;
-
-GroupStyled.CloseButton = styled.input`
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin-left: 10px;
-  cursor: pointer;
-  border: none;
-  background: url('assets/images/close-icon-white.svg') no-repeat;
 `;
 
 GroupStyled.ControlWrapper = styled.div`
@@ -331,18 +339,6 @@ GroupStyled.CoverImage = styled.div`
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
   background-repeat: no-repeat;
   background-size: cover;
-`;
-
-GroupStyled.CloseButton = styled.span`
-  position: absolute;
-  right: 5px;
-  top: 6px;
-  display: block;
-  width: 17px;
-  height: 17px;
-  cursor: pointer;
-  background: url(assets/images/close-icon-orange.svg) center center / cover no-repeat;
-  background-position: center center;
 `;
 
 GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`

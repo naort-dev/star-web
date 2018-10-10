@@ -1,85 +1,26 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { updateGroupAccount, updateSocialLinks } from '../../services/userRegistration';
 import GroupStyled from './styled';
-import DetailsEntry from './modules/detailsEntry';
+import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
-import { fetchGroupTypes } from '../../store/shared/actions/getGroupTypes';
+/* Import Actions */
+import { saveImage } from '../../store/shared/actions/imageViewer';
+import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
+import { saveVideo, uploadVideo } from '../../store/shared/actions/videoUploader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
-import { updateProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
+import { updateNotification, resetNotification } from '../../store/shared/actions/updateNotification';
+import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+import { fetchURL, checkStripe } from '../../store/shared/actions/stripeRegistration';
+import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
+import { logOutUser } from '../../store/shared/actions/login';
 
-class GroupRegistration extends React.Component {
-
+class starRegistrationComponent extends React.Component {
   state = {
-    featuredImage: {
-      fileName: null,
-      image: null,
-    },
-    profileImage: {
-      fileName: null,
-      image: null,
-    },
-  }
 
-  componentWillMount() {
-    this.props.fetchGroupTypes();
   }
-
-  setProfileImage = (fileName, image) => {
-    this.setState({
-      profileImage: {
-        ...this.state.profileImage,
-        fileName,
-        image,
-      },
-    });
-    this.props.changeStep(this.props.currentStep + 1);
-  }
-
-  setCoverImage = (imagetype, fileName, image) => {
-    this.setState({
-      [imagetype]: {
-        ...this.state[imagetype],
-        fileName,
-        image,
-      },
-    });
-  }
-  
-  submitGroupAccountDetails = (accountDetails, socialLinks) => {
-    const groupUpdate = updateGroupAccount(accountDetails);
-    const socialUpdate = updateSocialLinks(socialLinks);
-    Promise.all([groupUpdate, socialUpdate])
-      .then((success) => {
-        if (success) {
-          this.props.changeStep(this.props.currentStep + 1);
-        }
-      });
-  };
-
-  imageUpload = (secondaryImages) => {
-    const secondaryFileNames = secondaryImages.map((item) => {
-      if (item.fileName) {
-        return item.fileName;
-      }
-    });
-    const profileImage = {
-      avatar_photo: this.state.profileImage.fileName,
-      images: [this.state.profileImage.fileName, ...secondaryFileNames],
-    };
-    if (this.state.featuredImage.fileName) {
-      profileImage['featured_image'] = this.state.featuredImage.fileName;
-      profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
-    }
-    this.props.updateProfilePhoto(profileImage)
-      .then(() => {
-        this.props.fetchUserDetails(this.props.userDetails.id);
-      });
-    this.props.changeStep(this.props.currentStep + 1);
-  }
-
   render() {
     return (
       <GroupStyled>
@@ -87,7 +28,7 @@ class GroupRegistration extends React.Component {
           <GroupStyled.ContentWrapper>
             {
               this.props.currentStep === 2 && (
-                <DetailsEntry
+                <StarDetailsEntry
                   groupTypes={this.props.groupTypes}
                   submitGroupDetails={this.submitGroupAccountDetails}
                 />
@@ -150,17 +91,38 @@ class GroupRegistration extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  groupTypes: state.groupTypes.data,
-  userDetails: state.userDetails.settings_userDetails,
+  session: state.session,
+  imageViewer: state.imageViewer,
+  userDetails: state.userDetails,
+  videoRecorder: state.videoRecorder,
+  videoUploader: state.videoUploader,
+  settingsSave: state.saveSettings,
+  stripeRegistration: state.stripeRegistration,
+  changePasswordData: state.changePassword,
+  profileUploadStatus: state.photoUpload.profileUploadStatus,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchGroupTypes: () => dispatch(fetchGroupTypes()),
-  updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  resetUserDetails: () => dispatch(resetUserDetails()),
+  resetNotification: () => dispatch(resetNotification()),
+  resetProfilePhoto: () => dispatch(resetProfilePhoto()),
+  onStartRecording: () => dispatch(startRecording()),
+  onStopRecording: recordedVideo => dispatch(stopRecording(recordedVideo)),
+  onPlayVideo: () => dispatch(playVideo()),
+  onRerecord: () => dispatch(reRecord()),
+  onClearStreams: () => dispatch(clearStreams()),
+  onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),
+  uploadVideo: () => dispatch(uploadVideo()),
+  onSaveImage: imageData => dispatch(saveImage(imageData)),
+  updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
+  updateNotification: obj => dispatch(updateNotification(obj)),
+  updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
+  fetchURL: () => dispatch(fetchURL()),
+  checkStripe: () => dispatch(checkStripe()),
+  changePassword: data => dispatch(changePassword(data)),
+  logOut: () => dispatch(logOutUser()),
+  resetChangePassord: () => dispatch(resetChangePassord()),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(GroupRegistration);
+export const StarRegistration =  connect(mapStateToProps, mapDispatchToProps)(starRegistrationComponent);

@@ -11,7 +11,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import { LoginContainer, HeaderSection } from './styled';
 // import { HeaderSection } from '../loginFlow/styled';
-import GroupRegistration from '../GroupRegistration';
+import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
@@ -26,7 +26,7 @@ class SignupFlow extends React.Component {
       socialData: {},
       currentStep: 1,
     };
-    this.starRegistrationSteps = 4;
+    this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
   getBioDetails = (bioDetails) => {
@@ -49,19 +49,28 @@ class SignupFlow extends React.Component {
     if (this.state.selectedType === 'fan') {
       return <SignUpForm {...this.props} signupRole={this.state.selectedType} data={this.state.socialData} />;
     } else if (this.state.selectedType === 'star') {
+      // switch (this.state.currentStep) {
+      //   case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+      //   case 2: return <StarbioPopup currentStep={this.state.currentStep} changeStep={this.changeStep} getBioDetails={this.getBioDetails} />;
+      //   case 3: return <StarsignUpVideo currentStep={this.state.currentStep} changeStep={this.changeStep} bioDetails={this.state.bioDetails} />;
+      //   case 4: return <Starsuccess closeSignupFlow={() => this.props.toggleSignup(false)} />;
+      //   default: return null;
+      // }
       switch (this.state.currentStep) {
         case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
-        case 2: return <StarbioPopup currentStep={this.state.currentStep} changeStep={this.changeStep} getBioDetails={this.getBioDetails} />;
-        case 3: return <StarsignUpVideo currentStep={this.state.currentStep} changeStep={this.changeStep} bioDetails={this.state.bioDetails} />;
-        case 4: return <Starsuccess closeSignupFlow={() => this.props.toggleSignup(false)} />;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={() => this.props.toggleSignup(false)} />;
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
       switch (this.state.currentStep) {
         case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
-        case 2: 
+        case 2:
         case 3:
-        case 4: 
+        case 4:
         case 5: return <GroupRegistration currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} />;
         default: return null;
       }
