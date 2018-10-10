@@ -258,16 +258,22 @@ GroupStyled.mutiSelectItemWrapper = styled.div`
   margin: 9px;
   font-size: 14px;
   background-color: #FF6C58;
-  ${GroupStyled.CloseButton} {
-    position: static;
-    width: 12px;
-    height: 12px;
-    margin-left: 10px;
-  }
   @media(min-width: 1025px) {
     margin: 7.5px;
   }
 `;
+
+GroupStyled.OptionCloseButton = GroupStyled.CloseButton.extend`
+  position: static;
+  width: 12px;
+  height: 12px;
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  background: url('assets/images/close-icon-white.svg') no-repeat;
+  background-position: center center;
+  display: inline-block;
+`.withComponent('input');
 
 GroupStyled.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);

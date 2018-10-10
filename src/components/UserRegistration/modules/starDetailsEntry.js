@@ -54,9 +54,9 @@ export default class StarDetailsEntry extends React.Component {
       bio = true;
     }
     if (this.state.industries.length < 3) {
-      industries = false;
-    } else {
       industries = true;
+    } else {
+      industries = false;
     }
     if (!validator.isNumeric(this.state.bookingLimit, { no_symbols: true })) {
       bookingLimit = true;
@@ -73,31 +73,16 @@ export default class StarDetailsEntry extends React.Component {
   }
 
   submitGroupAccountDetails = () => {
-    const industries = this.state.industries.map(item => (
-      item.value
-    )).join(',');
     if (this.validateFields()) {
-      const accountDetails = {
-        contact_first_name: this.state.firstName,
-        contact_last_name: this.state.lastName,
+      const celebrityDetails = {
         description: this.state.bio,
-        tags: searchTags,
-        website: this.state.website,
-        phone: `${this.state.phNo1}-${this.state.phNo2}-${this.state.phNo3}`,
-        address: this.state.address,
-        address_2: this.state.address2,
-        city: this.state.city,
-        state: this.state.street,
-        zip: this.state.zip,
-        group_type: this.state.groupType,
+        profession: this.state.industries,
+        rate: parseInt(this.state.bookingPrice),
+        weekly_limits: parseInt(this.state.bookingLimit),
+        availabilty: true,
+        check_payments: false,
       };
-      const socialLinks = {
-        facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
-        twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
-        youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
-        instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
-      }; 
-      this.props.submitGroupDetails(accountDetails, socialLinks);
+      this.props.submitAccountDetails(celebrityDetails);
     }
   };
 
@@ -105,7 +90,7 @@ export default class StarDetailsEntry extends React.Component {
     return (
       <GroupStyled.mutiSelectItemWrapper>
         {selectProps.value.label}
-        <GroupStyled.CloseButton
+        <GroupStyled.OptionCloseButton
           type="button"
           onClick={() => selectProps.onRemove(selectProps.value)}
         />
@@ -143,8 +128,7 @@ export default class StarDetailsEntry extends React.Component {
                 {
                   !this.state.bio ?
                     <GroupStyled.CustomPlaceholder>
-                      Enter information about your group.<br />
-                      Note: Help Fans and Stars find you in search by including terms associated with your group.
+                      Have fun with it... no need to be serious.
                     </GroupStyled.CustomPlaceholder>
                   : null
                 }
@@ -152,6 +136,24 @@ export default class StarDetailsEntry extends React.Component {
               <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
                   ? 'Please enter a group bio'
+                  : null}
+              </GroupStyled.ErrorMsg>
+            </GroupStyled.WrapsInput>
+          </GroupStyled.InputWrapper>
+          <GroupStyled.InputWrapper>
+            <GroupStyled.Label>Stage Name</GroupStyled.Label>
+            <GroupStyled.WrapsInput>
+              <GroupStyled.InputArea
+                small
+                placeholder="Optional"
+                value={this.state.stageName}
+                onChange={(event) => {
+                  this.handleFieldChange('stageName', event.target.value);
+                }}
+              />
+              <GroupStyled.ErrorMsg isError={this.state.errors.stageName}>
+                {this.state.errors.stageName
+                  ? 'Please enter a valid event title'
                   : null}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
@@ -172,25 +174,7 @@ export default class StarDetailsEntry extends React.Component {
               <GroupStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
                   ? 'Please enter a valid event title'
-                  : null}
-              </GroupStyled.ErrorMsg>
-            </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper>
-          <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Stage Name</GroupStyled.Label>
-            <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
-                small
-                placeholder="Optional"
-                value={this.state.stageName}
-                onChange={(event) => {
-                  this.handleFieldChange('stageName', event.target.value);
-                }}
-              />
-              <GroupStyled.ErrorMsg isError={this.state.errors.stageName}>
-                {this.state.errors.stageName
-                  ? 'Please enter a valid event title'
-                  : null}
+                  : 'You can choose a maximum of 3 industries.'}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>

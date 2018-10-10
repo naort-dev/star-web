@@ -32,12 +32,13 @@ export default class ProfileUpload extends React.Component {
     }
   }
 
-  getCroppedImage = (file, image) => {
-    this.setState({ finalImage: image });
-    awsImageUpload(file, this.state.extension)
-    .then((resp) => {
-      this.setState({finalImage: image, finalFile: resp})
-    })
+  onComplete = () => {
+    this.setState({ imageLoading: true });
+    awsImageUpload(this.state.finalFile, this.state.extension)
+      .then((resp) => {
+        this.setState({ imageLoading: false });
+        this.props.onComplete(resp, this.state.finalImage);
+      });
   }
 
   async getImageData(file) {
@@ -51,6 +52,10 @@ export default class ProfileUpload extends React.Component {
     if (file) {
       reader.readAsDataURL(file);
     }
+  }
+
+  getCroppedImage = (file, image) => {
+    this.setState({ finalImage: image, finalFile: file });
   }
 
   getExif = (file) => {
@@ -107,7 +112,6 @@ export default class ProfileUpload extends React.Component {
     this.setState({ cropImage: null, cropMode: false })
   }
 
-
   render() {
     return (
       <GroupStyled.ContentWrapper>
@@ -146,7 +150,7 @@ export default class ProfileUpload extends React.Component {
               <GroupStyled.ControlWrapper>
                 <GroupStyled.ControlButton
                   disabled={!this.state.finalImage}
-                  onClick={() => this.props.onComplete(this.state.finalFile, this.state.finalImage)}
+                  onClick={() => this.onComplete()}
                 >
                   Continue
                 </GroupStyled.ControlButton>

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { updateGroupAccount, updateSocialLinks } from '../../services/userRegistration';
+import { imageSizes } from '../../constants/imageSizes';
 import GroupStyled from './styled';
 import DetailsEntry from './modules/detailsEntry';
 import ProfileUpload from './modules/profileUpload';
@@ -103,6 +104,7 @@ class GroupRegistrationComponent extends React.Component {
               this.props.currentStep === 4 && (
                 <CoverUpload
                   profileImage={this.state.profileImage.image}
+                  imageRatio={imageSizes.groupCover}
                   groupName={this.props.userDetails.first_name}
                   onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
                   onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}

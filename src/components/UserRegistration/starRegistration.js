@@ -5,6 +5,9 @@ import GroupStyled from './styled';
 import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
+import { imageSizes } from '../../constants/imageSizes';
+import QAVideoRecorder from '../QAVideoRecorder';
+import { recorder } from '../../constants/videoRecorder';
 /* Import Actions */
 import { saveImage } from '../../store/shared/actions/imageViewer';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
@@ -13,14 +16,69 @@ import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
 import { updateNotification, resetNotification } from '../../store/shared/actions/updateNotification';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
-import { fetchURL, checkStripe } from '../../store/shared/actions/stripeRegistration';
 import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
 import { logOutUser } from '../../store/shared/actions/login';
 
 class starRegistrationComponent extends React.Component {
   state = {
-
+    celebrityDetails: null,
+    featuredImage: {
+      fileName: null,
+      image: null,
+    },
+    profileImage: {
+      fileName: null,
+      image: null,
+    },
   }
+
+  setProfileImage = (fileName, image) => {
+    this.setState({
+      profileImage: {
+        ...this.state.profileImage,
+        fileName,
+        image,
+      },
+    });
+    this.props.changeStep(this.props.currentStep + 1);
+  }
+
+  setCoverImage = (imagetype, fileName, image) => {
+    this.setState({
+      [imagetype]: {
+        ...this.state[imagetype],
+        fileName,
+        image,
+      },
+    });
+  }
+
+  submitAccountDetails = (celebrityDetails) => {
+    this.setState({ celebrityDetails });
+    this.props.changeStep(this.props.currentStep + 1);
+  };
+
+  imageUpload = (secondaryImages) => {
+    const secondaryFileNames = secondaryImages.map((item) => {
+      if (item.fileName) {
+        return item.fileName;
+      }
+    });
+    const profileImage = {
+      avatar_photo: this.state.profileImage.fileName,
+      images: [this.state.profileImage.fileName, ...secondaryFileNames],
+    };
+    if (this.state.featuredImage.fileName) {
+      profileImage['featured_image'] = this.state.featuredImage.fileName;
+      profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+    }
+    this.props.updateProfilePhoto(profileImage)
+      .then(() => {
+        this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
+      });
+    this.props.changeStep(this.props.currentStep + 1);
+  }
+
   render() {
     return (
       <GroupStyled>
@@ -29,8 +87,7 @@ class starRegistrationComponent extends React.Component {
             {
               this.props.currentStep === 2 && (
                 <StarDetailsEntry
-                  groupTypes={this.props.groupTypes}
-                  submitGroupDetails={this.submitGroupAccountDetails}
+                  submitAccountDetails={this.submitAccountDetails}
                 />
             )}
             {
@@ -44,6 +101,7 @@ class starRegistrationComponent extends React.Component {
               this.props.currentStep === 4 && (
                 <CoverUpload
                   profileImage={this.state.profileImage.image}
+                  imageRatio={imageSizes.featured}
                   groupName={this.props.userDetails.first_name}
                   onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
                   onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}
@@ -52,35 +110,7 @@ class starRegistrationComponent extends React.Component {
             }
             {
               this.props.currentStep === 5 && (
-                <React.Fragment>
-                  <GroupStyled.HeadingWrapper>
-                    <GroupStyled.SubHeading>
-                      Your group profile has been created!
-                    </GroupStyled.SubHeading>
-                    <GroupStyled.SubHeadingDescription>
-                      Now what do we do?
-                    </GroupStyled.SubHeadingDescription>
-                  </GroupStyled.HeadingWrapper>
-                  <GroupStyled.ConfirmationWrapper>
-                    <GroupStyled.ConfirmationHead>Most groups choose to do 3 things:</GroupStyled.ConfirmationHead>
-                    <GroupStyled.confirmationSteps>
-                      1.  Invite your Stars who are already on Starsona to join your group.
-                    </GroupStyled.confirmationSteps>
-                    <GroupStyled.confirmationSteps>
-                      2.  Invite other Stars who support you to join Starsona.
-                    </GroupStyled.confirmationSteps>
-                    <GroupStyled.confirmationSteps>
-                      3.  Let fans know about your group page.
-                    </GroupStyled.confirmationSteps>
-                  </GroupStyled.ConfirmationWrapper>
-                  <GroupStyled.DoneButtonWrapper>
-                    <GroupStyled.DoneButton
-                      onClick={() => this.props.closeSignupFlow()}
-                    >
-                      Done
-                    </GroupStyled.DoneButton>
-                  </GroupStyled.DoneButtonWrapper>
-                </React.Fragment>
+                <QAVideoRecorder {...this.props} duration={recorder.signUpTimeOut} onSubmit={this.handleBooking} />
               )
             }
           </GroupStyled.ContentWrapper>
@@ -91,7 +121,6 @@ class starRegistrationComponent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  session: state.session,
   imageViewer: state.imageViewer,
   userDetails: state.userDetails,
   videoRecorder: state.videoRecorder,
@@ -118,8 +147,6 @@ const mapDispatchToProps = dispatch => ({
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
   updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
-  fetchURL: () => dispatch(fetchURL()),
-  checkStripe: () => dispatch(checkStripe()),
   changePassword: data => dispatch(changePassword(data)),
   logOut: () => dispatch(logOutUser()),
   resetChangePassord: () => dispatch(resetChangePassord()),

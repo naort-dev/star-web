@@ -1,7 +1,6 @@
 import React from 'react';
 import EXIF from 'exif-js';
 import { awsImageUpload } from '../../../services/awsImageUpload';
-import { imageSizes } from '../../../constants/imageSizes';
 import ImageCropper from '../../ImageCropper';
 import Loader from '../../Loader';
 import GroupStyled from '../styled';
@@ -49,7 +48,7 @@ export default class CoverUpload extends React.Component {
   setImageSize = () => {
     let coverImageHeight;
     if (this.coverImage) {
-      coverImageHeight = this.coverImage.clientWidth / imageSizes.groupCover;
+      coverImageHeight = this.coverImage.clientWidth / this.props.imageRatio;
     }
     this.setState({
       coverImageHeight,
@@ -235,7 +234,7 @@ export default class CoverUpload extends React.Component {
                 this.state.cropMode && this.state.cropImage &&
                   <ImageCropper
                     exifData={this.currentExif}
-                    aspectRatio={imageSizes.groupCover}
+                    aspectRatio={this.props.imageRatio}
                     afterCrop={this.getCroppedImage}
                     closeCropper={() => this.closeCropper()}
                     cropImage={this.state.cropImage}
