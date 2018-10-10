@@ -53,10 +53,14 @@ export const socialMediaLogin = (userName, firstName, lastName, signUpSource, pr
   }).then((resp) => {
    
     if (resp.data && resp.data.success) {
-      localStorage.setItem('data', JSON.stringify(resp.data.data));
-      dispatch(socialMediaLoginFetchEnd());
-      dispatch(socialMediaLoginFetchSuccess(resp.data.data));
-      dispatch(fetchUserDetails(resp.data.data.user.id));
+      if (resp.data.data.user.celebrity) {
+        window.location = 'https://about.starsona.com';
+      } else {
+        localStorage.setItem('data', JSON.stringify(resp.data.data));
+        dispatch(socialMediaLoginFetchEnd());
+        dispatch(socialMediaLoginFetchSuccess(resp.data.data));
+        dispatch(fetchUserDetails(resp.data.data.user.id));
+      }
     } else {
       dispatch(socialMediaLoginFetchEnd());
       if (resp.data.status === '400') {
