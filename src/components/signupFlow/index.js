@@ -5,8 +5,6 @@ import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
-import { StarbioPopup } from '../../pages/starbioPopup';
-import { StarsignUpVideo } from '../../pages/starSignUpVideo';
 import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import { LoginContainer, HeaderSection } from './styled';
@@ -15,7 +13,6 @@ import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
-import Starsuccess from '../../pages/starsuccess/Starsuccess.container';
 
 class SignupFlow extends React.Component {
   constructor(props) {

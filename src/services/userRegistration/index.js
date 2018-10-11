@@ -14,3 +14,10 @@ export const updateSocialLinks = (data) => {
   }).then(resp => resp.data.success)
   );
 };
+
+export const celebritySignupProfile = (data) => {
+  return (fetch.post(Api.celebrityProfile, {
+    ...data,
+  }).then(resp => resp.data.success)
+  );
+};

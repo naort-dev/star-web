@@ -27,7 +27,9 @@ export default class QAVideoRecorder extends React.Component {
   }
 
   componentDidMount() {
-    this.fetchStream();
+    if (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) {
+      this.fetchStream();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -126,13 +128,11 @@ export default class QAVideoRecorder extends React.Component {
     const allowedExtensions = /((\.mp4)|(\.MOV))$/i;
     if (!allowedExtensions.exec(document.getElementById('default-uploader').value)) {
       this.setState({ extensionError: true });
-    }
-
-    else {
+    } else {
       const fileURL = URL.createObjectURL(file);
       this.setState({ play: true, src: fileURL });
       this.props.onSaveVideo({ videoFile: file, url: fileURL, extension: file.type.split('/')[1] });
-      if (file) {
+      if (file){
         reader.readAsDataURL(file);
       }
     }
@@ -140,7 +140,9 @@ export default class QAVideoRecorder extends React.Component {
 
   async startRecording(rerecord = false) {
     if (rerecord === true) {
+      this.props.deleteVideo();
       this.props.onRerecord();
+      this.fetchStream();
       this.recordedBlobs = []; 
       return;
     }
@@ -221,13 +223,13 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.videoUploader.savedFile && this.state.play) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video id="video-player" onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
+          <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
-          <VideoRecorderDiv.UploadWrapper>
-                  <VideoRecorderDiv.RerecordButton />
-                  <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
-                </VideoRecorderDiv.UploadWrapper>
+            <VideoRecorderDiv.UploadWrapper>
+              <VideoRecorderDiv.RerecordButton onClick={() => this.startRecording(true)} />
+              {/* <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" /> */}
+            </VideoRecorderDiv.UploadWrapper>
             <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
@@ -237,13 +239,13 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.videoUploader.url) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video id="video-player" onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }} src={this.props.videoUploader.url} />
+          <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }} src={this.props.videoUploader.url} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
-          <VideoRecorderDiv.UploadWrapper>
-                  <VideoRecorderDiv.RerecordButton />
-                  <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
-                </VideoRecorderDiv.UploadWrapper>
+            <VideoRecorderDiv.UploadWrapper>
+              <VideoRecorderDiv.RerecordButton onClick={() => this.startRecording(true)} />
+              {/* <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" /> */}
+            </VideoRecorderDiv.UploadWrapper>
             <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
@@ -253,13 +255,13 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.src && !this.state.play) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video id="video-player" onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }} src={this.props.src} />
+          <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }} src={this.props.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
-          <VideoRecorderDiv.UploadWrapper>
-                  <VideoRecorderDiv.RerecordButton />
-                  <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
-                </VideoRecorderDiv.UploadWrapper>
+            <VideoRecorderDiv.UploadWrapper>
+              <VideoRecorderDiv.RerecordButton onClick={() => this.startRecording(true)} />
+              {/* <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" /> */}
+            </VideoRecorderDiv.UploadWrapper>
             <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo()} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
@@ -377,6 +379,10 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
       );
     }
 
+    if (this.props.videoUploader.savedFile || this.props.videoUploader.url) {
+      return this.renderUploader();
+    }
+
     return (
       <VideoRecorderDiv.ControlWrapper>
         <VideoRecorderDiv.Wrapper>
@@ -392,6 +398,10 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
           <VideoRecorderDiv.Button title="Record your question" onClick={this.startRecording.bind(this)} />
+          <VideoRecorderDiv.UploadWrapper>
+            <VideoRecorderDiv.NoVideoButton />
+            <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
+          </VideoRecorderDiv.UploadWrapper>
         </VideoRecorderDiv.ActionButton>
       </VideoRecorderDiv.ControlWrapper>
     );
@@ -403,9 +413,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
         {(checkMediaRecorderSupport() && !getMobileOperatingSystem()) && this.state.deviceSupport ?
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
-
-              { !this.state.streamed ? <Loader/> : 
-              
+              { !this.state.streamed && (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) ? <Loader/> :              
                 (this.props.src ? this.renderEditPreview() : this.renderPreview()) }
             </VideoRecorderDiv.VideoContainer>
           </VideoRecorderDiv>

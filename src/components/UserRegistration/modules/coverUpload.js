@@ -14,6 +14,7 @@ export default class CoverUpload extends React.Component {
     featuredImage: null,
     secondaryImages: [],
     coverImageHeight: 100,
+    secondaryImageHeight: 100,
   }
 
   componentWillMount() {
@@ -46,12 +47,14 @@ export default class CoverUpload extends React.Component {
   }
 
   setImageSize = () => {
-    let coverImageHeight;
+    let coverImageHeight, secondaryImageHeight;
     if (this.coverImage) {
-      coverImageHeight = this.coverImage.clientWidth / this.props.imageRatio;
+      coverImageHeight = this.coverImage.clientWidth / this.props.featuredRatio;
+      secondaryImageHeight = this.coverImage.clientWidth / this.props.secondaryRatio;
     }
     this.setState({
       coverImageHeight,
+      secondaryImageHeight,
     });
   }
 
@@ -173,7 +176,7 @@ export default class CoverUpload extends React.Component {
       return (
         <GroupStyled.SecondaryCoverImage
           key={index}
-          style={{ height: this.state.coverImageHeight }}
+          style={{ height: this.state.secondaryImageHeight }}
           imageUrl={item.image}
         >
           <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })}>
@@ -234,7 +237,7 @@ export default class CoverUpload extends React.Component {
                 this.state.cropMode && this.state.cropImage &&
                   <ImageCropper
                     exifData={this.currentExif}
-                    aspectRatio={this.props.imageRatio}
+                    aspectRatio={this.state.currentImage === 'featuredImage' ? this.props.featuredRatio : this.props.secondaryRatio}
                     afterCrop={this.getCroppedImage}
                     closeCropper={() => this.closeCropper()}
                     cropImage={this.state.cropImage}

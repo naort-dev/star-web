@@ -369,55 +369,47 @@ export default class SignUp extends React.Component {
             <LoginContainer.InputFieldsWrapper>
 
               <LoginContainer.InputContainer>
-                <LoginContainer.FirstLastNameWrapper>
-                  {
-                    this.props.statusCode === '410' ?
-                      <LoginContainer.EmptyDiv />
+                {
+                  this.props.statusCode === '410' ?
+                    <LoginContainer.EmptyDiv />
 
-                      :
-                      <LoginContainer.FirstNameWrapper groupSignup={this.props.signupRole === 'group'} >
-                        <LoginContainer.InputWrapper>
+                    :
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          placeholder={this.props.signupRole === 'group' ? 'Group name' : 'First name'}
+                          type="text"
+                          name="firstName"
+                          value={this.state.firstName.value}
+                          onChange={(event) => this.saveFormEntries(event, "firstName")}
+                          onBlur={this.checkRequired}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.firstName.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                }
+                {
+                  this.props.statusCode === '410' || this.props.signupRole === 'group' ?
+                    <LoginContainer.EmptyDiv />
 
-                          <LoginContainer.WrapsInput>
-                            <LoginContainer.Input
-                              placeholder={this.props.signupRole === 'group' ? 'Group name' : 'First name'}
-                              type="text"
-                              name="firstName"
-                              value={this.state.firstName.value}
-                              onChange={(event) => this.saveFormEntries(event, "firstName")}
-                              onBlur={this.checkRequired}
-                            />
-                            <LoginContainer.ErrorMsg>
-                              {this.state.firstName.message}
-                            </LoginContainer.ErrorMsg>
-                          </LoginContainer.WrapsInput>
-                        </LoginContainer.InputWrapper>
-                      </LoginContainer.FirstNameWrapper>
-                  }
-                  {
-                    this.props.statusCode === '410' || this.props.signupRole === 'group' ?
-                      <LoginContainer.EmptyDiv />
-
-                      :
-                      <LoginContainer.LastNameWrapper>
-                        <LoginContainer.InputWrapper>
-
-                          <LoginContainer.WrapsInput>
-                            <LoginContainer.Input
-                              placeholder="Last name"
-                              type="text"
-                              name="lastName"
-                              value={this.state.lastName.value}
-                              onChange={(event) => this.saveFormEntries(event, "lastName")}
-                            />
-                            <LoginContainer.ErrorMsg>
-                              {this.state.lastName.message}
-                            </LoginContainer.ErrorMsg>
-                          </LoginContainer.WrapsInput>
-                        </LoginContainer.InputWrapper>
-                      </LoginContainer.LastNameWrapper>
-                  }
-                </LoginContainer.FirstLastNameWrapper>
+                    :
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.Input
+                          placeholder="Last name"
+                          type="text"
+                          name="lastName"
+                          value={this.state.lastName.value}
+                          onChange={(event) => this.saveFormEntries(event, "lastName")}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.lastName.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                }
                 <LoginContainer.InputWrapper>
 
                   <LoginContainer.WrapsInput>

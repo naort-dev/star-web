@@ -104,7 +104,8 @@ class GroupRegistrationComponent extends React.Component {
               this.props.currentStep === 4 && (
                 <CoverUpload
                   profileImage={this.state.profileImage.image}
-                  imageRatio={imageSizes.groupCover}
+                  featuredRatio={imageSizes.groupCover}
+                  secondaryRatio={imageSizes.groupCover}
                   groupName={this.props.userDetails.first_name}
                   onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
                   onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}

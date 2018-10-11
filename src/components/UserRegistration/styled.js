@@ -6,7 +6,7 @@ const GroupStyled = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
-  height: 96%;
+  height: 97%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -151,8 +151,8 @@ GroupStyled.CustomInput = styled.div`
 GroupStyled.CustomPlaceholder = styled.span`
   position: absolute;
   left: 10px;
-  right: 0;
-  top: 10px;
+  right: 10px;
+  top: 14px;
   font-family: 'Ubuntu-Regular';
   color: #6d6d6d;
   font-size: 14px;
@@ -251,7 +251,7 @@ GroupStyled.CloseButton = styled.span`
 GroupStyled.mutiSelectItemWrapper = styled.div`
   display: inline-block;
   border: 2px solid white;
-  padding: 5px;
+  padding: 7px;
   color: white;
   background-color: #FF6C58;
   border-radius: 20px;
@@ -259,6 +259,7 @@ GroupStyled.mutiSelectItemWrapper = styled.div`
   font-size: 14px;
   background-color: #FF6C58;
   @media(min-width: 1025px) {
+    padding: 10px;
     margin: 7.5px;
   }
 `;
@@ -471,6 +472,51 @@ GroupStyled.CheckBox = styled.input`
   
 `;
 GroupStyled.Span = styled.label`
+`;
+
+GroupStyled.PopupButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 180px;
+  margin: 0 auto;
+`;
+
+GroupStyled.ActionButton = styled.button`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 6px 13px;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Ubuntu-Bold';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+`;
+
+GroupStyled.SuccessText = styled.p`
+  font-size: 18px;
+  margin-top: 5%;
+  color:rgba(51, 51, 51, 1);
+  font-family: 'Ubuntu-Regular';
+  margin-bottom: 5%;
+  text-align: left;
+  width: 100%;
+ `;
+
+ GroupStyled.SuccessTextBold = styled.p`
+ font-size: 18px;
+ margin-top: 5%;
+ font-family: 'Ubuntu-Bold';
+ margin-bottom: 5%;
+ text-align: left;
+ width: 100%;
 `;
 
 export default GroupStyled;

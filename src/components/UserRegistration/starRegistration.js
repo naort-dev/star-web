@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
+import axios from 'axios';
 import GroupStyled from './styled';
+import { celebritySignupProfile } from '../../services/userRegistration';
 import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
 import { imageSizes } from '../../constants/imageSizes';
 import QAVideoRecorder from '../QAVideoRecorder';
 import { recorder } from '../../constants/videoRecorder';
+import getAWSCredentials from '../../utils/AWSUpload'
+import { locations } from '../../constants/locations';
+import Loader from '../Loader';
 /* Import Actions */
 import { saveImage } from '../../store/shared/actions/imageViewer';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
-import { saveVideo, uploadVideo } from '../../store/shared/actions/videoUploader';
+import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
 import { updateNotification, resetNotification } from '../../store/shared/actions/updateNotification';
@@ -79,48 +84,111 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
+  getVideo = () => {
+    this.setState({ loader: true });
+    let uploadVideo;
+    if (this.props.videoUploader.savedFile != null) {
+      uploadVideo = this.props.videoUploader.savedFile;
+    }
+    else {
+      uploadVideo = new File([this.props.videoRecorder.recordedBuffer], 'profile.mp4');
+    }
+    getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
+      .then((response) => {
+        if (response && response.filename) {
+          axios.post(response.url, response.formData).then(() => {
+            const celebrityProfileData = {
+              ...this.state.celebrityDetails,
+              profile_video: response.filename,
+            }
+            celebritySignupProfile(celebrityProfileData)
+              .then((success) => {
+                this.setState({ loader: false })
+                if (success) {
+                  this.props.changeStep(this.props.currentStep + 1);
+                }
+              })
+          });
+        }
+      });
+  }
+
   render() {
     return (
       <GroupStyled>
-        <Scrollbars autoHide={false}>
-          <GroupStyled.ContentWrapper>
-            {
-              this.props.currentStep === 2 && (
-                <StarDetailsEntry
-                  submitAccountDetails={this.submitAccountDetails}
-                />
-            )}
-            {
-              this.props.currentStep === 3 && (
-                <ProfileUpload
-                  onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
-                />
-              )
-            }
-            {
-              this.props.currentStep === 4 && (
-                <CoverUpload
-                  profileImage={this.state.profileImage.image}
-                  imageRatio={imageSizes.featured}
-                  groupName={this.props.userDetails.first_name}
-                  onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                  onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}
-                />
-              )
-            }
-            {
-              this.props.currentStep === 5 && (
-                <QAVideoRecorder {...this.props} duration={recorder.signUpTimeOut} onSubmit={this.handleBooking} />
-              )
-            }
-          </GroupStyled.ContentWrapper>
-        </Scrollbars>
+        {
+          this.state.loader ?
+            <Loader />
+          :
+            <Scrollbars autoHide={false}>
+              <GroupStyled.ContentWrapper>
+                {
+                  this.props.currentStep === 2 && (
+                    <StarDetailsEntry
+                      submitAccountDetails={this.submitAccountDetails}
+                    />
+                )}
+                {
+                  this.props.currentStep === 3 && (
+                    <ProfileUpload
+                      onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+                    />
+                  )
+                }
+                {
+                  this.props.currentStep === 4 && (
+                    <CoverUpload
+                      profileImage={this.state.profileImage.image}
+                      featuredRatio={imageSizes.featured}
+                      secondaryRatio={imageSizes.first}
+                      groupName={this.props.userDetails.settings_userDetails.first_name}
+                      onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
+                      onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}
+                    />
+                  )
+                }
+                {
+                  this.props.currentStep === 5 && (
+                    <QAVideoRecorder
+                      {...this.props}
+                      responseMode
+                      recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
+                      duration={recorder.signUpTimeOut}
+                      onSubmit={this.getVideo}
+                    />
+                  )
+                }
+                {
+                  this.props.currentStep === 6 && (
+                    <React.Fragment>
+                      <GroupStyled.HeadingWrapper>
+                        <GroupStyled.SubHeading>
+                          Your Star profile has been created!
+                        </GroupStyled.SubHeading>
+                      </GroupStyled.HeadingWrapper>
+                      <GroupStyled.SuccessText>
+                        Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
+                      <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
+                      <GroupStyled.DoneButtonWrapper>
+                        <GroupStyled.DoneButton
+                          onClick={() => this.props.closeSignupFlow()}
+                        >
+                          Done
+                        </GroupStyled.DoneButton>
+                      </GroupStyled.DoneButtonWrapper>
+                    </React.Fragment>
+                  )
+                }
+              </GroupStyled.ContentWrapper>
+            </Scrollbars>
+        }
       </GroupStyled>
     );
   }
 }
 
 const mapStateToProps = state => ({
+  session: state.session,
   imageViewer: state.imageViewer,
   userDetails: state.userDetails,
   videoRecorder: state.videoRecorder,
@@ -139,6 +207,7 @@ const mapDispatchToProps = dispatch => ({
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: recordedVideo => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),
+  deleteVideo: () => dispatch(deleteVideo()),
   onRerecord: () => dispatch(reRecord()),
   onClearStreams: () => dispatch(clearStreams()),
   onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),

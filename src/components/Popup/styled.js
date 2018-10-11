@@ -68,7 +68,7 @@ PopupStyled.SmallContent = styled.div`
 
 PopupStyled.CloseButton = styled.span`
   position: absolute;
-  top: ${props => (props.smallPopup ? '10px' : '16px')};
+  top: ${props => (props.smallPopup ? '6px' : '16px')};
   right: ${props => (props.smallPopup ? '7px' : '18px')};
   display: inline-block;
   width: ${props => (props.smallPopup ? '17px' : '30px')};

@@ -1,5 +1,6 @@
 import React from 'react';
 import validator from 'validator';
+import Popup from '../../Popup';
 import MultiSelect from '../../MultiSelect';
 import { fetch } from '../../../services/fetch';
 import GroupStyled from '../styled';
@@ -12,6 +13,7 @@ export default class StarDetailsEntry extends React.Component {
     stageName: '',
     bookingPrice: '',
     bookingLimit: '',
+    popUpMessage: null,
     errors: {
       bio: false,
       industries: false,
@@ -44,6 +46,12 @@ export default class StarDetailsEntry extends React.Component {
       this.setState({
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
+      }, () => {
+        if (fieldType === 'bookingLimit' && fieldValue > 20) {
+          this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?` });
+        } else if (fieldType === 'bookingPrice' && fieldValue > 499) {
+          this.setState({ popUpMessage: `Set your booking rate at ${fieldValue}?` });
+        }
       });
     }
   };
@@ -79,12 +87,23 @@ export default class StarDetailsEntry extends React.Component {
         profession: this.state.industries,
         rate: parseInt(this.state.bookingPrice),
         weekly_limits: parseInt(this.state.bookingLimit),
-        availabilty: true,
-        check_payments: false,
+        availability: true,
       };
       this.props.submitAccountDetails(celebrityDetails);
     }
   };
+
+  renderPopup = () => {
+    return (
+      <React.Fragment>
+        {this.state.popUpMessage}
+        <GroupStyled.PopupButtonWrapper>
+          <GroupStyled.ActionButton onClick={() => this.setState({ popUpMessage: null })}>Yes</GroupStyled.ActionButton>
+          <GroupStyled.ActionButton onClick={() => this.setState({ popUpMessage: null })}>No</GroupStyled.ActionButton>
+        </GroupStyled.PopupButtonWrapper>
+      </React.Fragment>
+    );
+  }
 
   renderMultiValueItems = (selectProps) => {
     return (
@@ -101,6 +120,17 @@ export default class StarDetailsEntry extends React.Component {
   render() {
     return (
       <GroupStyled.DetailsWrapper>
+        {
+          this.state.popUpMessage &&
+            <Popup
+              smallPopup
+              closePopUp={() => this.setState({ popUpMessage: null })}
+            >
+              {
+                this.renderPopup()
+              }
+            </Popup>
+        }
         <GroupStyled.HeadingWrapper>
           <GroupStyled.InnerHeading>
             Create your profile
