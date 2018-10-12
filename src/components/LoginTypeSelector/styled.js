@@ -126,6 +126,9 @@ TypeSelectorWrapper.ContinueButton = styled.button`
   outline: none;
   border-radius: 5px;
   border: 2px solid #FF6C58;
+  &:hover {
+    background-color: #FF3B21;
+  }
   @media(min-width: 1920px) {
     font-size: 20px;
   }

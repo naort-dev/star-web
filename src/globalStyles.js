@@ -172,7 +172,8 @@ injectGlobal`
   display: block;
   position: relative;
   font-size: 18px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Ubuntu-Regular';
+  color: #484848;
   padding: 25px 25px 0 80px;
   margin: 10px auto;
   cursor: pointer;
@@ -224,7 +225,7 @@ injectGlobal`
 }
 .list .option-content{
   font-family: 'Ubuntu-Light';
-  color: #AAAAAA;
+  color: #88898c;
   margin-top: 15px;
   font-size:15px;
   @media(min-width:1025px){

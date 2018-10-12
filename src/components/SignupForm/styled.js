@@ -427,6 +427,9 @@ FooterSection.Button = styled.input`
   border-radius:5px;
   border: 2px solid #FF6C58;
   -webkit-appearance: none;
+  &:hover {
+    background-color: #FF3B21;
+  }
   @media(min-width:1920px){
     font-size:20px;
   }

@@ -151,8 +151,8 @@ GroupStyled.CustomInput = styled.div`
 GroupStyled.CustomPlaceholder = styled.span`
   position: absolute;
   left: 10px;
-  right: 10px;
-  top: 14px;
+  right: 0;
+  top: 10px;
   font-family: 'Ubuntu-Regular';
   color: #6d6d6d;
   font-size: 14px;
@@ -311,6 +311,9 @@ GroupStyled.ControlButton = styled.button`
   border-radius: 5px;
   border: 2px solid #FF6C58;
   border-image: initial;
+  &:hover {
+    background-color: #FF3B21;
+  }
   &:disabled {
     background-color: #b6b6b6;
     color: #676767;
@@ -365,11 +368,12 @@ GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
 `;
 
 GroupStyled.ProfileInputWrapper = styled.span`
-  background: url('assets/images/plus-icon.svg') no-repeat;
-  width: 28px;
-  height: 28px;
+  background: url('assets/images/image-upload.png') no-repeat;
+  width: 35px;
+  height: 35px;
   display: block;
   margin: 0 auto;
+  background-size: contain;
 `;
 
 GroupStyled.ProfileInputButton = styled.div`
