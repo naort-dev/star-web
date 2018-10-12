@@ -14,6 +14,9 @@ export default class StarDetailsEntry extends React.Component {
     bookingPrice: '',
     bookingLimit: '',
     popUpMessage: null,
+    priceCheck: false,
+    limitCheck: false,
+    selectedCheck: null,
     errors: {
       bio: false,
       industries: false,
@@ -47,10 +50,10 @@ export default class StarDetailsEntry extends React.Component {
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
       }, () => {
-        if (fieldType === 'bookingLimit' && fieldValue > 20) {
-          this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?` });
-        } else if (fieldType === 'bookingPrice' && fieldValue > 499) {
-          this.setState({ popUpMessage: `Set your booking rate at ${fieldValue}?` });
+        if (fieldType === "bookingLimit" && this.state.priceCheck) {
+          this.setState({ priceCheck: false });
+        } else if (fieldType === "bookingLimit" && this.state.limitCheck) {
+          this.setState({ limitCheck: false });
         }
       });
     }
@@ -93,13 +96,23 @@ export default class StarDetailsEntry extends React.Component {
     }
   };
 
+  handleFieldBlur = (fieldType, fieldValue) => {
+    if (fieldType === 'bookingLimit' && !this.state.limitCheck && fieldValue > 20) {
+      this.bookingLimit.blur();
+      this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?`, selectedCheck: 'limitCheck' });
+    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && fieldValue > 499) {
+      this.bookingPrice.blur();
+      this.setState({ popUpMessage: `Set your booking rate at ${fieldValue}?`, selectedCheck: 'priceCheck' });
+    }
+  }
+
   renderPopup = () => {
     return (
       <React.Fragment>
         {this.state.popUpMessage}
         <GroupStyled.PopupButtonWrapper>
-          <GroupStyled.ActionButton onClick={() => this.setState({ popUpMessage: null })}>Yes</GroupStyled.ActionButton>
-          <GroupStyled.ActionButton onClick={() => this.setState({ popUpMessage: null })}>No</GroupStyled.ActionButton>
+          <GroupStyled.ActionButton onClick={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}>Yes</GroupStyled.ActionButton>
+          <GroupStyled.ActionButton onClick={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: false, selectedCheck: null })}>No</GroupStyled.ActionButton>
         </GroupStyled.PopupButtonWrapper>
       </React.Fragment>
     );
@@ -124,7 +137,7 @@ export default class StarDetailsEntry extends React.Component {
           this.state.popUpMessage &&
             <Popup
               smallPopup
-              closePopUp={() => this.setState({ popUpMessage: null })}
+              closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
             >
               {
                 this.renderPopup()
@@ -213,9 +226,11 @@ export default class StarDetailsEntry extends React.Component {
             <GroupStyled.WrapsInput>
               <GroupStyled.InputArea
                 small
+                innerRef={(node) => {this.bookingPrice = node;}}
                 type="number"
                 placeholder="$0"
                 value={this.state.bookingPrice}
+                onBlur={event => this.handleFieldBlur('bookingPrice', event.target.value)}
                 onChange={(event) => {
                   this.handleFieldChange('bookingPrice', event.target.value);
                 }}
@@ -232,9 +247,11 @@ export default class StarDetailsEntry extends React.Component {
             <GroupStyled.WrapsInput>
               <GroupStyled.InputArea
                 small
+                innerRef={(node) => {this.bookingLimit = node;}}
                 type="number"
                 placeholder="0"
                 value={this.state.bookingLimit}
+                onBlur={event => this.handleFieldBlur('bookingLimit', event.target.value)}
                 onChange={(event) => {
                   this.handleFieldChange('bookingLimit', event.target.value);
                 }}
