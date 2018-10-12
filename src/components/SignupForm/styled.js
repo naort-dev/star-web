@@ -291,7 +291,7 @@ LoginContainer.InputWrapper = styled.div`
     margin-top:5%;
   }
   @media(min-width: 1025px) {
-    margin-top: 30px;
+    margin-top: 23px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;
@@ -493,8 +493,7 @@ LoginContainer.InputContainer = styled.div`
   
   @media(min-width:768px){
     width:90%;
-    margin: 20px 20px;
-    margin-top: 0;
+    margin: 0 20px;
   }
 `;
 LoginContainer.ButtonWrapper = styled.div`
