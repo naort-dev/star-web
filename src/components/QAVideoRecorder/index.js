@@ -143,7 +143,8 @@ export default class QAVideoRecorder extends React.Component {
       this.props.deleteVideo();
       this.props.onRerecord();
       this.fetchStream();
-      this.recordedBlobs = []; 
+      this.recordedBlobs = [];
+      this.setState({ play: false });
       return;
     }
     this.props.onStartRecording();
@@ -269,6 +270,7 @@ export default class QAVideoRecorder extends React.Component {
     }
 
     else {
+      console.log(this.state.play)
       if (this.state.play) {
         return (
           <VideoPlayer fill id="video-player" onEnded={() => this.endVideo()} primarySrc={this.state.src} />
