@@ -1,7 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ThreeColumnLayout from '../../components/ThreeColumnLayout';
-import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
@@ -89,6 +88,34 @@ export default class MyVideos extends React.Component {
     });
     return requestVideo;
   }
+
+  renderBookings = () => {
+    return (
+      <React.Fragment>
+        {
+          (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
+            <MyVideosStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+              <Loader />
+            </MyVideosStyled.loaderWrapper>
+          :
+            <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+              <ScrollList
+                dataList={this.props.myVideosList.data}
+                requestDetails
+                starMode={this.props.starMode}
+                limit={this.props.myVideosList.limit}
+                totalCount={this.props.myVideosList.count}
+                offset={this.props.myVideosList.offset}
+                loading={this.props.myVideosList.loading}
+                selectItem={data => this.showRequest(data)}
+                fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
+              />
+            </div>
+          }
+      </React.Fragment>
+    );
+  }
+
   render() {
     let requestStatus, orderId, requestType, requestVideo, createdDate, price, isPrivate, requestTypeId;
     let occasionDate, relationShip;
@@ -124,7 +151,11 @@ export default class MyVideos extends React.Component {
     }
     return (
       <div>
-        <ThreeColumnLayout />
+        <ThreeColumnLayout
+          selectedSideBarItem="requests"
+          history={this.props.history}
+          renderCenterSection={this.renderBookings}
+        />
         {
           this.props.orderDetailsLoading ?
             <ActionLoader />
@@ -152,12 +183,7 @@ export default class MyVideos extends React.Component {
             />
           : null
         }
-        <MyVideosStyled style={{ display: Object.keys(this.state.orderDetails).length ? 'none' : 'block' }}>
-          <Header
-            menuActive={this.state.menuActive}
-            enableMenu={this.activateMenu}
-            history={this.props.history}
-          />
+        {/* <MyVideosStyled style={{ display: Object.keys(this.state.orderDetails).length ? 'none' : 'block' }}>
           <MyVideosStyled.sectionWrapper>
             <MyVideosStyled.sideSection menuActive={this.state.menuActive}>
               <Scrollbars
@@ -219,8 +245,8 @@ export default class MyVideos extends React.Component {
               }
             </MyVideosStyled.mainSection>
           </MyVideosStyled.sectionWrapper>
-        </MyVideosStyled>
+        </MyVideosStyled> */}
       </div>
-    )
+    );
   }
-};
+}

@@ -1,10 +1,50 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
+import Sidebar from '../Sidebar';
+import Header from '../Header';
 import ColumnLayoutStyled from './styled';
 
-const ThreeColumnLayout = props => (
-  <ColumnLayoutStyled>
-    asdasd
-  </ColumnLayoutStyled>
-);
+export default class ThreeColumnLayout extends React.Component {
+  state = {
+    menuActive: false,
+  }
 
-export default ThreeColumnLayout;
+  activateMenu = () => {
+    this.setState({ menuActive: !this.state.menuActive });
+  }
+
+  render() {
+    return (
+      <ColumnLayoutStyled>
+        <Header
+          menuActive={this.state.menuActive}
+          enableMenu={this.activateMenu}
+          history={this.props.history}
+        />
+        <ColumnLayoutStyled.sideSection menuActive={this.state.menuActive}>
+          <Scrollbars
+            renderView={props => <div {...props} className="view" />}
+          >
+            <Sidebar
+              // list={this.props.professionsList}
+              noCategory
+              history={this.props.history}
+              selectedCategory={this.props.selectedSideBarItem}
+              menuActive={this.state.menuActive}
+              toggleMenu={this.activateMenu}
+            />
+          </Scrollbars>
+        </ColumnLayoutStyled.sideSection>
+        <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
+          <ColumnLayoutStyled.CenterSection>
+            {this.props.renderCenterSection()}
+          </ColumnLayoutStyled.CenterSection>
+          <ColumnLayoutStyled.RightSection>
+            sadasdsad
+          </ColumnLayoutStyled.RightSection>
+        </ColumnLayoutStyled.mainSection>
+      </ColumnLayoutStyled>
+    );
+  }
+}
+

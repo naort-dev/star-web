@@ -14,25 +14,6 @@ MyVideosStyled.sectionWrapper = styled.div`
   height:100%;
 `;
 
-MyVideosStyled.sideSection = styled.section`
-  background-color: #fff;
-  height: ${props => props.menuActive && '100%'};
-  @media(min-width: 1025px) {
-    width:25%;
-    max-width: 310px;
-    display: inline-block;
-    position: fixed;
-    left: 0;
-    top: 60px;
-    bottom: 0;
-    overflow: auto;
-  }
-  @media(min-width: 1920px) {
-    top: 72px;
-    padding-top: 72px;
-  }
-`;
-
 MyVideosStyled.mainSection = styled.section`
   height: 100%;
   display: ${props => (props.menuActive ? 'none' : 'block')}
