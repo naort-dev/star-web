@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import ThreeColumnLayout from '../../components/ThreeColumnLayout';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
@@ -123,6 +124,7 @@ export default class MyVideos extends React.Component {
     }
     return (
       <div>
+        <ThreeColumnLayout />
         {
           this.props.orderDetailsLoading ?
             <ActionLoader />

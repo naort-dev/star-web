@@ -22,7 +22,6 @@ import { MyVideos } from './pages/myVideos';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
-import { StarsignUpVideo } from './pages/starSignUpVideo';
 import { Requestvideo } from './pages/requestvideo';
 import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
@@ -30,7 +29,6 @@ import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
-import Starsuccess from './pages/starsuccess/Starsuccess.container';
 import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
 
 class App extends React.Component {
@@ -141,7 +139,6 @@ class App extends React.Component {
 
                 <Route exact path="/" component={Landing} />
                 <Route path="/resetpassword" component={Login} />
-                {/* <Route path="/:id/request" component={Requestvideo} /> */}
                 <Route path="/instalogin" component={InstaLogin} />
 
                 {/* logged in areas */}
