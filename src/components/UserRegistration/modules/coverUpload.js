@@ -75,7 +75,9 @@ export default class CoverUpload extends React.Component {
               image,
             };
           }
-          this.setState({ secondaryImages });
+          this.setState({ secondaryImages }, () => {
+            this.props.scrollRef.scrollToBottom();
+          });
         } else {
           this.props.onComplete(this.state.currentImage, resp, image);
           this.setState({ [this.state.currentImage]: image });
@@ -244,7 +246,7 @@ export default class CoverUpload extends React.Component {
                   />
               }
               <GroupStyled.ControlWrapper multiple>
-                <GroupStyled.SkipStep onClick={() => this.props.onImageUpload(this.state.secondaryImages)}>
+                <GroupStyled.SkipStep onClick={() => this.props.onImageUpload([], true)}>
                   Skip for now
                 </GroupStyled.SkipStep>
                 <GroupStyled.ControlButton

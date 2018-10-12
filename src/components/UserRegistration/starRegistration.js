@@ -63,7 +63,7 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   };
 
-  imageUpload = (secondaryImages) => {
+  imageUpload = (secondaryImages, skip) => {
     const secondaryFileNames = secondaryImages.map((item) => {
       if (item.fileName) {
         return item.fileName;
@@ -71,11 +71,14 @@ class starRegistrationComponent extends React.Component {
     });
     const profileImage = {
       avatar_photo: this.state.profileImage.fileName,
-      images: [this.state.profileImage.fileName, ...secondaryFileNames],
+      images: [this.state.profileImage.fileName],
     };
-    if (this.state.featuredImage.fileName) {
-      profileImage['featured_image'] = this.state.featuredImage.fileName;
-      profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+    if (!skip) {
+      profileImage.images = [...profileImage.images, ...secondaryFileNames];
+      if (this.state.featuredImage.fileName) {
+        profileImage['featured_image'] = this.state.featuredImage.fileName;
+        profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+      }
     }
     this.props.updateProfilePhoto(profileImage)
       .then(() => {
@@ -120,7 +123,10 @@ class starRegistrationComponent extends React.Component {
           this.state.loader ?
             <Loader />
           :
-            <Scrollbars autoHide={false}>
+            <Scrollbars
+              ref={node => {this.scrollRef = node;}}
+              autoHide={false}
+            >
               <GroupStyled.ContentWrapper>
                 {
                   this.props.currentStep === 2 && (
@@ -138,12 +144,13 @@ class starRegistrationComponent extends React.Component {
                 {
                   this.props.currentStep === 4 && (
                     <CoverUpload
+                      scrollRef={this.scrollRef}
                       profileImage={this.state.profileImage.image}
                       featuredRatio={imageSizes.featured}
                       secondaryRatio={imageSizes.first}
                       groupName={this.props.userDetails.settings_userDetails.first_name}
                       onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                      onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}
+                      onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
                     />
                   )
                 }

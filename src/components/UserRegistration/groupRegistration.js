@@ -60,7 +60,7 @@ class GroupRegistrationComponent extends React.Component {
       });
   };
 
-  imageUpload = (secondaryImages) => {
+  imageUpload = (secondaryImages, skip) => {
     const secondaryFileNames = secondaryImages.map((item) => {
       if (item.fileName) {
         return item.fileName;
@@ -68,11 +68,14 @@ class GroupRegistrationComponent extends React.Component {
     });
     const profileImage = {
       avatar_photo: this.state.profileImage.fileName,
-      images: [this.state.profileImage.fileName, ...secondaryFileNames],
+      images: [this.state.profileImage.fileName],
     };
-    if (this.state.featuredImage.fileName) {
-      profileImage['featured_image'] = this.state.featuredImage.fileName;
-      profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+    if (!skip) {
+      profileImage.images = [...profileImage.images, ...secondaryFileNames];
+      if (this.state.featuredImage.fileName) {
+        profileImage['featured_image'] = this.state.featuredImage.fileName;
+        profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+      }
     }
     this.props.updateProfilePhoto(profileImage)
       .then(() => {
@@ -84,7 +87,10 @@ class GroupRegistrationComponent extends React.Component {
   render() {
     return (
       <GroupStyled>
-        <Scrollbars autoHide={false}>
+        <Scrollbars
+          ref={node => {this.scrollRef = node;}}
+          autoHide={false}
+        >
           <GroupStyled.ContentWrapper>
             {
               this.props.currentStep === 2 && (
@@ -105,10 +111,11 @@ class GroupRegistrationComponent extends React.Component {
                 <CoverUpload
                   profileImage={this.state.profileImage.image}
                   featuredRatio={imageSizes.groupCover}
+                  scrollRef={this.scrollRef}
                   secondaryRatio={imageSizes.groupCover}
                   groupName={this.props.userDetails.first_name}
                   onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                  onImageUpload={secondaryImages => this.imageUpload(secondaryImages)}
+                  onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
                 />
               )
             }
