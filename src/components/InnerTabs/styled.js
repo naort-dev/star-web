@@ -14,7 +14,6 @@ const TabStyled = styled.div`
     padding-top: 0;
     padding-left: 44px;
     padding-right: 44px;
-    text-align: center;
   }
   @media(min-width: 1025px) {
     border-bottom: 1px solid #CCCCCC;
@@ -35,6 +34,8 @@ TabStyled.tabList = styled.ul`
   }
   @media(min-width: 1025px) {
     width: 100%;
+    display: flex;
+    justify-content: space-around;
   }
 `;
 
@@ -49,11 +50,11 @@ TabStyled.tabListItem = styled.li`
   @media(min-width: 768px) {
     font-size: 20px;
     padding: 5px 40px;
+    text-align: center;
   }
   @media(min-width: 1025px) {
     font-size: 21px;
-    padding: ${props => (props.starsPage ? '5px 27px' : '5px 50px')};
-    width: ${props => (props.starsPage ? 'auto' : '184px')};;
+    padding: 5px 27px;
   }
   @media(min-width: 1920px) {
     font-size: 24px;

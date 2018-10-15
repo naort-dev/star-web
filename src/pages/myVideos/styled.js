@@ -52,7 +52,7 @@ MyVideosStyled.loaderWrapper = styled.div`
 `;
 
 MyVideosStyled.ListWrapper = styled.div`
-  height: calc(100% - 0px);
+  height: calc(100% - 40px);
 `;
 
 export default MyVideosStyled;

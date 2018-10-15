@@ -40,7 +40,7 @@ export default class ThreeColumnLayout extends React.Component {
             {this.props.renderCenterSection()}
           </ColumnLayoutStyled.CenterSection>
           <ColumnLayoutStyled.RightSection>
-            sadasdsad
+
           </ColumnLayoutStyled.RightSection>
         </ColumnLayoutStyled.mainSection>
       </ColumnLayoutStyled>

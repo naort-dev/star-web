@@ -15,7 +15,6 @@ import { setRequestFlow } from '../../store/shared/actions/toggleModals';
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   session: state.session,
-  starAvailability: state.userDetails.settings_celebrityDetails ? state.userDetails.settings_celebrityDetails.availability : false,
   userDetails: state.userDetails,
   myVideosList: state.myVideosList,
   videoRecorder: state.videoRecorder,
