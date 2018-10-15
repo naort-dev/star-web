@@ -1,12 +1,10 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ThreeColumnLayout from '../../components/ThreeColumnLayout';
-import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
-import FilterSection from '../../components/filterSection';
 import OrderDetails from '../../components/OrderDetails';
-import Tabs from '../../components/Tabs';
+import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
 import MyVideosStyled from './styled';
 import { requestStatusList, celebRequestStatusList } from '../../constants/requestStatusList';
@@ -19,6 +17,7 @@ export default class MyVideos extends React.Component {
     this.state = {
       menuActive: false,
       filterSelected: false,
+      selectedTab: 'All',
       tabsClientHeight: 0,
       requestStatus: 'all',
       starAvailability: props.starAvailability,
@@ -42,6 +41,11 @@ export default class MyVideos extends React.Component {
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
+
+  switchTab = (item) => {
+    this.setState({ selectedTab: item });
+  }
+
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
@@ -98,7 +102,12 @@ export default class MyVideos extends React.Component {
               <Loader />
             </MyVideosStyled.loaderWrapper>
           :
-            <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+            <MyVideosStyled.ListWrapper>
+              <InnerTabs
+                labels={['All', 'Open', 'Completed', 'Cancelled']}
+                switchTab={this.switchTab}
+                selected={this.state.selectedTab}
+              />
               <ScrollList
                 dataList={this.props.myVideosList.data}
                 requestDetails
@@ -110,7 +119,7 @@ export default class MyVideos extends React.Component {
                 selectItem={data => this.showRequest(data)}
                 fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
               />
-            </div>
+            </MyVideosStyled.ListWrapper>
           }
       </React.Fragment>
     );
@@ -154,6 +163,11 @@ export default class MyVideos extends React.Component {
         <ThreeColumnLayout
           selectedSideBarItem="requests"
           history={this.props.history}
+          innerLinks={[
+            { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
+            { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+            { linkName: 'Groups', selectedName: 'groups', url: '/' },
+          ]}
           renderCenterSection={this.renderBookings}
         />
         {

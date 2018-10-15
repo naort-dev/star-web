@@ -54,6 +54,7 @@ ColumnLayoutStyled.CenterSection = styled.div`
     width: 75%;
     display: inline-block;
     vertical-align: top;
+    height: 100%;
   }
 `;
 
@@ -62,6 +63,7 @@ ColumnLayoutStyled.RightSection = styled.div`
     width: 25%;
     display: inline-block;
     vertical-align: top;
+    height: 100%;
   }
 `;
 

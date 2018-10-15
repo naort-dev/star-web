@@ -26,12 +26,12 @@ export default class ThreeColumnLayout extends React.Component {
             renderView={props => <div {...props} className="view" />}
           >
             <Sidebar
-              // list={this.props.professionsList}
               noCategory
               history={this.props.history}
               selectedCategory={this.props.selectedSideBarItem}
               menuActive={this.state.menuActive}
               toggleMenu={this.activateMenu}
+              innerLinks={this.props.innerLinks}
             />
           </Scrollbars>
         </ColumnLayoutStyled.sideSection>

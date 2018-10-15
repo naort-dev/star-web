@@ -86,27 +86,19 @@ class Sidebar extends React.Component {
       <SidebarStyled.FilterWrapper>
         <SidebarStyled.Filter>
           <SidebarStyled.ListWrapper>
-            <SidebarStyled.InnerListItem>
-              <SidebarStyled.InnerCategoryTitle
-                selected={this.props.selectedCategory === 'requests'}
-              >
-                <Link to={'/user/bookings'}>Requests</Link>
-              </SidebarStyled.InnerCategoryTitle>
-            </SidebarStyled.InnerListItem>
-            <SidebarStyled.InnerListItem>
-              <SidebarStyled.InnerCategoryTitle
-                selected={this.props.selectedCategory === 'earnings'}
-              >
-                <Link to={'/user/earnings'}>Earnings</Link>
-              </SidebarStyled.InnerCategoryTitle>
-            </SidebarStyled.InnerListItem>
-            <SidebarStyled.InnerListItem>
-              <SidebarStyled.InnerCategoryTitle>
-                <Link to="/myStar">My Star Page</Link>
-              </SidebarStyled.InnerCategoryTitle>
-            </SidebarStyled.InnerListItem>
-          </SidebarStyled.ListWrapper>   
-        </SidebarStyled.Filter>  
+            {
+              this.props.innerLinks && this.props.innerLinks.map((element, index) => (
+                <SidebarStyled.InnerListItem key={index}>
+                  <SidebarStyled.InnerCategoryTitle
+                    selected={this.props.selectedCategory === element.selectedName}
+                  >
+                    <Link to={element.url}>{element.linkName}</Link>
+                  </SidebarStyled.InnerCategoryTitle>
+                </SidebarStyled.InnerListItem>
+              ))
+            }
+          </SidebarStyled.ListWrapper>
+        </SidebarStyled.Filter>
       </SidebarStyled.FilterWrapper>
     );
   }
