@@ -184,7 +184,7 @@ export default class StarDetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Stage Name</GroupStyled.Label>
+            <GroupStyled.Label>Stage name</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.InputArea
                 small
@@ -216,15 +216,15 @@ export default class StarDetailsEntry extends React.Component {
               />
               <GroupStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
-                  ? 'Please enter a valid event title'
+                  ? 'Please enter a valid industry'
                   : 'You can choose a maximum of 3 industries.'}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Booking Price</GroupStyled.Label>
+            <GroupStyled.Label>Booking price</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
+              <GroupStyled.NumberInput
                 small
                 innerRef={(node) => {this.bookingPrice = node;}}
                 type="number"
@@ -243,9 +243,9 @@ export default class StarDetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Booking Limit</GroupStyled.Label>
+            <GroupStyled.Label>Booking limit</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
+              <GroupStyled.NumberInput
                 small
                 innerRef={(node) => {this.bookingLimit = node;}}
                 type="number"

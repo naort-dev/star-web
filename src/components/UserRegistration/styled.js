@@ -224,6 +224,10 @@ GroupStyled.ZipCode = GroupStyled.AddressDetails.extend`
   padding: 0;
 `.withComponent('div');
 
+GroupStyled.NumberInput = GroupStyled.InputArea.extend`
+
+`.withComponent('input');
+
 GroupStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 12px;
@@ -337,6 +341,8 @@ GroupStyled.CoverLayout = styled.div`
   height: 300px;
   border: 1px solid #d0d2d3;
   border-radius: 10px;
+  max-width: 400px;
+  margin: 0 auto;
 `;
 
 GroupStyled.CoverImage = styled.div`
@@ -355,20 +361,38 @@ GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
   width: 100%;
   height: 300px;
   margin: 10px 0;
+  border: 1px solid #d0d2d3;
+  border-radius: 10px;
+  max-width: 400px;
+  margin: 10px auto;
 `;
 
 GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
   width: 200px;
   height: 200px;
+  position: relative;
   border: ${props => (props.imageUrl ? 'none' : '2px dashed #FF6C58')};
   border-radius: 50%;
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#fff')};
   background-repeat: no-repeat;
   background-size: cover;
+  cursor: pointer;
+`;
+
+GroupStyled.ProfileInputContainer = styled.span`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
 `;
 
 GroupStyled.ProfileInputWrapper = styled.span`
-  background: url('assets/images/image-upload.png') no-repeat;
+  background: ${props => !props.noImage && "url('assets/images/image-upload.png') no-repeat"};
   width: 35px;
   height: 35px;
   display: block;
@@ -406,6 +430,21 @@ GroupStyled.ProfileImage = styled.span`
   }
 `;
 
+GroupStyled.Professions = styled.span`
+  font-family: 'Ubuntu-Light';
+  margin-top: 5px;
+  display: inline-block;
+  &::after {
+    content: '';
+    display: ${props => (props.separator ? 'inline-block' : 'none')};
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #d0d2d3;
+  }
+`;
+
 GroupStyled.ConfirmationWrapper = styled.div`
   font-family: Ubuntu-Light;
   margin-top: 40px;
@@ -425,7 +464,22 @@ GroupStyled.confirmationSteps = styled.span`
 
 GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
   margin: 10px 0;
-`;
+  background-color: transparent;
+  color: #969696;
+  border: none;
+  &:hover {
+    background-color: transparent;
+  }
+  &::before {
+    display: block;
+    content: '';
+    margin: 0 auto;
+    background: url('assets/images/image-upload.png') no-repeat;
+    width: 35px;
+    height: 35px;
+    background-size: contain;
+  }
+`.withComponent('span');
 
 GroupStyled.DoneButtonWrapper = styled.div`
   position: absolute;

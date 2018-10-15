@@ -125,16 +125,21 @@ export default class ProfileUpload extends React.Component {
                   Pick a profile picture
                 </GroupStyled.InnerHeading>
                 <GroupStyled.InnerDescription>
-                  Have your group logo? Upload it now.
+                  {
+                    this.props.starMode ?
+                      'Are you ready for your close up? Upload it now.'
+                    : 'Have your group logo? Upload it now.'
+                  }
                 </GroupStyled.InnerDescription>
               </GroupStyled.HeadingWrapper>
               <GroupStyled.ProfileInputButton>
                 <GroupStyled.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
                 >
-                  <GroupStyled.ProfileInputWrapper>
-                    <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
-                  </GroupStyled.ProfileInputWrapper>
+                  <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+                  <GroupStyled.ProfileInputContainer>
+                    <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
+                  </GroupStyled.ProfileInputContainer>
                 </GroupStyled.ProfileImageWrapper>
               </GroupStyled.ProfileInputButton>
               {

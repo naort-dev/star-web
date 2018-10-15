@@ -58,35 +58,6 @@ class starRegistrationComponent extends React.Component {
     });
   }
 
-  submitAccountDetails = (celebrityDetails) => {
-    this.setState({ celebrityDetails });
-    this.props.changeStep(this.props.currentStep + 1);
-  };
-
-  imageUpload = (secondaryImages, skip) => {
-    const secondaryFileNames = secondaryImages.map((item) => {
-      if (item.fileName) {
-        return item.fileName;
-      }
-    });
-    const profileImage = {
-      avatar_photo: this.state.profileImage.fileName,
-      images: [this.state.profileImage.fileName],
-    };
-    if (!skip) {
-      profileImage.images = [...profileImage.images, ...secondaryFileNames];
-      if (this.state.featuredImage.fileName) {
-        profileImage['featured_image'] = this.state.featuredImage.fileName;
-        profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
-      }
-    }
-    this.props.updateProfilePhoto(profileImage)
-      .then(() => {
-        this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
-      });
-    this.props.changeStep(this.props.currentStep + 1);
-  }
-
   getVideo = () => {
     this.setState({ loader: true });
     let uploadVideo;
@@ -116,6 +87,41 @@ class starRegistrationComponent extends React.Component {
       });
   }
 
+  imageUpload = (secondaryImages, skip) => {
+    const secondaryFileNames = secondaryImages.map((item) => {
+      if (item.fileName) {
+        return item.fileName;
+      }
+    });
+    const profileImage = {
+      avatar_photo: this.state.profileImage.fileName,
+      images: [this.state.profileImage.fileName],
+    };
+    if (!skip) {
+      profileImage.images = [...profileImage.images, ...secondaryFileNames];
+      if (this.state.featuredImage.fileName) {
+        profileImage['featured_image'] = this.state.featuredImage.fileName;
+        profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+      }
+    }
+    this.props.updateProfilePhoto(profileImage)
+      .then(() => {
+        this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
+      });
+    this.props.changeStep(this.props.currentStep + 1);
+  }
+
+  submitAccountDetails = (celebrityDetails) => {
+    this.setState({ celebrityDetails, loader: true });
+    celebritySignupProfile(celebrityDetails)
+      .then((success) => {
+        this.setState({ loader: false });
+        if (success) {
+          this.props.changeStep(this.props.currentStep + 1);
+        }
+      });
+  }
+
   render() {
     return (
       <GroupStyled>
@@ -137,6 +143,7 @@ class starRegistrationComponent extends React.Component {
                 {
                   this.props.currentStep === 3 && (
                     <ProfileUpload
+                      starMode
                       onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
                     />
                   )
@@ -144,6 +151,8 @@ class starRegistrationComponent extends React.Component {
                 {
                   this.props.currentStep === 4 && (
                     <CoverUpload
+                      starMode
+                      professionsList={this.props.userDetails.settings_celebrityDetails.profession_details}
                       scrollRef={this.scrollRef}
                       profileImage={this.state.profileImage.image}
                       featuredRatio={imageSizes.featured}

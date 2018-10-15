@@ -2,6 +2,7 @@ import React from 'react';
 import EXIF from 'exif-js';
 import { awsImageUpload } from '../../../services/awsImageUpload';
 import ImageCropper from '../../ImageCropper';
+import { starProfessionsFormater } from '../../../utils/dataToStringFormatter';
 import Loader from '../../Loader';
 import GroupStyled from '../styled';
 
@@ -158,19 +159,20 @@ export default class CoverUpload extends React.Component {
     const { secondaryImages } = this.state;
     this.inputRef.click();
     this.setState({ currentImage: `secondaryImage-${secondaryImages.length}` });
-    // if (!secondaryImages.length || secondaryImages[secondaryImages.length - 1].image !== null) {
-    //   secondaryImages.push({
-    //     fileName: null,
-    //     image: null,
-    //   });
-    //   this.setState({ secondaryImages });
-    // }
   }
 
   removeSecondaryImage = (itemIndex) => {
     const { secondaryImages } = this.state;
     secondaryImages.splice(itemIndex, 1);
     this.setState({ secondaryImages });
+  }
+
+  renderStarProfessions = (list) => {
+    return list && list.map((professions, index) => {
+      return (
+        <GroupStyled.Professions key={index} separator={index !== list.length - 1}>{professions.title}</GroupStyled.Professions>
+      );
+    })
   }
 
   renderSecondaryImages = () => {
@@ -180,13 +182,15 @@ export default class CoverUpload extends React.Component {
           key={index}
           style={{ height: this.state.secondaryImageHeight }}
           imageUrl={item.image}
+          onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })} 
         >
-          <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })}>
-            <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
-            {
-             item.image && <GroupStyled.CloseButton onClick={() => this.removeSecondaryImage(index)} />
-            }
-          </GroupStyled.ProfileInputWrapper>
+          <GroupStyled.ProfileInputContainer>
+            <GroupStyled.ProfileInputWrapper noImage={item.image} />
+          </GroupStyled.ProfileInputContainer>
+          <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+          {
+            item.image && <GroupStyled.CloseButton onClick={() => this.removeSecondaryImage(index)} />
+          }
         </GroupStyled.SecondaryCoverImage>
       );
     });
@@ -205,7 +209,11 @@ export default class CoverUpload extends React.Component {
                   Pick your profile cover
                 </GroupStyled.InnerHeading>
                 <GroupStyled.InnerDescription>
-                  Supporters who visit your profile will see it. Showcase your best visuals.
+                  {
+                    this.props.starMode ?
+                      'Fans who visit your profile will see it. Showcase your best visuals.'
+                    : 'Supporters who visit your profile will see it. Showcase your best visuals.'
+                  }
                 </GroupStyled.InnerDescription>
               </GroupStyled.HeadingWrapper>
               <GroupStyled.CoverLayout
@@ -214,10 +222,12 @@ export default class CoverUpload extends React.Component {
                 <GroupStyled.CoverImage
                   innerRef={(node) => { this.coverImage = node; }}
                   imageUrl={this.state.featuredImage}
+                  onClick={() => this.setState({ currentImage: 'featuredImage' })}
                 >
-                  <GroupStyled.ProfileInputWrapper onClick={() => this.setState({ currentImage: 'featuredImage' })}>
-                    <GroupStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
-                  </GroupStyled.ProfileInputWrapper>
+                  <GroupStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+                  <GroupStyled.ProfileInputContainer>
+                    <GroupStyled.ProfileInputWrapper noImage={this.state.featuredImage} />
+                  </GroupStyled.ProfileInputContainer>
                   {
                   this.state.featuredImage && <GroupStyled.CloseButton onClick={() => this.setState({ featuredImage: null })} />
                   }
@@ -225,6 +235,11 @@ export default class CoverUpload extends React.Component {
                 </GroupStyled.CoverImage>
                 <GroupStyled.GroupName>
                   {this.props.groupName}
+                  <div>
+                    {
+                      this.props.starMode && this.renderStarProfessions(this.props.professionsList)
+                    }
+                  </div>
                 </GroupStyled.GroupName>
               </GroupStyled.CoverLayout>
               {

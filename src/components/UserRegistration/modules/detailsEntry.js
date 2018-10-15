@@ -184,7 +184,7 @@ export default class DetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Group Type</GroupStyled.Label>
+            <GroupStyled.Label>Group type</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.Select
                 value={this.state.groupType}
@@ -251,7 +251,7 @@ export default class DetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper> */}
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Social Links</GroupStyled.Label>
+            <GroupStyled.Label>Social links</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.CustomInput>
                 <GroupStyled.InputArea
@@ -382,7 +382,7 @@ export default class DetailsEntry extends React.Component {
           </GroupStyled.SubHeadingDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.InputWrapper>
-          <GroupStyled.Label>Contact Name</GroupStyled.Label>
+          <GroupStyled.Label>Contact name</GroupStyled.Label>
           <GroupStyled.WrapsInput>
             <GroupStyled.InputArea
               small
@@ -409,7 +409,7 @@ export default class DetailsEntry extends React.Component {
           </GroupStyled.WrapsInput>
         </GroupStyled.InputWrapper>
         <GroupStyled.InputWrapper>
-          <GroupStyled.Label>Phone Number</GroupStyled.Label>
+          <GroupStyled.Label>Phone number</GroupStyled.Label>
           <GroupStyled.WrapsInput>
             <GroupStyled.PhoneNo
               small
@@ -454,7 +454,7 @@ export default class DetailsEntry extends React.Component {
           </GroupStyled.WrapsInput>
         </GroupStyled.InputWrapper>
         <GroupStyled.InputWrapper>
-          <GroupStyled.Label>Group Address</GroupStyled.Label>
+          <GroupStyled.Label>Group address</GroupStyled.Label>
           <GroupStyled.WrapsInput>
             <GroupStyled.InputArea
               small
