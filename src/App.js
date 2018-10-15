@@ -18,7 +18,7 @@ import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Favourites } from './pages/favourites';
-import { MyVideos } from './pages/myVideos';
+import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
@@ -35,7 +35,6 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      // showLoading: true,
       showLoading: false,
       timedOut: false,
     };
@@ -44,7 +43,6 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    // window.addEventListener('storage', this.updateSession);
     this.props.fetchProfessionsList();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
@@ -56,19 +54,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
-    // this.props.onGetUserDetails();
-
-    // this.timer = setTimeout(() => {
-    //   this.setState({ timedOut: true });
-    // }, 5000);
-  }
-
   componentWillReceiveProps(nextProps) {
-    // if (this.props.getUserDetailsLoading && !nextProps.getUserDetailsLoading) {
-    //   this.setState({ showLoading: false });
-    //   this.timer && window.clearTimeout(this.timer)
-    // }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
     }
@@ -81,10 +67,6 @@ class App extends React.Component {
     if (this.props.location !== prevProps.location) {
       window.scrollTo(0, 0);
     }
-  }
-
-  componentWillUnmount = () => {
-    window.removeEventListener('storage', this.updateSession);
   }
 
   updateSession = () => {
@@ -102,24 +84,16 @@ class App extends React.Component {
       <div>
         <div id="content-wrapper">
           {
-            this.props.loginModal ?
-              <LoginFlow />
-            : null
+            this.props.loginModal && <LoginFlow />
           }
           {
-            this.props.signUpModal ?
-              <SignupFlow />
-            : null
+            this.props.signUpModal && <SignupFlow />
           }
           {
-            this.props.requestFlow ?
-              <Requestvideo />
-            : null
+            this.props.requestFlow && <Requestvideo />
           }
           {
-            this.props.referModal ?
-              <ReferStar />
-            : null
+            this.props.referModal && <ReferStar />
           }
           <Helmet
             title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
@@ -165,13 +139,13 @@ class App extends React.Component {
                 <Route
                   path="/user/myVideos"
                   component={protectRoute({
-                    RouteComponent: MyVideos,
+                    RouteComponent: Requests,
                   })}
                 />
                 <Route
                   path="/user/bookings"
                   component={protectRoute({
-                    RouteComponent: MyVideos,
+                    RouteComponent: Requests,
                     selectedSideBarItem: 'requests',
                     starMode: true,
                   })}
@@ -182,24 +156,6 @@ class App extends React.Component {
                     RouteComponent: Earnings,
                   })}
                 />
-                {/*
-                <Route
-                  exact
-                  path="/account-settinglanding
-                  component={protectRoute({
-                    RouteComponent: AccountSettings,
-                    roles: allUserRolesExcept([userRoles.BOT]),
-                  })}
-                />
-                <Route
-                  exact
-                  path="/account-settings"
-                  component={protectRoute({
-                    RouteComponent: AccountSettings,
-                    roles: [userRoles.BOT, userRoles.KYC],
-                  })}
-                />
-                */}
 
                 {/* fallbacks, keep it last */}
                 <Route path="/unauthorized" component={Unauthorized} />

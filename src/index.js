@@ -12,7 +12,6 @@ import './globalStyles';
 
 import DevTools from './store/DevTools';
 
-// @TODO: read localForage and set the inital/preloaded state
 const store = configureStore();
 const DevToolsWrapper = () => (process.env.NODE_ENV === 'development' ? <DevTools /> : null);
 

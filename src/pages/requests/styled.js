@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const MyVideosStyled = styled.div`
+const RequestsStyled = styled.div`
   margin-top: 60px;
   height: calc(100vh - 60px);
   background-color: #F8F8F8;
@@ -9,12 +9,12 @@ const MyVideosStyled = styled.div`
     height: calc(100vh - 72px);
   }
 `;
-MyVideosStyled.sectionWrapper = styled.div`
+RequestsStyled.sectionWrapper = styled.div`
   max-width: 1920px;
   height:100%;
 `;
 
-MyVideosStyled.mainSection = styled.section`
+RequestsStyled.mainSection = styled.section`
   height: 100%;
   display: ${props => (props.menuActive ? 'none' : 'block')}
   @media(min-width: 768px) {
@@ -37,7 +37,7 @@ MyVideosStyled.mainSection = styled.section`
   }
 `;
 
-MyVideosStyled.loaderWrapper = styled.div`
+RequestsStyled.loaderWrapper = styled.div`
   height: calc(100% - 95px);
   padding: 20px 16px;
   @media(min-width: 1025px) {
@@ -51,8 +51,8 @@ MyVideosStyled.loaderWrapper = styled.div`
   }
 `;
 
-MyVideosStyled.ListWrapper = styled.div`
+RequestsStyled.ListWrapper = styled.div`
   height: calc(100% - 40px);
 `;
 
-export default MyVideosStyled;
+export default RequestsStyled;

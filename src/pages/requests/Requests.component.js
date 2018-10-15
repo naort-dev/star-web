@@ -6,12 +6,12 @@ import ScrollList from '../../components/ScrollList';
 import OrderDetails from '../../components/OrderDetails';
 import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
-import MyVideosStyled from './styled';
+import RequestsStyled from './styled';
 import { requestStatusList, celebRequestStatusList } from '../../constants/requestStatusList';
 
 const moment = require('moment');
 
-export default class MyVideos extends React.Component {
+export default class Requests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -81,7 +81,7 @@ export default class MyVideos extends React.Component {
         return <div>sadasdasd</div>;
       default:
         return (
-          <MyVideosStyled.ListWrapper>
+          <RequestsStyled.ListWrapper>
             <ScrollList
               dataList={this.props.myVideosList.data}
               requestDetails
@@ -93,7 +93,7 @@ export default class MyVideos extends React.Component {
               selectItem={data => this.showRequest(data)}
               fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
             />
-          </MyVideosStyled.ListWrapper>
+          </RequestsStyled.ListWrapper>
         );
     }
   }
@@ -108,9 +108,9 @@ export default class MyVideos extends React.Component {
         />
         {
           (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
-            <MyVideosStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+            <RequestsStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
               <Loader />
-            </MyVideosStyled.loaderWrapper>
+            </RequestsStyled.loaderWrapper>
           : this.renderBookings()
         }
       </React.Fragment>

@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import MyVideos from './MyVideos.component';
+import Requests from './Requests.component';
 import { fetchMyVideosList } from './actions/getMyVideosList';
 import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd } from './actions/handleRequests';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
@@ -46,4 +46,4 @@ const mapDispatchToProps = dispatch => ({
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MyVideos);
+export default connect(mapStateToProps, mapDispatchToProps)(Requests);
