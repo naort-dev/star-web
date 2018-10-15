@@ -95,14 +95,14 @@ VideoRecorderDiv.Button = styled.button`
     background-size: 50px;
   };
   ${props => props.stop && ({
-    backgroundColor: 'red',
+    backgroundColor: '#FF0000',
     marginRight: 0,
   })}
 `;
 
 VideoRecorderDiv.RerecordButton = styled.button`
   margin: 10px 20px;
-  background-color: red; 
+  background-color: #FF0000; 
   color: #FF6C58;
   height: 50px;
   width: 50px;
@@ -357,7 +357,7 @@ VideoRecorderDiv.IndicationText = styled.div`
   position: absolute;
   top: 5%;
   right: 20px;
-  color: red;
+  color: #FF0000;
 `;
 
 VideoRecorderDiv.StopRecorderText = styled.div`

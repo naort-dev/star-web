@@ -1,7 +1,6 @@
 import React from 'react';
 import validator from 'validator';
 import PlacesAutoComplete from '../../PlacesAutoComplete';
-import SelectTags from '../../SelectTag';
 import GroupStyled from '../styled';
 
 export default class DetailsEntry extends React.Component {
@@ -230,26 +229,6 @@ export default class DetailsEntry extends React.Component {
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
-          {/* <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Search tags</GroupStyled.Label>
-            <GroupStyled.WrapsInput>
-              <SelectTags
-                otherOptions={{
-                  clearable: false,
-                  arrowRenderer: null,
-                  valueComponent: selectProps =>
-                    this.renderMultiValueItems(selectProps)
-                }}
-                placeholder=""
-                searchTags={this.state.searchTags}
-                value={this.state.searchTags}
-                handleFieldChange={this.handleFieldChange}
-              />
-              <GroupStyled.ErrorMsg isError={false}>
-                Add hashtags to help Fans find you quicker
-              </GroupStyled.ErrorMsg>
-            </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper> */}
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Social links</GroupStyled.Label>
             <GroupStyled.WrapsInput>
@@ -482,14 +461,6 @@ export default class DetailsEntry extends React.Component {
                 }}
               />
             </GroupStyled.CityInfo>
-            {/* <GroupStyled.CityInfo
-              small
-              placeholder="City"
-              value={this.state.city}
-              onChange={(event) => {
-                this.handleFieldChange('city', event.target.value);
-              }}
-            /> */}
             <GroupStyled.AddressDetails>
               <PlacesAutoComplete
                 placeholder="State"
@@ -500,14 +471,6 @@ export default class DetailsEntry extends React.Component {
                 }}
               />
             </GroupStyled.AddressDetails>
-            {/* <GroupStyled.AddressDetails
-              small
-              placeholder="State"
-              value={this.state.state}
-              onChange={(event) => {
-                this.handleFieldChange('state', event.target.value);
-              }}
-            /> */}
             <GroupStyled.ZipCode>
               <PlacesAutoComplete
                 placeholder="Zip"
@@ -520,16 +483,6 @@ export default class DetailsEntry extends React.Component {
                 }}
               />
             </GroupStyled.ZipCode>
-            {/* <GroupStyled.ZipCode
-              small
-              placeholder="Zip"
-              type="tel"
-              maxLength="5"
-              value={this.state.zip}
-              onChange={(event) => {
-                this.handleFieldChange('zip', event.target.value);
-              }}
-            /> */}
             <GroupStyled.ErrorMsg isError={this.state.errors.addressField}>
               {
                 this.state.errors.addressField ? this.state.errors.addressField :
