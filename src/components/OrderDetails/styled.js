@@ -3,75 +3,16 @@ import { Scrollbars } from 'react-custom-scrollbars';
 
 const OrderStyled = styled.div`
   width: 100%;
-  height: 100vh;
+  height: 100%;
 `;
 
-OrderStyled.Header = styled.div`
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  height: 56px;
-  box-shadow: 0px 1px 0px 0px #333333;
-  @media(min-width: 1025px) {
-    display: none;
-  }
-`;
-
-OrderStyled.DesktopHeader = styled.div`
-  display: none;
-  z-index: 1;
-  @media(min-width: 1025px) {
-    display: block;
-    position: fixed;
-  }
-  @media(min-width: 1920px) {
-    height: 72px;
-  }
-`;
-
-OrderStyled.HeaderNavigation = styled.span`
-  background-image: url( 'assets/images/icon_back_40a.svg' );
-  background-repeat: no-repeat;
-  background-position: center;
-  border:none;
-  padding:20px;
-  background-size: 26px;
-  background-color:transparent;
-  cursor: pointer;
-  outline:none;
-  position: absolute;
-  left: 0;
-`;
-
-OrderStyled.HeaderTitle = styled.span`
-  font-family: 'Ubuntu-Bold';
-  font-size : 15px;
-  @media(min-width:1920px){
-    font-size:16px;
-  }
-`;
-
-OrderStyled.RequestStatusWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-top: 5px;
-`;
-
-OrderStyled.RequestStatus = styled.div`
-
-`;
 OrderStyled.ContentWrapper = styled.div`
-  height: calc(100vh - 96px);
+  height: 100%;
   overflow: auto;
   @media (min-width: 1025px) {
     overflow: initial;
-    background-color: rgb(248, 248, 248);
-    padding-top: 60px;
     height: 100%;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 72px;
+    padding: 0 20px;
   }
 `;
 OrderStyled.VideoContentWrapper = styled.div`
@@ -178,16 +119,8 @@ OrderStyled.VideoRequestName = styled.span`
 OrderStyled.leftContent = styled.div`
   @media(min-width: 1025px) {
     position: relative;
-    height: calc(100% - 6px);
-    width: 40%;
     background-color: #fff;
-    padding: 27px 42px;
-    padding-bottom: 90px;
-    float: left;
     margin-top: 6px;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 48px;
   }
 `;
 OrderStyled.scrollWrapper = styled(Scrollbars)`
@@ -204,9 +137,6 @@ OrderStyled.scrollWrapper = styled(Scrollbars)`
 OrderStyled.rightContent = styled.div`
   text-align: center;
   @media(min-width: 1025px) {
-    width: 60%;
-    float: right;
-    height: 100%;
     display: ${props => (props.notStar ? 'none' : 'flex')};
     align-items: center;
     justify-content: center;
@@ -238,29 +168,25 @@ OrderStyled.CloseButton = styled.span`
     height: 30px;
   }
 `;
-
-OrderStyled.MainTitle = styled.span`
-  display: block;
-  margin: 20px 0;
-  color: #FF953C;
-  text-align: center;
-  font-size: 18px;
-  @media(min-width: 1025px) {
-    margin: 19px 0;
-  }
-`;
 OrderStyled.ProfileImageWrapper = styled.div`
   width: 100%;
-  text-align: center;
   position: relative;
   padding: 0 16px;
   @media(min-width: 1025px) {
-    padding: 0 0;
+    margin: 0 20px;
     padding-bottom: 40px;
     border-bottom: 1px solid #333333;
+    width: calc(100% - 40px);
   }
 `;
 
+
+OrderStyled.ProfileDetailsWrapper = styled.span`
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 14px;
+  margin-left: 10px;
+`;
 OrderStyled.MoreActionsWrapper = styled.div`
   cursor: pointer;
   position: absolute;
@@ -291,10 +217,10 @@ OrderStyled.MoreActionsList = styled.ul`
 `;
 
 OrderStyled.MoreActionsItem = styled.li`
-    padding: 10px 0;
-    border-bottom: 1px solid #ccc;
-    :last-child {
-      border-bottom: none;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  :last-child {
+    border-bottom: none;
   }
 `;
 
@@ -306,33 +232,25 @@ OrderStyled.ProfileImage = styled.span`
   background-position: center;
   background-size:cover;
   height:50px;
-  border: solid 2px #FFFFFF;
-  box-shadow: 2px 2px 9px #4f4f4f;
   width:50px;
   position: relative;
   top: 8px;
   @media(min-width: 768px) {
-    width: 70px;
-    height: 70px;
-  }
-  @media(min-width: 1025px) {
-    height:100px;
-    width:100px;
+    width: 60px;
+    height: 60px;
   }
 `;
 OrderStyled.StarName = styled.h4`
-  font-size: 18px;
-  color: #FF6C58;
-  margin-top: 15px;
+  font-size: 16px;
   font-family: 'Ubuntu-Bold';
-  @media(min-width: 1025px) {
-    font-size: 26px;
-    margin-top: 25px;
-  }
 `;
-OrderStyled.StarProfessions = styled.div`
+OrderStyled.ProfileDetails = styled.div`
   display: block;
-  text-align: center;
+  font-family: 'Ubuntu-Light';
+  font-size: 14px;
+  span {
+    color: #FF6C58;
+  }
 `;
 OrderStyled.DetailsWrapper = styled.ul`
   margin-top: 15px;
@@ -348,38 +266,30 @@ OrderStyled.DetailsItem = styled.li`
 `;
 OrderStyled.DetailsTitle = styled.span`
   display: table-cell;
-  font-family: 'Ubuntu-Bold';
-  width: 50%;
+  font-family: 'Ubuntu-Light';
+  width: 20%;
   font-size:16px;
+  text-align: right;
+  vertical-align: middle;
   @media(min-width:1025px){
     font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;
   }
-`;
-
-OrderStyled.RequestStatusTitle = OrderStyled.DetailsTitle.extend`
-  display: inline-block;
-  width: auto;
-  margin-right: 10px;
 `;
 
 OrderStyled.DetailsValue = styled.span`
   display: table-cell;
-  width: 50%;
+  width: 80%;
   font-size:16px;
+  padding-left: 20px;
   @media(min-width:1025px){
     font-size:13px;
   }
   @media(min-width:1920px){
     font-size:16px;
   }
-`;
-
-OrderStyled.RequestStatusValue = OrderStyled.DetailsValue.extend`
-  display: inline-block;
-  width: auto;
 `;
 
 OrderStyled.SocialMediaWrapper = styled.div`

@@ -6,7 +6,7 @@ const OrderDetailsItem = props => (
     {
       props.value && props.value !== '' ?
         <OrderStyled.DetailsItem>
-          <OrderStyled.DetailsTitle>{props.title} :</OrderStyled.DetailsTitle>
+          <OrderStyled.DetailsTitle>{props.title}</OrderStyled.DetailsTitle>
           <OrderStyled.DetailsValue>{props.value}</OrderStyled.DetailsValue>
         </OrderStyled.DetailsItem>
       : null

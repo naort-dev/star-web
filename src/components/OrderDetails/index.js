@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import VideoPlayer from '../VideoPlayer';
-import Header from '../Header';
+import RequestFlowPopup from '../RequestFlowPopup';
 import DeclinePopup from './DeclinePopup';
 import AlertPopup from './AlertPopup';
 import SubmitPopup from './SubmitPopup';
@@ -445,26 +445,23 @@ export default class OrderDetails extends React.Component {
               }
             </Popup>
         }
-        <OrderStyled.Header>
-          <OrderStyled.HeaderNavigation
-            onClick={() => props.hideRequest()}
-          />
-          <OrderStyled.HeaderTitle>
-            {props.requestType}
-          </OrderStyled.HeaderTitle>
-        </OrderStyled.Header>
-        <OrderStyled.DesktopHeader>
-          <Header
-            menuActive={false}
-            enableMenu={() => { }}
-            history={this.props.history}
-          />
-        </OrderStyled.DesktopHeader>
-        <OrderStyled.ContentWrapper>
-          <OrderStyled.leftContent>
-            <OrderStyled.scrollWrapper
-              renderView={props => <div {...props} className="order-details-scroll-wrapper" />}
-            >
+        <RequestFlowPopup
+          dotsCount={0}
+          closePopUp={() => this.props.hideRequest()}
+          smallPopup
+        >
+          <OrderStyled.ProfileImageWrapper>
+            <OrderStyled.ProfileImage
+              imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
+            />
+            <OrderStyled.ProfileDetailsWrapper>
+              <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+              <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
+              <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
+            </OrderStyled.ProfileDetailsWrapper>
+          </OrderStyled.ProfileImageWrapper>
+          <OrderStyled.ContentWrapper>
+            <OrderStyled.leftContent>
               {
                 props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
                   this.renderVideo(props, title, shareUrl, this.props.starMode)
@@ -490,16 +487,9 @@ export default class OrderDetails extends React.Component {
                     <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
                   </OrderStyled.ProfileImageWrapper>
               }
-              <OrderStyled.RequestStatusWrapper>
-                <OrderStyled.RequestStatus>
-                  <OrderStyled.RequestStatusTitle>Status:  </OrderStyled.RequestStatusTitle>
-                  <OrderStyled.RequestStatusValue>{props.requestStatus}</OrderStyled.RequestStatusValue>
-                </OrderStyled.RequestStatus>
-              </OrderStyled.RequestStatusWrapper>
-              <OrderStyled.MainTitle>Order Details</OrderStyled.MainTitle>
               <OrderStyled.DetailsWrapper>
                 <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Requested:</OrderStyled.DetailsTitle>
+                  <OrderStyled.DetailsTitle>Requested</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
                 {
@@ -512,57 +502,59 @@ export default class OrderDetails extends React.Component {
                     : null
                 }
                 <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Booking Price:</OrderStyled.DetailsTitle>
+                  <OrderStyled.DetailsTitle>Booking Price</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
                 {
                   !props.starMode &&
                     <OrderStyled.DetailsItem>
-                      <OrderStyled.DetailsTitle>Make this Video private:</OrderStyled.DetailsTitle>
+                      <OrderStyled.DetailsTitle>Make this Video private</OrderStyled.DetailsTitle>
                       <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
                     </OrderStyled.DetailsItem>
                 }
                 <OrderStyled.DetailsItem>
-                  <OrderStyled.DetailsTitle>Order#:</OrderStyled.DetailsTitle>
+                  <OrderStyled.DetailsTitle>Order#</OrderStyled.DetailsTitle>
                   <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>
                 {this.props.requestStatusId === 6 &&
                 <OrderStyled.DetailsItem>
                   <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
-                  <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+                  <OrderStyled.DetailsValue>
+                    <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+                  </OrderStyled.DetailsValue>
                 </OrderStyled.DetailsItem>}
               </OrderStyled.DetailsWrapper>
-            </OrderStyled.scrollWrapper>
-            {/* Show only if request is not cancelled or not completed or not processing */}
-            {
-              props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
-                <OrderStyled.ControlWrapper>
-                  {
-                    this.props.starMode ?
-                      <OrderStyled.ActionButtonWrapper>
-                        <OrderStyled.ActionButton onClick={() => this.modifyBooking()}>Cancel Request</OrderStyled.ActionButton>
-                      </OrderStyled.ActionButtonWrapper>
-                    :
-                      <PaymentFooterController
-                        buttonMode
-                        modifyBooking={this.modifyBooking}
-                        handleBooking={this.handleBooking}
-                        modifyButtonName={this.props.orderDetails.editable ? 'Edit Request' : ''}
-                        buttonName="Cancel"
-                      />
-                  }
-                </OrderStyled.ControlWrapper>
-            }
-          </OrderStyled.leftContent>
-          <OrderStyled.rightContent>
-            <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
-            {
-              props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
-                this.renderVideoRecorder(props)
-              : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
-            }
-          </OrderStyled.rightContent>
-        </OrderStyled.ContentWrapper>
+              {/* Show only if request is not cancelled or not completed or not processing */}
+              {
+                props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
+                  <OrderStyled.ControlWrapper>
+                    {
+                      this.props.starMode ?
+                        <OrderStyled.ActionButtonWrapper>
+                          <OrderStyled.ActionButton onClick={() => this.modifyBooking()}>Cancel Request</OrderStyled.ActionButton>
+                        </OrderStyled.ActionButtonWrapper>
+                      :
+                        <PaymentFooterController
+                          buttonMode
+                          modifyBooking={this.modifyBooking}
+                          handleBooking={this.handleBooking}
+                          modifyButtonName={this.props.orderDetails.editable ? 'Edit Request' : ''}
+                          buttonName="Cancel"
+                        />
+                    }
+                  </OrderStyled.ControlWrapper>
+              }
+            </OrderStyled.leftContent>
+            <OrderStyled.rightContent>
+              <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
+              {
+                props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+                  this.renderVideoRecorder(props)
+                : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
+              }
+            </OrderStyled.rightContent>
+          </OrderStyled.ContentWrapper>
+        </RequestFlowPopup>
       </OrderStyled>
     );
   }

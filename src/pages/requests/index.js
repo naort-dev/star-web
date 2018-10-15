@@ -1,1 +1,1 @@
-export { MyVideos } from './MyVideos.loadable';
+export { Requests } from './Requests.loadable';
