@@ -5,6 +5,7 @@ dist/
 .vscode
 .chrome
 .DS_Store
+.env
 env.js
 .idea/
 yarn.lock

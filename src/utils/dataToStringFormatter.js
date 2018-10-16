@@ -10,4 +10,4 @@ export const starProfessionsFormater = (list) => {
     });
     return string;
   }
-}
+};

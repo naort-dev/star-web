@@ -1,20 +1,18 @@
 import React from 'react';
 import Select from 'react-select';
-import './multiselect'
+import './multiselect';
 
-export default class MultiSelect extends React.Component {
-    render() {
-        return (
-                <Select
-                    {...this.props.otherOptions}
-                    closeOnSelect={false}
-                    multi
-                    options={this.props.industry}
-                    onChange={(value) => this.props.handleFieldChange('profession', value)}
-                    placeholder="Select your industry"
-                    simpleValue
-                    value={this.props.profession}
-                />
-        )
-    }
-}
+const MultiSelect = props => (
+  <Select
+    {...props.otherOptions}
+    closeOnSelect={false}
+    multi
+    options={props.dataValues}
+    onChange={(value) => props.handleFieldChange(value)}
+    simpleValue
+    value={props.value}
+  />
+);
+
+export default MultiSelect;
+

@@ -39,7 +39,7 @@ LoginContainer.LeftSection = styled.div`
 `;
 
 LoginContainer.SignupFlow = styled.div`
-  height: calc(100% - 60px);
+  height: ${props => (props.currentStep === 1 ? 'calc(100% - 60px)' : '100%')};
 `;
 
 LoginContainer.RightSection = styled.div`
