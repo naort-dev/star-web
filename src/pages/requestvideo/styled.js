@@ -397,7 +397,7 @@ Request.ContinueButton = styled.button`
     color: #FF6C58;
   }
 `;
-Request.DiasableButton = styled.button`
+Request.DisableButton = styled.button`
   background-color: #b6b6b6;
   color: #676767;
   width: 100%;

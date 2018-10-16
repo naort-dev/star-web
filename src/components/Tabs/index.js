@@ -1,6 +1,5 @@
 import React from 'react';
 import TabStyled from './styled';
-import './checkboxStyled';
 
 export default class Tabs extends React.Component {
   constructor(props) {

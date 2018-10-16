@@ -117,12 +117,12 @@ class App extends React.Component {
 
                 {/* logged in areas */}
 
-                <Route
+                {/* <Route
                   path="/myStar/:videoId?"
                   component={protectRoute({
                     RouteComponent: Starprofile,
                   })}
-                />
+                /> */}
 
                 <Route
                   path="/user/favorites"

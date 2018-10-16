@@ -4,7 +4,6 @@ import { Request, HeaderSection } from '../../pages/requestvideo/styled';
 import { Askquestion } from '../../pages/askQuestion';
 import { Event } from '../../pages/eventAnnouncement';
 import { Personal } from '../../pages/personalizedAnnouncement';
-import './styling';
 
 export default class Requestvideo extends React.Component {
   constructor(props) {
@@ -153,7 +152,7 @@ export default class Requestvideo extends React.Component {
                                   />
                                   <label htmlFor="f-option">
                                     Personalized Shout-Out
-                                    <div className="request_content">
+                                    <div className="option-content">
                                       Celebrate everyday moments with a
                                       personalized video greeting from{" "}
                                       {fullName}. Birthdays, encouragement,
@@ -177,7 +176,7 @@ export default class Requestvideo extends React.Component {
                                   />
                                   <label htmlFor="s-option">
                                     Event Announcement
-                                    <div className="request_content">
+                                    <div className="option-content">
                                       Have {fullName} invite everyone over for
                                       your book club, the big game, fundraiser,
                                       bachelor/ette party, reunion… any event.
@@ -200,7 +199,7 @@ export default class Requestvideo extends React.Component {
                                   />
                                   <label htmlFor="t-option">
                                     Ask a Question
-                                    <div className="request_content">
+                                    <div className="option-content">
                                       Video yourself asking {fullName} a
                                       question. When they respond, we’ll stitch
                                       the two videos together so you get a great
@@ -225,9 +224,9 @@ export default class Requestvideo extends React.Component {
                           Next
                         </Request.ContinueButton>
                       ) : (
-                        <Request.DiasableButton disabled>
+                        <Request.DisableButton disabled>
                           Next
-                        </Request.DiasableButton>
+                        </Request.DisableButton>
                       )}
                     </Request.PaymentControllerWrapper>
                   </Request.ComponentWrapper>
