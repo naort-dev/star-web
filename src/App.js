@@ -32,6 +32,7 @@ import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import Starsuccess from './pages/starsuccess/Starsuccess.container';
 import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
+import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -140,6 +141,7 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
+                <Route path="/group-profile" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 {/* <Route path="/:id/request" component={Requestvideo} /> */}
                 <Route path="/instalogin" component={InstaLogin} />
