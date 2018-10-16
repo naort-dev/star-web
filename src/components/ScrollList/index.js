@@ -222,7 +222,7 @@ export default class ScrollList extends React.Component {
             id={item.user_id}
             menuActive={this.props.menuActive}
             dbId={item.id}
-            rate={item.celebrity_user.rate}
+            rate={item .celebrity_user && item.celebrity_user.rate}
             cover={coverPhoto}
             celebrityFollow={item.celebrity_follow}
             celebrityProfessions={item.celebrity_profession}

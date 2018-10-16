@@ -155,7 +155,6 @@ injectGlobal`
   input[type='file']{
     opacity: 0;
     cursor: pointer;
-    font-size: 0;
 }
 
 .round-radio ul li{
@@ -173,15 +172,16 @@ injectGlobal`
   display: block;
   position: relative;
   font-size: 18px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Ubuntu-Regular';
+  color: #484848;
   padding: 25px 25px 0 80px;
   margin: 10px auto;
   cursor: pointer;
   text-align: left;
   z-index: 1;
-  -webkit-transition: all 0.25s linear;
+
   @media(min-width: 768px) {
-    padding: 25px 25px 25px 80px;
+    padding: 25px 25px 9px 80px;
   }
   @media(min-width:1025px){
     font-size:20px;
@@ -195,9 +195,8 @@ injectGlobal`
   border-radius: 100%;
   height: 25px;
   width: 25px;
-  top: 30px;
+  top: 25px;
   left: 20px;
-
 	transition: border .25s linear;
 	-webkit-transition: border .25s linear;
 }
@@ -226,7 +225,7 @@ injectGlobal`
 }
 .list .option-content{
   font-family: 'Ubuntu-Light';
-  color: #AAAAAA;
+  color: #88898c;
   margin-top: 15px;
   font-size:15px;
   @media(min-width:1025px){

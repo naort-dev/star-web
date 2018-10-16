@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { updateGroupAccount } from '../../services/groupRegistration';
+import { updateGroupAccount, updateSocialLinks } from '../../services/userRegistration';
+import { imageSizes } from '../../constants/imageSizes';
 import GroupStyled from './styled';
 import DetailsEntry from './modules/detailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
 import { fetchGroupTypes } from '../../store/shared/actions/getGroupTypes';
+import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
 
-class GroupRegistration extends React.Component {
+class GroupRegistrationComponent extends React.Component {
 
   state = {
     featuredImage: {
@@ -47,28 +49,48 @@ class GroupRegistration extends React.Component {
     });
   }
   
-  submitGroupAccountDetails = (data) => {
-    updateGroupAccount(data).then((success) => {
-      if (success) {
-        this.props.changeStep(this.props.currentStep + 1);
-      }
-    });
+  submitGroupAccountDetails = (accountDetails, socialLinks) => {
+    const groupUpdate = updateGroupAccount(accountDetails);
+    const socialUpdate = updateSocialLinks(socialLinks);
+    Promise.all([groupUpdate, socialUpdate])
+      .then((success) => {
+        if (success) {
+          this.props.changeStep(this.props.currentStep + 1);
+        }
+      });
   };
 
-  imageUpload = () => {
+  imageUpload = (secondaryImages, skip) => {
+    const secondaryFileNames = secondaryImages.map((item) => {
+      if (item.fileName) {
+        return item.fileName;
+      }
+    });
     const profileImage = {
       avatar_photo: this.state.profileImage.fileName,
-      featured_image: this.state.featuredImage.fileName,
-      images: [this.state.profileImage.fileName, this.state.featuredImage.fileName],
+      images: [this.state.profileImage.fileName],
     };
-    this.props.updateProfilePhoto(profileImage);
+    if (!skip) {
+      profileImage.images = [...profileImage.images, ...secondaryFileNames];
+      if (this.state.featuredImage.fileName) {
+        profileImage['featured_image'] = this.state.featuredImage.fileName;
+        profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
+      }
+    }
+    this.props.updateProfilePhoto(profileImage)
+      .then(() => {
+        this.props.fetchUserDetails(this.props.userDetails.id);
+      });
     this.props.changeStep(this.props.currentStep + 1);
   }
 
   render() {
     return (
       <GroupStyled>
-        <Scrollbars>
+        <Scrollbars
+          ref={node => {this.scrollRef = node;}}
+          autoHide={false}
+        >
           <GroupStyled.ContentWrapper>
             {
               this.props.currentStep === 2 && (
@@ -88,8 +110,12 @@ class GroupRegistration extends React.Component {
               this.props.currentStep === 4 && (
                 <CoverUpload
                   profileImage={this.state.profileImage.image}
+                  featuredRatio={imageSizes.groupCover}
+                  scrollRef={this.scrollRef}
+                  secondaryRatio={imageSizes.groupCover}
+                  groupName={this.props.userDetails.first_name}
                   onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                  onImageUpload={() => this.imageUpload()}
+                  onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
                 />
               )
             }
@@ -104,9 +130,25 @@ class GroupRegistration extends React.Component {
                       Now what do we do?
                     </GroupStyled.SubHeadingDescription>
                   </GroupStyled.HeadingWrapper>
-                  {/* <GroupStyled.ConfirmationWrapper>
+                  <GroupStyled.ConfirmationWrapper>
                     <GroupStyled.ConfirmationHead>Most groups choose to do 3 things:</GroupStyled.ConfirmationHead>
-                  </GroupStyled.ConfirmationWrapper> */}
+                    <GroupStyled.confirmationSteps>
+                      1.  Invite your Stars who are already on Starsona to join your group.
+                    </GroupStyled.confirmationSteps>
+                    <GroupStyled.confirmationSteps>
+                      2.  Invite other Stars who support you to join Starsona.
+                    </GroupStyled.confirmationSteps>
+                    <GroupStyled.confirmationSteps>
+                      3.  Let fans know about your group page.
+                    </GroupStyled.confirmationSteps>
+                  </GroupStyled.ConfirmationWrapper>
+                  <GroupStyled.DoneButtonWrapper>
+                    <GroupStyled.DoneButton
+                      onClick={() => this.props.closeSignupFlow()}
+                    >
+                      Done
+                    </GroupStyled.DoneButton>
+                  </GroupStyled.DoneButtonWrapper>
                 </React.Fragment>
               )
             }
@@ -119,14 +161,16 @@ class GroupRegistration extends React.Component {
 
 const mapStateToProps = state => ({
   groupTypes: state.groupTypes.data,
+  userDetails: state.userDetails.settings_userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
 });
 
-export default connect(
+export const GroupRegistration = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(GroupRegistration);
+)(GroupRegistrationComponent);
