@@ -5,9 +5,10 @@ import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
 import OrderDetails from '../../components/OrderDetails';
 import InnerTabs from '../../components/InnerTabs';
+import RequestDetails from '../../components/RequestDetails';
 import ActionLoader from '../../components/ActionLoader';
 import RequestsStyled from './styled';
-import { requestStatusList, celebRequestStatusList } from '../../constants/requestStatusList';
+import { requestStatusList, celebRequestStatusList, celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 const moment = require('moment');
 
@@ -37,6 +38,21 @@ export default class Requests extends React.Component {
   }
 
   switchTab = (item) => {
+    const openStatuses = this.props.starMode ? celebOpenStatusList : openStatusList;
+    const completedStatus = this.props.starMode ? celebCompletedStatusList : completedStatusList;
+    switch (item) {
+      case 'Open':
+        this.props.fetchMyVideosList(0, true, this.role, openStatuses.toString());
+        break;
+      case 'Cancelled':
+        this.props.fetchMyVideosList(0, true, this.role, 5);
+        break;
+      case 'Completed':
+        this.props.fetchMyVideosList(0, true, this.role, completedStatus.toString());
+        break;
+      default:
+        this.props.fetchMyVideosList(0, true, this.role, 'all');
+    }
     this.setState({ selectedTab: item });
   }
 
@@ -75,25 +91,114 @@ export default class Requests extends React.Component {
     return requestVideo;
   }
 
+  findRequestVideoThumbnail = (requestVideo) => {
+    let completedVideo;
+    let questionVideo;
+    requestVideo.forEach((video) => {
+      if (video.video_status === 1) {
+        completedVideo = video;
+      } else if (video.video_status === 4) {
+        questionVideo = video;
+      }
+    })
+    if (completedVideo) {
+      return completedVideo.s3_thumbnail_url;
+    } else if (questionVideo) {
+      return questionVideo.s3_thumbnail_url;
+    }
+    return null;
+  }
+
+  renderSectionHeader = () => {
+    if (this.state.selectedTab === 'Open') {
+      return this.props.starMode ? 'Pending fan requests' : 'Pending requests';
+    } else if (this.state.selectedTab === 'Cancelled') {
+      return this.props.starMode ? 'Cancelled fan requests' : 'Cancelled requests';
+    }
+    return this.props.starMode ? 'Completed fan requests' : 'Completed requests';
+  }
+
+  renderRequestList = (status, starMode) => {
+    let statusList;
+    if (status === 'Open') {
+      statusList = starMode ? celebOpenStatusList : openStatusList;
+    } else if (status === 'Completed') {
+      statusList = starMode ? celebCompletedStatusList : completedStatusList;
+    } else {
+      statusList = [5];
+    }
+    return this.props.myVideosList.data.map((request, index) => {
+      if (statusList.indexOf(request.request_status) > -1) {
+        return (
+          <RequestsStyled.RequestItem key={index}>
+            <RequestDetails
+              starMode={this.props.starMode}
+              cover={this.findRequestVideoThumbnail(request.request_video)}
+              celebId={request.celebrity_id}
+              orderId={request.order_details ? request.order_details.order : ''}
+              videoId={request.booking_id}
+              profile={request.avatar_photo && request.avatar_photo.thumbnail_url}
+              fanProfile={request.fan_photo && request.fan_photo.thumbnail_url}
+              starName={request.celebrity}
+              fanName={request.fan}
+              details={request.booking_title}
+              requestStatus={request.request_status}
+              requestType={request.request_type}
+              createdDate={request.created_date}
+              selectItem={() => this.showRequest(request)}
+            />
+          </RequestsStyled.RequestItem>
+        );
+      }
+    });
+  }
+
   renderBookings = () => {
     switch (this.state.selectedTab) {
       case 'All':
-        return <div>sadasdasd</div>;
+        return (
+          <React.Fragment>
+            <RequestsStyled.StatusTypeWrapper >
+              <Scrollbars>
+                <RequestsStyled.SectionHeaderWrapper>
+                  <RequestsStyled.SectionHeader>Pending fan requests</RequestsStyled.SectionHeader>
+                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+                </RequestsStyled.SectionHeaderWrapper>
+                <RequestsStyled.ListWrapper autoHeight>
+                  {this.renderRequestList('Open', this.props.starMode)}
+                </RequestsStyled.ListWrapper>
+                <RequestsStyled.SectionHeaderWrapper>
+                  <RequestsStyled.SectionHeader>Completed fan requests</RequestsStyled.SectionHeader>
+                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+                </RequestsStyled.SectionHeaderWrapper>
+                <RequestsStyled.ListWrapper autoHeight>
+                  {this.renderRequestList('Completed', this.props.starMode)}
+                </RequestsStyled.ListWrapper>
+              </Scrollbars>
+            </RequestsStyled.StatusTypeWrapper>
+          </React.Fragment>
+        );
       default:
         return (
-          <RequestsStyled.ListWrapper>
-            <ScrollList
-              dataList={this.props.myVideosList.data}
-              requestDetails
-              starMode={this.props.starMode}
-              limit={this.props.myVideosList.limit}
-              totalCount={this.props.myVideosList.count}
-              offset={this.props.myVideosList.offset}
-              loading={this.props.myVideosList.loading}
-              selectItem={data => this.showRequest(data)}
-              fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
-            />
-          </RequestsStyled.ListWrapper>
+          <React.Fragment>
+            <RequestsStyled.SectionHeaderWrapper>
+              <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
+              <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+            </RequestsStyled.SectionHeaderWrapper>
+            <RequestsStyled.ListWrapper>
+              <ScrollList
+                dataList={this.props.myVideosList.data}
+                requestDetails
+                starMode={this.props.starMode}
+                limit={this.props.myVideosList.limit}
+                totalCount={this.props.myVideosList.count}
+                offset={this.props.myVideosList.offset}
+                loading={this.props.myVideosList.loading}
+                selectItem={data => this.showRequest(data)}
+                fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
+              />
+            </RequestsStyled.ListWrapper>
+          </React.Fragment>
         );
     }
   }
@@ -153,7 +258,7 @@ export default class Requests extends React.Component {
     return (
       <div>
         <ThreeColumnLayout
-          selectedSideBarItem="requests"
+          selectedSideBarItem={this.props.starMode ? 'requests' : ''}
           history={this.props.history}
           innerLinks={[
             { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },

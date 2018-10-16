@@ -37,6 +37,33 @@ RequestsStyled.mainSection = styled.section`
   }
 `;
 
+RequestsStyled.StatusTypeWrapper = styled.section`
+  height: calc(100% - 40px);
+`;
+
+RequestsStyled.SectionHeaderWrapper = styled.div`
+  height: 74px;
+  padding-top: 27px;
+  padding-left: 16px;
+  @media(min-width: 768px) {
+    padding-left: 44px;
+  }
+  @media(min-width: 1025px) {
+    padding-left: 0;
+  }
+`;
+
+RequestsStyled.SectionHeader = styled.span`
+  font-family: 'Ubuntu-Bold';
+  color: #FF6C58;
+  font-size: 18px;
+`;
+
+RequestsStyled.SectionDescription = styled.span`
+  display: block;
+  font-family: 'Ubuntu-Regular';
+`;
+
 RequestsStyled.loaderWrapper = styled.div`
   height: calc(100% - 95px);
   padding: 20px 16px;
@@ -52,7 +79,19 @@ RequestsStyled.loaderWrapper = styled.div`
 `;
 
 RequestsStyled.ListWrapper = styled.div`
-  height: calc(100% - 40px);
+  height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 114px)')};
+`;
+
+RequestsStyled.RequestItem = styled.div`
+  width: 100%;
+  padding: 0 20px;
+  padding-bottom: 20px;
+  @media(min-width: 768px) {
+    padding-left: 44px;
+  }
+  @media(min-width: 1025px) {
+    padding-left: 0;
+  }
 `;
 
 export default RequestsStyled;

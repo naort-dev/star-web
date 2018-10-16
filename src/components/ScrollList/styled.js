@@ -154,6 +154,12 @@ ListStyled.listItem = styled.li`
   }
 `;
 
+ListStyled.listRequests = styled.li`
+  animation: ${menuEnter} 0.2s linear;
+  width: 100%;
+  padding-bottom: 20px;
+`;
+
 ListStyled.listVideos = ListStyled.listItem.extend`
   width: calc(50% - 7px);
   margin-right: 10px;

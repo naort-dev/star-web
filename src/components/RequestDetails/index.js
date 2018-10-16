@@ -1,6 +1,7 @@
 import React from 'react';
 import VideoRenderDiv from './styled';
-import { requestTypes } from '../../constants/requestTypes'
+import { requestTypes } from '../../constants/requestTypes';
+import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList } from '../../constants/requestStatusList';
 
 export default class RequestDetails extends React.Component {
   constructor(props) {
@@ -27,7 +28,7 @@ export default class RequestDetails extends React.Component {
         this.setState({ profileImage: this.profileImage.src });
       }
     };
-    this.profileImage.src = this.props.profile;
+    this.profileImage.src = this.props.starMode ? this.props.fanProfile : this.props.profile;
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -111,34 +112,53 @@ export default class RequestDetails extends React.Component {
       default: return null;
     }
   }
+
+  renderSecondaryControlButton = () => {
+    const { starMode, requestStatus } = this.props;
+    if (requestStatus !== 5 && !(!starMode && openStatusList.indexOf(requestStatus) > -1)) {
+      if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
+        return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem()}>Respond</VideoRenderDiv.ControlButton>;
+      }
+    }
+    return null;
+  }
+
   render() {
     const { props } = this;
     return (
-      <VideoRenderDiv onClick={() => this.props.selectItem()}>
+      <VideoRenderDiv>
         <VideoRenderDiv.ImageSection
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
-        >
-          {
-            !this.props.starMode &&
-              <VideoRenderDiv.ProfileImageWrapper>
-                <VideoRenderDiv.ProfileImage
-                  imageUrl={this.state.profileImage}
-                />
-              </VideoRenderDiv.ProfileImageWrapper>
-          }
-          {/* <VideoRenderDiv.FavoriteButton /> */}
-        </VideoRenderDiv.ImageSection>
+        />
         <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.DetailWrapper>
-            <VideoRenderDiv.StarName>
-              {props.starMode ? this.requestType[props.requestType] : props.starName}
-            </VideoRenderDiv.StarName>
-            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
-            {this.renderRequestDetails()}
-          </VideoRenderDiv.DetailWrapper>
+          <VideoRenderDiv.ProfileDetailWrapper>
+            <VideoRenderDiv.ProfileImageWrapper>
+              <VideoRenderDiv.ProfileImage
+                imageUrl={this.state.profileImage}
+              />
+            </VideoRenderDiv.ProfileImageWrapper>
+            <VideoRenderDiv.DetailWrapper>
+              <VideoRenderDiv.StarName>
+                {props.starMode ? props.fanName : props.starName }
+              </VideoRenderDiv.StarName>
+              <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+            </VideoRenderDiv.DetailWrapper>
+          </VideoRenderDiv.ProfileDetailWrapper>
+          <VideoRenderDiv.StatusDetailsWrapper>
+            <VideoRenderDiv.StatusDetails>
+              <VideoRenderDiv.StarDetails>Status</VideoRenderDiv.StarDetails>
+              <VideoRenderDiv.RequestStatus>{props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus]}</VideoRenderDiv.RequestStatus>
+            </VideoRenderDiv.StatusDetails>
+            <VideoRenderDiv.ControlWrapper>
+              {
+                this.renderSecondaryControlButton()
+              }
+              <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem()} alternate>View</VideoRenderDiv.ControlButton>
+            </VideoRenderDiv.ControlWrapper>
+          </VideoRenderDiv.StatusDetailsWrapper>
+          {/* {this.renderRequestDetails()} */}
         </VideoRenderDiv.ProfileContent>
-        {/* </Link> */}
       </VideoRenderDiv>
     );
   }

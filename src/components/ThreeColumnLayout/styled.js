@@ -50,11 +50,11 @@ ColumnLayoutStyled.mainSection = styled.section`
 `;
 
 ColumnLayoutStyled.CenterSection = styled.div`
+  height: 100%;
   @media(min-width: 768px) {
     width: 75%;
     display: inline-block;
     vertical-align: top;
-    height: 100%;
   }
 `;
 
