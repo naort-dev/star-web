@@ -23,6 +23,12 @@ VideoRenderDiv.ProfileDetailWrapper = styled.div`
   width: 100%;
 `;
 
+VideoRenderDiv.VideoPlayerWrapper = styled.div`
+  width: 100%;
+  height: calc(100% - 0px);
+  position: relative;
+`;
+
 VideoRenderDiv.ProfileImageWrapper = styled.div`
   display: inline-block;
   vertical-align: top;
@@ -130,7 +136,7 @@ VideoRenderDiv.ControlButton = styled.button`
   border-color: ${props => (props.alternate ? '#D8D8D8' : '#FF6C58')};
   border-image: initial;
   &:hover {
-    background-color: ${props => (props.alternate ? '#D8D8D8' : '#FF3B21')};;
+    background-color: ${props => (props.alternate ? '#D8D8D8' : '#FF3B21')};
   }
   &:disabled {
     background-color: #D8D8D8;

@@ -1,5 +1,7 @@
 import React from 'react';
 import VideoRenderDiv from './styled';
+import VideoPlayer from '../VideoPlayer';
+import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes } from '../../constants/requestTypes';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList } from '../../constants/requestStatusList';
 
@@ -9,6 +11,7 @@ export default class RequestDetails extends React.Component {
     this.state = {
       coverImage: false,
       profileImage: false,
+      videoPlayerProps: null,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -60,6 +63,41 @@ export default class RequestDetails extends React.Component {
       }
     }
     return timeString;
+  }
+
+  getQaVideoData = (requestVideo) => {
+    let videoPlayerProps = {};
+    requestVideo.forEach((video) => {
+      if (video.video_status === 4) {
+        videoPlayerProps = {
+          ...videoPlayerProps,
+          primaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
+          primarySrc: video.s3_video_url ? video.s3_video_url : '',
+        };
+      } else if (video.video_status === 5) {
+        videoPlayerProps = {
+          ...videoPlayerProps,
+          secondaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
+          secondarySrc: video.s3_video_url ? video.s3_video_url : '',
+        };
+      }
+    });
+    return videoPlayerProps;
+  }
+  activateVideo = () => {
+    const { requestVideo, requestType } = this.props;
+    if (requestVideo && requestVideo.length) {
+      const videoPlayerProps = requestType === 3 ? this.getQaVideoData(requestVideo) : {
+        primaryCover: requestVideo[0].s3_thumbnail_url ? requestVideo[0].s3_thumbnail_url : '',
+        primarySrc: requestVideo[0].s3_video_url ? requestVideo[0].s3_video_url : '',
+      };
+      this.setState({
+        videoPlayerProps,
+      });
+    }
+  }
+  closeVideo = () => {
+    this.setState({ videoPlayerProps: null });
   }
   renderVideoDetails = (text) => {
     let splicedText = text;
@@ -117,7 +155,7 @@ export default class RequestDetails extends React.Component {
     const { starMode, requestStatus } = this.props;
     if (requestStatus !== 5 && !(!starMode && openStatusList.indexOf(requestStatus) > -1)) {
       if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
-        return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem()}>Respond</VideoRenderDiv.ControlButton>;
+        return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem(true)}>Respond</VideoRenderDiv.ControlButton>;
       }
     }
     return null;
@@ -127,7 +165,21 @@ export default class RequestDetails extends React.Component {
     const { props } = this;
     return (
       <VideoRenderDiv>
+        {
+          this.state.videoPlayerProps ?
+            <RequestFlowPopup
+              dotsCount={0}
+              closePopUp={this.closeVideo}
+              smallPopup
+            >
+              <VideoRenderDiv.VideoPlayerWrapper>
+                <VideoPlayer {...this.state.videoPlayerProps} />                
+              </VideoRenderDiv.VideoPlayerWrapper>
+            </RequestFlowPopup>
+          : null
+        }
         <VideoRenderDiv.ImageSection
+          onClick={this.activateVideo}
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         />

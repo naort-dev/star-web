@@ -180,9 +180,10 @@ export default class ScrollList extends React.Component {
             fanName={item.fan}
             details={item.booking_title}
             requestStatus={item.request_status}
+            requestVideo={item.request_video}
             requestType={item.request_type}
             createdDate={item.created_date}
-            selectItem={() => this.props.selectItem(item)}
+            selectItem={recordMode => this.props.selectItem(item, recordMode)}
           />
         </ListStyled.listRequests>
       ));

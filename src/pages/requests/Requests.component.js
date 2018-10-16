@@ -21,6 +21,7 @@ export default class Requests extends React.Component {
       selectedTab: 'All',
       tabsClientHeight: 0,
       requestStatus: 'all',
+      recordMode: false,
       orderDetails: {},
     };
     this.requestType = {
@@ -69,8 +70,9 @@ export default class Requests extends React.Component {
       this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
     });
   }
-  showRequest = (data) => {
-    this.setState({ orderDetails: data });
+  showRequest = (data, recordModeValue) => {
+    const recordMode = this.props.starMode ? recordModeValue : false;
+    this.setState({ orderDetails: data, recordMode });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -81,7 +83,7 @@ export default class Requests extends React.Component {
         track.stop();
       });
     }
-    this.setState({ orderDetails: {} });
+    this.setState({ orderDetails: {}, recordMode: false });
   }
   findRequestVideo = (list, videoStatus) => {
     let requestVideo = {};
@@ -142,10 +144,11 @@ export default class Requests extends React.Component {
               starName={request.celebrity}
               fanName={request.fan}
               details={request.booking_title}
+              requestVideo={request.request_video}
               requestStatus={request.request_status}
               requestType={request.request_type}
               createdDate={request.created_date}
-              selectItem={() => this.showRequest(request)}
+              selectItem={recordMode => this.showRequest(request, recordMode)}
             />
           </RequestsStyled.RequestItem>
         );
@@ -181,10 +184,14 @@ export default class Requests extends React.Component {
       default:
         return (
           <React.Fragment>
-            <RequestsStyled.SectionHeaderWrapper>
-              <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
-              <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-            </RequestsStyled.SectionHeaderWrapper>
+            {
+              this.props.myVideosList.data.length ?
+                <RequestsStyled.SectionHeaderWrapper>
+                  <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
+                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+                </RequestsStyled.SectionHeaderWrapper>
+              : null
+            }
             <RequestsStyled.ListWrapper>
               <ScrollList
                 dataList={this.props.myVideosList.data}
@@ -194,7 +201,7 @@ export default class Requests extends React.Component {
                 totalCount={this.props.myVideosList.count}
                 offset={this.props.myVideosList.offset}
                 loading={this.props.myVideosList.loading}
-                selectItem={data => this.showRequest(data)}
+                selectItem={this.showRequest}
                 fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
               />
             </RequestsStyled.ListWrapper>
@@ -276,6 +283,7 @@ export default class Requests extends React.Component {
           Object.keys(this.state.orderDetails).length ?
             <OrderDetails
               {...this.props}
+              recordMode={this.state.recordMode}
               orderDetails={this.state.orderDetails}
               requestStatus={requestStatus}
               requestStatusId={requestStatusId}

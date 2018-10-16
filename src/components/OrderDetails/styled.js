@@ -4,14 +4,17 @@ import { Scrollbars } from 'react-custom-scrollbars';
 const OrderStyled = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
+  @media(min-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 OrderStyled.ContentWrapper = styled.div`
-  height: 100%;
+  height: calc(100% - 105px);
   overflow: auto;
   @media (min-width: 1025px) {
     overflow: initial;
-    height: 100%;
     padding: 0 20px;
   }
 `;
@@ -172,10 +175,10 @@ OrderStyled.ProfileImageWrapper = styled.div`
   width: 100%;
   position: relative;
   padding: 0 16px;
+  border-bottom: 1px solid #333333;
+  padding-bottom: 40px;
   @media(min-width: 1025px) {
     margin: 0 20px;
-    padding-bottom: 40px;
-    border-bottom: 1px solid #333333;
     width: calc(100% - 40px);
   }
 `;
@@ -250,6 +253,7 @@ OrderStyled.ProfileDetails = styled.div`
   font-size: 14px;
   span {
     color: #FF6C58;
+    text-transform: uppercase;
   }
 `;
 OrderStyled.DetailsWrapper = styled.ul`
@@ -260,17 +264,25 @@ OrderStyled.DetailsWrapper = styled.ul`
   }
 `;
 OrderStyled.DetailsItem = styled.li`
-  display: table;
+  display: block;
   width: 100%;
   padding: 10px 0;
+  @media(min-width: 768px) {
+    display: table;
+  }
 `;
 OrderStyled.DetailsTitle = styled.span`
-  display: table-cell;
   font-family: 'Ubuntu-Light';
-  width: 20%;
-  font-size:16px;
-  text-align: right;
-  vertical-align: middle;
+  width: 40%;
+  display: inline-block;
+  font-size: 16px;
+  vertical-align: top;
+  @media(min-width: 768px) {
+    display: table-cell;
+    width: 20%;
+    text-align: right;
+    vertical-align: middle;
+  }
   @media(min-width:1025px){
     font-size:13px;
   }
@@ -280,10 +292,17 @@ OrderStyled.DetailsTitle = styled.span`
 `;
 
 OrderStyled.DetailsValue = styled.span`
-  display: table-cell;
-  width: 80%;
+  display: inline-block;
+  font-family: 'Ubuntu-Light';
+  width: 60%;
+  display: inline-block;
+  vertical-align: top;
   font-size:16px;
   padding-left: 20px;
+  @media(min-width: 768px) {
+    display: table-cell;
+    width: 80%;
+  }
   @media(min-width:1025px){
     font-size:13px;
   }
@@ -323,24 +342,34 @@ OrderStyled.ControlWrapper = styled.div`
 `;
 
 OrderStyled.ActionButtonWrapper = styled.div`
-  text-align: center;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  @media(min-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 OrderStyled.ActionButton = styled.button`
-  background-color: #fff; 
-  color: #FF6C58;
-  padding: 6px 18px;
+  background-color: ${props => (props.secondary ? '#D8D8D8' : '#FF6C58')};
+  color: ${props => (props.secondary ? '#676767' : 'rgb(255,255,255)')};
   text-align: center;
-  text-decoration: none;
+  margin: 5px 0;
+  width: 100%;
   display: inline-block;
-  cursor: pointer;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
-  outline:none;
-  border-radius:5px;
-  border: 2px solid #FF6C58;
-  @media(min-width: 1920px) {
-    font-size: 20px;
+  font-family: Ubuntu-Bold;
+  cursor: pointer;
+  padding: 10px 30px;
+  text-decoration: none;
+  outline: none;
+  border: 1px solid;
+  border-radius: 5px;
+  border-color: ${props => (props.secondary ? '#D8D8D8' : '#FF6C58')};
+  border-image: initial;
+  &:hover {
+    background-color: ${props => (props.secondary ? '#D8D8D8' : '#FF3B21')};
   }
 `;
 
