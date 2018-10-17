@@ -11,6 +11,10 @@ const LoginContainer = styled.div`
     }
 `;
 
+LoginContainer.Wrapper = styled.div`
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
+
 LoginContainer.BannerImage = styled.div`
   display:none;
   right:0;

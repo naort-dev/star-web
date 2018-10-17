@@ -129,6 +129,7 @@ GroupStyled.Label = styled.div`
 
 GroupStyled.WrapsInput = styled.div`
   width:100%;
+  position: relative;
   .Select-multi-value-wrapper {
     padding: 9px;
     @media(min-width: 1025px) {
@@ -152,7 +153,7 @@ GroupStyled.CustomPlaceholder = styled.span`
   position: absolute;
   left: 10px;
   right: 0;
-  top: 10px;
+  top: 11.5px;
   font-family: 'Ubuntu-Regular';
   color: #6d6d6d;
   font-size: 14px;
@@ -227,6 +228,10 @@ GroupStyled.ZipCode = GroupStyled.AddressDetails.extend`
 GroupStyled.NumberInput = GroupStyled.InputArea.extend`
 
 `.withComponent('input');
+
+GroupStyled.PriceInput = GroupStyled.NumberInput.extend`
+  padding-left: 18px;
+`;
 
 GroupStyled.ErrorMsg = styled.div`
   color:red;

@@ -50,9 +50,9 @@ export default class StarDetailsEntry extends React.Component {
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
       }, () => {
-        if (fieldType === "bookingLimit" && this.state.priceCheck) {
+        if (fieldType === 'bookingPrice' && this.state.priceCheck) {
           this.setState({ priceCheck: false });
-        } else if (fieldType === "bookingLimit" && this.state.limitCheck) {
+        } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
           this.setState({ limitCheck: false });
         }
       });
@@ -224,11 +224,14 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Booking price</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.NumberInput
+              <GroupStyled.CustomPlaceholder>
+                $
+              </GroupStyled.CustomPlaceholder>
+              <GroupStyled.PriceInput
                 small
                 innerRef={(node) => {this.bookingPrice = node;}}
                 type="number"
-                placeholder="$0"
+                placeholder="0"
                 value={this.state.bookingPrice}
                 onBlur={event => this.handleFieldBlur('bookingPrice', event.target.value)}
                 onChange={(event) => {

@@ -261,8 +261,8 @@ LoginContainer.Input = styled.input`
   font-size:16px;
   text-align:left;
   outline:none;
-  border: 1px solid #d0d2d3;
-  border-radius: 2px;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
   width: 100%;
   height: 40px;
   text-indent: 10px;

@@ -129,13 +129,13 @@ class starRegistrationComponent extends React.Component {
             >
               <GroupStyled.ContentWrapper>
                 {
-                  this.props.currentStep === 2 && (
+                  this.props.currentStep === 3 && (
                     <StarDetailsEntry
                       submitAccountDetails={this.submitAccountDetails}
                     />
                 )}
                 {
-                  this.props.currentStep === 3 && (
+                  this.props.currentStep === 2 && (
                     <ProfileUpload
                       starMode
                       onComplete={(fileName, image) => this.setProfileImage(fileName, image)}

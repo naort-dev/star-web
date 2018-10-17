@@ -16,6 +16,11 @@ const CropperStyled = styled.div`
   }
 `;
 
+CropperStyled.ButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
 CropperStyled.CropperButton = styled.div`
   background-color: white;
   margin-top: 10px;
@@ -31,6 +36,7 @@ CropperStyled.CropperButton = styled.div`
   cursor: pointer;
   border-radius: 5px;
   border: 2px solid #FF6C58;
+  margin-right: 20px;
 `;
 
 export default CropperStyled
