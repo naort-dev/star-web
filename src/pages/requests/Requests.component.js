@@ -129,31 +129,34 @@ export default class Requests extends React.Component {
     } else {
       statusList = [5];
     }
-    return this.props.myVideosList.data.map((request, index) => {
-      if (statusList.indexOf(request.request_status) > -1) {
-        return (
-          <RequestsStyled.RequestItem key={index}>
-            <RequestDetails
-              starMode={this.props.starMode}
-              cover={this.findRequestVideoThumbnail(request.request_video)}
-              celebId={request.celebrity_id}
-              orderId={request.order_details ? request.order_details.order : ''}
-              videoId={request.booking_id}
-              profile={request.avatar_photo && request.avatar_photo.thumbnail_url}
-              fanProfile={request.fan_photo && request.fan_photo.thumbnail_url}
-              starName={request.celebrity}
-              fanName={request.fan}
-              details={request.booking_title}
-              requestVideo={request.request_video}
-              requestStatus={request.request_status}
-              requestType={request.request_type}
-              createdDate={request.created_date}
-              selectItem={recordMode => this.showRequest(request, recordMode)}
-            />
-          </RequestsStyled.RequestItem>
-        );
-      }
-    });
+    if (this.props.myVideosList.data.length) {
+      return this.props.myVideosList.data.map((request, index) => {
+        if (statusList.indexOf(request.request_status) > -1) {
+          return (
+            <RequestsStyled.RequestItem key={index}>
+              <RequestDetails
+                starMode={this.props.starMode}
+                cover={this.findRequestVideoThumbnail(request.request_video)}
+                celebId={request.celebrity_id}
+                orderId={request.order_details ? request.order_details.order : ''}
+                videoId={request.booking_id}
+                profile={request.avatar_photo && request.avatar_photo.thumbnail_url}
+                fanProfile={request.fan_photo && request.fan_photo.thumbnail_url}
+                starName={request.celebrity}
+                fanName={request.fan}
+                details={request.booking_title}
+                requestVideo={request.request_video}
+                requestStatus={request.request_status}
+                requestType={request.request_type}
+                createdDate={request.created_date}
+                selectItem={recordMode => this.showRequest(request, recordMode)}
+              />
+            </RequestsStyled.RequestItem>
+          );
+        }
+      });
+    }
+    return null;
   }
 
   renderBookings = () => {
@@ -164,14 +167,14 @@ export default class Requests extends React.Component {
             <RequestsStyled.StatusTypeWrapper >
               <Scrollbars>
                 <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>Pending fan requests</RequestsStyled.SectionHeader>
+                  <RequestsStyled.SectionHeader>{this.props.starMode ? 'Pending fan requests' : 'Pending requests'}</RequestsStyled.SectionHeader>
                   <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
                 </RequestsStyled.SectionHeaderWrapper>
                 <RequestsStyled.ListWrapper autoHeight>
                   {this.renderRequestList('Open', this.props.starMode)}
                 </RequestsStyled.ListWrapper>
                 <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>Completed fan requests</RequestsStyled.SectionHeader>
+                  <RequestsStyled.SectionHeader>{this.props.starMode ? 'Completed fan requests' : 'Completed requests'}</RequestsStyled.SectionHeader>
                   <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
                 </RequestsStyled.SectionHeaderWrapper>
                 <RequestsStyled.ListWrapper autoHeight>
@@ -202,6 +205,7 @@ export default class Requests extends React.Component {
                 offset={this.props.myVideosList.offset}
                 loading={this.props.myVideosList.loading}
                 selectItem={this.showRequest}
+                noDataText="No requests"
                 fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
               />
             </RequestsStyled.ListWrapper>

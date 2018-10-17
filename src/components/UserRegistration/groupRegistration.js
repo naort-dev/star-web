@@ -143,11 +143,11 @@ class GroupRegistrationComponent extends React.Component {
                     </GroupStyled.confirmationSteps>
                   </GroupStyled.ConfirmationWrapper>
                   <GroupStyled.DoneButtonWrapper>
-                    <GroupStyled.DoneButton
+                    <GroupStyled.ControlButton
                       onClick={() => this.props.closeSignupFlow()}
                     >
                       Done
-                    </GroupStyled.DoneButton>
+                    </GroupStyled.ControlButton>
                   </GroupStyled.DoneButtonWrapper>
                 </React.Fragment>
               )

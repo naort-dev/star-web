@@ -12,9 +12,7 @@ import RequestVideoRecorder from '../RequestVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
-import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import { recorder } from '../../constants/videoRecorder';
-import { PaymentFooterController } from '../PaymentFooterController';
 import Api from '../../lib/api';
 import OrderStyled from './styled';
 import StarRating from '../StarRating';
@@ -32,66 +30,66 @@ export default class OrderDetails extends React.Component {
     };
   }
 
-  getOccasionDetails = (occasionType) => {
+  getOccasionDetails = (occasionType, isOverlay) => {
     const { props } = this;
     switch (occasionType) {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={props.occasionDate} />
+          <OrderDetailsItem overlay={isOverlay} title="Occasion Date" value={props.occasionDate} />
         );
       case 2:
-        return <OrderDetailsItem title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
+        return <OrderDetailsItem overlay={isOverlay} title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
       case 3:
-        return <OrderDetailsItem title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
+        return <OrderDetailsItem overlay={isOverlay} title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
       case 4:
-        return <OrderDetailsItem title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
+        return <OrderDetailsItem overlay={isOverlay} title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
       case 6:
-        return <OrderDetailsItem title="Event Title" value={props.orderDetails.request_details.event_title} />;
+        return <OrderDetailsItem overlay={isOverlay} title="Event Title" value={props.orderDetails.request_details.event_title} />;
       case 7:
-        return <OrderDetailsItem title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
+        return <OrderDetailsItem overlay={isOverlay} title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
       default:
         return null;
     }
   }
 
-  getEventDetails = (eventType) => {
+  getEventDetails = (eventType, isOverlay) => {
     const { props } = this;
     switch (eventType) {
       case 1:
         // Personal Shout-outs
         return (
           <React.Fragment>
-            <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="To"
+            <OrderDetailsItem overlay={isOverlay} title="Occasion" value={props.orderDetails.occasion} />
+            <OrderDetailsItem overlay={isOverlay} title="To"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
             />
-            <OrderDetailsItem title="From"
+            <OrderDetailsItem overlay={isOverlay} title="From"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
             />
-            <OrderDetailsItem title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
+            <OrderDetailsItem overlay={isOverlay} title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
             {
-              this.getOccasionDetails(props.orderDetails.occasion_type)
+              this.getOccasionDetails(props.orderDetails.occasion_type, isOverlay)
             }
-            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+            <OrderDetailsItem overlay={isOverlay} title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
       case 2:
         // Event Announcement
         return (
           <React.Fragment>
-            <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
+            <OrderDetailsItem overlay={isOverlay} title="Event" value={props.orderDetails.occasion} />
             {
-              this.getOccasionDetails(props.orderDetails.occasion_type)
+              this.getOccasionDetails(props.orderDetails.occasion_type, isOverlay)
             }
-            <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
-            <OrderDetailsItem title="Event Date" value={props.occasionDate} />
-            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+            <OrderDetailsItem overlay={isOverlay} title="Host" value={props.orderDetails.request_details.event_host} />
+            <OrderDetailsItem overlay={isOverlay} title="Event Date" value={props.occasionDate} />
+            <OrderDetailsItem overlay={isOverlay} title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
       case 3:
         // Q&A
-        return <OrderDetailsItem title="Title" value={props.orderDetails.request_details.question} />;
+        return <OrderDetailsItem overlay={isOverlay} title="Title" value={props.orderDetails.request_details.question} />;
       default: return null;
     }
   }
@@ -245,6 +243,46 @@ export default class OrderDetails extends React.Component {
     return `Answer ${this.props.orderDetails.fan}'s question`;
   }
 
+  renderOrderDetails = (isOverlay) => {
+    const { props } = this;
+    return (
+      <React.Fragment>
+        <OrderStyled.DetailsItem overlay={isOverlay}>
+          <OrderStyled.DetailsTitle overlay={isOverlay}>Requested</OrderStyled.DetailsTitle>
+          <OrderStyled.DetailsValue overlay={isOverlay}>{props.createdDate}</OrderStyled.DetailsValue>
+        </OrderStyled.DetailsItem>
+        {
+          this.getEventDetails(props.orderDetails.request_type, isOverlay)
+        }
+        {/* Show Reason if request is cancelled */}
+        {
+          props.requestStatusId === 5 ?
+            <OrderDetailsItem overlay={isOverlay} title="Decline Reason" value={props.orderDetails.comment} />
+            : null
+        }
+        <OrderStyled.DetailsItem overlay={isOverlay}>
+          <OrderStyled.DetailsTitle overlay={isOverlay}>Booking Price</OrderStyled.DetailsTitle>
+          <OrderStyled.DetailsValue overlay={isOverlay}>${props.price}</OrderStyled.DetailsValue>
+        </OrderStyled.DetailsItem>
+        {
+          !props.starMode &&
+            <OrderStyled.DetailsItem overlay={isOverlay}>
+              <OrderStyled.DetailsTitle overlay={isOverlay}>Make this Video private</OrderStyled.DetailsTitle>
+              <OrderStyled.DetailsValue overlay={isOverlay}>{props.isPrivate}</OrderStyled.DetailsValue>
+            </OrderStyled.DetailsItem>
+        }
+        {props.requestStatusId === 6 &&
+          <OrderStyled.DetailsItem overlay={isOverlay}>
+            <OrderStyled.DetailsTitle overlay={isOverlay}>Rating:</OrderStyled.DetailsTitle>
+            <OrderStyled.DetailsValue overlay={isOverlay}>
+              <StarRating rating={props.orderDetails.fan_rating ? props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+            </OrderStyled.DetailsValue>
+          </OrderStyled.DetailsItem>
+        }
+      </React.Fragment>
+    )
+  }
+
   renderStargramDestinationDetails = (text, audioSrc) => {
     return (
       <React.Fragment>
@@ -324,9 +362,8 @@ export default class OrderDetails extends React.Component {
       return (
         <OrderStyled.VideoRecorder>
           <RequestVideoRecorder
-            responseMode
-            recordTitle={this.renderRecordTitle}
             {...this.props}
+            overlayData={() => this.renderOrderDetails('overlay')}
             duration={recorder.askTimeOut}
             onSubmit={() => this.videoSubmit()}
           />
@@ -461,6 +498,7 @@ export default class OrderDetails extends React.Component {
                   </Popup>
               }
               <Scrollbars>
+                <OrderStyled.Header>New {props.requestType} request</OrderStyled.Header>
                 <OrderStyled.ProfileImageWrapper>
                   <OrderStyled.ProfileImage
                     imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
@@ -473,97 +511,12 @@ export default class OrderDetails extends React.Component {
                 </OrderStyled.ProfileImageWrapper>
                 <OrderStyled.ContentWrapper>
                   <OrderStyled.leftContent>
-                    {/* {
-                      props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
-                        this.renderVideo(props, title, shareUrl, this.props.starMode)
-                      :
-                        <OrderStyled.rightContent notStar>
-                          {this.renderVideo(props, title, shareUrl)}
-                        </OrderStyled.rightContent>
-                    } */}
-                    {/* {
-                      !props.starMode &&
-                        <OrderStyled.ProfileImageWrapper>
-                          <OrderStyled.ProfileImage
-                            imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
-                          />
-                          <OrderStyled.MoreActionsWrapper>
-                            {this.props.requestStatusId !== 5 && <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />}
-                            {
-                              this.state.showActions && !this.props.starMode &&
-                                this.renderActionList()
-                            }
-                          </OrderStyled.MoreActionsWrapper>
-                          <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                          <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
-                        </OrderStyled.ProfileImageWrapper>
-                    } */}
                     <OrderStyled.DetailsWrapper>
-                      <OrderStyled.DetailsItem>
-                        <OrderStyled.DetailsTitle>Requested</OrderStyled.DetailsTitle>
-                        <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
-                      </OrderStyled.DetailsItem>
                       {
-                        this.getEventDetails(props.orderDetails.request_type)
+                        this.renderOrderDetails()
                       }
-                      {/* Show Reason if request is cancelled */}
-                      {
-                        props.requestStatusId === 5 ?
-                          <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
-                          : null
-                      }
-                      <OrderStyled.DetailsItem>
-                        <OrderStyled.DetailsTitle>Booking Price</OrderStyled.DetailsTitle>
-                        <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
-                      </OrderStyled.DetailsItem>
-                      {
-                        !props.starMode &&
-                          <OrderStyled.DetailsItem>
-                            <OrderStyled.DetailsTitle>Make this Video private</OrderStyled.DetailsTitle>
-                            <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
-                          </OrderStyled.DetailsItem>
-                      }
-                      <OrderStyled.DetailsItem>
-                        <OrderStyled.DetailsTitle>Order#</OrderStyled.DetailsTitle>
-                        <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
-                      </OrderStyled.DetailsItem>
-                      {this.props.requestStatusId === 6 &&
-                      <OrderStyled.DetailsItem>
-                        <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
-                        <OrderStyled.DetailsValue>
-                          <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
-                        </OrderStyled.DetailsValue>
-                      </OrderStyled.DetailsItem>}
                     </OrderStyled.DetailsWrapper>
-                    {/* Show only if request is not cancelled or not completed or not processing */}
-                    {/* {
-                      props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
-                        <OrderStyled.ControlWrapper>
-                          {
-                            this.props.starMode ?
-                              <OrderStyled.ActionButtonWrapper>
-                                <OrderStyled.ActionButton onClick={() => this.modifyBooking()}>Cancel Request</OrderStyled.ActionButton>
-                              </OrderStyled.ActionButtonWrapper>
-                            :
-                              <PaymentFooterController
-                                buttonMode
-                                modifyBooking={this.modifyBooking}
-                                handleBooking={this.handleBooking}
-                                modifyButtonName={this.props.orderDetails.editable ? 'Edit Request' : ''}
-                                buttonName="Cancel"
-                              />
-                          }
-                        </OrderStyled.ControlWrapper>
-                    } */}
                   </OrderStyled.leftContent>
-                  {/* <OrderStyled.rightContent>
-                    <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
-                    {
-                      props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
-                        this.renderVideoRecorder(props)
-                      : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
-                    }
-                  </OrderStyled.rightContent> */}
                 </OrderStyled.ContentWrapper>
               </Scrollbars>
               {

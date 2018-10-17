@@ -52,7 +52,7 @@ LoginContainer.RightSection = styled.div`
 LoginContainer.LoginDiv = styled.button`
   background-color: #fff; 
   margin-right: 5px;
-  color: #007FAA;
+  color: #FF6C58;
   text-align: center;
   text-decoration: none;
   font-size: 16px;

@@ -53,11 +53,11 @@ TabStyled.tabListItem = styled.li`
     text-align: center;
   }
   @media(min-width: 1025px) {
-    font-size: 21px;
+    font-size: 18px;
     padding: 5px 27px;
   }
   @media(min-width: 1920px) {
-    font-size: 24px;
+    font-size: 21px;
   }
 `;
 

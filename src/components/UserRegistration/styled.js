@@ -176,8 +176,8 @@ GroupStyled.InputArea = styled.textarea`
   padding: 8px 8px;
   resize: none;
   background-color: white;
-  border: 1px solid #d0d2d3;
-  border-radius: 2px;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
   @media(min-width:768px){
     margin-top:0;
   }
@@ -274,7 +274,7 @@ GroupStyled.OptionCloseButton = GroupStyled.CloseButton.extend`
   height: 12px;
   border: none;
   outline: none;
-  margin-left: 10px;
+  margin-left: 4px;
   background: url('assets/images/close-icon-white.svg') no-repeat;
   background-position: center center;
   display: inline-block;
@@ -485,24 +485,8 @@ GroupStyled.DoneButtonWrapper = styled.div`
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: 9px;
   text-align: center;
-`;
-
-GroupStyled.DoneButton = styled.button`
-  background-color: #fff;
-  color: #FF6C58;
-  padding: 6px 50px;
-  text-align: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  font-size: 14px;
-  font-family: 'Ubuntu-Bold';
-  outline: none;
-  border-radius: 5px;
-  border: 2px solid #FF6C58;
 `;
 
 GroupStyled.UploadInput = styled.input`

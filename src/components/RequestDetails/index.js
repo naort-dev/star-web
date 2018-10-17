@@ -42,7 +42,7 @@ export default class RequestDetails extends React.Component {
     }
   }
   findTime = () => {
-    let timeString = 'Requested';
+    let timeString = '';
     if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
       timeString = 'Completed';
     } else {
@@ -161,6 +161,15 @@ export default class RequestDetails extends React.Component {
     return null;
   }
 
+  renderTime = () => {
+    const { starMode, requestStatus } = this.props;
+    const isOpenRequest = (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) || (!starMode && openStatusList.indexOf(requestStatus) > -1);
+    if (isOpenRequest) {
+      return <VideoRenderDiv.RequestTime>{this.findTime()}</VideoRenderDiv.RequestTime>;
+    }
+    return null;
+  }
+
   render() {
     const { props } = this;
     return (
@@ -182,7 +191,10 @@ export default class RequestDetails extends React.Component {
           onClick={this.activateVideo}
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
-        />
+        >
+          {this.state.coverImage ? <VideoRenderDiv.PlayButton /> : null}
+          {this.renderTime()}
+        </VideoRenderDiv.ImageSection>
         <VideoRenderDiv.ProfileContent>
           <VideoRenderDiv.ProfileDetailWrapper>
             <VideoRenderDiv.ProfileImageWrapper>
@@ -202,15 +214,15 @@ export default class RequestDetails extends React.Component {
               <VideoRenderDiv.StarDetails>Status</VideoRenderDiv.StarDetails>
               <VideoRenderDiv.RequestStatus>{props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus]}</VideoRenderDiv.RequestStatus>
             </VideoRenderDiv.StatusDetails>
-            <VideoRenderDiv.ControlWrapper>
-              {
-                this.renderSecondaryControlButton()
-              }
-              <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem()} alternate>View</VideoRenderDiv.ControlButton>
-            </VideoRenderDiv.ControlWrapper>
           </VideoRenderDiv.StatusDetailsWrapper>
           {/* {this.renderRequestDetails()} */}
         </VideoRenderDiv.ProfileContent>
+        <VideoRenderDiv.ControlWrapper>
+          {
+            this.renderSecondaryControlButton()
+          }
+          <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem()} alternate>View</VideoRenderDiv.ControlButton>
+        </VideoRenderDiv.ControlWrapper>
       </VideoRenderDiv>
     );
   }

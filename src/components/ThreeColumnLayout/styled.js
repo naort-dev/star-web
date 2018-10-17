@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const ColumnLayoutStyled = styled.div`
   margin-top: 60px;
   height: calc(100vh - 60px);
+  max-width: 1920px;
 `;
 
 ColumnLayoutStyled.sideSection = styled.section`

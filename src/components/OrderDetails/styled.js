@@ -12,11 +12,20 @@ const OrderStyled = styled.div`
   }
 `;
 
+OrderStyled.Header = styled.span`
+  display: block;
+  text-align: center;
+  font-family: 'Ubuntu-Bold';
+  font-size: 18px;
+  color: #FF6C58;
+  @media(min-width: 1025px) {
+    font-size: 22px;
+  }
+`;
+
 OrderStyled.ContentWrapper = styled.div`
-  height: calc(100% - 121px);
-  overflow: auto;
+  height: calc(100% - 147px);
   @media (min-width: 1025px) {
-    overflow: initial;
     padding: 0 20px;
   }
 `;
@@ -259,20 +268,21 @@ OrderStyled.DetailsItem = styled.li`
   display: block;
   width: 100%;
   padding: 10px 0;
+  color: ${props => props.overlay && '#fff'};
   @media(min-width: 768px) {
-    display: table;
+    display: ${props => (props.overlay ? 'block' : 'table')};
   }
 `;
 OrderStyled.DetailsTitle = styled.span`
   font-family: 'Ubuntu-Light';
-  width: 40%;
+  width: ${props => (props.overlay ? '100%' : '40%')};
   display: inline-block;
   font-size: 16px;
   vertical-align: top;
   @media(min-width: 768px) {
-    display: table-cell;
-    width: 20%;
-    text-align: right;
+    display: ${props => (props.overlay ? 'block' : 'table-cell')};
+    width: ${props => (props.overlay ? '100%' : '20%')};
+    text-align: ${props => (props.overlay ? 'auto' : 'right')};
     vertical-align: middle;
   }
   @media(min-width:1025px){
@@ -286,14 +296,14 @@ OrderStyled.DetailsTitle = styled.span`
 OrderStyled.DetailsValue = styled.span`
   display: inline-block;
   font-family: 'Ubuntu-Light';
-  width: 60%;
+  width: ${props => (props.overlay ? '100%' : '60%')};
   display: inline-block;
   vertical-align: top;
   font-size:16px;
-  padding-left: 20px;
+  padding-left: ${props => (props.overlay ? '0' : '20px')};
   @media(min-width: 768px) {
-    display: table-cell;
-    width: 80%;
+    display: ${props => (props.overlay ? 'block' : 'table-cell')};
+    width: ${props => (props.overlay ? '100%' : '80%')};
   }
   @media(min-width:1025px){
     font-size:13px;

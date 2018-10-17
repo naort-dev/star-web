@@ -372,6 +372,16 @@ VideoRecorderDiv.ControlWrapper = styled.div`
   height: 90%;
 `;
 
+VideoRecorderDiv.Overlay = styled.span`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 1;
+`;
+
 VideoRecorderDiv.UploadControlWrapper = styled.div`
   width: 100%;
   height: 90%;
@@ -388,7 +398,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   position: absolute;
   align-items: center;
   justify-content: center;
-  bottom: 10%;
+  bottom: 6%;
   `;
 
   VideoRecorderDiv.UploadActionButton = styled.div`
@@ -412,21 +422,33 @@ VideoRecorderDiv.RecordInfoButton = styled.div`
 
 VideoRecorderDiv.VideoHeading = styled.div`
   font-family: 'Ubuntu-bold';
-  color: #fff;
+  color: ${props => (props.selected ? '#333333' : '#fff')};
   font-size: 18px;
+  z-index: 1;
+  cursor: pointer;
+  background-color: ${props => props.selected && '#fff'};
+  user-select: none;
   border: 1px solid #fff;
   border-radius: 17px;
   padding: 3px 10px;
 `;
-
   
-  VideoRecorderDiv.UploadHeading = styled.div`
+VideoRecorderDiv.UploadHeading = styled.div`
   font-family: 'Ubuntu-bold';
   color: #fff;
   font-size: 24px;
   height: 35%;
   top: 5%;
   position: absolute;
-  `;
+`;
 
+VideoRecorderDiv.BookingDetailsWrapper = styled.ul`
+  position: absolute;
+  top: 93px;
+  bottom: 15%;
+  left: 0;
+  right: 0;
+  padding: 0 30px;
+  z-index: 1;
+`;
 export default VideoRecorderDiv;

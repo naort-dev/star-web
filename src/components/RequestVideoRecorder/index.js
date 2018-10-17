@@ -1,4 +1,5 @@
 import React from 'react';
+import Scrollbars from 'react-custom-scrollbars';
 import VideoRecorderDiv from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
 import VideoPlayer from '../VideoPlayer';
@@ -12,6 +13,7 @@ export default class RequestVideoRecorder extends React.Component {
       error: null,
       startUpload: false,
       browserSupport: false,
+      showBookingDetails: false,
       play: false,
       deviceSupport: true,
       isVideoPaused: true,
@@ -144,7 +146,7 @@ export default class RequestVideoRecorder extends React.Component {
       this.props.onRerecord();
       this.fetchStream();
       this.recordedBlobs = [];
-      this.setState({ play: false });
+      this.setState({ play: false, showBookingDetails: false });
       return;
     }
     this.props.onStartRecording();
@@ -206,6 +208,10 @@ export default class RequestVideoRecorder extends React.Component {
       this.previewVideo.pause();
     }
     this.props.onSubmit();
+  }
+
+  toggleBookingDetails = () => {
+    this.setState({ showBookingDetails: !this.state.showBookingDetails });
   }
 
   renderUploader = () => {
@@ -270,17 +276,30 @@ export default class RequestVideoRecorder extends React.Component {
           return (
             <VideoRecorderDiv.UploadControlWrapper>
               <VideoRecorderDiv.UploadTextWrapper>
-                <VideoRecorderDiv.VideoHeading>
+                <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
                   Booking Details
                  </VideoRecorderDiv.VideoHeading>
                </VideoRecorderDiv.UploadTextWrapper>
-              <VideoRecorderDiv.InfoText>Your browser doesn't support video recording or media capturing devices were not found. Please upload your video</VideoRecorderDiv.InfoText>
-              <VideoRecorderDiv.UploadActionButton>
-                <VideoRecorderDiv.UploadWrapper>
-                  <VideoRecorderDiv.NoVideoButton />
-                  <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
-                </VideoRecorderDiv.UploadWrapper>
-              </VideoRecorderDiv.UploadActionButton>
+               {
+                this.state.showBookingDetails &&
+                  <VideoRecorderDiv.BookingDetailsWrapper>
+                    <Scrollbars>
+                      {this.props.overlayData()}
+                    </Scrollbars>
+                  </VideoRecorderDiv.BookingDetailsWrapper>
+              }
+              {
+                !this.state.showBookingDetails &&
+                  <React.Fragment>
+                    <VideoRecorderDiv.InfoText>Your browser doesn't support video recording or media capturing devices were not found. Please upload your video</VideoRecorderDiv.InfoText>
+                    <VideoRecorderDiv.UploadActionButton>
+                      <VideoRecorderDiv.UploadWrapper>
+                        <VideoRecorderDiv.NoVideoButton />
+                        <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
+                      </VideoRecorderDiv.UploadWrapper>
+                    </VideoRecorderDiv.UploadActionButton>
+                  </React.Fragment>
+              }
             </VideoRecorderDiv.UploadControlWrapper>
           )
         }
@@ -320,12 +339,21 @@ export default class RequestVideoRecorder extends React.Component {
 
     return (
       <VideoRecorderDiv.ControlWrapper>
+        {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
         <VideoRecorderDiv.Wrapper>
-          <VideoRecorderDiv.VideoHeading>
+          <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
             Booking Details
           </VideoRecorderDiv.VideoHeading>
           <VideoRecorderDiv.RecordInfoButton> Ready to record </VideoRecorderDiv.RecordInfoButton>
         </VideoRecorderDiv.Wrapper>
+        {
+          this.state.showBookingDetails &&
+            <VideoRecorderDiv.BookingDetailsWrapper>
+              <Scrollbars>
+                {this.props.overlayData()}
+              </Scrollbars>
+            </VideoRecorderDiv.BookingDetailsWrapper>
+        }
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
           <VideoRecorderDiv.Button title="Record your question" onClick={this.startRecording.bind(this)} />

@@ -144,7 +144,7 @@ export default class QAVideoRecorder extends React.Component {
       this.props.onRerecord();
       this.fetchStream();
       this.recordedBlobs = [];
-      this.setState({ play: false });
+      this.setState({ play: false, disableEdit: true });
       return;
     }
     this.props.onStartRecording();
@@ -416,7 +416,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
               { !this.state.streamed && (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) ? <Loader/> :              
-                (this.props.src ? this.renderEditPreview() : this.renderPreview()) }
+                (this.props.src && !this.state.disableEdit ? this.renderEditPreview() : this.renderPreview()) }
             </VideoRecorderDiv.VideoContainer>
           </VideoRecorderDiv>
           :

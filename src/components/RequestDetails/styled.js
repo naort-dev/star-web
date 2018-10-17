@@ -2,16 +2,43 @@ import styled from 'styled-components';
 
 const VideoRenderDiv = styled.div`
   padding-right: 15px;
+  @media(min-width: 768px) {
+    position: relative;
+  }
 `;
 VideoRenderDiv.ImageSection = styled.div`
   position:relative;
-  background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/video-default.png)')};
+  background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/pending-video.png)')};
+  background-color: ${props => !props.imageUrl && '#F2F2F2'}; 
   background-repeat:no-repeat;
   background-position: center;
-  background-size:cover;
+  background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
   width: 100px;
   display: inline-block;
   height: 100px;
+`;
+
+VideoRenderDiv.PlayButton = styled.span`
+  background: url(assets/images/icon-play.svg) no-repeat;
+  background-color: #0000007a;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  background-size: contain;
+  position: absolute;
+  top: 34px;
+  left: 36px;
+  background-size: 20px;
+  background-position: center center;
+`;
+
+VideoRenderDiv.RequestTime = styled.span`
+  position: absolute;
+  bottom: 8px;
+  font-size: 12px;
+  left: 14px;
+  color: #f78a83;
 `;
 
 VideoRenderDiv.BannerImage = styled.img`
@@ -118,6 +145,11 @@ VideoRenderDiv.ControlWrapper = styled.span`
   flex-direction: row-reverse;
   justify-content: space-between;
   margin-top: 16px;
+  @media(min-width: 768px) {
+    position: absolute;
+    right: 24px;
+    bottom: 0px;
+  }
 `;
 
 VideoRenderDiv.ControlButton = styled.button`

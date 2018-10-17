@@ -34,7 +34,7 @@ TypeSelectorWrapper.subheading = styled.div`
 TypeSelectorWrapper.LoginDiv = styled.button`
   background-color: #fff; 
   margin-right: 5px;
-  color: #007FAA;
+  color: #FF6C58;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
@@ -49,12 +49,13 @@ TypeSelectorWrapper.LoginDiv = styled.button`
   }
 `;
 TypeSelectorWrapper.SocialMediaMessage = styled.div`
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Ubuntu-Regular';
   font-size: 14px;
   text-align: center;
-  color: #333333;
+  color: #7B797A;
   margin-top: 5px;
   margin-bottom:5%;
+  word-spacing: 3px;
   @media(min-width:768px){
     font-size: 18px;
   }

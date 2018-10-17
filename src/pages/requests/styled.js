@@ -38,13 +38,17 @@ RequestsStyled.mainSection = styled.section`
 `;
 
 RequestsStyled.StatusTypeWrapper = styled.section`
-  height: calc(100% - 40px);
+  height: calc(100% - 55px);
+  @media(min-width: 768px) {
+    height: calc(100% - 40px);
+  }
 `;
 
 RequestsStyled.SectionHeaderWrapper = styled.div`
   height: 74px;
   padding-top: 27px;
   padding-left: 16px;
+  margin-bottom: 20px;
   @media(min-width: 768px) {
     padding-left: 44px;
   }
@@ -79,7 +83,13 @@ RequestsStyled.loaderWrapper = styled.div`
 `;
 
 RequestsStyled.ListWrapper = styled.div`
-  height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 114px)')};
+  height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 150px)')};
+  @media(min-width: 768px) {
+    height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 133px)')};
+  }
+  @media(min-width: 1025px) {
+    height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 130px)')};
+  }
 `;
 
 RequestsStyled.RequestItem = styled.div`

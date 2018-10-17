@@ -112,14 +112,8 @@ class starRegistrationComponent extends React.Component {
   }
 
   submitAccountDetails = (celebrityDetails) => {
-    this.setState({ celebrityDetails, loader: true });
-    celebritySignupProfile(celebrityDetails)
-      .then((success) => {
-        this.setState({ loader: false });
-        if (success) {
-          this.props.changeStep(this.props.currentStep + 1);
-        }
-      });
+    this.setState({ celebrityDetails });
+    this.props.changeStep(this.props.currentStep + 1);
   }
 
   render() {
@@ -186,11 +180,11 @@ class starRegistrationComponent extends React.Component {
                         Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
                       <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
                       <GroupStyled.DoneButtonWrapper>
-                        <GroupStyled.DoneButton
+                        <GroupStyled.ControlButton
                           onClick={() => this.props.closeSignupFlow()}
                         >
                           Done
-                        </GroupStyled.DoneButton>
+                        </GroupStyled.ControlButton>
                       </GroupStyled.DoneButtonWrapper>
                     </React.Fragment>
                   )
