@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import Scrollbars from 'react-custom-scrollbars';
 import VideoPlayer from '../VideoPlayer';
 import RequestFlowPopup from '../RequestFlowPopup';
 import DeclinePopup from './DeclinePopup';
@@ -7,7 +8,7 @@ import AlertPopup from './AlertPopup';
 import SubmitPopup from './SubmitPopup';
 import Popup from '../Popup';
 import ShareView from './ShareView';
-import QAVideoRecorder from '../QAVideoRecorder';
+import RequestVideoRecorder from '../RequestVideoRecorder';
 import OrderDetailsItem from './orderDetailsItem';
 import { locations } from '../../constants/locations';
 import getAWSCredentials from '../../utils/AWSUpload';
@@ -322,7 +323,7 @@ export default class OrderDetails extends React.Component {
     if (props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6) {
       return (
         <OrderStyled.VideoRecorder>
-          <QAVideoRecorder
+          <RequestVideoRecorder
             responseMode
             recordTitle={this.renderRecordTitle}
             {...this.props}
@@ -459,130 +460,132 @@ export default class OrderDetails extends React.Component {
                     }
                   </Popup>
               }
-              <OrderStyled.ProfileImageWrapper>
-                <OrderStyled.ProfileImage
-                  imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
-                />
-                <OrderStyled.ProfileDetailsWrapper>
-                  <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                  <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
-                  <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
-                </OrderStyled.ProfileDetailsWrapper>
-              </OrderStyled.ProfileImageWrapper>
-              <OrderStyled.ContentWrapper>
-                <OrderStyled.leftContent>
-                  {/* {
-                    props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
-                      this.renderVideo(props, title, shareUrl, this.props.starMode)
-                    :
-                      <OrderStyled.rightContent notStar>
-                        {this.renderVideo(props, title, shareUrl)}
-                      </OrderStyled.rightContent>
-                  } */}
-                  {/* {
-                    !props.starMode &&
-                      <OrderStyled.ProfileImageWrapper>
-                        <OrderStyled.ProfileImage
-                          imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
-                        />
-                        <OrderStyled.MoreActionsWrapper>
-                          {this.props.requestStatusId !== 5 && <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />}
-                          {
-                            this.state.showActions && !this.props.starMode &&
-                              this.renderActionList()
-                          }
-                        </OrderStyled.MoreActionsWrapper>
-                        <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                        <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
-                      </OrderStyled.ProfileImageWrapper>
-                  } */}
-                  <OrderStyled.DetailsWrapper>
-                    <OrderStyled.DetailsItem>
-                      <OrderStyled.DetailsTitle>Requested</OrderStyled.DetailsTitle>
-                      <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
-                    </OrderStyled.DetailsItem>
-                    {
-                      this.getEventDetails(props.orderDetails.request_type)
-                    }
-                    {/* Show Reason if request is cancelled */}
-                    {
-                      props.requestStatusId === 5 ?
-                        <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
-                        : null
-                    }
-                    <OrderStyled.DetailsItem>
-                      <OrderStyled.DetailsTitle>Booking Price</OrderStyled.DetailsTitle>
-                      <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
-                    </OrderStyled.DetailsItem>
-                    {
+              <Scrollbars>
+                <OrderStyled.ProfileImageWrapper>
+                  <OrderStyled.ProfileImage
+                    imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
+                  />
+                  <OrderStyled.ProfileDetailsWrapper>
+                    <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+                    <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
+                    <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
+                  </OrderStyled.ProfileDetailsWrapper>
+                </OrderStyled.ProfileImageWrapper>
+                <OrderStyled.ContentWrapper>
+                  <OrderStyled.leftContent>
+                    {/* {
+                      props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+                        this.renderVideo(props, title, shareUrl, this.props.starMode)
+                      :
+                        <OrderStyled.rightContent notStar>
+                          {this.renderVideo(props, title, shareUrl)}
+                        </OrderStyled.rightContent>
+                    } */}
+                    {/* {
                       !props.starMode &&
-                        <OrderStyled.DetailsItem>
-                          <OrderStyled.DetailsTitle>Make this Video private</OrderStyled.DetailsTitle>
-                          <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
-                        </OrderStyled.DetailsItem>
+                        <OrderStyled.ProfileImageWrapper>
+                          <OrderStyled.ProfileImage
+                            imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
+                          />
+                          <OrderStyled.MoreActionsWrapper>
+                            {this.props.requestStatusId !== 5 && <OrderStyled.MoreActionsIcon onClick={() => this.toggleActions()} />}
+                            {
+                              this.state.showActions && !this.props.starMode &&
+                                this.renderActionList()
+                            }
+                          </OrderStyled.MoreActionsWrapper>
+                          <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+                          <OrderStyled.StarProfessions>{starProfessionsFormater(props.orderDetails.professions)}</OrderStyled.StarProfessions>
+                        </OrderStyled.ProfileImageWrapper>
+                    } */}
+                    <OrderStyled.DetailsWrapper>
+                      <OrderStyled.DetailsItem>
+                        <OrderStyled.DetailsTitle>Requested</OrderStyled.DetailsTitle>
+                        <OrderStyled.DetailsValue>{props.createdDate}</OrderStyled.DetailsValue>
+                      </OrderStyled.DetailsItem>
+                      {
+                        this.getEventDetails(props.orderDetails.request_type)
+                      }
+                      {/* Show Reason if request is cancelled */}
+                      {
+                        props.requestStatusId === 5 ?
+                          <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
+                          : null
+                      }
+                      <OrderStyled.DetailsItem>
+                        <OrderStyled.DetailsTitle>Booking Price</OrderStyled.DetailsTitle>
+                        <OrderStyled.DetailsValue>${props.price}</OrderStyled.DetailsValue>
+                      </OrderStyled.DetailsItem>
+                      {
+                        !props.starMode &&
+                          <OrderStyled.DetailsItem>
+                            <OrderStyled.DetailsTitle>Make this Video private</OrderStyled.DetailsTitle>
+                            <OrderStyled.DetailsValue>{props.isPrivate}</OrderStyled.DetailsValue>
+                          </OrderStyled.DetailsItem>
+                      }
+                      <OrderStyled.DetailsItem>
+                        <OrderStyled.DetailsTitle>Order#</OrderStyled.DetailsTitle>
+                        <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
+                      </OrderStyled.DetailsItem>
+                      {this.props.requestStatusId === 6 &&
+                      <OrderStyled.DetailsItem>
+                        <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
+                        <OrderStyled.DetailsValue>
+                          <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+                        </OrderStyled.DetailsValue>
+                      </OrderStyled.DetailsItem>}
+                    </OrderStyled.DetailsWrapper>
+                    {/* Show only if request is not cancelled or not completed or not processing */}
+                    {/* {
+                      props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
+                        <OrderStyled.ControlWrapper>
+                          {
+                            this.props.starMode ?
+                              <OrderStyled.ActionButtonWrapper>
+                                <OrderStyled.ActionButton onClick={() => this.modifyBooking()}>Cancel Request</OrderStyled.ActionButton>
+                              </OrderStyled.ActionButtonWrapper>
+                            :
+                              <PaymentFooterController
+                                buttonMode
+                                modifyBooking={this.modifyBooking}
+                                handleBooking={this.handleBooking}
+                                modifyButtonName={this.props.orderDetails.editable ? 'Edit Request' : ''}
+                                buttonName="Cancel"
+                              />
+                          }
+                        </OrderStyled.ControlWrapper>
+                    } */}
+                  </OrderStyled.leftContent>
+                  {/* <OrderStyled.rightContent>
+                    <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
+                    {
+                      props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
+                        this.renderVideoRecorder(props)
+                      : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
                     }
-                    <OrderStyled.DetailsItem>
-                      <OrderStyled.DetailsTitle>Order#</OrderStyled.DetailsTitle>
-                      <OrderStyled.DetailsValue>{props.orderId}</OrderStyled.DetailsValue>
-                    </OrderStyled.DetailsItem>
-                    {this.props.requestStatusId === 6 &&
-                    <OrderStyled.DetailsItem>
-                      <OrderStyled.DetailsTitle>Rating:</OrderStyled.DetailsTitle>
-                      <OrderStyled.DetailsValue>
-                        <StarRating rating={this.props.orderDetails.fan_rating ? this.props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
-                      </OrderStyled.DetailsValue>
-                    </OrderStyled.DetailsItem>}
-                  </OrderStyled.DetailsWrapper>
-                  {/* Show only if request is not cancelled or not completed or not processing */}
-                  {/* {
-                    props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
-                      <OrderStyled.ControlWrapper>
-                        {
-                          this.props.starMode ?
-                            <OrderStyled.ActionButtonWrapper>
-                              <OrderStyled.ActionButton onClick={() => this.modifyBooking()}>Cancel Request</OrderStyled.ActionButton>
-                            </OrderStyled.ActionButtonWrapper>
-                          :
-                            <PaymentFooterController
-                              buttonMode
-                              modifyBooking={this.modifyBooking}
-                              handleBooking={this.handleBooking}
-                              modifyButtonName={this.props.orderDetails.editable ? 'Edit Request' : ''}
-                              buttonName="Cancel"
-                            />
-                        }
-                      </OrderStyled.ControlWrapper>
-                  } */}
-                </OrderStyled.leftContent>
-                {/* <OrderStyled.rightContent>
-                  <OrderStyled.CloseButton onClick={() => props.hideRequest()} />
-                  {
-                    props.starMode && props.requestStatusId !== 5 && props.requestStatusId !== 6 ?
-                      this.renderVideoRecorder(props)
-                    : <OrderStyled.VideoContainer>{this.renderVideo(props, title, shareUrl)}</OrderStyled.VideoContainer>
-                  }
-                </OrderStyled.rightContent> */}
-                {
-                  props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
-                    <OrderStyled.ActionButtonWrapper>
-                      {
-                        props.starMode &&
-                          <OrderStyled.ActionButton onClick={this.handleBooking}>
-                            Respond
-                          </OrderStyled.ActionButton>
-                      }
-                      {
-                        !props.starMode && this.props.orderDetails.editable &&
-                          <OrderStyled.ActionButton onClick={this.modifyBooking}>
-                            Edit request
-                          </OrderStyled.ActionButton>
-                      }
-                      <OrderStyled.ActionButton onClick={props.starMode ? this.modifyBooking : this.handleBooking} secondary>
-                        { props.starMode ? 'Decline Request' : 'Cancel request' }
-                      </OrderStyled.ActionButton>
-                    </OrderStyled.ActionButtonWrapper>
-                }
-              </OrderStyled.ContentWrapper>
+                  </OrderStyled.rightContent> */}
+                </OrderStyled.ContentWrapper>
+              </Scrollbars>
+              {
+                props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
+                  <OrderStyled.ActionButtonWrapper>
+                    {
+                      props.starMode &&
+                        <OrderStyled.ActionButton onClick={this.handleBooking}>
+                          Respond
+                        </OrderStyled.ActionButton>
+                    }
+                    {
+                      !props.starMode && this.props.orderDetails.editable &&
+                        <OrderStyled.ActionButton onClick={this.modifyBooking}>
+                          Edit request
+                        </OrderStyled.ActionButton>
+                    }
+                    <OrderStyled.ActionButton onClick={props.starMode ? this.modifyBooking : this.handleBooking} secondary>
+                      { props.starMode ? 'Decline Request' : 'Cancel request' }
+                    </OrderStyled.ActionButton>
+                  </OrderStyled.ActionButtonWrapper>
+              }
             </OrderStyled>
         }
       </RequestFlowPopup>

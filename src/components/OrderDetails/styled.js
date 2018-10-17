@@ -5,13 +5,15 @@ const OrderStyled = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  padding-bottom: 100px;
   @media(min-width: 768px) {
     padding: 0 20px;
+    padding-bottom: 100px;
   }
 `;
 
 OrderStyled.ContentWrapper = styled.div`
-  height: calc(100% - 105px);
+  height: calc(100% - 121px);
   overflow: auto;
   @media (min-width: 1025px) {
     overflow: initial;
@@ -20,17 +22,7 @@ OrderStyled.ContentWrapper = styled.div`
 `;
 OrderStyled.VideoContentWrapper = styled.div`
   width: 100%;
-  height: 200px;
-  @media(min-width: 768px) {
-    height: 400px;
-  }
-  @media(min-width: 1025px) {
-    width: ${props => (props.width ? props.width : '100%')};
-    height: ${props => (props.height ? props.height : '100%')};
-    height: ${props => (props.starMode ? '250px' : '70%')};
-    max-width: 100%;
-    max-height: 480px;
-  }
+  height: 100%;
 `;
 
 OrderStyled.NoVideoText = styled.span`
@@ -442,19 +434,8 @@ OrderStyled.RatingTextArea = styled.textarea`
 `;
 
 OrderStyled.VideoRecorder = styled.div`
-  margin: 0 auto;
-  margin-bottom: 21px;
-  height: 400px;
-  max-width: 480px;
-  @media(min-width: 768px) {
-    height: 800px;
-    max-width: 600px;
-  }
-  @media(min-width: 1025px) {
-    width: 100%;
-    height: 100%;
-    margin-bottom: 0;
-  }
+  height: 100%;
+  width: 100%;
 `;
 
 OrderStyled.VideoContainer = styled.div`
