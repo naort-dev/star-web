@@ -154,7 +154,7 @@ export default class StarDetailsEntry extends React.Component {
             Public information
           </GroupStyled.SubHeading>
           <GroupStyled.SubHeadingDescription>
-            This information will be shared on your profile.
+            This information will be shared on your profile
           </GroupStyled.SubHeadingDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.InputwrapperDiv>

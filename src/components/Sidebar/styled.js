@@ -107,6 +107,27 @@ SidebarStyled.CategoryTitle = styled.span`
   }
 `;
 
+SidebarStyled.InnerListItem = SidebarStyled.ListItem.extend`
+  background: transparent;
+`;
+
+SidebarStyled.InnerCategoryTitle = SidebarStyled.CategoryTitle.extend`
+  background: transparent;
+  color: ${props => (props.selected ? '#1f1f1f' : '#9E9E9E')};
+  &:hover {
+    color: #1f1f1f;
+    background: transparent;
+  }
+  @media(min-width: 768px) {
+    border: none;
+    margin: 0;
+    &:hover {
+      margin: 0;
+      border: none;
+    }
+  }
+`;
+
 SidebarStyled.SubCategoryList = styled.ul`
   margin-left: 60px;
   width: calc(100% - 60px);

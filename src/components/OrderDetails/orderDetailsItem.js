@@ -5,9 +5,9 @@ const OrderDetailsItem = props => (
   <React.Fragment>
     {
       props.value && props.value !== '' ?
-        <OrderStyled.DetailsItem>
-          <OrderStyled.DetailsTitle>{props.title} :</OrderStyled.DetailsTitle>
-          <OrderStyled.DetailsValue>{props.value}</OrderStyled.DetailsValue>
+        <OrderStyled.DetailsItem overlay={props.overlay}>
+          <OrderStyled.DetailsTitle overlay={props.overlay}>{props.title}</OrderStyled.DetailsTitle>
+          <OrderStyled.DetailsValue overlay={props.overlay}>{props.value}</OrderStyled.DetailsValue>
         </OrderStyled.DetailsItem>
       : null
     }

@@ -65,6 +65,8 @@ PaymentStyled.StarPhoto = styled.span`
 PaymentStyled.RequestDetails = styled.div`
   display: inline-block;
   margin-left: 10px;
+  vertical-align: top;
+  margin-top: 16px;
 `;
 
 PaymentStyled.SubTitle = styled.span`

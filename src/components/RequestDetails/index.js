@@ -1,6 +1,9 @@
 import React from 'react';
 import VideoRenderDiv from './styled';
-import { requestTypes } from '../../constants/requestTypes'
+import VideoPlayer from '../VideoPlayer';
+import RequestFlowPopup from '../RequestFlowPopup';
+import { requestTypes } from '../../constants/requestTypes';
+import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList } from '../../constants/requestStatusList';
 
 export default class RequestDetails extends React.Component {
   constructor(props) {
@@ -8,6 +11,7 @@ export default class RequestDetails extends React.Component {
     this.state = {
       coverImage: false,
       profileImage: false,
+      videoPlayerProps: null,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -27,7 +31,7 @@ export default class RequestDetails extends React.Component {
         this.setState({ profileImage: this.profileImage.src });
       }
     };
-    this.profileImage.src = this.props.profile;
+    this.profileImage.src = this.props.starMode ? this.props.fanProfile : this.props.profile;
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -38,7 +42,7 @@ export default class RequestDetails extends React.Component {
     }
   }
   findTime = () => {
-    let timeString = 'Requested';
+    let timeString = '';
     if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
       timeString = 'Completed';
     } else {
@@ -59,6 +63,41 @@ export default class RequestDetails extends React.Component {
       }
     }
     return timeString;
+  }
+
+  getQaVideoData = (requestVideo) => {
+    let videoPlayerProps = {};
+    requestVideo.forEach((video) => {
+      if (video.video_status === 4) {
+        videoPlayerProps = {
+          ...videoPlayerProps,
+          primaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
+          primarySrc: video.s3_video_url ? video.s3_video_url : '',
+        };
+      } else if (video.video_status === 5) {
+        videoPlayerProps = {
+          ...videoPlayerProps,
+          secondaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
+          secondarySrc: video.s3_video_url ? video.s3_video_url : '',
+        };
+      }
+    });
+    return videoPlayerProps;
+  }
+  activateVideo = () => {
+    const { requestVideo, requestType } = this.props;
+    if (requestVideo && requestVideo.length) {
+      const videoPlayerProps = requestType === 3 ? this.getQaVideoData(requestVideo) : {
+        primaryCover: requestVideo[0].s3_thumbnail_url ? requestVideo[0].s3_thumbnail_url : '',
+        primarySrc: requestVideo[0].s3_video_url ? requestVideo[0].s3_video_url : '',
+      };
+      this.setState({
+        videoPlayerProps,
+      });
+    }
+  }
+  closeVideo = () => {
+    this.setState({ videoPlayerProps: null });
   }
   renderVideoDetails = (text) => {
     let splicedText = text;
@@ -111,34 +150,79 @@ export default class RequestDetails extends React.Component {
       default: return null;
     }
   }
+
+  renderSecondaryControlButton = () => {
+    const { starMode, requestStatus } = this.props;
+    if (requestStatus !== 5 && !(!starMode && openStatusList.indexOf(requestStatus) > -1)) {
+      if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
+        return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem(true)}>Respond</VideoRenderDiv.ControlButton>;
+      }
+    }
+    return null;
+  }
+
+  renderTime = () => {
+    const { starMode, requestStatus } = this.props;
+    const isOpenRequest = (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) || (!starMode && openStatusList.indexOf(requestStatus) > -1);
+    if (isOpenRequest) {
+      return <VideoRenderDiv.RequestTime>{this.findTime()}</VideoRenderDiv.RequestTime>;
+    }
+    return null;
+  }
+
   render() {
     const { props } = this;
     return (
-      <VideoRenderDiv onClick={() => this.props.selectItem()}>
+      <VideoRenderDiv>
+        {
+          this.state.videoPlayerProps ?
+            <RequestFlowPopup
+              dotsCount={0}
+              closePopUp={this.closeVideo}
+              smallPopup
+            >
+              <VideoRenderDiv.VideoPlayerWrapper>
+                <VideoPlayer {...this.state.videoPlayerProps} />                
+              </VideoRenderDiv.VideoPlayerWrapper>
+            </RequestFlowPopup>
+          : null
+        }
         <VideoRenderDiv.ImageSection
+          onClick={this.activateVideo}
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         >
-          {
-            !this.props.starMode &&
-              <VideoRenderDiv.ProfileImageWrapper>
-                <VideoRenderDiv.ProfileImage
-                  imageUrl={this.state.profileImage}
-                />
-              </VideoRenderDiv.ProfileImageWrapper>
-          }
-          {/* <VideoRenderDiv.FavoriteButton /> */}
+          {this.state.coverImage ? <VideoRenderDiv.PlayButton /> : null}
+          {this.renderTime()}
         </VideoRenderDiv.ImageSection>
         <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.DetailWrapper>
-            <VideoRenderDiv.StarName>
-              {props.starMode ? this.requestType[props.requestType] : props.starName}
-            </VideoRenderDiv.StarName>
-            <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
-            {this.renderRequestDetails()}
-          </VideoRenderDiv.DetailWrapper>
+          <VideoRenderDiv.ProfileDetailWrapper>
+            <VideoRenderDiv.ProfileImageWrapper>
+              <VideoRenderDiv.ProfileImage
+                imageUrl={this.state.profileImage}
+              />
+            </VideoRenderDiv.ProfileImageWrapper>
+            <VideoRenderDiv.DetailWrapper>
+              <VideoRenderDiv.StarName>
+                {props.starMode ? props.fanName : props.starName }
+              </VideoRenderDiv.StarName>
+              <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+            </VideoRenderDiv.DetailWrapper>
+          </VideoRenderDiv.ProfileDetailWrapper>
+          <VideoRenderDiv.StatusDetailsWrapper>
+            <VideoRenderDiv.StatusDetails>
+              <VideoRenderDiv.StarDetails>Status</VideoRenderDiv.StarDetails>
+              <VideoRenderDiv.RequestStatus>{props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus]}</VideoRenderDiv.RequestStatus>
+            </VideoRenderDiv.StatusDetails>
+          </VideoRenderDiv.StatusDetailsWrapper>
+          {/* {this.renderRequestDetails()} */}
         </VideoRenderDiv.ProfileContent>
-        {/* </Link> */}
+        <VideoRenderDiv.ControlWrapper>
+          {
+            this.renderSecondaryControlButton()
+          }
+          <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem()} alternate>View</VideoRenderDiv.ControlButton>
+        </VideoRenderDiv.ControlWrapper>
       </VideoRenderDiv>
     );
   }

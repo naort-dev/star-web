@@ -89,6 +89,7 @@ class SignupFlow extends React.Component {
           dotsCount={this.state.stepCount}
           selectedDot={this.state.currentStep}
           closePopUp={() => this.closeSignUp()}
+          disableOutsideClick
           smallPopup
         >
           <LoginContainer>

@@ -72,7 +72,7 @@ export class LoginTypeSelector extends React.Component  {
                         <label htmlFor="s-option">
                           Star Account
                           <div className="option-content">
-                          Engage with your most loyal fans and create unique one-of-a-kind videos for them.
+                          Engage with your most loyal fans and create unique <span>one - of - a - kind</span> videos for them.
                           </div>
                         </label>
                         <div className="check" />

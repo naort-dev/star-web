@@ -1,7 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchMyVideosList } from '../../../pages/myVideos/actions/getMyVideosList';
+import { fetchMyVideosList } from '../../../pages/requests/actions/getMyVideosList';
 
 export const CLEAR_ERROR = 'popup/CLEAR_ERROR'
 export const RATING = {

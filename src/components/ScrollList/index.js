@@ -167,7 +167,7 @@ export default class ScrollList extends React.Component {
     }
     else if (this.props.requestDetails) {
       return this.props.dataList.map((item, index) => (
-        <ListStyled.listVideos videos={this.props.videos} key={index}>
+        <ListStyled.listRequests videos={this.props.videos} key={index}>
           <RequestDetails
             starMode={this.props.starMode}
             cover={this.findRequestVideoThumbnail(item.request_video)}
@@ -175,14 +175,17 @@ export default class ScrollList extends React.Component {
             orderId={item.order_details ? item.order_details.order : ''}
             videoId={item.booking_id}
             profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
+            fanProfile={item.fan_photo && item.fan_photo.thumbnail_url}
             starName={item.celebrity}
+            fanName={item.fan}
             details={item.booking_title}
             requestStatus={item.request_status}
+            requestVideo={item.request_video}
             requestType={item.request_type}
             createdDate={item.created_date}
-            selectItem={() => this.props.selectItem(item)}
+            selectItem={recordMode => this.props.selectItem(item, recordMode)}
           />
-        </ListStyled.listVideos>
+        </ListStyled.listRequests>
       ));
     } else if (this.props.earnings) {
       return this.props.dataList.map((item, index) => (

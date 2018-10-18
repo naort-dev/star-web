@@ -12,12 +12,16 @@ export default class RequestFlowPopup extends React.Component {
     this.popupWrapper = null;
   }
   componentDidMount() {
-    window.addEventListener('click', this.hidePopup);
+    if (!this.props.disableOutsideClick) {
+      window.addEventListener('click', this.hidePopup);
+    }
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
   }
   componentWillUnmount() {
-    window.removeEventListener('click', this.hidePopup);
+    if (!this.props.disableOutsideClick) {
+      window.removeEventListener('click', this.hidePopup);
+    }
     document.body.style.overflow = 'initial';
     document.body.style.position = 'initial';
     if (this.props.scrollTarget) {

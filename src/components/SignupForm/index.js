@@ -449,8 +449,13 @@ export default class SignUp extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                 }
-
-
+                <LoginContainer.WrapsInput>
+                  {this.props.statusCode === undefined ?
+                    <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                    :
+                    <LoginContainer.EmptyDiv />
+                  }
+                </LoginContainer.WrapsInput>
                 <LoginContainer.ButtonWrapper>
                   <FooterSection.Button type="submit" value="SIGNUP" onClick={this.onRegister} />
                 </LoginContainer.ButtonWrapper>
@@ -461,13 +466,6 @@ export default class SignUp extends React.Component {
                 </LoginContainer.PrivacyContent>
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
-            <LoginContainer.WrapsInput>
-              {this.props.statusCode === undefined ?
-                <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                :
-                <LoginContainer.EmptyDiv />
-              }
-            </LoginContainer.WrapsInput>
           </LoginContainer.Container>
         </Scrollbars>
       </LoginContainer.SocialMediaSignup>

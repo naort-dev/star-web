@@ -152,12 +152,12 @@ export default class DetailsEntry extends React.Component {
             Public information
           </GroupStyled.SubHeading>
           <GroupStyled.SubHeadingDescription>
-            This information will be shared on your profile.
+            This information will be shared on your profile
           </GroupStyled.SubHeadingDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.InputwrapperDiv>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Group bio</GroupStyled.Label>
+            <GroupStyled.Label>Your bio</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.CustomInput>
                 <GroupStyled.InputArea

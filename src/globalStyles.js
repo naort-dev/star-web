@@ -228,6 +228,11 @@ injectGlobal`
   color: #88898c;
   margin-top: 15px;
   font-size:15px;
+  word-spacing: 3px;
+  span {
+    word-spacing: -2px;
+    display: inline-block;
+  }
   @media(min-width:1025px){
     font-size:18px;
   }
