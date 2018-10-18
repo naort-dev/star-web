@@ -110,8 +110,14 @@ LoginContainer.Heading = styled.div`
   color: #676767;
   font-size: 20px;
   font-family: 'Avenir-Bold';
-  @media(min-width: 768px){
-    font-size:32px;
+  @media(min-width:768px){
+    font-size:25px;
+  }
+  @media(min-width: 1025px){
+    font-size: 27px;
+  }
+  @media(min-width:1920px){
+    font-size: 30px;
   }
   
 `;
@@ -135,7 +141,7 @@ LoginContainer.SocialMediaMessage = styled.div`
     font-size:14px;
   }
   @media(min-width:1920px){
-    font-size:28px;
+    font-size:18px;
   }
 `;
 LoginContainer.Button = styled.button`
