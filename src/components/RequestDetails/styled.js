@@ -179,7 +179,7 @@ VideoRenderDiv.ControlButton = styled.button`
 
 VideoRenderDiv.RequestStatus = styled.span`
   display: block;
-  color: ${props => (props.highLight ? '#FF6C58' : '#9B9B9B')};
+  color: ${props => (props.highlight ? '#FF6C58' : '#9B9B9B')};
   font-size: 18px;
 `;
 

@@ -19,6 +19,7 @@ export default class Requests extends React.Component {
       menuActive: false,
       filterSelected: false,
       selectedTab: 'All',
+      innerLinks: [],
       tabsClientHeight: 0,
       requestStatus: 'all',
       recordMode: false,
@@ -33,6 +34,19 @@ export default class Requests extends React.Component {
   }
   componentWillMount() {
     this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
+    let innerLinks;
+    if (this.props.starMode) {
+      innerLinks = [
+        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
+        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+      ];
+    } else {
+      innerLinks = [
+        { linkName: 'Favorited stars', selectedName: 'favorites', url: '/user/favorites' },
+        { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
+      ];
+    }
+    this.setState({ innerLinks });
   }
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
@@ -130,7 +144,7 @@ export default class Requests extends React.Component {
       statusList = [5];
     }
     if (this.props.myVideosList.data.length) {
-      return this.props.myVideosList.data.map((request, index) => {
+      const list = this.props.myVideosList.data.map((request, index) => {
         if (statusList.indexOf(request.request_status) > -1) {
           return (
             <RequestsStyled.RequestItem key={index}>
@@ -155,6 +169,7 @@ export default class Requests extends React.Component {
           );
         }
       });
+      return list.length ? list : <span>No requests</span>;
     }
     return null;
   }
@@ -269,13 +284,9 @@ export default class Requests extends React.Component {
     return (
       <div>
         <ThreeColumnLayout
-          selectedSideBarItem={this.props.starMode ? 'requests' : ''}
+          selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          innerLinks={[
-            { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-            { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-            { linkName: 'Groups', selectedName: 'groups', url: '/' },
-          ]}
+          innerLinks={this.state.innerLinks}
           renderCenterSection={this.renderCenterSection}
         />
         {
