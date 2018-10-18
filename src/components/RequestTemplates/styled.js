@@ -20,7 +20,7 @@ Templates.InputWrapper = styled.div`
 `;
 Templates.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size:14px;
   display:inline-block;
   text-align:left;
@@ -40,7 +40,7 @@ Templates.Label = styled.div`
 `;
 Templates.RelationLabel = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size:14px;
   display:inline-block;
   text-align:left;
@@ -77,7 +77,7 @@ Templates.WrapsInput = styled.div`
 `;
 
 Templates.Input = styled.input`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #333333;
   font-size:14px;
   text-align:left;
@@ -103,7 +103,7 @@ Templates.Input = styled.input`
   }
 `;
 Templates.InputArea = styled.textarea`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #333333;
   font-size:14px;
   text-align:left;
@@ -125,7 +125,7 @@ Templates.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   @media(min-width:768px){
     width: 100%;
@@ -150,7 +150,7 @@ Templates.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #333333;
   font-size:14px;
   text-align:left;
@@ -189,7 +189,7 @@ background-size: 20px;
 background-repeat: no-repeat;
 background-position: left;
 padding-left: 35px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 color: #FF6C58;
 border-radius: 5px;
 min-width: 150px;
@@ -218,7 +218,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline: none;
 border-radius: 5px;
 border: 2px solid #FF6C58;
@@ -315,7 +315,7 @@ border-radius: 5px;
 border: 2px solid #FF6C58;
 cursor: pointer;
 margin-right: 10px;
-font-family: Ubuntu-bold;
+font-family: Avenir-bold;
 `;
 
 Templates.ConfirmNo = styled.button`
@@ -327,7 +327,7 @@ border-radius: 5px;
 border: 2px solid #FF6C58;
 cursor: pointer;
 margin-left: 10px;
-font-family: Ubuntu-bold;
+font-family: Avenir-bold;
 `;
 
 Templates.ActionsContainer = styled.div`
@@ -362,7 +362,7 @@ width: 69%;
 Templates.DetailedRelation = styled.span`
   font-size: 14px;
   display: inline-block;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   padding-bottom: 10px;
   @media(min-width:768px){
     padding-bottom: 0px;

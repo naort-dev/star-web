@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
+import { ROLES } from '../../constants/usertype';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
@@ -261,10 +262,15 @@ class Header extends React.Component {
                             My Videos
                           </Link>
                         </HeaderSection.UserLink>
-                        <HeaderSection.ProfileDropdownItem >
-                          <Link to="/settings">
-                            Settings
-                          </Link></HeaderSection.ProfileDropdownItem>
+                        {
+                          this.props.userDetails.role_details.role_code !== ROLES.group ?
+                            <HeaderSection.ProfileDropdownItem >
+                              <Link to="/settings">
+                                Settings
+                              </Link>
+                            </HeaderSection.ProfileDropdownItem>
+                          : null
+                        }
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>

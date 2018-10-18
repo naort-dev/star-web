@@ -4,7 +4,7 @@ injectGlobal`
   html, body {
     width: 100%;
     padding: 0;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
     color: #333333;
     margin: 0;
     background-color: rgb(248, 248, 248);
@@ -46,7 +46,7 @@ injectGlobal`
   cursor: pointer;
   text-align:left;
   font-size: 14px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -105,7 +105,7 @@ injectGlobal`
     margin-top: 0;
     color: #FF6C58 !important;
     font-weight: normal !important;
-    font-family: 'Ubuntu-Medium';
+    font-family: 'Avenir-Medium';
     font-size: 0.944rem;
   }
   .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
@@ -123,7 +123,7 @@ injectGlobal`
   }
   .react-datepicker__day-names, .react-datepicker__week {
     white-space: nowrap;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
   }
   
   #checkbox_container #checkmark:after {
@@ -155,7 +155,89 @@ injectGlobal`
   input[type='file']{
     opacity: 0;
     cursor: pointer;
-    font-size: 0;
+}
+
+.round-radio ul li{
+  display: block;
+  position: relative;
+  width: 100%;
+}
+
+.round-radio ul li input[type=radio]{
+  position: absolute;
+  visibility: hidden;
+}
+
+.round-radio ul li label{
+  display: block;
+  position: relative;
+  font-size: 18px;
+  font-family: 'Avenir-Regular';
+  color: #484848;
+  padding: 10px 25px 0 80px;
+  margin: 10px auto;
+  cursor: pointer;
+  text-align: left;
+  z-index: 1;
+  @media(min-width: 768px) {
+    padding: 25px 25px 9px 80px;
+  }
+  @media(min-width:1025px){
+    font-size:20px;
+  }
+}
+
+.round-radio ul li .check{
+  display: block;
+  position: absolute;
+  border: 2px solid #AAAAAA;
+  border-radius: 100%;
+  height: 25px;
+  width: 25px;
+  top: 9px;
+  left: 20px;
+	transition: border .25s linear;
+  -webkit-transition: border .25s linear;
+  @media(min-width: 768px) {
+    top: 24px;
+  }
+}
+
+
+.round-radio ul li .check::before {
+  display: block;
+  position: absolute;
+	content: '';
+  border-radius: 100%;
+  height: 15px;
+  width: 15px;
+  top: 3px;
+	left: 3px;
+  margin: auto;
+	transition: background 0.25s linear;
+	-webkit-transition: background 0.25s linear;
+}
+
+.round-radio input[type=radio]:checked ~ .check {
+  border: 2px solid #AAAAAA;
+}
+
+.round-radio input[type=radio]:checked ~ .check::before{
+  background: #FF6C58;
+}
+.list .option-content{
+  font-family: 'Avenir-Light';
+  color: #88898c;
+  margin-top: 15px;
+  font-size:15px;
+  word-spacing: 3px;
+  span {
+    word-spacing: -2px;
+    display: inline-block;
+  }
+  @media(min-width:1025px){
+    font-size:18px;
+  }
 }
 
 `

@@ -12,6 +12,22 @@ const LoginContainer = styled.div`
     padding-bottom: 0;
   }
 `;
+
+LoginContainer.BackButton = styled.span`
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  background-image: url(assets/images/icon_back_40a.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 15px;
+  background-size: 26px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+`;
+
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
@@ -64,7 +80,7 @@ LoginContainer.FirstLastNameWrapper = styled.div`
 LoginContainer.FirstNameWrapper = styled.div`
   width:100%;
   @media(min-width:768px){
-    width:49%
+    width: ${props => (props.groupSignup ? '100%' : '49%')};
   }
 `;
 LoginContainer.LastNameWrapper = styled.div`
@@ -90,11 +106,11 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  font-family: 'Ubuntu-Bold';
-  font-size: 25px;
   text-align: center;
-  color: #FF6C58;
-  @media(min-width:1920px){
+  color: #676767;
+  font-size: 20px;
+  font-family: 'Avenir-Bold';
+  @media(min-width: 768px){
     font-size:32px;
   }
   
@@ -108,11 +124,10 @@ LoginContainer.ButtonDiv = styled.div`
     width:100%;
 `;
 LoginContainer.SocialMediaMessage = styled.div`
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Regular';
   font-size: 14px;
   text-align: center;
-  color: #333333;
-  margin-top:3%;
+  color: #7B797A;
   @media(min-width:768px){
     font-size: 18px;
   }
@@ -213,7 +228,7 @@ LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   @media(min-width:768px){
     
@@ -222,7 +237,7 @@ LoginContainer.ErrorMsg = styled.div`
 `;
 LoginContainer.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size:16px;
   text-align:left;
   @media(min-width:768px){
@@ -241,7 +256,7 @@ LoginContainer.Label = styled.div`
 
 `;
 LoginContainer.SectionHeading = styled.div`
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   font-size: 14px;
   text-align: center;
   color: #737373;
@@ -257,13 +272,13 @@ LoginContainer.SectionHeading = styled.div`
   }
 `;
 LoginContainer.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
   outline:none;
-  border: 1px solid #d0d2d3;
-  border-radius: 2px;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
   width: 100%;
   height: 40px;
   text-indent: 10px;
@@ -292,7 +307,7 @@ LoginContainer.InputWrapper = styled.div`
     margin-top:5%;
   }
   @media(min-width: 1025px) {
-    margin-top: 30px;
+    margin-top: 23px;
   }
   @media(min-width: 1920px) {
     margin-top: 50px;
@@ -300,10 +315,16 @@ LoginContainer.InputWrapper = styled.div`
 `;
 LoginContainer.PrivacyContent = styled.div`
   text-align:left;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:12px;
-  padding: 17px 35px;
+  padding: 17px 23px;
+  line-height: 18px;
   color: #707070;
+  ${LoginContainer.Anchor} {
+    color: #707070;
+    margin: 0 5px;
+    text-decoration: underline;
+  }
   @media(min-width:768px){
     text-align:center;
   }
@@ -342,7 +363,7 @@ HeaderSection.LogoImage = styled.img`
   }
 `;
 HeaderSection.MiddleDiv = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size : 13px;
   @media(min-width:1920px){
     font-size:16px;
@@ -357,7 +378,7 @@ HeaderSection.RightDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
@@ -399,7 +420,7 @@ FooterSection.LeftSection = styled.div`
 FooterSection.Agreement = styled.div`
   text-align:left;
   color:rgba(112, 112, 112, 1);
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:12px;
 `;
 FooterSection.RightSection = styled.div`
@@ -418,12 +439,15 @@ FooterSection.Button = styled.input`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border-radius:5px;
   border: 2px solid #FF6C58;
   -webkit-appearance: none;
+  &:hover {
+    background-color: #FF3B21;
+  }
   @media(min-width:1920px){
     font-size:20px;
   }
@@ -448,11 +472,11 @@ LoginContainer.EmptyDiv = styled.div`
 LoginContainer.LoginDiv = styled.button`
   background-color: #fff; 
   margin-right: 5px;
-  color: #007FAA;
+  color: #FF6C58;
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
@@ -487,8 +511,7 @@ LoginContainer.InputContainer = styled.div`
   
   @media(min-width:768px){
     width:90%;
-    margin: 20px 20px;
-    margin-top: 0;
+    margin: 0 20px;
   }
 `;
 LoginContainer.ButtonWrapper = styled.div`
@@ -497,7 +520,7 @@ LoginContainer.ButtonWrapper = styled.div`
 LoginContainer.SignupLine = styled.div`
  
     display: block;
-    font-family: 'Ubuntu-Medium';
+    font-family: 'Avenir-Medium';
     color:#7c7c7c;
     font-size: 12px;
     margin: 0;

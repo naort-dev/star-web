@@ -29,7 +29,7 @@ FooterSection.LeftSection = styled.div`
 FooterSection.Agreement = styled.div`
   text-align:left;
   color:rgba(112, 112, 112, 1);
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:12px;
 `;
 FooterSection.RightSection = styled.div`
@@ -47,7 +47,7 @@ FooterSection.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 10px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;

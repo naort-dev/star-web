@@ -41,7 +41,7 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 0 40px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 14px;
   cursor: pointer;
   &:hover {
@@ -63,7 +63,7 @@ const DownloadLabel = styled.div`
   display: none;
   @media(min-width: 1025px) {
     display: block;
-    font-family: 'Ubuntu-Bold';
+    font-family: 'Avenir-Bold';
     color: #333333;
     font-size: 12px;
     margin: 0;

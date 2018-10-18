@@ -102,9 +102,8 @@ injectGlobal`
 }
 .Select-control {
   background-color: #fff;
-  border-color: #d9d9d9 #ccc #b3b3b3;
-  border-radius: 0px;
-  border: 1px solid #ccc;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
   color: #333;
   cursor: default;
   display: table;
@@ -126,7 +125,9 @@ injectGlobal`
 .Select-placeholder,
 .Select--single > .Select-control .Select-value {
   bottom: 0;
-  color: #aaa;
+  font-family: 'Avenir-Regular';
+  color: #7d7d7d;
+  font-size: 14px;
   left: 0;
   line-height: 34px;
   padding-left: 10px;
@@ -138,7 +139,6 @@ injectGlobal`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 13px;
 }
 .Select-input {
   height: 34px;
@@ -295,7 +295,7 @@ injectGlobal`
 .Select-option {
   box-sizing: border-box;
   background-color: #fff;
-  color: orange;
+  color: #333333;
   cursor: pointer;
   display: block;
   padding: 8px 10px;
@@ -312,7 +312,7 @@ injectGlobal`
   background-color: #ebf5ff;
   /* Fallback color for IE 8 */
   background-color: rgba(0, 126, 255, 0.08);
-  color: orange;
+  color: #333333;
 }
 .Select-option.is-disabled {
   color: #cccccc;
@@ -379,7 +379,7 @@ injectGlobal`
 .Select--multi .Select-value-icon:hover,
 .Select--multi .Select-value-icon:focus {
   background-color: #d8eafd;
-  color: orange;
+  color: #333333;
 }
 .Select--multi .Select-value-icon:active {
   background-color: #c2e0ff;

@@ -4,7 +4,7 @@ const DollarStyled = styled.div`
   font-size: ${props => `${props.size}px`};
   display: inline-flex;
   color: ${props => props.color};
-  font-family: ${props => (props.bold ? 'Ubuntu-Bold' : 'Ubuntu-Light')};'
+  font-family: ${props => (props.bold ? 'Avenir-Bold' : 'Avenir-Light')};'
 `;
 
 DollarStyled.Symbol = styled.span`
