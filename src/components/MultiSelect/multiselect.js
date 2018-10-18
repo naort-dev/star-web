@@ -102,9 +102,8 @@ injectGlobal`
 }
 .Select-control {
   background-color: #fff;
-  border-color: #d9d9d9 #ccc #b3b3b3;
-  border-radius: 0px;
-  border: 1px solid #ccc;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
   color: #333;
   cursor: default;
   display: table;
@@ -126,7 +125,7 @@ injectGlobal`
 .Select-placeholder,
 .Select--single > .Select-control .Select-value {
   bottom: 0;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #7d7d7d;
   font-size: 14px;
   left: 0;

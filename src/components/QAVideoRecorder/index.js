@@ -192,6 +192,9 @@ export default class QAVideoRecorder extends React.Component {
   }
 
   playPauseVideo = () => {
+    this.previewVideo.onEnded = () => {
+      this.endVideo();
+    };
     if (this.state.isVideoPaused) {
       this.previewVideo.play();
       this.setState({
@@ -270,7 +273,6 @@ export default class QAVideoRecorder extends React.Component {
     }
 
     else {
-      console.log(this.state.play)
       if (this.state.play) {
         return (
           <VideoPlayer fill id="video-player" onEnded={() => this.endVideo()} primarySrc={this.state.src} />

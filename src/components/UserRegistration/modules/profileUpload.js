@@ -114,7 +114,7 @@ export default class ProfileUpload extends React.Component {
 
   render() {
     return (
-      <GroupStyled.ContentWrapper>
+      <GroupStyled.DetailsWrapper>
         {
           this.state.imageLoading ?
             <Loader />
@@ -139,6 +139,7 @@ export default class ProfileUpload extends React.Component {
                   <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
                   <GroupStyled.ProfileInputContainer>
                     <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
+                    {!this.state.finalImage ? <GroupStyled.UploadText>Upload Image</GroupStyled.UploadText> : null}
                   </GroupStyled.ProfileInputContainer>
                 </GroupStyled.ProfileImageWrapper>
               </GroupStyled.ProfileInputButton>
@@ -160,9 +161,9 @@ export default class ProfileUpload extends React.Component {
                   Continue
                 </GroupStyled.ControlButton>
               </GroupStyled.ControlWrapper>
-          </React.Fragment>
+            </React.Fragment>
         }
-      </GroupStyled.ContentWrapper>
+      </GroupStyled.DetailsWrapper>
     );
   }
 }

@@ -28,7 +28,7 @@ FooterDiv.Button = styled.button`
   display: inline-block;
   cursor: pointer;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;

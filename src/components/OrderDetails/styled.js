@@ -15,7 +15,7 @@ const OrderStyled = styled.div`
 OrderStyled.Header = styled.span`
   display: block;
   text-align: center;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 18px;
   color: #FF6C58;
   @media(min-width: 1025px) {
@@ -26,6 +26,7 @@ OrderStyled.Header = styled.span`
 OrderStyled.ContentWrapper = styled.div`
   height: calc(100% - 147px);
   @media (min-width: 1025px) {
+    height: calc(100% - 152px);
     padding: 0 20px;
   }
 `;
@@ -37,7 +38,7 @@ OrderStyled.VideoContentWrapper = styled.div`
 OrderStyled.NoVideoText = styled.span`
   display: none;
   @media(min-width: 1025px) {
-    font-family: 'Ubuntu-Bold';
+    font-family: 'Avenir-Bold';
     display: block;
     line-height: 27px;
   }
@@ -51,7 +52,7 @@ OrderStyled.DownloadVideo = styled.span`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   outline:none;
   border-radius:5px;
   border: 2px solid #333333;
@@ -66,7 +67,7 @@ OrderStyled.DownloadVideo = styled.span`
 OrderStyled.VideoTitle = styled.span`
   display: block;
   font-size: 20px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   text-align: center;
   @media(min-width: 1025px) {
     font-size: 16px;
@@ -111,7 +112,7 @@ OrderStyled.VideoRequestName = styled.span`
   display: inline-block;
   color: rgba(51, 51, 51, 0.72);
   font-size: 16px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   vertical-align: top;
   padding-top: 22px;
   @media(min-width: 1025px) {
@@ -246,15 +247,16 @@ OrderStyled.ProfileImage = styled.span`
 `;
 OrderStyled.StarName = styled.h4`
   font-size: 16px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
 `;
 OrderStyled.ProfileDetails = styled.div`
   display: block;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 14px;
   span {
     color: #FF6C58;
     text-transform: uppercase;
+    font-family: 'Avenir-Bold';
   }
 `;
 OrderStyled.DetailsWrapper = styled.ul`
@@ -274,7 +276,7 @@ OrderStyled.DetailsItem = styled.li`
   }
 `;
 OrderStyled.DetailsTitle = styled.span`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   width: ${props => (props.overlay ? '100%' : '40%')};
   display: inline-block;
   font-size: 16px;
@@ -295,7 +297,7 @@ OrderStyled.DetailsTitle = styled.span`
 
 OrderStyled.DetailsValue = styled.span`
   display: inline-block;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   width: ${props => (props.overlay ? '100%' : '60%')};
   display: inline-block;
   vertical-align: top;
@@ -354,24 +356,24 @@ OrderStyled.ActionButtonWrapper = styled.div`
 `;
 
 OrderStyled.ActionButton = styled.button`
-  background-color: ${props => (props.secondary ? '#D8D8D8' : '#FF6C58')};
+  background-color: ${props => (props.secondary ? '#fff' : '#FF6C58')};
   color: ${props => (props.secondary ? '#676767' : 'rgb(255,255,255)')};
   text-align: center;
   margin: 5px 0;
   width: 100%;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-family: Avenir-Bold;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
   outline: none;
   border: 1px solid;
   border-radius: 5px;
-  border-color: ${props => (props.secondary ? '#D8D8D8' : '#FF6C58')};
+  border-color: ${props => (props.secondary ? '#fff' : '#FF6C58')};
   border-image: initial;
   &:hover {
-    background-color: ${props => (props.secondary ? '#D8D8D8' : '#FF3B21')};
+    background-color: ${props => (props.secondary ? '#fff' : '#FF3B21')};
   }
 `;
 
@@ -386,7 +388,7 @@ OrderStyled.PopupWrapper = styled.div`
 
 OrderStyled.PopupHeader = styled.span`
   font-size: 16px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
 `;
 
 OrderStyled.ReasonsWrapper = styled.ul`
@@ -420,7 +422,7 @@ OrderStyled.ConfirmButton = styled.button`
   display: inline-block;
   cursor: pointer;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline: none;
   border-radius: 5px;
   border: 2px solid ${props => (props.disabled ? '#ABABAB' : '#FF6C58')};
@@ -429,7 +431,7 @@ OrderStyled.ConfirmButton = styled.button`
 OrderStyled.TextArea = styled.textarea`
   margin: 10px 0;
   height: 100px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
 `;
 
 OrderStyled.RatingTextArea = styled.textarea`
@@ -440,7 +442,7 @@ OrderStyled.RatingTextArea = styled.textarea`
   margin-top: 10px;
   margin-bottom: 10px;
   font-size: 14px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
 `;
 
 OrderStyled.VideoRecorder = styled.div`
@@ -463,7 +465,7 @@ OrderStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   
 `;
@@ -490,6 +492,21 @@ OrderStyled.Copy = styled.span`
   background-color: #4a000d;
   background-position: center;
   border-radius: 32px;
+`;
+
+OrderStyled.BackButton = styled.span`
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  background-image: url(assets/images/icon_back_40a.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 15px;
+  background-size: 26px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
 `;
 
 export default OrderStyled;

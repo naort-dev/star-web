@@ -52,7 +52,7 @@ ColumnLayoutStyled.mainSection = styled.section`
 
 ColumnLayoutStyled.CenterSection = styled.div`
   height: 100%;
-  @media(min-width: 768px) {
+  @media(min-width: 1025px) {
     width: 75%;
     display: inline-block;
     vertical-align: top;
@@ -60,7 +60,7 @@ ColumnLayoutStyled.CenterSection = styled.div`
 `;
 
 ColumnLayoutStyled.RightSection = styled.div`
-  @media(min-width: 768px) {
+  @media(min-width: 1025px) {
     width: 25%;
     display: inline-block;
     vertical-align: top;

@@ -218,6 +218,20 @@ export default class RequestVideoRecorder extends React.Component {
     if (this.props.videoUploader.savedFile && this.state.play) {
       return (
         <VideoRecorderDiv.ControlWrapper>
+          {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
+          <VideoRecorderDiv.Wrapper>
+            <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
+              Booking Details
+            </VideoRecorderDiv.VideoHeading>
+          </VideoRecorderDiv.Wrapper>
+          {
+            this.state.showBookingDetails &&
+              <VideoRecorderDiv.BookingDetailsWrapper>
+                <Scrollbars>
+                  {this.props.overlayData()}
+                </Scrollbars>
+              </VideoRecorderDiv.BookingDetailsWrapper>
+          }
           <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
@@ -233,6 +247,20 @@ export default class RequestVideoRecorder extends React.Component {
     if (this.props.videoUploader.url) {
       return (
         <VideoRecorderDiv.ControlWrapper>
+          {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
+          <VideoRecorderDiv.Wrapper>
+            <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
+              Booking Details
+            </VideoRecorderDiv.VideoHeading>
+          </VideoRecorderDiv.Wrapper>
+          {
+            this.state.showBookingDetails &&
+              <VideoRecorderDiv.BookingDetailsWrapper>
+                <Scrollbars>
+                  {this.props.overlayData()}
+                </Scrollbars>
+              </VideoRecorderDiv.BookingDetailsWrapper>
+          }
           <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }} src={this.props.videoUploader.url} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
@@ -248,6 +276,20 @@ export default class RequestVideoRecorder extends React.Component {
     if (this.props.src && !this.state.play) {
       return (
         <VideoRecorderDiv.ControlWrapper>
+          {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
+          <VideoRecorderDiv.Wrapper>
+            <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
+              Booking Details
+            </VideoRecorderDiv.VideoHeading>
+          </VideoRecorderDiv.Wrapper>
+          {
+            this.state.showBookingDetails &&
+              <VideoRecorderDiv.BookingDetailsWrapper>
+                <Scrollbars>
+                  {this.props.overlayData()}
+                </Scrollbars>
+              </VideoRecorderDiv.BookingDetailsWrapper>
+          }
           <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }} src={this.props.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
@@ -323,6 +365,20 @@ export default class RequestVideoRecorder extends React.Component {
     if (this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
+          {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
+          <VideoRecorderDiv.Wrapper>
+            <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
+              Booking Details
+            </VideoRecorderDiv.VideoHeading>
+          </VideoRecorderDiv.Wrapper>
+          {
+            this.state.showBookingDetails &&
+              <VideoRecorderDiv.BookingDetailsWrapper>
+                <Scrollbars>
+                  {this.props.overlayData()}
+                </Scrollbars>
+              </VideoRecorderDiv.BookingDetailsWrapper>
+          }
           <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>

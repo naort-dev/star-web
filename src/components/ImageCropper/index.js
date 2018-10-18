@@ -139,6 +139,7 @@ export default class ImageCropper extends React.Component {
   render() {
     return (
       <Popup
+        disableBackground
         closePopUp={() => this.props.closeCropper()}
       >
         <CropperStyled innerRef={(node) => {this.cropperWrapper = node}}>
@@ -152,7 +153,10 @@ export default class ImageCropper extends React.Component {
                 onChange={this.onCropChange}
               />
           }
-          <CropperStyled.CropperButton onClick={this.handleCrop}>Crop</CropperStyled.CropperButton>
+          <CropperStyled.ButtonWrapper>
+            <CropperStyled.CropperButton onClick={this.handleCrop}>Select</CropperStyled.CropperButton>
+            <CropperStyled.CropperButton onClick={this.props.closeCropper}>Cancel</CropperStyled.CropperButton>
+          </CropperStyled.ButtonWrapper>
         </CropperStyled>
       </Popup>
     )

@@ -6,7 +6,7 @@ const ReferralStyled = styled.div`
 
 ReferralStyled.Heading = styled.span`
   display: block;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 25px;
   text-align: center;
   color: #FF6C58;
@@ -25,7 +25,7 @@ ReferralStyled.RequestReferral = styled.button`
   margin: 0 auto;
   font-size: 14px;
   max-width: 300px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline: none;
   cursor: pointer;
   border-radius: 19px;
@@ -35,14 +35,14 @@ ReferralStyled.RequestReferral = styled.button`
 
 ReferralStyled.Link = styled.a`
   color: #FF6C58;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-family: 14px;
 `;
 
 ReferralStyled.ReferralStatus = styled.span`
   display: block;
   padding: 20px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 16px;
   color: rgba(51,51,51,0.72);
   line-height: 27px;
@@ -58,7 +58,7 @@ ReferralStyled.ReferralDetailsWrapper = styled.div`
 ReferralStyled.ReferralDetailsHeading = styled.span`
   font-size: 21px;
   display: block;
-  font-family: Ubuntu-Light;
+  font-family: Avenir-Light;
 `;
 
 ReferralStyled.ReferralCode = styled.span`
@@ -67,7 +67,7 @@ ReferralStyled.ReferralCode = styled.span`
   color: #FF6C58;
   margin-top: 10px;
   margin-bottom: 17px;
-  font-family: Ubuntu-Medium;
+  font-family: Avenir-Medium;
 `;
 
 ReferralStyled.CopyReferral = styled.span`
@@ -110,7 +110,7 @@ ReferralStyled.referButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline: none;
   cursor: pointer;
   border-radius: 19px;

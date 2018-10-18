@@ -4,9 +4,30 @@ const GroupStyled = styled.div`
   height: 100%;
 `;
 
+GroupStyled.BackButton = styled.span`
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  background-image: url(assets/images/icon_back_40a.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 15px;
+  background-size: 26px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+`;
+
+GroupStyled.StepWrapper = styled.div`
+  width: calc(100% - 0px);
+  height: calc(100% - 0px);
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
+
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
-  height: 97%;
+  height: 96%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -28,26 +49,26 @@ GroupStyled.SubHeading = styled.span`
   display: block;
   font-size: 18px;
   color: #FF6C58;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
 `;
 
 GroupStyled.SubHeadingDescription = styled.span`
   display: block;
-  font-size: 17px;
+  font-size: 14px;
   margin-top: 5px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
 `;
 
 GroupStyled.InnerHeading = GroupStyled.SubHeadingDescription.extend`
   color: #7B797A;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
 `;
 
 GroupStyled.InnerDescription = styled.span`
   display: block;
   font-size: 14px;
   margin-top: 5px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
 `;
 
 GroupStyled.Select = styled.select`
@@ -68,7 +89,7 @@ GroupStyled.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #333333;
   font-size:14px;
   text-align:left;
@@ -112,7 +133,7 @@ GroupStyled.InputWrapper = styled.div`
 
 GroupStyled.Label = styled.div`
   color:#797979;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:13px;
   text-align:left;
   padding:10px 0;
@@ -129,6 +150,7 @@ GroupStyled.Label = styled.div`
 
 GroupStyled.WrapsInput = styled.div`
   width:100%;
+  position: relative;
   .Select-multi-value-wrapper {
     padding: 9px;
     @media(min-width: 1025px) {
@@ -152,11 +174,14 @@ GroupStyled.CustomPlaceholder = styled.span`
   position: absolute;
   left: 10px;
   right: 0;
-  top: 10px;
-  font-family: 'Ubuntu-Regular';
+  top: 16px;
+  font-family: 'Avenir-Regular';
   color: #6d6d6d;
   font-size: 14px;
   pointer-events: ${props => (props.activePlaceHolder ? 'auto' : 'none')};
+  @media(min-width: 768px) {
+    top: 11.5px;
+  }
 `;
 
 GroupStyled.HighlightText = styled.span`
@@ -165,7 +190,7 @@ GroupStyled.HighlightText = styled.span`
 `;
 
 GroupStyled.InputArea = styled.textarea`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #333333;
   font-size: 14px;
   text-align:left;
@@ -228,11 +253,15 @@ GroupStyled.NumberInput = GroupStyled.InputArea.extend`
 
 `.withComponent('input');
 
+GroupStyled.PriceInput = GroupStyled.NumberInput.extend`
+  padding-left: 18px;
+`;
+
 GroupStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 12px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   ${props => !props.isError && ({
     color: 'grey',
@@ -290,12 +319,12 @@ GroupStyled.ControlWrapper = styled.div`
   @media(min-width: 1025px) {
     box-shadow: none;
     padding: 26px 0;
-    border-top: ${props => (props.multiple ? 'none' : '1px solid rgb(34, 34, 34)')};
+    border-top: ${props => (props.multiple ? 'none' : '1px solid #EBEBEB')};
   }
 `;
 
 GroupStyled.SkipStep = styled.span`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   padding: 10px 0;
   color: #969696;
   cursor: pointer;
@@ -307,7 +336,7 @@ GroupStyled.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-family: Avenir-Bold;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
@@ -329,7 +358,7 @@ GroupStyled.GroupName = styled.span`
   display: block;
   padding: 20px;
   height: 50%;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 16px;
   @media(min-width: 768px) {
     padding: 30px;
@@ -388,6 +417,7 @@ GroupStyled.ProfileInputContainer = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   pointer-events: none;
 `;
 
@@ -398,6 +428,12 @@ GroupStyled.ProfileInputWrapper = styled.span`
   display: block;
   margin: 0 auto;
   background-size: contain;
+`;
+
+GroupStyled.UploadText = styled.span`
+  color: #FF6C58;
+  font-family: 'Avenir-Light';
+  font-size: 14px;
 `;
 
 GroupStyled.ProfileInputButton = styled.div`
@@ -431,7 +467,7 @@ GroupStyled.ProfileImage = styled.span`
 `;
 
 GroupStyled.Professions = styled.span`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   margin-top: 5px;
   display: inline-block;
   &::after {
@@ -446,7 +482,7 @@ GroupStyled.Professions = styled.span`
 `;
 
 GroupStyled.ConfirmationWrapper = styled.div`
-  font-family: Ubuntu-Light;
+  font-family: Avenir-Light;
   margin-top: 40px;
   padding-left: 40px;
   color: #565656;
@@ -533,7 +569,7 @@ GroupStyled.ActionButton = styled.button`
   display: inline-block;
   cursor: pointer;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;
@@ -546,7 +582,7 @@ GroupStyled.SuccessText = styled.p`
   font-size: 18px;
   margin-top: 5%;
   color:rgba(51, 51, 51, 1);
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   margin-bottom: 5%;
   text-align: left;
   width: 100%;
@@ -555,7 +591,7 @@ GroupStyled.SuccessText = styled.p`
  GroupStyled.SuccessTextBold = styled.p`
  font-size: 18px;
  margin-top: 5%;
- font-family: 'Ubuntu-Bold';
+ font-family: 'Avenir-Bold';
  margin-bottom: 5%;
  text-align: left;
  width: 100%;

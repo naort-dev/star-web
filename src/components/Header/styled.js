@@ -135,7 +135,7 @@ HeaderSection.ProfileDropdownItem = styled.li`
   }
 `;
 HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   cursor: auto;
   border-bottom: none;
   &:hover {
@@ -210,7 +210,7 @@ HeaderSection.AutoSuggest = styled.div`
   }
 `;
 HeaderSection.SuggestionListWrapper = styled.div`
-  font-family: Ubuntu-Light;
+  font-family: Avenir-Light;
   position: fixed;
   top: 60px;
   left: 0;
@@ -278,7 +278,7 @@ HeaderSection.SuggestionListContent = styled.span`
 HeaderSection.SuggestionDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   line-height: 18px;
   @media(min-width: 768px) {
     font-size: 14px;
@@ -334,7 +334,7 @@ HeaderSection.Input = styled.input`
   width: calc(100% - 28px);
   outline:none;
   height: 100%;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 16px;
   border: none;
   border-radius: 5px;
@@ -359,7 +359,7 @@ HeaderSection.SignIn = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 13px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   display: inline-block;
   border: none;
   outline:none;
@@ -384,7 +384,7 @@ HeaderSection.Join = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 13px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius:5px;
   cursor: pointer;
