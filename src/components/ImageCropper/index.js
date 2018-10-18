@@ -139,6 +139,7 @@ export default class ImageCropper extends React.Component {
   render() {
     return (
       <Popup
+        disableBackground
         closePopUp={() => this.props.closeCropper()}
       >
         <CropperStyled innerRef={(node) => {this.cropperWrapper = node}}>

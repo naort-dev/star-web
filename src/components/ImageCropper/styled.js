@@ -22,21 +22,24 @@ CropperStyled.ButtonWrapper = styled.div`
 `;
 
 CropperStyled.CropperButton = styled.div`
-  background-color: white;
-  margin-top: 10px;
-  color: #FF6C58;
-  padding: 4px 30px;
+  background-color: #FF6C58;
+  color: rgb(255,255,255);
   text-align: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
-  outline: none;
+  font-family: Ubuntu-Bold;
   cursor: pointer;
+  padding: 7px 30px;
+  text-decoration: none;
+  outline: none;
   border-radius: 5px;
   border: 2px solid #FF6C58;
+  border-image: initial;
   margin-right: 20px;
+  margin-top: 10px;
+  &:hover {
+    background-color: #FF3B21;
+  }
 `;
 
 export default CropperStyled

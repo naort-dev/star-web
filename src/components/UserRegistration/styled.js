@@ -4,19 +4,36 @@ const GroupStyled = styled.div`
   height: 100%;
 `;
 
+GroupStyled.BackButton = styled.span`
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  background-image: url(assets/images/icon_back_40a.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 15px;
+  background-size: 26px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+`;
+
+GroupStyled.StepWrapper = styled.div`
+  width: calc(100% - 0px);
+  height: calc(100% - 0px);
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
+
 GroupStyled.ContentWrapper = styled.div`
   padding: 0 10px;
-  height: 97%;
+  height: 96%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
   @media(min-width: 768px) {
     padding: 0 60px;
   }
-`;
-
-GroupStyled.ProfileUploadWrapper = GroupStyled.ContentWrapper.extend`
-  height: 96%;
 `;
 
 GroupStyled.HeadingWrapper = styled.div`

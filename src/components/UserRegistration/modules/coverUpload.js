@@ -26,6 +26,15 @@ export default class CoverUpload extends React.Component {
     this.setImageSize();
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setImageSize();
+    if (nextProps.visible && this.props.visible !=  nextProps.visible) {
+      setTimeout(() => {
+        this.setImageSize();
+      }, 0)
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.setImageSize);
   }

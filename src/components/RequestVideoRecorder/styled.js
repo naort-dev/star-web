@@ -421,7 +421,7 @@ VideoRecorderDiv.RecordInfoButton = styled.div`
 `;
 
 VideoRecorderDiv.VideoHeading = styled.div`
-  font-family: 'Ubuntu-bold';
+  font-family: 'Ubuntu-Light';
   color: ${props => (props.selected ? '#333333' : '#fff')};
   font-size: 18px;
   z-index: 1;

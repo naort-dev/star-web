@@ -37,7 +37,7 @@ VideoRenderDiv.RequestTime = styled.span`
   position: absolute;
   bottom: 8px;
   font-size: 12px;
-  left: 14px;
+  left: 22px;
   color: #f78a83;
 `;
 

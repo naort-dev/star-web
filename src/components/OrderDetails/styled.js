@@ -255,6 +255,7 @@ OrderStyled.ProfileDetails = styled.div`
   span {
     color: #FF6C58;
     text-transform: uppercase;
+    font-family: 'Ubuntu-Bold';
   }
 `;
 OrderStyled.DetailsWrapper = styled.ul`

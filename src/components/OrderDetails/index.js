@@ -67,7 +67,7 @@ export default class OrderDetails extends React.Component {
             <OrderDetailsItem overlay={isOverlay} title="From"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
             />
-            <OrderDetailsItem overlay={isOverlay} title={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s`} value={props.relationShip} />
+            <OrderDetailsItem overlay={isOverlay} title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${props.relationShip}`} />
             {
               this.getOccasionDetails(props.orderDetails.occasion_type, isOverlay)
             }
@@ -247,10 +247,13 @@ export default class OrderDetails extends React.Component {
     const { props } = this;
     return (
       <React.Fragment>
-        <OrderStyled.DetailsItem overlay={isOverlay}>
-          <OrderStyled.DetailsTitle overlay={isOverlay}>Requested</OrderStyled.DetailsTitle>
-          <OrderStyled.DetailsValue overlay={isOverlay}>{props.createdDate}</OrderStyled.DetailsValue>
-        </OrderStyled.DetailsItem>
+        {
+          !props.starMode &&
+            <OrderStyled.DetailsItem overlay={isOverlay}>
+              <OrderStyled.DetailsTitle overlay={isOverlay}>Requested</OrderStyled.DetailsTitle>
+              <OrderStyled.DetailsValue overlay={isOverlay}>{props.createdDate}</OrderStyled.DetailsValue>
+            </OrderStyled.DetailsItem>
+        }
         {
           this.getEventDetails(props.orderDetails.request_type, isOverlay)
         }
@@ -260,10 +263,13 @@ export default class OrderDetails extends React.Component {
             <OrderDetailsItem overlay={isOverlay} title="Decline Reason" value={props.orderDetails.comment} />
             : null
         }
-        <OrderStyled.DetailsItem overlay={isOverlay}>
-          <OrderStyled.DetailsTitle overlay={isOverlay}>Booking Price</OrderStyled.DetailsTitle>
-          <OrderStyled.DetailsValue overlay={isOverlay}>${props.price}</OrderStyled.DetailsValue>
-        </OrderStyled.DetailsItem>
+        {
+          !props.starMode &&
+            <OrderStyled.DetailsItem overlay={isOverlay}>
+              <OrderStyled.DetailsTitle overlay={isOverlay}>Booking Price</OrderStyled.DetailsTitle>
+              <OrderStyled.DetailsValue overlay={isOverlay}>${props.price}</OrderStyled.DetailsValue>
+            </OrderStyled.DetailsItem>
+        }
         {
           !props.starMode &&
             <OrderStyled.DetailsItem overlay={isOverlay}>

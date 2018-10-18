@@ -87,38 +87,38 @@ class GroupRegistrationComponent extends React.Component {
   render() {
     return (
       <GroupStyled>
+        {
+          this.props.currentStep >= 3 &&
+            <GroupStyled.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+        }
         <Scrollbars
           ref={node => {this.scrollRef = node;}}
           autoHide={false}
         >
           <GroupStyled.ContentWrapper>
-            {
-              this.props.currentStep === 2 && (
-                <DetailsEntry
-                  groupTypes={this.props.groupTypes}
-                  submitGroupDetails={this.submitGroupAccountDetails}
-                />
-            )}
-            {
-              this.props.currentStep === 3 && (
-                <ProfileUpload
-                  onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
-                />
-              )
-            }
-            {
-              this.props.currentStep === 4 && (
-                <CoverUpload
-                  profileImage={this.state.profileImage.image}
-                  featuredRatio={imageSizes.groupCover}
-                  scrollRef={this.scrollRef}
-                  secondaryRatio={imageSizes.groupCover}
-                  groupName={this.props.userDetails.first_name}
-                  onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                  onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
-                />
-              )
-            }
+            <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
+              <DetailsEntry
+                groupTypes={this.props.groupTypes}
+                submitGroupDetails={this.submitGroupAccountDetails}
+              />
+            </GroupStyled.StepWrapper>
+            <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
+              <ProfileUpload
+                onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+              />
+            </GroupStyled.StepWrapper>
+            <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
+              <CoverUpload
+                visible={this.props.currentStep === 4}
+                profileImage={this.state.profileImage.image}
+                featuredRatio={imageSizes.groupCover}
+                scrollRef={this.scrollRef}
+                secondaryRatio={imageSizes.groupCover}
+                groupName={this.props.userDetails.first_name}
+                onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
+                onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
+              />
+            </GroupStyled.StepWrapper>
             {
               this.props.currentStep === 5 && (
                 <React.Fragment>
