@@ -27,7 +27,7 @@ ReferralListItem.referralListName = styled.span`
 ReferralListItem.referralDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   line-height: 18px;
   margin-top: 3px;
   @media(min-width: 768px) {

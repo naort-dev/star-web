@@ -74,7 +74,7 @@ VideoRecorderDiv.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/video-recorder.svg');
@@ -83,9 +83,10 @@ VideoRecorderDiv.Button = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  margin-right: 30px;
   @media(min-width:768px){
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     background-size: 20px;
   }
   @media(min-width: 1920px) {
@@ -94,22 +95,23 @@ VideoRecorderDiv.Button = styled.button`
     background-size: 50px;
   };
   ${props => props.stop && ({
-    backgroundColor: 'red',
-  })
-  }
+    backgroundColor: '#FF0000',
+    marginRight: 0,
+  })}
 `;
 
 VideoRecorderDiv.RerecordButton = styled.button`
   margin: 10px 20px;
-  background-color: red; 
+  background-color: #FF0000; 
   color: #FF6C58;
   height: 50px;
   width: 50px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
+  position: relative;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/close-white.svg');
@@ -118,9 +120,22 @@ VideoRecorderDiv.RerecordButton = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  &:hover {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: block;
+      background: rgba(0,0,0,0.1);
+      border-radius: 50%;
+    }
+  }
   @media(min-width:768px){
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     background-size: 20px;
   }
   @media(min-width: 1920px) {
@@ -139,7 +154,7 @@ VideoRecorderDiv.ControlButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-size: 20px;
@@ -174,7 +189,8 @@ VideoRecorderDiv.SubmitButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  position: relative;
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/checked-white.svg');
@@ -183,9 +199,22 @@ VideoRecorderDiv.SubmitButton = styled.button`
   background-position: center;
   border: none;
   cursor: pointer;
+  &:hover {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: block;
+      background: rgba(0,0,0,0.1);
+      border-radius: 50%;
+    }
+  }
   @media(min-width:768px){
-    height: 50px;
-    width: 50px;
+    height: 60px;
+    width: 60px;
     background-size: 20px;
   }
   @media(min-width: 1920px) {
@@ -213,7 +242,7 @@ VideoRecorderDiv.NoVideoContainer = styled.div`
   `;
 
 VideoRecorderDiv.NoVideoText = styled.div`
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 font-size: 25px;
 margin-top: 50%;
 text-align: center;
@@ -235,35 +264,29 @@ VideoRecorderDiv.NoVideoButton = styled.button`
 margin: 10px 0px;
 height: 50px;
 width: 50px;
-background-color: #fff; 
+background-color: #000;
 color: #FF6C58;
 text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 border-radius: 100%;
-border: 1px solid #FF6C58;
-background-image: url('../../assets/images/upload.svg');
-background-size: 30px;
+background-image: url('../../assets/images/upload.png');
+background-size: 100% 100%;
 background-repeat: no-repeat;
-background-position: center;
 border: none;
-cursor: pointer,
-@media(min-width:768px){
-  height: 50px;
-  width: 50px;
-  background-size: 20px;
+cursor: pointer;
+@media(min-width: 768px){
+  height: 60px;
+  width: 60px;
 }
 @media(min-width: 1920px) {
   height: 100px;
   width: 100px;
-  background-size: 50px;
 }
-
 `;
-
 
 VideoRecorderDiv.UploadWrapper = styled.div`
     position: relative;
@@ -273,20 +296,16 @@ VideoRecorderDiv.UploadWrapper = styled.div`
   }
 `;
 
-
-
 VideoRecorderDiv.UploadInput = styled.input`
-    font-size: 100px;
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    cursor: pointer;
-    width: 100%;
-    height: 100%;
-    margin-top: 10px;
-
-  `;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  cursor: pointer;
+  width: 100%;
+  height: 100%;
+  margin-top: 10px;
+`;
 
 VideoRecorderDiv.LoaderWrapper = styled.div`
     position: fixed;
@@ -302,7 +321,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFF;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
     padding: 0 10px;
     text-align: center;
     width: 100%;
@@ -338,13 +357,13 @@ VideoRecorderDiv.IndicationText = styled.div`
   position: absolute;
   top: 5%;
   right: 20px;
-  color: red;
+  color: #FF0000;
 `;
 
 VideoRecorderDiv.StopRecorderText = styled.div`
   font-size: 18px;
   color: #FF6C58;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   text-align: center;
 `;
 
@@ -391,7 +410,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   `
 
   VideoRecorderDiv.VideoHeading = styled.div`
-  font-family: 'Ubuntu-bold';
+  font-family: 'Avenir-bold';
   color: #fff;
   font-size: 24px;
   height: 35%;
@@ -399,7 +418,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
 
   
   VideoRecorderDiv.UploadHeading = styled.div`
-  font-family: 'Ubuntu-bold';
+  font-family: 'Avenir-bold';
   color: #fff;
   font-size: 24px;
   height: 35%;

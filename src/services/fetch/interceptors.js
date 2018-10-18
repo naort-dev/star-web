@@ -3,7 +3,7 @@ export function onRequest(config) {
   const token = JSON.parse(localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')).user.authentication_token;
 
   if (token && !customConfig.headers.Authorization) {
-    customConfig.headers.Authorization = `Token ${token}`;
+    customConfig.headers.Authorization = `token ${token}`;
   }
   return config;
 }

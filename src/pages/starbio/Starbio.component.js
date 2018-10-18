@@ -1252,12 +1252,11 @@ export default class Starbio extends React.Component {
                                       otherOptions={{
                                         clearable: false,
                                         arrowRenderer: null,
-                                        valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                                        valueComponent: selectProps => this.renderMultiValueItems(selectProps),
                                       }}
-                                      industry={this.state.industry}
-                                      value={this.state.profession}
-                                      profession={this.state.profession.join(',')}
-                                      handleFieldChange={this.handleFieldChange.bind(this)}
+                                      dataValues={this.state.industry}
+                                      value={this.state.profession.join(',')}
+                                      handleFieldChange={value => this.handleFieldChange('profession', value)}
                                     />
                                     <LoginContainer.ErrorMsg isError={this.state.errors.profession}>
                                       {
@@ -1278,6 +1277,7 @@ export default class Starbio extends React.Component {
                                         clearable: false,
                                         arrowRenderer: null,
                                         valueComponent: (selectProps) => this.renderMultiValueItems(selectProps),
+                                        placeholder: 'Select your industry',
                                       }}
                                       searchTags={this.state.searchTags}
                                       value={this.state.searchTags}

@@ -22,7 +22,7 @@ class checkout extends React.Component {
       base: {
         fontSize: '13px',
         color: '#333333',
-        fontFamily: '"Ubuntu-Regular"',
+        fontFamily: '"Avenir-Regular"',
         '::placeholder': {
           color: '#333333',
         },

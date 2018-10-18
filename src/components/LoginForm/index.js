@@ -427,9 +427,9 @@ export default class LoginForm extends React.Component {
                               onChange={this.acceptPasswordHandler}
                               onBlur={this.checkPassword}
                             />
-                            <LoginContainer.ShowPassword
+                            {/* <LoginContainer.ShowPassword
                               onClick={this.ShowPassword}
-                            />
+                            /> */}
                           </LoginContainer.PasswordWrapper>
 
                           <LoginContainer.ErrorMsg>

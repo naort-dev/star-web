@@ -16,7 +16,7 @@ const PopupStyled = styled.div`
   right: 0;
   left: 0;
   padding-top: ${props => (props.smallPopup ? 0 : '46px')};
-  background-color: rgba(0,0,0,.6);
+  background-color: ${props => (props.disableBackground ? '#000' : 'rgba(0,0,0,.6)')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -68,7 +68,7 @@ PopupStyled.SmallContent = styled.div`
 
 PopupStyled.CloseButton = styled.span`
   position: absolute;
-  top: ${props => (props.smallPopup ? '10px' : '16px')};
+  top: ${props => (props.smallPopup ? '6px' : '16px')};
   right: ${props => (props.smallPopup ? '7px' : '18px')};
   display: inline-block;
   width: ${props => (props.smallPopup ? '17px' : '30px')};

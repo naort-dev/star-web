@@ -1,16 +1,16 @@
 @font-face {
-    font-family: 'Ubuntu-Regular';
-    src: url("/assets/fonts/Ubuntu/Ubuntu-Regular.ttf") format("truetype");
+    font-family: 'Avenir-Regular';
+    src: url("/assets/fonts/Avenir/Avenir-Regular.ttf") format("truetype");
 }
 @font-face {
-    font-family: 'Ubuntu-Light';
-    src: url("/assets/fonts/Ubuntu/Ubuntu-Light.ttf") format("truetype");
+    font-family: 'Avenir-Light';
+    src: url("/assets/fonts/Avenir/Avenir-Light.ttf") format("truetype");
 }
 @font-face {
-    font-family: 'Ubuntu-Bold';
-    src: url("/assets/fonts/Ubuntu/Ubuntu-Bold.ttf") format("truetype");
+    font-family: 'Avenir-Bold';
+    src: url("/assets/fonts/Avenir/Avenir-Bold.ttf") format("truetype");
 }
 @font-face {
-    font-family: 'Ubuntu-Medium';
-    src: url("/assets/fonts/Ubuntu/Ubuntu-Medium.ttf") format("truetype");
+    font-family: 'Avenir-Medium';
+    src: url("/assets/fonts/Avenir/Avenir-Medium.ttf") format("truetype");
 }

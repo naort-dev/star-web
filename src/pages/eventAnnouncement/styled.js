@@ -161,7 +161,7 @@ Request.AboutDetailContent = styled.p`
   line-height: 22px;
   font-size: 14px;
   color: rgba(51, 51, 51, 0.72);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
 `;
 Request.ImageRenderDiv = styled.div`
 
@@ -231,12 +231,12 @@ Request.Span = styled.span`
 Request.StarName = styled.h4`
   font-size: 18px;
   color: #FF6C58;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
 `;
 Request.StarRequests = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   margin-top: 8px;
   @media(min-width: 768px) {
     font-size: 14px;
@@ -256,7 +256,7 @@ Request.PopupContainer = styled.div`
 `;
 Request.PopupContent = styled.div`
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   color: #FF6C58;
   
 `;
@@ -320,7 +320,7 @@ HeaderSection.HeaderNavigation = styled.button`
   outline:none;
 `;
 HeaderSection.MiddleDiv = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size : 16px;
   @media(min-width:1920px){
     font-size:16px;
@@ -335,7 +335,7 @@ HeaderSection.RightDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   display: inline-block;
   font-size: 12px;
   border: none;
@@ -385,7 +385,7 @@ Request.HeaderText = styled.div`
   text-align:center;
   color:#FF6C58;
   font-size:20px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   @media(min-width:768px){
     font-size:32px;
   }
@@ -415,7 +415,7 @@ Request.Button = styled.button`
   border: 3px solid rgba(51, 51, 51, 0.72); 
   border-radius:19px;
   font-size:16px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   box-shadow: -2px 6px 8px rgba(0, 0, 0, 0.12);
   margin-bottom:25px;
   outline:none;
@@ -453,7 +453,7 @@ Request.Questionwraps = styled.div`
 
 `;
 Request.Heading = styled.div`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 20px;
   text-align: center;
   color: #333333;
@@ -473,7 +473,7 @@ Request.InputQuestion = styled.textarea`
   background-color: white;
   border: 2px solid rgba(51, 51, 51, 1);
   font-size:16px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   width:100%;
   padding:6px 9px;
   height:120px;
@@ -493,7 +493,7 @@ Request.QuestionButton = styled.button`
   height:40px;
   font-size:20px;
   max-width:500px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   color:rgba(255, 108, 88, 1);
   text-align:center;
   border: 3px solid rgba(255, 108, 88, 1);
@@ -541,7 +541,7 @@ Request.WrapsInput = styled.div`
 `;
 Request.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size:14px;
   text-align:left;
   padding-bottom:10px;
@@ -559,7 +559,7 @@ Request.Label = styled.div`
 
 `;
 Request.Input = styled.input`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #333333;
   font-size:14px;
   text-align:left;
@@ -587,7 +587,7 @@ Request.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   
 `;
@@ -609,7 +609,7 @@ Request.Select = styled.select`
   background-size: 16px;
   padding-right: 40px;
   background-color: #fff;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #333333;
   font-size:14px;
   text-align:left;
@@ -665,7 +665,7 @@ Request.ContinueButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 16px;
-  font-family: Ubuntu-Medium;
+  font-family: Avenir-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;

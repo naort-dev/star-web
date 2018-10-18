@@ -33,7 +33,7 @@ export default class Popup extends React.Component {
   }
   render() {
     return (
-      <PopupStyled smallPopup={this.props.smallPopup} innerRef={node => this.popupWrapper = node}>
+      <PopupStyled disableBackground={this.props.disableBackground} smallPopup={this.props.smallPopup} innerRef={node => this.popupWrapper = node}>
         {
           this.props.smallPopup ?
             <PopupStyled.SmallContainer

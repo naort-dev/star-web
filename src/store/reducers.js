@@ -7,12 +7,13 @@ import videosList from '../pages/landing/reducers/videosList';
 import celebDetails from '../pages/starProfile/reducers/celebDetails';
 import celebVideos from '../pages/starProfile/reducers/celebVideos';
 import professionsList from './shared/reducers/professionsList';
+import groupTypes from './shared/reducers/groupTypes';
 import suggestionsList from './shared/reducers/suggestionsList';
 import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
 import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
-import myVideosList from '../pages/myVideos/reducers/myVideosList';
+import myVideosList from '../pages/requests/reducers/myVideosList';
 import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
@@ -20,7 +21,7 @@ import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
 import videoRecorder from '../store/shared/reducers/videoRecording';
 import videoUploader from '../store/shared/reducers/videoUploader';
-import requestHandler from '../pages/myVideos/reducers/requestHandler';
+import requestHandler from '../pages/requests/reducers/requestHandler';
 import imageViewer from '../store/shared/reducers/imageViewer';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
 import referralDetails from '../store/shared/reducers/starReferral';
@@ -38,6 +39,7 @@ const appReducer = combineReducers({
   session,
   celebList,
   professionsList,
+  groupTypes,
   filters,
   videosList,
   suggestionsList,

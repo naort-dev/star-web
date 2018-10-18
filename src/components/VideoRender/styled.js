@@ -77,7 +77,7 @@ VideoRenderDiv.Span = styled.span`
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   @media(min-width: 1920px) {
     font-size: 20px;
   }
@@ -85,7 +85,7 @@ VideoRenderDiv.StarName = styled.h4`
 VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   margin-top: 8px;
   @media(min-width: 768px) {
     font-size: 14px;

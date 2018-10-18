@@ -97,7 +97,7 @@ class RequestTemplates extends React.Component {
 
                   </Templates.WrapsInput>
                   {
-                    !getMobileOperatingSystem() && checkMediaRecorderSupport() && (window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1) ?
+                    !getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                     <Templates.WrapsAudioInput>
                       <AudioRecorder key="for" target="for"  {...this.props}/>
                     </Templates.WrapsAudioInput>
@@ -129,7 +129,7 @@ class RequestTemplates extends React.Component {
                     }
                   </Templates.WrapsInput>
 
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                       <Templates.WrapsAudioInput>
                         <AudioRecorder key="from" target="from" {...this.props} />
                     </Templates.WrapsAudioInput>
@@ -226,7 +226,7 @@ class RequestTemplates extends React.Component {
                       null
                     }
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                     <Templates.WrapsAudioInput>
                      <AudioRecorder key="for" target="for" {...this.props}/>
                     </Templates.WrapsAudioInput>
@@ -256,7 +256,7 @@ class RequestTemplates extends React.Component {
                       null
                     }
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                      <Templates.WrapsAudioInput>
                      <AudioRecorder key= "from" target="from" {...this.props} />
                  </Templates.WrapsAudioInput>
@@ -356,7 +356,7 @@ class RequestTemplates extends React.Component {
                       null
                     }
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                      <Templates.WrapsAudioInput>
                      <AudioRecorder key="for" target="for" {...this.props} />
                  </Templates.WrapsAudioInput>
@@ -386,7 +386,7 @@ class RequestTemplates extends React.Component {
                       null
                     }
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                     <Templates.WrapsAudioInput>
                     <AudioRecorder key="from" target="from" {...this.props} />
                 </Templates.WrapsAudioInput>
@@ -496,7 +496,7 @@ class RequestTemplates extends React.Component {
                       null
                     }
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                     <Templates.WrapsAudioInput>
                     <AudioRecorder key="for" target="for" {...this.props} />
                     </Templates.WrapsAudioInput>
@@ -526,7 +526,7 @@ class RequestTemplates extends React.Component {
                       null
                     }
                   </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() ?
+                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
                      <Templates.WrapsAudioInput>
                      <AudioRecorder key="from" target="from" {...this.props} />
                  </Templates.WrapsAudioInput>

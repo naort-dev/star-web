@@ -73,7 +73,7 @@ SignupContainer.Container = styled.div`
   }
 `;
 SignupContainer.Heading = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 20px;
   text-align: center;
   color: #FF6C58;
@@ -91,7 +91,7 @@ SignupContainer.Heading = styled.div`
 `;
 SignupContainer.paragraph = styled.div`
   margin-top:1%;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:16px;
   text-align: center;
   color:rgba(51, 51, 51, 1);
@@ -178,7 +178,7 @@ HeaderSection.RightDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
@@ -220,7 +220,7 @@ FooterSection.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border-radius:5px;
@@ -239,7 +239,7 @@ FooterSection.DisabledButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border-radius:5px;
@@ -252,7 +252,7 @@ FooterSection.DisabledButton = styled.button`
 SignupContainer.VerificationText = styled.h4`
   color: rgba(51, 51, 51, 1);
   padding: 20px 0px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   font-size:16px;
   @media(min-width:768px){
     font-size:18px;

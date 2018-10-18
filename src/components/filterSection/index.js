@@ -151,42 +151,8 @@ export default class FilterSection extends React.Component {
                   </FilterStyled.filterItemWrapper>
                 </FilterStyled.filterSection>
               : null
-                // <FilterStyled.filterSection>
-                //   <FilterStyled.filterHeading>
-                //     Upload Date
-                //   </FilterStyled.filterHeading>
-                //   <FilterStyled.filterItemWrapper>
-                //     <FilterStyled.filterItem
-                //       selected={this.props.selectedVideoDate === 'today' ? true : false}
-                //       onClick={() => this.filterSelection('video_upload_date', 'today')}
-                //     >
-                //       Today
-                //     </FilterStyled.filterItem>
-                //     <FilterStyled.filterItem
-                //       selected={this.props.selectedVideoDate === 'last_7_days' ? true : false}
-                //       onClick={() => this.filterSelection('video_upload_date', 'last_7_days')}
-                //     >
-                //       This Week
-                //     </FilterStyled.filterItem>
-                //     <FilterStyled.filterItem
-                //       selected={this.props.selectedVideoDate === 'this_month' ? true : false}
-                //       onClick={() => this.filterSelection('video_upload_date', 'this_month')}
-                //     >
-                //       This Month
-                //     </FilterStyled.filterItem>
-                //     <FilterStyled.filterItem
-                //       selected={this.props.selectedVideoDate === 'this_year' ? true : false}
-                //       onClick={() => this.filterSelection('video_upload_date', 'this_year')}
-                //     >
-                //       This Year
-                //     </FilterStyled.filterItem>
-                //   </FilterStyled.filterItemWrapper>
-                // </FilterStyled.filterSection>
             }
           </FilterStyled.filterWrapper>
-          {/* <FilterStyled.ApplyButtonWrapper>
-            <FilterStyled.ApplyButton>Apply</FilterStyled.ApplyButton>
-          </FilterStyled.ApplyButtonWrapper> */}
         </Scrollbars>
       </FilterStyled>
     );

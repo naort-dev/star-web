@@ -19,7 +19,7 @@ ForgotPasswordWrap.Logo = styled.img`
 `;
 ForgotPasswordWrap.MailContent = styled.div`
   color: #666666;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
 `;
 
 

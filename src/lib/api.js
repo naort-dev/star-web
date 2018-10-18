@@ -2,6 +2,7 @@ class Api {
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
   static getProfessionsList = 'user/filtered_professions/';
+  static getGroupTypes = 'user/group_types/';
   static getVideosList = 'request/featured_videos/';
   static login = 'user/login/';
   static register = 'user/register/'
@@ -25,6 +26,8 @@ class Api {
   static resetPassword = 'user/resetpassword/';
   static getAWSVideo = 'user/get_signed_url/?key=stargram_videos&file_name=';
   static modifyUserDetails = 'user/user_details';
+  static modifySocialLinks = 'user/social_links/';
+  static updateGroupAccount = 'user/group_account/';
   static updateNotification = 'user/notification_settings/';
   static updatePhoto = 'user/profileimages/';
   static celebrityProfile = 'user/celebrity_profile/';

@@ -98,7 +98,7 @@ FilterStyled.filterSection = styled.li`
 `;
 FilterStyled.filterHeading = styled.span`
   display: block;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   text-align: left;
   padding: 0 10px;
   font-size: 20px;
@@ -114,7 +114,7 @@ FilterStyled.filterTypeList = styled.ul`
   padding-right: 10px;
 `;
 FilterStyled.filterItem = styled.li`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 16px;
   text-align: left;
   cursor: pointer;

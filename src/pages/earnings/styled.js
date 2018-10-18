@@ -72,20 +72,20 @@ EarningStyled.OverviewAmount = styled.span`
   display: block;
   border-bottom: 1px solid #333333;
   font-size: 16px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   padding-bottom: 8px;
 `;
 
 EarningStyled.OverViewText = styled.span`
   display: block;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 14px;
   margin-top: 10px;
 `;
 
 EarningStyled.OverViewSubText = styled.span`
   display: block;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 12px;
   margin-top: 10px;
 `;
@@ -130,7 +130,7 @@ margin-top: 16px;
 
 EarningStyled.OverviewMobileItem = styled.li`
 min-width: 50%;
-font-family: 'Ubuntu-Regular';
+font-family: 'Avenir-Regular';
 font-size: ${props => `${props.size}px`};
 display: flex;
 flex-direction: column;
@@ -143,7 +143,7 @@ margin-bottom: 0.1em;
 EarningStyled.EarningsListStyled = styled.div`
   width: 100%;
   height: 100%;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   font-size: 14px;
   background-color: #FFF;
 `;
@@ -173,7 +173,7 @@ EarningStyled.ListItem = styled.li`
   word-break: break-word;
   padding-right: 20px;
   color: ${props => (props.amount ? '#FF6C58' : '#333333')};
-  font-family: ${props => (props.light ? 'Ubuntu-Light' : 'Ubuntu-Medium')};
+  font-family: ${props => (props.light ? 'Avenir-Light' : 'Avenir-Medium')};
   display: ${props => (props.tabletView || props.desktopView ? 'none' : 'block')};
   @media (min-width: 768px) {
     width: ${props => (props.large ? '20%' : 'calc(60% / 3)')};
@@ -194,7 +194,7 @@ EarningStyled.ListDescription = EarningStyled.ListItem.extend `
 `;
 
 EarningStyled.heading = styled.h1`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 24px;
   margin-top: 20px;
 `;
@@ -205,7 +205,7 @@ EarningStyled.AllEarningsWrapper = styled.div`
 `;
 
 EarningStyled.errorMessage = styled.span`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 14px;
   color: #b5b5b5;
   display: block;
