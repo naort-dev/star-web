@@ -657,7 +657,7 @@ Request.DetailsItem = styled.li`
 `;
 Request.DetailsTitle = styled.span`
   display: table-cell;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   width: 50%;
   font-size:16px;
   @media(min-width:1025px){
