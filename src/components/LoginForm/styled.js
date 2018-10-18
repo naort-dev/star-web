@@ -102,7 +102,7 @@ LoginContainer.SocialMediaMessage = styled.div`
   font-size: 14px;
   text-align: center;
   color: #333333;
-  margin-top:3%;
+  margin-top: 0;
   margin-bottom:5%;
   @media(min-width:768px){
     font-size: 18px;

@@ -162,7 +162,7 @@ export default class SignUp extends React.Component {
         )
         .then(response => {
           if (response != undefined) {
-            if (this.props.signupRole === "star") {
+            if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
               this.props.changeStep(this.props.currentStep + 1);
             }
           }
