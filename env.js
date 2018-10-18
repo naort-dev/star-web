@@ -16,6 +16,7 @@
   instaAuthUrl: 'https://api.instagram.com/oauth/authorize/',
   stripe_api_version: '2017-08-15',
   GOOGLE_TAG_MANAGER_ID: 'GTM-NHBZLQ9',
+  GOOGLE_PLACES_KEY: 'AIzaSyCpIT3xFt_pYXmUt1u7FAFckO6EbYVsQDY',
   };
   window.env = function(key) {
     return config[key] || undefined;
