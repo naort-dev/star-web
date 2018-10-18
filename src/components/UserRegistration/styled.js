@@ -15,6 +15,10 @@ GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
   }
 `;
 
+GroupStyled.ProfileUploadWrapper = GroupStyled.ContentWrapper.extend`
+  height: 96%;
+`;
+
 GroupStyled.HeadingWrapper = styled.div`
   text-align: center;
   margin: 10px 0;
@@ -33,7 +37,7 @@ GroupStyled.SubHeading = styled.span`
 
 GroupStyled.SubHeadingDescription = styled.span`
   display: block;
-  font-size: 17px;
+  font-size: 14px;
   margin-top: 5px;
   font-family: 'Ubuntu-Light';
 `;
@@ -153,11 +157,14 @@ GroupStyled.CustomPlaceholder = styled.span`
   position: absolute;
   left: 10px;
   right: 0;
-  top: 11.5px;
+  top: 16px;
   font-family: 'Ubuntu-Regular';
   color: #6d6d6d;
   font-size: 14px;
   pointer-events: ${props => (props.activePlaceHolder ? 'auto' : 'none')};
+  @media(min-width: 768px) {
+    top: 11.5px;
+  }
 `;
 
 GroupStyled.HighlightText = styled.span`
@@ -393,6 +400,7 @@ GroupStyled.ProfileInputContainer = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   pointer-events: none;
 `;
 
@@ -403,6 +411,12 @@ GroupStyled.ProfileInputWrapper = styled.span`
   display: block;
   margin: 0 auto;
   background-size: contain;
+`;
+
+GroupStyled.UploadText = styled.span`
+  color: #FF6C58;
+  font-family: 'Ubuntu-Light';
+  font-size: 14px;
 `;
 
 GroupStyled.ProfileInputButton = styled.div`

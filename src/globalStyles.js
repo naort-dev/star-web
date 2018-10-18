@@ -174,12 +174,11 @@ injectGlobal`
   font-size: 18px;
   font-family: 'Ubuntu-Regular';
   color: #484848;
-  padding: 25px 25px 0 80px;
+  padding: 10px 25px 0 80px;
   margin: 10px auto;
   cursor: pointer;
   text-align: left;
   z-index: 1;
-
   @media(min-width: 768px) {
     padding: 25px 25px 9px 80px;
   }
@@ -195,10 +194,13 @@ injectGlobal`
   border-radius: 100%;
   height: 25px;
   width: 25px;
-  top: 25px;
+  top: 9px;
   left: 20px;
 	transition: border .25s linear;
-	-webkit-transition: border .25s linear;
+  -webkit-transition: border .25s linear;
+  @media(min-width: 768px) {
+    top: 24px;
+  }
 }
 
 

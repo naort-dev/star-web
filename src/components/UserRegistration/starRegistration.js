@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
+import { fetch } from '../../services/fetch';
 import GroupStyled from './styled';
-import { celebritySignupProfile } from '../../services/userRegistration';
+import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
 import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
@@ -27,6 +28,8 @@ import { logOutUser } from '../../store/shared/actions/login';
 class starRegistrationComponent extends React.Component {
   state = {
     celebrityDetails: null,
+    industryList: [],
+    professionsArray: [],
     featuredImage: {
       fileName: null,
       image: null,
@@ -35,6 +38,20 @@ class starRegistrationComponent extends React.Component {
       fileName: null,
       image: null,
     },
+  }
+
+  componentWillMount() {
+    fetch('user/professions/').then((response) => {
+      let dropDownList = [];
+      response.data.data.professions.map((profObj) => {
+        dropDownList.push({ value: profObj.id, label: profObj.title });
+        profObj.child.map((childObj) => {
+          dropDownList.push({ value: childObj.id, label: childObj.title });
+        });
+      });
+      return dropDownList;
+    })
+      .then(industryItem => this.setState({ industryList: industryItem }))
   }
 
   setProfileImage = (fileName, image) => {
@@ -111,8 +128,13 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
-  submitAccountDetails = (celebrityDetails) => {
-    this.setState({ celebrityDetails });
+  submitAccountDetails = (celebrityDetails, socialLinks) => {
+    const selectedProfessions = celebrityDetails.profession;
+    const professionsArray = this.state.industryList.filter((profession) => {
+      return selectedProfessions.indexOf(profession.value.toString()) > -1;
+    });
+    updateSocialLinks(socialLinks);
+    this.setState({ celebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
   }
 
@@ -129,13 +151,14 @@ class starRegistrationComponent extends React.Component {
             >
               <GroupStyled.ContentWrapper>
                 {
-                  this.props.currentStep === 3 && (
+                  this.props.currentStep === 2 && (
                     <StarDetailsEntry
+                      industryList={this.state.industryList}
                       submitAccountDetails={this.submitAccountDetails}
                     />
                 )}
                 {
-                  this.props.currentStep === 2 && (
+                  this.props.currentStep === 3 && (
                     <ProfileUpload
                       starMode
                       onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
@@ -146,7 +169,7 @@ class starRegistrationComponent extends React.Component {
                   this.props.currentStep === 4 && (
                     <CoverUpload
                       starMode
-                      professionsList={this.props.userDetails.settings_celebrityDetails.profession_details}
+                      professionsList={this.state.professionsArray}
                       scrollRef={this.scrollRef}
                       profileImage={this.state.profileImage.image}
                       featuredRatio={imageSizes.featured}

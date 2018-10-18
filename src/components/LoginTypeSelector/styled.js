@@ -54,7 +54,7 @@ TypeSelectorWrapper.SocialMediaMessage = styled.div`
   text-align: center;
   color: #7B797A;
   margin-top: 5px;
-  margin-bottom:5%;
+  margin-bottom: 5px;
   word-spacing: 3px;
   @media(min-width:768px){
     font-size: 18px;
@@ -193,9 +193,12 @@ TypeSelectorWrapper.HeaderText = styled.div`
   font-size:20px;
   font-family: 'Ubuntu-Bold';
   @media(min-width:768px){
-    font-size:32px;
+    font-size:25px;
   }
-  @media(min-width:1025px){
+  @media(min-width: 1025px){
+    font-size: 27px;
+  }
+  @media(min-width:1920px){
     font-size:38px;
   }
 `;
