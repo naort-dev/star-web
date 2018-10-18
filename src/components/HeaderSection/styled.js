@@ -23,7 +23,7 @@ HeaderSection.RightDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;

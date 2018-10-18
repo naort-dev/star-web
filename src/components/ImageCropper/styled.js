@@ -27,7 +27,7 @@ CropperStyled.CropperButton = styled.div`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Bold;
+  font-family: Avenir-Bold;
   cursor: pointer;
   padding: 7px 30px;
   text-decoration: none;

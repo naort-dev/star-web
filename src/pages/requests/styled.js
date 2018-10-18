@@ -58,14 +58,14 @@ RequestsStyled.SectionHeaderWrapper = styled.div`
 `;
 
 RequestsStyled.SectionHeader = styled.span`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   color: #FF6C58;
   font-size: 18px;
 `;
 
 RequestsStyled.SectionDescription = styled.span`
   display: block;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
 `;
 
 RequestsStyled.loaderWrapper = styled.div`
@@ -73,7 +73,7 @@ RequestsStyled.loaderWrapper = styled.div`
   padding: 20px 16px;
   @media(min-width: 1025px) {
     height: calc(100% - 79px);
-    padding: 0px;
+    padding: 0;
     padding-top: 20px;
     padding-bottom: 20px;
   }
@@ -88,7 +88,7 @@ RequestsStyled.ListWrapper = styled.div`
     height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 133px)')};
   }
   @media(min-width: 1025px) {
-    height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 130px)')};
+    height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 131px)')};
   }
 `;
 

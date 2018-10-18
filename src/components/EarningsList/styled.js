@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const EarningsListStyled = styled.div`
   width: 100%;
   background-color: #FFFFFF;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   font-size: 14px;
 `;
 
@@ -39,7 +39,7 @@ EarningsListStyled.ListItem = styled.li`
   word-break: break-word;
   padding-right: 20px;
   color: ${props => (props.amount ? '#FF6C58' : '#333333')};
-  font-family: ${props => (props.light ? 'Ubuntu-Light' : 'Ubuntu-Medium')};
+  font-family: ${props => (props.light ? 'Avenir-Light' : 'Avenir-Medium')};
   display: ${props => (props.tabletView || props.desktopView ? 'none' : 'block')};
   @media (min-width: 768px) {
     width: ${props => (props.large ? '20%' : 'calc(60% / 3)')};
@@ -84,7 +84,7 @@ EarningsListStyled.ListItemMobile = styled.li`
   word-break: break-word;
   padding-right: 20px;
   color: ${props => (props.light ? '#b5b5b5' : '#3b3b3b')};
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

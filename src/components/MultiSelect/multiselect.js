@@ -125,7 +125,7 @@ injectGlobal`
 .Select-placeholder,
 .Select--single > .Select-control .Select-value {
   bottom: 0;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #7d7d7d;
   font-size: 14px;
   left: 0;

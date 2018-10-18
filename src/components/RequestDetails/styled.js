@@ -100,7 +100,7 @@ VideoRenderDiv.DetailWrapper = styled.div`
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   @media(min-width: 1920px) {
     font-size: 20px;
   }
@@ -116,13 +116,13 @@ VideoRenderDiv.RequestDetails = styled.div`
 `;
 VideoRenderDiv.EventType = styled.span`
   display: block;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 12px;
 `;
 VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   @media(min-width: 768px) {
     font-size: 14px;
   }
@@ -158,7 +158,7 @@ VideoRenderDiv.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Regular;
+  font-family: Avenir-Regular;
   cursor: pointer;
   padding: 10px 25px;
   text-decoration: none;
@@ -179,7 +179,7 @@ VideoRenderDiv.ControlButton = styled.button`
 
 VideoRenderDiv.RequestStatus = styled.span`
   display: block;
-  color: #FF6C58;
+  color: ${props => (props.highLight ? '#FF6C58' : '#9B9B9B')};
   font-size: 18px;
 `;
 

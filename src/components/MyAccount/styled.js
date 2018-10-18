@@ -35,7 +35,7 @@ Accounts.Ask = styled.div`
 `;
 Accounts.PaymentLabel = styled.div`
   color:red;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:16px;
   text-align:left;
   cursor:pointer;
@@ -102,7 +102,7 @@ Accounts.Span = styled.label`
 Accounts.ImageLabel = styled.div`
   display:none;
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size:16px;
   text-align:left;
   padding:10px 0;
@@ -148,7 +148,7 @@ Accounts.PopupWrapper = styled.div`
 
 Accounts.PopupHeader = styled.span`
   font-size: 16px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
 `;
 
 Accounts.InputFieldsWrapper = styled.div`
@@ -178,7 +178,7 @@ Accounts.InputWraps = styled.div`
 `;
 
 Accounts.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
@@ -209,7 +209,7 @@ Accounts.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   
 `;
@@ -218,7 +218,7 @@ Accounts.ApiErrorMsg = styled.div`
 color:red;
 font-size: 11px;
 margin-top: 10px;
-font-family: 'Ubuntu-light';
+font-family: 'Avenir-light';
 text-align: center;
 `;
 
@@ -256,7 +256,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size:14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 cursor: pointer;
 border-radius:5px;

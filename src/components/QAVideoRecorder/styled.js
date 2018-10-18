@@ -74,7 +74,7 @@ VideoRecorderDiv.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/video-recorder.svg');
@@ -111,7 +111,7 @@ VideoRecorderDiv.RerecordButton = styled.button`
   display: inline-block;
   position: relative;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/close-white.svg');
@@ -154,7 +154,7 @@ VideoRecorderDiv.ControlButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-size: 20px;
@@ -190,7 +190,7 @@ VideoRecorderDiv.SubmitButton = styled.button`
   display: inline-block;
   font-size: 14px;
   position: relative;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius: 100%;
   background-image: url('../../assets/images/checked-white.svg');
@@ -242,7 +242,7 @@ VideoRecorderDiv.NoVideoContainer = styled.div`
   `;
 
 VideoRecorderDiv.NoVideoText = styled.div`
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 font-size: 25px;
 margin-top: 50%;
 text-align: center;
@@ -270,7 +270,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 border-radius: 100%;
 background-image: url('../../assets/images/upload.png');
@@ -321,7 +321,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFF;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
     padding: 0 10px;
     text-align: center;
     width: 100%;
@@ -363,7 +363,7 @@ VideoRecorderDiv.IndicationText = styled.div`
 VideoRecorderDiv.StopRecorderText = styled.div`
   font-size: 18px;
   color: #FF6C58;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   text-align: center;
 `;
 
@@ -410,7 +410,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   `
 
   VideoRecorderDiv.VideoHeading = styled.div`
-  font-family: 'Ubuntu-bold';
+  font-family: 'Avenir-bold';
   color: #fff;
   font-size: 24px;
   height: 35%;
@@ -418,7 +418,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
 
   
   VideoRecorderDiv.UploadHeading = styled.div`
-  font-family: 'Ubuntu-bold';
+  font-family: 'Avenir-bold';
   color: #fff;
   font-size: 24px;
   height: 35%;

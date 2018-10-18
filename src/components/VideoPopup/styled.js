@@ -51,7 +51,7 @@ VideoPopupStyled.VideoContent = styled.section`
 VideoPopupStyled.VideoTitle = styled.span`
   display: block;
   font-size: 11px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
 `;
 
 VideoPopupStyled.PopupActions = styled.div`
@@ -89,7 +89,7 @@ VideoPopupStyled.CommentBox = styled.input`
   outline: none;
   border: none;
   height: 100%;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 14px;
   background: transparent;
 `;
@@ -127,7 +127,7 @@ VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
     display: block;
     font-size: 12px;
     text-align: center;
-    font-family: Ubuntu-Light;
+    font-family: Avenir-Light;
   }
 `;
 
@@ -166,7 +166,7 @@ VideoPopupStyled.VideoRequestImage = styled.span`
 VideoPopupStyled.VideoRequestName = styled.span`
   display: inline-block;
   font-size: 16px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   vertical-align: top;
   padding-top: 5px;
   width: calc(100% - 51px);
@@ -282,7 +282,7 @@ VideoPopupStyled.commentItem = styled.li`
 
 VideoPopupStyled.commenterName = styled.span`
   font-size: 14px;
-  font-family: 'Ubuntu-medium';
+  font-family: 'Avenir-medium';
   vertical-align: top;
   display: inline-block;
   background: #F8F8F8;
@@ -294,13 +294,13 @@ VideoPopupStyled.commenterName = styled.span`
 VideoPopupStyled.comment = styled.span`
   font-size: 13px;
   padding-left: 10px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
 `;
 
 VideoPopupStyled.commentDate = styled.span`
   display: block;
   font-size: 11px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   padding-top: 2px;
 `;
 
@@ -313,7 +313,7 @@ VideoPopupStyled.loadMoreComments = styled.button`
   text-decoration: none;
   display: block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline: none;
   cursor: pointer;
   border-radius: 24px;

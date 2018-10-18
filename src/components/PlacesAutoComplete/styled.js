@@ -12,7 +12,7 @@ PlacesStyled.Input = styled.input`
   border: none;
   outline: none;
   padding: 8px 8px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 14px;
   color: #333333;
 `;

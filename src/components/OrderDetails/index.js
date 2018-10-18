@@ -482,72 +482,79 @@ export default class OrderDetails extends React.Component {
       title = props.orderDetails.booking_title;
     }
     return (
-      <RequestFlowPopup
-        dotsCount={0}
-        closePopUp={() => this.props.hideRequest()}
-        smallPopup
-      >
+      <React.Fragment>
         {
-          this.state.recordMode && props.starMode ?
-            this.renderVideoRecorder(props)
-          :
-            <OrderStyled>
+          this.state.showPopup &&
+            <Popup
+              smallPopup
+              closePopUp={this.closePopup}
+            >
               {
-                this.state.showPopup &&
-                  <Popup
-                    smallPopup
-                    closePopUp={this.closePopup}
-                  >
-                    {
-                      this.renderPopup()
-                    }
-                  </Popup>
+                this.renderPopup()
               }
-              <Scrollbars>
-                <OrderStyled.Header>New {props.requestType} request</OrderStyled.Header>
-                <OrderStyled.ProfileImageWrapper>
-                  <OrderStyled.ProfileImage
-                    imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
-                  />
-                  <OrderStyled.ProfileDetailsWrapper>
-                    <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                    <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
-                    <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
-                  </OrderStyled.ProfileDetailsWrapper>
-                </OrderStyled.ProfileImageWrapper>
-                <OrderStyled.ContentWrapper>
-                  <OrderStyled.leftContent>
-                    <OrderStyled.DetailsWrapper>
-                      {
-                        this.renderOrderDetails()
-                      }
-                    </OrderStyled.DetailsWrapper>
-                  </OrderStyled.leftContent>
-                </OrderStyled.ContentWrapper>
-              </Scrollbars>
-              {
-                props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
-                  <OrderStyled.ActionButtonWrapper>
-                    {
-                      props.starMode &&
-                        <OrderStyled.ActionButton onClick={this.handleBooking}>
-                          Respond
-                        </OrderStyled.ActionButton>
-                    }
-                    {
-                      !props.starMode && this.props.orderDetails.editable &&
-                        <OrderStyled.ActionButton onClick={this.modifyBooking}>
-                          Edit request
-                        </OrderStyled.ActionButton>
-                    }
-                    <OrderStyled.ActionButton onClick={props.starMode ? this.modifyBooking : this.handleBooking} secondary>
-                      { props.starMode ? 'Decline Request' : 'Cancel request' }
-                    </OrderStyled.ActionButton>
-                  </OrderStyled.ActionButtonWrapper>
-              }
-            </OrderStyled>
+            </Popup>
         }
-      </RequestFlowPopup>
+        <RequestFlowPopup
+          dotsCount={0}
+          closePopUp={() => this.props.hideRequest()}
+          smallPopup
+        >
+          {
+            this.state.recordMode && props.starMode &&
+              <OrderStyled.BackButton onClick={() => this.setState({ recordMode: false })} />
+          }
+          {
+            this.state.recordMode && props.starMode ?
+              this.renderVideoRecorder(props)
+            :
+              <OrderStyled>
+                <Scrollbars>
+                  <OrderStyled.Header>New {props.requestType} request</OrderStyled.Header>
+                  <OrderStyled.ProfileImageWrapper>
+                    <OrderStyled.ProfileImage
+                      imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
+                    />
+                    <OrderStyled.ProfileDetailsWrapper>
+                      <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+                      <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
+                      <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
+                    </OrderStyled.ProfileDetailsWrapper>
+                  </OrderStyled.ProfileImageWrapper>
+                  <OrderStyled.ContentWrapper>
+                    <OrderStyled.leftContent>
+                      <OrderStyled.DetailsWrapper>
+                        {
+                          this.renderOrderDetails()
+                        }
+                      </OrderStyled.DetailsWrapper>
+                    </OrderStyled.leftContent>
+                  </OrderStyled.ContentWrapper>
+                </Scrollbars>
+                {
+                  props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
+                    <OrderStyled.ActionButtonWrapper>
+                      {
+                        props.starMode &&
+                          <OrderStyled.ActionButton onClick={this.handleBooking}>
+                            Respond
+                          </OrderStyled.ActionButton>
+                      }
+                      {
+                        !props.starMode && this.props.orderDetails.editable &&
+                          <OrderStyled.ActionButton onClick={this.modifyBooking}>
+                            Edit request
+                          </OrderStyled.ActionButton>
+                      }
+                      <OrderStyled.ActionButton onClick={props.starMode ? this.modifyBooking : this.handleBooking} secondary>
+                        { props.starMode ? 'Decline Request' : 'Cancel request' }
+                      </OrderStyled.ActionButton>
+                    </OrderStyled.ActionButtonWrapper>
+                }
+              </OrderStyled>
+          }
+        </RequestFlowPopup>
+      </React.Fragment>
+      
     );
   }
 }

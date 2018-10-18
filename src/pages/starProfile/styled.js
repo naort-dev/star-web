@@ -190,7 +190,7 @@ Detail.VideoContent = styled.section`
 Detail.VideoTitle = styled.span`
   display: block;
   font-size: 20px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   text-align: center;
   @media(min-width: 1025px) {
     font-size: 16px;
@@ -237,7 +237,7 @@ Detail.VideoRequestName = styled.span`
   display: inline-block;
   color: rgba(51, 51, 51, 0.72);
   font-size: 16px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   vertical-align: top;
   padding-top: 22px;
   @media(min-width: 1025px) {
@@ -329,7 +329,7 @@ Detail.AboutDetailContent = styled.p`
   line-height: 22px;
   font-size: 14px;
   color: rgba(51, 51, 51, 0.72);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
 `;
 Detail.ImageRenderDiv = styled.div`
 
@@ -403,12 +403,12 @@ Detail.Span = styled.span`
 Detail.StarName = styled.h4`
   font-size: 18px;
   color: #FF6C58;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
 `;
 Detail.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   margin-top: 8px;
   @media(min-width: 768px) {
     font-size: 14px;
@@ -428,7 +428,7 @@ Detail.PopupContainer = styled.div`
 `;
 Detail.PopupContent = styled.div`
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   color: #FF6C58;
   
 `;
@@ -488,7 +488,7 @@ Detail.PopupButton = styled.button`
   display: inline-block;
   cursor: pointer;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius:5px;
   border: 2px solid #FF6C58;

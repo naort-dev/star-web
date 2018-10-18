@@ -4,7 +4,7 @@ injectGlobal`
   html, body {
     width: 100%;
     padding: 0;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
     color: #333333;
     margin: 0;
     background-color: rgb(248, 248, 248);
@@ -46,7 +46,7 @@ injectGlobal`
   cursor: pointer;
   text-align:left;
   font-size: 14px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -105,7 +105,7 @@ injectGlobal`
     margin-top: 0;
     color: #FF6C58 !important;
     font-weight: normal !important;
-    font-family: 'Ubuntu-Medium';
+    font-family: 'Avenir-Medium';
     font-size: 0.944rem;
   }
   .react-datepicker__day--selected, .react-datepicker__day--in-selecting-range, .react-datepicker__day--in-range {
@@ -123,7 +123,7 @@ injectGlobal`
   }
   .react-datepicker__day-names, .react-datepicker__week {
     white-space: nowrap;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
   }
   
   #checkbox_container #checkmark:after {
@@ -172,7 +172,7 @@ injectGlobal`
   display: block;
   position: relative;
   font-size: 18px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #484848;
   padding: 10px 25px 0 80px;
   margin: 10px auto;
@@ -226,7 +226,7 @@ injectGlobal`
   background: #FF6C58;
 }
 .list .option-content{
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   color: #88898c;
   margin-top: 15px;
   font-size:15px;

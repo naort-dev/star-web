@@ -75,7 +75,7 @@ SidebarStyled.ListWrapper = styled.ul`
 `;
 
 SidebarStyled.ListItem = styled.li`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 16px;
   color: ${props => props.selected && '#FF6C58'};
   background-color: ${props => props.selected && '#F8F8F8'};
@@ -145,7 +145,7 @@ SidebarStyled.SubCategoryListItem = styled.li`
 `;
 
 SidebarStyled.SectionHeading = styled.h3`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 18px;
   color: #333333;
   padding: 10px 0;
@@ -175,7 +175,7 @@ SidebarStyled.ApplyButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border: 2px solid #FF6C58;

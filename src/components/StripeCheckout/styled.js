@@ -16,7 +16,7 @@ PaymentStyled.wrapper = PaymentStyled.withComponent('div').extend`
 
 PaymentStyled.Heading = styled.span`
   display: block;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 20px;
   text-align: center;
   color: #FF6C58;
@@ -42,7 +42,7 @@ PaymentStyled.StarDetailsWrapper = styled.div`
 `;
 
 PaymentStyled.StarNameWrapper = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   line-height: 22px;
 `;
 
@@ -71,17 +71,17 @@ PaymentStyled.RequestDetails = styled.div`
 
 PaymentStyled.SubTitle = styled.span`
   display: block;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
 `;
 
 PaymentStyled.RequestType = styled.span`
   display: block;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
 `;
 
 PaymentStyled.BookingRate = styled.span`
   display: block;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 22px;
   margin-left: 30px;
 `;
@@ -115,7 +115,7 @@ PaymentStyled.ContinueButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Ubuntu-Medium;
+  font-family: Avenir-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;
@@ -191,7 +191,7 @@ PaymentStyled.ElementsWrapper = styled.div`
     max-width: 500px;
     padding: 10px 14px;
     font-size: 1em;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
     background-color: white;
     border-radius: 2px;
     border: 1px solid #d0d2d3;
@@ -237,7 +237,7 @@ PaymentStyled.ErrorElement = styled.span`
   font-size: 11px;
   display: inline-block;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
 `;
 

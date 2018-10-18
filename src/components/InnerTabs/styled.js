@@ -44,7 +44,7 @@ TabStyled.tabListItem = styled.li`
   padding: ${props => (props.disableFilter ? '5px 15px' : '5px 19px')};
   font-size: 16px;
   cursor: pointer;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   border-bottom: ${props => props.selected && '4px solid #FF6C58'}
   color: ${props => props.selected && '#FF6C58'}
   @media(min-width: 768px) {

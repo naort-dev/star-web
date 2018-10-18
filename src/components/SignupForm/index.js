@@ -338,7 +338,12 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <LoginContainer.SocialMediaSignup>
-        <Scrollbars>
+        {
+          <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+        }
+        <Scrollbars
+          renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}
+        >
           <LoginContainer.Container>
             <LoginContainer.Heading>Create your free account</LoginContainer.Heading>
             <LoginContainer.SocialMediaMessage>Already have an account?
@@ -440,7 +445,7 @@ export default class SignUp extends React.Component {
                             onChange={(event) => this.saveFormEntries(event, "password")}
                             onBlur={this.checkPassword}
                           />
-                          <LoginContainer.ShowPassword onClick={this.ShowPassword} />
+                          {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
                         </LoginContainer.PasswordWrapper>
                         <LoginContainer.ErrorMsg>
                           {this.state.password.message}
@@ -457,12 +462,12 @@ export default class SignUp extends React.Component {
                   }
                 </LoginContainer.WrapsInput>
                 <LoginContainer.ButtonWrapper>
-                  <FooterSection.Button type="submit" value="SIGNUP" onClick={this.onRegister} />
+                  <FooterSection.Button type="submit" value="Sign up" onClick={this.onRegister} />
                 </LoginContainer.ButtonWrapper>
                 <LoginContainer.PrivacyContent>
                   By creating an account you agree to Starsona’s
-                  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> <strong> Privacy Policy </strong></LoginContainer.Anchor>
-                  and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"><strong> Terms of Service</strong></LoginContainer.Anchor>
+                  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> Privacy Policy </LoginContainer.Anchor>
+                  and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"> Terms of Use </LoginContainer.Anchor>
                 </LoginContainer.PrivacyContent>
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>

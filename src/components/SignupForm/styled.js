@@ -12,6 +12,22 @@ const LoginContainer = styled.div`
     padding-bottom: 0;
   }
 `;
+
+LoginContainer.BackButton = styled.span`
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  background-image: url(assets/images/icon_back_40a.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 15px;
+  background-size: 26px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+`;
+
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
@@ -93,7 +109,7 @@ LoginContainer.Heading = styled.div`
   text-align: center;
   color: #676767;
   font-size: 20px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   @media(min-width: 768px){
     font-size:32px;
   }
@@ -108,10 +124,10 @@ LoginContainer.ButtonDiv = styled.div`
     width:100%;
 `;
 LoginContainer.SocialMediaMessage = styled.div`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 14px;
   text-align: center;
-  color: #333333;
+  color: #7B797A;
   @media(min-width:768px){
     font-size: 18px;
   }
@@ -212,7 +228,7 @@ LoginContainer.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   @media(min-width:768px){
     
@@ -221,7 +237,7 @@ LoginContainer.ErrorMsg = styled.div`
 `;
 LoginContainer.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size:16px;
   text-align:left;
   @media(min-width:768px){
@@ -240,7 +256,7 @@ LoginContainer.Label = styled.div`
 
 `;
 LoginContainer.SectionHeading = styled.div`
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   font-size: 14px;
   text-align: center;
   color: #737373;
@@ -256,7 +272,7 @@ LoginContainer.SectionHeading = styled.div`
   }
 `;
 LoginContainer.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
@@ -299,12 +315,14 @@ LoginContainer.InputWrapper = styled.div`
 `;
 LoginContainer.PrivacyContent = styled.div`
   text-align:left;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:12px;
   padding: 17px 23px;
   line-height: 18px;
   color: #707070;
   ${LoginContainer.Anchor} {
+    color: #707070;
+    margin: 0 5px;
     text-decoration: underline;
   }
   @media(min-width:768px){
@@ -345,7 +363,7 @@ HeaderSection.LogoImage = styled.img`
   }
 `;
 HeaderSection.MiddleDiv = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size : 13px;
   @media(min-width:1920px){
     font-size:16px;
@@ -360,7 +378,7 @@ HeaderSection.RightDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
@@ -402,7 +420,7 @@ FooterSection.LeftSection = styled.div`
 FooterSection.Agreement = styled.div`
   text-align:left;
   color:rgba(112, 112, 112, 1);
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:12px;
 `;
 FooterSection.RightSection = styled.div`
@@ -421,7 +439,7 @@ FooterSection.Button = styled.input`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border-radius:5px;
@@ -458,7 +476,7 @@ LoginContainer.LoginDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
@@ -502,7 +520,7 @@ LoginContainer.ButtonWrapper = styled.div`
 LoginContainer.SignupLine = styled.div`
  
     display: block;
-    font-family: 'Ubuntu-Medium';
+    font-family: 'Avenir-Medium';
     color:#7c7c7c;
     font-size: 12px;
     margin: 0;
