@@ -68,13 +68,6 @@ class LoginFlow extends React.Component {
                       :
                       null
                     }
-                    {path === '/resetpassword' ?
-                      <ResetPassword {...this.props} />
-                      :
-                      null
-                    }
-
-
                   </LoginContainer.LeftSection>
                 </LoginContainer>
               </LoginContainer.wrapper>

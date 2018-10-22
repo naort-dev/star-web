@@ -341,7 +341,6 @@ outline:none;
 cursor: pointer;
 border-radius:5px;
 border: 2px solid #FF6C58;
-margin-top:3%;
 -webkit-appearance: none;
 &:hover {
   background-color: #FF3B21;
