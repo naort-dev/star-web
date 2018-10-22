@@ -26,7 +26,7 @@ export class LoginTypeSelector extends React.Component  {
           >
             <TypeSelectorWrapper.OptionWrapper>
               <TypeSelectorWrapper.HeaderText>
-                Create your free Account
+                Create your free account
               </TypeSelectorWrapper.HeaderText>
               <TypeSelectorWrapper.SocialMediaMessage>
                 Already have an account?

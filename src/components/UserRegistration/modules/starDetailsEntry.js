@@ -55,11 +55,6 @@ export default class StarDetailsEntry extends React.Component {
     if (this.state.bio === '') {
       bio = true;
     }
-    if (this.state.industries.length < 3) {
-      industries = true;
-    } else {
-      industries = false;
-    }
     if (!validator.isNumeric(this.state.bookingLimit, { no_symbols: true })) {
       bookingLimit = true;
     } else {
@@ -214,7 +209,7 @@ export default class StarDetailsEntry extends React.Component {
               />
               <GroupStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
-                  ? 'Please enter a valid industry'
+                  ? 'Please choose a maximum of 3 industries.'
                   : 'You can choose a maximum of 3 industries.'}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
