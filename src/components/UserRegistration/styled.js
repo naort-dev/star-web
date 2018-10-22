@@ -203,6 +203,9 @@ GroupStyled.InputArea = styled.textarea`
   background-color: white;
   border: 1px solid #EBEBEB;
   border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
   }

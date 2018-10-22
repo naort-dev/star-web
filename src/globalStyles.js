@@ -228,7 +228,6 @@ injectGlobal`
 .list .option-content{
   font-family: 'Avenir-Light';
   color: #88898c;
-  margin-top: 15px;
   font-size:15px;
   word-spacing: 3px;
   span {

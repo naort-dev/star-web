@@ -2,6 +2,7 @@ import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
 import MultiSelect from '../../MultiSelect';
+import { numberToDollarFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
 export default class StarDetailsEntry extends React.Component {
@@ -52,21 +53,18 @@ export default class StarDetailsEntry extends React.Component {
 
   validateFields = () => {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
-    if (this.state.bio === '') {
-      bio = true;
-    }
-    if (!validator.isNumeric(this.state.bookingLimit, { no_symbols: true })) {
-      bookingLimit = true;
-    } else {
-      bookingLimit = false;
-    }
-    if (!validator.isNumeric(this.state.bookingPrice, { no_symbols: true })) {
-      bookingPrice = true;
-    } else {
-      bookingPrice = false;
+    bio = this.state.bio === '';
+    bookingLimit = !validator.isNumeric(this.state.bookingLimit, { no_symbols: true });
+    bookingPrice = !validator.isNumeric(this.state.bookingPrice, { no_symbols: true });
+    const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
+    const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
+    if (priceValid) {
+      this.handleFieldBlur('bookingPrice', this.state.bookingPrice);
+    } else if (limitValid) {
+      this.handleFieldBlur('bookingLimit', this.state.bookingLimit);
     }
     this.setState({ errors: { ...this.state.errors, industries, bookingLimit, bookingPrice, bio } });
-    return !industries && !bookingLimit && !bookingLimit && !bio;
+    return !industries && !bookingLimit && !bookingLimit && !bio && !priceValid && !limitValid;
   }
 
   submitGroupAccountDetails = () => {
@@ -95,7 +93,7 @@ export default class StarDetailsEntry extends React.Component {
       this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?`, selectedCheck: 'limitCheck' });
     } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && fieldValue > 499) {
       this.bookingPrice.blur();
-      this.setState({ popUpMessage: `Set your booking rate at ${fieldValue}?`, selectedCheck: 'priceCheck' });
+      this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(fieldValue)}?`, selectedCheck: 'priceCheck' });
     }
   }
 

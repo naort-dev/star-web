@@ -290,6 +290,9 @@ LoginContainer.Input = styled.input`
   text-indent: 10px;
   margin-top:3%;
   background-color: #fff;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
     height:40px;
