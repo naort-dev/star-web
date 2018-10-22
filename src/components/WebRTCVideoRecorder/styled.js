@@ -56,7 +56,7 @@ VideoRecorderDiv.Button = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   border-radius:5px;
   background-image: url('../../assets/images/rec-icon.svg');
@@ -92,7 +92,7 @@ VideoRecorderDiv.NoVideoContainer = styled.div`
   `;
 
 VideoRecorderDiv.NoVideoText = styled.div`
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 font-size: 25px;
 margin-top: 50%;
 text-align: center;
@@ -120,7 +120,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size: 14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 border-radius:5px;
 border: 1px solid #FF6C58;
@@ -171,7 +171,7 @@ VideoRecorderDiv.LoaderWrapper = styled.div`
 VideoRecorderDiv.InfoText = styled.div`
     font-size: 20px;
     color: #FFFFFF;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Avenir-Regular';
     text-align: center;
   `;
 
@@ -196,7 +196,7 @@ VideoRecorderDiv.InfoText = styled.div`
   VideoRecorderDiv.StopRecorderText = styled.div`
   font-size: 18px;
   color: #FF6C58;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   text-align: center;
   `;
 

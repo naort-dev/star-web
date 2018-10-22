@@ -15,7 +15,7 @@ Request.Wrapper = styled.div`
 Request.Heading = styled.div`
   color:rgba(51, 51, 51, 1);
   font-size:16px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   text-align: left;
   padding-bottom:10px;
 `;
@@ -23,7 +23,7 @@ Request.InputQuestion = styled.textarea`
   background-color: white;
   border: 2px solid rgba(51, 51, 51, 1);
   font-size:16px;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   width:100%;
   padding:6px 9px;
   height:120px;
@@ -43,7 +43,7 @@ Request.QuestionButton = styled.button`
   height:40px;
   font-size:20px;
   max-width:500px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   color:rgba(255, 108, 88, 1);
   text-align:center;
   border: 3px solid rgba(255, 108, 88, 1);
@@ -106,7 +106,7 @@ Request.WrapsInput = styled.div`
 `;
 Request.Label = styled.div`
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size:16px;
   text-align:left;
   padding-bottom:10px;
@@ -127,7 +127,7 @@ Request.Label = styled.div`
 
 `;
 Request.Input = styled.input`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
@@ -155,7 +155,7 @@ Request.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Ubuntu-light';
+  font-family: 'Avenir-light';
   text-align:left;
   
 `;

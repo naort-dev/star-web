@@ -28,7 +28,7 @@ FooterSection.LeftSection = styled.div`
 FooterSection.Agreement = styled.div`
   text-align:left;
   color:rgba(112, 112, 112, 1);
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size:12px;
 `;
 
@@ -47,7 +47,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size:14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 cursor: pointer;
 border-radius:5px;
@@ -63,7 +63,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size:14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 cursor: pointer;
 border-radius:5px;
@@ -81,7 +81,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size:14px;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 outline:none;
 cursor: pointer;
 border-radius:5px;

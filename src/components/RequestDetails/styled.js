@@ -1,41 +1,64 @@
 import styled from 'styled-components';
 
 const VideoRenderDiv = styled.div`
-  right:0;
-  cursor: pointer;
- 
- 
+  padding-right: 15px;
+  @media(min-width: 768px) {
+    position: relative;
+  }
 `;
 VideoRenderDiv.ImageSection = styled.div`
-  right:0;
   position:relative;
-  background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/video-default.png)')};
+  background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/pending-video.png)')};
+  background-color: ${props => !props.imageUrl && '#F2F2F2'}; 
   background-repeat:no-repeat;
   background-position: center;
-  background-size:cover;
-  width:100%;
-  height:160px;
-  &:hover{
-    box-shadow: 0px 6px 8px #FF6C58;
-  }
-  @media(min-width: 768px) {
-    height:${props => (props.height ? props.height : '200')}px;
-  }
-  
-  
+  background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
+  width: 100px;
+  display: inline-block;
+  height: 100px;
+`;
+
+VideoRenderDiv.PlayButton = styled.span`
+  background: url(assets/images/icon-play.svg) no-repeat;
+  background-color: #0000007a;
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  background-size: contain;
+  position: absolute;
+  top: 34px;
+  left: 36px;
+  background-size: 20px;
+  background-position: center center;
+`;
+
+VideoRenderDiv.RequestTime = styled.span`
+  position: absolute;
+  bottom: 8px;
+  font-size: 12px;
+  left: 22px;
+  color: #f78a83;
 `;
 
 VideoRenderDiv.BannerImage = styled.img`
   width:100%;
 `;
-VideoRenderDiv.ProfileImageWrapper = styled.div`
-  position:absolute;
-  right:0;
-  left:0;
-  bottom: 0;
-  text-align:center;
-  background-image: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(34,34,34,0.1),rgba(34,34,34,.3) 100%);
 
+VideoRenderDiv.ProfileDetailWrapper = styled.div`
+  display: block;
+  width: 100%;
+`;
+
+VideoRenderDiv.VideoPlayerWrapper = styled.div`
+  width: 100%;
+  height: calc(100% - 0px);
+  position: relative;
+`;
+
+VideoRenderDiv.ProfileImageWrapper = styled.div`
+  display: inline-block;
+  vertical-align: top;
 `;
 VideoRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
@@ -44,16 +67,9 @@ VideoRenderDiv.ProfileImage = styled.span`
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
-  height:40px;
-  border: solid 2px #FFFFFF;
-  box-shadow: 2px 2px 9px #4f4f4f;
-  width:40px;
+  height:30px;
+  width:30px;
   position: relative;
-  top: 8px;
-  @media(min-width: 768px) {
-    width: 48px;
-    height: 48px;
-  }
 `;
 VideoRenderDiv.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40b.png' );
@@ -68,19 +84,23 @@ VideoRenderDiv.FavoriteButton = styled.button`
   right: 8px;
 `;
 VideoRenderDiv.ProfileContent = styled.div`
-  margin-top: 18px;
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 10px;
+  width: calc(100% - 100px);
 `;
 VideoRenderDiv.DetailWrapper = styled.div`
-  text-align:center;
   line-height: 18px;
   position: relative;
-  min-height: 120px;
-  padding-bottom: 58px;
+  display: inline-block;
+  width: calc(100% - 35px);
+  vertical-align: middle;
+  padding-left: 11px;
 `;
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   @media(min-width: 1920px) {
     font-size: 20px;
   }
@@ -94,23 +114,73 @@ VideoRenderDiv.RequestDetails = styled.div`
   right: 0;
   bottom: 0;
 `;
-VideoRenderDiv.RequestStatus = styled.span`
-  font-family: Ubuntu-Medium;
-  font-size: 16px;
-`;
 VideoRenderDiv.EventType = styled.span`
   display: block;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 12px;
 `;
 VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
-  font-family: 'Ubuntu-Light';
-  margin-top: 8px;
+  font-family: 'Avenir-Light';
   @media(min-width: 768px) {
     font-size: 14px;
   }
+`;
+
+VideoRenderDiv.StatusDetailsWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-top: 11px;
+  padding-left: 42px;
+`;
+
+VideoRenderDiv.StatusDetails = styled.div`
+
+`;
+
+VideoRenderDiv.ControlWrapper = styled.span`
+  width: 242px;
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  margin-top: 16px;
+  @media(min-width: 768px) {
+    position: absolute;
+    right: 24px;
+    bottom: 0px;
+  }
+`;
+
+VideoRenderDiv.ControlButton = styled.button`
+  background-color: ${props => (props.alternate ? '#D8D8D8' : '#FF6C58')};
+  color: ${props => (props.alternate ? '#676767' : 'rgb(255,255,255)')};
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Regular;
+  cursor: pointer;
+  padding: 10px 25px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid;
+  border-color: ${props => (props.alternate ? '#D8D8D8' : '#FF6C58')};
+  border-image: initial;
+  &:hover {
+    background-color: ${props => (props.alternate ? '#D8D8D8' : '#FF3B21')};
+  }
+  &:disabled {
+    background-color: #D8D8D8;
+    color: #676767;
+    border-color: #D8D8D8;
+  }
+`;
+
+VideoRenderDiv.RequestStatus = styled.span`
+  display: block;
+  color: ${props => (props.highlight ? '#FF6C58' : '#9B9B9B')};
+  font-size: 18px;
 `;
 
 export default VideoRenderDiv;

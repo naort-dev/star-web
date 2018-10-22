@@ -81,61 +81,89 @@ class Sidebar extends React.Component {
     ))
   )
 
+  renderInnerPageLinks = () => {
+    return (
+      <SidebarStyled.FilterWrapper>
+        <SidebarStyled.Filter>
+          <SidebarStyled.ListWrapper>
+            {
+              this.props.innerLinks && this.props.innerLinks.map((element, index) => (
+                <SidebarStyled.InnerListItem key={index}>
+                  <SidebarStyled.InnerCategoryTitle
+                    selected={this.props.selectedCategory === element.selectedName}
+                  >
+                    <Link to={element.url}>{element.linkName}</Link>
+                  </SidebarStyled.InnerCategoryTitle>
+                </SidebarStyled.InnerListItem>
+              ))
+            }
+          </SidebarStyled.ListWrapper>
+        </SidebarStyled.Filter>
+      </SidebarStyled.FilterWrapper>
+    );
+  }
+
   render() {
     return (
       <SidebarStyled menuActive={this.props.menuActive}>
-        <section>
-          <SidebarStyled.FilterWrapper>
-            {
-              this.props.starRole ?
-                <SidebarStyled.Filter>
-                  <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
-                  <SidebarStyled.Separator />
-                  <SidebarStyled.ListWrapper>
-                    <SidebarStyled.ListItem>
-                      <SidebarStyled.CategoryTitle
-                        selected={this.props.selectedCategory === 'requests'}
-                      >
-                        <Link to={'/user/bookings'}>Requests</Link>
-                      </SidebarStyled.CategoryTitle>
-                    </SidebarStyled.ListItem>
-                    <SidebarStyled.ListItem>
-                      <SidebarStyled.CategoryTitle
-                        selected={this.props.selectedCategory === 'earnings'}
-                      >
-                        <Link to={'/user/earnings'}>Earnings</Link>
-                      </SidebarStyled.CategoryTitle>
-                    </SidebarStyled.ListItem>
-                    {/* <SidebarStyled.ListItem>
-                      <SidebarStyled.CategoryTitle>
-                        <Link to="/myStar">My Star Page</Link>
-                      </SidebarStyled.CategoryTitle>
-                    </SidebarStyled.ListItem> */}
-                  </SidebarStyled.ListWrapper>
-                </SidebarStyled.Filter>
-              : null
-            }
-            <SidebarStyled.Filter>
-              <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
-              <SidebarStyled.Separator />
-              <SidebarStyled.ListWrapper>
-                <SidebarStyled.ListItem>
-                  <SidebarStyled.CategoryTitle
-                    selected={this.props.selectedCategory === '' ? true : false}
-                    onClick={() => this.selectCategory('featured', '')}
-                  >
-                    Featured
-                  </SidebarStyled.CategoryTitle>
-                </SidebarStyled.ListItem>
-                {
-                  this.renderCategoryList()
-                }
-              </SidebarStyled.ListWrapper>
-            </SidebarStyled.Filter>
-          </SidebarStyled.FilterWrapper>
-        </section>
-        <Footer isLoggedIn={this.props.isLoggedIn}/>
-        <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
+        {
+          !this.props.noCategory ?
+            <React.Fragment>
+              <section>
+                <SidebarStyled.FilterWrapper>
+                  {
+                    this.props.starRole ?
+                      <SidebarStyled.Filter>
+                        <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
+                        <SidebarStyled.Separator />
+                        <SidebarStyled.ListWrapper>
+                          <SidebarStyled.ListItem>
+                            <SidebarStyled.CategoryTitle
+                              selected={this.props.selectedCategory === 'requests'}
+                            >
+                              <Link to={'/user/bookings'}>Requests</Link>
+                            </SidebarStyled.CategoryTitle>
+                          </SidebarStyled.ListItem>
+                          <SidebarStyled.ListItem>
+                            <SidebarStyled.CategoryTitle
+                              selected={this.props.selectedCategory === 'earnings'}
+                            >
+                              <Link to={'/user/earnings'}>Earnings</Link>
+                            </SidebarStyled.CategoryTitle>
+                          </SidebarStyled.ListItem>
+                          <SidebarStyled.ListItem>
+                            <SidebarStyled.CategoryTitle>
+                              <Link to="/myStar">My Star Page</Link>
+                            </SidebarStyled.CategoryTitle>
+                          </SidebarStyled.ListItem>
+                        </SidebarStyled.ListWrapper>
+                      </SidebarStyled.Filter>
+                    : null
+                  }
+                  <SidebarStyled.Filter>
+                    <SidebarStyled.SectionHeading>Find a Star </SidebarStyled.SectionHeading>
+                    <SidebarStyled.Separator />
+                    <SidebarStyled.ListWrapper>
+                      <SidebarStyled.ListItem>
+                        <SidebarStyled.CategoryTitle
+                          selected={this.props.selectedCategory === '' ? true : false}
+                          onClick={() => this.selectCategory('featured', '')}
+                        >
+                          Featured
+                        </SidebarStyled.CategoryTitle>
+                      </SidebarStyled.ListItem>
+                      {
+                        this.renderCategoryList()
+                      }
+                    </SidebarStyled.ListWrapper>
+                  </SidebarStyled.Filter>
+                </SidebarStyled.FilterWrapper>
+              </section>
+              <Footer isLoggedIn={this.props.isLoggedIn}/>
+              <SidebarStyled.ApplyButton onClick={() => this.props.toggleMenu()}>Apply</SidebarStyled.ApplyButton>
+            </React.Fragment>
+          : this.renderInnerPageLinks()
+        }
       </SidebarStyled>
     );
   }

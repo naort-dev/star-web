@@ -11,6 +11,10 @@ const LoginContainer = styled.div`
     }
 `;
 
+LoginContainer.Wrapper = styled.div`
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
+
 LoginContainer.BannerImage = styled.div`
   display:none;
   right:0;
@@ -93,7 +97,7 @@ HeaderSection.LogoImage = styled.img`
 `;
 
 HeaderSection.MiddleDiv = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size : 13px;
   @media(min-width:1920px){
     font-size:16px;
@@ -106,7 +110,7 @@ HeaderSection.RightDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;

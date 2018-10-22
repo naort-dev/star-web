@@ -122,7 +122,7 @@ export default class DetailsEntry extends React.Component {
         twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
         youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
-      }; 
+      };
       this.props.submitGroupDetails(accountDetails, socialLinks);
     }
   };
@@ -152,12 +152,12 @@ export default class DetailsEntry extends React.Component {
             Public information
           </GroupStyled.SubHeading>
           <GroupStyled.SubHeadingDescription>
-            This information will be shared on your profile.
+            This information will be shared on your profile
           </GroupStyled.SubHeadingDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.InputwrapperDiv>
           <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Group bio</GroupStyled.Label>
+            <GroupStyled.Label>Your bio</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.CustomInput>
                 <GroupStyled.InputArea
@@ -357,7 +357,7 @@ export default class DetailsEntry extends React.Component {
           </GroupStyled.SubHeading>
           <GroupStyled.SubHeadingDescription>
             This information is private to you and will not be shared
-            publicly.
+            publicly
           </GroupStyled.SubHeadingDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.InputWrapper>

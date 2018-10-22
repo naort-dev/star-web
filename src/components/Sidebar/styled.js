@@ -75,7 +75,7 @@ SidebarStyled.ListWrapper = styled.ul`
 `;
 
 SidebarStyled.ListItem = styled.li`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 16px;
   color: ${props => props.selected && '#FF6C58'};
   background-color: ${props => props.selected && '#F8F8F8'};
@@ -107,6 +107,27 @@ SidebarStyled.CategoryTitle = styled.span`
   }
 `;
 
+SidebarStyled.InnerListItem = SidebarStyled.ListItem.extend`
+  background: transparent;
+`;
+
+SidebarStyled.InnerCategoryTitle = SidebarStyled.CategoryTitle.extend`
+  background: transparent;
+  color: ${props => (props.selected ? '#1f1f1f' : '#9E9E9E')};
+  &:hover {
+    color: #1f1f1f;
+    background: transparent;
+  }
+  @media(min-width: 768px) {
+    border: none;
+    margin: 0;
+    &:hover {
+      margin: 0;
+      border: none;
+    }
+  }
+`;
+
 SidebarStyled.SubCategoryList = styled.ul`
   margin-left: 60px;
   width: calc(100% - 60px);
@@ -124,7 +145,7 @@ SidebarStyled.SubCategoryListItem = styled.li`
 `;
 
 SidebarStyled.SectionHeading = styled.h3`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 18px;
   color: #333333;
   padding: 10px 0;
@@ -154,7 +175,7 @@ SidebarStyled.ApplyButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size:14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border: 2px solid #FF6C58;

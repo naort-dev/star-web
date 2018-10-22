@@ -80,7 +80,7 @@ background-color: white ;
 margin-right: 5px;
 padding: 5px 20px;
 text-align: center;
-font-family: 'Ubuntu-Bold';
+font-family: 'Avenir-Bold';
 color: #FF6C58;
 border: 2px solid #ef6a58;
 cursor: pointer;
@@ -91,7 +91,7 @@ margin-top: 15px;
 AudioRecorderDiv.Label = styled.div`
 font-size: 16px;
 color: #FF6C58;
-font-family: Ubuntu-bold;
+font-family: Avenir-bold;
 margin-bottom: 10px;
 @media(min-width:1025px){
   font-size: 24px;

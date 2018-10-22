@@ -2,8 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
+import { fetch } from '../../services/fetch';
 import GroupStyled from './styled';
-import { celebritySignupProfile } from '../../services/userRegistration';
+import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
 import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
@@ -27,6 +28,9 @@ import { logOutUser } from '../../store/shared/actions/login';
 class starRegistrationComponent extends React.Component {
   state = {
     celebrityDetails: null,
+    industryList: [],
+    videoUrl: null,
+    professionsArray: [],
     featuredImage: {
       fileName: null,
       image: null,
@@ -35,6 +39,20 @@ class starRegistrationComponent extends React.Component {
       fileName: null,
       image: null,
     },
+  }
+
+  componentWillMount() {
+    fetch('user/professions/').then((response) => {
+      let dropDownList = [];
+      response.data.data.professions.map((profObj) => {
+        dropDownList.push({ value: profObj.id, label: profObj.title });
+        profObj.child.map((childObj) => {
+          dropDownList.push({ value: childObj.id, label: childObj.title });
+        });
+      });
+      return dropDownList;
+    })
+      .then(industryItem => this.setState({ industryList: industryItem }))
   }
 
   setProfileImage = (fileName, image) => {
@@ -63,9 +81,10 @@ class starRegistrationComponent extends React.Component {
     let uploadVideo;
     if (this.props.videoUploader.savedFile != null) {
       uploadVideo = this.props.videoUploader.savedFile;
-    }
-    else {
+      this.setState({ videoUrl: this.props.videoUploader.url });
+    } else {
       uploadVideo = new File([this.props.videoRecorder.recordedBuffer], 'profile.mp4');
+      this.setState({ videoUrl: this.props.videoRecorder.recordedBlob });
     }
     getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
       .then((response) => {
@@ -111,20 +130,23 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
-  submitAccountDetails = (celebrityDetails) => {
-    this.setState({ celebrityDetails, loader: true });
-    celebritySignupProfile(celebrityDetails)
-      .then((success) => {
-        this.setState({ loader: false });
-        if (success) {
-          this.props.changeStep(this.props.currentStep + 1);
-        }
-      });
+  submitAccountDetails = (celebrityDetails, socialLinks) => {
+    const selectedProfessions = celebrityDetails.profession;
+    const professionsArray = this.state.industryList.filter((profession) => {
+      return selectedProfessions.indexOf(profession.value.toString()) > -1;
+    });
+    updateSocialLinks(socialLinks);
+    this.setState({ celebrityDetails, professionsArray });
+    this.props.changeStep(this.props.currentStep + 1);
   }
 
   render() {
     return (
       <GroupStyled>
+        {
+          this.props.currentStep >= 3 &&
+            <GroupStyled.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+        }
         {
           this.state.loader ?
             <Loader />
@@ -134,45 +156,42 @@ class starRegistrationComponent extends React.Component {
               autoHide={false}
             >
               <GroupStyled.ContentWrapper>
+                <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
+                  <StarDetailsEntry
+                    industryList={this.state.industryList}
+                    submitAccountDetails={this.submitAccountDetails}
+                  />
+                </GroupStyled.StepWrapper>
+                <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
+                  <ProfileUpload
+                    starMode
+                    onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+                  />
+                </GroupStyled.StepWrapper>
+                <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
+                  <CoverUpload
+                    visible={this.props.currentStep === 4}
+                    starMode
+                    professionsList={this.state.professionsArray}
+                    scrollRef={this.scrollRef}
+                    profileImage={this.state.profileImage.image}
+                    featuredRatio={imageSizes.featured}
+                    secondaryRatio={imageSizes.first}
+                    groupName={this.props.userDetails.settings_userDetails.first_name}
+                    onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
+                    onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
+                  />
+                </GroupStyled.StepWrapper>
                 {
-                  this.props.currentStep === 2 && (
-                    <StarDetailsEntry
-                      submitAccountDetails={this.submitAccountDetails}
-                    />
-                )}
-                {
-                  this.props.currentStep === 3 && (
-                    <ProfileUpload
-                      starMode
-                      onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
-                    />
-                  )
-                }
-                {
-                  this.props.currentStep === 4 && (
-                    <CoverUpload
-                      starMode
-                      professionsList={this.props.userDetails.settings_celebrityDetails.profession_details}
-                      scrollRef={this.scrollRef}
-                      profileImage={this.state.profileImage.image}
-                      featuredRatio={imageSizes.featured}
-                      secondaryRatio={imageSizes.first}
-                      groupName={this.props.userDetails.settings_userDetails.first_name}
-                      onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                      onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
-                    />
-                  )
-                }
-                {
-                  this.props.currentStep === 5 && (
+                  this.props.currentStep === 5 &&
                     <QAVideoRecorder
                       {...this.props}
+                      src={this.state.videoUrl}
                       responseMode
                       recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
                       duration={recorder.signUpTimeOut}
                       onSubmit={this.getVideo}
                     />
-                  )
                 }
                 {
                   this.props.currentStep === 6 && (
@@ -186,11 +205,11 @@ class starRegistrationComponent extends React.Component {
                         Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
                       <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
                       <GroupStyled.DoneButtonWrapper>
-                        <GroupStyled.DoneButton
+                        <GroupStyled.ControlButton
                           onClick={() => this.props.closeSignupFlow()}
                         >
                           Done
-                        </GroupStyled.DoneButton>
+                        </GroupStyled.ControlButton>
                       </GroupStyled.DoneButtonWrapper>
                     </React.Fragment>
                   )

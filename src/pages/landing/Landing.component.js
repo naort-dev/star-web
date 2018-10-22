@@ -20,12 +20,6 @@ export default class Landing extends React.Component {
     };
   }
 
-  componentDidMount() {
-    window.onpopstate = this.onBackButtonEvent;
-  }
-
-  onBackButtonEvent = (event) => event.preventDefault()
-
   componentWillMount() {
     switch (this.props.filters.selectedTab) {
       case 'Stars':
@@ -47,6 +41,11 @@ export default class Landing extends React.Component {
     }
     window.addEventListener('resize', this.setScrollHeight);
   }
+
+  componentDidMount() {
+    window.onpopstate = this.onBackButtonEvent;
+  }
+
   componentWillReceiveProps(nextProps) {
     const loginChange = this.props.isLoggedIn !== nextProps.isLoggedIn;
     const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
@@ -95,6 +94,7 @@ export default class Landing extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('resize', this.setScrollHeight);
   }
+  onBackButtonEvent = event => event.preventDefault()
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
@@ -243,13 +243,13 @@ export default class Landing extends React.Component {
             {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
                 (!this.props.videosList.data.length && this.props.videosList.loading) ?
-                <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                  <Loader />
-                </LandingStyled.loaderWrapper>
+                  <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                    <Loader />
+                  </LandingStyled.loaderWrapper>
                 :
-                <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                  {this.renderScrollList()}
-                </div>
+                  <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                    {this.renderScrollList()}
+                  </div>
             }
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>

@@ -2,13 +2,12 @@ import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
 import MultiSelect from '../../MultiSelect';
-import { fetch } from '../../../services/fetch';
 import GroupStyled from '../styled';
 
 export default class StarDetailsEntry extends React.Component {
   state = {
     bio: '',
-    industryList: [],
+    charity: '',
     industries: [],
     stageName: '',
     bookingPrice: '',
@@ -17,6 +16,12 @@ export default class StarDetailsEntry extends React.Component {
     priceCheck: false,
     limitCheck: false,
     selectedCheck: null,
+    socialMedia: {
+      facebook: '',
+      twitter: '',
+      instagram: '',
+      youtube: '',
+    },
     errors: {
       bio: false,
       industries: false,
@@ -24,20 +29,6 @@ export default class StarDetailsEntry extends React.Component {
       bookingLimit: false,
     },
   };
-
-  componentWillMount() {
-    fetch('user/professions/').then((response) => {
-      let dropDownList = [];
-      response.data.data.professions.map((profObj) => {
-        dropDownList.push({ value: profObj.id, label: profObj.title });
-        profObj.child.map((childObj) => {
-          dropDownList.push({ value: childObj.id, label: childObj.title });
-        });
-      });
-      return dropDownList;
-    })
-      .then(industryItem => this.setState({ industryList: industryItem }))
-  }
 
   handleFieldChange = (fieldType, fieldValue) => {
     if (fieldType === 'industries') {
@@ -50,9 +41,9 @@ export default class StarDetailsEntry extends React.Component {
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
       }, () => {
-        if (fieldType === "bookingLimit" && this.state.priceCheck) {
+        if (fieldType === 'bookingPrice' && this.state.priceCheck) {
           this.setState({ priceCheck: false });
-        } else if (fieldType === "bookingLimit" && this.state.limitCheck) {
+        } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
           this.setState({ limitCheck: false });
         }
       });
@@ -89,10 +80,17 @@ export default class StarDetailsEntry extends React.Component {
         description: this.state.bio,
         profession: this.state.industries,
         rate: parseInt(this.state.bookingPrice),
+        charity: this.state.charity,
         weekly_limits: parseInt(this.state.bookingLimit),
         availability: true,
       };
-      this.props.submitAccountDetails(celebrityDetails);
+      const socialLinks = {
+        facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
+        twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
+        youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
+        instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
+      };
+      this.props.submitAccountDetails(celebrityDetails, socialLinks);
     }
   };
 
@@ -154,7 +152,7 @@ export default class StarDetailsEntry extends React.Component {
             Public information
           </GroupStyled.SubHeading>
           <GroupStyled.SubHeadingDescription>
-            This information will be shared on your profile.
+            This information will be shared on your profile
           </GroupStyled.SubHeadingDescription>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.InputwrapperDiv>
@@ -210,7 +208,7 @@ export default class StarDetailsEntry extends React.Component {
                   arrowRenderer: null,
                   valueComponent: selectProps => this.renderMultiValueItems(selectProps),
                 }}
-                dataValues={this.state.industryList}
+                dataValues={this.props.industryList}
                 value={this.state.industries.join(',')}
                 handleFieldChange={value => this.handleFieldChange('industries', value)}
               />
@@ -224,11 +222,14 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Booking price</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.NumberInput
+              <GroupStyled.CustomPlaceholder>
+                $
+              </GroupStyled.CustomPlaceholder>
+              <GroupStyled.PriceInput
                 small
                 innerRef={(node) => {this.bookingPrice = node;}}
                 type="number"
-                placeholder="$0"
+                placeholder="0"
                 value={this.state.bookingPrice}
                 onBlur={event => this.handleFieldBlur('bookingPrice', event.target.value)}
                 onChange={(event) => {
@@ -261,6 +262,145 @@ export default class StarDetailsEntry extends React.Component {
                   ? 'Please enter a valid booking limit'
                   : 'What is the maximum number of open bookings you want to offer at any given time?'}
               </GroupStyled.ErrorMsg>
+            </GroupStyled.WrapsInput>
+          </GroupStyled.InputWrapper>
+          <GroupStyled.InputWrapper>
+            <GroupStyled.Label>Charity / Group</GroupStyled.Label>
+            <GroupStyled.WrapsInput>
+              <GroupStyled.InputArea
+                small
+                placeholder="Optional"
+                value={this.state.charity}
+                onChange={(event) => {
+                  this.handleFieldChange('charity', event.target.value);
+                }}
+              />
+              <GroupStyled.ErrorMsg isError={this.state.errors.charity}>
+                {this.state.errors.charity
+                  ? 'Please enter a valid event title'
+                  : null}
+              </GroupStyled.ErrorMsg>
+            </GroupStyled.WrapsInput>
+          </GroupStyled.InputWrapper>
+          <GroupStyled.InputWrapper>
+            <GroupStyled.Label>Social links</GroupStyled.Label>
+            <GroupStyled.WrapsInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  value={this.state.socialMedia.facebook}
+                  innerRef={(node) => { this.facebookRef = node; }}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { ...this.state.socialMedia, facebook: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  this.state.socialMedia.facebook === '' ?
+                    <GroupStyled.CustomPlaceholder
+                      activePlaceHolder
+                      onClick={() => {
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, facebook: 'https://www.facebook.com/' });
+                        this.facebookRef.focus();
+                      }}
+                    >
+                      www.facebook.com/
+                      <GroupStyled.HighlightText>
+                        add facebook
+                      </GroupStyled.HighlightText>
+                    </GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  innerRef={(node) => { this.twitterRef = node; }}
+                  value={this.state.socialMedia.twitter}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { ...this.state.socialMedia, twitter: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  this.state.socialMedia.twitter === '' ?
+                    <GroupStyled.CustomPlaceholder
+                      activePlaceHolder
+                      onClick={() => {
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, twitter: 'https://www.twitter.com/' });
+                        this.twitterRef.focus();
+                      }}
+                    >
+                      www.twitter.com/
+                      <GroupStyled.HighlightText>
+                        add twitter
+                      </GroupStyled.HighlightText>
+                    </GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  innerRef={(node) => { this.instagramRef = node; }}
+                  value={this.state.socialMedia.instagram}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { ...this.state.socialMedia, instagram: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  this.state.socialMedia.instagram === '' ?
+                    <GroupStyled.CustomPlaceholder
+                      activePlaceHolder
+                      onClick={() => {
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, instagram: 'https://www.instagram.com/' });
+                        this.instagramRef.focus();
+                      }}
+                    >
+                      www.instagram.com/
+                      <GroupStyled.HighlightText>
+                        add instagram
+                      </GroupStyled.HighlightText>
+                    </GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
+              <GroupStyled.CustomInput>
+                <GroupStyled.InputArea
+                  small
+                  innerRef={(node) => { this.youtubeRef = node; }}
+                  value={this.state.socialMedia.youtube}
+                  onChange={(event) => {
+                    this.handleFieldChange(
+                      'socialMedia',
+                      { ...this.state.socialMedia, youtube: event.target.value }
+                    );
+                  }}
+                />
+                {
+                  this.state.socialMedia.youtube === '' ?
+                    <GroupStyled.CustomPlaceholder
+                      activePlaceHolder
+                      onClick={() => {
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, youtube: 'https://www.youtube.com/' });
+                        this.youtubeRef.focus();
+                      }}
+                    >
+                      www.youtube.com/
+                      <GroupStyled.HighlightText>
+                        add youtube
+                      </GroupStyled.HighlightText>
+                    </GroupStyled.CustomPlaceholder>
+                  : null
+                }
+              </GroupStyled.CustomInput>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
         </GroupStyled.InputwrapperDiv>

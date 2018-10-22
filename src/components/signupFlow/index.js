@@ -22,7 +22,7 @@ class SignupFlow extends React.Component {
       selectedType: null,
       stepCount: 0,
       socialData: {},
-      currentStep: 1,
+      currentStep: 0,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -31,11 +31,11 @@ class SignupFlow extends React.Component {
     this.setState({ bioDetails });
   }
   changeSignUpRole = (role) => {
-    this.setState({ selectedType: role });
+    this.setState({ selectedType: role, currentStep: 1, stepCount: 0 });
     if (role === 'star') {
-      this.setState({ stepCount: this.starRegistrationSteps });
+      this.setState({ stepCount: this.starRegistrationSteps, currentStep: 1 });
     } else if (role === 'group') {
-      this.setState({ stepCount: this.groupRegistrationSteps });
+      this.setState({ stepCount: this.groupRegistrationSteps, currentStep: 1 });
     }
   }
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
@@ -51,15 +51,8 @@ class SignupFlow extends React.Component {
   
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
-      return <SignUpForm {...this.props} signupRole={this.state.selectedType} data={this.state.socialData} />;
+      return <SignUpForm {...this.props} changeStep={this.changeStep} currentStep={this.state.currentStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
     } else if (this.state.selectedType === 'star') {
-      // switch (this.state.currentStep) {
-      //   case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.props.toggleSignup(false)} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
-      //   case 2: return <StarbioPopup currentStep={this.state.currentStep} changeStep={this.changeStep} getBioDetails={this.getBioDetails} />;
-      //   case 3: return <StarsignUpVideo currentStep={this.state.currentStep} changeStep={this.changeStep} bioDetails={this.state.bioDetails} />;
-      //   case 4: return <Starsuccess closeSignupFlow={() => this.props.toggleSignup(false)} />;
-      //   default: return null;
-      // }
       switch (this.state.currentStep) {
         case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
         case 2:
@@ -86,15 +79,16 @@ class SignupFlow extends React.Component {
     return (
       <div>
         <RequestFlowPopup
-          dotsCount={this.state.stepCount}
+          dotsCount={this.state.currentStep ? this.state.stepCount : 0}
           selectedDot={this.state.currentStep}
           closePopUp={() => this.closeSignUp()}
+          disableOutsideClick
           smallPopup
         >
           <LoginContainer>
             <LoginContainer.LeftSection>
               {
-                this.state.currentStep === 1 ?
+                this.state.currentStep === 1 ||  this.state.currentStep === 0 ?
                   <HeaderSection>
                     {/* {
                       this.state.currentStep > 1 ?
@@ -111,7 +105,7 @@ class SignupFlow extends React.Component {
                 : null
               }
               {
-                !this.state.selectedType ?
+                !this.state.selectedType || this.state.currentStep === 0 ?
                   <LoginTypeSelector {...this.props} isSignUp changeSignUpRole={this.changeSignUpRole} />
                 :
                   <LoginContainer.SignupFlow currentStep={this.state.currentStep}>

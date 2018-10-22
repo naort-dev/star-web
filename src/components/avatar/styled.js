@@ -50,7 +50,7 @@ AvatarContainer.CropperButton = styled.div`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline: none;
   cursor: pointer;
   border-radius: 5px;
@@ -215,7 +215,7 @@ AvatarContainer.Avatar = styled.span`
 `;
 AvatarContainer.FeaturedText = styled.div`
 font-size: 16px;
-font-family: Ubuntu-bold
+font-family: Avenir-bold
 margin-top: 2%;
 
 @media(min-width:768px){
@@ -228,7 +228,7 @@ font-size: 16px;
 `;
 AvatarContainer.CaptionText = styled.div`
 font-size: 14px;
-font-family: Ubuntu-light;
+font-family: Avenir-light;
 @media(min-width:768px){
   font-size: 15px;
 }
@@ -328,7 +328,7 @@ AvatarContainer.CropperButton = styled.div`
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   outline: none;
   cursor: pointer;
   border-radius: 5px;

@@ -21,7 +21,7 @@ Tabs.List = styled.ul`
   font-size: 16px;
   width: 188px;
   cursor: pointer;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   border-bottom: ${props => (props.selected ? '4px solid #FF6C58' : 'none')};
   color: ${props => (props.selected ? '#FF6C58' : 'black')};;
 `;

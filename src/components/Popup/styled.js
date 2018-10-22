@@ -16,7 +16,7 @@ const PopupStyled = styled.div`
   right: 0;
   left: 0;
   padding-top: ${props => (props.smallPopup ? 0 : '46px')};
-  background-color: rgba(0,0,0,.6);
+  background-color: ${props => (props.disableBackground ? '#000' : 'rgba(0,0,0,.6)')};
   display: flex;
   justify-content: center;
   align-items: center;

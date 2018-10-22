@@ -57,7 +57,7 @@ ListStyled.Banner = styled.div`
 `;
 
 ListStyled.BannerHeading = styled.span`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   display: block;
   font-size: 16px;
   color: white;
@@ -75,7 +75,7 @@ ListStyled.BannerHeading = styled.span`
 
 ListStyled.BannerSubHeading = styled.span`
   display: block;
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 16px;
   margin-top: 5px;
   @media(min-width: 768px) {
@@ -152,6 +152,12 @@ ListStyled.listItem = styled.li`
       margin-right: 0;
     }
   }
+`;
+
+ListStyled.listRequests = styled.li`
+  animation: ${menuEnter} 0.2s linear;
+  width: 100%;
+  padding-bottom: 20px;
 `;
 
 ListStyled.listVideos = ListStyled.listItem.extend`
