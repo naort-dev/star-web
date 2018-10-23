@@ -60,11 +60,14 @@ export default class RequestFlowPopup extends React.Component {
           largePopup={this.props.largePopup}
           innerRef={node => this.popupContent = node}
         >
-          <PopupStyled.SliderDotsWrapper>
-            {
-              this.renderSliderDots()
-            }
-          </PopupStyled.SliderDotsWrapper>
+          {
+            !this.props.modalView &&
+            <PopupStyled.SliderDotsWrapper>
+              {
+                this.renderSliderDots()
+              }
+            </PopupStyled.SliderDotsWrapper>
+          }
           {
             !this.props.modalView &&
               <PopupStyled.CloseButton

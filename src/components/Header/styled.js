@@ -310,7 +310,7 @@ HeaderSection.InputWrapper = styled.div`
     background-repeat:no-repeat;
     background-position: center;
     left: 15px;
-    top: 25%;
+    top: 20%;
     width: 35px;
     height: 35px;
   }

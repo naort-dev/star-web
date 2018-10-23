@@ -60,8 +60,9 @@ GroupStyled.SubHeadingDescription = styled.span`
 `;
 
 GroupStyled.InnerHeading = GroupStyled.SubHeadingDescription.extend`
+  font-size: 18px;
   color: #7B797A;
-  font-family: 'Avenir-Regular';
+  font-family: 'Avenir-Medium';
 `;
 
 GroupStyled.InnerDescription = styled.span`

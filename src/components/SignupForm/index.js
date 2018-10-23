@@ -348,7 +348,7 @@ export default class SignUp extends React.Component {
             <LoginContainer.Heading>Create your free account</LoginContainer.Heading>
             <LoginContainer.SocialMediaMessage>Already have an account?
               <span onClick={() => this.props.toggleLogin(true)}>
-                <LoginContainer.LoginDiv>Log In</LoginContainer.LoginDiv>
+                <LoginContainer.LoginDiv>Log in</LoginContainer.LoginDiv>
               </span>
             </LoginContainer.SocialMediaMessage>
             <LoginContainer.ButtonDiv>

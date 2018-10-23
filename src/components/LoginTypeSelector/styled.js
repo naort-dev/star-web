@@ -192,10 +192,10 @@ TypeSelectorWrapper.HeaderText = styled.div`
     font-size:25px;
   }
   @media(min-width: 1025px){
-    font-size: 27px;
+    font-size: 25px;
   }
   @media(min-width:1920px){
-    font-size: 30px;
+    font-size: 27px;
   }
 `;
 TypeSelectorWrapper.ButtonWrapper = styled.div`
