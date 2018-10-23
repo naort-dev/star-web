@@ -351,9 +351,6 @@ export default class SignUp extends React.Component {
                 <LoginContainer.LoginDiv>Log In</LoginContainer.LoginDiv>
               </span>
             </LoginContainer.SocialMediaMessage>
-            <LoginContainer.SignupLine>
-              <span>Signup using social</span>
-            </LoginContainer.SignupLine>
             <LoginContainer.ButtonDiv>
               <LoginContainer.Button onClick={() => this.OnFBlogin()}>
                 <LoginContainer.FacebookContent /> 

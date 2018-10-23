@@ -2,7 +2,7 @@ import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
 import MultiSelect from '../../MultiSelect';
-import { numberToDollarFormatter } from '../../../utils/dataformatter';
+import { numberToDollarFormatter, numberToCommaFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
 export default class StarDetailsEntry extends React.Component {
@@ -54,6 +54,7 @@ export default class StarDetailsEntry extends React.Component {
   validateFields = () => {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
     bio = this.state.bio === '';
+    industries = this.state.industries.length === 0;
     bookingLimit = !validator.isNumeric(this.state.bookingLimit, { no_symbols: true });
     bookingPrice = !validator.isNumeric(this.state.bookingPrice, { no_symbols: true });
     const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
@@ -90,7 +91,7 @@ export default class StarDetailsEntry extends React.Component {
   handleFieldBlur = (fieldType, fieldValue) => {
     if (fieldType === 'bookingLimit' && !this.state.limitCheck && fieldValue > 20) {
       this.bookingLimit.blur();
-      this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?`, selectedCheck: 'limitCheck' });
+      this.setState({ popUpMessage: `Are you sure you can complete ${numberToCommaFormatter(fieldValue)} Starsona videos?`, selectedCheck: 'limitCheck' });
     } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && fieldValue > 499) {
       this.bookingPrice.blur();
       this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(fieldValue)}?`, selectedCheck: 'priceCheck' });
