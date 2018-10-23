@@ -507,7 +507,7 @@ export default class OrderDetails extends React.Component {
             this.state.recordMode && props.starMode ?
               this.renderVideoRecorder(props)
             :
-              <OrderStyled>
+              <OrderStyled buttonsEnabled={props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6}>
                 <Scrollbars>
                   <OrderStyled.Header>New {props.requestType} request</OrderStyled.Header>
                   <OrderStyled.ProfileImageWrapper>
