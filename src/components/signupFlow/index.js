@@ -96,7 +96,7 @@ class SignupFlow extends React.Component {
                     } */}
                     <Link to="/">
                       <HeaderSection.LogoImage
-                        src="assets/images/logo_starsona_large.svg"
+                        src="assets/images/logo_starsona.png"
                         alt=""
                       />
                     </Link>

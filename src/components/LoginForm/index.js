@@ -362,13 +362,9 @@ export default class LoginForm extends React.Component {
               <LoginContainer.SocialMediaMessage>
                 Don't have an account?
                 <span onClick={() => this.props.toggleSignup(true)}>
-                  <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
+                  <LoginContainer.LoginDiv>Sign up</LoginContainer.LoginDiv>
                 </span>
               </LoginContainer.SocialMediaMessage>
-              <LoginContainer.SignupLine>
-                <span>Login using social</span>
-              </LoginContainer.SignupLine>
-
               <LoginContainer.ButtonDiv>
                 <LoginContainer.Button >
                   <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />

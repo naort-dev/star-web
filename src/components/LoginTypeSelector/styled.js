@@ -102,9 +102,6 @@ TypeSelectorWrapper.Button = styled.button`
 
 TypeSelectorWrapper.ComponentWrapper = styled.div`
   height: 100%;
-  @media(min-width:1025px){
-    height:calc(100% - 40px);
-  }
 `;
 
 TypeSelectorWrapper.ComponentWrapperScroll = styled(Scrollbars)`

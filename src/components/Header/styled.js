@@ -39,11 +39,12 @@ HeaderSection.HeaderLeft = styled.div`
   }
 `;
 HeaderSection.ImgLogo = styled.img`
-  width:117.61px;
-  height:30.27px
+  width:  117.61px;
+  height: 19.27px;
+  margin-top: 6px;
   @media(min-width: 1920px) {
     width: auto;
-    height: 40px;
+    height: 26px;
   }
 `;
 HeaderSection.MenuButton = styled.button`

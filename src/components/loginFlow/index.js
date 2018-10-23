@@ -53,7 +53,7 @@ class LoginFlow extends React.Component {
                     <HeaderSection>
                       <Link to="/" onClick={() => this.props.toggleLogin(false)}>
                         <HeaderSection.LogoImage
-                          src="assets/images/logo_starsona_large.svg"
+                          src="assets/images/logo_starsona.png"
                           alt=""
                         />
                       </Link>

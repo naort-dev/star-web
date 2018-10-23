@@ -426,14 +426,12 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-  
+  padding-bottom: 12px;
 `;
 HeaderSection.LogoImage = styled.img`
-  width:100px;
-  height:45px;
+  width:133px;
   @media(min-width:1025px){
-    width:120px;
-    height:60px;
+    width:180px;
   }
 `;
 HeaderSection.HeaderNavigation = styled.button`

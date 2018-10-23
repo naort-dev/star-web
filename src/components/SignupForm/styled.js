@@ -155,62 +155,25 @@ LoginContainer.Button = styled.button`
 `;
 LoginContainer.FacebookContent = styled.span`
   position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
+  width: 30px;
+  background: url( 'assets/images/facebook.svg' ) no-repeat left;
+  height: 30px;
   display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/facebook.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-  }
   
 `;
 LoginContainer.GoogleContent = styled.span`
   position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
-  display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/search.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-    
-  }
-  
+  width: 30px;
+  height: 30px;
+  background: url( 'assets/images/search.svg' ) no-repeat left;
+  display:block; 
 `;
 LoginContainer.InstagramContent = styled.span`
   position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
+  width: 30px;
+  height: 30px;
+  background: url( 'assets/images/instagram.svg' ) no-repeat left;
   display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/instagram.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-    
-  }
- 
 `;
 LoginContainer.Line = styled.hr`
   width:230px;
@@ -527,13 +490,13 @@ LoginContainer.ButtonWrapper = styled.div`
   margin-top:5%;
 `;
 LoginContainer.SignupLine = styled.div`
- 
     display: block;
     font-family: 'Avenir-Light';
-    color:#e8e7e7;
+    color:#b3acac;
     font-size: 12px;
     margin: 0;
     margin: 20px 20px;
+    margin-top: 0;
     order: 1;
     span {
       display: inline-block;

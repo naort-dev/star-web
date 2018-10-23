@@ -70,7 +70,7 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-  
+  padding-bottom: 12px;
 `;
 HeaderSection.HeaderNavigation = styled.button`
   background-image: url( 'assets/images/icon_back_40a.svg' );
@@ -88,11 +88,9 @@ HeaderSection.HeaderNavigation = styled.button`
 `;
 
 HeaderSection.LogoImage = styled.img`
-  width:100px;
-  height:45px;
+  width:133px;
   @media(min-width:1025px){
-    width:120px;
-    height:60px;
+    width:180px;
   }
 `;
 

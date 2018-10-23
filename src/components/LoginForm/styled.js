@@ -511,8 +511,8 @@ LoginContainer.InputContainer = styled.div`
 LoginContainer.SignupLine = styled.div`
  
     display: block;
-    font-family: 'Avenir-Medium';
-    color:#7c7c7c;
+    font-family: 'Avenir-Light';
+    color:#b3acac;
     font-size: 12px;
     margin: 0;
     margin: 20px 20px;
@@ -524,7 +524,7 @@ LoginContainer.SignupLine = styled.div`
       content: '';
       display: inline-block;
       height: 1px;
-      background-color: #ccc;
+      background-color: #e8e7e7;
       vertical-align: middle;
       width: 50px;
       width: calc(50% - 69px);

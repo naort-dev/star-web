@@ -2,7 +2,7 @@ import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
 import MultiSelect from '../../MultiSelect';
-import { numberToDollarFormatter, numberToCommaFormatter } from '../../../utils/dataformatter';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
 export default class StarDetailsEntry extends React.Component {
@@ -37,16 +37,24 @@ export default class StarDetailsEntry extends React.Component {
       if (industriesArray.length <= 3) {
         this.setState({ industries: industriesArray, errors: { ...this.state.errors, industries: false } });
       }
+    } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
+      const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
+      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+        this.setState({
+          [fieldType]: newFieldValue,
+          errors: { ...this.state.errors, [fieldType]: false },
+        }, () => {
+          if (fieldType === 'bookingPrice' && this.state.priceCheck) {
+            this.setState({ priceCheck: false });
+          } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
+            this.setState({ limitCheck: false });
+          }
+        });
+      }
     } else {
       this.setState({
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
-      }, () => {
-        if (fieldType === 'bookingPrice' && this.state.priceCheck) {
-          this.setState({ priceCheck: false });
-        } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
-          this.setState({ limitCheck: false });
-        }
       });
     }
   };
@@ -55,8 +63,8 @@ export default class StarDetailsEntry extends React.Component {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
     bio = this.state.bio === '';
     industries = this.state.industries.length === 0;
-    bookingLimit = !validator.isNumeric(this.state.bookingLimit, { no_symbols: true });
-    bookingPrice = !validator.isNumeric(this.state.bookingPrice, { no_symbols: true });
+    bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
+    bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
     const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
     const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
     if (priceValid) {
@@ -73,9 +81,9 @@ export default class StarDetailsEntry extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: this.state.industries,
-        rate: parseInt(this.state.bookingPrice),
+        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
         charity: this.state.charity,
-        weekly_limits: parseInt(this.state.bookingLimit),
+        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
         availability: true,
       };
       const socialLinks = {
@@ -89,12 +97,13 @@ export default class StarDetailsEntry extends React.Component {
   };
 
   handleFieldBlur = (fieldType, fieldValue) => {
-    if (fieldType === 'bookingLimit' && !this.state.limitCheck && fieldValue > 20) {
+    const newFieldValue = commaToNumberFormatter(fieldValue)
+    if (fieldType === 'bookingLimit' && !this.state.limitCheck && newFieldValue > 20) {
       this.bookingLimit.blur();
-      this.setState({ popUpMessage: `Are you sure you can complete ${numberToCommaFormatter(fieldValue)} Starsona videos?`, selectedCheck: 'limitCheck' });
-    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && fieldValue > 499) {
+      this.setState({ popUpMessage: `Are you sure you can complete ${numberToCommaFormatter(newFieldValue)} Starsona videos?`, selectedCheck: 'limitCheck' });
+    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && newFieldValue > 499) {
       this.bookingPrice.blur();
-      this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(fieldValue)}?`, selectedCheck: 'priceCheck' });
+      this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
   }
 
@@ -223,7 +232,7 @@ export default class StarDetailsEntry extends React.Component {
               <GroupStyled.PriceInput
                 small
                 innerRef={(node) => {this.bookingPrice = node;}}
-                type="number"
+                type="text"
                 placeholder="0"
                 value={this.state.bookingPrice}
                 onBlur={event => this.handleFieldBlur('bookingPrice', event.target.value)}
@@ -244,7 +253,7 @@ export default class StarDetailsEntry extends React.Component {
               <GroupStyled.NumberInput
                 small
                 innerRef={(node) => {this.bookingLimit = node;}}
-                type="number"
+                type="text"
                 placeholder="0"
                 value={this.state.bookingLimit}
                 onBlur={event => this.handleFieldBlur('bookingLimit', event.target.value)}
