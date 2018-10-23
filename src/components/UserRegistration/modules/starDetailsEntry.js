@@ -128,6 +128,7 @@ export default class StarDetailsEntry extends React.Component {
         {
           this.state.popUpMessage &&
             <Popup
+              modalView
               smallPopup
               closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
             >
