@@ -61,7 +61,7 @@ GroupStyled.SubHeadingDescription = styled.span`
 
 GroupStyled.InnerHeading = GroupStyled.SubHeadingDescription.extend`
   font-size: 18px;
-  color: #7B797A;
+  color: #565555;
   font-family: 'Avenir-Medium';
 `;
 
@@ -505,7 +505,8 @@ GroupStyled.confirmationSteps = styled.span`
 GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
   margin: 10px 0;
   background-color: transparent;
-  color: #969696;
+  color: #cecece;
+  font-family: 'Avenir-Light';
   border: none;
   &:hover {
     background-color: transparent;
