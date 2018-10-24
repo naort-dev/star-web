@@ -274,7 +274,8 @@ GroupProfileStyled.memberListPopup = styled.div`
   height: 100%;
   overflow: auto;
   .popupHeading {
-    font-size: 45px;
+    font-size: 35px;
+    color: #413e3e;
     border-bottom: 1px solid #ddd;
     padding: 10px 40px;
     @media(max-width: 767px) {
@@ -303,9 +304,9 @@ GroupProfileStyled.memberListPopup = styled.div`
       }
     }
     .memberPopupDetails {
-      font-size: 22px;
+      font-size: 20px;
       line-height: 30px;
-      margin: 20px 3% 20px 0;
+      margin: 20px 3% 20px 5px;
       min-width: 200px;
       @media(max-width: 767px) {
         font-size: 16px;
