@@ -111,12 +111,13 @@ GroupProfileStyled.profileWrapper = styled.div`
       padding: 20px;
     }
     h1 {
-      font-size: 50px;
+      font-size: 48px;
       margin-bottom: 20px;
-      font-family: 'Avenir-Bold';
-      @media(max-width: 1024px) {
+      font-family: 'Avenir-Regular';
+      @media(max-width: 1920px) {
         font-size: 35px;
-        font-family: 'Avenir-Regular';
+      }
+      @media(max-width: 1024px) {
         margin-bottom: 10px;
       }
       @media(max-width:767px) {
@@ -124,7 +125,7 @@ GroupProfileStyled.profileWrapper = styled.div`
       }
     }
     .groupDetailsContainer p {
-      font-size: 25px;
+      font-size: 23px;
       line-height: 30px;
       &:not(.groupDescription) {
       color: #ccc;
@@ -142,10 +143,10 @@ GroupProfileStyled.profileWrapper = styled.div`
         margin-top: 20px;
       }
       h2 {
-        font-size: 45px;
+        font-size: 40px;
         font-weight: 500;
         color: #717171;
-        @media(max-width: 1024px) {
+        @media(max-width: 1920px) {
           font-size: 30px;
           font-family: 'Avenir-Regular';
         }
@@ -166,8 +167,8 @@ GroupProfileStyled.profileWrapper = styled.div`
         .memberDetails {
           width: 17%;
           height: 200px;
-          font-size: 22px;
-          line-height: 30px;
+          font-size: 20px;
+          line-height: 25px;
           margin: 20px 3% 20px 0;
           display: inline-block;
           vertical-align: top;
@@ -233,7 +234,7 @@ GroupProfileStyled.getStartedButton = styled.input`
   text-decoration: none;
   display: inline-block;
   font-size:22px;
-  font-family: 'Avenir-Bold';
+  font-family: 'Avenir-Medium';
   outline:none;
   cursor: pointer;
   border-radius:5px;
