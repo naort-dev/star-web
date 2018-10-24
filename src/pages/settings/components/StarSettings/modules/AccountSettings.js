@@ -7,9 +7,11 @@ export default class AccountSettings extends React.Component {
     super(props);
     this.state = {
       managePayment: false,
-      firstName: '',
-      lastName: '',
-      email: '',
+      firstName: props.userDetails.first_name ? props.userDetails.first_name : '',
+      lastName: props.userDetails.last_name ? props.userDetails.last_name : '',
+      email: props.userDetails.email ? props.userDetails.email : '',
+      celebrityStarsonaMessage: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_starsona_message : false,
+      celebrityAccountUpdates: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_account_updates : false,
       errors: {
         firstName: false,
         lastName: false,
@@ -132,8 +134,8 @@ export default class AccountSettings extends React.Component {
                   <input
                     id="celebrityStarsonaRequest"
                     type="checkbox"
-                    checked={true}
-                    onChange={(event) => { console.log('hi') }}
+                    checked={this.state.celebrityStarsonaMessage}
+                    onChange={() => this.setState({ celebrityStarsonaMessage: !this.state.celebrityStarsonaMessage })}
                   />
                   <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -142,8 +144,8 @@ export default class AccountSettings extends React.Component {
                   <input
                     id="celebrityStarsonaRequest"
                     type="checkbox"
-                    checked={true}
-                    onChange={(event) => { console.log('hi') }}
+                    checked={this.state.celebrityAccountUpdates}
+                    onChange={() => this.setState({ celebrityAccountUpdates: !this.state.celebrityAccountUpdates })}
                   />
                   <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>

@@ -1,13 +1,31 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
+import { fetch } from '../../../../services/fetch';
 import AccountSettings from './modules/AccountSettings';
 import ProfileSettings from './modules/ProfileSettings';
 import InnerTabs from '../../../../components/InnerTabs';
+import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
 import SettingsStyled from '../../styled';
 
-export default class StarSettings extends React.Component {
+class StarSettings extends React.Component {
   state = {
     selectedTab: 'Account',
+    industryList: [],
+  }
+
+  componentWillMount() {
+    fetch('user/professions/').then((response) => {
+      let dropDownList = [];
+      response.data.data.professions.map((profObj) => {
+        dropDownList.push({ value: profObj.id, label: profObj.title });
+        profObj.child.map((childObj) => {
+          dropDownList.push({ value: childObj.id, label: childObj.title });
+        });
+      });
+      return dropDownList;
+    })
+      .then(industryItem => this.setState({ industryList: industryItem }))
   }
 
   switchTab = (item) => {
@@ -32,7 +50,12 @@ export default class StarSettings extends React.Component {
             </SettingsStyled.ContentWrapper>
             <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
               <ProfileSettings
-                industryList={[]}
+                industryList={this.state.industryList}
+                userDetails={this.props.userDetails}
+                celebDetails={this.props.celebrityDetails}
+                fetchUrl={this.props.fetchUrl}
+                stripeRegistration={this.props.stripeRegistration}
+                checkStripe={this.props.checkStripe}
               />
             </SettingsStyled.ContentWrapper>
             <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
@@ -44,3 +67,14 @@ export default class StarSettings extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  stripeRegistration: state.stripeRegistration,
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchURL: () => dispatch(fetchURL()),
+  checkStripe: () => dispatch(checkStripe()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(StarSettings);

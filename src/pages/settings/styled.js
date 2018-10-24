@@ -50,6 +50,48 @@ SettingsStyled.Label = styled.span`
   }
 `;
 
+SettingsStyled.PopupButtonWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 180px;
+  margin: 0 auto;
+`;
+
+SettingsStyled.ActionButton = styled.button`
+  background-color: #fff; 
+  color: #FF6C58;
+  padding: 6px 13px;
+  text-align: center;
+  margin-top: 20px;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 14px;
+  font-family: 'Avenir-Bold';
+  outline:none;
+  border-radius:5px;
+  border: 2px solid #FF6C58;
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+`;
+
+SettingsStyled.HollowButton = styled.button`
+  background-color: #FFF;
+  color: #FF6C58;
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Regular;
+  cursor: pointer;
+  padding: 10px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+  border-image: initial;
+`;
+
 SettingsStyled.WrapsInput = styled.div`
   width:100%;
   position: relative;
@@ -142,6 +184,9 @@ SettingsStyled.InputArea = styled.textarea`
   background-color: white;
   border: 1px solid #EBEBEB;
   border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
   }

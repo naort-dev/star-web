@@ -2,16 +2,17 @@ import React from 'react';
 import validator from 'validator';
 import Popup from '../../../../../components/Popup';
 import MultiSelect from './../../../../../components/MultiSelect';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../../../utils/dataformatter';
 import SettingsStyled from '../../../styled';
 
 export default class ProfileSettings extends React.Component {
   state = {
-    bio: '',
-    charity: '',
+    bio: this.props.celebDetails.description ? this.props.celebDetails.description : '',
+    charity: this.props.celebDetails.charity ? this.props.celebDetails.charity : '',
     industries: [],
-    stageName: '',
-    bookingPrice: '',
-    bookingLimit: '',
+    stageName: this.props.userDetails.nick_name ? this.props.userDetails.nick_name : '',
+    bookingPrice: this.props.celebDetails.rate ? numberToCommaFormatter(this.props.celebDetails.rate) : '',
+    bookingLimit: this.props.celebDetails.weekly_limits ? numberToCommaFormatter(this.props.celebDetails.weekly_limits) : '',
     popUpMessage: null,
     priceCheck: false,
     limitCheck: false,
@@ -30,11 +31,47 @@ export default class ProfileSettings extends React.Component {
     },
   };
 
+  componentWillMount() {
+    let professionList;
+    if (this.props.celebDetails.profession_details) {
+      professionList = this.props.celebDetails.profession_details.map(profession => profession.id.toString());
+    }
+    this.setState({ industries: professionList });
+    this.props.checkStripe();
+  }
+
+  getStripe() {
+    this.props.fetchURL()
+      .then((response) => {
+        window.location = response.data.data.stripe_url;
+      });
+  }
+
+  getDashboard() {
+    if (this.props.stripeRegistration.dashboardURL) {
+      window.open(this.props.stripeRegistration.dashboardURL, '_blank');
+    }
+  }
+
   handleFieldChange = (fieldType, fieldValue) => {
     if (fieldType === 'industries') {
       const industriesArray = fieldValue.split(',');
       if (industriesArray.length <= 3) {
         this.setState({ industries: industriesArray, errors: { ...this.state.errors, industries: false } });
+      }
+    } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
+      const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
+      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+        this.setState({
+          [fieldType]: newFieldValue,
+          errors: { ...this.state.errors, [fieldType]: false },
+        }, () => {
+          if (fieldType === 'bookingPrice' && this.state.priceCheck) {
+            this.setState({ priceCheck: false });
+          } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
+            this.setState({ limitCheck: false });
+          }
+        });
       }
     } else {
       this.setState({
@@ -52,26 +89,19 @@ export default class ProfileSettings extends React.Component {
 
   validateFields = () => {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
-    if (this.state.bio === '') {
-      bio = true;
-    }
-    if (this.state.industries.length < 3) {
-      industries = true;
-    } else {
-      industries = false;
-    }
-    if (!validator.isNumeric(this.state.bookingLimit, { no_symbols: true })) {
-      bookingLimit = true;
-    } else {
-      bookingLimit = false;
-    }
-    if (!validator.isNumeric(this.state.bookingPrice, { no_symbols: true })) {
-      bookingPrice = true;
-    } else {
-      bookingPrice = false;
+    bio = this.state.bio === '';
+    industries = this.state.industries.length === 0;
+    bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
+    bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
+    const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
+    const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
+    if (priceValid) {
+      this.handleFieldBlur('bookingPrice', this.state.bookingPrice);
+    } else if (limitValid) {
+      this.handleFieldBlur('bookingLimit', this.state.bookingLimit);
     }
     this.setState({ errors: { ...this.state.errors, industries, bookingLimit, bookingPrice, bio } });
-    return !industries && !bookingLimit && !bookingLimit && !bio;
+    return !industries && !bookingLimit && !bookingLimit && !bio && !priceValid && !limitValid;
   }
 
   submitGroupAccountDetails = () => {
@@ -95,12 +125,13 @@ export default class ProfileSettings extends React.Component {
   };
 
   handleFieldBlur = (fieldType, fieldValue) => {
-    if (fieldType === 'bookingLimit' && !this.state.limitCheck && fieldValue > 20) {
+    const newFieldValue = commaToNumberFormatter(fieldValue)
+    if (fieldType === 'bookingLimit' && !this.state.limitCheck && newFieldValue > 20) {
       this.bookingLimit.blur();
-      this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?`, selectedCheck: 'limitCheck' });
-    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && fieldValue > 499) {
+      this.setState({ popUpMessage: `Are you sure you can complete ${numberToCommaFormatter(newFieldValue)} Starsona videos?`, selectedCheck: 'limitCheck' });
+    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && newFieldValue > 499) {
       this.bookingPrice.blur();
-      this.setState({ popUpMessage: `Set your booking rate at ${fieldValue}?`, selectedCheck: 'priceCheck' });
+      this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
   }
 
@@ -131,7 +162,7 @@ export default class ProfileSettings extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {/* {
+        {
           this.state.popUpMessage &&
             <Popup
               smallPopup
@@ -141,7 +172,7 @@ export default class ProfileSettings extends React.Component {
                 this.renderPopup()
               }
             </Popup>
-        } */}
+        }
         <SettingsStyled.HeadingWrapper>
           <SettingsStyled.SubHeading>
             Public information
@@ -223,7 +254,7 @@ export default class ProfileSettings extends React.Component {
               <SettingsStyled.PriceInput
                 small
                 innerRef={(node) => {this.bookingPrice = node;}}
-                type="number"
+                type="text"
                 placeholder="0"
                 value={this.state.bookingPrice}
                 onBlur={event => this.handleFieldBlur('bookingPrice', event.target.value)}
@@ -244,7 +275,7 @@ export default class ProfileSettings extends React.Component {
               <SettingsStyled.NumberInput
                 small
                 innerRef={(node) => {this.bookingLimit = node;}}
-                type="number"
+                type="text"
                 placeholder="0"
                 value={this.state.bookingLimit}
                 onBlur={event => this.handleFieldBlur('bookingLimit', event.target.value)}
@@ -396,6 +427,33 @@ export default class ProfileSettings extends React.Component {
                   : null
                 }
               </SettingsStyled.CustomInput>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+        </SettingsStyled.InputwrapperDiv>
+        <SettingsStyled.HeadingWrapper>
+          <SettingsStyled.SubHeading>
+            Private information
+          </SettingsStyled.SubHeading>
+          <SettingsStyled.SubHeadingDescription>
+            This information is private to you and will not be shared
+            publicly
+          </SettingsStyled.SubHeadingDescription>
+        </SettingsStyled.HeadingWrapper>
+        <SettingsStyled.InputwrapperDiv>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Payments</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.CustomInput>
+                {this.props.stripeRegistration.cardDetails ?
+                  <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                  :
+                  <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
+                }
+              </SettingsStyled.CustomInput>
+              <SettingsStyled.ErrorMsg>
+                Payouts for your earnings will be distributed on
+                the first of every month
+              </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
         </SettingsStyled.InputwrapperDiv>
