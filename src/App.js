@@ -113,7 +113,7 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                <Route path="/group-profile" component={GroupProfile} />
+                <Route exact path="/group-profile/:id" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
 
