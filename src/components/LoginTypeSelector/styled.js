@@ -4,6 +4,9 @@ import { Scrollbars } from 'react-custom-scrollbars';
 const TypeSelectorWrapper = styled.div`
   text-align: center;
   height: calc(100% - 98px);
+  @media(min-width: 1025px) {
+    height: calc(100% - 55px);
+  }
 `;
 TypeSelectorWrapper.Content = styled.div`
   padding: 0px 0px;
