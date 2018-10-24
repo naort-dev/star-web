@@ -104,7 +104,7 @@ export default class ProfileSettings extends React.Component {
     return !industries && !bookingLimit && !bookingLimit && !bio && !priceValid && !limitValid;
   }
 
-  submitGroupAccountDetails = () => {
+  submitProfileDetails = () => {
     if (this.validateFields()) {
       const celebrityDetails = {
         description: this.state.bio,
@@ -120,7 +120,7 @@ export default class ProfileSettings extends React.Component {
         youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
-      this.props.submitAccountDetails(celebrityDetails, socialLinks);
+      this.props.submitProfileDetails(celebrityDetails, socialLinks);
     }
   };
 
@@ -457,6 +457,13 @@ export default class ProfileSettings extends React.Component {
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
         </SettingsStyled.InputwrapperDiv>
+        <SettingsStyled.ControlWrapper>
+          <SettingsStyled.ControlButton
+            onClick={() => this.submitProfileDetails()}
+          >
+            Save
+          </SettingsStyled.ControlButton>
+        </SettingsStyled.ControlWrapper>
       </React.Fragment>
     );
   }

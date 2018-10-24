@@ -28,9 +28,13 @@ export default class Requests extends React.Component {
     ];
   }
   componentWillMount() {
-    this.props.fetchUserDetails(this.props.sessionDetails.id);
+    this.fetchUserDetails();
     this.setInnerLinks();
   }
+
+  fetchUserDetails = () => {
+    this.props.fetchUserDetails(this.props.sessionDetails.id)
+  } 
 
   setInnerLinks = () => {
     const innerLinks = this.starLinks;
@@ -44,6 +48,10 @@ export default class Requests extends React.Component {
           <StarSettings
             userDetails={this.props.userDetails}
             celebrityDetails={this.props.celebrityDetails}
+            fetchUserDetails={this.fetchUserDetails}
+            updateUserDetails={this.props.updateUserDetails}
+            updateNotification={this.props.updateNotification}
+            updateProfilePhoto={this.props.updateProfilePhoto}
           />
         );
       case ROLES.fan:
