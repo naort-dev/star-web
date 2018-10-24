@@ -166,9 +166,6 @@ export default class GroupProfile extends React.Component {
               <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/getstarsona/">
                 <GroupProfileStyled.shareIcon alt="playsore icon" src="assets/images/insta-icon.svg" />
               </a>
-              <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCmmN9QPqAGE18yWENxsw7jQ">
-                <GroupProfileStyled.shareIcon alt="playsore icon" src="assets/images/youtube-icon.svg" />
-              </a>
             </div>
           </GroupProfileStyled.profileWrapper>
         </GroupProfileStyled.sectionWrapper>
