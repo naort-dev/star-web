@@ -208,7 +208,7 @@ export default class Starprofile extends React.Component {
     } else {
       coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
     }
-    if (this.props.detailsError === '404') {
+    if (this.props.detailsError === '404' || Object.keys(this.props.detailsError).length) {
       return <Redirect to="/not-found" />;
     }
     return (

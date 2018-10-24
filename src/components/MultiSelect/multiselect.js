@@ -44,7 +44,7 @@ injectGlobal`
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
   background: #fff;
-  border-color: #b3b3b3 #ccc #d9d9d9;
+  border-color: #FF6C58;
 }
 .Select.is-open > .Select-control .Select-arrow {
   top: -2px;
@@ -114,6 +114,9 @@ injectGlobal`
   outline: none;
   position: relative;
   width: 100%;
+  &:focus-within {
+    border-color: #FF6C58;
+  }
 }
 .Select-control:hover {
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);

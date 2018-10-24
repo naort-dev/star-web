@@ -213,7 +213,7 @@ export default class RequestDetails extends React.Component {
             <VideoRenderDiv.StatusDetails>
               <VideoRenderDiv.StarDetails>Status</VideoRenderDiv.StarDetails>
               <VideoRenderDiv.RequestStatus
-               highlight={props.starMode ? celebOpenStatusList.indexOf(props.requestStatus) > -1 : openStatusList.indexOf(props.requestStatus)}
+               highlight={props.starMode ? celebOpenStatusList.indexOf(props.requestStatus) > -1 : openStatusList.indexOf(props.requestStatus) > -1}
               >{props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus]}</VideoRenderDiv.RequestStatus>
             </VideoRenderDiv.StatusDetails>
           </VideoRenderDiv.StatusDetailsWrapper>

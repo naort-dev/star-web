@@ -188,6 +188,7 @@ class starRegistrationComponent extends React.Component {
                       {...this.props}
                       src={this.state.videoUrl}
                       responseMode
+                      recordPlaceHolder="Start recording"
                       recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
                       duration={recorder.signUpTimeOut}
                       onSubmit={this.getVideo}

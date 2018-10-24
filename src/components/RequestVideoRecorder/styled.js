@@ -274,11 +274,13 @@ font-family: 'Avenir-Bold';
 outline:none;
 border-radius: 100%;
 background-image: url('../../assets/images/upload.png');
-background-size: 100% 100%;
+background-size: 40px;
 background-repeat: no-repeat;
+background-position: center center;
 border: none;
 cursor: pointer;
 @media(min-width: 768px){
+  background-position: center 8px;
   height: 60px;
   width: 60px;
 }
