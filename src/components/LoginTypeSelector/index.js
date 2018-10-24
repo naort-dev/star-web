@@ -26,12 +26,12 @@ export class LoginTypeSelector extends React.Component  {
           >
             <TypeSelectorWrapper.OptionWrapper>
               <TypeSelectorWrapper.HeaderText>
-                Create your free Account
+                Create your account
               </TypeSelectorWrapper.HeaderText>
               <TypeSelectorWrapper.SocialMediaMessage>
                 Already have an account?
                 <span onClick={() => this.props.toggleLogin(true)}>
-                  <TypeSelectorWrapper.LoginDiv>Log In</TypeSelectorWrapper.LoginDiv>
+                  <TypeSelectorWrapper.LoginDiv>Log in</TypeSelectorWrapper.LoginDiv>
                 </span>
               </TypeSelectorWrapper.SocialMediaMessage>
               <TypeSelectorWrapper.ButtonWrapper>
