@@ -225,7 +225,7 @@ GroupProfileStyled.ButtonWrapper = styled.div`
   }
 `;
 GroupProfileStyled.getStartedButton = styled.input`
-  background-color: #d2412c; 
+  background-color: #FF6C58; 
   color: #fff;
   padding: 22px 30px;
   min-width: 260px;
@@ -238,12 +238,12 @@ GroupProfileStyled.getStartedButton = styled.input`
   outline:none;
   cursor: pointer;
   border-radius:5px;
-  border: 2px solid #d2412c;
+  border: 2px solid #FF6C58;
   margin-top:3%;
   -webkit-appearance: none;
   &:hover {
-    background-color: #FF6C58;
-    border: 2px solid #FF6C58;
+    background-color: #FF3B21;
+    border: 2px solid #FF3B21;
   }
   @media(min-width:1920px){
     font-size:20px;
