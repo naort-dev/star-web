@@ -30,6 +30,7 @@ import { Starbio } from './pages/starbio';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
+import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -112,6 +113,7 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
+                <Route exact path="/group-profile/:id" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
 
