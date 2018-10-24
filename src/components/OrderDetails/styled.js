@@ -5,10 +5,10 @@ const OrderStyled = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding-bottom: 100px;
+  padding-bottom: ${props => (props.buttonsEnabled ? '100px' : '0')};
   @media(min-width: 768px) {
     padding: 0 20px;
-    padding-bottom: 100px;
+    padding-bottom: ${props => (props.buttonsEnabled ? '100px' : '0')};
   }
 `;
 

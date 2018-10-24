@@ -79,10 +79,9 @@ class SignupFlow extends React.Component {
     return (
       <div>
         <RequestFlowPopup
-          dotsCount={this.state.currentStep ? this.state.stepCount : 0}
-          selectedDot={this.state.currentStep}
+          dotsCount={0}
           closePopUp={() => this.closeSignUp()}
-          disableOutsideClick
+          modalView={this.state.currentStep > 1}
           smallPopup
         >
           <LoginContainer>
@@ -97,7 +96,7 @@ class SignupFlow extends React.Component {
                     } */}
                     <Link to="/">
                       <HeaderSection.LogoImage
-                        src="assets/images/logo_starsona_large.svg"
+                        src="assets/images/logo_starsona.png"
                         alt=""
                       />
                     </Link>

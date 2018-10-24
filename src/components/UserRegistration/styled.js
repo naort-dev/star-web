@@ -60,8 +60,9 @@ GroupStyled.SubHeadingDescription = styled.span`
 `;
 
 GroupStyled.InnerHeading = GroupStyled.SubHeadingDescription.extend`
-  color: #7B797A;
-  font-family: 'Avenir-Regular';
+  font-size: 18px;
+  color: #565555;
+  font-family: 'Avenir-Medium';
 `;
 
 GroupStyled.InnerDescription = styled.span`
@@ -203,6 +204,9 @@ GroupStyled.InputArea = styled.textarea`
   background-color: white;
   border: 1px solid #EBEBEB;
   border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
   }
@@ -501,7 +505,8 @@ GroupStyled.confirmationSteps = styled.span`
 GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
   margin: 10px 0;
   background-color: transparent;
-  color: #969696;
+  color: #cecece;
+  font-family: 'Avenir-Light';
   border: none;
   &:hover {
     background-color: transparent;

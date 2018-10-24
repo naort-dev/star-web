@@ -12,12 +12,16 @@ export default class Popup extends React.Component {
     this.popupWrapper = null;
   }
   componentDidMount() {
-    window.addEventListener('click', this.hidePopup);
+    if (!this.props.modalView) {
+      window.addEventListener('click', this.hidePopup);
+    }
     document.body.style.overflow = 'hidden';
     document.body.style.position = 'fixed';
   }
   componentWillUnmount() {
-    window.removeEventListener('click', this.hidePopup);
+    if (!this.props.modalView) {
+      window.removeEventListener('click', this.hidePopup);
+    }
     document.body.style.overflow = 'initial';
     document.body.style.position = 'initial';
     if (this.props.scrollTarget) {
@@ -40,10 +44,13 @@ export default class Popup extends React.Component {
               popHeight={this.props.height}
               innerRef={node => this.popupContent = node}
             >
-              <PopupStyled.CloseButton
-                smallPopup={this.props.smallPopup}
-                onClick={() => this.props.closePopUp()}
-              />
+              {
+                !this.props.modalView &&
+                  <PopupStyled.CloseButton
+                    smallPopup={this.props.smallPopup}
+                    onClick={() => this.props.closePopUp()}
+                  />
+              }
               <PopupStyled.SmallContent>
                 {this.props.children}
               </PopupStyled.SmallContent>

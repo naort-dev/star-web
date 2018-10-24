@@ -345,15 +345,12 @@ export default class SignUp extends React.Component {
           renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}
         >
           <LoginContainer.Container>
-            <LoginContainer.Heading>Create your free account</LoginContainer.Heading>
+            <LoginContainer.Heading>Create your account</LoginContainer.Heading>
             <LoginContainer.SocialMediaMessage>Already have an account?
               <span onClick={() => this.props.toggleLogin(true)}>
-                <LoginContainer.LoginDiv>Log In</LoginContainer.LoginDiv>
+                <LoginContainer.LoginDiv>Log in</LoginContainer.LoginDiv>
               </span>
             </LoginContainer.SocialMediaMessage>
-            <LoginContainer.SignupLine>
-              <span>Signup using social</span>
-            </LoginContainer.SignupLine>
             <LoginContainer.ButtonDiv>
               <LoginContainer.Button onClick={() => this.OnFBlogin()}>
                 <LoginContainer.FacebookContent /> 

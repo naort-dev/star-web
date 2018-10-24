@@ -362,13 +362,9 @@ export default class LoginForm extends React.Component {
               <LoginContainer.SocialMediaMessage>
                 Don't have an account?
                 <span onClick={() => this.props.toggleSignup(true)}>
-                  <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
+                  <LoginContainer.LoginDiv>Sign up</LoginContainer.LoginDiv>
                 </span>
               </LoginContainer.SocialMediaMessage>
-              <LoginContainer.SignupLine>
-                <span>Login using social</span>
-              </LoginContainer.SignupLine>
-
               <LoginContainer.ButtonDiv>
                 <LoginContainer.Button >
                   <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />
@@ -427,9 +423,6 @@ export default class LoginForm extends React.Component {
                               onChange={this.acceptPasswordHandler}
                               onBlur={this.checkPassword}
                             />
-                            {/* <LoginContainer.ShowPassword
-                              onClick={this.ShowPassword}
-                            /> */}
                           </LoginContainer.PasswordWrapper>
 
                           <LoginContainer.ErrorMsg>
@@ -438,20 +431,28 @@ export default class LoginForm extends React.Component {
                         </LoginContainer.WrapsInput>
                       </LoginContainer.InputWrapper>
                     )}
-                  {this.props.statusCode === "410" ? (
+                  {this.props.statusCode === '410' ? (
                     <React.Fragment />
                   ) : (
                       <LoginContainer.ForgotButtonWrapper>
                         <LoginContainer.actionText
-                          onClick={() => this.props.changeView("forgotpassword")}
+                          onClick={() => this.props.changeView('forgotpassword')}
                         >
                           <LoginContainer.ForgotButtonSpan>
                             {" "}
                             Forgot your password?
-                        </LoginContainer.ForgotButtonSpan>
+                          </LoginContainer.ForgotButtonSpan>
                         </LoginContainer.actionText>
                       </LoginContainer.ForgotButtonWrapper>
                     )}
+                  {
+                    this.props.statusCode !== '410' && this.props.statusCode !== '310' && this.props.error &&
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.ErrorMsg>
+                          {this.props.error}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                  }
                   <LoginContainer.ButtonWrapper>
                     <LoginContainer.SignIn
                       type="submit"
@@ -462,17 +463,6 @@ export default class LoginForm extends React.Component {
                   </LoginContainer.ButtonWrapper>
                 </LoginContainer.InputContainer>
               </LoginContainer.InputFieldsWrapper>
-
-              <LoginContainer.WrapsInput>
-                {this.props.statusCode === "410" ||
-                  this.props.statusCode === "310" ? (
-                    <LoginContainer.EmptyDiv />
-                  ) : (
-                    <LoginContainer.ErrorMsg>
-                      {this.props.error}
-                    </LoginContainer.ErrorMsg>
-                  )}
-              </LoginContainer.WrapsInput>
             </LoginContainer.Container>
           </Scrollbars>
         </LoginContainer.SocialMediaSignup>

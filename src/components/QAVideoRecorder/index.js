@@ -401,7 +401,7 @@ if (this.props.src && !this.props.videoRecorder.recordedBlob && !this.props.vide
         </VideoRecorderDiv.Wrapper>
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
-          <VideoRecorderDiv.Button title="Record your question" onClick={this.startRecording.bind(this)} />
+          <VideoRecorderDiv.Button title={this.props.recordPlaceHolder ? this.props.recordPlaceHolder : 'Record your question'} onClick={this.startRecording.bind(this)} />
           <VideoRecorderDiv.UploadWrapper>
             <VideoRecorderDiv.NoVideoButton />
             <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />
