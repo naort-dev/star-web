@@ -59,7 +59,7 @@ export default class GroupProfile extends React.Component {
               smallPopup
             >
               <GroupProfileStyled.memberListPopup>
-                <div className="popupHeading">Our Members</div>
+                <div className="popupHeading">Our members</div>
                 <div className="memberDetails">
                   <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
                   <div className="memberPopupDetails">
