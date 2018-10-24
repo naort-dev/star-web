@@ -1,10 +1,12 @@
 import React from 'react';
+import ManagePayments from '../../../../../components/ManagePayments';
 import SettingsStyled from '../../../styled';
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      managePayment: false,
       firstName: '',
       lastName: '',
       email: '',
@@ -26,6 +28,13 @@ export default class AccountSettings extends React.Component {
   render() {
     return (
       <React.Fragment>
+        {
+          this.state.managePayment ?
+            <ManagePayments
+              onClosePayments={() => this.setState({ managePayment: false })}
+            />
+          : null
+        }
         <SettingsStyled.InputwrapperDiv>
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>First name</SettingsStyled.Label>
@@ -96,6 +105,59 @@ export default class AccountSettings extends React.Component {
                     : null}
                 </SettingsStyled.ErrorMsg>
               </SettingsStyled.CustomInput>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Password</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.ActionText>
+                Manage your password
+              </SettingsStyled.ActionText>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Payment method</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.ActionText onClick={() => this.setState({ managePayment: true })}>
+                Manage your payments
+              </SettingsStyled.ActionText>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Notifications</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.CheckBoxesWrapper>
+                <SettingsStyled.CheckBoxWrapper id="checkbox_container">
+                  <span>Messages from Starsona</span>
+                  <input
+                    id="celebrityStarsonaRequest"
+                    type="checkbox"
+                    checked={true}
+                    onChange={(event) => { console.log('hi') }}
+                  />
+                  <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                </SettingsStyled.CheckBoxWrapper>
+                <SettingsStyled.CheckBoxWrapper id="checkbox_container">
+                  <span>Account updates</span>
+                  <input
+                    id="celebrityStarsonaRequest"
+                    type="checkbox"
+                    checked={true}
+                    onChange={(event) => { console.log('hi') }}
+                  />
+                  <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                </SettingsStyled.CheckBoxWrapper>
+                <SettingsStyled.CheckBoxWrapper id="checkbox_container">
+                  <span>My Starsona updates</span>
+                  <input
+                    id="celebrityStarsonaRequest"
+                    type="checkbox"
+                    checked={true}
+                    onChange={(event) => { console.log('hi') }}
+                  />
+                  <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                </SettingsStyled.CheckBoxWrapper>
+              </SettingsStyled.CheckBoxesWrapper>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
         </SettingsStyled.InputwrapperDiv>

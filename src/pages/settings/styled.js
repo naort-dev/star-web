@@ -9,6 +9,11 @@ SettingsStyled.Container = styled.section`
   padding: 20px 10px;
 `;
 
+SettingsStyled.ContentWrapper = styled.section`
+  padding-right: 10px;
+  display: ${props => (props.visible ? 'block' : 'none')};
+`;
+
 SettingsStyled.InputwrapperDiv = styled.div`
 
 `;
@@ -26,7 +31,7 @@ SettingsStyled.InputWrapper = styled.div`
   }
 `;
 
-SettingsStyled.Label = styled.div`
+SettingsStyled.Label = styled.span`
   color:#797979;
   font-family: 'Avenir-Regular';
   font-size:13px;
@@ -78,6 +83,46 @@ SettingsStyled.CustomPlaceholder = styled.span`
   }
 `;
 
+SettingsStyled.CloseButton = styled.span`
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  display: block;
+  width: 17px;
+  height: 17px;
+  cursor: pointer;
+  background: url(assets/images/close-icon-orange.svg) center center / cover no-repeat;
+  background-position: center center;
+`;
+
+SettingsStyled.mutiSelectItemWrapper = styled.div`
+  display: inline-block;
+  border: 2px solid white;
+  padding: 7px;
+  color: white;
+  background-color: #FF6C58;
+  border-radius: 20px;
+  margin: 9px;
+  font-size: 14px;
+  background-color: #FF6C58;
+  @media(min-width: 1025px) {
+    padding: 10px;
+    margin: 7.5px;
+  }
+`;
+
+SettingsStyled.OptionCloseButton = SettingsStyled.CloseButton.extend`
+  position: static;
+  width: 12px;
+  height: 12px;
+  border: none;
+  outline: none;
+  margin-left: 4px;
+  background: url('assets/images/close-icon-white.svg') no-repeat;
+  background-position: center center;
+  display: inline-block;
+`.withComponent('input');
+
 SettingsStyled.HighlightText = styled.span`
   color: #FF6C58;
   pointer-events: auto;
@@ -106,6 +151,48 @@ SettingsStyled.InputArea = styled.textarea`
   @media(min-width:1920px){
     font-size:16px;
   }
+`;
+SettingsStyled.PhoneNo = SettingsStyled.InputArea.extend`
+  width: ${props => (props.lastDigit ? '64px' : '53px')};;
+  height: 35px;
+  margin-right: 12px;
+  @media(min-width: 1025px) {
+    margin-right: 12px;
+  }
+`.withComponent('input');
+
+SettingsStyled.CityInfo = SettingsStyled.InputArea.extend`
+  width: 50%;
+  height: 40px;
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
+`.withComponent('div');
+
+SettingsStyled.AddressDetails = SettingsStyled.InputArea.extend`
+  width: calc(25% - 10px);
+  height: 40px;
+  margin-left: 10px;
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
+  @media(min-width: 1025px) {
+    margin-left: 10px;
+  }
+`.withComponent('div');
+
+SettingsStyled.ZipCode = SettingsStyled.AddressDetails.extend`
+  vertical-align: top;
+  display: inline-block;
+  padding: 0;
+`.withComponent('div');
+
+SettingsStyled.NumberInput = SettingsStyled.InputArea.extend`
+
+`.withComponent('input');
+
+SettingsStyled.PriceInput = SettingsStyled.NumberInput.extend`
+  padding-left: 18px;
 `;
 
 SettingsStyled.ErrorMsg = styled.div`
@@ -140,6 +227,36 @@ SettingsStyled.SubHeadingDescription = styled.span`
   font-size: 14px;
   margin-top: 5px;
   font-family: 'Avenir-Light';
+`;
+
+SettingsStyled.HighlightText = styled.span`
+  color: #FF6C58;
+  pointer-events: auto;
+`;
+
+SettingsStyled.ActionText = styled.span`
+  color: #FF6C58;
+  font-size: 14px;
+  font-family: 'Avenir-Regular';
+  padding-top: 10px;
+  padding-left: 10px;
+  height: 40px;
+  display: block;
+  cursor: pointer;
+  &:hover {
+    color: #FF3B21;
+  }
+`;
+
+SettingsStyled.CheckBoxesWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+SettingsStyled.CheckBoxWrapper = styled.label`
+  margin-bottom: 0;
+  display: block;
+  margin-top: 10px;
 `;
 
 export default SettingsStyled;

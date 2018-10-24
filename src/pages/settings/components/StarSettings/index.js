@@ -1,5 +1,7 @@
 import React from 'react';
+import Scrollbars from 'react-custom-scrollbars';
 import AccountSettings from './modules/AccountSettings';
+import ProfileSettings from './modules/ProfileSettings';
 import InnerTabs from '../../../../components/InnerTabs';
 import SettingsStyled from '../../styled';
 
@@ -12,35 +14,31 @@ export default class StarSettings extends React.Component {
     this.setState({ selectedTab: item });
   }
 
-  renderSettingsContent = () => {
-    const { selectedTab } = this.state;
-    switch (selectedTab) {
-      case 'Account':
-        return (
-          <AccountSettings
-            userDetails={this.props.userDetails}
-          />
-        );
-      case 'Profile details':
-        return <div>Profile</div>;
-      case 'Share profile':
-        return <div>Profile</div>;
-      default: return null;
-    }
-  }
-
   render() {
+    const { selectedTab } = this.state;
     return (
       <SettingsStyled>
         <InnerTabs
           labels={['Account', 'Profile details', 'Share profile']}
           switchTab={this.switchTab}
-          selected={this.state.selectedTab}
+          selected={selectedTab}
         />
         <SettingsStyled.Container>
-          {
-            this.renderSettingsContent()
-          }
+          <Scrollbars>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
+              <AccountSettings
+                userDetails={this.props.userDetails}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
+              <ProfileSettings
+                industryList={[]}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
+              <div>Profile</div>
+            </SettingsStyled.ContentWrapper>
+          </Scrollbars>
         </SettingsStyled.Container>
       </SettingsStyled>
     );
