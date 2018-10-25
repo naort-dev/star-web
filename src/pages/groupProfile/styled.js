@@ -73,7 +73,8 @@ GroupProfileStyled.sectionWrapper = styled.div`
   .image-gallery-left-nav::before {
   }
   .image-gallery-slides, .image-gallery-slides img {
-    min-height: 130px
+    min-height: 130px;
+    max-height: 430px;
   }
 `;
 
@@ -131,8 +132,17 @@ GroupProfileStyled.profileWrapper = styled.div`
     .groupDetailsContainer p {
       font-size: 23px;
       line-height: 30px;
-      &:not(.groupDescription) {
-      color: #ccc;
+      &.groupDescription {
+        height: 115px;
+        overflow: hidden;
+      }
+      &.groupFullDescription {
+        height: auto;
+      }
+      &.readMore {
+        margin-top:  10px;
+        color: #ccc;
+        cursor: pointer;
       }
       @media(min-width: 1025px) and (max-width: 1920px) {
         font-size: 20px;
@@ -152,6 +162,7 @@ GroupProfileStyled.profileWrapper = styled.div`
       h2 {
         font-size: 40px;
         font-weight: 500;
+        margin-bottom: 5px;
         color: #717171;
         @media(max-width: 1920px) {
           font-size: 30px;
@@ -171,10 +182,14 @@ GroupProfileStyled.profileWrapper = styled.div`
           display: flex;
           overflow: auto;
         }
+        &>p {
+          margin: 10px;
+        }
         .memberDetails {
           width: 17%;
-          height: 200px;
-          font-size: 20px;
+          height: 100%;
+          max-height: 210px;
+          font-size: 18px;
           line-height: 25px;
           margin: 20px 3% 20px 0;
           display: inline-block;
@@ -197,7 +212,8 @@ GroupProfileStyled.profileWrapper = styled.div`
             font-family: 'Avenir-Medium';
           }
           .jobDetails {
-            color: #9e9e9e
+            color: #9e9e9e;
+            word-break: break-all;
           }
         }
       }
@@ -271,11 +287,10 @@ GroupProfileStyled.getStartedButton = styled.input`
 `;
 
 GroupProfileStyled.memberListPopup = styled.div`
-  height: 100%;
-  overflow: auto;
+  height: calc( 100% - 75px);
   .popupHeading {
-    font-size: 35px;
-    color: #413e3e;
+    font-size: 32px;
+    color: #4c555d;
     border-bottom: 1px solid #ddd;
     padding: 10px 40px;
     @media(max-width: 767px) {
@@ -304,8 +319,8 @@ GroupProfileStyled.memberListPopup = styled.div`
       }
     }
     .memberPopupDetails {
-      font-size: 20px;
-      line-height: 30px;
+      font-size: 18px;
+      line-height: 25px;
       margin: 20px 3% 20px 5px;
       min-width: 200px;
       @media(max-width: 767px) {
@@ -318,14 +333,33 @@ GroupProfileStyled.memberListPopup = styled.div`
         margin-top: 5px;
       }
       .jobDetails {
-        color: #9e9e9e
+        color: #9e9e9e;
+        word-break: break-all;
       }
     }
-  }
+    .memberDetailButton{
+      background-color: #dadada;
+      color: #676767;
+      width: 150px;
+      text-align: center;
+      font-size: 16px;
+      font-family: Avenir - Medium;
+      cursor: pointer;
+      padding: 12px;
+      height: 45px;
+      -webkit-text -decoration: none;
+      text-decoration: none;
+      outline: none;
+      border-radius: 5px;
+      border-width: 2px;
+      border-style: solid;
+      border-color: #dadada;
+      border-image: initial;
+    }
 `;
 
-GroupProfileStyled.memberDetailButton = styled.button`
-  background-color: #b6b6b6;
+GroupProfileStyled.memberDetailButton = styled.a`
+  background-color: #dadada;
   color: #676767;
   width: 150px;
   text-align: center;
@@ -333,14 +367,14 @@ GroupProfileStyled.memberDetailButton = styled.button`
   font-family: Avenir-Medium;
   cursor: pointer;
   padding: 12px;
-  height: 50px;
+  height: 45px;
   -webkit-text-decoration: none;
   text-decoration: none;
   outline: none;
   border-radius: 5px;
   border-width: 2px;
   border-style: solid;
-  border-color: #b6b6b6;
+  border-color: #dadada;
   border-image: initial;
 `;
 
