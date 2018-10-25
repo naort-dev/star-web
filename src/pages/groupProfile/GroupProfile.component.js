@@ -128,6 +128,7 @@ export default class GroupProfile extends React.Component {
             useBrowserFullscreen={false}
             showPlayButton={false}
             autoPlay={true}
+            slideInterval={8000}
           />
           <GroupProfileStyled.profileWrapper>
             <div className="profileImageContainer">
