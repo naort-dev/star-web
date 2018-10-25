@@ -52,6 +52,10 @@ const memberImage = styled.img`
   height:120px;
   border-radius: 50%;
   object-fit: cover;
+  @media(max-width: 1920px) and (min-width: 1025px) {
+    width: 95px;
+    height: 95px;
+  }
   @media(max-width: 767px) {
     width: 70px;
     height: 70px;
@@ -130,6 +134,9 @@ GroupProfileStyled.profileWrapper = styled.div`
       &:not(.groupDescription) {
       color: #ccc;
       }
+      @media(min-width: 1025px) and (max-width: 1920px) {
+        font-size: 20px;
+      }
       @media(max-width: 1024px) {
         font-size: 20px;
       }
@@ -156,11 +163,11 @@ GroupProfileStyled.profileWrapper = styled.div`
       }
       .memberListContainer {
         border-bottom: 1px solid #ddd;
-        @media(min-width: 768px) {
+        @media(min-width: 1025px) {
           display: flex;
           overflow: auto;
         }
-        @media(max-width: 767px) {
+        @media(max-width: 1024px) {
           display: flex;
           overflow: auto;
         }
@@ -174,6 +181,10 @@ GroupProfileStyled.profileWrapper = styled.div`
           vertical-align: top;
           text-align: center;
           min-width: 120px;
+          @media(max-width: 1920px) and (min-width: 1025px) {
+            min-width: 90px;
+            width: calc( 20% - 20px);
+          }
           @media(max-width: 767px) {
             font-size: 16px;
             line-height: 25px;
@@ -227,8 +238,8 @@ GroupProfileStyled.ButtonWrapper = styled.div`
 GroupProfileStyled.getStartedButton = styled.input`
   background-color: #FF6C58; 
   color: #fff;
-  padding: 22px 30px;
-  min-width: 260px;
+  padding: 15px;
+  min-width: 250px;
   width:auto;
   text-align: center;
   text-decoration: none;
@@ -263,7 +274,8 @@ GroupProfileStyled.memberListPopup = styled.div`
   height: 100%;
   overflow: auto;
   .popupHeading {
-    font-size: 45px;
+    font-size: 35px;
+    color: #413e3e;
     border-bottom: 1px solid #ddd;
     padding: 10px 40px;
     @media(max-width: 767px) {
@@ -292,9 +304,9 @@ GroupProfileStyled.memberListPopup = styled.div`
       }
     }
     .memberPopupDetails {
-      font-size: 22px;
+      font-size: 20px;
       line-height: 30px;
-      margin: 20px 3% 20px 0;
+      margin: 20px 3% 20px 5px;
       min-width: 200px;
       @media(max-width: 767px) {
         font-size: 16px;
