@@ -48,25 +48,10 @@ export const celebVideosListSwapCacheEnd = key => ({
 });
 
 export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispatch, getState) => {
-  // const cachedData = getState().videosList[category.label] && getState().videosList[category.label].data;
-  const { limit } = getState().videosList;
+  const { limit } = getState().celebVideos;
   const request = requestType ? requestType: '';
-  // if (categoryChange && cachedData) {
-  //   if (typeof getState().videosList.token !== typeof undefined) {
-  //     getState().videosList.token.cancel('Operation canceled due to new request.');
-  //   }
-  //   dispatch(videosListSwapCacheStart(refresh));
-  //   return new Promise((resolve) => {
-  //     setTimeout(resolve, 0);
-  //   }).then(() => {
-  //     dispatch(videosListSwapCacheEnd(category.label));
-  //   });
-  //   // setTimeout(() => {
-  //   //   dispatch(videosListSwapCacheEnd(category.label));
-  //   // }, 0);
-  // }
-  if (typeof getState().videosList.token !== typeof undefined) {
-    getState().videosList.token.cancel('Operation canceled due to new request.');
+  if (typeof getState().celebVideos.token !== typeof undefined) {
+    getState().celebVideos.token.cancel('Operation canceled due to new request.');
   }
   const source = CancelToken.source();
   dispatch(celebVideosListFetchStart(refresh, source));
@@ -74,7 +59,7 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
-      let list = getState().videosList.data;
+      let list = getState().celebVideos.data;
       const { count } = resp.data.data;
       if (refresh) {
         list = resp.data.data.featured_videos;

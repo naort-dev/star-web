@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PopupStyled from './styled';
 import smoothScroll from '../../utils/smoothScroll';
 
@@ -35,7 +36,7 @@ export default class Popup extends React.Component {
       this.props.closePopUp();
     }
   }
-  render() {
+  renderPopup = () => {
     return (
       <PopupStyled disableBackground={this.props.disableBackground} smallPopup={this.props.smallPopup} innerRef={node => this.popupWrapper = node}>
         {
@@ -69,5 +70,11 @@ export default class Popup extends React.Component {
         }
       </PopupStyled>
     );
+  }
+  render() {
+    return ReactDOM.createPortal(
+      this.renderPopup(),
+      document.getElementById('modal-root'),
+    )
   }
 }

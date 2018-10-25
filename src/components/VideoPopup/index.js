@@ -311,7 +311,7 @@ class VideoPopup extends React.Component {
                             }
                             {
                               !this.props.commentList.loading && !this.props.commentList.data.length ?
-                                <VideoPopupStyled.commentItem>No Comments yet</VideoPopupStyled.commentItem>
+                                <VideoPopupStyled.commentItem>No comments yet</VideoPopupStyled.commentItem>
                               : null
                             }
                           </VideoPopupStyled.commentListScrollbar>
