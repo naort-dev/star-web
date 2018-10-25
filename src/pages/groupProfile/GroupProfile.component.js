@@ -1,9 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
+import { Scrollbars } from 'react-custom-scrollbars';
+
 import Header from '../../components/Header';
 import ModalPopup from '../../components/RequestFlowPopup';
 import GroupProfileStyled from './styled';
+import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
 export default class GroupProfile extends React.Component {
   constructor(props) {
@@ -11,19 +15,21 @@ export default class GroupProfile extends React.Component {
     this.state = {
       menuActive: false,
       memberlistModal: false,
+      readMoreFlag: false,
     };
   }
 
-  componentDidMount() {
-    window.onpopstate = this.onBackButtonEvent;
+  componentWillMount() {
+    this.props.resetGroupDetails();
+    this.props.fetchGroupDetails(this.props.match.params.id.toLowerCase());
   }
 
-  getStarted = () => {
-
-  }
-
-  showImagePopup = () => {
-
+  componentWillReceiveProps(nextProps) {
+    let groupDetails = nextProps.groupDetails;
+    if (!nextProps.memberListDetails.length && groupDetails && groupDetails.user_id) {
+      // this.props.resetMemberDetails();
+      this.props.fetchGroupMembers(nextProps.groupDetails.user_id);
+    }
   }
 
   toggleMemberList = (flag) => {
@@ -31,18 +37,65 @@ export default class GroupProfile extends React.Component {
       memberlistModal: flag,
     });
   }
+
+  toggleDescription = (flag) => {
+    this.setState({
+      readMoreFlag: flag,
+    });
+  }
+
+  renderItem = (item) => {
+    return (
+      <div className="memberDetails">
+        <GroupProfileStyled.memberProfileImage src={item.avatar_photo.thumbnail_url} alt="Profile" /> 
+        <div className="memberPopupDetails">
+          <p className="memberName">{item.get_short_name}</p>
+          <p className="jobDetails">
+            {
+              starProfessionsFormater(item.celebrity_profession)
+            }
+          </p>
+        </div>
+        <Link to={`/${item.user_id}`} className="memberDetailButton">
+          View
+        </Link>
+      </div>
+    );
+  };
+
+  renderMemberDetail = (item) => {
+    return (
+      <div className="memberDetails">
+        <Link to={`/${item.user_id}`}>
+          <GroupProfileStyled.memberProfileImage src={item.avatar_photo.thumbnail_url} alt="Profile" />
+        </Link>
+        <p className="memberName">{item.get_short_name}</p>
+        <p className="jobDetails">
+          {
+            starProfessionsFormater(item.celebrity_profession)
+          }
+        </p>
+      </div>
+    );
+  };
+
   render() {
-    const images = [
-      {
-        original: 'https://s3.amazonaws.com/starsona-stb-usea1/images/profile/FILE_1539259001P7KS72O7.jpeg',
-      },
-      {
-        original: 'https://s3.amazonaws.com/starsona-stb-usea1/images/profile/FILE_1539259015NBX27OFG.jpeg',
-      },
-      {
-        original: 'https://s3.amazonaws.com/starsona-stb-usea1/images/profile/FILE_1539259008IHELCYWK.jpeg',
-      },
-    ];
+    let images = [];
+    const descriptionClass = this.state.readMoreFlag ? 'groupFullDescription' : 'groupDescription';
+    if (this.props.groupDetails && this.props.groupDetails.featured_photo) {
+      const { featured_photo: {image_url} } = this.props.groupDetails;
+      images.push({ original: image_url });
+    }
+
+    if (this.props.groupDetails && this.props.groupDetails.images) {
+      const imagesArray = this.props.groupDetails.images.map(item =>
+        ({ original: item.image_url }));
+      images = [...images, ...imagesArray];
+    }
+    const memberListArray = this.props.memberListDetails;
+    const descriptionLength = this.props.groupDetails.group_details?
+      this.props.groupDetails.group_details.description.length:0;
+
     return (
       <GroupProfileStyled>
         <Header
@@ -60,39 +113,13 @@ export default class GroupProfile extends React.Component {
             >
               <GroupProfileStyled.memberListPopup>
                 <div className="popupHeading">Our members</div>
-                <div className="memberDetails">
-                  <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                  <div className="memberPopupDetails">
-                    <p className="memberName">Kelly</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
-                  <GroupProfileStyled.memberDetailButton>
-                    View
-                  </GroupProfileStyled.memberDetailButton>
-                </div>
-                <div className="memberDetails">
-                  <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                  <div className="memberPopupDetails">
-                    <p className="memberName">Kelly Surfer</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
-                  <GroupProfileStyled.memberDetailButton>
-                    View
-                  </GroupProfileStyled.memberDetailButton>
-                </div>
-                <div className="memberDetails">
-                  <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                  <div className="memberPopupDetails">
-                    <p className="memberName">KellySurfer Surfer</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
-                  <GroupProfileStyled.memberDetailButton>
-                    View
-                  </GroupProfileStyled.memberDetailButton>
-                </div>
+                <Scrollbars>
+                  { memberListArray.map(data => this.renderItem(data)) }
+                </Scrollbars>
               </GroupProfileStyled.memberListPopup>
             </ModalPopup>
         : null}
+
         <GroupProfileStyled.sectionWrapper>
           <ImageGallery
             items={images}
@@ -101,59 +128,35 @@ export default class GroupProfile extends React.Component {
             useBrowserFullscreen={false}
             showPlayButton={false}
             autoPlay={true}
+            slideInterval={8000}
           />
           <GroupProfileStyled.profileWrapper>
             <div className="profileImageContainer">
-              <GroupProfileStyled.profileImage src="assets/images/check.jpg" alt="Profile" />
+              <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : ''} alt="Profile" />
             </div>
             <div className="profileDetails">
               <div className="groupDetailsContainer">
-                <h1>World Surfing League</h1>
-                <p className="groupDescription">The World Surf League organizes the annual tour of professional surf competitions
-                  and broadcasts each event live at WorldSurfLeague.com where you can experience
-                  the athleticism, drama and adventure of competitive surfing -- anywhere and
-                  anytime it&apos;s on.
-                </p>
-                <p>read more</p>
+                <h1>{this.props.groupDetails.first_name} {this.props.groupDetails.last_name}</h1>
+                <p className={descriptionClass}>{this.props.groupDetails.group_details?this.props.groupDetails.group_details.description: ''}</p>
+                {descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p>:''}
               </div>
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
-                  <div className="memberDetails">
-                    <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                    <p className="memberName">Kelly</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
-                  <div className="memberDetails">
-                    <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                    <p className="memberName">Kelly</p>
-                  </div>
-                  <div className="memberDetails">
-                    <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                    <p className="memberName">Kelly</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
-                  <div className="memberDetails">
-                    <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                    <p className="memberName">Kelly</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
-                  <div className="memberDetails">
-                    <GroupProfileStyled.memberProfileImage src="assets/images/check.jpg" alt="Profile" />
-                    <p className="memberName">Kelly</p>
-                    <p className="jobDetails">Surfer</p>
-                  </div>
+                  {memberListArray.length > 0 ? memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) : <p>No members available</p>}
                 </div>
-                <div className="seeMemberList">
-                  <span onClick={() => { this.toggleMemberList(true); }}>See all members</span>
-                </div>
+                {this.props.memberCount > 5 ?
+                  <div className="seeMemberList">
+                    <span onClick={() => { this.toggleMemberList(true); }}>See all members</span>
+                  </div>
+                : ''}
               </div>
             </div>
             <div className="socialMediaIcons">
               <GroupProfileStyled.ButtonWrapper>
                 <GroupProfileStyled.getStartedButton
                   type="button"
-                  value="Get Started"
+                  value="Get started"
                   onClick={this.getStarted}
                 />
               </GroupProfileStyled.ButtonWrapper>
