@@ -51,7 +51,6 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
   const { limit } = getState().celebVideos;
   const request = requestType ? requestType: '';
   if (typeof getState().celebVideos.token !== typeof undefined) {
-    console.log('hi')
     getState().celebVideos.token.cancel('Operation canceled due to new request.');
   }
   const source = CancelToken.source();
