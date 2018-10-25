@@ -33,10 +33,25 @@ export default class ProfileSettings extends React.Component {
 
   componentWillMount() {
     let professionList;
+    let facebook;
+    let twitter;
+    let instagram;
+    let youtube;
     if (this.props.celebDetails.profession_details) {
       professionList = this.props.celebDetails.profession_details.map(profession => profession.id.toString());
     }
-    this.setState({ industries: professionList });
+    this.props.userDetails.social_links.forEach((link) => {
+      if (link.social_link_key === 'facebook_url') {
+        facebook = link.social_link_value;
+      } else if (link.social_link_key === 'twitter_url') {
+        twitter = link.social_link_value;
+      } else if (link.social_link_key === 'youtube_url') {
+        youtube = link.social_link_value;
+      } else if (link.social_link_key === 'instagram_url') {
+        instagram = link.social_link_value;
+      }
+    });
+    this.setState({ industries: professionList, socialMedia: { facebook, twitter, youtube, instagram } });
     this.props.checkStripe();
   }
 

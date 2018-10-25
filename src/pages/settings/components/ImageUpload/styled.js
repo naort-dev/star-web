@@ -122,10 +122,16 @@ ImageUploadStyled.ProfileImage = styled.span`
     height: 70px;
   }
 `;
-
+ImageUploadStyled.AddCoverWrapper = styled.span`
+  display: block;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  max-width: 550px;
+  margin: 0 auto;
+`;
 ImageUploadStyled.AddCoverButton = styled.span`
   margin: 10px 0;
-  margin-right: 32px;
   background-color: transparent;
   color: #cecece;
   cursor: pointer;

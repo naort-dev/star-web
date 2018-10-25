@@ -5,13 +5,23 @@ const SettingsStyled = styled.div`
 `;
 
 SettingsStyled.Container = styled.section`
-  height: calc(100% - 40px);
+  height: calc(100% - 57px);
   padding: 20px 10px;
+  @media(min-width: 768px) {
+    padding: 20px 44px;
+    height: calc(100% - 40px);
+  }
+  @media(min-width: 1025px) {
+    padding: 20px 10px;
+  }
 `;
 
 SettingsStyled.ContentWrapper = styled.section`
   padding-right: 10px;
   display: ${props => (props.visible ? 'block' : 'none')};
+  @media(min-width: 1025px) {
+    padding-right: 25px;
+  }
 `;
 
 SettingsStyled.InputwrapperDiv = styled.div`
@@ -38,7 +48,7 @@ SettingsStyled.Label = styled.span`
   text-align:left;
   padding:10px 0;
   @media(min-width:768px){
-    width: 20%;
+    width: 21%;
     display:flex;
     align-items:center;
     padding-right: 10px;
@@ -102,7 +112,7 @@ SettingsStyled.WrapsInput = styled.div`
     }
   }
   @media(min-width:768px){
-    width: 80%;
+    width: 79%;
   }
 `;
 
@@ -152,13 +162,13 @@ SettingsStyled.CustomPlaceholder = styled.span`
   position: absolute;
   left: 10px;
   right: 0;
-  top: 16px;
+  top: 13px;
   font-family: 'Avenir-Regular';
   color: #6d6d6d;
   font-size: 14px;
   pointer-events: ${props => (props.activePlaceHolder ? 'auto' : 'none')};
   @media(min-width: 768px) {
-    top: 11.5px;
+    top: 8.5px;
   }
 `;
 
@@ -214,7 +224,7 @@ SettingsStyled.InputArea = styled.textarea`
   text-align:left;
   outline:none;
   width: 100%;
-  height: ${props => (props.small ? '40px' : '80px')};
+  height: ${props => (props.small ? '35px' : '80px')};
   margin: 4px 0;
   padding: 8px 8px;
   resize: none;
@@ -277,6 +287,12 @@ SettingsStyled.PriceInput = SettingsStyled.NumberInput.extend`
   padding-left: 18px;
 `;
 
+SettingsStyled.ReadOnlySection = SettingsStyled.InputArea.extend`
+  display: flex;
+  justify-content: space-between;
+  height: auto;
+`.withComponent('span');
+
 SettingsStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 12px;
@@ -321,12 +337,14 @@ SettingsStyled.ActionText = styled.span`
   font-size: 14px;
   font-family: 'Avenir-Regular';
   padding-top: 10px;
-  padding-left: 10px;
   height: 40px;
   display: block;
   cursor: pointer;
   &:hover {
     color: #FF3B21;
+  }
+  @media(min-width: 768px) {
+    padding-left: 10px;
   }
 `;
 

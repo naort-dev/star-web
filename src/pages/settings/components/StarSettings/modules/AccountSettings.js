@@ -1,6 +1,8 @@
 import React from 'react';
 import validator from 'validator';
 import ManagePayments from '../../../../../components/ManagePayments';
+import Popup from '../../../../../components/Popup';
+import ChangePassword from '../../../../../components/MyAccount/ChangePassword';
 import { imageSizes } from '../../../../../constants/imageSizes';
 import ImageUpload from '../../ImageUpload';
 import SettingsStyled from '../../../styled';
@@ -10,6 +12,7 @@ export default class AccountSettings extends React.Component {
     super(props);
     this.state = {
       managePayment: false,
+      changePassword: false,
       featuredImage: {
         image: props.userDetails.featured_photo ? props.userDetails.featured_photo.image_url : null,
         file: props.userDetails.featured_photo ? props.userDetails.featured_photo.photo : null,
@@ -28,7 +31,6 @@ export default class AccountSettings extends React.Component {
       errors: {
         firstName: false,
         lastName: false,
-        email: false,
       },
     };
   }
@@ -42,6 +44,13 @@ export default class AccountSettings extends React.Component {
         };
       });
       this.setState({ secondaryImages });
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.changePasswordData.submitStatus) {
+      nextProps.resetChangePassword();
+      this.setState({ changePassword: false });
     }
   }
 
@@ -79,12 +88,11 @@ export default class AccountSettings extends React.Component {
   };
 
   validateFields = () => {
-    let { firstName, lastName, email} = this.state.errors;
+    let { firstName, lastName } = this.state.errors;
     firstName = validator.isEmpty(this.state.firstName);
     lastName = validator.isEmpty(this.state.lastName);
-    email = !validator.isEmail(this.state.email);
-    this.setState({ errors: { ...this.state.errors, firstName, lastName, email } });
-    return !firstName && !lastName && !email;
+    this.setState({ errors: { ...this.state.errors, firstName, lastName } });
+    return !firstName && !lastName;
   }
 
   removeSecondaryImage = (itemIndex) => {
@@ -98,7 +106,6 @@ export default class AccountSettings extends React.Component {
       const userDetails = {
         first_name: this.state.firstName,
         last_name: this.state.lastName,
-        email: this.state.email,
       };
       const secondaryFileNames = this.state.secondaryImages.map((item) => {
         if (item.file) {
@@ -125,6 +132,20 @@ export default class AccountSettings extends React.Component {
             <ManagePayments
               onClosePayments={() => this.setState({ managePayment: false })}
             />
+          : null
+        }
+        {
+          this.state.changePassword ?
+            <Popup
+              closePopUp={() => this.setState({ changePassword: false })}
+              smallPopup
+            >
+              <ChangePassword
+                changePassword={this.props.changePassword}
+                changePasswordData={this.props.changePasswordData}
+                resetChangePassord={this.props.resetChangePassword}
+              />
+            </Popup>
           : null
         }
         <ImageUpload
@@ -192,26 +213,16 @@ export default class AccountSettings extends React.Component {
             <SettingsStyled.Label>Email</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.CustomInput>
-                <SettingsStyled.InputArea
-                  small
-                  value={this.state.email}
-                  placeholder="Email"
-                  onChange={(event) => {
-                    this.handleFieldChange('email', event.target.value);
-                  }}
-                />
-                <SettingsStyled.ErrorMsg isError={this.state.errors.email}>
-                  {this.state.errors.email
-                    ? 'Please enter a valid email'
-                    : null}
-                </SettingsStyled.ErrorMsg>
+                <SettingsStyled.ReadOnlySection>
+                  {this.state.email}
+                </SettingsStyled.ReadOnlySection>
               </SettingsStyled.CustomInput>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Password</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
-              <SettingsStyled.ActionText>
+              <SettingsStyled.ActionText onClick={() => this.setState({ changePassword: true })}>
                 Manage your password
               </SettingsStyled.ActionText>
             </SettingsStyled.WrapsInput>

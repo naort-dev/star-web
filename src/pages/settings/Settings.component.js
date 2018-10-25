@@ -32,13 +32,13 @@ export default class Requests extends React.Component {
     this.setInnerLinks();
   }
 
-  fetchUserDetails = () => {
-    this.props.fetchUserDetails(this.props.sessionDetails.id)
-  } 
-
   setInnerLinks = () => {
     const innerLinks = this.starLinks;
     this.setState({ innerLinks });
+  }
+
+  fetchUserDetails = () => {
+    this.props.fetchUserDetails(this.props.sessionDetails.id)
   }
 
   renderCenterSection = () => {
@@ -52,6 +52,9 @@ export default class Requests extends React.Component {
             updateUserDetails={this.props.updateUserDetails}
             updateNotification={this.props.updateNotification}
             updateProfilePhoto={this.props.updateProfilePhoto}
+            resetChangePassword={this.props.resetChangePassword}
+            changePassword={this.props.changePassword}
+            changePasswordData={this.props.changePasswordData}
           />
         );
       case ROLES.fan:

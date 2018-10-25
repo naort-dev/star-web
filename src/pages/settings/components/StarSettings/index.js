@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
 import { fetch } from '../../../../services/fetch';
 import AccountSettings from './modules/AccountSettings';
+import ShareUser from '../ShareUser';
 import ProfileSettings from './modules/ProfileSettings';
 import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
@@ -82,6 +83,9 @@ class StarSettings extends React.Component {
               <AccountSettings
                 userDetails={this.props.userDetails}
                 submitAccountDetails={this.submitAccountDetails}
+                resetChangePassword={this.props.resetChangePassword}
+                changePassword={this.props.changePassword}
+                changePasswordData={this.props.changePasswordData}
               />
             </SettingsStyled.ContentWrapper>
             <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
@@ -96,7 +100,10 @@ class StarSettings extends React.Component {
               />
             </SettingsStyled.ContentWrapper>
             <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
-              <div>Profile</div>
+              <ShareUser
+                type="star"
+                shareUrl={this.props.userDetails.share_url}
+              />
             </SettingsStyled.ContentWrapper>
           </Scrollbars>
         </SettingsStyled.Container>

@@ -77,7 +77,7 @@ export default class MyAccount extends React.Component {
     const { oldPassword, password1, password2 } = this.state;
     const {changePasswordData} = this.props
     return (
-      <Fragment>
+      <Accounts.PopupWrapper>
         <Accounts.PopupHeader>Change password</Accounts.PopupHeader>
         <Accounts.InputFieldsWrapper>
           <Accounts.InputWraps>
@@ -130,7 +130,7 @@ export default class MyAccount extends React.Component {
           </Accounts.ButtonWrapper>
           <Accounts.ApiErrorMsg>{changePasswordData.error ? changePasswordData.error.message : ''}</Accounts.ApiErrorMsg>
         </Accounts.InputFieldsWrapper>
-      </Fragment>
+      </Accounts.PopupWrapper>
     );
   }
 }
