@@ -250,7 +250,6 @@ const mapDispatchToProps = dispatch => ({
   uploadVideo: () => dispatch(uploadVideo()),
   onSaveImage: imageData => dispatch(saveImage(imageData)),
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
-  updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   changePassword: data => dispatch(changePassword(data)),
   logOut: () => dispatch(logOutUser()),

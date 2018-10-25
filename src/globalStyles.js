@@ -131,7 +131,7 @@ injectGlobal`
     top: 1px;
     width: 5px;
     height: 7px;
-    border: solid black;
+    border: solid #FF6C58;
     cursor: pointer;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);

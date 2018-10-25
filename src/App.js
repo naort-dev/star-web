@@ -27,6 +27,7 @@ import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
+import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
@@ -135,7 +136,7 @@ class App extends React.Component {
                 <Route
                   path="/settings"
                   component={protectRoute({
-                    RouteComponent: Starbio,
+                    RouteComponent: Settings,
                   })}
                 />
                 <Route

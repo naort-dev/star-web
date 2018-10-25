@@ -70,20 +70,6 @@ export default class Requests extends React.Component {
     }
     this.setState({ selectedTab: item });
   }
-
-  activateMenu = () => {
-    this.setState({ menuActive: !this.state.menuActive });
-  }
-  toggleFilterSection = () => {
-    this.setState({ filterSelected: !this.state.filterSelected }, () => {
-      this.setScrollHeight();
-    });
-  }
-  updateRequestStatus = (requestStatus) => {
-    this.setState({ requestStatus }, () => {
-      this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
-    });
-  }
   showRequest = (data, recordModeValue) => {
     const recordMode = this.props.starMode ? recordModeValue : false;
     this.setState({ orderDetails: data, recordMode });

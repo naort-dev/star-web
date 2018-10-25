@@ -4,7 +4,7 @@ import Accounts from './styled';
 import Avatar from '../avatar';
 import ManagePayments from '../../components/ManagePayments';
 import Popup from '../Popup';
-import ChangePassword from './ChangePassword'
+import ChangePassword from './ChangePassword';
 
 export default class MyAccount extends React.Component {
   constructor(props) {
@@ -41,8 +41,7 @@ export default class MyAccount extends React.Component {
         {
           this.state.showPopup &&
             <Popup closePopUp={this.closePopup} smallPopup>
-              <Accounts.PopupWrapper>{this.renderPopup()}</Accounts.PopupWrapper >
-
+              {this.renderPopup()}
             </Popup>
         }
         <Accounts.ComponentWrapper>
