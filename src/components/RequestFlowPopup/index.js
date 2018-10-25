@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PopupStyled from './styled';
 import smoothScroll from '../../utils/smoothScroll';
 
@@ -53,7 +54,8 @@ export default class RequestFlowPopup extends React.Component {
       })
     );
   }
-  render() {
+
+  renderPopup = () => {
     return (
       <PopupStyled innerRef={node => this.popupWrapper = node}>
         <PopupStyled.SmallContainer
@@ -81,6 +83,13 @@ export default class RequestFlowPopup extends React.Component {
           </PopupStyled.SmallContent>
         </PopupStyled.SmallContainer>
       </PopupStyled>
+    );
+  }
+
+  render() {
+    return ReactDOM.createPortal(
+      this.renderPopup(),
+      document.getElementById('modal-root'),
     );
   }
 }
