@@ -7,6 +7,7 @@ import OrderDetails from '../../components/OrderDetails';
 import InnerTabs from '../../components/InnerTabs';
 import RequestDetails from '../../components/RequestDetails';
 import ActionLoader from '../../components/ActionLoader';
+import { ROLES } from '../../constants/usertype';
 import RequestsStyled from './styled';
 import { requestStatusList, celebRequestStatusList, celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
@@ -43,13 +44,20 @@ export default class Requests extends React.Component {
       ];
     } else {
       innerLinks = [
-        { linkName: 'Favorited stars', selectedName: 'favorites', url: '/user/favorites' },
         { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
+      innerLinks = this.props.userDetails.settings_userDetails.role_details.role_code === ROLES.star ?
+        [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }]
+        : innerLinks;
     }
     this.setState({ innerLinks });
   }
+
+  componentWillUnmount() {
+    this.props.myVideosListReset();
+  }
+
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }

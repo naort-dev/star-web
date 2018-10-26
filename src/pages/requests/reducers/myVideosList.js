@@ -52,6 +52,9 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case MY_VIDEOS_LIST.reset:
+      return initalState;
+
     default:
       return state;
   }
