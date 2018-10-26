@@ -47,7 +47,7 @@ export default class Requests extends React.Component {
         { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
-      innerLinks = this.props.userDetails.settings_userDetails.role_details.role_code === ROLES.star ?
+      innerLinks = this.props.userDetails.settings_userDetails.role_details && this.props.userDetails.settings_userDetails.role_details.role_code === ROLES.star ?
         [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }]
         : innerLinks;
     }
