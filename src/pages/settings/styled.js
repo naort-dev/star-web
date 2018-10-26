@@ -15,11 +15,7 @@ SettingsStyled.Container = styled.section`
 `;
 
 SettingsStyled.ContentWrapper = styled.section`
-  padding-right: 10px;
   display: ${props => (props.visible ? 'block' : 'none')};
-  @media(min-width: 1025px) {
-    padding-right: 25px;
-  }
 `;
 
 SettingsStyled.InputwrapperDiv = styled.div`
