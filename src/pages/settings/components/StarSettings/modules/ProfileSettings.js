@@ -8,7 +8,6 @@ import SettingsStyled from '../../../styled';
 export default class ProfileSettings extends React.Component {
   state = {
     bio: this.props.celebDetails.description ? this.props.celebDetails.description : '',
-    charity: this.props.celebDetails.charity ? this.props.celebDetails.charity : '',
     industries: [],
     stageName: this.props.userDetails.nick_name ? this.props.userDetails.nick_name : '',
     bookingPrice: this.props.celebDetails.rate ? numberToCommaFormatter(this.props.celebDetails.rate) : '',
@@ -125,7 +124,6 @@ export default class ProfileSettings extends React.Component {
         description: this.state.bio,
         profession: this.state.industries,
         rate: parseInt(this.state.bookingPrice),
-        // charity: this.state.charity,
         weekly_limits: parseInt(this.state.bookingLimit),
         availability: true,
       };
@@ -305,24 +303,6 @@ export default class ProfileSettings extends React.Component {
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
-          {/* <SettingsStyled.InputWrapper>
-            <SettingsStyled.Label>Charity / Group</SettingsStyled.Label>
-            <SettingsStyled.WrapsInput>
-              <SettingsStyled.InputArea
-                small
-                placeholder="Optional"
-                value={this.state.charity}
-                onChange={(event) => {
-                  this.handleFieldChange('charity', event.target.value);
-                }}
-              />
-              <SettingsStyled.ErrorMsg isError={this.state.errors.charity}>
-                {this.state.errors.charity
-                  ? 'Please enter a valid event title'
-                  : null}
-              </SettingsStyled.ErrorMsg>
-            </SettingsStyled.WrapsInput>
-          </SettingsStyled.InputWrapper> */}
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Social links</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
