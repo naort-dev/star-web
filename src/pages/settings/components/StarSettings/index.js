@@ -44,7 +44,7 @@ class StarSettings extends React.Component {
     Promise.all([this.props.updateUserDetails(this.props.userDetails.id, userData), this.props.updateProfilePhoto(profileImages)])
       .then(() => {
         this.setState({ showPopup: true });
-        this.props.fetchUserDetails();
+        // this.props.fetchUserDetails();
       });
   }
 

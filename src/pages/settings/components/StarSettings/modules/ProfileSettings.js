@@ -8,60 +8,32 @@ import SettingsStyled from '../../../styled';
 export default class ProfileSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.initialState = {
-      bio: this.props.celebDetails.description ? this.props.celebDetails.description : '',
-      industries: [],
-      stageName: this.props.userDetails.nick_name ? this.props.userDetails.nick_name : '',
-      bookingPrice: this.props.celebDetails.rate ? numberToCommaFormatter(this.props.celebDetails.rate) : '',
-      bookingLimit: this.props.celebDetails.weekly_limits ? numberToCommaFormatter(this.props.celebDetails.weekly_limits) : '',
-      popUpMessage: null,
-      priceCheck: false,
-      limitCheck: false,
-      selectedCheck: null,
-      socialMedia: {
-        facebook: '',
-        twitter: '',
-        instagram: '',
-        youtube: '',
-      },
-      errors: {
-        bio: false,
-        industries: false,
-        bookingPrice: false,
-        bookingLimit: false,
-      },
-      cancelDetails: false,
-    };
     this.state = {
-      ...this.initialState,
+
     };
   }
 
 
   componentWillMount() {
-    this.setInitialData();
+    this.setInitialData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.state.cancelDetails) {
-      this.setState({
-        ...this.initialState,
-      }, () => {
-        this.setInitialData();
-      });
+      this.setInitialData(nextProps);
     }
   }
 
-  setInitialData = () => {
+  setInitialData = (props) => {
     let professionList;
     let facebook;
     let twitter;
     let instagram;
     let youtube;
-    if (this.props.celebDetails.profession_details) {
-      professionList = this.props.celebDetails.profession_details.map(profession => profession.id.toString());
+    if (props.celebDetails.profession_details) {
+      professionList = props.celebDetails.profession_details.map(profession => profession.id.toString());
     }
-    this.props.userDetails.social_links.forEach((link) => {
+    props.userDetails.social_links.forEach((link) => {
       if (link.social_link_key === 'facebook_url') {
         facebook = link.social_link_value;
       } else if (link.social_link_key === 'twitter_url') {
@@ -72,8 +44,26 @@ export default class ProfileSettings extends React.Component {
         instagram = link.social_link_value;
       }
     });
-    this.setState({ industries: professionList, socialMedia: { facebook, twitter, youtube, instagram } });
-    this.props.checkStripe();
+    this.setState({
+      industries: professionList,
+      socialMedia: { facebook, twitter, youtube, instagram },
+      bio: props.celebDetails.description ? props.celebDetails.description : '',
+      stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
+      bookingPrice: props.celebDetails.rate ? numberToCommaFormatter(props.celebDetails.rate) : '',
+      bookingLimit: props.celebDetails.weekly_limits ? numberToCommaFormatter(props.celebDetails.weekly_limits) : '',
+      popUpMessage: null,
+      priceCheck: false,
+      limitCheck: false,
+      selectedCheck: null,
+      errors: {
+        bio: false,
+        industries: false,
+        bookingPrice: false,
+        bookingLimit: false,
+      },
+      cancelDetails: false,
+    });
+    props.checkStripe();
   }
 
   getStripe() {

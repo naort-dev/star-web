@@ -10,7 +10,36 @@ import SettingsStyled from '../../../styled';
 export default class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.initialState = {
+    this.state = {
+      
+    };
+  }
+
+  componentWillMount() {
+    this.setInitialData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.changePasswordData.submitStatus) {
+      nextProps.resetChangePassword();
+      this.setState({ changePassword: false });
+    }
+    if (this.state.cancelDetails) {
+      this.setInitialData(nextProps);
+    }
+  }
+
+  setInitialData = (props) => {
+    let secondaryImages = [];
+    if (props.userDetails && props.userDetails.images) {
+      secondaryImages = props.userDetails.images.map((image) => {
+        return {
+          fileName: image.photo,
+          image: image.image_url,
+        };
+      });
+    }
+    this.setState({
       managePayment: false,
       changePassword: false,
       featuredImage: {
@@ -21,7 +50,7 @@ export default class AccountSettings extends React.Component {
         image: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.image_url : null,
         file: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.photo : null,
       },
-      secondaryImages: [],
+      secondaryImages,
       firstName: props.userDetails.first_name ? props.userDetails.first_name : '',
       lastName: props.userDetails.last_name ? props.userDetails.last_name : '',
       email: props.userDetails.email ? props.userDetails.email : '',
@@ -33,40 +62,7 @@ export default class AccountSettings extends React.Component {
         lastName: false,
       },
       cancelDetails: false,
-    };
-    this.state = {
-      ...this.initialState,
-    };
-  }
-
-  componentWillMount() {
-    this.setInitialData();
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.changePasswordData.submitStatus) {
-      nextProps.resetChangePassword();
-      this.setState({ changePassword: false });
-    }
-    if (this.state.cancelDetails) {
-      this.setState({
-        ...this.initialState,
-      }, () => {
-        this.setInitialData();
-      });
-    }
-  }
-
-  setInitialData = () => {
-    if (this.props.userDetails && this.props.userDetails.images) {
-      const secondaryImages = this.props.userDetails.images.map((image) => {
-        return {
-          fileName: image.photo,
-          image: image.image_url,
-        };
-      });
-      this.setState({ secondaryImages });
-    }
+    });
   }
 
   getProfilePhotos = (type, file, image) => {

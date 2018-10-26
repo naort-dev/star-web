@@ -1,7 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails } from './getUserDetails'
+import { fetchUserDetails, userDetailsFetchSuccess } from './getUserDetails'
 
 
 export const UPDATE_USER_DETAILS = {
@@ -54,7 +54,7 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(updateUserDetailsFetchEnd());
       dispatch(updateUserDetailsFetchSuccess(resp.data.data));
-      dispatch(fetchUserDetails(id));
+      // dispatch(fetchUserDetails(id));
     } else {
       dispatch(updateUserDetailsFetchEnd());
       dispatch(updateUserDetailsFetchFailed('404'));
