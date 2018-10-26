@@ -44,6 +44,7 @@ ShareStyled.NetworkWrapper = styled.div`
 ShareStyled.CopyButton = styled.span`
   font-size: 14px;
   color: #FF6C58;
+  cursor: pointer;
 `;
 
 ShareStyled.FacebookShareButton = styled(FacebookShareButton)`
