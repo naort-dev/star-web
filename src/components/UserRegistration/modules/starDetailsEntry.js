@@ -62,7 +62,7 @@ export default class StarDetailsEntry extends React.Component {
   validateFields = () => {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
     bio = this.state.bio === '';
-    industries = this.state.industries.length === 0;
+    industries = this.state.industries.length === 0 || this.state.industries[0] === '' ;
     bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
     bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
     const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
@@ -73,7 +73,7 @@ export default class StarDetailsEntry extends React.Component {
       this.handleFieldBlur('bookingLimit', this.state.bookingLimit);
     }
     this.setState({ errors: { ...this.state.errors, industries, bookingLimit, bookingPrice, bio } });
-    return !industries && !bookingLimit && !bookingLimit && !bio && !priceValid && !limitValid;
+    return !industries && !bookingLimit && !bookingPrice && !bio && !priceValid && !limitValid;
   }
 
   submitGroupAccountDetails = () => {
