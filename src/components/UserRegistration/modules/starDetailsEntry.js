@@ -86,13 +86,16 @@ export default class StarDetailsEntry extends React.Component {
         weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
         availability: true,
       };
+      const userDetails = {
+        nick_name: this.state.stageName,
+      };
       const socialLinks = {
         facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
         twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
         youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
-      this.props.submitAccountDetails(celebrityDetails, socialLinks);
+      this.props.submitAccountDetails(celebrityDetails, userDetails, socialLinks);
     }
   };
 
