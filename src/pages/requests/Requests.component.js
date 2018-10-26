@@ -22,6 +22,7 @@ export default class Requests extends React.Component {
       requestStatus: 'all',
       recordMode: false,
       orderDetails: {},
+      scrollTarget: '',
     };
     this.requestType = {
       3: 'Q&A',
@@ -166,7 +167,7 @@ export default class Requests extends React.Component {
         return (
           <React.Fragment>
             <RequestsStyled.StatusTypeWrapper >
-              <Scrollbars>
+              {/* <Scrollbars> */}
                 <RequestsStyled.SectionHeaderWrapper>
                   <RequestsStyled.SectionHeader>{this.props.starMode ? 'Pending fan requests' : 'Pending requests'}</RequestsStyled.SectionHeader>
                   <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
@@ -181,7 +182,7 @@ export default class Requests extends React.Component {
                 <RequestsStyled.ListWrapper autoHeight>
                   {this.renderRequestList('Completed', this.props.starMode)}
                 </RequestsStyled.ListWrapper>
-              </Scrollbars>
+              {/* </Scrollbars> */}
             </RequestsStyled.StatusTypeWrapper>
           </React.Fragment>
         );
@@ -199,6 +200,7 @@ export default class Requests extends React.Component {
             <RequestsStyled.ListWrapper>
               <ScrollList
                 dataList={this.props.myVideosList.data}
+                scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
                 requestDetails
                 starMode={this.props.starMode}
                 limit={this.props.myVideosList.limit}
@@ -232,6 +234,10 @@ export default class Requests extends React.Component {
         }
       </React.Fragment>
     );
+  }
+
+  updateScrollTarget = (target) => {
+    this.setState({ scrollTarget: target });
   }
 
   render() {
@@ -274,6 +280,7 @@ export default class Requests extends React.Component {
           history={this.props.history}
           innerLinks={this.state.innerLinks}
           renderCenterSection={this.renderCenterSection}
+          getScrollTarget={this.updateScrollTarget}
         />
         {
           this.props.orderDetailsLoading ?

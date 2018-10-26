@@ -78,7 +78,7 @@ class StarSettings extends React.Component {
           selected={selectedTab}
         />
         <SettingsStyled.Container>
-          <Scrollbars>
+          {/* <Scrollbars> */}
             <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
               <AccountSettings
                 userDetails={this.props.userDetails}
@@ -105,7 +105,7 @@ class StarSettings extends React.Component {
                 shareUrl={this.props.userDetails.share_url}
               />
             </SettingsStyled.ContentWrapper>
-          </Scrollbars>
+          {/* </Scrollbars> */}
         </SettingsStyled.Container>
       </SettingsStyled>
     );

@@ -47,8 +47,7 @@ ColumnLayoutStyled.mainSection = styled.section`
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 30px;
-    float: right;
-    height: calc(100vh - 60px);
+    height: auto;
   }
   @media(min-width: 1920px) {
     padding-top: 72px;

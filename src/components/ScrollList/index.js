@@ -239,6 +239,7 @@ export default class ScrollList extends React.Component {
   }
 
   render() {
+    console.log(this.props.scrollTarget)
     return (
       <ListStyled>
         {

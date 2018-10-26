@@ -9,6 +9,12 @@ export default class ThreeColumnLayout extends React.Component {
     menuActive: false,
   }
 
+  componentDidMount() {
+    if (this.props.getScrollTarget) {
+      this.props.getScrollTarget('column-layout-scrollable-target');
+    }
+  }
+
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
@@ -16,35 +22,39 @@ export default class ThreeColumnLayout extends React.Component {
   render() {
     return (
       <ColumnLayoutStyled>
-        <ColumnLayoutStyled.Container>
-          <Header
-            menuActive={this.state.menuActive}
-            enableMenu={this.activateMenu}
-            history={this.props.history}
-          />
-          <ColumnLayoutStyled.sideSection menuActive={this.state.menuActive}>
-            <Scrollbars
-              renderView={props => <div {...props} className="view" />}
-            >
-              <Sidebar
-                noCategory
-                history={this.props.history}
-                selectedCategory={this.props.selectedSideBarItem}
-                menuActive={this.state.menuActive}
-                toggleMenu={this.activateMenu}
-                innerLinks={this.props.innerLinks}
-              />
-            </Scrollbars>
-          </ColumnLayoutStyled.sideSection>
-          <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
-            <ColumnLayoutStyled.CenterSection>
-              {this.props.renderCenterSection()}
-            </ColumnLayoutStyled.CenterSection>
-            <ColumnLayoutStyled.RightSection>
+        <Scrollbars
+          renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+        >
+          <ColumnLayoutStyled.Container>
+            <Header
+              menuActive={this.state.menuActive}
+              enableMenu={this.activateMenu}
+              history={this.props.history}
+            />
+            <ColumnLayoutStyled.sideSection menuActive={this.state.menuActive}>
+              <Scrollbars
+                renderView={props => <div {...props} className="view" />}
+              >
+                <Sidebar
+                  noCategory
+                  history={this.props.history}
+                  selectedCategory={this.props.selectedSideBarItem}
+                  menuActive={this.state.menuActive}
+                  toggleMenu={this.activateMenu}
+                  innerLinks={this.props.innerLinks}
+                />
+              </Scrollbars>
+            </ColumnLayoutStyled.sideSection>
+            <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
+              <ColumnLayoutStyled.CenterSection>
+                {this.props.renderCenterSection()}
+              </ColumnLayoutStyled.CenterSection>
+              <ColumnLayoutStyled.RightSection>
 
-            </ColumnLayoutStyled.RightSection>
-          </ColumnLayoutStyled.mainSection>
-        </ColumnLayoutStyled.Container>
+              </ColumnLayoutStyled.RightSection>
+            </ColumnLayoutStyled.mainSection>
+          </ColumnLayoutStyled.Container>
+        </Scrollbars>
       </ColumnLayoutStyled>
     );
   }

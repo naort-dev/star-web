@@ -5,11 +5,9 @@ const SettingsStyled = styled.div`
 `;
 
 SettingsStyled.Container = styled.section`
-  height: calc(100% - 57px);
   padding: 20px 10px;
   @media(min-width: 768px) {
     padding: 20px 44px;
-    height: calc(100% - 40px);
   }
   @media(min-width: 1025px) {
     padding: 20px 10px;
