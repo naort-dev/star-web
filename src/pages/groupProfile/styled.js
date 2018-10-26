@@ -10,18 +10,6 @@ const GroupProfileStyled = styled.div`
   }
 `;
 
-const shareIcon = styled.img`
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-  margin: 10px;
-  margin-left: 0;
-  display: inline-block;
-  @media(max-width: 1024px) {
-    margin-right: 0;
-  }
-`;
-
 const profilePicture = styled.img`
   border-radius: 50%;
   object-fit: cover;
@@ -214,6 +202,11 @@ GroupProfileStyled.profileWrapper = styled.div`
           .jobDetails {
             color: #9e9e9e;
             word-break: break-all;
+            font-size: 13px;
+            line-height: 16px;
+            @media(min-width: 1920px) {
+              font-size: 16px;
+            }
           }
         }
       }
@@ -240,8 +233,23 @@ GroupProfileStyled.profileWrapper = styled.div`
       flex-basis: 30px;
     }
     a {
+      cursor: pointer;
+      width: 24px;
+      height: 24px;
       margin: 10px;
       display: inline-block;
+      &.facebook_url {
+        background-image: url('assets/images/fb-icon.svg')
+      }
+      &.twitter_url {
+        background-image: url('assets/images/twitter-icon.svg')
+      }
+      &.youtube_url {
+        background-image: url('assets/images/youtube-icon.svg')
+      }
+      &.instagram_url {
+        background-image: url('assets/images/insta-icon.svg')
+      }
     }
   }
 `;
@@ -335,6 +343,7 @@ GroupProfileStyled.memberListPopup = styled.div`
       .jobDetails {
         color: #9e9e9e;
         word-break: break-all;
+        font-size: 16px;
       }
     }
     .memberDetailButton{
@@ -379,7 +388,6 @@ GroupProfileStyled.memberDetailButton = styled.a`
 `;
 
 GroupProfileStyled.profileImage = profilePicture;
-GroupProfileStyled.shareIcon = shareIcon;
 GroupProfileStyled.memberProfileImage = memberImage;
 
 export default GroupProfileStyled;
