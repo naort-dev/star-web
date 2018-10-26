@@ -48,7 +48,7 @@ export default class ImageUpload extends React.Component {
     let coverImageHeight, secondaryImageHeight;
     if (this.coverImage) {
       coverImageHeight = this.coverImage.clientWidth / this.props.featuredRatio;
-      secondaryImageHeight = this.coverImage.clientWidth / this.props.secondaryRatio;
+      secondaryImageHeight = (this.coverImage.clientWidth / (this.props.secondaryRatio * 2)) - 10;
     }
     this.setState({
       coverImageHeight,
@@ -59,7 +59,6 @@ export default class ImageUpload extends React.Component {
   getCroppedImage = (file, image) => {
     awsImageUpload(file, this.state.extension)
       .then((resp) => {
-        console.log(this.coverImage.clientWidth)
         this.props.onComplete(this.state.currentImage, resp, image);
         this.setState({ currentImage: null });
       });
@@ -195,7 +194,12 @@ export default class ImageUpload extends React.Component {
                 </ImageUploadStyled.CoverImage>
               </ImageUploadStyled.CoverLayout>
               {
-                this.props.featuredImage && this.renderSecondaryImages()
+                this.props.featuredImage &&
+                  <ImageUploadStyled.SecondaryCoverWrapper>
+                    {
+                      this.renderSecondaryImages()
+                    }
+                  </ImageUploadStyled.SecondaryCoverWrapper>
               }
               {
                 this.props.featuredImage && this.props.secondaryImages.length < 2 ?

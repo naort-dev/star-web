@@ -108,8 +108,8 @@ export default class AccountSettings extends React.Component {
         last_name: this.state.lastName,
       };
       const secondaryFileNames = this.state.secondaryImages.map((item) => {
-        if (item.file) {
-          return item.file;
+        if (item.fileName) {
+          return item.fileName;
         }
       });
       const profileImages = {
@@ -118,7 +118,7 @@ export default class AccountSettings extends React.Component {
       };
       if (this.state.featuredImage.file) {
         profileImages['featured_image'] = this.state.featuredImage.file;
-        profileImages.images = [...profileImages.images, this.state.featuredImage.file, ...secondaryFileNames];
+        profileImages.images = secondaryFileNames;
       }
       this.props.submitAccountDetails(userDetails, profileImages);
     }
@@ -231,7 +231,7 @@ export default class AccountSettings extends React.Component {
             <SettingsStyled.Label>Payment method</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.ActionText onClick={() => this.setState({ managePayment: true })}>
-                Manage your payments
+                Manage your payments methods
               </SettingsStyled.ActionText>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
