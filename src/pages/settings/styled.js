@@ -105,6 +105,7 @@ SettingsStyled.HollowButton = styled.button`
 SettingsStyled.WrapsInput = styled.div`
   width:100%;
   position: relative;
+  max-width: 400px;
   .Select-multi-value-wrapper {
     padding: 9px;
     @media(min-width: 1025px) {

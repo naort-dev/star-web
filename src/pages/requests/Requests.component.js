@@ -16,8 +16,6 @@ export default class Requests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuActive: false,
-      filterSelected: false,
       selectedTab: 'All',
       innerLinks: [],
       tabsClientHeight: 0,
@@ -39,11 +37,13 @@ export default class Requests extends React.Component {
       innerLinks = [
         { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
         { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
     } else {
       innerLinks = [
         { linkName: 'Favorited stars', selectedName: 'favorites', url: '/user/favorites' },
         { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
+        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
     }
     this.setState({ innerLinks });
