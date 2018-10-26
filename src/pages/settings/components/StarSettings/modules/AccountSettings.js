@@ -231,7 +231,7 @@ export default class AccountSettings extends React.Component {
             <SettingsStyled.Label>Payment method</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.ActionText onClick={() => this.setState({ managePayment: true })}>
-                Manage your payments
+                Manage your payments methods
               </SettingsStyled.ActionText>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>

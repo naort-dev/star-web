@@ -73,7 +73,7 @@ export default class MyAccount extends React.Component {
 
   render() {
     const { oldPassword, password1, password2 } = this.state;
-    const {changePasswordData} = this.props
+    const {changePasswordData} = this.props;
     return (
       <Accounts.PopupWrapper>
         <Accounts.PopupHeader>Change password</Accounts.PopupHeader>
