@@ -27,7 +27,6 @@ export default class GroupProfile extends React.Component {
   componentWillReceiveProps(nextProps) {
     let groupDetails = nextProps.groupDetails;
     if (!nextProps.memberListDetails.length && groupDetails && groupDetails.user_id) {
-      // this.props.resetMemberDetails();
       this.props.fetchGroupMembers(nextProps.groupDetails.user_id);
     }
   }
@@ -44,10 +43,19 @@ export default class GroupProfile extends React.Component {
     });
   }
 
+  socialMedia = (icon) => {
+    return (
+      <Link to={`/${icon.social_link_value}`} className={icon.social_link_key}>
+        <span></span>
+      </Link>
+
+    );
+  }
+
   renderItem = (item) => {
     return (
       <div className="memberDetails">
-        <GroupProfileStyled.memberProfileImage src={item.avatar_photo.thumbnail_url} alt="Profile" /> 
+        <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" /> 
         <div className="memberPopupDetails">
           <p className="memberName">{item.get_short_name}</p>
           <p className="jobDetails">
@@ -67,7 +75,7 @@ export default class GroupProfile extends React.Component {
     return (
       <div className="memberDetails">
         <Link to={`/${item.user_id}`}>
-          <GroupProfileStyled.memberProfileImage src={item.avatar_photo.thumbnail_url} alt="Profile" />
+          <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" />
         </Link>
         <p className="memberName">{item.get_short_name}</p>
         <p className="jobDetails">
@@ -78,7 +86,6 @@ export default class GroupProfile extends React.Component {
       </div>
     );
   };
-
   render() {
     let images = [];
     const descriptionClass = this.state.readMoreFlag ? 'groupFullDescription' : 'groupDescription';
@@ -160,15 +167,8 @@ export default class GroupProfile extends React.Component {
                   onClick={this.getStarted}
                 />
               </GroupProfileStyled.ButtonWrapper>
-              <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/getstarsona/">
-                <GroupProfileStyled.shareIcon alt="playsore icon" src="assets/images/fb-icon.svg" />
-              </a>
-              <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/getstarsona">
-                <GroupProfileStyled.shareIcon alt="playsore icon" src="assets/images/twitter-icon.svg" />
-              </a>
-              <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/getstarsona/">
-                <GroupProfileStyled.shareIcon alt="playsore icon" src="assets/images/insta-icon.svg" />
-              </a>
+              {this.props.groupDetails.social_links && 
+                this.props.groupDetails.social_links.map( data => this.socialMedia(data)) }
             </div>
           </GroupProfileStyled.profileWrapper>
         </GroupProfileStyled.sectionWrapper>
