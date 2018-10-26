@@ -14,9 +14,6 @@ ColumnLayoutStyled.Container = styled.div`
   @media(min-width: 1025px) {
     padding-left: 95px;
   }
-  @media(min-width: 1920px) {
-    max-width: 1920px;
-  }
 `;
 
 ColumnLayoutStyled.sideSection = styled.section`

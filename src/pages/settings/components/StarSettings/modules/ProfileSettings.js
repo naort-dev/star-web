@@ -6,31 +6,53 @@ import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter
 import SettingsStyled from '../../../styled';
 
 export default class ProfileSettings extends React.Component {
-  state = {
-    bio: this.props.celebDetails.description ? this.props.celebDetails.description : '',
-    industries: [],
-    stageName: this.props.userDetails.nick_name ? this.props.userDetails.nick_name : '',
-    bookingPrice: this.props.celebDetails.rate ? numberToCommaFormatter(this.props.celebDetails.rate) : '',
-    bookingLimit: this.props.celebDetails.weekly_limits ? numberToCommaFormatter(this.props.celebDetails.weekly_limits) : '',
-    popUpMessage: null,
-    priceCheck: false,
-    limitCheck: false,
-    selectedCheck: null,
-    socialMedia: {
-      facebook: '',
-      twitter: '',
-      instagram: '',
-      youtube: '',
-    },
-    errors: {
-      bio: false,
-      industries: false,
-      bookingPrice: false,
-      bookingLimit: false,
-    },
-  };
+  constructor(props) {
+    super(props);
+    this.initialState = {
+      bio: this.props.celebDetails.description ? this.props.celebDetails.description : '',
+      industries: [],
+      stageName: this.props.userDetails.nick_name ? this.props.userDetails.nick_name : '',
+      bookingPrice: this.props.celebDetails.rate ? numberToCommaFormatter(this.props.celebDetails.rate) : '',
+      bookingLimit: this.props.celebDetails.weekly_limits ? numberToCommaFormatter(this.props.celebDetails.weekly_limits) : '',
+      popUpMessage: null,
+      priceCheck: false,
+      limitCheck: false,
+      selectedCheck: null,
+      socialMedia: {
+        facebook: '',
+        twitter: '',
+        instagram: '',
+        youtube: '',
+      },
+      errors: {
+        bio: false,
+        industries: false,
+        bookingPrice: false,
+        bookingLimit: false,
+      },
+      cancelDetails: false,
+    };
+    this.state = {
+      ...this.initialState,
+    };
+  }
+
 
   componentWillMount() {
+    this.setInitialData();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.cancelDetails) {
+      this.setState({
+        ...this.initialState,
+      }, () => {
+        this.setInitialData();
+      });
+    }
+  }
+
+  setInitialData = () => {
     let professionList;
     let facebook;
     let twitter;
@@ -55,7 +77,7 @@ export default class ProfileSettings extends React.Component {
   }
 
   getStripe() {
-    this.props.fetchURL()
+    this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
@@ -148,6 +170,11 @@ export default class ProfileSettings extends React.Component {
     }
   }
 
+  cancelDetails = () => {
+    this.setState({ cancelDetails: true });
+    this.props.fetchUserDetails();
+  }
+
   renderPopup = () => {
     return (
       <React.Fragment>
@@ -178,6 +205,7 @@ export default class ProfileSettings extends React.Component {
         {
           this.state.popUpMessage &&
             <Popup
+              modalView
               smallPopup
               closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
             >
@@ -319,7 +347,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.facebook === '' ?
+                  !this.state.socialMedia.facebook || this.state.socialMedia.facebook === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -348,7 +376,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.twitter === '' ?
+                  !this.state.socialMedia.twitter || this.state.socialMedia.twitter === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -377,7 +405,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.instagram === '' ?
+                  !this.state.socialMedia.instagram || this.state.socialMedia.instagram === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -406,7 +434,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.youtube === '' ?
+                  !this.state.socialMedia.youtube || this.state.socialMedia.youtube === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -430,7 +458,7 @@ export default class ProfileSettings extends React.Component {
             Private information
           </SettingsStyled.SubHeading>
           <SettingsStyled.SubHeadingDescription>
-            This information is private to you and will not be shared
+            This information is private and will not be shared
             publicly
           </SettingsStyled.SubHeadingDescription>
         </SettingsStyled.HeadingWrapper>
@@ -452,7 +480,12 @@ export default class ProfileSettings extends React.Component {
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
         </SettingsStyled.InputwrapperDiv>
-        <SettingsStyled.ControlWrapper>
+        <SettingsStyled.ControlWrapper multiple>
+          <SettingsStyled.CancelButton
+            onClick={this.cancelDetails}
+          >
+            Cancel
+          </SettingsStyled.CancelButton>
           <SettingsStyled.ControlButton
             onClick={() => this.submitProfileDetails()}
           >

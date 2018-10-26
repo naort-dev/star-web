@@ -48,7 +48,7 @@ export default class MyAccount extends React.Component {
   }
 
   checkPassword = (field) => {
-    const pattern = /^(?=.*?[A-Za-z])(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/;
+    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
 
     if (validator.isEmpty(this.state[field].value)) {
       this.setState({ [field]: { ...this.state[field], message: 'Enter a  password' } });

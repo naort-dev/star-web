@@ -10,7 +10,7 @@ import SettingsStyled from '../../../styled';
 export default class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.initialState = {
       managePayment: false,
       changePassword: false,
       featuredImage: {
@@ -32,25 +32,40 @@ export default class AccountSettings extends React.Component {
         firstName: false,
         lastName: false,
       },
+      cancelDetails: false,
+    };
+    this.state = {
+      ...this.initialState,
     };
   }
 
   componentWillMount() {
-    if (this.props.userDetails && this.props.userDetails.images) {
-      const secondaryImages = this.props.userDetails.images.map((image) => {
-        return {
-          file: image.photo,
-          image: image.image_url,
-        };
-      });
-      this.setState({ secondaryImages });
-    }
+    this.setInitialData();
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.changePasswordData.submitStatus) {
       nextProps.resetChangePassword();
       this.setState({ changePassword: false });
+    }
+    if (this.state.cancelDetails) {
+      this.setState({
+        ...this.initialState,
+      }, () => {
+        this.setInitialData();
+      });
+    }
+  }
+
+  setInitialData = () => {
+    if (this.props.userDetails && this.props.userDetails.images) {
+      const secondaryImages = this.props.userDetails.images.map((image) => {
+        return {
+          fileName: image.photo,
+          image: image.image_url,
+        };
+      });
+      this.setState({ secondaryImages });
     }
   }
 
@@ -108,20 +123,25 @@ export default class AccountSettings extends React.Component {
         last_name: this.state.lastName,
       };
       const secondaryFileNames = this.state.secondaryImages.map((item) => {
-        if (item.fileName) {
+        if (item.image) {
           return item.fileName;
         }
       });
       const profileImages = {
         avatar_photo: this.state.profileImage.file,
-        images: [this.state.profileImage.file],
+        images: [this.state.profileImage.file, ...secondaryFileNames],
       };
       if (this.state.featuredImage.file) {
         profileImages['featured_image'] = this.state.featuredImage.file;
-        profileImages.images = secondaryFileNames;
+        profileImages.images = [...profileImages.images, this.state.featuredImage.file]
       }
       this.props.submitAccountDetails(userDetails, profileImages);
     }
+  }
+
+  cancelDetails = () => {
+    this.setState({ cancelDetails: true });
+    this.props.fetchUserDetails();
   }
 
   render() {
@@ -204,7 +224,7 @@ export default class AccountSettings extends React.Component {
             Private information
           </SettingsStyled.SubHeading>
           <SettingsStyled.SubHeadingDescription>
-            This information is private to you and will not be shared
+            This information is private and will not be shared
             publicly
           </SettingsStyled.SubHeadingDescription>
         </SettingsStyled.HeadingWrapper>
@@ -273,7 +293,12 @@ export default class AccountSettings extends React.Component {
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
         </SettingsStyled.InputwrapperDiv>
-        <SettingsStyled.ControlWrapper>
+        <SettingsStyled.ControlWrapper multiple>
+          <SettingsStyled.CancelButton
+            onClick={this.cancelDetails}
+          >
+            Cancel
+          </SettingsStyled.CancelButton>
           <SettingsStyled.ControlButton
             onClick={() => this.submitAccountDetails()}
           >
