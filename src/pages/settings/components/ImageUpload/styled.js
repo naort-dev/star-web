@@ -43,14 +43,20 @@ ImageUploadStyled.CoverImage = styled.div`
   background-size: cover;
 `;
 
+ImageUploadStyled.SecondaryCoverWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  max-width: 550px;
+  margin-top: 40px;
+`;
+
 ImageUploadStyled.SecondaryCoverImage = ImageUploadStyled.CoverImage.extend`
-  width: 100%;
+  width: calc(50% - 10px);
   height: 300px;
+  display: inline-block;
   border: 1px solid #d0d2d3;
   border-radius: 10px;
-  max-width: 550px;
-  margin: 10px auto;
-  margin-top: 40px;
 `;
 
 ImageUploadStyled.ProfileImageWrapper = ImageUploadStyled.CoverImage.extend`

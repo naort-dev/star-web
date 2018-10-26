@@ -47,7 +47,7 @@ CropperStyled.CropperCancel = styled.span`
   display: block;
   padding: 11px 25px;
   color: #fff;
+  cursor: pointer;
 `;
 
-export default CropperStyled
-;
+export default CropperStyled;

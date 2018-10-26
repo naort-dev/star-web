@@ -112,6 +112,11 @@ export default class Requests extends React.Component {
     return null;
   }
 
+
+  updateScrollTarget = (target) => {
+    this.setState({ scrollTarget: target });
+  }
+
   renderSectionHeader = () => {
     if (this.state.selectedTab === 'Open') {
       return this.props.starMode ? 'Pending fan requests' : 'Pending requests';
@@ -234,10 +239,6 @@ export default class Requests extends React.Component {
         }
       </React.Fragment>
     );
-  }
-
-  updateScrollTarget = (target) => {
-    this.setState({ scrollTarget: target });
   }
 
   render() {

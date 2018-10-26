@@ -78,34 +78,32 @@ class StarSettings extends React.Component {
           selected={selectedTab}
         />
         <SettingsStyled.Container>
-          {/* <Scrollbars> */}
-            <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
-              <AccountSettings
-                userDetails={this.props.userDetails}
-                submitAccountDetails={this.submitAccountDetails}
-                resetChangePassword={this.props.resetChangePassword}
-                changePassword={this.props.changePassword}
-                changePasswordData={this.props.changePasswordData}
-              />
-            </SettingsStyled.ContentWrapper>
-            <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
-              <ProfileSettings
-                industryList={this.state.industryList}
-                userDetails={this.props.userDetails}
-                celebDetails={this.props.celebrityDetails}
-                fetchUrl={this.props.fetchUrl}
-                stripeRegistration={this.props.stripeRegistration}
-                checkStripe={this.props.checkStripe}
-                submitProfileDetails={this.submitProfileDetails}
-              />
-            </SettingsStyled.ContentWrapper>
-            <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
-              <ShareUser
-                type="star"
-                shareUrl={this.props.userDetails.share_url}
-              />
-            </SettingsStyled.ContentWrapper>
-          {/* </Scrollbars> */}
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
+            <AccountSettings
+              userDetails={this.props.userDetails}
+              submitAccountDetails={this.submitAccountDetails}
+              resetChangePassword={this.props.resetChangePassword}
+              changePassword={this.props.changePassword}
+              changePasswordData={this.props.changePasswordData}
+            />
+          </SettingsStyled.ContentWrapper>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
+            <ProfileSettings
+              industryList={this.state.industryList}
+              userDetails={this.props.userDetails}
+              celebDetails={this.props.celebrityDetails}
+              fetchUrl={this.props.fetchUrl}
+              stripeRegistration={this.props.stripeRegistration}
+              checkStripe={this.props.checkStripe}
+              submitProfileDetails={this.submitProfileDetails}
+            />
+          </SettingsStyled.ContentWrapper>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
+            <ShareUser
+              type="star"
+              shareUrl={this.props.userDetails.share_url}
+            />
+          </SettingsStyled.ContentWrapper>
         </SettingsStyled.Container>
       </SettingsStyled>
     );
