@@ -36,12 +36,16 @@ class StarSettings extends React.Component {
     this.setState({ selectedTab: item });
   }
 
-  submitAccountDetails = (userDetails, profileImages) => {
+  submitAccountDetails = (userDetails, profileImages, notifications) => {
     const userData = {
       celebrity_details: {},
       user_details: userDetails,
     };
-    Promise.all([this.props.updateUserDetails(this.props.userDetails.id, userData), this.props.updateProfilePhoto(profileImages)])
+    Promise.all([
+      this.props.updateUserDetails(this.props.userDetails.id, userData),
+      this.props.updateProfilePhoto(profileImages),
+      this.props.updateNotification(notifications),
+    ])
       .then(() => {
         this.setState({ showPopup: true });
         // this.props.fetchUserDetails();

@@ -123,6 +123,11 @@ export default class AccountSettings extends React.Component {
           return item.fileName;
         }
       });
+      const notifications = {
+        celebrity_starsona_message: this.state.celebrityStarsonaMessage,
+        celebrity_account_updates: this.state.celebrityAccountUpdates,
+        fan_starsona_videos: this.state.fanStarsonaVideos,
+      };
       const profileImages = {
         avatar_photo: this.state.profileImage.file,
         images: [this.state.profileImage.file, ...secondaryFileNames],
@@ -131,7 +136,7 @@ export default class AccountSettings extends React.Component {
         profileImages['featured_image'] = this.state.featuredImage.file;
         profileImages.images = [...profileImages.images, this.state.featuredImage.file]
       }
-      this.props.submitAccountDetails(userDetails, profileImages);
+      this.props.submitAccountDetails(userDetails, profileImages, notifications);
     }
   }
 
