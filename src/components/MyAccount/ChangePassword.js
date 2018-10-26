@@ -6,8 +6,6 @@ export default class MyAccount extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showPassword1: false,
-      showPassword2: false,
       oldPassword: {
         value: '',
         message: '',
@@ -94,14 +92,13 @@ export default class MyAccount extends React.Component {
           <Accounts.InputWraps>
             <Accounts.PasswordWrapper>
               <Accounts.Input
-                type={this.state.showPassword1 ? 'text' : 'password'}
+                type="password"
                 name="password1"
                 value={password1.value}
                 placeholder="New password"
                 onChange={e => this.onChange(e, 'password1')}
                 onBlur={() => this.checkPassword('password1')}
               />
-              <Accounts.ShowPassword onClick={() => this.setState({ showPassword1: !this.state.showPassword1 })} />
             </Accounts.PasswordWrapper>
             <Accounts.ErrorMsg>{password1.message}</Accounts.ErrorMsg>
           </Accounts.InputWraps>
@@ -109,14 +106,13 @@ export default class MyAccount extends React.Component {
           <Accounts.InputWraps>
             <Accounts.PasswordWrapper>
               <Accounts.Input
-                type={this.state.showPassword2 ? 'text' : 'password'}
+                type="password"
                 name="password2"
                 value={password2.value}
                 placeholder="Re-enter new password"
                 onChange={e => this.onChange(e, 'password2')}
                 onBlur={() => this.checkPassword('password2')}
               />
-              <Accounts.ShowPassword onClick={() => this.setState({ showPassword2: !this.state.showPassword2 })} />
             </Accounts.PasswordWrapper>
             <Accounts.ErrorMsg>{password2.message}</Accounts.ErrorMsg>
           </Accounts.InputWraps>

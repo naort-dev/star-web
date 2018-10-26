@@ -125,7 +125,7 @@ export default class ProfileSettings extends React.Component {
         description: this.state.bio,
         profession: this.state.industries,
         rate: parseInt(this.state.bookingPrice),
-        charity: this.state.charity,
+        // charity: this.state.charity,
         weekly_limits: parseInt(this.state.bookingLimit),
         availability: true,
       };
@@ -305,7 +305,7 @@ export default class ProfileSettings extends React.Component {
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
-          <SettingsStyled.InputWrapper>
+          {/* <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Charity / Group</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.InputArea
@@ -322,7 +322,7 @@ export default class ProfileSettings extends React.Component {
                   : null}
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
-          </SettingsStyled.InputWrapper>
+          </SettingsStyled.InputWrapper> */}
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Social links</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
