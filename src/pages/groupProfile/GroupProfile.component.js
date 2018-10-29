@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import ModalPopup from '../../components/RequestFlowPopup';
 import GroupProfileStyled from './styled';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
+import { ROLES } from '../../constants/usertype';
 
 export default class GroupProfile extends React.Component {
   constructor(props) {
@@ -36,7 +37,7 @@ export default class GroupProfile extends React.Component {
 
   groupFollowStatus = () => {
     if (this.props.isLoggedIn) {
-      if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === 'R1002' || this.props.userDetails.role_details.role_code === 'R1004')) {
+      if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group)) {
         this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
       } else {
         this.props.fanFollowStatus(this.props.groupDetails.user_id, !this.props.groupDetails.is_follow);
@@ -120,9 +121,9 @@ export default class GroupProfile extends React.Component {
 
     let followedText = '';
     if (this.props.userDetails && this.props.isLoggedIn && this.props.userDetails.role_details) {
-      if (this.props.userDetails.role_details.role_code === 'R1001' && this.props.groupDetails.is_follow) {
+      if (this.props.userDetails.role_details.role_code === ROLES.fan && this.props.groupDetails.is_follow) {
         followedText = 'Following';
-      } else if (this.props.userDetails.role_details.role_code === 'R1002' || this.props.userDetails.role_details.role_code === 'R1004') {
+      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
         if (this.props.groupDetails.account_follow_details && this.props.groupDetails.account_follow_details.approved) {
           followedText = 'Member';
         } else {
