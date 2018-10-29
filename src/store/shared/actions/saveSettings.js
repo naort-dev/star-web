@@ -54,7 +54,6 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(updateUserDetailsFetchEnd());
       dispatch(updateUserDetailsFetchSuccess(resp.data.data));
-      // dispatch(fetchUserDetails(id));
     } else {
       dispatch(updateUserDetailsFetchEnd());
       dispatch(updateUserDetailsFetchFailed('404'));
