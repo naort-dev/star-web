@@ -314,7 +314,7 @@ GroupProfileStyled.followingButton = styled.div `
   position: relative;
   &:after {
     content: '';
-    background-image: url(assets/images/check-mark.png);
+    background-image:  ${props => (props.followedText === 'Requested' ? 'none' : 'url(assets/images/check-mark.png)')};
     width: 30px;
     height: 25px;
     background-size: cover;
