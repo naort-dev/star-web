@@ -1,20 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Scrollbars from 'react-custom-scrollbars';
 import { fetch } from '../../../../services/fetch';
-import AccountSettings from './modules/AccountSettings';
+import AccountSettings from '../StarSettings/modules/AccountSettings';
 import ShareUser from '../ShareUser';
-import ProfileSettings from './modules/ProfileSettings';
+import ProfileSettings from '../StarSettings/modules/ProfileSettings';
 import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
 import Popup from '../../../../components/Popup';
 import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
 import SettingsStyled from '../../styled';
 
-class StarSettings extends React.Component {
+class FanSettings extends React.Component {
   state = {
     selectedTab: 'Account',
     industryList: [],
+    tabsList: ['Account', 'Share profile'],
     showPopup: false,
   }
 
@@ -36,6 +36,14 @@ class StarSettings extends React.Component {
     this.setState({ selectedTab: item });
   }
 
+  enableStarSignup = () => {
+    this.setState({
+      tabsList: ['Account', 'Profile details', 'Share profile'],
+    }, () => {
+      this.setState({ selectedTab: 'Profile details' });
+    });
+  }
+
   submitAccountDetails = (userDetails, profileImages, notifications) => {
     const userData = {
       celebrity_details: {},
@@ -48,7 +56,6 @@ class StarSettings extends React.Component {
     ])
       .then(() => {
         this.setState({ showPopup: true });
-        // this.props.fetchUserDetails();
       });
   }
 
@@ -77,15 +84,16 @@ class StarSettings extends React.Component {
             </Popup>
         }
         <InnerTabs
-          labels={['Account', 'Profile details', 'Share profile']}
+          labels={this.state.tabsList}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
         <SettingsStyled.Container>
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
             <AccountSettings
-              type="star"
+              type="fan"
               userDetails={this.props.userDetails}
+              enableStarSignup={this.enableStarSignup}
               fetchUserDetails={this.props.fetchUserDetails}
               submitAccountDetails={this.submitAccountDetails}
               resetChangePassword={this.props.resetChangePassword}
@@ -107,9 +115,10 @@ class StarSettings extends React.Component {
           </SettingsStyled.ContentWrapper>
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
             <ShareUser
-              heading="Tell your fans that you're on Starsona"
+              heading="Invite your friends to join Starsona"
               description="Lorem Ipsum"
-              shareUrl={this.props.userDetails.share_url}
+              type="star"
+              shareUrl="www.starsona.com"
             />
           </SettingsStyled.ContentWrapper>
         </SettingsStyled.Container>
@@ -127,4 +136,4 @@ const mapDispatchToProps = dispatch => ({
   checkStripe: () => dispatch(checkStripe()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(StarSettings);
+export default connect(mapStateToProps, mapDispatchToProps)(FanSettings);

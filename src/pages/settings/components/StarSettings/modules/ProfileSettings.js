@@ -45,7 +45,7 @@ export default class ProfileSettings extends React.Component {
       }
     });
     this.setState({
-      industries: professionList,
+      industries: professionList ? professionList : [],
       socialMedia: { facebook, twitter, youtube, instagram },
       bio: props.celebDetails.description ? props.celebDetails.description : '',
       stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',

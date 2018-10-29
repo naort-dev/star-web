@@ -2,6 +2,7 @@ import React from 'react';
 import { ROLES } from '../../constants/usertype';
 import ThreeColumnLayout from '../../components/ThreeColumnLayout';
 import StarSettings from './components/StarSettings';
+import FanSettings from './components/FanSettings';
 
 export default class Requests extends React.Component {
   constructor(props) {
@@ -29,11 +30,31 @@ export default class Requests extends React.Component {
   }
   componentWillMount() {
     this.fetchUserDetails();
-    this.setInnerLinks();
+    if (this.props.userDetails.role_details) {
+      this.setInnerLinks(this.props);
+    }
   }
 
-  setInnerLinks = () => {
-    const innerLinks = this.starLinks;
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.userDetails.role_details) {
+      this.setInnerLinks(nextProps);
+    }
+  }
+
+  setInnerLinks = (props) => {
+    let innerLinks = [];
+    switch (props.userDetails.role_details.role_code) {
+      case ROLES.star:
+        innerLinks = this.starLinks;
+        break;
+      case ROLES.fan:
+        innerLinks = this.fanLinks;
+        break;
+      case ROLES.group:
+        innerLinks = this.groupLinks;
+        break;
+      default: return null;
+    }
     this.setState({ innerLinks });
   }
 
@@ -60,7 +81,17 @@ export default class Requests extends React.Component {
           );
         case ROLES.fan:
           return (
-            <span>fan</span>
+            <FanSettings
+              userDetails={this.props.userDetails}
+              celebrityDetails={this.props.celebrityDetails}
+              fetchUserDetails={this.fetchUserDetails}
+              updateUserDetails={this.props.updateUserDetails}
+              updateNotification={this.props.updateNotification}
+              updateProfilePhoto={this.props.updateProfilePhoto}
+              resetChangePassword={this.props.resetChangePassword}
+              changePassword={this.props.changePassword}
+              changePasswordData={this.props.changePasswordData}
+            />
           );
         default: return null;
       }

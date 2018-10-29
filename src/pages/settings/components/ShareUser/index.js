@@ -107,25 +107,21 @@ export default class ShareUser extends React.Component {
   }
 
   renderContent = (props) => {
-    switch (props.type) {
-      case 'star':
-        return (
-          <React.Fragment>
-            <ShareStyled.HeadingWrapper>
-              <ShareStyled.SubHeading>
-                Tell your fans that you're on Starsona
-              </ShareStyled.SubHeading>
-              <ShareStyled.SubHeadingDescription>
-                Lorem Ipsum
-              </ShareStyled.SubHeadingDescription>
-            </ShareStyled.HeadingWrapper>
-            {
-              this.renderShareView(props.shareUrl)
-            }
-          </React.Fragment>
-        );
-      default: return null;
-    }
+    return (
+      <React.Fragment>
+        <ShareStyled.HeadingWrapper>
+          <ShareStyled.SubHeading>
+            {props.heading}
+          </ShareStyled.SubHeading>
+          <ShareStyled.SubHeadingDescription>
+            {props.description}
+          </ShareStyled.SubHeadingDescription>
+        </ShareStyled.HeadingWrapper>
+        {
+          this.renderShareView(props.shareUrl)
+        }
+      </React.Fragment>
+    );
   }
 
   render() {
