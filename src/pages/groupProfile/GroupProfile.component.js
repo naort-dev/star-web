@@ -17,6 +17,7 @@ export default class GroupProfile extends React.Component {
       menuActive: false,
       memberlistModal: false,
       readMoreFlag: false,
+      followFlag: false,
     };
   }
 
@@ -28,7 +29,16 @@ export default class GroupProfile extends React.Component {
   componentWillReceiveProps(nextProps) {
     let groupDetails = nextProps.groupDetails;
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
-      this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());
+      this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());      
+      if (this.state.followFlag) {
+        if (nextProps.isLoggedIn) {
+          if (nextProps.groupDetails && nextProps.userDetails.role_details && (nextProps.userDetails.role_details.role_code === ROLES.star || nextProps.userDetails.role_details.role_code === ROLES.group)) {
+            this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
+          } else {
+            this.props.fanFollowStatus(nextProps.groupDetails.user_id, !nextProps.groupDetails.is_follow);
+          }
+        }
+      }
     }
     if (!nextProps.memberListDetails.length && groupDetails && groupDetails.user_id) {
       this.props.fetchGroupMembers(nextProps.groupDetails.user_id);
@@ -36,6 +46,9 @@ export default class GroupProfile extends React.Component {
   }
 
   groupFollowStatus = () => {
+    this.setState({
+      followFlag: true,
+    });
     if (this.props.isLoggedIn) {
       if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group)) {
         this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
