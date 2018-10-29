@@ -20,7 +20,7 @@ ColumnLayoutStyled.sideSection = styled.section`
   background-color: #fff;
   height: ${props => props.menuActive && '100%'};
   @media(min-width: 1025px) {
-    width: 200px;
+    width: 210px;
     height: 99%;
     display: inline-block;
     overflow: auto;
@@ -38,7 +38,7 @@ ColumnLayoutStyled.mainSection = styled.section`
     padding-top: 40px;
   }
   @media(min-width: 1025px) {
-    width: calc(100% - 200px);
+    width: calc(100% - 210px);
     display: inline-block;
     vertical-align: top;
     padding-left: 50px;

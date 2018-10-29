@@ -39,6 +39,20 @@ export default class AccountSettings extends React.Component {
         };
       });
     }
+    let notifications = {};
+    if (props.type === 'star') {
+      notifications = {
+        starsonaMessage: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_starsona_message : false,
+        accountUpdates: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_account_updates : false,
+        starsonaVideos: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_starsona_request : false,
+      };
+    } else {
+      notifications = {
+        starsonaMessage: props.userDetails.notification_settings ? props.userDetails.notification_settings.fan_starsona_messages : false,
+        accountUpdates: props.userDetails.notification_settings ? props.userDetails.notification_settings.fan_account_updates : false,
+        starsonaVideos: props.userDetails.notification_settings ? props.userDetails.notification_settings.fan_starsona_videos : false,
+      };
+    }
     this.setState({
       managePayment: false,
       changePassword: false,
@@ -54,9 +68,7 @@ export default class AccountSettings extends React.Component {
       firstName: props.userDetails.first_name ? props.userDetails.first_name : '',
       lastName: props.userDetails.last_name ? props.userDetails.last_name : '',
       email: props.userDetails.email ? props.userDetails.email : '',
-      celebrityStarsonaMessage: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_starsona_message : false,
-      celebrityAccountUpdates: props.userDetails.notification_settings ? props.userDetails.notification_settings.celebrity_account_updates : false,
-      fanStarsonaVideos: props.userDetails.notification_settings ? props.userDetails.notification_settings.fan_starsona_videos : false,
+      ...notifications,
       errors: {
         firstName: false,
         lastName: false,
@@ -123,11 +135,20 @@ export default class AccountSettings extends React.Component {
           return item.fileName;
         }
       });
-      const notifications = {
-        celebrity_starsona_message: this.state.celebrityStarsonaMessage,
-        celebrity_account_updates: this.state.celebrityAccountUpdates,
-        fan_starsona_videos: this.state.fanStarsonaVideos,
-      };
+      let notifications = {};
+      if (this.props.type === 'star') {
+        notifications = {
+          celebrity_starsona_message: this.state.starsonaMessage,
+          celebrity_account_updates: this.state.accountUpdates,
+          celebrity_starsona_request: this.state.starsonaVideos,
+        };
+      } else {
+        notifications = {
+          fan_starsona_messages: this.state.starsonaMessage,
+          fan_account_updates: this.state.accountUpdates,
+          fan_starsona_videos: this.state.starsonaVideos,
+        };
+      }
       const profileImages = {
         avatar_photo: this.state.profileImage.file,
         images: [this.state.profileImage.file, ...secondaryFileNames],
@@ -170,6 +191,7 @@ export default class AccountSettings extends React.Component {
           : null
         }
         <ImageUpload
+          type={this.props.type}
           profileImage={this.state.profileImage.image}
           featuredImage={this.state.featuredImage.image}
           secondaryImages={this.state.secondaryImages}
@@ -265,8 +287,8 @@ export default class AccountSettings extends React.Component {
                   <input
                     id="celebrityStarsonaRequest"
                     type="checkbox"
-                    checked={this.state.celebrityStarsonaMessage}
-                    onChange={() => this.setState({ celebrityStarsonaMessage: !this.state.celebrityStarsonaMessage })}
+                    checked={this.state.starsonaMessage}
+                    onChange={() => this.setState({ starsonaMessage: !this.state.starsonaMessage })}
                   />
                   <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -275,8 +297,8 @@ export default class AccountSettings extends React.Component {
                   <input
                     id="celebrityStarsonaRequest"
                     type="checkbox"
-                    checked={this.state.celebrityAccountUpdates}
-                    onChange={() => this.setState({ celebrityAccountUpdates: !this.state.celebrityAccountUpdates })}
+                    checked={this.state.accountUpdates}
+                    onChange={() => this.setState({ accountUpdates: !this.state.accountUpdates })}
                   />
                   <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -285,8 +307,8 @@ export default class AccountSettings extends React.Component {
                   <input
                     id="celebrityStarsonaRequest"
                     type="checkbox"
-                    checked={this.state.fanStarsonaVideos}
-                    onChange={() => this.setState({ fanStarsonaVideos: !this.state.fanStarsonaVideos })}
+                    checked={this.state.starsonaVideos}
+                    onChange={() => this.setState({ starsonaVideos: !this.state.starsonaVideos })}
                   />
                   <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -306,6 +328,24 @@ export default class AccountSettings extends React.Component {
             Save
           </SettingsStyled.ControlButton>
         </SettingsStyled.ControlWrapper>
+        {
+          this.props.type === 'fan' &&
+            <React.Fragment>
+              <SettingsStyled.HeadingWrapper>
+                <SettingsStyled.SubHeading>
+                  Are you a Star and want to engage with Fans?
+                </SettingsStyled.SubHeading>
+                <SettingsStyled.SubHeadingDescription>
+                  Lorem Ipsum
+                </SettingsStyled.SubHeadingDescription>
+              </SettingsStyled.HeadingWrapper>
+              <SettingsStyled.HollowButton
+                onClick={() => this.props.enableStarSignup()}
+              >
+                Create Star account
+              </SettingsStyled.HollowButton>
+            </React.Fragment>
+        }
       </React.Fragment>
     );
   }

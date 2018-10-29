@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import SettingsStyled from '../../styled';
 
 const ImageUploadStyled = styled.div`
 
@@ -128,6 +129,34 @@ ImageUploadStyled.ProfileImage = styled.span`
     height: 70px;
   }
 `;
+
+ImageUploadStyled.fanProfileImage = ImageUploadStyled.ProfileImage.extend`
+  position: static;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  @media(min-width: 768px) {
+    width: 90px;
+    height: 90px;
+  }
+`;
+
+ImageUploadStyled.fanProfileWrapper = SettingsStyled.InputWrapper.extend`
+  align-items: flex-start;
+  @media(min-width: 768px) {
+    align-items: center;
+  }
+`;
+
+ImageUploadStyled.fanProfileContainer = SettingsStyled.WrapsInput.extend`
+  display: flex;
+  align-items: center;
+`;
+
+ImageUploadStyled.fanProfileChange = SettingsStyled.ActionText.extend`
+  margin-left: 10px;
+`;
+
 ImageUploadStyled.AddCoverWrapper = styled.span`
   display: block;
   width: 100%;
