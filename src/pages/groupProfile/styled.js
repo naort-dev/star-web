@@ -69,6 +69,7 @@ GroupProfileStyled.sectionWrapper = styled.div`
 GroupProfileStyled.profileWrapper = styled.div`
   display: flex;
   justify-content: space-around;
+  background-color: #fff;
   @media(max-width: 1200px) and (min-width: 768px) {
     display: block;
   }
