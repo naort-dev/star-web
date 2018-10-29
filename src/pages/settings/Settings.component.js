@@ -64,37 +64,38 @@ export default class Requests extends React.Component {
 
   renderCenterSection = () => {
     if (this.props.userDetails.role_details) {
-      switch (this.props.userDetails.role_details.role_code) {
-        case ROLES.star:
-          return (
-            <StarSettings
-              userDetails={this.props.userDetails}
-              celebrityDetails={this.props.celebrityDetails}
-              fetchUserDetails={this.fetchUserDetails}
-              updateUserDetails={this.props.updateUserDetails}
-              updateNotification={this.props.updateNotification}
-              updateProfilePhoto={this.props.updateProfilePhoto}
-              resetChangePassword={this.props.resetChangePassword}
-              changePassword={this.props.changePassword}
-              changePasswordData={this.props.changePasswordData}
-            />
-          );
-        case ROLES.fan:
-          return (
-            <FanSettings
-              userDetails={this.props.userDetails}
-              celebrityDetails={this.props.celebrityDetails}
-              fetchUserDetails={this.fetchUserDetails}
-              updateUserDetails={this.props.updateUserDetails}
-              updateNotification={this.props.updateNotification}
-              updateProfilePhoto={this.props.updateProfilePhoto}
-              resetChangePassword={this.props.resetChangePassword}
-              changePassword={this.props.changePassword}
-              changePasswordData={this.props.changePasswordData}
-            />
-          );
-        default: return null;
+      if (this.props.userDetails.role_details.role_code === ROLES.star ||
+        (this.props.userDetails.role_details.role_code === ROLES.fan && this.props.userDetails.celebrity)
+      ) {
+        return (
+          <StarSettings
+            userDetails={this.props.userDetails}
+            celebrityDetails={this.props.celebrityDetails}
+            fetchUserDetails={this.fetchUserDetails}
+            updateUserDetails={this.props.updateUserDetails}
+            updateNotification={this.props.updateNotification}
+            updateProfilePhoto={this.props.updateProfilePhoto}
+            resetChangePassword={this.props.resetChangePassword}
+            changePassword={this.props.changePassword}
+            changePasswordData={this.props.changePasswordData}
+          />
+        );
+      } else if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity) {
+        return (
+          <FanSettings
+            userDetails={this.props.userDetails}
+            celebrityDetails={this.props.celebrityDetails}
+            fetchUserDetails={this.fetchUserDetails}
+            updateUserDetails={this.props.updateUserDetails}
+            updateNotification={this.props.updateNotification}
+            updateProfilePhoto={this.props.updateProfilePhoto}
+            resetChangePassword={this.props.resetChangePassword}
+            changePassword={this.props.changePassword}
+            changePasswordData={this.props.changePasswordData}
+          />
+        );
       }
+      return null;
     }
     return null;
   }
