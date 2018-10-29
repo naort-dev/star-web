@@ -26,8 +26,23 @@ export default class GroupProfile extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     let groupDetails = nextProps.groupDetails;
+    if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
+      this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());
+    }
     if (!nextProps.memberListDetails.length && groupDetails && groupDetails.user_id) {
       this.props.fetchGroupMembers(nextProps.groupDetails.user_id);
+    }
+  }
+
+  groupFollowStatus = () => {
+    if (this.props.isLoggedIn) {
+      if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === 'R1002' || this.props.userDetails.role_details.role_code === 'R1004')) {
+        this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
+      } else {
+        this.props.fanFollowStatus(this.props.groupDetails.user_id, !this.props.groupDetails.is_follow);
+      }
+    } else {
+      this.props.toggleLogin(true);
     }
   }
 
@@ -103,6 +118,19 @@ export default class GroupProfile extends React.Component {
     const descriptionLength = this.props.groupDetails.group_details?
       this.props.groupDetails.group_details.description.length:0;
 
+    let followedText = '';
+    if (this.props.userDetails && this.props.isLoggedIn && this.props.userDetails.role_details) {
+      if (this.props.userDetails.role_details.role_code === 'R1001' && this.props.groupDetails.is_follow) {
+        followedText = 'Following';
+      } else if (this.props.userDetails.role_details.role_code === 'R1002' || this.props.userDetails.role_details.role_code === 'R1004') {
+        if (this.props.groupDetails.account_follow_details && this.props.groupDetails.account_follow_details.approved) {
+          followedText = 'Member';
+        } else {
+          followedText = 'Requested';
+        }
+      }
+    }
+
     return (
       <GroupProfileStyled>
         <Header
@@ -150,7 +178,9 @@ export default class GroupProfile extends React.Component {
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
-                  {memberListArray.length > 0 ? memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) : <p>No members available</p>}
+                  {memberListArray.length > 0 ?
+                    memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) 
+                    : <p>No members available</p>}
                 </div>
                 {this.props.memberCount > 5 ?
                   <div className="seeMemberList">
@@ -161,11 +191,13 @@ export default class GroupProfile extends React.Component {
             </div>
             <div className="socialMediaIcons">
               <GroupProfileStyled.ButtonWrapper>
-                <GroupProfileStyled.getStartedButton
-                  type="button"
-                  value="Get started"
-                  onClick={this.getStarted}
-                />
+                {(!this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) ?
+                  <GroupProfileStyled.getStartedButton onClick={this.groupFollowStatus}>
+                  Follow
+                  </GroupProfileStyled.getStartedButton>
+                  : <GroupProfileStyled.followingButton onClick={this.groupFollowStatus} followedText={followedText}>
+                    {followedText}
+                  </GroupProfileStyled.followingButton>}
               </GroupProfileStyled.ButtonWrapper>
               {this.props.groupDetails.social_links && 
                 this.props.groupDetails.social_links.map( data => this.socialMedia(data)) }
