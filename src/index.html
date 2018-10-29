@@ -13,6 +13,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="google-signin-client_id" content="86585295157-07s9jds1q8p6aorv2vulb0h4dfctlaga.apps.googleusercontent.com">
     <link rel="shortcut icon" type="image/png" href="assets/favicon.ico"/>
+    <link rel="preload" href="assets/fonts/Avenir/Avenir-Regular.ttf" as="font">
+    <link rel="preload" href="assets/fonts/Avenir/Avenir-Light.ttf" as="font">
+    <link rel="preload" href="assets/fonts/Avenir/Avenir-Medium.ttf" as="font">
+    <link rel="preload" href="assets/fonts/Avenir/Avenir-Bold.ttf" as="font">
+    <link rel="preconnect" href="https://s3.amazonaws.com">
     <link rel="stylesheet" type="text/css" href="assets/fonts.css">
     <title>Starsona</title>
     <script src="/env.js"></script>
@@ -20,7 +25,6 @@
     <link rel="apple-touch-icon" href="assets/images/app-icon.png">
     <link rel="android-touch-icon" href="assets/images/app-icon.png">
     <link rel="windows-touch-icon" href="assets/images/app-icon.png">
-    <link rel="preconnect" href="https://s3.amazonaws.com">
 </head>
 <body>
     <!-- Google Tag Manager (noscript) -->
@@ -31,6 +35,6 @@
     <div id="modal-root"></div>
     <script src="https://js.stripe.com/v3/"></script>
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script src="/canvasToBlob.js"></script>
+    <script src="/canvasToBlob.js" async defer></script>
 </body>
 </html>
