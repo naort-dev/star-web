@@ -44,7 +44,9 @@ class Api {
   static getReferralList = 'user/referral_list/';
   static getCommentsList = 'request/comments';
   static addComment = 'request/comments/';
-  static groupMembersList = account => `user/group_list/?account=${account}`
+  static groupMembersList = account => `user/group_list/?account=${account}`;
+  static celebrityGroupFollow = 'user/join_group/';
+  static fanGroupFollow = 'user/fan/group_follow/';
 }
 
 export default Api;

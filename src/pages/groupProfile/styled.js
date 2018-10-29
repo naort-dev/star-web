@@ -69,6 +69,7 @@ GroupProfileStyled.sectionWrapper = styled.div`
 GroupProfileStyled.profileWrapper = styled.div`
   display: flex;
   justify-content: space-around;
+  background-color: #fff;
   @media(max-width: 1200px) and (min-width: 768px) {
     display: block;
   }
@@ -259,7 +260,7 @@ GroupProfileStyled.ButtonWrapper = styled.div`
     margin-top: 0;
   }
 `;
-GroupProfileStyled.getStartedButton = styled.input`
+GroupProfileStyled.getStartedButton = styled.div`
   background-color: #FF6C58; 
   color: #fff;
   padding: 15px;
@@ -279,6 +280,50 @@ GroupProfileStyled.getStartedButton = styled.input`
   &:hover {
     background-color: #FF3B21;
     border: 2px solid #FF3B21;
+  }
+  @media(min-width:1920px){
+    font-size:20px;
+  }
+  @media(max-width: 1024px) {
+    min-width: 100%;
+    padding: 15px;
+    width: 100%;
+  }
+  @media(max-width: 767px) {
+    max-width: 200px;
+    min-width: 200px;
+  }
+`;
+GroupProfileStyled.followingButton = styled.div `
+  background-color: ${props => (props.followedText === 'Requested' ? '#dadada' : '#fff')}; 
+  color: ${props => (props.followedText === 'Requested' ? '#808080' : '#FF6C58')};
+  padding: 15px;
+  min-width: 250px;
+  width:auto;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size:22px;
+  font-family: 'Avenir-Medium';
+  outline:none;
+  cursor: ${props => (props.followedText === 'Requested' ? 'not-allowed' : 'default')};
+  border-radius:5px;
+  border: 2px solid ${props => (props.followedText === 'Requested' ? '#dadada' : '#FF6C58')};
+  margin-top:3%;
+  -webkit-appearance: none;
+  position: relative;
+  &:after {
+    content: '';
+    background-image:  ${props => (props.followedText === 'Requested' ? 'none' : 'url(assets/images/check-mark.png)')};
+    width: 30px;
+    height: 25px;
+    background-size: cover;
+    position: absolute;
+    top: 12px;
+  }
+  &:hover {
+    color: ${props => (props.followedText === 'Requested' ? '#808080' : '#FF3B21')};
+    border: 2px solid ${props => (props.followedText === 'Requested' ? '#dadada' : '#FF3B21')};
   }
   @media(min-width:1920px){
     font-size:20px;
@@ -344,6 +389,9 @@ GroupProfileStyled.memberListPopup = styled.div`
         color: #9e9e9e;
         word-break: break-all;
         font-size: 16px;
+        @media(max-width: 767px) {
+          font-size: 14px;
+        }
       }
     }
     .memberDetailButton{
