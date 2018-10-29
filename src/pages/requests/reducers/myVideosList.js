@@ -2,6 +2,8 @@ import { MY_VIDEOS_LIST } from '../actions/getMyVideosList';
 
 const initalState = {
   data: [],
+  open: [],
+  completed: [],
   loading: false,
   offset: -1,
   count: 0,
@@ -26,6 +28,13 @@ export default (state = { ...initalState }, action) => {
         loading: false,
       };
 
+    case MY_VIDEOS_LIST.updateAll:
+      return {
+        ...state,
+        [action.key]: action.list,
+        loading: false,
+      };
+
     case MY_VIDEOS_LIST.success:
       return {
         ...state,
@@ -42,6 +51,9 @@ export default (state = { ...initalState }, action) => {
         ...state,
         error: action.error,
       };
+
+    case MY_VIDEOS_LIST.reset:
+      return initalState;
 
     default:
       return state;

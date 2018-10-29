@@ -51,17 +51,11 @@ class App extends React.Component {
       this.props.updateStarRole(JSON.parse(localStorage.getItem('data')).user.celebrity);
       this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
-    if (!this.props.professionsList.professions.length) {
-      this.setState({ showLoading: true });
-    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
-    }
-    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
-      this.setState({ showLoading: false });
     }
   }
 
@@ -178,7 +172,6 @@ App.propTypes = {
 };
 
 const mapState = state => ({
-  professionsList: state.professionsList,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,

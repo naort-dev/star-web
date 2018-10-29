@@ -36,15 +36,18 @@ class StarSettings extends React.Component {
     this.setState({ selectedTab: item });
   }
 
-  submitAccountDetails = (userDetails, profileImages) => {
+  submitAccountDetails = (userDetails, profileImages, notifications) => {
     const userData = {
       celebrity_details: {},
       user_details: userDetails,
     };
-    Promise.all([this.props.updateUserDetails(this.props.userDetails.id, userData), this.props.updateProfilePhoto(profileImages)])
+    Promise.all([
+      this.props.updateUserDetails(this.props.userDetails.id, userData),
+      this.props.updateProfilePhoto(profileImages),
+      this.props.updateNotification(notifications),
+    ])
       .then(() => {
         this.setState({ showPopup: true });
-        this.props.fetchUserDetails();
       });
   }
 
@@ -81,6 +84,7 @@ class StarSettings extends React.Component {
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
             <AccountSettings
               userDetails={this.props.userDetails}
+              fetchUserDetails={this.props.fetchUserDetails}
               submitAccountDetails={this.submitAccountDetails}
               resetChangePassword={this.props.resetChangePassword}
               changePassword={this.props.changePassword}
@@ -89,10 +93,11 @@ class StarSettings extends React.Component {
           </SettingsStyled.ContentWrapper>
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
             <ProfileSettings
+              fetchUserDetails={this.props.fetchUserDetails}
               industryList={this.state.industryList}
               userDetails={this.props.userDetails}
               celebDetails={this.props.celebrityDetails}
-              fetchUrl={this.props.fetchUrl}
+              fetchUrl={this.props.fetchURL}
               stripeRegistration={this.props.stripeRegistration}
               checkStripe={this.props.checkStripe}
               submitProfileDetails={this.submitProfileDetails}

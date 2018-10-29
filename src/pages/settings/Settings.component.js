@@ -42,27 +42,30 @@ export default class Requests extends React.Component {
   }
 
   renderCenterSection = () => {
-    switch (this.props.userDetails.role_details.role_code) {
-      case ROLES.star:
-        return (
-          <StarSettings
-            userDetails={this.props.userDetails}
-            celebrityDetails={this.props.celebrityDetails}
-            fetchUserDetails={this.fetchUserDetails}
-            updateUserDetails={this.props.updateUserDetails}
-            updateNotification={this.props.updateNotification}
-            updateProfilePhoto={this.props.updateProfilePhoto}
-            resetChangePassword={this.props.resetChangePassword}
-            changePassword={this.props.changePassword}
-            changePasswordData={this.props.changePasswordData}
-          />
-        );
-      case ROLES.fan:
-        return (
-          <span>fan</span>
-        );
-      default: return null;
+    if (this.props.userDetails.role_details) {
+      switch (this.props.userDetails.role_details.role_code) {
+        case ROLES.star:
+          return (
+            <StarSettings
+              userDetails={this.props.userDetails}
+              celebrityDetails={this.props.celebrityDetails}
+              fetchUserDetails={this.fetchUserDetails}
+              updateUserDetails={this.props.updateUserDetails}
+              updateNotification={this.props.updateNotification}
+              updateProfilePhoto={this.props.updateProfilePhoto}
+              resetChangePassword={this.props.resetChangePassword}
+              changePassword={this.props.changePassword}
+              changePasswordData={this.props.changePasswordData}
+            />
+          );
+        case ROLES.fan:
+          return (
+            <span>fan</span>
+          );
+        default: return null;
+      }
     }
+    return null;
   }
 
   render() {

@@ -124,6 +124,13 @@ SettingsStyled.ControlWrapper = styled.div`
   }
 `;
 
+SettingsStyled.CancelButton = styled.span`
+  font-family: 'Avenir-Light';
+  padding: 10px 0;
+  color: #969696;
+  cursor: pointer;
+`;
+
 SettingsStyled.ControlButton = styled.button`
   background-color: #FF6C58;
   color: rgb(255,255,255);

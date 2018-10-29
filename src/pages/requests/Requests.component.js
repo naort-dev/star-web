@@ -7,6 +7,7 @@ import OrderDetails from '../../components/OrderDetails';
 import InnerTabs from '../../components/InnerTabs';
 import RequestDetails from '../../components/RequestDetails';
 import ActionLoader from '../../components/ActionLoader';
+import { ROLES } from '../../constants/usertype';
 import RequestsStyled from './styled';
 import { requestStatusList, celebRequestStatusList, celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
@@ -32,7 +33,8 @@ export default class Requests extends React.Component {
     this.role = props.starMode ? 'celebrity_id' : 'fan_id';
   }
   componentWillMount() {
-    this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
+    this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebOpenStatusList : openStatusList, 'open');
+    this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebCompletedStatusList : completedStatusList, 'completed');
     let innerLinks;
     if (this.props.starMode) {
       innerLinks = [
@@ -42,13 +44,20 @@ export default class Requests extends React.Component {
       ];
     } else {
       innerLinks = [
-        { linkName: 'Favorited stars', selectedName: 'favorites', url: '/user/favorites' },
         { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
+      innerLinks = this.props.userDetails.settings_userDetails.role_details && this.props.userDetails.settings_userDetails.role_details.role_code === ROLES.star ?
+        [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }]
+        : innerLinks;
     }
     this.setState({ innerLinks });
   }
+
+  componentWillUnmount() {
+    this.props.myVideosListReset();
+  }
+
   setScrollHeight = () => {
     this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
   }
@@ -67,7 +76,9 @@ export default class Requests extends React.Component {
         this.props.fetchMyVideosList(0, true, this.role, completedStatus.toString());
         break;
       default:
-        this.props.fetchMyVideosList(0, true, this.role, 'all');
+        this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebOpenStatusList : openStatusList, 'open');
+        this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebCompletedStatusList : completedStatusList, 'completed');
+        // this.props.fetchMyVideosList(0, true, this.role, 'all');
     }
     this.setState({ selectedTab: item });
   }
@@ -128,15 +139,15 @@ export default class Requests extends React.Component {
 
   renderRequestList = (status, starMode) => {
     let statusList;
-    if (status === 'Open') {
+    if (status === 'open') {
       statusList = starMode ? celebOpenStatusList : openStatusList;
-    } else if (status === 'Completed') {
+    } else if (status === 'completed') {
       statusList = starMode ? celebCompletedStatusList : completedStatusList;
     } else {
       statusList = [5];
     }
-    if (this.props.myVideosList.data.length) {
-      const list = this.props.myVideosList.data.map((request, index) => {
+    if (this.props.myVideosList[status].length) {
+      const list = this.props.myVideosList[status].map((request, index) => {
         if (statusList.indexOf(request.request_status) > -1) {
           return (
             <RequestsStyled.RequestItem key={index}>
@@ -178,14 +189,14 @@ export default class Requests extends React.Component {
                   <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
                 </RequestsStyled.SectionHeaderWrapper>
                 <RequestsStyled.ListWrapper autoHeight>
-                  {this.renderRequestList('Open', this.props.starMode)}
+                  {this.renderRequestList('open', this.props.starMode)}
                 </RequestsStyled.ListWrapper>
                 <RequestsStyled.SectionHeaderWrapper>
                   <RequestsStyled.SectionHeader>{this.props.starMode ? 'Completed fan requests' : 'Completed requests'}</RequestsStyled.SectionHeader>
                   <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
                 </RequestsStyled.SectionHeaderWrapper>
                 <RequestsStyled.ListWrapper autoHeight>
-                  {this.renderRequestList('Completed', this.props.starMode)}
+                  {this.renderRequestList('completed', this.props.starMode)}
                 </RequestsStyled.ListWrapper>
               {/* </Scrollbars> */}
             </RequestsStyled.StatusTypeWrapper>

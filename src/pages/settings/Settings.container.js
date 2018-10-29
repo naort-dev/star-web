@@ -12,6 +12,7 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
   userDetails: state.userDetails.settings_userDetails,
   celebrityDetails: state.userDetails.settings_celebrityDetails,
+  userDetailLoading: state.userDetails.loading,
   changePasswordData: state.changePassword,
 });
 

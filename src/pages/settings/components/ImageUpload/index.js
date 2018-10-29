@@ -194,15 +194,16 @@ export default class ImageUpload extends React.Component {
                 </ImageUploadStyled.CoverImage>
               </ImageUploadStyled.CoverLayout>
               {
-                this.props.featuredImage &&
+                (this.props.featuredImage || this.props.secondaryImages.length) ?
                   <ImageUploadStyled.SecondaryCoverWrapper>
                     {
                       this.renderSecondaryImages()
                     }
                   </ImageUploadStyled.SecondaryCoverWrapper>
+                : null
               }
               {
-                this.props.featuredImage && this.props.secondaryImages.length < 2 ?
+                this.props.secondaryImages.length < 2 ?
                   <ImageUploadStyled.AddCoverWrapper>
                     <ImageUploadStyled.AddCoverButton onClick={() => this.addNewCover()}>Add cover</ImageUploadStyled.AddCoverButton>
                   </ImageUploadStyled.AddCoverWrapper>

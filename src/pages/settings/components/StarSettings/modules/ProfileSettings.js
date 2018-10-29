@@ -6,40 +6,34 @@ import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter
 import SettingsStyled from '../../../styled';
 
 export default class ProfileSettings extends React.Component {
-  state = {
-    bio: this.props.celebDetails.description ? this.props.celebDetails.description : '',
-    industries: [],
-    stageName: this.props.userDetails.nick_name ? this.props.userDetails.nick_name : '',
-    bookingPrice: this.props.celebDetails.rate ? numberToCommaFormatter(this.props.celebDetails.rate) : '',
-    bookingLimit: this.props.celebDetails.weekly_limits ? numberToCommaFormatter(this.props.celebDetails.weekly_limits) : '',
-    popUpMessage: null,
-    priceCheck: false,
-    limitCheck: false,
-    selectedCheck: null,
-    socialMedia: {
-      facebook: '',
-      twitter: '',
-      instagram: '',
-      youtube: '',
-    },
-    errors: {
-      bio: false,
-      industries: false,
-      bookingPrice: false,
-      bookingLimit: false,
-    },
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
 
   componentWillMount() {
+    this.setInitialData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.cancelDetails) {
+      this.setInitialData(nextProps);
+    }
+  }
+
+  setInitialData = (props) => {
     let professionList;
     let facebook;
     let twitter;
     let instagram;
     let youtube;
-    if (this.props.celebDetails.profession_details) {
-      professionList = this.props.celebDetails.profession_details.map(profession => profession.id.toString());
+    if (props.celebDetails.profession_details) {
+      professionList = props.celebDetails.profession_details.map(profession => profession.id.toString());
     }
-    this.props.userDetails.social_links.forEach((link) => {
+    props.userDetails.social_links.forEach((link) => {
       if (link.social_link_key === 'facebook_url') {
         facebook = link.social_link_value;
       } else if (link.social_link_key === 'twitter_url') {
@@ -50,12 +44,30 @@ export default class ProfileSettings extends React.Component {
         instagram = link.social_link_value;
       }
     });
-    this.setState({ industries: professionList, socialMedia: { facebook, twitter, youtube, instagram } });
-    this.props.checkStripe();
+    this.setState({
+      industries: professionList,
+      socialMedia: { facebook, twitter, youtube, instagram },
+      bio: props.celebDetails.description ? props.celebDetails.description : '',
+      stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
+      bookingPrice: props.celebDetails.rate ? numberToCommaFormatter(props.celebDetails.rate) : '',
+      bookingLimit: props.celebDetails.weekly_limits ? numberToCommaFormatter(props.celebDetails.weekly_limits) : '',
+      popUpMessage: null,
+      priceCheck: false,
+      limitCheck: false,
+      selectedCheck: null,
+      errors: {
+        bio: false,
+        industries: false,
+        bookingPrice: false,
+        bookingLimit: false,
+      },
+      cancelDetails: false,
+    });
+    props.checkStripe();
   }
 
   getStripe() {
-    this.props.fetchURL()
+    this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
@@ -104,7 +116,7 @@ export default class ProfileSettings extends React.Component {
   validateFields = () => {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
     bio = this.state.bio === '';
-    industries = this.state.industries.length === 0;
+    industries = this.state.industries.length === 0 || this.state.industries[0] === '' ;
     bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
     bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
     const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
@@ -115,7 +127,7 @@ export default class ProfileSettings extends React.Component {
       this.handleFieldBlur('bookingLimit', this.state.bookingLimit);
     }
     this.setState({ errors: { ...this.state.errors, industries, bookingLimit, bookingPrice, bio } });
-    return !industries && !bookingLimit && !bookingLimit && !bio && !priceValid && !limitValid;
+    return !industries && !bookingLimit && !bookingPrice && !bio && !priceValid && !limitValid;
   }
 
   submitProfileDetails = () => {
@@ -128,10 +140,10 @@ export default class ProfileSettings extends React.Component {
         availability: true,
       };
       const socialLinks = {
-        facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
-        twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
-        youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
-        instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
+        facebook_url: this.state.socialMedia.facebook && validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
+        twitter_url: this.state.socialMedia.twitter && validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
+        youtube_url: this.state.socialMedia.youtube && validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
+        instagram_url: this.state.socialMedia.instagram && validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
       this.props.submitProfileDetails(celebrityDetails, socialLinks);
     }
@@ -146,6 +158,11 @@ export default class ProfileSettings extends React.Component {
       this.bookingPrice.blur();
       this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
+  }
+
+  cancelDetails = () => {
+    this.setState({ cancelDetails: true });
+    this.props.fetchUserDetails();
   }
 
   renderPopup = () => {
@@ -178,6 +195,7 @@ export default class ProfileSettings extends React.Component {
         {
           this.state.popUpMessage &&
             <Popup
+              modalView
               smallPopup
               closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
             >
@@ -319,7 +337,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.facebook === '' ?
+                  !this.state.socialMedia.facebook || this.state.socialMedia.facebook === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -348,7 +366,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.twitter === '' ?
+                  !this.state.socialMedia.twitter || this.state.socialMedia.twitter === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -377,7 +395,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.instagram === '' ?
+                  !this.state.socialMedia.instagram || this.state.socialMedia.instagram === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -406,7 +424,7 @@ export default class ProfileSettings extends React.Component {
                   }}
                 />
                 {
-                  this.state.socialMedia.youtube === '' ?
+                  !this.state.socialMedia.youtube || this.state.socialMedia.youtube === '' ?
                     <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
@@ -430,7 +448,7 @@ export default class ProfileSettings extends React.Component {
             Private information
           </SettingsStyled.SubHeading>
           <SettingsStyled.SubHeadingDescription>
-            This information is private to you and will not be shared
+            This information is private and will not be shared
             publicly
           </SettingsStyled.SubHeadingDescription>
         </SettingsStyled.HeadingWrapper>
@@ -452,7 +470,12 @@ export default class ProfileSettings extends React.Component {
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
         </SettingsStyled.InputwrapperDiv>
-        <SettingsStyled.ControlWrapper>
+        <SettingsStyled.ControlWrapper multiple>
+          <SettingsStyled.CancelButton
+            onClick={this.cancelDetails}
+          >
+            Cancel
+          </SettingsStyled.CancelButton>
           <SettingsStyled.ControlButton
             onClick={() => this.submitProfileDetails()}
           >

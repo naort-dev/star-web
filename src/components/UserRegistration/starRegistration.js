@@ -130,12 +130,17 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
-  submitAccountDetails = (celebrityDetails, socialLinks) => {
+  submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
     const selectedProfessions = celebrityDetails.profession;
     const professionsArray = this.state.industryList.filter((profession) => {
       return selectedProfessions.indexOf(profession.value.toString()) > -1;
     });
+    const finalUserDetails = {
+      celebrity_details: {},
+      user_details: userDetails,
+    }
     updateSocialLinks(socialLinks);
+    this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
   }
