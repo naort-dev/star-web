@@ -48,7 +48,6 @@ class StarSettings extends React.Component {
     ])
       .then(() => {
         this.setState({ showPopup: true });
-        // this.props.fetchUserDetails();
       });
   }
 
