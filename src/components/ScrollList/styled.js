@@ -52,7 +52,7 @@ ListStyled.Banner = styled.div`
     padding-right: 56px;
   }
   @media(min-width: 1025px) {
-    width: 100%;
+    width: calc(100% - 13px);
   }
   @media(min-width: 1920px) {
     height: 180px;
