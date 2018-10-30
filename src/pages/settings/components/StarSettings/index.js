@@ -52,10 +52,10 @@ class StarSettings extends React.Component {
     }
   }
 
-  submitProfileDetails = async (celebrityDetails, socialLinks) => {
+  submitProfileDetails = async (celebrityDetails, userDetails, socialLinks) => {
     const userData = {
       celebrity_details: celebrityDetails,
-      user_details: {},
+      user_details: userDetails,
     };
     await updateSocialLinks(socialLinks);
     await this.props.updateUserDetails(this.props.userDetails.id, userData);

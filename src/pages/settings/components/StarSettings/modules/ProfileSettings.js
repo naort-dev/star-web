@@ -139,13 +139,16 @@ export default class ProfileSettings extends React.Component {
         weekly_limits: parseInt(this.state.bookingLimit),
         availability: true,
       };
+      const userDetails = {
+        nick_name: this.state.stageName,
+      };
       const socialLinks = {
         facebook_url: this.state.socialMedia.facebook && validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
         twitter_url: this.state.socialMedia.twitter && validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
         youtube_url: this.state.socialMedia.youtube && validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: this.state.socialMedia.instagram && validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
-      this.props.submitProfileDetails(celebrityDetails, socialLinks);
+      this.props.submitProfileDetails(celebrityDetails, userDetails, socialLinks);
     }
   };
 
