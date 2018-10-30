@@ -19,10 +19,10 @@ class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: null,
+      selectedType: props.signUpDetails ? props.signUpDetails.type : null,
       stepCount: 0,
       socialData: {},
-      currentStep: 0,
+      currentStep: props.signUpDetails ? props.signUpDetails.step : 0,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -126,6 +126,7 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
+  signUpDetails: state.modals.signUpDetails,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
