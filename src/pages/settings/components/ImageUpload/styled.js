@@ -115,13 +115,26 @@ ImageUploadStyled.ProfileImage = styled.span`
   position: absolute;
   bottom: -18px;
   left: 17px;
-  width: 40px;
-  height: 40px;
+  width: 60px;
+  height: 60px;
   display: inline-block;
   border-radius: 50%;
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4')};
   background-repeat: no-repeat;
   background-size: cover;
+  ${ImageUploadStyled.ProfileInputWrapper} {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 21px;
+    top: 19px;
+    @media(min-width: 768px) {
+      width: 25px;
+      height: 25px;
+      left: 24px;
+      top: 23px;
+    }
+  }
   @media(min-width: 768px) {
     bottom: -29px;
     left: 27px;
