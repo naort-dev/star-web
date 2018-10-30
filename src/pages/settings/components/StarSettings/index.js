@@ -36,30 +36,27 @@ class StarSettings extends React.Component {
     this.setState({ selectedTab: item });
   }
 
-  submitAccountDetails = (userDetails, profileImages, notifications) => {
+  submitAccountDetails = async (userDetails, profileImages, notifications) => {
     const userData = {
       celebrity_details: {},
       user_details: userDetails,
     };
-    Promise.all([
-      this.props.updateUserDetails(this.props.userDetails.id, userData),
-      this.props.updateProfilePhoto(profileImages),
-      this.props.updateNotification(notifications),
-    ])
-      .then(() => {
-        this.setState({ showPopup: true });
-      });
+    await this.props.updateUserDetails(this.props.userDetails.id, userData);
+    await this.props.updateProfilePhoto(profileImages);
+    await this.props.updateNotification(notifications);
+    this.props.fetchUserDetails();
+    this.setState({ showPopup: true });
   }
 
-  submitProfileDetails = (celebrityDetails, socialLinks) => {
+  submitProfileDetails = async (celebrityDetails, socialLinks) => {
     const userData = {
       celebrity_details: celebrityDetails,
       user_details: {},
     };
-    Promise.all([updateSocialLinks(socialLinks), this.props.updateUserDetails(this.props.userDetails.id, userData)])
-      .then(() => {
-        this.setState({ showPopup: true });
-      });
+    await updateSocialLinks(socialLinks);
+    await this.props.updateUserDetails(this.props.userDetails.id, userData);
+    this.props.fetchUserDetails();
+    this.setState({ showPopup: true });
   }
 
   render() {
