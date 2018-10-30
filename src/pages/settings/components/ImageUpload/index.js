@@ -212,6 +212,7 @@ export default class ImageUpload extends React.Component {
                         this.props.featuredImage && <ImageUploadStyled.CloseButton onClick={() => this.props.onComplete('featuredImage', null, null)} />
                         }
                         <ImageUploadStyled.ProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
+                          <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} />
                           <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
                         </ImageUploadStyled.ProfileImage>
                       </ImageUploadStyled.CoverImage>
