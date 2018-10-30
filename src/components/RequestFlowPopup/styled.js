@@ -49,7 +49,6 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   @media(min-width: 768px) {
     width: 90%;
     max-width: ${props => (props.largePopup ? '900px' : '600px')};
-    border-radius: 12px;
     height: 80%;
   }
 `;
