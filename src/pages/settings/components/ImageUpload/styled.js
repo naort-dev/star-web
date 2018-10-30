@@ -13,7 +13,7 @@ ImageUploadStyled.CloseButton = styled.span`
   width: 17px;
   height: 17px;
   cursor: pointer;
-  background: url(assets/images/close-icon-orange.svg) center center / cover no-repeat;
+  background: url(assets/images/close-icon-orange.svg) no-repeat;
   background-position: center center;
 `;
 
