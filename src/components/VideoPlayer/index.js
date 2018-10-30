@@ -24,30 +24,13 @@ export default class VideoPlayer extends React.Component {
   componentDidMount() {
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
     window.addEventListener('resize', this.setVideoHeight)
-    // this.setVideoHeight();
-  }
-
-  componentWillMount() {
-    window.removeEventListener('resize', this.setVideoHeight)
-  }
-
-  setVideoHeight = () => {
-    let videoHeight;
-    if (this.state.videoWrapperRef) {
-      videoHeight = this.state.videoWrapperRef.clientWidth / this.props.ratio;
-    }
-    this.setState({ videoHeight });
-  }
-
-  setVideoWrapperRef = (node) => {
-    if (!this.state.videoWrapperRef) {
-      this.setState({ videoWrapperRef: node }, () => {
-        this.setVideoHeight();
-      });
-    }
   }
 
   static getDerivedStateFromProps = (nextProps, prevState) => {
+    let { videoHeight } = prevState;
+    if (nextProps.ratio && prevState.videoWrapperRef) {
+      videoHeight = prevState.videoWrapperRef.clientWidth / nextProps.ratio;
+    }
     if (nextProps.primarySrc !== prevState.primarySrc) {
       return {
         ...prevState,
@@ -60,10 +43,30 @@ export default class VideoPlayer extends React.Component {
           thumbnail: nextProps.secondaryCover,
           video: nextProps.secondarySrc,
         },
-        videoHeight: prevState.videoWrapperRef.clientWidth / nextProps.ratio,
+        videoHeight,
       };
     }
     return null;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setVideoHeight);
+  }
+
+  setVideoHeight = () => {
+    let videoHeight;
+    if (this.state.videoWrapperRef && this.props.ratio) {
+      videoHeight = this.state.videoWrapperRef.clientWidth / this.props.ratio;
+    }
+    this.setState({ videoHeight });
+  }
+
+  setVideoWrapperRef = (node) => {
+    if (!this.state.videoWrapperRef) {
+      this.setState({ videoWrapperRef: node }, () => {
+        this.setVideoHeight();
+      });
+    }
   }
 
   handleStateChange = (state) => {
@@ -87,7 +90,7 @@ export default class VideoPlayer extends React.Component {
     return (
       <VideoRenderDiv
         innerRef={node => this.setVideoWrapperRef(node)}
-        height={`${this.state.videoHeight}px`}
+        height={this.state.videoHeight}
       >
         {this.state.secondary.thumbnail && <VideoRenderDiv.answerVideo
           onClick={this.swapVideos}
