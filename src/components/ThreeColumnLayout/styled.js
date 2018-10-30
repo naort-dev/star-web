@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
 const ColumnLayoutStyled = styled.div`
-  padding-top: 60px;
+  margin-top: 60px;
   height: calc(100vh - 60px);
   background: #fff;
+  padding-bottom: 20px;
 `;
 
 ColumnLayoutStyled.Container = styled.div`
