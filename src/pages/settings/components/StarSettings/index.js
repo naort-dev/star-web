@@ -15,7 +15,7 @@ class StarSettings extends React.Component {
   state = {
     selectedTab: 'Account',
     industryList: [],
-    showPopup: false,
+    popupMessage: '',
   }
 
   componentWillMount() {
@@ -36,30 +36,31 @@ class StarSettings extends React.Component {
     this.setState({ selectedTab: item });
   }
 
-  submitAccountDetails = (userDetails, profileImages, notifications) => {
+  submitAccountDetails = async (userDetails, profileImages, notifications) => {
     const userData = {
       celebrity_details: {},
       user_details: userDetails,
     };
-    Promise.all([
-      this.props.updateUserDetails(this.props.userDetails.id, userData),
-      this.props.updateProfilePhoto(profileImages),
-      this.props.updateNotification(notifications),
-    ])
-      .then(() => {
-        this.setState({ showPopup: true });
-      });
+    try {
+      await this.props.updateUserDetails(this.props.userDetails.id, userData);
+      await this.props.updateProfilePhoto(profileImages);
+      await this.props.updateNotification(notifications);
+      this.props.fetchUserDetails();
+      this.setState({ popupMessage: 'Successfully updated setings' });
+    } catch (e) {
+      this.setState({ popupMessage: 'Something went wrong' });
+    }
   }
 
-  submitProfileDetails = (celebrityDetails, socialLinks) => {
+  submitProfileDetails = async (celebrityDetails, socialLinks) => {
     const userData = {
       celebrity_details: celebrityDetails,
       user_details: {},
     };
-    Promise.all([updateSocialLinks(socialLinks), this.props.updateUserDetails(this.props.userDetails.id, userData)])
-      .then(() => {
-        this.setState({ showPopup: true });
-      });
+    await updateSocialLinks(socialLinks);
+    await this.props.updateUserDetails(this.props.userDetails.id, userData);
+    this.props.fetchUserDetails();
+    this.setState({ popupMessage: 'Successfully updated setings' });
   }
 
   render() {
@@ -67,12 +68,12 @@ class StarSettings extends React.Component {
     return (
       <SettingsStyled>
         {
-          this.state.showPopup &&
+          this.state.popupMessage && this.state.popupMessage !== '' &&
             <Popup
               smallPopup
-              closePopUp={() => this.setState({ showPopup: false })}
+              closePopUp={() => this.setState({ popupMessage: '' })}
             >
-              Successfully updated setings
+              { this.state.popupMessage }
             </Popup>
         }
         <InnerTabs
