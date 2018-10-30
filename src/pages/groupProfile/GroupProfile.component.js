@@ -74,10 +74,11 @@ export default class GroupProfile extends React.Component {
 
   socialMedia = (icon) => {
     return (
-      <Link to={`/${icon.social_link_value}`} className={icon.social_link_key}>
-        <span></span>
-      </Link>
-
+      icon.social_link_value !== '' ?
+        <Link to={`/${icon.social_link_value}`} className={icon.social_link_key} target="_blank">
+          <span></span>
+        </Link>
+        : ''
     );
   }
 
