@@ -88,18 +88,25 @@ class ImageRender extends React.Component {
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         >
-          <Link to={`/${props.id}`} style={{ display: 'block', height: '100%' }}>
+          <Link
+            to={props.isGroup ? `/group-profile/${props.id}` : `/${props.id}`}
+            style={{ display: 'block', height: '100%' }}
+          >
             <ImageRenderDiv.ProfileImageWrapper>
               <ImageRenderDiv.ProfileImage
                 imageUrl={this.state.profileImage}
               />
             </ImageRenderDiv.ProfileImageWrapper>
           </Link>
-          <ImageRenderDiv.Rating>${this.props.rate}</ImageRenderDiv.Rating>
-          <ImageRenderDiv.FavoriteButton
-            onClick={e => this.updateFavouriteSelection(e)}
-            selected={this.state.favouriteSelected}
-          />
+          { !props.isGroup &&
+            <React.Fragment>
+              <ImageRenderDiv.Rating>${this.props.rate}</ImageRenderDiv.Rating>
+              <ImageRenderDiv.FavoriteButton
+                onClick={e => this.updateFavouriteSelection(e)}
+                selected={this.state.favouriteSelected}
+              />
+            </React.Fragment>
+          }
         </ImageRenderDiv.ImageSection>
         <Link to={`/${props.id}`} style={{ display: 'block', height: '100%' }}>
           <ImageRenderDiv.ProfileContent>
@@ -107,7 +114,7 @@ class ImageRender extends React.Component {
               <ImageRenderDiv.StarName>
                 {props.starName}
               </ImageRenderDiv.StarName>
-              <ImageRenderDiv.StarDetails>{props.details}</ImageRenderDiv.StarDetails>
+              <ImageRenderDiv.StarDetails>{props.isGroup ? props.groupType : props.details}</ImageRenderDiv.StarDetails>
             </ImageRenderDiv.Span>
           </ImageRenderDiv.ProfileContent>
         </Link>
