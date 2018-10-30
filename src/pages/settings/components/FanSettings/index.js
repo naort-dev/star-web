@@ -8,6 +8,7 @@ import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
 import Popup from '../../../../components/Popup';
 import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
+import { toggleSignup } from '../../../../store/shared/actions/toggleModals';
 import SettingsStyled from '../../styled';
 
 class FanSettings extends React.Component {
@@ -37,11 +38,7 @@ class FanSettings extends React.Component {
   }
 
   enableStarSignup = () => {
-    this.setState({
-      tabsList: ['Account', 'Profile details', 'Share profile'],
-    }, () => {
-      this.setState({ selectedTab: 'Profile details' });
-    });
+    this.props.toggleSignup(true, 'star', 2);
   }
 
   submitAccountDetails = (userDetails, profileImages, notifications) => {
@@ -132,6 +129,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  toggleSignup: (state, type, step) => dispatch(toggleSignup(state, type, step)),
   fetchURL: () => dispatch(fetchURL()),
   checkStripe: () => dispatch(checkStripe()),
 });

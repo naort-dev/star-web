@@ -4,6 +4,7 @@ const ColumnLayoutStyled = styled.div`
   margin-top: 60px;
   height: calc(100vh - 60px);
   background: #fff;
+  padding-bottom: 20px;
 `;
 
 ColumnLayoutStyled.Container = styled.div`
