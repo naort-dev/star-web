@@ -15,7 +15,7 @@ class FanSettings extends React.Component {
   state = {
     selectedTab: 'Account',
     industryList: [],
-    tabsList: ['Account', 'Share profile'],
+    tabsList: ['Account', 'Invite friends'],
     showPopup: false,
   }
 
