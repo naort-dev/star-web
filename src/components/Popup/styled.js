@@ -48,7 +48,6 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   width: 80%;
   height: ${props => (props.popHeight ? props.popHeight : 'auto')};
   padding: 20px 20px 20px;
-  border-radius: 12px;
   background-color: #fff;
   @media(min-width: 768px) {
     width: 50%;
