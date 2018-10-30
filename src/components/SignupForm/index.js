@@ -341,9 +341,9 @@ export default class SignUp extends React.Component {
         {
           <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         }
-        <Scrollbars
+        {/* <Scrollbars
           renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}
-        >
+        > */}
           <LoginContainer.Container>
             <LoginContainer.Heading>Create your account</LoginContainer.Heading>
             <LoginContainer.SocialMediaMessage>Already have an account?
@@ -469,7 +469,7 @@ export default class SignUp extends React.Component {
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
           </LoginContainer.Container>
-        </Scrollbars>
+        {/* </Scrollbars> */}
       </LoginContainer.SocialMediaSignup>
     );
   }

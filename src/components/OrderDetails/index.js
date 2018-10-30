@@ -508,28 +508,26 @@ export default class OrderDetails extends React.Component {
               this.renderVideoRecorder(props)
             :
               <OrderStyled buttonsEnabled={props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6}>
-                <Scrollbars>
-                  <OrderStyled.Header>New {props.requestType} request</OrderStyled.Header>
-                  <OrderStyled.ProfileImageWrapper>
-                    <OrderStyled.ProfileImage
-                      imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
-                    />
-                    <OrderStyled.ProfileDetailsWrapper>
-                      <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
-                      <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
-                      <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
-                    </OrderStyled.ProfileDetailsWrapper>
-                  </OrderStyled.ProfileImageWrapper>
-                  <OrderStyled.ContentWrapper>
-                    <OrderStyled.leftContent>
-                      <OrderStyled.DetailsWrapper>
-                        {
-                          this.renderOrderDetails()
-                        }
-                      </OrderStyled.DetailsWrapper>
-                    </OrderStyled.leftContent>
-                  </OrderStyled.ContentWrapper>
-                </Scrollbars>
+                <OrderStyled.Header>New {props.requestType} request</OrderStyled.Header>
+                <OrderStyled.ProfileImageWrapper>
+                  <OrderStyled.ProfileImage
+                    imageUrl={props.orderDetails.avatar_photo && props.orderDetails.avatar_photo.thumbnail_url}
+                  />
+                  <OrderStyled.ProfileDetailsWrapper>
+                    <OrderStyled.StarName>{props.orderDetails.celebrity}</OrderStyled.StarName>
+                    <OrderStyled.ProfileDetails>ORDER#: {props.orderId}</OrderStyled.ProfileDetails>
+                    <OrderStyled.ProfileDetails>STATUS: <span>{props.requestStatus}</span></OrderStyled.ProfileDetails>
+                  </OrderStyled.ProfileDetailsWrapper>
+                </OrderStyled.ProfileImageWrapper>
+                <OrderStyled.ContentWrapper>
+                  <OrderStyled.leftContent>
+                    <OrderStyled.DetailsWrapper>
+                      {
+                        this.renderOrderDetails()
+                      }
+                    </OrderStyled.DetailsWrapper>
+                  </OrderStyled.leftContent>
+                </OrderStyled.ContentWrapper>
                 {
                   props.requestStatusId !== 4 && props.requestStatusId !== 5 && props.requestStatusId !== 6 &&
                     <OrderStyled.ActionButtonWrapper>

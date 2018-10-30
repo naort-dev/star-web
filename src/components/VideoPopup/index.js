@@ -205,9 +205,11 @@ class VideoPopup extends React.Component {
       primarySrc: props.selectedVideo.question_answer_videos.answer ? props.selectedVideo.question_answer_videos.question : '',
       secondaryCover: props.selectedVideo.question_answer_videos.answer_thumb ? props.selectedVideo.question_answer_videos.answer_thumb : '',
       secondarySrc: props.selectedVideo.question_answer_videos.answer ? props.selectedVideo.question_answer_videos.answer : '',
+      ratio: props.selectedVideo.width / props.selectedVideo.height,
     } : {
       primaryCover: props.selectedVideo.s3_thumbnail_url ? props.selectedVideo.s3_thumbnail_url : '',
       primarySrc: props.selectedVideo.s3_video_url ? props.selectedVideo.s3_video_url : '',
+      ratio: props.selectedVideo.width / props.selectedVideo.height,
     };
     return (
       <RequestFlowPopup
@@ -259,7 +261,7 @@ class VideoPopup extends React.Component {
                           placeholder="Enter your comment"
                           value={this.state.commentText}
                           onKeyUp={event => this.handleCommentEnter(event)}
-                          onInput={event => this.handleCommentAdd(event)}
+                          onChange={event => this.handleCommentAdd(event)}
                         />
                       </VideoPopupStyled.CommentBoxWrapper>
                     </VideoPopupStyled.PopupActions>

@@ -156,10 +156,10 @@ class starRegistrationComponent extends React.Component {
           this.state.loader ?
             <Loader />
           :
-            <Scrollbars
-              ref={node => {this.scrollRef = node;}}
-              autoHide={false}
-            >
+            // <Scrollbars
+            //   ref={node => {this.scrollRef = node;}}
+            //   autoHide={false}
+            // >
               <GroupStyled.ContentWrapper>
                 <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
                   <StarDetailsEntry
@@ -221,7 +221,7 @@ class starRegistrationComponent extends React.Component {
                   )
                 }
               </GroupStyled.ContentWrapper>
-            </Scrollbars>
+            // {/* </Scrollbars> */}
         }
       </GroupStyled>
     );

@@ -14,10 +14,10 @@ const menuEnter = keyframes`
 const Request = styled.section`
  display:flex;
  flex-direction: column;
- padding-bottom: 40px;
  height: 100%;
  max-width: 1920px;
  background-color: #fff;
+ overflow: auto;
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
@@ -422,16 +422,11 @@ Request.DisableButton = styled.button`
   }
 `;
 Request.PaymentControllerWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10px;
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
   @media(min-width: 768px) {
-    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){

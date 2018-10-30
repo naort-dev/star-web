@@ -124,96 +124,87 @@ export default class Requestvideo extends React.Component {
               <Request>
                 <Request.LeftSection>
                   <Request.ComponentWrapper>
-                    <Request.ComponentWrapperScroll
-                      renderView={props => (
-                        <div
-                          {...props}
-                          className="component-wrapper-scroll-wrapper"
-                        />
-                      )}
-                    >
-                      <Request.OptionWrapper>
-                        <Request.HeaderText>
-                          What kind of video would you like to request?
-                        </Request.HeaderText>
-                        <Request.ButtonWrapper>
-                          <div className="round-radio">
-                            <ul className="list">
-                              <li className="list">
-                                <div>
-                                  <input
-                                    type="radio"
-                                    id="f-option"
-                                    name="selector"
-                                    value="personal"
-                                    onClick={event =>
-                                      this.setRequestType(event.target.value)
-                                    }
-                                  />
-                                  <label htmlFor="f-option">
-                                    Personalized Shout-Out
-                                    <div className="option-content">
-                                      Celebrate everyday moments with a
-                                      personalized video greeting from{" "}
-                                      {fullName}. Birthdays, encouragement,
-                                      graduations… you pick.
-                                    </div>
-                                  </label>
-                                  <div className="check" />
-                                </div>
-                              </li>
+                    <Request.OptionWrapper>
+                      <Request.HeaderText>
+                        What kind of video would you like to request?
+                      </Request.HeaderText>
+                      <Request.ButtonWrapper>
+                        <div className="round-radio">
+                          <ul className="list">
+                            <li className="list">
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="f-option"
+                                  name="selector"
+                                  value="personal"
+                                  onClick={event =>
+                                    this.setRequestType(event.target.value)
+                                  }
+                                />
+                                <label htmlFor="f-option">
+                                  Personalized Shout-Out
+                                  <div className="option-content">
+                                    Celebrate everyday moments with a
+                                    personalized video greeting from{" "}
+                                    {fullName}. Birthdays, encouragement,
+                                    graduations… you pick.
+                                  </div>
+                                </label>
+                                <div className="check" />
+                              </div>
+                            </li>
 
-                              <li className="list">
-                                <div>
-                                  <input
-                                    type="radio"
-                                    id="s-option"
-                                    name="selector"
-                                    value="event"
-                                    onClick={event =>
-                                      this.setRequestType(event.target.value)
-                                    }
-                                  />
-                                  <label htmlFor="s-option">
-                                    Event Announcement
-                                    <div className="option-content">
-                                      Have {fullName} invite everyone over for
-                                      your book club, the big game, fundraiser,
-                                      bachelor/ette party, reunion… any event.
-                                    </div>
-                                  </label>
-                                  <div className="check" />
-                                </div>
-                              </li>
+                            <li className="list">
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="s-option"
+                                  name="selector"
+                                  value="event"
+                                  onClick={event =>
+                                    this.setRequestType(event.target.value)
+                                  }
+                                />
+                                <label htmlFor="s-option">
+                                  Event Announcement
+                                  <div className="option-content">
+                                    Have {fullName} invite everyone over for
+                                    your book club, the big game, fundraiser,
+                                    bachelor/ette party, reunion… any event.
+                                  </div>
+                                </label>
+                                <div className="check" />
+                              </div>
+                            </li>
 
-                              <li className="list">
-                                <div>
-                                  <input
-                                    type="radio"
-                                    id="t-option"
-                                    name="selector"
-                                    value="ask"
-                                    onClick={event =>
-                                      this.setRequestType(event.target.value)
-                                    }
-                                  />
-                                  <label htmlFor="t-option">
-                                    Ask a Question
-                                    <div className="option-content">
-                                      Video yourself asking {fullName} a
-                                      question. When they respond, we’ll stitch
-                                      the two videos together so you get a great
-                                      Q&A interaction.
-                                    </div>
-                                  </label>
-                                  <div className="check" />
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </Request.ButtonWrapper>
-                      </Request.OptionWrapper>
-                    </Request.ComponentWrapperScroll>
+                            <li className="list">
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="t-option"
+                                  name="selector"
+                                  value="ask"
+                                  onClick={event =>
+                                    this.setRequestType(event.target.value)
+                                  }
+                                />
+                                <label htmlFor="t-option">
+                                  Ask a Question
+                                  <div className="option-content">
+                                    Video yourself asking {fullName} a
+                                    question. When they respond, we’ll stitch
+                                    the two videos together so you get a great
+                                    Q&A interaction.
+                                  </div>
+                                </label>
+                                <div className="check" />
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                      </Request.ButtonWrapper>
+                    </Request.OptionWrapper>
                     <Request.PaymentControllerWrapper>
                       {this.state.requestTypeStatus ? (
                         <Request.ContinueButton

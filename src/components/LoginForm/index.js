@@ -354,7 +354,7 @@ export default class LoginForm extends React.Component {
     return (
       <React.Fragment>
         <LoginContainer.SocialMediaSignup>
-          <Scrollbars>
+          {/* <Scrollbars> */}
             <LoginContainer.Container>
               <LoginContainer.Heading>
                 Welcome back to Starsona!
@@ -464,7 +464,7 @@ export default class LoginForm extends React.Component {
                 </LoginContainer.InputContainer>
               </LoginContainer.InputFieldsWrapper>
             </LoginContainer.Container>
-          </Scrollbars>
+          {/* </Scrollbars> */}
         </LoginContainer.SocialMediaSignup>
       </React.Fragment>
     );

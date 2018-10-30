@@ -16,14 +16,14 @@ export class LoginTypeSelector extends React.Component  {
     return (
       <TypeSelectorWrapper>
         <TypeSelectorWrapper.ComponentWrapper>
-          <TypeSelectorWrapper.ComponentWrapperScroll
+          {/* <TypeSelectorWrapper.ComponentWrapperScroll
             renderView={props => (
               <div
                 {...props}
                 className="component-wrapper-scroll-wrapper"
               />
             )}
-          >
+          > */}
             <TypeSelectorWrapper.OptionWrapper>
               <TypeSelectorWrapper.HeaderText>
                 Create your account
@@ -103,7 +103,7 @@ export class LoginTypeSelector extends React.Component  {
                 </div>
               </TypeSelectorWrapper.ButtonWrapper>
             </TypeSelectorWrapper.OptionWrapper>
-          </TypeSelectorWrapper.ComponentWrapperScroll>
+          {/* </TypeSelectorWrapper.ComponentWrapperScroll> */}
           <TypeSelectorWrapper.PaymentControllerWrapper>
             {this.state.selectedOption ? (
               <TypeSelectorWrapper.ContinueButton

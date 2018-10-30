@@ -128,51 +128,15 @@ export default class Askquestion extends React.Component {
                   null
                 }
                 <Request>
-                  {/* <HeaderSection>
-              <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-              <HeaderSection.MiddleDiv> {fullName}</HeaderSection.MiddleDiv>
-              <Link to={`/${this.props.match.params.id}`}>
-                <HeaderSection.RightDiv onClick={() => this.cancel()}>Cancel</HeaderSection.RightDiv>
-              </Link>
-            </HeaderSection> */}
-                  {/* <Request.RightSection>
-              <Request.recorderWrapper>
-                <VideoRecorder {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} />
-              </Request.recorderWrapper>
-            </Request.RightSection> */}
                   <Request.LeftSection>
                     <Request.ComponentWrapper>
-                      {/* <Request.ComponentWrapperScroll
-                        renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-                      > */}
-                      {/* <Request.Heading>What’s your question? </Request.Heading> */}
-                        <Request.Questionwraps>
-                          <Request.Ask>
-                            {/* <Request.InputFieldsWrapper>
-                              <Request.InputWrapper> */}
-                                {/* <Request.Label>Tell {fullName} a little about your question</Request.Label> */}
-                                {/* <Request.WrapsInput>
-                                  <Request.InputQuestion
-                                    placeholder="Best to start your question with “What”, “How” or “Why”."
-                                    value={this.state.question}
-                                    onChange={event => this.setQuestion(event.target.value)}
-                                  />
-                                  <Request.ErrorMsg></Request.ErrorMsg>
-                                </Request.WrapsInput> */}
-                              {/* </Request.InputWrapper>
-                            </Request.InputFieldsWrapper> */}
-
-                            <Request.recorderWrapper>
-                              <QAVideoRecorder star={fullName} {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} onSubmit={this.handleBooking.bind(this)} />
-                            </Request.recorderWrapper>
-                          </Request.Ask>
-                        </Request.Questionwraps>
-                      {/* </Request.ComponentWrapperScroll> */}
-                      {/* <Request.PaymentControllerWrapper>
-                        <Request.ContinueButton disabled={disabled} onClick={() => this.handleBooking()}>
-                          Book
-                      </Request.ContinueButton>
-                      </Request.PaymentControllerWrapper> */}
+                      <Request.Questionwraps>
+                        <Request.Ask>
+                          <Request.recorderWrapper>
+                            <QAVideoRecorder star={fullName} {...this.props} src={this.props.bookingData.requestVideo && this.props.bookingData.requestVideo[0].s3_video_url} duration={recorder.askTimeOut} onSubmit={this.handleBooking.bind(this)} />
+                          </Request.recorderWrapper>
+                        </Request.Ask>
+                      </Request.Questionwraps>
                     </Request.ComponentWrapper>
                   </Request.LeftSection>
                 </Request>
