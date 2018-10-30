@@ -22,15 +22,15 @@ export default class ThreeColumnLayout extends React.Component {
   render() {
     return (
       <ColumnLayoutStyled>
+        <Header
+          menuActive={this.state.menuActive}
+          enableMenu={this.activateMenu}
+          history={this.props.history}
+        />
         <Scrollbars
           renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
         >
           <ColumnLayoutStyled.Container>
-            <Header
-              menuActive={this.state.menuActive}
-              enableMenu={this.activateMenu}
-              history={this.props.history}
-            />
             <ColumnLayoutStyled.sideSection menuActive={this.state.menuActive}>
               <Scrollbars
                 renderView={props => <div {...props} className="view" />}

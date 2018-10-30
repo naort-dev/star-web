@@ -12,9 +12,11 @@ export const toggleLogin = state => ({
   state,
 });
 
-export const toggleSignup = state => ({
+export const toggleSignup = (state, signUpType, step) => ({
   type: TOGGLE_MODALS.toggleSignup,
   state,
+  signUpType,
+  step,
 });
 
 export const toggleRefer = state => ({
