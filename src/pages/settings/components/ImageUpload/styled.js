@@ -119,7 +119,7 @@ ImageUploadStyled.ProfileImage = styled.span`
   height: 40px;
   display: inline-block;
   border-radius: 50%;
-  background: ${props => (props.imageUrl && `url(${props.imageUrl})`)};
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
   background-repeat: no-repeat;
   background-size: cover;
   @media(min-width: 768px) {
@@ -135,6 +135,19 @@ ImageUploadStyled.fanProfileImage = ImageUploadStyled.ProfileImage.extend`
   display: inline-block;
   width: 60px;
   height: 60px;
+  ${ImageUploadStyled.ProfileInputWrapper} {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    left: 20px;
+    top: 17px;
+    @media(min-width: 768px) {
+      width: 25px;
+      height: 25px;
+      left: 34px;
+      top: 32px;
+    }
+  }
   @media(min-width: 768px) {
     width: 90px;
     height: 90px;
