@@ -106,7 +106,7 @@ export default class GroupProfile extends React.Component {
         <Link to={`/${item.user_id}`}>
           <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" />
         </Link>
-        <p className="memberName">{item.get_short_name}</p>
+        <p className="memberName">{item.first_name}</p>
         <p className="jobDetails">
           {
             starProfessionsFormater(item.celebrity_profession)
