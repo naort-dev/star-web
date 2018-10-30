@@ -119,7 +119,7 @@ ImageUploadStyled.ProfileImage = styled.span`
   height: 40px;
   display: inline-block;
   border-radius: 50%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4')};
   background-repeat: no-repeat;
   background-size: cover;
   @media(min-width: 768px) {

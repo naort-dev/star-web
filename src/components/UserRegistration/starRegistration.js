@@ -20,7 +20,6 @@ import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from
 import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
-import { updateNotification, resetNotification } from '../../store/shared/actions/updateNotification';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
 import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
 import { logOutUser } from '../../store/shared/actions/login';
@@ -93,14 +92,14 @@ class starRegistrationComponent extends React.Component {
             const celebrityProfileData = {
               ...this.state.celebrityDetails,
               profile_video: response.filename,
-            }
+            };
             celebritySignupProfile(celebrityProfileData)
               .then((success) => {
                 this.setState({ loader: false })
                 if (success) {
                   this.props.changeStep(this.props.currentStep + 1);
                 }
-              })
+              });
           });
         }
       });
@@ -243,7 +242,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   resetUserDetails: () => dispatch(resetUserDetails()),
-  resetNotification: () => dispatch(resetNotification()),
   resetProfilePhoto: () => dispatch(resetProfilePhoto()),
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: recordedVideo => dispatch(stopRecording(recordedVideo)),

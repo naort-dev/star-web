@@ -16,6 +16,7 @@ export default (state = { ...initialState }, action) => {
         ...state,
         loginModal: action.state,
         signUpModal: false,
+        signUpDetails: null,
       };
 
     case TOGGLE_MODALS.toggleSignup:
@@ -27,6 +28,7 @@ export default (state = { ...initialState }, action) => {
           ...state.signUpDetails,
           type: action.signUpType,
           step: action.step,
+          enableClose: action.enableClose,
         },
       };
 
