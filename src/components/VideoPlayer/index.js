@@ -23,7 +23,12 @@ export default class VideoPlayer extends React.Component {
 
   componentDidMount() {
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
+    window.addEventListener('resize', this.setVideoHeight)
     // this.setVideoHeight();
+  }
+
+  componentWillMount() {
+    window.removeEventListener('resize', this.setVideoHeight)
   }
 
   setVideoHeight = () => {
