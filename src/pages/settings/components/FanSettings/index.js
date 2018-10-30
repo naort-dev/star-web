@@ -20,7 +20,7 @@ class FanSettings extends React.Component {
   }
 
   enableStarSignup = () => {
-    this.props.toggleSignup(true, 'star', 2);
+    this.props.toggleSignup(true, 'star', 2, true);
   }
 
   submitAccountDetails = async (userDetails, profileImages, notifications) => {
@@ -89,7 +89,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  toggleSignup: (state, type, step) => dispatch(toggleSignup(state, type, step)),
+  toggleSignup: (state, type, step, enableClose) => dispatch(toggleSignup(state, type, step, enableClose)),
   fetchURL: () => dispatch(fetchURL()),
   checkStripe: () => dispatch(checkStripe()),
 });

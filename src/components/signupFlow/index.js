@@ -19,10 +19,11 @@ class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: props.signUpDetails ? props.signUpDetails.type : null,
+      selectedType: props.signUpDetails.type ? props.signUpDetails.type : null,
       stepCount: 0,
       socialData: {},
-      currentStep: props.signUpDetails ? props.signUpDetails.step : 0,
+      currentStep: props.signUpDetails.step ? props.signUpDetails.step : 0,
+      enableClose: props.signUpDetails.enableClose ? props.signUpDetails.enableClose : false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -41,7 +42,7 @@ class SignupFlow extends React.Component {
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   changeStep = (step) => {
-    this.setState({ currentStep: step });
+    this.setState({ currentStep: step, enableClose: false });
   }
 
   closeSignUp = () => {
@@ -81,7 +82,7 @@ class SignupFlow extends React.Component {
         <RequestFlowPopup
           dotsCount={0}
           closePopUp={() => this.closeSignUp()}
-          modalView={this.state.currentStep > 1}
+          modalView={this.state.currentStep > 1 && !this.state.enableClose}
           smallPopup
         >
           <LoginContainer>
@@ -89,11 +90,6 @@ class SignupFlow extends React.Component {
               {
                 this.state.currentStep === 1 ||  this.state.currentStep === 0 ?
                   <HeaderSection>
-                    {/* {
-                      this.state.currentStep > 1 ?
-                        <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                      : null
-                    } */}
                     <Link to="/">
                       <HeaderSection.LogoImage
                         src="assets/images/logo_starsona.png"
