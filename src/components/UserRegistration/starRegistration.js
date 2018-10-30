@@ -156,72 +156,67 @@ class starRegistrationComponent extends React.Component {
           this.state.loader ?
             <Loader />
           :
-            // <Scrollbars
-            //   ref={node => {this.scrollRef = node;}}
-            //   autoHide={false}
-            // >
-              <GroupStyled.ContentWrapper>
-                <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
-                  <StarDetailsEntry
-                    industryList={this.state.industryList}
-                    submitAccountDetails={this.submitAccountDetails}
+            <GroupStyled.ContentWrapper>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
+                <StarDetailsEntry
+                  industryList={this.state.industryList}
+                  submitAccountDetails={this.submitAccountDetails}
+                />
+              </GroupStyled.StepWrapper>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
+                <ProfileUpload
+                  starMode
+                  onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+                />
+              </GroupStyled.StepWrapper>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
+                <CoverUpload
+                  visible={this.props.currentStep === 4}
+                  starMode
+                  professionsList={this.state.professionsArray}
+                  scrollRef={this.scrollRef}
+                  profileImage={this.state.profileImage.image}
+                  featuredRatio={imageSizes.featured}
+                  secondaryRatio={imageSizes.first}
+                  groupName={this.props.userDetails.settings_userDetails.first_name}
+                  onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
+                  onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
+                />
+              </GroupStyled.StepWrapper>
+              {
+                this.props.currentStep === 5 &&
+                  <QAVideoRecorder
+                    {...this.props}
+                    src={this.state.videoUrl}
+                    responseMode
+                    recordPlaceHolder="Start recording"
+                    recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
+                    duration={recorder.signUpTimeOut}
+                    onSubmit={this.getVideo}
                   />
-                </GroupStyled.StepWrapper>
-                <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
-                  <ProfileUpload
-                    starMode
-                    onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
-                  />
-                </GroupStyled.StepWrapper>
-                <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
-                  <CoverUpload
-                    visible={this.props.currentStep === 4}
-                    starMode
-                    professionsList={this.state.professionsArray}
-                    scrollRef={this.scrollRef}
-                    profileImage={this.state.profileImage.image}
-                    featuredRatio={imageSizes.featured}
-                    secondaryRatio={imageSizes.first}
-                    groupName={this.props.userDetails.settings_userDetails.first_name}
-                    onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                    onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
-                  />
-                </GroupStyled.StepWrapper>
-                {
-                  this.props.currentStep === 5 &&
-                    <QAVideoRecorder
-                      {...this.props}
-                      src={this.state.videoUrl}
-                      responseMode
-                      recordPlaceHolder="Start recording"
-                      recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
-                      duration={recorder.signUpTimeOut}
-                      onSubmit={this.getVideo}
-                    />
-                }
-                {
-                  this.props.currentStep === 6 && (
-                    <React.Fragment>
-                      <GroupStyled.HeadingWrapper>
-                        <GroupStyled.SubHeading>
-                          Your Star profile has been created!
-                        </GroupStyled.SubHeading>
-                      </GroupStyled.HeadingWrapper>
-                      <GroupStyled.SuccessText>
-                        Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
-                      <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
-                      <GroupStyled.DoneButtonWrapper>
-                        <GroupStyled.ControlButton
-                          onClick={() => this.props.closeSignupFlow()}
-                        >
-                          Done
-                        </GroupStyled.ControlButton>
-                      </GroupStyled.DoneButtonWrapper>
-                    </React.Fragment>
-                  )
-                }
-              </GroupStyled.ContentWrapper>
-            // {/* </Scrollbars> */}
+              }
+              {
+                this.props.currentStep === 6 && (
+                  <React.Fragment>
+                    <GroupStyled.HeadingWrapper>
+                      <GroupStyled.SubHeading>
+                        Your Star profile has been created!
+                      </GroupStyled.SubHeading>
+                    </GroupStyled.HeadingWrapper>
+                    <GroupStyled.SuccessText>
+                      Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
+                    <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
+                    <GroupStyled.DoneButtonWrapper>
+                      <GroupStyled.ControlButton
+                        onClick={() => this.props.closeSignupFlow()}
+                      >
+                        Done
+                      </GroupStyled.ControlButton>
+                    </GroupStyled.DoneButtonWrapper>
+                  </React.Fragment>
+                )
+              }
+            </GroupStyled.ContentWrapper>
         }
       </GroupStyled>
     );

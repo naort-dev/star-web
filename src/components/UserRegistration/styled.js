@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const GroupStyled = styled.div`
   height: 100%;
+  overflow: auto;
 `;
 
 GroupStyled.BackButton = styled.span`
