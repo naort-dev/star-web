@@ -61,5 +61,6 @@ export const updateUserDetails = (id, obj) => (dispatch, getState) => {
   }).catch((exception) => {
     dispatch(updateUserDetailsFetchEnd());
     dispatch(updateUserDetailsFetchFailed(exception));
+    return Promise.reject(exception);
   });
 };

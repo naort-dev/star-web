@@ -12,7 +12,7 @@ class FanSettings extends React.Component {
   state = {
     selectedTab: 'Account',
     tabsList: ['Account', 'Invite friends'],
-    showPopup: false,
+    popupMessage: '',
   }
 
   switchTab = (item) => {
@@ -28,11 +28,15 @@ class FanSettings extends React.Component {
       celebrity_details: {},
       user_details: userDetails,
     };
-    await this.props.updateUserDetails(this.props.userDetails.id, userData);
-    await this.props.updateProfilePhoto(profileImages);
-    await this.props.updateNotification(notifications);
-    this.props.fetchUserDetails();
-    this.setState({ showPopup: true });
+    try {
+      await this.props.updateUserDetails(this.props.userDetails.id, userData);
+      await this.props.updateProfilePhoto(profileImages);
+      await this.props.updateNotification(notifications);
+      this.props.fetchUserDetails();
+      this.setState({ popupMessage: 'Successfully updated setings' });
+    } catch (e) {
+      this.setState({ popupMessage: 'Something went wrong' });
+    }
   }
 
   render() {
@@ -40,12 +44,12 @@ class FanSettings extends React.Component {
     return (
       <SettingsStyled>
         {
-          this.state.showPopup &&
+          this.state.popupMessage && this.state.popupMessage !== '' &&
             <Popup
               smallPopup
-              closePopUp={() => this.setState({ showPopup: false })}
+              closePopUp={() => this.setState({ popupMessage: '' })}
             >
-              Successfully updated setings
+              { this.state.popupMessage }
             </Popup>
         }
         <InnerTabs
@@ -66,7 +70,7 @@ class FanSettings extends React.Component {
               changePasswordData={this.props.changePasswordData}
             />
           </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Invite friends'}>
             <ShareUser
               heading="Invite your friends to join Starsona"
               description="Lorem Ipsum"
