@@ -180,6 +180,7 @@ export default class ImageUpload extends React.Component {
                     <SettingsStyled.Label>Profile image</SettingsStyled.Label>
                     <ImageUploadStyled.fanProfileContainer>
                       <ImageUploadStyled.fanProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
+                        <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} />
                         <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
                       </ImageUploadStyled.fanProfileImage>
                       <ImageUploadStyled.fanProfileChange onClick={() => this.addFanProfileImage()}>
