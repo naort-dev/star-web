@@ -104,7 +104,6 @@ export default class VideoPlayer extends React.Component {
             poster={this.state.primary.thumbnail}
             src={this.state.primary.video}
             fluid
-            // aspectRatio="auto"
             autoPlay={this.state.primary.video === this.props.secondarySrc || this.props.autoPlay}
             
           >
