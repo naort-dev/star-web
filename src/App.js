@@ -13,6 +13,7 @@ import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
+import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
@@ -46,6 +47,7 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    this.props.fetchGroupTypes();
     if (localStorage && localStorage.getItem('data') !== null) {
       this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
       this.props.updateStarRole(JSON.parse(localStorage.getItem('data')).user.celebrity);
@@ -56,6 +58,7 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
+      this.props.fetchGroupTypes();
     }
   }
 
@@ -181,6 +184,7 @@ const mapState = state => ({
 
 const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
+  fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   updateStarRole: role => dispatch(updateStarRole(role)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),

@@ -81,6 +81,21 @@ class Sidebar extends React.Component {
     ))
   )
 
+  renderGroupCategoryList = () => (
+    this.props.groupCategory.map(item => (
+      <SidebarStyled.ListItem
+        key={item.id}
+      >
+        <SidebarStyled.CategoryTitle
+          selected={this.props.selectedCategory === item.id ? true : false}
+          onClick={() => this.selectCategory(item.group_name, item.id)}
+        >
+          {item.group_name}
+        </SidebarStyled.CategoryTitle>
+      </SidebarStyled.ListItem>
+    ))
+  )
+
   renderInnerPageLinks = () => {
     return (
       <SidebarStyled.FilterWrapper>
@@ -157,6 +172,15 @@ class Sidebar extends React.Component {
                       }
                     </SidebarStyled.ListWrapper>
                   </SidebarStyled.Filter>
+                  <SidebarStyled.Filter>
+                    <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
+                    <SidebarStyled.Separator />
+                    <SidebarStyled.ListWrapper>
+                      {
+                        this.renderGroupCategoryList()
+                      }
+                    </SidebarStyled.ListWrapper>
+                  </SidebarStyled.Filter>
                 </SidebarStyled.FilterWrapper>
               </section>
               <Footer isLoggedIn={this.props.isLoggedIn}/>
@@ -171,6 +195,7 @@ class Sidebar extends React.Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   starRole: state.userDetails.starRole,
+  groupCategory: state.groupTypes.data,
 });
 
 const mapDispatchToProps = dispatch => ({
