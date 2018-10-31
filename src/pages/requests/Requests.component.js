@@ -1,6 +1,5 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
-import ThreeColumnLayout from '../../components/ThreeColumnLayout';
+import ColumnLayout from '../../components/ColumnLayout';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
 import OrderDetails from '../../components/OrderDetails';
@@ -33,8 +32,7 @@ export default class Requests extends React.Component {
     this.role = props.starMode ? 'celebrity_id' : 'fan_id';
   }
   componentWillMount() {
-    this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebOpenStatusList : openStatusList, 'open');
-    this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebCompletedStatusList : completedStatusList, 'completed');
+    this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
     let innerLinks;
     if (this.props.starMode) {
       innerLinks = [
@@ -76,9 +74,7 @@ export default class Requests extends React.Component {
         this.props.fetchMyVideosList(0, true, this.role, completedStatus.toString());
         break;
       default:
-        this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebOpenStatusList : openStatusList, 'open');
-        this.props.fetchMyVideosList(0, true, this.role, this.props.starMode ? celebCompletedStatusList : completedStatusList, 'completed');
-        // this.props.fetchMyVideosList(0, true, this.role, 'all');
+        this.props.fetchMyVideosList(0, true, this.role, 'all');
     }
     this.setState({ selectedTab: item });
   }
@@ -178,59 +174,72 @@ export default class Requests extends React.Component {
   }
 
   renderBookings = () => {
-    switch (this.state.selectedTab) {
-      case 'All':
-        return (
-          <React.Fragment>
-            <RequestsStyled.StatusTypeWrapper >
-              {/* <Scrollbars> */}
-                <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>{this.props.starMode ? 'Pending fan requests' : 'Pending requests'}</RequestsStyled.SectionHeader>
-                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-                </RequestsStyled.SectionHeaderWrapper>
-                <RequestsStyled.ListWrapper autoHeight>
-                  {this.renderRequestList('open', this.props.starMode)}
-                </RequestsStyled.ListWrapper>
-                <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>{this.props.starMode ? 'Completed fan requests' : 'Completed requests'}</RequestsStyled.SectionHeader>
-                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-                </RequestsStyled.SectionHeaderWrapper>
-                <RequestsStyled.ListWrapper autoHeight>
-                  {this.renderRequestList('completed', this.props.starMode)}
-                </RequestsStyled.ListWrapper>
-              {/* </Scrollbars> */}
-            </RequestsStyled.StatusTypeWrapper>
-          </React.Fragment>
-        );
-      default:
-        return (
-          <React.Fragment>
-            {
-              this.props.myVideosList.data.length ?
-                <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
-                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-                </RequestsStyled.SectionHeaderWrapper>
-              : null
-            }
-            <RequestsStyled.ListWrapper>
-              <ScrollList
-                dataList={this.props.myVideosList.data}
-                scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
-                requestDetails
-                starMode={this.props.starMode}
-                limit={this.props.myVideosList.limit}
-                totalCount={this.props.myVideosList.count}
-                offset={this.props.myVideosList.offset}
-                loading={this.props.myVideosList.loading}
-                selectItem={this.showRequest}
-                noDataText="No requests"
-                fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
-              />
-            </RequestsStyled.ListWrapper>
-          </React.Fragment>
-        );
-    }
+    return (
+      <ScrollList
+        dataList={this.props.myVideosList.data}
+        scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+        requestDetails
+        starMode={this.props.starMode}
+        limit={this.props.myVideosList.limit}
+        totalCount={this.props.myVideosList.count}
+        offset={this.props.myVideosList.offset}
+        loading={this.props.myVideosList.loading}
+        selectItem={this.showRequest}
+        noDataText="No requests"
+        fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
+      />
+    )
+    // switch (this.state.selectedTab) {
+    //   case 'All':
+    //     return (
+    //       <React.Fragment>
+    //         <RequestsStyled.StatusTypeWrapper >
+    //           <RequestsStyled.SectionHeaderWrapper>
+    //             <RequestsStyled.SectionHeader>{this.props.starMode ? 'Pending fan requests' : 'Pending requests'}</RequestsStyled.SectionHeader>
+    //             <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+    //           </RequestsStyled.SectionHeaderWrapper>
+    //           <RequestsStyled.ListWrapper autoHeight>
+    //             {this.renderRequestList('open', this.props.starMode)}
+    //           </RequestsStyled.ListWrapper>
+    //           <RequestsStyled.SectionHeaderWrapper>
+    //             <RequestsStyled.SectionHeader>{this.props.starMode ? 'Completed fan requests' : 'Completed requests'}</RequestsStyled.SectionHeader>
+    //             <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+    //           </RequestsStyled.SectionHeaderWrapper>
+    //           <RequestsStyled.ListWrapper autoHeight>
+    //             {this.renderRequestList('completed', this.props.starMode)}
+    //           </RequestsStyled.ListWrapper>
+    //         </RequestsStyled.StatusTypeWrapper>
+    //       </React.Fragment>
+    //     );
+    //   default:
+    //     return (
+    //       <React.Fragment>
+    //         {
+    //           this.props.myVideosList.data.length ?
+    //             <RequestsStyled.SectionHeaderWrapper>
+    //               <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
+    //               <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
+    //             </RequestsStyled.SectionHeaderWrapper>
+    //           : null
+    //         }
+    //         <RequestsStyled.ListWrapper>
+    //           <ScrollList
+    //             dataList={this.props.myVideosList.data}
+    //             scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+    //             requestDetails
+    //             starMode={this.props.starMode}
+    //             limit={this.props.myVideosList.limit}
+    //             totalCount={this.props.myVideosList.count}
+    //             offset={this.props.myVideosList.offset}
+    //             loading={this.props.myVideosList.loading}
+    //             selectItem={this.showRequest}
+    //             noDataText="No requests"
+    //             fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
+    //           />
+    //         </RequestsStyled.ListWrapper>
+    //       </React.Fragment>
+    //     );
+    // }
   }
 
   renderCenterSection = () => {
@@ -287,7 +296,7 @@ export default class Requests extends React.Component {
     }
     return (
       <div>
-        <ThreeColumnLayout
+        <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
           innerLinks={this.state.innerLinks}

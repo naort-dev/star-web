@@ -4,7 +4,7 @@ import Sidebar from '../Sidebar';
 import Header from '../Header';
 import ColumnLayoutStyled from './styled';
 
-export default class ThreeColumnLayout extends React.Component {
+export default class ColumnLayout extends React.Component {
   state = {
     menuActive: false,
   }
@@ -49,9 +49,6 @@ export default class ThreeColumnLayout extends React.Component {
               <ColumnLayoutStyled.CenterSection>
                 {this.props.renderCenterSection()}
               </ColumnLayoutStyled.CenterSection>
-              <ColumnLayoutStyled.RightSection>
-
-              </ColumnLayoutStyled.RightSection>
             </ColumnLayoutStyled.mainSection>
           </ColumnLayoutStyled.Container>
         </Scrollbars>

@@ -32,11 +32,6 @@ TabStyled.tabList = styled.ul`
     height: auto;
     white-space: normal;
   }
-  @media(min-width: 1025px) {
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-  }
 `;
 
 TabStyled.tabListItem = styled.li`
