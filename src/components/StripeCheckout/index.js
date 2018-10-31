@@ -130,73 +130,66 @@ class StripeCheckout extends React.Component {
   render() {
     return (
       <PaymentStyled.wrapper>
-        <PaymentStyled.ComponentWrapperScroll
-          renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-        >
-          <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
-          <PaymentStyled.StarDetailsWrapper>
-            <PaymentStyled.StarNameWrapper>
-              <PaymentStyled.StarPhoto 
-                imageUrl={this.props.profilePhoto}
-              />
-              <PaymentStyled.RequestDetails>
-                <PaymentStyled.SubTitle>
-                  Starsona booking
-                </PaymentStyled.SubTitle>
-                {this.props.fullName}
-                <PaymentStyled.RequestType>
-                  {requestTypes[this.props.requestType]}
-                </PaymentStyled.RequestType>
-              </PaymentStyled.RequestDetails>
-            </PaymentStyled.StarNameWrapper>
-            <PaymentStyled.BookingRate>
-              ${this.props.rate}
-            </PaymentStyled.BookingRate>
-          </PaymentStyled.StarDetailsWrapper>
-          <PaymentStyled.OptionSelectionWrapper>
-            {
-              Object.keys(this.props.sourceList).length ?
-                <PaymentStyled.OptionSelector>
-                  <input
-                    id="card-select"
-                    name="card-selection"
-                    type="radio"
-                    checked={this.state.cardSelection}
-                    onChange={event => this.toggleCardSelection(event, true)}
-                  />
-                  <PaymentStyled.OptionLabel
-                    htmlFor="card-select"
-                  >
-                    Select cards
-                  </PaymentStyled.OptionLabel>
-                </PaymentStyled.OptionSelector>
-              : null
-            }
-            {
-              this.state.cardSelection && this.renderCardList()
-            }
-            <PaymentStyled.OptionSelector>
-              <input
-                id="add-card"
-                name="card-selection"
-                type="radio"
-                checked={!this.state.cardSelection}
-                onChange={event => this.toggleCardSelection(event, false)}
-              />
-              <PaymentStyled.OptionLabel
-                htmlFor="add-card"
-              >
-                Pay using new card
-              </PaymentStyled.OptionLabel>
-            </PaymentStyled.OptionSelector>
-          </PaymentStyled.OptionSelectionWrapper>
+        <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
+        <PaymentStyled.StarDetailsWrapper>
+          <PaymentStyled.StarNameWrapper>
+            <PaymentStyled.StarPhoto 
+              imageUrl={this.props.profilePhoto}
+            />
+            <PaymentStyled.RequestDetails>
+              <PaymentStyled.SubTitle>
+                Starsona booking
+              </PaymentStyled.SubTitle>
+              {this.props.fullName}
+              <PaymentStyled.RequestType>
+                {requestTypes[this.props.requestType]}
+              </PaymentStyled.RequestType>
+            </PaymentStyled.RequestDetails>
+          </PaymentStyled.StarNameWrapper>
+          <PaymentStyled.BookingRate>
+            ${this.props.rate}
+          </PaymentStyled.BookingRate>
+        </PaymentStyled.StarDetailsWrapper>
+        <PaymentStyled.OptionSelectionWrapper>
           {
-            !this.state.cardSelection && this.renderAddCard()
+            Object.keys(this.props.sourceList).length ?
+              <PaymentStyled.OptionSelector>
+                <input
+                  id="card-select"
+                  name="card-selection"
+                  type="radio"
+                  checked={this.state.cardSelection}
+                  onChange={event => this.toggleCardSelection(event, true)}
+                />
+                <PaymentStyled.OptionLabel
+                  htmlFor="card-select"
+                >
+                  Select cards
+                </PaymentStyled.OptionLabel>
+              </PaymentStyled.OptionSelector>
+            : null
           }
-          {/* <PaymentStyled.StripeLogoWrapper>
-            <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
-          </PaymentStyled.StripeLogoWrapper> */}
-        </PaymentStyled.ComponentWrapperScroll>
+          {
+            this.state.cardSelection && this.renderCardList()
+          }
+          <PaymentStyled.OptionSelector>
+            <input
+              id="add-card"
+              name="card-selection"
+              type="radio"
+              checked={!this.state.cardSelection}
+              onChange={event => this.toggleCardSelection(event, false)}
+            />
+            <PaymentStyled.OptionLabel
+              htmlFor="add-card"
+            >
+              Pay using new card
+            </PaymentStyled.OptionLabel>
+          </PaymentStyled.OptionSelector>
+        </PaymentStyled.OptionSelectionWrapper>
+        {
+          !this.state.cardSelection && this.renderAddCard()
+        }
         <PaymentStyled.PaymentControllerWrapper>
           <PaymentStyled.ContinueButton onClick={() => this.handleBooking()}>
              Confirm Booking  -  ${this.props.rate}

@@ -433,16 +433,12 @@ Request.ComponentWrapperScroll = styled(Scrollbars)`
   }
 `;
 Request.PaymentControllerWrapper = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 10px;
+  width: 100%;
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
   @media(min-width: 768px) {
-    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){
@@ -617,10 +613,6 @@ ConfirmationModal.description = styled.p`
 `;
 
 ConfirmationModal.ButtonWrapper = styled.div`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   text-align: center;
 `;
 

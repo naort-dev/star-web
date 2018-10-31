@@ -87,21 +87,15 @@ PaymentStyled.BookingRate = styled.span`
 `;
 
 PaymentStyled.PaymentControllerWrapper = styled.div`
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 10px;
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
   @media(min-width: 768px) {
-    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){
     margin: 0 42px;
-
     box-shadow: none;
     left:0;
     right:0;

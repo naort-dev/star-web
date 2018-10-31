@@ -42,6 +42,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  min-height: 300px;
   @media(min-width:768px){
     width: 100%;
     height: 100%;

@@ -73,12 +73,14 @@ export default class RequestDetails extends React.Component {
           ...videoPlayerProps,
           primaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
           primarySrc: video.s3_video_url ? video.s3_video_url : '',
+          ratio: video.width / video.height,
         };
       } else if (video.video_status === 5) {
         videoPlayerProps = {
           ...videoPlayerProps,
           secondaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
           secondarySrc: video.s3_video_url ? video.s3_video_url : '',
+          ratio: video.width / video.height,
         };
       }
     });
@@ -90,6 +92,7 @@ export default class RequestDetails extends React.Component {
       const videoPlayerProps = requestType === 3 ? this.getQaVideoData(requestVideo) : {
         primaryCover: requestVideo[0].s3_thumbnail_url ? requestVideo[0].s3_thumbnail_url : '',
         primarySrc: requestVideo[0].s3_video_url ? requestVideo[0].s3_video_url : '',
+        ratio: requestVideo[0].width / requestVideo[0].height,
       };
       this.setState({
         videoPlayerProps,

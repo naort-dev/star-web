@@ -341,135 +341,131 @@ export default class SignUp extends React.Component {
         {
           <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         }
-        <Scrollbars
-          renderTrackHorizontal={props => <div {...props} style={{display: 'none'}} className="track-horizontal"/>}
-        >
-          <LoginContainer.Container>
-            <LoginContainer.Heading>Create your account</LoginContainer.Heading>
-            <LoginContainer.SocialMediaMessage>Already have an account?
-              <span onClick={() => this.props.toggleLogin(true)}>
-                <LoginContainer.LoginDiv>Log in</LoginContainer.LoginDiv>
-              </span>
-            </LoginContainer.SocialMediaMessage>
-            <LoginContainer.ButtonDiv>
-              <LoginContainer.Button onClick={() => this.OnFBlogin()}>
-                <LoginContainer.FacebookContent /> 
-              </LoginContainer.Button>
+        <LoginContainer.Container>
+          <LoginContainer.Heading>Create your account</LoginContainer.Heading>
+          <LoginContainer.SocialMediaMessage>Already have an account?
+            <span onClick={() => this.props.toggleLogin(true)}>
+              <LoginContainer.LoginDiv>Log in</LoginContainer.LoginDiv>
+            </span>
+          </LoginContainer.SocialMediaMessage>
+          <LoginContainer.ButtonDiv>
+            <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+              <LoginContainer.FacebookContent /> 
+            </LoginContainer.Button>
 
-              <LoginContainer.GoogleWrapper id="g-sign-in" />
-              <LoginContainer.Button onClick={() => this.onGmail()}>
-                <LoginContainer.GoogleContent />
-              </LoginContainer.Button>
+            <LoginContainer.GoogleWrapper id="g-sign-in" />
+            <LoginContainer.Button onClick={() => this.onGmail()}>
+              <LoginContainer.GoogleContent />
+            </LoginContainer.Button>
 
-              <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-                <LoginContainer.InstagramContent />
-              </LoginContainer.Button>
-            </LoginContainer.ButtonDiv>
-            <LoginContainer.SignupLine>
-              <span>or signup with email</span>
-            </LoginContainer.SignupLine>
-            <LoginContainer.InputFieldsWrapper>
+            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+              <LoginContainer.InstagramContent />
+            </LoginContainer.Button>
+          </LoginContainer.ButtonDiv>
+          <LoginContainer.SignupLine>
+            <span>or signup with email</span>
+          </LoginContainer.SignupLine>
+          <LoginContainer.InputFieldsWrapper>
 
-              <LoginContainer.InputContainer>
-                {
-                  this.props.statusCode === '410' ?
-                    <LoginContainer.EmptyDiv />
+            <LoginContainer.InputContainer>
+              {
+                this.props.statusCode === '410' ?
+                  <LoginContainer.EmptyDiv />
 
-                    :
-                    <LoginContainer.InputWrapper>
-                      <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
-                          placeholder={this.props.signupRole === 'group' ? 'Group name' : 'First name'}
-                          type="text"
-                          name="firstName"
-                          value={this.state.firstName.value}
-                          onChange={(event) => this.saveFormEntries(event, "firstName")}
-                          onBlur={this.checkRequired}
-                        />
-                        <LoginContainer.ErrorMsg>
-                          {this.state.firstName.message}
-                        </LoginContainer.ErrorMsg>
-                      </LoginContainer.WrapsInput>
-                    </LoginContainer.InputWrapper>
-                }
-                {
-                  this.props.statusCode === '410' || this.props.signupRole === 'group' ?
-                    <LoginContainer.EmptyDiv />
+                  :
+                  <LoginContainer.InputWrapper>
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.Input
+                        placeholder={this.props.signupRole === 'group' ? 'Group name' : 'First name'}
+                        type="text"
+                        name="firstName"
+                        value={this.state.firstName.value}
+                        onChange={(event) => this.saveFormEntries(event, "firstName")}
+                        onBlur={this.checkRequired}
+                      />
+                      <LoginContainer.ErrorMsg>
+                        {this.state.firstName.message}
+                      </LoginContainer.ErrorMsg>
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+              }
+              {
+                this.props.statusCode === '410' || this.props.signupRole === 'group' ?
+                  <LoginContainer.EmptyDiv />
 
-                    :
-                    <LoginContainer.InputWrapper>
-                      <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
-                          placeholder="Last name"
-                          type="text"
-                          name="lastName"
-                          value={this.state.lastName.value}
-                          onChange={(event) => this.saveFormEntries(event, "lastName")}
-                        />
-                        <LoginContainer.ErrorMsg>
-                          {this.state.lastName.message}
-                        </LoginContainer.ErrorMsg>
-                      </LoginContainer.WrapsInput>
-                    </LoginContainer.InputWrapper>
-                }
-                <LoginContainer.InputWrapper>
+                  :
+                  <LoginContainer.InputWrapper>
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.Input
+                        placeholder="Last name"
+                        type="text"
+                        name="lastName"
+                        value={this.state.lastName.value}
+                        onChange={(event) => this.saveFormEntries(event, "lastName")}
+                      />
+                      <LoginContainer.ErrorMsg>
+                        {this.state.lastName.message}
+                      </LoginContainer.ErrorMsg>
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+              }
+              <LoginContainer.InputWrapper>
 
-                  <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
-                      placeholder="Email"
-                      type="email"
-                      name="email"
-                      value={this.state.email.value}
-                      onChange={(event) => this.saveFormEntries(event, "email")}
-                      onBlur={this.checkEmail}
-                    />
-                    <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
-                  </LoginContainer.WrapsInput>
-                </LoginContainer.InputWrapper>
-                {
-                  this.props.statusCode === '410' ?
-                    <LoginContainer.EmptyDiv />
-                    :
-                    <LoginContainer.InputWrapper>
-
-                      <LoginContainer.WrapsInput>
-                        <LoginContainer.PasswordWrapper>
-                          <LoginContainer.Input
-                            placeholder="Password"
-                            type={this.state.showPassword ? 'text' : 'password'}
-                            name="password"
-                            value={this.state.password.value}
-                            onChange={(event) => this.saveFormEntries(event, "password")}
-                            onBlur={this.checkPassword}
-                          />
-                          {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
-                        </LoginContainer.PasswordWrapper>
-                        <LoginContainer.ErrorMsg>
-                          {this.state.password.message}
-                        </LoginContainer.ErrorMsg>
-
-                      </LoginContainer.WrapsInput>
-                    </LoginContainer.InputWrapper>
-                }
                 <LoginContainer.WrapsInput>
-                  {this.props.statusCode === undefined ?
-                    <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                    :
-                    <LoginContainer.EmptyDiv />
-                  }
+                  <LoginContainer.Input
+                    placeholder="Email"
+                    type="email"
+                    name="email"
+                    value={this.state.email.value}
+                    onChange={(event) => this.saveFormEntries(event, "email")}
+                    onBlur={this.checkEmail}
+                  />
+                  <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
                 </LoginContainer.WrapsInput>
-                <LoginContainer.ButtonWrapper>
-                  <FooterSection.Button type="submit" value="Sign up" onClick={this.onRegister} />
-                </LoginContainer.ButtonWrapper>
-                <LoginContainer.PrivacyContent>
-                  By creating an account you agree to Starsona’s
-                  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> Privacy Policy </LoginContainer.Anchor>
-                  and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"> Terms of Use </LoginContainer.Anchor>
-                </LoginContainer.PrivacyContent>
-              </LoginContainer.InputContainer>
-            </LoginContainer.InputFieldsWrapper>
-          </LoginContainer.Container>
-        </Scrollbars>
+              </LoginContainer.InputWrapper>
+              {
+                this.props.statusCode === '410' ?
+                  <LoginContainer.EmptyDiv />
+                  :
+                  <LoginContainer.InputWrapper>
+
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.PasswordWrapper>
+                        <LoginContainer.Input
+                          placeholder="Password"
+                          type={this.state.showPassword ? 'text' : 'password'}
+                          name="password"
+                          value={this.state.password.value}
+                          onChange={(event) => this.saveFormEntries(event, "password")}
+                          onBlur={this.checkPassword}
+                        />
+                        {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
+                      </LoginContainer.PasswordWrapper>
+                      <LoginContainer.ErrorMsg>
+                        {this.state.password.message}
+                      </LoginContainer.ErrorMsg>
+
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+              }
+              <LoginContainer.WrapsInput>
+                {this.props.statusCode === undefined ?
+                  <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                  :
+                  <LoginContainer.EmptyDiv />
+                }
+              </LoginContainer.WrapsInput>
+              <LoginContainer.ButtonWrapper>
+                <FooterSection.Button type="submit" value="Sign up" onClick={this.onRegister} />
+              </LoginContainer.ButtonWrapper>
+              <LoginContainer.PrivacyContent>
+                By creating an account you agree to Starsona’s
+                <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> Privacy Policy </LoginContainer.Anchor>
+                and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"> Terms of Use </LoginContainer.Anchor>
+              </LoginContainer.PrivacyContent>
+            </LoginContainer.InputContainer>
+          </LoginContainer.InputFieldsWrapper>
+        </LoginContainer.Container>
       </LoginContainer.SocialMediaSignup>
     );
   }
