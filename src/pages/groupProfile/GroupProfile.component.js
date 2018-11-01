@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { Scrollbars } from 'react-custom-scrollbars';
-
 import Header from '../../components/Header';
 import ModalPopup from '../../components/RequestFlowPopup';
 import GroupProfileStyled from './styled';
@@ -163,9 +161,7 @@ export default class GroupProfile extends React.Component {
             >
               <GroupProfileStyled.memberListPopup>
                 <div className="popupHeading">Our members</div>
-                <Scrollbars>
-                  { memberListArray.map(data => this.renderItem(data)) }
-                </Scrollbars>
+                { memberListArray.map(data => this.renderItem(data)) }
               </GroupProfileStyled.memberListPopup>
             </ModalPopup>
         : null}
