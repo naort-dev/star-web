@@ -188,58 +188,7 @@ export default class Requests extends React.Component {
         noDataText="No requests"
         fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
       />
-    )
-    // switch (this.state.selectedTab) {
-    //   case 'All':
-    //     return (
-    //       <React.Fragment>
-    //         <RequestsStyled.StatusTypeWrapper >
-    //           <RequestsStyled.SectionHeaderWrapper>
-    //             <RequestsStyled.SectionHeader>{this.props.starMode ? 'Pending fan requests' : 'Pending requests'}</RequestsStyled.SectionHeader>
-    //             <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-    //           </RequestsStyled.SectionHeaderWrapper>
-    //           <RequestsStyled.ListWrapper autoHeight>
-    //             {this.renderRequestList('open', this.props.starMode)}
-    //           </RequestsStyled.ListWrapper>
-    //           <RequestsStyled.SectionHeaderWrapper>
-    //             <RequestsStyled.SectionHeader>{this.props.starMode ? 'Completed fan requests' : 'Completed requests'}</RequestsStyled.SectionHeader>
-    //             <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-    //           </RequestsStyled.SectionHeaderWrapper>
-    //           <RequestsStyled.ListWrapper autoHeight>
-    //             {this.renderRequestList('completed', this.props.starMode)}
-    //           </RequestsStyled.ListWrapper>
-    //         </RequestsStyled.StatusTypeWrapper>
-    //       </React.Fragment>
-    //     );
-    //   default:
-    //     return (
-    //       <React.Fragment>
-    //         {
-    //           this.props.myVideosList.data.length ?
-    //             <RequestsStyled.SectionHeaderWrapper>
-    //               <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
-    //               <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-    //             </RequestsStyled.SectionHeaderWrapper>
-    //           : null
-    //         }
-    //         <RequestsStyled.ListWrapper>
-    //           <ScrollList
-    //             dataList={this.props.myVideosList.data}
-    //             scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
-    //             requestDetails
-    //             starMode={this.props.starMode}
-    //             limit={this.props.myVideosList.limit}
-    //             totalCount={this.props.myVideosList.count}
-    //             offset={this.props.myVideosList.offset}
-    //             loading={this.props.myVideosList.loading}
-    //             selectItem={this.showRequest}
-    //             noDataText="No requests"
-    //             fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
-    //           />
-    //         </RequestsStyled.ListWrapper>
-    //       </React.Fragment>
-    //     );
-    // }
+    );
   }
 
   renderCenterSection = () => {

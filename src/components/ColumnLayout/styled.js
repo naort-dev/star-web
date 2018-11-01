@@ -42,7 +42,7 @@ ColumnLayoutStyled.mainSection = styled.section`
     width: calc(100% - 210px);
     display: inline-block;
     vertical-align: top;
-    padding-left: 50px;
+    padding-left: 0;
     padding-right: 50px;
     padding-top: 30px;
     height: auto;

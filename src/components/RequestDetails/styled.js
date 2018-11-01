@@ -2,8 +2,11 @@ import styled from 'styled-components';
 
 const VideoRenderDiv = styled.div`
   padding-right: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #D8D8D8;
   @media(min-width: 768px) {
     position: relative;
+    padding-bottom: 30px;
   }
 `;
 VideoRenderDiv.ImageSection = styled.div`
@@ -34,11 +37,8 @@ VideoRenderDiv.PlayButton = styled.span`
 `;
 
 VideoRenderDiv.RequestTime = styled.span`
-  position: absolute;
-  bottom: 8px;
-  font-size: 12px;
-  left: 22px;
-  color: #f78a83;
+  font-size: 14px;
+  color: #EA57A1;
 `;
 
 VideoRenderDiv.BannerImage = styled.img`
@@ -67,8 +67,8 @@ VideoRenderDiv.ProfileImage = styled.span`
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;
-  height:30px;
-  width:30px;
+  height:50px;
+  width:50px;
   position: relative;
 `;
 VideoRenderDiv.FavoriteButton = styled.button`
@@ -87,20 +87,20 @@ VideoRenderDiv.ProfileContent = styled.div`
   display: inline-block;
   vertical-align: top;
   padding-left: 10px;
-  width: calc(100% - 100px);
+  width: 100%;
 `;
 VideoRenderDiv.DetailWrapper = styled.div`
   line-height: 18px;
   position: relative;
   display: inline-block;
-  width: calc(100% - 35px);
+  width: calc(100% - 50px);
   vertical-align: middle;
   padding-left: 11px;
 `;
 VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
-  font-family: 'Avenir-Bold';
+  font-family: 'Avenir-Regular';
   @media(min-width: 1920px) {
     font-size: 20px;
   }
@@ -123,6 +123,7 @@ VideoRenderDiv.StarDetails = styled.p`
   font-size: 12px;
   color:rgba(34, 34, 34, 0.7);
   font-family: 'Avenir-Light';
+  display: inline-block;
   @media(min-width: 768px) {
     font-size: 14px;
   }
@@ -132,29 +133,35 @@ VideoRenderDiv.StatusDetailsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 11px;
-  padding-left: 42px;
+  flex-direction: column;
+  padding-left: 0;
+  @media(min-width: 768px) {
+    flex-direction: row;
+    padding-left: 62px;
+    margin-top: 0;
+    align-items: center;
+  }
 `;
 
 VideoRenderDiv.StatusDetails = styled.div`
-
+  padding-left: 62px;
+  @media(min-width: 768px) {
+    padding-left: 0;
+  }
 `;
 
 VideoRenderDiv.ControlWrapper = styled.span`
-  width: 242px;
   display: flex;
-  flex-direction: row-reverse;
   justify-content: space-between;
   margin-top: 16px;
   @media(min-width: 768px) {
-    position: absolute;
-    right: 24px;
-    bottom: 0px;
+    margin-top: 0;
   }
 `;
 
 VideoRenderDiv.ControlButton = styled.button`
-  background-color: ${props => (props.alternate ? '#D8D8D8' : '#FF6C58')};
-  color: ${props => (props.alternate ? '#676767' : 'rgb(255,255,255)')};
+  background-color: ${props => (props.alternate ? '#fff' : '#FF6C58')};
+  color: ${props => (props.alternate ? '#333333' : 'rgb(255,255,255)')};
   text-align: center;
   display: inline-block;
   font-size: 14px;
@@ -163,12 +170,15 @@ VideoRenderDiv.ControlButton = styled.button`
   padding: 10px 25px;
   text-decoration: none;
   outline: none;
-  border-radius: 5px;
-  border: 2px solid;
-  border-color: ${props => (props.alternate ? '#D8D8D8' : '#FF6C58')};
+  border-radius: 20px;
+  border: ${props => (props.alternate ? '1px solid' : '2px solid')};
+  border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
+  @media(min-width: 768px) {
+    margin-left: ${props => (props.alternate ? '0' : '15px')};
+  }
   &:hover {
-    background-color: ${props => (props.alternate ? '#D8D8D8' : '#FF3B21')};
+    background-color: ${props => (props.alternate ? '#fff' : '#FF3B21')};
   }
   &:disabled {
     background-color: #D8D8D8;
@@ -177,10 +187,23 @@ VideoRenderDiv.ControlButton = styled.button`
   }
 `;
 
+VideoRenderDiv.ShareButton = VideoRenderDiv.ControlButton.extend`
+  background-color: #fff;
+  color: #FF6C58;
+  border-width: 1px;
+  &:hover {
+    background-color: #fff;
+  }
+`;
+
 VideoRenderDiv.RequestStatus = styled.span`
-  display: block;
-  color: ${props => (props.highlight ? '#FF6C58' : '#9B9B9B')};
-  font-size: 18px;
+  display: inline-block;
+  color: #fff;
+  font-size: 12px;
+  margin-left: 10px;
+  background-color: ${props => props.color};
+  border-radius: 16px;
+  padding: 3px 8px;
 `;
 
 export default VideoRenderDiv;
