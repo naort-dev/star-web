@@ -92,17 +92,17 @@ export default class GroupProfile extends React.Component {
             }
           </p>
         </div>
-        <Link to={`/${item.user_id}`} className="memberDetailButton">
+        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`} className="memberDetailButton">
           View
         </Link>
       </div>
     );
   };
 
-  renderMemberDetail = (item) => {
+  renderMemberDetail = (item) => {    
     return (
       <div className="memberDetails">
-        <Link to={`/${item.user_id}`}>
+        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
           <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" />
         </Link>
         <p className="memberName">{item.first_name}</p>
