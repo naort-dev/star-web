@@ -173,7 +173,6 @@ class starRegistrationComponent extends React.Component {
                   visible={this.props.currentStep === 4}
                   starMode
                   professionsList={this.state.professionsArray}
-                  scrollRef={this.scrollRef}
                   profileImage={this.state.profileImage.image}
                   featuredRatio={imageSizes.featured}
                   secondaryRatio={imageSizes.first}
