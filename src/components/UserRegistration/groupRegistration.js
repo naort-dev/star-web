@@ -108,7 +108,6 @@ class GroupRegistrationComponent extends React.Component {
               visible={this.props.currentStep === 4}
               profileImage={this.state.profileImage.image}
               featuredRatio={imageSizes.groupCover}
-              scrollRef={this.scrollRef}
               secondaryRatio={imageSizes.groupCover}
               groupName={this.props.userDetails.first_name}
               onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}

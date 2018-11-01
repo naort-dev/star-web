@@ -85,9 +85,7 @@ export default class CoverUpload extends React.Component {
               image,
             };
           }
-          this.setState({ secondaryImages }, () => {
-            this.props.scrollRef.scrollToBottom();
-          });
+          this.setState({ secondaryImages });
         } else {
           this.props.onComplete(this.state.currentImage, resp, image);
           this.setState({ [this.state.currentImage]: image });
