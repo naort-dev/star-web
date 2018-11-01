@@ -524,10 +524,6 @@ GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
 `.withComponent('span');
 
 GroupStyled.DoneButtonWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 9px;
   text-align: center;
 `;
 
