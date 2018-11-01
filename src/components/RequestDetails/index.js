@@ -1,9 +1,12 @@
 import React from 'react';
+import moment from 'moment';
 import VideoRenderDiv from './styled';
 import VideoPlayer from '../VideoPlayer';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes } from '../../constants/requestTypes';
-import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList } from '../../constants/requestStatusList';
+import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
+import StarRating from '../StarRating';
+import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class RequestDetails extends React.Component {
   constructor(props) {
@@ -13,6 +16,7 @@ export default class RequestDetails extends React.Component {
       profileImage: false,
       videoPlayerProps: null,
       itemSelected: false,
+      showDetails: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
@@ -113,10 +117,102 @@ export default class RequestDetails extends React.Component {
     this.setState({ videoPlayerProps: null });
   }
 
+  getOccasionDetails = (occasionType) => {
+    const { props } = this;
+    const occasionDate = props.orderDetails.request_details && props.orderDetails.request_details.date ? moment(props.orderDetails.request_details.date).format('LL') : '';
+    switch (occasionType) {
+      case 1:
+      case 5:
+        return (
+          <OrderDetailsItem title="Occasion Date" value={occasionDate} />
+        );
+      case 2:
+        return <OrderDetailsItem title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
+      case 3:
+        return <OrderDetailsItem title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
+      case 4:
+        return <OrderDetailsItem title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
+      case 6:
+        return <OrderDetailsItem title="Event Title" value={props.orderDetails.request_details.event_title} />;
+      case 7:
+        return <OrderDetailsItem title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
+      default:
+        return null;
+    }
+  }
+
+  getEventDetails = (eventType) => {
+    const { props } = this;
+    switch (eventType) {
+      case 1:
+        // Personal Shout-outs
+        return (
+          <React.Fragment>
+            <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
+            <OrderDetailsItem title="To"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
+            />
+            <OrderDetailsItem title="From"
+              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
+            />
+            <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${props.relationShip}`} />
+            {
+              this.getOccasionDetails(props.orderDetails.occasion_type)
+            }
+            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+          </React.Fragment>
+        );
+      case 2:
+        // Event Announcement
+        return (
+          <React.Fragment>
+            <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
+            {
+              this.getOccasionDetails(props.orderDetails.occasion_type)
+            }
+            <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
+            <OrderDetailsItem title="Event Date" value={props.occasionDate} />
+            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+          </React.Fragment>
+        );
+      case 3:
+        // Q&A
+        return <OrderDetailsItem title="Title" value={props.orderDetails.request_details.question} />;
+      default: return null;
+    }
+  }
+
   selectItem = () => {
     this.setState({ itemSelected: !this.state.itemSelected });
     this.props.selectItem();
   }
+
+  showDetails = () => {
+    this.setState({ showDetails: !this.state.showDetails });
+  }
+
+  playAudio = (audioSrc) => {
+    const audio = new Audio(audioSrc);
+    audio.play();
+  }
+
+  renderStargramDestinationDetails = (text, audioSrc) => {
+    return (
+      <React.Fragment>
+        <span>
+          {text}
+        </span>
+        {
+          audioSrc &&
+            <VideoRenderDiv.AudioIcon
+              src="assets/images/voice.png"
+              onClick={() => this.playAudio(audioSrc)}
+            />
+        }
+      </React.Fragment>
+    );
+  }
+
   renderVideoDetails = (text) => {
     let splicedText = text;
     if (text.length > this.charLimit) {
@@ -127,11 +223,16 @@ export default class RequestDetails extends React.Component {
 
   renderSecondaryControlButton = () => {
     const { starMode, requestStatus } = this.props;
-    if (requestStatus !== 5 && (starMode || !openStatusList.indexOf(requestStatus) > -1)) {
-      if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
-        return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem(true)}>Respond</VideoRenderDiv.ControlButton>;
-      }
+    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus > -1) && this.props.orderDetails.public_request;
+    const fanVideoShare = !starMode && completedStatusList.indexOf(requestStatus) > -1;
+    const canVideoShare = starVideoShare || fanVideoShare;
+    const canEdit = !starMode && this.props.orderDetails.editable;
+    if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
+      return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem(true)}>Respond</VideoRenderDiv.ControlButton>;
+    } else if (canVideoShare) {
       return <VideoRenderDiv.ShareButton>Share</VideoRenderDiv.ShareButton>;
+    } else if (canEdit) { // completed video for fan
+      return <VideoRenderDiv.ShareButton>Edit</VideoRenderDiv.ShareButton>;
     }
     return null;
   }
@@ -143,6 +244,45 @@ export default class RequestDetails extends React.Component {
       return <VideoRenderDiv.RequestTime>{this.findTime()}</VideoRenderDiv.RequestTime>;
     }
     return null;
+  }
+
+  renderOrderDetails = () => {
+    const { props } = this;
+    const price = props.orderDetails.order_details ? props.orderDetails.order_details.price: 0;
+    const isPrivate = props.orderDetails.public_request ? 'No' : 'Yes';
+    return (
+      <React.Fragment>
+        {
+          !props.starMode &&
+            <OrderDetailsItem title="Requested" value={moment(props.orderDetails.created_date).format('LL')} />
+        }
+        {
+          this.getEventDetails(props.orderDetails.request_type)
+        }
+        {/* Show Reason if request is cancelled */}
+        {
+          props.requestStatusId === 5 ?
+            <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
+            : null
+        }
+        {
+          !props.starMode &&
+            <OrderDetailsItem title="Booking Price" value={`$${price}`} />
+        }
+        {
+          !props.starMode &&
+            <OrderDetailsItem title="Make this Video private" value={isPrivate} />
+        }
+        {props.requestStatusId === 6 &&
+          <VideoRenderDiv.DetailsItem>
+            <VideoRenderDiv.DetailsTitle>Rating:</VideoRenderDiv.DetailsTitle>
+            <VideoRenderDiv.DetailsValue>
+              <StarRating rating={props.orderDetails.fan_rating ? props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
+            </VideoRenderDiv.DetailsValue>
+          </VideoRenderDiv.DetailsItem>
+        }
+      </React.Fragment>
+    )
   }
 
   render() {
@@ -162,14 +302,6 @@ export default class RequestDetails extends React.Component {
             </RequestFlowPopup>
           : null
         }
-        {/* <VideoRenderDiv.ImageSection
-          onClick={this.activateVideo}
-          height={props.imageHeight}
-          imageUrl={this.state.coverImage}
-        >
-          {this.state.coverImage ? <VideoRenderDiv.PlayButton /> : null}
-          {this.renderTime()}
-        </VideoRenderDiv.ImageSection> */}
         <VideoRenderDiv.ProfileContent>
           <VideoRenderDiv.ProfileDetailWrapper>
             <VideoRenderDiv.ProfileImageWrapper>
@@ -196,7 +328,7 @@ export default class RequestDetails extends React.Component {
               {this.renderTime()}
             </VideoRenderDiv.StatusDetails>
             <VideoRenderDiv.ControlWrapper>
-              <VideoRenderDiv.ControlButton onClick={this.selectItem} alternate>
+              <VideoRenderDiv.ControlButton onClick={this.showDetails} alternate>
                 {this.state.itemSelected ? 'Hide details' : 'View details'}
               </VideoRenderDiv.ControlButton>
               {
@@ -205,6 +337,23 @@ export default class RequestDetails extends React.Component {
             </VideoRenderDiv.ControlWrapper>
           </VideoRenderDiv.StatusDetailsWrapper>
         </VideoRenderDiv.ProfileContent>
+        {
+          this.state.showDetails &&
+            <VideoRenderDiv.DetailsContainer>
+              <VideoRenderDiv.DetailsWrapper>
+                {
+                  this.renderOrderDetails()
+                }
+              </VideoRenderDiv.DetailsWrapper>
+              <VideoRenderDiv.ImageSection
+                onClick={this.activateVideo}
+                height={props.imageHeight}
+                imageUrl={this.state.coverImage}
+              >
+                {this.state.coverImage ? <VideoRenderDiv.PlayButton /> : null}
+              </VideoRenderDiv.ImageSection>
+            </VideoRenderDiv.DetailsContainer>
+        }
       </VideoRenderDiv>
     );
   }

@@ -269,26 +269,24 @@ OrderStyled.DetailsWrapper = styled.ul`
 OrderStyled.DetailsItem = styled.li`
   display: block;
   width: 100%;
-  padding: 10px 0;
+  padding: 3px 0;
   color: ${props => props.overlay && '#fff'};
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table')};
+    padding: 3px 0;
   }
 `;
 OrderStyled.DetailsTitle = styled.span`
   font-family: 'Avenir-Light';
   width: ${props => (props.overlay ? '100%' : '40%')};
   display: inline-block;
-  font-size: 16px;
+  font-size: 12px;
   vertical-align: top;
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table-cell')};
     width: ${props => (props.overlay ? '100%' : '20%')};
-    text-align: ${props => (props.overlay ? 'auto' : 'right')};
-    vertical-align: middle;
-  }
-  @media(min-width:1025px){
     font-size:13px;
+    vertical-align: middle;
   }
   @media(min-width:1920px){
     font-size:16px;
@@ -301,13 +299,11 @@ OrderStyled.DetailsValue = styled.span`
   width: ${props => (props.overlay ? '100%' : '60%')};
   display: inline-block;
   vertical-align: top;
-  font-size:16px;
+  font-size: 12px;
   padding-left: ${props => (props.overlay ? '0' : '20px')};
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table-cell')};
     width: ${props => (props.overlay ? '100%' : '80%')};
-  }
-  @media(min-width:1025px){
     font-size:13px;
   }
   @media(min-width:1920px){

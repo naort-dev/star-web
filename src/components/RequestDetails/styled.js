@@ -16,9 +16,11 @@ VideoRenderDiv.ImageSection = styled.div`
   background-repeat:no-repeat;
   background-position: center;
   background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
-  width: 100px;
-  display: inline-block;
-  height: 100px;
+  width: 300px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 VideoRenderDiv.PlayButton = styled.span`
@@ -29,9 +31,6 @@ VideoRenderDiv.PlayButton = styled.span`
   height: 30px;
   display: inline-block;
   background-size: contain;
-  position: absolute;
-  top: 34px;
-  left: 36px;
   background-size: 20px;
   background-position: center center;
 `;
@@ -204,6 +203,80 @@ VideoRenderDiv.RequestStatus = styled.span`
   background-color: ${props => props.color};
   border-radius: 16px;
   padding: 3px 8px;
+`;
+
+VideoRenderDiv.DetailsContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding-top: 30px;
+  flex-direction: column;
+  @media(min-width: 768px) {
+    flex-direction: row;
+    padding-left: 62px;
+  }
+`;
+
+VideoRenderDiv.DetailsWrapper = styled.ul`
+  padding: 0 16px;
+  @media(min-width: 768px) {
+    padding: 0 0;
+    width: 80%;
+  }
+  @media(min-width: 1025px) {
+    width: calc(100% - 310px);
+  }
+`;
+
+VideoRenderDiv.DetailsItem = styled.li`
+  display: block;
+  width: 100%;
+  padding: 3px 0;
+  @media(min-width: 768px) {
+    display: table;
+    padding: 5px 0;
+  }
+`;
+VideoRenderDiv.DetailsTitle = styled.span`
+  font-family: 'Avenir-Light';
+  width: 40%;
+  display: inline-block;
+  font-size:12px;
+  vertical-align: top;
+  @media(min-width: 768px) {
+    display: table-cell;
+    width: 20%;
+    font-size:13px;
+    text-align: right;
+    vertical-align: middle;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+`;
+
+VideoRenderDiv.DetailsValue = styled.span`
+  display: inline-block;
+  font-family: 'Avenir-Light';
+  width: 60%;
+  display: inline-block;
+  vertical-align: top;
+  font-size:12px;
+  padding-left: 20px;
+  @media(min-width: 768px) {
+    display: table-cell;
+    font-size:13px;
+    width: 80%;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+`;
+
+VideoRenderDiv.AudioIcon = styled.img`
+  vertical-align: top;
+  padding-left: 8px;
+  width: 24px;
+  cursor: pointer;
 `;
 
 export default VideoRenderDiv;

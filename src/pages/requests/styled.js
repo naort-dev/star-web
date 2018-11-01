@@ -14,27 +14,8 @@ RequestsStyled.sectionWrapper = styled.div`
   height:100%;
 `;
 
-RequestsStyled.mainSection = styled.section`
-  height: 100%;
-  display: ${props => (props.menuActive ? 'none' : 'block')}
-  @media(min-width: 768px) {
-    padding-top: 40px;
-  }
-  @media(min-width: 1025px) {
-    width: 75%;
-    display: inline-block;
-    vertical-align: top;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 30px;
-    float: right;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 72px;
-  }
-  @media(min-width: 1241px) {
-    width: calc(100% - 310px);
-  }
+RequestsStyled.ContentWrapper = styled.section`
+  height: calc(100% - 57px);
 `;
 
 RequestsStyled.StatusTypeWrapper = styled.section`

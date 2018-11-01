@@ -199,13 +199,15 @@ export default class Requests extends React.Component {
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
         />
-        {
-          (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
-            <RequestsStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-              <Loader />
-            </RequestsStyled.loaderWrapper>
-          : this.renderBookings()
-        }
+        <RequestsStyled.ContentWrapper>
+          {
+            (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
+              <RequestsStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                <Loader />
+              </RequestsStyled.loaderWrapper>
+            : this.renderBookings()
+          }
+        </RequestsStyled.ContentWrapper>
       </React.Fragment>
     );
   }
