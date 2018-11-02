@@ -34,12 +34,6 @@ export const myVideosListFetchSuccess = (list, offset, count, videoStatus, role)
     });
 };
 
-export const myVideosListUpdateAllData = (list, key) => ({
-  type: MY_VIDEOS_LIST.updateAll,
-  list,
-  key,
-});
-
 export const myVideosListFetchFailed = error => ({
   type: MY_VIDEOS_LIST.failed,
   error,
@@ -49,13 +43,14 @@ export const myVideosListReset = () => ({
   type: MY_VIDEOS_LIST.reset,
 });
 
-export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus, allDataType) => (dispatch, getState) => {
+
+export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   const { status, limit, role } = getState().myVideosList;
   const videoStatus = requestStatus ? requestStatus : status;
   const finalRole = currentRole ? currentRole: role;
   const source = CancelToken.source();
-  if (typeof getState().myVideosList.token !== typeof undefined && allDataType !== 'open' && allDataType !== 'completed') {
+  if (typeof getState().myVideosList.token !== typeof undefined) {
     getState().myVideosList.token.cancel('Operation canceled due to new request.');
   }
   dispatch(myVideosListFetchStart(refresh, source));
@@ -68,17 +63,13 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus, a
     if (resp.data && resp.data.success) {
       dispatch(myVideosListFetchEnd());
       let list = getState().myVideosList.data;
-      if (allDataType === 'open' || allDataType === 'completed') {
-        dispatch(myVideosListUpdateAllData(resp.data.data.request_list, allDataType));
+      const { count } = resp.data.data;
+      if (refresh) {
+        list = resp.data.data.request_list;
       } else {
-        const { count } = resp.data.data;
-        if (refresh) {
-          list = resp.data.data.request_list;
-        } else {
-          list = [...list, ...resp.data.data.request_list];
-        }
-        dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus, finalRole));
+        list = [...list, ...resp.data.data.request_list];
       }
+      dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus, finalRole));
     } else {
       dispatch(myVideosListFetchEnd());
     }
@@ -89,4 +80,5 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus, a
     dispatch(myVideosListFetchFailed(exception));
   });
 };
+
 
