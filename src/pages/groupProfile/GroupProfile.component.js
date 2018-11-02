@@ -39,6 +39,16 @@ export default class GroupProfile extends React.Component {
         }
       }
     }
+    if (this.props.match.params.id.toLowerCase() !== nextProps.match.params.id.toLowerCase()) {
+      this.props.resetMemberDetails();
+      this.props.resetGroupDetails();
+      this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());
+    }
+  }
+
+  componentWillUnmount() {
+    this.props.resetGroupDetails();
+    this.props.resetMemberDetails();
   }
 
   groupFollowStatus = () => {

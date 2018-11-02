@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchGroupDetails, resetGroupDetails } from './actions/getGroupDetails';
-import { fetchGroupMembers } from './actions/getMembersList';
+import { fetchGroupMembers, resetMemberDetails } from './actions/getMembersList';
 import { toggleLogin } from '../../store/shared/actions/toggleModals';
 import GroupProfile from './GroupProfile.component';
 import { celebrityFollowStatus, fanFollowStatus } from '../../store/shared/actions/followGroupCelebrity';
@@ -18,7 +18,7 @@ const mapDispatchToProps = dispatch => ({
   toggleLogin: state => dispatch(toggleLogin(state)),
   resetGroupDetails: () => dispatch(resetGroupDetails()),
   fetchGroupMembers: (id, offset, refresh) => dispatch(fetchGroupMembers(id, offset, refresh)),
-  // resetMemberDetails: () => dispatch(resetMemberDetails()),
+  resetMemberDetails: () => dispatch(resetMemberDetails()),
   fanFollowStatus: (id, flag) => dispatch(fanFollowStatus(id, flag)),
   celebrityFollowStatus: id => dispatch(celebrityFollowStatus(id)),
 });
