@@ -1,9 +1,11 @@
 import { MEMBERS_LIST_DETAILS } from '../actions/getMembersList';
 
 const initalState = {
-  memberList: {},
-  count: 0,
+  memberList: [],
   loading: false,
+  offset: -1,
+  count: 0,
+  limit: 10,
   error: '',
 };
 
@@ -25,8 +27,9 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        memberList: action.details.group_list,
-        count: action.details.count,
+        memberList: action.details,
+        count: action.count,
+        offset: action.offset,
       };
 
     case MEMBERS_LIST_DETAILS.failed:

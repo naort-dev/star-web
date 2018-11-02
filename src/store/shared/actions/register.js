@@ -1,7 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { fetchUserDetails } from '../actions/getUserDetails';
+import { userDetailsFetchSuccess } from '../actions/getUserDetails';
 
 export const REGISTER = {
   start: 'session/ON_LOGIN',
@@ -53,10 +53,14 @@ export const registerUser = (
 
   }).then((resp) => {
     if (resp.data && resp.data.success) {
+      const obj = {
+        ...resp.data.data,
+        celebrity_details: {},
+      };
       localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(registerFetchEnd());
-      dispatch(registerFetchSuccess(resp.data.data));
-      dispatch(fetchUserDetails(resp.data.data.user.id));
+      dispatch(userDetailsFetchSuccess(obj));
+      dispatch(registerFetchSuccess(obj));
 
       return resp
     } else {

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Header from '../../components/Header';
+import ScrollList from '../../components/ScrollList';
 import ModalPopup from '../../components/RequestFlowPopup';
 import GroupProfileStyled from './styled';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
@@ -29,7 +30,7 @@ export default class GroupProfile extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());      
       if (this.state.followFlag) {
-        if (nextProps.isLoggedIn) {
+        if (nextProps.isLoggedIn) {          
           if (nextProps.groupDetails && nextProps.userDetails.role_details && (nextProps.userDetails.role_details.role_code === ROLES.star || nextProps.userDetails.role_details.role_code === ROLES.group)) {
             this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
           } else {
@@ -37,9 +38,6 @@ export default class GroupProfile extends React.Component {
           }
         }
       }
-    }
-    if (!nextProps.memberListDetails.length && groupDetails && groupDetails.user_id) {
-      this.props.fetchGroupMembers(nextProps.groupDetails.user_id);
     }
   }
 
@@ -127,7 +125,7 @@ export default class GroupProfile extends React.Component {
         ({ original: item.image_url }));
       images = [...images, ...imagesArray];
     }
-    const memberListArray = this.props.memberListDetails;
+    const memberListArray = this.props.memberListDetails.memberList;
     const descriptionLength = this.props.groupDetails.group_details?
       this.props.groupDetails.group_details.description.length:0;
 
@@ -161,7 +159,20 @@ export default class GroupProfile extends React.Component {
             >
               <GroupProfileStyled.memberListPopup>
                 <div className="popupHeading">Our members</div>
-                { memberListArray.map(data => this.renderItem(data)) }
+                {/* { memberListArray.map(data => this.renderItem(data)) } */}
+                <div className="memberPopup">
+                  <ScrollList
+                    noDataText="No members"
+                    memberList
+                    renderFunction={this.renderItem}
+                    dataList={memberListArray}
+                    limit={this.props.memberListDetails.limit}
+                    totalCount={this.props.memberListDetails.count}
+                    offset={this.props.memberListDetails.offset}
+                    loading={this.props.memberListDetails.loading}
+                    fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                  />
+                </div>
               </GroupProfileStyled.memberListPopup>
             </ModalPopup>
         : null}
