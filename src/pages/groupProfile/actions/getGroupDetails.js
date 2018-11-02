@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { fetchGroupMembers } from './getMembersList';
 
 export const GROUP_DETAILS = {
   start: 'fetch_start/group_details',
@@ -46,6 +47,7 @@ export const fetchGroupDetails = id => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(groupDetailstFetchEnd());
       dispatch(groupDetailstFetchSuccess(resp.data.data));
+      dispatch(fetchGroupMembers(resp.data.data.user.user_id, 0, true));
     } else {
       dispatch(groupDetailstFetchEnd());
       dispatch(groupDetailstFetchFailed('404'));

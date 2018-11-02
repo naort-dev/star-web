@@ -164,8 +164,11 @@ export default class ScrollList extends React.Component {
           />
         </ListStyled.listVideos>
       ));
-    }
-    else if (this.props.requestDetails) {
+    } else if (this.props.memberList) {
+      return this.props.dataList.map((item) => {
+        return this.props.renderFunction(item);
+      });
+    } else if (this.props.requestDetails) {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listRequests videos={this.props.videos} key={index}>
           <RequestDetails
