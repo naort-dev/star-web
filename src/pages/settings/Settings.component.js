@@ -1,6 +1,6 @@
 import React from 'react';
 import { ROLES } from '../../constants/usertype';
-import ThreeColumnLayout from '../../components/ThreeColumnLayout';
+import ColumnLayout from '../../components/ColumnLayout';
 import StarSettings from './components/StarSettings';
 import FanSettings from './components/FanSettings';
 
@@ -101,7 +101,7 @@ export default class Requests extends React.Component {
   render() {
     return (
       <div>
-        <ThreeColumnLayout
+        <ColumnLayout
           selectedSideBarItem="settings"
           history={this.props.history}
           innerLinks={this.state.innerLinks}

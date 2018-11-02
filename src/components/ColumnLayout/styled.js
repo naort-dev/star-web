@@ -11,7 +11,7 @@ ColumnLayoutStyled.Container = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  max-width: 1200px;
+  max-width: 1920px;
   @media(min-width: 1025px) {
     padding-left: 95px;
   }
@@ -42,7 +42,7 @@ ColumnLayoutStyled.mainSection = styled.section`
     width: calc(100% - 210px);
     display: inline-block;
     vertical-align: top;
-    padding-left: 50px;
+    padding-left: 0;
     padding-right: 50px;
     padding-top: 30px;
     height: auto;
@@ -55,18 +55,9 @@ ColumnLayoutStyled.mainSection = styled.section`
 ColumnLayoutStyled.CenterSection = styled.div`
   height: 100%;
   @media(min-width: 1025px) {
-    width: 75%;
+    width: 100%;
     display: inline-block;
     vertical-align: top;
-  }
-`;
-
-ColumnLayoutStyled.RightSection = styled.div`
-  @media(min-width: 1025px) {
-    width: 25%;
-    display: inline-block;
-    vertical-align: top;
-    height: 100%;
   }
 `;
 
