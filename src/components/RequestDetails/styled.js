@@ -135,6 +135,7 @@ VideoRenderDiv.StatusDetailsWrapper = styled.div`
   flex-direction: column;
   padding-left: 0;
   flex-wrap: wrap;
+  padding-bottom: 30px;
   @media(min-width: 768px) {
     flex-direction: row;
     padding-left: 62px;
@@ -212,15 +213,17 @@ VideoRenderDiv.RequestStatus = styled.span`
 VideoRenderDiv.DetailsContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding-top: 30px;
+  padding-top: ${props => (props.isVisible ? '30px' : '0')};
   flex-direction: column;
-  max-height: ${props => (props.isVisible ? '600px' : 0)};
-  padding-bottom: ${props => (props.isVisible ? '30px' : 0)};
+  height: ${props => (props.isVisible ? 'auto' : 0)};
+  opacity: ${props => (props.isVisible ? 1 : 0)};
+  padding-bottom: ${props => (props.isVisible ? '30px' : '0')};
   order: 2;
-  transition: max-height 1s ease;
+  transition: all 0.5s ease;
   overflow: hidden;
   @media(min-width: 768px) {
     flex-direction: row;
+    padding-bottom: 0;
     order: 3;
     width: 100%;
   }
