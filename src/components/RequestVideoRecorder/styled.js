@@ -288,6 +288,7 @@ cursor: pointer;
 @media(min-width: 1920px) {
   height: 100px;
   width: 100px;
+  background-size: 77px;
 }
 `;
 
@@ -401,6 +402,9 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   align-items: center;
   justify-content: center;
   bottom: 6%;
+  @media(min-width: 1920px) {
+    bottom: 45px;
+  }
   `;
 
   VideoRecorderDiv.UploadActionButton = styled.div`

@@ -15,12 +15,15 @@ VideoRenderDiv.ImageSection = styled.div`
   background-repeat:no-repeat;
   background-position: center;
   background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
-  width: 300px;
+  max-width: 300px;
   height: 150px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+  @media(min-width: 768px) {
+    width: 300px;
+  }
 `;
 
 VideoRenderDiv.PlayButton = styled.span`
