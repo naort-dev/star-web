@@ -15,7 +15,6 @@ export default class RequestDetails extends React.Component {
       coverImage: false,
       profileImage: false,
       videoPlayerProps: null,
-      itemSelected: false,
       showDetails: false,
     };
     this.coverImage = new Image();
@@ -157,7 +156,9 @@ export default class RequestDetails extends React.Component {
             <OrderDetailsItem title="From"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
             />
-            <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${relationShip}`} />
+            {
+              props.orderDetails.request_details.stargramto !== 'Myself' && <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${relationShip}`} />
+            }
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }

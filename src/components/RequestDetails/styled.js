@@ -17,6 +17,7 @@ VideoRenderDiv.ImageSection = styled.div`
   background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
   width: 300px;
   height: 150px;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
