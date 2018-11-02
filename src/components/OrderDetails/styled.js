@@ -270,6 +270,7 @@ OrderStyled.DetailsItem = styled.li`
   display: block;
   width: 100%;
   padding: 3px 0;
+  line-height: 20px;
   color: ${props => props.overlay && '#fff'};
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table')};

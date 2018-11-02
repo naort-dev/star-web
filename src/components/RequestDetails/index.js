@@ -143,6 +143,8 @@ export default class RequestDetails extends React.Component {
 
   getEventDetails = (eventType) => {
     const { props } = this;
+    const occasionDate = props.orderDetails.request_details && props.orderDetails.request_details.date ? moment(props.orderDetails.request_details.date).format('LL') : '';
+    const relationShip = props.orderDetails.request_details && props.orderDetails.request_details.relationship && props.orderDetails.request_details.relationship.title ? props.orderDetails.request_details.relationship.title : '';
     switch (eventType) {
       case 1:
         // Personal Shout-outs
@@ -155,7 +157,7 @@ export default class RequestDetails extends React.Component {
             <OrderDetailsItem title="From"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
             />
-            <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${props.relationShip}`} />
+            <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${relationShip}`} />
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }
@@ -171,7 +173,7 @@ export default class RequestDetails extends React.Component {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }
             <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
-            <OrderDetailsItem title="Event Date" value={props.occasionDate} />
+            <OrderDetailsItem title="Event Date" value={occasionDate} />
             <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
@@ -183,7 +185,6 @@ export default class RequestDetails extends React.Component {
   }
 
   selectItem = () => {
-    this.setState({ itemSelected: !this.state.itemSelected });
     this.props.selectItem();
   }
 
@@ -213,13 +214,13 @@ export default class RequestDetails extends React.Component {
     );
   }
 
-  renderVideoDetails = (text) => {
-    let splicedText = text;
-    if (text.length > this.charLimit) {
-      splicedText = text.substring(0, this.charLimit) + '...';
-    }
-    return splicedText;
-  }
+  // renderVideoDetails = (text) => {
+  //   let splicedText = text;
+  //   if (text.length > this.charLimit) {
+  //     splicedText = text.substring(0, this.charLimit) + '...';
+  //   }
+  //   return splicedText;
+  // }
 
   renderSecondaryControlButton = () => {
     const { starMode, requestStatus } = this.props;
@@ -228,11 +229,11 @@ export default class RequestDetails extends React.Component {
     const canVideoShare = starVideoShare || fanVideoShare;
     const canEdit = !starMode && this.props.orderDetails.editable;
     if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
-      return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem(true)}>Respond</VideoRenderDiv.ControlButton>;
+      return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem('respond')}>Respond</VideoRenderDiv.ControlButton>;
     } else if (canVideoShare) {
       return <VideoRenderDiv.ShareButton>Share</VideoRenderDiv.ShareButton>;
     } else if (canEdit) { // completed video for fan
-      return <VideoRenderDiv.ShareButton>Edit</VideoRenderDiv.ShareButton>;
+      return <VideoRenderDiv.ShareButton onClick={() => this.props.selectItem('edit')}>Edit</VideoRenderDiv.ShareButton>;
     }
     return null;
   }
@@ -248,7 +249,7 @@ export default class RequestDetails extends React.Component {
 
   renderOrderDetails = () => {
     const { props } = this;
-    const price = props.orderDetails.order_details ? props.orderDetails.order_details.price: 0;
+    const price = props.orderDetails.order_details ? props.orderDetails.order_details.amount: 0;
     const isPrivate = props.orderDetails.public_request ? 'No' : 'Yes';
     return (
       <React.Fragment>
@@ -313,7 +314,7 @@ export default class RequestDetails extends React.Component {
               <VideoRenderDiv.StarName>
                 {props.starMode ? props.fanName : props.starName }
               </VideoRenderDiv.StarName>
-              <VideoRenderDiv.StarDetails>{this.renderVideoDetails(props.details)}</VideoRenderDiv.StarDetails>
+              <VideoRenderDiv.StarDetails>{props.details}</VideoRenderDiv.StarDetails>
             </VideoRenderDiv.DetailWrapper>
           </VideoRenderDiv.ProfileDetailWrapper>
           <VideoRenderDiv.StatusDetailsWrapper>
@@ -329,17 +330,13 @@ export default class RequestDetails extends React.Component {
             </VideoRenderDiv.StatusDetails>
             <VideoRenderDiv.ControlWrapper>
               <VideoRenderDiv.ControlButton onClick={this.showDetails} alternate>
-                {this.state.itemSelected ? 'Hide details' : 'View details'}
+                {this.state.showDetails ? 'Hide details' : 'View details'}
               </VideoRenderDiv.ControlButton>
               {
                 this.renderSecondaryControlButton()
               }
             </VideoRenderDiv.ControlWrapper>
-          </VideoRenderDiv.StatusDetailsWrapper>
-        </VideoRenderDiv.ProfileContent>
-        {
-          this.state.showDetails &&
-            <VideoRenderDiv.DetailsContainer>
+            <VideoRenderDiv.DetailsContainer isVisible={this.state.showDetails}>
               <VideoRenderDiv.DetailsWrapper>
                 {
                   this.renderOrderDetails()
@@ -350,10 +347,11 @@ export default class RequestDetails extends React.Component {
                 height={props.imageHeight}
                 imageUrl={this.state.coverImage}
               >
-                {this.state.coverImage ? <VideoRenderDiv.PlayButton /> : null}
+                {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible={this.state.showDetails} /> : null}
               </VideoRenderDiv.ImageSection>
             </VideoRenderDiv.DetailsContainer>
-        }
+          </VideoRenderDiv.StatusDetailsWrapper>
+        </VideoRenderDiv.ProfileContent>
       </VideoRenderDiv>
     );
   }

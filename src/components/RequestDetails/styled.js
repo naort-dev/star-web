@@ -6,7 +6,6 @@ const VideoRenderDiv = styled.div`
   border-bottom: 1px solid #D8D8D8;
   @media(min-width: 768px) {
     position: relative;
-    padding-bottom: 30px;
   }
 `;
 VideoRenderDiv.ImageSection = styled.div`
@@ -29,7 +28,7 @@ VideoRenderDiv.PlayButton = styled.span`
   border-radius: 100%;
   width: 30px;
   height: 30px;
-  display: inline-block;
+  display: ${props => (props.isVisible ? 'inline-block' : 'none')};
   background-size: contain;
   background-size: 20px;
   background-position: center center;
@@ -134,6 +133,7 @@ VideoRenderDiv.StatusDetailsWrapper = styled.div`
   margin-top: 11px;
   flex-direction: column;
   padding-left: 0;
+  flex-wrap: wrap;
   @media(min-width: 768px) {
     flex-direction: row;
     padding-left: 62px;
@@ -144,6 +144,7 @@ VideoRenderDiv.StatusDetailsWrapper = styled.div`
 
 VideoRenderDiv.StatusDetails = styled.div`
   padding-left: 62px;
+  order: 1;
   @media(min-width: 768px) {
     padding-left: 0;
   }
@@ -151,10 +152,12 @@ VideoRenderDiv.StatusDetails = styled.div`
 
 VideoRenderDiv.ControlWrapper = styled.span`
   display: flex;
+  order: 3;
   justify-content: space-between;
   margin-top: 16px;
   @media(min-width: 768px) {
     margin-top: 0;
+    order: 2;
   }
 `;
 
@@ -210,19 +213,20 @@ VideoRenderDiv.DetailsContainer = styled.div`
   justify-content: space-between;
   padding-top: 30px;
   flex-direction: column;
+  max-height: ${props => (props.isVisible ? '600px' : 0)};
+  padding-bottom: ${props => (props.isVisible ? '30px' : 0)};
+  order: 2;
+  transition: max-height 1s ease;
+  overflow: hidden;
   @media(min-width: 768px) {
     flex-direction: row;
-    padding-left: 62px;
+    order: 3;
+    width: 100%;
   }
 `;
 
 VideoRenderDiv.DetailsWrapper = styled.ul`
-  padding: 0 16px;
   @media(min-width: 768px) {
-    padding: 0 0;
-    width: 80%;
-  }
-  @media(min-width: 1025px) {
     width: calc(100% - 310px);
   }
 `;

@@ -333,9 +333,8 @@ VideoRecorderDiv.InfoText = styled.div`
 VideoRecorderDiv.Wrapper = styled.div`
   display: flex;
   width: 100%;
-  padding: 0 10px;
+  padding: 10px;
   position: absolute;
-  line-height: 41px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -433,7 +432,7 @@ VideoRecorderDiv.VideoHeading = styled.div`
   user-select: none;
   border: 1px solid #fff;
   border-radius: 17px;
-  padding: 3px 20px;
+  padding: 8px 20px;
 `;
   
 VideoRecorderDiv.UploadHeading = styled.div`
