@@ -73,7 +73,7 @@ VideoRenderDiv.ProfileImageWrapper = styled.div`
 `;
 VideoRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
-  display: inline-block;
+  display: block;
   background-image: ${props => (props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
@@ -183,16 +183,25 @@ VideoRenderDiv.ControlButton = styled.button`
   font-size: 14px;
   font-family: Avenir-Regular;
   cursor: pointer;
-  width: calc(50% - 10px);
+  flex: 1;
+  height: 45px;
   text-decoration: none;
   outline: none;
   border-radius: 20px;
   border: ${props => (props.alternate ? '1px solid' : '2px solid')};
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
+  &:first-child {
+    margin-right: 5px;
+  }
+  &:last-child {
+    margin-left: 5px;
+  }
   @media(min-width: 768px) {
     width: auto;
     padding: 10px 25px;
+    flex: none;
+    height: auto;
     margin-left: ${props => (props.alternate ? '0' : '15px')};
   }
   &:hover {
