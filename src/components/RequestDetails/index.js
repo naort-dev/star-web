@@ -225,7 +225,7 @@ export default class RequestDetails extends React.Component {
 
   renderSecondaryControlButton = () => {
     const { starMode, requestStatus } = this.props;
-    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus > -1) && this.props.orderDetails.public_request;
+    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1 && this.props.orderDetails.public_request;
     const fanVideoShare = !starMode && completedStatusList.indexOf(requestStatus) > -1;
     const canVideoShare = starVideoShare || fanVideoShare;
     const canEdit = !starMode && this.props.orderDetails.editable;

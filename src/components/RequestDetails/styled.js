@@ -21,20 +21,29 @@ VideoRenderDiv.ImageSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0000007a;
+  }
   @media(min-width: 768px) {
     width: 300px;
   }
 `;
 
 VideoRenderDiv.PlayButton = styled.span`
-  background: url(assets/images/icon-play.svg) no-repeat;
-  background-color: #0000007a;
+  background: url(assets/images/play-button.svg) no-repeat;
   border-radius: 100%;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   display: ${props => (props.isVisible ? 'inline-block' : 'none')};
   background-size: contain;
-  background-size: 20px;
+  background-size: 40px;
+  z-index: 1;
   background-position: center center;
 `;
 
@@ -174,7 +183,7 @@ VideoRenderDiv.ControlButton = styled.button`
   font-size: 14px;
   font-family: Avenir-Regular;
   cursor: pointer;
-  padding: 10px 25px;
+  width: calc(50% - 10px);
   text-decoration: none;
   outline: none;
   border-radius: 20px;
@@ -182,6 +191,8 @@ VideoRenderDiv.ControlButton = styled.button`
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
   @media(min-width: 768px) {
+    width: auto;
+    padding: 10px 25px;
     margin-left: ${props => (props.alternate ? '0' : '15px')};
   }
   &:hover {
