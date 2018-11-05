@@ -184,7 +184,7 @@ export default class OrderDetails extends React.Component {
         selectedRequestType = 'ask';
       }
       this.props.setBookingDetails(bookingData);
-      this.props.history.push(`/${orderDetails.celebrity_id}`);
+      // this.props.history.push(`/${orderDetails.celebrity_id}`);
       this.props.setRequestFlow(orderDetails.celebrity_id, selectedRequestType, 1);
     }
   }

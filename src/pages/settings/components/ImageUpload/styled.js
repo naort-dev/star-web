@@ -30,6 +30,9 @@ ImageUploadStyled.CoverLayout = styled.div`
   border-radius: 10px;
   margin: 0 auto;
   margin-bottom: ${props => !props.featuredPresent && '60px'};
+  @media(min-width: 1500px) {
+    max-width: 1000px;
+  }
 `;
 
 ImageUploadStyled.CoverImage = styled.div`
@@ -50,6 +53,9 @@ ImageUploadStyled.SecondaryCoverWrapper = styled.div`
   margin: 0 auto;
   max-width: 550px;
   margin-top: 40px;
+  @media(min-width: 1500px) {
+    max-width: 1000px;
+  }
 `;
 
 ImageUploadStyled.SecondaryCoverImage = ImageUploadStyled.CoverImage.extend`
@@ -190,6 +196,9 @@ ImageUploadStyled.AddCoverWrapper = styled.span`
   justify-content: flex-end;
   max-width: 550px;
   margin: 0 auto;
+  @media(min-width: 1500px) {
+    max-width: 1000px;
+  }
 `;
 ImageUploadStyled.AddCoverButton = styled.span`
   margin: 10px 0;

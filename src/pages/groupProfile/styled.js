@@ -232,6 +232,7 @@ GroupProfileStyled.profileWrapper = styled.div`
     }
     @media(max-width: 767px) {
       flex-basis: 30px;
+      margin-bottom: 20px;
     }
     a {
       cursor: pointer;
@@ -351,6 +352,13 @@ GroupProfileStyled.memberListPopup = styled.div`
       padding-left: 10px;
     }
   }
+  .memberPopup section {
+    height: 500px;
+    @media(max-width: 480px) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
   .memberDetails {
     display: flex;
     align-items: center;
@@ -362,6 +370,7 @@ GroupProfileStyled.memberListPopup = styled.div`
     border-bottom: 1px solid #e2e2e2;
     @media(max-width: 767px) {
       margin: 0 5px;
+      width: 100%;
     }
     ${memberImage} {
       width: 110px;
@@ -381,6 +390,10 @@ GroupProfileStyled.memberListPopup = styled.div`
         line-height: 25px;
         margin: 20px 0 20px 15px;
         min-width: 140px;
+        width: 100%;
+      }
+      @media(max-width: 480px) {
+        margin-left: 10px;
       }
       .memberName {
         margin-top: 5px;

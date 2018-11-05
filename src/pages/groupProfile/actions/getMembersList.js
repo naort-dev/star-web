@@ -18,9 +18,11 @@ export const memberListFetchEnd = () => ({
   type: MEMBERS_LIST_DETAILS.end,
 });
 
-export const memberListFetchSuccess = details => ({
+export const memberListFetchSuccess = (details, offset, count) => ({
   type: MEMBERS_LIST_DETAILS.success,
   details,
+  offset,
+  count,
 });
 
 export const memberListFetchFailed = error => ({
@@ -32,15 +34,23 @@ export const resetMemberDetails = () => ({
   type: MEMBERS_LIST_DETAILS.reset,
 });
 
-export const fetchGroupMembers = id => (dispatch) => {
+export const fetchGroupMembers = (id, offset, refresh) => (dispatch, getState) => {
   if (!id) return null;
-  const API_URL = Api.groupMembersList(id);
+  const API_URL = Api.groupMembersList;
+  const { limit } = getState().memberList;
 
   dispatch(memberListFetchStart());
-  return fetch.get(API_URL).then((resp) => {
+  return fetch.get(`${API_URL}?account=${id}&limit=${limit}&offset=${offset}`).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(memberListFetchEnd());
-      dispatch(memberListFetchSuccess(resp.data.data));
+      let list = getState().memberList.memberList;
+      const { count } = resp.data.data;
+      if (refresh) {
+        list = resp.data.data.group_list;
+      } else {
+        list = [...list, ...resp.data.data.group_list];
+      }
+      dispatch(memberListFetchSuccess(list, offset, count));
     } else {
       dispatch(memberListFetchEnd());
       dispatch(memberListFetchFailed('404'));

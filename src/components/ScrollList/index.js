@@ -164,8 +164,11 @@ export default class ScrollList extends React.Component {
           />
         </ListStyled.listVideos>
       ));
-    }
-    else if (this.props.requestDetails) {
+    } else if (this.props.memberList) {
+      return this.props.dataList.map((item) => {
+        return this.props.renderFunction(item);
+      });
+    } else if (this.props.requestDetails) {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listRequests videos={this.props.videos} key={index}>
           <RequestDetails
@@ -178,12 +181,13 @@ export default class ScrollList extends React.Component {
             fanProfile={item.fan_photo && item.fan_photo.thumbnail_url}
             starName={item.celebrity}
             fanName={item.fan}
+            orderDetails={item}
             details={item.booking_title}
             requestStatus={item.request_status}
             requestVideo={item.request_video}
             requestType={item.request_type}
             createdDate={item.created_date}
-            selectItem={recordMode => this.props.selectItem(item, recordMode)}
+            selectItem={type => this.props.selectItem(item, type)}
           />
         </ListStyled.listRequests>
       ));

@@ -146,11 +146,11 @@ class Sidebar extends React.Component {
                               <Link to={'/user/earnings'}>Earnings</Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
-                          <SidebarStyled.ListItem>
+                          {/* <SidebarStyled.ListItem>
                             <SidebarStyled.CategoryTitle>
                               <Link to="/myStar">My Star Page</Link>
                             </SidebarStyled.CategoryTitle>
-                          </SidebarStyled.ListItem>
+                          </SidebarStyled.ListItem> */}
                         </SidebarStyled.ListWrapper>
                       </SidebarStyled.Filter>
                     : null

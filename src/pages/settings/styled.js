@@ -33,6 +33,9 @@ SettingsStyled.InputWrapper = styled.div`
     justify-content: flex-start;
     margin: 20px 0;
   }
+  @media(min-width: 1025px) {
+    max-width: 1000px
+  }
 `;
 
 SettingsStyled.Label = styled.span`
