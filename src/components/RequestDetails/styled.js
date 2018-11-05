@@ -28,7 +28,7 @@ VideoRenderDiv.ImageSection = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #0000007a;
+    background-color: ${props => props.imageUrl && '#0000007a'};
   }
   @media(min-width: 768px) {
     width: 300px;

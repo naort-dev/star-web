@@ -19,6 +19,7 @@ export default class Requests extends React.Component {
       innerLinks: [],
       requestStatus: 'all',
       recordMode: false,
+      currentUserRole: props.userDetails.settings_userDetails.role_details && props.userDetails.settings_userDetails.role_details.role_code === ROLES.star,
       orderDetails: {},
       scrollTarget: '',
     };
@@ -29,26 +30,30 @@ export default class Requests extends React.Component {
     };
     this.role = props.starMode ? 'celebrity_id' : 'fan_id';
   }
-  componentWillMount() {
+  componentDidMount() {
     this.props.myVideosListReset();
     this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
-    let innerLinks;
-    if (this.props.starMode) {
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let { innerLinks } = prevState;
+    const userRoleCode = nextProps.userDetails.settings_userDetails.role_details ? nextProps.userDetails.settings_userDetails.role_details.role_code : null ;
+    if (nextProps.starMode && !prevState.innerLinks.length) {
       innerLinks = [
         { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
         { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
-    } else {
+    } else if (!prevState.innerLinks.length) {
       innerLinks = [
         { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
-      innerLinks = this.props.userDetails.settings_userDetails.role_details && this.props.userDetails.settings_userDetails.role_details.role_code === ROLES.star ?
-        [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }]
-        : innerLinks;
     }
-    this.setState({ innerLinks });
+    if (userRoleCode === ROLES.star && !nextProps.starMode && prevState.currentUserRole !== userRoleCode) {
+      innerLinks = [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }];
+    }
+    return ({ innerLinks, currentUserRole: userRoleCode });
   }
 
   switchTab = (item) => {
