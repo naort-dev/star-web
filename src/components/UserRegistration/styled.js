@@ -219,6 +219,26 @@ GroupStyled.InputArea = styled.textarea`
   }
 `;
 
+GroupStyled.IndustryInput = GroupStyled.InputArea.extend`
+  min-height: 80px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  height: auto;
+  padding-right: 40px;
+`.withComponent('span');
+
+GroupStyled.IndustryEditButton = styled.span`
+  color: #FF6C58;
+  position: absolute;
+  cursor: pointer;
+  right: 9px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+`;
+
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
   width: ${props => (props.lastDigit ? '64px' : '53px')};;
   height: 35px;

@@ -7,6 +7,7 @@ export const PROFESSION_LIST = {
   end: 'fetch_end/professions_list',
   success: 'fetch_success/professions_list',
   failed: 'fetch_failed/professions_list',
+  successAll: 'fetch_all/professions_list',
 };
 
 export const professionsListFetchStart = () => ({
@@ -25,6 +26,14 @@ export const professionsListtFetchSuccess = (data) => {
     });
 };
 
+export const professionsAllFetchSuccess = (data) => {
+  return (
+    {
+      type: PROFESSION_LIST.successAll,
+      data,
+    });
+};
+
 export const professionsListtFetchFailed = error => ({
   type: PROFESSION_LIST.failed,
   error,
@@ -36,6 +45,21 @@ export const fetchProfessionsList = () => (dispatch) => {
     if (resp.data && resp.data.success) {
       dispatch(professionsListtFetchEnd());
       dispatch(professionsListtFetchSuccess(resp.data.data));
+    } else {
+      dispatch(professionsListtFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(professionsListtFetchEnd());
+    dispatch(professionsListtFetchFailed(exception));
+  });
+};
+
+export const fetchAllProfessions = () => (dispatch) => {
+  dispatch(professionsListFetchStart());
+  return fetch.get(Api.getAllProfessions).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(professionsListtFetchEnd());
+      dispatch(professionsAllFetchSuccess(resp.data.data));
     } else {
       dispatch(professionsListtFetchEnd());
     }

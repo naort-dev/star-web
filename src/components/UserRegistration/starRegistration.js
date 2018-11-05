@@ -27,7 +27,6 @@ import { logOutUser } from '../../store/shared/actions/login';
 class starRegistrationComponent extends React.Component {
   state = {
     celebrityDetails: null,
-    industryList: [],
     videoUrl: null,
     professionsArray: [],
     featuredImage: {
@@ -38,20 +37,6 @@ class starRegistrationComponent extends React.Component {
       fileName: null,
       image: null,
     },
-  }
-
-  componentWillMount() {
-    fetch('user/professions/').then((response) => {
-      let dropDownList = [];
-      response.data.data.professions.map((profObj) => {
-        dropDownList.push({ value: profObj.id, label: profObj.title });
-        profObj.child.map((childObj) => {
-          dropDownList.push({ value: childObj.id, label: childObj.title });
-        });
-      });
-      return dropDownList;
-    })
-      .then(industryItem => this.setState({ industryList: industryItem }))
   }
 
   setProfileImage = (fileName, image) => {
@@ -130,17 +115,18 @@ class starRegistrationComponent extends React.Component {
   }
 
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
-    const selectedProfessions = celebrityDetails.profession;
-    const professionsArray = this.state.industryList.filter((profession) => {
-      return selectedProfessions.indexOf(profession.value.toString()) > -1;
-    });
+    const professionsArray = celebrityDetails.profession;
+    const newCelebrityDetails = {
+      ...celebrityDetails,
+      profession: celebrityDetails.profession.map(profession => profession.value.toString()),
+    }
     const finalUserDetails = {
       celebrity_details: {},
       user_details: userDetails,
     }
     updateSocialLinks(socialLinks);
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
-    this.setState({ celebrityDetails, professionsArray });
+    this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
   }
 
@@ -158,7 +144,6 @@ class starRegistrationComponent extends React.Component {
             <GroupStyled.ContentWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
                 <StarDetailsEntry
-                  industryList={this.state.industryList}
                   submitAccountDetails={this.submitAccountDetails}
                 />
               </GroupStyled.StepWrapper>
