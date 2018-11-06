@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Header from '../../components/Header';
 import ScrollList from '../../components/ScrollList';
+import HorizontalScrollList from '../../components/HorizontalScrollList';
 import ModalPopup from '../../components/RequestFlowPopup';
 import GroupProfileStyled from './styled';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
@@ -164,7 +166,6 @@ export default class GroupProfile extends React.Component {
             >
               <GroupProfileStyled.memberListPopup>
                 <div className="popupHeading">Our members</div>
-                {/* { memberListArray.map(data => this.renderItem(data)) } */}
                 <div className="memberPopup">
                   <ScrollList
                     noDataText="No members"
@@ -218,9 +219,27 @@ export default class GroupProfile extends React.Component {
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
-                  {memberListArray.length > 0 ?
-                    memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) 
-                    : <p>No members available</p>}
+                  
+                  <div className="memberScroll">
+                    <Scrollbars>
+                      <HorizontalScrollList
+                        noDataText="No members available"
+                        memberList
+                        renderFunction={this.renderMemberDetail}
+                        dataList={memberListArray}
+                        limit={this.props.memberListDetails.limit}
+                        totalCount={this.props.memberListDetails.count}
+                        offset={this.props.memberListDetails.offset}
+                        loading={this.props.memberListDetails.loading}
+                        fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                      />
+                    </Scrollbars>
+                  </div>
+                  <div className="memberlistWeb">
+                    {memberListArray.length > 0 ?
+                      memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) 
+                      : <p>No members available</p>}
+                  </div>
                 </div>
                 {this.props.memberCount > 5 ?
                   <div className="seeMemberList">
