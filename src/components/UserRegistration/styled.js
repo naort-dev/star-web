@@ -466,6 +466,7 @@ GroupStyled.ProfileInputButton = styled.div`
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
+  padding-bottom: 18px;
   ${GroupStyled.ProfileInputWrapper} {
     width: 60px;
     height: 60px;
