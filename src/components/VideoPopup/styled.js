@@ -22,6 +22,7 @@ VideoPopupStyled.VideoContentWrapper = styled.div`
 VideoPopupStyled.VideoPlayerWrapper = styled.div`
   position: relative;
   width: 100%;
+  height: 400px;
   @media(min-width: 1025px) {
     width: 50%;
     display: inline-block;
