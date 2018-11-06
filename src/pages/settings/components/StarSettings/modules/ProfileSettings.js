@@ -1,7 +1,8 @@
 import React from 'react';
 import validator from 'validator';
 import Popup from '../../../../../components/Popup';
-import MultiSelect from './../../../../../components/MultiSelect';
+import RequestFlowPopup from './../../../../../components/RequestFlowPopup';
+import { IndustrySelection } from './../../../../../components/IndustrySelection';
 import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../../../utils/dataformatter';
 import SettingsStyled from '../../../styled';
 
@@ -9,7 +10,7 @@ export default class ProfileSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      
     };
   }
 
@@ -25,14 +26,10 @@ export default class ProfileSettings extends React.Component {
   }
 
   setInitialData = (props) => {
-    let professionList;
     let facebook;
     let twitter;
     let instagram;
     let youtube;
-    if (props.celebDetails.profession_details) {
-      professionList = props.celebDetails.profession_details.map(profession => profession.id.toString());
-    }
     props.userDetails.social_links.forEach((link) => {
       if (link.social_link_key === 'facebook_url') {
         facebook = link.social_link_value;
@@ -45,7 +42,8 @@ export default class ProfileSettings extends React.Component {
       }
     });
     this.setState({
-      industries: professionList ? professionList : [],
+      industries: props.celebDetails.profession_details ? props.celebDetails.profession_details : [],
+      industrySelection: false,
       socialMedia: { facebook, twitter, youtube, instagram },
       bio: props.celebDetails.description ? props.celebDetails.description : '',
       stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
@@ -77,6 +75,10 @@ export default class ProfileSettings extends React.Component {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
+  }
+
+  getIndustrySelection = (industries) => {
+    this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
@@ -132,9 +134,10 @@ export default class ProfileSettings extends React.Component {
 
   submitProfileDetails = () => {
     if (this.validateFields()) {
+      const professions = this.state.industries.map(profession => profession.id.toString());
       const celebrityDetails = {
         description: this.state.bio,
-        profession: this.state.industries,
+        profession: professions,
         rate: parseInt(this.state.bookingPrice),
         weekly_limits: parseInt(this.state.bookingLimit),
         availability: true,
@@ -168,6 +171,17 @@ export default class ProfileSettings extends React.Component {
     this.props.fetchUserDetails();
   }
 
+  closeIndustrySelection = () => {
+    this.setState({ industrySelection: false });
+  }
+
+  removeSelectedIndustry = (id, event) => {
+    event.stopPropagation();
+    let { industries } = this.state;
+    industries = industries.filter(profession => profession.id !== id);
+    this.setState({ industries });
+  }
+
   renderPopup = () => {
     return (
       <React.Fragment>
@@ -180,16 +194,16 @@ export default class ProfileSettings extends React.Component {
     );
   }
 
-  renderMultiValueItems = (selectProps) => {
-    return (
-      <SettingsStyled.mutiSelectItemWrapper>
-        {selectProps.value.label}
+  renderIndustries = () => {
+    const { industries } = this.state;
+    return industries.map(profession => (
+      <SettingsStyled.mutiSelectItemWrapper key={profession.id}>
+        {profession.title}
         <SettingsStyled.OptionCloseButton
-          type="button"
-          onClick={() => selectProps.onRemove(selectProps.value)}
+          onClick={event => this.removeSelectedIndustry(profession.id, event)}
         />
       </SettingsStyled.mutiSelectItemWrapper>
-    );
+    ));
   };
 
   render() {
@@ -206,6 +220,22 @@ export default class ProfileSettings extends React.Component {
                 this.renderPopup()
               }
             </Popup>
+        }
+        {
+          this.state.industrySelection &&
+            <RequestFlowPopup
+              dotsCount={0}
+              closePopUp={this.closeIndustrySelection}
+              smallPopup
+            >
+              <SettingsStyled.IndustrySelectionWrapper>
+                <IndustrySelection
+                  selectedProfessions={this.state.industries}
+                  onSelectionComplete={this.getIndustrySelection}
+                  limit={3}
+                />
+              </SettingsStyled.IndustrySelectionWrapper>
+            </RequestFlowPopup>
         }
         <SettingsStyled.HeadingWrapper>
           <SettingsStyled.SubHeading>
@@ -262,16 +292,23 @@ export default class ProfileSettings extends React.Component {
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Your industry</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
-              <MultiSelect
-                otherOptions={{
-                  clearable: false,
-                  arrowRenderer: null,
-                  valueComponent: selectProps => this.renderMultiValueItems(selectProps),
-                }}
-                dataValues={this.props.industryList}
-                value={this.state.industries.join(',')}
-                handleFieldChange={value => this.handleFieldChange('industries', value)}
-              />
+              <SettingsStyled.IndustryInput
+                onClick={() => this.setState({ industrySelection: true })}
+              >
+                {
+                  !this.state.industries.length ?
+                    <SettingsStyled.CustomPlaceholder>
+                      Select ...
+                    </SettingsStyled.CustomPlaceholder>
+                  :
+                    <SettingsStyled.IndustryEditButton>
+                      Edit
+                    </SettingsStyled.IndustryEditButton>
+                }
+                {
+                  this.renderIndustries()
+                }
+              </SettingsStyled.IndustryInput>
               <SettingsStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
                   ? 'Please enter a valid industry'

@@ -249,6 +249,35 @@ SettingsStyled.InputArea = styled.textarea`
     font-size:16px;
   }
 `;
+
+SettingsStyled.IndustryInput = SettingsStyled.InputArea.extend`
+  min-height: 80px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  height: auto;
+  padding-right: 40px;
+`.withComponent('span');
+
+SettingsStyled.IndustryEditButton = styled.span`
+  color: #FF6C58;
+  position: absolute;
+  cursor: pointer;
+  right: 9px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+`;
+
+SettingsStyled.IndustrySelectionWrapper = styled.div`
+  height: 100%;
+  overflow: auto;
+  @media(min-width: 768px) {
+    height: auto;
+  }
+`;
+
 SettingsStyled.PhoneNo = SettingsStyled.InputArea.extend`
   width: ${props => (props.lastDigit ? '64px' : '53px')};;
   height: 35px;
