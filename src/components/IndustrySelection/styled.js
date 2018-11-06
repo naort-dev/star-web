@@ -124,8 +124,11 @@ IndustryStyled.InnerCategoryWrapper = styled.div`
 `;
 
 IndustryStyled.ListContainer = styled.div`
-  padding: 15px 40px;
+  padding: 15px 3px;
   width: 100%;
+  @media(min-width: 768px) {
+    padding: 15px 40px;
+  }
 `;
 
 IndustryStyled.selectedItem = styled.li`
@@ -137,10 +140,10 @@ IndustryStyled.selectedItem = styled.li`
   border-radius: 20px;
   margin-right: 4px;
   font-size: 14px;
+  margin-top: 10px;
   background-color: #FF6C58;
   @media(min-width: 1025px) {
     padding: 10px;
-    margin-top: 10px;
   }
 `;
 

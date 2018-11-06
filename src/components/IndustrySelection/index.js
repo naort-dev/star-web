@@ -8,14 +8,33 @@ class IndustrySelectionComponent extends React.Component {
   state = {
     filterProfessions: [],
     categorySelected: null,
+    searchValue: '',
     selectedProfessions: this.props.selectedProfessions,
   }
 
-  static getDerivedStateFromProps(nextProps) {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let { filterProfessions } = prevState;
     if (!nextProps.professions.length) {
       nextProps.fetchAllProfessions();
     }
-    return ({ filterProfessions: nextProps.professions });
+    if (prevState.searchValue !== '') {
+      let newProfessions = [];
+      nextProps.professions.filter((profession) => {
+        const filteredChildProfessions = profession.child.filter(childProfession => childProfession.title.toLowerCase().indexOf(prevState.searchValue) > -1)
+        if (filteredChildProfessions.length) {
+          newProfessions = [...newProfessions, { ...profession, child: filteredChildProfessions }];
+        }
+      });
+      filterProfessions = newProfessions;
+    } else {
+      filterProfessions = nextProps.professions;
+    }
+    return ({ filterProfessions });
+  }
+
+  getSearchValue = (event) => {
+    const searchValue = event.target.value.toLowerCase();
+    this.setState({ searchValue });
   }
 
   updateSelectedCategory = (profession) => {
@@ -56,9 +75,9 @@ class IndustrySelectionComponent extends React.Component {
           onClick={() => this.removeSelectedProfession(profession.value)}
         />
       </IndustryStyled.selectedItem>
-    ))
-  }  
-  
+    ));
+  }
+
   renderSubProfessions = (profession) => {
     const { selectedProfessions } = this.state;
     const filteredProfessions = profession.child.filter((childProfession) => {
@@ -72,11 +91,11 @@ class IndustrySelectionComponent extends React.Component {
       >
         <IndustryStyled.ListItemContent>{childProfession.title}</IndustryStyled.ListItemContent>
       </IndustryStyled.ListItem>
-    ))
+    ));
   }
 
   render() {
-    const { categorySelected, selectedProfessions } = this.state;
+    const { categorySelected, selectedProfessions, searchValue } = this.state;
     return (
       <IndustryStyled>
         <IndustryStyled.HeaderWrapper>
@@ -91,6 +110,8 @@ class IndustrySelectionComponent extends React.Component {
             <IndustryStyled.SearchWrapper>
               <IndustryStyled.SearchField
                 placeholder="search for your industry"
+                value={searchValue}
+                onChange={(event) => this.getSearchValue(event)}
               />
             </IndustryStyled.SearchWrapper>
             <IndustryStyled.ListWrapper>
