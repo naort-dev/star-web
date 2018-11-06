@@ -113,12 +113,7 @@ export default class GroupProfile extends React.Component {
         <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
           <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" />
         </Link>
-        <p className="memberName">{item.first_name}</p>
-        <p className="jobDetails">
-          {
-            starProfessionsFormater(item.celebrity_profession)
-          }
-        </p>
+        <p className="memberName">{item.get_short_name}</p>
       </div>
     );
   };
@@ -207,6 +202,19 @@ export default class GroupProfile extends React.Component {
                 <p className={descriptionClass}>{this.props.groupDetails.group_details?this.props.groupDetails.group_details.description: ''}</p>
                 {descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p>:''}
               </div>
+              <div className="socialMediaIcons">
+                <GroupProfileStyled.ButtonWrapper>
+                  {(!this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) ?
+                    <GroupProfileStyled.getStartedButton onClick={this.groupFollowStatus}>
+                    Follow
+                    </GroupProfileStyled.getStartedButton>
+                    : <GroupProfileStyled.followingButton onClick={this.groupFollowStatus} followedText={followedText}>
+                      {followedText}
+                    </GroupProfileStyled.followingButton>}
+                </GroupProfileStyled.ButtonWrapper>
+                {this.props.groupDetails.social_links && 
+                  this.props.groupDetails.social_links.map( data => this.socialMedia(data)) }
+              </div>
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
@@ -220,19 +228,6 @@ export default class GroupProfile extends React.Component {
                   </div>
                 : ''}
               </div>
-            </div>
-            <div className="socialMediaIcons">
-              <GroupProfileStyled.ButtonWrapper>
-                {(!this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) ?
-                  <GroupProfileStyled.getStartedButton onClick={this.groupFollowStatus}>
-                  Follow
-                  </GroupProfileStyled.getStartedButton>
-                  : <GroupProfileStyled.followingButton onClick={this.groupFollowStatus} followedText={followedText}>
-                    {followedText}
-                  </GroupProfileStyled.followingButton>}
-              </GroupProfileStyled.ButtonWrapper>
-              {this.props.groupDetails.social_links && 
-                this.props.groupDetails.social_links.map( data => this.socialMedia(data)) }
             </div>
           </GroupProfileStyled.profileWrapper>
         </GroupProfileStyled.sectionWrapper>
