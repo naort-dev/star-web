@@ -138,7 +138,7 @@ IndustryStyled.selectedItem = styled.li`
   color: white;
   background-color: #FF6C58;
   border-radius: 20px;
-  margin-right: 4px;
+  margin-right: 12px;
   font-size: 14px;
   margin-top: 10px;
   background-color: #FF6C58;
@@ -158,6 +158,13 @@ IndustryStyled.CloseButton = styled.span`
   background: url('assets/images/close-icon-white.svg') no-repeat;
   background-position: center center;
   display: inline-block;
+`;
+
+IndustryStyled.LoaderWrapper = styled.div`
+  min-height: 300px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
 `;
 
 export default IndustryStyled;

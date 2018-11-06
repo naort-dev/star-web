@@ -1,7 +1,6 @@
 import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
-import MultiSelect from '../../MultiSelect';
 import { IndustrySelection } from '../../IndustrySelection';
 import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
@@ -102,7 +101,7 @@ export default class StarDetailsEntry extends React.Component {
   removeSelectedIndustry = (id, event) => {
     event.stopPropagation();
     let { industries } = this.state;
-    industries = industries.filter(profession => profession.value !== id);
+    industries = industries.filter(profession => profession.id !== id);
     this.setState({ industries });
   }
 
@@ -120,10 +119,10 @@ export default class StarDetailsEntry extends React.Component {
   renderIndustries = () => {
     const { industries } = this.state;
     return industries.map(profession => (
-      <GroupStyled.mutiSelectItemWrapper key={profession.value}>
-        {profession.label}
+      <GroupStyled.mutiSelectItemWrapper key={profession.id}>
+        {profession.title}
         <GroupStyled.OptionCloseButton
-          onClick={event => this.removeSelectedIndustry(profession.value, event)}
+          onClick={event => this.removeSelectedIndustry(profession.id, event)}
         />
       </GroupStyled.mutiSelectItemWrapper>
     ));

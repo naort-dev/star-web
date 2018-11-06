@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
-import { fetch } from '../../services/fetch';
 import GroupStyled from './styled';
 import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
 import StarDetailsEntry from './modules/starDetailsEntry';
@@ -16,6 +14,7 @@ import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */
 import { saveImage } from '../../store/shared/actions/imageViewer';
+import { fetchAllProfessions } from '../../store/shared/actions/getProfessions';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
@@ -37,6 +36,10 @@ class starRegistrationComponent extends React.Component {
       fileName: null,
       image: null,
     },
+  }
+
+  componentWillMount() {
+    this.props.fetchAllProfessions();
   }
 
   setProfileImage = (fileName, image) => {
@@ -118,7 +121,7 @@ class starRegistrationComponent extends React.Component {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
       ...celebrityDetails,
-      profession: celebrityDetails.profession.map(profession => profession.value.toString()),
+      profession: celebrityDetails.profession.map(profession => profession.id.toString()),
     }
     const finalUserDetails = {
       celebrity_details: {},
@@ -220,6 +223,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
   resetUserDetails: () => dispatch(resetUserDetails()),
   resetProfilePhoto: () => dispatch(resetProfilePhoto()),
   onStartRecording: () => dispatch(startRecording()),
