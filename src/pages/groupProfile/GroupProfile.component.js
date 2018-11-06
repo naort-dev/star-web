@@ -219,22 +219,23 @@ export default class GroupProfile extends React.Component {
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
-                  
-                  <div className="memberScroll">
-                    <Scrollbars>
-                      <HorizontalScrollList
-                        noDataText="No members available"
-                        memberList
-                        renderFunction={this.renderMemberDetail}
-                        dataList={memberListArray}
-                        limit={this.props.memberListDetails.limit}
-                        totalCount={this.props.memberListDetails.count}
-                        offset={this.props.memberListDetails.offset}
-                        loading={this.props.memberListDetails.loading}
-                        fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
-                      />
-                    </Scrollbars>
-                  </div>
+                  { memberListArray.length > 0 ?
+                    <div className="memberScroll">
+                      <Scrollbars>
+                        <HorizontalScrollList
+                          noDataText="No members available"
+                          memberList
+                          renderFunction={this.renderMemberDetail}
+                          dataList={memberListArray}
+                          limit={this.props.memberListDetails.limit}
+                          totalCount={this.props.memberListDetails.count}
+                          offset={this.props.memberListDetails.offset}
+                          loading={this.props.memberListDetails.loading}
+                          fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                        />
+                      </Scrollbars>
+                    </div>
+                  : <p>No members available</p>}
                   <div className="memberlistWeb">
                     {memberListArray.length > 0 ?
                       memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) 
