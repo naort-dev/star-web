@@ -8,9 +8,6 @@ import ImageRender from '../ImageRender';
 import VideoPlayer from '../VideoPlayer';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Popup from '../Popup';
-import RequestDetails from '../RequestDetails';
-import EarningsList from '../EarningsList';
-import ReferralList from '../ReferralList';
 import Loader from '../Loader';
 import VideoPopup from '../VideoPopup';
 
@@ -90,19 +87,15 @@ export default class HorizontalScrollList extends React.Component {
     }
   }
 
-  infiniteScrollList = () => {
-    return (
-
-      <InfiniteScroll onReachRight={this.fetchMoreData} horizontal>
-        <ListStyled.listWrapper videos={this.props.videos}>
-          {this.renderList()}
-          {
-            this.props.loading && <li><Loader /></li>
-          }
-        </ListStyled.listWrapper>
-      </InfiniteScroll>
-    );
-  }
+  infiniteScrollList = () => (
+    <InfiniteScroll onReachRight={this.fetchMoreData} horizontal>
+      <ListStyled.listWrapper videos={this.props.videos}>
+        {this.renderList()}
+        {!this.props.dataList.length && !this.props.loading ? <ListStyled.NoDataText>{this.props.noDataText}</ListStyled.NoDataText> : null}
+        {this.props.loading && <li><Loader /></li>}
+      </ListStyled.listWrapper>
+    </InfiniteScroll>
+  );
 
   enableVideoPopup = (index) => {
     this.setState({ videoActive: true, selectedVideoIndex: index });
@@ -149,48 +142,9 @@ export default class HorizontalScrollList extends React.Component {
         </ListStyled.listVideos>
       ));
     } else if (this.props.memberList) {
-      return this.props.dataList.map((item) => {
-        return this.props.renderFunction(item);
+      return this.props.dataList.map((item, index) => {
+        return this.props.renderFunction(item, index);
       });
-    } else if (this.props.requestDetails) {
-      return this.props.dataList.map((item, index) => (
-        <ListStyled.listRequests videos={this.props.videos} key={index}>
-          <RequestDetails
-            starMode={this.props.starMode}
-            cover={this.findRequestVideoThumbnail(item.request_video)}
-            celebId={item.celebrity_id}
-            orderId={item.order_details ? item.order_details.order : ''}
-            videoId={item.booking_id}
-            profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-            fanProfile={item.fan_photo && item.fan_photo.thumbnail_url}
-            starName={item.celebrity}
-            fanName={item.fan}
-            orderDetails={item}
-            details={item.booking_title}
-            requestStatus={item.request_status}
-            requestVideo={item.request_video}
-            requestType={item.request_type}
-            createdDate={item.created_date}
-            selectItem={type => this.props.selectItem(item, type)}
-          />
-        </ListStyled.listRequests>
-      ));
-    } else if (this.props.earnings) {
-      return this.props.dataList.map((item, index) => (
-        <EarningsList
-          item={item}
-          index={index}
-          key={item.created_date}
-        />
-      ));
-    } else if (this.props.referralList) {
-      return this.props.dataList.map((item, index) => (
-        <ReferralList
-          data={item}
-          index={index}
-          key={index}
-        />
-      ));
     }
     return this.props.dataList.map((item, index) => {
       let coverPhoto;

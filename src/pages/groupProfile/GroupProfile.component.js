@@ -53,6 +53,10 @@ export default class GroupProfile extends React.Component {
     this.props.resetMemberDetails();
   }
 
+  activateMenu = () => {
+    this.setState({ menuActive: !this.state.menuActive });
+  }
+
   groupFollowStatus = () => {
     this.setState({
       followFlag: true,
@@ -109,9 +113,9 @@ export default class GroupProfile extends React.Component {
     );
   };
 
-  renderMemberDetail = (item) => {    
+  renderMemberDetail = (item, index) => {    
     return (
-      <div className="memberDetails">
+      <div className="memberDetails" key={index}>
         <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
           <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" />
         </Link>
@@ -155,7 +159,6 @@ export default class GroupProfile extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
-          onClick={this.showImagePopup}
         />
         {
           this.state.memberlistModal ?
@@ -219,26 +222,24 @@ export default class GroupProfile extends React.Component {
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
-                  { memberListArray.length > 0 ?
-                    <div className="memberScroll">
-                      <Scrollbars>
-                        <HorizontalScrollList
-                          noDataText="No members available"
-                          memberList
-                          renderFunction={this.renderMemberDetail}
-                          dataList={memberListArray}
-                          limit={this.props.memberListDetails.limit}
-                          totalCount={this.props.memberListDetails.count}
-                          offset={this.props.memberListDetails.offset}
-                          loading={this.props.memberListDetails.loading}
-                          fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
-                        />
-                      </Scrollbars>
-                    </div>
-                  : <p>No members available</p>}
+                  <div className="memberScroll">
+                    <Scrollbars>
+                      <HorizontalScrollList
+                        noDataText="No members available"
+                        memberList
+                        renderFunction={this.renderMemberDetail}
+                        dataList={memberListArray}
+                        limit={this.props.memberListDetails.limit}
+                        totalCount={this.props.memberListDetails.count}
+                        offset={this.props.memberListDetails.offset}
+                        loading={this.props.memberListDetails.loading}
+                        fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                      />
+                    </Scrollbars>
+                  </div>
                   <div className="memberlistWeb">
                     {memberListArray.length > 0 ?
-                      memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) 
+                      memberListArray.slice(0, 5).map((item, index) => this.renderMemberDetail(item, index))
                       : <p>No members available</p>}
                   </div>
                 </div>
