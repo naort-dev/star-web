@@ -1,35 +1,23 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Scrollbars from 'react-custom-scrollbars';
-import { fetch } from '../../../../services/fetch';
 import AccountSettings from './modules/AccountSettings';
 import ShareUser from '../ShareUser';
 import ProfileSettings from './modules/ProfileSettings';
 import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
 import Popup from '../../../../components/Popup';
+import { fetchAllProfessions } from '../../../../store/shared/actions/getProfessions';
 import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
 import SettingsStyled from '../../styled';
 
 class StarSettings extends React.Component {
   state = {
     selectedTab: 'Account',
-    industryList: [],
     popupMessage: '',
   }
 
   componentWillMount() {
-    fetch('user/professions/').then((response) => {
-      let dropDownList = [];
-      response.data.data.professions.map((profObj) => {
-        dropDownList.push({ value: profObj.id, label: profObj.title });
-        profObj.child.map((childObj) => {
-          dropDownList.push({ value: childObj.id, label: childObj.title });
-        });
-      });
-      return dropDownList;
-    })
-      .then(industryItem => this.setState({ industryList: industryItem }))
+    this.props.fetchAllProfessions();
   }
 
   switchTab = (item) => {
@@ -96,7 +84,6 @@ class StarSettings extends React.Component {
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
             <ProfileSettings
               fetchUserDetails={this.props.fetchUserDetails}
-              industryList={this.state.industryList}
               userDetails={this.props.userDetails}
               celebDetails={this.props.celebrityDetails}
               fetchUrl={this.props.fetchURL}
@@ -124,6 +111,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchURL: () => dispatch(fetchURL()),
+  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
   checkStripe: () => dispatch(checkStripe()),
 });
 

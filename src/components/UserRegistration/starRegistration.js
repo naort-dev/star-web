@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Scrollbars } from 'react-custom-scrollbars';
 import axios from 'axios';
-import { fetch } from '../../services/fetch';
 import GroupStyled from './styled';
 import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
 import StarDetailsEntry from './modules/starDetailsEntry';
@@ -16,6 +14,7 @@ import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */
 import { saveImage } from '../../store/shared/actions/imageViewer';
+import { fetchAllProfessions } from '../../store/shared/actions/getProfessions';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
@@ -27,7 +26,6 @@ import { logOutUser } from '../../store/shared/actions/login';
 class starRegistrationComponent extends React.Component {
   state = {
     celebrityDetails: null,
-    industryList: [],
     videoUrl: null,
     professionsArray: [],
     featuredImage: {
@@ -41,17 +39,7 @@ class starRegistrationComponent extends React.Component {
   }
 
   componentWillMount() {
-    fetch('user/professions/').then((response) => {
-      let dropDownList = [];
-      response.data.data.professions.map((profObj) => {
-        dropDownList.push({ value: profObj.id, label: profObj.title });
-        profObj.child.map((childObj) => {
-          dropDownList.push({ value: childObj.id, label: childObj.title });
-        });
-      });
-      return dropDownList;
-    })
-      .then(industryItem => this.setState({ industryList: industryItem }))
+    this.props.fetchAllProfessions();
   }
 
   setProfileImage = (fileName, image) => {
@@ -130,17 +118,18 @@ class starRegistrationComponent extends React.Component {
   }
 
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
-    const selectedProfessions = celebrityDetails.profession;
-    const professionsArray = this.state.industryList.filter((profession) => {
-      return selectedProfessions.indexOf(profession.value.toString()) > -1;
-    });
+    const professionsArray = celebrityDetails.profession;
+    const newCelebrityDetails = {
+      ...celebrityDetails,
+      profession: celebrityDetails.profession.map(profession => profession.id.toString()),
+    }
     const finalUserDetails = {
       celebrity_details: {},
       user_details: userDetails,
     }
     updateSocialLinks(socialLinks);
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
-    this.setState({ celebrityDetails, professionsArray });
+    this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
   }
 
@@ -158,7 +147,6 @@ class starRegistrationComponent extends React.Component {
             <GroupStyled.ContentWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
                 <StarDetailsEntry
-                  industryList={this.state.industryList}
                   submitAccountDetails={this.submitAccountDetails}
                 />
               </GroupStyled.StepWrapper>
@@ -235,6 +223,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
   resetUserDetails: () => dispatch(resetUserDetails()),
   resetProfilePhoto: () => dispatch(resetProfilePhoto()),
   onStartRecording: () => dispatch(startRecording()),
