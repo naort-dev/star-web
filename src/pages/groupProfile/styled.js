@@ -2,11 +2,9 @@ import styled from 'styled-components';
 
 const GroupProfileStyled = styled.div`
   margin-top: 60px;
-  height: calc(100vh - 60px);
-  background-color: #F8F8F8;
+  background-color: #FFF;
   @media(min-width: 1920px) {
     margin-top: 72px;
-    height: calc(100vh - 72px);
   }
 `;
 
@@ -18,20 +16,17 @@ const profilePicture = styled.img`
   border: 8px solid #fff;
   position: absolute;
   top: 0;
-  right: 0;
-  margin-top: -110px;
+  margin-top: -120px;
   @media(max-width: 1024px) {
     width: 170px;
     height: 170px;
-    margin-top: -80px;
+    margin-top: -85px;
   }
   @media(max-width: 767px) {
-    width: 70px;
-    height: 70px;
-    right: calc( 50% - 35px);
-    top: -20px;
+    width: 100px;
+    height: 100px;
     border: 2px solid #fff;
-    margin-top: -15px;
+    margin-top: -50px;
   }
 `;
 
@@ -63,84 +58,72 @@ GroupProfileStyled.sectionWrapper = styled.div`
   .image-gallery-slides, .image-gallery-slides img {
     min-height: 130px;
     max-height: 430px;
+    object-fit: cover;
   }
 `;
 
 GroupProfileStyled.profileWrapper = styled.div`
-  display: flex;
-  justify-content: space-around;
-  background-color: #fff;
-  @media(max-width: 1200px) and (min-width: 768px) {
-    display: block;
-  }
-  @media(max-width: 767px) {
-    flex-direction: column;
-  }
+  max-width: 1200px;
+  text-align: center;
+  margin: 0 auto;
   .profileImageContainer {
     position: relative;
-    flex-basis: 600px;
-    @media(max-width: 1200px) and (min-width: 768px) {
-      width: 25%;
-      display: inline-block;
-      vertical-align: top;
-    }
-    @media(max-width: 767px) {
-      flex-basis: 30px;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .profileDetails {
-    padding: 20px 0 20px 50px;
-    flex-basis: 100%;
+    padding: 20px 50px;
     font-family: 'Avenir-Regular';
-    @media(max-width: 1200px) and (min-width: 768px) {
-      width: 50%;
-      padding: 10px;
-      display: inline-block;
-      vertical-align: top;
-    }
     @media(max-width: 1024px) {
       padding-left: 10px;
     }
     @media(max-width: 767px) {
       padding: 20px;
     }
-    h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      font-family: 'Avenir-Regular';
-      @media(max-width: 1920px) {
-        font-size: 35px;
+    .groupDetailsContainer {
+      margin-top: 120px;
+      @media(max-width: 767px) {
+        margin-top: 50px;
       }
-      @media(max-width: 1024px) {
-        margin-bottom: 10px;
+      h1 {
+        font-size: 48px;
+        margin-bottom: 20px;
+        font-family: 'Avenir-Regular';
+        @media(max-width: 1920px) {
+          font-size: 35px;
+        }
+        @media(max-width: 1024px) {
+          margin-bottom: 10px;
+        }
+        @media(max-width:767px) {
+          font-size: 28px;
+        }
       }
-      @media(max-width:767px) {
-        font-size: 28px;
-      }
-    }
-    .groupDetailsContainer p {
-      font-size: 23px;
-      line-height: 30px;
-      &.groupDescription {
-        height: 115px;
-        overflow: hidden;
-      }
-      &.groupFullDescription {
-        height: auto;
-      }
-      &.readMore {
-        margin-top:  10px;
-        color: #ccc;
-        cursor: pointer;
-      }
-      @media(min-width: 1025px) and (max-width: 1920px) {
-        font-size: 20px;
-      }
-      @media(max-width: 1024px) {
-        font-size: 20px;
-      }
-      @media(max-width:767px) {
-        font-size: 16px;
+      p {
+        font-size: 23px;
+        line-height: 30px;
+        &.groupDescription {
+          height: 115px;
+          overflow: hidden;
+        }
+        &.groupFullDescription {
+          height: auto;
+        }
+        &.readMore {
+          margin-top:  10px;
+          color: #ccc;
+          cursor: pointer;
+        }
+        @media(min-width: 1025px) and (max-width: 1920px) {
+          font-size: 20px;
+        }
+        @media(max-width: 1024px) {
+          font-size: 20px;
+        }
+        @media(max-width:767px) {
+          font-size: 16px;
+        }
       }
     }
     .memberList {
@@ -150,9 +133,8 @@ GroupProfileStyled.profileWrapper = styled.div`
       }
       h2 {
         font-size: 40px;
-        font-weight: 500;
         margin-bottom: 5px;
-        color: #717171;
+        color: #333;
         @media(max-width: 1920px) {
           font-size: 30px;
           font-family: 'Avenir-Regular';
@@ -162,15 +144,11 @@ GroupProfileStyled.profileWrapper = styled.div`
         }
       }
       .memberListContainer {
-        border-bottom: 1px solid #ddd;
-        @media(min-width: 1025px) {
-          display: flex;
-          overflow: auto;
-        }
-        @media(max-width: 1024px) {
-          display: flex;
-          overflow: auto;
-        }
+        max-width: 900px;
+        margin: 0 auto;
+        justify-content: center;
+        display: flex;
+        overflow: auto;
         &>p {
           margin: 10px;
         }
@@ -178,7 +156,7 @@ GroupProfileStyled.profileWrapper = styled.div`
           width: 17%;
           height: 100%;
           max-height: 210px;
-          font-size: 18px;
+          font-size: 20px;
           line-height: 25px;
           margin: 20px 3% 20px 0;
           display: inline-block;
@@ -199,15 +177,7 @@ GroupProfileStyled.profileWrapper = styled.div`
             margin-top: 5px;
             color: #616161;
             font-family: 'Avenir-Medium';
-          }
-          .jobDetails {
-            color: #9e9e9e;
-            word-break: break-all;
-            font-size: 13px;
-            line-height: 16px;
-            @media(min-width: 1920px) {
-              font-size: 16px;
-            }
+            word-wrap: break-word;
           }
         }
       }
@@ -217,40 +187,40 @@ GroupProfileStyled.profileWrapper = styled.div`
         span {
           font-size: 20px;
           cursor: pointer;
+          color: #9e9e9e;
+          font-family: Avenir-Medium;
+          text-decoration: underline;
         }
       }
     }
   }
   .socialMediaIcons {
     text-align: center;
-    flex-basis: 700px;
     @media(max-width: 1200px) and (min-width: 768px) {
-      width: 25%;
       padding-right: 10px;
       display: inline-block;
       vertical-align: top;
     }
     @media(max-width: 767px) {
-      flex-basis: 30px;
       margin-bottom: 20px;
     }
     a {
       cursor: pointer;
-      width: 24px;
-      height: 24px;
-      margin: 10px;
+      width: 40px;
+      height: 40px;
+      margin: 30px 15px 0;
       display: inline-block;
       &.facebook_url {
-        background-image: url('assets/images/fb-icon.svg')
+        background-image: url('assets/images/facebook.png')
       }
       &.twitter_url {
-        background-image: url('assets/images/twitter-icon.svg')
+        background-image: url('assets/images/twitter.png')
       }
       &.youtube_url {
-        background-image: url('assets/images/youtube-icon.svg')
+        background-image: url('assets/images/youtube.png')
       }
       &.instagram_url {
-        background-image: url('assets/images/insta-icon.svg')
+        background-image: url('assets/images/instagram.png')
       }
     }
   }
@@ -274,7 +244,7 @@ GroupProfileStyled.getStartedButton = styled.div`
   font-family: 'Avenir-Medium';
   outline:none;
   cursor: pointer;
-  border-radius:5px;
+  border-radius: 35px;
   border: 2px solid #FF6C58;
   margin-top:3%;
   -webkit-appearance: none;
@@ -286,13 +256,12 @@ GroupProfileStyled.getStartedButton = styled.div`
     font-size:20px;
   }
   @media(max-width: 1024px) {
-    min-width: 100%;
-    padding: 15px;
     width: 100%;
   }
   @media(max-width: 767px) {
     max-width: 200px;
     min-width: 200px;
+    padding: 10px;
   }
 `;
 GroupProfileStyled.followingButton = styled.div `
@@ -308,7 +277,7 @@ GroupProfileStyled.followingButton = styled.div `
   font-family: 'Avenir-Medium';
   outline:none;
   cursor: ${props => (props.followedText === 'Requested' ? 'not-allowed' : 'default')};
-  border-radius:5px;
+  border-radius: 35px;
   border: 2px solid ${props => (props.followedText === 'Requested' ? '#dadada' : '#FF6C58')};
   margin-top:3%;
   -webkit-appearance: none;
@@ -330,7 +299,6 @@ GroupProfileStyled.followingButton = styled.div `
     font-size:20px;
   }
   @media(max-width: 1024px) {
-    min-width: 100%;
     padding: 15px;
     width: 100%;
   }
