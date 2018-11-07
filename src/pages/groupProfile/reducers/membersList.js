@@ -42,7 +42,7 @@ export default (state = { ...initalState }, action) => {
     case MEMBERS_LIST_DETAILS.reset:
       return {
         ...state,
-        memberList: {},
+        memberList: [],
       };
 
     default:
