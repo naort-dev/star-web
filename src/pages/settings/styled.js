@@ -264,10 +264,8 @@ SettingsStyled.IndustryEditButton = styled.span`
   position: absolute;
   cursor: pointer;
   right: 9px;
-  top: 0;
+  top: 7px;
   bottom: 0;
-  display: flex;
-  align-items: center;
 `;
 
 SettingsStyled.IndustrySelectionWrapper = styled.div`

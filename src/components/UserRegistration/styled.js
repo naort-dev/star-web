@@ -27,8 +27,8 @@ GroupStyled.StepWrapper = styled.div`
 `;
 
 GroupStyled.ContentWrapper = styled.div`
-  padding: 0 10px;
   height: 96%;
+  padding: 0 10px;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -233,10 +233,8 @@ GroupStyled.IndustryEditButton = styled.span`
   position: absolute;
   cursor: pointer;
   right: 9px;
-  top: 0;
+  top: 7px;
   bottom: 0;
-  display: flex;
-  align-items: center;
 `;
 
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`

@@ -145,10 +145,10 @@ ReferralStyled.SupportLink = styled.span`
 
 ReferralStyled.ScrollView = styled.div`
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  overflow: auto;
+  @media(min-width: 768px) {
+    height: auto;
+  }
 `;
 
 export default ReferralStyled;
