@@ -3,6 +3,7 @@ import ColumnLayout from '../../components/ColumnLayout';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
+import SubmitView from '../../components/SubmitView';
 import OrderDetails from '../../components/OrderDetails';
 import VideoRecorder from './components/VideoRecorder';
 import ShareView from '../../components/ShareView';
@@ -48,6 +49,7 @@ export default class Requests extends React.Component {
       ];
     } else if (!prevState.innerLinks.length) {
       innerLinks = [
+        ...innerLinks,
         { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       ];
@@ -66,7 +68,40 @@ export default class Requests extends React.Component {
       case 'share':
         return <ShareView iconSize={50} title={orderDetails.booking_title} shareUrl={`https://${finalVideo.video_url}`} />;
       case 'respond':
-        return <VideoRecorder orderDetails={this.state.orderDetails} {...this.props} />
+        return <VideoRecorder orderDetails={this.state.orderDetails} {...this.props} />;
+      case 'report':
+        return (
+          <SubmitView
+            heading="Report abuse"
+            onSubmit={data => this.props.reportAbuse({
+              celebrity: orderDetails.celebrity_id,
+              abuse_comment: data.comment,
+            })}
+            closePopup={this.closePopup}
+          />
+        );
+      case 'contact':
+        return (
+          <SubmitView
+            heading="Contact support"
+            onSubmit={data => this.props.contactSupport({ comments: data.comment })}
+            closePopup={this.closePopup}
+          />
+        );
+      case 'rate':
+        return (
+          <SubmitView
+            heading="Rate video"
+            onSubmit={data => this.props.rateCelebrity({
+              celebrity: orderDetails.celebrity_id,
+              fan_rate: data.rating.toString(),
+              starsona: orderDetails.id,
+              comments: data.comment,
+            })}
+            closePopup={this.closePopup}
+            onRatingSuccess={this.closePopup}
+          />
+        )
       default: return null;
     }
   }
@@ -154,7 +189,12 @@ export default class Requests extends React.Component {
       this.editRequest(data);
     } else if (actionType === 'cancel') {
       console.log('cancel');
-    } else if (actionType === 'share' || actionType === 'respond') {
+    } else if (actionType === 'share'
+      || actionType === 'respond'
+      || actionType === 'report'
+      || actionType === 'contact'
+      || actionType === 'rate'
+    ) {
       showActionPopup = true;
     }
     requestAction = actionType;
@@ -260,7 +300,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    console.log(this.state.orderDetails);
+    console.log(this.state.requestAction);
     return (
       <div>
         <ColumnLayout
@@ -285,29 +325,6 @@ export default class Requests extends React.Component {
               { this.getPopupContent(this.state.requestAction) }
             </RequestFlowPopup>
         }
-        {/* {
-          Object.keys(this.state.orderDetails).length ?
-            <OrderDetails
-              {...this.props}
-              recordMode={this.state.recordMode}
-              orderDetails={this.state.orderDetails}
-              requestStatus={requestStatus}
-              requestStatusId={requestStatusId}
-              orderId={orderId}
-              requestType={requestType}
-              hideRequest={this.hideRequest}
-              requestVideo={requestVideo}
-              createdDate={createdDate}
-              price={price}
-              isPrivate={isPrivate}
-              relationShip={relationShip}
-              occasionDate={occasionDate}
-              rateCelebrity={this.props.rateCelebrity}
-              contactSupport={this.props.contactSupport}
-              reportAbuse={this.props.reportAbuse}
-            />
-          : null
-        } */}
       </div>
     );
   }

@@ -243,6 +243,7 @@ VideoRenderDiv.HorizontalHamburger = styled.span`
 VideoRenderDiv.MoreSettingsList = styled.ul`
   position: absolute;
   background: #fff;
+  user-select: none;
   padding: 5px 0;
   top: calc(100% + 5px);
   box-shadow: 0px 4px 8px 0px #cccccc

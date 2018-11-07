@@ -246,9 +246,9 @@ export default class RequestDetails extends React.Component {
     const { starMode, requestStatus } = this.props;
     return (
       <React.Fragment>
-        <VideoRenderDiv.MoreSettingsListItem>Contact support</VideoRenderDiv.MoreSettingsListItem>
-        <VideoRenderDiv.MoreSettingsListItem>Report abuse</VideoRenderDiv.MoreSettingsListItem>
-        {requestStatus === 6 && <VideoRenderDiv.MoreSettingsListItem>Rate</VideoRenderDiv.MoreSettingsListItem>}
+        <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('contact')}>Contact support</VideoRenderDiv.MoreSettingsListItem>
+        <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('report')}>Report abuse</VideoRenderDiv.MoreSettingsListItem>
+        {requestStatus === 6 && !starMode && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
         {/* <VideoRenderDiv.MoreSettingsListItem>Download Video</VideoRenderDiv.MoreSettingsListItem> */}
       </React.Fragment>
     )
@@ -271,11 +271,11 @@ export default class RequestDetails extends React.Component {
     }
   }
   renderSecondaryControlButton = () => {
-    const { starMode, requestStatus } = this.props;
-    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1 && this.props.orderDetails.public_request;
+    const { starMode, requestStatus, orderDetails } = this.props;
+    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1 && orderDetails.public_request;
     const fanVideoShare = !starMode && completedStatusList.indexOf(requestStatus) > -1;
     const canVideoShare = starVideoShare || fanVideoShare;
-    const canEdit = !starMode && this.props.orderDetails.editable;
+    const canEdit = !starMode && orderDetails.editable;
     if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
       return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem('respond')}>Respond</VideoRenderDiv.ControlButton>;
     } else if (canVideoShare) {
@@ -296,42 +296,40 @@ export default class RequestDetails extends React.Component {
   }
 
   renderOrderDetails = () => {
-    const { props } = this;
-    const price = props.orderDetails.order_details ? props.orderDetails.order_details.amount: 0;
-    const isPrivate = props.orderDetails.public_request ? 'No' : 'Yes';
+    const { requestStatus, orderDetails, starMode } = this.props;
+    const price = orderDetails.order_details ? orderDetails.order_details.amount: 0;
+    const isPrivate = orderDetails.public_request ? 'No' : 'Yes';
     return (
       <React.Fragment>
         {
-          !props.starMode &&
-            <OrderDetailsItem title="Requested" value={moment(props.orderDetails.created_date).format('LL')} />
+          !starMode &&
+            <OrderDetailsItem title="Requested" value={moment(orderDetails.created_date).format('LL')} />
         }
         {
-          this.getEventDetails(props.orderDetails.request_type)
+          this.getEventDetails(orderDetails.request_type)
         }
         {/* Show Reason if request is cancelled */}
         {
-          props.requestStatusId === 5 ?
-            <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
+          requestStatus === 5 ?
+            <OrderDetailsItem title="Decline Reason" value={orderDetails.comment} />
             : null
         }
         {
-          !props.starMode &&
+          !starMode &&
             <OrderDetailsItem title="Booking Price" value={`$${price}`} />
         }
         {
-          !props.starMode &&
+          !starMode &&
             <OrderDetailsItem title="Make this Video private" value={isPrivate} />
         }
-        {props.requestStatusId === 6 &&
-          <VideoRenderDiv.DetailsItem>
-            <VideoRenderDiv.DetailsTitle>Rating:</VideoRenderDiv.DetailsTitle>
-            <VideoRenderDiv.DetailsValue>
-              <StarRating rating={props.orderDetails.fan_rating ? props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
-            </VideoRenderDiv.DetailsValue>
-          </VideoRenderDiv.DetailsItem>
+        {requestStatus === 6 &&
+          <OrderDetailsItem
+            title="Rating"
+            value={<StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />}
+          />
         }
       </React.Fragment>
-    )
+    );
   }
 
   render() {
