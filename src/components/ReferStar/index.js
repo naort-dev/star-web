@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
-import { Scrollbars } from 'react-custom-scrollbars';
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -231,20 +229,18 @@ class ReferStar extends React.Component {
           smallPopup
         >
           <ReferralStyled.ScrollView>
-            <Scrollbars>
-              <ReferralStyled.Banner>{this.renderBanner()}</ReferralStyled.Banner>
-              <ReferralStyled id="referral-wrapper">
-                <ReferralStyled.Heading>
-                  Refer a Star
-                </ReferralStyled.Heading>
-                {
-                props.loading ?
-                  <Loader />
-                :
-                  this.renderReferralDetails(props)
-              }
-              </ReferralStyled>
-            </Scrollbars>
+            <ReferralStyled.Banner>{this.renderBanner()}</ReferralStyled.Banner>
+            <ReferralStyled id="referral-wrapper">
+              <ReferralStyled.Heading>
+                Refer a Star
+              </ReferralStyled.Heading>
+              {
+              props.loading ?
+                <Loader />
+              :
+                this.renderReferralDetails(props)
+            }
+            </ReferralStyled>
           </ReferralStyled.ScrollView>
         </RequestFlowPopup>
     );
