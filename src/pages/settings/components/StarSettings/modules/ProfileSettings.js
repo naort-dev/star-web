@@ -226,10 +226,12 @@ export default class ProfileSettings extends React.Component {
             <RequestFlowPopup
               dotsCount={0}
               closePopUp={this.closeIndustrySelection}
+              modalView
               smallPopup
             >
               <SettingsStyled.IndustrySelectionWrapper>
                 <IndustrySelection
+                  onClose={() => this.setState({ industrySelection: false })}
                   selectedProfessions={this.state.industries}
                   onSelectionComplete={this.getIndustrySelection}
                   limit={3}

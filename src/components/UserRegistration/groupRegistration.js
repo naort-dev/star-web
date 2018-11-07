@@ -116,7 +116,7 @@ class GroupRegistrationComponent extends React.Component {
           </GroupStyled.StepWrapper>
           {
             this.props.currentStep === 5 && (
-              <React.Fragment>
+              <GroupStyled.DetailsWrapper>
                 <GroupStyled.HeadingWrapper>
                   <GroupStyled.SubHeading>
                     Your group profile has been created!
@@ -144,7 +144,7 @@ class GroupRegistrationComponent extends React.Component {
                     Done
                   </GroupStyled.ControlButton>
                 </GroupStyled.DoneButtonWrapper>
-              </React.Fragment>
+              </GroupStyled.DetailsWrapper>
             )
           }
         </GroupStyled.ContentWrapper>

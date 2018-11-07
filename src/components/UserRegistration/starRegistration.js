@@ -171,19 +171,21 @@ class starRegistrationComponent extends React.Component {
               </GroupStyled.StepWrapper>
               {
                 this.props.currentStep === 5 &&
-                  <QAVideoRecorder
-                    {...this.props}
-                    src={this.state.videoUrl}
-                    responseMode
-                    recordPlaceHolder="Start recording"
-                    recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
-                    duration={recorder.signUpTimeOut}
-                    onSubmit={this.getVideo}
-                  />
+                  <GroupStyled.VideoRecorderWrapper>
+                    <QAVideoRecorder
+                      {...this.props}
+                      src={this.state.videoUrl}
+                      responseMode
+                      recordPlaceHolder="Start recording"
+                      recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
+                      duration={recorder.signUpTimeOut}
+                      onSubmit={this.getVideo}
+                    />
+                  </GroupStyled.VideoRecorderWrapper>
               }
               {
                 this.props.currentStep === 6 && (
-                  <React.Fragment>
+                  <GroupStyled.DetailsWrapper>
                     <GroupStyled.HeadingWrapper>
                       <GroupStyled.SubHeading>
                         Your Star profile has been created!
@@ -199,7 +201,7 @@ class starRegistrationComponent extends React.Component {
                         Done
                       </GroupStyled.ControlButton>
                     </GroupStyled.DoneButtonWrapper>
-                  </React.Fragment>
+                  </GroupStyled.DetailsWrapper>
                 )
               }
             </GroupStyled.ContentWrapper>
