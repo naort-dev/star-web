@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Header from '../../components/Header';
 import ScrollList from '../../components/ScrollList';
+import HorizontalScrollList from '../../components/HorizontalScrollList';
 import ModalPopup from '../../components/RequestFlowPopup';
 import GroupProfileStyled from './styled';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
@@ -49,6 +51,10 @@ export default class GroupProfile extends React.Component {
   componentWillUnmount() {
     this.props.resetGroupDetails();
     this.props.resetMemberDetails();
+  }
+
+  activateMenu = () => {
+    this.setState({ menuActive: !this.state.menuActive });
   }
 
   groupFollowStatus = () => {
@@ -107,9 +113,9 @@ export default class GroupProfile extends React.Component {
     );
   };
 
-  renderMemberDetail = (item) => {    
+  renderMemberDetail = (item, index) => {    
     return (
-      <div className="memberDetails">
+      <div className="memberDetails" key={index}>
         <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
           <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" />
         </Link>
@@ -153,7 +159,6 @@ export default class GroupProfile extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
-          onClick={this.showImagePopup}
         />
         {
           this.state.memberlistModal ?
@@ -164,7 +169,6 @@ export default class GroupProfile extends React.Component {
             >
               <GroupProfileStyled.memberListPopup>
                 <div className="popupHeading">Our members</div>
-                {/* { memberListArray.map(data => this.renderItem(data)) } */}
                 <div className="memberPopup">
                   <ScrollList
                     noDataText="No members"
@@ -218,9 +222,26 @@ export default class GroupProfile extends React.Component {
               <div className="memberList">
                 <h2>Our members</h2>
                 <div className="memberListContainer">
-                  {memberListArray.length > 0 ?
-                    memberListArray.slice(0, 5).map(item => this.renderMemberDetail(item)) 
-                    : <p>No members available</p>}
+                  <div className="memberScroll">
+                    <Scrollbars>
+                      <HorizontalScrollList
+                        noDataText="No members available"
+                        memberList
+                        renderFunction={this.renderMemberDetail}
+                        dataList={memberListArray}
+                        limit={this.props.memberListDetails.limit}
+                        totalCount={this.props.memberListDetails.count}
+                        offset={this.props.memberListDetails.offset}
+                        loading={this.props.memberListDetails.loading}
+                        fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                      />
+                    </Scrollbars>
+                  </div>
+                  <div className="memberlistWeb">
+                    {memberListArray.length > 0 ?
+                      memberListArray.slice(0, 5).map((item, index) => this.renderMemberDetail(item, index))
+                      : <p>No members available</p>}
+                  </div>
                 </div>
                 {this.props.memberCount > 5 ?
                   <div className="seeMemberList">

@@ -152,9 +152,33 @@ GroupProfileStyled.profileWrapper = styled.div`
         &>p {
           margin: 10px;
         }
+        .memberScroll {
+          display: none;
+          min-height: 285px;
+          @media(max-width: 1024px) {
+            display: flex;
+            overflow: auto;
+            width: 100%;
+          }
+          @media(max-width: 767px) {
+            min-height: 200px;
+          }
+          ul li {
+            margin-top: 50px;
+            @media(max-width: 767px) {
+              margin: 20px 5px;
+            }
+          }
+        }
+        .memberlistWeb {
+          display: flex;
+          overflow: auto;
+          @media(max-width: 1024px) {
+            display: none;
+          }
+        }
         .memberDetails {
           width: 17%;
-          height: 100%;
           max-height: 210px;
           font-size: 20px;
           line-height: 25px;
@@ -167,23 +191,31 @@ GroupProfileStyled.profileWrapper = styled.div`
             min-width: 90px;
             width: calc( 20% - 20px);
           }
+          @media (max-width: 1024px) {
+            min-height: 160px;
+          }
           @media(max-width: 767px) {
             font-size: 16px;
             line-height: 25px;
             min-width: 100px;
-            height: auto;
+            margin-top: 0;
+            margin-bottom: 0;
           }
           .memberName {
             margin-top: 5px;
             color: #616161;
             font-family: 'Avenir-Medium';
             word-wrap: break-word;
+            white-space: pre-line;
           }
         }
       }
       .seeMemberList {
         padding: 20px;
         text-align: center;
+        @media(max-width: 1024px) {
+          display: none;
+        }
         span {
           font-size: 20px;
           cursor: pointer;
