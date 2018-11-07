@@ -97,15 +97,18 @@ class IndustrySelectionComponent extends React.Component {
 
   render() {
     const { categorySelected, selectedProfessions, searchValue } = this.state;
-    const { onSelectionComplete, loading } = this.props;
+    const { onSelectionComplete, loading, onClose } = this.props;
     return (
       <IndustryStyled>
         <IndustryStyled.HeaderWrapper>
-          <IndustryStyled.BackButton onClick={() => onSelectionComplete(selectedProfessions)} />
+          <IndustryStyled.BackButton onClick={onClose} />
           <IndustryStyled.HeaderContent>
-            <IndustryStyled.HeaderText>
-              Select your industry
-            </IndustryStyled.HeaderText>
+            <IndustryStyled.HeaderTextWrapper>
+              <IndustryStyled.HeaderText>
+                Select your industry
+              </IndustryStyled.HeaderText>
+              <IndustryStyled.CompleteButton onClick={() => onSelectionComplete(selectedProfessions)}>Done</IndustryStyled.CompleteButton>
+            </IndustryStyled.HeaderTextWrapper>
             <IndustryStyled.Description>
               You may choose up to a maximum of 3 industries
             </IndustryStyled.Description>

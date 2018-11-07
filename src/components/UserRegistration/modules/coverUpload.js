@@ -205,7 +205,7 @@ export default class CoverUpload extends React.Component {
 
   render() {
     return (
-      <GroupStyled.ContentWrapper>
+      <GroupStyled.DetailsWrapper>
         {
           this.state.imageLoading ?
             <Loader />
@@ -280,7 +280,7 @@ export default class CoverUpload extends React.Component {
               </GroupStyled.ControlWrapper>
             </React.Fragment>
         }
-      </GroupStyled.ContentWrapper>
+      </GroupStyled.DetailsWrapper>
     );
   }
 }

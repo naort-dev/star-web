@@ -144,6 +144,7 @@ export default class StarDetailsEntry extends React.Component {
     if (this.state.industrySelection) {
       return (
         <IndustrySelection
+          onClose={() => this.setState({ industrySelection: false })}
           selectedProfessions={this.state.industries}
           onSelectionComplete={this.getIndustrySelection}
           limit={3}
