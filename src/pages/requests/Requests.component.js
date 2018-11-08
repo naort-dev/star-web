@@ -5,8 +5,10 @@ import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
 import SubmitView from '../../components/SubmitView';
 import VideoRecorder from './components/VideoRecorder';
+import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
+import Popup from '../../components/Popup';
 import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
 import RequestsStyled from './styled';
@@ -100,9 +102,24 @@ export default class Requests extends React.Component {
             closePopup={this.closePopup}
             onRatingSuccess={this.closePopup}
           />
+        );
+      case 'cancel':
+      case 'decline':
+        return (
+          <DeclineView
+            changeRequestStatus={reason => this.changeRequestStatus(orderDetails.id, 5, reason)} // to cancel a request
+            starMode={this.props.starMode}
+            closePopup={this.closePopup}
+            requestType={orderDetails.request_type}
+          />
         )
       default: return null;
     }
+  }
+
+  changeRequestStatus = (requestId, requestStatus, reason) => {
+    this.props.changeRequestStatus(requestId, requestStatus, reason);
+    this.closePopup();
   }
 
   switchTab = (item) => {
@@ -186,13 +203,13 @@ export default class Requests extends React.Component {
     let { requestAction, showActionPopup } = this.state;
     if (actionType === 'edit') {
       this.editRequest(data);
-    } else if (actionType === 'cancel') {
-      console.log('cancel');
     } else if (actionType === 'share'
       || actionType === 'respond'
       || actionType === 'report'
       || actionType === 'contact'
       || actionType === 'rate'
+      || actionType === 'decline'
+      || actionType === 'cancel'
     ) {
       showActionPopup = true;
     }
@@ -299,7 +316,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    console.log(this.state.orderDetails);
+    console.log(this.state.requestAction);
     return (
       <div>
         <ColumnLayout
@@ -315,7 +332,7 @@ export default class Requests extends React.Component {
           : null
         }
         {
-          this.state.showActionPopup &&
+          this.state.showActionPopup && this.state.requestAction === 'respond' &&
             <RequestFlowPopup
               dotsCount={0}
               smallPopup
@@ -323,6 +340,15 @@ export default class Requests extends React.Component {
             >
               { this.getPopupContent(this.state.requestAction) }
             </RequestFlowPopup>
+        }
+        {
+          this.state.showActionPopup && this.state.requestAction !== 'respond' &&
+            <Popup
+              smallPopup
+              closePopUp={this.closePopup}
+            >
+              { this.getPopupContent(this.state.requestAction) }
+            </Popup>
         }
       </div>
     );

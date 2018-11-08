@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import RequestVideoRecorder from '../../../../components/RequestVideoRecorder';
 import OrderDetailsItem from '../../../../components/OrderDetails/orderDetailsItem';
+import { numberToDollarFormatter } from '../../../../utils/dataformatter';
 import StarRating from '../../../../components/StarRating';
 import { recorder } from '../../../../constants/videoRecorder';
 import VideoRecorderStyled from './styled';
@@ -15,18 +16,18 @@ export default class VideoRecorder extends React.Component {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={occasionDate} />
+          <OrderDetailsItem overlay title="Occasion Date" value={occasionDate} />
         );
       case 2:
-        return <OrderDetailsItem title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
+        return <OrderDetailsItem overlay title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
       case 3:
-        return <OrderDetailsItem title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
+        return <OrderDetailsItem overlay title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
       case 4:
-        return <OrderDetailsItem title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
+        return <OrderDetailsItem overlay title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
       case 6:
-        return <OrderDetailsItem title="Event Title" value={props.orderDetails.request_details.event_title} />;
+        return <OrderDetailsItem overlay title="Event Title" value={props.orderDetails.request_details.event_title} />;
       case 7:
-        return <OrderDetailsItem title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
+        return <OrderDetailsItem overlay title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
       default:
         return null;
     }
@@ -41,38 +42,38 @@ export default class VideoRecorder extends React.Component {
         // Personal Shout-outs
         return (
           <React.Fragment>
-            <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="To"
+            <OrderDetailsItem overlay title="Occasion" value={props.orderDetails.occasion} />
+            <OrderDetailsItem overlay title="To"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
             />
-            <OrderDetailsItem title="From"
+            <OrderDetailsItem overlay title="From"
               value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
             />
             {
-              props.orderDetails.request_details.stargramto !== 'Myself' && <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${relationShip}`} />
+              props.orderDetails.request_details.stargramto !== 'Myself' && <OrderDetailsItem overlay title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${relationShip}`} />
             }
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }
-            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+            <OrderDetailsItem overlay title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
       case 2:
         // Event Announcement
         return (
           <React.Fragment>
-            <OrderDetailsItem title="Event" value={props.orderDetails.occasion} />
+            <OrderDetailsItem overlay title="Event" value={props.orderDetails.occasion} />
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }
-            <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
-            <OrderDetailsItem title="Event Date" value={occasionDate} />
-            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+            <OrderDetailsItem overlay title="Host" value={props.orderDetails.request_details.event_host} />
+            <OrderDetailsItem overlay title="Event Date" value={occasionDate} />
+            <OrderDetailsItem overlay title="Important Info" value={props.orderDetails.request_details.important_info} />
           </React.Fragment>
         );
       case 3:
         // Q&A
-        return <OrderDetailsItem title="Title" value={props.orderDetails.request_details.question} />;
+        return <OrderDetailsItem overlay title="Title" value={props.orderDetails.request_details.question} />;
       default: return null;
     }
   }
@@ -107,7 +108,7 @@ export default class VideoRecorder extends React.Component {
       <React.Fragment>
         {
           !props.starMode &&
-            <OrderDetailsItem title="Requested" value={moment(props.orderDetails.created_date).format('LL')} />
+            <OrderDetailsItem overlay title="Requested" value={moment(props.orderDetails.created_date).format('LL')} />
         }
         {
           this.getEventDetails(props.orderDetails.request_type)
@@ -115,17 +116,14 @@ export default class VideoRecorder extends React.Component {
         {/* Show Reason if request is cancelled */}
         {
           props.requestStatusId === 5 ?
-            <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
+            <OrderDetailsItem overlay title="Decline Reason" value={props.orderDetails.comment} />
             : null
         }
         {
           !props.starMode &&
-            <OrderDetailsItem title="Booking Price" value={`$${price}`} />
+            <OrderDetailsItem overlay title="Private video" value={isPrivate} />
         }
-        {
-          !props.starMode &&
-            <OrderDetailsItem title="Private video" value={isPrivate} />
-        }
+        <OrderDetailsItem overlay bold title="Booking Price" value={`${numberToDollarFormatter(price)}`} />
         {props.requestStatusId === 6 &&
           <VideoRecorderStyled.DetailsItem>
             <VideoRecorderStyled.DetailsTitle>Rating:</VideoRecorderStyled.DetailsTitle>

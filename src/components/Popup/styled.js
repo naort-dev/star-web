@@ -62,6 +62,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
 
 PopupStyled.SmallContent = styled.div`
   height: 100%;
+  width: 100%;
   overflow-y: auto;
 `;
 

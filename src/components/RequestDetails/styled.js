@@ -4,9 +4,7 @@ const VideoRenderDiv = styled.div`
   padding-right: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #D8D8D8;
-  @media(min-width: 768px) {
-    position: relative;
-  }
+  position: relative;
 `;
 VideoRenderDiv.ImageSection = styled.div`
   position:relative;
@@ -136,7 +134,7 @@ VideoRenderDiv.StarDetails = styled.p`
   font-family: 'Avenir-Light';
   display: inline-block;
   @media(min-width: 768px) {
-    font-size: 14px;
+    font-size: 15px;
   }
 `;
 
@@ -173,6 +171,12 @@ VideoRenderDiv.ControlWrapper = styled.span`
     margin-top: 0;
     order: 2;
   }
+`;
+
+VideoRenderDiv.TextButton = styled.span`
+  margin-top: 10px;
+  cursor: pointer;
+  display: inline-block;
 `;
 
 VideoRenderDiv.ControlButton = styled.button`
@@ -266,7 +270,6 @@ VideoRenderDiv.RequestStatus = styled.span`
   display: inline-block;
   color: #fff;
   font-size: 12px;
-  margin-left: 10px;
   background-color: ${props => props.color};
   border-radius: 16px;
   padding: 3px 8px;
