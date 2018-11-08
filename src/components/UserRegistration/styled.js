@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const GroupStyled = styled.div`
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 `;
 
 GroupStyled.BackButton = styled.span`

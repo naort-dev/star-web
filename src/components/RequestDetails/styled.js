@@ -192,10 +192,12 @@ VideoRenderDiv.ControlButton = styled.button`
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
   &:not(last-child) {
+    margin-left: 5px;
     margin-right: 5px;
   }
   &:last-child {
     margin-left: 5px;
+    margin-right: 0;
   }
   @media(min-width: 768px) {
     width: auto;

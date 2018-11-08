@@ -49,6 +49,7 @@ Detail.sideSection = styled.section`
     box-shadow: 0px 3px 7px 0px #cccccc inset;
     bottom: 0;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 Detail.LeftSection = styled.div`
