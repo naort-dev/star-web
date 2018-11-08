@@ -6,6 +6,8 @@ const VideoRenderDiv = styled.div`
   height: 100%;
   @media(min-width: 768px) {
     height: ${props => (props.height ? `${props.height}px` : '100%')};
+    min-height: 200px;
+    min-width: 400px;
   }
 `;
 
