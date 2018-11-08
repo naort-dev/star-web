@@ -7,6 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;

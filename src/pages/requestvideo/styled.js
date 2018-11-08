@@ -18,6 +18,7 @@ const Request = styled.section`
  max-width: 1920px;
  background-color: #fff;
  overflow: auto;
+ -webkit-overflow-scrolling: touch;
  @media(min-width: 1025px){
   flex-direction: row;
   padding-bottom: 0;
@@ -48,6 +49,7 @@ Request.sideSection = styled.section`
     box-shadow: 0px 3px 7px 0px #cccccc inset;
     bottom: 0;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 Request.LeftSection = styled.div`

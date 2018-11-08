@@ -4,15 +4,14 @@ import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
 import SubmitView from '../../components/SubmitView';
-import OrderDetails from '../../components/OrderDetails';
 import VideoRecorder from './components/VideoRecorder';
 import ShareView from '../../components/ShareView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
-import { ROLES } from '../../constants/usertype';
 import RequestsStyled from './styled';
 import { celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
+
 export default class Requests extends React.Component {
   constructor(props) {
     super(props);
@@ -22,7 +21,7 @@ export default class Requests extends React.Component {
       requestStatus: 'all',
       requestAction: '',
       showActionPopup: false,
-      isCelebrity: props.userDetails.settings_userDetails.celebrity,
+      isCelebrity: null,
       orderDetails: {},
       scrollTarget: '',
     };
@@ -300,7 +299,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    console.log(this.state.requestAction);
+    console.log(this.state.orderDetails);
     return (
       <div>
         <ColumnLayout

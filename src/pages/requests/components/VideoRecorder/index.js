@@ -124,7 +124,7 @@ export default class VideoRecorder extends React.Component {
         }
         {
           !props.starMode &&
-            <OrderDetailsItem title="Make this Video private" value={isPrivate} />
+            <OrderDetailsItem title="Private video" value={isPrivate} />
         }
         {props.requestStatusId === 6 &&
           <VideoRecorderStyled.DetailsItem>

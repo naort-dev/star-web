@@ -320,7 +320,7 @@ export default class RequestDetails extends React.Component {
         }
         {
           !starMode &&
-            <OrderDetailsItem title="Make this Video private" value={isPrivate} />
+            <OrderDetailsItem title="Private video" value={isPrivate} />
         }
         {requestStatus === 6 &&
           <OrderDetailsItem
@@ -358,9 +358,9 @@ export default class RequestDetails extends React.Component {
             </VideoRenderDiv.ProfileImageWrapper>
             <VideoRenderDiv.DetailWrapper>
               <VideoRenderDiv.StarName>
-                {props.starMode ? props.fanName : props.starName }
+                {props.details}
               </VideoRenderDiv.StarName>
-              <VideoRenderDiv.StarDetails>{props.details}</VideoRenderDiv.StarDetails>
+              <VideoRenderDiv.StarDetails>{props.starMode ? props.fanName : props.starName }</VideoRenderDiv.StarDetails>
             </VideoRenderDiv.DetailWrapper>
           </VideoRenderDiv.ProfileDetailWrapper>
           <VideoRenderDiv.StatusDetailsWrapper>

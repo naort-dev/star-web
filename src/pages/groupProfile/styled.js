@@ -149,6 +149,7 @@ GroupProfileStyled.profileWrapper = styled.div`
         justify-content: center;
         display: flex;
         overflow: auto;
+        -webkit-overflow-scrolling: touch;
         &>p {
           margin: 10px;
         }
@@ -158,6 +159,7 @@ GroupProfileStyled.profileWrapper = styled.div`
           @media(max-width: 1024px) {
             display: flex;
             overflow: auto;
+            -webkit-overflow-scrolling: touch;
             width: 100%;
           }
           @media(max-width: 767px) {
@@ -173,6 +175,7 @@ GroupProfileStyled.profileWrapper = styled.div`
         .memberlistWeb {
           display: flex;
           overflow: auto;
+          -webkit-overflow-scrolling: touch;
           @media(max-width: 1024px) {
             display: none;
           }

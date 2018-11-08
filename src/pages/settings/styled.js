@@ -271,6 +271,7 @@ SettingsStyled.IndustryEditButton = styled.span`
 SettingsStyled.IndustrySelectionWrapper = styled.div`
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
     height: auto;
   }
