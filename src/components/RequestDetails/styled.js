@@ -6,6 +6,14 @@ const VideoRenderDiv = styled.div`
   border-bottom: 1px solid #D8D8D8;
   position: relative;
 `;
+
+VideoRenderDiv.ContentWrapper = styled.div`
+  @media(min-width: 768px) {
+    padding-left: 10px;
+    width: calc(100% - 250px)
+  }
+`;
+
 VideoRenderDiv.ImageSection = styled.div`
   position:relative;
   background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/pending-video.png)')};
@@ -16,7 +24,7 @@ VideoRenderDiv.ImageSection = styled.div`
   max-width: 300px;
   height: 150px;
   cursor: pointer;
-  display: flex;
+  display: ${props => (props.mobile ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
   &::after {
@@ -29,7 +37,8 @@ VideoRenderDiv.ImageSection = styled.div`
     background-color: ${props => props.imageUrl && '#0000007a'};
   }
   @media(min-width: 768px) {
-    width: 300px;
+    width: 250px;
+    display: ${props => (props.mobile ? 'none' : 'flex')};
   }
 `;
 
@@ -47,7 +56,13 @@ VideoRenderDiv.PlayButton = styled.span`
 
 VideoRenderDiv.RequestTime = styled.span`
   font-size: 14px;
-  color: #FF6C58;
+  color: ${props => (props.timeLeft ? '#FF6C58' : 'grey')};
+  float: ${props => (props.timeLeft ? 'none' : 'right')};
+  padding-left: 10px;
+  &::after {
+    content: '';
+    clear: both;
+  }
 `;
 
 VideoRenderDiv.BannerImage = styled.img`
@@ -97,6 +112,9 @@ VideoRenderDiv.ProfileContent = styled.div`
   vertical-align: top;
   padding-left: 10px;
   width: 100%;
+  @media(min-width: 768px) {
+    display: flex;
+  }
 `;
 VideoRenderDiv.DetailWrapper = styled.div`
   line-height: 18px;
@@ -110,6 +128,9 @@ VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
   font-family: 'Avenir-Regular';
+  @media(min-width: 768px) {
+    display: inline-block;
+  }
   @media(min-width: 1920px) {
     font-size: 20px;
   }
@@ -135,6 +156,7 @@ VideoRenderDiv.StarDetails = styled.p`
   display: inline-block;
   @media(min-width: 768px) {
     font-size: 15px;
+    display: block;
   }
 `;
 
@@ -159,6 +181,7 @@ VideoRenderDiv.StatusDetails = styled.div`
   order: 1;
   @media(min-width: 768px) {
     padding-left: 0;
+    margin: 10px 0;
   }
 `;
 
@@ -174,7 +197,7 @@ VideoRenderDiv.ControlWrapper = styled.span`
 `;
 
 VideoRenderDiv.TextButton = styled.span`
-  margin-top: 10px;
+  margin-top: 25px;
   cursor: pointer;
   display: inline-block;
 `;
@@ -188,16 +211,17 @@ VideoRenderDiv.ControlButton = styled.button`
   font-family: Avenir-Regular;
   cursor: pointer;
   flex: 1;
-  height: 45px;
+  height: 40px;
   text-decoration: none;
   outline: none;
   border-radius: 20px;
   border: ${props => (props.alternate ? '1px solid' : '2px solid')};
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
-  &:not(last-child) {
-    margin-left: 5px;
-    margin-right: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  &:first-child {
+    margin-left: 0;
   }
   &:last-child {
     margin-left: 5px;
@@ -205,9 +229,9 @@ VideoRenderDiv.ControlButton = styled.button`
   }
   @media(min-width: 768px) {
     width: auto;
-    padding: 10px 25px;
+    padding: 8px 25px;
     flex: none;
-    height: auto;
+    height: 37px;
     margin-left: ${props => (props.alternate ? '0' : '5px')};
   }
   &:hover {
@@ -230,11 +254,14 @@ VideoRenderDiv.ShareButton = VideoRenderDiv.ControlButton.extend`
 `;
 
 VideoRenderDiv.MoreSettings = VideoRenderDiv.ControlButton.extend`
-  padding: 1px 15px;
+  padding: 10px;
   display: flex;
   align-items: center;
   flex: none;
   position: relative;
+  @media(min-width: 768px) {
+    padding: 10px;
+  }
 `.withComponent('span');
 
 VideoRenderDiv.HorizontalHamburger = styled.span`
@@ -294,55 +321,17 @@ VideoRenderDiv.DetailsContainer = styled.div`
   }
 `;
 
-VideoRenderDiv.DetailsWrapper = styled.ul`
-  @media(min-width: 768px) {
-    width: calc(100% - 310px);
-  }
-`;
-
-VideoRenderDiv.DetailsItem = styled.li`
-  display: block;
+VideoRenderDiv.DetailsWrapper = styled.div`
   width: 100%;
-  padding: 3px 0;
-  @media(min-width: 768px) {
-    display: table;
-    padding: 5px 0;
-  }
-`;
-VideoRenderDiv.DetailsTitle = styled.span`
-  font-family: 'Avenir-Light';
-  width: 40%;
-  display: inline-block;
-  font-size:12px;
-  vertical-align: top;
-  @media(min-width: 768px) {
-    display: table-cell;
-    width: 20%;
-    font-size:13px;
-    text-align: right;
-    vertical-align: middle;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
 `;
 
-VideoRenderDiv.DetailsValue = styled.span`
-  display: inline-block;
-  font-family: 'Avenir-Light';
-  width: 60%;
-  display: inline-block;
-  vertical-align: top;
-  font-size:12px;
-  padding-left: 20px;
-  @media(min-width: 768px) {
-    display: table-cell;
-    font-size:13px;
-    width: 80%;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
+VideoRenderDiv.DetailsList = styled.ul`
+  width: 100%;
+`;
+
+VideoRenderDiv.DetailsTitle = styled.span`
+  font-family: 'Avenir-Medium';
+  margin-bottom: 10px;
 `;
 
 VideoRenderDiv.AudioIcon = styled.img`

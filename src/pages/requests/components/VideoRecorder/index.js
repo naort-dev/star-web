@@ -92,8 +92,13 @@ export default class VideoRecorder extends React.Component {
       .then((response) => {
         if (response && response.filename) {
           axios.post(response.url, response.formData).then(() => {
-            this.props.responseVideo(this.props.orderDetails.id, response.filename);
-            this.props.onComplete(true);
+            this.props.responseVideo(this.props.orderDetails.id, response.filename)
+              .then(() => {
+                this.props.onComplete(true);
+              })
+              .catch((e) => {
+                this.props.onComplete(false);
+              });
           })
             .catch((e) => {
               this.props.onComplete(false);

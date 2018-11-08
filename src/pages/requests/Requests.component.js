@@ -64,11 +64,10 @@ export default class Requests extends React.Component {
 
   onVideoUpload = (success) => {
     if (success) {
-      this.requestAction(this.state.orderDetails, 'respondSucess');
+      this.requestAction(this.state.orderDetails, 'respondSuccess');
     } else {
       this.requestAction(this.state.orderDetails, 'respondFail');
     }
-    this.closePopup();
   }
 
   getPopupContent = (requestAction) => {
@@ -124,6 +123,7 @@ export default class Requests extends React.Component {
           />
         );
       case 'respondSuccess':
+        console.log('asdasd')
         return (
           <AlertView
             message={`Thank you! Your video has been sent to ${fan}`}
