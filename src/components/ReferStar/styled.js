@@ -2,6 +2,9 @@ import styled from 'styled-components';
 
 const ReferralStyled = styled.div`
   margin-top: 150px;
+  @media(min-width: 768px) {
+    width: 500px;
+  }
 `;
 
 ReferralStyled.Heading = styled.span`

@@ -7,6 +7,7 @@ import SubmitView from '../../components/SubmitView';
 import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
+import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Popup from '../../components/Popup';
 import InnerTabs from '../../components/InnerTabs';
@@ -61,15 +62,24 @@ export default class Requests extends React.Component {
     return ({ innerLinks, isCelebrity });
   }
 
+  onVideoUpload = (success) => {
+    if (success) {
+      this.requestAction(this.state.orderDetails, 'respondSucess');
+    } else {
+      this.requestAction(this.state.orderDetails, 'respondFail');
+    }
+    this.closePopup();
+  }
+
   getPopupContent = (requestAction) => {
     const { orderDetails } = this.state;
-    const { request_video: requestVideo } = orderDetails;
+    const { request_video: requestVideo, fan } = orderDetails;
     const finalVideo = requestVideo.filter(video => video.video_status === 1)[0]; // find completed video
     switch (requestAction) {
       case 'share':
         return <ShareView iconSize={50} title={orderDetails.booking_title} shareUrl={`https://${finalVideo.video_url}`} />;
       case 'respond':
-        return <VideoRecorder orderDetails={this.state.orderDetails} {...this.props} />;
+        return <VideoRecorder onComplete={this.onVideoUpload} orderDetails={this.state.orderDetails} {...this.props} />;
       case 'report':
         return (
           <SubmitView
@@ -112,7 +122,21 @@ export default class Requests extends React.Component {
             closePopup={this.closePopup}
             requestType={orderDetails.request_type}
           />
-        )
+        );
+      case 'respondSuccess':
+        return (
+          <AlertView
+            message={`Thank you! Your video has been sent to ${fan}`}
+            closePopup={this.closePopup}
+          />
+        );
+      case 'respondFail':
+        return (
+          <AlertView
+            message="Something went wrong"
+            closePopup={this.closePopup}
+          />
+        );
       default: return null;
     }
   }
@@ -210,6 +234,8 @@ export default class Requests extends React.Component {
       || actionType === 'rate'
       || actionType === 'decline'
       || actionType === 'cancel'
+      || actionType === 'respondSuccess'
+      || actionType === 'respondFail'
     ) {
       showActionPopup = true;
     }
@@ -316,7 +342,6 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    console.log(this.state.requestAction);
     return (
       <div>
         <ColumnLayout

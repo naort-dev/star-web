@@ -25,7 +25,7 @@ export default class RequestDetails extends React.Component {
     this.mounted = true;
     this.charLimit = 50;
     this.requestType = requestTypes;
-    this.openColor = '#EA57A1';
+    this.openColor = '#FF6C58';
     this.completedColor = '#64C937';
     this.cancelledColor = '#363636';
   }
@@ -212,10 +212,6 @@ export default class RequestDetails extends React.Component {
     this.setState({ videoPlayerProps: null });
   }
 
-  selectItem = () => {
-    this.props.selectItem();
-  }
-
   showDetails = () => {
     this.setState({ showDetails: !this.state.showDetails });
   }
@@ -227,6 +223,15 @@ export default class RequestDetails extends React.Component {
 
   toggleActions = () => {
     this.setState({ showActions: !this.state.showActions });
+  }
+
+  downloadVideo = () => {
+    const { request_video: requestVideo } = this.props.orderDetails;
+    const finalVideo = requestVideo.filter(video => video.video_status === 1)[0];
+    const link = document.createElement('a');
+    link.href = finalVideo.s3_video_url;
+    link.click();
+    link.remove();
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
@@ -245,16 +250,20 @@ export default class RequestDetails extends React.Component {
       </React.Fragment>
     );
   }
-  
   renderActions = () => {
     const { starMode, requestStatus, orderDetails } = this.props;
     const showRateButton = requestStatus === 6 && !starMode && !orderDetails.fan_rating;
+    const celebVideoDownload = starMode && requestStatus === 6 && orderDetails.public_request;
+    const fanVideoDownload = !starMode && requestStatus === 6;
+    const canDownload = celebVideoDownload || fanVideoDownload;
     return (
       <React.Fragment>
         <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('contact')}>Contact support</VideoRenderDiv.MoreSettingsListItem>
         <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('report')}>Report abuse</VideoRenderDiv.MoreSettingsListItem>
         {showRateButton && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
-        {/* <VideoRenderDiv.MoreSettingsListItem>Download Video</VideoRenderDiv.MoreSettingsListItem> */}
+        {
+          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download video</VideoRenderDiv.MoreSettingsListItem>
+        }
       </React.Fragment>
     )
   }
@@ -269,7 +278,7 @@ export default class RequestDetails extends React.Component {
             this.state.showActions &&
               <VideoRenderDiv.MoreSettingsList innerRef={this.getMoreSettingsRef}>
                 {this.renderActions()}
-              </VideoRenderDiv.MoreSettingsList>            
+              </VideoRenderDiv.MoreSettingsList>
           }
         </VideoRenderDiv.MoreSettings>
       );
@@ -297,7 +306,6 @@ export default class RequestDetails extends React.Component {
     const currentDate = new Date();
     const celebOpenRequest = starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
     const fanOpenRequest = !starMode && openStatusList.indexOf(requestStatus) > -1;
-    // const isOpenRequest = celebOpenRequest || fanOpenRequest;
     if (fanOpenRequest) {
       return <VideoRenderDiv.RequestTime>{this.findTime(finalCreatedDate, currentDate)}</VideoRenderDiv.RequestTime>;
     } else if (celebOpenRequest) {
@@ -339,10 +347,7 @@ export default class RequestDetails extends React.Component {
             <OrderDetailsItem title="Decline Reason" value={orderDetails.comment} />
             : null
         }
-        {
-          !starMode &&
-            <OrderDetailsItem title="Private video" value={isPrivate} />
-        }
+        <OrderDetailsItem title="Private video" value={isPrivate} />
         {requestStatus === 6 &&
           <OrderDetailsItem
             title="Rating"

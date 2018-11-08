@@ -216,6 +216,7 @@ export default class RequestVideoRecorder extends React.Component {
 
   renderUploader = () => {
     if (this.props.videoUploader.savedFile && this.state.play) {
+      console.log(this.state.src)
       return (
         <VideoRecorderDiv.ControlWrapper>
           {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
@@ -232,7 +233,7 @@ export default class RequestVideoRecorder extends React.Component {
                 </Scrollbars>
               </VideoRecorderDiv.BookingDetailsWrapper>
           }
-          <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
+          <VideoRecorderDiv.Video id='preview-video' innerRef={(node) => { this.previewVideo = node; }} src={this.state.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.UploadWrapper>

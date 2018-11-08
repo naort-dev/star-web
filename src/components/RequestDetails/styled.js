@@ -47,7 +47,7 @@ VideoRenderDiv.PlayButton = styled.span`
 
 VideoRenderDiv.RequestTime = styled.span`
   font-size: 14px;
-  color: #EA57A1;
+  color: #FF6C58;
 `;
 
 VideoRenderDiv.BannerImage = styled.img`
@@ -272,7 +272,7 @@ VideoRenderDiv.RequestStatus = styled.span`
   font-size: 12px;
   background-color: ${props => props.color};
   border-radius: 16px;
-  padding: 3px 8px;
+  padding: 9px 21px;
 `;
 
 VideoRenderDiv.DetailsContainer = styled.div`

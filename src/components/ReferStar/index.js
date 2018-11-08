@@ -22,7 +22,7 @@ import { toggleRefer } from '../../store/shared/actions/toggleModals';
 import { requestReferral, getReferralList, getReferalLink } from '../../store/shared/actions/referStar';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { contactSupport } from '../../store/shared/actions/popupActions';
-import SubmitPopup from '../OrderDetails/SubmitPopup';
+import SubmitView from '../SubmitView';
 
 class ReferStar extends React.Component {
   constructor(props) {
@@ -213,7 +213,7 @@ class ReferStar extends React.Component {
           smallPopup
           closePopUp={() => this.setState({ openSupport: false })}
         >
-          <SubmitPopup
+          <SubmitView
             heading="Contact support"
             onSubmit={data => this.props.contactSupport({ comments: data.comment })}
             closePopup={() => this.setState({ openSupport: false })}

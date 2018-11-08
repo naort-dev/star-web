@@ -1,8 +1,11 @@
 import React from 'react';
 import moment from 'moment';
+import axios from 'axios';
 import RequestVideoRecorder from '../../../../components/RequestVideoRecorder';
 import OrderDetailsItem from '../../../../components/OrderDetails/orderDetailsItem';
 import { numberToDollarFormatter } from '../../../../utils/dataformatter';
+import getAWSCredentials from '../../../../utils/AWSUpload';
+import { locations } from '../../../../constants/locations';
 import StarRating from '../../../../components/StarRating';
 import { recorder } from '../../../../constants/videoRecorder';
 import VideoRecorderStyled from './styled';
@@ -81,6 +84,34 @@ export default class VideoRecorder extends React.Component {
   playAudio = (audioSrc) => {
     const audio = new Audio(audioSrc);
     audio.play();
+  }
+
+  uploadVideoToAWS = (video) => {
+    this.props.requestFetchStart();
+    getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, video)
+      .then((response) => {
+        if (response && response.filename) {
+          axios.post(response.url, response.formData).then(() => {
+            this.props.responseVideo(this.props.orderDetails.id, response.filename);
+            this.props.onComplete(true);
+          })
+            .catch((e) => {
+              this.props.onComplete(false);
+            });
+        }
+      });
+  }
+
+  videoSubmit = () => {
+    let video;
+    if (this.props.videoUploader.savedFile != null) {
+      video = this.props.videoUploader.savedFile;
+    } else {
+      video = this.props.videoRecorder.recordedBuffer ? new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4') : null;
+    }
+    if (video) {
+      this.uploadVideoToAWS(video);
+    }
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
