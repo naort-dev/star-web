@@ -191,7 +191,7 @@ VideoRenderDiv.ControlButton = styled.button`
   border: ${props => (props.alternate ? '1px solid' : '2px solid')};
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
-  &:first-child {
+  &:not(last-child) {
     margin-right: 5px;
   }
   &:last-child {
@@ -202,7 +202,7 @@ VideoRenderDiv.ControlButton = styled.button`
     padding: 10px 25px;
     flex: none;
     height: auto;
-    margin-left: ${props => (props.alternate ? '0' : '15px')};
+    margin-left: ${props => (props.alternate ? '0' : '5px')};
   }
   &:hover {
     background-color: ${props => (props.alternate ? '#fff' : '#FF3B21')};
@@ -220,6 +220,43 @@ VideoRenderDiv.ShareButton = VideoRenderDiv.ControlButton.extend`
   border-width: 1px;
   &:hover {
     background-color: #fff;
+  }
+`;
+
+VideoRenderDiv.MoreSettings = VideoRenderDiv.ControlButton.extend`
+  padding: 1px 15px;
+  display: flex;
+  align-items: center;
+  flex: none;
+  position: relative;
+`.withComponent('span');
+
+VideoRenderDiv.HorizontalHamburger = styled.span`
+  background: url('assets/images/dots-vertical.svg') no-repeat;
+  background-position: center center;
+  transform: rotate(-90deg);
+  width: 20px;
+  height: 20px;
+  display: block;
+`;
+
+VideoRenderDiv.MoreSettingsList = styled.ul`
+  position: absolute;
+  background: #fff;
+  user-select: none;
+  padding: 5px 0;
+  top: calc(100% + 5px);
+  box-shadow: 0px 4px 8px 0px #cccccc
+  right: 0;
+  width: 140px;
+  z-index: 1;
+  text-align: left;
+`;
+
+VideoRenderDiv.MoreSettingsListItem = styled.li`
+  padding: 5px;
+  &:hover, &:focus {
+    color: #FF6C58;
   }
 `;
 
