@@ -11,21 +11,21 @@ VideoRecorderStyled.DetailsItem = styled.li`
   width: 100%;
   padding: 3px 0;
   line-height: 20px;
-  color: ${props => props.overlay && '#fff'};
+  color: #fff;
   @media(min-width: 768px) {
-    display: ${props => (props.overlay ? 'block' : 'table')};
+    display: block;
     padding: 3px 0;
   }
 `;
 VideoRecorderStyled.DetailsTitle = styled.span`
   font-family: 'Avenir-Light';
-  width: ${props => (props.overlay ? '100%' : '40%')};
+  width: 100%;
   display: inline-block;
   font-size: 12px;
   vertical-align: top;
   @media(min-width: 768px) {
-    display: ${props => (props.overlay ? 'block' : 'table-cell')};
-    width: ${props => (props.overlay ? '100%' : '20%')};
+    display: block;
+    width: 100%;
     font-size:13px;
     vertical-align: middle;
   }
@@ -37,14 +37,14 @@ VideoRecorderStyled.DetailsTitle = styled.span`
 VideoRecorderStyled.DetailsValue = styled.span`
   display: inline-block;
   font-family: 'Avenir-Light';
-  width: ${props => (props.overlay ? '100%' : '60%')};
+  width: 100%;
   display: inline-block;
   vertical-align: top;
   font-size: 12px;
-  padding-left: ${props => (props.overlay ? '0' : '20px')};
+  padding-left: 0;
   @media(min-width: 768px) {
-    display: ${props => (props.overlay ? 'block' : 'table-cell')};
-    width: ${props => (props.overlay ? '100%' : '80%')};
+    display: block;
+    width: 100%;
     font-size:13px;
   }
   @media(min-width:1920px){

@@ -278,11 +278,11 @@ OrderStyled.DetailsItem = styled.li`
   }
 `;
 OrderStyled.DetailsTitle = styled.span`
-  font-family: 'Avenir-Light';
   width: ${props => (props.overlay ? '100%' : '40%')};
   display: inline-block;
   font-size: 12px;
   vertical-align: top;
+  font-family: ${props => (props.bold ? 'Avenir-Medium' : 'Avenir-Light')}
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table-cell')};
     width: ${props => (props.overlay ? '100%' : '20%')};
@@ -296,7 +296,7 @@ OrderStyled.DetailsTitle = styled.span`
 
 OrderStyled.DetailsValue = styled.span`
   display: inline-block;
-  font-family: 'Avenir-Light';
+  font-family: ${props => (props.bold ? 'Avenir-Medium' : 'Avenir-Light')}
   width: ${props => (props.overlay ? '100%' : '60%')};
   display: inline-block;
   vertical-align: top;

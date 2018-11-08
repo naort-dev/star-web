@@ -6,6 +6,8 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
 import StarRating from '../StarRating';
+import { requestExpiryDays } from '../../constants';
+import { numberToDollarFormatter } from '../../utils/dataformatter';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class RequestDetails extends React.Component {
@@ -23,7 +25,7 @@ export default class RequestDetails extends React.Component {
     this.mounted = true;
     this.charLimit = 50;
     this.requestType = requestTypes;
-    this.openColor = '#EA57A1';
+    this.openColor = '#FF6C58';
     this.completedColor = '#64C937';
     this.cancelledColor = '#363636';
   }
@@ -167,25 +169,27 @@ export default class RequestDetails extends React.Component {
     }
   }
 
-  findTime = () => {
+  findTime = (fromDate, toDate, futureTime) => {
     let timeString = '';
     if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
       timeString = 'Completed';
     } else {
-      const currentDate = new Date();
-      const createdDate = new Date(this.props.createdDate);
-      const timeDiff = currentDate - createdDate;
+      const timeDiff = toDate - fromDate;
       const diffDays = Math.floor(timeDiff / 86400000); // days
       const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
       const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
+      const diffAppend = futureTime ? 'left' : 'ago';
       if (diffDays >= 1) {
-        timeString = diffDays === 1 ? `${timeString} ${diffDays} day ago` : `${timeString} ${diffDays} days ago`;
+        timeString = diffDays === 1 ? `${timeString} ${diffDays} day` : `${timeString} ${diffDays} days`;
+        if (futureTime) {
+          timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ${diffAppend}` : `${timeString} ${diffHrs} hours ${diffAppend}`;
+        }
       } else if (diffHrs >= 1) {
-        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : `${timeString} ${diffHrs} hours ago`;
+        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ${diffAppend}` : `${timeString} ${diffHrs} hours ${diffAppend}`;
       } else if (diffMins >= 1) {
-        timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ago` : `${timeString} ${diffMins} minutes ago`;
+        timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ${diffAppend}` : `${timeString} ${diffMins} minutes ${diffAppend}`;
       } else {
-        timeString = `${timeString} just now`;
+        timeString = `${timeString} ${futureTime ? diffAppend : 'just now'}`;
       }
     }
     return timeString;
@@ -208,10 +212,6 @@ export default class RequestDetails extends React.Component {
     this.setState({ videoPlayerProps: null });
   }
 
-  selectItem = () => {
-    this.props.selectItem();
-  }
-
   showDetails = () => {
     this.setState({ showDetails: !this.state.showDetails });
   }
@@ -223,6 +223,15 @@ export default class RequestDetails extends React.Component {
 
   toggleActions = () => {
     this.setState({ showActions: !this.state.showActions });
+  }
+
+  downloadVideo = () => {
+    const { request_video: requestVideo } = this.props.orderDetails;
+    const finalVideo = requestVideo.filter(video => video.video_status === 1)[0];
+    const link = document.createElement('a');
+    link.href = finalVideo.s3_video_url;
+    link.click();
+    link.remove();
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
@@ -241,15 +250,20 @@ export default class RequestDetails extends React.Component {
       </React.Fragment>
     );
   }
-  
   renderActions = () => {
-    const { starMode, requestStatus } = this.props;
+    const { starMode, requestStatus, orderDetails } = this.props;
+    const showRateButton = requestStatus === 6 && !starMode && !orderDetails.fan_rating;
+    const celebVideoDownload = starMode && requestStatus === 6 && orderDetails.public_request;
+    const fanVideoDownload = !starMode && requestStatus === 6;
+    const canDownload = celebVideoDownload || fanVideoDownload;
     return (
       <React.Fragment>
         <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('contact')}>Contact support</VideoRenderDiv.MoreSettingsListItem>
         <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('report')}>Report abuse</VideoRenderDiv.MoreSettingsListItem>
-        {requestStatus === 6 && !starMode && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
-        {/* <VideoRenderDiv.MoreSettingsListItem>Download Video</VideoRenderDiv.MoreSettingsListItem> */}
+        {showRateButton && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
+        {
+          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download video</VideoRenderDiv.MoreSettingsListItem>
+        }
       </React.Fragment>
     )
   }
@@ -264,7 +278,7 @@ export default class RequestDetails extends React.Component {
             this.state.showActions &&
               <VideoRenderDiv.MoreSettingsList innerRef={this.getMoreSettingsRef}>
                 {this.renderActions()}
-              </VideoRenderDiv.MoreSettingsList>            
+              </VideoRenderDiv.MoreSettingsList>
           }
         </VideoRenderDiv.MoreSettings>
       );
@@ -287,10 +301,29 @@ export default class RequestDetails extends React.Component {
   }
 
   renderTime = () => {
-    const { starMode, requestStatus } = this.props;
-    const isOpenRequest = (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) || (!starMode && openStatusList.indexOf(requestStatus) > -1);
-    if (isOpenRequest) {
-      return <VideoRenderDiv.RequestTime>{this.findTime()}</VideoRenderDiv.RequestTime>;
+    const { starMode, requestStatus, createdDate } = this.props;
+    const finalCreatedDate = new Date(createdDate);
+    const currentDate = new Date();
+    const celebOpenRequest = starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
+    const fanOpenRequest = !starMode && openStatusList.indexOf(requestStatus) > -1;
+    if (fanOpenRequest) {
+      return <VideoRenderDiv.RequestTime>{this.findTime(finalCreatedDate, currentDate)}</VideoRenderDiv.RequestTime>;
+    } else if (celebOpenRequest) {
+      let expiryDate = new Date(createdDate);
+      expiryDate.setDate(finalCreatedDate.getDate() + requestExpiryDays);
+      return <VideoRenderDiv.RequestTime>{this.findTime(currentDate, expiryDate, true)}</VideoRenderDiv.RequestTime>;
+    }
+    return null;
+  }
+
+  renderCancelButton = () => {
+    const { requestStatus, starMode } = this.props;
+    const celebCancellable = starMode && starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
+    const fanCancellable = !starMode && openStatusList.indexOf(requestStatus) > -1;
+    if (celebCancellable) {
+      return <VideoRenderDiv.TextButton onClick={() => this.props.selectItem('decline')}>Decline request</VideoRenderDiv.TextButton>;
+    } else if (fanCancellable) {
+      return <VideoRenderDiv.TextButton onClick={() => this.props.selectItem('cancel')}>Cancel request</VideoRenderDiv.TextButton>;
     }
     return null;
   }
@@ -314,19 +347,16 @@ export default class RequestDetails extends React.Component {
             <OrderDetailsItem title="Decline Reason" value={orderDetails.comment} />
             : null
         }
-        {
-          !starMode &&
-            <OrderDetailsItem title="Booking Price" value={`$${price}`} />
-        }
-        {
-          !starMode &&
-            <OrderDetailsItem title="Private video" value={isPrivate} />
-        }
+        <OrderDetailsItem title="Private video" value={isPrivate} />
         {requestStatus === 6 &&
           <OrderDetailsItem
             title="Rating"
             value={<StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />}
           />
+        }
+        {
+          !starMode &&
+            <OrderDetailsItem bold title="Booking Price" value={`${numberToDollarFormatter(price)}`} />
         }
       </React.Fragment>
     );
@@ -365,7 +395,6 @@ export default class RequestDetails extends React.Component {
           </VideoRenderDiv.ProfileDetailWrapper>
           <VideoRenderDiv.StatusDetailsWrapper>
             <VideoRenderDiv.StatusDetails>
-              <VideoRenderDiv.StarDetails>Status</VideoRenderDiv.StarDetails>
               <VideoRenderDiv.RequestStatus
                 color={this.getStatusColor(props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus])}
                 highlight={props.starMode ? celebOpenStatusList.indexOf(props.requestStatus) > -1 : openStatusList.indexOf(props.requestStatus) > -1}
@@ -389,6 +418,9 @@ export default class RequestDetails extends React.Component {
               <VideoRenderDiv.DetailsWrapper>
                 {
                   this.renderOrderDetails()
+                }
+                {
+                  this.renderCancelButton()
                 }
               </VideoRenderDiv.DetailsWrapper>
               <VideoRenderDiv.ImageSection
