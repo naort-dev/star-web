@@ -286,7 +286,6 @@ cursor: pointer;
 @media(min-width: 1920px) {
   height: 100px;
   width: 100px;
-  background-size: 77px;
 }
 `;
 

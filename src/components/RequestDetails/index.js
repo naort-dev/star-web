@@ -345,6 +345,7 @@ export default class RequestDetails extends React.Component {
   renderOrderDetails = () => {
     const { requestStatus, orderDetails, starMode } = this.props;
     const price = orderDetails.order_details ? orderDetails.order_details.amount: 0;
+    const orderId = orderDetails.order_details ? orderDetails.order_details.order: '';
     const isPrivate = orderDetails.public_request ? 'No' : 'Yes';
     return (
       <React.Fragment>
@@ -368,6 +369,7 @@ export default class RequestDetails extends React.Component {
             value={<StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />}
           />
         }
+        <OrderDetailsItem title="Order#" value={orderId} />
         {
           !starMode &&
             <OrderDetailsItem bold title="Booking Price" value={`${numberToDollarFormatter(price)}`} />

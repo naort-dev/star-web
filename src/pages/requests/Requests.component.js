@@ -63,6 +63,14 @@ export default class Requests extends React.Component {
   }
 
   onVideoUpload = (success) => {
+    this.props.onClearStreams();
+    this.props.deleteVideo();
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
     if (success) {
       this.requestAction(this.state.orderDetails, 'respondSuccess');
     } else {
@@ -87,6 +95,7 @@ export default class Requests extends React.Component {
               celebrity: orderDetails.celebrity_id,
               abuse_comment: data.comment,
             })}
+            successMessage="Sent"
             closePopup={this.closePopup}
           />
         );
@@ -96,6 +105,7 @@ export default class Requests extends React.Component {
             heading="Contact support"
             onSubmit={data => this.props.contactSupport({ comments: data.comment })}
             closePopup={this.closePopup}
+            successMessage="Sent"
           />
         );
       case 'rate':
@@ -108,8 +118,8 @@ export default class Requests extends React.Component {
               starsona: orderDetails.id,
               comments: data.comment,
             })}
+            successMessage="Rating success"
             closePopup={this.closePopup}
-            onRatingSuccess={this.closePopup}
           />
         );
       case 'cancel':
@@ -125,7 +135,7 @@ export default class Requests extends React.Component {
       case 'respondSuccess':
         return (
           <AlertView
-            message={`Thank you! Your video has been sent to ${fan}`}
+            message={`Thank you! Your Starsona has been sent to ${fan}`}
             closePopup={this.closePopup}
           />
         );

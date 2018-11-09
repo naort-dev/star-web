@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import SubmitStyled from './styled';
 import StarRating from '../StarRating';
+import Popup from '../Popup';
+import AlertView from '../AlertView';
 import { clearPopupError } from '../../store/shared/actions/popupActions';
 
 const { func, bool, string } = PropTypes;
@@ -20,6 +22,7 @@ export default class SubmitView extends React.Component {
   static propTypes = {
     onSubmit: func.isRequired,
     heading: string.isRequired,
+    successMessage: string.isRequired,
     error: string,
     submitStatus: bool,
   };
@@ -35,6 +38,7 @@ export default class SubmitView extends React.Component {
     this.state = {
       rating: 0,
       comment: '',
+      alertText: '',
     };
   }
 
@@ -43,12 +47,16 @@ export default class SubmitView extends React.Component {
   }
 
   static getDerivedStateFromProps = (props, state) => {
+    let { alertText } = state;
     if (props.submitStatus) {
-      if (props.heading === 'Rate video') props.onRatingSuccess();
       props.clearPopupError();
-      props.closePopup(state.rating);
+      alertText = props.successMessage;
     }
-    return null;
+    return { alertText };
+  }
+
+  closePopup = () => {
+    this.props.closePopup();
   }
 
   sendReason = () => {
@@ -60,25 +68,38 @@ export default class SubmitView extends React.Component {
   render() {
     return (
       <SubmitStyled>
-        <div>
-          <SubmitStyled.Header>{this.props.heading}</SubmitStyled.Header>
-          <SubmitStyled.RatingTextArea
-            placeholder={this.props.heading === 'Rate video' ? 'Comment' : ''}
-            onChange={event => this.setState({ comment: event.target.value })}
-          />
-          {this.props.heading === 'Rate video' && <StarRating onClick={rating => this.setState({ rating })} center />}
-          <SubmitStyled.ErrorWrapper>
-            {this.props.error && <SubmitStyled.ErrorMsg>{this.props.error}</SubmitStyled.ErrorMsg>}
-          </SubmitStyled.ErrorWrapper>
-          <SubmitStyled.ConfirmButtonWrapper>
-            <SubmitStyled.ConfirmButton
-              onClick={this.sendReason}
-              disabled={(!this.state.rating && this.props.heading === 'Rate video') || (this.props.heading !== 'Rate video' && !this.state.comment)}
+        {
+          this.state.alertText !== '' ?
+            <Popup
+              smallPopup
+              closePopUp={this.closePopup}
             >
-              Submit
-            </SubmitStyled.ConfirmButton>
-          </SubmitStyled.ConfirmButtonWrapper>
-        </div>
+              <AlertView
+                message={this.state.alertText}
+                closePopup={this.closePopup}
+              />
+            </Popup>
+          :
+            <div>
+              <SubmitStyled.Header>{this.props.heading}</SubmitStyled.Header>
+              <SubmitStyled.RatingTextArea
+                placeholder={this.props.heading === 'Rate video' ? 'Comment' : ''}
+                onChange={event => this.setState({ comment: event.target.value })}
+              />
+              {this.props.heading === 'Rate video' && <StarRating onClick={rating => this.setState({ rating })} center />}
+              <SubmitStyled.ErrorWrapper>
+                {this.props.error && <SubmitStyled.ErrorMsg>{this.props.error}</SubmitStyled.ErrorMsg>}
+              </SubmitStyled.ErrorWrapper>
+              <SubmitStyled.ConfirmButtonWrapper>
+                <SubmitStyled.ConfirmButton
+                  onClick={this.sendReason}
+                  disabled={(!this.state.rating && this.props.heading === 'Rate video') || (this.props.heading !== 'Rate video' && !this.state.comment)}
+                >
+                  Submit
+                </SubmitStyled.ConfirmButton>
+              </SubmitStyled.ConfirmButtonWrapper>
+            </div>
+        }
       </SubmitStyled>
     );
   }
