@@ -30,6 +30,7 @@ class VideoPopup extends React.Component {
       sharePopup: false,
       hasMore: true,
       commentText: '',
+      videoContentHeight: null,
     };
   }
 
@@ -119,6 +120,19 @@ class VideoPopup extends React.Component {
     if (this.state.commentText !== '') {
       this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
       this.setState({ commentText: '' });
+    }
+  }
+
+  setVideoContentHeight = (node) => {
+    let { videoContentHeight } = this.state;
+    videoContentHeight = node.clientWidth / (this.props.selectedVideo.width / this.props.selectedVideo.height);
+    this.setState({ videoContentHeight })
+  }
+
+  setVideoContentRef = (node) => {  
+    if (!this.videoContent) {
+      this.videoContent = node;
+      this.setVideoContentHeight(node)
     }
   }
 
@@ -214,6 +228,7 @@ class VideoPopup extends React.Component {
     return (
       <RequestFlowPopup
         noDisableScroll={this.props.noDisableScroll}
+        autoWidth
         dotsCount={0}
         selectedDot={1}
         closePopUp={() => props.closePopUp()}
@@ -234,7 +249,7 @@ class VideoPopup extends React.Component {
                         </React.Fragment>
                     }
                   </VideoPopupStyled.VideoPlayerWrapper>
-                  <VideoPopupStyled.VideoContent>
+                  <VideoPopupStyled.VideoContent innerRef={node => this.setVideoContentRef(node)} height={this.state.videoContentHeight}>
                     <VideoPopupStyled.VideoRequester>
                       <VideoPopupStyled.StarLink to={`/${props.selectedVideo.user_id}`}>
                         <VideoPopupStyled.VideoRequestImage

@@ -63,6 +63,7 @@ export default class RequestFlowPopup extends React.Component {
         <PopupStyled.SmallContainer
           modalView={this.props.modalView}
           largePopup={this.props.largePopup}
+          autoWidth={this.props.autoWidth}
           innerRef={node => this.popupContent = node}
         >
           {

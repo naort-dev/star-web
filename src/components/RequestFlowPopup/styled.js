@@ -36,6 +36,7 @@ PopupStyled.Container = styled.div`
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
+    overflow: initial;
     margin: auto;
     height: auto;
     justify-content: center;
@@ -48,7 +49,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   width: 100%;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: 50%;
+    width: ${props => !props.autoWidth && '50%'};
     min-width: 200px;
     max-width: ${props => (props.largePopup ? '900px' : '600px')};
   }
