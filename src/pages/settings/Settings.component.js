@@ -13,13 +13,11 @@ export default class Requests extends React.Component {
     this.fanTabs = ['Account', 'Invite friends'];
     this.fanLinks = [
       { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-      { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
     ];
     this.starTabs = ['Account', 'Profile details', 'Share profile'];
     this.starLinks = [
       { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
       { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-      { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
     ];
     this.groupTabs = ['Account', 'Group details', 'Share online'];
   }
