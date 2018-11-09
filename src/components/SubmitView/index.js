@@ -49,9 +49,7 @@ export default class SubmitView extends React.Component {
   static getDerivedStateFromProps = (props, state) => {
     let { alertText } = state;
     if (props.submitStatus) {
-      if (props.heading === 'Rate video') props.onRatingSuccess();
       props.clearPopupError();
-      // props.closePopup(state.rating);
       alertText = props.successMessage;
     }
     return { alertText };
