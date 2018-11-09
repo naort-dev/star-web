@@ -136,7 +136,7 @@ StarProfileStyled.profileWrapper = styled.div`
         margin-top: 40px;
         margin-bottom: 20px;
       }
-      section {
+      & > div > section {
         height: 500px;
       }
     }
@@ -367,94 +367,6 @@ StarProfileStyled.FavoriteButton = styled.button`
   background-color: transparent;
 `;
 
-StarProfileStyled.memberListPopup = styled.div`
-  height: calc( 100% - 75px);
-  .popupHeading {
-    font-size: 32px;
-    color: #4c555d;
-    border-bottom: 1px solid #ddd;
-    padding: 10px 40px;
-    @media(max-width: 767px) {
-      font-size: 25px;
-      padding-left: 10px;
-    }
-  }
-  .memberPopup section {
-    height: 500px;
-    @media(max-width: 480px) {
-      padding-left: 0;
-      padding-right: 0;
-    }
-  }
-  .memberDetails {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-direction: row;
-    margin: 0 45px;
-    padding-bottom:15px;
-    padding-top: 15px;
-    border-bottom: 1px solid #e2e2e2;
-    @media(max-width: 767px) {
-      margin: 0 5px;
-      width: 100%;
-    }
-    ${memberImage} {
-      width: 110px;
-      height: 110px;
-      @media(max-width: 767px) {
-        width: 80px;
-        height: 80px;
-      }
-    }
-    .memberPopupDetails {
-      font-size: 18px;
-      line-height: 25px;
-      margin: 20px 3% 20px 5px;
-      min-width: 200px;
-      @media(max-width: 767px) {
-        font-size: 16px;
-        line-height: 25px;
-        margin: 20px 0 20px 15px;
-        min-width: 140px;
-        width: 100%;
-      }
-      @media(max-width: 480px) {
-        margin-left: 10px;
-      }
-      .memberName {
-        margin-top: 5px;
-      }
-      .jobDetails {
-        color: #9e9e9e;
-        word-break: break-all;
-        font-size: 16px;
-        @media(max-width: 767px) {
-          font-size: 14px;
-        }
-      }
-    }
-    .memberDetailButton{
-      background-color: #dadada;
-      color: #676767;
-      width: 150px;
-      text-align: center;
-      font-size: 16px;
-      font-family: Avenir - Medium;
-      cursor: pointer;
-      padding: 12px;
-      height: 45px;
-      -webkit-text -decoration: none;
-      text-decoration: none;
-      outline: none;
-      border-radius: 5px;
-      border-width: 2px;
-      border-style: solid;
-      border-color: #dadada;
-      border-image: initial;
-    }
-`;
-
 StarProfileStyled.memberDetailButton = styled.a`
   background-color: #dadada;
   color: #676767;
@@ -515,9 +427,14 @@ StarProfileStyled.PopupButton = styled.button`
 StarProfileStyled.ScrollListWrapper = styled.div`
   height: calc(100% - 32px);
   padding-bottom: 47px;
+  width: 80%;
+  margin: 0 auto;
   @media(min-width: 768px) {
     height: calc(100% - 39px);
     padding-bottom: 0;
+  }
+  .videoItem {
+    width: calc(33% - 20px);
   }
 `;
 
@@ -526,6 +443,62 @@ StarProfileStyled.NoData = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+StarProfileStyled.ImageSection = styled.div`
+  position:relative;
+  background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/pending-video.png)')};
+  background-color: ${props => !props.imageUrl && '#F2F2F2'}; 
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
+  height: 150px;
+  cursor: pointer;
+  display: ${props => (props.mobile ? 'flex' : 'none')};
+  justify-content: center;
+  align-items: center;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: ${props => props.imageUrl && '#0000007a'};
+  }
+  @media(min-width: 768px) {
+    display: ${props => (props.mobile ? 'none' : 'flex')};
+    margin: 10px;
+  }
+  &:hover .videoDetails {
+    display: flex;
+  }
+  .videoDetails {
+    display: none;
+    position: absolute;
+    background: #000000c7;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: #fff;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+  }
+`;
+
+StarProfileStyled.PlayButton = styled.span`
+  background: url(assets/images/play-button.svg) no-repeat;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  display: ${props => (props.isVisible ? 'inline-block' : 'none')};
+  background-size: contain;
+  background-size: 40px;
+  z-index: 1;
+  background-position: center center;
 `;
 
 StarProfileStyled.profileImage = profilePicture;

@@ -124,7 +124,7 @@ export default class ScrollList extends React.Component {
   }
 
   renderList() {
-    if (this.props.videos) {
+    if (this.props.videos) { 
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
@@ -171,6 +171,10 @@ export default class ScrollList extends React.Component {
           key={index}
         />
       ));
+    } else if (this.props.starVideos) {
+      return this.props.dataList.map((item, index) => {
+        return this.props.renderFunction(item, index);
+      });
     }
     return this.props.dataList.map((item, index) => {
       let coverPhoto;

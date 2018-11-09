@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import AppBanner from '../../components/AppBanner';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
+import VideoPopup from '../../components/VideoPopup';
 import { ImageStack } from '../../components/ImageStack';
 import Popup from '../../components/Popup';
 import { fetch } from '../../services/fetch';
@@ -19,10 +20,12 @@ export default class Starprofile extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
-      selectedTab: 'All',
       favouriteSelected: props.userDetails.is_follow || false,
       showPopup: null,
+      videoActive: false,
+      selectedVideo: null,
     };
+    this.coverImage = new Image();
   }
 
   componentWillMount() {
@@ -126,13 +129,32 @@ export default class Starprofile extends React.Component {
     }
   }
 
+  enableVideoPopup = (selectedVideo) => {
+    this.setState({ videoActive: true, selectedVideo });
+  }
+
+  renderItem = (item, index) => {
+    return (
+      <li className="videoItem" key={index}>
+        <StarProfileStyled.ImageSection
+          onClick={() => this.enableVideoPopup(item)}
+          imageUrl={item.s3_thumbnail_url}
+        >
+          {item.s3_thumbnail_url ? <StarProfileStyled.PlayButton isVisible /> : null}
+          <div className="videoDetails">{item.booking_title}</div>
+        </StarProfileStyled.ImageSection>
+      </li>
+    );
+  };
+
   renderVideoList = () => {
     if (this.props.videosList.data.length) {
       return (
         <ScrollList
           dataList={this.props.videosList.data}
-          videos
+          starVideos
           starsPage
+          renderFunction={this.renderItem}
           limit={this.props.videosList.limit}
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
@@ -172,6 +194,15 @@ export default class Starprofile extends React.Component {
 
     return (
       <StarProfileStyled>
+        {
+          this.state.videoActive &&
+          <VideoPopup
+            videoPopupLoading={this.state.videoPopupLoading}
+            noSlider
+            selectedVideo={this.state.selectedVideo}
+            closePopUp={() => this.setState({ videoActive: false })}
+          />
+        }
         {
           this.state.showAppBanner && !this.isMyStarPage() && Object.keys(this.props.userDetails).length && Object.keys(this.props.celebrityDetails).length ?
             <AppBanner

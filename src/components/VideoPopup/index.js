@@ -225,8 +225,13 @@ class VideoPopup extends React.Component {
                 <VideoPopupStyled.VideoPlayer>
                   <VideoPopupStyled.VideoPlayerWrapper>
                     <VideoPlayer {...videoPlayerProps} />
-                    <VideoPopupStyled.LeftSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex-1)} />
-                    <VideoPopupStyled.RightSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex+1)} />
+                    {
+                      !props.noSlider &&
+                        <React.Fragment>
+                          <VideoPopupStyled.LeftSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex - 1)} />
+                          <VideoPopupStyled.RightSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex + 1)} />
+                        </React.Fragment>
+                    }
                   </VideoPopupStyled.VideoPlayerWrapper>
                   <VideoPopupStyled.VideoContent>
                     <VideoPopupStyled.VideoRequester>
