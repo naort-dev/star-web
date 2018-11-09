@@ -57,8 +57,9 @@ StarProfileStyled.sectionWrapper = styled.div`
   }
   .image-gallery-slides, .image-gallery-slides img {
     min-height: 130px;
-    // max-height: 430px;
-    // object-fit: cover;
+    max-height: 400px;
+    object-fit: cover;
+    object-position: top;
   }
 `;
 
@@ -308,6 +309,9 @@ StarProfileStyled.getStartedButton = styled.button`
     min-width: 200px;
     padding: 10px;
   }
+  .bookButton {
+    font-family: 'Avenir-Regular';
+  }
 `;
 StarProfileStyled.followingButton = styled.div`
   background-color: ${props => (props.followedText === 'Requested' ? '#dadada' : '#fff')}; 
@@ -429,12 +433,32 @@ StarProfileStyled.ScrollListWrapper = styled.div`
   padding-bottom: 47px;
   width: 80%;
   margin: 0 auto;
-  @media(min-width: 768px) {
-    height: calc(100% - 39px);
-    padding-bottom: 0;
+  @media(max-width: 1024px) {
+    display: none;
   }
   .videoItem {
     width: ${props => (props.count > 1 ? `calc(100%/${props.count} - 20px)` : '100%')};
+  }
+`;
+
+StarProfileStyled.ScrollMobWrapper = styled.div`
+  height: 200px;
+  padding-bottom: 47px;
+  width: 80%;
+  margin: 0 auto;
+  display: none;
+  @media(max-width: 1024px) {
+    display: block;
+  }
+  .videoMobScroll {
+    height: 200px;
+    .videoItem {
+      width: 250px;
+      min-width: 250px;
+    }
+    ul {
+      justify-content: center;
+    }
   }
 `;
 
@@ -452,7 +476,7 @@ StarProfileStyled.ImageSection = styled.div`
   background-repeat:no-repeat;
   background-position: center;
   background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
-  height: ${props => (props.count > 1 ? `calc(450px / ${props.count} - 20px)` : '450px')};
+  height: ${props => (props.count > 1 ? `calc(450px / ${props.count} - 20px)` : '430px')};
   cursor: pointer;
   display: ${props => (props.mobile ? 'flex' : 'none')};
   justify-content: center;
@@ -505,482 +529,3 @@ StarProfileStyled.profileImage = profilePicture;
 StarProfileStyled.memberProfileImage = memberImage;
 
 export default StarProfileStyled;
-
-
-// import styled, { keyframes } from 'styled-components';
-
-// const menuEnter = keyframes`
-//   from {
-//     opacity: 0;
-//   }
-
-//   to {
-//     opacity: 1;
-//   }
-// `;
-
-// const Detail = styled.section`
-//  display:flex;
-//  padding-top: 60px;
-//  flex-direction: column;
-//  padding-bottom: 40px;
-//  height: 100%;
-//  max-width: 1920px;
-//  @media(min-width: 1025px){
-//   flex-direction: row;
-//   padding-bottom: 0;
-//   height: 100%;
-//   background-color: #F8F8F8;
-//  }
-//  @media(min-width: 1920px) {
-//   padding-top: 72px;
-// }
- 
-// `;
-// Detail.Wrapper = styled.div`
-//  height: 100vh;
-// `;
-
-// Detail.Content = styled.div`
-//  height: 100%;24px
-// `;
-
-// Detail.sideSection = styled.section`
-//   background-color: #fff;
-//   height: ${props => props.menuActive && '100%'};
-//   @media(min-width: 1025px) {
-//     width:25%;
-//     max-width: 310px;
-//     display: inline-block;
-//     position: fixed;
-//     left: 0;
-//     top: 60px;
-//     box-shadow: 0px 3px 7px 0px #cccccc inset;
-//     bottom: 0;
-//     overflow: auto;
-//   }
-// `;
-// Detail.LeftSection = styled.div`
-//   width:100%;
-//   background-color: #fff;
-//   animation: ${menuEnter} 0.3s linear;
-//   @media(min-width: 1025px){
-//     width:40%;
-//     padding: 0px 0px;
-//   }
-
-// `;
-// Detail.RightSection = styled.div`
-//   width:100%
-//   padding: 0px 0px;
-//   height: ${props => (props.isNotEmpty ? 'calc(100% - 237px)' : '170px')};
-//   min-height: ${props => (props.isNotEmpty ? 'calc(95vh - 54px)' : 'auto')};
-//   position: relative;
-//   @media(min-width: 768px) {
-//     height: calc(100% - 426px);
-//     min-height: calc(100vh - 60px);
-//     padding-bottom: 58px;
-//   }
-//   @media(min-width: 1025px){
-//     width:60%;
-//     height: 100%;
-//     padding: 27px 35px;
-//     padding-bottom: 0;
-//   }
-//   @media(min-width: 1920px) {
-//     padding-top: 48px;
-//   }
-// `;
-// Detail.SmallScreenLayout = styled.div`
-//   width:100%;
-//   @media(min-width:1025px){
-//     display:none;
-//   }
-// `;
-
-// Detail.LargeScreenLayout = styled.div`
-//   display: none;
-//   @media(min-width:1025px){
-//     display:block;
-//     height: calc(100% - 89px);
-//     padding-bottom: 16px;
-//   }
-// `;
-// Detail.RequestControllerWrapper = styled.div`
-//   position: fixed;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   padding: 7px 16px;
-//   background-color: #fff;
-//   z-index: 5;
-//   box-shadow: 0px -6px 8px rgba(0, 0, 0, 0.04);
-//   @media(min-width: 768px) {
-//     padding: 13px 44px;
-//   }
-//   @media(min-width:1025px){
-//     padding: 27px 0;
-//     margin: 0 42px;
-//     position:relative;
-//     box-shadow: none;
-//     border-top: solid #333333 1px;
-//   }
-// `;
-
-// Detail.VideoPlayWrapper = styled.div`
-//   position: fixed;
-//   animation: ${menuEnter} 0.2s linear;
-//   top: 0;
-//   left: 0;
-//   right: 0;
-//   bottom: 0;
-//   background: #000;
-//   z-index: 11;
-//   @media(min-width: 768px) {
-//     top: 60px;
-//     background: #fff;
-//     padding: 150px 44px 58px;
-//     z-index: 1;
-//   }
-//   @media(min-width: 1025px) {
-//     position: absolute;
-//     top: 0;
-//     padding-top: 44px;
-//     height: 100%;
-//   }
-// `;
-
-// Detail.VideoPlayerSection = styled.div`
-//   height: 100%;
-//   padding-top:47px;
-//   @media(min-width: 1025px) {
-//     padding-top: 20px;
-//   }
-// `;
-
-// Detail.VideoPlayerContent = styled.div`
-//   height: calc(100vh - 50px);
-//   @media(min-width: 768px) {
-//     display: flex;
-//     align-items: center;
-//     flex-direction: column;
-//     height: auto;
-//     padding-bottom: 20px;
-//   }
-//   @media(min-width: 1025px) {
-//     padding: 0;
-//   }
-// `;
-
-// Detail.VideoPlayer = styled.div`
-//   width: 100%;
-//   height: 100%;
-//   background: #000;
-//   @media(min-width:768px) {
-//     width: ${props => `${props.videoWidth}px`};
-//     height: ${props => `${props.videoHeight}px`}
-//     max-width: 640px;
-//     max-height: 480px;
-//     padding: 0;
-//   }
-//   @media(min-width: 1025px) {
-//     height: calc(100vh - 341px);
-//     max-width: 100%;
-//     max-height: none;
-//   }
-// `;
-// Detail.VideoContent = styled.section`
-//   display: none;
-//   @media(min-width: 768px) {
-//     margin-top: 20px;
-//     display: block;
-//   }
-// `;
-// Detail.VideoTitle = styled.span`
-//   display: block;
-//   font-size: 20px;
-//   font-family: 'Avenir-Bold';
-//   text-align: center;
-//   @media(min-width: 1025px) {
-//     font-size: 16px;
-//   }
-
-// `;
-// Detail.VideoRequester = styled.div`
-//   display: none;
-//   @media(min-width: 768px) {
-//     margin-top: 20px;
-//     display: block;
-//     text-align: center;
-//   }
-//   @media(min-width: 1025px) {
-//     margin-top: 0px;
-//     margin-bottom: 22px;
-//   }
-// `;
-// Detail.VideoRequestImage = styled.span`
-//   border-radius: 50%;
-//   display: inline-block;
-//   background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
-//   background-repeat:no-repeat;
-//   background-position: center;
-//   background-size:cover;
-//   height:40px;
-//   border: solid 2px #FFFFFF;
-//   box-shadow: 2px 2px 9px #4f4f4f;
-//   width:40px;
-//   position: relative;
-//   top: 8px;
-//   margin-right: 20px;
-//   @media(min-width: 768px) {
-//     width: 48px;
-//     height: 48px;
-//   }
-//   @media(min-width: 1025px) {
-//     width: 30px;
-//     height: 30px;
-//     margin-right: 11px;
-//   }
-// `;
-// Detail.VideoRequestName = styled.span`
-//   display: inline-block;
-//   color: rgba(51, 51, 51, 0.72);
-//   font-size: 16px;
-//   font-family: 'Avenir-Regular';
-//   vertical-align: top;
-//   padding-top: 22px;
-//   @media(min-width: 1025px) {
-//     padding-top: 17px;
-//     font-size: 14px;
-//   }
-// `;
-// Detail.RelatedVideos = styled.ul`
-//   display: none;
-//   @media(min-width: 1025px) {
-//     width: 100%;
-//     height: calc(100% - 400px);
-//     min-height: 100%;
-//     padding: 0 50px;
-//     display: block;
-//     padding-top: 20px;    
-//   }
-// `;
-// Detail.RelatedVideosItem = styled.li`
-//   width: 100%
-//   display: inline-block;
-//   margin-bottom: 20px;
-//   padding-left: 0;
-//   vertical-align: top;
-//   animation: ${menuEnter} 0.2s linear;
-//   @media(min-width: 768px) {
-//     width: calc(50%);
-//     border-right: 20px solid transparent;
-//     &:nth-child(even) {
-//       border-right: 0;
-//     }
-//   }
-//   @media(min-width: 1025px) {
-//     width: calc(33.33%);
-//     margin-bottom: 30px;
-//     &:nth-child(even) {
-//       border-right: 20px solid transparent;
-//     }
-//     &:nth-child(3n) {
-//       border-right: 0;
-//     }
-//   }
-// `;
-// Detail.CloseButton = styled.span`
-//   position: absolute;
-//   top: 16px;
-//   right: 18px;
-//   display: inline-block;
-//   width: 30px;
-//   height: 30px;
-//   background: url('assets/images/close-icon-orange.svg') no-repeat;
-//   background-size: cover;
-//   background-position: center center;
-//   @media(min-width: 768px) {
-//     right: 44px;
-//   }
-//   @media(min-width: 1025px) {
-//     right: 50px;
-//     width: 24px;
-//     height: 24px;
-//   }
-// `;
-
-// Detail.AboutDetailsWrapper = styled.article`
-//   padding: 16px;
-//   height: 450px;
-//   overflow-y: auto;
-//   line-height: 30px;
-//   padding-bottom: 50px;
-//   @media(min-width: 768px) {
-//     padding: 10px 44px;
-//   }
-// `;
-// Detail.AboutDetailHeading = styled.span`
-//   display: block;
-//   text-align: center;
-//   color: #FF953C;
-//   margin-bottom: 10px;
-// `;
-// Detail.AboutDetailContent = styled.p`
-//   line-height: 22px;
-//   font-size: 14px;
-//   color: rgba(51, 51, 51, 0.72);
-//   font-family: 'Avenir-Light';
-// `;
-// Detail.ImageRenderDiv = styled.div`
-
-// `;
-// Detail.ImageSection = styled.div`
-//   right:0;
-//   position:relative;
-//   width:100%;
-//   background: ${props => !props.imageUrl && 'url(assets/images/default-cover.jpg)'};
-//   background-size: cover;
-//   background-repeat: no-repeat;
-//   background-position: center center;
-//   min-height: 120px;
-//   @media(min-width: 768px) {
-//     min-height: 300px;
-//   }
-// `;
-// Detail.CoverImage = styled.img`
-//   width: 100%;
-//   display: block;
-//   max-height: 80vh;
-// `;
-// Detail.BannerImage = styled.img`
-//   width:100%;
-// `;
-// Detail.ProfileImageWrapper = styled.div`
-//   position:absolute;
-//   right:0;
-//   left:0;
-//   bottom: 0;
-//   text-align:center;
-//   background-image: linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(34,34,34,0.1),rgba(34,34,34,.3) 100%);
-
-// `;
-// Detail.ProfileImage = styled.span`
-//   border-radius: 50%;
-//   display: inline-block;
-//   background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
-//   background-repeat:no-repeat;
-//   background-position: center;
-//   background-size:cover;
-//   height:40px;
-//   border: solid 2px #FFFFFF;
-//   box-shadow: 2px 2px 9px #4f4f4f;
-//   width:40px;
-//   position: relative;
-//   top: 8px;
-//   @media(min-width: 768px) {
-//     width: 48px;
-//     height: 48px;
-//   }
-// `;
-// Detail.FavoriteButton = styled.button`
-//   background-image: url( 'assets/images/icon_favorite_40b.png' );
-//   background-repeat:no-repeat;
-//   background-position: center;
-//   border:none;
-//   padding:18px;
-//   background-size: 27px;
-//   position:absolute;
-//   bottom: 4px;
-//   background-color: transparent;
-//   right: 8px;
-// `;
-// Detail.ProfileContent = styled.div`
-//   margin-top: 18px;
-// `;
-// Detail.Span = styled.span`
-//   text-align:center;
-// `;
-// Detail.StarName = styled.h4`
-//   font-size: 18px;
-//   color: #FF6C58;
-//   font-family: 'Avenir-Bold';
-// `;
-// Detail.StarDetails = styled.p`
-//   font-size: 12px;
-//   color:rgba(34, 34, 34, 0.7);
-//   font-family: 'Avenir-Light';
-//   margin-top: 8px;
-//   @media(min-width: 768px) {
-//     font-size: 14px;
-//   }
-// `;
-// Detail.PopupContainer = styled.div`
-//   background-color:white;
-//   width:100%;
-//   height:300px;
-//   padding:52px 36px;
-// `;
-// Detail.PopupContent = styled.div`
-//   font-size: 14px;
-//   font-family: 'Avenir-Bold';
-//   color: #FF6C58;
-  
-// `;
-// Detail.Article = styled.article`
-//   padding-bottom:20px;
-// `;
-// Detail.AppIconWrapper = styled.div`
-//   text-align: center;
-//   @media(min-width: 768px) and (max-width: 1024px) {
-    
-   
-//   }
-//   @media(min-width: 1025px) {
-//     margin: 0;
-//     text-align: center;
-//   }
-// `;
-// Detail.Link = styled.a`
-//   width: 100%;
-//   display: block;
-// `;
-// Detail.StoreIcon = styled.img`
-//   cursor: pointer;
-//   width: 117px;
-//   height: 40px;
-//   margin: 10px;
-//   margin-left: 0;
-//   display: inline-block;
-// `;
-
-// const HeaderSection = styled.div`
-//   display:flex;
-//   justify-content: space-between;
-//   align-items: center;
-  
-// `;
-
-// HeaderSection.HeaderNavigation = styled.button`
-//   background-image: url( 'assets/images/icon_back_40a.svg' );
-//   background-repeat: no-repeat;
-//   background-position: center;
-//   border:none;
-//   padding:20px;
-//   background-size: 26px;
-//   background-color:white;
-//   cursor: pointer;
-//   outline:none;
-// `;
-
-// HeaderSection.Small = HeaderSection.extend`
-// background-image: linear-gradient(0deg,rgba(0,0,0,0) 0%,rgba(34,34,34,0.1),rgba(34,34,34,.3) 100%);
-// width: 100%;
-// position: absolute;
-// z-index: 2;
-// `;
-// HeaderSection.HeaderNavigationMobile = HeaderSection.HeaderNavigation.extend`
-// background-image: url( 'assets/images/icon_back_40_white.svg' );
-// background-color: initial;
-// `;
-// export { Detail, HeaderSection };

@@ -3,6 +3,7 @@ import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
+import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import AppBanner from '../../components/AppBanner';
 import Loader from '../../components/Loader';
@@ -14,6 +15,7 @@ import { fetch } from '../../services/fetch';
 import StarProfileStyled from '../starProfile/styled';
 import { setMetaTags } from '../../utils/setMetaTags';
 import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
+import HorizontalScrollList from '../../components/HorizontalScrollList';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -133,6 +135,16 @@ export default class Starprofile extends React.Component {
     this.setState({ videoActive: true, selectedVideo });
   }
 
+  vf = () => {
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
+    return (
+      <React.Fragment>
+        <span>${rate}</span>
+        <span className="bookButton"> Book {this.props.userDetails.first_name}</span>
+      </React.Fragment>
+    );
+  }
+
   renderItem = (item, index) => {
     return (
       <li className="videoItem" key={index}>
@@ -140,6 +152,21 @@ export default class Starprofile extends React.Component {
           onClick={() => this.enableVideoPopup(item)}
           imageUrl={item.s3_thumbnail_url}
           count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}
+        >
+          {item.s3_thumbnail_url ? <StarProfileStyled.PlayButton isVisible /> : null}
+          <div className="videoDetails">{item.booking_title}</div>
+        </StarProfileStyled.ImageSection>
+      </li>
+    );
+  };
+
+  renderMobItem = (item, index) => {
+    return (
+      <li className="videoItem" key={index}>
+        <StarProfileStyled.ImageSection
+          onClick={() => this.enableVideoPopup(item)}
+          imageUrl={item.s3_thumbnail_url}
+          count={3}
         >
           {item.s3_thumbnail_url ? <StarProfileStyled.PlayButton isVisible /> : null}
           <div className="videoDetails">{item.booking_title}</div>
@@ -192,6 +219,8 @@ export default class Starprofile extends React.Component {
     // }
     const descriptionLength = this.props.celebrityDetails.description ?
       this.props.celebrityDetails.description.length : 0;
+
+     
 
     return (
       <StarProfileStyled>
@@ -282,7 +311,7 @@ export default class Starprofile extends React.Component {
               <div className="socialMediaIcons">
                 <StarProfileStyled.ButtonWrapper>
                   <StarProfileStyled.getStartedButton onClick={() => this.handleRequest()}>
-                    {this.props.celebrityDetails.availability && remainingBookings > 0 ? `$${rate} Book ${this.props.userDetails.first_name}` : 'Alert Me'}
+                    {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.vf() : 'Alert Me'}
                   </StarProfileStyled.getStartedButton>
                 </StarProfileStyled.ButtonWrapper>
                 {this.props.userDetails.social_links &&
@@ -299,6 +328,24 @@ export default class Starprofile extends React.Component {
                       this.renderVideoList()
                   }
                 </StarProfileStyled.ScrollListWrapper>
+                <StarProfileStyled.ScrollMobWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
+                  <div className="videoMobScroll">
+                    <Scrollbars>
+                      <HorizontalScrollList
+                        noDataText="Be the first to get this type of video!"
+                        starVideos
+                        starsPage
+                        renderFunction={this.renderMobItem}
+                        dataList={this.props.videosList.data}
+                        limit={this.props.videosList.limit}
+                        totalCount={this.props.videosList.count}
+                        offset={this.props.videosList.offset}
+                        loading={this.props.videosList.loading}
+                        fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
+                      />
+                    </Scrollbars>
+                  </div>
+                </StarProfileStyled.ScrollMobWrapper>
               </div>
             </div>
           </StarProfileStyled.profileWrapper>
