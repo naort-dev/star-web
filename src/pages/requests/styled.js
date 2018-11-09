@@ -15,7 +15,7 @@ RequestsStyled.sectionWrapper = styled.div`
 `;
 
 RequestsStyled.ContentWrapper = styled.section`
-  height: calc(100% - 80px);
+  height: calc(100% - 83px);
 `;
 
 RequestsStyled.StatusTypeWrapper = styled.section`

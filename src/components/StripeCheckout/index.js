@@ -2,6 +2,8 @@ import React from 'react';
 import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
+import AlertView from '../../components/AlertView';
+import Popup from '../../components/Popup';
 import { requestTypes } from '../../constants/requestTypes';
 import Checkout from './checkout';
 import {
@@ -10,6 +12,7 @@ import {
   paymentFetchSourceEnd,
   fetchSourceList,
   modifySourceList,
+  resetPaymentsError,
 } from '../../store/shared/actions/processPayments';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
@@ -97,7 +100,7 @@ class StripeCheckout extends React.Component {
               >
                 <PaymentStyled.cardItemDetails
                   selected={this.state.selectedCardIndex === index}
-                  onClick={() => this.setState({ selectedCardIndex: index })}
+                  onClick={() => this.setState({ selectedCardIndex: index, selectedSourceId: this.props.sourceList[index].id })}
                 >
                   <PaymentStyled.CardTypeIcon cardImage={cardTypeImageFinder(this.props.sourceList[index].brand)} />
                   <PaymentStyled.CardNumber>
@@ -130,6 +133,19 @@ class StripeCheckout extends React.Component {
   render() {
     return (
       <PaymentStyled.wrapper>
+        {
+          this.props.error ?
+            <Popup
+              smallPopup
+              closePopUp={this.props.resetPaymentsError}
+            >
+              <AlertView
+                message={this.props.error.message.split(':')[1]}
+                closePopup={this.props.resetPaymentsError}
+              />
+            </Popup>
+          : null
+        }
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
         <PaymentStyled.StarDetailsWrapper>
           <PaymentStyled.StarNameWrapper>
@@ -206,6 +222,7 @@ class StripeCheckout extends React.Component {
 const mapStateToProps = state => ({
   loading: state.paymentDetails.loading,
   requestDetails: state.paymentDetails.requestDetails,
+  error: state.paymentDetails.error,
   paymentStatus: state.paymentDetails.paymentStatus,
   sourceList: state.paymentDetails.sourceList,
 });
@@ -215,6 +232,7 @@ const mapDispatchToProps = dispatch => ({
   paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),
+  resetPaymentsError: () => dispatch(resetPaymentsError()),
   modifySourceList: (source, customer, action) => dispatch(modifySourceList(source, customer, action)),
 });
 
