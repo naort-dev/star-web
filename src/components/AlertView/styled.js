@@ -8,7 +8,7 @@ const AlertStyled = styled.div`
   background-color: #fff;
 `;
 
-AlertStyled.PopupHeader = styled.span`
+AlertStyled.Header = styled.span`
   font-size: 16px;
   font-family: 'Avenir-Bold';
 `;
