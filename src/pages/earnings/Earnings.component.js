@@ -12,8 +12,8 @@ export default class Earnings extends React.Component {
     super(props);
     this.state = {
       innerLinks: [
-        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
+        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
       ],
       selectedTab: 'All',
       scrollTarget: '',
