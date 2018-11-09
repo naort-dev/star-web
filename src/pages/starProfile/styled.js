@@ -450,18 +450,23 @@ StarProfileStyled.ScrollMobWrapper = styled.div`
   @media(max-width: 1024px) {
     display: block;
   }
+  @media(max-width: 480px) {
+    width: 100%;
+    height: 240px;
+  }
   .videoMobScroll {
     height: 200px;
     .videoItem {
       width: 250px;
       min-width: 250px;
+      margin: 10px;
       @media(max-width: 480px) {
         width: 200px;
         min-width: 200px;
       }
     }
     ul {
-      justify-content: center;
+      justify-content: flex-start;
     }
   }
 `;
