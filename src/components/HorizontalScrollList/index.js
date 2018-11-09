@@ -145,6 +145,10 @@ export default class HorizontalScrollList extends React.Component {
       return this.props.dataList.map((item, index) => {
         return this.props.renderFunction(item, index);
       });
+    } else if (this.props.starVideos) {
+      return this.props.dataList.map((item, index) => {
+        return this.props.renderFunction(item, index);
+      });
     }
     return this.props.dataList.map((item, index) => {
       let coverPhoto;
