@@ -20,6 +20,7 @@ const PopupStyled = styled.div`
   justify-content: center;
   z-index: 11;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
     padding: 30px 0;
   }
@@ -33,18 +34,18 @@ PopupStyled.Container = styled.div`
   animation: ${popupEnter} 0.2s ease-out;
   @media(min-width: 768px) {
     margin: auto;
-    width: 100%;
     justify-content: center;
     align-items: center;
   }
 `;
 
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
+  padding: ${props => (props.modalView ? '0' : '31px 7px 20px')};
   width: 100%;
-  padding: 31px 7px 20px;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: 90%;
+    width: auto;
+    min-width: 200px;
     max-width: ${props => (props.largePopup ? '900px' : '600px')};
   }
 `;

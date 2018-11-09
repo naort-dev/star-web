@@ -25,6 +25,7 @@ ColumnLayoutStyled.sideSection = styled.section`
     height: 99%;
     display: inline-block;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
   @media(min-width: 1920px) {
     padding-top: 72px;

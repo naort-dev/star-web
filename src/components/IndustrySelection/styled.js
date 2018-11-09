@@ -29,6 +29,17 @@ IndustryStyled.HeaderContent = styled.div`
   width: 100%;
 `;
 
+IndustryStyled.HeaderTextWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+IndustryStyled.CompleteButton = styled.span`
+  cursor: pointer;
+  padding: 10px;
+`;
+
 IndustryStyled.HeaderText = styled.div`
   color:#676767;
   font-size:20px;
@@ -124,7 +135,7 @@ IndustryStyled.InnerCategoryWrapper = styled.div`
 `;
 
 IndustryStyled.ListContainer = styled.div`
-  padding: 15px 3px;
+  padding: 15px 10px;
   width: 100%;
   @media(min-width: 768px) {
     padding: 15px 40px;

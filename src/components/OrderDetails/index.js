@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import Scrollbars from 'react-custom-scrollbars';
 import VideoPlayer from '../VideoPlayer';
 import RequestFlowPopup from '../RequestFlowPopup';
 import DeclinePopup from './DeclinePopup';

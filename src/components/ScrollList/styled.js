@@ -15,6 +15,7 @@ const ListStyled = styled.section`
   padding-right: 10px;
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding-top: 20px;
   padding-bottom: 20px;
   position: relative;
