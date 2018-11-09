@@ -45,9 +45,9 @@ export default class Requests extends React.Component {
     const isCelebrity = nextProps.userDetails.settings_userDetails.celebrity;
     if (nextProps.starMode && !prevState.innerLinks.length) {
       innerLinks = [
-        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
         { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
+        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
       ];
     } else if (!prevState.innerLinks.length) {
       innerLinks = [
@@ -95,7 +95,7 @@ export default class Requests extends React.Component {
               celebrity: orderDetails.celebrity_id,
               abuse_comment: data.comment,
             })}
-            successMessage="Sent"
+            successMessage="The message has been sent."
             closePopup={this.closePopup}
           />
         );
@@ -105,7 +105,7 @@ export default class Requests extends React.Component {
             heading="Contact support"
             onSubmit={data => this.props.contactSupport({ comments: data.comment })}
             closePopup={this.closePopup}
-            successMessage="Sent"
+            successMessage="The message has been sent."
           />
         );
       case 'rate':
@@ -118,7 +118,7 @@ export default class Requests extends React.Component {
               starsona: orderDetails.id,
               comments: data.comment,
             })}
-            successMessage="Rating success"
+            successMessage="Your rating has been recorded!"
             closePopup={this.closePopup}
           />
         );
