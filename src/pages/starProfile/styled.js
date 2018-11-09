@@ -288,7 +288,7 @@ StarProfileStyled.getStartedButton = styled.button`
   text-decoration: none;
   display: inline-block;
   font-size:22px;
-  font-family: 'Avenir-Medium';
+  font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
   border-radius: 35px;
