@@ -140,6 +140,14 @@ export default class GroupProfile extends React.Component {
     const descriptionLength = this.props.groupDetails.group_details?
       this.props.groupDetails.group_details.description.length:0;
 
+    let followText = 'Follow';
+    if (this.props.userDetails && this.props.isLoggedIn && !this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) {
+      if (this.props.userDetails.role_details.role_code === ROLES.fan) {
+        followText = 'Follow';
+      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
+        followText = 'Support Group';
+      }
+    }
     let followedText = '';
     if (this.props.userDetails && this.props.isLoggedIn && this.props.userDetails.role_details) {
       if (this.props.userDetails.role_details.role_code === ROLES.fan && this.props.groupDetails.is_follow) {
@@ -198,7 +206,7 @@ export default class GroupProfile extends React.Component {
           />
           <GroupProfileStyled.profileWrapper>
             <div className="profileImageContainer">
-              <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : ''} alt="Profile" />
+              <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : '../../ assets / images / profile.png'} alt="Profile" />
             </div>
             <div className="profileDetails">
               <div className="groupDetailsContainer">
@@ -210,7 +218,7 @@ export default class GroupProfile extends React.Component {
                 <GroupProfileStyled.ButtonWrapper>
                   {(!this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) ?
                     <GroupProfileStyled.getStartedButton onClick={this.groupFollowStatus}>
-                    Follow
+                      {followText}
                     </GroupProfileStyled.getStartedButton>
                     : <GroupProfileStyled.followingButton onClick={this.groupFollowStatus} followedText={followedText}>
                       {followedText}

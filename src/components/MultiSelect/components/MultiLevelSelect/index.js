@@ -4,7 +4,6 @@ import MultiLevelStyled from './styled';
 
 const MultiLevelSelect = (props) => {
   const { option } = props;
-  console.log(props);
   if (option.parent) {
     return (
       <MultiLevelStyled.InnerListWrapper>
