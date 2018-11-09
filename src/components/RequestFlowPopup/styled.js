@@ -48,7 +48,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   width: 100%;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: auto;
+    width: 50%;
     min-width: 200px;
     max-width: ${props => (props.largePopup ? '900px' : '600px')};
   }
