@@ -191,7 +191,7 @@ GroupProfileStyled.profileWrapper = styled.div`
           text-align: center;
           min-width: 120px;
           @media(max-width: 1920px) and (min-width: 1025px) {
-            min-width: 90px;
+            min-width: 110px;
             width: calc( 20% - 20px);
           }
           @media (max-width: 1024px) {
