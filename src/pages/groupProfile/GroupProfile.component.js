@@ -141,7 +141,7 @@ export default class GroupProfile extends React.Component {
       this.props.groupDetails.group_details.description.length:0;
 
     let followText = 'Follow';
-    if (this.props.userDetails && this.props.isLoggedIn && !this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) {
+    if (this.props.userDetails && this.props.userDetails.role_details && this.props.isLoggedIn && !this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) {
       if (this.props.userDetails.role_details.role_code === ROLES.fan) {
         followText = 'Follow';
       } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
