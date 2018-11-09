@@ -434,7 +434,7 @@ StarProfileStyled.ScrollListWrapper = styled.div`
     padding-bottom: 0;
   }
   .videoItem {
-    width: calc(33% - 20px);
+    width: ${props => (props.count > 1 ? `calc(100%/${props.count} - 20px)` : '100%')};
   }
 `;
 
@@ -452,7 +452,7 @@ StarProfileStyled.ImageSection = styled.div`
   background-repeat:no-repeat;
   background-position: center;
   background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
-  height: 150px;
+  height: ${props => (props.count > 1 ? `calc(450px / ${props.count} - 20px)` : '450px')};
   cursor: pointer;
   display: ${props => (props.mobile ? 'flex' : 'none')};
   justify-content: center;

@@ -213,6 +213,7 @@ class VideoPopup extends React.Component {
     };
     return (
       <RequestFlowPopup
+        noDisableScroll={this.props.noDisableScroll}
         dotsCount={0}
         selectedDot={1}
         closePopUp={() => props.closePopUp()}

@@ -16,8 +16,10 @@ export default class RequestFlowPopup extends React.Component {
     if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
+    if (!this.props.noDisableScroll) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.modalView !== nextProps.modalView && nextProps.modalView) {

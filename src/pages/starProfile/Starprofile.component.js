@@ -139,6 +139,7 @@ export default class Starprofile extends React.Component {
         <StarProfileStyled.ImageSection
           onClick={() => this.enableVideoPopup(item)}
           imageUrl={item.s3_thumbnail_url}
+          count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}
         >
           {item.s3_thumbnail_url ? <StarProfileStyled.PlayButton isVisible /> : null}
           <div className="videoDetails">{item.booking_title}</div>
@@ -197,6 +198,7 @@ export default class Starprofile extends React.Component {
         {
           this.state.videoActive &&
           <VideoPopup
+            noDisableScroll
             videoPopupLoading={this.state.videoPopupLoading}
             noSlider
             selectedVideo={this.state.selectedVideo}
@@ -289,7 +291,7 @@ export default class Starprofile extends React.Component {
 
               <div className="videoListing">
                 <h2>Starsona videos from {this.props.userDetails.first_name}</h2>
-                <StarProfileStyled.ScrollListWrapper>
+                <StarProfileStyled.ScrollListWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
                   {
                     !this.props.videosList.data.length && this.props.videosList.loading ?
                       <Loader />
