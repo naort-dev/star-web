@@ -455,6 +455,10 @@ StarProfileStyled.ScrollMobWrapper = styled.div`
     .videoItem {
       width: 250px;
       min-width: 250px;
+      @media(max-width: 480px) {
+        width: 200px;
+        min-width: 200px;
+      }
     }
     ul {
       justify-content: center;
@@ -478,7 +482,7 @@ StarProfileStyled.ImageSection = styled.div`
   background-size: ${props => (props.imageUrl ? 'cover' : '50px')};
   height: ${props => (props.count > 1 ? `calc(450px / ${props.count} - 20px)` : '430px')};
   cursor: pointer;
-  display: ${props => (props.mobile ? 'flex' : 'none')};
+  display: flex;
   justify-content: center;
   align-items: center;
   &::after {
