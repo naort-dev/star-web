@@ -87,6 +87,7 @@ export default class Requests extends React.Component {
               celebrity: orderDetails.celebrity_id,
               abuse_comment: data.comment,
             })}
+            successMessage="Sent"
             closePopup={this.closePopup}
           />
         );
@@ -96,6 +97,7 @@ export default class Requests extends React.Component {
             heading="Contact support"
             onSubmit={data => this.props.contactSupport({ comments: data.comment })}
             closePopup={this.closePopup}
+            successMessage="Sent"
           />
         );
       case 'rate':
@@ -108,6 +110,7 @@ export default class Requests extends React.Component {
               starsona: orderDetails.id,
               comments: data.comment,
             })}
+            successMessage="Rating success"
             closePopup={this.closePopup}
             onRatingSuccess={this.closePopup}
           />
