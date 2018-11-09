@@ -123,7 +123,6 @@ export default class Requests extends React.Component {
           />
         );
       case 'respondSuccess':
-        console.log('asdasd')
         return (
           <AlertView
             message={`Thank you! Your video has been sent to ${fan}`}

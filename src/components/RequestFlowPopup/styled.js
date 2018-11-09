@@ -32,8 +32,12 @@ PopupStyled.Container = styled.div`
   position: relative;
   justify-content: center;
   animation: ${popupEnter} 0.2s ease-out;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
     margin: auto;
+    height: auto;
     justify-content: center;
     align-items: center;
   }
