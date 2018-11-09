@@ -17,6 +17,7 @@ export default class Requests extends React.Component {
     this.starTabs = ['Account', 'Profile details', 'Share profile'];
     this.starLinks = [
       { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
+      { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
       { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
     ];
     this.groupTabs = ['Account', 'Group details', 'Share online'];
