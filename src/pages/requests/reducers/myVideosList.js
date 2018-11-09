@@ -5,7 +5,7 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
-  limit: 20,
+  limit: 10,
   role: 'fan_id',
   status: 'all',
 };
