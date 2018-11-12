@@ -26,6 +26,7 @@ export default class Starprofile extends React.Component {
       showPopup: null,
       videoActive: false,
       selectedVideo: null,
+      offsetValue: 0,
     };
     this.coverImage = new Image();
   }
@@ -36,13 +37,13 @@ export default class Starprofile extends React.Component {
     if (!this.isMyStarPage()) {
       this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
     }
-    this.props.fetchCelebVideosList(0, true, this.getUserId(this.props));
+    this.props.fetchCelebVideosList(this.state.offsetValue, true, this.getUserId(this.props));
   }
   componentWillReceiveProps(nextProps) {
     if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
       this.props.resetCelebDetails();
       this.props.fetchCelebDetails(this.getUserId(nextProps));
-      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
+      this.props.fetchCelebVideosList(this.state.offsetValue, true, this.getUserId(nextProps));
     }
     if (nextProps.userDetails.is_follow !== this.state.favouriteSelected) {
       this.setState({ favouriteSelected: nextProps.userDetails.is_follow });
@@ -52,6 +53,11 @@ export default class Starprofile extends React.Component {
         this.props.toggleRequestFlow(true);
       }
       this.props.fetchCelebDetails(this.getUserId(nextProps));
+    }
+    if (nextProps.videosList.offset != this.state.offsetValue) {
+      this.setState({
+        offsetValue: nextProps.videosList.offset,
+      });
     }
   }
 
@@ -130,6 +136,17 @@ export default class Starprofile extends React.Component {
       this.props.toggleLogin(true);
     }
   }
+  
+  seeAllVideosAction = (offset) => {
+    const { count } = this.props.videosList;
+    const newOffset = offset + 6;
+    this.setState({
+      offsetValue: newOffset,
+    });
+    if (newOffset < count) {
+      this.props.fetchCelebVideosList(newOffset, true, this.getUserId(this.props));
+    }
+  }
 
   enableVideoPopup = (selectedVideo) => {
     this.setState({ videoActive: true, selectedVideo });
@@ -137,17 +154,21 @@ export default class Starprofile extends React.Component {
 
   vf = () => {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
+    let firstName = '';
+    if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
+      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name.split(' ')[0] : this.props.userDetails.first_name;
+    }
     return (
       <React.Fragment>
         <span>${rate}</span>
-        <span className="bookButton"> Book {this.props.userDetails.first_name}</span>
+        <span className="bookButton"> Book {firstName}</span>
       </React.Fragment>
     );
   }
 
-  renderItem = (item, index) => {
+  renderItem = (item) => {
     return (
-      <li className="videoItem" key={index}>
+      <li className="videoItem">
         <StarProfileStyled.ImageSection
           onClick={() => this.enableVideoPopup(item)}
           imageUrl={item.s3_thumbnail_url}
@@ -206,21 +227,16 @@ export default class Starprofile extends React.Component {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
-
+    let firstName = '';
+    if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
+      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name.split(' ')[0] : this.props.userDetails.first_name;
+    }
     if (this.props.userDetails && this.props.userDetails.featured_photo) {
       const { featured_photo: { image_url } } = this.props.userDetails;
       images.push({ original: image_url });
     }
-
-    // if (this.props.userDetails && this.props.userDetails.images) {
-    //   const imagesArray = this.props.userDetails.images.map(item =>
-    //     ({ original: item.image_url }));
-    //   images = [...images, ...imagesArray];
-    // }
     const descriptionLength = this.props.celebrityDetails.description ?
       this.props.celebrityDetails.description.length : 0;
-
-     
 
     return (
       <StarProfileStyled>
@@ -319,14 +335,23 @@ export default class Starprofile extends React.Component {
               </div>
 
               <div className="videoListing">
-                <h2>Starsona videos from {this.props.userDetails.first_name}</h2>
+                <h2>Starsona videos from {fullName}</h2>
                 <StarProfileStyled.ScrollListWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
                   {
                     !this.props.videosList.data.length && this.props.videosList.loading ?
                       <Loader />
                       :
-                      this.renderVideoList()
-                  }
+                      <div>
+                        <ul>{this.props.videosList.data.map(data => this.renderItem(data))}</ul>
+                        { this.props.videosList.loading ? <Loader /> : null}
+                        {
+                          this.props.videosList.count > 6 &&
+                          (this.state.offsetValue + 6) < this.props.videosList.count &&
+                          <p className="seeAllVideos" onClick={() => this.seeAllVideosAction(this.state.offsetValue)}>See more videos</p>
+                        }
+                      </div>
+              }
+                  {this.props.videosList.count === 0 && <div>Be the first to get this type of video!</div>}
                 </StarProfileStyled.ScrollListWrapper>
                 <StarProfileStyled.ScrollMobWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
                   <div className="videoMobScroll">

@@ -138,7 +138,7 @@ StarProfileStyled.profileWrapper = styled.div`
         margin-bottom: 20px;
       }
       & > div > section {
-        height: 500px;
+        height: 350px;
       }
     }
     .memberList {
@@ -291,7 +291,7 @@ StarProfileStyled.getStartedButton = styled.button`
   font-family: 'Avenir-Bold';
   outline:none;
   cursor: pointer;
-  border-radius: 35px;
+  border-radius: 10px;
   border: 2px solid #FF6C58;
   -webkit-appearance: none;
   &:hover {
@@ -438,6 +438,15 @@ StarProfileStyled.ScrollListWrapper = styled.div`
   }
   .videoItem {
     width: ${props => (props.count > 1 ? `calc(100%/${props.count} - 20px)` : '100%')};
+    display: inline-block;
+  }
+  .seeAllVideos {
+    font-size: 20px;
+    cursor: pointer;
+    color: #9e9e9e;
+    font-family: Avenir-Medium;
+    text-decoration: underline;
+    margin-top: 10px;
   }
 `;
 
@@ -505,6 +514,9 @@ StarProfileStyled.ImageSection = styled.div`
   }
   &:hover .videoDetails {
     display: flex;
+    @media(max-width: 1024px) {
+      display: none;
+    }
   }
   .videoDetails {
     display: none;
