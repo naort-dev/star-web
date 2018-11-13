@@ -16,6 +16,7 @@ import StarProfileStyled from '../starProfile/styled';
 import { setMetaTags } from '../../utils/setMetaTags';
 import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
 import HorizontalScrollList from '../../components/HorizontalScrollList';
+import ShareView from '../../components/ShareView';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -27,6 +28,7 @@ export default class Starprofile extends React.Component {
       videoActive: false,
       selectedVideo: null,
       offsetValue: 0,
+      sharePopup: false,
     };
     this.coverImage = new Image();
   }
@@ -164,6 +166,15 @@ export default class Starprofile extends React.Component {
     );
   }
 
+  shareProfileAction = () => {
+    this.setState({
+      sharePopup: true,
+    });
+  }
+  closePopup = () => {
+    this.setState({ sharePopup: false });
+  }
+
   renderItem = (item) => {
     return (
       <li className="videoItem">
@@ -289,6 +300,16 @@ export default class Starprofile extends React.Component {
             </StarProfileStyled.PopupWrapper>
           </Popup> : null}
 
+        {
+          this.state.sharePopup &&
+          <Popup
+            smallPopup
+            closePopUp={this.closePopup}
+          >
+            <ShareView iconSize={50} title={this.props.userDetails.fullName} shareUrl={this.props.userDetails.share_url} />
+          </Popup>
+        }
+
         <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
@@ -318,6 +339,7 @@ export default class Starprofile extends React.Component {
                     onClick={e => this.updateFavouriteSelection(e)}
                     selected={this.state.favouriteSelected}
                   />
+                  {this.props.userDetails.share_url && <StarProfileStyled.shareButton onClick={() => { this.shareProfileAction(); }}></StarProfileStyled.shareButton>}
                 </h1>
                 <div className="professionDetails">{starProfessionsDotFormater(this.props.celebrityDetails.profession_details)}</div>
                 <p className={descriptionClass}>{this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}</p>
@@ -329,6 +351,7 @@ export default class Starprofile extends React.Component {
                   <StarProfileStyled.getStartedButton onClick={() => this.handleRequest()}>
                     {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.vf() : 'Alert Me'}
                   </StarProfileStyled.getStartedButton>
+                  
                 </StarProfileStyled.ButtonWrapper>
                 {this.props.userDetails.social_links &&
                   this.props.userDetails.social_links.map(data => this.socialMedia(data))}

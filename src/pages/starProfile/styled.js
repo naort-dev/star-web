@@ -366,7 +366,7 @@ StarProfileStyled.FavoriteButton = styled.button`
   outline: none;
   padding: 18px;
   background-size: 30px;
-  position: absolute;
+  vertical-align: super;
   margin-left: 10px;
   background-color: transparent;
 `;
@@ -544,6 +544,14 @@ StarProfileStyled.PlayButton = styled.span`
   background-size: 40px;
   z-index: 1;
   background-position: center center;
+`;
+StarProfileStyled.shareButton = styled.span`
+  display: inline-block;
+  cursor: pointer;
+  margin-left: 10px;
+  width: 23px;
+  height: 23px;
+  background: url(assets/images/upload.svg) left center/contain no-repeat;
 `;
 
 StarProfileStyled.profileImage = profilePicture;
