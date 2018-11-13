@@ -7,6 +7,7 @@ import Header from '../../components/Header';
 import ScrollList from '../../components/ScrollList';
 import HorizontalScrollList from '../../components/HorizontalScrollList';
 import ModalPopup from '../../components/RequestFlowPopup';
+import Loader from '../../components/Loader';
 import GroupProfileStyled from './styled';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import { ROLES } from '../../constants/usertype';
@@ -87,9 +88,7 @@ export default class GroupProfile extends React.Component {
   socialMedia = (icon) => {
     return (
       icon.social_link_value !== '' ?
-        <Link to={`/${icon.social_link_value}`} className={icon.social_link_key} target="_blank">
-          <span></span>
-        </Link>
+        <a href={`${icon.social_link_value}`} className={icon.social_link_key} target="_blank"></a>
         : ''
     );
   }
@@ -167,6 +166,7 @@ export default class GroupProfile extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
+          disableMenu
         />
         {
           this.state.memberlistModal ?
@@ -193,7 +193,7 @@ export default class GroupProfile extends React.Component {
               </GroupProfileStyled.memberListPopup>
             </ModalPopup>
         : null}
-
+        {this.props.groupDetails && !this.props.detailsLoading &&
         <GroupProfileStyled.sectionWrapper>
           <ImageGallery
             items={images}
@@ -259,7 +259,8 @@ export default class GroupProfile extends React.Component {
               </div>
             </div>
           </GroupProfileStyled.profileWrapper>
-        </GroupProfileStyled.sectionWrapper>
+        </GroupProfileStyled.sectionWrapper>}
+        {this.props.detailsLoading && <Loader />}
       </GroupProfileStyled>
     );
   }

@@ -120,9 +120,7 @@ export default class Starprofile extends React.Component {
   socialMedia = (icon) => {
     return (
       icon.social_link_value !== '' ?
-        <Link to={`/${icon.social_link_value}`} className={icon.social_link_key} target="_blank">
-          <span></span>
-        </Link>
+        <a href={`${icon.social_link_value}`} className={icon.social_link_key} target="_blank"></a>
         : ''
     );
   }
@@ -295,7 +293,9 @@ export default class Starprofile extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
+          disableMenu
         />
+        {this.props.userDetails && !this.props.detailsLoading &&
         <StarProfileStyled.sectionWrapper>
           <ImageGallery
             items={images}
@@ -374,7 +374,8 @@ export default class Starprofile extends React.Component {
               </div>
             </div>
           </StarProfileStyled.profileWrapper>
-        </StarProfileStyled.sectionWrapper>
+        </StarProfileStyled.sectionWrapper>}
+        {this.props.detailsLoading && <Loader />}
       </StarProfileStyled>
     );
   }
