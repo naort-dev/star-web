@@ -44,7 +44,9 @@ class LoginFlow extends React.Component {
         >
           {
             this.props.loading ?
-              <Loader />
+              <LoginContainer.LoaderWrapper>
+                <Loader />
+              </LoginContainer.LoaderWrapper>
               :
               <LoginContainer.wrapper>
 

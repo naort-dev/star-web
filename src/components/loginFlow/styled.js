@@ -22,6 +22,13 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+
+LoginContainer.LoaderWrapper = styled.div`
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+`;
+
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;

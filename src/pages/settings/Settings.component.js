@@ -11,34 +11,11 @@ export default class Requests extends React.Component {
       innerLinks: [],
     };
     this.fanTabs = ['Account', 'Invite friends'];
-    this.fanLinks = [
-      { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-    ];
     this.starTabs = ['Account', 'Profile details', 'Share profile'];
-    this.starLinks = [
-      { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-      { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-      { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-    ];
     this.groupTabs = ['Account', 'Group details', 'Share online'];
   }
   componentWillMount() {
     this.fetchUserDetails();
-    this.setInnerLinks(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.setInnerLinks(nextProps);
-  }
-
-  setInnerLinks = (props) => {
-    let innerLinks = [];
-    if (props.userDetails.celebrity) {
-      innerLinks = this.starLinks;
-    } else {
-      innerLinks = this.fanLinks;
-    }
-    this.setState({ innerLinks });
   }
 
   fetchUserDetails = () => {
@@ -89,9 +66,9 @@ export default class Requests extends React.Component {
         <ColumnLayout
           selectedSideBarItem="settings"
           history={this.props.history}
-          innerLinks={this.state.innerLinks}
-          renderCenterSection={this.renderCenterSection}
-        />
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
       </div>
     );
   }
