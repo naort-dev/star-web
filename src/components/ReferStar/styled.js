@@ -4,6 +4,8 @@ const ReferralStyled = styled.div`
   margin-top: 150px;
   @media(min-width: 768px) {
     width: 500px;
+    margin: 150px auto;
+    margin-bottom: 0;
   }
 `;
 

@@ -1,7 +1,10 @@
 import styled from 'styled-components';
 
 const ShareStyled = styled.div`
-  padding: 0 20px;
+  padding: 0;
+  @media(min-width: 768px) {
+    padding: 0 20px;
+  }
 `;
 
 ShareStyled.Title = styled.span`
