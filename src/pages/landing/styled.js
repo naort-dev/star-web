@@ -27,6 +27,7 @@ LandingStyled.sideSection = styled.section`
     top: 60px;
     bottom: 0;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
   @media(min-width: 1920px) {
     top: 72px;

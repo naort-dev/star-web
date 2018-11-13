@@ -19,6 +19,7 @@ export const PAYMENTS = {
   modifySourceListStart: 'payments/MODIFY_SOURCE_START',
   modifySourceListEnd: 'payments/MODIFY_SOURCE_END',
   modifySourceListFailed: 'payments/MODIFY_SOURCE_FAILED',
+  resetError: 'reset/PAYMENT_ERROR',
 };
 
 
@@ -49,6 +50,10 @@ export const paymentFetchSourceStart = () => ({
 
 export const paymentFetchSourceEnd = () => ({
   type: PAYMENTS.fetchSourceEnd,
+});
+
+export const resetPaymentsError = () => ({
+  type: PAYMENTS.resetError,
 });
 
 export const setPaymentStatus = (status) => {
@@ -166,7 +171,7 @@ export const createCharge = (starsonaId, amount, tokenId, customerId) => (dispat
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
+    dispatch(paymentFetchFailed(exception.response.data.error));
   });
 };
 

@@ -6,6 +6,8 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
 import StarRating from '../StarRating';
+import { requestExpiryDays } from '../../constants';
+import { numberToDollarFormatter } from '../../utils/dataformatter';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class RequestDetails extends React.Component {
@@ -16,13 +18,14 @@ export default class RequestDetails extends React.Component {
       profileImage: false,
       videoPlayerProps: null,
       showDetails: false,
+      showActions: false,
     };
     this.coverImage = new Image();
     this.profileImage = new Image();
     this.mounted = true;
     this.charLimit = 50;
     this.requestType = requestTypes;
-    this.openColor = '#EA57A1';
+    this.openColor = '#FF6C58';
     this.completedColor = '#64C937';
     this.cancelledColor = '#363636';
   }
@@ -39,6 +42,7 @@ export default class RequestDetails extends React.Component {
       }
     };
     this.profileImage.src = this.props.starMode ? this.props.fanProfile : this.props.profile;
+    window.addEventListener('click', this.handleGlobalClick);
   }
   componentWillUnmount() {
     this.mounted = false;
@@ -73,47 +77,6 @@ export default class RequestDetails extends React.Component {
       return this.completedColor;
     }
     return this.cancelledColor;
-  }
-
-  findTime = () => {
-    let timeString = '';
-    if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
-      timeString = 'Completed';
-    } else {
-      const currentDate = new Date();
-      const createdDate = new Date(this.props.createdDate);
-      const timeDiff = currentDate - createdDate;
-      const diffDays = Math.floor(timeDiff / 86400000); // days
-      const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
-      const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
-      if (diffDays >= 1) {
-        timeString = diffDays === 1 ? `${timeString} ${diffDays} day ago` : `${timeString} ${diffDays} days ago`;
-      } else if (diffHrs >= 1) {
-        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ago` : `${timeString} ${diffHrs} hours ago`;
-      } else if (diffMins >= 1) {
-        timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ago` : `${timeString} ${diffMins} minutes ago`;
-      } else {
-        timeString = `${timeString} just now`;
-      }
-    }
-    return timeString;
-  }
-
-  activateVideo = () => {
-    const { requestVideo, requestType } = this.props;
-    if (requestVideo && requestVideo.length) {
-      const videoPlayerProps = requestType === 3 ? this.getQaVideoData(requestVideo) : {
-        primaryCover: requestVideo[0].s3_thumbnail_url ? requestVideo[0].s3_thumbnail_url : '',
-        primarySrc: requestVideo[0].s3_video_url ? requestVideo[0].s3_video_url : '',
-        ratio: requestVideo[0].width / requestVideo[0].height,
-      };
-      this.setState({
-        videoPlayerProps,
-      });
-    }
-  }
-  closeVideo = () => {
-    this.setState({ videoPlayerProps: null });
   }
 
   getOccasionDetails = (occasionType) => {
@@ -185,8 +148,69 @@ export default class RequestDetails extends React.Component {
     }
   }
 
-  selectItem = () => {
-    this.props.selectItem();
+  getMoreSettingsRef = (node) => {
+    if (!this.moreSettings) {
+      this.moreSettings = node;
+    }
+  }
+
+  getMoreSettingsWrapperRef = (node) => {
+    if (!this.moreSettingsWrapper) {
+      this.moreSettingsWrapper = node;
+    }
+  }
+
+  handleGlobalClick = (event) => {
+    const moreSettingsClick = this.moreSettings && !this.moreSettings.contains(event.target)
+    const moreSettingsWrapperClick = this.moreSettingsWrapper && !this.moreSettingsWrapper.contains(event.target)
+    const shouldHide = moreSettingsClick && moreSettingsWrapperClick && this.state.showActions;
+    if (shouldHide) {
+      this.setState({ showActions: false });
+    }
+  }
+
+  findTime = (fromDate, toDate, futureTime) => {
+    let timeString = futureTime ? 'Due in' : '';
+    if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
+      timeString = 'Completed';
+    } else {
+      const timeDiff = toDate - fromDate;
+      const diffDays = Math.floor(timeDiff / 86400000); // days
+      const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
+      const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
+      const diffAppend = futureTime ? '' : 'ago';
+      if (diffDays >= 1) {
+        if (futureTime && diffHrs > 0) {
+          timeString = diffDays + 1 === 1 ? `${timeString} ${diffDays} day ${diffAppend}` : `${timeString} ${diffDays + 1} days ${diffAppend}`;
+        } else {
+          timeString = diffDays === 1 ? `${timeString} ${diffDays} day ${diffAppend}` : `${timeString} ${diffDays} days ${diffAppend}`;
+        }
+      } else if (diffHrs >= 1) {
+        timeString = diffHrs === 1 ? `${timeString} ${diffHrs} hour ${diffAppend}` : `${timeString} ${diffHrs} hours ${diffAppend}`;
+      } else if (diffMins >= 1) {
+        timeString = diffMins === 1 ? `${timeString} ${diffMins} minute ${diffAppend}` : `${timeString} ${diffMins} minutes ${diffAppend}`;
+      } else {
+        timeString = `${timeString} ${futureTime ? diffAppend : 'just now'}`;
+      }
+    }
+    return timeString;
+  }
+
+  activateVideo = () => {
+    const { requestVideo, requestType } = this.props;
+    if (requestVideo && requestVideo.length) {
+      const videoPlayerProps = requestType === 3 ? this.getQaVideoData(requestVideo) : {
+        primaryCover: requestVideo[0].s3_thumbnail_url ? requestVideo[0].s3_thumbnail_url : '',
+        primarySrc: requestVideo[0].s3_video_url ? requestVideo[0].s3_video_url : '',
+        ratio: requestVideo[0].width / requestVideo[0].height,
+      };
+      this.setState({
+        videoPlayerProps,
+      });
+    }
+  }
+  closeVideo = () => {
+    this.setState({ videoPlayerProps: null });
   }
 
   showDetails = () => {
@@ -196,6 +220,19 @@ export default class RequestDetails extends React.Component {
   playAudio = (audioSrc) => {
     const audio = new Audio(audioSrc);
     audio.play();
+  }
+
+  toggleActions = () => {
+    this.setState({ showActions: !this.state.showActions });
+  }
+
+  downloadVideo = () => {
+    const { request_video: requestVideo } = this.props.orderDetails;
+    const finalVideo = requestVideo.filter(video => video.video_status === 1)[0];
+    const link = document.createElement('a');
+    link.href = finalVideo.s3_video_url;
+    link.click();
+    link.remove();
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
@@ -214,77 +251,131 @@ export default class RequestDetails extends React.Component {
       </React.Fragment>
     );
   }
+  renderActions = () => {
+    const { starMode, requestStatus, orderDetails } = this.props;
+    const showRateButton = requestStatus === 6 && !starMode && !orderDetails.fan_rating;
+    const celebVideoDownload = starMode && requestStatus === 6 && orderDetails.public_request;
+    const fanVideoDownload = !starMode && requestStatus === 6;
+    const canDownload = celebVideoDownload || fanVideoDownload;
+    return (
+      <React.Fragment>
+        <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('contact')}>Contact support</VideoRenderDiv.MoreSettingsListItem>
+        <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('report')}>Report abuse</VideoRenderDiv.MoreSettingsListItem>
+        {showRateButton && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
+        {
+          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download video</VideoRenderDiv.MoreSettingsListItem>
+        }
+      </React.Fragment>
+    )
+  }
 
-  // renderVideoDetails = (text) => {
-  //   let splicedText = text;
-  //   if (text.length > this.charLimit) {
-  //     splicedText = text.substring(0, this.charLimit) + '...';
-  //   }
-  //   return splicedText;
-  // }
-
+  renderActionButton = () => {
+    const { requestStatus } = this.props;
+    if (requestStatus !== 5) { // no actions for cancelled videos
+      return (
+        <VideoRenderDiv.MoreSettings innerRef={this.getMoreSettingsWrapperRef} onClick={this.toggleActions} alternate>
+          <VideoRenderDiv.HorizontalHamburger />
+          {
+            this.state.showActions &&
+              <VideoRenderDiv.MoreSettingsList innerRef={this.getMoreSettingsRef}>
+                {this.renderActions()}
+              </VideoRenderDiv.MoreSettingsList>
+          }
+        </VideoRenderDiv.MoreSettings>
+      );
+    }
+  }
   renderSecondaryControlButton = () => {
-    const { starMode, requestStatus } = this.props;
-    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus > -1) && this.props.orderDetails.public_request;
+    const { starMode, requestStatus, orderDetails } = this.props;
+    const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1 && orderDetails.public_request;
     const fanVideoShare = !starMode && completedStatusList.indexOf(requestStatus) > -1;
     const canVideoShare = starVideoShare || fanVideoShare;
-    const canEdit = !starMode && this.props.orderDetails.editable;
+    const canEdit = !starMode && orderDetails.editable;
     if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
       return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem('respond')}>Respond</VideoRenderDiv.ControlButton>;
     } else if (canVideoShare) {
-      return <VideoRenderDiv.ShareButton>Share</VideoRenderDiv.ShareButton>;
+      return <VideoRenderDiv.ShareButton onClick={() => this.props.selectItem('share')}>Share</VideoRenderDiv.ShareButton>;
     } else if (canEdit) { // completed video for fan
-      return <VideoRenderDiv.ShareButton onClick={() => this.props.selectItem('edit')}>Edit</VideoRenderDiv.ShareButton>;
+      return <VideoRenderDiv.ControlButton alternate onClick={() => this.props.selectItem('edit')}>Edit details</VideoRenderDiv.ControlButton>;
+    }
+    return null;
+  }
+
+  renderTimeLeft = () => {
+    const { starMode, requestStatus, createdDate } = this.props;
+    const finalCreatedDate = new Date(createdDate);
+    const currentDate = new Date();
+    const celebOpenRequest = starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
+    if (celebOpenRequest) {
+      let expiryDate = new Date(createdDate);
+      expiryDate.setDate(finalCreatedDate.getDate() + requestExpiryDays);
+      return <VideoRenderDiv.RequestTime timeLeft>{this.findTime(currentDate, expiryDate, true)}</VideoRenderDiv.RequestTime>;
     }
     return null;
   }
 
   renderTime = () => {
-    const { starMode, requestStatus } = this.props;
-    const isOpenRequest = (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) || (!starMode && openStatusList.indexOf(requestStatus) > -1);
-    if (isOpenRequest) {
-      return <VideoRenderDiv.RequestTime>{this.findTime()}</VideoRenderDiv.RequestTime>;
+    const { starMode, requestStatus, createdDate, orderDetails } = this.props;
+    const finalCreatedDate = new Date(createdDate);
+    const currentDate = new Date();
+    const celebOpenRequest = starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
+    const celebCompletedRequest = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1;
+    const fanCompletedRequest = !starMode && completedStatusList.indexOf(requestStatus) > 1;
+    if (fanCompletedRequest || celebCompletedRequest) {
+      const completedDate = orderDetails.request_details ? new Date(orderDetails.request_details.date) : null;
+      return <VideoRenderDiv.RequestTime>{this.findTime(completedDate, currentDate)}</VideoRenderDiv.RequestTime>;
+    } else if (!celebOpenRequest) {
+      return <VideoRenderDiv.RequestTime>{this.findTime(finalCreatedDate, currentDate)}</VideoRenderDiv.RequestTime>;
+    }
+    return null;
+  }
+
+  renderCancelButton = () => {
+    const { requestStatus, starMode } = this.props;
+    const celebCancellable = starMode && starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
+    const fanCancellable = !starMode && openStatusList.indexOf(requestStatus) > -1;
+    if (celebCancellable) {
+      return <VideoRenderDiv.TextButton onClick={() => this.props.selectItem('decline')}>Decline request</VideoRenderDiv.TextButton>;
+    } else if (fanCancellable) {
+      return <VideoRenderDiv.TextButton onClick={() => this.props.selectItem('cancel')}>Cancel request</VideoRenderDiv.TextButton>;
     }
     return null;
   }
 
   renderOrderDetails = () => {
-    const { props } = this;
-    const price = props.orderDetails.order_details ? props.orderDetails.order_details.amount: 0;
-    const isPrivate = props.orderDetails.public_request ? 'No' : 'Yes';
+    const { requestStatus, orderDetails, starMode } = this.props;
+    const price = orderDetails.order_details ? orderDetails.order_details.amount: 0;
+    const orderId = orderDetails.order_details ? orderDetails.order_details.order: '';
+    const isPrivate = orderDetails.public_request ? 'No' : 'Yes';
     return (
       <React.Fragment>
         {
-          !props.starMode &&
-            <OrderDetailsItem title="Requested" value={moment(props.orderDetails.created_date).format('LL')} />
+          !starMode &&
+            <OrderDetailsItem title="Requested" value={moment(orderDetails.created_date).format('LL')} />
         }
         {
-          this.getEventDetails(props.orderDetails.request_type)
+          this.getEventDetails(orderDetails.request_type)
         }
         {/* Show Reason if request is cancelled */}
         {
-          props.requestStatusId === 5 ?
-            <OrderDetailsItem title="Decline Reason" value={props.orderDetails.comment} />
+          requestStatus === 5 ?
+            <OrderDetailsItem title="Decline Reason" value={orderDetails.comment} />
             : null
         }
-        {
-          !props.starMode &&
-            <OrderDetailsItem title="Booking Price" value={`$${price}`} />
+        <OrderDetailsItem title="Private video" value={isPrivate} />
+        {requestStatus === 6 &&
+          <OrderDetailsItem
+            title="Rating"
+            value={<StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />}
+          />
         }
+        <OrderDetailsItem title="Order#" value={orderId} />
         {
-          !props.starMode &&
-            <OrderDetailsItem title="Make this Video private" value={isPrivate} />
-        }
-        {props.requestStatusId === 6 &&
-          <VideoRenderDiv.DetailsItem>
-            <VideoRenderDiv.DetailsTitle>Rating:</VideoRenderDiv.DetailsTitle>
-            <VideoRenderDiv.DetailsValue>
-              <StarRating rating={props.orderDetails.fan_rating ? props.orderDetails.fan_rating.fan_rate : this.state.rate} readOnly />
-            </VideoRenderDiv.DetailsValue>
-          </VideoRenderDiv.DetailsItem>
+          !starMode &&
+            <OrderDetailsItem bold title="Booking Price" value={`${numberToDollarFormatter(price)}`} />
         }
       </React.Fragment>
-    )
+    );
   }
 
   render() {
@@ -305,53 +396,72 @@ export default class RequestDetails extends React.Component {
           : null
         }
         <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.ProfileDetailWrapper>
-            <VideoRenderDiv.ProfileImageWrapper>
-              <VideoRenderDiv.ProfileImage
-                imageUrl={this.state.profileImage}
-              />
-            </VideoRenderDiv.ProfileImageWrapper>
-            <VideoRenderDiv.DetailWrapper>
-              <VideoRenderDiv.StarName>
-                {props.starMode ? props.fanName : props.starName }
-              </VideoRenderDiv.StarName>
-              <VideoRenderDiv.StarDetails>{props.details}</VideoRenderDiv.StarDetails>
-            </VideoRenderDiv.DetailWrapper>
-          </VideoRenderDiv.ProfileDetailWrapper>
-          <VideoRenderDiv.StatusDetailsWrapper>
-            <VideoRenderDiv.StatusDetails>
-              <VideoRenderDiv.StarDetails>Status</VideoRenderDiv.StarDetails>
-              <VideoRenderDiv.RequestStatus
-               color={this.getStatusColor(props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus])}
-               highlight={props.starMode ? celebOpenStatusList.indexOf(props.requestStatus) > -1 : openStatusList.indexOf(props.requestStatus) > -1}
-              >
-                {props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus]}
-              </VideoRenderDiv.RequestStatus>
-              {this.renderTime()}
-            </VideoRenderDiv.StatusDetails>
-            <VideoRenderDiv.ControlWrapper>
-              <VideoRenderDiv.ControlButton onClick={this.showDetails} alternate>
-                {this.state.showDetails ? 'Hide details' : 'View details'}
-              </VideoRenderDiv.ControlButton>
-              {
-                this.renderSecondaryControlButton()
-              }
-            </VideoRenderDiv.ControlWrapper>
-            <VideoRenderDiv.DetailsContainer isVisible={this.state.showDetails}>
-              <VideoRenderDiv.DetailsWrapper>
+          <VideoRenderDiv.ImageSection
+            onClick={this.activateVideo}
+            height={props.imageHeight}
+            imageUrl={this.state.coverImage}
+          >
+            {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
+          </VideoRenderDiv.ImageSection>
+          <VideoRenderDiv.ContentWrapper>
+            <VideoRenderDiv.ProfileDetailWrapper>
+              <VideoRenderDiv.ProfileImageWrapper>
+                <VideoRenderDiv.ProfileImage
+                  imageUrl={this.state.profileImage}
+                />
+              </VideoRenderDiv.ProfileImageWrapper>
+              <VideoRenderDiv.DetailWrapper>
+                <VideoRenderDiv.StarName>
+                  {props.details}
+                </VideoRenderDiv.StarName>
+                {this.renderTime()}
+                <VideoRenderDiv.StarDetails>{props.starMode ? props.fanName : props.starName }</VideoRenderDiv.StarDetails>
+              </VideoRenderDiv.DetailWrapper>
+            </VideoRenderDiv.ProfileDetailWrapper>
+            <VideoRenderDiv.StatusDetailsWrapper>
+              <VideoRenderDiv.StatusDetails>
+                <VideoRenderDiv.RequestStatus
+                  color={this.getStatusColor(props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus])}
+                  highlight={props.starMode ? celebOpenStatusList.indexOf(props.requestStatus) > -1 : openStatusList.indexOf(props.requestStatus) > -1}
+                >
+                  {props.starMode ? celebRequestStatusList[props.requestStatus] : requestStatusList[props.requestStatus]}
+                </VideoRenderDiv.RequestStatus>
+                {this.renderTimeLeft()}
+              </VideoRenderDiv.StatusDetails>
+              <VideoRenderDiv.ControlWrapper>
+                <VideoRenderDiv.ControlButton onClick={this.showDetails} alternate>
+                  {this.state.showDetails ? 'Hide details' : 'View details'}
+                </VideoRenderDiv.ControlButton>
                 {
-                  this.renderOrderDetails()
+                  this.renderSecondaryControlButton()
                 }
-              </VideoRenderDiv.DetailsWrapper>
-              <VideoRenderDiv.ImageSection
-                onClick={this.activateVideo}
-                height={props.imageHeight}
-                imageUrl={this.state.coverImage}
-              >
-                {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible={this.state.showDetails} /> : null}
-              </VideoRenderDiv.ImageSection>
-            </VideoRenderDiv.DetailsContainer>
-          </VideoRenderDiv.StatusDetailsWrapper>
+                {
+                  this.renderActionButton()
+                }
+              </VideoRenderDiv.ControlWrapper>
+              <VideoRenderDiv.DetailsContainer isVisible={this.state.showDetails}>
+                <VideoRenderDiv.ImageSection
+                  mobile
+                  onClick={this.activateVideo}
+                  height={props.imageHeight}
+                  imageUrl={this.state.coverImage}
+                >
+                  {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
+                </VideoRenderDiv.ImageSection>
+                <VideoRenderDiv.DetailsWrapper>
+                  <VideoRenderDiv.DetailsTitle>Request Details</VideoRenderDiv.DetailsTitle>
+                  <VideoRenderDiv.DetailsList>
+                    {
+                      this.renderOrderDetails()
+                    }
+                  </VideoRenderDiv.DetailsList>
+                  {
+                    this.renderCancelButton()
+                  }
+                </VideoRenderDiv.DetailsWrapper>
+              </VideoRenderDiv.DetailsContainer>
+            </VideoRenderDiv.StatusDetailsWrapper>
+          </VideoRenderDiv.ContentWrapper>          
         </VideoRenderDiv.ProfileContent>
       </VideoRenderDiv>
     );

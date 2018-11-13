@@ -6,10 +6,7 @@ const TabStyled = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
-  &::after {
-    content: '';
-    clear: both;
-  }
+  margin-bottom: 16px;
   @media(min-width: 768px) {
     padding-top: 0;
     padding-left: 44px;
@@ -36,7 +33,7 @@ TabStyled.tabList = styled.ul`
 
 TabStyled.tabListItem = styled.li`
   display: inline-block;
-  padding: ${props => (props.disableFilter ? '5px 15px' : '5px 19px')};
+  padding: 5px 10px 16px;;
   font-size: 16px;
   cursor: pointer;
   font-family: ${props => (props.selected ? 'Avenir-Bold' : 'Avenir-Regular')};
@@ -44,12 +41,10 @@ TabStyled.tabListItem = styled.li`
   color: ${props => props.selected && '#FF6C58'}
   @media(min-width: 768px) {
     font-size: 20px;
-    padding: 5px 40px;
     text-align: center;
   }
   @media(min-width: 1025px) {
     font-size: 18px;
-    padding: 5px 27px;
   }
   @media(min-width: 1920px) {
     font-size: 21px;

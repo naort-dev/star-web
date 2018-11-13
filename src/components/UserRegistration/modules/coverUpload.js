@@ -177,7 +177,7 @@ export default class CoverUpload extends React.Component {
   renderStarProfessions = (list) => {
     return list && list.map((professions, index) => {
       return (
-        <GroupStyled.Professions key={index} separator={index !== list.length - 1}>{professions.label}</GroupStyled.Professions>
+        <GroupStyled.Professions key={index} separator={index !== list.length - 1}>{professions.title}</GroupStyled.Professions>
       );
     })
   }
@@ -205,7 +205,7 @@ export default class CoverUpload extends React.Component {
 
   render() {
     return (
-      <GroupStyled.ContentWrapper>
+      <GroupStyled.DetailsWrapper>
         {
           this.state.imageLoading ?
             <Loader />
@@ -280,7 +280,7 @@ export default class CoverUpload extends React.Component {
               </GroupStyled.ControlWrapper>
             </React.Fragment>
         }
-      </GroupStyled.ContentWrapper>
+      </GroupStyled.DetailsWrapper>
     );
   }
 }

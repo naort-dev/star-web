@@ -8,7 +8,6 @@ import ImageRender from '../ImageRender';
 import VideoPlayer from '../VideoPlayer';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Popup from '../Popup';
-import RequestDetails from '../RequestDetails';
 import EarningsList from '../EarningsList';
 import ReferralList from '../ReferralList';
 import Loader from '../Loader';
@@ -124,26 +123,8 @@ export default class ScrollList extends React.Component {
     this.setState({ videoActive: true, selectedVideoIndex: index });
   }
 
-  findRequestVideoThumbnail = (requestVideo) => {
-    let completedVideo;
-    let questionVideo;
-    requestVideo.forEach((video) => {
-      if (video.video_status === 1) {
-        completedVideo = video;
-      } else if (video.video_status === 4) {
-        questionVideo = video;
-      }
-    })
-    if (completedVideo) {
-      return completedVideo.s3_thumbnail_url;
-    } else if (questionVideo) {
-      return questionVideo.s3_thumbnail_url;
-    }
-    return null;
-  }
-
   renderList() {
-    if (this.props.videos) {
+    if (this.props.videos) { 
       return this.props.dataList.map((item, index) => (
         <ListStyled.listVideos starsPage={this.props.starsPage} videos={this.props.videos} key={index}>
           <VideoRender
@@ -170,25 +151,8 @@ export default class ScrollList extends React.Component {
       });
     } else if (this.props.requestDetails) {
       return this.props.dataList.map((item, index) => (
-        <ListStyled.listRequests videos={this.props.videos} key={index}>
-          <RequestDetails
-            starMode={this.props.starMode}
-            cover={this.findRequestVideoThumbnail(item.request_video)}
-            celebId={item.celebrity_id}
-            orderId={item.order_details ? item.order_details.order : ''}
-            videoId={item.booking_id}
-            profile={item.avatar_photo && item.avatar_photo.thumbnail_url}
-            fanProfile={item.fan_photo && item.fan_photo.thumbnail_url}
-            starName={item.celebrity}
-            fanName={item.fan}
-            orderDetails={item}
-            details={item.booking_title}
-            requestStatus={item.request_status}
-            requestVideo={item.request_video}
-            requestType={item.request_type}
-            createdDate={item.created_date}
-            selectItem={type => this.props.selectItem(item, type)}
-          />
+        <ListStyled.listRequests key={index}>
+          {this.props.renderFunction(item)}
         </ListStyled.listRequests>
       ));
     } else if (this.props.earnings) {
@@ -207,6 +171,10 @@ export default class ScrollList extends React.Component {
           key={index}
         />
       ));
+    } else if (this.props.starVideos) {
+      return this.props.dataList.map((item, index) => {
+        return this.props.renderFunction(item, index);
+      });
     }
     return this.props.dataList.map((item, index) => {
       let coverPhoto;

@@ -1,8 +1,6 @@
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
-import { Scrollbars } from 'react-custom-scrollbars';
 import {
   FacebookShareButton,
   GooglePlusShareButton,
@@ -24,7 +22,7 @@ import { toggleRefer } from '../../store/shared/actions/toggleModals';
 import { requestReferral, getReferralList, getReferalLink } from '../../store/shared/actions/referStar';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { contactSupport } from '../../store/shared/actions/popupActions';
-import SubmitPopup from '../OrderDetails/SubmitPopup';
+import SubmitView from '../SubmitView';
 
 class ReferStar extends React.Component {
   constructor(props) {
@@ -215,7 +213,7 @@ class ReferStar extends React.Component {
           smallPopup
           closePopUp={() => this.setState({ openSupport: false })}
         >
-          <SubmitPopup
+          <SubmitView
             heading="Contact support"
             onSubmit={data => this.props.contactSupport({ comments: data.comment })}
             closePopup={() => this.setState({ openSupport: false })}
@@ -231,20 +229,18 @@ class ReferStar extends React.Component {
           smallPopup
         >
           <ReferralStyled.ScrollView>
-            <Scrollbars>
-              <ReferralStyled.Banner>{this.renderBanner()}</ReferralStyled.Banner>
-              <ReferralStyled id="referral-wrapper">
-                <ReferralStyled.Heading>
-                  Refer a Star
-                </ReferralStyled.Heading>
-                {
-                props.loading ?
-                  <Loader />
-                :
-                  this.renderReferralDetails(props)
-              }
-              </ReferralStyled>
-            </Scrollbars>
+            <ReferralStyled.Banner>{this.renderBanner()}</ReferralStyled.Banner>
+            <ReferralStyled id="referral-wrapper">
+              <ReferralStyled.Heading>
+                Refer a Star
+              </ReferralStyled.Heading>
+              {
+              props.loading ?
+                <Loader />
+              :
+                this.renderReferralDetails(props)
+            }
+            </ReferralStyled>
           </ReferralStyled.ScrollView>
         </RequestFlowPopup>
     );

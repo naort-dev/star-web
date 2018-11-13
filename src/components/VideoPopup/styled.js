@@ -22,6 +22,7 @@ VideoPopupStyled.VideoContentWrapper = styled.div`
 VideoPopupStyled.VideoPlayerWrapper = styled.div`
   position: relative;
   width: 100%;
+  height: 400px;
   @media(min-width: 1025px) {
     width: 50%;
     display: inline-block;
@@ -40,7 +41,7 @@ VideoPopupStyled.VideoContent = styled.section`
   @media(min-width: 1025px) {
     width: 50%;
     display: inline-block;
-    height: 100%;
+    height: ${props => (props.height ? `${props.height}px` : '100%')};
     position: relative;
     vertical-align: top;
     padding: 10px 20px;

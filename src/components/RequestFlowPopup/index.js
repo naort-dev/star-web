@@ -16,8 +16,10 @@ export default class RequestFlowPopup extends React.Component {
     if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
+    if (!this.props.noDisableScroll) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.modalView !== nextProps.modalView && nextProps.modalView) {
@@ -59,7 +61,9 @@ export default class RequestFlowPopup extends React.Component {
     return (
       <PopupStyled innerRef={node => this.popupWrapper = node}>
         <PopupStyled.SmallContainer
+          modalView={this.props.modalView}
           largePopup={this.props.largePopup}
+          autoWidth={this.props.autoWidth}
           innerRef={node => this.popupContent = node}
         >
           {

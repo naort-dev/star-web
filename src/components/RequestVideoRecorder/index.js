@@ -232,7 +232,7 @@ export default class RequestVideoRecorder extends React.Component {
                 </Scrollbars>
               </VideoRecorderDiv.BookingDetailsWrapper>
           }
-          <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
+          <VideoRecorderDiv.Video id='preview-video' innerRef={(node) => { this.previewVideo = node; }} src={this.state.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.UploadWrapper>

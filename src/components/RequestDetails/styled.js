@@ -4,10 +4,16 @@ const VideoRenderDiv = styled.div`
   padding-right: 15px;
   padding-bottom: 10px;
   border-bottom: 1px solid #D8D8D8;
+  position: relative;
+`;
+
+VideoRenderDiv.ContentWrapper = styled.div`
   @media(min-width: 768px) {
-    position: relative;
+    padding-left: 10px;
+    width: calc(100% - 250px)
   }
 `;
+
 VideoRenderDiv.ImageSection = styled.div`
   position:relative;
   background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/pending-video.png)')};
@@ -18,29 +24,45 @@ VideoRenderDiv.ImageSection = styled.div`
   max-width: 300px;
   height: 150px;
   cursor: pointer;
-  display: flex;
+  display: ${props => (props.mobile ? 'flex' : 'none')};
   justify-content: center;
   align-items: center;
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: ${props => props.imageUrl && '#0000007a'};
+  }
   @media(min-width: 768px) {
-    width: 300px;
+    width: 250px;
+    display: ${props => (props.mobile ? 'none' : 'flex')};
   }
 `;
 
 VideoRenderDiv.PlayButton = styled.span`
-  background: url(assets/images/icon-play.svg) no-repeat;
-  background-color: #0000007a;
+  background: url(assets/images/play-button.svg) no-repeat;
   border-radius: 100%;
-  width: 30px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   display: ${props => (props.isVisible ? 'inline-block' : 'none')};
   background-size: contain;
-  background-size: 20px;
+  background-size: 40px;
+  z-index: 1;
   background-position: center center;
 `;
 
 VideoRenderDiv.RequestTime = styled.span`
   font-size: 14px;
-  color: #EA57A1;
+  color: ${props => (props.timeLeft ? '#FF6C58' : 'grey')};
+  float: ${props => (props.timeLeft ? 'none' : 'right')};
+  padding-left: 10px;
+  &::after {
+    content: '';
+    clear: both;
+  }
 `;
 
 VideoRenderDiv.BannerImage = styled.img`
@@ -64,7 +86,7 @@ VideoRenderDiv.ProfileImageWrapper = styled.div`
 `;
 VideoRenderDiv.ProfileImage = styled.span`
   border-radius: 50%;
-  display: inline-block;
+  display: block;
   background-image: ${props => (props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
@@ -90,6 +112,9 @@ VideoRenderDiv.ProfileContent = styled.div`
   vertical-align: top;
   padding-left: 10px;
   width: 100%;
+  @media(min-width: 768px) {
+    display: flex;
+  }
 `;
 VideoRenderDiv.DetailWrapper = styled.div`
   line-height: 18px;
@@ -103,6 +128,9 @@ VideoRenderDiv.StarName = styled.h4`
   font-size: 16px;
   color:#333333;
   font-family: 'Avenir-Regular';
+  @media(min-width: 768px) {
+    display: inline-block;
+  }
   @media(min-width: 1920px) {
     font-size: 20px;
   }
@@ -127,7 +155,8 @@ VideoRenderDiv.StarDetails = styled.p`
   font-family: 'Avenir-Light';
   display: inline-block;
   @media(min-width: 768px) {
-    font-size: 14px;
+    font-size: 15px;
+    display: block;
   }
 `;
 
@@ -152,6 +181,7 @@ VideoRenderDiv.StatusDetails = styled.div`
   order: 1;
   @media(min-width: 768px) {
     padding-left: 0;
+    margin: 10px 0;
   }
 `;
 
@@ -166,6 +196,12 @@ VideoRenderDiv.ControlWrapper = styled.span`
   }
 `;
 
+VideoRenderDiv.TextButton = styled.span`
+  margin-top: 25px;
+  cursor: pointer;
+  display: inline-block;
+`;
+
 VideoRenderDiv.ControlButton = styled.button`
   background-color: ${props => (props.alternate ? '#fff' : '#FF6C58')};
   color: ${props => (props.alternate ? '#333333' : 'rgb(255,255,255)')};
@@ -174,15 +210,29 @@ VideoRenderDiv.ControlButton = styled.button`
   font-size: 14px;
   font-family: Avenir-Regular;
   cursor: pointer;
-  padding: 10px 25px;
+  flex: 1;
+  height: 40px;
   text-decoration: none;
   outline: none;
   border-radius: 20px;
   border: ${props => (props.alternate ? '1px solid' : '2px solid')};
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
+  margin-left: 5px;
+  margin-right: 5px;
+  &:first-child {
+    margin-left: 0;
+  }
+  &:last-child {
+    margin-left: 5px;
+    margin-right: 0;
+  }
   @media(min-width: 768px) {
-    margin-left: ${props => (props.alternate ? '0' : '15px')};
+    width: auto;
+    padding: 8px 25px;
+    flex: none;
+    height: 37px;
+    margin-left: ${props => (props.alternate ? '0' : '5px')};
   }
   &:hover {
     background-color: ${props => (props.alternate ? '#fff' : '#FF3B21')};
@@ -203,14 +253,53 @@ VideoRenderDiv.ShareButton = VideoRenderDiv.ControlButton.extend`
   }
 `;
 
+VideoRenderDiv.MoreSettings = VideoRenderDiv.ControlButton.extend`
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex: none;
+  position: relative;
+  @media(min-width: 768px) {
+    padding: 10px;
+  }
+`.withComponent('span');
+
+VideoRenderDiv.HorizontalHamburger = styled.span`
+  background: url('assets/images/dots-vertical.svg') no-repeat;
+  background-position: center center;
+  transform: rotate(-90deg);
+  width: 20px;
+  height: 20px;
+  display: block;
+`;
+
+VideoRenderDiv.MoreSettingsList = styled.ul`
+  position: absolute;
+  background: #fff;
+  user-select: none;
+  padding: 5px 0;
+  top: calc(100% + 5px);
+  box-shadow: 0px 4px 8px 0px #cccccc
+  right: 0;
+  width: 140px;
+  z-index: 1;
+  text-align: left;
+`;
+
+VideoRenderDiv.MoreSettingsListItem = styled.li`
+  padding: 5px;
+  &:hover, &:focus {
+    color: #FF6C58;
+  }
+`;
+
 VideoRenderDiv.RequestStatus = styled.span`
   display: inline-block;
   color: #fff;
   font-size: 12px;
-  margin-left: 10px;
   background-color: ${props => props.color};
   border-radius: 16px;
-  padding: 3px 8px;
+  padding: 9px 21px;
 `;
 
 VideoRenderDiv.DetailsContainer = styled.div`
@@ -232,55 +321,17 @@ VideoRenderDiv.DetailsContainer = styled.div`
   }
 `;
 
-VideoRenderDiv.DetailsWrapper = styled.ul`
-  @media(min-width: 768px) {
-    width: calc(100% - 310px);
-  }
-`;
-
-VideoRenderDiv.DetailsItem = styled.li`
-  display: block;
+VideoRenderDiv.DetailsWrapper = styled.div`
   width: 100%;
-  padding: 3px 0;
-  @media(min-width: 768px) {
-    display: table;
-    padding: 5px 0;
-  }
-`;
-VideoRenderDiv.DetailsTitle = styled.span`
-  font-family: 'Avenir-Light';
-  width: 40%;
-  display: inline-block;
-  font-size:12px;
-  vertical-align: top;
-  @media(min-width: 768px) {
-    display: table-cell;
-    width: 20%;
-    font-size:13px;
-    text-align: right;
-    vertical-align: middle;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
 `;
 
-VideoRenderDiv.DetailsValue = styled.span`
-  display: inline-block;
-  font-family: 'Avenir-Light';
-  width: 60%;
-  display: inline-block;
-  vertical-align: top;
-  font-size:12px;
-  padding-left: 20px;
-  @media(min-width: 768px) {
-    display: table-cell;
-    font-size:13px;
-    width: 80%;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
+VideoRenderDiv.DetailsList = styled.ul`
+  width: 100%;
+`;
+
+VideoRenderDiv.DetailsTitle = styled.span`
+  font-family: 'Avenir-Medium';
+  margin-bottom: 10px;
 `;
 
 VideoRenderDiv.AudioIcon = styled.img`

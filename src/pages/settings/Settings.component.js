@@ -12,46 +12,31 @@ export default class Requests extends React.Component {
     };
     this.fanTabs = ['Account', 'Invite friends'];
     this.fanLinks = [
-      { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
       { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
     ];
     this.starTabs = ['Account', 'Profile details', 'Share profile'];
     this.starLinks = [
-      { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
       { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
+      { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+      { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
     ];
     this.groupTabs = ['Account', 'Group details', 'Share online'];
-    this.groupLinks = [
-      { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-      { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
-    ];
   }
   componentWillMount() {
     this.fetchUserDetails();
-    if (this.props.userDetails.role_details) {
-      this.setInnerLinks(this.props);
-    }
+    this.setInnerLinks(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.userDetails.role_details) {
-      this.setInnerLinks(nextProps);
-    }
+    this.setInnerLinks(nextProps);
   }
 
   setInnerLinks = (props) => {
     let innerLinks = [];
-    switch (props.userDetails.role_details.role_code) {
-      case ROLES.star:
-        innerLinks = this.starLinks;
-        break;
-      case ROLES.fan:
-        innerLinks = this.fanLinks;
-        break;
-      case ROLES.group:
-        innerLinks = this.groupLinks;
-        break;
-      default: return null;
+    if (props.userDetails.celebrity) {
+      innerLinks = this.starLinks;
+    } else {
+      innerLinks = this.fanLinks;
     }
     this.setState({ innerLinks });
   }

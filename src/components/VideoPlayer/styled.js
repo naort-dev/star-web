@@ -3,7 +3,12 @@ import styled from 'styled-components';
 const VideoRenderDiv = styled.div`
   cursor: pointer;
   width: 100%;
-  height: ${props => (props.height ? `${props.height}px` : '100%')};
+  height: 100%;
+  @media(min-width: 768px) {
+    height: ${props => (props.height ? `${props.height}px` : '100%')};
+    min-height: 200px;
+    min-width: 400px;
+  }
 `;
 
 VideoRenderDiv.answerVideo = styled.img`

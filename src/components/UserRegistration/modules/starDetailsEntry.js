@@ -1,7 +1,7 @@
 import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
-import MultiSelect from '../../MultiSelect';
+import { IndustrySelection } from '../../IndustrySelection';
 import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
@@ -31,13 +31,12 @@ export default class StarDetailsEntry extends React.Component {
     },
   };
 
+  getIndustrySelection = (industries) => {
+    this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
+  }
+
   handleFieldChange = (fieldType, fieldValue) => {
-    if (fieldType === 'industries') {
-      const industriesArray = fieldValue.split(',');
-      if (industriesArray.length <= 3) {
-        this.setState({ industries: industriesArray, errors: { ...this.state.errors, industries: false } });
-      }
-    } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
+    if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
       const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
       if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
         this.setState({
@@ -99,6 +98,13 @@ export default class StarDetailsEntry extends React.Component {
     }
   };
 
+  removeSelectedIndustry = (id, event) => {
+    event.stopPropagation();
+    let { industries } = this.state;
+    industries = industries.filter(profession => profession.id !== id);
+    this.setState({ industries });
+  }
+
   handleFieldBlur = (fieldType, fieldValue) => {
     const newFieldValue = commaToNumberFormatter(fieldValue)
     if (fieldType === 'bookingLimit' && !this.state.limitCheck && newFieldValue > 20) {
@@ -109,6 +115,18 @@ export default class StarDetailsEntry extends React.Component {
       this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
   }
+
+  renderIndustries = () => {
+    const { industries } = this.state;
+    return industries.map(profession => (
+      <GroupStyled.mutiSelectItemWrapper key={profession.id}>
+        {profession.title}
+        <GroupStyled.OptionCloseButton
+          onClick={event => this.removeSelectedIndustry(profession.id, event)}
+        />
+      </GroupStyled.mutiSelectItemWrapper>
+    ));
+  };
 
   renderPopup = () => {
     return (
@@ -122,19 +140,17 @@ export default class StarDetailsEntry extends React.Component {
     );
   }
 
-  renderMultiValueItems = (selectProps) => {
-    return (
-      <GroupStyled.mutiSelectItemWrapper>
-        {selectProps.value.label}
-        <GroupStyled.OptionCloseButton
-          type="button"
-          onClick={() => selectProps.onRemove(selectProps.value)}
-        />
-      </GroupStyled.mutiSelectItemWrapper>
-    );
-  };
-
   render() {
+    if (this.state.industrySelection) {
+      return (
+        <IndustrySelection
+          onClose={() => this.setState({ industrySelection: false })}
+          selectedProfessions={this.state.industries}
+          onSelectionComplete={this.getIndustrySelection}
+          limit={3}
+        />
+      );
+    }
     return (
       <GroupStyled.DetailsWrapper>
         {
@@ -209,16 +225,23 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Your industry</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <MultiSelect
-                otherOptions={{
-                  clearable: false,
-                  arrowRenderer: null,
-                  valueComponent: selectProps => this.renderMultiValueItems(selectProps),
-                }}
-                dataValues={this.props.industryList}
-                value={this.state.industries.join(',')}
-                handleFieldChange={value => this.handleFieldChange('industries', value)}
-              />
+              <GroupStyled.IndustryInput
+                onClick={() => this.setState({ industrySelection: true })}
+              >
+                {
+                  !this.state.industries.length ?
+                    <GroupStyled.CustomPlaceholder>
+                      Select ...
+                    </GroupStyled.CustomPlaceholder>
+                  :
+                    <GroupStyled.IndustryEditButton>
+                      Edit
+                    </GroupStyled.IndustryEditButton>
+                }
+                {
+                  this.renderIndustries()
+                }
+              </GroupStyled.IndustryInput>
               <GroupStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
                   ? 'Please choose a maximum of 3 industries.'

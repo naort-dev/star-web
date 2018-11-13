@@ -10,6 +10,7 @@ export const CELEB_VIDEOS_LIST = {
   failed: 'fetch_failed/celeb_video_list',
   swapCacheStart: 'swap_cache_start/celeb_video_list',
   swapCacheEnd: 'swap_cache_end/celeb_video_list',
+  celebLoading: 'loading/celeb_video_list',
 };
 
 export const celebVideosListFetchStart = (refresh, token) => ({
@@ -47,6 +48,11 @@ export const celebVideosListSwapCacheEnd = key => ({
   key,
 });
 
+export const celebVideosListFetchLoading = refresh => ({
+  type: CELEB_VIDEOS_LIST.celebLoading,
+  refresh,
+});
+
 export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispatch, getState) => {
   const { limit } = getState().celebVideos;
   const request = requestType ? requestType: '';
@@ -54,7 +60,11 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
     getState().celebVideos.token.cancel('Operation canceled due to new request.');
   }
   const source = CancelToken.source();
-  dispatch(celebVideosListFetchStart(refresh, source));
+  if (offset === 0) {
+    dispatch(celebVideosListFetchStart(refresh, source));
+  } else {
+    dispatch(celebVideosListFetchLoading());
+  }
   return fetch.get(`${Api.getVideosList}?limit=${limit}&offset=${offset}&request_type=${request}&user_id=${id}`, {
     cancelToken: source.token,
   }).then((resp) => {

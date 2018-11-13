@@ -57,7 +57,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
 VideoRecorderDiv.Video = styled.video`
   height: 100%;
   width: 100%;
-  object-fit: fill;
+  object-fit: contain;
   background-color: black;
   @media(min-width:1025px){
     width: 100%;
@@ -286,7 +286,6 @@ cursor: pointer;
 @media(min-width: 1920px) {
   height: 100px;
   width: 100px;
-  background-size: 77px;
 }
 `;
 

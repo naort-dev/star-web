@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const GroupStyled = styled.div`
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
 `;
 
 GroupStyled.BackButton = styled.span`
@@ -27,23 +28,26 @@ GroupStyled.StepWrapper = styled.div`
 `;
 
 GroupStyled.ContentWrapper = styled.div`
-  padding: 0 10px;
-  height: 96%;
+  height: 100%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
+  padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 0 60px;
+    padding: 30px 60px;
+  }
+`;
+
+GroupStyled.VideoRecorderWrapper = GroupStyled.DetailsWrapper.extend`
+  padding: 30px 0;
+  @media(min-width: 768px) {
+    padding: 30px 0;
   }
 `;
 
 GroupStyled.HeadingWrapper = styled.div`
   text-align: center;
-  margin: 10px 0;
   margin-bottom: 30px;
-  @media(min-width: 768px) {
-    margin: 20px 0;
-  }
 `;
 
 GroupStyled.SubHeading = styled.span`
@@ -217,6 +221,24 @@ GroupStyled.InputArea = styled.textarea`
   @media(min-width:1920px){
     font-size:16px;
   }
+`;
+
+GroupStyled.IndustryInput = GroupStyled.InputArea.extend`
+  min-height: 80px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  height: auto;
+  padding-right: 40px;
+`.withComponent('span');
+
+GroupStyled.IndustryEditButton = styled.span`
+  color: #FF6C58;
+  position: absolute;
+  cursor: pointer;
+  right: 9px;
+  top: 7px;
+  bottom: 0;
 `;
 
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
@@ -446,6 +468,7 @@ GroupStyled.ProfileInputButton = styled.div`
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
+  padding-bottom: 18px;
   ${GroupStyled.ProfileInputWrapper} {
     width: 60px;
     height: 60px;

@@ -1,9 +1,7 @@
-import React, { Fragment } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
-import Header from '../../components/Header';
-import Sidebar from '../../components/Sidebar';
+import React from 'react';
 import moment from 'moment';
-import Tabs from '../../components/Tabs';
+import ColumnLayout from '../../components/ColumnLayout';
+import InnerTabs from '../../components/InnerTabs';
 import EarningsList from '../../components/EarningsList';
 import Dollar from '../../components/Dollar';
 import ScrollList from '../../components/ScrollList';
@@ -13,20 +11,52 @@ export default class Earnings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuActive: false,
+      innerLinks: [
+        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
+        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+      ],
       selectedTab: 'All',
+      scrollTarget: '',
     };
     if (JSON.stringify(this.props.list) === '{}' && !this.props.loading) this.props.fetchEarningsList({});
     if (this.props.pendingList.length === 0 && !this.props.pendingLoading) this.props.fetchEarningsList({ offset: this.props.pendingOffset, status: 1, limit: 15 });
     if (this.props.paidList.length === 0 && !this.props.paidLoading) this.props.fetchEarningsList({ offset: this.props.paidOffset, status: 2, limit: 15 });
   }
 
-  activateMenu = () => {
-    this.setState({ menuActive: !this.state.menuActive });
+  componentWillMount() {
+    let { innerLinks } = this.state;
+    if (this.props.userDetails.settings_userDetails.celebrity) {
+      innerLinks = [
+        ...innerLinks,
+        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
+      ];
+    }
+    this.setState({ innerLinks });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const isCelebrity = nextProps.userDetails.settings_userDetails.celebrity;
+    let { innerLinks } = this.state;
+    if (nextProps.userDetails.settings_userDetails.celebrity !== this.props.userDetails.settings_userDetails.celebrity && isCelebrity) {
+      innerLinks = [
+        ...innerLinks,
+        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
+      ];
+    } else if (!isCelebrity) {
+      innerLinks = [
+        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
+      ];
+    }
+    this.setState({ innerLinks });
   }
 
   switchTab = (tab) => {
     this.setState({ selectedTab: tab });
+  }
+
+  updateScrollTarget = (target) => {
+    this.setState({ scrollTarget: target });
   }
 
   renderOverview = (amount, mainHead, subHead) => (
@@ -43,6 +73,75 @@ export default class Earnings extends React.Component {
       <Dollar amount={amount} size={size} color="#FF6C58" />
     </EarningStyled.OverviewMobileItem>
   )
+
+  renderCenterSection = () => {
+    const {
+      paidList,
+      pendingList,
+      paidAmount,
+      pendingAmount,
+      totalAmount,
+      pendingCount,
+      paidCount,
+      paidOffset,
+      pendingOffset,
+      list,
+      pendingLoading,
+      paidLoading
+    } = this.props;
+    const { selectedTab } = this.state;
+    const selectedItemCount = selectedTab === 'Paid' ? paidCount : pendingCount;
+    return (
+      <EarningStyled.sectionWrapper>
+        <InnerTabs
+          labels={['All', 'Pending', 'Paid']}
+          switchTab={this.switchTab}
+          selected={this.state.selectedTab}
+        />
+        <EarningStyled.mainSection>
+          <EarningStyled.Overview>
+            {this.renderOverview(totalAmount, 'Total Video Sales', `You have created ${paidCount + pendingCount} videos`)}
+            {this.renderOverview(pendingAmount, 'Pending Videos', `You have ${pendingCount} videos to fulfill`)}
+            {this.renderOverview(paidAmount, 'Scheduled Payment', `will be paid out on ${moment().add(1, 'months').startOf('month').format('DD/MM/YYYY')}`)}
+          </EarningStyled.Overview>
+          {this.renderOverviews()}
+          <EarningStyled.EarningsListStyled>
+            {(selectedTab === 'Paid' || selectedTab === 'Pending') &&
+            <EarningStyled.ContentWrapper>
+              {selectedItemCount != 0 && this.renderHeader()}
+              <ScrollList
+                dataList={selectedTab === 'Paid' ? paidList : pendingList}
+                limit={15}
+                earnings
+                scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+                totalCount={selectedTab === 'Paid' ? paidCount : pendingCount}
+                offset={selectedTab === 'Paid' ? paidOffset : pendingOffset}
+                loading={selectedTab === 'Paid' ? paidLoading : pendingLoading}
+                noDataText="None at this time"
+                fetchData={(offset, refresh) => this.props.fetchEarningsList({
+                  offset,
+                  status: selectedTab === 'Paid' ? 2 : 1,
+                  limit: 15,
+                })}
+              />
+            </EarningStyled.ContentWrapper>}
+            {selectedTab === 'All' && (list.Paid || list.Pending) &&
+            <EarningStyled.AllEarningsWrapper>
+              <EarningStyled.heading>Paid</EarningStyled.heading >
+              {list.Paid.length != 0 && this.renderHeader()}
+              {this.renderEarningList(list.Paid)}
+              {list.Paid.length != 0 && <EarningStyled.MoreButton onClick={() => this.switchTab('Paid')}>More...</EarningStyled.MoreButton>}
+              <EarningStyled.heading>Pending</EarningStyled.heading >
+              {list.Pending.length !=0 && this.renderHeader()}
+              {this.renderEarningList(list.Pending)}
+              {list.Pending.length !=0 && <EarningStyled.MoreButton onClick={() => this.switchTab('Pending')}>More...</EarningStyled.MoreButton>}
+            </EarningStyled.AllEarningsWrapper>
+            }
+          </EarningStyled.EarningsListStyled>
+        </EarningStyled.mainSection>
+      </EarningStyled.sectionWrapper>
+    );
+  }
 
   renderOverviews = () => {
     const {
@@ -117,93 +216,15 @@ export default class Earnings extends React.Component {
   )
 
   render() {
-    const {
-      paidList,
-      pendingList,
-      paidAmount,
-      pendingAmount,
-      totalAmount,
-      pendingCount,
-      paidCount,
-      paidOffset,
-      pendingOffset,
-      list,
-      pendingLoading,
-      paidLoading
-    } = this.props;
-    const { selectedTab } = this.state;
-    const selectedItemCount = selectedTab === 'Paid' ? paidCount : pendingCount;
-
     return (
       <EarningStyled>
-        <Header
-          menuActive={this.state.menuActive}
-          enableMenu={this.activateMenu}
+        <ColumnLayout
+          selectedSideBarItem="earnings"
           history={this.props.history}
+          innerLinks={this.state.innerLinks}
+          renderCenterSection={this.renderCenterSection}
+          getScrollTarget={this.updateScrollTarget}
         />
-        <EarningStyled.sectionWrapper>
-          <EarningStyled.sideSection menuActive={this.state.menuActive}>
-            <Scrollbars
-              renderView={props => <div {...props} className="view" />}
-            >
-              <Sidebar
-                list={this.props.professionsList}
-                history={this.props.history}
-                selectedCategory="earnings"
-                menuActive={this.state.menuActive}
-                toggleMenu={this.activateMenu}
-              />
-            </Scrollbars>
-          </EarningStyled.sideSection>
-          <EarningStyled.tabsWapper>
-            <Tabs
-              labels={['All', 'Pending', 'Paid']}
-              switchTab={this.switchTab}
-              disableFilter
-              selected={this.state.selectedTab}
-            />
-          </EarningStyled.tabsWapper>
-          <EarningStyled.mainSection menuActive={this.state.menuActive}>
-            <EarningStyled.Overview>
-              {this.renderOverview(totalAmount, 'Total Video Sales', `You have created ${paidCount + pendingCount} videos`)}
-              {this.renderOverview(pendingAmount, 'Pending Videos', `You have ${pendingCount} videos to fulfill`)}
-              {this.renderOverview(paidAmount, 'Scheduled Payment', `will be paid out on ${moment().add(1, 'months').startOf('month').format('DD/MM/YYYY')}`)}
-            </EarningStyled.Overview>
-            {this.renderOverviews()}
-            <EarningStyled.EarningsListStyled>
-              {(selectedTab === 'Paid' || selectedTab === 'Pending') &&
-              <EarningStyled.ContentWrapper>
-                {selectedItemCount != 0 && this.renderHeader()}
-                <ScrollList
-                  dataList={selectedTab === 'Paid' ? paidList : pendingList}
-                  limit={15}
-                  earnings
-                  totalCount={selectedTab === 'Paid' ? paidCount : pendingCount}
-                  offset={selectedTab === 'Paid' ? paidOffset : pendingOffset}
-                  loading={selectedTab === 'Paid' ? paidLoading : pendingLoading}
-                  noDataText="None at this time"
-                  fetchData={(offset, refresh) => this.props.fetchEarningsList({
-                    offset,
-                    status: selectedTab === 'Paid' ? 2 : 1,
-                    limit: 15,
-                  })}
-                />
-              </EarningStyled.ContentWrapper>}
-              {selectedTab === 'All' && (list.Paid || list.Pending) &&
-              <EarningStyled.AllEarningsWrapper>
-                <EarningStyled.heading>Paid</EarningStyled.heading >
-                {list.Paid.length != 0 && this.renderHeader()}
-                {this.renderEarningList(list.Paid)}
-                {list.Paid.length != 0 && <EarningStyled.MoreButton onClick={() => this.switchTab('Paid')}>More...</EarningStyled.MoreButton>}
-                <EarningStyled.heading>Pending</EarningStyled.heading >
-                {list.Pending.length !=0 && this.renderHeader()}
-                {this.renderEarningList(list.Pending)}
-                {list.Pending.length !=0 && <EarningStyled.MoreButton onClick={() => this.switchTab('Pending')}>More...</EarningStyled.MoreButton>}
-              </EarningStyled.AllEarningsWrapper>
-              }
-            </EarningStyled.EarningsListStyled>
-          </EarningStyled.mainSection>
-        </EarningStyled.sectionWrapper>
       </EarningStyled>
     );
   }

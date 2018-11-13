@@ -5,7 +5,7 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
-  limit: 40,
+  limit: 6,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -22,6 +22,13 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+      };
+    
+    case CELEB_VIDEOS_LIST.celebLoading:
+      return {
+        ...state,
+        loading: true,
+        data: action.refresh ? [] : state.data,
       };
 
     case CELEB_VIDEOS_LIST.success:
