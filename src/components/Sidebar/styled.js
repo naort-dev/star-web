@@ -111,6 +111,26 @@ SidebarStyled.InnerListItem = SidebarStyled.ListItem.extend`
   background: transparent;
 `;
 
+SidebarStyled.LinkElement = styled.span`
+  position: relative;
+`;
+
+SidebarStyled.InnerListItemCount = styled.span`
+  position: absolute;
+  font-family: 'Avenir-Medium';
+  top: -7px;
+  right: -15px;
+  font-size: 11px;
+  width: 18px;
+  line-height: 18px;
+  height: 18px;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #FF6C58;
+  color: #fff;
+  display: inline-block;
+`;
+
 SidebarStyled.InnerCategoryTitle = SidebarStyled.CategoryTitle.extend`
   background: transparent;
   color: ${props => (props.selected ? '#1f1f1f' : '#9E9E9E')};

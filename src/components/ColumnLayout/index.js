@@ -61,7 +61,7 @@ class ColumnLayout extends React.Component {
             </ColumnLayoutStyled.sideSection>
             <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
               <ColumnLayoutStyled.CenterSection>
-                {this.props.renderCenterSection()}
+                {this.props.children}
               </ColumnLayoutStyled.CenterSection>
             </ColumnLayoutStyled.mainSection>
           </ColumnLayoutStyled.Container>
@@ -75,8 +75,4 @@ const mapStateToProps = state => ({
   userDetails: state.userDetails.settings_userDetails,
 });
 
-const mapDispatchToProps = dispatch => ({
-
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ColumnLayout);
+export default connect(mapStateToProps)(ColumnLayout);

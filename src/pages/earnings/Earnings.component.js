@@ -189,9 +189,10 @@ export default class Earnings extends React.Component {
         <ColumnLayout
           selectedSideBarItem="earnings"
           history={this.props.history}
-          renderCenterSection={this.renderCenterSection}
           getScrollTarget={this.updateScrollTarget}
-        />
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
       </EarningStyled>
     );
   }

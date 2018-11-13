@@ -15,8 +15,11 @@ import { setRequestFlow } from '../../store/shared/actions/toggleModals';
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   session: state.session,
-  userDetails: state.userDetails,
-  myVideosList: state.myVideosList,
+  requestsList: state.myVideosList.data,
+  requestsLimit: state.myVideosList.limit,
+  requestsOffset: state.myVideosList.offset,
+  requestsCount: state.myVideosList.count,
+  requestsLoading: state.myVideosList.loading,
   videoRecorder: state.videoRecorder,
   videoUploader: state.videoUploader,
   orderDetailsLoading: state.requestHandler.loading,

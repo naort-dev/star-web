@@ -66,8 +66,9 @@ export default class Requests extends React.Component {
         <ColumnLayout
           selectedSideBarItem="settings"
           history={this.props.history}
-          renderCenterSection={this.renderCenterSection}
-        />
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
       </div>
     );
   }

@@ -20,11 +20,9 @@ export default class Requests extends React.Component {
     super(props);
     this.state = {
       selectedTab: 'All',
-      innerLinks: [],
       requestStatus: 'all',
       requestAction: '',
       showActionPopup: false,
-      isCelebrity: null,
       orderDetails: {},
       scrollTarget: '',
     };
@@ -293,15 +291,15 @@ export default class Requests extends React.Component {
   renderBookings = () => {
     return (
       <ScrollList
-        dataList={this.props.myVideosList.data}
+        dataList={this.props.requestsList}
         scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
         requestDetails
         renderFunction={this.renderRequests}
         starMode={this.props.starMode}
-        limit={this.props.myVideosList.limit}
-        totalCount={this.props.myVideosList.count}
-        offset={this.props.myVideosList.offset}
-        loading={this.props.myVideosList.loading}
+        limit={this.props.requestsLimit}
+        totalCount={this.props.requestsCount}
+        offset={this.props.requestsOffset}
+        loading={this.props.requestsLoading}
         noDataText="No requests"
         fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
       />
@@ -318,7 +316,7 @@ export default class Requests extends React.Component {
         />
         <RequestsStyled.ContentWrapper>
           {
-            (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
+            (!this.props.requestsList.length && this.props.requestsLoading) ?
               <RequestsStyled.loaderWrapper>
                 <Loader />
               </RequestsStyled.loaderWrapper>
@@ -334,9 +332,10 @@ export default class Requests extends React.Component {
         <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          renderCenterSection={this.renderCenterSection}
           getScrollTarget={this.updateScrollTarget}
-        />
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
         {
           this.props.orderDetailsLoading ?
             <ActionLoader />
