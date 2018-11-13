@@ -120,9 +120,7 @@ export default class Starprofile extends React.Component {
   socialMedia = (icon) => {
     return (
       icon.social_link_value !== '' ?
-        <Link to={`/${icon.social_link_value}`} className={icon.social_link_key} target="_blank">
-          <span></span>
-        </Link>
+        <a href={`${icon.social_link_value}`} className={icon.social_link_key} target="_blank"></a>
         : ''
     );
   }
