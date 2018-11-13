@@ -293,7 +293,9 @@ export default class Starprofile extends React.Component {
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
+          disableMenu
         />
+        {this.props.userDetails && !this.props.detailsLoading &&
         <StarProfileStyled.sectionWrapper>
           <ImageGallery
             items={images}
@@ -372,7 +374,8 @@ export default class Starprofile extends React.Component {
               </div>
             </div>
           </StarProfileStyled.profileWrapper>
-        </StarProfileStyled.sectionWrapper>
+        </StarProfileStyled.sectionWrapper>}
+        {this.props.detailsLoading && <Loader />}
       </StarProfileStyled>
     );
   }
