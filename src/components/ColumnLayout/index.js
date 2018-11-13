@@ -1,18 +1,32 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Sidebar from '../Sidebar';
 import Header from '../Header';
 import ColumnLayoutStyled from './styled';
 
-export default class ColumnLayout extends React.Component {
-  state = {
-    menuActive: false,
+class ColumnLayout extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      menuActive: false,
+    };
   }
 
   componentDidMount() {
     if (this.props.getScrollTarget) {
       this.props.getScrollTarget('column-layout-scrollable-target');
     }
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let { menuActive, innerLinks } = prevState;
+    innerLinks = fanInnerLinks;
+    if (nextProps.userDetails.celebrity) {
+      innerLinks = starInnerLinks;
+    }
+    return ({ menuActive, innerLinks });
   }
 
   activateMenu = () => {
@@ -41,7 +55,7 @@ export default class ColumnLayout extends React.Component {
                   selectedCategory={this.props.selectedSideBarItem}
                   menuActive={this.state.menuActive}
                   toggleMenu={this.activateMenu}
-                  innerLinks={this.props.innerLinks}
+                  innerLinks={this.state.innerLinks}
                 />
               </Scrollbars>
             </ColumnLayoutStyled.sideSection>
@@ -57,3 +71,12 @@ export default class ColumnLayout extends React.Component {
   }
 }
 
+const mapStateToProps = state => ({
+  userDetails: state.userDetails.settings_userDetails,
+});
+
+const mapDispatchToProps = dispatch => ({
+
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ColumnLayout);

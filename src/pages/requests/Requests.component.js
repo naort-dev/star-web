@@ -40,28 +40,6 @@ export default class Requests extends React.Component {
     this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
   }
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    let { innerLinks } = prevState;
-    const isCelebrity = nextProps.userDetails.settings_userDetails.celebrity;
-    if (nextProps.starMode && !prevState.innerLinks.length) {
-      innerLinks = [
-        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-      ];
-    } else if (!prevState.innerLinks.length) {
-      innerLinks = [
-        ...innerLinks,
-        { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
-        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-      ];
-    }
-    if (isCelebrity && isCelebrity !== prevState.isCelebrity && !nextProps.starMode) {
-      innerLinks = [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }];
-    }
-    return ({ innerLinks, isCelebrity });
-  }
-
   onVideoUpload = (success) => {
     this.props.onClearStreams();
     this.props.deleteVideo();
@@ -356,7 +334,6 @@ export default class Requests extends React.Component {
         <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          innerLinks={this.state.innerLinks}
           renderCenterSection={this.renderCenterSection}
           getScrollTarget={this.updateScrollTarget}
         />

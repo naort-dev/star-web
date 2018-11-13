@@ -11,44 +11,12 @@ export default class Earnings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      innerLinks: [
-        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-      ],
       selectedTab: 'All',
       scrollTarget: '',
     };
     if (JSON.stringify(this.props.list) === '{}' && !this.props.loading) this.props.fetchEarningsList({});
     if (this.props.pendingList.length === 0 && !this.props.pendingLoading) this.props.fetchEarningsList({ offset: this.props.pendingOffset, status: 1, limit: 15 });
     if (this.props.paidList.length === 0 && !this.props.paidLoading) this.props.fetchEarningsList({ offset: this.props.paidOffset, status: 2, limit: 15 });
-  }
-
-  componentWillMount() {
-    let { innerLinks } = this.state;
-    if (this.props.userDetails.settings_userDetails.celebrity) {
-      innerLinks = [
-        ...innerLinks,
-        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-      ];
-    }
-    this.setState({ innerLinks });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const isCelebrity = nextProps.userDetails.settings_userDetails.celebrity;
-    let { innerLinks } = this.state;
-    if (nextProps.userDetails.settings_userDetails.celebrity !== this.props.userDetails.settings_userDetails.celebrity && isCelebrity) {
-      innerLinks = [
-        ...innerLinks,
-        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-      ];
-    } else if (!isCelebrity) {
-      innerLinks = [
-        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-      ];
-    }
-    this.setState({ innerLinks });
   }
 
   switchTab = (tab) => {
@@ -221,7 +189,6 @@ export default class Earnings extends React.Component {
         <ColumnLayout
           selectedSideBarItem="earnings"
           history={this.props.history}
-          innerLinks={this.state.innerLinks}
           renderCenterSection={this.renderCenterSection}
           getScrollTarget={this.updateScrollTarget}
         />
