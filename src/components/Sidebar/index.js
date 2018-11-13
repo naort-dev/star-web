@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
     if (this.props.updateMainCategory) {
       this.props.updateMainCategory(label, id);
     }
-    if (this.props.history && this.props.history.location.pathname != '/') {
+    if (this.props.history && this.props.history.location.pathname !== '/') {
       this.props.history.push('/');
     }
   }
@@ -134,7 +134,16 @@ class Sidebar extends React.Component {
                             <SidebarStyled.CategoryTitle
                               selected={this.props.selectedCategory === 'requests'}
                             >
-                              <Link to={'/user/bookings'}>Requests</Link>
+                              <Link to={'/user/bookings'}>
+                                <SidebarStyled.LinkElement>
+                                  Requests
+                                  <SidebarStyled.InnerListItemCount>
+                                    {
+                                      this.props.userDetails.settings_celebrityDetails.pending_requests_count
+                                    }
+                                  </SidebarStyled.InnerListItemCount>
+                                </SidebarStyled.LinkElement>
+                              </Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                           <SidebarStyled.ListItem>
