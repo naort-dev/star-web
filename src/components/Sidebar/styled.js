@@ -116,12 +116,10 @@ SidebarStyled.LinkElement = styled.span`
 `;
 
 SidebarStyled.InnerListItemCount = styled.span`
-  position: absolute;
   font-family: 'Avenir-Medium';
-  top: -10px;
-  right: -23px;
   font-size: 13px;
   line-height: 18px;
+  margin-left: 5px;
   padding: 0 11px;
   text-align: center;
   border-radius: 16px;
