@@ -11,8 +11,8 @@ import {
   GooglePlusIcon,
   EmailIcon,
 } from 'react-share';
-import SnackBar from '../SnackBar';
 import copy from 'copy-to-clipboard';
+import SnackBar from '../SnackBar';
 import ShareStyled from './styled';
 
 export default class ShareView extends React.Component {
