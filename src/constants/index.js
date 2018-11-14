@@ -7,9 +7,7 @@ export const fanInnerLinks = [
 ];
 
 export const starInnerLinks = [
-  { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
-  { linkName: 'Favorited stars', selectedName: 'favorites', url: '/user/favorites' },
-  { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-  { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
   { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
+  { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
+  { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
 ];
