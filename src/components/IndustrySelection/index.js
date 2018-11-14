@@ -102,13 +102,17 @@ class IndustrySelectionComponent extends React.Component {
   }
 
   renderProfessions = () => {
-    const { categorySelected, searchValue, searchProfessions } = this.state;
+    const { categorySelected, searchValue, searchProfessions, selectedProfessions } = this.state;
     if (searchValue !== '') {
+      const newSearchProfessions = searchProfessions.filter((childProfession) => {
+        const professionSelected = selectedProfessions.find(item => item.title === childProfession.title);
+        return !professionSelected;
+      });
       return (
         <IndustryStyled.ListContainer>
           <IndustryStyled.ListWrapper>
             {
-                searchProfessions.map(childProfession => (
+                newSearchProfessions.map(childProfession => (
                   <IndustryStyled.ListItem
                     onClick={() => this.selectProfession(childProfession)}
                     key={childProfession.id}
@@ -119,7 +123,7 @@ class IndustrySelectionComponent extends React.Component {
             }
           </IndustryStyled.ListWrapper>
         </IndustryStyled.ListContainer>
-      )
+      );
     }
     return (
       <React.Fragment>

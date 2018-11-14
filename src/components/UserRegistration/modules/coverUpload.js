@@ -60,7 +60,7 @@ export default class CoverUpload extends React.Component {
     let coverImageHeight, secondaryImageHeight;
     if (this.coverImage) {
       coverImageHeight = this.coverImage.clientWidth / this.props.featuredRatio;
-      secondaryImageHeight = this.coverImage.clientWidth / this.props.secondaryRatio;
+      secondaryImageHeight = (this.coverImage.clientWidth / (this.props.secondaryRatio * 2)) - 10;
     }
     this.setState({
       coverImageHeight,
@@ -250,7 +250,13 @@ export default class CoverUpload extends React.Component {
                 </GroupStyled.GroupName>
               </GroupStyled.CoverLayout>
               {
-                this.renderSecondaryImages()
+                this.state.secondaryImages.length ?
+                  <GroupStyled.SecondaryCoverWrapper>
+                    {
+                      this.renderSecondaryImages()
+                    }
+                  </GroupStyled.SecondaryCoverWrapper>
+                : null
               }
               {
                 this.state.featuredImage && this.state.secondaryImages.length < 2 ?
