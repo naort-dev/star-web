@@ -10,6 +10,9 @@ const VideoRenderDiv = styled.div`
     min-height: 200px;
     min-width: 400px;
   }
+  @media(min-width: 1025px) {
+    max-height: none;
+  }
 `;
 
 VideoRenderDiv.answerVideo = styled.img`
