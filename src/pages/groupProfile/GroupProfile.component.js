@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ImageGallery from 'react-image-gallery';
+import { Redirect } from 'react-router-dom';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Header from '../../components/Header';
 import ScrollList from '../../components/ScrollList';
@@ -160,6 +161,9 @@ export default class GroupProfile extends React.Component {
       }
     }
 
+    if (this.props.groupDetailsError) {
+      return <Redirect to="/not-found" />;
+    }
     return (
       <GroupProfileStyled>
         <Header
