@@ -69,6 +69,7 @@ class RequestTemplates extends React.Component {
     const optionItems = relations.map((relations) =>
       <option value={relations.id} key={relations.id}>{relations.title}</option>
     );
+    console.log(this.state.type, this.state.user)
     switch (this.state.type) {
       case 1:
         return null;
@@ -82,7 +83,7 @@ class RequestTemplates extends React.Component {
                 <Templates.InputWrapperContainer>
                   <Templates.WrapsInput>
                     <Templates.Input
-                      placeholder="Enter host name"
+                      placeholder="Enter name"
                       type="text"
                       name="hostName"
                       value={this.props.hostName}
@@ -178,7 +179,7 @@ class RequestTemplates extends React.Component {
               null
             }
             <Templates.InputWrapper>
-              <Templates.Label>What is {this.state.eventname} for?</Templates.Label>
+              <Templates.Label>What is this {this.state.eventname} for?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="What specifically for"
@@ -212,7 +213,7 @@ class RequestTemplates extends React.Component {
                 <Templates.InputWrapperContainer>
                   <Templates.WrapsInput>
                     <Templates.Input
-                      placeholder="Enter host name"
+                      placeholder="Enter name"
                       type="text"
                       name="hostName"
                       value={this.props.hostName}
