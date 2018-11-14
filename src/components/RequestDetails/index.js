@@ -3,7 +3,7 @@ import moment from 'moment';
 import VideoRenderDiv from './styled';
 import VideoPlayer from '../VideoPlayer';
 import RequestFlowPopup from '../RequestFlowPopup';
-import { requestTypes } from '../../constants/requestTypes';
+import { requestTypes, requestTypeTitle } from '../../constants/requestTypes';
 import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
 import StarRating from '../StarRating';
 import { requestExpiryDays } from '../../constants';
@@ -158,6 +158,14 @@ export default class RequestDetails extends React.Component {
     if (!this.moreSettingsWrapper) {
       this.moreSettingsWrapper = node;
     }
+  }
+
+  getTitle = () => {
+    const { request_type: requestType, occasion } = this.props.orderDetails;
+    if (requestType === 3) { // Q&A video
+      return `Q&A ${requestTypeTitle[requestType]}`;
+    }
+    return `${occasion} ${requestTypeTitle[requestType]}`;
   }
 
   handleGlobalClick = (event) => {
@@ -363,10 +371,16 @@ export default class RequestDetails extends React.Component {
             : null
         }
         <OrderDetailsItem title="Private video" value={isPrivate} />
-        {requestStatus === 6 &&
+        {requestStatus === 6 && orderDetails.fan_rating !== null &&
           <OrderDetailsItem
             title="Rating"
             value={<StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />}
+          />
+        }
+        {requestStatus === 6 && orderDetails.fan_rating !== null &&
+          <OrderDetailsItem
+            title="Comments"
+            value={orderDetails.fan_rating.comments}
           />
         }
         <OrderDetailsItem title="Order#" value={orderId} />
@@ -412,7 +426,7 @@ export default class RequestDetails extends React.Component {
               </VideoRenderDiv.ProfileImageWrapper>
               <VideoRenderDiv.DetailWrapper>
                 <VideoRenderDiv.StarName>
-                  {props.details}
+                  {props.starMode ? this.getTitle() : props.details}
                 </VideoRenderDiv.StarName>
                 {this.renderTime()}
                 <VideoRenderDiv.StarDetails>{props.starMode ? props.fanName : props.starName }</VideoRenderDiv.StarDetails>
