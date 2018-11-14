@@ -123,19 +123,6 @@ class VideoPopup extends React.Component {
     }
   }
 
-  setVideoContentHeight = (node) => {
-    let { videoContentHeight } = this.state;
-    videoContentHeight = node.clientWidth / (this.props.selectedVideo.width / this.props.selectedVideo.height);
-    this.setState({ videoContentHeight })
-  }
-
-  setVideoContentRef = (node) => {  
-    if (!this.videoContent) {
-      this.videoContent = node;
-      this.setVideoContentHeight(node)
-    }
-  }
-
   handleCommentEnter = (event) => {
     if (event.keyCode === 13) {
       this.commentAdder();
@@ -249,7 +236,7 @@ class VideoPopup extends React.Component {
                         </React.Fragment>
                     }
                   </VideoPopupStyled.VideoPlayerWrapper>
-                  <VideoPopupStyled.VideoContent innerRef={node => this.setVideoContentRef(node)} height={this.state.videoContentHeight}>
+                  <VideoPopupStyled.VideoContent>
                     <VideoPopupStyled.VideoRequester>
                       <VideoPopupStyled.StarLink to={`/${props.selectedVideo.user_id}`}>
                         <VideoPopupStyled.VideoRequestImage
