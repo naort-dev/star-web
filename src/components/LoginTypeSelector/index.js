@@ -41,7 +41,7 @@ export class LoginTypeSelector extends React.Component  {
                         }
                       />
                       <label htmlFor="f-option">
-                        Fan Account
+                        Fan account
                         <div className="option-content">
                         Search for your favorite stars and book  personalized videos from them.
                         </div>
@@ -62,7 +62,7 @@ export class LoginTypeSelector extends React.Component  {
                         }
                       />
                       <label htmlFor="s-option">
-                        Star Account
+                        Star account
                         <div className="option-content">
                         Engage with your most loyal fans and create unique <span>one - of - a - kind</span> videos for them.
                         </div>
@@ -83,7 +83,7 @@ export class LoginTypeSelector extends React.Component  {
                         }
                       />
                       <label htmlFor="t-option">
-                        Group Account
+                        Group account
                         <div className="option-content">
                         For those who represent a group such as a charity, brand, team, or university.
                         </div>

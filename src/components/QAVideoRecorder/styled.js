@@ -7,11 +7,11 @@ const VideoRecorderDiv = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column-reverse;
-  @media(min-width:1025px){
+  @media(min-width:768px){
     width: 100%;
     height: 100%;
   }
-  @media(min-width:768px){
+  @media(min-width:1025px){
     width: 100%;
     height: 100%;
   }
@@ -61,7 +61,8 @@ VideoRecorderDiv.Video = styled.video`
   background-color: black;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%
+    height: auto;
+    object-fit: cover;
   }
 `;
 

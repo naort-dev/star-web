@@ -33,9 +33,9 @@ export default class Askquestion extends React.Component {
     this.props.history.push(`/${this.props.match.params.id}`);
   }
 
-  handleBooking = () => {
-    this.setState({ loader: true });
-    if (this.props.isLoggedIn) {
+  handleBooking = (noEdit) => {
+    if (this.props.isLoggedIn && !noEdit) {
+      this.setState({ loader: true });
       let uploadVideo;
       if (this.props.videoUploader.savedFile != null) {
         uploadVideo = this.props.videoUploader.savedFile;
@@ -58,6 +58,8 @@ export default class Askquestion extends React.Component {
             });
           }
         });
+    } else {
+      this.props.toggleRequestFlow(false);
     }
   }
 
