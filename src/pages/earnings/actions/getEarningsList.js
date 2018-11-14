@@ -22,10 +22,11 @@ export const earningsListFetchEnd = status => ({
   status,
 });
 
-export const earningsListFetchSuccess = list => (
+export const earningsListFetchSuccess = (list, offset) => (
   {
     type: EARNINGS_LIST.success,
     list,
+    offset,
   });
 
 export const pendingEarningsListFetchSuccess = (list, offset) => (
@@ -55,7 +56,7 @@ export const fetchEarningsList = params => (dispatch, getState) => {
       dispatch(earningsListFetchEnd(params.status));
       if (params.status === 1) dispatch(pendingEarningsListFetchSuccess(resp.data.data, params.offset));
       else if (params.status === 2) dispatch(paidEarningsListFetchSuccess(resp.data.data, params.offset));
-      else dispatch(earningsListFetchSuccess(resp.data.data));
+      else if (params.status === 'all') dispatch(earningsListFetchSuccess(resp.data.data, params.offset));
     } else {
       dispatch(earningsListFetchEnd(params.status));
     }

@@ -158,7 +158,6 @@ export default class QAVideoRecorder extends React.Component {
           videoElem.src = null;
         }
         videoElem.srcObject = this.state.stream;
-        console.log()
         const options = {
           mimeType: 'video/webm;codecs=vp8',
           audioBitsPerSecond: 128000,
