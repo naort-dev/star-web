@@ -137,11 +137,15 @@ class Sidebar extends React.Component {
                               <Link to={'/user/bookings'}>
                                 <SidebarStyled.LinkElement>
                                   Requests
-                                  <SidebarStyled.InnerListItemCount>
-                                    {
-                                      this.props.userDetails.settings_celebrityDetails.pending_requests_count
-                                    }
-                                  </SidebarStyled.InnerListItemCount>
+                                  {
+                                    this.props.userDetails.settings_celebrityDetails.pending_requests_count ?
+                                      <SidebarStyled.InnerListItemCount>
+                                        {
+                                          this.props.userDetails.settings_celebrityDetails.pending_requests_count
+                                        }
+                                      </SidebarStyled.InnerListItemCount>
+                                    : null
+                                  }
                                 </SidebarStyled.LinkElement>
                               </Link>
                             </SidebarStyled.CategoryTitle>

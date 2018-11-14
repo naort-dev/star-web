@@ -61,7 +61,8 @@ VideoRecorderDiv.Video = styled.video`
   background-color: black;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%
+    height: auto;
+    object-fit: cover;
   }
 `;
 
