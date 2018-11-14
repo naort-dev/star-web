@@ -3,7 +3,7 @@ import { GROUP_DETAILS } from '../actions/getGroupDetails';
 const initalState = {
   userDetails: {},
   loading: false,
-  error: '',
+  error: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -12,6 +12,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
       };
 
     case GROUP_DETAILS.end:
