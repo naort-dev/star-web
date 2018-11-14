@@ -224,7 +224,7 @@ VideoRenderDiv.ControlButton = styled.button`
     margin-left: 0;
   }
   &:last-child {
-    margin-left: 5px;
+    margin-left: 0;
     margin-right: 0;
   }
   @media(min-width: 768px) {

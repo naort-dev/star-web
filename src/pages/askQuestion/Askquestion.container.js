@@ -4,6 +4,7 @@ import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
+import { toggleRequestFlow } from '../../store/shared/actions/toggleModals';
 
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
@@ -27,6 +28,7 @@ const mapDispatchToProps = dispatch => ({
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   onSaveVideo: videoFile => dispatch(saveVideo(videoFile)),
   deleteVideo: () => dispatch(deleteVideo()),
+  toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Askquestion);
