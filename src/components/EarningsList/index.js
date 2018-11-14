@@ -12,6 +12,7 @@ const EarningsList = (props) => {
       <EarningsListStyled.ListItem light desktopView>{item.starsona.fan}</EarningsListStyled.ListItem>
       <EarningsListStyled.ListItem light>{item.id}</EarningsListStyled.ListItem>
       <EarningsListStyled.ListItem large light>{moment(item.created_date).format('LL')}</EarningsListStyled.ListItem>
+      <EarningsListStyled.ListItem light>{item.payout_status}</EarningsListStyled.ListItem>
     </EarningsListStyled.Content>
   );
 
