@@ -69,7 +69,6 @@ class RequestTemplates extends React.Component {
     const optionItems = relations.map((relations) =>
       <option value={relations.id} key={relations.id}>{relations.title}</option>
     );
-    console.log(this.state.type, this.state.user)
     switch (this.state.type) {
       case 1:
         return null;
