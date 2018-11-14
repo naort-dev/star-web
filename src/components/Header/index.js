@@ -286,7 +286,7 @@ class Header extends React.Component {
                   </span>
                   <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignIn>
-                      Log In
+                      Log in
                     </HeaderSection.SignIn>
                     <HeaderSection.SignInIcon
                       src="assets/images/icon_profile_40a.png"
@@ -294,7 +294,7 @@ class Header extends React.Component {
                     />
                   </span>
                   <span onClick={() => this.props.toggleSignup(true)}>
-                    <HeaderSection.Join>Sign Up!</HeaderSection.Join>
+                    <HeaderSection.Join>Sign up!</HeaderSection.Join>
                   </span>
                 </div>
             }
