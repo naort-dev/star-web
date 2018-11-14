@@ -54,6 +54,6 @@ export const fetchGroupDetails = id => (dispatch, getState) => {
     }
   }).catch((exception) => {
     dispatch(groupDetailstFetchEnd());
-    dispatch(groupDetailstFetchFailed(exception));
+    dispatch(groupDetailstFetchFailed(exception.response.data));
   });
 };

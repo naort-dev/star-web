@@ -2,6 +2,7 @@ import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
@@ -247,6 +248,9 @@ export default class Starprofile extends React.Component {
     const descriptionLength = this.props.celebrityDetails.description ?
       this.props.celebrityDetails.description.length : 0;
 
+    if (this.props.detailsError) {
+      return <Redirect to="/not-found" />;
+    }
     return (
       <StarProfileStyled>
         {
