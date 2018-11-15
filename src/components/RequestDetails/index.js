@@ -123,14 +123,21 @@ export default class RequestDetails extends React.Component {
         return (
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
-            <OrderDetailsItem title="To"
-              value={this.renderStargramDestinationDetails(stargramto, props.orderDetails.to_audio_file)}
-            />
-            <OrderDetailsItem title="From"
-              value={this.renderStargramDestinationDetails(stargramfrom, props.orderDetails.from_audio_file)}
-            />
             {
-              stargramto !== 'Myself' && <OrderDetailsItem title="Relationship" value={`${stargramfrom} is ${stargramto}'s ${relationShip}`} />
+              stargramto &&
+                <OrderDetailsItem title="To"
+                  value={this.renderStargramDestinationDetails(stargramto, props.orderDetails.to_audio_file)}
+                />
+            }
+            {
+              stargramfrom &&
+                <OrderDetailsItem title="From"
+                  value={this.renderStargramDestinationDetails(stargramfrom, props.orderDetails.from_audio_file)}
+                />
+            }
+            {
+              stargramto !== 'Myself' && stargramfrom !== null && stargramto !== null &&
+                <OrderDetailsItem title="Relationship" value={`${stargramfrom} is ${stargramto}'s ${relationShip}`} />
             }
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
