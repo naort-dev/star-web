@@ -20,7 +20,12 @@ const EarningsList = (props) => {
     <EarningsListStyled.ContainerMobile key={`1_${index}`}>
       {index !== 0 && <EarningsListStyled.MobileSeparator />}
       <EarningsListStyled.ContentMobile key={index}>
-        <EarningsListStyled.ListItemMobile light>{moment(item.created_date).format('LL')}</EarningsListStyled.ListItemMobile>
+        <EarningsListStyled.ListItemMobile light>
+          <div>
+            {moment(item.created_date).format('LL')}
+            <span>{item.payout_status}</span>
+          </div>
+        </EarningsListStyled.ListItemMobile>
         <EarningsListStyled.DataRowWrapperMobile>
           <EarningsListStyled.ListItemMobile>{item.starsona.fan} · {item.starsona.occasion}</EarningsListStyled.ListItemMobile>
           <Dollar amount={parseFloat(item.amount)} size={15} color="#b5b5b5" />
