@@ -2,6 +2,7 @@ class Api {
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
   static getProfessionsList = 'user/filtered_professions/';
+  static getAllProfessions = 'user/professions/';
   static getGroupTypes = 'user/group_types/';
   static getVideosList = 'request/featured_videos/';
   static login = 'user/login/';
@@ -44,6 +45,9 @@ class Api {
   static getReferralList = 'user/referral_list/';
   static getCommentsList = 'request/comments';
   static addComment = 'request/comments/';
+  static groupMembersList = 'user/group_list/';
+  static celebrityGroupFollow = 'user/join_group/';
+  static fanGroupFollow = 'user/fan/group_follow/';
 }
 
 export default Api;

@@ -155,7 +155,7 @@ export default class ImageCropper extends React.Component {
           }
           <CropperStyled.ButtonWrapper>
             <CropperStyled.CropperButton onClick={this.handleCrop}>Select</CropperStyled.CropperButton>
-            <CropperStyled.CropperButton onClick={this.props.closeCropper}>Cancel</CropperStyled.CropperButton>
+            <CropperStyled.CropperCancel onClick={this.props.closeCropper}>Cancel</CropperStyled.CropperCancel>
           </CropperStyled.ButtonWrapper>
         </CropperStyled>
       </Popup>

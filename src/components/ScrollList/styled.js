@@ -15,6 +15,7 @@ const ListStyled = styled.section`
   padding-right: 10px;
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding-top: 20px;
   padding-bottom: 20px;
   position: relative;
@@ -50,6 +51,9 @@ ListStyled.Banner = styled.div`
     width: calc(100% - 17px);
     height: 128px;
     padding-right: 56px;
+  }
+  @media(min-width: 1025px) {
+    width: calc(100% - 13px);
   }
   @media(min-width: 1920px) {
     height: 180px;

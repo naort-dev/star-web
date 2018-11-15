@@ -354,128 +354,116 @@ export default class LoginForm extends React.Component {
     return (
       <React.Fragment>
         <LoginContainer.SocialMediaSignup>
-          <Scrollbars>
-            <LoginContainer.Container>
-              <LoginContainer.Heading>
-                Welcome back to Starsona!
-              </LoginContainer.Heading>
-              <LoginContainer.SocialMediaMessage>
-                Don't have an account?
-                <span onClick={() => this.props.toggleSignup(true)}>
-                  <LoginContainer.LoginDiv>Sign Up</LoginContainer.LoginDiv>
-                </span>
-              </LoginContainer.SocialMediaMessage>
-              <LoginContainer.SignupLine>
-                <span>Login using social</span>
-              </LoginContainer.SignupLine>
+          <LoginContainer.Container>
+            <LoginContainer.Heading>
+              Welcome back to Starsona!
+            </LoginContainer.Heading>
+            <LoginContainer.SocialMediaMessage>
+              Don't have an account?
+              <span onClick={() => this.props.toggleSignup(true)}>
+                <LoginContainer.LoginDiv>Sign up</LoginContainer.LoginDiv>
+              </span>
+            </LoginContainer.SocialMediaMessage>
+            <LoginContainer.ButtonDiv>
+              <LoginContainer.Button >
+                <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />
+              </LoginContainer.Button>
 
-              <LoginContainer.ButtonDiv>
-                <LoginContainer.Button >
-                  <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />
-                </LoginContainer.Button>
+              <LoginContainer.Button onClick={() => this.onGmail()}>
+                <LoginContainer.GoogleWrapper
+                  id="g-sign-in"
+                  ref={gSignIn => (this.gSignIn = gSignIn)}
+                />
+                <LoginContainer.GoogleContent />
+                  
+                
+              </LoginContainer.Button>
 
-                <LoginContainer.Button onClick={() => this.onGmail()}>
-                  <LoginContainer.GoogleWrapper
-                    id="g-sign-in"
-                    ref={gSignIn => (this.gSignIn = gSignIn)}
-                  />
-                  <LoginContainer.GoogleContent />
-                   
-                 
-                </LoginContainer.Button>
+              <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+                <LoginContainer.InstagramContent />
+              </LoginContainer.Button>
+            </LoginContainer.ButtonDiv>
 
-                <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
-                  <LoginContainer.InstagramContent />
-                </LoginContainer.Button>
-              </LoginContainer.ButtonDiv>
+            <LoginContainer.SignupLine>
+              <span>or log in with email</span>
+            </LoginContainer.SignupLine>
+            <LoginContainer.InputFieldsWrapper>
+              <LoginContainer.InputContainer>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.WrapsInput>
+                    <LoginContainer.Input
+                      type="text"
+                      name="email"
+                      value={email.value}
+                      placeholder={
+                        this.props.statusCode === "410"
+                          ? "Please enter an email"
+                          : "Email"
+                      }
+                      onChange={this.acceptEmailHandler}
+                      onBlur={this.checkEmail}
+                    />
+                    <LoginContainer.ErrorMsg>
+                      {email.message}
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                {this.props.statusCode === "410" ? (
+                  <LoginContainer.EmptyDiv />
+                ) : (
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
+                        <LoginContainer.PasswordWrapper>
+                          <LoginContainer.Input
+                            type={this.state.showPassword ? "text" : "password"}
+                            name="password"
+                            value={password.value}
+                            placeholder="Password"
+                            onChange={this.acceptPasswordHandler}
+                            onBlur={this.checkPassword}
+                          />
+                        </LoginContainer.PasswordWrapper>
 
-              <LoginContainer.SignupLine>
-                <span>or log in with email</span>
-              </LoginContainer.SignupLine>
-              <LoginContainer.InputFieldsWrapper>
-                <LoginContainer.InputContainer>
-                  <LoginContainer.InputWrapper>
+                        <LoginContainer.ErrorMsg>
+                          {password.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                  )}
+                {this.props.statusCode === '410' ? (
+                  <React.Fragment />
+                ) : (
+                    <LoginContainer.ForgotButtonWrapper>
+                      <LoginContainer.actionText
+                        onClick={() => this.props.changeView('forgotpassword')}
+                      >
+                        <LoginContainer.ForgotButtonSpan>
+                          {" "}
+                          Forgot your password?
+                        </LoginContainer.ForgotButtonSpan>
+                      </LoginContainer.actionText>
+                    </LoginContainer.ForgotButtonWrapper>
+                  )}
+                {
+                  this.props.statusCode !== '410' && this.props.statusCode !== '310' && this.props.error &&
                     <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        type="text"
-                        name="email"
-                        value={email.value}
-                        placeholder={
-                          this.props.statusCode === "410"
-                            ? "Please enter an email"
-                            : "Email"
-                        }
-                        onChange={this.acceptEmailHandler}
-                        onBlur={this.checkEmail}
-                      />
                       <LoginContainer.ErrorMsg>
-                        {email.message}
+                        {this.props.error}
                       </LoginContainer.ErrorMsg>
                     </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-                  {this.props.statusCode === "410" ? (
-                    <LoginContainer.EmptyDiv />
-                  ) : (
-                      <LoginContainer.InputWrapper>
-                        <LoginContainer.WrapsInput>
-                          <LoginContainer.PasswordWrapper>
-                            <LoginContainer.Input
-                              type={this.state.showPassword ? "text" : "password"}
-                              name="password"
-                              value={password.value}
-                              placeholder="Password"
-                              onChange={this.acceptPasswordHandler}
-                              onBlur={this.checkPassword}
-                            />
-                            {/* <LoginContainer.ShowPassword
-                              onClick={this.ShowPassword}
-                            /> */}
-                          </LoginContainer.PasswordWrapper>
-
-                          <LoginContainer.ErrorMsg>
-                            {password.message}
-                          </LoginContainer.ErrorMsg>
-                        </LoginContainer.WrapsInput>
-                      </LoginContainer.InputWrapper>
-                    )}
-                  {this.props.statusCode === "410" ? (
-                    <React.Fragment />
-                  ) : (
-                      <LoginContainer.ForgotButtonWrapper>
-                        <LoginContainer.actionText
-                          onClick={() => this.props.changeView("forgotpassword")}
-                        >
-                          <LoginContainer.ForgotButtonSpan>
-                            {" "}
-                            Forgot your password?
-                        </LoginContainer.ForgotButtonSpan>
-                        </LoginContainer.actionText>
-                      </LoginContainer.ForgotButtonWrapper>
-                    )}
-                  <LoginContainer.ButtonWrapper>
-                    <LoginContainer.SignIn
-                      type="submit"
-                      value="Log In"
-                      onClick={this.onLogin}
-                      disabled={this.props.loading}
-                    />
-                  </LoginContainer.ButtonWrapper>
-                </LoginContainer.InputContainer>
-              </LoginContainer.InputFieldsWrapper>
-
-              <LoginContainer.WrapsInput>
-                {this.props.statusCode === "410" ||
-                  this.props.statusCode === "310" ? (
-                    <LoginContainer.EmptyDiv />
-                  ) : (
-                    <LoginContainer.ErrorMsg>
-                      {this.props.error}
-                    </LoginContainer.ErrorMsg>
-                  )}
-              </LoginContainer.WrapsInput>
-            </LoginContainer.Container>
-          </Scrollbars>
-        </LoginContainer.SocialMediaSignup>
+                }
+                <LoginContainer.ButtonWrapper>
+                  <LoginContainer.SignIn
+                    type="submit"
+                    value="Log In"
+                    onClick={this.onLogin}
+                    disabled={this.props.loading}
+                  />
+                </LoginContainer.ButtonWrapper>
+              </LoginContainer.InputContainer>
+            </LoginContainer.InputFieldsWrapper>
+          </LoginContainer.Container>
+         </LoginContainer.SocialMediaSignup>
       </React.Fragment>
     );
   }

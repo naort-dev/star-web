@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Requests from './Requests.component';
-import { fetchMyVideosList } from './actions/getMyVideosList';
+import { fetchMyVideosList, myVideosListReset } from './actions/getMyVideosList';
 import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd } from './actions/handleRequests';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
@@ -15,15 +15,19 @@ import { setRequestFlow } from '../../store/shared/actions/toggleModals';
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   session: state.session,
-  userDetails: state.userDetails,
-  myVideosList: state.myVideosList,
+  requestsList: state.myVideosList.data,
+  requestsLimit: state.myVideosList.limit,
+  requestsOffset: state.myVideosList.offset,
+  requestsCount: state.myVideosList.count,
+  requestsLoading: state.myVideosList.loading,
   videoRecorder: state.videoRecorder,
   videoUploader: state.videoUploader,
   orderDetailsLoading: state.requestHandler.loading,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMyVideosList: (offset, refresh, role, requestStatus) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus)),
+  myVideosListReset: () => dispatch(myVideosListReset()),
+  fetchMyVideosList: (offset, refresh, role, requestStatus, allDataType) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus, allDataType)),
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),

@@ -8,6 +8,8 @@ export const MY_VIDEOS_LIST = {
   end: 'fetch_end/MY_VIDEOS_LIST',
   success: 'fetch_success/MY_VIDEOS_LIST',
   failed: 'fetch_failed/MY_VIDEOS_LIST',
+  updateAll: 'fetch_all/MY_VIDEOS_LIST',
+  reset: 'RESET/MY_VIDEOS_LIST',
 };
 
 export const myVideosListFetchStart = (refresh, token) => ({
@@ -37,6 +39,11 @@ export const myVideosListFetchFailed = error => ({
   error,
 });
 
+export const myVideosListReset = () => ({
+  type: MY_VIDEOS_LIST.reset,
+});
+
+
 export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   const { status, limit, role } = getState().myVideosList;
@@ -57,12 +64,14 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) =
       dispatch(myVideosListFetchEnd());
       let list = getState().myVideosList.data;
       const { count } = resp.data.data;
+      let newOffset = offset;
       if (refresh) {
         list = resp.data.data.request_list;
+        newOffset = 0;
       } else {
         list = [...list, ...resp.data.data.request_list];
       }
-      dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus, finalRole));
+      dispatch(myVideosListFetchSuccess(list, newOffset, count, videoStatus, finalRole));
     } else {
       dispatch(myVideosListFetchEnd());
     }
@@ -73,4 +82,5 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) =
     dispatch(myVideosListFetchFailed(exception));
   });
 };
+
 

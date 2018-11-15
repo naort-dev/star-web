@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const GroupStyled = styled.div`
   height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
 `;
 
 GroupStyled.BackButton = styled.span`
@@ -26,23 +28,26 @@ GroupStyled.StepWrapper = styled.div`
 `;
 
 GroupStyled.ContentWrapper = styled.div`
-  padding: 0 10px;
-  height: 96%;
+  height: 100%;
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
+  padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 0 60px;
+    padding: 30px 60px;
+  }
+`;
+
+GroupStyled.VideoRecorderWrapper = GroupStyled.DetailsWrapper.extend`
+  padding: 30px 0;
+  @media(min-width: 768px) {
+    padding: 30px 0;
   }
 `;
 
 GroupStyled.HeadingWrapper = styled.div`
   text-align: center;
-  margin: 10px 0;
   margin-bottom: 30px;
-  @media(min-width: 768px) {
-    margin: 20px 0;
-  }
 `;
 
 GroupStyled.SubHeading = styled.span`
@@ -60,8 +65,9 @@ GroupStyled.SubHeadingDescription = styled.span`
 `;
 
 GroupStyled.InnerHeading = GroupStyled.SubHeadingDescription.extend`
-  color: #7B797A;
-  font-family: 'Avenir-Regular';
+  font-size: 18px;
+  color: #565555;
+  font-family: 'Avenir-Medium';
 `;
 
 GroupStyled.InnerDescription = styled.span`
@@ -203,6 +209,9 @@ GroupStyled.InputArea = styled.textarea`
   background-color: white;
   border: 1px solid #EBEBEB;
   border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
   }
@@ -212,6 +221,24 @@ GroupStyled.InputArea = styled.textarea`
   @media(min-width:1920px){
     font-size:16px;
   }
+`;
+
+GroupStyled.IndustryInput = GroupStyled.InputArea.extend`
+  min-height: 80px;
+  position: relative;
+  cursor: pointer;
+  display: block;
+  height: auto;
+  padding-right: 40px;
+`.withComponent('span');
+
+GroupStyled.IndustryEditButton = styled.span`
+  color: #FF6C58;
+  position: absolute;
+  cursor: pointer;
+  right: 9px;
+  top: 7px;
+  bottom: 0;
 `;
 
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
@@ -386,14 +413,22 @@ GroupStyled.CoverImage = styled.div`
   background-size: cover;
 `;
 
-GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
+GroupStyled.SecondaryCoverWrapper = styled.div`
   width: 100%;
-  height: 300px;
   margin: 10px 0;
-  border: 1px solid #d0d2d3;
   border-radius: 10px;
   max-width: 400px;
+  display: flex;
+  justify-content: space-between;
   margin: 10px auto;
+`;
+
+GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
+  width: calc(50% - 10px);
+  height: 300px;
+  display: inline-block;
+  border: 1px solid #d0d2d3;
+  border-radius: 10px;
 `;
 
 GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
@@ -441,6 +476,7 @@ GroupStyled.ProfileInputButton = styled.div`
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
+  padding-bottom: 18px;
   ${GroupStyled.ProfileInputWrapper} {
     width: 60px;
     height: 60px;
@@ -501,7 +537,9 @@ GroupStyled.confirmationSteps = styled.span`
 GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
   margin: 10px 0;
   background-color: transparent;
-  color: #969696;
+  color: #cecece;
+  padding-left: 0;
+  font-family: 'Avenir-Light';
   border: none;
   &:hover {
     background-color: transparent;
@@ -515,13 +553,12 @@ GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
     height: 35px;
     background-size: contain;
   }
+  @media(min-width: 768px) {
+    padding: 10px 30px;
+  }
 `.withComponent('span');
 
 GroupStyled.DoneButtonWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 9px;
   text-align: center;
 `;
 

@@ -56,7 +56,8 @@ injectGlobal`
   }
   @media(min-width:1025px){
     font-size:13px;
-    padding-left: 27px;
+    padding-left: 30px;
+    padding-top: 3px;
   }
  }
  /* Hide the browser's default checkbox */
@@ -74,7 +75,7 @@ injectGlobal`
     height: 20px;
     width: 20px;
     background-color: white;
-    border: 2px solid rgba(51, 51, 51, 1);
+    border: 1px solid #EBEBEB;
     @media(min-width:768px){
       left:0px;
       height: 25px;
@@ -82,8 +83,8 @@ injectGlobal`
     }
     @media(min-width: 1025px){
       left:0px;
-      height: 18px;
-      width: 18px;
+      height: 24px;
+      width: 24px;
       top: -2px;
     }
   }
@@ -127,27 +128,27 @@ injectGlobal`
   }
   
   #checkbox_container #checkmark:after {
-    left: 4px;
+    left: 5px;
     top: 1px;
     width: 5px;
-    height: 7px;
-    border: solid black;
+    height: 9px;
+    border: solid #FF6C58;
     cursor: pointer;
     border-width: 0 3px 3px 0;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     @media(min-width: 768px) {
-      left: 7px;
-      top: 2px;
+      left: 8px;
+      top: 3px;
       width: 5px;
       height: 9px;
     }
     @media(min-width:1025px){
-      left: 4px;
-      width: 3px;
-      height: 6px;
-      top: 1px;
+      left: 7px;
+      width: 6px;
+      height: 10px;
+      top: 2px;
     }
 
   }
@@ -228,7 +229,6 @@ injectGlobal`
 .list .option-content{
   font-family: 'Avenir-Light';
   color: #88898c;
-  margin-top: 15px;
   font-size:15px;
   word-spacing: 3px;
   span {

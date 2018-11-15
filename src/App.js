@@ -27,9 +27,11 @@ import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
 import { Starbio } from './pages/starbio';
+import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
+import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -49,17 +51,11 @@ class App extends React.Component {
       this.props.updateStarRole(JSON.parse(localStorage.getItem('data')).user.celebrity);
       this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
-    if (!this.props.professionsList.professions.length) {
-      this.setState({ showLoading: true });
-    }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
-    }
-    if (this.props.professionsList.professions.length !== nextProps.professionsList.professions.length) {
-      this.setState({ showLoading: false });
     }
   }
 
@@ -117,6 +113,7 @@ class App extends React.Component {
                 <Route path="/faq" component={() => window.location = 'https://about.starsona.com/faq'}/>
                 {/* <Route path="/login" component={Login} />
                 <Route path="/forgotpassword" component={Login} /> */}
+                <Route exact path="/group-profile/:id" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
 
@@ -138,7 +135,7 @@ class App extends React.Component {
                 <Route
                   path="/settings"
                   component={protectRoute({
-                    RouteComponent: Starbio,
+                    RouteComponent: Settings,
                   })}
                 />
                 <Route
@@ -180,7 +177,6 @@ App.propTypes = {
 };
 
 const mapState = state => ({
-  professionsList: state.professionsList,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,

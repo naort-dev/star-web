@@ -60,7 +60,7 @@ export default class CoverUpload extends React.Component {
     let coverImageHeight, secondaryImageHeight;
     if (this.coverImage) {
       coverImageHeight = this.coverImage.clientWidth / this.props.featuredRatio;
-      secondaryImageHeight = this.coverImage.clientWidth / this.props.secondaryRatio;
+      secondaryImageHeight = (this.coverImage.clientWidth / (this.props.secondaryRatio * 2)) - 10;
     }
     this.setState({
       coverImageHeight,
@@ -85,9 +85,7 @@ export default class CoverUpload extends React.Component {
               image,
             };
           }
-          this.setState({ secondaryImages }, () => {
-            this.props.scrollRef.scrollToBottom();
-          });
+          this.setState({ secondaryImages });
         } else {
           this.props.onComplete(this.state.currentImage, resp, image);
           this.setState({ [this.state.currentImage]: image });
@@ -179,7 +177,7 @@ export default class CoverUpload extends React.Component {
   renderStarProfessions = (list) => {
     return list && list.map((professions, index) => {
       return (
-        <GroupStyled.Professions key={index} separator={index !== list.length - 1}>{professions.label}</GroupStyled.Professions>
+        <GroupStyled.Professions key={index} separator={index !== list.length - 1}>{professions.title}</GroupStyled.Professions>
       );
     })
   }
@@ -207,7 +205,7 @@ export default class CoverUpload extends React.Component {
 
   render() {
     return (
-      <GroupStyled.ContentWrapper>
+      <GroupStyled.DetailsWrapper>
         {
           this.state.imageLoading ?
             <Loader />
@@ -252,7 +250,13 @@ export default class CoverUpload extends React.Component {
                 </GroupStyled.GroupName>
               </GroupStyled.CoverLayout>
               {
-                this.renderSecondaryImages()
+                this.state.secondaryImages.length ?
+                  <GroupStyled.SecondaryCoverWrapper>
+                    {
+                      this.renderSecondaryImages()
+                    }
+                  </GroupStyled.SecondaryCoverWrapper>
+                : null
               }
               {
                 this.state.featuredImage && this.state.secondaryImages.length < 2 ?
@@ -282,7 +286,7 @@ export default class CoverUpload extends React.Component {
               </GroupStyled.ControlWrapper>
             </React.Fragment>
         }
-      </GroupStyled.ContentWrapper>
+      </GroupStyled.DetailsWrapper>
     );
   }
 }

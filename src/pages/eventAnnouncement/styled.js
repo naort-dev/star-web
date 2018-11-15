@@ -44,6 +44,7 @@ Request.sideSection = styled.section`
     box-shadow: 0px 3px 7px 0px #cccccc inset;
     bottom: 0;
     overflow: auto;
+    -webkit-overflow-scrolling: touch;
   }
 `;
 Request.LeftSection = styled.div`
@@ -443,10 +444,8 @@ Request.Ask = styled.div`
   padding: 25px 19px;
   height:100%;
   position:relative;
-  padding-bottom: 68px;
   @media(min-width:1025px){
     padding: 25px 48px;
-    padding-bottom: 80px;
   }
 `;
 Request.Questionwraps = styled.div`
@@ -639,23 +638,17 @@ Request.EventStep2 = styled.div`
 
 `;
 Request.PaymentControllerWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10px;
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
   z-index: 5;
+  margin-bottom: 25px;
   @media(min-width: 768px) {
-    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){
     margin: 0 42px;
     box-shadow: none;
-    left:0;
-    right:0;
   }
 `;
 Request.ContinueButton = styled.button`

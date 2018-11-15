@@ -26,8 +26,8 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        settings_celebrityDetails: action.details.celebrity_details,
-        settings_userDetails: action.details.user,
+        settings_celebrityDetails: { ...action.details.celebrity_details },
+        settings_userDetails: { ...action.details.user },
         starRole: action.details.user.celebrity,
       };
 

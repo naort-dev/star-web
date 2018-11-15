@@ -1,7 +1,7 @@
 import { EARNINGS_LIST } from '../actions/getEarningsList';
 
 const initalState = {
-  list: {},
+  list: [],
   paidList: [],
   pendingList: [],
   paidCount: 0,
@@ -13,6 +13,7 @@ const initalState = {
   totalAmount: null,
   loading: false,
   error: null,
+  allOffset: 0,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -37,10 +38,12 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        list: action.list,
+        list: [...state.list, ...action.list.earning_list],
         paidAmount: action.list.Paid_amount,
         pendingAmount: action.list.Pending_amount,
         totalAmount: action.list.Total_amount,
+        allOffset: action.offset,
+        allCount: action.list.count,
       };
 
     case EARNINGS_LIST.pendingSuccess:

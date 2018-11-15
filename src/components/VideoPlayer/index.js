@@ -16,16 +16,24 @@ export default class VideoPlayer extends React.Component {
         thumbnail: this.props.secondaryCover,
         video: this.props.secondarySrc,
       },
+      videoWrapperRef: null,
+      videoHeight: null,
     };
   }
 
   componentDidMount() {
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
+    window.addEventListener('resize', this.setVideoHeight)
   }
 
   static getDerivedStateFromProps = (nextProps, prevState) => {
+    let { videoHeight } = prevState;
+    if (nextProps.ratio && prevState.videoWrapperRef) {
+      videoHeight = prevState.videoWrapperRef.clientWidth / nextProps.ratio;
+    }
     if (nextProps.primarySrc !== prevState.primarySrc) {
       return {
+        ...prevState,
         primarySrc: nextProps.primarySrc,
         primary: {
           thumbnail: nextProps.primaryCover,
@@ -35,9 +43,30 @@ export default class VideoPlayer extends React.Component {
           thumbnail: nextProps.secondaryCover,
           video: nextProps.secondarySrc,
         },
+        videoHeight,
       };
     }
     return null;
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.setVideoHeight);
+  }
+
+  setVideoHeight = () => {
+    let videoHeight;
+    if (this.state.videoWrapperRef && this.props.ratio) {
+      videoHeight = this.state.videoWrapperRef.clientWidth / this.props.ratio;
+    }
+    this.setState({ videoHeight });
+  }
+
+  setVideoWrapperRef = (node) => {
+    if (!this.state.videoWrapperRef) {
+      this.setState({ videoWrapperRef: node }, () => {
+        this.setVideoHeight();
+      });
+    }
   }
 
   handleStateChange = (state) => {
@@ -58,9 +87,11 @@ export default class VideoPlayer extends React.Component {
   }
 
   render() {
-   
     return (
-      <VideoRenderDiv>
+      <VideoRenderDiv
+        innerRef={node => this.setVideoWrapperRef(node)}
+        height={this.state.videoHeight}
+      >
         {this.state.secondary.thumbnail && <VideoRenderDiv.answerVideo
           onClick={this.swapVideos}
           src={this.state.secondary.thumbnail}
@@ -73,7 +104,6 @@ export default class VideoPlayer extends React.Component {
             poster={this.state.primary.thumbnail}
             src={this.state.primary.video}
             fluid
-            aspectRatio="auto"
             autoPlay={this.state.primary.video === this.props.secondarySrc || this.props.autoPlay}
             
           >

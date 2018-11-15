@@ -2,6 +2,7 @@
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { updateCelebrityFollow } from '../../../pages/landing/actions/getCelebList';
+import { updateCelebDetailsFollow } from '../../../pages/starProfile/actions/getCelebDetails';
 import { updateFavouriteList } from '../../../pages/favourites/actions/getFavouritesList';
 
 export const FOLLOW_CELEBRITY = {
@@ -37,6 +38,9 @@ export const followCelebrity = (celebrityId, celebProfessions, follow, cancelUpd
     },
   }).then((resp) => {
     if (!cancelUpdate) {
+      if (Object.keys(getState().celebDetails).length) {
+        dispatch(updateCelebDetailsFollow(follow));
+      }
       dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
       dispatch(updateFavouriteList(celebrityId, follow));
     }

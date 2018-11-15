@@ -269,60 +269,49 @@ export default class Confirm extends React.Component {
 
   renderConfirmDetails = (bookingData, rate, remainingBookings, profilePhoto, fullName) => (
     <React.Fragment>
-      <Request.ComponentWrapperScroll
-      
-        renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-      >
-        <Request.ProfileImageWrapper>
-          <Request.ProfileImage
-            imageUrl={profilePhoto}
-          />
-          <Request.StarName>{fullName}</Request.StarName>
-          <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
-        </Request.ProfileImageWrapper>
-        <Request.Heading>Confirm Booking</Request.Heading>
-        {
-          this.state.bookingData.type === 3 &&
-            <Request.smallScreenVideo>
-              <Request.VideoContentWrapper>
-                <VideoPlayer
-                  primarySrc={this.state.QAVideo.url}
-                />
-              </Request.VideoContentWrapper>
-            </Request.smallScreenVideo>
-        }
-        <Request.Questionwraps>
-          <Request.Ask>
-            {
-              this.getEventDetails(bookingData.type)
-            }
-          </Request.Ask>
-        </Request.Questionwraps>
-        <Request.OptionWrapper>
-          <Request.CheckBoxWrapper>
-            <Request.Label id="checkbox_container">
-              <span>I give permission to {fullName} and Starsona to share my video on social media</span>
-              <Request.CheckBox
-                id="private_video"
-                type="checkbox"
-                checked={this.state.publicRequest}
-                onChange={() => this.changePublicStatus()}
+      <Request.ProfileImageWrapper>
+        <Request.ProfileImage
+          imageUrl={profilePhoto}
+        />
+        <Request.StarName>{fullName}</Request.StarName>
+        <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
+      </Request.ProfileImageWrapper>
+      <Request.Heading>Confirm Booking</Request.Heading>
+      {
+        this.state.bookingData.type === 3 &&
+          <Request.smallScreenVideo>
+            <Request.VideoContentWrapper>
+              <VideoPlayer
+                primarySrc={this.state.QAVideo.url}
               />
-              <Request.Span htmlFor="private_video" id="checkmark" />
-            </Request.Label>
-          </Request.CheckBoxWrapper>
-        </Request.OptionWrapper>
-      </Request.ComponentWrapperScroll>
+            </Request.VideoContentWrapper>
+          </Request.smallScreenVideo>
+      }
+      <Request.Questionwraps>
+        <Request.Ask>
+          {
+            this.getEventDetails(bookingData.type)
+          }
+        </Request.Ask>
+      </Request.Questionwraps>
+      <Request.OptionWrapper>
+        <Request.CheckBoxWrapper>
+          <Request.Label id="checkbox_container">
+            <span>I give permission to {fullName} and Starsona to share my video on social media</span>
+            <Request.CheckBox
+              id="private_video"
+              type="checkbox"
+              checked={this.state.publicRequest}
+              onChange={() => this.changePublicStatus()}
+            />
+            <Request.Span htmlFor="private_video" id="checkmark" />
+          </Request.Label>
+        </Request.CheckBoxWrapper>
+      </Request.OptionWrapper>
       <Request.PaymentControllerWrapper>
         <Request.ContinueButton onClick={() => this.handleBooking()}>
           {bookingData.edit ? 'Save' : 'Continue'}
         </Request.ContinueButton>
-        {/* <PaymentFooterController
-          rate={rate}
-          remainingBookings={remainingBookings}
-          buttonName={bookingData.edit ? "save" : "Purchase"}
-          handleBooking={this.handleBooking}
-        /> */}
       </Request.PaymentControllerWrapper>
     </React.Fragment>
   )
@@ -404,23 +393,6 @@ export default class Confirm extends React.Component {
                 }
               </Request.ComponentWrapper>
             </Request.LeftSection>
-            {/* <Request.RightSection videoMode={this.state.bookingData.type === 3}>
-              {
-                this.state.bookingData.type === 3 ?
-                  <Request.VideoContentWrapper>
-                    <VideoPlayer
-                      primarySrc={this.state.QAVideo.url}
-                    />
-                  </Request.VideoContentWrapper>
-                :
-                  <Request.ImageStackWrapper>
-                    <ImageStack
-                      featureImage={featuredImage}
-                      imageList={imageList}
-                    />
-                  </Request.ImageStackWrapper>
-              }
-            </Request.RightSection> */}
           </Request>
         </Request.Content>
       </Request.Wrapper>

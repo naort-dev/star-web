@@ -15,47 +15,47 @@ const PopupStyled = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  padding-top: 0;
   background-color: rgba(0,0,0,.6);
   display: flex;
   justify-content: center;
-  align-items: center;
   z-index: 11;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  @media(min-width: 768px) {
+    padding: 30px 0;
+  }
 `;
 
 PopupStyled.Container = styled.div`
   display: flex;
   max-width: 100%;
-  max-height: 100%;
   position: relative;
-  align-items: center;
   justify-content: center;
   animation: ${popupEnter} 0.2s ease-out;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
-    width: 100%;
-    height: 100%;
+    overflow: initial;
+    margin: auto;
+    height: auto;
     justify-content: center;
     align-items: center;
-    max-width: 80%;
-    max-height: 80%;
   }
 `;
 
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
+  padding: ${props => (props.modalView ? '0' : '31px 7px 20px')};
   width: 100%;
-  height: 100%;
-  padding: 31px 7px 20px;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: 90%;
+    width: ${props => !props.autoWidth && '50%'};
+    min-width: 200px;
     max-width: ${props => (props.largePopup ? '900px' : '600px')};
-    border-radius: 12px;
-    height: 80%;
   }
 `;
 
 PopupStyled.SmallContent = styled.div`
-  height: 100%;
   width: 100%;
 `;
 

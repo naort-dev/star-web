@@ -34,6 +34,8 @@ import socialMediaData from '../store/shared/reducers/socialMediaState';
 import photoUpload from './shared/reducers/photoUpload';
 import modals from './shared/reducers/modals';
 import commentsList from '../store/shared/reducers/commentsList';
+import groupDetails from '../pages/groupProfile/reducers/groupDetails';
+import memberList from '../pages/groupProfile/reducers/membersList';
 
 const appReducer = combineReducers({
   session,
@@ -69,6 +71,8 @@ const appReducer = combineReducers({
   commentsList,
   photoUpload,
   modals,
+  groupDetails,
+  memberList,
 });
 
 const rootReducer = (state, action) => {

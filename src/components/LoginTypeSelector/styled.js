@@ -4,6 +4,9 @@ import { Scrollbars } from 'react-custom-scrollbars';
 const TypeSelectorWrapper = styled.div`
   text-align: center;
   height: calc(100% - 98px);
+  @media(min-width: 1025px) {
+    height: calc(100% - 55px);
+  }
 `;
 TypeSelectorWrapper.Content = styled.div`
   padding: 0px 0px;
@@ -102,9 +105,6 @@ TypeSelectorWrapper.Button = styled.button`
 
 TypeSelectorWrapper.ComponentWrapper = styled.div`
   height: 100%;
-  @media(min-width:1025px){
-    height:calc(100% - 40px);
-  }
 `;
 
 TypeSelectorWrapper.ComponentWrapperScroll = styled(Scrollbars)`
@@ -161,23 +161,15 @@ TypeSelectorWrapper.DisableButton = styled.button`
   }
 `;
 TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10px;
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
-  z-index: 5;
   @media(min-width: 768px) {
-    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){
     margin: 0 42px;
     box-shadow: none;
-    left:0;
-    right:0;
   }
 `;
 TypeSelectorWrapper.OptionWrapper = styled.footer`
@@ -195,10 +187,10 @@ TypeSelectorWrapper.HeaderText = styled.div`
     font-size:25px;
   }
   @media(min-width: 1025px){
-    font-size: 27px;
+    font-size: 25px;
   }
   @media(min-width:1920px){
-    font-size: 30px;
+    font-size: 27px;
   }
 `;
 TypeSelectorWrapper.ButtonWrapper = styled.div`

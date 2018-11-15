@@ -7,6 +7,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   height: 100%;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   padding-bottom: 56px;
   @media(min-width: 1025px){
     flex-direction: row;
@@ -21,13 +22,19 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+
+LoginContainer.LoaderWrapper = styled.div`
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+`;
+
 LoginContainer.LeftSection = styled.div`
   width: 100%;
   height: 100%;
   @media(min-width: 1025px){
     padding: 0px 0px;
     position: relative;
-    padding-bottom: 83px;
   }
 `;
 LoginContainer.RightSection = styled.div`
@@ -426,14 +433,15 @@ const HeaderSection = styled.div`
   display:flex;
   justify-content: center;
   align-items: center;
-  
+  padding-bottom: 12px;
+  @media(min-width: 768px) {
+    display: none;
+  }
 `;
 HeaderSection.LogoImage = styled.img`
-  width:100px;
-  height:45px;
+  width:133px;
   @media(min-width:1025px){
-    width:120px;
-    height:60px;
+    width:180px;
   }
 `;
 HeaderSection.HeaderNavigation = styled.button`

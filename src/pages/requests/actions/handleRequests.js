@@ -2,6 +2,7 @@
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { fetchMyVideosList } from './getMyVideosList';
+import { fetchUserDetails } from '../../../store/shared/actions/getUserDetails';
 
 export const REQUESTS = {
   start: 'requests/START',
@@ -27,6 +28,7 @@ export const requestFetchFailed = error => ({
 export const changeRequestStatus = (requestId, requestStatus, comment) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   const { status, offset, role } = getState().myVideosList;
+  const { id } = getState().userDetails.settings_userDetails;
   dispatch(requestFetchStart());
   return fetch.post(Api.changeRequestStatus, {
     id: requestId,
@@ -39,7 +41,8 @@ export const changeRequestStatus = (requestId, requestStatus, comment) => (dispa
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(requestFetchEnd());
-      dispatch(fetchMyVideosList(offset, true, role, status));
+      dispatch(fetchMyVideosList(0, true, role, status));
+      dispatch(fetchUserDetails(id));
     } else {
       dispatch(requestFetchEnd());
     }
@@ -53,6 +56,7 @@ export const changeRequestStatus = (requestId, requestStatus, comment) => (dispa
 export const responseVideo = (requestId, fileName) => (dispatch, getState) => {
   const { authentication_token: authToken } = getState().session.auth_token;
   const { status, offset, role } = getState().myVideosList;
+  const { id } = getState().userDetails.settings_userDetails;
   dispatch(requestFetchStart());
   return fetch.post(Api.starsonaVideo, {
     video: fileName,
@@ -65,7 +69,8 @@ export const responseVideo = (requestId, fileName) => (dispatch, getState) => {
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(requestFetchEnd());
-      dispatch(fetchMyVideosList(offset, true, role, status));
+      dispatch(fetchMyVideosList(0, true, role, status));
+      dispatch(fetchUserDetails(id));
     } else {
       dispatch(requestFetchEnd());
     }

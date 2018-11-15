@@ -33,7 +33,6 @@ export const changePassword = data => (dispatch) => {
   return fetch.post(Api.changePassword, data).then((resp) => {
     dispatch(changePasswordEnd());
     if (resp.data && resp.data.success) {
-      localStorage.setItem('data', JSON.stringify(resp.data.data));
       dispatch(changePasswordSuccess(resp.data.data));
     } else if (resp.data && resp.data.error) {
       dispatch(changePasswordFailed(resp.data.error));

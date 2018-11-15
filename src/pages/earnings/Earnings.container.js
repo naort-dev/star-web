@@ -3,6 +3,7 @@ import Earnings from './Earnings.component';
 import { fetchEarningsList } from './actions/getEarningsList';
 
 const mapStateToProps = state => ({
+  userDetails: state.userDetails,
   professionsList: state.professionsList,
   paidList: state.earningsList.paidList,
   pendingList: state.earningsList.pendingList,
@@ -20,9 +21,11 @@ const mapStateToProps = state => ({
   paidCount: state.earningsList.paidCount,
   pendingOffset: state.earningsList.pendingOffset,
   paidOffset: state.earningsList.paidOffset,
+  allOffset: state.earningsList.allOffset,
   paidLoading: state.earningsList.paidLoading,
   pendingLoading: state.earningsList.pendingLoading,
   loading: state.earningsList.loading,
+  allCount: state.earningsList.allCount,
 });
 
 const mapDispatchToProps = dispatch => ({
