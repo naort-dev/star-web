@@ -117,7 +117,6 @@ const FlexStyles = styled.ul`
 `;
 
 EarningStyled.Header = FlexStyles.extend`
-  margin-top: 20px;
   border-top: 1px solid #CCCCCC;
   border-bottom: 1px solid #CCCCCC;
   display: none;
@@ -162,8 +161,11 @@ EarningStyled.heading = styled.h1`
 `;
 
 EarningStyled.AllEarningsWrapper = styled.div`
-  padding: 16px;
+  padding: 0 16px;
   background-color: #fff;
+  @media(min-width: 768px) {
+    padding: 16px 0;
+  }
 `;
 
 EarningStyled.errorMessage = styled.span`
