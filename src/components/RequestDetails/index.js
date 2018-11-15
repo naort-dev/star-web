@@ -82,6 +82,11 @@ export default class RequestDetails extends React.Component {
   getOccasionDetails = (occasionType) => {
     const { props } = this;
     const occasionDate = props.orderDetails.request_details && props.orderDetails.request_details.date ? moment(props.orderDetails.request_details.date).format('LL') : '';
+    const specificallyFor = props.orderDetails.request_details && props.orderDetails.request_details.specifically_for;
+    const honoringFor = props.orderDetails.request_details && props.orderDetails.request_details.honoring_for;
+    const fromWhere = props.orderDetails.request_details && props.orderDetails.request_details.from_where;
+    const eventTitle = props.orderDetails.request_details && props.orderDetails.request_details.event_title;
+    const eventGuestHonor = props.orderDetails.request_details && props.orderDetails.request_details.event_guest_honor;
     switch (occasionType) {
       case 1:
       case 5:
@@ -89,15 +94,15 @@ export default class RequestDetails extends React.Component {
           <OrderDetailsItem title="Occasion Date" value={occasionDate} />
         );
       case 2:
-        return <OrderDetailsItem title="What specifically for" value={props.orderDetails.request_details.specifically_for} />;
+        return <OrderDetailsItem title="What specifically for" value={specificallyFor} />;
       case 3:
-        return <OrderDetailsItem title="Person of honor" value={props.orderDetails.request_details.honoring_for} />;
+        return <OrderDetailsItem title="Person of honor" value={honoringFor} />;
       case 4:
-        return <OrderDetailsItem title={`${props.orderDetails.occasion} from`} value={props.orderDetails.request_details.from_where} />;
+        return <OrderDetailsItem title={`${props.orderDetails.occasion} from`} value={fromWhere} />;
       case 6:
-        return <OrderDetailsItem title="Event Title" value={props.orderDetails.request_details.event_title} />;
+        return <OrderDetailsItem title="Event Title" value={eventTitle} />;
       case 7:
-        return <OrderDetailsItem title="Guest of honor" value={props.orderDetails.request_details.event_guest_honor} />;
+        return <OrderDetailsItem title="Guest of honor" value={eventGuestHonor} />;
       default:
         return null;
     }
@@ -107,6 +112,11 @@ export default class RequestDetails extends React.Component {
     const { props } = this;
     const occasionDate = props.orderDetails.request_details && props.orderDetails.request_details.date ? moment(props.orderDetails.request_details.date).format('LL') : '';
     const relationShip = props.orderDetails.request_details && props.orderDetails.request_details.relationship && props.orderDetails.request_details.relationship.title ? props.orderDetails.request_details.relationship.title : '';
+    const stargramto = props.orderDetails.request_details && props.orderDetails.request_details.stargramto;
+    const stargramfrom = props.orderDetails.request_details && props.orderDetails.request_details.stargramfrom;
+    const importantInfo = props.orderDetails.request_details && props.orderDetails.request_details.important_info;
+    const eventHost = props.orderDetails.request_details && props.orderDetails.request_details.event_host;
+    const question = props.orderDetails.request_details && props.orderDetails.request_details.question;
     switch (eventType) {
       case 1:
         // Personal Shout-outs
@@ -114,18 +124,18 @@ export default class RequestDetails extends React.Component {
           <React.Fragment>
             <OrderDetailsItem title="Occasion" value={props.orderDetails.occasion} />
             <OrderDetailsItem title="To"
-              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramto, props.orderDetails.to_audio_file)}
+              value={this.renderStargramDestinationDetails(stargramto, props.orderDetails.to_audio_file)}
             />
             <OrderDetailsItem title="From"
-              value={this.renderStargramDestinationDetails(props.orderDetails.request_details.stargramfrom, props.orderDetails.from_audio_file)}
+              value={this.renderStargramDestinationDetails(stargramfrom, props.orderDetails.from_audio_file)}
             />
             {
-              props.orderDetails.request_details.stargramto !== 'Myself' && <OrderDetailsItem title="Relationship" value={`${props.orderDetails.request_details.stargramfrom} is ${props.orderDetails.request_details.stargramto}'s ${relationShip}`} />
+              stargramto !== 'Myself' && <OrderDetailsItem title="Relationship" value={`${stargramfrom} is ${stargramto}'s ${relationShip}`} />
             }
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }
-            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+            <OrderDetailsItem title="Important Info" value={importantInfo} />
           </React.Fragment>
         );
       case 2:
@@ -136,14 +146,14 @@ export default class RequestDetails extends React.Component {
             {
               this.getOccasionDetails(props.orderDetails.occasion_type)
             }
-            <OrderDetailsItem title="Host" value={props.orderDetails.request_details.event_host} />
+            <OrderDetailsItem title="Host" value={eventHost} />
             <OrderDetailsItem title="Event Date" value={occasionDate} />
-            <OrderDetailsItem title="Important Info" value={props.orderDetails.request_details.important_info} />
+            <OrderDetailsItem title="Important Info" value={importantInfo} />
           </React.Fragment>
         );
       case 3:
         // Q&A
-        return <OrderDetailsItem title="Title" value={props.orderDetails.request_details.question} />;
+        return <OrderDetailsItem title="Title" value={question} />;
       default: return null;
     }
   }
