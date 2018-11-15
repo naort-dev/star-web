@@ -96,7 +96,6 @@ export default class Earnings extends React.Component {
             {selectedTab === 'All' && (list.length > 0) && !(list.length === 0 && loading) &&
               <EarningStyled.AllEarningsWrapper>
                 {list.length != 0 && this.renderHeader()}
-                {this.renderEarningList(list)}
                 <ScrollList
                   dataList={list}
                   limit={15}
@@ -114,24 +113,12 @@ export default class Earnings extends React.Component {
                 />
               </EarningStyled.AllEarningsWrapper>
             }
+            {selectedTab === 'All' && list.length === 0 && !loading && <EarningStyled.errorMessage>None at this time</EarningStyled.errorMessage> }
           </EarningStyled.EarningsListStyled>
         </EarningStyled.mainSection>
       </EarningStyled.sectionWrapper>
     );
   }
-
-  renderEarningList = list => (    
-    <EarningStyled.ContentWrapper>
-      {list && !list.length && <EarningStyled.errorMessage>None at this time</EarningStyled.errorMessage>}
-      {list && list.map((item, index) => (
-        <EarningsList
-          item={item}
-          index={index}
-          key={item.created_date}
-        />))}
-
-    </EarningStyled.ContentWrapper>
-  )
 
   renderHeader = () => (
     <EarningStyled.Header>
