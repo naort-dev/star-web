@@ -256,6 +256,6 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
+    dispatch(paymentFetchFailed(exception.data.reponse.error));
   });
 };
