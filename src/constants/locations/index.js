@@ -15,5 +15,5 @@ export const locations = {
   notFound: "/not-found",
   getAwsVideoCredentials: "user/signed_url/?extension=mp4&key=authentication_videos&file_type=video",
   askAwsVideoCredentials: "user/signed_url/?extension=mp4&key=stargram_videos&file_type=video",
-  bannerVideo: 'https://s3.amazonaws.com/starsona/videos/Public+Videos/MarKeting+Videos+Reel+-+FINAL+2018-08-24.mp4',
+  bannerVideo: 'https://s3.amazonaws.com/starsona/videos/Public+Videos/banner-video.mp4',
 };
