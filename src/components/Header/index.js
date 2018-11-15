@@ -235,10 +235,10 @@ class Header extends React.Component {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
                   <Link to="/user/favorites">
-                    <HeaderSection.FavoriteButton />
+                    <HeaderSection.FavoriteButton title="Favorites" />
                   </Link>
                   <Link to="/user/myVideos">
-                    <HeaderSection.MyvideoButton />
+                    <HeaderSection.MyvideoButton title="My videos" />
                   </Link>
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}

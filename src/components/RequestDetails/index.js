@@ -180,7 +180,7 @@ export default class RequestDetails extends React.Component {
   findTime = (fromDate, toDate, futureTime) => {
     let timeString = futureTime ? 'Due in' : '';
     if (this.props.starMode && this.props.requestStatus === 4) { // Processing Videos
-      timeString = 'Completed';
+      timeString = 'Completed (Processing)';
     } else {
       const timeDiff = toDate - fromDate;
       const diffDays = Math.floor(timeDiff / 86400000); // days

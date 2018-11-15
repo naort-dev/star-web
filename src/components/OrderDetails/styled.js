@@ -285,7 +285,7 @@ OrderStyled.DetailsTitle = styled.span`
   font-family: ${props => (props.bold ? 'Avenir-Medium' : 'Avenir-Light')}
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table-cell')};
-    width: ${props => (props.overlay ? '100%' : '20%')};
+    width: ${props => (props.overlay ? '100%' : '25%')};
     font-size:13px;
     vertical-align: middle;
   }
@@ -304,7 +304,7 @@ OrderStyled.DetailsValue = styled.span`
   padding-left: ${props => (props.overlay ? '0' : '20px')};
   @media(min-width: 768px) {
     display: ${props => (props.overlay ? 'block' : 'table-cell')};
-    width: ${props => (props.overlay ? '100%' : '80%')};
+    width: ${props => (props.overlay ? '100%' : '75%')};
     font-size:13px;
   }
   @media(min-width:1920px){
