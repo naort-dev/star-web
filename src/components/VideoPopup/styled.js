@@ -276,7 +276,7 @@ VideoPopupStyled.CommentsList = styled.ul`
   border-top: 1px solid #A4A4A4;
   padding: 5px 0;
   @media(min-width: 1025px) {
-    height: calc(100% - 113px);
+    height: calc(100% - 130px);
   }
 `;
 
