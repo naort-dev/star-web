@@ -310,7 +310,7 @@ export default class Starprofile extends React.Component {
             smallPopup
             closePopUp={this.closePopup}
           >
-            <ShareView iconSize={50} title={this.props.userDetails.fullName} shareUrl={this.props.userDetails.share_url} />
+            <ShareView iconSize={50} title={fullName} shareUrl={this.props.userDetails.share_url} />
           </Popup>
         }
 
