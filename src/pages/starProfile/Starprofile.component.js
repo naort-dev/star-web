@@ -28,6 +28,7 @@ export default class Starprofile extends React.Component {
       showPopup: null,
       videoActive: false,
       selectedVideo: null,
+      showAppBanner: true,
       offsetValue: 0,
       sharePopup: false,
     };
