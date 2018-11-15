@@ -72,6 +72,9 @@ VideoRenderDiv.BannerImage = styled.img`
 VideoRenderDiv.ProfileDetailWrapper = styled.div`
   display: block;
   width: 100%;
+  @media(min-width: 1920px) {
+    padding-top: 6px;
+  }
 `;
 
 VideoRenderDiv.VideoPlayerWrapper = styled.div`
