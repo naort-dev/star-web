@@ -17,6 +17,7 @@ import copy from 'copy-to-clipboard';
 import addVideoComment from '../../services/addVideoComment';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import VideoPlayer from '../VideoPlayer';
+import SnackBar from '../SnackBar';
 import Loader from '../Loader';
 import RequestFlowPopup from '../RequestFlowPopup';
 import VideoPopupStyled from './styled';
@@ -31,6 +32,7 @@ class VideoPopup extends React.Component {
       hasMore: true,
       commentText: '',
       videoContentHeight: null,
+      snackBarText: '',
     };
   }
 
@@ -129,6 +131,19 @@ class VideoPopup extends React.Component {
     }
   }
 
+  setSnackBarText = (text) => {
+    this.setState({ snackBarText: text });
+  }
+  
+  closeSnackBar = () => {
+    this.setState({ snackBarText: '' });
+  }
+
+  copyUrl = (shareUrl) => {
+    copy(shareUrl);
+    this.setSnackBarText('Link copied to clipboard');
+  }
+
   renderSocialIcons = (selectedVideo) => {
     const defaultUrl = selectedVideo.video_url;
     const shareUrl = `https://${defaultUrl}`;
@@ -193,7 +208,7 @@ class VideoPopup extends React.Component {
           </EmailShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
-          <VideoPopupStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} />
+          <VideoPopupStyled.Copy title="Copy to Clipboard" onClick={() => this.copyUrl(shareUrl)} />
         </VideoPopupStyled.Somenetwork>
       </React.Fragment>
     );
@@ -222,6 +237,10 @@ class VideoPopup extends React.Component {
         largePopup
       >
         <VideoPopupStyled.VideoContentWrapper>
+          {
+            this.state.snackBarText !== '' &&
+              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+          }
           {
             !props.videoPopupLoading ?
               <React.Fragment>
