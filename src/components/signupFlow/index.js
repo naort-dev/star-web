@@ -19,10 +19,11 @@ class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: null,
+      selectedType: props.signUpDetails.type ? props.signUpDetails.type : null,
       stepCount: 0,
       socialData: {},
-      currentStep: 0,
+      currentStep: props.signUpDetails.step ? props.signUpDetails.step : 0,
+      enableClose: props.signUpDetails.enableClose ? props.signUpDetails.enableClose : false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -41,7 +42,7 @@ class SignupFlow extends React.Component {
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   changeStep = (step) => {
-    this.setState({ currentStep: step });
+    this.setState({ currentStep: step, enableClose: false });
   }
 
   closeSignUp = () => {
@@ -79,10 +80,9 @@ class SignupFlow extends React.Component {
     return (
       <div>
         <RequestFlowPopup
-          dotsCount={this.state.currentStep ? this.state.stepCount : 0}
-          selectedDot={this.state.currentStep}
+          dotsCount={0}
           closePopUp={() => this.closeSignUp()}
-          disableOutsideClick
+          modalView={this.state.currentStep > 1 && !this.state.enableClose}
           smallPopup
         >
           <LoginContainer>
@@ -90,14 +90,9 @@ class SignupFlow extends React.Component {
               {
                 this.state.currentStep === 1 ||  this.state.currentStep === 0 ?
                   <HeaderSection>
-                    {/* {
-                      this.state.currentStep > 1 ?
-                        <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
-                      : null
-                    } */}
                     <Link to="/">
                       <HeaderSection.LogoImage
-                        src="assets/images/logo_starsona_large.svg"
+                        src="assets/images/logo_starsona.png"
                         alt=""
                       />
                     </Link>
@@ -127,6 +122,7 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
+  signUpDetails: state.modals.signUpDetails,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,

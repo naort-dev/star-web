@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 const ReferralStyled = styled.div`
   margin-top: 150px;
+  @media(min-width: 768px) {
+    width: 500px;
+    margin: 150px auto;
+    margin-bottom: 0;
+  }
 `;
 
 ReferralStyled.Heading = styled.span`
@@ -145,10 +150,11 @@ ReferralStyled.SupportLink = styled.span`
 
 ReferralStyled.ScrollView = styled.div`
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  @media(min-width: 768px) {
+    height: auto;
+  }
 `;
 
 export default ReferralStyled;

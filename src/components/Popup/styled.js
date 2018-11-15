@@ -48,7 +48,6 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   width: 80%;
   height: ${props => (props.popHeight ? props.popHeight : 'auto')};
   padding: 20px 20px 20px;
-  border-radius: 12px;
   background-color: #fff;
   @media(min-width: 768px) {
     width: 50%;
@@ -63,6 +62,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
 
 PopupStyled.SmallContent = styled.div`
   height: 100%;
+  width: 100%;
   overflow-y: auto;
 `;
 

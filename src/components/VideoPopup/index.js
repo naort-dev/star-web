@@ -30,6 +30,7 @@ class VideoPopup extends React.Component {
       sharePopup: false,
       hasMore: true,
       commentText: '',
+      videoContentHeight: null,
     };
   }
 
@@ -205,12 +206,16 @@ class VideoPopup extends React.Component {
       primarySrc: props.selectedVideo.question_answer_videos.answer ? props.selectedVideo.question_answer_videos.question : '',
       secondaryCover: props.selectedVideo.question_answer_videos.answer_thumb ? props.selectedVideo.question_answer_videos.answer_thumb : '',
       secondarySrc: props.selectedVideo.question_answer_videos.answer ? props.selectedVideo.question_answer_videos.answer : '',
+      ratio: props.selectedVideo.width / props.selectedVideo.height,
     } : {
       primaryCover: props.selectedVideo.s3_thumbnail_url ? props.selectedVideo.s3_thumbnail_url : '',
       primarySrc: props.selectedVideo.s3_video_url ? props.selectedVideo.s3_video_url : '',
+      ratio: props.selectedVideo.width / props.selectedVideo.height,
     };
     return (
       <RequestFlowPopup
+        noDisableScroll={this.props.noDisableScroll}
+        autoWidth
         dotsCount={0}
         selectedDot={1}
         closePopUp={() => props.closePopUp()}
@@ -223,8 +228,13 @@ class VideoPopup extends React.Component {
                 <VideoPopupStyled.VideoPlayer>
                   <VideoPopupStyled.VideoPlayerWrapper>
                     <VideoPlayer {...videoPlayerProps} />
-                    <VideoPopupStyled.LeftSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex-1)} />
-                    <VideoPopupStyled.RightSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex+1)} />
+                    {
+                      !props.noSlider &&
+                        <React.Fragment>
+                          <VideoPopupStyled.LeftSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex - 1)} />
+                          <VideoPopupStyled.RightSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex + 1)} />
+                        </React.Fragment>
+                    }
                   </VideoPopupStyled.VideoPlayerWrapper>
                   <VideoPopupStyled.VideoContent>
                     <VideoPopupStyled.VideoRequester>
@@ -259,7 +269,7 @@ class VideoPopup extends React.Component {
                           placeholder="Enter your comment"
                           value={this.state.commentText}
                           onKeyUp={event => this.handleCommentEnter(event)}
-                          onInput={event => this.handleCommentAdd(event)}
+                          onChange={event => this.handleCommentAdd(event)}
                         />
                       </VideoPopupStyled.CommentBoxWrapper>
                     </VideoPopupStyled.PopupActions>
@@ -311,7 +321,7 @@ class VideoPopup extends React.Component {
                             }
                             {
                               !this.props.commentList.loading && !this.props.commentList.data.length ?
-                                <VideoPopupStyled.commentItem>No Comments yet</VideoPopupStyled.commentItem>
+                                <VideoPopupStyled.commentItem>No comments yet</VideoPopupStyled.commentItem>
                               : null
                             }
                           </VideoPopupStyled.commentListScrollbar>

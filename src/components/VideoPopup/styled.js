@@ -22,7 +22,10 @@ VideoPopupStyled.VideoContentWrapper = styled.div`
 VideoPopupStyled.VideoPlayerWrapper = styled.div`
   position: relative;
   width: 100%;
-  height: 45%;
+  height: 400px;
+  @media(min-width: 768px) {
+    height: auto;
+  }
   @media(min-width: 1025px) {
     width: 50%;
     display: inline-block;
@@ -33,6 +36,11 @@ VideoPopupStyled.VideoPlayerWrapper = styled.div`
 VideoPopupStyled.VideoPlayer = styled.div`
   width: 100%;
   height: 100%;
+  display: table;
+  @media(min-width: 1025px) {
+    display: flex;
+    align-items: stretch
+  }
 `;
 VideoPopupStyled.VideoContent = styled.section`
   padding-top: 10px;
@@ -40,7 +48,6 @@ VideoPopupStyled.VideoContent = styled.section`
   @media(min-width: 1025px) {
     width: 50%;
     display: inline-block;
-    height: 100%;
     position: relative;
     vertical-align: top;
     padding: 10px 20px;
@@ -203,7 +210,8 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
   z-index: 1;
   left: 0;
   right: 0;
-  bottom: ${props => (props.visible ? '0' : '-100%')};
+  bottom: 0;
+  display: ${props => (props.visible ? 'block' : 'none')}
   @media(min-width: 768px) {
     position: absolute;
     background: transparent;

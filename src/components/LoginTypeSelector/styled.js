@@ -4,13 +4,16 @@ import { Scrollbars } from 'react-custom-scrollbars';
 const TypeSelectorWrapper = styled.div`
   text-align: center;
   height: calc(100% - 98px);
+  @media(min-width: 1025px) {
+    height: calc(100% - 55px);
+  }
 `;
 TypeSelectorWrapper.Content = styled.div`
   padding: 0px 0px;
 `;
 
 TypeSelectorWrapper.heading = styled.div`
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   font-size: 25px;
   color:#FF6C58;
   @media(min-width:1920px){
@@ -18,7 +21,7 @@ TypeSelectorWrapper.heading = styled.div`
   }
 `;
 TypeSelectorWrapper.subheading = styled.div`
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   font-size: 12px;
   color:#333333;
   @media(min-width : 768px){
@@ -38,7 +41,7 @@ TypeSelectorWrapper.LoginDiv = styled.button`
   text-align: center;
   text-decoration: none;
   font-size: 16px;
-  font-family: 'Ubuntu-Light';
+  font-family: 'Avenir-Light';
   display: inline-block;
   font-size: 12px;
   cursor: pointer;
@@ -49,11 +52,10 @@ TypeSelectorWrapper.LoginDiv = styled.button`
   }
 `;
 TypeSelectorWrapper.SocialMediaMessage = styled.div`
-  font-family: 'Ubuntu-Regular';
+  font-family: 'Avenir-Regular';
   font-size: 14px;
   text-align: center;
   color: #7B797A;
-  margin-top: 5px;
   margin-bottom: 5px;
   word-spacing: 3px;
   @media(min-width:768px){
@@ -73,7 +75,7 @@ TypeSelectorWrapper.Button = styled.button`
   background-color: white;
   border-radius: 13px;
   margin-top: 6%;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   font-size:13px;
   color: #333333;
   width: 100%;
@@ -103,9 +105,6 @@ TypeSelectorWrapper.Button = styled.button`
 
 TypeSelectorWrapper.ComponentWrapper = styled.div`
   height: 100%;
-  @media(min-width:1025px){
-    height:calc(100% - 40px);
-  }
 `;
 
 TypeSelectorWrapper.ComponentWrapperScroll = styled(Scrollbars)`
@@ -120,7 +119,7 @@ TypeSelectorWrapper.ContinueButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 16px;
-  font-family: Ubuntu-Medium;
+  font-family: Avenir-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;
@@ -144,7 +143,7 @@ TypeSelectorWrapper.DisableButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 16px;
-  font-family: Ubuntu-Medium;
+  font-family: Avenir-Medium;
   cursor: pointer;
   padding: 12px 30px;
   text-decoration: none;
@@ -162,23 +161,15 @@ TypeSelectorWrapper.DisableButton = styled.button`
   }
 `;
 TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 10px;
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
-  z-index: 5;
   @media(min-width: 768px) {
-    position: absolute;
     padding: 13px;
   }
   @media(min-width:1025px){
     margin: 0 42px;
     box-shadow: none;
-    left:0;
-    right:0;
   }
 `;
 TypeSelectorWrapper.OptionWrapper = styled.footer`
@@ -191,15 +182,15 @@ TypeSelectorWrapper.HeaderText = styled.div`
   text-align:center;
   color:#676767;
   font-size:20px;
-  font-family: 'Ubuntu-Bold';
+  font-family: 'Avenir-Bold';
   @media(min-width:768px){
     font-size:25px;
   }
   @media(min-width: 1025px){
-    font-size: 27px;
+    font-size: 25px;
   }
   @media(min-width:1920px){
-    font-size:38px;
+    font-size: 27px;
   }
 `;
 TypeSelectorWrapper.ButtonWrapper = styled.div`
@@ -214,7 +205,7 @@ TypeSelectorWrapper.Button = styled.button`
   border: 3px solid rgba(51, 51, 51, 0.72); 
   border-radius:19px;
   font-size:16px;
-  font-family: 'Ubuntu-Medium';
+  font-family: 'Avenir-Medium';
   box-shadow: -2px 6px 8px rgba(0, 0, 0, 0.12);
   margin-bottom:25px;
   outline:none;

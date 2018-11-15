@@ -6,6 +6,7 @@ const initalState = {
   paymentStatus: false,
   serverUpdated: false,
   sourceList: {},
+  error: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -17,6 +18,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: true,
+        error: null,
       };
       
     case PAYMENTS.end:
@@ -51,6 +53,10 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+        error: {
+          code: action.error.code,
+          message: action.error.message,
+        },
       };
 
     case PAYMENTS.sourceListSuccess:
@@ -59,7 +65,11 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         sourceList: action.data,
       };
-
+    case PAYMENTS.resetError:
+      return {
+        ...state,
+        error: null,
+      }
     default:
       return state;
   }

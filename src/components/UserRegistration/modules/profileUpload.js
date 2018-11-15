@@ -139,7 +139,7 @@ export default class ProfileUpload extends React.Component {
                   <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
                   <GroupStyled.ProfileInputContainer>
                     <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
-                    {!this.state.finalImage ? <GroupStyled.UploadText>Upload Image</GroupStyled.UploadText> : null}
+                    {!this.state.finalImage ? <GroupStyled.UploadText>Upload image</GroupStyled.UploadText> : null}
                   </GroupStyled.ProfileInputContainer>
                 </GroupStyled.ProfileImageWrapper>
               </GroupStyled.ProfileInputButton>

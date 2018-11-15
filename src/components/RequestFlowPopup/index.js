@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import PopupStyled from './styled';
 import smoothScroll from '../../utils/smoothScroll';
 
@@ -12,14 +13,23 @@ export default class RequestFlowPopup extends React.Component {
     this.popupWrapper = null;
   }
   componentDidMount() {
-    if (!this.props.disableOutsideClick) {
+    if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
-    document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
+    if (!this.props.noDisableScroll) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.position = 'fixed';
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.modalView !== nextProps.modalView && nextProps.modalView) {
+      window.removeEventListener('click', this.hidePopup);
+    } else if (this.props.modalView !== nextProps.modalView && !nextProps.modalView) {
+      window.addEventListener('click', this.hidePopup);
+    }
   }
   componentWillUnmount() {
-    if (!this.props.disableOutsideClick) {
+    if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
     }
     document.body.style.overflow = 'initial';
@@ -46,28 +56,44 @@ export default class RequestFlowPopup extends React.Component {
       })
     );
   }
-  render() {
+
+  renderPopup = () => {
     return (
       <PopupStyled innerRef={node => this.popupWrapper = node}>
         <PopupStyled.SmallContainer
+          modalView={this.props.modalView}
           largePopup={this.props.largePopup}
+          autoWidth={this.props.autoWidth}
           innerRef={node => this.popupContent = node}
         >
-          <PopupStyled.SliderDotsWrapper>
-            {
-              this.renderSliderDots()
-            }
-          </PopupStyled.SliderDotsWrapper>
-          <PopupStyled.CloseButton
-            smallPopup={this.props.smallPopup || this.props.largePopup}
-            onClick={() => this.props.closePopUp()}
-            closeIconColor={this.props.closeIconColor}
-          />
+          {
+            !this.props.modalView &&
+            <PopupStyled.SliderDotsWrapper>
+              {
+                this.renderSliderDots()
+              }
+            </PopupStyled.SliderDotsWrapper>
+          }
+          {
+            !this.props.modalView &&
+              <PopupStyled.CloseButton
+                smallPopup={this.props.smallPopup || this.props.largePopup}
+                onClick={() => this.props.closePopUp()}
+                closeIconColor={this.props.closeIconColor}
+              />
+          }
           <PopupStyled.SmallContent>
             {this.props.children}
           </PopupStyled.SmallContent>
         </PopupStyled.SmallContainer>
       </PopupStyled>
+    );
+  }
+
+  render() {
+    return ReactDOM.createPortal(
+      this.renderPopup(),
+      document.getElementById('modal-root'),
     );
   }
 }

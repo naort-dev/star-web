@@ -15,46 +15,8 @@ EarningStyled.sectionWrapper = styled.div`
   height:100%;
 `;
 
-EarningStyled.sideSection = styled.section`
-  background-color: #fff;
-  height: ${props => props.menuActive && '100%'};
-  @media(min-width: 1025px) {
-    width:25%;
-    max-width: 310px;
-    display: inline-block;
-    position: fixed;
-    left: 0;
-    top: 60px;
-    bottom: 0;
-    overflow: auto;
-  }
-  @media(min-width: 1920px) {
-    top: 72px;
-    padding-top: 72px;
-  }
-`;
-
 EarningStyled.mainSection = styled.section`
-  height: 100%;
-  display: ${props => (props.menuActive ? 'none' : 'block')}
-  @media(min-width: 768px) {
-    padding-top: 40px;
-  }
-  @media(min-width: 1025px) {
-    width: 75%;
-    display: inline-block;
-    vertical-align: top;
-    padding-left: 50px;
-    padding-right: 50px;
-    padding-top: 30px;
-    float: right;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 72px;
-  }
-  @media(min-width: 1241px) {
-    width: calc(100% - 310px);
-  }
+
 `;
 
 EarningStyled.Overview = styled.ul`
@@ -205,19 +167,11 @@ EarningStyled.AllEarningsWrapper = styled.div`
 `;
 
 EarningStyled.errorMessage = styled.span`
-  font-family: 'Avenir-Light';
   font-size: 14px;
-  color: #b5b5b5;
-  display: block;
-  margin-top: 20px;
-`;
-
-EarningStyled.tabsWapper = styled.section`
-  @media (min-width: 768px) {
-    width: 75%;
-    float: right;
-    margin-top: 30px;
-  }
+  display: flex;
+  margin-top: 27px;
+  justify-content: center;
+  font-weight: 600;
 `;
 
 EarningStyled.MoreButton = styled.span`

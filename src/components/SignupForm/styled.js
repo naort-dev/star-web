@@ -110,8 +110,14 @@ LoginContainer.Heading = styled.div`
   color: #676767;
   font-size: 20px;
   font-family: 'Avenir-Bold';
-  @media(min-width: 768px){
-    font-size:32px;
+  @media(min-width:768px){
+    font-size:25px;
+  }
+  @media(min-width: 1025px){
+    font-size: 25px;
+  }
+  @media(min-width:1920px){
+    font-size: 27px;
   }
   
 `;
@@ -135,7 +141,7 @@ LoginContainer.SocialMediaMessage = styled.div`
     font-size:14px;
   }
   @media(min-width:1920px){
-    font-size:28px;
+    font-size:18px;
   }
 `;
 LoginContainer.Button = styled.button`
@@ -149,62 +155,25 @@ LoginContainer.Button = styled.button`
 `;
 LoginContainer.FacebookContent = styled.span`
   position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
+  width: 30px;
+  background: url( 'assets/images/facebook.svg' ) no-repeat left;
+  height: 30px;
   display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/facebook.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-  }
   
 `;
 LoginContainer.GoogleContent = styled.span`
   position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
-  display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/search.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-    
-  }
-  
+  width: 30px;
+  height: 30px;
+  background: url( 'assets/images/search.svg' ) no-repeat left;
+  display:block; 
 `;
 LoginContainer.InstagramContent = styled.span`
   position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
+  width: 30px;
+  height: 30px;
+  background: url( 'assets/images/instagram.svg' ) no-repeat left;
   display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/instagram.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-    
-  }
- 
 `;
 LoginContainer.Line = styled.hr`
   width:230px;
@@ -284,6 +253,9 @@ LoginContainer.Input = styled.input`
   text-indent: 10px;
   margin-top:3%;
   background-color: #fff;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
     height:40px;
@@ -518,13 +490,13 @@ LoginContainer.ButtonWrapper = styled.div`
   margin-top:5%;
 `;
 LoginContainer.SignupLine = styled.div`
- 
     display: block;
-    font-family: 'Avenir-Medium';
-    color:#7c7c7c;
+    font-family: 'Avenir-Light';
+    color:#b3acac;
     font-size: 12px;
     margin: 0;
     margin: 20px 20px;
+    margin-top: 0;
     order: 1;
     span {
       display: inline-block;
@@ -533,7 +505,7 @@ LoginContainer.SignupLine = styled.div`
       content: '';
       display: inline-block;
       height: 1px;
-      background-color: #ccc;
+      background-color: #e8e7e7;
       vertical-align: middle;
       width: 50px;
       width: calc(50% - 69px);

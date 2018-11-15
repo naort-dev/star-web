@@ -1,28 +1,30 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
-import ThreeColumnLayout from '../../components/ThreeColumnLayout';
+import ColumnLayout from '../../components/ColumnLayout';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
-import OrderDetails from '../../components/OrderDetails';
-import InnerTabs from '../../components/InnerTabs';
 import RequestDetails from '../../components/RequestDetails';
+import SubmitView from '../../components/SubmitView';
+import VideoRecorder from './components/VideoRecorder';
+import DeclineView from './components/DeclineView';
+import ShareView from '../../components/ShareView';
+import AlertView from '../../components/AlertView';
+import RequestFlowPopup from '../../components/RequestFlowPopup';
+import Popup from '../../components/Popup';
+import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
 import RequestsStyled from './styled';
-import { requestStatusList, celebRequestStatusList, celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
-
-const moment = require('moment');
+import { celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class Requests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      menuActive: false,
-      filterSelected: false,
       selectedTab: 'All',
-      tabsClientHeight: 0,
       requestStatus: 'all',
-      recordMode: false,
+      requestAction: '',
+      showActionPopup: false,
       orderDetails: {},
+      scrollTarget: '',
     };
     this.requestType = {
       3: 'Q&A',
@@ -31,11 +33,102 @@ export default class Requests extends React.Component {
     };
     this.role = props.starMode ? 'celebrity_id' : 'fan_id';
   }
-  componentWillMount() {
+  componentDidMount() {
+    this.props.myVideosListReset();
     this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
   }
-  setScrollHeight = () => {
-    this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+
+  onVideoUpload = (success) => {
+    this.props.onClearStreams();
+    this.props.deleteVideo();
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    if (success) {
+      this.requestAction(this.state.orderDetails, 'respondSuccess');
+    } else {
+      this.requestAction(this.state.orderDetails, 'respondFail');
+    }
+  }
+
+  getPopupContent = (requestAction) => {
+    const { orderDetails } = this.state;
+    const { request_video: requestVideo, fan } = orderDetails;
+    const finalVideo = requestVideo.filter(video => video.video_status === 1)[0]; // find completed video
+    switch (requestAction) {
+      case 'share':
+        return <ShareView iconSize={50} title={orderDetails.booking_title} shareUrl={`https://${finalVideo.video_url}`} />;
+      case 'respond':
+        return <VideoRecorder onComplete={this.onVideoUpload} orderDetails={this.state.orderDetails} {...this.props} />;
+      case 'report':
+        return (
+          <SubmitView
+            heading="Report abuse"
+            onSubmit={data => this.props.reportAbuse({
+              celebrity: orderDetails.celebrity_id,
+              abuse_comment: data.comment,
+            })}
+            successMessage="The message has been sent."
+            closePopup={this.closePopup}
+          />
+        );
+      case 'contact':
+        return (
+          <SubmitView
+            heading="Contact support"
+            onSubmit={data => this.props.contactSupport({ comments: data.comment })}
+            closePopup={this.closePopup}
+            successMessage="The message has been sent."
+          />
+        );
+      case 'rate':
+        return (
+          <SubmitView
+            heading="Rate video"
+            onSubmit={data => this.props.rateCelebrity({
+              celebrity: orderDetails.celebrity_id,
+              fan_rate: data.rating.toString(),
+              starsona: orderDetails.id,
+              comments: data.comment,
+            })}
+            successMessage="Your rating has been recorded!"
+            closePopup={this.closePopup}
+          />
+        );
+      case 'cancel':
+      case 'decline':
+        return (
+          <DeclineView
+            changeRequestStatus={reason => this.changeRequestStatus(orderDetails.id, 5, reason)} // to cancel a request
+            starMode={this.props.starMode}
+            closePopup={this.closePopup}
+            requestType={orderDetails.request_type}
+          />
+        );
+      case 'respondSuccess':
+        return (
+          <AlertView
+            message={`Thank you! Your Starsona has been sent to ${fan}`}
+            closePopup={this.closePopup}
+          />
+        );
+      case 'respondFail':
+        return (
+          <AlertView
+            message="Something went wrong"
+            closePopup={this.closePopup}
+          />
+        );
+      default: return null;
+    }
+  }
+
+  changeRequestStatus = (requestId, requestStatus, reason) => {
+    this.props.changeRequestStatus(requestId, requestStatus, reason);
+    this.closePopup();
   }
 
   switchTab = (item) => {
@@ -57,22 +150,82 @@ export default class Requests extends React.Component {
     this.setState({ selectedTab: item });
   }
 
-  activateMenu = () => {
-    this.setState({ menuActive: !this.state.menuActive });
+  editRequest = (orderDetails) => {
+    let bookingData = {
+      edit: true,
+      requestId: orderDetails.id,
+      hostName: orderDetails.request_details.stargramto,
+      userName: orderDetails.request_details.stargramfrom,
+      date: orderDetails.request_details.date,
+    };
+    this.props.fetchCelebDetails(orderDetails.celebrity_id);
+    let selectedRequestType = '';
+    if (orderDetails.request_type === 1) { // Shout Outs
+      bookingData = {
+        ...bookingData,
+        eventName: orderDetails.occasion,
+        relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+        otherRelationValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.title,
+        type: 1,
+        publicRequest: orderDetails.public_request,
+        occasionType: orderDetails.occasion_type,
+        selectedValue: orderDetails.occasion_id,
+        selectedPersonal: orderDetails.request_details.stargramto !== 'Myself' ? '2' : '1',
+        specification: orderDetails.request_details.specifically_for,
+        importantinfo: orderDetails.request_details.important_info,
+        from_audio_file: orderDetails.from_audio_file,
+        to_audio_file: orderDetails.to_audio_file,
+      };
+      this.props.saveAudioRecording('from', { recordedBlob: null, recordedUrl: orderDetails.from_audio_file }); // update from audio in request flow
+      this.props.saveAudioRecording('for', { recordedBlob: null, recordedUrl: orderDetails.to_audio_file }); // update to audio in request flow
+      selectedRequestType = 'personal';
+    } else if (orderDetails.request_type === 2) { // events
+      bookingData = {
+        ...bookingData,
+        eventName: orderDetails.occasion,
+        relationshipValue: orderDetails.request_details.relationship && orderDetails.request_details.relationship.id,
+        type: 1,
+        publicRequest: orderDetails.public_request,
+        occasionType: orderDetails.occasion_type,
+        selectedValue: orderDetails.occasion_id,
+        selectedPersonal: orderDetails.request_details.stargramfrom !== 'Myself' ? '2' : '1',
+        specification: orderDetails.request_details.specifically_for,
+        importantinfo: orderDetails.request_details.important_info,
+        // otherRelationValue:undefined,
+        from_audio_file: orderDetails.from_audio_file,
+        to_audio_file: orderDetails.from_whereto_audio_file,
+      };
+      selectedRequestType = 'event';
+    } else if (orderDetails.request_type === 3) { // Q&A
+      bookingData = {
+        ...bookingData,
+        question: orderDetails.booking_title,
+        requestVideo: orderDetails.request_video
+      };
+      selectedRequestType = 'ask';
+    }
+    this.props.setBookingDetails(bookingData);
+    this.props.setRequestFlow(orderDetails.celebrity_id, selectedRequestType, 1);
   }
-  toggleFilterSection = () => {
-    this.setState({ filterSelected: !this.state.filterSelected }, () => {
-      this.setScrollHeight();
-    });
-  }
-  updateRequestStatus = (requestStatus) => {
-    this.setState({ requestStatus }, () => {
-      this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
-    });
-  }
-  showRequest = (data, recordModeValue) => {
-    const recordMode = this.props.starMode ? recordModeValue : false;
-    this.setState({ orderDetails: data, recordMode });
+
+  requestAction = (data, actionType) => {
+    let { requestAction, showActionPopup } = this.state;
+    if (actionType === 'edit') {
+      this.editRequest(data);
+    } else if (actionType === 'share'
+      || actionType === 'respond'
+      || actionType === 'report'
+      || actionType === 'contact'
+      || actionType === 'rate'
+      || actionType === 'decline'
+      || actionType === 'cancel'
+      || actionType === 'respondSuccess'
+      || actionType === 'respondFail'
+    ) {
+      showActionPopup = true;
+    }
+    requestAction = actionType;
+    this.setState({ orderDetails: data, requestAction, showActionPopup });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -85,14 +238,7 @@ export default class Requests extends React.Component {
     }
     this.setState({ orderDetails: {}, recordMode: false });
   }
-  findRequestVideo = (list, videoStatus) => {
-    let requestVideo = {};
-    requestVideo = list.find((videoItem) => {
-      return videoItem.video_status === videoStatus;
-    });
-    return requestVideo;
-  }
-
+  
   findRequestVideoThumbnail = (requestVideo) => {
     let completedVideo;
     let questionVideo;
@@ -111,107 +257,53 @@ export default class Requests extends React.Component {
     return null;
   }
 
-  renderSectionHeader = () => {
-    if (this.state.selectedTab === 'Open') {
-      return this.props.starMode ? 'Pending fan requests' : 'Pending requests';
-    } else if (this.state.selectedTab === 'Cancelled') {
-      return this.props.starMode ? 'Cancelled fan requests' : 'Cancelled requests';
-    }
-    return this.props.starMode ? 'Completed fan requests' : 'Completed requests';
+  updateScrollTarget = (target) => {
+    this.setState({ scrollTarget: target });
   }
 
-  renderRequestList = (status, starMode) => {
-    let statusList;
-    if (status === 'Open') {
-      statusList = starMode ? celebOpenStatusList : openStatusList;
-    } else if (status === 'Completed') {
-      statusList = starMode ? celebCompletedStatusList : completedStatusList;
-    } else {
-      statusList = [5];
-    }
-    if (this.props.myVideosList.data.length) {
-      return this.props.myVideosList.data.map((request, index) => {
-        if (statusList.indexOf(request.request_status) > -1) {
-          return (
-            <RequestsStyled.RequestItem key={index}>
-              <RequestDetails
-                starMode={this.props.starMode}
-                cover={this.findRequestVideoThumbnail(request.request_video)}
-                celebId={request.celebrity_id}
-                orderId={request.order_details ? request.order_details.order : ''}
-                videoId={request.booking_id}
-                profile={request.avatar_photo && request.avatar_photo.thumbnail_url}
-                fanProfile={request.fan_photo && request.fan_photo.thumbnail_url}
-                starName={request.celebrity}
-                fanName={request.fan}
-                details={request.booking_title}
-                requestVideo={request.request_video}
-                requestStatus={request.request_status}
-                requestType={request.request_type}
-                createdDate={request.created_date}
-                selectItem={recordMode => this.showRequest(request, recordMode)}
-              />
-            </RequestsStyled.RequestItem>
-          );
-        }
-      });
-    }
-    return null;
+  closePopup = () => {
+    this.setState({ showActionPopup: false })
+  }
+
+  renderRequests = (request) => {
+    return (
+      <RequestDetails
+        starMode={this.props.starMode}
+        cover={this.findRequestVideoThumbnail(request.request_video)}
+        celebId={request.celebrity_id}
+        orderId={request.order_details ? request.order_details.order : ''}
+        videoId={request.booking_id}
+        profile={request.avatar_photo && request.avatar_photo.thumbnail_url}
+        fanProfile={request.fan_photo && request.fan_photo.thumbnail_url}
+        starName={request.celebrity}
+        fanName={request.fan}
+        orderDetails={request}
+        details={request.booking_title}
+        requestStatus={request.request_status}
+        requestVideo={request.request_video}
+        requestType={request.request_type}
+        createdDate={request.created_date}
+        selectItem={type => this.requestAction(request, type)}
+      />
+    )
   }
 
   renderBookings = () => {
-    switch (this.state.selectedTab) {
-      case 'All':
-        return (
-          <React.Fragment>
-            <RequestsStyled.StatusTypeWrapper >
-              <Scrollbars>
-                <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>{this.props.starMode ? 'Pending fan requests' : 'Pending requests'}</RequestsStyled.SectionHeader>
-                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-                </RequestsStyled.SectionHeaderWrapper>
-                <RequestsStyled.ListWrapper autoHeight>
-                  {this.renderRequestList('Open', this.props.starMode)}
-                </RequestsStyled.ListWrapper>
-                <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>{this.props.starMode ? 'Completed fan requests' : 'Completed requests'}</RequestsStyled.SectionHeader>
-                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-                </RequestsStyled.SectionHeaderWrapper>
-                <RequestsStyled.ListWrapper autoHeight>
-                  {this.renderRequestList('Completed', this.props.starMode)}
-                </RequestsStyled.ListWrapper>
-              </Scrollbars>
-            </RequestsStyled.StatusTypeWrapper>
-          </React.Fragment>
-        );
-      default:
-        return (
-          <React.Fragment>
-            {
-              this.props.myVideosList.data.length ?
-                <RequestsStyled.SectionHeaderWrapper>
-                  <RequestsStyled.SectionHeader>{this.renderSectionHeader()}</RequestsStyled.SectionHeader>
-                  <RequestsStyled.SectionDescription>Lorem Ipsum</RequestsStyled.SectionDescription>
-                </RequestsStyled.SectionHeaderWrapper>
-              : null
-            }
-            <RequestsStyled.ListWrapper>
-              <ScrollList
-                dataList={this.props.myVideosList.data}
-                requestDetails
-                starMode={this.props.starMode}
-                limit={this.props.myVideosList.limit}
-                totalCount={this.props.myVideosList.count}
-                offset={this.props.myVideosList.offset}
-                loading={this.props.myVideosList.loading}
-                selectItem={this.showRequest}
-                noDataText="No requests"
-                fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
-              />
-            </RequestsStyled.ListWrapper>
-          </React.Fragment>
-        );
-    }
+    return (
+      <ScrollList
+        dataList={this.props.requestsList}
+        scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+        requestDetails
+        renderFunction={this.renderRequests}
+        starMode={this.props.starMode}
+        limit={this.props.requestsLimit}
+        totalCount={this.props.requestsCount}
+        offset={this.props.requestsOffset}
+        loading={this.props.requestsLoading}
+        noDataText="No requests"
+        fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
+      />
+    );
   }
 
   renderCenterSection = () => {
@@ -222,89 +314,51 @@ export default class Requests extends React.Component {
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
         />
-        {
-          (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
-            <RequestsStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-              <Loader />
-            </RequestsStyled.loaderWrapper>
-          : this.renderBookings()
-        }
+        <RequestsStyled.ContentWrapper>
+          {
+            (!this.props.requestsList.length && this.props.requestsLoading) ?
+              <RequestsStyled.loaderWrapper>
+                <Loader />
+              </RequestsStyled.loaderWrapper>
+            : this.renderBookings()
+          }
+        </RequestsStyled.ContentWrapper>
       </React.Fragment>
     );
   }
-
   render() {
-    let requestStatus, orderId, requestType, requestVideo, createdDate, price, isPrivate, requestTypeId;
-    let occasionDate, relationShip;
-    let requestStatusId;
-    if (Object.keys(this.state.orderDetails).length) {
-      requestStatusId = this.state.orderDetails.request_status;
-      if (Object.keys(requestStatusList).indexOf(requestStatusId+"") > -1) {
-        if (this.state.orderDetails.request_type === 3 && requestStatusId === 6) { // completed video and Q&A video
-          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
-        } else if (requestStatusId !== 6) {
-          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 4);
-        } else {
-          requestVideo = this.findRequestVideo(this.state.orderDetails.request_video, 1);
-        }
-      }
-      requestStatus = this.props.starMode ? celebRequestStatusList[requestStatusId] : requestStatusList[requestStatusId];
-      orderId = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.order : '';
-      requestType = this.requestType[this.state.orderDetails.request_type];
-      createdDate = moment(this.state.orderDetails.created_date).format('LL');
-      price = this.state.orderDetails.order_details ? this.state.orderDetails.order_details.amount : '';
-      isPrivate = this.state.orderDetails.public_request ? 'No' : 'Yes';
-      if (this.state.orderDetails.request_details) {
-        occasionDate = this.state.orderDetails.request_details.date ? moment(this.state.orderDetails.request_details.date).format('LL') : '';
-        if (this.state.orderDetails.request_details.relationship) {
-          relationShip = this.state.orderDetails.request_details.relationship.title ? this.state.orderDetails.request_details.relationship.title : '';
-        } else {
-          relationShip = '';
-        }
-      } else {
-        occasionDate = '';
-        relationShip = '';
-      }
-    }
     return (
       <div>
-        <ThreeColumnLayout
-          selectedSideBarItem={this.props.starMode ? 'requests' : ''}
+        <ColumnLayout
+          selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          innerLinks={[
-            { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-            { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-            { linkName: 'Groups', selectedName: 'groups', url: '/' },
-          ]}
-          renderCenterSection={this.renderCenterSection}
-        />
+          getScrollTarget={this.updateScrollTarget}
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
         {
           this.props.orderDetailsLoading ?
             <ActionLoader />
           : null
         }
         {
-          Object.keys(this.state.orderDetails).length ?
-            <OrderDetails
-              {...this.props}
-              recordMode={this.state.recordMode}
-              orderDetails={this.state.orderDetails}
-              requestStatus={requestStatus}
-              requestStatusId={requestStatusId}
-              orderId={orderId}
-              requestType={requestType}
-              hideRequest={this.hideRequest}
-              requestVideo={requestVideo}
-              createdDate={createdDate}
-              price={price}
-              isPrivate={isPrivate}
-              relationShip={relationShip}
-              occasionDate={occasionDate}
-              rateCelebrity={this.props.rateCelebrity}
-              contactSupport={this.props.contactSupport}
-              reportAbuse={this.props.reportAbuse}
-            />
-          : null
+          this.state.showActionPopup && this.state.requestAction === 'respond' &&
+            <RequestFlowPopup
+              dotsCount={0}
+              smallPopup
+              closePopUp={this.closePopup}
+            >
+              { this.getPopupContent(this.state.requestAction) }
+            </RequestFlowPopup>
+        }
+        {
+          this.state.showActionPopup && this.state.requestAction !== 'respond' &&
+            <Popup
+              smallPopup
+              closePopUp={this.closePopup}
+            >
+              { this.getPopupContent(this.state.requestAction) }
+            </Popup>
         }
       </div>
     );

@@ -232,7 +232,7 @@ export default class RequestVideoRecorder extends React.Component {
                 </Scrollbars>
               </VideoRecorderDiv.BookingDetailsWrapper>
           }
-          <VideoRecorderDiv.Video id='preview-video' onEnded={() => this.endVideo()} innerRef={(node) => { this.previewVideo = node; }}src={this.state.src} />
+          <VideoRecorderDiv.Video id='preview-video' innerRef={(node) => { this.previewVideo = node; }} src={this.state.src} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.UploadWrapper>
@@ -412,7 +412,7 @@ export default class RequestVideoRecorder extends React.Component {
         }
         <VideoRecorderDiv.Video id="video-player" autoPlay muted="muted" />
         <VideoRecorderDiv.ActionButton>
-          <VideoRecorderDiv.Button title="Record your question" onClick={this.startRecording.bind(this)} />
+          <VideoRecorderDiv.Button title="Start recording" onClick={this.startRecording.bind(this)} />
           <VideoRecorderDiv.UploadWrapper>
             <VideoRecorderDiv.NoVideoButton />
             <VideoRecorderDiv.UploadInput title="Upload video" id="default-uploader" accept=".mp4, .MOV" onChange={() => this.fileUpload()} type="file" />

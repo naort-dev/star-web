@@ -35,6 +35,11 @@ export const resetCelebDetails = () => ({
   type: CELEB_DETAILS.reset,
 });
 
+export const updateCelebDetailsFollow = follow => (dispatch, getState) => {
+  const { userDetails } = getState().celebDetails;
+  const { is_follow: isFollow } = userDetails;
+};
+
 export const fetchCelebDetails = id => (dispatch, getState) => {
   if (!id) return null;
   const { isLoggedIn, auth_token } = getState().session;
@@ -62,6 +67,6 @@ export const fetchCelebDetails = id => (dispatch, getState) => {
     }
   }).catch((exception) => {
     dispatch(celebDetailstFetchEnd());
-    dispatch(celebDetailstFetchFailed(exception));
+    dispatch(celebDetailstFetchFailed(exception.response.data));
   });
 };

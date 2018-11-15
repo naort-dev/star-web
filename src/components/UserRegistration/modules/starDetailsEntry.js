@@ -1,7 +1,8 @@
 import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
-import MultiSelect from '../../MultiSelect';
+import { IndustrySelection } from '../../IndustrySelection';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
 export default class StarDetailsEntry extends React.Component {
@@ -30,48 +31,48 @@ export default class StarDetailsEntry extends React.Component {
     },
   };
 
+  getIndustrySelection = (industries) => {
+    this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
+  }
+
   handleFieldChange = (fieldType, fieldValue) => {
-    if (fieldType === 'industries') {
-      const industriesArray = fieldValue.split(',');
-      if (industriesArray.length <= 3) {
-        this.setState({ industries: industriesArray, errors: { ...this.state.errors, industries: false } });
+    if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
+      const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
+      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+        this.setState({
+          [fieldType]: newFieldValue,
+          errors: { ...this.state.errors, [fieldType]: false },
+        }, () => {
+          if (fieldType === 'bookingPrice' && this.state.priceCheck) {
+            this.setState({ priceCheck: false });
+          } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
+            this.setState({ limitCheck: false });
+          }
+        });
       }
     } else {
       this.setState({
         [fieldType]: fieldValue,
         errors: { ...this.state.errors, [fieldType]: false },
-      }, () => {
-        if (fieldType === 'bookingPrice' && this.state.priceCheck) {
-          this.setState({ priceCheck: false });
-        } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
-          this.setState({ limitCheck: false });
-        }
       });
     }
   };
 
   validateFields = () => {
     let { bio, industries, bookingLimit, bookingPrice } = this.state.errors;
-    if (this.state.bio === '') {
-      bio = true;
-    }
-    if (this.state.industries.length < 3) {
-      industries = true;
-    } else {
-      industries = false;
-    }
-    if (!validator.isNumeric(this.state.bookingLimit, { no_symbols: true })) {
-      bookingLimit = true;
-    } else {
-      bookingLimit = false;
-    }
-    if (!validator.isNumeric(this.state.bookingPrice, { no_symbols: true })) {
-      bookingPrice = true;
-    } else {
-      bookingPrice = false;
+    bio = this.state.bio === '';
+    industries = this.state.industries.length === 0 || this.state.industries[0] === '' ;
+    bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
+    bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
+    const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
+    const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
+    if (priceValid) {
+      this.handleFieldBlur('bookingPrice', this.state.bookingPrice);
+    } else if (limitValid) {
+      this.handleFieldBlur('bookingLimit', this.state.bookingLimit);
     }
     this.setState({ errors: { ...this.state.errors, industries, bookingLimit, bookingPrice, bio } });
-    return !industries && !bookingLimit && !bookingLimit && !bio;
+    return !industries && !bookingLimit && !bookingPrice && !bio && !priceValid && !limitValid;
   }
 
   submitGroupAccountDetails = () => {
@@ -79,10 +80,13 @@ export default class StarDetailsEntry extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: this.state.industries,
-        rate: parseInt(this.state.bookingPrice),
+        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
         charity: this.state.charity,
-        weekly_limits: parseInt(this.state.bookingLimit),
+        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
         availability: true,
+      };
+      const userDetails = {
+        nick_name: this.state.stageName,
       };
       const socialLinks = {
         facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
@@ -90,19 +94,39 @@ export default class StarDetailsEntry extends React.Component {
         youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
-      this.props.submitAccountDetails(celebrityDetails, socialLinks);
+      this.props.submitAccountDetails(celebrityDetails, userDetails, socialLinks);
     }
   };
 
+  removeSelectedIndustry = (id, event) => {
+    event.stopPropagation();
+    let { industries } = this.state;
+    industries = industries.filter(profession => profession.id !== id);
+    this.setState({ industries });
+  }
+
   handleFieldBlur = (fieldType, fieldValue) => {
-    if (fieldType === 'bookingLimit' && !this.state.limitCheck && fieldValue > 20) {
+    const newFieldValue = commaToNumberFormatter(fieldValue)
+    if (fieldType === 'bookingLimit' && !this.state.limitCheck && newFieldValue > 20) {
       this.bookingLimit.blur();
-      this.setState({ popUpMessage: `Are you sure you can complete ${fieldValue} Starsona videos?`, selectedCheck: 'limitCheck' });
-    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && fieldValue > 499) {
+      this.setState({ popUpMessage: `Are you sure you can complete ${numberToCommaFormatter(newFieldValue)} Starsona videos?`, selectedCheck: 'limitCheck' });
+    } else if (fieldType === 'bookingPrice' && !this.state.priceCheck && newFieldValue > 499) {
       this.bookingPrice.blur();
-      this.setState({ popUpMessage: `Set your booking rate at ${fieldValue}?`, selectedCheck: 'priceCheck' });
+      this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
   }
+
+  renderIndustries = () => {
+    const { industries } = this.state;
+    return industries.map(profession => (
+      <GroupStyled.mutiSelectItemWrapper key={profession.id}>
+        {profession.title}
+        <GroupStyled.OptionCloseButton
+          onClick={event => this.removeSelectedIndustry(profession.id, event)}
+        />
+      </GroupStyled.mutiSelectItemWrapper>
+    ));
+  };
 
   renderPopup = () => {
     return (
@@ -116,24 +140,23 @@ export default class StarDetailsEntry extends React.Component {
     );
   }
 
-  renderMultiValueItems = (selectProps) => {
-    return (
-      <GroupStyled.mutiSelectItemWrapper>
-        {selectProps.value.label}
-        <GroupStyled.OptionCloseButton
-          type="button"
-          onClick={() => selectProps.onRemove(selectProps.value)}
-        />
-      </GroupStyled.mutiSelectItemWrapper>
-    );
-  };
-
   render() {
+    if (this.state.industrySelection) {
+      return (
+        <IndustrySelection
+          onClose={() => this.setState({ industrySelection: false })}
+          selectedProfessions={this.state.industries}
+          onSelectionComplete={this.getIndustrySelection}
+          limit={3}
+        />
+      );
+    }
     return (
       <GroupStyled.DetailsWrapper>
         {
           this.state.popUpMessage &&
             <Popup
+              modalView
               smallPopup
               closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
             >
@@ -202,19 +225,26 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Your industry</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <MultiSelect
-                otherOptions={{
-                  clearable: false,
-                  arrowRenderer: null,
-                  valueComponent: selectProps => this.renderMultiValueItems(selectProps),
-                }}
-                dataValues={this.props.industryList}
-                value={this.state.industries.join(',')}
-                handleFieldChange={value => this.handleFieldChange('industries', value)}
-              />
+              <GroupStyled.IndustryInput
+                onClick={() => this.setState({ industrySelection: true })}
+              >
+                {
+                  !this.state.industries.length ?
+                    <GroupStyled.CustomPlaceholder>
+                      Select ...
+                    </GroupStyled.CustomPlaceholder>
+                  :
+                    <GroupStyled.IndustryEditButton>
+                      Edit
+                    </GroupStyled.IndustryEditButton>
+                }
+                {
+                  this.renderIndustries()
+                }
+              </GroupStyled.IndustryInput>
               <GroupStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
-                  ? 'Please enter a valid industry'
+                  ? 'Please choose a maximum of 3 industries.'
                   : 'You can choose a maximum of 3 industries.'}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>
@@ -228,7 +258,7 @@ export default class StarDetailsEntry extends React.Component {
               <GroupStyled.PriceInput
                 small
                 innerRef={(node) => {this.bookingPrice = node;}}
-                type="number"
+                type="text"
                 placeholder="0"
                 value={this.state.bookingPrice}
                 onBlur={event => this.handleFieldBlur('bookingPrice', event.target.value)}
@@ -249,7 +279,7 @@ export default class StarDetailsEntry extends React.Component {
               <GroupStyled.NumberInput
                 small
                 innerRef={(node) => {this.bookingLimit = node;}}
-                type="number"
+                type="text"
                 placeholder="0"
                 value={this.state.bookingLimit}
                 onBlur={event => this.handleFieldBlur('bookingLimit', event.target.value)}

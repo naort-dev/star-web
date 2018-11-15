@@ -102,7 +102,7 @@ LoginContainer.SocialMediaMessage = styled.div`
   font-size: 14px;
   text-align: center;
   color: #333333;
-  margin-top:3%;
+  margin-top: 0;
   margin-bottom:5%;
   @media(min-width:768px){
     font-size: 18px;
@@ -250,6 +250,9 @@ LoginContainer.Input = styled.input`
   text-indent: 10px;
   margin-top:3%;
   background-color: #fff;
+  &:focus {
+    border-color: #FF6C58;
+  }
   @media(min-width:768px){
     margin-top:0;
     height:40px;
@@ -338,7 +341,6 @@ outline:none;
 cursor: pointer;
 border-radius:5px;
 border: 2px solid #FF6C58;
-margin-top:3%;
 -webkit-appearance: none;
 &:hover {
   background-color: #FF3B21;
@@ -509,8 +511,8 @@ LoginContainer.InputContainer = styled.div`
 LoginContainer.SignupLine = styled.div`
  
     display: block;
-    font-family: 'Avenir-Medium';
-    color:#7c7c7c;
+    font-family: 'Avenir-Light';
+    color:#b3acac;
     font-size: 12px;
     margin: 0;
     margin: 20px 20px;
@@ -522,7 +524,7 @@ LoginContainer.SignupLine = styled.div`
       content: '';
       display: inline-block;
       height: 1px;
-      background-color: #ccc;
+      background-color: #e8e7e7;
       vertical-align: middle;
       width: 50px;
       width: calc(50% - 69px);

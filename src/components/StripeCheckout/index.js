@@ -2,6 +2,8 @@ import React from 'react';
 import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
+import AlertView from '../../components/AlertView';
+import Popup from '../../components/Popup';
 import { requestTypes } from '../../constants/requestTypes';
 import Checkout from './checkout';
 import {
@@ -10,6 +12,7 @@ import {
   paymentFetchSourceEnd,
   fetchSourceList,
   modifySourceList,
+  resetPaymentsError,
 } from '../../store/shared/actions/processPayments';
 import PaymentStyled from './styled';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
@@ -97,7 +100,7 @@ class StripeCheckout extends React.Component {
               >
                 <PaymentStyled.cardItemDetails
                   selected={this.state.selectedCardIndex === index}
-                  onClick={() => this.setState({ selectedCardIndex: index })}
+                  onClick={() => this.setState({ selectedCardIndex: index, selectedSourceId: this.props.sourceList[index].id })}
                 >
                   <PaymentStyled.CardTypeIcon cardImage={cardTypeImageFinder(this.props.sourceList[index].brand)} />
                   <PaymentStyled.CardNumber>
@@ -130,73 +133,79 @@ class StripeCheckout extends React.Component {
   render() {
     return (
       <PaymentStyled.wrapper>
-        <PaymentStyled.ComponentWrapperScroll
-          renderView={props => <div {...props} className="component-wrapper-scroll-wrapper" />}
-        >
-          <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
-          <PaymentStyled.StarDetailsWrapper>
-            <PaymentStyled.StarNameWrapper>
-              <PaymentStyled.StarPhoto 
-                imageUrl={this.props.profilePhoto}
+        {
+          this.props.error ?
+            <Popup
+              smallPopup
+              closePopUp={this.props.resetPaymentsError}
+            >
+              <AlertView
+                message={this.props.error.message.split(':')[1]}
+                closePopup={this.props.resetPaymentsError}
               />
-              <PaymentStyled.RequestDetails>
-                <PaymentStyled.SubTitle>
-                  Starsona booking
-                </PaymentStyled.SubTitle>
-                {this.props.fullName}
-                <PaymentStyled.RequestType>
-                  {requestTypes[this.props.requestType]}
-                </PaymentStyled.RequestType>
-              </PaymentStyled.RequestDetails>
-            </PaymentStyled.StarNameWrapper>
-            <PaymentStyled.BookingRate>
-              ${this.props.rate}
-            </PaymentStyled.BookingRate>
-          </PaymentStyled.StarDetailsWrapper>
-          <PaymentStyled.OptionSelectionWrapper>
-            {
-              Object.keys(this.props.sourceList).length ?
-                <PaymentStyled.OptionSelector>
-                  <input
-                    id="card-select"
-                    name="card-selection"
-                    type="radio"
-                    checked={this.state.cardSelection}
-                    onChange={event => this.toggleCardSelection(event, true)}
-                  />
-                  <PaymentStyled.OptionLabel
-                    htmlFor="card-select"
-                  >
-                    Select cards
-                  </PaymentStyled.OptionLabel>
-                </PaymentStyled.OptionSelector>
-              : null
-            }
-            {
-              this.state.cardSelection && this.renderCardList()
-            }
-            <PaymentStyled.OptionSelector>
-              <input
-                id="add-card"
-                name="card-selection"
-                type="radio"
-                checked={!this.state.cardSelection}
-                onChange={event => this.toggleCardSelection(event, false)}
-              />
-              <PaymentStyled.OptionLabel
-                htmlFor="add-card"
-              >
-                Pay using new card
-              </PaymentStyled.OptionLabel>
-            </PaymentStyled.OptionSelector>
-          </PaymentStyled.OptionSelectionWrapper>
+            </Popup>
+          : null
+        }
+        <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
+        <PaymentStyled.StarDetailsWrapper>
+          <PaymentStyled.StarNameWrapper>
+            <PaymentStyled.StarPhoto 
+              imageUrl={this.props.profilePhoto}
+            />
+            <PaymentStyled.RequestDetails>
+              <PaymentStyled.SubTitle>
+                Starsona booking
+              </PaymentStyled.SubTitle>
+              {this.props.fullName}
+              <PaymentStyled.RequestType>
+                {requestTypes[this.props.requestType]}
+              </PaymentStyled.RequestType>
+            </PaymentStyled.RequestDetails>
+          </PaymentStyled.StarNameWrapper>
+          <PaymentStyled.BookingRate>
+            ${this.props.rate}
+          </PaymentStyled.BookingRate>
+        </PaymentStyled.StarDetailsWrapper>
+        <PaymentStyled.OptionSelectionWrapper>
           {
-            !this.state.cardSelection && this.renderAddCard()
+            Object.keys(this.props.sourceList).length ?
+              <PaymentStyled.OptionSelector>
+                <input
+                  id="card-select"
+                  name="card-selection"
+                  type="radio"
+                  checked={this.state.cardSelection}
+                  onChange={event => this.toggleCardSelection(event, true)}
+                />
+                <PaymentStyled.OptionLabel
+                  htmlFor="card-select"
+                >
+                  Select cards
+                </PaymentStyled.OptionLabel>
+              </PaymentStyled.OptionSelector>
+            : null
           }
-          {/* <PaymentStyled.StripeLogoWrapper>
-            <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />
-          </PaymentStyled.StripeLogoWrapper> */}
-        </PaymentStyled.ComponentWrapperScroll>
+          {
+            this.state.cardSelection && this.renderCardList()
+          }
+          <PaymentStyled.OptionSelector>
+            <input
+              id="add-card"
+              name="card-selection"
+              type="radio"
+              checked={!this.state.cardSelection}
+              onChange={event => this.toggleCardSelection(event, false)}
+            />
+            <PaymentStyled.OptionLabel
+              htmlFor="add-card"
+            >
+              Pay using new card
+            </PaymentStyled.OptionLabel>
+          </PaymentStyled.OptionSelector>
+        </PaymentStyled.OptionSelectionWrapper>
+        {
+          !this.state.cardSelection && this.renderAddCard()
+        }
         <PaymentStyled.PaymentControllerWrapper>
           <PaymentStyled.ContinueButton onClick={() => this.handleBooking()}>
              Confirm Booking  -  ${this.props.rate}
@@ -213,6 +222,7 @@ class StripeCheckout extends React.Component {
 const mapStateToProps = state => ({
   loading: state.paymentDetails.loading,
   requestDetails: state.paymentDetails.requestDetails,
+  error: state.paymentDetails.error,
   paymentStatus: state.paymentDetails.paymentStatus,
   sourceList: state.paymentDetails.sourceList,
 });
@@ -222,6 +232,7 @@ const mapDispatchToProps = dispatch => ({
   paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),
+  resetPaymentsError: () => dispatch(resetPaymentsError()),
   modifySourceList: (source, customer, action) => dispatch(modifySourceList(source, customer, action)),
 });
 

@@ -5,6 +5,7 @@ const initialState = {
   signUpModal: false,
   referModal: false,
   requestFlow: false,
+  signUpDetails: null,
   requestFlowDetails: null,
 };
 
@@ -15,6 +16,7 @@ export default (state = { ...initialState }, action) => {
         ...state,
         loginModal: action.state,
         signUpModal: false,
+        signUpDetails: null,
       };
 
     case TOGGLE_MODALS.toggleSignup:
@@ -22,6 +24,12 @@ export default (state = { ...initialState }, action) => {
         ...state,
         signUpModal: action.state,
         loginModal: false,
+        signUpDetails: {
+          ...state.signUpDetails,
+          type: action.signUpType,
+          step: action.step,
+          enableClose: action.enableClose,
+        },
       };
 
     case TOGGLE_MODALS.toggleRefer:

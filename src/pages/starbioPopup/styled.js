@@ -6,6 +6,7 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
   overflow: auto;
+  -webkit-overflow-scrolling: touch;
   height: calc(100% - 64px);
 `;
 LoginContainer.wrapper = styled.div`

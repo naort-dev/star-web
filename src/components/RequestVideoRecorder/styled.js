@@ -42,6 +42,7 @@ VideoRecorderDiv.VideoContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: relative;
+  min-height: 300px;
   @media(min-width:768px){
     width: 100%;
     height: 100%;
@@ -56,11 +57,12 @@ VideoRecorderDiv.VideoContainer = styled.div`
 VideoRecorderDiv.Video = styled.video`
   height: 100%;
   width: 100%;
-  object-fit: fill;
+  object-fit: contain;
   background-color: black;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%
+    height: auto;
+    object-fit: cover;
   }
 `;
 
@@ -274,17 +276,20 @@ font-family: 'Avenir-Bold';
 outline:none;
 border-radius: 100%;
 background-image: url('../../assets/images/upload.png');
-background-size: 100% 100%;
+background-size: 40px;
 background-repeat: no-repeat;
+background-position: center center;
 border: none;
 cursor: pointer;
 @media(min-width: 768px){
+  background-position: center 8px;
   height: 60px;
   width: 60px;
 }
 @media(min-width: 1920px) {
   height: 100px;
   width: 100px;
+  background-size: 77px;
 }
 `;
 
@@ -330,9 +335,8 @@ VideoRecorderDiv.InfoText = styled.div`
 VideoRecorderDiv.Wrapper = styled.div`
   display: flex;
   width: 100%;
-  padding: 0 10px;
+  padding: 10px;
   position: absolute;
-  line-height: 41px;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -399,6 +403,9 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   align-items: center;
   justify-content: center;
   bottom: 6%;
+  @media(min-width: 1920px) {
+    bottom: 45px;
+  }
   `;
 
   VideoRecorderDiv.UploadActionButton = styled.div`
@@ -430,7 +437,7 @@ VideoRecorderDiv.VideoHeading = styled.div`
   user-select: none;
   border: 1px solid #fff;
   border-radius: 17px;
-  padding: 3px 20px;
+  padding: 8px 20px;
 `;
   
 VideoRecorderDiv.UploadHeading = styled.div`
