@@ -427,6 +427,7 @@ VideoRecorderDiv.RecordInfoButton = styled.div`
   align-items: center;
   position: absolute;
   right: 24px;
+  z-index: 1;
 `;
 
 VideoRecorderDiv.VideoHeading = styled.div`
