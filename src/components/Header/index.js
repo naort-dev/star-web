@@ -256,7 +256,7 @@ class Header extends React.Component {
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
                           <Link to="/user/favorites">
-                            Favourites
+                            Favorites
                           </Link>
                         </HeaderSection.UserLink>
                         <HeaderSection.UserLink>
