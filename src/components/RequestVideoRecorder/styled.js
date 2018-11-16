@@ -92,9 +92,9 @@ VideoRecorderDiv.Button = styled.button`
     background-size: 20px;
   }
   @media(min-width: 1920px) {
-    height: 100px;
-    width: 100px;
-    background-size: 50px;
+    height: 80px;
+    width: 80px;
+    background-size: 38px;
   };
   ${props => props.stop && ({
     backgroundColor: '#FF0000',
@@ -289,7 +289,7 @@ cursor: pointer;
 @media(min-width: 1920px) {
   height: 80px;
   width: 80px;
-  background-size: 77px;
+  background-size: 65px;
 }
 `;
 
@@ -404,6 +404,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   align-items: center;
   justify-content: center;
   bottom: 6%;
+  z-index: 1;
   @media(min-width: 1920px) {
     bottom: 45px;
   }
