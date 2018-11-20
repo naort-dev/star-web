@@ -3,6 +3,7 @@ import { ROLES } from '../../constants/usertype';
 import ColumnLayout from '../../components/ColumnLayout';
 import StarSettings from './components/StarSettings';
 import FanSettings from './components/FanSettings';
+import GroupSettings from './components/GroupSettings';
 
 export default class Requests extends React.Component {
   constructor(props) {
@@ -55,7 +56,19 @@ export default class Requests extends React.Component {
           />
         );
       }
-      return null;
+      return (
+        <GroupSettings
+          userDetails={this.props.userDetails}
+          celebrityDetails={this.props.celebrityDetails}
+          fetchUserDetails={this.fetchUserDetails}
+          updateUserDetails={this.props.updateUserDetails}
+          updateNotification={this.props.updateNotification}
+          updateProfilePhoto={this.props.updateProfilePhoto}
+          resetChangePassword={this.props.resetChangePassword}
+          changePassword={this.props.changePassword}
+          changePasswordData={this.props.changePasswordData}
+        />
+      );
     }
     return null;
   }

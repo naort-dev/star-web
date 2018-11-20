@@ -2,13 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
-import ProfileSettings from './modules/ProfileSettings';
-import { updateSocialLinks } from '../../../../services/userRegistration';
+import ProfileSettings from './components/ProfileSettings';
+import { updateSocialLinks, updateGroupAccount } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
 import AlertView from '../../../../components/AlertView';
 import Popup from '../../../../components/Popup';
-import { fetchAllProfessions } from '../../../../store/shared/actions/getProfessions';
 import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
+import { fetchGroupTypes } from '../../../../store/shared/actions/getGroupTypes';
 import SettingsStyled from '../../styled';
 
 class StarSettings extends React.Component {
@@ -18,11 +18,15 @@ class StarSettings extends React.Component {
   }
 
   componentWillMount() {
-    this.props.fetchAllProfessions();
+    this.props.fetchGroupTypes();
   }
 
   switchTab = (item) => {
     this.setState({ selectedTab: item });
+  }
+
+  closePopup = () => {
+    this.setState({ popupMessage: '' });
   }
 
   submitAccountDetails = async (userDetails, profileImages, notifications) => {
@@ -41,15 +45,15 @@ class StarSettings extends React.Component {
     }
   }
 
-  submitProfileDetails = async (celebrityDetails, userDetails, socialLinks) => {
-    const userData = {
-      celebrity_details: celebrityDetails,
-      user_details: userDetails,
-    };
-    await updateSocialLinks(socialLinks);
-    await this.props.updateUserDetails(this.props.userDetails.id, userData);
-    this.props.fetchUserDetails();
-    this.setState({ popupMessage: 'Successfully updated setings' });
+  submitProfileDetails = async (groupDetails, socialLinks) => {
+    try {
+      await updateSocialLinks(socialLinks);
+      await updateGroupAccount(groupDetails);
+      this.props.fetchUserDetails();
+      this.setState({ popupMessage: 'Successfully updated setings' });
+    } catch (e) {
+      this.setState({ popupMessage: 'Something went wrong' });
+    }
   }
 
   render() {
@@ -69,14 +73,14 @@ class StarSettings extends React.Component {
             </Popup>
         }
         <InnerTabs
-          labels={['Account', 'Profile details', 'Share profile']}
+          labels={['Account', 'Profile details', 'Share online']}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
         <SettingsStyled.Container>
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
             <AccountSettings
-              type="star"
+              type="group"
               userDetails={this.props.userDetails}
               fetchUserDetails={this.props.fetchUserDetails}
               submitAccountDetails={this.submitAccountDetails}
@@ -89,19 +93,20 @@ class StarSettings extends React.Component {
             <ProfileSettings
               fetchUserDetails={this.props.fetchUserDetails}
               userDetails={this.props.userDetails}
-              celebDetails={this.props.celebrityDetails}
+              groupTypes={this.props.groupTypes}
               fetchUrl={this.props.fetchURL}
               stripeRegistration={this.props.stripeRegistration}
               checkStripe={this.props.checkStripe}
               submitProfileDetails={this.submitProfileDetails}
             />
           </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Share online'}>
             <ShareUser
-              type="star"
-              heading="Tell your fans that you're on Starsona"
+              type="group"
+              heading="Invite your community"
               description="Lorem Ipsum"
-              shareUrl={this.props.userDetails.share_url}
+              referralCode={this.props.userDetails.promo_code}
+              shareUrl={`${window.location.origin}/group-profile/${this.props.userDetails.user_id}`}
             />
           </SettingsStyled.ContentWrapper>
         </SettingsStyled.Container>
@@ -112,11 +117,12 @@ class StarSettings extends React.Component {
 
 const mapStateToProps = state => ({
   stripeRegistration: state.stripeRegistration,
+  groupTypes: state.groupTypes.data,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchURL: () => dispatch(fetchURL()),
-  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
+  fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   checkStripe: () => dispatch(checkStripe()),
 });
 

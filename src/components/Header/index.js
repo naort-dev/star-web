@@ -264,15 +264,11 @@ class Header extends React.Component {
                             My videos
                           </Link>
                         </HeaderSection.UserLink>
-                        {
-                          this.props.userDetails.role_details.role_code !== ROLES.group ?
-                            <HeaderSection.ProfileDropdownItem >
-                              <Link to="/settings">
-                                Settings
-                              </Link>
-                            </HeaderSection.ProfileDropdownItem>
-                          : null
-                        }
+                        <HeaderSection.ProfileDropdownItem >
+                          <Link to="/settings">
+                            Settings
+                          </Link>
+                        </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
