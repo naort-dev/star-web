@@ -15,7 +15,8 @@ ShareStyled.HeadingWrapper = styled.div`
   margin: 10px 0;
   margin-bottom: 30px;
   @media(min-width: 768px) {
-    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-top: 0;
   }
 `;
 
@@ -79,6 +80,14 @@ ShareStyled.NetworkName = styled.span`
   font-family: 'Avenir-Regular';
   margin-top: 7px;
   color: #000;
+`;
+
+ShareStyled.MinorDescription = styled.span`
+  font-size: 12px;
+  margin-top:4px;
+  font-family: 'Avenir-light';
+  text-align:left;
+  color: grey;
 `;
 
 export default ShareStyled;

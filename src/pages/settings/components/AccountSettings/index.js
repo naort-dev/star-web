@@ -1,11 +1,11 @@
 import React from 'react';
 import validator from 'validator';
-import ManagePayments from '../../../../../components/ManagePayments';
-import Popup from '../../../../../components/Popup';
-import ChangePassword from '../../../../../components/MyAccount/ChangePassword';
-import { imageSizes } from '../../../../../constants/imageSizes';
-import ImageUpload from '../../ImageUpload';
-import SettingsStyled from '../../../styled';
+import ManagePayments from '../../../../components/ManagePayments';
+import Popup from '../../../../components/Popup';
+import ChangePassword from '../../../../components/MyAccount/ChangePassword';
+import { imageSizes } from '../../../../constants/imageSizes';
+import ImageUpload from '../ImageUpload';
+import SettingsStyled from '../../styled';
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
@@ -113,7 +113,7 @@ export default class AccountSettings extends React.Component {
   validateFields = () => {
     let { firstName, lastName } = this.state.errors;
     firstName = validator.isEmpty(this.state.firstName);
-    lastName = validator.isEmpty(this.state.lastName);
+    lastName = this.props.type === 'group' ? false : validator.isEmpty(this.state.lastName);
     this.setState({ errors: { ...this.state.errors, firstName, lastName } });
     return !firstName && !lastName;
   }
@@ -126,10 +126,15 @@ export default class AccountSettings extends React.Component {
 
   submitAccountDetails = () => {
     if (this.validateFields()) {
-      const userDetails = {
+      let userDetails = {
         first_name: this.state.firstName,
-        last_name: this.state.lastName,
       };
+      if (this.props.type !== 'group') {
+        userDetails = {
+          ...userDetails,
+          last_name: this.state.lastName,
+        };
+      }
       const secondaryFileNames = this.state.secondaryImages.map((item) => {
         if (item.image) {
           return item.fileName;
@@ -196,13 +201,13 @@ export default class AccountSettings extends React.Component {
           featuredImage={this.state.featuredImage.image}
           secondaryImages={this.state.secondaryImages}
           removeSecondaryImage={this.removeSecondaryImage}
-          featuredRatio={imageSizes.featured}
-          secondaryRatio={imageSizes.first}
+          featuredRatio={this.props.type === 'group' ? imageSizes.groupCover : imageSizes.featured}
+          secondaryRatio={this.props.type === 'group' ? imageSizes.groupCover : imageSizes.first}
           onComplete={this.getProfilePhotos}
         />
         <SettingsStyled.InputwrapperDiv>
           <SettingsStyled.InputWrapper>
-            <SettingsStyled.Label>First name</SettingsStyled.Label>
+            <SettingsStyled.Label>{ this.props.type === 'group' ? 'Group' : 'First' } name</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.CustomInput>
                 <SettingsStyled.InputArea
@@ -221,26 +226,29 @@ export default class AccountSettings extends React.Component {
               </SettingsStyled.CustomInput>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
-          <SettingsStyled.InputWrapper>
-            <SettingsStyled.Label>Last name</SettingsStyled.Label>
-            <SettingsStyled.WrapsInput>
-              <SettingsStyled.CustomInput>
-                <SettingsStyled.InputArea
-                  small
-                  value={this.state.lastName}
-                  placeholder="Last name"
-                  onChange={(event) => {
-                    this.handleFieldChange('lastName', event.target.value);
-                  }}
-                />
-                <SettingsStyled.ErrorMsg isError={this.state.errors.lastName}>
-                  {this.state.errors.lastName
-                    ? 'Please enter a last name'
-                    : null}
-                </SettingsStyled.ErrorMsg>
-              </SettingsStyled.CustomInput>
-            </SettingsStyled.WrapsInput>
-          </SettingsStyled.InputWrapper>
+          {
+            this.props.type !== 'group' &&
+              <SettingsStyled.InputWrapper>
+                <SettingsStyled.Label>Last name</SettingsStyled.Label>
+                <SettingsStyled.WrapsInput>
+                  <SettingsStyled.CustomInput>
+                    <SettingsStyled.InputArea
+                      small
+                      value={this.state.lastName}
+                      placeholder="Last name"
+                      onChange={(event) => {
+                        this.handleFieldChange('lastName', event.target.value);
+                      }}
+                    />
+                    <SettingsStyled.ErrorMsg isError={this.state.errors.lastName}>
+                      {this.state.errors.lastName
+                        ? 'Please enter a last name'
+                        : null}
+                    </SettingsStyled.ErrorMsg>
+                  </SettingsStyled.CustomInput>
+                </SettingsStyled.WrapsInput>
+              </SettingsStyled.InputWrapper>
+          }
         </SettingsStyled.InputwrapperDiv>
         <SettingsStyled.HeadingWrapper>
           <SettingsStyled.SubHeading>
