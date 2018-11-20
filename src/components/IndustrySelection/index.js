@@ -10,27 +10,33 @@ class IndustrySelectionComponent extends React.Component {
     filterProfessions: [],
     categorySelected: null,
     searchValue: '',
+    searchProfessions: [],
     selectedProfessions: this.props.selectedProfessions,
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let { filterProfessions } = prevState;
+    let { filterProfessions, searchProfessions } = prevState;
     if (!nextProps.professions.length) {
       nextProps.fetchAllProfessions();
     }
     if (prevState.searchValue !== '') {
       let newProfessions = [];
-      nextProps.professions.filter((profession) => {
-        const filteredChildProfessions = profession.child.filter(childProfession => childProfession.title.toLowerCase().indexOf(prevState.searchValue) > -1)
+      nextProps.professions.forEach((profession) => {
+        let filteredChildProfessions = [];
+        if (profession.title.toLowerCase().indexOf(prevState.searchValue) > -1) {
+          filteredChildProfessions = profession.child;
+        } else {
+          filteredChildProfessions = profession.child.filter(childProfession => childProfession.title.toLowerCase().indexOf(prevState.searchValue) > -1);
+        }
         if (filteredChildProfessions.length) {
-          newProfessions = [...newProfessions, { ...profession, child: filteredChildProfessions }];
+          newProfessions = [...newProfessions, ...filteredChildProfessions];
         }
       });
-      filterProfessions = newProfessions;
+      searchProfessions = newProfessions;
     } else {
       filterProfessions = nextProps.professions;
     }
-    return ({ filterProfessions });
+    return ({ filterProfessions, searchProfessions });
   }
 
   getSearchValue = (event) => {
@@ -95,6 +101,58 @@ class IndustrySelectionComponent extends React.Component {
     ));
   }
 
+  renderProfessions = () => {
+    const { categorySelected, searchValue, searchProfessions, selectedProfessions } = this.state;
+    if (searchValue !== '') {
+      const newSearchProfessions = searchProfessions.filter((childProfession) => {
+        const professionSelected = selectedProfessions.find(item => item.title === childProfession.title);
+        return !professionSelected;
+      });
+      return (
+        <IndustryStyled.ListContainer>
+          <IndustryStyled.ListWrapper>
+            {
+                newSearchProfessions.map(childProfession => (
+                  <IndustryStyled.ListItem
+                    onClick={() => this.selectProfession(childProfession)}
+                    key={childProfession.id}
+                  >
+                    <IndustryStyled.ListItemContent>{childProfession.title}</IndustryStyled.ListItemContent>
+                  </IndustryStyled.ListItem>
+                ))
+            }
+          </IndustryStyled.ListWrapper>
+        </IndustryStyled.ListContainer>
+      );
+    }
+    return (
+      <React.Fragment>
+        {
+            categorySelected ?
+              <IndustryStyled.InnerCategoryWrapper>
+                <IndustryStyled.BackButton onClick={() => this.updateSelectedCategory(null)} />
+                <IndustryStyled.ListContainer>
+                  <IndustryStyled.ListWrapper>
+                    <IndustryStyled.ListItemContent selected>{categorySelected.title}</IndustryStyled.ListItemContent>
+                    {
+                      this.renderSubProfessions(categorySelected)
+                    }
+                  </IndustryStyled.ListWrapper>
+                </IndustryStyled.ListContainer>
+              </IndustryStyled.InnerCategoryWrapper>
+            :
+              <IndustryStyled.ListContainer>
+                <IndustryStyled.ListWrapper>
+                  {
+                    this.renderProfessionList()
+                  }
+                </IndustryStyled.ListWrapper>
+              </IndustryStyled.ListContainer>
+        }
+      </React.Fragment>
+    )
+  }
+
   render() {
     const { categorySelected, selectedProfessions, searchValue } = this.state;
     const { onSelectionComplete, loading, onClose } = this.props;
@@ -132,30 +190,7 @@ class IndustrySelectionComponent extends React.Component {
               <Loader />
             </IndustryStyled.LoaderWrapper>
           :
-            <React.Fragment>
-              {
-                categorySelected ?
-                  <IndustryStyled.InnerCategoryWrapper>
-                    <IndustryStyled.BackButton onClick={() => this.updateSelectedCategory(null)} />
-                    <IndustryStyled.ListContainer>
-                      <IndustryStyled.ListWrapper>
-                        <IndustryStyled.ListItemContent selected>{categorySelected.title}</IndustryStyled.ListItemContent>
-                        {
-                          this.renderSubProfessions(categorySelected)
-                        }
-                      </IndustryStyled.ListWrapper>
-                    </IndustryStyled.ListContainer>
-                  </IndustryStyled.InnerCategoryWrapper>
-                :
-                  <IndustryStyled.ListContainer>
-                    <IndustryStyled.ListWrapper>
-                      {
-                        this.renderProfessionList()
-                      }
-                    </IndustryStyled.ListWrapper>
-                  </IndustryStyled.ListContainer>
-              }
-            </React.Fragment>
+            this.renderProfessions()
         }
       </IndustryStyled>
     );

@@ -392,7 +392,7 @@ export default class LoginForm extends React.Component {
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
                     <LoginContainer.Input
-                      type="text"
+                      type="email"
                       name="email"
                       value={email.value}
                       placeholder={

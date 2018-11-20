@@ -72,6 +72,9 @@ VideoRenderDiv.BannerImage = styled.img`
 VideoRenderDiv.ProfileDetailWrapper = styled.div`
   display: block;
   width: 100%;
+  @media(min-width: 1920px) {
+    padding-top: 6px;
+  }
 `;
 
 VideoRenderDiv.VideoPlayerWrapper = styled.div`
@@ -218,13 +221,12 @@ VideoRenderDiv.ControlButton = styled.button`
   border: ${props => (props.alternate ? '1px solid' : '2px solid')};
   border-color: ${props => (props.alternate ? '#333333' : '#FF6C58')};
   border-image: initial;
-  margin-left: 5px;
   margin-right: 5px;
   &:first-child {
     margin-left: 0;
   }
   &:last-child {
-    margin-left: 5px;
+    margin-left: 0;
     margin-right: 0;
   }
   @media(min-width: 768px) {
@@ -232,7 +234,6 @@ VideoRenderDiv.ControlButton = styled.button`
     padding: 8px 25px;
     flex: none;
     height: 37px;
-    margin-left: ${props => (props.alternate ? '0' : '5px')};
   }
   &:hover {
     background-color: ${props => (props.alternate ? '#fff' : '#FF3B21')};

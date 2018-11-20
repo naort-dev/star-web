@@ -17,6 +17,7 @@ import Loader from '../Loader';
 import ReferralStyled from './styled';
 import ScrollList from '../ScrollList';
 import Popup from '../Popup';
+import SnackBar from '../SnackBar';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { toggleRefer } from '../../store/shared/actions/toggleModals';
 import { requestReferral, getReferralList, getReferalLink } from '../../store/shared/actions/referStar';
@@ -29,6 +30,7 @@ class ReferStar extends React.Component {
     super(props);
     this.state = {
       copyStatus: null,
+      snackBarText: '',
     };
     this.copyInterval = null;
   }
@@ -56,16 +58,17 @@ class ReferStar extends React.Component {
     this.setState({ openSupport: true });
   }
 
-  copy = (data, type) => {
+  setSnackBarText = (text) => {
+    this.setState({ snackBarText: text });
+  }
+  
+  closeSnackBar = () => {
+    this.setState({ snackBarText: '' });
+  }
+
+  copy = (data) => {
     copy(data);
-    this.setState({ copyStatus: type }, () => {
-      clearInterval(this.copyInterval);
-      this.copyInterval = setTimeout(() => {
-        this.setState({
-          copyStatus: null,
-        });
-      }, 1000);
-    });
+    this.setState({ snackBarText: 'Link copied to clipboard' });
   }
 
   renderReferralList = () => {
@@ -145,7 +148,7 @@ class ReferStar extends React.Component {
         </EmailShareButton>
       </ReferralStyled.Somenetwork>
       <ReferralStyled.Somenetwork>
-        <ReferralStyled.Copy title="Copy to Clipboard" onClick={() => this.copy(shareUrl, 'link')} />
+        <ReferralStyled.Copy title="Copy to Clipboard" onClick={() => this.copy(shareUrl)} />
       </ReferralStyled.Somenetwork>
     </React.Fragment>
   )
@@ -177,8 +180,8 @@ class ReferStar extends React.Component {
           <ReferralStyled.ReferralCode>
             {props.userDetails.promo_code}
           </ReferralStyled.ReferralCode>
-          <ReferralStyled.CopyReferral onClick={() => this.copy(props.userDetails.promo_code, 'promo')}>
-            {this.state.copyStatus === 'promo' ? 'Copied' : 'Copy'}
+          <ReferralStyled.CopyReferral onClick={() => this.copy(props.userDetails.promo_code)}>
+            Copy
           </ReferralStyled.CopyReferral>
           {this.props.referralDetails.link && <ReferralStyled.referButton onClick={() => this.setState({ share: !this.state.share })}>Invite a star</ReferralStyled.referButton>}
           {
@@ -229,6 +232,10 @@ class ReferStar extends React.Component {
           smallPopup
         >
           <ReferralStyled.ScrollView>
+            {
+              this.state.snackBarText !== '' &&
+                <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+            }
             <ReferralStyled.Banner>{this.renderBanner()}</ReferralStyled.Banner>
             <ReferralStyled id="referral-wrapper">
               <ReferralStyled.Heading>

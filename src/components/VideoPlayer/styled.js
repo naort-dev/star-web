@@ -5,9 +5,13 @@ const VideoRenderDiv = styled.div`
   width: 100%;
   height: 100%;
   @media(min-width: 768px) {
+    max-height: 80vh;
     height: ${props => (props.height ? `${props.height}px` : '100%')};
     min-height: 200px;
     min-width: 400px;
+  }
+  @media(min-width: 1025px) {
+    max-height: none;
   }
 `;
 
@@ -25,6 +29,8 @@ VideoRenderDiv.answerVideo = styled.img`
   transition: ${props => (props.fullScreen ? 'top .5s, right .5s, height .5s' : 'unset')};
   @media(min-width: 768px) {
     right: ${props => (props.fullScreen ? '50%' : '48px')};
+    max-width: ${props => (props.fullScreen ? '100%' : '100px')};
+    max-height: ${props => (props.fullScreen ? '100%' : '100px')};
     top: ${props => (props.fullScreen ? '50%' : '47px')};
   }
   @media(min-width: 1025px) {

@@ -413,14 +413,22 @@ GroupStyled.CoverImage = styled.div`
   background-size: cover;
 `;
 
-GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
+GroupStyled.SecondaryCoverWrapper = styled.div`
   width: 100%;
-  height: 300px;
   margin: 10px 0;
-  border: 1px solid #d0d2d3;
   border-radius: 10px;
   max-width: 400px;
+  display: flex;
+  justify-content: space-between;
   margin: 10px auto;
+`;
+
+GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
+  width: calc(50% - 10px);
+  height: 300px;
+  display: inline-block;
+  border: 1px solid #d0d2d3;
+  border-radius: 10px;
 `;
 
 GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
@@ -530,6 +538,7 @@ GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
   margin: 10px 0;
   background-color: transparent;
   color: #cecece;
+  padding-left: 0;
   font-family: 'Avenir-Light';
   border: none;
   &:hover {
@@ -543,6 +552,9 @@ GroupStyled.AddCoverButton = GroupStyled.ControlButton.extend`
     width: 35px;
     height: 35px;
     background-size: contain;
+  }
+  @media(min-width: 768px) {
+    padding: 10px 30px;
   }
 `.withComponent('span');
 

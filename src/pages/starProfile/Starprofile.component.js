@@ -2,6 +2,7 @@ import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
@@ -16,6 +17,7 @@ import StarProfileStyled from '../starProfile/styled';
 import { setMetaTags } from '../../utils/setMetaTags';
 import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
 import HorizontalScrollList from '../../components/HorizontalScrollList';
+import ShareView from '../../components/ShareView';
 
 export default class Starprofile extends React.Component {
   constructor(props) {
@@ -26,7 +28,9 @@ export default class Starprofile extends React.Component {
       showPopup: null,
       videoActive: false,
       selectedVideo: null,
+      showAppBanner: true,
       offsetValue: 0,
+      sharePopup: false,
     };
     this.coverImage = new Image();
   }
@@ -120,9 +124,7 @@ export default class Starprofile extends React.Component {
   socialMedia = (icon) => {
     return (
       icon.social_link_value !== '' ?
-        <Link to={`/${icon.social_link_value}`} className={icon.social_link_key} target="_blank">
-          <span></span>
-        </Link>
+        <a href={`${icon.social_link_value}`} className={icon.social_link_key} target="_blank"></a>
         : ''
     );
   }
@@ -164,6 +166,15 @@ export default class Starprofile extends React.Component {
         <span className="bookButton"> Book {firstName}</span>
       </React.Fragment>
     );
+  }
+
+  shareProfileAction = () => {
+    this.setState({
+      sharePopup: true,
+    });
+  }
+  closePopup = () => {
+    this.setState({ sharePopup: false });
   }
 
   renderItem = (item) => {
@@ -238,6 +249,9 @@ export default class Starprofile extends React.Component {
     const descriptionLength = this.props.celebrityDetails.description ?
       this.props.celebrityDetails.description.length : 0;
 
+    if (this.props.detailsError) {
+      return <Redirect to="/not-found" />;
+    }
     return (
       <StarProfileStyled>
         {
@@ -291,11 +305,23 @@ export default class Starprofile extends React.Component {
             </StarProfileStyled.PopupWrapper>
           </Popup> : null}
 
+        {
+          this.state.sharePopup &&
+          <Popup
+            smallPopup
+            closePopUp={this.closePopup}
+          >
+            <ShareView iconSize={50} title={fullName} shareUrl={this.props.userDetails.share_url} />
+          </Popup>
+        }
+
         <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
+          disableMenu
         />
+        {this.props.userDetails && !this.props.detailsLoading &&
         <StarProfileStyled.sectionWrapper>
           <ImageGallery
             items={images}
@@ -318,6 +344,7 @@ export default class Starprofile extends React.Component {
                     onClick={e => this.updateFavouriteSelection(e)}
                     selected={this.state.favouriteSelected}
                   />
+                  {this.props.userDetails.share_url && <StarProfileStyled.shareButton onClick={() => { this.shareProfileAction(); }}></StarProfileStyled.shareButton>}
                 </h1>
                 <div className="professionDetails">{starProfessionsDotFormater(this.props.celebrityDetails.profession_details)}</div>
                 <p className={descriptionClass}>{this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}</p>
@@ -329,6 +356,7 @@ export default class Starprofile extends React.Component {
                   <StarProfileStyled.getStartedButton onClick={() => this.handleRequest()}>
                     {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.vf() : 'Alert Me'}
                   </StarProfileStyled.getStartedButton>
+                  
                 </StarProfileStyled.ButtonWrapper>
                 {this.props.userDetails.social_links &&
                   this.props.userDetails.social_links.map(data => this.socialMedia(data))}
@@ -374,7 +402,8 @@ export default class Starprofile extends React.Component {
               </div>
             </div>
           </StarProfileStyled.profileWrapper>
-        </StarProfileStyled.sectionWrapper>
+        </StarProfileStyled.sectionWrapper>}
+        {this.props.detailsLoading && <Loader />}
       </StarProfileStyled>
     );
   }

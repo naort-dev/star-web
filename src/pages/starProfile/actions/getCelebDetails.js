@@ -67,6 +67,6 @@ export const fetchCelebDetails = id => (dispatch, getState) => {
     }
   }).catch((exception) => {
     dispatch(celebDetailstFetchEnd());
-    dispatch(celebDetailstFetchFailed(exception));
+    dispatch(celebDetailstFetchFailed(exception.response.data));
   });
 };

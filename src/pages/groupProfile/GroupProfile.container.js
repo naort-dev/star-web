@@ -11,6 +11,8 @@ const mapStateToProps = state => ({
   memberCount: state.memberList.count,
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.userDetails.settings_userDetails,
+  detailsLoading: state.groupDetails.loading,
+  groupDetailsError: state.groupDetails.error,
 });
 
 const mapDispatchToProps = dispatch => ({

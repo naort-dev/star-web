@@ -158,7 +158,6 @@ export default class QAVideoRecorder extends React.Component {
           videoElem.src = null;
         }
         videoElem.srcObject = this.state.stream;
-        console.log()
         const options = {
           mimeType: 'video/webm;codecs=vp8',
           audioBitsPerSecond: 128000,
@@ -216,12 +215,12 @@ export default class QAVideoRecorder extends React.Component {
     });
   }
 
-  submitVideo() {
+  submitVideo(noEdit) {
     if (this.previewVideo) {
       this.setState({ isVideoPaused: true });
       this.previewVideo.pause();
     }
-    this.props.onSubmit();
+    this.props.onSubmit(noEdit);
   }
 
   renderUploader = () => {
@@ -330,7 +329,7 @@ export default class QAVideoRecorder extends React.Component {
           <VideoRecorderDiv.Video src={this.props.videoRecorder.recordedBlob} controls />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
-            <VideoRecorderDiv.SubmitButton title="Delete & re-record" onClick={() => this.submitVideo()} />
+            <VideoRecorderDiv.SubmitButton title="Delete & re-record" onClick={() => this.submitVideo(true)} />
           </VideoRecorderDiv.ActionButton>
         </VideoRecorderDiv.ControlWrapper>
       );
@@ -352,7 +351,7 @@ export default class QAVideoRecorder extends React.Component {
         <VideoRecorderDiv.Video id="video-player" onEnded={() => this.endVideo()} src={this.props.src} controls />
         <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />
-            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo()} />
+            <VideoRecorderDiv.SubmitButton title="Save and continue" onClick={() => this.submitVideo(true)} />
           </VideoRecorderDiv.ActionButton>
       </VideoRecorderDiv.ControlWrapper>
     );
@@ -396,7 +395,7 @@ export default class QAVideoRecorder extends React.Component {
     if (this.props.videoRecorder.recordedBlob && !this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
+          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} onEnded={() => this.endVideo()} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />

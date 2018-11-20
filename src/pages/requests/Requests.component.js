@@ -20,11 +20,9 @@ export default class Requests extends React.Component {
     super(props);
     this.state = {
       selectedTab: 'All',
-      innerLinks: [],
       requestStatus: 'all',
       requestAction: '',
       showActionPopup: false,
-      isCelebrity: null,
       orderDetails: {},
       scrollTarget: '',
     };
@@ -38,28 +36,6 @@ export default class Requests extends React.Component {
   componentDidMount() {
     this.props.myVideosListReset();
     this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    let { innerLinks } = prevState;
-    const isCelebrity = nextProps.userDetails.settings_userDetails.celebrity;
-    if (nextProps.starMode && !prevState.innerLinks.length) {
-      innerLinks = [
-        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-        { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
-        { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
-      ];
-    } else if (!prevState.innerLinks.length) {
-      innerLinks = [
-        ...innerLinks,
-        { linkName: 'My videos', selectedName: 'myVideos', url: '/user/myVideos' },
-        { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-      ];
-    }
-    if (isCelebrity && isCelebrity !== prevState.isCelebrity && !nextProps.starMode) {
-      innerLinks = [...innerLinks, { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' }];
-    }
-    return ({ innerLinks, isCelebrity });
   }
 
   onVideoUpload = (success) => {
@@ -315,15 +291,15 @@ export default class Requests extends React.Component {
   renderBookings = () => {
     return (
       <ScrollList
-        dataList={this.props.myVideosList.data}
+        dataList={this.props.requestsList}
         scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
         requestDetails
         renderFunction={this.renderRequests}
         starMode={this.props.starMode}
-        limit={this.props.myVideosList.limit}
-        totalCount={this.props.myVideosList.count}
-        offset={this.props.myVideosList.offset}
-        loading={this.props.myVideosList.loading}
+        limit={this.props.requestsLimit}
+        totalCount={this.props.requestsCount}
+        offset={this.props.requestsOffset}
+        loading={this.props.requestsLoading}
         noDataText="No requests"
         fetchData={(offset, refresh) => this.props.fetchMyVideosList(offset, refresh)}
       />
@@ -340,7 +316,7 @@ export default class Requests extends React.Component {
         />
         <RequestsStyled.ContentWrapper>
           {
-            (!this.props.myVideosList.data.length && this.props.myVideosList.loading) ?
+            (!this.props.requestsList.length && this.props.requestsLoading) ?
               <RequestsStyled.loaderWrapper>
                 <Loader />
               </RequestsStyled.loaderWrapper>
@@ -356,10 +332,10 @@ export default class Requests extends React.Component {
         <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          innerLinks={this.state.innerLinks}
-          renderCenterSection={this.renderCenterSection}
           getScrollTarget={this.updateScrollTarget}
-        />
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
         {
           this.props.orderDetailsLoading ?
             <ActionLoader />

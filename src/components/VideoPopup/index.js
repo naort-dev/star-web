@@ -17,6 +17,7 @@ import copy from 'copy-to-clipboard';
 import addVideoComment from '../../services/addVideoComment';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import VideoPlayer from '../VideoPlayer';
+import SnackBar from '../SnackBar';
 import Loader from '../Loader';
 import RequestFlowPopup from '../RequestFlowPopup';
 import VideoPopupStyled from './styled';
@@ -31,6 +32,7 @@ class VideoPopup extends React.Component {
       hasMore: true,
       commentText: '',
       videoContentHeight: null,
+      snackBarText: '',
     };
   }
 
@@ -123,23 +125,23 @@ class VideoPopup extends React.Component {
     }
   }
 
-  setVideoContentHeight = (node) => {
-    let { videoContentHeight } = this.state;
-    videoContentHeight = node.clientWidth / (this.props.selectedVideo.width / this.props.selectedVideo.height);
-    this.setState({ videoContentHeight })
-  }
-
-  setVideoContentRef = (node) => {  
-    if (!this.videoContent) {
-      this.videoContent = node;
-      this.setVideoContentHeight(node)
-    }
-  }
-
   handleCommentEnter = (event) => {
     if (event.keyCode === 13) {
       this.commentAdder();
     }
+  }
+
+  setSnackBarText = (text) => {
+    this.setState({ snackBarText: text });
+  }
+  
+  closeSnackBar = () => {
+    this.setState({ snackBarText: '' });
+  }
+
+  copyUrl = (shareUrl) => {
+    copy(shareUrl);
+    this.setSnackBarText('Link copied to clipboard');
   }
 
   renderSocialIcons = (selectedVideo) => {
@@ -206,7 +208,7 @@ class VideoPopup extends React.Component {
           </EmailShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
-          <VideoPopupStyled.Copy title="Copy to Clipboard" onClick={() => copy(shareUrl)} />
+          <VideoPopupStyled.Copy title="Copy to Clipboard" onClick={() => this.copyUrl(shareUrl)} />
         </VideoPopupStyled.Somenetwork>
       </React.Fragment>
     );
@@ -236,6 +238,10 @@ class VideoPopup extends React.Component {
       >
         <VideoPopupStyled.VideoContentWrapper>
           {
+            this.state.snackBarText !== '' &&
+              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+          }
+          {
             !props.videoPopupLoading ?
               <React.Fragment>
                 <VideoPopupStyled.VideoPlayer>
@@ -249,7 +255,7 @@ class VideoPopup extends React.Component {
                         </React.Fragment>
                     }
                   </VideoPopupStyled.VideoPlayerWrapper>
-                  <VideoPopupStyled.VideoContent innerRef={node => this.setVideoContentRef(node)} height={this.state.videoContentHeight}>
+                  <VideoPopupStyled.VideoContent>
                     <VideoPopupStyled.VideoRequester>
                       <VideoPopupStyled.StarLink to={`/${props.selectedVideo.user_id}`}>
                         <VideoPopupStyled.VideoRequestImage

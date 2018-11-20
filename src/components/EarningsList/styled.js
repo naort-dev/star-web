@@ -82,12 +82,15 @@ EarningsListStyled.ListItemMobile = styled.li`
   width: ${props => (props.light ? 'auto' : '77%')};
   font-size: 15px;
   word-break: break-word;
-  padding-right: 20px;
   color: ${props => (props.light ? '#b5b5b5' : '#3b3b3b')};
   font-family: 'Avenir-Light';
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  & > div {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
 
 EarningsListStyled.MobileSeparator = styled.div`

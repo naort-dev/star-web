@@ -82,7 +82,7 @@ class RequestTemplates extends React.Component {
                 <Templates.InputWrapperContainer>
                   <Templates.WrapsInput>
                     <Templates.Input
-                      placeholder="Enter host name"
+                      placeholder="Enter name"
                       type="text"
                       name="hostName"
                       value={this.props.hostName}
@@ -178,7 +178,7 @@ class RequestTemplates extends React.Component {
               null
             }
             <Templates.InputWrapper>
-              <Templates.Label>What is {this.state.eventname} for?</Templates.Label>
+              <Templates.Label>What is this {this.state.eventname} for?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="What specifically for"
@@ -212,7 +212,7 @@ class RequestTemplates extends React.Component {
                 <Templates.InputWrapperContainer>
                   <Templates.WrapsInput>
                     <Templates.Input
-                      placeholder="Enter host name"
+                      placeholder="Enter name"
                       type="text"
                       name="hostName"
                       value={this.props.hostName}

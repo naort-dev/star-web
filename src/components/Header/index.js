@@ -235,10 +235,10 @@ class Header extends React.Component {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
                   <Link to="/user/favorites">
-                    <HeaderSection.FavoriteButton />
+                    <HeaderSection.FavoriteButton title="Favorites" />
                   </Link>
                   <Link to="/user/myVideos">
-                    <HeaderSection.MyvideoButton />
+                    <HeaderSection.MyvideoButton title="My videos" />
                   </Link>
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}
@@ -256,12 +256,12 @@ class Header extends React.Component {
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.UserLink>
                           <Link to="/user/favorites">
-                            Favourites
+                            Favorites
                           </Link>
                         </HeaderSection.UserLink>
                         <HeaderSection.UserLink>
                           <Link to="/user/myVideos">
-                            My Videos
+                            My videos
                           </Link>
                         </HeaderSection.UserLink>
                         {
@@ -286,7 +286,7 @@ class Header extends React.Component {
                   </span>
                   <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignIn>
-                      Log In
+                      Log in
                     </HeaderSection.SignIn>
                     <HeaderSection.SignInIcon
                       src="assets/images/icon_profile_40a.png"
@@ -294,7 +294,7 @@ class Header extends React.Component {
                     />
                   </span>
                   <span onClick={() => this.props.toggleSignup(true)}>
-                    <HeaderSection.Join>Sign Up!</HeaderSection.Join>
+                    <HeaderSection.Join>Sign up!</HeaderSection.Join>
                   </span>
                 </div>
             }

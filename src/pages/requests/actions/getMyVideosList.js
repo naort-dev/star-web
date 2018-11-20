@@ -64,12 +64,14 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) =
       dispatch(myVideosListFetchEnd());
       let list = getState().myVideosList.data;
       const { count } = resp.data.data;
+      let newOffset = offset;
       if (refresh) {
         list = resp.data.data.request_list;
+        newOffset = 0;
       } else {
         list = [...list, ...resp.data.data.request_list];
       }
-      dispatch(myVideosListFetchSuccess(list, offset, count, videoStatus, finalRole));
+      dispatch(myVideosListFetchSuccess(list, newOffset, count, videoStatus, finalRole));
     } else {
       dispatch(myVideosListFetchEnd());
     }

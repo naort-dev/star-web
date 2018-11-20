@@ -61,7 +61,8 @@ VideoRecorderDiv.Video = styled.video`
   background-color: black;
   @media(min-width:1025px){
     width: 100%;
-    height: 100%
+    height: auto;
+    object-fit: cover;
   }
 `;
 
@@ -91,9 +92,9 @@ VideoRecorderDiv.Button = styled.button`
     background-size: 20px;
   }
   @media(min-width: 1920px) {
-    height: 100px;
-    width: 100px;
-    background-size: 50px;
+    height: 80px;
+    width: 80px;
+    background-size: 38px;
   };
   ${props => props.stop && ({
     backgroundColor: '#FF0000',
@@ -140,8 +141,8 @@ VideoRecorderDiv.RerecordButton = styled.button`
     background-size: 20px;
   }
   @media(min-width: 1920px) {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     background-size: 40px;
   }
 `;
@@ -174,8 +175,8 @@ VideoRecorderDiv.ControlButton = styled.button`
     background-size: 20px;
   }
   @media(min-width: 1920px) {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     background-size: 40px;
   } 
 `;
@@ -219,8 +220,8 @@ VideoRecorderDiv.SubmitButton = styled.button`
     background-size: 20px;
   }
   @media(min-width: 1920px) {
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     background-size: 50px;
   }
 `;
@@ -286,9 +287,9 @@ cursor: pointer;
   width: 60px;
 }
 @media(min-width: 1920px) {
-  height: 100px;
-  width: 100px;
-  background-size: 77px;
+  height: 80px;
+  width: 80px;
+  background-size: 65px;
 }
 `;
 
@@ -347,13 +348,11 @@ VideoRecorderDiv.UploadTextWrapper = styled.div`
   width: 100%;
   padding: 0 10px;
   margin-top: 14px;
-  top:0;
-  left: 0;
-  right: 0;
-  position: absolute;
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  position: absolute;
+  top: 0;
 `;
 
 VideoRecorderDiv.IndicationText = styled.div`
@@ -392,6 +391,9 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  @media(min-width: 768px) {
+    justify-content: space-between;
+  }
 `;
 
   VideoRecorderDiv.ActionButton = styled.div`
@@ -402,6 +404,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   align-items: center;
   justify-content: center;
   bottom: 6%;
+  z-index: 1;
   @media(min-width: 1920px) {
     bottom: 45px;
   }
@@ -424,6 +427,7 @@ VideoRecorderDiv.RecordInfoButton = styled.div`
   align-items: center;
   position: absolute;
   right: 24px;
+  z-index: 1;
 `;
 
 VideoRecorderDiv.VideoHeading = styled.div`

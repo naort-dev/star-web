@@ -28,7 +28,7 @@ class Sidebar extends React.Component {
     if (this.props.updateMainCategory) {
       this.props.updateMainCategory(label, id);
     }
-    if (this.props.history && this.props.history.location.pathname != '/') {
+    if (this.props.history && this.props.history.location.pathname !== '/') {
       this.props.history.push('/');
     }
   }
@@ -107,7 +107,20 @@ class Sidebar extends React.Component {
                   <SidebarStyled.InnerCategoryTitle
                     selected={this.props.selectedCategory === element.selectedName}
                   >
-                    <Link to={element.url}>{element.linkName}</Link>
+                    <Link to={element.url}>
+                      <SidebarStyled.LinkElement>
+                        {element.linkName}
+                        {
+                          element.selectedName === 'requests' && this.props.userDetails.settings_celebrityDetails.pending_requests_count ?
+                            <SidebarStyled.InnerListItemCount>
+                              {
+                                this.props.userDetails.settings_celebrityDetails.pending_requests_count
+                              }
+                            </SidebarStyled.InnerListItemCount>
+                          : null
+                        }
+                      </SidebarStyled.LinkElement>
+                    </Link>
                   </SidebarStyled.InnerCategoryTitle>
                 </SidebarStyled.InnerListItem>
               ))
@@ -136,7 +149,20 @@ class Sidebar extends React.Component {
                             <SidebarStyled.CategoryTitle
                               selected={this.props.selectedCategory === 'requests'}
                             >
-                              <Link to={'/user/bookings'}>Requests</Link>
+                              <Link to={'/user/bookings'}>
+                                <SidebarStyled.LinkElement>
+                                  Requests
+                                  {
+                                    this.props.userDetails.settings_celebrityDetails.pending_requests_count ?
+                                      <SidebarStyled.InnerListItemCount>
+                                        {
+                                          this.props.userDetails.settings_celebrityDetails.pending_requests_count
+                                        }
+                                      </SidebarStyled.InnerListItemCount>
+                                    : null
+                                  }
+                                </SidebarStyled.LinkElement>
+                              </Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                           <SidebarStyled.ListItem>
@@ -146,11 +172,11 @@ class Sidebar extends React.Component {
                               <Link to={'/user/earnings'}>Earnings</Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
-                          {/* <SidebarStyled.ListItem>
+                          <SidebarStyled.ListItem>
                             <SidebarStyled.CategoryTitle>
-                              <Link to="/myStar">My Star Page</Link>
+                              <Link to="/settings">Settings</Link>
                             </SidebarStyled.CategoryTitle>
-                          </SidebarStyled.ListItem> */}
+                          </SidebarStyled.ListItem>
                         </SidebarStyled.ListWrapper>
                       </SidebarStyled.Filter>
                     : null
@@ -194,6 +220,7 @@ class Sidebar extends React.Component {
 }
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
+  userDetails: state.userDetails,
   starRole: state.userDetails.starRole,
   groupCategory: state.groupTypes.data,
 });

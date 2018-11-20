@@ -353,6 +353,20 @@ export default class RequestVideoRecorder extends React.Component {
     if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
+          {this.state.showBookingDetails && <VideoRecorderDiv.Overlay />}
+          <VideoRecorderDiv.Wrapper>
+            <VideoRecorderDiv.VideoHeading selected={this.state.showBookingDetails} onClick={this.toggleBookingDetails}>
+              Booking Details
+            </VideoRecorderDiv.VideoHeading>
+          </VideoRecorderDiv.Wrapper>
+          {
+            this.state.showBookingDetails &&
+              <VideoRecorderDiv.BookingDetailsWrapper>
+                <Scrollbars>
+                  {this.props.overlayData()}
+                </Scrollbars>
+              </VideoRecorderDiv.BookingDetailsWrapper>
+          }
           <VideoRecorderDiv.IndicationText>Recording</VideoRecorderDiv.IndicationText>
           <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} onEnded={() => this.endVideo()} id="video-player" autoPlay muted="muted" />
           <VideoRecorderDiv.ActionButton>
