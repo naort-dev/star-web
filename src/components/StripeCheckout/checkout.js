@@ -15,7 +15,7 @@ class checkout extends React.Component {
       cardNumberError: '',
       cardExpiryError: '',
       cvvError: '',
-      zipCodeError: '',
+      // zipCodeError: '',
       cardTypeImage: null,
     };
     this.styles = {
@@ -85,14 +85,14 @@ class checkout extends React.Component {
             />
             { this.returnErrorMsg('cvvError') }
           </PaymentStyled.CardElementWrapper>
-          <PaymentStyled.CardElementWrapper>
+          {/* <PaymentStyled.CardElementWrapper>
             <PaymentStyled.title>Zip code</PaymentStyled.title>
             <PostalCodeElement
               onChange={event => this.setErrorMsg(event, 'zipCodeError')}
               style={this.styles}
             />
             { this.returnErrorMsg('zipCodeError') }
-          </PaymentStyled.CardElementWrapper>
+          </PaymentStyled.CardElementWrapper> */}
         </PaymentStyled.OtherDetailsWrapper>
       </PaymentStyled>
     );
