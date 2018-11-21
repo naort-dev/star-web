@@ -95,7 +95,7 @@ class StarSettings extends React.Component {
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
             <ShareUser
               heading="Tell your fans that you're on Starsona"
-              description="Lorem Ipsum"
+              description=""
               shareUrl={this.props.userDetails.share_url}
             />
           </SettingsStyled.ContentWrapper>

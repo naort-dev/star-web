@@ -73,7 +73,7 @@ class FanSettings extends React.Component {
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Invite friends'}>
             <ShareUser
               heading="Invite your friends to join Starsona"
-              description="Lorem Ipsum"
+              description=""
               type="star"
               shareUrl="www.starsona.com"
             />

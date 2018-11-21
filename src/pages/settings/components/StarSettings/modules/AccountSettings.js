@@ -336,7 +336,7 @@ export default class AccountSettings extends React.Component {
                   Are you a Star and want to engage with Fans?
                 </SettingsStyled.SubHeading>
                 <SettingsStyled.SubHeadingDescription>
-                  Lorem Ipsum
+                  
                 </SettingsStyled.SubHeadingDescription>
               </SettingsStyled.HeadingWrapper>
               <SettingsStyled.HollowButton
