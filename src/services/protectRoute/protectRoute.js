@@ -29,7 +29,6 @@ export const protectRoute = ({
         hasRole = fanRoutes.includes(location.pathname);
       }
     }
-    console.log(hasRole)
     // const hasRole = roles.length ? roles.includes(role) : true;
     const allowAccess = (isLoggedIn && hasRole) || (!isProtectedRoute && !isLoggedIn);
     // const allowAccess = (isProtectedRoute && isLoggedIn);
