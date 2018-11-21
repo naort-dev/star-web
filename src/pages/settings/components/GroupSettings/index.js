@@ -73,7 +73,7 @@ class StarSettings extends React.Component {
             </Popup>
         }
         <InnerTabs
-          labels={['Account', 'Profile details', 'Share online']}
+          labels={['Account', 'Group details', 'Share online']}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
@@ -89,7 +89,7 @@ class StarSettings extends React.Component {
               changePasswordData={this.props.changePasswordData}
             />
           </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Group details'}>
             <ProfileSettings
               fetchUserDetails={this.props.fetchUserDetails}
               userDetails={this.props.userDetails}

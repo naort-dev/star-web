@@ -9,7 +9,6 @@ export default class ProfileSettings extends React.Component {
     website: '',
     firstName: '',
     lastName: '',
-    searchTags: [],
     groupType: '',
     phNo1: '',
     phNo2: '',
@@ -39,8 +38,8 @@ export default class ProfileSettings extends React.Component {
     this.setInitialData(this.props);
   }
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    let { groupType } = prevState
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let { groupType } = prevState;
     const { grouptype: currentGroupType } = nextProps.userDetails.group_details;
     if (groupType === '' && nextProps.groupTypes.length) {
       groupType = nextProps.groupTypes.filter(type => type.group_name === currentGroupType)[0].id;
@@ -81,7 +80,6 @@ export default class ProfileSettings extends React.Component {
       website,
       firstName,
       lastName,
-      searchTags: [],
       phNo1: phone.split('-')[0],
       phNo2: phone.split('-')[1],
       phNo3: phone.split('-')[2],
@@ -98,7 +96,6 @@ export default class ProfileSettings extends React.Component {
         addressField: false,
         phNo: false,
       },
-      cancelDetails: false,
     });
     props.checkStripe();
   }
@@ -108,6 +105,19 @@ export default class ProfileSettings extends React.Component {
     const state = address.state ? address.state : '';
     const city = address.city ? address.city : '';
     this.setState({ zip, state, city });
+  }
+
+  getStripe() {
+    this.props.fetchUrl()
+      .then((response) => {
+        window.location = response.data.data.stripe_url;
+      });
+  }
+
+  getDashboard() {
+    if (this.props.stripeRegistration.dashboardURL) {
+      window.open(this.props.stripeRegistration.dashboardURL, '_blank');
+    }
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
@@ -191,7 +201,6 @@ export default class ProfileSettings extends React.Component {
   };
 
   cancelDetails = () => {
-    this.setState({ cancelDetails: true });
     this.setInitialData(this.props);
   }
 
