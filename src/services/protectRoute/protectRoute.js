@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import { protectedRoutes, fanRoutes, starRoutes } from './protectedRoutes';
+import { ROLES } from '../../constants/usertype';
+import { protectedRoutes, fanRoutes, starRoutes, groupRoutes } from './protectedRoutes';
 import { Page404 } from '../../pages/page404';
 
 export const protectRoute = ({
@@ -13,15 +14,17 @@ export const protectRoute = ({
   const ProtectedRoute = (props) => {
     const {
       location,
-      // role,
-      starRole,
+      role,
+      isStar,
       isLoggedIn,
     } = props;
     const isProtectedRoute = protectedRoutes.includes(location.pathname);
     let hasRole;
     if (isProtectedRoute) {
-      if (starRole) {
+      if (isStar) {
         hasRole = starRoutes.includes(location.pathname);
+      } else if (role === ROLES.group) {
+        hasRole = groupRoutes.includes(location.pathname);
       } else {
         hasRole = fanRoutes.includes(location.pathname);
       }
@@ -34,8 +37,7 @@ export const protectRoute = ({
 
     if (allowAccess) {
       return <RouteComponent {...props} {...routeProps} />;
-    }
-    else if (unAuthorized) {
+    } else if (unAuthorized) {
       return (
         <Redirect
           to={{
@@ -43,18 +45,7 @@ export const protectRoute = ({
           }}
         />
       );
-    }
-    // } else if (shouldAuthenticate) {
-    //   return (
-    //     <Redirect
-    //       to={{
-    //         pathname: '/login',
-    //         state: { from: location },
-    //       }}
-    //     />
-    //   );
-    // }
-    else if (shouldAuthenticate) {
+    } else if (shouldAuthenticate) {
       return (
         <Redirect
           to={{
@@ -72,12 +63,14 @@ export const protectRoute = ({
   ProtectedRoute.propTypes = {
     location: PropTypes.object.isRequired,
     isLoggedIn: PropTypes.bool.isRequired,
-    // role: PropTypes.string.isRequired,
+    role: PropTypes.string.isRequired,
+    isStar: PropTypes.bool.isRequired,
   };
 
   const mapState = state => ({
     isLoggedIn: state.session.isLoggedIn,
-    starRole: state.userDetails.starRole,
+    isStar: state.userDetails.isStar,
+    role: state.userDetails.role,
   });
 
   return connect(mapState)(ProtectedRoute);
