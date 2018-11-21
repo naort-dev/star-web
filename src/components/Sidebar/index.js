@@ -125,7 +125,7 @@ class Sidebar extends React.Component {
               <section>
                 <SidebarStyled.FilterWrapper>
                   {
-                    this.props.starRole ?
+                    this.props.isStar ?
                       <SidebarStyled.Filter>
                         <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
                         <SidebarStyled.Separator />
@@ -197,7 +197,7 @@ class Sidebar extends React.Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.userDetails,
-  starRole: state.userDetails.starRole,
+  isStar: state.userDetails.isStar,
 });
 
 const mapDispatchToProps = dispatch => ({
