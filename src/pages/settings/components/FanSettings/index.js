@@ -69,6 +69,9 @@ class FanSettings extends React.Component {
               enableStarSignup={this.enableStarSignup}
               fetchUserDetails={this.props.fetchUserDetails}
               submitAccountDetails={this.submitAccountDetails}
+              fetchUrl={this.props.fetchURL}
+              stripeRegistration={this.props.stripeRegistration}
+              checkStripe={this.props.checkStripe}
               resetChangePassword={this.props.resetChangePassword}
               changePassword={this.props.changePassword}
               changePasswordData={this.props.changePasswordData}

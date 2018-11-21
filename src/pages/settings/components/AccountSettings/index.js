@@ -24,9 +24,6 @@ export default class AccountSettings extends React.Component {
       nextProps.resetChangePassword();
       this.setState({ changePassword: false });
     }
-    if (this.state.cancelDetails) {
-      this.setInitialData(nextProps);
-    }
   }
 
   setInitialData = (props) => {
@@ -103,6 +100,19 @@ export default class AccountSettings extends React.Component {
     }
   }
 
+  getStripe() {
+    this.props.fetchUrl()
+      .then((response) => {
+        window.location = response.data.data.stripe_url;
+      });
+  }
+
+  getDashboard() {
+    if (this.props.stripeRegistration.dashboardURL) {
+      window.open(this.props.stripeRegistration.dashboardURL, '_blank');
+    }
+  }
+
   handleFieldChange = (fieldType, fieldValue) => {
     this.setState({
       [fieldType]: fieldValue,
@@ -167,7 +177,7 @@ export default class AccountSettings extends React.Component {
   }
 
   cancelDetails = () => {
-    this.setState({ cancelDetails: true });
+    this.setInitialData(this.props);
     this.props.fetchUserDetails();
   }
 
@@ -323,6 +333,25 @@ export default class AccountSettings extends React.Component {
               </SettingsStyled.CheckBoxesWrapper>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
+          {
+            this.props.type === 'fan' &&
+              <SettingsStyled.InputWrapper>
+                <SettingsStyled.Label>Payments</SettingsStyled.Label>
+                <SettingsStyled.WrapsInput>
+                  <SettingsStyled.CustomInput>
+                    {this.props.stripeRegistration.cardDetails ?
+                      <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                      :
+                      <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
+                    }
+                  </SettingsStyled.CustomInput>
+                  <SettingsStyled.ErrorMsg>
+                    Payouts for your earnings will be distributed on
+                    the first of every month
+                  </SettingsStyled.ErrorMsg>
+                </SettingsStyled.WrapsInput>
+              </SettingsStyled.InputWrapper>
+          }
         </SettingsStyled.InputwrapperDiv>
         <SettingsStyled.ControlWrapper multiple>
           <SettingsStyled.CancelButton
