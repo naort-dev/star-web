@@ -2,6 +2,7 @@ import React from 'react';
 
 import ColumnLayout from '../../components/ColumnLayout';
 import InnerTabs from '../../components/InnerTabs';
+import RowItem from './components/RowItem';
 import SupportStyled from './styled';
 
 export default class StarSupporters extends React.Component {
@@ -29,6 +30,7 @@ export default class StarSupporters extends React.Component {
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
         />
+        <RowItem />
       </React.Fragment>
     );
   }

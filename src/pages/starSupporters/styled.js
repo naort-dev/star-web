@@ -25,7 +25,7 @@ SupportStyled.Container = styled.div`
 `;
 
 SupportStyled.CenterSection = styled.div`
-  width: 75%;
+
 `;
 
 SupportStyled.BigHeading = styled.span`
