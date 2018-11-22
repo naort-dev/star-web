@@ -355,11 +355,18 @@ VideoRecorderDiv.UploadTextWrapper = styled.div`
   top: 0;
 `;
 
+VideoRecorderDiv.RecordDuration = styled.span`
+  color: #fff;
+  display: block;
+  font-size: 18px;
+`;
+
 VideoRecorderDiv.IndicationText = styled.div`
   position: absolute;
   top: 5%;
   right: 20px;
   color: #FF0000;
+  text-align: right;
 `;
 
 VideoRecorderDiv.StopRecorderText = styled.div`
