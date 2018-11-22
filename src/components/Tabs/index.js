@@ -27,7 +27,7 @@ export default class Tabs extends React.Component {
 
   render() {
     return (
-      <TabStyled filterSelected={this.props.filterSelected}>
+      <TabStyled filterSelected={this.props.filterSelected} hideTab={!this.props.noTabs}>
         {
           this.props.heading ?
             <TabStyled.TitleControl titleLabel={this.props.Heading} starMode={this.props.starMode}>
@@ -57,7 +57,7 @@ export default class Tabs extends React.Component {
         }
         {
           !this.props.disableTabs ?
-            <TabStyled.tabList disableFilter={this.props.disableFilter} innerRef={node => this.tabList = node}>
+            <TabStyled.tabList hideTab={!this.props.noTabs} disableFilter={this.props.disableFilter} innerRef={node => this.tabList = node}>
               {
                 this.props.labels.map((item, index) => (
                   <TabStyled.tabListItem
