@@ -17,6 +17,7 @@ export default class Landing extends React.Component {
       tabsClientHeight: 0,
       filterSelected: false,
       subCategoryList: [],
+      groupClick: true,
     };
   }
 
@@ -130,7 +131,16 @@ export default class Landing extends React.Component {
     this.setState({ subCategoryList });
   }
   updateCategory = (label, value, category) => {
-    this.props.switchTab('Stars');
+    if (category === 'Group') {
+      this.setState({
+        groupClick: false,
+      });
+    } else {
+      this.setState({
+        groupClick: true,
+      });
+      this.props.switchTab('Stars');
+    }
     this.props.fetchCelebrityList(0, true, category);
   }
   updateSubCategoryList = (selectedList) => {
@@ -211,6 +221,7 @@ export default class Landing extends React.Component {
             <div
               ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
             >
+              {this.state.groupClick &&
               <Tabs
                 labels={['Stars', 'Videos']}
                 switchTab={this.props.switchTab}
@@ -219,7 +230,7 @@ export default class Landing extends React.Component {
                 selected={this.props.filters.selectedTab}
                 filterCount={this.getFilterCount}
                 toggleFilter={this.toggleFilterSection}
-              />
+              />}
               {
                 this.state.filterSelected &&
                 <FilterSection
