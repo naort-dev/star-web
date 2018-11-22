@@ -7,7 +7,7 @@ export const USER_DETAILS = {
   end: 'fetch_end/user_details',
   success: 'fetch_success/user_details',
   failed: 'fetch_failed/user_details',
-  updateStarRole: 'update_role/user_details',
+  updateUserRole: 'update_role/user_details',
   reset: 'reset/user_details',
 };
 
@@ -36,8 +36,9 @@ export const resetUserDetails = () => ({
   type: USER_DETAILS.reset,
 });
 
-export const updateStarRole = role => ({
-  type: USER_DETAILS.updateStarRole,
+export const updateUserRole = (isStar, role) => ({
+  type: USER_DETAILS.updateUserRole,
+  isStar,
   role,
 });
 
@@ -60,10 +61,9 @@ export const fetchUserDetails = id => (dispatch, getState) => {
       dispatch(userDetailsFetchEnd());
       dispatch(userDetailsFetchSuccess(resp.data.data));
       return resp.data.data;
-    } else {
-      dispatch(userDetailsFetchEnd());
-      dispatch(userDetailsFetchFailed('404'));
     }
+    dispatch(userDetailsFetchEnd());
+    dispatch(userDetailsFetchFailed('404'));
   }).catch((exception) => {
     dispatch(userDetailsFetchEnd());
     dispatch(userDetailsFetchFailed(exception));

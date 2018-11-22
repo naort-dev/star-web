@@ -1,15 +1,14 @@
 import React from 'react';
 import validator from 'validator';
-import PlacesAutoComplete from '../../PlacesAutoComplete';
-import GroupStyled from '../styled';
+import PlacesAutoComplete from '../../../../../components/PlacesAutoComplete';
+import SettingsStyled from '../../../styled';
 
-export default class DetailsEntry extends React.Component {
+export default class ProfileSettings extends React.Component {
   state = {
     bio: '',
     website: '',
     firstName: '',
     lastName: '',
-    searchTags: [],
     groupType: '',
     phNo1: '',
     phNo2: '',
@@ -33,14 +32,92 @@ export default class DetailsEntry extends React.Component {
       addressField: false,
       phNo: false,
     },
-    userConfirmation: false,
   };
+
+  componentDidMount() {
+    this.setInitialData(this.props);
+  }
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    let { groupType } = prevState;
+    const { grouptype: currentGroupType } = nextProps.userDetails.group_details;
+    if (groupType === '' && nextProps.groupTypes.length) {
+      groupType = nextProps.groupTypes.filter(type => type.group_name === currentGroupType)[0].id;
+    }
+    return { groupType };
+  }
+
+  setInitialData = (props) => {
+    let facebook;
+    let twitter;
+    let instagram;
+    let youtube;
+    props.userDetails.social_links.forEach((link) => {
+      if (link.social_link_key === 'facebook_url') {
+        facebook = link.social_link_value;
+      } else if (link.social_link_key === 'twitter_url') {
+        twitter = link.social_link_value;
+      } else if (link.social_link_key === 'youtube_url') {
+        youtube = link.social_link_value;
+      } else if (link.social_link_key === 'instagram_url') {
+        instagram = link.social_link_value;
+      }
+    });
+    const { description,
+      contact_first_name: firstName,
+      contact_last_name: lastName,
+      website,
+      address,
+      address_2: address2,
+      city,
+      state,
+      zip,
+      phone,
+    } = props.userDetails.group_details;
+    this.setState({
+      socialMedia: { facebook, twitter, youtube, instagram },
+      bio: description,
+      website,
+      firstName,
+      lastName,
+      phNo1: phone.split('-')[0],
+      phNo2: phone.split('-')[1],
+      phNo3: phone.split('-')[2],
+      address,
+      address2,
+      city,
+      state,
+      zip: zip.toString(),
+      errors: {
+        bio: false,
+        searchTags: false,
+        groupType: false,
+        name: false,
+        addressField: false,
+        phNo: false,
+      },
+    });
+    props.checkStripe();
+  }
 
   setAddress = (address) => {
     const zip = address.zip ? address.zip : '';
     const state = address.state ? address.state : '';
     const city = address.city ? address.city : '';
     this.setState({ zip, state, city });
+  }
+
+  getStripe() {
+    this.props.fetchUrl()
+      .then((response) => {
+        window.location = response.data.data.stripe_url;
+      });
+  }
+
+  getDashboard() {
+    if (this.props.stripeRegistration.dashboardURL) {
+      window.open(this.props.stripeRegistration.dashboardURL, '_blank');
+    }
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
@@ -99,15 +176,11 @@ export default class DetailsEntry extends React.Component {
   }
 
   submitGroupAccountDetails = () => {
-    const searchTags = this.state.searchTags.map(item => (
-      item.value
-    )).join(',');
     if (this.validateFields()) {
       const accountDetails = {
         contact_first_name: this.state.firstName,
         contact_last_name: this.state.lastName,
         description: this.state.bio,
-        tags: searchTags,
         website: this.state.website,
         phone: `${this.state.phNo1}-${this.state.phNo2}-${this.state.phNo3}`,
         address: this.state.address,
@@ -123,44 +196,31 @@ export default class DetailsEntry extends React.Component {
         youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
-      this.props.submitGroupDetails(accountDetails, socialLinks);
+      this.props.submitProfileDetails(accountDetails, socialLinks);
     }
   };
 
-  renderMultiValueItems = (selectProps) => {
-    return (
-      <GroupStyled.mutiSelectItemWrapper>
-        {selectProps.value.label}
-        <GroupStyled.CloseButton
-          type="button"
-          onClick={() => selectProps.onRemove(selectProps.value)}
-        />
-      </GroupStyled.mutiSelectItemWrapper>
-    );
-  };
+  cancelDetails = () => {
+    this.setInitialData(this.props);
+  }
 
   render() {
     return (
-      <GroupStyled.DetailsWrapper>
-        <GroupStyled.HeadingWrapper>
-          <GroupStyled.InnerHeading>
-            Create your profile
-          </GroupStyled.InnerHeading>
-        </GroupStyled.HeadingWrapper>
-        <GroupStyled.HeadingWrapper>
-          <GroupStyled.SubHeading>
+      <React.Fragment>
+        <SettingsStyled.HeadingWrapper>
+          <SettingsStyled.SubHeading>
             Public information
-          </GroupStyled.SubHeading>
-          <GroupStyled.SubHeadingDescription>
+          </SettingsStyled.SubHeading>
+          <SettingsStyled.SubHeadingDescription>
             This information will be shared on your profile
-          </GroupStyled.SubHeadingDescription>
-        </GroupStyled.HeadingWrapper>
-        <GroupStyled.InputwrapperDiv>
-          <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Your bio</GroupStyled.Label>
-            <GroupStyled.WrapsInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
+          </SettingsStyled.SubHeadingDescription>
+        </SettingsStyled.HeadingWrapper>
+        <SettingsStyled.InputwrapperDiv>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Your bio</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.CustomInput>
+                <SettingsStyled.InputArea
                   value={this.state.bio}
                   onChange={(event) => {
                     this.handleFieldChange('bio', event.target.value);
@@ -168,24 +228,24 @@ export default class DetailsEntry extends React.Component {
                 />
                 {
                   !this.state.bio ?
-                    <GroupStyled.CustomPlaceholder>
+                    <SettingsStyled.CustomPlaceholder>
                       Enter information about your group.<br />
                       Note: Help Fans and Stars find you in search by including terms associated with your group.
-                    </GroupStyled.CustomPlaceholder>
+                    </SettingsStyled.CustomPlaceholder>
                   : null
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
+              </SettingsStyled.CustomInput>
+              <SettingsStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
                   ? 'Please enter a group bio'
                   : null}
-              </GroupStyled.ErrorMsg>
-            </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper>
-          <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Group type</GroupStyled.Label>
-            <GroupStyled.WrapsInput>
-              <GroupStyled.Select
+              </SettingsStyled.ErrorMsg>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Group type</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.Select
                 value={this.state.groupType}
                 onChange={event =>
                   this.handleFieldChange(
@@ -202,19 +262,19 @@ export default class DetailsEntry extends React.Component {
                     {item.label}
                   </option>
                 ))}
-              </GroupStyled.Select>
-              <GroupStyled.ErrorMsg isError={this.state.errors.groupType}>
+              </SettingsStyled.Select>
+              <SettingsStyled.ErrorMsg isError={this.state.errors.groupType}>
                 {
                   this.state.errors.groupType ? 'Please choose your group type' :
                     null
                 }
-              </GroupStyled.ErrorMsg>
-            </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper>
-          <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Website</GroupStyled.Label>
-            <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
+              </SettingsStyled.ErrorMsg>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Website</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.InputArea
                 small
                 placeholder="www.yoursite.org"
                 value={this.state.website}
@@ -222,18 +282,18 @@ export default class DetailsEntry extends React.Component {
                   this.handleFieldChange('website', event.target.value);
                 }}
               />
-              <GroupStyled.ErrorMsg isError={this.state.errors.website}>
+              <SettingsStyled.ErrorMsg isError={this.state.errors.website}>
                 {this.state.errors.website
                   ? 'Please enter a valid event title'
                   : null}
-              </GroupStyled.ErrorMsg>
-            </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper>
-          <GroupStyled.InputWrapper>
-            <GroupStyled.Label>Social links</GroupStyled.Label>
-            <GroupStyled.WrapsInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
+              </SettingsStyled.ErrorMsg>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Social links</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.CustomInput>
+                <SettingsStyled.InputArea
                   small
                   value={this.state.socialMedia.facebook}
                   innerRef={(node) => { this.facebookRef = node; }}
@@ -246,7 +306,7 @@ export default class DetailsEntry extends React.Component {
                 />
                 {
                   this.state.socialMedia.facebook === '' ?
-                    <GroupStyled.CustomPlaceholder
+                    <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
                         this.handleFieldChange('socialMedia', { ...this.state.socialMedia, facebook: 'https://www.facebook.com/' });
@@ -254,15 +314,15 @@ export default class DetailsEntry extends React.Component {
                       }}
                     >
                       www.facebook.com/
-                      <GroupStyled.HighlightText>
+                      <SettingsStyled.HighlightText>
                         add facebook
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
+                      </SettingsStyled.HighlightText>
+                    </SettingsStyled.CustomPlaceholder>
                   : null
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
+              </SettingsStyled.CustomInput>
+              <SettingsStyled.CustomInput>
+                <SettingsStyled.InputArea
                   small
                   innerRef={(node) => { this.twitterRef = node; }}
                   value={this.state.socialMedia.twitter}
@@ -275,7 +335,7 @@ export default class DetailsEntry extends React.Component {
                 />
                 {
                   this.state.socialMedia.twitter === '' ?
-                    <GroupStyled.CustomPlaceholder
+                    <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
                         this.handleFieldChange('socialMedia', { ...this.state.socialMedia, twitter: 'https://www.twitter.com/' });
@@ -283,15 +343,15 @@ export default class DetailsEntry extends React.Component {
                       }}
                     >
                       www.twitter.com/
-                      <GroupStyled.HighlightText>
+                      <SettingsStyled.HighlightText>
                         add twitter
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
+                      </SettingsStyled.HighlightText>
+                    </SettingsStyled.CustomPlaceholder>
                   : null
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
+              </SettingsStyled.CustomInput>
+              <SettingsStyled.CustomInput>
+                <SettingsStyled.InputArea
                   small
                   innerRef={(node) => { this.instagramRef = node; }}
                   value={this.state.socialMedia.instagram}
@@ -304,7 +364,7 @@ export default class DetailsEntry extends React.Component {
                 />
                 {
                   this.state.socialMedia.instagram === '' ?
-                    <GroupStyled.CustomPlaceholder
+                    <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
                         this.handleFieldChange('socialMedia', { ...this.state.socialMedia, instagram: 'https://www.instagram.com/' });
@@ -312,15 +372,15 @@ export default class DetailsEntry extends React.Component {
                       }}
                     >
                       www.instagram.com/
-                      <GroupStyled.HighlightText>
+                      <SettingsStyled.HighlightText>
                         add instagram
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
+                      </SettingsStyled.HighlightText>
+                    </SettingsStyled.CustomPlaceholder>
                   : null
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
+              </SettingsStyled.CustomInput>
+              <SettingsStyled.CustomInput>
+                <SettingsStyled.InputArea
                   small
                   innerRef={(node) => { this.youtubeRef = node; }}
                   value={this.state.socialMedia.youtube}
@@ -333,7 +393,7 @@ export default class DetailsEntry extends React.Component {
                 />
                 {
                   this.state.socialMedia.youtube === '' ?
-                    <GroupStyled.CustomPlaceholder
+                    <SettingsStyled.CustomPlaceholder
                       activePlaceHolder
                       onClick={() => {
                         this.handleFieldChange('socialMedia', { ...this.state.socialMedia, youtube: 'https://www.youtube.com/' });
@@ -341,29 +401,29 @@ export default class DetailsEntry extends React.Component {
                       }}
                     >
                       www.youtube.com/
-                      <GroupStyled.HighlightText>
+                      <SettingsStyled.HighlightText>
                         add youtube
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
+                      </SettingsStyled.HighlightText>
+                    </SettingsStyled.CustomPlaceholder>
                   : null
                 }
-              </GroupStyled.CustomInput>
-            </GroupStyled.WrapsInput>
-          </GroupStyled.InputWrapper>
-        </GroupStyled.InputwrapperDiv>
-        <GroupStyled.HeadingWrapper>
-          <GroupStyled.SubHeading>
+              </SettingsStyled.CustomInput>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+        </SettingsStyled.InputwrapperDiv>
+        <SettingsStyled.HeadingWrapper>
+          <SettingsStyled.SubHeading>
             Private information
-          </GroupStyled.SubHeading>
-          <GroupStyled.SubHeadingDescription>
+          </SettingsStyled.SubHeading>
+          <SettingsStyled.SubHeadingDescription>
             This information is private to you and will not be shared
             publicly
-          </GroupStyled.SubHeadingDescription>
-        </GroupStyled.HeadingWrapper>
-        <GroupStyled.InputWrapper>
-          <GroupStyled.Label>Contact name</GroupStyled.Label>
-          <GroupStyled.WrapsInput>
-            <GroupStyled.InputArea
+          </SettingsStyled.SubHeadingDescription>
+        </SettingsStyled.HeadingWrapper>
+        <SettingsStyled.InputWrapper>
+          <SettingsStyled.Label>Contact name</SettingsStyled.Label>
+          <SettingsStyled.WrapsInput>
+            <SettingsStyled.InputArea
               small
               placeholder="First name"
               value={this.state.firstName}
@@ -371,7 +431,7 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('firstName', event.target.value);
               }}
             />
-            <GroupStyled.InputArea
+            <SettingsStyled.InputArea
               small
               placeholder="Last name"
               value={this.state.lastName}
@@ -379,18 +439,18 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('lastName', event.target.value);
               }}
             />
-            <GroupStyled.ErrorMsg isError={this.state.errors.name}>
+            <SettingsStyled.ErrorMsg isError={this.state.errors.name}>
               {
                 this.state.errors.name ? this.state.errors.name :
                   null
               }
-            </GroupStyled.ErrorMsg>
-          </GroupStyled.WrapsInput>
-        </GroupStyled.InputWrapper>
-        <GroupStyled.InputWrapper>
-          <GroupStyled.Label>Phone number</GroupStyled.Label>
-          <GroupStyled.WrapsInput>
-            <GroupStyled.PhoneNo
+            </SettingsStyled.ErrorMsg>
+          </SettingsStyled.WrapsInput>
+        </SettingsStyled.InputWrapper>
+        <SettingsStyled.InputWrapper>
+          <SettingsStyled.Label>Phone number</SettingsStyled.Label>
+          <SettingsStyled.WrapsInput>
+            <SettingsStyled.PhoneNo
               small
               type="tel"
               innerRef={(node) => { this.phNo1 = node; }}
@@ -401,7 +461,7 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('phNo1', event.target.value);
               }}
             />
-            <GroupStyled.PhoneNo
+            <SettingsStyled.PhoneNo
               small
               type="tel"
               maxLength="3"
@@ -412,7 +472,7 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('phNo2', event.target.value);
               }}
             />
-            <GroupStyled.PhoneNo
+            <SettingsStyled.PhoneNo
               small
               lastDigit
               type="tel"
@@ -424,18 +484,18 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('phNo3', event.target.value);
               }}
             />
-            <GroupStyled.ErrorMsg isError={this.state.errors.phone}>
+            <SettingsStyled.ErrorMsg isError={this.state.errors.phone}>
               {
                 this.state.errors.phone ? 'Please enter a valid phone number' :
                   null
               }
-            </GroupStyled.ErrorMsg>
-          </GroupStyled.WrapsInput>
-        </GroupStyled.InputWrapper>
-        <GroupStyled.InputWrapper>
-          <GroupStyled.Label>Group address</GroupStyled.Label>
-          <GroupStyled.WrapsInput>
-            <GroupStyled.InputArea
+            </SettingsStyled.ErrorMsg>
+          </SettingsStyled.WrapsInput>
+        </SettingsStyled.InputWrapper>
+        <SettingsStyled.InputWrapper>
+          <SettingsStyled.Label>Group address</SettingsStyled.Label>
+          <SettingsStyled.WrapsInput>
+            <SettingsStyled.InputArea
               small
               placeholder="Address 1"
               value={this.state.address}
@@ -443,7 +503,7 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('address', event.target.value);
               }}
             />
-            <GroupStyled.InputArea
+            <SettingsStyled.InputArea
               small
               placeholder="Address 2"
               value={this.state.address2}
@@ -451,7 +511,7 @@ export default class DetailsEntry extends React.Component {
                 this.handleFieldChange('address2', event.target.value);
               }}
             />
-            <GroupStyled.CityInfo>
+            <SettingsStyled.CityInfo>
               <PlacesAutoComplete
                 placeholder="City"
                 value={this.state.city}
@@ -460,8 +520,8 @@ export default class DetailsEntry extends React.Component {
                   this.handleFieldChange('city', value);
                 }}
               />
-            </GroupStyled.CityInfo>
-            <GroupStyled.AddressDetails>
+            </SettingsStyled.CityInfo>
+            <SettingsStyled.AddressDetails>
               <PlacesAutoComplete
                 placeholder="State"
                 value={this.state.state}
@@ -470,8 +530,8 @@ export default class DetailsEntry extends React.Component {
                   this.handleFieldChange('state', value);
                 }}
               />
-            </GroupStyled.AddressDetails>
-            <GroupStyled.ZipCode>
+            </SettingsStyled.AddressDetails>
+            <SettingsStyled.ZipCode>
               <PlacesAutoComplete
                 placeholder="Zip"
                 type="tel"
@@ -482,51 +542,44 @@ export default class DetailsEntry extends React.Component {
                   this.handleFieldChange('zip', value);
                 }}
               />
-            </GroupStyled.ZipCode>
-            <GroupStyled.ErrorMsg isError={this.state.errors.addressField}>
+            </SettingsStyled.ZipCode>
+            <SettingsStyled.ErrorMsg isError={this.state.errors.addressField}>
               {
                 this.state.errors.addressField ? this.state.errors.addressField :
                   null
               }
-            </GroupStyled.ErrorMsg>
-          </GroupStyled.WrapsInput>
-        </GroupStyled.InputWrapper>
-        <GroupStyled.OptionWrapper>
-          <GroupStyled.CheckBoxWrapper>
-            <GroupStyled.CheckBoxLabel
-              id="checkbox_container"
-              onClick={() =>
-                this.setState({
-                  userConfirmation: !this.state.userConfirmation,
-                })
+            </SettingsStyled.ErrorMsg>
+          </SettingsStyled.WrapsInput>
+        </SettingsStyled.InputWrapper>
+        <SettingsStyled.InputWrapper>
+          <SettingsStyled.Label>Payments</SettingsStyled.Label>
+          <SettingsStyled.WrapsInput>
+            <SettingsStyled.CustomInput>
+              {this.props.stripeRegistration.cardDetails ?
+                <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                :
+                <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
               }
-            >
-              <span>
-                I am officially affiliated with this group and have the
-                right to create a group account on it's behalf.
-              </span>
-              <GroupStyled.CheckBox
-                id="group-info-validation"
-                type="checkbox"
-                checked={this.state.userConfirmation}
-                onChange={() => {}}
-              />
-              <GroupStyled.Span
-                htmlFor="private_video"
-                id="checkmark"
-              />
-            </GroupStyled.CheckBoxLabel>
-          </GroupStyled.CheckBoxWrapper>
-        </GroupStyled.OptionWrapper>
-        <GroupStyled.ControlWrapper>
-          <GroupStyled.ControlButton
-            disabled={!this.state.userConfirmation}
+            </SettingsStyled.CustomInput>
+            <SettingsStyled.ErrorMsg>
+              Payouts for your earnings will be distributed on
+              the first of every month
+            </SettingsStyled.ErrorMsg>
+          </SettingsStyled.WrapsInput>
+        </SettingsStyled.InputWrapper>
+        <SettingsStyled.ControlWrapper multiple>
+          <SettingsStyled.CancelButton
+            onClick={this.cancelDetails}
+          >
+            Cancel
+          </SettingsStyled.CancelButton>
+          <SettingsStyled.ControlButton
             onClick={() => this.submitGroupAccountDetails()}
           >
-            Continue
-          </GroupStyled.ControlButton>
-        </GroupStyled.ControlWrapper>
-      </GroupStyled.DetailsWrapper>
+            Save
+          </SettingsStyled.ControlButton>
+        </SettingsStyled.ControlWrapper>
+      </React.Fragment>
     );
   }
 }

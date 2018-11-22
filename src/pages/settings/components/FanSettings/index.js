@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AccountSettings from '../StarSettings/modules/AccountSettings';
+import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
 import InnerTabs from '../../../../components/InnerTabs';
+import AlertView from '../../../../components/AlertView';
 import Popup from '../../../../components/Popup';
 import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
 import { toggleSignup } from '../../../../store/shared/actions/toggleModals';
@@ -47,9 +48,12 @@ class FanSettings extends React.Component {
           this.state.popupMessage && this.state.popupMessage !== '' &&
             <Popup
               smallPopup
-              closePopUp={() => this.setState({ popupMessage: '' })}
+              closePopUp={this.closePopup}
             >
-              { this.state.popupMessage }
+              <AlertView
+                message={this.state.popupMessage}
+                closePopup={this.closePopup}
+              />
             </Popup>
         }
         <InnerTabs
@@ -65,6 +69,9 @@ class FanSettings extends React.Component {
               enableStarSignup={this.enableStarSignup}
               fetchUserDetails={this.props.fetchUserDetails}
               submitAccountDetails={this.submitAccountDetails}
+              fetchUrl={this.props.fetchURL}
+              stripeRegistration={this.props.stripeRegistration}
+              checkStripe={this.props.checkStripe}
               resetChangePassword={this.props.resetChangePassword}
               changePassword={this.props.changePassword}
               changePasswordData={this.props.changePasswordData}
@@ -74,7 +81,7 @@ class FanSettings extends React.Component {
             <ShareUser
               heading="Invite your friends to join Starsona"
               description="Lorem Ipsum"
-              type="star"
+              type="fan"
               shareUrl="www.starsona.com"
             />
           </SettingsStyled.ContentWrapper>

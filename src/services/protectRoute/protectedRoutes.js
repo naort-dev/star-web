@@ -9,6 +9,10 @@ export const starRoutes = [
   '/user/earnings',
   '/myStar',
 ];
+export const groupRoutes = [
+  ...fanRoutes,
+  'user/star-supporters',
+];
 export const protectedRoutes = [
   ...fanRoutes,
   ...starRoutes,
