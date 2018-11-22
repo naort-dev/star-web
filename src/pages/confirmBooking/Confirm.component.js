@@ -190,6 +190,7 @@ export default class Confirm extends React.Component {
   closeRequestFlow = () => {
     this.clearStream();
     this.props.resetRequestFlow();
+    this.props.fetchCelebDetails(this.props.userDetails.user_id);
     this.props.resetPaymentDetails();
     this.props.deleteVideo();
     this.props.cancelBookingDetails();

@@ -21,6 +21,18 @@ export default class StarSupporters extends React.Component {
     this.setState({ showTabs: true });
   }
 
+  renderList = () => {
+    return (
+      <React.Fragment>
+        <InnerTabs
+          labels={['All', 'Supporters', 'Pending']}
+          switchTab={this.switchTab}
+          selected={this.state.selectedTab}
+        />
+      </React.Fragment>
+    );
+  }
+
   render() {
     return (
       <div>
@@ -32,13 +44,7 @@ export default class StarSupporters extends React.Component {
             <SupportStyled.CenterSection>
               {
                 this.state.showTabs ?
-                  <React.Fragment>
-                    <InnerTabs
-                      labels={['All', 'Supporters', 'Pending']}
-                      switchTab={this.switchTab}
-                      selected={this.state.selectedTab}
-                    />
-                  </React.Fragment>
+                  this.renderList(this.props)
                 :
                   <React.Fragment>
                     <SupportStyled.SmallHeading>
