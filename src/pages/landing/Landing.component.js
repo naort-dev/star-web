@@ -221,7 +221,6 @@ export default class Landing extends React.Component {
             <div
               ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
             >
-              {this.state.groupClick &&
               <Tabs
                 labels={['Stars', 'Videos']}
                 switchTab={this.props.switchTab}
@@ -230,7 +229,8 @@ export default class Landing extends React.Component {
                 selected={this.props.filters.selectedTab}
                 filterCount={this.getFilterCount}
                 toggleFilter={this.toggleFilterSection}
-              />}
+                noTabs={this.state.groupClick}
+              />
               {
                 this.state.filterSelected &&
                 <FilterSection
