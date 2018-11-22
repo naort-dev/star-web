@@ -174,7 +174,6 @@ GroupProfileStyled.profileWrapper = styled.div`
         }
         .memberlistWeb {
           display: flex;
-          overflow: auto;
           -webkit-overflow-scrolling: touch;
           @media(max-width: 1024px) {
             display: none;
