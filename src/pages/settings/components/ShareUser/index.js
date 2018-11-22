@@ -38,7 +38,7 @@ export default class ShareUser extends React.Component {
             Invite your Stars
           </ShareStyled.SubHeading>
           <ShareStyled.SubHeadingDescription>
-            Lorem Ipsum
+            
           </ShareStyled.SubHeadingDescription>
         </ShareStyled.HeadingWrapper>
         <SettingsStyled.InputWrapper>

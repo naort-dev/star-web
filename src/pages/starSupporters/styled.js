@@ -1,88 +1,73 @@
 import styled from 'styled-components';
 
-const RequestsStyled = styled.div`
-  margin-top: 60px;
-  height: calc(100vh - 60px);
-  background-color: #F8F8F8;
-  @media(min-width: 1920px) {
-    margin-top: 72px;
-    height: calc(100vh - 72px);
-  }
-`;
-RequestsStyled.sectionWrapper = styled.div`
-  max-width: 1920px;
-  height:100%;
-`;
-
-RequestsStyled.ContentWrapper = styled.section`
+const SupportStyled = styled.div`
 
 `;
 
-RequestsStyled.StatusTypeWrapper = styled.section`
-  height: calc(100% - 55px);
-  @media(min-width: 768px) {
-    height: calc(100% - 40px);
-  }
-`;
-
-RequestsStyled.SectionHeaderWrapper = styled.div`
-  height: 74px;
-  padding-top: 27px;
-  padding-left: 16px;
-  margin-bottom: 20px;
-  @media(min-width: 768px) {
-    padding-left: 44px;
-  }
-  @media(min-width: 1025px) {
-    padding-left: 0;
-  }
-`;
-
-RequestsStyled.SectionHeader = styled.span`
-  font-family: 'Avenir-Bold';
-  color: #FF6C58;
-  font-size: 18px;
-`;
-
-RequestsStyled.SectionDescription = styled.span`
+SupportStyled.SmallHeading = styled.span`
   display: block;
-  font-family: 'Avenir-Regular';
-`;
-
-RequestsStyled.loaderWrapper = styled.div`
-  height: calc(100% - 95px);
-  padding: 20px 16px;
-  @media(min-width: 1025px) {
-    height: calc(100% - 79px);
-    padding: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
-  }
-  @media(min-width: 1920px) {
-    padding-top: 32px;
-  }
-`;
-
-RequestsStyled.ListWrapper = styled.div`
-  height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 150px)')};
-  @media(min-width: 768px) {
-    height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 133px)')};
-  }
-  @media(min-width: 1025px) {
-    height: ${props => (props.autoHeight ? 'auto' : 'calc(100% - 131px)')};
-  }
-`;
-
-RequestsStyled.RequestItem = styled.div`
+  font-size: 18px;
+  color: #FF6C58;
+  font-family: Avenir-Bold;
   width: 100%;
-  padding: 0 20px;
-  padding-bottom: 20px;
-  @media(min-width: 768px) {
-    padding-left: 44px;
-  }
+  padding: 15px 10px 10px;
+  border-bottom: 1px solid rgb(204, 204, 204);
   @media(min-width: 1025px) {
-    padding-left: 0;
+    font-size: 20px;
   }
 `;
 
-export default RequestsStyled;
+SupportStyled.Container = styled.div`
+  padding: 10px;
+  @media(min-width: 1025px) {
+    padding-top: 50px;
+  }
+`;
+
+SupportStyled.CenterSection = styled.div`
+  width: 75%;
+`;
+
+SupportStyled.BigHeading = styled.span`
+  font-size: 20px;
+  display: block;
+  font-family: Avenir-Bold;
+  @media(min-width: 1025px) {
+    font-size: 22px;
+  }
+`;
+
+SupportStyled.Description = styled.span`
+  font-size: 14px;
+  font-family: Avenir-Regular;
+`;
+
+SupportStyled.ControlWrapper = styled.div`
+  padding: 10px 0;
+`;
+
+SupportStyled.ControlButton = styled.button`
+  background-color: #FF6C58;
+  color: rgb(255,255,255);
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Bold;
+  cursor: pointer;
+  padding: 10px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+  border-image: initial;
+  &:hover {
+    background-color: #FF3B21;
+  }
+  &:disabled {
+    background-color: #b6b6b6;
+    color: #676767;
+    border-color: #b6b6b6;
+  }
+`;
+
+export default SupportStyled;

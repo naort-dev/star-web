@@ -5,12 +5,12 @@ const SettingsStyled = styled.div`
 `;
 
 SettingsStyled.Container = styled.section`
-  padding: 20px 10px;
+  padding: 0 10px 20px;
   @media(min-width: 768px) {
-    padding: 20px 44px;
+    padding: 0 44px 20px;
   }
   @media(min-width: 1025px) {
-    padding: 20px 10px;
+    padding: 0 10px 20px;
   }
 `;
 

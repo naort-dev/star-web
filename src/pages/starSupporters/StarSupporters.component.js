@@ -1,13 +1,26 @@
 import React from 'react';
+
 import ColumnLayout from '../../components/ColumnLayout';
+import InnerTabs from '../../components/InnerTabs';
+import SupportStyled from './styled';
 
 export default class StarSupporters extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      showTabs: false,
+      selectedTab: 'All',
     };
   }
+
+  switchTab = (selectedTab) => {
+    this.setState({ selectedTab });
+  }
+
+  showTabs = () => {
+    this.setState({ showTabs: true });
+  }
+
   render() {
     return (
       <div>
@@ -15,7 +28,39 @@ export default class StarSupporters extends React.Component {
           selectedSideBarItem="supporters"
           history={this.props.history}
         >
-          <div>Lorem Ipsum</div>
+          <SupportStyled>
+            <SupportStyled.CenterSection>
+              {
+                this.state.showTabs ?
+                  <React.Fragment>
+                    <InnerTabs
+                      labels={['All', 'Supporters', 'Pending']}
+                      switchTab={this.switchTab}
+                      selected={this.state.selectedTab}
+                    />
+                  </React.Fragment>
+                :
+                  <React.Fragment>
+                    <SupportStyled.SmallHeading>
+                        Stars who support your group
+                    </SupportStyled.SmallHeading>
+                    <SupportStyled.Container>
+                      <SupportStyled.BigHeading>
+                        Invite and share your Starsona profile
+                      </SupportStyled.BigHeading>
+                      <SupportStyled.Description>
+                        Lorem Ipsum
+                      </SupportStyled.Description>
+                      <SupportStyled.ControlWrapper>
+                        <SupportStyled.ControlButton onClick={this.showTabs}>
+                          Invite stars
+                        </SupportStyled.ControlButton>
+                      </SupportStyled.ControlWrapper>
+                    </SupportStyled.Container>
+                  </React.Fragment>
+              }
+            </SupportStyled.CenterSection>
+          </SupportStyled>
         </ColumnLayout>
       </div>
     );
