@@ -248,6 +248,7 @@ export default class Landing extends React.Component {
                   updateSelectedVideoType={this.props.updateSelectedVideoType}
                   updateSelectedVideoDate={this.props.updateSelectedVideoDate}
                   toggleFilter={this.toggleFilterSection}
+                  groupClicked={this.state.groupClick}
                 />
               }
             </div>
