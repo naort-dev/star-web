@@ -45,6 +45,9 @@ export default class Requestvideo extends React.Component {
   };
 
   closeRequestFlow = () => {
+    if (this[this.state.requestType] === this.props.stepCount) {
+      this.props.fetchCelebDetails(this.props.userDetails.user_id)
+    }
     this.clearStream();
     this.props.resetRequestFlow();
     this.props.resetPaymentDetails();

@@ -27,6 +27,7 @@ import { Requestvideo } from './pages/requestvideo';
 import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
+import { StarSupporters } from './pages/starSupporters';
 import { Starbio } from './pages/starbio';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
@@ -121,6 +122,12 @@ class App extends React.Component {
                   path="/settings"
                   component={protectRoute({
                     RouteComponent: Settings,
+                  })}
+                />
+                <Route
+                  path="/user/star-supporters"
+                  component={protectRoute({
+                    RouteComponent: StarSupporters,
                   })}
                 />
                 <Route

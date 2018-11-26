@@ -100,7 +100,7 @@ class StarSettings extends React.Component {
             <ShareUser
               type="star"
               heading="Tell your fans that you're on Starsona"
-              description="Lorem Ipsum"
+              description=""
               shareUrl={this.props.userDetails.share_url}
             />
           </SettingsStyled.ContentWrapper>

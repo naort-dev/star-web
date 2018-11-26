@@ -13,7 +13,7 @@ const ShareStyled = styled.div`
 
 ShareStyled.HeadingWrapper = styled.div`
   margin: 10px 0;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   @media(min-width: 768px) {
     margin-bottom: 20px;
     margin-top: 0;
