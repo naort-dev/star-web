@@ -18,8 +18,13 @@ export default class RequestVideoRecorder extends React.Component {
       deviceSupport: true,
       isVideoPaused: true,
       recordedBlob: false,
+      recordingTime: {
+        minutes: 0,
+        seconds: 0,
+      },
     };
     this.mediaRecorder = "";
+    this.recordingDate = null;
     this.recordedBlobs = [];
     this.handleDataAvailable = this.handleDataAvailable.bind(this);
     this.stopRecording = this.stopRecording.bind(this)
@@ -85,6 +90,17 @@ export default class RequestVideoRecorder extends React.Component {
 
   handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
+      let { recordingTime } = this.state;
+      const finalTime = this.recordingDate.getTime() + this.props.duration;
+      const currentTime = new Date(event.timecode).getTime();
+      const recordSeconds = parseInt((finalTime - currentTime) / 1000) % 60;
+      const recordMinutes = parseInt((finalTime - currentTime) / (1000* 60)) % 60;
+      recordingTime = {
+        ...recordingTime,
+        minutes: recordMinutes,
+        seconds: recordSeconds,
+      };
+      this.setState({ recordingTime });
       this.recordedBlobs.push(event.data);
     }
   }
@@ -167,6 +183,7 @@ export default class RequestVideoRecorder extends React.Component {
           bitsPerSecond: 128000,
         };
         try {
+          this.recordingDate = new Date();
           this.mediaRecorder = new MediaRecorder(this.state.stream, options);
           this.mediaRecorder.ondataavailable = this.handleDataAvailable;
           this.mediaRecorder.start(100);
@@ -367,7 +384,16 @@ export default class RequestVideoRecorder extends React.Component {
                 </Scrollbars>
               </VideoRecorderDiv.BookingDetailsWrapper>
           }
-          <VideoRecorderDiv.IndicationText>Recording</VideoRecorderDiv.IndicationText>
+          <VideoRecorderDiv.IndicationText>
+            Recording
+            {
+              <VideoRecorderDiv.RecordDuration>
+                { this.state.recordingTime.minutes !== 0 &&
+                  this.state.recordingTime.minutes > 9 ? this.state.recordingTime.minutes : `0${this.state.recordingTime.minutes}` }
+                :{this.state.recordingTime.seconds > 9 ? this.state.recordingTime.seconds : `0${this.state.recordingTime.seconds}` }
+              </VideoRecorderDiv.RecordDuration>
+            }
+          </VideoRecorderDiv.IndicationText>
           <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} onEnded={() => this.endVideo()} id="video-player" autoPlay muted="muted" />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.Button title="Stop recording" stop onClick={this.stopRecording} />
@@ -393,7 +419,7 @@ export default class RequestVideoRecorder extends React.Component {
                 </Scrollbars>
               </VideoRecorderDiv.BookingDetailsWrapper>
           }
-          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
+          <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} onEnded={() => this.endVideo()} id='preview-video' src={this.props.videoRecorder.recordedBlob} />
           <VideoRecorderDiv.ControlButton paused={this.state.isVideoPaused} onClick={this.playPauseVideo} />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.RerecordButton title="Re record" onClick={() => this.startRecording(true)} />

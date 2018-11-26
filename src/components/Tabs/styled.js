@@ -6,6 +6,7 @@ const TabStyled = styled.div`
   display: flex;
   justify-content: space-between;
   position: relative;
+  min-height: ${props => (props.hideTab ? '56px' : '0')};
   &::after {
     content: '';
     clear: both;
@@ -15,6 +16,7 @@ const TabStyled = styled.div`
     padding-left: 44px;
     padding-right: 44px;
     text-align: center;
+    min-height: ${props => (props.hideTab ? '40px' : '0')};
   }
   @media(min-width: 1025px) {
     border: none;
@@ -25,7 +27,7 @@ const TabStyled = styled.div`
 `;
 
 TabStyled.tabList = styled.ul`
-  display: block;
+  display: ${props => (props.hideTab ? 'none' : 'block')};
   width: ${props => (props.disableFilter ? '100%' : 'calc(100% - 25px)')};
   overflow-x: auto;
   white-space: nowrap;
