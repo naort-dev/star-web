@@ -94,9 +94,9 @@ export default class GroupProfile extends React.Component {
     );
   }
 
-  renderItem = (item) => {
+  renderItem = (item, index) => {
     return (
-      <div className="memberDetails">
+      <div className="memberDetails" key={index}>
         <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" /> 
         <div className="memberPopupDetails">
           <p className="memberName">{item.get_short_name}</p>

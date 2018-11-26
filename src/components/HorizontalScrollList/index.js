@@ -215,7 +215,7 @@ export default class HorizontalScrollList extends React.Component {
             this.infiniteScrollList(this.props.scrollTarget)
           :
             <Scrollbars
-              renderView={props => <div {...props} className="view" id="scrollable-target" />}
+              renderView={props => <div {...props} className="view" id="horizontal-scrollable-target" />}
             >
               {
                 this.props.banner &&
@@ -233,7 +233,7 @@ export default class HorizontalScrollList extends React.Component {
                   </ListStyled.Banner>
               }
               {
-                this.infiniteScrollList('scrollable-target')
+                this.infiniteScrollList('horizontal-scrollable-target')
               }
             </Scrollbars>
         }
