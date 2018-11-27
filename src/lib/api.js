@@ -48,6 +48,7 @@ class Api {
   static groupMembersList = 'user/group_list/';
   static celebrityGroupFollow = 'user/join_group/';
   static fanGroupFollow = 'user/fan/group_follow/';
+  static getGroupMembers = 'user/get_members/'
 }
 
 export default Api;
