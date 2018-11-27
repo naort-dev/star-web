@@ -40,7 +40,7 @@ export const memberListReset = () => ({
 
 
 export const fetchNonMemberList = (offset, refresh) => (dispatch, getState) => {
-  const { limit } = getState().groupSupporters;
+  const { limit } = getState().groupSupporters.nonMemberList;
   dispatch(memberListFetchStart(refresh));
   return fetch.get(`${Api.getGroupMembers}?limit=${limit}&offset=${offset}`)
     .then((resp) => {

@@ -49,7 +49,7 @@ export const removeMember = userId => (dispatch, getState) => {
 };
 
 export const fetchMemberList = (offset, refresh, isMember = false, type) => (dispatch, getState) => {
-  const { limit } = getState().groupSupporters;
+  const { limit } = getState().groupSupporters.memberList;
   dispatch(memberListFetchStart(refresh));
   let apiURl = `${Api.getGroupMembers}?member=${isMember}&limit=${limit}&offset=${offset}`;
   if (type === 'support') {

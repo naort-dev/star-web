@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { deleteGroupMember } from '../../services/groupManagement';
+import { deleteGroupMember, addGroupMember } from '../../services/groupManagement';
 import ColumnLayout from '../../components/ColumnLayout';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Loader from '../../components/Loader';
@@ -58,6 +58,13 @@ export default class StarSupporters extends React.Component {
         .then((success) => {
           if (success) {
             this.props.removeMember(actionData.userId);
+          }
+        });
+    } else if (type === 'accept') {
+      addGroupMember(actionData)
+        .then((success) => {
+          if (success) {
+            this.fetchList(this.state.selectedTab);
           }
         });
     }
