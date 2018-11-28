@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import VideoRenderDiv from './styled';
-import VideoPlayer from '../VideoPlayer';
+import VideoPopup from '../VideoPopup';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes, requestTypeTitle } from '../../constants/requestTypes';
 import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
@@ -49,24 +49,40 @@ export default class RequestDetails extends React.Component {
   }
 
   getQaVideoData = (requestVideo) => {
+    const { requestStatus, orderDetails } = this.props;
     let videoPlayerProps = {};
-    requestVideo.forEach((video) => {
-      if (video.video_status === 4) {
-        videoPlayerProps = {
-          ...videoPlayerProps,
-          primaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
-          primarySrc: video.s3_video_url ? video.s3_video_url : '',
-          ratio: video.width / video.height,
-        };
-      } else if (video.video_status === 5) {
-        videoPlayerProps = {
-          ...videoPlayerProps,
-          secondaryCover: video.s3_thumbnail_url ? video.s3_thumbnail_url : '',
-          secondarySrc: video.s3_video_url ? video.s3_video_url : '',
-          ratio: video.width / video.height,
-        };
-      }
-    });
+    if (requestStatus === 6) {
+      requestVideo.forEach((video) => {
+        if (video.video_status === 4) {
+          videoPlayerProps = {
+            ...videoPlayerProps,
+            ...video,
+            ...this.props.orderDetails,
+            question_answer_videos: {
+              ...videoPlayerProps.question_answer_videos,
+              question: video.s3_video_url,
+              question_thumb: video.s3_thumbnail_url,
+            },
+            full_name: this.props.orderDetails.celebrity,
+          };
+        } else if (video.video_status === 5) {
+          videoPlayerProps = {
+            ...videoPlayerProps,
+            question_answer_videos: {
+              ...videoPlayerProps.question_answer_videos,
+              answer_thumb: video.s3_thumbnail_url,
+              answer: video.s3_video_url,
+            },
+          };
+        }
+      });
+    } else {
+      videoPlayerProps = {
+        ...requestVideo.filter(video => video.video_status === 4)[0],
+        ...orderDetails,
+        full_name: orderDetails.celebrity,
+      };
+    }
     return videoPlayerProps;
   }
 
@@ -222,20 +238,20 @@ export default class RequestDetails extends React.Component {
   }
 
   activateVideo = () => {
-    const { requestVideo, requestType } = this.props;
+    const { requestVideo, requestType, orderDetails } = this.props;
     if (requestVideo && requestVideo.length) {
-      const videoPlayerProps = requestType === 3 ? this.getQaVideoData(requestVideo) : {
-        primaryCover: requestVideo[0].s3_thumbnail_url ? requestVideo[0].s3_thumbnail_url : '',
-        primarySrc: requestVideo[0].s3_video_url ? requestVideo[0].s3_video_url : '',
-        ratio: requestVideo[0].width / requestVideo[0].height,
+      const selectedVideo = requestType === 3 ? this.getQaVideoData(requestVideo) : {
+        ...requestVideo[0],
+        ...orderDetails,
+        full_name: orderDetails.celebrity,
       };
       this.setState({
-        videoPlayerProps,
+        selectedVideo,
       });
     }
   }
   closeVideo = () => {
-    this.setState({ videoPlayerProps: null });
+    this.setState({ selectedVideo: null });
   }
 
   showDetails = () => {
@@ -314,7 +330,7 @@ export default class RequestDetails extends React.Component {
     const { starMode, requestStatus, orderDetails } = this.props;
     const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1 && orderDetails.public_request;
     const fanVideoShare = !starMode && completedStatusList.indexOf(requestStatus) > -1;
-    const canVideoShare = starVideoShare || fanVideoShare;
+    const canVideoShare = (starVideoShare || fanVideoShare) && requestStatus !== 4; // 4 - processing
     const canEdit = !starMode && orderDetails.editable;
     if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
       return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem('respond')}>Respond</VideoRenderDiv.ControlButton>;
@@ -414,6 +430,15 @@ export default class RequestDetails extends React.Component {
     return (
       <VideoRenderDiv>
         {
+          this.state.selectedVideo ?
+            <VideoPopup
+              selectedVideo={this.state.selectedVideo}
+              noSlider
+              closePopUp={this.closeVideo}
+            />
+          : null
+        }
+        {/* {
           this.state.videoPlayerProps ?
             <RequestFlowPopup
               dotsCount={0}
@@ -425,7 +450,7 @@ export default class RequestDetails extends React.Component {
               </VideoRenderDiv.VideoPlayerWrapper>
             </RequestFlowPopup>
           : null
-        }
+        } */}
         <VideoRenderDiv.ProfileContent>
           <VideoRenderDiv.ImageSection
             onClick={this.activateVideo}

@@ -38,6 +38,7 @@ class VideoPopup extends React.Component {
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+    console.log(this.props.selectedVideo);
   }
 
   componentWillReceiveProps(nextProps) {
