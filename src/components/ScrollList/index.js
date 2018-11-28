@@ -145,6 +145,12 @@ export default class ScrollList extends React.Component {
           />
         </ListStyled.listVideos>
       ));
+    } else if (this.props.requestDetails) {
+      return this.props.dataList.map((item, index) => (
+        <ListStyled.listRequests key={index}>
+          {this.props.renderFunction(item)}
+        </ListStyled.listRequests>
+      ));
     } else if (this.props.renderFunction) {
       return this.props.dataList.map((item) => {
         return this.props.renderFunction(item);
@@ -153,13 +159,6 @@ export default class ScrollList extends React.Component {
       return this.props.dataList.map((item, index) => {
         return this.props.renderFunction(item, index);
       });
-      
-    } else if (this.props.requestDetails) {
-      return this.props.dataList.map((item, index) => (
-        <ListStyled.listRequests key={index}>
-          {this.props.renderFunction(item)}
-        </ListStyled.listRequests>
-      ));
     } else if (this.props.earnings) {
       return this.props.dataList.map((item, index) => (
         <EarningsList
