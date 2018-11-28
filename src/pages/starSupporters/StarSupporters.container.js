@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import StarSupporters from './StarSupporters.component';
 import { fetchMemberList, removeMember } from './actions/getMemberList';
-import { fetchNonMemberList } from './actions/getNonMembers';
+import { fetchNonMemberList, removeNonMember } from './actions/getNonMembers';
 
 
 const mapStateToProps = state => ({
@@ -18,6 +18,7 @@ const mapDispatchToProps = dispatch => ({
   fetchMemberList: (offset, refresh, type) => dispatch(fetchMemberList(offset, refresh, true, type)),
   fetchNonMemberList: (offset, refresh) => dispatch(fetchNonMemberList(offset, refresh)),
   removeMember: userId => dispatch(removeMember(userId)),
+  removeNonMember: userId => dispatch(removeNonMember(userId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StarSupporters);

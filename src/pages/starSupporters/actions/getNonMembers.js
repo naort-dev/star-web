@@ -38,6 +38,16 @@ export const memberListReset = () => ({
   type: NON_MEMBER_LIST.reset,
 });
 
+export const removeNonMember = userId => (dispatch, getState) => {
+  let { data: memberList, count, offset } = getState().groupSupporters.nonMemberList;
+  memberList = memberList.filter((member) => {
+    return member.user_id !== userId;
+  });
+  count -= count;
+  offset -= offset;
+  dispatch(memberListFetchSuccess(memberList, offset, count));
+};
+
 
 export const fetchNonMemberList = (offset, refresh) => (dispatch, getState) => {
   const { limit } = getState().groupSupporters.nonMemberList;

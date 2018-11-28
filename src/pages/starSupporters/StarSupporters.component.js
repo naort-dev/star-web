@@ -48,6 +48,7 @@ export default class StarSupporters extends React.Component {
 
   closeInviteView = () => {
     this.setState({ inviteView: false });
+    this.fetchList(this.state.selectedTab);
   }
 
   handleAction = (type, actionData) => {
@@ -65,6 +66,13 @@ export default class StarSupporters extends React.Component {
         .then((success) => {
           if (success) {
             this.fetchList(this.state.selectedTab);
+          }
+        });
+    } else if (type === 'invite') {
+      addGroupMember(actionData)
+        .then((success) => {
+          if (success) {
+            this.props.removeNonMember(actionData);
           }
         });
     }
@@ -163,9 +171,7 @@ export default class StarSupporters extends React.Component {
             }
             <SupportStyled.CenterSection>
               {
-                this.props.membersList.length || this.props.membersLoading ?
-                  this.renderList(this.props)
-                :
+                !this.props.membersList.length && !this.props.membersLoading && this.state.selectedTab === 'All' ?
                   <React.Fragment>
                     <SupportStyled.SmallHeading>
                         Stars who support your group
@@ -184,6 +190,7 @@ export default class StarSupporters extends React.Component {
                       </SupportStyled.ControlWrapper>
                     </SupportStyled.Container>
                   </React.Fragment>
+                : this.renderList(this.props)
               }
             </SupportStyled.CenterSection>
             <SupportStyled.RightSection>

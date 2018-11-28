@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { addGroupMember, deleteGroupMember } from '../../../../services/groupManagement';
 import { starProfessionsDotFormater } from '../../../../utils/dataToStringFormatter';
 import RowStyled from './styled';
 
@@ -9,7 +8,6 @@ export default class RowItem extends React.Component {
     super(props);
     this.state = {
       profileImage: null,
-      invite: false,
       showCancel: false,
     };
     this.profileImage = new Image();
@@ -36,21 +34,6 @@ export default class RowItem extends React.Component {
     if (this.requestedRef && !this.requestedRef.contains(event.target)) {
       this.setState({ showCancel: false });
     }
-  }
-
-  toggleInvite = (state) => {
-    if (state) {
-      addGroupMember(this.props.member.user_id)
-        .then((success) => {
-          if (success) {
-            this.setState({ invite: true });
-          }
-        })
-        .catch(() => {
-          this.setState({ invite: false });
-        });
-    }
-    this.setState({ invite: state });
   }
 
   renderApproval = ({ celebrity_invite: invited }) => {
@@ -105,23 +88,8 @@ export default class RowItem extends React.Component {
               : null
             }
             {
-              !member.celebrity_account[0] && !this.state.invite ?
-                <RowStyled.ControlButton onClick={() => this.toggleInvite(true)}>Invite</RowStyled.ControlButton>
-              : null
-            }
-            {
-              !member.celebrity_account[0] && this.state.invite ?
-                <RowStyled.ControlButton
-                  innerRef={(node) => { this.requestedRef = node; }}
-                  alternate
-                  onClick={() => this.setState({ showCancel: true })}
-                >
-                  Requested
-                  {
-                    this.state.showCancel &&
-                      <RowStyled.ButtonOverlay onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Cancel request</RowStyled.ButtonOverlay>
-                  }
-                </RowStyled.ControlButton>
+              !member.celebrity_account[0] ?
+                <RowStyled.ControlButton onClick={() => this.props.onAction('invite', member.user_id)} >Invite</RowStyled.ControlButton>
               : null
             }
           </RowStyled.ControlWrapper>
