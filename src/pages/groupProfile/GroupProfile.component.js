@@ -37,6 +37,8 @@ export default class GroupProfile extends React.Component {
         if (nextProps.isLoggedIn) {          
           if (nextProps.groupDetails && nextProps.userDetails.role_details && (nextProps.userDetails.role_details.role_code === ROLES.star || nextProps.userDetails.role_details.role_code === ROLES.group)) {
             this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
+          } else if (nextProps.userDetails.celebrity) {
+            this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
           } else {
             this.props.fanFollowStatus(nextProps.groupDetails.user_id, !nextProps.groupDetails.is_follow);
           }
@@ -65,6 +67,8 @@ export default class GroupProfile extends React.Component {
     });
     if (this.props.isLoggedIn) {
       if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group)) {
+        this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
+      } else if (this.props.userDetails.celebrity) {
         this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
       } else {
         this.props.fanFollowStatus(this.props.groupDetails.user_id, !this.props.groupDetails.is_follow);
