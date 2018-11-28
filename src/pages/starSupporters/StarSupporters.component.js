@@ -68,13 +68,6 @@ export default class StarSupporters extends React.Component {
             this.fetchList(this.state.selectedTab);
           }
         });
-    } else if (type === 'invite') {
-      addGroupMember(actionData)
-        .then((success) => {
-          if (success) {
-            this.props.removeNonMember(actionData);
-          }
-        });
     }
   }
 

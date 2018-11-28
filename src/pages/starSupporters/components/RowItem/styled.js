@@ -113,6 +113,7 @@ RowStyled.ControlButton = styled.button`
   cursor: pointer;
   height: 40px;
   padding: 8px 25px;
+  white-space: nowrap;
   text-decoration: none;
   outline: none;
   border-radius: 20px;
