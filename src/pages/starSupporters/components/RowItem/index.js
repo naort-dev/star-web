@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { addGroupMember } from '../../../../services/groupManagement';
 import { starProfessionsDotFormater } from '../../../../utils/dataToStringFormatter';
 import RowStyled from './styled';
 
@@ -9,6 +10,7 @@ export default class RowItem extends React.Component {
     this.state = {
       profileImage: null,
       showCancel: false,
+      invite: false,
     };
     this.profileImage = new Image();
     this.mounted = true;
@@ -28,6 +30,20 @@ export default class RowItem extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
     window.removeEventListener('click', this.toggleCancel);
+  }
+
+  inviteStar = () => {
+    const { member } = this.props;
+    addGroupMember(member.user_id)
+      .then((success) => {
+        if (!success) {
+          this.setState({ invite: false });
+        }
+      })
+      .catch(() => {
+        this.setState({ invite: false });
+      });
+    this.setState({ invite: true });
   }
 
   toggleCancel = (event) => {
@@ -88,8 +104,13 @@ export default class RowItem extends React.Component {
               : null
             }
             {
-              !member.celebrity_account[0] ?
-                <RowStyled.ControlButton onClick={() => this.props.onAction('invite', member.user_id)} >Invite</RowStyled.ControlButton>
+              !member.celebrity_account[0] && !this.state.invite ?
+                <RowStyled.ControlButton onClick={this.inviteStar}>Invite</RowStyled.ControlButton>
+              : null
+            }
+            {
+              !member.celebrity_account[0] && this.state.invite ?
+                <RowStyled.ControlButton disabled>Invite sent</RowStyled.ControlButton>
               : null
             }
           </RowStyled.ControlWrapper>
