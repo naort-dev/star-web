@@ -41,13 +41,13 @@ export default class RowItem extends React.Component {
     if (!invited) {
       return (
         <React.Fragment>
-          <RowStyled.ControlButton innerRef={(node) => { this.requestedRef = node; }} alternate onClick={() => this.setState({ showCancel: true })}>
+          <RowStyled.RequestedButton innerRef={(node) => { this.requestedRef = node; }} alternate onClick={() => this.setState({ showCancel: true })}>
             Requested
             {
               this.state.showCancel &&
                 <RowStyled.ButtonOverlay onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Cancel request</RowStyled.ButtonOverlay>
             }
-          </RowStyled.ControlButton>
+          </RowStyled.RequestedButton>
         </React.Fragment>
       );
     }

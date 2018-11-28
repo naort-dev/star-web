@@ -135,6 +135,16 @@ RowStyled.ControlButton = styled.button`
   }
 `;
 
+RowStyled.RequestedButton = RowStyled.ControlButton.extend`
+  background-color: #fff;
+  color: #FF6C58;
+  border-width: 1px;
+  border-color: #FF6C58;
+  &:hover {
+    background-color: #fff;
+  }
+`;
+
 RowStyled.ButtonOverlay = styled.span`
   position: absolute;
   bottom: -41px;

@@ -43,8 +43,8 @@ export const removeMember = userId => (dispatch, getState) => {
   memberList = memberList.filter((member) => {
     return member.user_id !== userId;
   });
-  count -= count;
-  offset -= offset;
+  count -= 1;
+  offset -= 1;
   dispatch(memberListFetchSuccess(memberList, offset, count));
 };
 
