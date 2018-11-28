@@ -314,7 +314,7 @@ export default class RequestDetails extends React.Component {
     const { starMode, requestStatus, orderDetails } = this.props;
     const starVideoShare = starMode && celebCompletedStatusList.indexOf(requestStatus) > -1 && orderDetails.public_request;
     const fanVideoShare = !starMode && completedStatusList.indexOf(requestStatus) > -1;
-    const canVideoShare = starVideoShare || fanVideoShare;
+    const canVideoShare = (starVideoShare || fanVideoShare) && requestStatus !== 4;// 4 - processing video
     const canEdit = !starMode && orderDetails.editable;
     if (starMode && celebOpenStatusList.indexOf(requestStatus) > -1) {
       return <VideoRenderDiv.ControlButton onClick={() => this.props.selectItem('respond')}>Respond</VideoRenderDiv.ControlButton>;
