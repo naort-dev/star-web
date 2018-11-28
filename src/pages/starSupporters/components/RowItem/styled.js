@@ -155,7 +155,8 @@ RowStyled.ButtonOverlay = styled.span`
   color: #333333;
   padding: 5px;
   border: 1px solid #CCCCCC;
-  border-radius: 3px;
+  border-radius: 6px;
+  box-shadow: -2px 2px 5px #CCCCCC;
   &::after {
     content: "";
     border-bottom: 5px solid #CCCCCC;
