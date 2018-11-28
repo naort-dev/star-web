@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 
 const SupportStyled = styled.div`
-
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  @media(min-width: 1025px) {
+    display: block;
+  }
 `;
 
 SupportStyled.SmallHeading = styled.span`
@@ -17,6 +22,13 @@ SupportStyled.SmallHeading = styled.span`
   }
 `;
 
+SupportStyled.SubHeading = styled.span`
+  display: block;
+  font-size: 18px;
+  color: #FF6C58;
+  font-family: 'Avenir-Bold';
+`;
+
 SupportStyled.Container = styled.div`
   padding: 10px;
   @media(min-width: 1025px) {
@@ -25,7 +37,24 @@ SupportStyled.Container = styled.div`
 `;
 
 SupportStyled.CenterSection = styled.div`
+  order: 2
+  @media(min-width: 1025px) {
+    width: 75%;
+    display: inline-block;
+  }
+`;
 
+SupportStyled.RightSection = styled.div`
+  order: 1;
+  padding: 10px;
+  text-align: right;
+  @media(min-width: 1025px) {
+    width: 25%;
+    padding: 0 10px;
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+  }
 `;
 
 SupportStyled.BigHeading = styled.span`
@@ -47,26 +76,44 @@ SupportStyled.ControlWrapper = styled.div`
 `;
 
 SupportStyled.ControlButton = styled.button`
-  background-color: #FF6C58;
-  color: rgb(255,255,255);
+  background-color: ${props => (props.alternate ? '#fff' : '#FF6C58')};
+  color: ${props => (props.alternate ? '#FF6C58' : '#fff')};
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Avenir-Bold;
+  font-family: ${props => (props.alternate ? 'Avenir-Regular' : 'Avenir-Bold')};
   cursor: pointer;
-  padding: 10px 30px;
+  padding: ${props => (props.alternate ? '10px 15px' : '10px 30px')};
   text-decoration: none;
   outline: none;
   border-radius: 5px;
-  border: 2px solid #FF6C58;
+  border: ${props => (props.alternate ? '1px solid #FF6C58' : '2px solid #FF6C58')};2px solid #FF6C58;
   border-image: initial;
   &:hover {
-    background-color: #FF3B21;
+    background-color: ${props => (props.alternate ? '#fff' : '#FF3B21')};
   }
   &:disabled {
     background-color: #b6b6b6;
     color: #676767;
     border-color: #b6b6b6;
+  }
+`;
+
+SupportStyled.InviteList = styled.div`
+  height: 500px;
+`;
+
+SupportStyled.LoaderWrapper = styled.div`
+  height: calc(100% - 95px);
+  padding: 20px 16px;
+  @media(min-width: 1025px) {
+    height: calc(100% - 79px);
+    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  @media(min-width: 1920px) {
+    padding-top: 32px;
   }
 `;
 

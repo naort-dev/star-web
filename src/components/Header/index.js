@@ -204,7 +204,7 @@ class Header extends React.Component {
             <HeaderSection.InputWrapper>
               <HeaderSection.Input
                 innerRef={(node) => { this.searchInput = node; }}
-                placeholder="Let’s search the Stars!"
+                placeholder="Search Starsona"
                 value={this.state.searchText}
                 onClick={this.showSuggestions}
                 onChange={this.handleSearchChange}

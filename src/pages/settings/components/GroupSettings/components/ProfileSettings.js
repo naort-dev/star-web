@@ -48,10 +48,10 @@ export default class ProfileSettings extends React.Component {
   }
 
   setInitialData = (props) => {
-    let facebook;
-    let twitter;
-    let instagram;
-    let youtube;
+    let facebook = '';
+    let twitter = '';
+    let instagram = '';
+    let youtube = '';
     props.userDetails.social_links.forEach((link) => {
       if (link.social_link_key === 'facebook_url') {
         facebook = link.social_link_value;

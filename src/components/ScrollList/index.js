@@ -74,7 +74,7 @@ export default class ScrollList extends React.Component {
       return;
     }
     if (!this.props.loading) {
-      this.props.fetchData(this.props.offset + this.props.limit);
+      this.props.fetchData(this.props.offset + this.props.limit, false);
     }
   };
 
@@ -145,16 +145,20 @@ export default class ScrollList extends React.Component {
           />
         </ListStyled.listVideos>
       ));
-    } else if (this.props.memberList) {
-      return this.props.dataList.map((item, index) => {
-        return this.props.renderFunction(item, index);
-      });
     } else if (this.props.requestDetails) {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listRequests key={index}>
           {this.props.renderFunction(item)}
         </ListStyled.listRequests>
       ));
+    } else if (this.props.renderFunction) {
+      return this.props.dataList.map((item) => {
+        return this.props.renderFunction(item);
+      });
+    } else if (this.props.memberList) {
+      return this.props.dataList.map((item, index) => {
+        return this.props.renderFunction(item, index);
+      });
     } else if (this.props.earnings) {
       return this.props.dataList.map((item, index) => (
         <EarningsList
