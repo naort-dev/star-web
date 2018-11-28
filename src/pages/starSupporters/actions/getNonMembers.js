@@ -38,9 +38,19 @@ export const memberListReset = () => ({
   type: NON_MEMBER_LIST.reset,
 });
 
+export const removeNonMember = userId => (dispatch, getState) => {
+  let { data: memberList, count, offset } = getState().groupSupporters.nonMemberList;
+  memberList = memberList.filter((member) => {
+    return member.user_id !== userId;
+  });
+  count -= 1;
+  offset -= 1;
+  dispatch(memberListFetchSuccess(memberList, offset, count));
+};
+
 
 export const fetchNonMemberList = (offset, refresh) => (dispatch, getState) => {
-  const { limit } = getState().groupSupporters;
+  const { limit } = getState().groupSupporters.nonMemberList;
   dispatch(memberListFetchStart(refresh));
   return fetch.get(`${Api.getGroupMembers}?limit=${limit}&offset=${offset}`)
     .then((resp) => {

@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 const RowStyled = styled.li`
   padding-right: 15px;
-  padding-bottom: 10px;
+  padding-bottom: 20px;
+  margin-bottom: 5px;
   padding-top: 10px;
   border-bottom: 1px solid #D8D8D8;
   position: relative;
@@ -107,6 +108,7 @@ RowStyled.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
+  position: relative;
   font-family: Avenir-Regular;
   cursor: pointer;
   height: 40px;
@@ -130,6 +132,39 @@ RowStyled.ControlButton = styled.button`
     background-color: #D8D8D8;
     color: #676767;
     border-color: #D8D8D8;
+  }
+`;
+
+RowStyled.RequestedButton = RowStyled.ControlButton.extend`
+  background-color: #fff;
+  color: #FF6C58;
+  border-width: 1px;
+  border-color: #FF6C58;
+  &:hover {
+    background-color: #fff;
+  }
+`;
+
+RowStyled.ButtonOverlay = styled.span`
+  position: absolute;
+  bottom: -41px;
+  left: 0;
+  right: 0;
+  background: #fff;
+  color: #333333;
+  padding: 5px;
+  border: 1px solid #CCCCCC;
+  border-radius: 3px;
+  &::after {
+    content: "";
+    border-bottom: 5px solid #CCCCCC;
+    position: absolute;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    width: 0;
+    height: 0;
+    right: 49px;
+    bottom: 28px;;
   }
 `;
 

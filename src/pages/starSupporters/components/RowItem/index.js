@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { fetch } from '../../../../services/fetch';
-import Api from '../../../../lib/api';
 import { starProfessionsDotFormater } from '../../../../utils/dataToStringFormatter';
 import RowStyled from './styled';
 
@@ -10,7 +8,7 @@ export default class RowItem extends React.Component {
     super(props);
     this.state = {
       profileImage: null,
-      invite: false,
+      showCancel: false,
     };
     this.profileImage = new Image();
     this.mounted = true;
@@ -24,41 +22,39 @@ export default class RowItem extends React.Component {
       }
     };
     this.profileImage.src = profileImage;
+    window.addEventListener('click', this.toggleCancel);
   }
 
   componentWillUnmount() {
     this.mounted = false;
+    window.removeEventListener('click', this.toggleCancel);
   }
 
-  toggleInvite = (state) => {
-    if (state) {
-      fetch.post(Api.celebrityGroupFollow, {
-        account: this.props.member.user_id,
-      })
-        .then((resp) => {
-          if (resp.data.success) {
-            this.setState({ invite: true });
-          }
-        })
-        .catch(() => {
-          this.setState({ invite: false });
-        });
+  toggleCancel = (event) => {
+    if (this.requestedRef && !this.requestedRef.contains(event.target)) {
+      this.setState({ showCancel: false });
     }
-    this.setState({ invite: state });
   }
 
   renderApproval = ({ celebrity_invite: invited }) => {
-    if (invited) {
+    const { member } = this.props;
+    if (!invited) {
       return (
         <React.Fragment>
-          <RowStyled.ControlButton alternate>Requested</RowStyled.ControlButton>
+          <RowStyled.RequestedButton innerRef={(node) => { this.requestedRef = node; }} alternate onClick={() => this.setState({ showCancel: true })}>
+            Requested
+            {
+              this.state.showCancel &&
+                <RowStyled.ButtonOverlay onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Cancel request</RowStyled.ButtonOverlay>
+            }
+          </RowStyled.RequestedButton>
         </React.Fragment>
       );
     }
     return (
       <React.Fragment>
-        <RowStyled.ControlButton>Accept</RowStyled.ControlButton>
-        <RowStyled.ControlButton alternate>Decline</RowStyled.ControlButton>
+        <RowStyled.ControlButton onClick={() => this.props.onAction('accept', member.user_id)}>Accept</RowStyled.ControlButton>
+        <RowStyled.ControlButton alternate onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Decline</RowStyled.ControlButton>
       </React.Fragment>
     );
   }
@@ -79,7 +75,7 @@ export default class RowItem extends React.Component {
           </RowStyled.ProfileDetailWrapper>
           <RowStyled.ControlWrapper>
             {
-              member.celebrity_account[0] && member.celebrity_account[0].approved ?
+              member.celebrity_account[0] && member.celebrity_account[0].approved && member.celebrity_account[0].celebrity_invite ?
                 <React.Fragment>
                   <RowStyled.ControlButton onClick={() => this.props.onAction('view', `/${member.user_id}`)} alternate>View</RowStyled.ControlButton>
                   <RowStyled.ControlButton alternate onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Remove</RowStyled.ControlButton>
@@ -87,18 +83,13 @@ export default class RowItem extends React.Component {
               : null
             }
             {
-              member.celebrity_account[0] && !member.celebrity_account[0].approved ?
+              member.celebrity_account[0] && (!member.celebrity_account[0].approved || !member.celebrity_account[0].celebrity_invite) ?
                 this.renderApproval(member.celebrity_account[0])
               : null
             }
             {
-              !member.celebrity_account[0] && !this.state.invite ?
-                <RowStyled.ControlButton onClick={() => this.toggleInvite(true)}>Invite</RowStyled.ControlButton>
-              : null
-            }
-            {
-              !member.celebrity_account[0] && this.state.invite ?
-                <RowStyled.ControlButton alternate>Requested</RowStyled.ControlButton>
+              !member.celebrity_account[0] ?
+                <RowStyled.ControlButton onClick={() => this.props.onAction('invite', member.user_id)} >Invite</RowStyled.ControlButton>
               : null
             }
           </RowStyled.ControlWrapper>

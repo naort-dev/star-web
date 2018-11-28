@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { deleteGroupMember } from '../../services/groupManagement';
+import { deleteGroupMember, addGroupMember } from '../../services/groupManagement';
 import ColumnLayout from '../../components/ColumnLayout';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Loader from '../../components/Loader';
@@ -48,6 +48,7 @@ export default class StarSupporters extends React.Component {
 
   closeInviteView = () => {
     this.setState({ inviteView: false });
+    this.fetchList(this.state.selectedTab);
   }
 
   handleAction = (type, actionData) => {
@@ -60,11 +61,25 @@ export default class StarSupporters extends React.Component {
             this.props.removeMember(actionData.userId);
           }
         });
+    } else if (type === 'accept') {
+      addGroupMember(actionData)
+        .then((success) => {
+          if (success) {
+            this.fetchList(this.state.selectedTab);
+          }
+        });
+    } else if (type === 'invite') {
+      addGroupMember(actionData)
+        .then((success) => {
+          if (success) {
+            this.props.removeNonMember(actionData);
+          }
+        });
     }
   }
 
   showInviteView = () => {
-    this.setState({ inviteView: true});
+    this.setState({ inviteView: true });
     this.props.fetchNonMemberList(0, true);
   }
 
@@ -156,9 +171,7 @@ export default class StarSupporters extends React.Component {
             }
             <SupportStyled.CenterSection>
               {
-                this.props.membersList.length || this.props.membersLoading ?
-                  this.renderList(this.props)
-                :
+                !this.props.membersList.length && !this.props.membersLoading && this.state.selectedTab === 'All' ?
                   <React.Fragment>
                     <SupportStyled.SmallHeading>
                         Stars who support your group
@@ -177,6 +190,7 @@ export default class StarSupporters extends React.Component {
                       </SupportStyled.ControlWrapper>
                     </SupportStyled.Container>
                   </React.Fragment>
+                : this.renderList(this.props)
               }
             </SupportStyled.CenterSection>
             <SupportStyled.RightSection>
