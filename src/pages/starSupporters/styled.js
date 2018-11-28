@@ -2,6 +2,11 @@ import styled from 'styled-components';
 
 const SupportStyled = styled.div`
   position: relative;
+  display: flex;
+  flex-direction: column;
+  @media(min-width: 1025px) {
+    display: block;
+  }
 `;
 
 SupportStyled.SmallHeading = styled.span`
@@ -32,7 +37,7 @@ SupportStyled.Container = styled.div`
 `;
 
 SupportStyled.CenterSection = styled.div`
-
+  order: 2
   @media(min-width: 1025px) {
     width: 75%;
     display: inline-block;
@@ -40,10 +45,13 @@ SupportStyled.CenterSection = styled.div`
 `;
 
 SupportStyled.RightSection = styled.div`
-  display: none;
+  order: 1;
+  padding: 10px;
+  text-align: right;
   @media(min-width: 1025px) {
     width: 25%;
     padding: 0 10px;
+    text-align: left;
     display: inline-block;
     vertical-align: top;
   }

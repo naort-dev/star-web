@@ -79,7 +79,7 @@ export default class StarSupporters extends React.Component {
   }
 
   showInviteView = () => {
-    this.setState({ inviteView: true});
+    this.setState({ inviteView: true });
     this.props.fetchNonMemberList(0, true);
   }
 
