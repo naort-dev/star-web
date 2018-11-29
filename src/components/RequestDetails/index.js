@@ -333,6 +333,7 @@ export default class RequestDetails extends React.Component {
         </VideoRenderDiv.MoreSettings>
       );
     }
+    return null;
   }
   renderSecondaryControlButton = () => {
     const { starMode, requestStatus, orderDetails } = this.props;
