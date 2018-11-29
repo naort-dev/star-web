@@ -58,13 +58,13 @@ export default class RequestDetails extends React.Component {
           videoPlayerProps = {
             ...videoPlayerProps,
             ...video,
-            ...this.props.orderDetails,
+            ...orderDetails,
             question_answer_videos: {
               ...videoPlayerProps.question_answer_videos,
               question: video.s3_video_url,
               question_thumb: video.s3_thumbnail_url,
             },
-            full_name: this.props.orderDetails.celebrity,
+            full_name: orderDetails.celebrity,
           };
         } else if (video.video_status === 5) {
           videoPlayerProps = {
@@ -251,7 +251,7 @@ export default class RequestDetails extends React.Component {
         this.setState({
           selectedVideo,
         });
-      } else {
+      } else if (requestStatus !== 6 && requestType === 3) {
         this.setState({
           videoPlayerProps: selectedVideo,
         });

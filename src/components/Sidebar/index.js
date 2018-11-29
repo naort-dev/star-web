@@ -121,6 +121,15 @@ class Sidebar extends React.Component {
                             </SidebarStyled.InnerListItemCount>
                           : null
                         }
+                        {
+                          element.selectedName === 'myVideos' && this.props.userDetails.settings_userDetails.completed_fan_unseen_count ?
+                            <SidebarStyled.InnerListItemCount>
+                              {
+                                this.props.userDetails.settings_userDetails.completed_fan_unseen_count
+                              }
+                            </SidebarStyled.InnerListItemCount>
+                          : null
+                        }
                       </SidebarStyled.LinkElement>
                     </Link>
                   </SidebarStyled.InnerCategoryTitle>

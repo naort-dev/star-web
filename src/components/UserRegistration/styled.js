@@ -208,6 +208,7 @@ GroupStyled.InputArea = styled.textarea`
   resize: none;
   background-color: white;
   border: 1px solid #EBEBEB;
+  border-color: ${props => (props.isError ? 'red' : '#EBEBEB')}
   border-radius: 4px;
   &:focus {
     border-color: #FF6C58;
