@@ -28,7 +28,7 @@ VideoPopupStyled.VideoPlayerWrapper = styled.div`
   }
   @media(min-width: 1025px) {
     width: 50%;
-    display: inline-block;
+    display: table-cell;
     height: 100%;
   }
 `;
@@ -37,17 +37,13 @@ VideoPopupStyled.VideoPlayer = styled.div`
   width: 100%;
   height: 100%;
   display: table;
-  @media(min-width: 1025px) {
-    display: flex;
-    align-items: stretch
-  }
 `;
 VideoPopupStyled.VideoContent = styled.section`
   padding-top: 10px;
   background-color: #fff;
   @media(min-width: 1025px) {
     width: 50%;
-    display: inline-block;
+    display: table-cell;
     position: relative;
     vertical-align: top;
     padding: 10px 20px;
