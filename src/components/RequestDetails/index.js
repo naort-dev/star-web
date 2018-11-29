@@ -2,6 +2,7 @@ import React from 'react';
 import moment from 'moment';
 import VideoRenderDiv from './styled';
 import VideoPopup from '../VideoPopup';
+import VideoPlayer from '../VideoPlayer';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes, requestTypeTitle } from '../../constants/requestTypes';
 import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
@@ -77,10 +78,11 @@ export default class RequestDetails extends React.Component {
         }
       });
     } else {
+      const questionVideo = requestVideo.filter(video => video.video_status === 4)[0]; // question video 
       videoPlayerProps = {
-        ...requestVideo.filter(video => video.video_status === 4)[0],
-        ...orderDetails,
-        full_name: orderDetails.celebrity,
+        primaryCover: questionVideo.s3_thumbnail_url ? questionVideo.s3_thumbnail_url : '',
+        primarySrc: questionVideo.s3_video_url ? questionVideo.s3_video_url : '',
+        ratio: questionVideo.width / questionVideo.height,
       };
     }
     return videoPlayerProps;
@@ -238,20 +240,26 @@ export default class RequestDetails extends React.Component {
   }
 
   activateVideo = () => {
-    const { requestVideo, requestType, orderDetails } = this.props;
+    const { requestVideo, requestType, orderDetails, requestStatus } = this.props;
     if (requestVideo && requestVideo.length) {
       const selectedVideo = requestType === 3 ? this.getQaVideoData(requestVideo) : {
         ...requestVideo[0],
         ...orderDetails,
         full_name: orderDetails.celebrity,
       };
-      this.setState({
-        selectedVideo,
-      });
+      if (requestStatus === 6) { // completed video
+        this.setState({
+          selectedVideo,
+        });
+      } else {
+        this.setState({
+          videoPlayerProps: selectedVideo,
+        });
+      }
     }
   }
   closeVideo = () => {
-    this.setState({ selectedVideo: null });
+    this.setState({ selectedVideo: null, videoPlayerProps: null });
   }
 
   showDetails = () => {
@@ -438,7 +446,7 @@ export default class RequestDetails extends React.Component {
             />
           : null
         }
-        {/* {
+        {
           this.state.videoPlayerProps ?
             <RequestFlowPopup
               dotsCount={0}
@@ -450,7 +458,7 @@ export default class RequestDetails extends React.Component {
               </VideoRenderDiv.VideoPlayerWrapper>
             </RequestFlowPopup>
           : null
-        } */}
+        }
         <VideoRenderDiv.ProfileContent>
           <VideoRenderDiv.ImageSection
             onClick={this.activateVideo}
