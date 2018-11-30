@@ -146,27 +146,42 @@ RowStyled.RequestedButton = RowStyled.ControlButton.extend`
   }
 `;
 
-RowStyled.ButtonOverlay = styled.span`
+RowStyled.ButtonOverlayWrapper = styled.div`
   position: absolute;
-  bottom: -41px;
+  bottom: -46px;
   left: 0;
   right: 0;
+`;
+
+RowStyled.ButtonOverlay = styled.span`
   background: #fff;
   color: #333333;
   padding: 5px;
   border: 1px solid #CCCCCC;
   border-radius: 6px;
   box-shadow: -2px 2px 5px #CCCCCC;
+  display: block;
+`;
+
+RowStyled.ButtonArrow = styled.span`
+  border-bottom: 14px solid #CCCCCC;
+  position: relative;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  width: 0;
+  height: 0;
+  display: block;
+  margin: 0 auto;
   &::after {
-    content: "";
-    border-bottom: 5px solid #CCCCCC;
+    content: '';
     position: absolute;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
     width: 0;
     height: 0;
-    right: 56px;
-    bottom: 28px;;
+    left: -12px;
+    top: 1px;
+    border-bottom: 14px solid #fff;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
   }
 `;
 

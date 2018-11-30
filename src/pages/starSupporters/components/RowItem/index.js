@@ -61,11 +61,14 @@ export default class RowItem extends React.Component {
             Request sent
             {
               this.state.showCancel &&
-                <RowStyled.ButtonOverlay
-                  onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}
-                >
-                  Cancel request
-                </RowStyled.ButtonOverlay>
+                <RowStyled.ButtonOverlayWrapper>
+                  <RowStyled.ButtonArrow />
+                  <RowStyled.ButtonOverlay
+                    onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}
+                  >
+                    Cancel request
+                  </RowStyled.ButtonOverlay>
+                </RowStyled.ButtonOverlayWrapper>
             }
           </RowStyled.RequestedButton>
         </React.Fragment>
