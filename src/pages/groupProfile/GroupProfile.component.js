@@ -34,10 +34,10 @@ export default class GroupProfile extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());      
       if (this.state.followFlag) {
-        if (nextProps.isLoggedIn) {          
-          if (nextProps.groupDetails && nextProps.userDetails.role_details && (nextProps.userDetails.role_details.role_code === ROLES.star || nextProps.userDetails.role_details.role_code === ROLES.group)) {
+        if (nextProps.isLoggedIn) {      
+          if (nextProps.groupDetails && nextProps.sessionDetails.role_details && (nextProps.sessionDetails.role_details.role_code === ROLES.star || nextProps.sessionDetails.role_details.role_code === ROLES.group)) {
             this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
-          } else if (nextProps.userDetails.celebrity) {
+          } else if (nextProps.sessionDetails.celebrity) {
             this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
           } else {
             this.props.fanFollowStatus(nextProps.groupDetails.user_id, !nextProps.groupDetails.is_follow);

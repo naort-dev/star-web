@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   memberListDetails: state.memberList,
   memberCount: state.memberList.count,
   isLoggedIn: state.session.isLoggedIn,
+  sessionDetails: state.session.auth_token,
   userDetails: state.userDetails.settings_userDetails,
   detailsLoading: state.groupDetails.loading,
   groupDetailsError: state.groupDetails.error,
