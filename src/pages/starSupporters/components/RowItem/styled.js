@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const RowStyled = styled.li`
   padding-right: 15px;
   padding-bottom: 20px;
-  margin-bottom: 5px;
+  margin-bottom: 25px;
   padding-top: 10px;
   border-bottom: 1px solid #D8D8D8;
   position: relative;
@@ -165,7 +165,7 @@ RowStyled.ButtonOverlay = styled.span`
     border-right: 5px solid transparent;
     width: 0;
     height: 0;
-    right: 49px;
+    right: 56px;
     bottom: 28px;;
   }
 `;

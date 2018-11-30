@@ -146,17 +146,18 @@ export default class GroupProfile extends React.Component {
 
     let followText = 'Follow';
     if (this.props.userDetails && this.props.userDetails.role_details && this.props.isLoggedIn && !this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) {
-      if (this.props.userDetails.role_details.role_code === ROLES.fan) {
+      if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity ) {
         followText = 'Follow';
-      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
+      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.celebrity  || this.props.userDetails.role_details.role_code === ROLES.group) {
         followText = 'Support Group';
       }
     }
+    console.log(followText)
     let followedText = '';
     if (this.props.userDetails && this.props.isLoggedIn && this.props.userDetails.role_details) {
-      if (this.props.userDetails.role_details.role_code === ROLES.fan && this.props.groupDetails.is_follow) {
+      if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity && this.props.groupDetails.is_follow) {
         followedText = 'Following';
-      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
+      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.celebrity || this.props.userDetails.role_details.role_code === ROLES.group) {
         if (this.props.groupDetails.account_follow_details && this.props.groupDetails.account_follow_details.approved) {
           followedText = 'Member';
         } else {
