@@ -465,7 +465,10 @@ export default class QAVideoRecorder extends React.Component {
         {(checkMediaRecorderSupport() && !getMobileOperatingSystem()) && this.state.deviceSupport ?
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
-              { !this.state.streamed && (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) ? <Loader/> :              
+              { !this.state.streamed && (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) ?
+                <VideoRecorderDiv.LoaderWrapper>
+                  <Loader />
+                </VideoRecorderDiv.LoaderWrapper> :              
                 (this.props.src && !this.state.disableEdit ? this.renderEditPreview() : this.renderPreview()) }
             </VideoRecorderDiv.VideoContainer>
           </VideoRecorderDiv>
