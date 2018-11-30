@@ -29,9 +29,7 @@ class VideoPopup extends React.Component {
     super(props);
     this.state = {
       sharePopup: false,
-      hasMore: true,
       commentText: '',
-      videoContentHeight: null,
       snackBarText: '',
     };
   }
@@ -47,14 +45,12 @@ class VideoPopup extends React.Component {
       this.setState({
         commentText: '',
         sharePopup: false,
-        hasMore: true,
-      })
+      });
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.commentList.count - prevProps.commentList.count === 1 && this.scrollBarRef) {
-      // this.scrollBarRef.scrollToBottom();
       if (this.commentInput) {
         this.commentInput.focus();
       }
@@ -63,6 +59,10 @@ class VideoPopup extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
+  }
+
+  setSnackBarText = (text) => {
+    this.setState({ snackBarText: text });
   }
 
   findTime = (commentDate) => {
@@ -88,10 +88,8 @@ class VideoPopup extends React.Component {
   }
 
   loadMoreComments = () => {
-    if (this.props.commentList.data.length >= this.props.commentList.count) {
-      this.setState({ hasMore: false })
-    } else {
-      const offset = this.props.commentList.data[this.props.commentList.data.length-1].id;
+    if (this.props.commentList.data.length < this.props.commentList.count) {
+      const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
       this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset);
     }
   }
@@ -130,10 +128,6 @@ class VideoPopup extends React.Component {
       this.commentAdder();
     }
   }
-
-  setSnackBarText = (text) => {
-    this.setState({ snackBarText: text });
-  }
   
   closeSnackBar = () => {
     this.setState({ snackBarText: '' });
@@ -147,7 +141,7 @@ class VideoPopup extends React.Component {
   renderSocialIcons = (selectedVideo) => {
     const defaultUrl = selectedVideo.video_url;
     const shareUrl = `https://${defaultUrl}`;
-    const title = selectedVideo.booking_title
+    const title = selectedVideo.booking_title;
     return (
       <React.Fragment>
         <VideoPopupStyled.Somenetwork>
