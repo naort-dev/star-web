@@ -35,10 +35,14 @@ class StarSettings extends React.Component {
       await this.props.updateProfilePhoto(profileImages);
       await this.props.updateNotification(notifications);
       this.props.fetchUserDetails();
-      this.setState({ popupMessage: 'Successfully updated setings' });
+      this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
       this.setState({ popupMessage: 'Something went wrong' });
     }
+  }
+
+  closePopup = () => {
+    this.setState({ popupMessage: '' });
   }
 
   submitProfileDetails = async (celebrityDetails, userDetails, socialLinks) => {
@@ -49,7 +53,7 @@ class StarSettings extends React.Component {
     await updateSocialLinks(socialLinks);
     await this.props.updateUserDetails(this.props.userDetails.id, userData);
     this.props.fetchUserDetails();
-    this.setState({ popupMessage: 'Successfully updated setings' });
+    this.setState({ popupMessage: 'Successfully updated settings' });
   }
 
   render() {

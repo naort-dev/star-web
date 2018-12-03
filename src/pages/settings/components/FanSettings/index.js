@@ -24,6 +24,10 @@ class FanSettings extends React.Component {
     this.props.toggleSignup(true, 'star', 2, true);
   }
 
+  closePopup = () => {
+    this.setState({ popupMessage: '' });
+  }
+
   submitAccountDetails = async (userDetails, profileImages, notifications) => {
     const userData = {
       celebrity_details: {},
@@ -34,7 +38,7 @@ class FanSettings extends React.Component {
       await this.props.updateProfilePhoto(profileImages);
       await this.props.updateNotification(notifications);
       this.props.fetchUserDetails();
-      this.setState({ popupMessage: 'Successfully updated setings' });
+      this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
       this.setState({ popupMessage: 'Something went wrong' });
     }

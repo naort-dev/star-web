@@ -39,7 +39,7 @@ class StarSettings extends React.Component {
       await this.props.updateProfilePhoto(profileImages);
       await this.props.updateNotification(notifications);
       this.props.fetchUserDetails();
-      this.setState({ popupMessage: 'Successfully updated setings' });
+      this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
       this.setState({ popupMessage: 'Something went wrong' });
     }
@@ -50,7 +50,7 @@ class StarSettings extends React.Component {
       await updateSocialLinks(socialLinks);
       await updateGroupAccount(groupDetails);
       this.props.fetchUserDetails();
-      this.setState({ popupMessage: 'Successfully updated setings' });
+      this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
       this.setState({ popupMessage: 'Something went wrong' });
     }

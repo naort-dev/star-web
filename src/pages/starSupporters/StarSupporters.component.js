@@ -174,7 +174,7 @@ export default class StarSupporters extends React.Component {
                         Invite and share your Starsona profile
                       </SupportStyled.BigHeading>
                       <SupportStyled.Description>
-                        Lorem Ipsum
+                        
                       </SupportStyled.Description>
                       <SupportStyled.ControlWrapper>
                         <SupportStyled.ControlButton onClick={this.showInviteView}>
