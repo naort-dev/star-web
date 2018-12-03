@@ -29,6 +29,7 @@ class VideoPopup extends React.Component {
     super(props);
     this.state = {
       sharePopup: false,
+      pendingComment: '',
       commentText: '',
       snackBarText: '',
     };
@@ -39,9 +40,15 @@ class VideoPopup extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id) {
+    if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.selectedVideo.video_id && this.state.pendingComment !== '') {
+      this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
+    }
+    if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id && nextProps.selectedVideo.video_id) {
       this.props.resetCommentsList();
       this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
+      if (this.state.pendingComment) {
+        this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
+      }
       this.setState({
         commentText: '',
         sharePopup: false,
@@ -94,14 +101,16 @@ class VideoPopup extends React.Component {
     }
   }
 
-  addVideoComment = (videoId, comment) => {
-    if (this.props.isLoggedIn) {
+  addVideoComment = (videoId, comment, isLoggedIn) => {
+    if (isLoggedIn) {
+      this.setState({ commentText: '' });
       addVideoComment(videoId, comment)
         .then(() => {
+          this.setState({ pendingComment: '' });
           this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
         });
     } else {
-      this.props.closePopUp();
+      this.setState({ pendingComment: comment });
       this.props.toggleLogin(true);
     }
   }
@@ -113,13 +122,12 @@ class VideoPopup extends React.Component {
   }
 
   handleCommentAdd = (event) => {
-    this.setState({ commentText: event.target.value })
+    this.setState({ commentText: event.target.value });
   }
 
   commentAdder = () => {
     if (this.state.commentText !== '') {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
-      this.setState({ commentText: '' });
+      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText, this.props.isLoggedIn);
     }
   }
 
