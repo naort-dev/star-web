@@ -21,3 +21,4 @@ export const celebritySignupProfile = (data) => {
   }).then(resp => resp.data.success)
   );
 };
+

@@ -33,6 +33,7 @@ import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
+import { getConfig } from './store/shared/actions/getConfig';
 import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
@@ -48,6 +49,7 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    this.props.getConfig();
     this.props.fetchGroupTypes();
     if (localStorage && localStorage.getItem('data') !== null) {
       const userData = JSON.parse(localStorage.getItem('data')).user;
@@ -176,6 +178,7 @@ const mapState = state => ({
 });
 
 const mapProps = dispatch => ({
+  getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),

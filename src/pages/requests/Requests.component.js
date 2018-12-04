@@ -21,7 +21,6 @@ export default class Requests extends React.Component {
     super(props);
     this.state = {
       selectedTab: 'All',
-      requestStatus: 'all',
       requestAction: '',
       showActionPopup: false,
       orderDetails: {},
@@ -36,7 +35,7 @@ export default class Requests extends React.Component {
   }
   componentDidMount() {
     this.props.myVideosListReset();
-    this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
+    this.props.fetchMyVideosList(0, true, this.role, 'all');
   }
 
   onVideoUpload = (success) => {
@@ -95,7 +94,7 @@ export default class Requests extends React.Component {
               comments: data.comment,
             })}
             orderDetails={orderDetails}
-            successMessage="Your rating has been recorded!"
+            onSuccess={this.fetchVideosList}
             closePopup={this.closePopup}
           />
         );
@@ -125,6 +124,10 @@ export default class Requests extends React.Component {
         );
       default: return null;
     }
+  }
+
+  fetchVideosList = () => {
+    this.props.fetchMyVideosList(0, true)
   }
 
   changeRequestStatus = (requestId, requestStatus, reason) => {
@@ -263,7 +266,7 @@ export default class Requests extends React.Component {
   }
 
   closePopup = () => {
-    this.setState({ showActionPopup: false })
+    this.setState({ showActionPopup: false });
   }
 
   renderRequests = (request) => {

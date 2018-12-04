@@ -13,10 +13,18 @@ SubmitStyled.Header = styled.span`
 `;
 
 SubmitStyled.SubHeading = styled.span`
-  font-size: 16ppx;
+  font-size: 16px;
   color: rgba(34,34,34,0.7);
   font-family: 'Avenir-Light';
   margin: 4px 0;
+`;
+
+SubmitStyled.SubText = styled.span`
+  display: inline-block;
+  font-size: 14px;
+  color: #333333;
+  font-family: 'Avenir-Regular';
+  cursor: pointer;
 `;
 
 SubmitStyled.ProfileDetail = styled.span`
@@ -52,6 +60,7 @@ SubmitStyled.RatingWrapper = styled.div`
   border-top: 1px solid #D8D8D8;
   border-bottom: 1px solid #D8D8D8;
   margin-top: 10px;
+  text-align: center;
 `;
 
 SubmitStyled.RatingHeading = SubmitStyled.ProfileDetail.extend`
@@ -63,7 +72,6 @@ SubmitStyled.RatingHeading = SubmitStyled.ProfileDetail.extend`
 SubmitStyled.ReasonsWrapper = SubmitStyled.RatingWrapper.extend`
   border-top: none;
   margin-top: 0;
-  text-align: center;
 `;
 
 SubmitStyled.ReasonsList = styled.ul`
@@ -76,11 +84,28 @@ SubmitStyled.ReasonItem = styled.li`
   border: ${props => (props.selected ? 'none' : '1px solid #D8D8D8')};
   color: ${props => (props.selected ? '#fff' : '#333333')};
   background-color: ${props => (props.selected ? '#FF6C58' : '#fff')};
-  border-radius: ${props => (props.tip ? '50%' : '7px')};
-  padding: ${props => (props.tip ? '21px 22px' : '8px 10px')};
+  border-radius: 7px;
+  padding: 8px 10px;
   margin: 5px;
   cursor: pointer;
   user-select: none;
+`;
+
+SubmitStyled.TipsList = SubmitStyled.ReasonsList.extend`
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+`;
+
+SubmitStyled.TipItem = SubmitStyled.ReasonItem.extend`
+  border-radius: 50%;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 SubmitStyled.ConfirmButtonWrapper = styled.div`
@@ -114,10 +139,47 @@ SubmitStyled.ConfirmButton = styled.button`
   }
 `;
 
+SubmitStyled.ColorText = styled.span`
+  color: #FF6C58;
+  font-size: 16px;
+  font-family: 'Avenir-Regular';
+  cursor: pointer;
+`;
+
+SubmitStyled.CustomInput = styled.input`
+  font-family: 'Avenir-Regular';
+  color: #333333;
+  font-size: 14px;
+  text-align:left;
+  outline:none;
+  width: 60px;
+  height: 40px;
+  margin: 4px 0;
+  padding: 8px 8px;
+  resize: none;
+  background-color: white;
+  border: 1px solid #EBEBEB;
+  border-color: #EBEBEB;
+  border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
+  @media(min-width:768px){
+    margin-top:0;
+  }
+  @media(min-width:1025px){
+    margin-top:0;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
+`;
+
 SubmitStyled.RatingTextArea = styled.textarea`
   width: 100%;
   height: 90px;
   resize: none;
+  outline: none;
   border-color: #ABABAB;
   margin-top: 10px;
   margin-bottom: 10px;

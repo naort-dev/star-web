@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { LOGIN } from './shared/actions/login';
 
+import config from './shared/reducers/config';
 import session from './shared/reducers/session';
 import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
@@ -39,6 +40,7 @@ import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
 
 const appReducer = combineReducers({
+  config,
   session,
   celebList,
   professionsList,
