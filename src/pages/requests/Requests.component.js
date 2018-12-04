@@ -7,6 +7,7 @@ import SubmitView from '../../components/SubmitView';
 import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
+import RateView from './components/RateView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Popup from '../../components/Popup';
@@ -86,14 +87,14 @@ export default class Requests extends React.Component {
         );
       case 'rate':
         return (
-          <SubmitView
-            heading="Rate video"
+          <RateView
             onSubmit={data => this.props.rateCelebrity({
               celebrity: orderDetails.celebrity_id,
               fan_rate: data.rating.toString(),
               starsona: orderDetails.id,
               comments: data.comment,
             })}
+            orderDetails={orderDetails}
             successMessage="Your rating has been recorded!"
             closePopup={this.closePopup}
           />
@@ -342,7 +343,7 @@ export default class Requests extends React.Component {
           : null
         }
         {
-          this.state.showActionPopup && this.state.requestAction === 'respond' &&
+          this.state.showActionPopup && (this.state.requestAction === 'respond' || this.state.requestAction === 'rate') &&
             <RequestFlowPopup
               dotsCount={0}
               smallPopup
@@ -352,7 +353,7 @@ export default class Requests extends React.Component {
             </RequestFlowPopup>
         }
         {
-          this.state.showActionPopup && this.state.requestAction !== 'respond' &&
+          this.state.showActionPopup && this.state.requestAction !== 'respond' && this.state.requestAction !== 'rate' &&
             <Popup
               smallPopup
               closePopUp={this.closePopup}
