@@ -28,7 +28,6 @@ import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
 import { StarSupporters } from './pages/starSupporters';
-import { Starbio } from './pages/starbio';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
