@@ -8,6 +8,7 @@ import { requestTypes } from '../../constants/requestTypes';
 import Checkout from './checkout';
 import {
   createCharge,
+  tipPayment,
   paymentFetchSourceStart,
   paymentFetchSourceEnd,
   fetchSourceList,
@@ -49,7 +50,7 @@ class StripeCheckout extends React.Component {
   }
 
   getEphemeralKey = () => {
-    fetchEphemeralKey(this.props.authToken)
+    fetchEphemeralKey()
       .then((resp) => {
         const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
         this.setState({ customerId });
@@ -81,7 +82,12 @@ class StripeCheckout extends React.Component {
     }
   }
   chargeCreator = (tokenId, customerId) => {
-    this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId, customerId);
+    const { paymentType, rate, requestDetails, paymentId } = this.props;
+    if (paymentType === 'tip') {
+      this.props.tipPayment(paymentId, rate, tokenId);
+    } else {
+      this.props.createCharge(requestDetails.id, rate, tokenId, customerId);
+    }
   }
   removeCard = (source) => {
     this.props.modifySourceList(source, this.state.customerId, false);
@@ -149,17 +155,21 @@ class StripeCheckout extends React.Component {
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
         <PaymentStyled.StarDetailsWrapper>
           <PaymentStyled.StarNameWrapper>
-            <PaymentStyled.StarPhoto 
+            <PaymentStyled.StarPhoto
               imageUrl={this.props.profilePhoto}
             />
             <PaymentStyled.RequestDetails>
               <PaymentStyled.SubTitle>
-                Starsona booking
+                { this.props.customHeading ? this.props.customHeading : 'Starsona booking' }
               </PaymentStyled.SubTitle>
               {this.props.fullName}
-              <PaymentStyled.RequestType>
-                {requestTypes[this.props.requestType]}
-              </PaymentStyled.RequestType>
+              {
+                this.props.requestType ?
+                  <PaymentStyled.RequestType>
+                    {requestTypes[this.props.requestType]}
+                  </PaymentStyled.RequestType>
+                : null
+              }
             </PaymentStyled.RequestDetails>
           </PaymentStyled.StarNameWrapper>
           <PaymentStyled.BookingRate>
@@ -228,7 +238,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createCharge: (starsonaId, amount, tokenId, customerId) => dispatch((createCharge(starsonaId, amount, tokenId, customerId))),
+  createCharge: (starsonaId, amount, tokenId) => dispatch((createCharge(starsonaId, amount, tokenId))),
+  tipPayment: (booking, amount, tokenId) => dispatch(tipPayment(booking, amount, tokenId)),
   paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),
