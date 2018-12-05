@@ -19,6 +19,7 @@ class Api {
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
   static otherRelation = 'request/other_relation/';
   static getEphemeralKey = 'payments/generatekey/';
+  static tipPayment = 'payments/paytip/';
   static createCharge = 'payments/createcharge/';
   static starsonaRequest = 'request/stargramz/';
   static starsonaVideo = 'request/stargramz_video/';
