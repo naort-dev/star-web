@@ -3,6 +3,7 @@ import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
 import AlertView from '../../components/AlertView';
+import Loader from '../../components/Loader';
 import Popup from '../../components/Popup';
 import { requestTypes } from '../../constants/requestTypes';
 import Checkout from './checkout';
@@ -151,6 +152,12 @@ class StripeCheckout extends React.Component {
               />
             </Popup>
           : null
+        }
+        {
+          this.props.loading &&
+            <PaymentStyled.LoaderWrapper>
+              <Loader />
+            </PaymentStyled.LoaderWrapper>
         }
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
         <PaymentStyled.StarDetailsWrapper>

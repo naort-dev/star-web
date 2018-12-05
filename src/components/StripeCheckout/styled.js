@@ -252,7 +252,7 @@ PaymentStyled.OtherDetailsWrapper = PaymentStyled.ElementsWrapper.extend`
 PaymentStyled.title = styled.label`
   font-size: 14px;
 `;
-PaymentStyled.loaderWrapper = styled.div`
+PaymentStyled.LoaderWrapper = styled.div`
   position: fixed;
   top: 0;
   z-index: 10;

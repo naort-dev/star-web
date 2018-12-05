@@ -102,7 +102,12 @@ export default class RateView extends React.Component {
     this.props.closePopup();
   }
 
-  sendReason = () => {
+  exitPaymentMode = () => {
+    this.setState({ alertText: 'Tip payment successfull' });
+    this.props.onSuccess();
+  }
+
+  sendFeedback = () => {
     const { orderDetails } = this.props;
     const { tip, rating, comment, reason } = this.state;
     this.setState({ loading: true });
@@ -162,7 +167,7 @@ export default class RateView extends React.Component {
                     fullName={celebrity}
                     paymentId={orderDetails.id}
                     profilePhoto={orderDetails.avatar_photo && orderDetails.avatar_photo.thumbnail_url}
-                    exitPaymentMode={this.closePopup}
+                    exitPaymentMode={this.exitPaymentMode}
                   />
                 :
                   <React.Fragment>
@@ -237,7 +242,7 @@ export default class RateView extends React.Component {
                     </SubmitStyled.ErrorWrapper>
                     <SubmitStyled.ConfirmButtonWrapper>
                       <SubmitStyled.ConfirmButton
-                        onClick={this.sendReason}
+                        onClick={this.sendFeedback}
                         disabled={(!this.state.rating && this.props.heading === 'Rate video')}
                       >
                         Submit
