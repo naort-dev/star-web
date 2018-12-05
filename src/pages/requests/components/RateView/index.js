@@ -55,6 +55,7 @@ export default class RateView extends React.Component {
       alertText: '',
       tip: 0,
       loading: false,
+      customTip: '',
       paymentMode: false,
       enableCustomTip: false,
       tipsList,
@@ -68,6 +69,17 @@ export default class RateView extends React.Component {
       alertText = props.successMessage;
     }
     return { alertText };
+  }
+
+  onCustomInputChange = (event) => {
+    this.setState({ customTip: event.target.value });
+  }
+
+  onCustomInput = (event) => {
+    const { tipsList } = this.state;
+    if (event.keyCode === 13 && tipsList.indexOf(event.target.value) < 0) {
+      this.updateTipsList(event.target.value)
+    }
   }
 
   setReason = (newReason) => {
@@ -84,15 +96,16 @@ export default class RateView extends React.Component {
     this.setState({ enableCustomTip: !this.state.enableCustomTip });
   }
 
-  updateTipsList = (event) => {
-    const { tipsList } = this.state;
-    if (event.keyCode === 13 && tipsList.indexOf(event.target.value) < 0) {
+  updateTipsList = () => {
+    const { tipsList, customTip } = this.state;
+    if (customTip && customTip !== 0 && tipsList.indexOf(customTip) < 0) {
       this.setState({
         tipsList: [
           ...tipsList,
-          event.target.value,
+          Math.round(customTip),
         ],
-        tip: event.target.value,
+        tip: Math.round(customTip),
+        customTip: '',
         enableCustomTip: false,
       });
     }
@@ -223,11 +236,21 @@ export default class RateView extends React.Component {
                           </SubmitStyled.TipsList>
                           {
                             this.state.enableCustomTip ?
-                              <SubmitStyled.CustomInput
-                                type="number"
-                                autoFocus
-                                onKeyDown={this.updateTipsList}
-                              />
+                              <React.Fragment>
+                                <SubmitStyled.CustomInput
+                                  placeholder="Enter custom tip"
+                                  type="number"
+                                  value={this.state.customTip}
+                                  autoFocus
+                                  onChange={this.onCustomInputChange}
+                                  onKeyDown={this.onCustomInput}
+                                />
+                                <SubmitStyled.ConfirmButton
+                                  onClick={this.updateTipsList}
+                                >
+                                  Enter
+                                </SubmitStyled.ConfirmButton>
+                              </React.Fragment>
                             : <SubmitStyled.ColorText onClick={this.toggleCustomTip}>Enter custom amount</SubmitStyled.ColorText>
                           }
                         </SubmitStyled.ReasonsWrapper>

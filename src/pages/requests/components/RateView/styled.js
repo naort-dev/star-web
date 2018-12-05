@@ -152,9 +152,9 @@ SubmitStyled.CustomInput = styled.input`
   font-size: 14px;
   text-align:left;
   outline:none;
-  width: 60px;
+  width: 140px;
   height: 40px;
-  margin: 4px 0;
+  margin: 4px 5px;
   padding: 8px 8px;
   resize: none;
   background-color: white;
