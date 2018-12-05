@@ -1,4 +1,5 @@
 class Api {
+  static getConfig = 'config/';
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
   static getProfessionsList = 'user/filtered_professions/';
@@ -35,6 +36,7 @@ class Api {
   static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
   static changeRequestStatus = 'request/change_request_status/';
   static rating = 'user/fan/celebrity_rating/';
+  static requestFeedback = 'request/feedback/';
   static contactSupport = 'user/contact_support/';
   static reportAbuse = 'user/fan/celebrity_abuse/'
   static stripeRegistration = 'payments/getstripeurl/';

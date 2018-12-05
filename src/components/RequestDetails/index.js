@@ -276,12 +276,16 @@ export default class RequestDetails extends React.Component {
   }
 
   downloadVideo = () => {
-    const { request_video: requestVideo } = this.props.orderDetails;
+    const { request_video: requestVideo, booking_title } = this.props.orderDetails;
     const finalVideo = requestVideo.filter(video => video.video_status === 1)[0];
     const link = document.createElement('a');
+    link.target = '_blank';
+    link.download = `${booking_title}`;
     link.href = finalVideo.s3_video_url;
+    link.style.display = 'none';
+    document.body.appendChild(link);
     link.click();
-    link.remove();
+    document.body.removeChild(link);
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
