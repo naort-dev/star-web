@@ -2,8 +2,8 @@ import axios from 'axios';
 import Api from '../../lib/api';
 import { fetch } from '../fetch';
 
-export const awsImageUpload = (file, extension) => {
-  return fetch(Api.getImageCredentials(extension))
+export default function postReactionMedia(key, file, extension, fileType) {
+  return fetch(Api.getawsCredentials(key, extension, fileType))
     .then((response) => {
       let filename = response.data.data.fields.key.split('/');
       filename = filename[2];
@@ -22,5 +22,5 @@ export const awsImageUpload = (file, extension) => {
     .then((response) => {
       axios.post(response.url, response.formData);
       return response.filename;
-    });
+    })
 }

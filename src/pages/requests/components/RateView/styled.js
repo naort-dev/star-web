@@ -23,8 +23,20 @@ SubmitStyled.SubText = styled.span`
   display: inline-block;
   font-size: 14px;
   color: #333333;
+  user-select: none;
   font-family: 'Avenir-Regular';
   cursor: pointer;
+  &::before {
+    content: '';
+    background: url('assets/images/media.png') no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    margin-right: 5px;
+    vertical-align: middle;
+    margin-bottom: 4px;
+  }
 `;
 
 SubmitStyled.ProfileDetail = styled.span`
@@ -175,6 +187,15 @@ SubmitStyled.CustomInput = styled.input`
   }
 `;
 
+SubmitStyled.CloseButton = styled.span`
+  width: 10px;
+  height: 10px;
+  display: block;
+  background: url('assets/images/close-icon-orange.svg') no-repeat;
+  background-size: contain;
+  cursor: pointer;
+`;
+
 SubmitStyled.RatingTextArea = styled.textarea`
   width: 100%;
   height: 90px;
@@ -194,15 +215,40 @@ SubmitStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 11px;
   margin-top:4px;
-  font-family: 'Avenir-light';
-  text-align:left;
-  
+  font-family: 'Avenir-light';  
 `;
 
 SubmitStyled.ErrorWrapper = styled.div`
   text-align: center;
   display: flex;
   justify-content: center;
+`;
+
+SubmitStyled.FilesList = styled.ul`
+  text-align: center;
+`;
+
+SubmitStyled.FileItem = styled.li`
+  margin: 0 12px;
+  display: inline-block;
+  position: relative;
+  ${SubmitStyled.CloseButton} {
+    position: absolute;
+    top: -7px;
+    right: -12px;
+  }
+`;
+
+SubmitStyled.ImageFile = styled.img`
+  width: 50px;
+  height: 50px;
+  display: block;
+`;
+
+SubmitStyled.VideoFile = styled.video`
+  width: 50px;
+  height: 50px;
+  display: block;
 `;
 
 export default SubmitStyled;
