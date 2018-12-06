@@ -73,7 +73,7 @@ class starRegistrationComponent extends React.Component {
       uploadVideo = new File([this.props.videoRecorder.recordedBuffer], 'profile.mp4');
       this.setState({ videoUrl: this.props.videoRecorder.recordedBlob });
     }
-    getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
+    getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
       .then((response) => {
         if (response && response.filename) {
           axios.post(response.url, response.formData).then(() => {

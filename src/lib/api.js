@@ -35,6 +35,7 @@ class Api {
   static updatePhoto = 'user/profileimages/';
   static celebrityProfile = 'user/celebrity_profile/';
   static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
+  static getawsCredentials = (key, extension, fileType) => `user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
   static changeRequestStatus = 'request/change_request_status/';
   static rating = 'user/fan/celebrity_rating/';
   static requestFeedback = 'request/feedback/';
