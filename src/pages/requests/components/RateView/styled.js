@@ -203,8 +203,8 @@ SubmitStyled.CustomInput = styled.input`
 `;
 
 SubmitStyled.CloseButton = styled.span`
-  width: 10px;
-  height: 10px;
+  width: 20px;
+  height: 20px;
   display: block;
   background: url('assets/images/close-icon-orange.svg') no-repeat;
   background-size: contain;
@@ -228,8 +228,8 @@ SubmitStyled.RatingTextArea = styled.textarea`
 
 SubmitStyled.ErrorMsg = styled.div`
   color:red;
-  font-size: 11px;
-  margin-top:4px;
+  font-size: 13px;
+  margin-top: 4px;
   font-family: 'Avenir-light';  
 `;
 
@@ -241,6 +241,7 @@ SubmitStyled.ErrorWrapper = styled.div`
 
 SubmitStyled.FilesList = styled.ul`
   text-align: center;
+  margin: 15px 0;
 `;
 
 SubmitStyled.FileItem = styled.li`
@@ -249,8 +250,8 @@ SubmitStyled.FileItem = styled.li`
   position: relative;
   ${SubmitStyled.CloseButton} {
     position: absolute;
-    top: -7px;
-    right: -12px;
+    top: -13px;
+    right: -20px;
   }
 `;
 
