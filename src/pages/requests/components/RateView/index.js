@@ -244,7 +244,7 @@ export default class RateView extends React.Component {
   render() {
     const { orderDetails, requestFeedback } = this.props;
     const { booking_title: bookingTitle, celebrity } = orderDetails;
-    const { tip } = this.state;
+    const { tip, filesList } = this.state;
     return (
       <SubmitStyled>
         <input
@@ -296,9 +296,12 @@ export default class RateView extends React.Component {
                         <SubmitStyled.FilesList>
                           { this.renderFiles() }
                         </SubmitStyled.FilesList>
-                        <SubmitStyled.SubText onClick={this.fileUpload}>
-                          Add a reaction video or photo
-                        </SubmitStyled.SubText>
+                        {
+                          filesList.length < 3 &&
+                            <SubmitStyled.SubText onClick={this.fileUpload}>
+                              Add a reaction video or photo
+                            </SubmitStyled.SubText>
+                        }
                         {
                           this.state.filesError && <SubmitStyled.ErrorMsg>{this.state.filesError}</SubmitStyled.ErrorMsg>
                         }
