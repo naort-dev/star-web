@@ -129,6 +129,10 @@ export default class RateView extends React.Component {
     this.setState({ tip, enableCustomTip: false });
   }
 
+  setRating = (rating) => {
+    this.setState({ rating });
+  }
+
   toggleCustomTip = () => {
     this.setState({ enableCustomTip: !this.state.enableCustomTip });
   }
@@ -169,6 +173,10 @@ export default class RateView extends React.Component {
 
   closePopup = () => {
     this.props.closePopup();
+  }
+
+  closePaymentMode = () => {
+    this.setState({ paymentMode: false });
   }
 
   exitPaymentMode = () => {
@@ -244,7 +252,10 @@ export default class RateView extends React.Component {
   render() {
     const { orderDetails, requestFeedback } = this.props;
     const { booking_title: bookingTitle, celebrity } = orderDetails;
-    const { tip } = this.state;
+    const {
+      tip, filesList, paymentMode, comment,
+      rating, filesError, alertText, reason, enableCustomTip, customTip,
+    } = this.state;
     return (
       <SubmitStyled>
         <input
@@ -256,29 +267,32 @@ export default class RateView extends React.Component {
           multiple
         />
         {
-          this.state.alertText !== '' &&
+          alertText !== '' &&
             <Popup
               smallPopup
               closePopUp={this.closePopup}
             >
               <AlertView
-                message={this.state.alertText}
+                message={alertText}
                 closePopup={this.closePopup}
               />
             </Popup>
         }
         <React.Fragment>
           {
-            this.state.paymentMode ?
-              <StripeCheckout
-                rate={tip}
-                paymentType="tip"
-                customHeading="Additional tip for"
-                fullName={celebrity}
-                paymentId={orderDetails.id}
-                profilePhoto={orderDetails.avatar_photo && orderDetails.avatar_photo.thumbnail_url}
-                exitPaymentMode={this.exitPaymentMode}
-              />
+            paymentMode ?
+              <React.Fragment>
+                <StripeCheckout
+                  rate={tip}
+                  paymentType="tip"
+                  customHeading="Additional tip for"
+                  fullName={celebrity}
+                  paymentId={orderDetails.id}
+                  profilePhoto={orderDetails.avatar_photo && orderDetails.avatar_photo.thumbnail_url}
+                  exitPaymentMode={this.exitPaymentMode}
+                />
+                <SubmitStyled.BackButton onClick={this.closePaymentMode} />
+              </React.Fragment>
             :
               <React.Fragment>
                 <SubmitStyled.Header>Rate your video</SubmitStyled.Header>
@@ -289,35 +303,38 @@ export default class RateView extends React.Component {
                 <SubmitStyled.ProfileDetail>{ bookingTitle }</SubmitStyled.ProfileDetail>
                 <SubmitStyled.RatingWrapper>
                   <SubmitStyled.RatingHeading>{this.renderRatingText()}</SubmitStyled.RatingHeading>
-                  <StarRating big onClick={rating => this.setState({ rating })} center />
+                  <StarRating big rating={rating} onClick={this.setRating} center />
                   {
-                    this.state.rating > 2 &&
+                    rating > 2 &&
                       <React.Fragment>
                         <SubmitStyled.FilesList>
                           { this.renderFiles() }
                         </SubmitStyled.FilesList>
-                        <SubmitStyled.SubText onClick={this.fileUpload}>
-                          Add a reaction video or photo
-                        </SubmitStyled.SubText>
                         {
-                          this.state.filesError && <SubmitStyled.ErrorMsg>{this.state.filesError}</SubmitStyled.ErrorMsg>
+                          filesList.length < 3 &&
+                            <SubmitStyled.SubText onClick={this.fileUpload}>
+                              Add a reaction video or photo
+                            </SubmitStyled.SubText>
+                        }
+                        {
+                          filesError && <SubmitStyled.ErrorMsg>{filesError}</SubmitStyled.ErrorMsg>
                         }
                       </React.Fragment>
                   }
                 </SubmitStyled.RatingWrapper>
                 {
-                  this.state.rating !== 0 && this.state.rating <= 2 &&
+                  rating !== 0 && rating <= 2 &&
                     <SubmitStyled.ReasonsWrapper>
                       <SubmitStyled.SubHeading>What went wrong?</SubmitStyled.SubHeading>
                       <SubmitStyled.ReasonsList>
                         {
-                          requestFeedback.map(reason => (
+                          requestFeedback.map(reasonItem => (
                             <SubmitStyled.ReasonItem
-                              selected={this.state.reason === reason}
-                              onClick={() => this.setReason(reason)}
-                              key={reason}
+                              selected={reason === reasonItem}
+                              onClick={() => this.setReason(reasonItem)}
+                              key={reasonItem}
                             >
-                              {reason}
+                              {reasonItem}
                             </SubmitStyled.ReasonItem>
                           ))
                         }
@@ -325,29 +342,29 @@ export default class RateView extends React.Component {
                     </SubmitStyled.ReasonsWrapper>
                 }
                 {
-                  this.state.rating > 2 &&
+                  rating > 2 &&
                     <SubmitStyled.ReasonsWrapper>
                       <SubmitStyled.SubHeading>Want to give an additional tip?</SubmitStyled.SubHeading>
                       <SubmitStyled.TipsList>
                         {
-                          this.state.tipsList.map(tip => (
+                          this.state.tipsList.map(tipItem => (
                             <SubmitStyled.TipItem
-                              key={tip}
-                              selected={this.state.tip === tip}
-                              onClick={() => this.setTip(tip)}
+                              key={tipItem}
+                              selected={tip === tipItem}
+                              onClick={() => this.setTip(tipItem)}
                             >
-                              {tip}$
+                              {tipItem}$
                             </SubmitStyled.TipItem>
                           ))
                         }
                       </SubmitStyled.TipsList>
                       {
-                        this.state.enableCustomTip ?
+                        enableCustomTip ?
                           <React.Fragment>
                             <SubmitStyled.CustomInput
                               placeholder="Enter custom tip"
                               type="number"
-                              value={this.state.customTip}
+                              value={customTip}
                               autoFocus
                               onChange={this.onCustomInputChange}
                               onKeyDown={this.onCustomInput}
@@ -363,8 +380,8 @@ export default class RateView extends React.Component {
                     </SubmitStyled.ReasonsWrapper>
                 }
                 <SubmitStyled.RatingTextArea
-                  placeholder={this.state.rating > 2 ? `Add a thank you note to ${celebrity}` : 'Add a comment'}
-                  value={this.state.comment}
+                  placeholder={rating > 2 ? `Add a thank you note to ${celebrity}` : 'Add a comment'}
+                  value={comment}
                   onChange={event => this.setState({ comment: event.target.value })}
                 />
                 <SubmitStyled.ErrorWrapper>
@@ -373,7 +390,7 @@ export default class RateView extends React.Component {
                 <SubmitStyled.ConfirmButtonWrapper>
                   <SubmitStyled.ConfirmButton
                     onClick={this.sendFeedback}
-                    disabled={(!this.state.rating && this.props.heading === 'Rate video')}
+                    disabled={(!rating && this.props.heading === 'Rate video')}
                   >
                     Submit
                   </SubmitStyled.ConfirmButton>
