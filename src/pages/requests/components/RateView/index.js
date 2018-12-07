@@ -79,7 +79,7 @@ export default class RateView extends React.Component {
 
   onCustomInput = (event) => {
     const { tipsList } = this.state;
-    if (event.keyCode === 13 && tipsList.indexOf(event.target.value) < 0) {
+    if (event.keyCode === 13) {
       this.updateTipsList(event.target.value);
     }
   }
@@ -93,7 +93,7 @@ export default class RateView extends React.Component {
     const imageExtensions = /((jpeg)|(jpg)|(png))$/i;
     if (!allowedExtensions.exec(this.fileInput.value)) {
       this.setState({ filesError: 'Incorrect file format' });
-    } else if (files.length > 3) {
+    } else if (files.length > 3 || filesList.length + files.length > 3) {
       this.setState({ filesError: 'Only 3 files allowed' });
       this.fileInput.value = '';
     } else {
@@ -149,6 +149,12 @@ export default class RateView extends React.Component {
         customTip: '',
         enableCustomTip: false,
       });
+    } else if (tipsList.indexOf(customTip) > -1) {
+      this.setState({
+        tip: tipsList[tipsList.indexOf(customTip)],
+        customTip: '',
+        enableCustomTip: false,
+      });
     }
   }
 
@@ -194,6 +200,9 @@ export default class RateView extends React.Component {
             .then((success) => {
               if (success) {
                 this.props.onSuccess();
+                if (!tip) {
+                  this.closePopup();
+                }
               }
             });
         })
@@ -205,6 +214,7 @@ export default class RateView extends React.Component {
         .then((success) => {
           if (success) {
             this.props.onSuccess();
+            this.closePopup();
           }
         });
     }
@@ -231,7 +241,7 @@ export default class RateView extends React.Component {
           file.fileType === 'image' ?
             <SubmitStyled.ImageFile src={file.fileURL} alt={file.fileData.name} />
           :
-            <SubmitStyled.VideoFile src={file.fileURL} />
+            <SubmitStyled.VideoFile autoPlay muted src={file.fileURL} />
         }
         <SubmitStyled.CloseButton onClick={() => this.modifyFilesList(index)} />
       </SubmitStyled.FileItem>
@@ -264,7 +274,7 @@ export default class RateView extends React.Component {
           ref={(node) => { this.fileInput = node; }}
           onChange={this.onFileChange}
           type="file"
-          multiple
+          multiple="3"
         />
         {
           alertText !== '' &&
