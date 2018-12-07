@@ -76,13 +76,13 @@ class Header extends React.Component {
 
   handleSearchChange = (e) => {
     this.setState({ searchText: e.target.value });
-    if (e.target.value.length >= 3) {
+    if (e.target.value.trim('').length >= 3) {
       this.setState({ showSuggestions: true });
       if (this.suggestionsFetchDelay) {
         clearTimeout(this.suggestionsFetchDelay);
       }
       this.suggestionsFetchDelay = setTimeout(() => {
-        this.props.fetchSuggestionList(this.state.searchText);
+        this.props.fetchSuggestionList(this.state.searchText.trim(''));
       }, 500);
     } else {
       this.setState({ showSuggestions: false });
@@ -91,16 +91,16 @@ class Header extends React.Component {
 
   handleSearchSubmit = (e) => {
     if (e.keyCode === 13) {
-      this.props.updateSearchParam(e.target.value);
+      this.props.updateSearchParam(e.target.value.trim(''));
       if (this.props.history.location.pathname != '/') {
         this.props.history.push('/');
       }
-      this.setState({ searchActive: false, showSuggestions: false });
+      this.setState({ searchText: e.target.value.trim(''), searchActive: false, showSuggestions: false });
     }
   }
 
   showSuggestions = () => {
-    if (this.state.searchText.length >= 3) {
+    if (this.state.searchText.trim('').length >= 3) {
       this.setState({ showSuggestions: true });
     }
   }
@@ -118,7 +118,7 @@ class Header extends React.Component {
     this.setState({ searchActive: true }, () => {
       this.searchInput.focus();
     });
-    if (this.state.searchText.length >= 3) {
+    if (this.state.searchText.trim('').length >= 3) {
       this.setState({ showSuggestions: true });
     }
   }
