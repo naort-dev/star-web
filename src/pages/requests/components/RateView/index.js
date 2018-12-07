@@ -272,7 +272,7 @@ export default class RateView extends React.Component {
           ref={(node) => { this.fileInput = node; }}
           onChange={this.onFileChange}
           type="file"
-          multiple
+          multiple="3"
         />
         {
           alertText !== '' &&
