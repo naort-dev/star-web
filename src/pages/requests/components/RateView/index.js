@@ -200,7 +200,9 @@ export default class RateView extends React.Component {
             .then((success) => {
               if (success) {
                 this.props.onSuccess();
-                this.closePopup();
+                if (!tip) {
+                  this.closePopup();
+                }
               }
             });
         })

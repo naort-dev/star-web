@@ -6,7 +6,7 @@ export default function postReactionMedia(key, file, extension, fileType) {
   return fetch(Api.getawsCredentials(key, extension, fileType))
     .then((response) => {
       let filename = response.data.data.fields.key.split('/');
-      filename = filename[2];
+      filename = filename[filename.length - 1];
       const formData = new FormData();
       formData.append('success_action_status', response.data.data.fields.success_action_status);
       formData.append('signature', response.data.data.fields.signature);
