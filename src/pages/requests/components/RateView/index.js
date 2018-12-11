@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import SubmitStyled from './styled';
 import { awsKeys } from '../../../../constants';
 import postReactionMedia from '../../../../services/postReaction';
@@ -61,6 +62,7 @@ export default class RateView extends React.Component {
       filesList: [],
       filesError: '',
       tipsList,
+      uploadProgess: [],
     };
   }
 
@@ -158,20 +160,41 @@ export default class RateView extends React.Component {
     }
   }
 
-  filesUpload = async () => {
+  stopWindowClose = () => {
+    return 'window does not work';
+  }
+  
+  filesUpload = () => {
     let finalFilesList = [];
     const { filesList } = this.state;
-    const filePromise = filesList.map((file) => {
+    const uploadProgess = [...this.state.uploadProgess];
+    const filePromise = filesList.map((file, index) => {
       return postReactionMedia(awsKeys.reactions, file.fileData, file.extension, file.fileType)
         .then((resp) => {
+          axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
+            uploadProgess[index] = (progressEvent.loaded / progressEvent.total) * 100;
+            this.setState({ 
+              uploadProgess,
+            });
+            if (uploadProgess.filter(progress => progress === 100).length === filesList.length) {
+              console.log(uploadProgess);
+              window.onbeforeunload = function () { }
+            } else {
+              window.onbeforeunload = function(event) {
+                event.preventDefault()
+                event.returnValue = "Write something clever here..";
+              };
+            }
+          },
+          });
           finalFilesList = [
             ...finalFilesList,
             {
-              reaction_file: resp,
+              reaction_file: resp.filename,
               file_type: file.fileType === 'image' ? 1 : 2,
             },
           ];
-        })
+        });
     });
     return Promise.all(filePromise)
       .then(() => finalFilesList)
@@ -210,7 +233,7 @@ export default class RateView extends React.Component {
     if (rating > 2 && filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
-          this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
+          // this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
         })
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
