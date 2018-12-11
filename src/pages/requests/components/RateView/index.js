@@ -62,7 +62,6 @@ export default class RateView extends React.Component {
       filesList: [],
       filesError: '',
       tipsList,
-      uploadProgess: [],
     };
   }
 
@@ -167,17 +166,13 @@ export default class RateView extends React.Component {
   filesUpload = () => {
     let finalFilesList = [];
     const { filesList } = this.state;
-    const uploadProgess = [...this.state.uploadProgess];
+    const uploadProgess = [];
     const filePromise = filesList.map((file, index) => {
       return postReactionMedia(awsKeys.reactions, file.fileData, file.extension, file.fileType)
         .then((resp) => {
           axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
             uploadProgess[index] = (progressEvent.loaded / progressEvent.total) * 100;
-            this.setState({ 
-              uploadProgess,
-            });
             if (uploadProgess.filter(progress => progress === 100).length === filesList.length) {
-              console.log(uploadProgess);
               window.onbeforeunload = function () { }
             } else {
               window.onbeforeunload = function(event) {

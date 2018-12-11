@@ -39,7 +39,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoading: false,
+      showLoading: true,
       timedOut: false,
     };
 
@@ -62,6 +62,9 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
       this.props.fetchGroupTypes();
+    }
+    if (this.props.configLoading !== nextProps.configLoading && nextProps.configLoading) {
+      this.setState({ showLoading: false })
     }
   }
 
@@ -169,6 +172,7 @@ App.propTypes = {
 };
 
 const mapState = state => ({
+  configLoading: state.config.loading,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
