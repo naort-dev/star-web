@@ -10,6 +10,7 @@
     "css-loader": "^0.28.11",
     "exif-js": "^2.3.0",
     "history": "^4.7.2",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "node-sass": "^4.9.0",
     "prop-types": "^15.6.1",

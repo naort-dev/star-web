@@ -68,6 +68,12 @@ class VideoPopup extends React.Component {
     this.props.resetCommentsList();
   }
 
+  onVideoEnded = () => {
+    if (this.props.onVideoEnded) {
+      this.props.onVideoEnded();
+    }
+  }
+
   setSnackBarText = (text) => {
     this.setState({ snackBarText: text });
   }
@@ -248,7 +254,7 @@ class VideoPopup extends React.Component {
               <React.Fragment>
                 <VideoPopupStyled.VideoPlayer>
                   <VideoPopupStyled.VideoPlayerWrapper>
-                    <VideoPlayer {...videoPlayerProps} />
+                    <VideoPlayer onVideoEnded={this.onVideoEnded} {...videoPlayerProps} />
                     {
                       !props.noSlider &&
                         <React.Fragment>

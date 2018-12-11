@@ -287,6 +287,7 @@ export default class Requests extends React.Component {
         requestVideo={request.request_video}
         requestType={request.request_type}
         createdDate={request.created_date}
+        updateVideosList={this.props.updateVideosList}
         selectItem={type => this.requestAction(request, type)}
       />
     )
