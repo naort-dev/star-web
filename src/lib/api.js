@@ -17,6 +17,7 @@ class Api {
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
+  static setVideoView = 'request/readvideo/';
   static otherRelation = 'request/other_relation/';
   static getEphemeralKey = 'payments/generatekey/';
   static tipPayment = 'payments/paytip/';

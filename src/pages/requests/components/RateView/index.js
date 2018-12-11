@@ -139,7 +139,7 @@ export default class RateView extends React.Component {
 
   updateTipsList = () => {
     const { tipsList, customTip } = this.state;
-    if (customTip && customTip !== 0 && tipsList.indexOf(customTip) < 0) {
+    if (customTip && parseInt(customTip) !== 0 && tipsList.indexOf(customTip) < 0) {
       this.setState({
         tipsList: [
           ...tipsList,
@@ -190,33 +190,33 @@ export default class RateView extends React.Component {
     this.props.onSuccess();
   }
 
+  sendRequestFeedback = (files) => {
+    const { orderDetails } = this.props;
+    const { tip, rating, comment, reason } = this.state;
+    requestFeedback(files, orderDetails.id, comment, reason, rating)
+      .then((success) => {
+        if (success) {
+          this.props.onSuccess();
+          if (!tip) {
+            this.closePopup();
+          }
+        }
+      });
+  }
+
   sendFeedback = () => {
     const { orderDetails } = this.props;
     const { tip, rating, comment, reason, filesList } = this.state;
     if (rating > 2 && filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
-          requestFeedback(finalFiles, orderDetails.id, comment, reason, rating)
-            .then((success) => {
-              if (success) {
-                this.props.onSuccess();
-                if (!tip) {
-                  this.closePopup();
-                }
-              }
-            });
+          this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
         })
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
         });
     } else {
-      requestFeedback([], orderDetails.id, comment, reason, rating)
-        .then((success) => {
-          if (success) {
-            this.props.onSuccess();
-            this.closePopup();
-          }
-        });
+      this.sendRequestFeedback([], orderDetails.id, comment, reason, rating);
     }
     if (tip) {
       this.setState({ paymentMode: true });
@@ -400,7 +400,7 @@ export default class RateView extends React.Component {
                 <SubmitStyled.ConfirmButtonWrapper>
                   <SubmitStyled.ConfirmButton
                     onClick={this.sendFeedback}
-                    disabled={(!rating && this.props.heading === 'Rate video')}
+                    disabled={!rating}
                   >
                     Submit
                   </SubmitStyled.ConfirmButton>
