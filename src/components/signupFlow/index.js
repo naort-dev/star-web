@@ -55,13 +55,13 @@ class SignupFlow extends React.Component {
       return <SignUpForm {...this.props} changeStep={this.changeStep} currentStep={this.state.currentStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+        case 7: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
         case 2:
         case 3:
         case 4:
         case 5:
         case 6:
-        case 7: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={() => this.closeSignUp()} />;
+        case 1: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={() => this.closeSignUp()} />;
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
