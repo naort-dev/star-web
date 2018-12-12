@@ -240,7 +240,7 @@ export default class RateView extends React.Component {
     if (rating > 2 && filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
-          // this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
+          this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
         })
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
