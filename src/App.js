@@ -28,18 +28,18 @@ import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
 import { StarSupporters } from './pages/starSupporters';
-import { Starbio } from './pages/starbio';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
+import { getConfig } from './store/shared/actions/getConfig';
 import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoading: false,
+      showLoading: true,
       timedOut: false,
     };
 
@@ -48,6 +48,7 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    this.props.getConfig();
     this.props.fetchGroupTypes();
     if (localStorage && localStorage.getItem('data') !== null) {
       const userData = JSON.parse(localStorage.getItem('data')).user;
@@ -61,6 +62,9 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
       this.props.fetchGroupTypes();
+    }
+    if (this.props.configLoading !== nextProps.configLoading && nextProps.configLoading) {
+      this.setState({ showLoading: false })
     }
   }
 
@@ -168,6 +172,7 @@ App.propTypes = {
 };
 
 const mapState = state => ({
+  configLoading: state.config.loading,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
@@ -176,6 +181,7 @@ const mapState = state => ({
 });
 
 const mapProps = dispatch => ({
+  getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),

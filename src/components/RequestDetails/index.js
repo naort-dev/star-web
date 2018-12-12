@@ -9,7 +9,10 @@ import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
 import StarRating from '../StarRating';
 import { requestExpiryDays } from '../../constants';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
+import { setVideoViewStatus } from '../../services/requestFeedback';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
+
+import { cloneDeep } from 'lodash';
 
 export default class RequestDetails extends React.Component {
   constructor(props) {
@@ -24,11 +27,11 @@ export default class RequestDetails extends React.Component {
     this.coverImage = new Image();
     this.profileImage = new Image();
     this.mounted = true;
-    this.charLimit = 50;
     this.requestType = requestTypes;
     this.openColor = '#FF6C58';
     this.completedColor = '#64C937';
     this.cancelledColor = '#363636';
+    this.videoRead = false;
   }
   componentWillMount() {
     this.coverImage.onload = () => {
@@ -49,12 +52,32 @@ export default class RequestDetails extends React.Component {
     this.mounted = false;
   }
 
+  onVideoEnded = () => {
+    const { requestStatus, requestVideo, orderDetails } = this.props;
+    if (requestStatus === 6) { // completed video
+      const finalVideo = requestVideo.find(video => video.video_status === 1); // find final video
+      if (!finalVideo.read_status) {
+        this.videoRead = true;
+        setVideoViewStatus(finalVideo.video_id)
+          .then((success) => {
+            if (success) {
+              finalVideo.read_status = true;
+              const orderDetailsTemp = cloneDeep(orderDetails);
+              const videoIndex = requestVideo.findIndex(video => video.video_status === 1);
+              orderDetailsTemp[videoIndex] = finalVideo;
+              this.props.updateVideosList(orderDetails.id, orderDetailsTemp);
+            }
+          });
+      }
+    }
+  }
+
   getQaVideoData = (requestVideo) => {
     const { requestStatus, orderDetails } = this.props;
     let videoPlayerProps = {};
-    if (requestStatus === 6) {
+    if (requestStatus === 6) { // completed video
       requestVideo.forEach((video) => {
-        if (video.video_status === 4) {
+        if (video.video_status === 4) { // Question Video
           videoPlayerProps = {
             ...videoPlayerProps,
             ...video,
@@ -66,7 +89,7 @@ export default class RequestDetails extends React.Component {
             },
             full_name: orderDetails.celebrity,
           };
-        } else if (video.video_status === 5) {
+        } else if (video.video_status === 5) { // Answer Video
           videoPlayerProps = {
             ...videoPlayerProps,
             question_answer_videos: {
@@ -259,6 +282,12 @@ export default class RequestDetails extends React.Component {
     }
   }
   closeVideo = () => {
+    const { requestStatus } = this.props;
+    if (requestStatus === 6) { // completed video
+      if (this.videoRead) {
+        this.props.selectItem('rate');
+      }
+    }
     this.setState({ selectedVideo: null, videoPlayerProps: null });
   }
 
@@ -276,12 +305,16 @@ export default class RequestDetails extends React.Component {
   }
 
   downloadVideo = () => {
-    const { request_video: requestVideo } = this.props.orderDetails;
+    const { request_video: requestVideo, booking_title } = this.props.orderDetails;
     const finalVideo = requestVideo.filter(video => video.video_status === 1)[0];
     const link = document.createElement('a');
+    link.target = '_blank';
+    link.download = `${booking_title}`;
     link.href = finalVideo.s3_video_url;
+    link.style.display = 'none';
+    document.body.appendChild(link);
     link.click();
-    link.remove();
+    document.body.removeChild(link);
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
@@ -357,7 +390,7 @@ export default class RequestDetails extends React.Component {
     const currentDate = new Date();
     const celebOpenRequest = starMode && celebOpenStatusList.indexOf(requestStatus) > -1;
     if (celebOpenRequest) {
-      let expiryDate = new Date(createdDate);
+      const expiryDate = new Date(createdDate);
       expiryDate.setDate(finalCreatedDate.getDate() + requestExpiryDays);
       return <VideoRenderDiv.RequestTime timeLeft>{this.findTime(currentDate, expiryDate, true)}</VideoRenderDiv.RequestTime>;
     }
@@ -442,6 +475,7 @@ export default class RequestDetails extends React.Component {
           this.state.selectedVideo ?
             <VideoPopup
               selectedVideo={this.state.selectedVideo}
+              onVideoEnded={this.onVideoEnded}
               noSlider
               closePopUp={this.closeVideo}
             />
@@ -455,7 +489,7 @@ export default class RequestDetails extends React.Component {
               smallPopup
             >
               <VideoRenderDiv.VideoPlayerWrapper>
-                <VideoPlayer {...this.state.videoPlayerProps} />                
+                <VideoPlayer onVideoEnded={this.onVideoEnded} {...this.state.videoPlayerProps} />                
               </VideoRenderDiv.VideoPlayerWrapper>
             </RequestFlowPopup>
           : null
@@ -526,7 +560,7 @@ export default class RequestDetails extends React.Component {
                 </VideoRenderDiv.DetailsWrapper>
               </VideoRenderDiv.DetailsContainer>
             </VideoRenderDiv.StatusDetailsWrapper>
-          </VideoRenderDiv.ContentWrapper>          
+          </VideoRenderDiv.ContentWrapper>
         </VideoRenderDiv.ProfileContent>
       </VideoRenderDiv>
     );

@@ -2,11 +2,11 @@ import axios from 'axios';
 import Api from '../../lib/api';
 import { fetch } from '../fetch';
 
-export const awsImageUpload = (file, extension) => {
-  return fetch(Api.getImageCredentials(extension))
+export default function postReactionMedia(key, file, extension, fileType) {
+  return fetch(Api.getawsCredentials(key, extension, fileType))
     .then((response) => {
       let filename = response.data.data.fields.key.split('/');
-      filename = filename[2];
+      filename = filename[filename.length - 1];
       const formData = new FormData();
       formData.append('success_action_status', response.data.data.fields.success_action_status);
       formData.append('signature', response.data.data.fields.signature);
@@ -19,8 +19,8 @@ export const awsImageUpload = (file, extension) => {
       formData.append('file', file);
       return { formData, url: response.data.data.url, filename };
     })
-    .then((response) => {
-      axios.post(response.url, response.formData);
-      return response.filename;
-    });
+    // .then((response) => {
+    //   axios.post(response.url, response.formData, {onUploadProgress: (progressEvent) => console.log(progressEvent)});
+    //   return response.filename;
+    // })
 }

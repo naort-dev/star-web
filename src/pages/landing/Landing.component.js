@@ -252,17 +252,17 @@ export default class Landing extends React.Component {
                 />
               }
             </div>
-            {
+            {/* {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
                 (!this.props.videosList.data.length && this.props.videosList.loading) ?
                   <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                     <Loader />
                   </LandingStyled.loaderWrapper>
-                :
+                : */}
                   <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                     {this.renderScrollList()}
                   </div>
-            }
+            {/* } */}
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>
       </LandingStyled>

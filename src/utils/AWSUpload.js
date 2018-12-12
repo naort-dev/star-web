@@ -1,9 +1,7 @@
 import { fetch } from '../services/fetch';
 
 export default function getAWSCredentials(url, auth_token, file) {
-  return fetch(url, {
-    'headers': { 'Authorization': `token ${auth_token}` }
-  })
+  return fetch(url)
     .then((response) => {
       let filename = response.data.data.fields.key.split('/');
       filename = filename[2];

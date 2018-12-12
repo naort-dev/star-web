@@ -21,6 +21,9 @@ const PopupStyled = styled.div`
   z-index: 11;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
+  @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+    display: block;
+  }
   @media(min-width: 768px) {
     padding: 30px 0;
   }

@@ -16,17 +16,6 @@ export default (state = { ...initialState }, action) => {
         loading: true,
       };
 
-    // case REQUESTS.success:
-    //   return {
-    //     ...state,
-    //     ...action.user,
-    //     isLoggedIn: true,
-    //     loading: false,
-    //     statusCode: undefined,
-    //     auth_token: action.data.user,
-    //     starRole: action.data.user.celebrity,
-    //   };
-
     case REQUESTS.failed:
       return {
         ...state,
@@ -41,11 +30,6 @@ export default (state = { ...initialState }, action) => {
       return {
         ...state,
         loading: false,
-      };
-
-    case REQUESTS.logout:
-      return {
-        ...initialState,
       };
 
     default:

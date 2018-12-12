@@ -355,13 +355,6 @@ export default class Confirm extends React.Component {
     }
     return (
       <Request.Wrapper>
-        {
-          this.props.loading ?
-            <ConfirmationModal.loaderWrapper>
-              <Loader />
-            </ConfirmationModal.loaderWrapper>
-          : null
-        }
         <Request.Content>
           <Request>
             <Request.LeftSection>
