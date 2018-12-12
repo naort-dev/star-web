@@ -5,6 +5,8 @@ import axios from 'axios';
 import SubmitStyled from './styled';
 import { awsKeys } from '../../../../constants';
 import postReactionMedia from '../../../../services/postReaction';
+import { CancelToken } from '../../../../services/fetch';
+import { getExifData, imageRotation } from '../../../../utils/imageProcessing';
 import StarRating from '../../../../components/StarRating';
 import StripeCheckout from '../../../../components/StripeCheckout';
 import Popup from '../../../../components/Popup';
@@ -100,13 +102,19 @@ export default class RateView extends React.Component {
     } else {
       Array.from(files).forEach((file) => {
         let newFile = {};
-        const processFiles = (result) => {
+        const processFiles = async (result) => {
           newFile = {
             fileData: file,
             fileURL: result.currentTarget.result,
             extension: file.type.split('/')[1],
             fileType: imageExtensions.exec(file.type) ? 'image' : 'video',
           };
+          if (newFile.fileType === 'image') {
+            const exifData = await getExifData(newFile.fileData);
+            const correctedFile = await imageRotation(file, exifData);
+            newFile.fileData = correctedFile;
+            newFile.fileURL = window.URL.createObjectURL(correctedFile);
+          }
           filesList = [...filesList, newFile];
           this.setState({ filesList, filesError: '' });
         };
@@ -177,8 +185,11 @@ export default class RateView extends React.Component {
             } else {
               window.onbeforeunload = (event) => {
                 event.preventDefault();
-                event.returnValue = "Write something clever here..";
-                this.filesUpload();
+                event.returnValue = 'Write something clever here..';
+                const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                if (isChrome) {
+                  this.filesUpload();
+                }
               };
             }
           },
@@ -229,7 +240,7 @@ export default class RateView extends React.Component {
     if (rating > 2 && filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
-          this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
+          // this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
         })
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
