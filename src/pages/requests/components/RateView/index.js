@@ -175,9 +175,10 @@ export default class RateView extends React.Component {
             if (uploadProgess.filter(progress => progress === 100).length === filesList.length) {
               window.onbeforeunload = function () { }
             } else {
-              window.onbeforeunload = function(event) {
-                event.preventDefault()
+              window.onbeforeunload = (event) => {
+                event.preventDefault();
                 event.returnValue = "Write something clever here..";
+                this.filesUpload();
               };
             }
           },
@@ -228,7 +229,7 @@ export default class RateView extends React.Component {
     if (rating > 2 && filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
-          // this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
+          this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
         })
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
