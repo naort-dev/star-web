@@ -65,6 +65,7 @@ export default class RateView extends React.Component {
       filesError: '',
       tipsList,
     };
+    this.cancelTokens = [];
   }
 
   static getDerivedStateFromProps = (props, state) => {
@@ -167,17 +168,22 @@ export default class RateView extends React.Component {
     }
   }
 
-  stopWindowClose = () => {
-    return 'window does not work';
+  stopFileUploads = () => {
+    this.cancelTokens.forEach((token) => {
+      token.cancel('Duplicate request');
+    });
   }
-  
+
   filesUpload = () => {
     let finalFilesList = [];
     const { filesList } = this.state;
     const uploadProgess = [];
+    this.stopFileUploads();
+    this.cancelTokens = [];
     const filePromise = filesList.map((file, index) => {
       return postReactionMedia(awsKeys.reactions, file.fileData, file.extension, file.fileType)
         .then((resp) => {
+          this.cancelTokens[index] = CancelToken.source();
           axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
             uploadProgess[index] = (progressEvent.loaded / progressEvent.total) * 100;
             if (uploadProgess.filter(progress => progress === 100).length === filesList.length) {
@@ -193,6 +199,7 @@ export default class RateView extends React.Component {
               };
             }
           },
+          cancelToken: this.cancelTokens[index].token,
           });
           finalFilesList = [
             ...finalFilesList,
@@ -227,7 +234,8 @@ export default class RateView extends React.Component {
       .then((success) => {
         if (success) {
           this.props.onSuccess();
-          if (!tip) {
+          if (rating <= 2 || !tip) {
+            this.stopFileUploads();
             this.closePopup();
           }
         }
@@ -248,8 +256,10 @@ export default class RateView extends React.Component {
     } else {
       this.sendRequestFeedback([], orderDetails.id, comment, reason, rating);
     }
-    if (tip) {
+    if (rating > 2 && tip) {
       this.setState({ paymentMode: true });
+    } else {
+      this.stopFileUploads();
     }
   }
 
