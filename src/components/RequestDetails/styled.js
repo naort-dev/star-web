@@ -288,7 +288,7 @@ VideoRenderDiv.MoreSettingsList = styled.ul`
 `;
 
 VideoRenderDiv.MoreSettingsListItem = styled.li`
-  padding: 5px;
+  padding: 9px;
   &:hover, &:focus {
     color: #FF6C58;
   }

@@ -19,8 +19,8 @@ export default function postReactionMedia(key, file, extension, fileType) {
       formData.append('file', file);
       return { formData, url: response.data.data.url, filename };
     })
-    .then((response) => {
-      axios.post(response.url, response.formData);
-      return response.filename;
-    })
+    // .then((response) => {
+    //   axios.post(response.url, response.formData, {onUploadProgress: (progressEvent) => console.log(progressEvent)});
+    //   return response.filename;
+    // })
 }

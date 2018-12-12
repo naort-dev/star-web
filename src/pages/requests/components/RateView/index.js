@@ -1,9 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import SubmitStyled from './styled';
 import { awsKeys } from '../../../../constants';
 import postReactionMedia from '../../../../services/postReaction';
+import { CancelToken } from '../../../../services/fetch';
+import { getExifData, imageRotation } from '../../../../utils/imageProcessing';
 import StarRating from '../../../../components/StarRating';
 import StripeCheckout from '../../../../components/StripeCheckout';
 import Popup from '../../../../components/Popup';
@@ -99,13 +102,19 @@ export default class RateView extends React.Component {
     } else {
       Array.from(files).forEach((file) => {
         let newFile = {};
-        const processFiles = (result) => {
+        const processFiles = async (result) => {
           newFile = {
             fileData: file,
             fileURL: result.currentTarget.result,
             extension: file.type.split('/')[1],
             fileType: imageExtensions.exec(file.type) ? 'image' : 'video',
           };
+          if (newFile.fileType === 'image') {
+            const exifData = await getExifData(newFile.fileData);
+            const correctedFile = await imageRotation(file, exifData);
+            newFile.fileData = correctedFile;
+            newFile.fileURL = window.URL.createObjectURL(correctedFile);
+          }
           filesList = [...filesList, newFile];
           this.setState({ filesList, filesError: '' });
         };
@@ -158,20 +167,41 @@ export default class RateView extends React.Component {
     }
   }
 
-  filesUpload = async () => {
+  stopWindowClose = () => {
+    return 'window does not work';
+  }
+  
+  filesUpload = () => {
     let finalFilesList = [];
     const { filesList } = this.state;
-    const filePromise = filesList.map((file) => {
+    const uploadProgess = [];
+    const filePromise = filesList.map((file, index) => {
       return postReactionMedia(awsKeys.reactions, file.fileData, file.extension, file.fileType)
         .then((resp) => {
+          axios.post(resp.url, resp.formData, { onUploadProgress: (progressEvent) => {
+            uploadProgess[index] = (progressEvent.loaded / progressEvent.total) * 100;
+            if (uploadProgess.filter(progress => progress === 100).length === filesList.length) {
+              window.onbeforeunload = function () { }
+            } else {
+              window.onbeforeunload = (event) => {
+                event.preventDefault();
+                event.returnValue = 'Write something clever here..';
+                const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+                if (isChrome) {
+                  this.filesUpload();
+                }
+              };
+            }
+          },
+          });
           finalFilesList = [
             ...finalFilesList,
             {
-              reaction_file: resp,
+              reaction_file: resp.filename,
               file_type: file.fileType === 'image' ? 1 : 2,
             },
           ];
-        })
+        });
     });
     return Promise.all(filePromise)
       .then(() => finalFilesList)
