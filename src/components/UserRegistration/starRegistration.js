@@ -14,7 +14,7 @@ import CoverUpload from './modules/coverUpload';
 import { imageSizes } from '../../constants/imageSizes';
 import QAVideoRecorder from '../QAVideoRecorder';
 import { recorder } from '../../constants/videoRecorder';
-import getAWSCredentials from '../../utils/AWSUpload'
+import getAWSCredentials from '../../utils/AWSUpload';
 import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */

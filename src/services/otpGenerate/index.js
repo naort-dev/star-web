@@ -19,5 +19,5 @@ export const validateOtp = (phoneNumber, countryCode, code) => {
   };
   return fetch.post(Api.validateOtpCode, {
     ...obj,
-  }).then(resp => resp.data);
+  }).then(resp => resp.data).catch(e => e);
 };

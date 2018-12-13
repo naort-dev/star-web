@@ -220,7 +220,7 @@ GroupStyled.Label = styled.div`
     align-items: center;
     ${GroupStyled.numberVerification} {
       margin-left: 5px;
-      color: #FF6C58;
+      color: ${props => (props.colorText === 'Verify' ? '#FF6C58' : 'green')};
     }
     input {
       opacity : unset;
@@ -871,8 +871,40 @@ GroupStyled.AnotherRepButton = styled.button`
   outline: none;
 `;
 GroupStyled.RepFormWrapper = styled.div``;
-GroupStyled.OTPWrapper = styled.div``;
-GroupStyled.OTPInput = styled.input``;
-GroupStyled.OTPSubmit = styled.button``;
+GroupStyled.OTPWrapper = styled.div`
+  text-align: center;
+  & .errorElement {
+    color: red;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 12px;
+  }
+`;
+GroupStyled.OTPInput = styled.input`
+  margin: 10px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 20px;
+  outline: none;
+`;
+GroupStyled.OTPSubmit = styled.button`
+  background-color: #FF6C58;
+  color: rgb(255,255,255);
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Bold;
+  cursor: pointer;
+  padding: 10px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+  border-image: initial;
+  &:hover {
+    background-color: #FF3B21;
+  }
+`;
 
 export default GroupStyled;
