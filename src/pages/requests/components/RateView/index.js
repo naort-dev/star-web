@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import validator from 'validator';
 import SubmitStyled from './styled';
 import { awsKeys } from '../../../../constants';
 import postReactionMedia from '../../../../services/postReaction';
@@ -78,11 +79,12 @@ export default class RateView extends React.Component {
   }
 
   onCustomInputChange = (event) => {
-    this.setState({ customTip: event.target.value });
+    if (validator.isNumeric(event.target.value, { no_symbols: true }) || event.target.value === '') {
+      this.setState({ customTip: event.target.value });
+    }
   }
 
   onCustomInput = (event) => {
-    const { tipsList } = this.state;
     if (event.keyCode === 13) {
       this.updateTipsList(event.target.value);
     }
@@ -149,13 +151,14 @@ export default class RateView extends React.Component {
 
   updateTipsList = () => {
     const { tipsList, customTip } = this.state;
+    console.log(customTip, tipsList)
     if (customTip && parseInt(customTip) !== 0 && tipsList.indexOf(customTip) < 0) {
       this.setState({
         tipsList: [
           ...tipsList,
-          Math.round(customTip),
+          customTip,
         ],
-        tip: Math.round(customTip),
+        tip: customTip,
         customTip: '',
         enableCustomTip: false,
       });
