@@ -241,13 +241,16 @@ export default class StarNotifications extends React.Component {
         phoneCheckedBox,
         value,
         representatives,
+        country,
         countryCode,
       } = this.state;
+      const codeNumber = this.phone.props.metadata.countries[country][0];
+      const originalNumber = this.state.value.substring(codeNumber.length + 1, value.length);
       const notifications = {
         emailNotify: emailCheckedBox,
         email: email.value,
         phoneNotify: phoneCheckedBox,
-        phone: value,
+        phone: originalNumber,
         countryCode,
       };
       const repUpdateStatus = representatives.map((rep, index) => {
