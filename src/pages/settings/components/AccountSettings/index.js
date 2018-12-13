@@ -300,7 +300,7 @@ export default class AccountSettings extends React.Component {
             <SettingsStyled.Label>Notifications</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.CheckBoxesWrapper>
-                <SettingsStyled.CheckBoxWrapper id="checkbox_container">
+                <SettingsStyled.CheckBoxWrapper className="checkbox_container">
                   <span>Messages from Starsona</span>
                   <input
                     id="celebrityStarsonaRequest"
@@ -308,9 +308,9 @@ export default class AccountSettings extends React.Component {
                     checked={this.state.starsonaMessage}
                     onChange={() => this.setState({ starsonaMessage: !this.state.starsonaMessage })}
                   />
-                  <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                  <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
-                <SettingsStyled.CheckBoxWrapper id="checkbox_container">
+                <SettingsStyled.CheckBoxWrapper className="checkbox_container">
                   <span>Account updates</span>
                   <input
                     id="celebrityStarsonaRequest"
@@ -318,9 +318,9 @@ export default class AccountSettings extends React.Component {
                     checked={this.state.accountUpdates}
                     onChange={() => this.setState({ accountUpdates: !this.state.accountUpdates })}
                   />
-                  <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                  <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
-                <SettingsStyled.CheckBoxWrapper id="checkbox_container">
+                <SettingsStyled.CheckBoxWrapper className="checkbox_container">
                   <span>My Starsona updates</span>
                   <input
                     id="celebrityStarsonaRequest"
@@ -328,7 +328,7 @@ export default class AccountSettings extends React.Component {
                     checked={this.state.starsonaVideos}
                     onChange={() => this.setState({ starsonaVideos: !this.state.starsonaVideos })}
                   />
-                  <span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                  <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
               </SettingsStyled.CheckBoxesWrapper>
             </SettingsStyled.WrapsInput>

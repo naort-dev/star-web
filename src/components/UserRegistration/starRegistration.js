@@ -3,13 +3,17 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import GroupStyled from './styled';
 import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
+
+/*   Modules   */
 import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
+import StarNotifications from './modules/starNotifications';
+/*             */
 import { imageSizes } from '../../constants/imageSizes';
 import QAVideoRecorder from '../QAVideoRecorder';
 import { recorder } from '../../constants/videoRecorder';
-import getAWSCredentials from '../../utils/AWSUpload'
+import getAWSCredentials from '../../utils/AWSUpload';
 import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */
@@ -20,6 +24,7 @@ import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+import { updateNotification } from '../../store/shared/actions/updateNotification';
 import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
 import { logOutUser } from '../../store/shared/actions/login';
 
@@ -117,23 +122,43 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
+  submitNotifications = (notifications) => {
+    const { notification_settings: currentNotifications } = this.props.userDetails.settings_userDetails;
+    let newNotifications = {
+      ...currentNotifications,
+    };    
+    newNotifications = {
+      ...newNotifications,
+      email_notification: notifications.email_notification,
+      mobile_notification: notifications.mobile_notification,
+      secondary_email: notifications.secondary_email,
+      mobile_number: notifications.mobile_number,
+      mobile_country_code: notifications.mobile_country_code,
+    };
+
+    this.props.updateNotification(newNotifications)
+      .then(() => {
+        this.props.changeStep(this.props.currentStep + 1);
+      })
+  }
+
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
       ...celebrityDetails,
       profession: celebrityDetails.profession.map(profession => profession.id.toString()),
-    }
+    };
     const finalUserDetails = {
       celebrity_details: {},
       user_details: userDetails,
-    }
+    };
     updateSocialLinks(socialLinks);
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
   }
 
-  render() {
+  render() { 
     return (
       <GroupStyled>
         {
@@ -184,7 +209,7 @@ class starRegistrationComponent extends React.Component {
                   </GroupStyled.VideoRecorderWrapper>
               }
               {
-                this.props.currentStep === 6 && (
+                this.props.currentStep === 7 && (
                   <GroupStyled.DetailsWrapper>
                     <GroupStyled.HeadingWrapper>
                       <GroupStyled.SubHeading>
@@ -204,6 +229,11 @@ class starRegistrationComponent extends React.Component {
                   </GroupStyled.DetailsWrapper>
                 )
               }
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
+                <StarNotifications
+                  onComplete={this.submitNotifications}
+                />
+              </GroupStyled.StepWrapper>
             </GroupStyled.ContentWrapper>
         }
       </GroupStyled>
@@ -238,10 +268,11 @@ const mapDispatchToProps = dispatch => ({
   uploadVideo: () => dispatch(uploadVideo()),
   onSaveImage: imageData => dispatch(saveImage(imageData)),
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
+  updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   changePassword: data => dispatch(changePassword(data)),
   logOut: () => dispatch(logOutUser()),
   resetChangePassord: () => dispatch(resetChangePassord()),
 });
 
-export const StarRegistration =  connect(mapStateToProps, mapDispatchToProps)(starRegistrationComponent);
+export const StarRegistration = connect(mapStateToProps, mapDispatchToProps)(starRegistrationComponent);

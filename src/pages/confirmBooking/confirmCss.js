@@ -1,7 +1,7 @@
 import { injectGlobal } from 'styled-components';
 
 injectGlobal`
-  #checkbox_container {
+  .checkbox_container {
     font-family: 'Avenir-Bold';
   }
 `;
