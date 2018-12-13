@@ -16,10 +16,10 @@ export default class StarNotification extends React.Component {
       emailCheckedBox: props.notificationDetails.email_notification,
       phoneCheckedBox: props.notificationDetails.mobile_notification,
       value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
-        `'+'${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
+        `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
         : '',
       addEmailFlag: false,
-      email: { value: '', isValid: false, message: '' },
+      email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
       representatives: [],
       anotherRepButton: true,
       phoneNumberVerify: 'Verify',
@@ -36,6 +36,7 @@ export default class StarNotification extends React.Component {
     const { representatives } = this.state;
     this.props.representativeDetails.forEach((key, index) => {      
       representatives.push({
+        repId: key.representative_id,
         firstName: key.first_name,
         lastName: key.last_name,
         email: key.email,
@@ -361,6 +362,38 @@ export default class StarNotification extends React.Component {
     }
   }
 
+  cancelDetails = (props) => {
+    const { representatives } = this.state;
+    this.setState({
+      representatives: [],
+    }, () => {
+      let repArray = [];
+      this.props.representativeDetails.forEach((key, index) => {
+        repArray.push({
+          firstName: key.first_name,
+          lastName: key.last_name,
+          email: key.email,
+          phone: key.phone,
+          firstNameError: '',
+          lastNameError: '',
+          emailError: '',
+          emailInvite: key.email_notify,
+          phoneInvite: key.sms_notify,
+          phoneCheck: false,
+        });        
+      });
+      this.setState({
+        representatives: repArray,
+        emailCheckedBox: props.notificationDetails.email_notification,
+        phoneCheckedBox: props.notificationDetails.mobile_notification,
+        value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
+          `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
+          : '',
+        email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
+      });
+    });
+  }
+
   renderRepresentatives = () => {
     const { representatives } = this.state;
     return representatives.map((rep, index) => (
@@ -559,7 +592,7 @@ export default class StarNotification extends React.Component {
                   </div>
                   {
                     value !== '' && value !== undefined && isValidPhoneNumber(value) &&
-                    <NotificationStyled.numberVerification colorText={this.state.phoneNumberVerify} onClick={() => this.getOtp()}>
+                  <NotificationStyled.numberVerification colorText={this.state.phoneNumberVerify} onClick={() => this.getOtp()}>
                       {this.state.phoneNumberVerify}
                     </NotificationStyled.numberVerification>
                   }
@@ -599,7 +632,12 @@ export default class StarNotification extends React.Component {
               </NotificationStyled.RepFormWrapper>
             }
           </NotificationStyled.RepresentativeWrapper>
-          <NotificationStyled.ControlWrapper>
+          <NotificationStyled.ControlWrapper multiple>
+            <NotificationStyled.CancelButton
+              onClick={() => this.cancelDetails(this.props)}
+            >
+              Cancel
+            </NotificationStyled.CancelButton>
             <NotificationStyled.ControlButton
               onClick={() => this.submitNotification()}
             >

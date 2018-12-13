@@ -196,7 +196,7 @@ NotificationStyled.Label = styled.div`
     align-items: center;
     ${NotificationStyled.numberVerification} {
       margin-left: 5px;
-      color: ${props => (props.colorText === 'Verify' ? '#FF6C58' : 'green')};
+      color: ${props => (props.colorText === 'Verified' ? 'green' : '#FF6C58')};
     }
     input {
       opacity : unset;
@@ -378,4 +378,12 @@ NotificationStyled.ControlButton = styled.button`
     border-color: #b6b6b6;
   }
 `;
+
+NotificationStyled.CancelButton = styled.span`
+  font-family: 'Avenir-Light';
+  padding: 10px 0;
+  color: #969696;
+  cursor: pointer;
+`;
+
 export default NotificationStyled;

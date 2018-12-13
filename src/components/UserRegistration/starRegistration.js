@@ -126,15 +126,16 @@ class starRegistrationComponent extends React.Component {
     const { notification_settings: currentNotifications } = this.props.userDetails.settings_userDetails;
     let newNotifications = {
       ...currentNotifications,
-    };
+    };    
     newNotifications = {
       ...newNotifications,
-      email_notification: notifications.emailNotify,
-      mobile_notification: notifications.phoneNotify,
-      secondary_email: notifications.email,
-      mobile_number: notifications.phone,
-      mobile_country_code: notifications.countryCode,
+      email_notification: notifications.email_notification,
+      mobile_notification: notifications.mobile_notification,
+      secondary_email: notifications.secondary_email,
+      mobile_number: notifications.mobile_number,
+      mobile_country_code: notifications.mobile_country_code,
     };
+
     this.props.updateNotification(newNotifications)
       .then(() => {
         this.props.changeStep(this.props.currentStep + 1);
