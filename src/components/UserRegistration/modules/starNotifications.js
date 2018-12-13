@@ -14,6 +14,7 @@ export default class StarNotifications extends React.Component {
     addEmailFlag: false,
     email: { value: '', isValid: false, message: '' },
     addForm: false,
+    representatives: [],
     rep1FirstName: { value: '', isValid: false, message: '' },
     rep1LastName: { value: '', isValid: false, message: '' },
     rep1Phone: '',
@@ -57,17 +58,48 @@ export default class StarNotifications extends React.Component {
     }
   }
 
-  getRepresentativeForm = () => {
-    if (!this.state.rep2Form) {
-      this.setState({
-        addForm: true,
-        anotherRepButton: true,
-        rep1FirstName: { value: '', isValid: false, message: '' },
-        rep1LastName: { value: '', isValid: false, message: '' },
-        rep1Phone: '',
-        rep1Email: { value: '', isValid: false, message: '' },
+  setRepPhone = (index, value) => {
+    const { representatives } = this.state;
+    const currentRep = { ...representatives[index] };
+    currentRep.phone = value;
+    if (value !== '') {
+      currentRep.phoneError = '';
+    }
+    representatives[index] = currentRep;
+    this.setState({ representatives });
+  }
+
+  addRepForm = () => {
+    const { representatives } = this.state;
+    const repCount = representatives.length;
+    let prevRepValid = true;
+    if (repCount) {
+      const firstNameValid = this.checkRepName(repCount - 1, 'firstName');
+      const lastNameValid = this.checkRepName(repCount - 1, 'lastName');
+      const emailValid = this.checkRepEmail(repCount - 1, 'email');
+      let phoneValid = true;
+      if (representatives[repCount - 1].phoneCheck) {
+        phoneValid = isValidPhoneNumber(representatives[repCount - 1].phone);
+      }
+      prevRepValid = firstNameValid && lastNameValid && emailValid && phoneValid;
+    }
+    if (repCount + 1 < 3 && prevRepValid) {
+      representatives.push({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        firstNameError: '',
+        lastNameError: '',
+        emailError: '',
+        emailInvite: false,
+        phoneInvite: false,
+        phoneCheck: false,
       });
     }
+    this.setState({
+      representatives,
+    });
   }
 
   handleFieldChange = (event, status) => {
@@ -82,44 +114,17 @@ export default class StarNotifications extends React.Component {
     });
   }
 
-  handleEmailPhoneInvite = (event, status, checkedBox) => {
-    if (checkedBox === 'rep1EmailInvite') {
-      this.setState({
-        rep1EmailInvite: !status,
-      });
-    } else if (checkedBox === 'rep1PhoneInvite') {
-      this.setState({
-        rep1PhoneInvite: !status,
-      }, () => {
-        if (this.state.rep1Phone === '' && this.state.rep1PhoneInvite) {
-          this.setState({
-            rep1phoneCheck: true,
-          });
-        } else {
-          this.setState({
-            rep1phoneCheck: false,
-          });
-        }
-      });
-    } else if (checkedBox === 'rep2EmailInvite') {
-      this.setState({
-        rep2EmailInvite: !status,
-      });
-    } else if (checkedBox === 'rep2PhoneInvite') {
-      this.setState({
-        rep2PhoneInvite: !status,
-      }, () => {
-        if (this.state.rep2Phone === '' && this.state.rep2PhoneInvite) {
-          this.setState({
-            rep2phoneCheck: true,
-          });
-        } else {
-          this.setState({
-            rep2phoneCheck: false,
-          });
-        }
-      });
+  handleEmailPhoneInvite = (index, key) => {
+    const { representatives } = this.state;
+    const currentRep = { ...representatives[index] };
+    currentRep[key] = !currentRep[key];
+    if (key === 'phoneInvite' && currentRep.phone === '' && currentRep.phoneInvite) {
+      currentRep.phoneCheck = true;
+    } else {
+      currentRep.phoneCheck = false;
     }
+    representatives[index] = currentRep;
+    this.setState({ representatives });
   }
 
   addEmailAddress = () => {
@@ -156,120 +161,56 @@ export default class StarNotifications extends React.Component {
     return true;
   };
 
-  checkRepEmail = (email) => {
+  checkRepEmail = (index, key) => {
+    const { representatives } = this.state;
+    const currentRep = { ...representatives[index] };
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // To check email validity
-    if (email === 'rep1Email') {
-      if (validator.isEmpty(this.state.rep1Email.value)) {
-        this.setState({
-          rep1Email: { ...this.state.rep1Email, isValid: false, message: 'Enter an email address' },
-        });
-        return false;
-      }
-      if (!emailRegex.test(this.state.rep1Email.value)) {
-        this.setState({
-          rep1Email: { ...this.state.rep1Email, isValid: false, message: 'Enter a valid email address' },
-        });
-        return false;
-      }
-      this.setState({
-        rep1Email: { ...this.state.rep1Email, message: '', isValid: true },
-      });
-      return true;
-    } else if (email === 'rep2Email') {
-      if (validator.isEmpty(this.state.rep2Email.value)) {
-        this.setState({
-          rep2Email: { ...this.state.rep2Email, isValid: false, message: 'Enter an email address' },
-        });
-        return false;
-      }
-      if (!emailRegex.test(this.state.rep2Email.value)) {
-        this.setState({
-          rep2Email: { ...this.state.rep2Email, isValid: false, message: 'Enter a valid email address' },
-        });
-        return false;
-      }
-      this.setState({
-        rep2Email: { ...this.state.rep2Email, message: '', isValid: true },
-      });
-      return true;
+    if (validator.isEmpty(currentRep[key])) {
+      currentRep[`${key}Error`] = 'Enter an email address';
+      representatives[index] = currentRep;
+      this.setState({ representatives });
+      return false;
+    } else if (!emailRegex.test(currentRep[key])) {
+      currentRep[`${key}Error`] = 'Enter a valid email address';
+      representatives[index] = currentRep;
+      this.setState({ representatives });
+      return false;
     }
+    currentRep[`${key}Error`] = '';
+    representatives[index] = currentRep;
+    this.setState({ representatives });
+    return true;
   };
 
-  acceptRepEmailHandler = (email, emailText) => {
-    if (email === 'rep1Email') {
-      this.setState({ rep1Email: { ...this.state.rep1Email, value: emailText } });
-    } else if (email === 'rep2Email') {
-      this.setState({ rep2Email: { ...this.state.rep2Email, value: emailText } });
-    }
+  acceptRepEmailHandler = (index, key, email) => {
+    const { representatives } = this.state;
+    const currentRep = { ...representatives[index] };
+    currentRep[key] = email;
+    representatives[index] = currentRep;
+    this.setState({ representatives });
   };
 
-  checkRepName = (nameText) => {
-    if (nameText === 'rep1FirstName') {
-      if (validator.isEmpty(this.state.rep1FirstName.value)) {
-        this.setState({
-          rep1FirstName: { ...this.state.rep1FirstName, message: 'Enter first name' },
-        });
-        return false;
-      }
-      this.setState({
-        rep1FirstName: { ...this.state.rep1FirstName, message: '', isValid: true },
-      });
-      return true;
-    } else if (nameText === 'rep1LastName') {
-      if (validator.isEmpty(this.state.rep1LastName.value)) {
-        this.setState({
-          rep1LastName: { ...this.state.rep1LastName, message: 'Enter last name' },
-        });
-        return false;
-      }
-      this.setState({
-        rep1LastName: { ...this.state.rep1LastName, message: '', isValid: true },
-      });
-      return true;
-    } else if (nameText === 'rep2FirstName') {
-      if (validator.isEmpty(this.state.rep2FirstName.value)) {
-        this.setState({
-          rep2FirstName: { ...this.state.rep2FirstName, message: 'Enter first name' },
-        });
-        return false;
-      }
-      this.setState({
-        rep2FirstName: { ...this.state.rep2FirstName, message: '', isValid: true },
-      });
-      return true;
-    } else if (nameText === 'rep2LastName') {
-      if (validator.isEmpty(this.state.rep2LastName.value)) {
-        this.setState({
-          rep2LastName: { ...this.state.rep2LastName, message: 'Enter last name' },
-        });
-        return false;
-      }
-      this.setState({
-        rep2LastName: { ...this.state.rep2LastName, message: '', isValid: true },
-      });
-      return true;
+  checkRepName = (index, key) => {
+    const { representatives } = this.state;
+    const currentRep = { ...representatives[index] };
+    if (validator.isEmpty(currentRep[key])) {
+      currentRep[`${key}Error`] = key === 'firstName' ? 'Enter first name' : 'Enter last name';
+      representatives[index] = currentRep;
+      this.setState({ representatives });
+      return false;
     }
     return true;
   }
 
-  acceptNameHandler = (value, nameText) => {
-    if (nameText === 'rep1FirstName') {
-      this.setState({
-        rep1FirstName: { ...this.state.rep1FirstName, value },
-      });
-    } else if (nameText === 'rep1LastName') {
-      this.setState({
-        rep1LastName: { ...this.state.rep1LastName, value },
-      });
-    } else if (nameText === 'rep2FirstName') {
-      this.setState({
-        rep2FirstName: { ...this.state.rep2FirstName, value },
-      });
-    } else if (nameText === 'rep2LastName') {
-      this.setState({
-        rep2LastName: { ...this.state.rep2LastName, value },
-      });
+  acceptNameHandler = (index, key, value) => {
+    const { representatives } = this.state;
+    const currentRep = { ...representatives[index] };
+    currentRep[key] = value;
+    if (value !== '') {
+      currentRep[`${key}Error`] = '';
     }
+    representatives[index] = currentRep;
+    this.setState({ representatives });
   }
 
   acceptEmailHandler = (e) => {
@@ -279,54 +220,47 @@ export default class StarNotifications extends React.Component {
   acceptOTP = (e) => {
     this.setState({ otpValue: e.target.value });
   }
+
+  checkAllValidity = () => {
+    const { emailCheckedBox, addEmailFlag, phoneCheckedBox, value, representatives } = this.state;
+    let emailValid = true;
+    let phoneValid = true;
+    let repValid = true;
+    if (emailCheckedBox && addEmailFlag) {
+      emailValid = this.checkEmail();
+    }
+    if (phoneCheckedBox && !isValidPhoneNumber(value)) {
+      phoneValid = false;
+    }
+    representatives.forEach((rep, index) => {
+      const firstName = this.checkRepName(index, 'firstName');
+      const lastName = this.checkRepName(index, 'lastName');
+      const email = this.checkRepEmail(index, 'email');
+      let repPhoneValid = true;
+      if (rep.phoneCheck) {
+        repPhoneValid = isValidPhoneNumber(rep.phone);
+      }
+      if (repValid) {
+        repValid = firstName && lastName && email && repPhoneValid;
+      }
+    });
+    return emailValid && phoneValid && repValid;
+  }
+
   submitNotification = () => {
-    if (!this.state.email.isValid && this.state.emailCheckedBox && this.state.addEmailFlag) {
-      this.checkEmail();
-    } else if (this.state.phoneCheckedBox && !isValidPhoneNumber(this.state.value)) {
-      return false;
-    } else if (this.state.addForm && (!this.state.rep1FirstName.isValid || !this.state.rep1LastName.isValid || !this.state.rep1Email.isValid)) {
-      this.checkRepName('rep1FirstName');
-      this.checkRepName('rep1LastName');
-      this.checkRepEmail('rep1Email');
-      return false;
-    } else if (this.state.rep2Form && (!this.state.rep2FirstName.isValid || !this.state.rep2LastName.isValid || !this.state.rep2Email.isValid)) {
-      this.checkRepName('rep2FirstName');
-      this.checkRepName('rep2LastName');
-      this.checkRepEmail('rep2Email');
-      return false;
-    }
-    console.log('success');
-    return true;
-  }
-
-  closePopup = (form) => {
-    if (form === 'form1') {
-      this.setState({
-        addForm: false,
-      });
-    } else if (form === 'form2') {
-      this.setState({
-        rep2Form: false,
-        anotherRepButton: true,
-      });
-    }
-  }
-
-  addAnotherRepForm = () => {
-    if (this.state.rep1FirstName.isValid && this.state.rep1LastName.isValid && this.state.rep1Email.isValid) {
-      this.setState({
-        anotherRepButton: false,
-        rep2Form: true,
-        rep2FirstName: { value: '', isValid: false, message: '' },
-        rep2LastName: { value: '', isValid: false, message: '' },
-        rep2Phone: '',
-        rep2Email: { value: '', isValid: false, message: '' },
-      });
+    if (this.checkAllValidity()) {
+      console.log('success');
     } else {
-      this.checkRepName('rep1FirstName');
-      this.checkRepName('rep1LastName');
-      this.checkRepEmail('rep1Email');
+      console.log('not valid');
     }
+  }
+
+  deleteRepForm = (index) => {
+    const { representatives } = this.state;
+    representatives.splice(index, 1);
+    this.setState({
+      representatives,
+    });
   }
 
   closeOtpPopup = () => {
@@ -347,16 +281,102 @@ export default class StarNotifications extends React.Component {
       });
   }
 
+  renderRepresentatives = () => {
+    const { representatives } = this.state;
+    return representatives.map((rep, index) => (
+      <GroupStyled.AddRepForm key={index}>
+        <div className="RepDetailText">
+          <p>Representative #{index + 1}</p>
+          <GroupStyled.CloseRepForm onClick={() => this.deleteRepForm(index)}>X</GroupStyled.CloseRepForm>
+        </div>
+        <div className="representativeForm1">
+          <div className="repFormElement">
+            <GroupStyled.Rep1FirstName
+              type="text"
+              name={`rep${index}FirstName`}
+              value={rep.firstName}
+              onChange={event => this.acceptNameHandler(index, 'firstName', event.target.value)}
+              onBlur={() => this.checkRepName(index, 'firstName')}
+              placeholder="First name"
+            />
+            <div className="errorElement">{rep.firstNameError}</div>
+          </div>
+          <div className="repFormElement">
+            <GroupStyled.Rep1LastName
+              type="text"
+              name={`rep${index}LastName`}
+              value={rep.lastName}
+              onChange={event => this.acceptNameHandler(index, 'lastName', event.target.value)}
+              onBlur={() => this.checkRepName(index, 'lastName')}
+              placeholder="Last name"
+            />
+            <div className="errorElement">{rep.lastNameError}</div>
+          </div>
+          <div className="repFormElement">
+            <GroupStyled.Rep1Email
+              type="email"
+              name={`rep${index}Email`}
+              value={rep.email}
+              onChange={event => this.acceptRepEmailHandler(index, 'email', event.target.value)}
+              onBlur={() => this.checkRepEmail(index, 'email')}
+              placeholder="Email"
+            />
+            <div className="errorElement">{rep.emailError}</div>
+          </div>
+          <div className="repFormElement">
+            <PhoneInput
+              placeholder="Mobile phone(optional)"
+              value={rep.phone}
+              onChange={value => this.setRepPhone(index, value)}
+            />
+            <div className="errorElement">
+              {
+                !rep.phoneCheck && rep.phone !== '' && rep.phone !== undefined && !isValidPhoneNumber(rep.phone) ? 'Invalid phone number' : undefined
+              }
+              {
+                rep.phoneCheck && 'Phone number required'
+              }
+            </div>
+          </div>
+          <div className="notifyRepresentative">
+            <p>
+            Your representative will receive an invitation they will need to confirm.
+            </p>
+            <p>How should we send the invitation?</p>
+            <GroupStyled.WrapsInput className="checkboxWrapper">
+              <GroupStyled.Label className="checkbox_container">
+                <span className="checkBoxHeading">Send an invite via email address.</span>
+                <GroupStyled.CheckBox
+                  id="rep2EmailUpdates"
+                  type="checkbox"
+                  checked={rep.emailInvite}
+                  onChange={event => this.handleEmailPhoneInvite(index, 'emailInvite', event.target.value)}
+                />
+                <GroupStyled.Span htmlFor="rep2EmailUpdates" className="checkmark" />
+              </GroupStyled.Label>
+            </GroupStyled.WrapsInput>
+            <GroupStyled.WrapsInput className="checkboxWrapper">
+              <GroupStyled.Label className="checkbox_container">
+                <span className="checkBoxHeading">Send an invite via text message.</span>
+                <GroupStyled.CheckBox
+                  id="rep2PhoneUpdates"
+                  type="checkbox"
+                  checked={rep.phoneInvite}
+                  onChange={event => this.handleEmailPhoneInvite(index, 'phoneInvite', event.target.value)}
+                />
+                <GroupStyled.Span htmlFor="rep2PhoneUpdates" className="checkmark" />
+              </GroupStyled.Label>
+            </GroupStyled.WrapsInput>
+          </div>
+        </div>
+      </GroupStyled.AddRepForm>
+    ))
+  }
+
   render() {
     const {
-      value, email, rep1FirstName,
-      rep1LastName,
-      rep1Phone,
-      rep1Email,
-      rep2Phone,
-      rep2FirstName,
-      rep2LastName,
-      rep2Email,
+      value,
+      email,
     } = this.state;
     return (
       <GroupStyled.DetailsWrapper>
@@ -420,7 +440,7 @@ export default class StarNotifications extends React.Component {
             {
               this.state.addEmailFlag &&
               <GroupStyled.EmailWrapper>
-                <GroupStyled.AddEmail 
+                <GroupStyled.AddEmail
                   email={this.state.addEmailFlag} 
                   type="email"
                   name="email"
@@ -481,7 +501,7 @@ export default class StarNotifications extends React.Component {
         <GroupStyled.RepresentativeWrapper>
           <GroupStyled.addRepWrapper>
             <GroupStyled.AddRepresentative
-              onClick={() => this.getRepresentativeForm()}
+              onClick={() => this.addRepForm()}
             />
             <div className="addRepText">Add Representative
               <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
@@ -490,190 +510,21 @@ export default class StarNotifications extends React.Component {
             </div>
           </GroupStyled.addRepWrapper>
           {
-            this.state.addForm &&
+            this.state.representatives.length !== 0 &&
             <GroupStyled.RepFormWrapper>
-              <GroupStyled.AddRepForm>
-                <div className="RepDetailText">
-                  <p>Representative #1</p>
-                  <GroupStyled.CloseRepForm onClick={() => this.closePopup('form1')}>X</GroupStyled.CloseRepForm>
-                </div>
-                <div className="representativeForm1">
-                  <div className="repFormElement">
-                    <GroupStyled.Rep1FirstName
-                      type="text"
-                      name="rep1FirstName"
-                      value={rep1FirstName.value}
-                      onChange={event => this.acceptNameHandler(event.target.value, 'rep1FirstName')}
-                      onBlur={() => this.checkRepName('rep1FirstName')}
-                      placeholder="First name"
-                    />
-                    <div className="errorElement">{rep1FirstName.message}</div>
-                  </div>
-                  <div className="repFormElement">
-                    <GroupStyled.Rep1LastName
-                      type="text"
-                      name="rep1LastName"
-                      value={rep1LastName.value}
-                      onChange={event => this.acceptNameHandler(event.target.value, 'rep1LastName')}
-                      onBlur={() => this.checkRepName('rep1LastName')}
-                      placeholder="Last name"
-                    />
-                    <div className="errorElement">{rep1LastName.message}</div>
-                  </div>
-                  <div className="repFormElement">
-                    <GroupStyled.Rep1Email
-                      type="email"
-                      name="rep1Email"
-                      value={rep1Email.value}
-                      onChange={event => this.acceptRepEmailHandler('rep1Email', event.target.value)}
-                      onBlur={() => this.checkRepEmail('rep1Email')}
-                      placeholder="Email"
-                    />
-                    <div className="errorElement">{rep1Email.message}</div>
-                  </div>
-                  <div className="repFormElement">
-                    <PhoneInput
-                      placeholder="Mobile phone(optional)"
-                      value={rep1Phone.value}
-                      onChange={value1 => this.setState({ rep1Phone: { value: value1 } })}
-                    />
-                    <div className="errorElement">
-                      {
-                        !this.state.rep1phoneCheck && rep1Phone.value !== '' && rep1Phone.value !== undefined && !isValidPhoneNumber(rep1Phone.value) ? 'Invalid phone number' : undefined
-                      }
-                      {
-                        this.state.rep1phoneCheck && 'Phone number required'
-                      }
-                    </div>
-                  </div>
-                  <div className="notifyRepresentative">
-                    <p>
-                      Your representative will receive an invitation they will need to confirm.
-                    </p>
-                    <p>How should we send the invitation?</p>
-                    <GroupStyled.WrapsInput className="checkboxWrapper">
-                      <GroupStyled.Label className="checkbox_container">
-                        <span className="checkBoxHeading">Send an invite via email address.</span>
-                        <GroupStyled.CheckBox
-                          id="rep1EmailUpdates"
-                          type="checkbox"
-                          checked={this.state.rep1EmailInvite}
-                          onChange={(event) => { this.handleEmailPhoneInvite(event.target.value, this.state.rep1EmailInvite, 'rep1EmailInvite'); }}
-                        />
-                        <GroupStyled.Span htmlFor="rep1EmailUpdates" className="checkmark" />
-                      </GroupStyled.Label>
-                    </GroupStyled.WrapsInput>
-                    <GroupStyled.WrapsInput className="checkboxWrapper">
-                      <GroupStyled.Label className="checkbox_container">
-                        <span className="checkBoxHeading">Send an invite via text message.</span>
-                        <GroupStyled.CheckBox
-                          id="rep1PhoneUpdates"
-                          type="checkbox"
-                          checked={this.state.rep1PhoneInvite}
-                          onChange={(event) => { this.handleEmailPhoneInvite(event.target.value, this.state.rep1PhoneInvite, 'rep1PhoneInvite'); }}
-                        />
-                        <GroupStyled.Span htmlFor="rep1PhoneUpdates" className="checkmark" />
-                      </GroupStyled.Label>
-                    </GroupStyled.WrapsInput>
-                  </div>
-                </div>
-              </GroupStyled.AddRepForm>
-              <GroupStyled.AnotherRepButton
-                buttonDisplay={this.state.anotherRepButton}
-                onClick={() => this.addAnotherRepForm()}
-              >
-                Add another representative
-              </GroupStyled.AnotherRepButton>
+              {
+                this.renderRepresentatives()
+              }
+              {
+                this.state.representatives.length === 1 &&
+                  <GroupStyled.AnotherRepButton
+                    buttonDisplay={this.state.anotherRepButton}
+                    onClick={() => this.addRepForm()}
+                  >
+                    Add another representative
+                  </GroupStyled.AnotherRepButton>
+              }
             </GroupStyled.RepFormWrapper>
-          }
-          {
-            this.state.rep2Form &&
-            <GroupStyled.AddRepForm>
-              <div className="RepDetailText">
-                <p>Representative #2</p>
-                <GroupStyled.CloseRepForm onClick={() => this.closePopup('form2')}>X</GroupStyled.CloseRepForm>
-              </div>
-              <div className="representativeForm1">
-                <div className="repFormElement">
-                  <GroupStyled.Rep1FirstName
-                    type="text"
-                    name="rep2FirstName"
-                    value={rep2FirstName.value}
-                    onChange={event => this.acceptNameHandler(event.target.value, 'rep2FirstName')}
-                    onBlur={() => this.checkRepName('rep2FirstName')}
-                    placeholder="First name"
-                  />
-                  <div className="errorElement">{rep2FirstName.message}</div>
-                </div>
-                <div className="repFormElement">
-                  <GroupStyled.Rep1LastName
-                    type="text"
-                    name="rep2LastName"
-                    value={rep2LastName.value}
-                    onChange={event => this.acceptNameHandler(event.target.value, 'rep2LastName')}
-                    onBlur={() => this.checkRepName('rep2LastName')}
-                    placeholder="Last name"
-                  />
-                  <div className="errorElement">{rep2LastName.message}</div>
-                </div>
-                <div className="repFormElement">
-                  <GroupStyled.Rep1Email
-                    type="email"
-                    name="rep2Email"
-                    value={rep2Email.value}
-                    onChange={event => this.acceptRepEmailHandler('rep2Email', event.target.value)}
-                    onBlur={() => this.checkRepEmail('rep2Email')}
-                    placeholder="Email"
-                  />
-                  <div className="errorElement">{rep2Email.message}</div>
-                </div>
-                <div className="repFormElement">
-                  <PhoneInput
-                    placeholder="Mobile phone(optional)"
-                    value={rep2Phone.value}
-                    onChange={value1 => this.setState({ rep2Phone: { value: value1 } })}
-                  />
-                  <div className="errorElement">
-                    {
-                      !this.state.rep2phoneCheck && rep2Phone.value !== '' && rep2Phone.value !== undefined && !isValidPhoneNumber(rep2Phone.value) ? 'Invalid phone number' : undefined
-                    }
-                    {
-                      this.state.rep2phoneCheck && 'Phone number required'
-                    }
-                  </div>
-                </div>
-                <div className="notifyRepresentative">
-                  <p>
-                  Your representative will receive an invitation they will need to confirm.
-                  </p>
-                  <p>How should we send the invitation?</p>
-                  <GroupStyled.WrapsInput className="checkboxWrapper">
-                    <GroupStyled.Label className="checkbox_container">
-                      <span className="checkBoxHeading">Send an invite via email address.</span>
-                      <GroupStyled.CheckBox
-                        id="rep2EmailUpdates"
-                        type="checkbox"
-                        checked={this.state.rep2EmailInvite}
-                        onChange={(event) => { this.handleEmailPhoneInvite(event.target.value, this.state.rep2EmailInvite, 'rep2EmailInvite'); }}
-                      />
-                      <GroupStyled.Span htmlFor="rep2EmailUpdates" className="checkmark" />
-                    </GroupStyled.Label>
-                  </GroupStyled.WrapsInput>
-                  <GroupStyled.WrapsInput className="checkboxWrapper">
-                    <GroupStyled.Label className="checkbox_container">
-                      <span className="checkBoxHeading">Send an invite via text message.</span>
-                      <GroupStyled.CheckBox
-                        id="rep2PhoneUpdates"
-                        type="checkbox"
-                        checked={this.state.rep2PhoneInvite}
-                        onChange={(event) => { this.handleEmailPhoneInvite(event.target.value, this.state.rep2PhoneInvite, 'rep2PhoneInvite'); }}
-                      />
-                      <GroupStyled.Span htmlFor="rep2PhoneUpdates" className="checkmark" />
-                    </GroupStyled.Label>
-                  </GroupStyled.WrapsInput>
-                </div>
-              </div>
-            </GroupStyled.AddRepForm>
           }
         </GroupStyled.RepresentativeWrapper>
         <GroupStyled.ButtonWrapper
@@ -682,6 +533,6 @@ export default class StarNotifications extends React.Component {
           Submit
         </GroupStyled.ButtonWrapper>
       </GroupStyled.DetailsWrapper>
-    )
+    );
   }
 }
