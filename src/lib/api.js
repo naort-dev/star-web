@@ -56,6 +56,7 @@ class Api {
   static getGroupMembers = 'user/get_members/';
   static getOtpCode = 'user/validate_mobile/';
   static validateOtpCode = 'user/verify_mobile/';
+  static celebRepresentative = 'user/celebrity_representative/';
 }
 
 export default Api;
