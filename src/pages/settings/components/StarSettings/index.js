@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
+import StarNotification from '../StarNotification';
 import ProfileSettings from './modules/ProfileSettings';
 import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
@@ -73,7 +74,7 @@ class StarSettings extends React.Component {
             </Popup>
         }
         <InnerTabs
-          labels={['Account', 'Profile details', 'Share profile']}
+          labels={['Account', 'Profile details', 'Share profile', 'Notifications']}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
@@ -106,6 +107,13 @@ class StarSettings extends React.Component {
               heading="Tell your fans that you're on Starsona"
               description=""
               shareUrl={this.props.userDetails.share_url}
+            />
+          </SettingsStyled.ContentWrapper>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Notifications'}>
+            <StarNotification
+              type="star"
+              notificationDetails={this.props.userDetails.notification_settings}
+              representativeDetails={this.props.userDetails.celebrity_representatives}
             />
           </SettingsStyled.ContentWrapper>
         </SettingsStyled.Container>

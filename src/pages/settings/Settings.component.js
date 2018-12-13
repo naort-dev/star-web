@@ -12,7 +12,7 @@ export default class Requests extends React.Component {
       innerLinks: [],
     };
     this.fanTabs = ['Account', 'Invite friends'];
-    this.starTabs = ['Account', 'Profile details', 'Share profile'];
+    this.starTabs = ['Account', 'Profile details', 'Share profile', 'Notifications'];
     this.groupTabs = ['Account', 'Group details', 'Share online'];
   }
   componentWillMount() {

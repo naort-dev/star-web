@@ -35,7 +35,7 @@ export default class Tabs extends React.Component {
                 this.props.starMode ?
                   <TabStyled.OptionWrapper>
                     <TabStyled.CheckBoxWrapper>
-                      <TabStyled.Label id="checkbox_container" onClick={()=> this.props.changeleftCheckSelection()}>
+                      <TabStyled.Label className="checkbox_container" onClick={()=> this.props.changeleftCheckSelection()}>
                         <span>Accepting Requests</span>
                         <TabStyled.CheckBox
                           id="accepting-requests"
@@ -43,7 +43,7 @@ export default class Tabs extends React.Component {
                           checked={this.props.leftCheckSelection}
                           onChange={() => {}}
                         />
-                        <TabStyled.Span htmlFor="private_video" id="checkmark" />
+                        <TabStyled.Span htmlFor="private_video" className="checkmark" />
                       </TabStyled.Label>
                     </TabStyled.CheckBoxWrapper>
                   </TabStyled.OptionWrapper>

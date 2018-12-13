@@ -297,7 +297,7 @@ export default class Confirm extends React.Component {
       </Request.Questionwraps>
       <Request.OptionWrapper>
         <Request.CheckBoxWrapper>
-          <Request.Label id="checkbox_container">
+          <Request.Label className="checkbox_container">
             <span>I give permission to {fullName} and Starsona to share my video on social media</span>
             <Request.CheckBox
               id="private_video"
@@ -305,7 +305,7 @@ export default class Confirm extends React.Component {
               checked={this.state.publicRequest}
               onChange={() => this.changePublicStatus()}
             />
-            <Request.Span htmlFor="private_video" id="checkmark" />
+            <Request.Span htmlFor="private_video" className="checkmark" />
           </Request.Label>
         </Request.CheckBoxWrapper>
       </Request.OptionWrapper>

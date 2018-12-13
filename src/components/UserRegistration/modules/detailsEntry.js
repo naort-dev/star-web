@@ -494,7 +494,7 @@ export default class DetailsEntry extends React.Component {
         <GroupStyled.OptionWrapper>
           <GroupStyled.CheckBoxWrapper>
             <GroupStyled.CheckBoxLabel
-              id="checkbox_container"
+              className="checkbox_container"
               onClick={() =>
                 this.setState({
                   userConfirmation: !this.state.userConfirmation,
@@ -513,7 +513,7 @@ export default class DetailsEntry extends React.Component {
               />
               <GroupStyled.Span
                 htmlFor="private_video"
-                id="checkmark"
+                className="checkmark"
               />
             </GroupStyled.CheckBoxLabel>
           </GroupStyled.CheckBoxWrapper>

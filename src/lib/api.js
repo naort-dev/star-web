@@ -53,7 +53,10 @@ class Api {
   static groupMembersList = 'user/group_list/';
   static celebrityGroupFollow = 'user/join_group/';
   static fanGroupFollow = 'user/fan/group_follow/';
-  static getGroupMembers = 'user/get_members/'
+  static getGroupMembers = 'user/get_members/';
+  static getOtpCode = 'user/validate_mobile/';
+  static validateOtpCode = 'user/verify_mobile/';
+  static celebRepresentative = 'user/celebrity_representative/';
 }
 
 export default Api;
