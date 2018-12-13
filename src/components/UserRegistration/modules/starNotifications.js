@@ -4,6 +4,7 @@ import validator from 'validator';
 import 'react-phone-number-input/style.css';
 import Popup from '../../Popup';
 import { generateOtp, validateOtp } from '../../../services/otpGenerate';
+import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../services/userRegistration';
 import GroupStyled from '../styled';
 
 export default class StarNotifications extends React.Component {
@@ -105,7 +106,7 @@ export default class StarNotifications extends React.Component {
     currentRep[key] = !currentRep[key];
     if (key === 'phoneInvite' && currentRep.phone === '' && currentRep.phoneInvite) {
       currentRep.phoneCheck = true;
-    } else {
+    } else if (key === 'phoneInvite') {
       currentRep.phoneCheck = false;
     }
     representatives[index] = currentRep;
@@ -248,16 +249,58 @@ export default class StarNotifications extends React.Component {
         phone: value,
         countryCode,
       };
-      this.props.onComplete(notifications, representatives);
+      const repUpdateStatus = representatives.map((rep, index) => {
+        const currentRep = { ...rep };
+        if (rep.repId) {
+          return (
+            updateRepresentative(rep.repId, rep.firstName, rep.lastName, rep.email, rep.phone, rep.emailInvite, rep.phoneInvite)
+              .then((resp) => {
+                currentRep.repId = resp.data.representative_id;
+                representatives[index] = currentRep;
+                this.setState({
+                  representatives,
+                });
+                return resp;
+              })
+          );
+        }
+        return (
+          addRepresentative(rep.firstName, rep.lastName, rep.email, rep.phone, rep.emailInvite, rep.phoneInvite)
+            .then((resp) => {
+              currentRep.repId = resp.data.representative_id;
+              representatives[index] = currentRep;
+              this.setState({
+                representatives,
+              });
+              return resp;
+            })
+        );
+      });
+      Promise.all(repUpdateStatus)
+        .then(() => {
+          this.props.onComplete(notifications);
+        });
     }
   }
 
   deleteRepForm = (index) => {
     const { representatives } = this.state;
-    representatives.splice(index, 1);
-    this.setState({
-      representatives,
-    });
+    if (representatives[index].repId) {
+      deleteRepresentative(representatives[index].repId)
+        .then((resp) => {
+          if (resp.success) {
+            representatives.splice(index, 1);
+            this.setState({
+              representatives,
+            });
+          }
+        });
+    } else {
+      representatives.splice(index, 1);
+      this.setState({
+        representatives,
+      });
+    }
   }
 
   closeOtpPopup = () => {
@@ -344,24 +387,24 @@ export default class StarNotifications extends React.Component {
               <GroupStyled.Label className="checkbox_container">
                 <span className="checkBoxHeading">Send an invite via email address.</span>
                 <GroupStyled.CheckBox
-                  id="rep2EmailUpdates"
+                  id={`rep${index}EmailUpdates`}
                   type="checkbox"
                   checked={rep.emailInvite}
                   onChange={event => this.handleEmailPhoneInvite(index, 'emailInvite', event.target.value)}
                 />
-                <GroupStyled.Span htmlFor="rep2EmailUpdates" className="checkmark" />
+                <GroupStyled.Span htmlFor={`rep${index}EmailUpdates`} className="checkmark" />
               </GroupStyled.Label>
             </GroupStyled.WrapsInput>
             <GroupStyled.WrapsInput className="checkboxWrapper">
               <GroupStyled.Label className="checkbox_container">
                 <span className="checkBoxHeading">Send an invite via text message.</span>
                 <GroupStyled.CheckBox
-                  id="rep2PhoneUpdates"
+                  id={`rep${index}PhoneUpdates`}
                   type="checkbox"
                   checked={rep.phoneInvite}
                   onChange={event => this.handleEmailPhoneInvite(index, 'phoneInvite', event.target.value)}
                 />
-                <GroupStyled.Span htmlFor="rep2PhoneUpdates" className="checkmark" />
+                <GroupStyled.Span htmlFor={`rep${index}PhoneUpdates`} className="checkmark" />
               </GroupStyled.Label>
             </GroupStyled.WrapsInput>
           </div>
@@ -524,11 +567,13 @@ export default class StarNotifications extends React.Component {
             </GroupStyled.RepFormWrapper>
           }
         </GroupStyled.RepresentativeWrapper>
-        <GroupStyled.ButtonWrapper
-          onClick={() => this.submitNotification()}
-        >
-          Submit
-        </GroupStyled.ButtonWrapper>
+        <GroupStyled.ControlWrapper>
+          <GroupStyled.ControlButton
+            onClick={() => this.submitNotification()}
+          >
+            Submit
+          </GroupStyled.ControlButton>
+        </GroupStyled.ControlWrapper>
       </GroupStyled.DetailsWrapper>
     );
   }

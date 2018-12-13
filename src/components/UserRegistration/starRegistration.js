@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import GroupStyled from './styled';
-import { celebritySignupProfile, updateSocialLinks, addRepresentative } from '../../services/userRegistration';
+import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
 
 /*   Modules   */
 import StarDetailsEntry from './modules/starDetailsEntry';
@@ -122,7 +122,7 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
-  submitNotifications = (notifications, representatives) => {
+  submitNotifications = (notifications) => {
     const { notification_settings: currentNotifications } = this.props.userDetails.settings_userDetails;
     let newNotifications = {
       ...currentNotifications,
@@ -135,14 +135,10 @@ class starRegistrationComponent extends React.Component {
       mobile_number: notifications.phone,
       mobile_country_code: notifications.countryCode,
     };
-    this.props.updateNotification(newNotifications);
-    const repUpdateStatus = representatives.map((rep) => {
-      return addRepresentative(rep.firstName, rep.lastName, rep.email, rep.phone, rep.emailInvite, rep.phoneInvite);
-    });
-    Promise.all(repUpdateStatus)
+    this.props.updateNotification(newNotifications)
       .then(() => {
-        console.log('hi');
-      });
+        this.props.changeStep(this.props.currentStep + 1);
+      })
   }
 
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
