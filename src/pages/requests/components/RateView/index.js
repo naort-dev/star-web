@@ -151,7 +151,6 @@ export default class RateView extends React.Component {
 
   updateTipsList = () => {
     const { tipsList, customTip } = this.state;
-    console.log(customTip, tipsList)
     if (customTip && parseInt(customTip) !== 0 && tipsList.indexOf(customTip) < 0) {
       this.setState({
         tipsList: [
