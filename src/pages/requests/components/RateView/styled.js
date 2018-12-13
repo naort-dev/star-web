@@ -265,6 +265,7 @@ SubmitStyled.VideoFile = styled.video`
   width: 50px;
   height: 50px;
   display: block;
+  object-fit: fill;
 `;
 
 export default SubmitStyled;
