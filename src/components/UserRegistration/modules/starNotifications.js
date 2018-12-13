@@ -13,24 +13,8 @@ export default class StarNotifications extends React.Component {
     value: '',
     addEmailFlag: false,
     email: { value: '', isValid: false, message: '' },
-    addForm: false,
     representatives: [],
-    rep1FirstName: { value: '', isValid: false, message: '' },
-    rep1LastName: { value: '', isValid: false, message: '' },
-    rep1Phone: '',
-    rep1Email: { value: '', isValid: false, message: '' },
     anotherRepButton: true,
-    rep2Form: false,
-    rep2FirstName: { value: '', isValid: false, message: '' },
-    rep2LastName: { value: '', isValid: false, message: '' },
-    rep2Phone: '',
-    rep2Email: { value: '', isValid: false, message: '' },
-    rep1EmailInvite: false,
-    rep1PhoneInvite: false,
-    rep2EmailInvite: false,
-    rep2PhoneInvite: false,
-    rep1phoneCheck: false,
-    rep2phoneCheck: false,
     phoneNumberVerify: 'Verify',
     country: '',
     otpEnterPopup: false,
@@ -64,6 +48,7 @@ export default class StarNotifications extends React.Component {
     currentRep.phone = value;
     if (value !== '') {
       currentRep.phoneError = '';
+      currentRep.phoneCheck = false;
     }
     representatives[index] = currentRep;
     this.setState({ representatives });
@@ -142,7 +127,6 @@ export default class StarNotifications extends React.Component {
 
   checkEmail = () => {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // To check email validity
-
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({
         email: { ...this.state.email, isValid: false, message: 'Enter an email address' },
@@ -249,9 +233,22 @@ export default class StarNotifications extends React.Component {
 
   submitNotification = () => {
     if (this.checkAllValidity()) {
-      console.log('success');
-    } else {
-      console.log('not valid');
+      const {
+        emailCheckedBox,
+        email,
+        phoneCheckedBox,
+        value,
+        representatives,
+        countryCode,
+      } = this.state;
+      const notifications = {
+        emailNotify: emailCheckedBox,
+        email: email.value,
+        phoneNotify: phoneCheckedBox,
+        phone: value,
+        countryCode,
+      };
+      this.props.onComplete(notifications, representatives);
     }
   }
 

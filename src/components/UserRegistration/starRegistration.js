@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import GroupStyled from './styled';
-import { celebritySignupProfile, updateSocialLinks } from '../../services/userRegistration';
+import { celebritySignupProfile, updateSocialLinks, addRepresentative } from '../../services/userRegistration';
 
 /*   Modules   */
 import StarDetailsEntry from './modules/starDetailsEntry';
@@ -24,6 +24,7 @@ import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+import { updateNotification } from '../../store/shared/actions/updateNotification';
 import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
 import { logOutUser } from '../../store/shared/actions/login';
 
@@ -121,16 +122,39 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
+  submitNotifications = (notifications, representatives) => {
+    const { notification_settings: currentNotifications } = this.props.userDetails.settings_userDetails;
+    let newNotifications = {
+      ...currentNotifications,
+    };
+    newNotifications = {
+      ...newNotifications,
+      email_notification: notifications.emailNotify,
+      mobile_notification: notifications.phoneNotify,
+      secondary_email: notifications.email,
+      mobile_number: notifications.phone,
+      mobile_country_code: notifications.countryCode,
+    };
+    this.props.updateNotification(newNotifications);
+    const repUpdateStatus = representatives.map((rep) => {
+      return addRepresentative(rep.firstName, rep.lastName, rep.email, rep.phone, rep.emailInvite, rep.phoneInvite);
+    });
+    Promise.all(repUpdateStatus)
+      .then(() => {
+        console.log('hi');
+      });
+  }
+
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
       ...celebrityDetails,
       profession: celebrityDetails.profession.map(profession => profession.id.toString()),
-    }
+    };
     const finalUserDetails = {
       celebrity_details: {},
       user_details: userDetails,
-    }
+    };
     updateSocialLinks(socialLinks);
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
@@ -149,7 +173,7 @@ class starRegistrationComponent extends React.Component {
             <Loader />
           :
             <GroupStyled.ContentWrapper>
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
                 <StarDetailsEntry
                   submitAccountDetails={this.submitAccountDetails}
                 />
@@ -208,11 +232,11 @@ class starRegistrationComponent extends React.Component {
                   </GroupStyled.DetailsWrapper>
                 )
               }
-
-              {
-                this.props.currentStep === 1 &&
-                  <StarNotifications />
-              }
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
+                <StarNotifications
+                  onComplete={this.submitNotifications}
+                />
+              </GroupStyled.StepWrapper>
             </GroupStyled.ContentWrapper>
         }
       </GroupStyled>
@@ -247,6 +271,7 @@ const mapDispatchToProps = dispatch => ({
   uploadVideo: () => dispatch(uploadVideo()),
   onSaveImage: imageData => dispatch(saveImage(imageData)),
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
+  updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   changePassword: data => dispatch(changePassword(data)),
   logOut: () => dispatch(logOutUser()),
