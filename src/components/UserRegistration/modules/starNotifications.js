@@ -22,6 +22,7 @@ export default class StarNotifications extends React.Component {
     otpValue: '',
     phoneNumberOriginal: '',
     countryCode: '',
+    otpErrorMessage: '',
   }
 
   getOtp = () => {
@@ -306,19 +307,31 @@ export default class StarNotifications extends React.Component {
   closeOtpPopup = () => {
     this.setState({
       otpEnterPopup: false,
+      phoneNumberVerify: 'Verify',
     });
   }
 
   submitOTPForm = () => {
-    validateOtp(this.state.phoneNumberOriginal, this.state.countryCode, this.state.otpValue)
-      .then((resp) => {
-        if (resp.success) {
-          this.setState({
-            phoneNumberVerify: 'Verified',
-            otpEnterPopup: false,
-          });
-        }
+    if (this.state.otpValue !== '') {
+      validateOtp(this.state.phoneNumberOriginal, this.state.countryCode, this.state.otpValue)
+        .then((resp) => {
+          if (resp.success) {
+            this.setState({
+              phoneNumberVerify: 'Verified',
+              otpEnterPopup: false,
+              otpErrorMessage: '',
+            });
+          } else if (resp.status == '400') {
+            this.setState({
+              otpErrorMessage: resp.response.data.error.message,
+            });
+          }
+        });
+    } else {
+      this.setState({
+        otpErrorMessage: 'Enter OTP',
       });
+    }
   }
 
   renderRepresentatives = () => {
@@ -440,6 +453,7 @@ export default class StarNotifications extends React.Component {
                   placeholder="OTP"
                   onChange={this.acceptOTP}
                 />
+                <p className="errorElement">{this.state.otpErrorMessage}</p>
                 <GroupStyled.OTPSubmit
                   onClick={() => this.submitOTPForm()}
                 >

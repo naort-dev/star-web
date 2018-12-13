@@ -341,5 +341,41 @@ NotificationStyled.OTPSubmit = styled.button`
   }
 `;
 
+NotificationStyled.ControlWrapper = styled.div`
+  background-color: rgb(255, 255, 255);
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  padding: 13px 12px;
+  justify-content: ${props => (props.multiple ? 'space-between' : 'flex-end')};
+  @media(min-width: 1025px) {
+    box-shadow: none;
+    padding: 26px 0;
+    border-top: ${props => (props.multiple ? 'none' : '1px solid #EBEBEB')};
+  }
+`;
 
+NotificationStyled.ControlButton = styled.button`
+  background-color: #FF6C58;
+  color: rgb(255,255,255);
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Bold;
+  cursor: pointer;
+  padding: 10px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+  border-image: initial;
+  &:hover {
+    background-color: #FF3B21;
+  }
+  &:disabled {
+    background-color: #b6b6b6;
+    color: #676767;
+    border-color: #b6b6b6;
+  }
+`;
 export default NotificationStyled;
