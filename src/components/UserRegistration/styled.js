@@ -205,6 +205,9 @@ GroupStyled.Label = styled.div`
       border: none;
       border-bottom: 1px solid #aaa;
       outline: none;
+      min-width: 230px;
+      font-size: 14px;
+      font-family: 'Avenir-Regular';
       &:focus {
         outline: none;
       }
@@ -226,6 +229,8 @@ GroupStyled.Label = styled.div`
     input {
       opacity : unset;
       position: relative;
+      font-size: 14px;
+      font-family: 'Avenir-Regular';
     }
     .react-phone-number-input {
       width: 180px;
@@ -790,9 +795,11 @@ GroupStyled.RepresentativeWrapper = styled.div`
 `;
 
 GroupStyled.addRepWrapper = styled.div`
-  display: flex;
+  display: inline-block;
   margin-bottom: 10px;
+  cursor: pointer;
   .addRepText {
+    display: inline-block;
     font-size: 17px;
     p {
       font-size: 12px;
@@ -867,6 +874,7 @@ GroupStyled.AnotherRepButton = styled.button`
   margin: 20px auto;
   font-size: 16px;
   outline: none;
+  cursor: pointer;
 `;
 GroupStyled.RepFormWrapper = styled.div``;
 GroupStyled.OTPWrapper = styled.div`
