@@ -8,20 +8,74 @@ import {
   EmailIcon,
 } from 'react-share';
 import SettingsStyled from '../../styled';
+import SnackBar from '../../../../components/SnackBar';
 import ShareStyled from './styled';
 
 export default class ShareUser extends React.Component {
 
-  renderShareView = (shareUrl) => {
+  state = {
+    snackBarText: '',
+  }
+
+  setSnackBarText = (text) => {
+    this.setState({ snackBarText: text });
+  }
+  
+  closeSnackBar = () => {
+    this.setState({ snackBarText: '' });
+  }
+
+  copyUrl = (shareText, snackBarText) => {
+    copy(shareText);
+    this.setSnackBarText(snackBarText);
+  }
+
+  renderInviteView = (referralCode) => {
     return (
       <React.Fragment>
+        <ShareStyled.HeadingWrapper>
+          <ShareStyled.SubHeading>
+            Invite your Stars
+          </ShareStyled.SubHeading>
+          <ShareStyled.SubHeadingDescription>
+            
+          </ShareStyled.SubHeadingDescription>
+        </ShareStyled.HeadingWrapper>
+        <SettingsStyled.InputWrapper>
+          <SettingsStyled.Label>Star referral code</SettingsStyled.Label>
+          <SettingsStyled.WrapsInput>
+            <SettingsStyled.CustomInput>
+              <SettingsStyled.ReadOnlySection>
+                <span>{referralCode}</span>
+                <ShareStyled.CopyButton title="Copy to Clipboard" onClick={() => this.copyUrl(referralCode, 'Referral code copied to clipboard')}>Copy</ShareStyled.CopyButton>
+              </SettingsStyled.ReadOnlySection>
+            </SettingsStyled.CustomInput>
+            <ShareStyled.MinorDescription>This unique code will not expire</ShareStyled.MinorDescription>
+          </SettingsStyled.WrapsInput>
+        </SettingsStyled.InputWrapper>
+      </React.Fragment>
+    );
+  }
+
+  renderShareView = (shareUrl) => {
+    const { heading, description } = this.props;
+    return (
+      <React.Fragment>
+        <ShareStyled.HeadingWrapper>
+          <ShareStyled.SubHeading>
+            {heading}
+          </ShareStyled.SubHeading>
+          <ShareStyled.SubHeadingDescription>
+            {description}
+          </ShareStyled.SubHeadingDescription>
+        </ShareStyled.HeadingWrapper>
         <SettingsStyled.InputWrapper>
           <SettingsStyled.Label>Profile link</SettingsStyled.Label>
           <SettingsStyled.WrapsInput>
             <SettingsStyled.CustomInput>
               <SettingsStyled.ReadOnlySection>
                 <span>{shareUrl}</span>
-                <ShareStyled.CopyButton onClick={() => copy(shareUrl)}>Copy</ShareStyled.CopyButton>
+                <ShareStyled.CopyButton title="Copy to Clipboard" onClick={() => this.copyUrl(shareUrl, 'Link copied to clipboard')}>Copy</ShareStyled.CopyButton>
               </SettingsStyled.ReadOnlySection>
             </SettingsStyled.CustomInput>
           </SettingsStyled.WrapsInput>
@@ -109,14 +163,13 @@ export default class ShareUser extends React.Component {
   renderContent = (props) => {
     return (
       <React.Fragment>
-        <ShareStyled.HeadingWrapper>
-          <ShareStyled.SubHeading>
-            {props.heading}
-          </ShareStyled.SubHeading>
-          <ShareStyled.SubHeadingDescription>
-            {props.description}
-          </ShareStyled.SubHeadingDescription>
-        </ShareStyled.HeadingWrapper>
+        {
+          this.state.snackBarText !== '' &&
+            <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+        }
+        {
+          props.type === 'group' && this.renderInviteView(props.referralCode)
+        }
         {
           this.renderShareView(props.shareUrl)
         }

@@ -1,4 +1,5 @@
 class Api {
+  static getConfig = 'config/';
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
   static getProfessionsList = 'user/filtered_professions/';
@@ -16,8 +17,10 @@ class Api {
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
+  static setVideoView = 'request/readvideo/';
   static otherRelation = 'request/other_relation/';
   static getEphemeralKey = 'payments/generatekey/';
+  static tipPayment = 'payments/paytip/';
   static createCharge = 'payments/createcharge/';
   static starsonaRequest = 'request/stargramz/';
   static starsonaVideo = 'request/stargramz_video/';
@@ -33,8 +36,10 @@ class Api {
   static updatePhoto = 'user/profileimages/';
   static celebrityProfile = 'user/celebrity_profile/';
   static getImageCredentials = imageType => `user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
+  static getawsCredentials = (key, extension, fileType) => `user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
   static changeRequestStatus = 'request/change_request_status/';
   static rating = 'user/fan/celebrity_rating/';
+  static requestFeedback = 'request/feedback/';
   static contactSupport = 'user/contact_support/';
   static reportAbuse = 'user/fan/celebrity_abuse/'
   static stripeRegistration = 'payments/getstripeurl/';
@@ -48,6 +53,10 @@ class Api {
   static groupMembersList = 'user/group_list/';
   static celebrityGroupFollow = 'user/join_group/';
   static fanGroupFollow = 'user/fan/group_follow/';
+  static getGroupMembers = 'user/get_members/';
+  static getOtpCode = 'user/validate_mobile/';
+  static validateOtpCode = 'user/verify_mobile/';
+  static celebRepresentative = 'user/celebrity_representative/';
 }
 
 export default Api;

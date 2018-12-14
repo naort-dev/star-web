@@ -11,3 +11,15 @@ export const starInnerLinks = [
   { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
   { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
 ];
+
+export const groupInnerLinks = [
+  ...fanInnerLinks,
+  { linkName: 'Star supporters', selectedName: 'supporters', url: '/user/star-supporters' },
+];
+
+export const awsKeys = {
+  reactions: 'reactions',
+  accountImage: 'profile_images',
+  accountVideo: 'authentication_videos',
+  starsonaVIdeo: 'stargram_videos',
+};
