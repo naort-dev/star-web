@@ -79,7 +79,7 @@ export default class RateView extends React.Component {
   }
 
   onCustomInputChange = (event) => {
-    if (validator.isNumeric(event.target.value, { no_symbols: true }) || event.target.value === '') {
+    if ((validator.isNumeric(event.target.value, { no_symbols: true }) || event.target.value === '') && event.target.value <= 9999) {
       this.setState({ customTip: event.target.value });
     }
   }
@@ -155,9 +155,9 @@ export default class RateView extends React.Component {
       this.setState({
         tipsList: [
           ...tipsList,
-          customTip,
+          `${parseInt(customTip)}`,
         ],
-        tip: customTip,
+        tip: `${parseInt(customTip)}`,
         customTip: '',
         enableCustomTip: false,
       });
