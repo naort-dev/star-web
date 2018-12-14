@@ -63,8 +63,8 @@ class App extends React.Component {
       this.props.fetchProfessionsList();
       this.props.fetchGroupTypes();
     }
-    if (this.props.configLoading !== nextProps.configLoading && nextProps.configLoading) {
-      this.setState({ showLoading: false })
+    if (this.props.configLoading !== nextProps.configLoading && !nextProps.configLoading) {
+      this.setState({ showLoading: false });
     }
   }
 
