@@ -57,8 +57,10 @@ export const updateNotification = obj => (dispatch, getState) => {
       dispatch(updateNotificationFetchEnd());
       dispatch(updateNotificationFetchFailed('404'));
     }
+    return resp.data;
   }).catch((exception) => {
     dispatch(updateNotificationFetchEnd());
-    dispatch(updateNotificationFetchFailed(exception));
-  });
+    dispatch(updateNotificationFetchFailed(exception.response.data));
+    return exception.response.data;
+  })
 };

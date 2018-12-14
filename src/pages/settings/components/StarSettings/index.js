@@ -46,6 +46,30 @@ class StarSettings extends React.Component {
     this.setState({ popupMessage: '' });
   }
 
+  submitNotifications = (notifications) => {
+    const { notification_settings: currentNotifications } = this.props.userDetails;
+    let newNotifications = {
+      ...currentNotifications,
+    };
+    newNotifications = {
+      ...newNotifications,
+      email_notification: notifications.emailNotify,
+      mobile_notification: notifications.phoneNotify,
+      secondary_email: notifications.email,
+      mobile_number: notifications.phone,
+      mobile_country_code: notifications.countryCode,
+    };
+
+    this.props.updateNotification(newNotifications)
+      .then((resp) => {
+        if (resp.status == 200) {
+          this.setState({ popupMessage: 'Successfully updated settings' });
+        } else {
+          this.setState({ popupMessage: resp.error.message });
+        }
+      })
+  }
+
   submitProfileDetails = async (celebrityDetails, userDetails, socialLinks) => {
     const userData = {
       celebrity_details: celebrityDetails,
@@ -114,6 +138,7 @@ class StarSettings extends React.Component {
               type="star"
               notificationDetails={this.props.userDetails.notification_settings}
               representativeDetails={this.props.userDetails.celebrity_representatives}
+              onComplete={this.submitNotifications}
             />
           </SettingsStyled.ContentWrapper>
         </SettingsStyled.Container>

@@ -137,9 +137,11 @@ class starRegistrationComponent extends React.Component {
     };
 
     this.props.updateNotification(newNotifications)
-      .then(() => {
-        this.props.changeStep(this.props.currentStep + 1);
-      })
+      .then((resp) => {
+        if (resp.status == 200) {
+          this.props.changeStep(this.props.currentStep + 1);
+        }
+      });
   }
 
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
