@@ -29,7 +29,7 @@ export default (state = { ...initalState }, action) => {
 
     case CONFIG.failed:
       return {
-        ...initalState,
+        ...state,
         loading: false,
       };
 
