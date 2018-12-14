@@ -321,11 +321,7 @@ export default class Requests extends React.Component {
         />
         <RequestsStyled.ContentWrapper>
           {
-            (!this.props.requestsList.length && this.props.requestsLoading) ?
-              <RequestsStyled.loaderWrapper>
-                <Loader />
-              </RequestsStyled.loaderWrapper>
-            : this.renderBookings()
+            this.renderBookings()
           }
         </RequestsStyled.ContentWrapper>
       </React.Fragment>
