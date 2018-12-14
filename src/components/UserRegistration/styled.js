@@ -805,7 +805,7 @@ GroupStyled.addRepWrapper = styled.div`
     font-size: 17px;
     @media(min-width:768px){
       display: inline-block;
-      max-width: 500px;
+      width: calc(100% - 60px);
     }
     p {
       font-size: 12px;
@@ -822,6 +822,8 @@ GroupStyled.AddRepresentative = styled.span`
   margin-right: 10px;
   cursor: pointer;
   background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: top;
 `;
 
 GroupStyled.AddRepForm = styled.div`
