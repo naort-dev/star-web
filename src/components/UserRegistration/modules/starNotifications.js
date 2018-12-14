@@ -565,14 +565,16 @@ export default class StarNotifications extends React.Component {
           </GroupStyled.Label>
         </GroupStyled.WrapsInput>
         <GroupStyled.RepresentativeWrapper>
-          <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
-            <GroupStyled.AddRepresentative />
-            <div className="addRepText">Add Representative
-              <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
-                <span>Learn more</span>
-              </p>
-            </div>
-          </GroupStyled.addRepWrapper>
+          {
+            this.state.representatives.length < 2 &&
+            <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
+              <GroupStyled.AddRepresentative />
+              <div className="addRepText">Add Representative
+                <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
+                </p>
+              </div>
+            </GroupStyled.addRepWrapper>
+          }
           {
             this.state.representatives.length !== 0 &&
             <GroupStyled.RepFormWrapper>

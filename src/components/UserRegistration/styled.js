@@ -795,12 +795,18 @@ GroupStyled.RepresentativeWrapper = styled.div`
 `;
 
 GroupStyled.addRepWrapper = styled.div`
-  display: inline-block;
   margin-bottom: 10px;
   cursor: pointer;
-  .addRepText {
+  display: flex;
+  @media(min-width:768px){
     display: inline-block;
+  }  
+  .addRepText {
     font-size: 17px;
+    @media(min-width:768px){
+      display: inline-block;
+      max-width: 500px;
+    }
     p {
       font-size: 12px;
       color: #aaa;
