@@ -128,8 +128,8 @@ SubmitStyled.TipsList = SubmitStyled.ReasonsList.extend`
 SubmitStyled.TipItem = SubmitStyled.ReasonItem.extend`
   border-radius: 50%;
   padding: 0;
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -63,8 +63,8 @@ class App extends React.Component {
       this.props.fetchProfessionsList();
       this.props.fetchGroupTypes();
     }
-    if (this.props.configLoading !== nextProps.configLoading && nextProps.configLoading) {
-      this.setState({ showLoading: false })
+    if (!nextProps.configLoading && nextProps.configData) {
+      this.setState({ showLoading: false });
     }
   }
 
@@ -173,6 +173,7 @@ App.propTypes = {
 
 const mapState = state => ({
   configLoading: state.config.loading,
+  configData: state.config.data,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,

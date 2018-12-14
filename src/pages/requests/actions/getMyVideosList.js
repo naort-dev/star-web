@@ -52,6 +52,7 @@ export const updateVideosList = (id, newData) => (dispatch, getState) => {
   const originalList = cloneDeep(getState().myVideosList.data);
   const dataIndex = originalList.findIndex(item => item.id === id);
   originalList[dataIndex] = newData;
+  dispatch(myVideosListFetchStart(false, getState().myVideosList.token));
   dispatch(myVideosListUpdate(originalList));
 };
 

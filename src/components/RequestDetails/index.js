@@ -64,7 +64,7 @@ export default class RequestDetails extends React.Component {
               finalVideo.read_status = true;
               const orderDetailsTemp = cloneDeep(orderDetails);
               const videoIndex = requestVideo.findIndex(video => video.video_status === 1);
-              orderDetailsTemp[videoIndex] = finalVideo;
+              orderDetailsTemp.request_video[videoIndex] = finalVideo;
               this.props.updateVideosList(orderDetails.id, orderDetailsTemp);
             }
           });
@@ -286,6 +286,7 @@ export default class RequestDetails extends React.Component {
     if (requestStatus === 6) { // completed video
       if (this.videoRead) {
         this.props.selectItem('rate');
+        this.videoRead = false;
       }
     }
     this.setState({ selectedVideo: null, videoPlayerProps: null });
