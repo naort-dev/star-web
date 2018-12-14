@@ -236,8 +236,10 @@ export default class RateView extends React.Component {
       .then((success) => {
         if (success) {
           this.props.onSuccess();
-          if (rating <= 2 || !tip) {
+          if (rating <= 2) {
             this.stopFileUploads();
+          }
+          if (rating <= 2 || !tip) {
             this.closePopup();
           }
         }
