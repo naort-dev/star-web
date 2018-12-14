@@ -634,4 +634,196 @@ GroupStyled.SuccessText = styled.p`
  width: 100%;
 `;
 
+GroupStyled.HeaderText = styled.div`
+  text-align:center;
+  color:#676767;
+  font-size:20px;
+  font-family: 'Avenir-Bold';
+  @media(min-width:768px){
+    font-size:25px;
+  }
+  @media(min-width: 1025px){
+    font-size: 25px;
+  }
+  @media(min-width:1920px){
+    font-size: 27px;
+  }
+`;
+
+GroupStyled.SocialMediaMessage = styled.div`
+  font-family: 'Avenir-Regular';
+  font-size: 14px;
+  text-align: center;
+  color: #7B797A;
+  margin-bottom: 5px;
+  margin-top: 10px;
+  word-spacing: 3px;
+  @media(min-width:768px){
+    font-size: 18px;
+  }
+  @media(min-width:1025px){
+    font-size:14px;
+  }
+  @media(min-width:1920px){
+    font-size:18px;
+  }
+`;
+
+GroupStyled.NoteText = styled.div`
+  color: #aaa;
+  font-size: 12px;
+  margin-top: 3px;
+`;
+
+GroupStyled.ButtonWrapper = styled.button`
+  background-color: #FF6C58;
+  color: rgb(255,255,255);
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Bold;
+  cursor: pointer;
+  padding: 10px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+  border-image: initial;
+  &:hover {
+    background-color: #FF3B21;
+  }
+`;
+
+GroupStyled.RepresentativeWrapper = styled.div`
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+`;
+
+GroupStyled.addRepWrapper = styled.div`
+  margin-bottom: 10px;
+  cursor: pointer;
+  display: flex;
+  @media(min-width:768px){
+    display: inline-block;
+  }  
+  .addRepText {
+    font-size: 17px;
+    @media(min-width:768px){
+      display: inline-block;
+      width: calc(100% - 60px);
+    }
+    p {
+      font-size: 12px;
+      color: #aaa;
+    }
+  }
+`;
+
+GroupStyled.AddRepresentative = styled.span`
+  background-image: url(assets/images/plus-sign-in-circle.png);
+  width: 40px;
+  height: 40px;
+  background-size: 100% auto;
+  margin-right: 10px;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: top;
+`;
+
+GroupStyled.AddRepForm = styled.div`
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin-left: 5px;
+  padding: 12px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  .RepDetailText {
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .repFormElement {
+    margin-top: 25px;
+    input {
+      border: none;
+      border-bottom: 1px solid #aaa;
+      width: 100%;
+      font-size: 14px;
+      outline: none;
+      font-family: 'Avenir-Regular';
+    }
+    .errorElement {
+      color: red;
+      margin-top: 2px;
+      font-size: 12px;
+    }
+  }
+  .notifyRepresentative {
+    margin-top: 20px;
+    p {
+      color: #aaa;
+      font-size: 14px;
+    }
+    .checkbox_container {
+      margin-bottom: 0;
+    }
+  }
+`;
+
+GroupStyled.CloseRepForm = styled.p`
+  cursor: pointer;
+`;
+GroupStyled.Rep1Email = styled.input``;
+GroupStyled.Rep1FirstName = styled.input``;
+GroupStyled.Rep1LastName = styled.input``;
+GroupStyled.Rep1Phone = styled.input``;
+GroupStyled.AnotherRepButton = styled.button`
+  display: ${props => (props.buttonDisplay ? 'block' : 'none')};
+  border: none;
+  background: transparent;
+  color: #aaa;
+  text-decoration: underline;
+  margin: 20px auto;
+  font-size: 16px;
+  outline: none;
+  cursor: pointer;
+`;
+GroupStyled.RepFormWrapper = styled.div``;
+GroupStyled.OTPWrapper = styled.div`
+  text-align: center;
+  & .errorElement {
+    color: red;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 12px;
+  }
+`;
+GroupStyled.OTPInput = styled.input`
+  margin: 10px;
+  border: none;
+  border-bottom: 1px solid #ddd;
+  text-align: center;
+  font-size: 20px;
+  outline: none;
+`;
+GroupStyled.OTPSubmit = styled.button`
+  background-color: #FF6C58;
+  color: rgb(255,255,255);
+  text-align: center;
+  display: inline-block;
+  font-size: 14px;
+  font-family: Avenir-Bold;
+  cursor: pointer;
+  padding: 10px 30px;
+  text-decoration: none;
+  outline: none;
+  border-radius: 5px;
+  border: 2px solid #FF6C58;
+  border-image: initial;
+  &:hover {
+    background-color: #FF3B21;
+  }
+`;
+
 export default GroupStyled;
