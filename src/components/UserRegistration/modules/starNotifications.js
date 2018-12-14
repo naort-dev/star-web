@@ -265,14 +265,6 @@ export default class StarNotifications extends React.Component {
         if (rep.repId) {
           return (
             updateRepresentative(rep.repId, rep.firstName, rep.lastName, rep.email, rep.phone, rep.emailInvite, rep.phoneInvite)
-              .then((resp) => {
-                currentRep.repId = resp.data.representative_id;
-                representatives[index] = currentRep;
-                this.setState({
-                  representatives,
-                });
-                return resp;
-              })
           );
         }
         return (
