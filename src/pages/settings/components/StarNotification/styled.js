@@ -88,8 +88,7 @@ NotificationStyled.addRepWrapper = styled.div`
   display: flex;
   margin-bottom: 10px;
   .addRepText {
-    font-size: 18px;
-    font-family: Avenir-Medium;
+    font-size: 17px;
     p {
       font-size: 12px;
       color: #aaa;
@@ -145,7 +144,7 @@ NotificationStyled.Label = styled.div`
   margin-bottom: 0;
   &.checkbox_container {
     padding-top: 3px;
-    font-size: 14px;
+    font-size: 12px;
     padding-left: 30px;
     @media(min-width:768px){
       padding-right: 0;
@@ -161,9 +160,10 @@ NotificationStyled.Label = styled.div`
     font-size:13px;
   }
   & > .checkBoxHeading {
-    font-size: 16px;
-    font-family: Avenir-Medium;
+    font-size: 14px;
     color: #333;
+    margin-bottom: 5px;
+    display: block;
   }
   & > label {
     top: 2px;
@@ -237,11 +237,12 @@ NotificationStyled.WrapsInput = styled.div`
 
 NotificationStyled.AddRepresentative = styled.span`
   background-image: url(assets/images/plus-sign-in-circle.png);
-  width: 40px;
-  height: 40px;
-  background-size: 27px 27px;
+  width: 35px;
+  height: 35px;
+  background-size: contain;
   margin-right: 10px;
   cursor: pointer;
+  display: inline-block;
   background-repeat: no-repeat;
 `;
 
@@ -256,16 +257,16 @@ NotificationStyled.AddRepForm = styled.div`
     font-size: 18px;
     display: flex;
     justify-content: space-between;
-    font-family: Avenir-Medium;
   }
   .repFormElement {
-    margin-top: 30px;
+    margin-top: 25px;
     input {
       border: none;
       border-bottom: 1px solid #aaa;
       width: 100%;
-      font-size: 16px;
+      font-size: 14px;
       outline: none;
+      font-family: 'Avenir-Regular';
     }
     .errorElement {
       color: red;
@@ -278,7 +279,6 @@ NotificationStyled.AddRepForm = styled.div`
     p {
       color: #aaa;
       font-size: 14px;
-      font-family: Avenir-Medium;
     }
     .checkbox_container {
       margin-bottom: 0;
@@ -300,7 +300,6 @@ NotificationStyled.AnotherRepButton = styled.button`
   color: #aaa;
   text-decoration: underline;
   margin: 20px auto;
-  font-family: Avenir-Medium;
   font-size: 16px;
   outline: none;
 `;

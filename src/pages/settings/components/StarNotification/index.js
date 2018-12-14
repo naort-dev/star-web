@@ -349,9 +349,13 @@ export default class StarNotification extends React.Component {
               otpEnterPopup: false,
               otpErrorMessage: '',
             });
-          } else if (resp.status == '400') {
+          } else if (resp.status == '400' && resp.response.data.error.code === 1006) {
             this.setState({
               otpErrorMessage: resp.response.data.error.message,
+            });
+          } else if (resp.status == '400' && resp.response.data.error.code === 1009) {
+            this.setState({
+              otpErrorMessage: resp.response.data.error.message.verification_code[0],
             });
           }
         });
