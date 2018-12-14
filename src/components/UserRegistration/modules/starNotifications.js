@@ -542,7 +542,7 @@ export default class StarNotifications extends React.Component {
                     ref={(node) => { this.phone = node; }}
                     value={value}
                     onCountryChange={value1 => this.setState({ country: value1 })}
-                    onChange={number => this.setState({ value: number })}
+                    onChange={number => this.setState({ value: number, phoneNumberVerify: 'Verify' })}
                     // error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
                   />
                   <div className="errorElement">
