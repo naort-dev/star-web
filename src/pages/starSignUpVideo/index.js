@@ -1,1 +1,0 @@
-export { StarsignUpVideo } from './StarsignUpVideo.loadable';

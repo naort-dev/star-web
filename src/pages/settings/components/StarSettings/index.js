@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import AccountSettings from './modules/AccountSettings';
+import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
+import StarNotification from '../StarNotification';
 import ProfileSettings from './modules/ProfileSettings';
 import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
+import AlertView from '../../../../components/AlertView';
 import Popup from '../../../../components/Popup';
 import { fetchAllProfessions } from '../../../../store/shared/actions/getProfessions';
 import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
@@ -34,10 +36,39 @@ class StarSettings extends React.Component {
       await this.props.updateProfilePhoto(profileImages);
       await this.props.updateNotification(notifications);
       this.props.fetchUserDetails();
-      this.setState({ popupMessage: 'Successfully updated setings' });
+      this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
       this.setState({ popupMessage: 'Something went wrong' });
     }
+  }
+
+  closePopup = () => {
+    this.setState({ popupMessage: '' });
+  }
+
+  submitNotifications = (notifications) => {
+    const { notification_settings: currentNotifications } = this.props.userDetails;
+    let newNotifications = {
+      ...currentNotifications,
+    };
+    newNotifications = {
+      ...newNotifications,
+      email_notification: notifications.emailNotify,
+      mobile_notification: notifications.phoneNotify,
+      secondary_email: notifications.email,
+      mobile_number: notifications.phone,
+      mobile_country_code: notifications.countryCode,
+    };
+
+    this.props.updateNotification(newNotifications)
+      .then((resp) => {
+        if (resp.status == 200) {
+          this.setState({ popupMessage: 'Successfully updated settings' });
+          this.props.fetchUserDetails();
+        } else {
+          this.setState({ popupMessage: resp.error.message });
+        }
+      })
   }
 
   submitProfileDetails = async (celebrityDetails, userDetails, socialLinks) => {
@@ -48,7 +79,7 @@ class StarSettings extends React.Component {
     await updateSocialLinks(socialLinks);
     await this.props.updateUserDetails(this.props.userDetails.id, userData);
     this.props.fetchUserDetails();
-    this.setState({ popupMessage: 'Successfully updated setings' });
+    this.setState({ popupMessage: 'Successfully updated settings' });
   }
 
   render() {
@@ -59,13 +90,16 @@ class StarSettings extends React.Component {
           this.state.popupMessage && this.state.popupMessage !== '' &&
             <Popup
               smallPopup
-              closePopUp={() => this.setState({ popupMessage: '' })}
+              closePopUp={this.closePopup}
             >
-              { this.state.popupMessage }
+              <AlertView
+                message={this.state.popupMessage}
+                closePopup={this.closePopup}
+              />
             </Popup>
         }
         <InnerTabs
-          labels={['Account', 'Profile details', 'Share profile']}
+          labels={['Account', 'Profile details', 'Share profile', 'Notifications']}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
@@ -94,9 +128,18 @@ class StarSettings extends React.Component {
           </SettingsStyled.ContentWrapper>
           <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
             <ShareUser
+              type="star"
               heading="Tell your fans that you're on Starsona"
-              description="Lorem Ipsum"
+              description=""
               shareUrl={this.props.userDetails.share_url}
+            />
+          </SettingsStyled.ContentWrapper>
+          <SettingsStyled.ContentWrapper visible={selectedTab === 'Notifications'}>
+            <StarNotification
+              type="star"
+              notificationDetails={this.props.userDetails.notification_settings}
+              representativeDetails={this.props.userDetails.celebrity_representatives}
+              onComplete={this.submitNotifications}
             />
           </SettingsStyled.ContentWrapper>
         </SettingsStyled.Container>

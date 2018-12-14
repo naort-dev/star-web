@@ -80,7 +80,7 @@ export const updateCelebrityFollow = (celebrityId, celebProfessions, follow) => 
   });
   dispatch(celebListUpdateFollow(cachedData));
 }
-export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
+export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispatch, getState) => {
   const {
     category,
     searchParam,
@@ -135,9 +135,13 @@ export const fetchCelebrityList = (offset, refresh) => (dispatch, getState) => {
   if (category.label === 'featured')  {
     API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
   } else {
-    const subCategoryList = filters[category.value];
+    const subCategoryList = filters.category.value;
     const professsion = subCategoryList && Object.keys(subCategoryList).length ? Object.keys(subCategoryList).toString() : category.value;
-    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
+    if (selectedCategory === 'Group') {
+      API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&group_type=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
+    } else {
+      API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
+    }
   }
   return fetch.get(API_URL, options).then((resp) => {
     if (resp.data && resp.data.success) {

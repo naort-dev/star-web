@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PopupStyled from './styled';
-import smoothScroll from '../../utils/smoothScroll';
 
 export default class RequestFlowPopup extends React.Component {
   constructor(props) {

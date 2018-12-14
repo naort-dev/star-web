@@ -7,6 +7,7 @@ import SubmitView from '../../components/SubmitView';
 import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
+import RateView from './components/RateView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Popup from '../../components/Popup';
@@ -20,7 +21,6 @@ export default class Requests extends React.Component {
     super(props);
     this.state = {
       selectedTab: 'All',
-      requestStatus: 'all',
       requestAction: '',
       showActionPopup: false,
       orderDetails: {},
@@ -35,7 +35,7 @@ export default class Requests extends React.Component {
   }
   componentDidMount() {
     this.props.myVideosListReset();
-    this.props.fetchMyVideosList(0, true, this.role, this.state.requestStatus);
+    this.props.fetchMyVideosList(0, true, this.role, 'all');
   }
 
   onVideoUpload = (success) => {
@@ -86,15 +86,15 @@ export default class Requests extends React.Component {
         );
       case 'rate':
         return (
-          <SubmitView
-            heading="Rate video"
+          <RateView
             onSubmit={data => this.props.rateCelebrity({
               celebrity: orderDetails.celebrity_id,
               fan_rate: data.rating.toString(),
               starsona: orderDetails.id,
               comments: data.comment,
             })}
-            successMessage="Your rating has been recorded!"
+            orderDetails={orderDetails}
+            onSuccess={this.fetchVideosList}
             closePopup={this.closePopup}
           />
         );
@@ -124,6 +124,10 @@ export default class Requests extends React.Component {
         );
       default: return null;
     }
+  }
+
+  fetchVideosList = () => {
+    this.props.fetchMyVideosList(0, true)
   }
 
   changeRequestStatus = (requestId, requestStatus, reason) => {
@@ -262,7 +266,7 @@ export default class Requests extends React.Component {
   }
 
   closePopup = () => {
-    this.setState({ showActionPopup: false })
+    this.setState({ showActionPopup: false });
   }
 
   renderRequests = (request) => {
@@ -283,6 +287,7 @@ export default class Requests extends React.Component {
         requestVideo={request.request_video}
         requestType={request.request_type}
         createdDate={request.created_date}
+        updateVideosList={this.props.updateVideosList}
         selectItem={type => this.requestAction(request, type)}
       />
     )
@@ -316,11 +321,7 @@ export default class Requests extends React.Component {
         />
         <RequestsStyled.ContentWrapper>
           {
-            (!this.props.requestsList.length && this.props.requestsLoading) ?
-              <RequestsStyled.loaderWrapper>
-                <Loader />
-              </RequestsStyled.loaderWrapper>
-            : this.renderBookings()
+            this.renderBookings()
           }
         </RequestsStyled.ContentWrapper>
       </React.Fragment>
@@ -342,7 +343,7 @@ export default class Requests extends React.Component {
           : null
         }
         {
-          this.state.showActionPopup && this.state.requestAction === 'respond' &&
+          this.state.showActionPopup && (this.state.requestAction === 'respond' || this.state.requestAction === 'rate') &&
             <RequestFlowPopup
               dotsCount={0}
               smallPopup
@@ -352,7 +353,7 @@ export default class Requests extends React.Component {
             </RequestFlowPopup>
         }
         {
-          this.state.showActionPopup && this.state.requestAction !== 'respond' &&
+          this.state.showActionPopup && this.state.requestAction !== 'respond' && this.state.requestAction !== 'rate' &&
             <Popup
               smallPopup
               closePopUp={this.closePopup}

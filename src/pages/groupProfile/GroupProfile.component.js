@@ -34,8 +34,10 @@ export default class GroupProfile extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());      
       if (this.state.followFlag) {
-        if (nextProps.isLoggedIn) {          
-          if (nextProps.groupDetails && nextProps.userDetails.role_details && (nextProps.userDetails.role_details.role_code === ROLES.star || nextProps.userDetails.role_details.role_code === ROLES.group)) {
+        if (nextProps.isLoggedIn) {      
+          if (nextProps.groupDetails && nextProps.sessionDetails.role_details && (nextProps.sessionDetails.role_details.role_code === ROLES.star || nextProps.sessionDetails.role_details.role_code === ROLES.group)) {
+            this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
+          } else if (nextProps.sessionDetails.celebrity) {
             this.props.celebrityFollowStatus(nextProps.groupDetails.user_id);
           } else {
             this.props.fanFollowStatus(nextProps.groupDetails.user_id, !nextProps.groupDetails.is_follow);
@@ -66,6 +68,8 @@ export default class GroupProfile extends React.Component {
     if (this.props.isLoggedIn) {
       if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group)) {
         this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
+      } else if (this.props.userDetails.celebrity) {
+        this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
       } else {
         this.props.fanFollowStatus(this.props.groupDetails.user_id, !this.props.groupDetails.is_follow);
       }
@@ -94,9 +98,9 @@ export default class GroupProfile extends React.Component {
     );
   }
 
-  renderItem = (item) => {
+  renderItem = (item, index) => {
     return (
-      <div className="memberDetails">
+      <div className="memberDetails" key={index}>
         <GroupProfileStyled.memberProfileImage src={item.avatar_photo ? item.avatar_photo.thumbnail_url : '../../assets/images/profile.png'} alt="Profile" /> 
         <div className="memberPopupDetails">
           <p className="memberName">{item.get_short_name}</p>
@@ -142,17 +146,17 @@ export default class GroupProfile extends React.Component {
 
     let followText = 'Follow';
     if (this.props.userDetails && this.props.userDetails.role_details && this.props.isLoggedIn && !this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) {
-      if (this.props.userDetails.role_details.role_code === ROLES.fan) {
+      if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity ) {
         followText = 'Follow';
-      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
+      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.celebrity  || this.props.userDetails.role_details.role_code === ROLES.group) {
         followText = 'Support Group';
       }
     }
     let followedText = '';
     if (this.props.userDetails && this.props.isLoggedIn && this.props.userDetails.role_details) {
-      if (this.props.userDetails.role_details.role_code === ROLES.fan && this.props.groupDetails.is_follow) {
+      if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity && this.props.groupDetails.is_follow) {
         followedText = 'Following';
-      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group) {
+      } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.celebrity || this.props.userDetails.role_details.role_code === ROLES.group) {
         if (this.props.groupDetails.account_follow_details && this.props.groupDetails.account_follow_details.approved) {
           followedText = 'Member';
         } else {

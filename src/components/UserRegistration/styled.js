@@ -137,26 +137,120 @@ GroupStyled.InputWrapper = styled.div`
   }
 `;
 
+GroupStyled.PhoneInput = styled.div`
+`;
+
+GroupStyled.AddEmailText = styled.p`
+  font-size: 14px;
+  cursor: pointer;
+  color: #797979;
+  text-decoration: underline;
+  margin-top: 5px;
+`;
+
+GroupStyled.AddEmail = styled.input`
+`;
+
+GroupStyled.CloseInput = styled.span`
+`;
+
+GroupStyled.EmailWrapper = styled.div`
+
+`;
+
+GroupStyled.numberVerification = styled.span`
+`;
+
 GroupStyled.Label = styled.div`
   color:#797979;
   font-family: 'Avenir-Regular';
   font-size:13px;
   text-align:left;
   padding:10px 0;
+  margin-bottom: 0;
+  &.checkbox_container {
+    padding-top: 3px;
+    font-size: 12px;
+    @media(min-width:768px){
+      padding-right: 0;
+    }
+  }
   @media(min-width:768px){
     display:flex;
     align-items:center;
+    padding-left: 0;
     padding-right: 10px;
-    padding-bottom: 10px;
   }
   @media(min-width:1920px){
     font-size:13px;
+  }
+  & > .checkBoxHeading {
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+    display: block;
+  }
+  & > label {
+    top: 2px;
+  }
+  & input[type="checkbox"] {
+    top: 0;
+    left: 0;
+  }
+  ${GroupStyled.EmailWrapper} {
+    margin-top: 5px;
+    & > input {
+      opacity : unset;
+      position: relative;
+      border: none;
+      border-bottom: 1px solid #aaa;
+      outline: none;
+      min-width: 230px;
+      font-size: 14px;
+      font-family: 'Avenir-Regular';
+      &:focus {
+        outline: none;
+      }
+    }
+    & .errorElement {
+      color: red;
+      margin-top: 2px;
+      font-size: 12px;
+    }
+  }
+  ${GroupStyled.PhoneInput} {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    ${GroupStyled.numberVerification} {
+      margin-left: 5px;
+      color: ${props => (props.colorText === 'Verify' ? '#FF6C58' : 'green')};
+    }
+    input {
+      opacity : unset;
+      position: relative;
+      font-size: 14px;
+      font-family: 'Avenir-Regular';
+    }
+    .react-phone-number-input {
+      width: 180px;
+      display: inline-block;
+    }
+    & .errorElement {
+      color: red;
+      margin-left: 32px;
+      margin-top: 2px;
+      font-size: 12px;
+    }
   }
 `;
 
 GroupStyled.WrapsInput = styled.div`
   width:100%;
   position: relative;
+  &.checkboxWrapper{
+    margin-top: 15px;
+  }
   .Select-multi-value-wrapper {
     padding: 9px;
     @media(min-width: 1025px) {
@@ -208,6 +302,7 @@ GroupStyled.InputArea = styled.textarea`
   resize: none;
   background-color: white;
   border: 1px solid #EBEBEB;
+  border-color: ${props => (props.isError ? 'red' : '#EBEBEB')}
   border-radius: 4px;
   &:focus {
     border-color: #FF6C58;
@@ -293,7 +388,7 @@ GroupStyled.ErrorMsg = styled.div`
   ${props => !props.isError && ({
     color: 'grey',
   })
-  }
+}
 `;
 
 GroupStyled.CloseButton = styled.span`
@@ -625,7 +720,7 @@ GroupStyled.SuccessText = styled.p`
   width: 100%;
  `;
 
- GroupStyled.SuccessTextBold = styled.p`
+GroupStyled.SuccessTextBold = styled.p`
  font-size: 18px;
  margin-top: 5%;
  font-family: 'Avenir-Bold';
@@ -710,7 +805,7 @@ GroupStyled.addRepWrapper = styled.div`
     font-size: 17px;
     @media(min-width:768px){
       display: inline-block;
-      width: calc(100% - 60px);
+      max-width: 500px;
     }
     p {
       font-size: 12px;
@@ -727,8 +822,6 @@ GroupStyled.AddRepresentative = styled.span`
   margin-right: 10px;
   cursor: pointer;
   background-repeat: no-repeat;
-  display: inline-block;
-  vertical-align: top;
 `;
 
 GroupStyled.AddRepForm = styled.div`
