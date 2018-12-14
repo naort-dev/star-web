@@ -608,10 +608,8 @@ export default class StarNotification extends React.Component {
             </NotificationStyled.Label>
           </NotificationStyled.WrapsInput>
           <NotificationStyled.RepresentativeWrapper>
-            <NotificationStyled.addRepWrapper>
-              <NotificationStyled.AddRepresentative
-                onClick={() => this.addRepForm()}
-              />
+            <NotificationStyled.addRepWrapper onClick={() => this.addRepForm()}>
+              <NotificationStyled.AddRepresentative />
               <div className="addRepText">Add Representative
                 <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
                   <span>Learn more</span>

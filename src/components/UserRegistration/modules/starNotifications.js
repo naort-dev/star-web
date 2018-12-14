@@ -565,10 +565,8 @@ export default class StarNotifications extends React.Component {
           </GroupStyled.Label>
         </GroupStyled.WrapsInput>
         <GroupStyled.RepresentativeWrapper>
-          <GroupStyled.addRepWrapper>
-            <GroupStyled.AddRepresentative
-              onClick={() => this.addRepForm()}
-            />
+          <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
+            <GroupStyled.AddRepresentative />
             <div className="addRepText">Add Representative
               <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
                 <span>Learn more</span>
