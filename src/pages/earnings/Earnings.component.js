@@ -96,7 +96,6 @@ export default class Earnings extends React.Component {
             {selectedTab === 'All' && (list.length > 0) && !(list.length === 0 && loading) &&
               <EarningStyled.AllEarningsWrapper>
                 {list.length != 0 && this.renderHeader()}
-                {this.renderEarningList(list)}
                 <ScrollList
                   dataList={list}
                   limit={15}
