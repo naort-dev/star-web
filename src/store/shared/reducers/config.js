@@ -1,7 +1,7 @@
 import { CONFIG } from '../actions/getConfig';
 
 const initalState = {
-  data: {},
+  data: null,
   loading: false,
   error: null,
 };
