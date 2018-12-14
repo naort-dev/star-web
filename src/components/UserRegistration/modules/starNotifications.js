@@ -204,18 +204,20 @@ export default class StarNotifications extends React.Component {
   };
 
   acceptOTP = (e) => {
-    this.setState({ otpValue: e.target.value });
+    if (validator.isNumeric(e.target.value, { no_symbols: true }) || e.target.value === '') {
+      this.setState({ otpValue: e.target.value });
+    }
   }
 
   checkAllValidity = () => {
-    const { emailCheckedBox, addEmailFlag, phoneCheckedBox, value, representatives } = this.state;
+    const { emailCheckedBox, addEmailFlag, phoneCheckedBox, value, representatives, phoneNumberVerify } = this.state;
     let emailValid = true;
     let phoneValid = true;
     let repValid = true;
     if (emailCheckedBox && addEmailFlag) {
       emailValid = this.checkEmail();
     }
-    if (phoneCheckedBox && !isValidPhoneNumber(value)) {
+    if (phoneCheckedBox && (!isValidPhoneNumber(value) || phoneNumberVerify !== 'Verified')) {
       phoneValid = false;
     }
     representatives.forEach((rep, index) => {
@@ -459,7 +461,8 @@ export default class StarNotifications extends React.Component {
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
                 <GroupStyled.OTPInput
-                  type="number"
+                  type="text"
+                  maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
                   placeholder="OTP"

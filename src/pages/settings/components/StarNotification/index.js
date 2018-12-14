@@ -11,7 +11,6 @@ export default class StarNotification extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       emailCheckedBox: props.notificationDetails.email_notification,
       phoneCheckedBox: props.notificationDetails.mobile_notification,
@@ -22,7 +21,7 @@ export default class StarNotification extends React.Component {
       email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
       representatives: [],
       anotherRepButton: true,
-      phoneNumberVerify: 'Verify',
+      phoneNumberVerify: props.notificationDetails.mobile_number ? 'Verified' : 'Verify',
       country: '',
       otpEnterPopup: false,
       otpValue: '',
@@ -232,18 +231,20 @@ export default class StarNotification extends React.Component {
   };
 
   acceptOTP = (e) => {
-    this.setState({ otpValue: e.target.value });
+    if (validator.isNumeric(e.target.value, { no_symbols: true }) || e.target.value === '') {
+      this.setState({ otpValue: e.target.value });
+    }
   }
 
   checkAllValidity = () => {
-    const { emailCheckedBox, addEmailFlag, phoneCheckedBox, value, representatives } = this.state;
+    const { emailCheckedBox, addEmailFlag, phoneCheckedBox, value, representatives, phoneNumberVerify } = this.state;
     let emailValid = true;
     let phoneValid = true;
     let repValid = true;
     if (emailCheckedBox && addEmailFlag) {
       emailValid = this.checkEmail();
     }
-    if (phoneCheckedBox && !isValidPhoneNumber(value)) {
+    if (phoneCheckedBox && (!isValidPhoneNumber(value) || phoneNumberVerify !== 'Verified')) {
       phoneValid = false;
     }
     representatives.forEach((rep, index) => {
@@ -269,13 +270,21 @@ export default class StarNotification extends React.Component {
         phoneCheckedBox,
         value,
         representatives,
+        country,
         countryCode,
       } = this.state;
+      let originalNumber;
+      if (phoneCheckedBox) {
+        const codeNumber = this.phone.props.metadata.countries[country][0];
+        originalNumber = value.substring(codeNumber.length + 1, value.length);
+      } else {
+        originalNumber = '';
+      }
       const notifications = {
         emailNotify: emailCheckedBox,
         email: email.value,
         phoneNotify: phoneCheckedBox,
-        phone: value,
+        phone: originalNumber,
         countryCode,
       };
       const repUpdateStatus = representatives.map((rep, index) => {
@@ -511,7 +520,8 @@ export default class StarNotification extends React.Component {
               </NotificationStyled.SocialMediaMessage>
               <NotificationStyled.OTPWrapper>
                 <NotificationStyled.OTPInput
-                  type="number"
+                  type="text"
+                  maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
                   placeholder="OTP"
@@ -596,7 +606,7 @@ export default class StarNotification extends React.Component {
                   </div>
                   {
                     value !== '' && value !== undefined && isValidPhoneNumber(value) &&
-                  <NotificationStyled.numberVerification colorText={this.state.phoneNumberVerify} onClick={() => this.getOtp()}>
+                    <NotificationStyled.numberVerification verified={this.state.phoneNumberVerify === 'Verified'} onClick={() => this.getOtp()}>
                       {this.state.phoneNumberVerify}
                     </NotificationStyled.numberVerification>
                   }

@@ -64,6 +64,7 @@ class StarSettings extends React.Component {
       .then((resp) => {
         if (resp.status == 200) {
           this.setState({ popupMessage: 'Successfully updated settings' });
+          this.props.fetchUserDetails();
         } else {
           this.setState({ popupMessage: resp.error.message });
         }

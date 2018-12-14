@@ -207,7 +207,7 @@ NotificationStyled.Label = styled.div`
     align-items: center;
     ${NotificationStyled.numberVerification} {
       margin-left: 5px;
-      color: ${props => (props.colorText === 'Verified' ? 'green' : '#FF6C58')};
+      color: ${props => (props.verified ? 'green' : '#FF6C58')};
     }
     input {
       opacity : unset;
