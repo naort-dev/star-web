@@ -65,6 +65,8 @@ class App extends React.Component {
     }
     if (!nextProps.configLoading && nextProps.configData) {
       this.setState({ showLoading: false });
+    } else if (!nextProps.configLoading && !nextProps.configData) {
+      this.props.getConfig();
     }
   }
 

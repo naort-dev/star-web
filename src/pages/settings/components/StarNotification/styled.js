@@ -257,6 +257,7 @@ NotificationStyled.AddRepresentative = styled.span`
   cursor: pointer;
   display: inline-block;
   background-repeat: no-repeat;
+  vertical-align: top;
 `;
 
 NotificationStyled.AddRepForm = styled.div`
