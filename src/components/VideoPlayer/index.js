@@ -69,8 +69,18 @@ export default class VideoPlayer extends React.Component {
     }
   }
 
-  handleStateChange = (state) => {
-    if (state.ended && this.state.primary.video === this.props.primarySrc && this.state.secondary.video) this.swapVideos();
+  handleStateChange = (state, prevState) => {
+    if (state.ended && this.state.primary.video === this.props.primarySrc && this.state.secondary.video) {
+      this.swapVideos();
+    } else if (prevState.ended !== state.ended && state.ended && this.state.primary.video === this.props.secondarySrc) {
+      if (this.props.onVideoEnded) {
+        this.props.onVideoEnded();
+      }
+    } else if (prevState.ended !== state.ended && state.ended && this.state.primary.video === this.props.primarySrc && !this.state.secondary.video) {
+      if (this.props.onVideoEnded) {
+        this.props.onVideoEnded();
+      }
+    }
   }
 
   swapVideos = () => {
@@ -82,6 +92,8 @@ export default class VideoPlayer extends React.Component {
         video: '',
       },
       fullScreen: true,
+    }, () => {
+      this.player.play();
     });
     setTimeout(() => this.setState({ primary, secondary, fullScreen: false }), 500);
   }

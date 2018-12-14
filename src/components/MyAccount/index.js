@@ -127,7 +127,7 @@ export default class MyAccount extends React.Component {
                   <Templates.InputWrapper>
                     <Templates.Label>Notification</Templates.Label>
                     <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
+                      <Accounts.Label className="checkbox_container">
                         <span>Messages from Starsona</span>
                         <Accounts.CheckBox
                           id="messagesFromStarsona"
@@ -135,14 +135,14 @@ export default class MyAccount extends React.Component {
                           checked={this.props.accountDetails.notification_settings.fan_starsona_messages}
                           onChange={(event) => { this.props.handleFieldChange('fan_starsona_messages', event.target.value); }}
                         />
-                        <Accounts.Span htmlFor="messagesFromStarsona" id="checkmark" />
+                        <Accounts.Span htmlFor="messagesFromStarsona" className="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label />
                     <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
+                      <Accounts.Label className="checkbox_container">
                         <span>Account updates</span>
                         <Accounts.CheckBox
                           id="accountUpdates"
@@ -150,14 +150,14 @@ export default class MyAccount extends React.Component {
                           checked={this.props.accountDetails.notification_settings.fan_account_updates}
                           onChange={(event) => { this.props.handleFieldChange('fan_account_updates', event.target.value); }}
                         />
-                        <Accounts.Span htmlFor="accountUpdates" id="checkmark" />
+                        <Accounts.Span htmlFor="accountUpdates" className="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label />
                     <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
+                      <Accounts.Label className="checkbox_container">
                         <span>My Starsona updates</span>
                         <Accounts.CheckBox
                           id="myStarsonaUpdates"
@@ -165,14 +165,14 @@ export default class MyAccount extends React.Component {
                           checked={this.props.accountDetails.notification_settings.fan_starsona_videos}
                           onChange={(event) => { this.props.handleFieldChange('fan_starsona_videos', event.target.value); }}
                         />
-                        <Accounts.Span htmlFor="myStarsonaUpdates" id="checkmark" />
+                        <Accounts.Span htmlFor="myStarsonaUpdates" className="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
                   </Templates.InputWrapper>
                   <Templates.InputWrapper>
                     <Templates.Label />
                     <Accounts.WrapsInput>
-                      <Accounts.Label id="checkbox_container">
+                      <Accounts.Label className="checkbox_container">
                         <span>Email updates on Starsona</span>
                         <Accounts.CheckBox
                           id="emailUpdates"
@@ -180,7 +180,7 @@ export default class MyAccount extends React.Component {
                           checked={this.props.accountDetails.notification_settings.fan_email_starsona_videos}
                           onChange={(event) => { this.props.handleFieldChange('fan_email_starsona_videos', event.target.value); }}
                         />
-                        <Accounts.Span htmlFor="emailUpdates" id="checkmark" />
+                        <Accounts.Span htmlFor="emailUpdates" className="checkmark" />
                       </Accounts.Label>
                     </Accounts.WrapsInput>
 
@@ -190,7 +190,7 @@ export default class MyAccount extends React.Component {
                       <Templates.InputWrapper>
                         <Templates.Label></Templates.Label>
                         <Accounts.WrapsInput>
-                          <Accounts.Label id="checkbox_container">
+                          <Accounts.Label className="checkbox_container">
                             <span>Celebrity Starsona request</span>
                             <Accounts.CheckBox
                               id="celebrityStarsonaRequest"
@@ -198,7 +198,7 @@ export default class MyAccount extends React.Component {
                               checked={this.props.accountDetails.notification_settings.celebrity_starsona_request}
                               onChange={(event) => { this.props.handleFieldChange('celebrity_starsona_request', event.target.value); }}
                             />
-                            <Accounts.Span htmlFor="celebrityStarsonaRequest" id="checkmark" />
+                            <Accounts.Span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                           </Accounts.Label>
                         </Accounts.WrapsInput>
 
@@ -206,7 +206,7 @@ export default class MyAccount extends React.Component {
                       <Templates.InputWrapper>
                         <Templates.Label></Templates.Label>
                         <Accounts.WrapsInput>
-                          <Accounts.Label id="checkbox_container">
+                          <Accounts.Label className="checkbox_container">
                             <span>Celebrity Starsona message</span>
                             <Accounts.CheckBox
                               id="celebrityStarsonaMesssage"
@@ -214,7 +214,7 @@ export default class MyAccount extends React.Component {
                               checked={this.props.accountDetails.notification_settings.celebrity_starsona_message}
                               onChange={(event) => { this.props.handleFieldChange('celebrity_starsona_message', event.target.value); }}
                             />
-                            <Accounts.Span htmlFor="celebrityStarsonaMesssage" id="checkmark" />
+                            <Accounts.Span htmlFor="celebrityStarsonaMesssage" className="checkmark" />
                           </Accounts.Label>
                         </Accounts.WrapsInput>
 
@@ -222,7 +222,7 @@ export default class MyAccount extends React.Component {
                       <Templates.InputWrapper>
                         <Templates.Label></Templates.Label>
                         <Accounts.WrapsInput>
-                          <Accounts.Label id="checkbox_container">
+                          <Accounts.Label className="checkbox_container">
                             <span>Celebrity Account updates</span>
                             <Accounts.CheckBox
                               id="celebrityAccountUpdates"
@@ -230,7 +230,7 @@ export default class MyAccount extends React.Component {
                               checked={this.props.accountDetails.notification_settings.celebrity_account_updates}
                               onChange={(event) => { this.props.handleFieldChange('celebrity_account_updates', event.target.value); }}
                             />
-                            <Accounts.Span htmlFor="celebrityAccountUpdates" id="checkmark" />
+                            <Accounts.Span htmlFor="celebrityAccountUpdates" className="checkmark" />
                           </Accounts.Label>
                         </Accounts.WrapsInput>
 

@@ -5,12 +5,12 @@ const SettingsStyled = styled.div`
 `;
 
 SettingsStyled.Container = styled.section`
-  padding: 20px 10px;
+  padding: 0 10px 20px;
   @media(min-width: 768px) {
-    padding: 20px 44px;
+    padding: 0 44px 20px;
   }
   @media(min-width: 1025px) {
-    padding: 20px 10px;
+    padding: 0 10px 20px;
   }
 `;
 
@@ -222,6 +222,49 @@ SettingsStyled.HighlightText = styled.span`
   pointer-events: auto;
 `;
 
+SettingsStyled.Select = styled.select`
+  margin: 0;
+  outline: none;
+  display: inline-block;
+  &::-ms-expand {
+    display: none;
+  }
+  -ms-appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 100%;
+  background: url('assets/images/br_down.png') no-repeat;
+  background-position: 97% 8px;
+  background-size: 16px;
+  padding-right: 40px;
+  background-color: #fff;
+  font-family: 'Avenir-Light';
+  color: #333333;
+  font-size:14px;
+  text-align:left;
+  outline:none;
+  height: 34px;
+  text-indent: 10px;
+  background-color: white;
+  border: 1px solid #d0d2d3;
+  border-radius: 2px;
+  @media(min-width:768px){
+    margin-top:0;
+    height:35px;
+  }
+  @media(min-width:1025px){
+    margin-top:0;
+    height:33px;
+    font-size:13px;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+    height:40px;
+  }
+`;
+
 SettingsStyled.InputArea = styled.textarea`
   font-family: 'Avenir-Regular';
   color: #333333;
@@ -342,7 +385,8 @@ SettingsStyled.HeadingWrapper = styled.div`
   margin: 10px 0;
   margin-bottom: 30px;
   @media(min-width: 768px) {
-    margin: 20px 0;
+    margin-bottom: 20px;
+    margin-top: 0;
   }
 `;
 

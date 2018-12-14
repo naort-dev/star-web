@@ -43,6 +43,12 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
+    case MY_VIDEOS_LIST.updateList:
+      return {
+        ...state,
+        data: action.data,
+      };
+
     case MY_VIDEOS_LIST.reset:
       return initalState;
 

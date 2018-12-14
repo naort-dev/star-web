@@ -4,7 +4,8 @@ const initalState = {
   settings_celebrityDetails: {},
   settings_userDetails: {},
   loading: false,
-  starRole: false,
+  isStar: false,
+  role: '',
   error: '',
 };
 
@@ -28,7 +29,8 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         settings_celebrityDetails: { ...action.details.celebrity_details },
         settings_userDetails: { ...action.details.user },
-        starRole: action.details.user.celebrity,
+        isStar: action.details.user.celebrity,
+        role: action.details.user.role_details.role_code,
       };
 
     case USER_DETAILS.failed:
@@ -38,10 +40,11 @@ export default (state = { ...initalState }, action) => {
         error: action.error,
       };
 
-    case USER_DETAILS.updateStarRole:
+    case USER_DETAILS.updateUserRole:
       return {
         ...state,
-        starRole: action.role,
+        isStar: action.isStar,
+        role: action.role,
       };
 
     case USER_DETAILS.reset:
@@ -49,7 +52,8 @@ export default (state = { ...initalState }, action) => {
         ...state,
         settings_celebrityDetails: {},
         settings_userDetails: {},
-        starRole: false,
+        isStar: false,
+        role: '',
       };
 
     default:
