@@ -196,8 +196,13 @@ class starRegistrationComponent extends React.Component {
                   onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
                 />
               </GroupStyled.StepWrapper>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
+                <StarNotifications
+                  onComplete={this.submitNotifications}
+                />
+              </GroupStyled.StepWrapper>
               {
-                this.props.currentStep === 5 &&
+                this.props.currentStep === 6 &&
                   <GroupStyled.VideoRecorderWrapper>
                     <QAVideoRecorder
                       {...this.props}
@@ -231,11 +236,6 @@ class starRegistrationComponent extends React.Component {
                   </GroupStyled.DetailsWrapper>
                 )
               }
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
-                <StarNotifications
-                  onComplete={this.submitNotifications}
-                />
-              </GroupStyled.StepWrapper>
             </GroupStyled.ContentWrapper>
         }
       </GroupStyled>
