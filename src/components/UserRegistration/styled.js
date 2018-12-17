@@ -614,13 +614,18 @@ GroupStyled.Professions = styled.span`
 
 GroupStyled.ConfirmationWrapper = styled.div`
   font-family: Avenir-Light;
-  margin-top: 40px;
+  margin: 20px 0;
   padding-left: 40px;
   color: #565656;
 `;
 
 GroupStyled.ConfirmationHead = styled.span`
 
+`;
+
+GroupStyled.ConfirmationFooter = styled.span`
+  margin-top: 20px;
+  display: block;
 `;
 
 GroupStyled.confirmationSteps = styled.span`
