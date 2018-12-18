@@ -18,6 +18,10 @@ ReferralStyled.Heading = styled.span`
   margin-bottom: 30px;
 `;
 
+ReferralStyled.ReferralList = styled.div`
+  width: 100%;
+`;
+
 ReferralStyled.RequestReferral = styled.button`
   background-color: #FF6C58;
   color: #fff;
