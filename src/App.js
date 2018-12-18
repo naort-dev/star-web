@@ -113,6 +113,11 @@ class App extends React.Component {
                 <Route path="/faq" component={() => window.location = 'https://about.starsona.com/faq'}/>
                 {/* <Route path="/login" component={Login} />
                 <Route path="/forgotpassword" component={Login} /> */}
+                <Route
+                  exact
+                  path="/signup"
+                  render={props => <Landing {...props} isSignup />}
+                />
                 <Route exact path="/group-profile/:id" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
