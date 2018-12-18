@@ -74,7 +74,7 @@ export default class ScrollList extends React.Component {
       return;
     }
     if (!this.props.loading) {
-      this.props.fetchData(this.props.offset + this.props.limit, false);
+      this.props.fetchData(this.props.offset + this.props.limit);
     }
   };
 
@@ -145,20 +145,16 @@ export default class ScrollList extends React.Component {
           />
         </ListStyled.listVideos>
       ));
+    } else if (this.props.memberList) {
+      return this.props.dataList.map((item) => {
+        return this.props.renderFunction(item);
+      });
     } else if (this.props.requestDetails) {
       return this.props.dataList.map((item, index) => (
         <ListStyled.listRequests key={index}>
           {this.props.renderFunction(item)}
         </ListStyled.listRequests>
       ));
-    } else if (this.props.renderFunction) {
-      return this.props.dataList.map((item) => {
-        return this.props.renderFunction(item);
-      });
-    } else if (this.props.memberList) {
-      return this.props.dataList.map((item, index) => {
-        return this.props.renderFunction(item, index);
-      });
     } else if (this.props.earnings) {
       return this.props.dataList.map((item, index) => (
         <EarningsList
@@ -223,56 +219,49 @@ export default class ScrollList extends React.Component {
           this.state.videoActive &&
             <VideoPopup
               videoPopupLoading={this.state.videoPopupLoading}
-              selectedVideo={this.props.dataList.length ? this.props.dataList[this.state.selectedVideoIndex] : {}}
+              selectedVideo={this.props.dataList[this.state.selectedVideoIndex]}
               selectedVideoIndex={this.state.selectedVideoIndex}
               changeVideo={this.changeVideo}
               closePopUp={() => this.setState({ videoActive: false })}
             />
         }
         {
-          !this.props.dataList.length && this.props.loading ?
-            <Loader />
+          this.state.bannerVideo &&
+            <Popup closePopUp={() => this.setState({ bannerVideo: false })}>
+              <ListStyled.VideoPlayer>
+                <VideoPlayer
+                  autoPlay
+                  primarySrc={locations.bannerVideo}
+                />
+              </ListStyled.VideoPlayer>
+            </Popup>
+        }
+        {
+          this.props.scrollTarget ?
+            this.infiniteScrollList(this.props.scrollTarget)
           :
-            <React.Fragment>
+            <Scrollbars
+              renderView={props => <div {...props} className="view" id="scrollable-target" />}
+            >
               {
-                this.state.bannerVideo &&
-                  <Popup closePopUp={() => this.setState({ bannerVideo: false })}>
-                    <ListStyled.VideoPlayer>
-                      <VideoPlayer
-                        autoPlay
-                        primarySrc={locations.bannerVideo}
-                      />
-                    </ListStyled.VideoPlayer>
-                  </Popup>
-              }
-              {
-                this.props.scrollTarget ?
-                  this.infiniteScrollList(this.props.scrollTarget)
-                :
-                  <Scrollbars
-                    renderView={props => <div {...props} className="view" id="scrollable-target" />}
+                this.props.banner &&
+                  <ListStyled.Banner
+                    onClick={() => this.setState({ bannerVideo: true })}
                   >
-                    {
-                      this.props.banner &&
-                        <ListStyled.Banner
-                          onClick={() => this.setState({ bannerVideo: true })}
-                        >
-                          <ListStyled.BannerHeading>
-                            Personalized Video Shout-Outs
-                            <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
-                          </ListStyled.BannerHeading>
-                          <ListStyled.BannerPlayButton
-                            alt="banner-video"
-                            src="assets/images/play-button.png"
-                          />
-                        </ListStyled.Banner>
-                    }
-                    {
-                      this.infiniteScrollList('scrollable-target')
-                    }
-                  </Scrollbars>
+                    <ListStyled.BannerHeading>
+                      Personalized Video Shout-Outs
+                      <ListStyled.BannerSubHeading>to Celebrate Everyday Moments</ListStyled.BannerSubHeading>
+                    </ListStyled.BannerHeading>
+                    <ListStyled.BannerPlayButton
+                      alt="banner-video"
+                      src="assets/images/play-button.png"
+                    />
+                  </ListStyled.Banner>
               }
-            </React.Fragment>
+              {
+                this.infiniteScrollList('scrollable-target')
+              }
+            </Scrollbars>
         }
       </ListStyled>
     );

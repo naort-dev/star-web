@@ -118,7 +118,7 @@ export default class FilterSection extends React.Component {
                 </FilterStyled.filterSection>
             }
             {
-              this.props.selectedTab !== 'Videos' ? 
+              this.props.selectedTab !== 'Videos' ?
                 <FilterStyled.filterSection>
                   <FilterStyled.filterHeading>
                     Sort By
@@ -136,22 +136,18 @@ export default class FilterSection extends React.Component {
                     >
                       Z - A
                     </FilterStyled.filterItem>
-                    {this.props.groupClicked ?
-                      <FilterStyled.filterItem
-                        selected={this.props.selectedSort === 'lpf' ? true : false}
-                        onClick={() => this.filterSelection('sort', 'lpf')}
-                      >
-                        $ - $$$
-                      </FilterStyled.filterItem>
-                      : null}
-                    {this.props.groupClicked ?
-                      <FilterStyled.filterItem
-                        selected={this.props.selectedSort === 'hpf' ? true : false}
-                        onClick={() => this.filterSelection('sort', 'hpf')}
-                      >
-                        $$$ - $
-                      </FilterStyled.filterItem>
-                    : null}
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedSort === 'lpf' ? true : false}
+                      onClick={() => this.filterSelection('sort', 'lpf')}
+                    >
+                      $ - $$$
+                    </FilterStyled.filterItem>
+                    <FilterStyled.filterItem
+                      selected={this.props.selectedSort === 'hpf' ? true : false}
+                      onClick={() => this.filterSelection('sort', 'hpf')}
+                    >
+                      $$$ - $
+                    </FilterStyled.filterItem>
                   </FilterStyled.filterItemWrapper>
                 </FilterStyled.filterSection>
               : null

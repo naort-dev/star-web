@@ -3,13 +3,11 @@ import { Elements } from 'react-stripe-elements';
 import { connect } from 'react-redux';
 import Scrollbars from 'react-custom-scrollbars';
 import AlertView from '../../components/AlertView';
-import Loader from '../../components/Loader';
 import Popup from '../../components/Popup';
 import { requestTypes } from '../../constants/requestTypes';
 import Checkout from './checkout';
 import {
   createCharge,
-  tipPayment,
   paymentFetchSourceStart,
   paymentFetchSourceEnd,
   fetchSourceList,
@@ -51,7 +49,7 @@ class StripeCheckout extends React.Component {
   }
 
   getEphemeralKey = () => {
-    fetchEphemeralKey()
+    fetchEphemeralKey(this.props.authToken)
       .then((resp) => {
         const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
         this.setState({ customerId });
@@ -83,12 +81,7 @@ class StripeCheckout extends React.Component {
     }
   }
   chargeCreator = (tokenId, customerId) => {
-    const { paymentType, rate, requestDetails, paymentId } = this.props;
-    if (paymentType === 'tip') {
-      this.props.tipPayment(paymentId, rate, tokenId);
-    } else {
-      this.props.createCharge(requestDetails.id, rate, tokenId, customerId);
-    }
+    this.props.createCharge(this.props.requestDetails.id, this.props.rate, tokenId, customerId);
   }
   removeCard = (source) => {
     this.props.modifySourceList(source, this.state.customerId, false);
@@ -153,30 +146,20 @@ class StripeCheckout extends React.Component {
             </Popup>
           : null
         }
-        {
-          this.props.loading &&
-            <PaymentStyled.LoaderWrapper>
-              <Loader />
-            </PaymentStyled.LoaderWrapper>
-        }
         <PaymentStyled.Heading>Review your Purchase</PaymentStyled.Heading>
         <PaymentStyled.StarDetailsWrapper>
           <PaymentStyled.StarNameWrapper>
-            <PaymentStyled.StarPhoto
+            <PaymentStyled.StarPhoto 
               imageUrl={this.props.profilePhoto}
             />
             <PaymentStyled.RequestDetails>
               <PaymentStyled.SubTitle>
-                { this.props.customHeading ? this.props.customHeading : 'Starsona booking' }
+                Starsona booking
               </PaymentStyled.SubTitle>
               {this.props.fullName}
-              {
-                this.props.requestType ?
-                  <PaymentStyled.RequestType>
-                    {requestTypes[this.props.requestType]}
-                  </PaymentStyled.RequestType>
-                : null
-              }
+              <PaymentStyled.RequestType>
+                {requestTypes[this.props.requestType]}
+              </PaymentStyled.RequestType>
             </PaymentStyled.RequestDetails>
           </PaymentStyled.StarNameWrapper>
           <PaymentStyled.BookingRate>
@@ -245,8 +228,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  createCharge: (starsonaId, amount, tokenId) => dispatch((createCharge(starsonaId, amount, tokenId))),
-  tipPayment: (booking, amount, tokenId) => dispatch(tipPayment(booking, amount, tokenId)),
+  createCharge: (starsonaId, amount, tokenId, customerId) => dispatch((createCharge(starsonaId, amount, tokenId, customerId))),
   paymentFetchSourceStart: () => dispatch(paymentFetchSourceStart()),
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),

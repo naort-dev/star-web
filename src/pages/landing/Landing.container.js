@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCelebrityList: (offset, refresh, category) => dispatch(fetchCelebrityList(offset, refresh, category)),
+  fetchCelebrityList: (offset, refresh) => dispatch(fetchCelebrityList(offset, refresh)),
   fetchVideosList: (offset, refresh) => dispatch(fetchVideosList(offset, refresh)),
   updateCategory: (label, value) => dispatch(updateCategory(label, value)),
   switchTab: label => dispatch(switchTab(label)),

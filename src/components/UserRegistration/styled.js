@@ -137,120 +137,26 @@ GroupStyled.InputWrapper = styled.div`
   }
 `;
 
-GroupStyled.PhoneInput = styled.div`
-`;
-
-GroupStyled.AddEmailText = styled.p`
-  font-size: 14px;
-  cursor: pointer;
-  color: #797979;
-  text-decoration: underline;
-  margin-top: 5px;
-`;
-
-GroupStyled.AddEmail = styled.input`
-`;
-
-GroupStyled.CloseInput = styled.span`
-`;
-
-GroupStyled.EmailWrapper = styled.div`
-
-`;
-
-GroupStyled.numberVerification = styled.span`
-`;
-
 GroupStyled.Label = styled.div`
   color:#797979;
   font-family: 'Avenir-Regular';
   font-size:13px;
   text-align:left;
   padding:10px 0;
-  margin-bottom: 0;
-  &.checkbox_container {
-    padding-top: 3px;
-    font-size: 12px;
-    @media(min-width:768px){
-      padding-right: 0;
-    }
-  }
   @media(min-width:768px){
     display:flex;
     align-items:center;
-    padding-left: 0;
     padding-right: 10px;
+    padding-bottom: 10px;
   }
   @media(min-width:1920px){
     font-size:13px;
-  }
-  & > .checkBoxHeading {
-    font-size: 14px;
-    color: #333;
-    margin-bottom: 5px;
-    display: block;
-  }
-  & > label {
-    top: 2px;
-  }
-  & input[type="checkbox"] {
-    top: 0;
-    left: 0;
-  }
-  ${GroupStyled.EmailWrapper} {
-    margin-top: 5px;
-    & > input {
-      opacity : unset;
-      position: relative;
-      border: none;
-      border-bottom: 1px solid #aaa;
-      outline: none;
-      min-width: 230px;
-      font-size: 14px;
-      font-family: 'Avenir-Regular';
-      &:focus {
-        outline: none;
-      }
-    }
-    & .errorElement {
-      color: red;
-      margin-top: 2px;
-      font-size: 12px;
-    }
-  }
-  ${GroupStyled.PhoneInput} {
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    ${GroupStyled.numberVerification} {
-      margin-left: 5px;
-      color: ${props => (props.colorText === 'Verify' ? '#FF6C58' : 'green')};
-    }
-    input {
-      opacity : unset;
-      position: relative;
-      font-size: 14px;
-      font-family: 'Avenir-Regular';
-    }
-    .react-phone-number-input {
-      width: 180px;
-      display: inline-block;
-    }
-    & .errorElement {
-      color: red;
-      margin-left: 32px;
-      margin-top: 2px;
-      font-size: 12px;
-    }
   }
 `;
 
 GroupStyled.WrapsInput = styled.div`
   width:100%;
   position: relative;
-  &.checkboxWrapper{
-    margin-top: 15px;
-  }
   .Select-multi-value-wrapper {
     padding: 9px;
     @media(min-width: 1025px) {
@@ -302,7 +208,6 @@ GroupStyled.InputArea = styled.textarea`
   resize: none;
   background-color: white;
   border: 1px solid #EBEBEB;
-  border-color: ${props => (props.isError ? 'red' : '#EBEBEB')}
   border-radius: 4px;
   &:focus {
     border-color: #FF6C58;
@@ -388,7 +293,7 @@ GroupStyled.ErrorMsg = styled.div`
   ${props => !props.isError && ({
     color: 'grey',
   })
-}
+  }
 `;
 
 GroupStyled.CloseButton = styled.span`
@@ -720,205 +625,13 @@ GroupStyled.SuccessText = styled.p`
   width: 100%;
  `;
 
-GroupStyled.SuccessTextBold = styled.p`
+ GroupStyled.SuccessTextBold = styled.p`
  font-size: 18px;
  margin-top: 5%;
  font-family: 'Avenir-Bold';
  margin-bottom: 5%;
  text-align: left;
  width: 100%;
-`;
-
-GroupStyled.HeaderText = styled.div`
-  text-align:center;
-  color:#676767;
-  font-size:20px;
-  font-family: 'Avenir-Bold';
-  @media(min-width:768px){
-    font-size:25px;
-  }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
-  }
-`;
-
-GroupStyled.SocialMediaMessage = styled.div`
-  font-family: 'Avenir-Regular';
-  font-size: 14px;
-  text-align: center;
-  color: #7B797A;
-  margin-bottom: 5px;
-  margin-top: 10px;
-  word-spacing: 3px;
-  @media(min-width:768px){
-    font-size: 18px;
-  }
-  @media(min-width:1025px){
-    font-size:14px;
-  }
-  @media(min-width:1920px){
-    font-size:18px;
-  }
-`;
-
-GroupStyled.NoteText = styled.div`
-  color: #aaa;
-  font-size: 12px;
-  margin-top: 3px;
-`;
-
-GroupStyled.ButtonWrapper = styled.button`
-  background-color: #FF6C58;
-  color: rgb(255,255,255);
-  text-align: center;
-  display: inline-block;
-  font-size: 14px;
-  font-family: Avenir-Bold;
-  cursor: pointer;
-  padding: 10px 30px;
-  text-decoration: none;
-  outline: none;
-  border-radius: 5px;
-  border: 2px solid #FF6C58;
-  border-image: initial;
-  &:hover {
-    background-color: #FF3B21;
-  }
-`;
-
-GroupStyled.RepresentativeWrapper = styled.div`
-  border-top: 1px solid #ddd;
-  padding-top: 20px;
-`;
-
-GroupStyled.addRepWrapper = styled.div`
-  margin-bottom: 10px;
-  cursor: pointer;
-  display: flex;
-  @media(min-width:768px){
-    display: inline-block;
-  }  
-  .addRepText {
-    font-size: 17px;
-    @media(min-width:768px){
-      display: inline-block;
-      width: calc(100% - 60px);
-    }
-    p {
-      font-size: 12px;
-      color: #aaa;
-    }
-  }
-`;
-
-GroupStyled.AddRepresentative = styled.span`
-  background-image: url(assets/images/plus-sign-in-circle.png);
-  width: 40px;
-  height: 40px;
-  background-size: 100% auto;
-  margin-right: 10px;
-  cursor: pointer;
-  background-repeat: no-repeat;
-  display: inline-block;
-  vertical-align: top;
-`;
-
-GroupStyled.AddRepForm = styled.div`
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  margin-left: 5px;
-  padding: 12px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  .RepDetailText {
-    font-size: 18px;
-    display: flex;
-    justify-content: space-between;
-  }
-  .repFormElement {
-    margin-top: 25px;
-    input {
-      border: none;
-      border-bottom: 1px solid #aaa;
-      width: 100%;
-      font-size: 14px;
-      outline: none;
-      font-family: 'Avenir-Regular';
-    }
-    .errorElement {
-      color: red;
-      margin-top: 2px;
-      font-size: 12px;
-    }
-  }
-  .notifyRepresentative {
-    margin-top: 20px;
-    p {
-      color: #aaa;
-      font-size: 14px;
-    }
-    .checkbox_container {
-      margin-bottom: 0;
-    }
-  }
-`;
-
-GroupStyled.CloseRepForm = styled.p`
-  cursor: pointer;
-`;
-GroupStyled.Rep1Email = styled.input``;
-GroupStyled.Rep1FirstName = styled.input``;
-GroupStyled.Rep1LastName = styled.input``;
-GroupStyled.Rep1Phone = styled.input``;
-GroupStyled.AnotherRepButton = styled.button`
-  display: ${props => (props.buttonDisplay ? 'block' : 'none')};
-  border: none;
-  background: transparent;
-  color: #aaa;
-  text-decoration: underline;
-  margin: 20px auto;
-  font-size: 16px;
-  outline: none;
-  cursor: pointer;
-`;
-GroupStyled.RepFormWrapper = styled.div``;
-GroupStyled.OTPWrapper = styled.div`
-  text-align: center;
-  & .errorElement {
-    color: red;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    font-size: 12px;
-  }
-`;
-GroupStyled.OTPInput = styled.input`
-  margin: 10px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-  font-size: 20px;
-  outline: none;
-`;
-GroupStyled.OTPSubmit = styled.button`
-  background-color: #FF6C58;
-  color: rgb(255,255,255);
-  text-align: center;
-  display: inline-block;
-  font-size: 14px;
-  font-family: Avenir-Bold;
-  cursor: pointer;
-  padding: 10px 30px;
-  text-decoration: none;
-  outline: none;
-  border-radius: 5px;
-  border: 2px solid #FF6C58;
-  border-image: initial;
-  &:hover {
-    background-color: #FF3B21;
-  }
 `;
 
 export default GroupStyled;

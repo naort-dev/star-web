@@ -13,22 +13,20 @@ class Sidebar extends React.Component {
     };
   }
 
-  selectCategory = (label, id, category) => {
+  selectCategory = (label, id) => {
     if (label === 'featured') this.setState({ showSubCategory: false });
-    if (this.props.selectedCategory === id && category === 'Stars') {
+    if (this.props.selectedCategory === id) {
       this.setState({ showSubCategory: !this.state.showSubCategory});
       return;
     }
-    if (category === 'Stars') {
-      this.setState({ showSubCategory: true });
-    }
+    this.setState({ showSubCategory: true });
 
     if (window.outerWidth<=1024) {
       if (label === 'featured') this.props.toggleMenu();
     }
-    this.props.updateCategory(label, id, category);
+    this.props.updateCategory(label, id);
     if (this.props.updateMainCategory) {
-      this.props.updateMainCategory(label, id, category);
+      this.props.updateMainCategory(label, id);
     }
     if (this.props.history && this.props.history.location.pathname !== '/') {
       this.props.history.push('/');
@@ -52,7 +50,7 @@ class Sidebar extends React.Component {
       >
         <SidebarStyled.CategoryTitle
           selected={this.props.selectedCategory === item.id ? true : false}
-          onClick={() => this.selectCategory(item.title, item.id, 'Stars')}
+          onClick={() => this.selectCategory(item.title, item.id)}
         >
           {item.title}
         </SidebarStyled.CategoryTitle>
@@ -83,21 +81,6 @@ class Sidebar extends React.Component {
     ))
   )
 
-  renderGroupCategoryList = () => (
-    this.props.groupCategory.map(item => (
-      <SidebarStyled.ListItem
-        key={item.id}
-      >
-        <SidebarStyled.CategoryTitle
-          selected={this.props.selectedCategory === item.id ? true : false}
-          onClick={() => this.selectCategory(item.group_name, item.id, 'Group')}
-        >
-          {item.group_name}
-        </SidebarStyled.CategoryTitle>
-      </SidebarStyled.ListItem>
-    ))
-  )
-
   renderInnerPageLinks = () => {
     return (
       <SidebarStyled.FilterWrapper>
@@ -117,15 +100,6 @@ class Sidebar extends React.Component {
                             <SidebarStyled.InnerListItemCount>
                               {
                                 this.props.userDetails.settings_celebrityDetails.pending_requests_count
-                              }
-                            </SidebarStyled.InnerListItemCount>
-                          : null
-                        }
-                        {
-                          element.selectedName === 'myVideos' && this.props.userDetails.settings_userDetails.completed_fan_unseen_count ?
-                            <SidebarStyled.InnerListItemCount>
-                              {
-                                this.props.userDetails.settings_userDetails.completed_fan_unseen_count
                               }
                             </SidebarStyled.InnerListItemCount>
                           : null
@@ -151,7 +125,7 @@ class Sidebar extends React.Component {
               <section>
                 <SidebarStyled.FilterWrapper>
                   {
-                    this.props.isStar ?
+                    this.props.starRole ?
                       <SidebarStyled.Filter>
                         <SidebarStyled.SectionHeading>Star</SidebarStyled.SectionHeading>
                         <SidebarStyled.Separator />
@@ -199,22 +173,13 @@ class Sidebar extends React.Component {
                       <SidebarStyled.ListItem>
                         <SidebarStyled.CategoryTitle
                           selected={this.props.selectedCategory === '' ? true : false}
-                          onClick={() => this.selectCategory('featured', '', 'Stars')}
+                          onClick={() => this.selectCategory('featured', '')}
                         >
                           Featured
                         </SidebarStyled.CategoryTitle>
                       </SidebarStyled.ListItem>
                       {
                         this.renderCategoryList()
-                      }
-                    </SidebarStyled.ListWrapper>
-                  </SidebarStyled.Filter>
-                  <SidebarStyled.Filter>
-                    <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
-                    <SidebarStyled.Separator />
-                    <SidebarStyled.ListWrapper>
-                      {
-                        this.renderGroupCategoryList()
                       }
                     </SidebarStyled.ListWrapper>
                   </SidebarStyled.Filter>
@@ -232,12 +197,11 @@ class Sidebar extends React.Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.userDetails,
-  groupCategory: state.groupTypes.data,
-  isStar: state.userDetails.isStar,
+  starRole: state.userDetails.starRole,
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateCategory: (label, value, category) => dispatch(updateCategory(label, value, category)),
+  updateCategory: (label, value) => dispatch(updateCategory(label, value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);

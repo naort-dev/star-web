@@ -54,8 +54,6 @@ export default class Starprofile extends React.Component {
       this.setState({ favouriteSelected: nextProps.userDetails.is_follow });
     }
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
-      this.setState({ offsetValue: 0 });
-      this.props.fetchCelebVideosList(0, true, this.getUserId(nextProps));
       if (nextProps.isLoggedIn && nextProps.requestFlowDetails) {
         this.props.toggleRequestFlow(true);
       }

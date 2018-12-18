@@ -11,11 +11,10 @@ export const UPDATEFILTER = {
   updateSelectedVideoDate: 'update/update_video_date',
 };
 
-export const updateCategory = (label, value, category) => ({
+export const updateCategory = (label, value) => ({
   type: UPDATEFILTER.updateCategory,
   label,
   value,
-  category,
 });
 
 export const updateSearchParam = value => ({

@@ -190,7 +190,6 @@ export default class Confirm extends React.Component {
   closeRequestFlow = () => {
     this.clearStream();
     this.props.resetRequestFlow();
-    this.props.fetchCelebDetails(this.props.userDetails.user_id);
     this.props.resetPaymentDetails();
     this.props.deleteVideo();
     this.props.cancelBookingDetails();
@@ -297,7 +296,7 @@ export default class Confirm extends React.Component {
       </Request.Questionwraps>
       <Request.OptionWrapper>
         <Request.CheckBoxWrapper>
-          <Request.Label className="checkbox_container">
+          <Request.Label id="checkbox_container">
             <span>I give permission to {fullName} and Starsona to share my video on social media</span>
             <Request.CheckBox
               id="private_video"
@@ -305,7 +304,7 @@ export default class Confirm extends React.Component {
               checked={this.state.publicRequest}
               onChange={() => this.changePublicStatus()}
             />
-            <Request.Span htmlFor="private_video" className="checkmark" />
+            <Request.Span htmlFor="private_video" id="checkmark" />
           </Request.Label>
         </Request.CheckBoxWrapper>
       </Request.OptionWrapper>
@@ -355,6 +354,13 @@ export default class Confirm extends React.Component {
     }
     return (
       <Request.Wrapper>
+        {
+          this.props.loading ?
+            <ConfirmationModal.loaderWrapper>
+              <Loader />
+            </ConfirmationModal.loaderWrapper>
+          : null
+        }
         <Request.Content>
           <Request>
             <Request.LeftSection>

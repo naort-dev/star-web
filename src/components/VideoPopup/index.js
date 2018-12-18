@@ -29,8 +29,9 @@ class VideoPopup extends React.Component {
     super(props);
     this.state = {
       sharePopup: false,
-      pendingComment: '',
+      hasMore: true,
       commentText: '',
+      videoContentHeight: null,
       snackBarText: '',
     };
   }
@@ -40,24 +41,20 @@ class VideoPopup extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.selectedVideo.video_id && this.state.pendingComment !== '') {
-      this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
-    }
-    if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id && nextProps.selectedVideo.video_id) {
+    if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id) {
       this.props.resetCommentsList();
       this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
-      if (this.state.pendingComment) {
-        this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
-      }
       this.setState({
         commentText: '',
         sharePopup: false,
-      });
+        hasMore: true,
+      })
     }
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.commentList.count - prevProps.commentList.count === 1 && this.scrollBarRef) {
+      // this.scrollBarRef.scrollToBottom();
       if (this.commentInput) {
         this.commentInput.focus();
       }
@@ -66,16 +63,6 @@ class VideoPopup extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
-  }
-
-  onVideoEnded = () => {
-    if (this.props.onVideoEnded) {
-      this.props.onVideoEnded();
-    }
-  }
-
-  setSnackBarText = (text) => {
-    this.setState({ snackBarText: text });
   }
 
   findTime = (commentDate) => {
@@ -101,22 +88,22 @@ class VideoPopup extends React.Component {
   }
 
   loadMoreComments = () => {
-    if (this.props.commentList.data.length < this.props.commentList.count) {
-      const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
+    if (this.props.commentList.data.length >= this.props.commentList.count) {
+      this.setState({ hasMore: false })
+    } else {
+      const offset = this.props.commentList.data[this.props.commentList.data.length-1].id;
       this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset);
     }
   }
 
-  addVideoComment = (videoId, comment, isLoggedIn) => {
-    if (isLoggedIn) {
-      this.setState({ commentText: '' });
+  addVideoComment = (videoId, comment) => {
+    if (this.props.isLoggedIn) {
       addVideoComment(videoId, comment)
         .then(() => {
-          this.setState({ pendingComment: '' });
           this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
         });
     } else {
-      this.setState({ pendingComment: comment });
+      this.props.closePopUp();
       this.props.toggleLogin(true);
     }
   }
@@ -128,12 +115,13 @@ class VideoPopup extends React.Component {
   }
 
   handleCommentAdd = (event) => {
-    this.setState({ commentText: event.target.value });
+    this.setState({ commentText: event.target.value })
   }
 
   commentAdder = () => {
     if (this.state.commentText !== '') {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText, this.props.isLoggedIn);
+      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+      this.setState({ commentText: '' });
     }
   }
 
@@ -141,6 +129,10 @@ class VideoPopup extends React.Component {
     if (event.keyCode === 13) {
       this.commentAdder();
     }
+  }
+
+  setSnackBarText = (text) => {
+    this.setState({ snackBarText: text });
   }
   
   closeSnackBar = () => {
@@ -155,7 +147,7 @@ class VideoPopup extends React.Component {
   renderSocialIcons = (selectedVideo) => {
     const defaultUrl = selectedVideo.video_url;
     const shareUrl = `https://${defaultUrl}`;
-    const title = selectedVideo.booking_title;
+    const title = selectedVideo.booking_title
     return (
       <React.Fragment>
         <VideoPopupStyled.Somenetwork>
@@ -254,7 +246,7 @@ class VideoPopup extends React.Component {
               <React.Fragment>
                 <VideoPopupStyled.VideoPlayer>
                   <VideoPopupStyled.VideoPlayerWrapper>
-                    <VideoPlayer onVideoEnded={this.onVideoEnded} {...videoPlayerProps} />
+                    <VideoPlayer {...videoPlayerProps} />
                     {
                       !props.noSlider &&
                         <React.Fragment>

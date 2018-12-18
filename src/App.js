@@ -13,7 +13,6 @@ import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
-import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
@@ -27,19 +26,18 @@ import { Requestvideo } from './pages/requestvideo';
 import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
 import SignupFlow from './components/signupFlow';
-import { StarSupporters } from './pages/starSupporters';
+import { Starbio } from './pages/starbio';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
-import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
-import { getConfig } from './store/shared/actions/getConfig';
+import { fetchUserDetails, updateStarRole } from './store/shared/actions/getUserDetails';
 import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoading: true,
+      showLoading: false,
       timedOut: false,
     };
 
@@ -48,25 +46,16 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
-    this.props.getConfig();
-    this.props.fetchGroupTypes();
     if (localStorage && localStorage.getItem('data') !== null) {
-      const userData = JSON.parse(localStorage.getItem('data')).user;
-      this.props.updateLoginStatus(userData);
-      this.props.updateUserRole(userData.celebrity, userData.role_details.role_code);
-      this.props.fetchUserDetails(userData.id);
+      this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.updateStarRole(JSON.parse(localStorage.getItem('data')).user.celebrity);
+      this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
-      this.props.fetchGroupTypes();
-    }
-    if (!nextProps.configLoading && nextProps.configData) {
-      this.setState({ showLoading: false });
-    } else if (!nextProps.configLoading && !nextProps.configData) {
-      this.props.getConfig();
     }
   }
 
@@ -74,6 +63,13 @@ class App extends React.Component {
     if (this.props.location !== prevProps.location) {
       window.scrollTo(0, 0);
     }
+  }
+
+  updateSession = () => {
+    if (localStorage && localStorage.getItem('data') !== null) {
+      this.props.updateLoginStatus(JSON.parse(localStorage.getItem('data')).user);
+      this.props.fetchUserDetails(JSON.parse(localStorage.getItem('data')).user.id)
+    } else this.props.logOut();
   }
 
   render() {
@@ -123,6 +119,13 @@ class App extends React.Component {
 
                 {/* logged in areas */}
 
+                {/* <Route
+                  path="/myStar/:videoId?"
+                  component={protectRoute({
+                    RouteComponent: Starprofile,
+                  })}
+                /> */}
+
                 <Route
                   path="/user/favorites"
                   component={protectRoute({
@@ -136,12 +139,6 @@ class App extends React.Component {
                   })}
                 />
                 <Route
-                  path="/user/star-supporters"
-                  component={protectRoute({
-                    RouteComponent: StarSupporters,
-                  })}
-                />
-                <Route
                   path="/user/myVideos"
                   component={protectRoute({
                     RouteComponent: Requests,
@@ -151,6 +148,7 @@ class App extends React.Component {
                   path="/user/bookings"
                   component={protectRoute({
                     RouteComponent: Requests,
+                    selectedSideBarItem: 'requests',
                     starMode: true,
                   })}
                 />
@@ -179,8 +177,6 @@ App.propTypes = {
 };
 
 const mapState = state => ({
-  configLoading: state.config.loading,
-  configData: state.config.data,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
@@ -189,11 +185,9 @@ const mapState = state => ({
 });
 
 const mapProps = dispatch => ({
-  getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
-  fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
-  updateUserRole: (isStar, role) => dispatch(updateUserRole(isStar, role)),
+  updateStarRole: role => dispatch(updateStarRole(role)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   logOut: () => dispatch(logOut()),
 });

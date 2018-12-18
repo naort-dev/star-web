@@ -10,7 +10,7 @@ RatingStyled.Rating = styled.label`
   padding: 3px;
   vertical-align: middle;
   line-height: 1;
-  font-size: ${props => (props.big ? '2.5em' : '1.5em')};
+  font-size: 1.5em;
   color: ${props => (props.selected ? '#FF6C58' : '#ABABAB')};
   transition: color .2s ease-out;
   &:hover {

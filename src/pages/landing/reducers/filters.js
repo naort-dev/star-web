@@ -4,7 +4,6 @@ const initalState = {
   category: {
     label: 'featured',
     value: '',
-    selectedCategory: 'Stars',
   },
   selectedTab: 'Stars',
   searchParam: '',
@@ -23,7 +22,6 @@ export default (state = { ...initalState }, action) => {
         category: {
           label: action.label,
           value: action.value,
-          selectedCategory: action.category,
         },
       };
 

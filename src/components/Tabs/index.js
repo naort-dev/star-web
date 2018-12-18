@@ -27,7 +27,7 @@ export default class Tabs extends React.Component {
 
   render() {
     return (
-      <TabStyled filterSelected={this.props.filterSelected} hideTab={!this.props.noTabs}>
+      <TabStyled filterSelected={this.props.filterSelected}>
         {
           this.props.heading ?
             <TabStyled.TitleControl titleLabel={this.props.Heading} starMode={this.props.starMode}>
@@ -35,7 +35,7 @@ export default class Tabs extends React.Component {
                 this.props.starMode ?
                   <TabStyled.OptionWrapper>
                     <TabStyled.CheckBoxWrapper>
-                      <TabStyled.Label className="checkbox_container" onClick={()=> this.props.changeleftCheckSelection()}>
+                      <TabStyled.Label id="checkbox_container" onClick={()=> this.props.changeleftCheckSelection()}>
                         <span>Accepting Requests</span>
                         <TabStyled.CheckBox
                           id="accepting-requests"
@@ -43,7 +43,7 @@ export default class Tabs extends React.Component {
                           checked={this.props.leftCheckSelection}
                           onChange={() => {}}
                         />
-                        <TabStyled.Span htmlFor="private_video" className="checkmark" />
+                        <TabStyled.Span htmlFor="private_video" id="checkmark" />
                       </TabStyled.Label>
                     </TabStyled.CheckBoxWrapper>
                   </TabStyled.OptionWrapper>
@@ -57,7 +57,7 @@ export default class Tabs extends React.Component {
         }
         {
           !this.props.disableTabs ?
-            <TabStyled.tabList hideTab={!this.props.noTabs} disableFilter={this.props.disableFilter} innerRef={node => this.tabList = node}>
+            <TabStyled.tabList disableFilter={this.props.disableFilter} innerRef={node => this.tabList = node}>
               {
                 this.props.labels.map((item, index) => (
                   <TabStyled.tabListItem
