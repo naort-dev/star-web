@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import Requests from './Requests.component';
-import { fetchMyVideosList, myVideosListReset, updateVideosList } from './actions/getMyVideosList';
+import { fetchMyVideosList, myVideosListReset } from './actions/getMyVideosList';
 import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd } from './actions/handleRequests';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
@@ -28,7 +28,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   myVideosListReset: () => dispatch(myVideosListReset()),
   fetchMyVideosList: (offset, refresh, role, requestStatus, allDataType) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus, allDataType)),
-  updateVideosList: (id, data) => dispatch(updateVideosList(id, data)),
   onStartRecording: () => dispatch(startRecording()),
   onStopRecording: (recordedVideo) => dispatch(stopRecording(recordedVideo)),
   onPlayVideo: () => dispatch(playVideo()),

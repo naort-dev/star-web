@@ -1,7 +1,6 @@
 import { combineReducers } from 'redux';
 import { LOGIN } from './shared/actions/login';
 
-import config from './shared/reducers/config';
 import session from './shared/reducers/session';
 import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
@@ -15,7 +14,6 @@ import filters from '../pages/landing/reducers/filters';
 import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 import myVideosList from '../pages/requests/reducers/myVideosList';
-import groupSupporters from '../pages/starSupporters/reducers';
 import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
@@ -40,7 +38,6 @@ import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
 
 const appReducer = combineReducers({
-  config,
   session,
   celebList,
   professionsList,
@@ -76,7 +73,6 @@ const appReducer = combineReducers({
   modals,
   groupDetails,
   memberList,
-  groupSupporters,
 });
 
 const rootReducer = (state, action) => {

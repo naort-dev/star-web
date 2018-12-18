@@ -113,7 +113,7 @@ export default class DetailsEntry extends React.Component {
         address: this.state.address,
         address_2: this.state.address2,
         city: this.state.city,
-        state: this.state.state,
+        state: this.state.street,
         zip: this.state.zip,
         group_type: this.state.groupType,
       };
@@ -494,7 +494,7 @@ export default class DetailsEntry extends React.Component {
         <GroupStyled.OptionWrapper>
           <GroupStyled.CheckBoxWrapper>
             <GroupStyled.CheckBoxLabel
-              className="checkbox_container"
+              id="checkbox_container"
               onClick={() =>
                 this.setState({
                   userConfirmation: !this.state.userConfirmation,
@@ -513,7 +513,7 @@ export default class DetailsEntry extends React.Component {
               />
               <GroupStyled.Span
                 htmlFor="private_video"
-                className="checkmark"
+                id="checkmark"
               />
             </GroupStyled.CheckBoxLabel>
           </GroupStyled.CheckBoxWrapper>

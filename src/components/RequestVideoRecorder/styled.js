@@ -40,9 +40,9 @@ VideoRecorderDiv.VideoContainer = styled.div`
   display: flex;
   background-color: rgba(0,0,0,0.8);
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   position: relative;
-  min-height: 250px;
+  min-height: 300px;
   @media(min-width:768px){
     width: 100%;
     height: 100%;
@@ -313,11 +313,14 @@ VideoRecorderDiv.UploadInput = styled.input`
 `;
 
 VideoRecorderDiv.LoaderWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.3);
+  `;
 
 
 VideoRecorderDiv.InfoText = styled.div`
@@ -348,12 +351,8 @@ VideoRecorderDiv.UploadTextWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: column;
-`;
-
-VideoRecorderDiv.RecordDuration = styled.span`
-  color: #fff;
-  display: block;
-  font-size: 18px;
+  position: absolute;
+  top: 0;
 `;
 
 VideoRecorderDiv.IndicationText = styled.div`
@@ -361,7 +360,6 @@ VideoRecorderDiv.IndicationText = styled.div`
   top: 5%;
   right: 20px;
   color: #FF0000;
-  text-align: right;
 `;
 
 VideoRecorderDiv.StopRecorderText = styled.div`
@@ -388,7 +386,7 @@ VideoRecorderDiv.Overlay = styled.span`
 
 VideoRecorderDiv.UploadControlWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: 90%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -401,6 +399,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   VideoRecorderDiv.ActionButton = styled.div`
   display: flex;
   width: 100%;
+  height: 10%;
   position: absolute;
   align-items: center;
   justify-content: center;
@@ -415,6 +414,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   margin-top: 10px;
   display: flex;
   width: 100%;
+  height: 10%;
   align-items: center;
   justify-content: center;
   `;

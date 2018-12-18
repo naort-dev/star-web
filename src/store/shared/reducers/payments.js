@@ -7,7 +7,6 @@ const initalState = {
   serverUpdated: false,
   sourceList: {},
   error: null,
-  sourceError: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -50,15 +49,6 @@ export default (state = { ...initalState }, action) => {
 
     case PAYMENTS.failed:
     case PAYMENTS.sourceListFailed:
-      return {
-        ...state,
-        loading: false,
-        sourceError: {
-          code: action.error.code,
-          message: action.error.message,
-        },
-      };
-
     case PAYMENTS.modifySourceListFailed:
       return {
         ...state,

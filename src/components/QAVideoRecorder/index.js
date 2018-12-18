@@ -16,14 +16,9 @@ export default class QAVideoRecorder extends React.Component {
       deviceSupport: true,
       isVideoPaused: true,
       recordedBlob: false,
-      recordingTime: {
-        minutes: 0,
-        seconds: 0,
-      },
     };
     this.mediaRecorder = "";
     this.recordedBlobs = [];
-    this.recordingDate = null;
     this.handleDataAvailable = this.handleDataAvailable.bind(this);
     this.stopRecording = this.stopRecording.bind(this)
     this.timerID = null;
@@ -88,17 +83,6 @@ export default class QAVideoRecorder extends React.Component {
 
   handleDataAvailable(event) {
     if (event.data && event.data.size > 0) {
-      let { recordingTime } = this.state;
-      const finalTime = this.recordingDate.getTime() + this.props.duration;
-      const currentTime = new Date(event.timecode).getTime();
-      const recordSeconds = parseInt((finalTime - currentTime) / 1000) % 60;
-      const recordMinutes = parseInt((finalTime - currentTime) / (1000* 60)) % 60;
-      recordingTime = {
-        ...recordingTime,
-        minutes: recordMinutes,
-        seconds: recordSeconds,
-      };
-      this.setState({ recordingTime });
       this.recordedBlobs.push(event.data);
     }
   }
@@ -127,7 +111,7 @@ export default class QAVideoRecorder extends React.Component {
     this.stopStream();
   }
 
-  closeStream = () => {
+  closeStream() {
     const stream = document.getElementById('video-player').srcObject;
     const tracks = stream.getTracks();
     tracks.forEach((track) => {
@@ -181,7 +165,6 @@ export default class QAVideoRecorder extends React.Component {
           bitsPerSecond: 128000,
         };
         try {
-          this.recordingDate = new Date();
           this.mediaRecorder = new MediaRecorder(this.state.stream, options);
           this.mediaRecorder.ondataavailable = this.handleDataAvailable;
           this.mediaRecorder.start(100);
@@ -400,16 +383,7 @@ export default class QAVideoRecorder extends React.Component {
     if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
-          <VideoRecorderDiv.IndicationText>
-            Recording
-            {
-              <VideoRecorderDiv.RecordDuration>
-                { this.state.recordingTime.minutes !== 0 &&
-                  this.state.recordingTime.minutes > 9 ? this.state.recordingTime.minutes : `0${this.state.recordingTime.minutes}` }
-                :{this.state.recordingTime.seconds > 9 ? this.state.recordingTime.seconds : `0${this.state.recordingTime.seconds}` }
-              </VideoRecorderDiv.RecordDuration>
-            }
-          </VideoRecorderDiv.IndicationText>
+          <VideoRecorderDiv.IndicationText>Recording</VideoRecorderDiv.IndicationText>
           <VideoRecorderDiv.Video innerRef={(node) => { this.previewVideo = node; }} onEnded={() => this.endVideo()} id="video-player" autoPlay muted="muted" />
           <VideoRecorderDiv.ActionButton>
             <VideoRecorderDiv.Button title="Stop recording" stop onClick={this.stopRecording} />
@@ -465,10 +439,7 @@ export default class QAVideoRecorder extends React.Component {
         {(checkMediaRecorderSupport() && !getMobileOperatingSystem()) && this.state.deviceSupport ?
           <VideoRecorderDiv>
             <VideoRecorderDiv.VideoContainer>
-              { !this.state.streamed && (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) ?
-                <VideoRecorderDiv.LoaderWrapper>
-                  <Loader />
-                </VideoRecorderDiv.LoaderWrapper> :              
+              { !this.state.streamed && (!this.props.videoRecorder.recordedBlob && !this.props.videoUploader.url) ? <Loader/> :              
                 (this.props.src && !this.state.disableEdit ? this.renderEditPreview() : this.renderPreview()) }
             </VideoRecorderDiv.VideoContainer>
           </VideoRecorderDiv>

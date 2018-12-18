@@ -151,12 +151,17 @@ export const modifySourceList = (source, customer, action, callback) => (dispatc
     });
 };
 
-export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
+export const createCharge = (starsonaId, amount, tokenId, customerId) => (dispatch, getState) => {
+  const { authentication_token: authToken } = getState().session.auth_token;
   dispatch(paymentFetchStart());
   return fetch.post(Api.createCharge, {
     starsona: starsonaId,
     amount,
     source: tokenId,
+  }, {
+    headers: {
+      'Authorization': `token ${authToken}`,
+    },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
@@ -169,43 +174,27 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
     dispatch(paymentFetchFailed(exception.response.data.error));
   });
 };
-
-export const tipPayment = (bookingId, amount, tokenId) => (dispatch) => {
-  dispatch(paymentFetchStart());
-  return fetch.post(Api.tipPayment, {
-    booking: bookingId,
-    amount,
-    source: tokenId,
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(paymentFetchEnd());
-      dispatch(setPaymentStatus(resp.data.success));
-    } else {
-      dispatch(paymentFetchEnd());
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception.response.data.error));
-  });
-};
-
 
 const starsonaVideo = (authToken, filename, requestId, duration, dispatch, callback) => {
   return fetch.post(Api.starsonaVideo, {
     video: filename,
     stragramz_request: requestId,
     duration,
-  }).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(paymentFetchEnd());
-      if (callback) {
-        callback();
+  }, {
+      headers: {
+        'Authorization': `token ${authToken}`,
+      },
+    }).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(paymentFetchEnd());
+        if (callback) {
+          callback();
+        }
       }
-    }
-  }).catch((exception) => {
-    dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
-  });
+    }).catch((exception) => {
+      dispatch(paymentFetchEnd());
+      dispatch(paymentFetchFailed(exception));
+    });
 }
 
 export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatch, getState) => {

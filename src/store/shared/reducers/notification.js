@@ -2,7 +2,7 @@ import { UPDATE_NOTIFICATION } from '../actions/updateNotification';
 
 const initalState = {
   loading: false,
-  error: {},
+  error: '',
 };
 
 export default (state = { ...initalState }, action) => {

@@ -14,13 +14,11 @@ const ListStyled = styled.section`
   padding: 0 16px;
   padding-right: 10px;
   height: 100%;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
   padding-top: 20px;
   padding-bottom: 20px;
   position: relative;
-  .infinite-scroll-component {
-    overflow: initial !important;
-  }
   @media(min-width: 768px) {
     padding: 0 44px;
     padding-right: 38px;

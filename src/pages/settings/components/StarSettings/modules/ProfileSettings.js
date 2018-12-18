@@ -19,6 +19,12 @@ export default class ProfileSettings extends React.Component {
     this.setInitialData(this.props);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.state.cancelDetails) {
+      this.setInitialData(nextProps);
+    }
+  }
+
   setInitialData = (props) => {
     let facebook;
     let twitter;
@@ -161,7 +167,7 @@ export default class ProfileSettings extends React.Component {
   }
 
   cancelDetails = () => {
-    this.setInitialData(this.props);
+    this.setState({ cancelDetails: true });
     this.props.fetchUserDetails();
   }
 

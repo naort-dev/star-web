@@ -17,7 +17,6 @@ export default class Landing extends React.Component {
       tabsClientHeight: 0,
       filterSelected: false,
       subCategoryList: [],
-      groupClick: true,
     };
   }
 
@@ -29,7 +28,7 @@ export default class Landing extends React.Component {
           this.props.filters.searchParam !== this.props.celebList.currentSearchParam
 
         ) {
-          this.props.fetchCelebrityList(0, true, 'Stars');
+          this.props.fetchCelebrityList(0, true);
         }
         break;
       case 'Videos':
@@ -38,7 +37,7 @@ export default class Landing extends React.Component {
         }
         break;
       default:
-        this.props.fetchCelebrityList(0, true, 'Stars');
+        this.props.fetchCelebrityList(0, true);
     }
     window.addEventListener('resize', this.setScrollHeight);
   }
@@ -62,10 +61,10 @@ export default class Landing extends React.Component {
         if (searchParamChange) {
           this.props.switchTab('Stars');
         } else {
-          this.props.fetchVideosList(0, true, 'Stars');
+          this.props.fetchVideosList(0, true);
         }
       } else {
-        this.props.fetchCelebrityList(0, true, this.props.filters.category.selectedCategory);
+        this.props.fetchCelebrityList(0, true);
       }
     }
     if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
@@ -87,7 +86,7 @@ export default class Landing extends React.Component {
         }
       } else if (nextProps.filters.selectedTab === 'Stars') {
         if ((tabChange && !this.props.celebList.data.length) || loginChange) {
-          this.props.fetchCelebrityList(0, true, 'Stars');
+          this.props.fetchCelebrityList(0, true);
         }
       }
     }
@@ -130,22 +129,13 @@ export default class Landing extends React.Component {
     });
     this.setState({ subCategoryList });
   }
-  updateCategory = (label, value, category) => {
-    if (category === 'Group') {
-      this.setState({
-        groupClick: false,
-      });
-    } else {
-      this.setState({
-        groupClick: true,
-      });
-      this.props.switchTab('Stars');
-    }
-    this.props.fetchCelebrityList(0, true, category);
+  updateCategory = (label, value) => {
+    this.props.switchTab('Stars');
+    this.props.fetchCelebrityList(0, true);
   }
   updateSubCategoryList = (selectedList) => {
     this.props.updateSelectedSubCategory(selectedList, this.props.filters.category.value);
-    this.props.fetchCelebrityList(0, true, 'Stars');
+    this.props.fetchCelebrityList(0, true);
   }
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
@@ -174,7 +164,7 @@ export default class Landing extends React.Component {
           totalCount={this.props.celebList.count}
           offset={this.props.celebList.offset}
           loading={this.props.celebList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh, 'Stars')}
+          fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh)}
         />
       );
     } else if (this.props.filters.selectedTab === 'Videos') {
@@ -229,7 +219,6 @@ export default class Landing extends React.Component {
                 selected={this.props.filters.selectedTab}
                 filterCount={this.getFilterCount}
                 toggleFilter={this.toggleFilterSection}
-                noTabs={this.state.groupClick}
               />
               {
                 this.state.filterSelected &&
@@ -248,21 +237,20 @@ export default class Landing extends React.Component {
                   updateSelectedVideoType={this.props.updateSelectedVideoType}
                   updateSelectedVideoDate={this.props.updateSelectedVideoDate}
                   toggleFilter={this.toggleFilterSection}
-                  groupClicked={this.state.groupClick}
                 />
               }
             </div>
-            {/* {
+            {
               (!this.props.celebList.data.length && this.props.celebList.loading) ||
                 (!this.props.videosList.data.length && this.props.videosList.loading) ?
                   <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                     <Loader />
                   </LandingStyled.loaderWrapper>
-                : */}
+                :
                   <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
                     {this.renderScrollList()}
                   </div>
-            {/* } */}
+            }
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>
       </LandingStyled>

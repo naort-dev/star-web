@@ -21,39 +21,3 @@ export const celebritySignupProfile = (data) => {
   }).then(resp => resp.data.success)
   );
 };
-
-export const addRepresentative = (firstName, lastName, email, phone, emailNotify, phoneNotify) => {
-  return (fetch.post(Api.celebRepresentative, {
-    first_name: firstName,
-    last_name: lastName,
-    email,
-    phone,
-    email_notify: emailNotify,
-    sms_notify: phoneNotify,
-  }).then(resp => resp.data)
-  );
-};
-
-export const deleteRepresentative = (repId) => {
-  return (fetch.delete(`${Api.celebRepresentative}${repId}/`)
-    .then(resp => resp.data)
-  );
-};
-
-export const updateRepresentative = (repId, firstName, lastName, email, phone, emailNotify, phoneNotify) => {
-  return (fetch.post(`${Api.celebRepresentative}${repId}/`, {
-    first_name: firstName,
-    last_name: lastName,
-    email,
-    phone,
-    email_notify: emailNotify,
-    sms_notify: phoneNotify,
-  }).then(resp => resp.data)
-  );
-};
-
-export const getRepresentative = () => {
-  return (fetch(Api.celebRepresentative)
-    .then(resp => resp.data)
-  );
-};

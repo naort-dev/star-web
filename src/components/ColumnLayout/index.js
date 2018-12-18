@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { fanInnerLinks, starInnerLinks, groupInnerLinks } from '../../constants';
-import { ROLES } from '../../constants/usertype';
+import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Sidebar from '../Sidebar';
 import Header from '../Header';
 import ColumnLayoutStyled from './styled';
@@ -12,7 +11,6 @@ class ColumnLayout extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
-      innerLinks: [],
     };
   }
 
@@ -24,13 +22,9 @@ class ColumnLayout extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     let { menuActive, innerLinks } = prevState;
-    const { role } = nextProps;
+    innerLinks = fanInnerLinks;
     if (nextProps.userDetails.celebrity) {
       innerLinks = starInnerLinks;
-    } else if (role === ROLES.group) {
-      innerLinks = groupInnerLinks;
-    } else {
-      innerLinks = fanInnerLinks;
     }
     return ({ menuActive, innerLinks });
   }
@@ -79,7 +73,6 @@ class ColumnLayout extends React.Component {
 
 const mapStateToProps = state => ({
   userDetails: state.userDetails.settings_userDetails,
-  role: state.userDetails.role,
 });
 
 export default connect(mapStateToProps)(ColumnLayout);

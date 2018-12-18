@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { Request, HeaderSection } from '../../pages/askQuestion/styled';
-import getAWSCredentials from '../../utils/AWSUpload';
+import getAWSCredentials from '../../utils/AWSUpload'
 import { locations } from '../../constants/locations';
 import { recorder } from '../../constants/videoRecorder';
 import Loader from '../../components/Loader';

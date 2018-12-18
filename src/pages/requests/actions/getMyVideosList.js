@@ -1,14 +1,14 @@
-import axios from 'axios';
-import { cloneDeep } from 'lodash';
+
 import Api from '../../../lib/api';
 import { fetch, CancelToken } from '../../../services/fetch';
+import axios from 'axios';
 
 export const MY_VIDEOS_LIST = {
   start: 'fetch_start/MY_VIDEOS_LIST',
   end: 'fetch_end/MY_VIDEOS_LIST',
   success: 'fetch_success/MY_VIDEOS_LIST',
   failed: 'fetch_failed/MY_VIDEOS_LIST',
-  updateList: 'update/MY_VIDEOS_LIST',
+  updateAll: 'fetch_all/MY_VIDEOS_LIST',
   reset: 'RESET/MY_VIDEOS_LIST',
 };
 
@@ -39,24 +39,13 @@ export const myVideosListFetchFailed = error => ({
   error,
 });
 
-export const myVideosListUpdate = data => ({
-  type: MY_VIDEOS_LIST.updateList,
-  data,
-});
-
 export const myVideosListReset = () => ({
   type: MY_VIDEOS_LIST.reset,
 });
 
-export const updateVideosList = (id, newData) => (dispatch, getState) => {
-  const originalList = cloneDeep(getState().myVideosList.data);
-  const dataIndex = originalList.findIndex(item => item.id === id);
-  originalList[dataIndex] = newData;
-  dispatch(myVideosListFetchStart(false, getState().myVideosList.token));
-  dispatch(myVideosListUpdate(originalList));
-};
 
 export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) => (dispatch, getState) => {
+  const { isLoggedIn, auth_token } = getState().session;
   const { status, limit, role } = getState().myVideosList;
   const videoStatus = requestStatus ? requestStatus : status;
   const finalRole = currentRole ? currentRole: role;
@@ -67,6 +56,9 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) =
   dispatch(myVideosListFetchStart(refresh, source));
   return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=${finalRole}`, {
     cancelToken: source.token,
+    headers: {
+      'Authorization': `token ${auth_token.authentication_token}`,
+    },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(myVideosListFetchEnd());
@@ -90,3 +82,5 @@ export const fetchMyVideosList = (offset, refresh, currentRole, requestStatus) =
     dispatch(myVideosListFetchFailed(exception));
   });
 };
+
+

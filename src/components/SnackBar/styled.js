@@ -17,7 +17,7 @@ const SnackBarStyled = styled.div`
   background: #323232;
   animation: ${menuEnter} 0.1s linear;
   padding: 10px;
-  z-index: 10;
+  z-index: 1;
 `;
 
 SnackBarStyled.Content = styled.span`

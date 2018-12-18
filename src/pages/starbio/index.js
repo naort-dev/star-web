@@ -1,0 +1,1 @@
+export { Starbio } from './Starbio.loadable';
