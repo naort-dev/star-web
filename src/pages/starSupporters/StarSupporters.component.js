@@ -16,6 +16,7 @@ export default class StarSupporters extends React.Component {
       selectedTab: 'All',
       scrollTarget: '',
       inviteView: false,
+      popupRef: null,
     };
   }
 
@@ -71,6 +72,10 @@ export default class StarSupporters extends React.Component {
     }
   }
 
+  getPopupRef = (popupRef) => {
+    this.setState({ popupRef });
+  }
+
   showInviteView = () => {
     this.setState({ inviteView: true });
     this.props.fetchNonMemberList(0, true);
@@ -97,6 +102,7 @@ export default class StarSupporters extends React.Component {
       <SupportStyled.InviteList>
         <ScrollList
           dataList={data}
+          scrollTarget={this.state.popupRef}
           renderFunction={this.renderMembers}
           limit={limit}
           totalCount={count}
@@ -157,6 +163,7 @@ export default class StarSupporters extends React.Component {
                   dotsCount={0}
                   smallPopup
                   closePopUp={this.closeInviteView}
+                  getPopupRef={this.getPopupRef}
                 >
                   <SupportStyled.SubHeading>Invite Stars</SupportStyled.SubHeading>
                   { this.renderInviteView() }
