@@ -152,9 +152,6 @@ HeaderSection.UserLink = HeaderSection.ProfileDropdownItem.extend`
   a {
     color: #333333;
   }
-  @media(min-width: 768px) {
-    display: none;
-  }
 `;
 HeaderSection.FavoriteButton = styled.button`
   display: none;

@@ -254,12 +254,12 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
-                  <Link to="/user/favorites">
+                  {/* <Link to="/user/favorites">
                     <HeaderSection.FavoriteButton title="Favorites" />
                   </Link>
                   <Link to="/user/myVideos">
                     <HeaderSection.MyvideoButton title="My videos" />
-                  </Link>
+                  </Link> */}
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}
                     onClick={this.activateSearch}
@@ -274,16 +274,16 @@ class Header extends React.Component {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
-                        <HeaderSection.UserLink>
+                        <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
                             Favorites
                           </Link>
-                        </HeaderSection.UserLink>
-                        <HeaderSection.UserLink>
+                        </HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/myVideos">
                             My videos
                           </Link>
-                        </HeaderSection.UserLink>
+                        </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem >
                           <Link to="/settings">
                             Settings
