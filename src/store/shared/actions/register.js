@@ -42,6 +42,7 @@ export const registerUser = (
   UserEmail,
   UserPassword,
   UserRole,
+  referral,
 ) => (dispatch, getState) => {
   dispatch(registerFetchStart());
   return fetch.post(Api.register, {
@@ -50,6 +51,7 @@ export const registerUser = (
     email: UserEmail,
     password: UserPassword,
     role: UserRole,
+    referral_code: referral,
 
   }).then((resp) => {
     if (resp.data && resp.data.success) {

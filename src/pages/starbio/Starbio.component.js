@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import { Link, Redirect } from 'react-router-dom';
-import { default as ReactLoader } from 'react-loader';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import EXIF from 'exif-js';

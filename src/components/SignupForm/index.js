@@ -12,6 +12,7 @@ export default class SignUp extends React.Component {
       firstName: { value: "", isValid: false, message: "" },
       lastName: { value: "", isValid: true, message: "" },
       password: { value: "", isValid: false, message: "" },
+      referral: '',
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
       role: ROLES[props.signupRole],
@@ -33,6 +34,15 @@ export default class SignUp extends React.Component {
   componentWillMount() {
     if (this.props.isLoggedIn) {
       this.props.toggleSignup(false);
+    }
+    const params = window.location.search && window.location.search.split('?')[1];
+    const finalParams = params && params.split('&');
+    if (finalParams) {
+      finalParams.forEach((data) => {
+        if (data.split('=')[0] === 'referral') {
+          this.setState({ referral: data.split('=')[1] });
+        }
+      });
     }
   }
 
@@ -134,6 +144,7 @@ export default class SignUp extends React.Component {
           this.state.socialMedia.fb_id,
           this.state.socialMedia.gp_id,
           this.state.socialMedia.in_id,
+          this.state.referral,
         ).then((response) => {
           if (response.status === 200) {
             if (response.data.data && response.data.data.user) {
@@ -154,12 +165,13 @@ export default class SignUp extends React.Component {
       this.checkRequired()
     ) {
       this.props.registerUser(
-          this.state.firstName.value,
-          this.state.lastName.value,
-          this.state.email.value,
-          this.state.password.value,
-          this.state.role
-        )
+        this.state.firstName.value,
+        this.state.lastName.value,
+        this.state.email.value,
+        this.state.password.value,
+        this.state.role,
+        this.state.referral,
+      )
         .then(response => {
           if (response != undefined) {
             if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
@@ -174,6 +186,7 @@ export default class SignUp extends React.Component {
         this.state.email.value,
         this.state.password.value,
         this.state.role,
+        this.state.referral,
       ).then((response) => {
         if (response !== undefined) {
           if (this.props.signupRole === 'star' || this.props.signupRole === 'group') {
@@ -503,6 +516,19 @@ export default class SignUp extends React.Component {
                   <LoginContainer.EmptyDiv />
                 }
               </LoginContainer.WrapsInput>
+              <LoginContainer.InputWrapper>
+                <LoginContainer.WrapsInput>
+                  <LoginContainer.PasswordWrapper>
+                    <LoginContainer.Input
+                      placeholder="Referral code (optional)"
+                      type="text"
+                      name="referral"
+                      value={this.state.referral}
+                      onChange={event => this.setState({ referral: event.target.value })}
+                    />
+                  </LoginContainer.PasswordWrapper>
+                </LoginContainer.WrapsInput>
+              </LoginContainer.InputWrapper>
               <LoginContainer.ButtonWrapper>
                 <FooterSection.Button type="submit" value="Sign up" onClick={this.onRegister} />
               </LoginContainer.ButtonWrapper>

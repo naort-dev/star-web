@@ -130,10 +130,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
-  registerUser: (firstName, lastName, email, password, role) =>
-    dispatch(registerUser(firstName, lastName, email, password, role)),
-  socialMediaLogin: (userName, firstName, lastName, signUpSource, profilePhoto, fbId) =>
-    dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, fbId)),
+  registerUser: (firstName, lastName, email, password, role, referral) =>
+    dispatch(registerUser(firstName, lastName, email, password, role, referral)),
+  socialMediaLogin: (userName, firstName, lastName, signUpSource, profilePhoto, fbId, referral) =>
+    dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, fbId, referral)),
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
   toggleLogin: state => dispatch(toggleLogin(state)),
