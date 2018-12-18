@@ -48,7 +48,6 @@ export const getReferalLink = data => (dispatch) => {
     branch_key: env('BRANCH_IO_KEY'),
     data: {
       $deeplink_path: `invite/?invite_code=${data.code}`,
-      // $desktop_url: 'https://about.starsona.com/#star-highlight',
       $desktop_url: `${window.location.origin}/signup?referral=${data.code}`,
       $ios_deeplink_path: `invite/?invite_code=${data.code}`,
       $android_deeplink_path: `invite/?invite_code=${data.code}`,
