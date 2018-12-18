@@ -2,7 +2,6 @@ import { connect } from 'react-redux';
 import Confirm from './Confirm.component';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
-import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { starsonaRequest, resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { deleteVideo } from '../../store/shared/actions/videoUploader';
@@ -25,7 +24,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   starsonaRequest: (bookingData, publicStatus, callback) => dispatch(starsonaRequest(bookingData, publicStatus, callback)),

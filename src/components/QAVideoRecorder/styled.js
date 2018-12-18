@@ -40,9 +40,9 @@ VideoRecorderDiv.VideoContainer = styled.div`
   display: flex;
   background-color: rgba(0,0,0,0.8);
   justify-content: center;
-  align-items: stretch;
+  align-items: center;
   position: relative;
-  min-height: 250px;
+  min-height: 300px;
   @media(min-width:768px){
     width: 100%;
     height: 100%;
@@ -310,11 +310,14 @@ VideoRecorderDiv.UploadInput = styled.input`
 `;
 
 VideoRecorderDiv.LoaderWrapper = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-  width: 100%;
-`;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, 0.3);
+  `;
 
 
 VideoRecorderDiv.InfoText = styled.div`
@@ -349,18 +352,11 @@ VideoRecorderDiv.UploadTextWrapper = styled.div`
   flex-direction: column;
 `;
 
-VideoRecorderDiv.RecordDuration = styled.span`
-  color: #fff;
-  display: block;
-  font-size: 18px;
-`;
-
 VideoRecorderDiv.IndicationText = styled.div`
   position: absolute;
   top: 5%;
   right: 20px;
   color: #FF0000;
-  text-align: right;
 `;
 
 VideoRecorderDiv.StopRecorderText = styled.div`
@@ -372,25 +368,29 @@ VideoRecorderDiv.StopRecorderText = styled.div`
 
 VideoRecorderDiv.ControlWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: 90%;
 `;
 
 VideoRecorderDiv.UploadControlWrapper = styled.div`
   width: 100%;
-  height: auto;
+  height: 90%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   flex-direction: column;
+  @media(min-width: 768px) {
+    justify-content: space-between;
+  }
 `;
 
   VideoRecorderDiv.ActionButton = styled.div`
   display: flex;
   width: 100%;
+  height: 10%;
   position: absolute;
   align-items: center;
   justify-content: center;
-  bottom: 18px;
+  bottom: 10%;
   @media(min-width: 1920px) {
     bottom: 45px;
   }
@@ -400,6 +400,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   margin-top: 10px;
   display: flex;
   width: 100%;
+  height: 10%;
   align-items: center;
   justify-content: center;
   `;

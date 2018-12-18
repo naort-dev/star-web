@@ -38,7 +38,7 @@ injectGlobal`
     display: none;
   }
 
-.checkbox_container{
+#checkbox_container{
   display: inline-block;
   position: relative;
   padding-left: 35px;
@@ -61,13 +61,13 @@ injectGlobal`
   }
  }
  /* Hide the browser's default checkbox */
- .checkbox_container input {
+ #checkbox_container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
   }
   /* Create a custom checkbox */
-  .checkmark {
+  #checkmark {
     position: absolute;
     top: -2px;
     left: 0;
@@ -88,17 +88,17 @@ injectGlobal`
       top: -2px;
     }
   }
-  .checkbox_container:checked ~ .checkmark {
+  #checkbox_container:checked ~ #checkmark {
     background-color: #2196F3;
   }
   /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
+  #checkmark:after {
       content: "";
       position: absolute;
       display: none;
   }
   /* Show the checkmark when checked */
-  .checkbox_container input:checked ~ .checkmark:after {
+  #checkbox_container input:checked ~ #checkmark:after {
       display: block;
   }
   /* Style the checkmark/indicator */
@@ -127,7 +127,7 @@ injectGlobal`
     font-family: 'Avenir-Regular';
   }
   
-  .checkbox_container .checkmark:after {
+  #checkbox_container #checkmark:after {
     left: 5px;
     top: 1px;
     width: 5px;

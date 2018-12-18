@@ -174,6 +174,7 @@ GroupProfileStyled.profileWrapper = styled.div`
         }
         .memberlistWeb {
           display: flex;
+          overflow: auto;
           -webkit-overflow-scrolling: touch;
           @media(max-width: 1024px) {
             display: none;
@@ -298,7 +299,7 @@ GroupProfileStyled.getStartedButton = styled.div`
     padding: 10px;
   }
 `;
-GroupProfileStyled.followingButton = styled.div`
+GroupProfileStyled.followingButton = styled.div `
   background-color: ${props => (props.followedText === 'Requested' ? '#dadada' : '#fff')}; 
   color: ${props => (props.followedText === 'Requested' ? '#808080' : '#FF6C58')};
   padding: 15px;
@@ -354,7 +355,7 @@ GroupProfileStyled.memberListPopup = styled.div`
       padding-left: 10px;
     }
   }
-  .memberPopup > section {
+  .memberPopup section {
     height: 500px;
     @media(max-width: 480px) {
       padding-left: 0;

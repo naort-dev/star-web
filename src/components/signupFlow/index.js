@@ -60,8 +60,7 @@ class SignupFlow extends React.Component {
         case 3:
         case 4:
         case 5:
-        case 6:
-        case 7: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={() => this.closeSignUp()} />;
+        case 6: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={() => this.closeSignUp()} />;
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
