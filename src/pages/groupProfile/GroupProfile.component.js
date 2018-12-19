@@ -8,6 +8,7 @@ import Header from '../../components/Header';
 import ScrollList from '../../components/ScrollList';
 import HorizontalScrollList from '../../components/HorizontalScrollList';
 import ModalPopup from '../../components/RequestFlowPopup';
+import Popup from '../../components/Popup';
 import Loader from '../../components/Loader';
 import GroupProfileStyled from './styled';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
@@ -19,8 +20,10 @@ export default class GroupProfile extends React.Component {
     this.state = {
       menuActive: false,
       memberlistModal: false,
+      verticalScrollTarget: null,
       readMoreFlag: false,
       followFlag: false,
+      showPopup: false,
     };
   }
 
@@ -66,7 +69,11 @@ export default class GroupProfile extends React.Component {
       followFlag: true,
     });
     if (this.props.isLoggedIn) {
-      if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group)) {
+      if (this.props.groupDetails.id === this.props.userDetails.id) {
+        this.setState({
+          showPopup: true,
+        });
+      } else if (this.props.groupDetails && (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.role_details.role_code === ROLES.group)) {
         this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
       } else if (this.props.userDetails.celebrity) {
         this.props.celebrityFollowStatus(this.props.groupDetails.user_id);
@@ -81,6 +88,12 @@ export default class GroupProfile extends React.Component {
   toggleMemberList = (flag) => {
     this.setState({
       memberlistModal: flag,
+    });
+  }
+
+  setMemberListScroll = (verticalScrollTarget) => {
+    this.setState({
+      verticalScrollTarget
     });
   }
 
@@ -182,6 +195,8 @@ export default class GroupProfile extends React.Component {
               dotsCount={0}
               closePopUp={() => this.toggleMemberList(false)}
               smallPopup
+              getPopupRef={this.setMemberListScroll}
+              noScrollToTop
             >
               <GroupProfileStyled.memberListPopup>
                 <div className="popupHeading">Our members</div>
@@ -196,11 +211,27 @@ export default class GroupProfile extends React.Component {
                     offset={this.props.memberListDetails.offset}
                     loading={this.props.memberListDetails.loading}
                     fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                    scrollTarget={this.state.verticalScrollTarget}
                   />
                 </div>
               </GroupProfileStyled.memberListPopup>
             </ModalPopup>
         : null}
+        {
+          this.state.showPopup &&
+          <Popup
+            smallPopup
+            closePopUp={() => this.setState({ showPopup: false })}
+            noScrollToTop
+          >
+            <GroupProfileStyled.UserPopup>
+              Glad you support your own group! :-)
+              <GroupProfileStyled.UserButton onClick={() => this.setState({ showPopup: false })}>
+                OK
+              </GroupProfileStyled.UserButton>
+            </GroupProfileStyled.UserPopup>
+          </Popup>
+        }
         {this.props.groupDetails && !this.props.detailsLoading &&
         <GroupProfileStyled.sectionWrapper>
           <ImageGallery
@@ -214,7 +245,7 @@ export default class GroupProfile extends React.Component {
           />
           <GroupProfileStyled.profileWrapper>
             <div className="profileImageContainer">
-              <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : '../../ assets / images / profile.png'} alt="Profile" />
+              <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
             </div>
             <div className="profileDetails">
               <div className="groupDetailsContainer">

@@ -17,7 +17,11 @@ export default class Popup extends React.Component {
       window.addEventListener('click', this.hidePopup);
     }
     document.body.style.overflow = 'hidden';
-    document.body.style.position = 'fixed';
+    if (this.props.noScrollToTop) {
+      document.body.style.position = 'initial';
+    } else {
+      document.body.style.position = 'fixed';
+    }
   }
   componentWillUnmount() {
     if (!this.props.modalView) {
