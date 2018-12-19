@@ -14,6 +14,12 @@ VideoRenderDiv.ContentWrapper = styled.div`
   }
 `;
 
+VideoRenderDiv.ImageSectionWrapper = styled.div`
+  @media(min-width: 1025px) {
+    display: inline-block;
+  }
+`;
+
 VideoRenderDiv.ImageSection = styled.div`
   position:relative;
   background-image: ${props => (props.imageUrl ? 'url(' + props.imageUrl + ')' : 'url(assets/images/pending-video.png)')};
@@ -39,6 +45,32 @@ VideoRenderDiv.ImageSection = styled.div`
   @media(min-width: 768px) {
     width: 250px;
     display: ${props => (props.mobile ? 'none' : 'flex')};
+  }
+`;
+
+VideoRenderDiv.ReactionControl = styled.span`
+  text-align: center;
+  display: block;
+  margin-top: 5px;
+`;
+
+VideoRenderDiv.ReactionControlText = styled.span`
+  display: inline-block;
+  font-size: 14px;
+  color: #FF6C58;
+  user-select: none;
+  font-family: 'Avenir-Regular';
+  cursor: pointer;
+  &::before {
+    content: '';
+    background: url('assets/images/media.png') no-repeat;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    background-size: contain;
+    margin-right: 5px;
+    vertical-align: middle;
+    margin-bottom: 4px;
   }
 `;
 

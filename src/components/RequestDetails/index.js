@@ -496,13 +496,23 @@ export default class RequestDetails extends React.Component {
           : null
         }
         <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.ImageSection
-            onClick={this.activateVideo}
-            height={props.imageHeight}
-            imageUrl={this.state.coverImage}
-          >
-            {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
-          </VideoRenderDiv.ImageSection>
+          <VideoRenderDiv.ImageSectionWrapper>
+            <VideoRenderDiv.ImageSection
+              onClick={this.activateVideo}
+              height={props.imageHeight}
+              imageUrl={this.state.coverImage}
+            >
+              {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
+            </VideoRenderDiv.ImageSection>
+            {
+              props.orderDetails.fan_rating !== null &&
+                <VideoRenderDiv.ReactionControl>
+                  <VideoRenderDiv.ReactionControlText onClick={() => this.props.selectItem('reaction')} >
+                    View reaction
+                  </VideoRenderDiv.ReactionControlText>
+                </VideoRenderDiv.ReactionControl>
+            }
+          </VideoRenderDiv.ImageSectionWrapper>
           <VideoRenderDiv.ContentWrapper>
             <VideoRenderDiv.ProfileDetailWrapper>
               <VideoRenderDiv.ProfileImageWrapper>

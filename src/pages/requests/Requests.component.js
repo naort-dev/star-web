@@ -1,6 +1,5 @@
 import React from 'react';
 import ColumnLayout from '../../components/ColumnLayout';
-import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
 import SubmitView from '../../components/SubmitView';
@@ -8,6 +7,7 @@ import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
 import RateView from './components/RateView';
+import ReactionView from './components/ReactionView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Popup from '../../components/Popup';
@@ -98,6 +98,13 @@ export default class Requests extends React.Component {
             closePopup={this.closePopup}
           />
         );
+      case 'reaction':
+        return (
+          <ReactionView
+            orderDetails={orderDetails}
+            closePopup={this.closePopup}
+          />
+        );
       case 'cancel':
       case 'decline':
         return (
@@ -127,7 +134,7 @@ export default class Requests extends React.Component {
   }
 
   fetchVideosList = () => {
-    this.props.fetchMyVideosList(0, true)
+    this.props.fetchMyVideosList(0, true);
   }
 
   changeRequestStatus = (requestId, requestStatus, reason) => {
@@ -225,6 +232,7 @@ export default class Requests extends React.Component {
       || actionType === 'cancel'
       || actionType === 'respondSuccess'
       || actionType === 'respondFail'
+      || actionType === 'reaction'
     ) {
       showActionPopup = true;
     }
@@ -328,6 +336,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
+    const { requestAction, showActionPopup } = this.state;
     return (
       <div>
         <ColumnLayout
@@ -343,22 +352,22 @@ export default class Requests extends React.Component {
           : null
         }
         {
-          this.state.showActionPopup && (this.state.requestAction === 'respond' || this.state.requestAction === 'rate') &&
+          showActionPopup && (requestAction === 'respond' || requestAction === 'rate' || requestAction === 'reaction') &&
             <RequestFlowPopup
               dotsCount={0}
               smallPopup
               closePopUp={this.closePopup}
             >
-              { this.getPopupContent(this.state.requestAction) }
+              { this.getPopupContent(requestAction) }
             </RequestFlowPopup>
         }
         {
-          this.state.showActionPopup && this.state.requestAction !== 'respond' && this.state.requestAction !== 'rate' &&
+          showActionPopup && requestAction !== 'respond' && requestAction !== 'rate' && requestAction !== 'reaction' &&
             <Popup
               smallPopup
               closePopUp={this.closePopup}
             >
-              { this.getPopupContent(this.state.requestAction) }
+              { this.getPopupContent(requestAction) }
             </Popup>
         }
       </div>
