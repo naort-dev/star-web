@@ -503,7 +503,7 @@ export default class DetailsEntry extends React.Component {
             >
               <span>
                 I am officially affiliated with this group and have the
-                right to create a group account on it's behalf.
+                right to create a group account on its behalf.
               </span>
               <GroupStyled.CheckBox
                 id="group-info-validation"

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
 import Loader from '../Loader';
-import { ROLES } from '../../constants/usertype';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
@@ -26,7 +25,8 @@ class Header extends React.Component {
       searchText,
       profilePhoto: null,
     };
-    this.suggestionsFetchDelay=undefined;
+    this.cursorPos = -1;
+    this.suggestionsFetchDelay = undefined;
     this.profileImage = new Image();
     this.mounted = true;
   }
@@ -74,6 +74,19 @@ class Header extends React.Component {
     };
   }
 
+  setListFocus = (e) => {
+    const { showSuggestions } = this.state;
+    let { cursorPos } = this;
+    const { suggestions } = this.props.suggestionsList;
+    if (e.key === 'ArrowUp' && showSuggestions && cursorPos - 1 >= 0) {
+      this.suggestionList.childNodes[cursorPos - 1].focus();
+      this.cursorPos = cursorPos - 1;
+    } else if (e.key === 'ArrowDown' && showSuggestions && cursorPos + 1 < suggestions.length) {
+      this.suggestionList.childNodes[cursorPos + 1].focus();
+      this.cursorPos = cursorPos + 1;
+    }
+  }
+
   handleSearchChange = (e) => {
     this.setState({ searchText: e.target.value });
     if (e.target.value.trim('').length >= 3) {
@@ -86,6 +99,7 @@ class Header extends React.Component {
       }, 500);
     } else {
       this.setState({ showSuggestions: false });
+      this.cursorPos = -1;
     }
   }
 
@@ -97,6 +111,7 @@ class Header extends React.Component {
       }
       this.setState({ searchText: e.target.value.trim(''), searchActive: false, showSuggestions: false });
     }
+    this.setListFocus(e);
   }
 
   showSuggestions = () => {
@@ -108,6 +123,7 @@ class Header extends React.Component {
   removeSuggestions = (e) => {
     if (this.searchRef && !this.searchRef.contains(e.target)) {
       this.setState({ showSuggestions: false, searchActive: false });
+      this.cursorPos = -1;
     }
     if (this.profileDropDown && !this.profileButton.contains(e.target) && !this.profileDropDown.contains(e.target)) {
       this.setState({ profileDropdown: false });
@@ -120,11 +136,13 @@ class Header extends React.Component {
     });
     if (this.state.searchText.trim('').length >= 3) {
       this.setState({ showSuggestions: true });
+      this.cursorPos = -1;
     }
   }
 
   deactivateSearch = () => {
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
+    this.cursorPos = -1;
     this.props.updateSearchParam('');
     this.props.fetchSuggestionList('');
   }
@@ -133,6 +151,7 @@ class Header extends React.Component {
     this.props.resetSearchParam('');
     this.props.updateSearchParam('');
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
+    this.cursorPos = -1;
   }
 
   logoutUser = () => {
@@ -146,11 +165,12 @@ class Header extends React.Component {
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
       return (
-        <HeaderSection.SuggestionList>
+        <HeaderSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
           {
-            this.props.suggestionsList.suggestions.map((item, index) => (
+            this.props.suggestionsList.suggestions.map(item => (
               <HeaderSection.SuggestionListItem
-                key={index}
+                tabIndex="0"
+                key={item.user_id}
               >
                 <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
@@ -234,12 +254,12 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
-                  <Link to="/user/favorites">
+                  {/* <Link to="/user/favorites">
                     <HeaderSection.FavoriteButton title="Favorites" />
                   </Link>
                   <Link to="/user/myVideos">
                     <HeaderSection.MyvideoButton title="My videos" />
-                  </Link>
+                  </Link> */}
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}
                     onClick={this.activateSearch}
@@ -254,16 +274,16 @@ class Header extends React.Component {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
-                        <HeaderSection.UserLink>
+                        <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
                             Favorites
                           </Link>
-                        </HeaderSection.UserLink>
-                        <HeaderSection.UserLink>
+                        </HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/myVideos">
                             My videos
                           </Link>
-                        </HeaderSection.UserLink>
+                        </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem >
                           <Link to="/settings">
                             Settings
