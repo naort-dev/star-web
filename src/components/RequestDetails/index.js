@@ -505,7 +505,7 @@ export default class RequestDetails extends React.Component {
               {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
             </VideoRenderDiv.ImageSection>
             {
-              props.orderDetails.fan_rating !== null &&
+              props.starMode && props.orderDetails.fan_rating !== null &&
                 <VideoRenderDiv.ReactionControl>
                   <VideoRenderDiv.ReactionControlText onClick={() => this.props.selectItem('reaction')} >
                     View reaction
