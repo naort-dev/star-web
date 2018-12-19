@@ -89,10 +89,13 @@ export default class RowItem extends React.Component {
         <RowStyled.ContentWrapper>
           <RowStyled.ProfileDetailWrapper>
             <RowStyled.ProfileImageWrapper>
-              <RowStyled.ProfileImage imageUrl={this.state.profileImage} />
+              <RowStyled.ProfileImage
+                onClick={() => this.props.onAction('view', `/${member.user_id}`)}
+                imageUrl={this.state.profileImage}
+              />
             </RowStyled.ProfileImageWrapper>
             <RowStyled.DetailWrapper>
-              <RowStyled.StarName>{member.get_short_name}</RowStyled.StarName>
+              <RowStyled.StarName onClick={() => this.props.onAction('view', `/${member.user_id}`)}>{member.get_short_name}</RowStyled.StarName>
               <RowStyled.DetailItem>{starProfessionsDotFormater(member.celebrity_profession)}</RowStyled.DetailItem>
             </RowStyled.DetailWrapper>
           </RowStyled.ProfileDetailWrapper>
