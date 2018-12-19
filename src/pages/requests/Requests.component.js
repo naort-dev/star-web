@@ -101,6 +101,7 @@ export default class Requests extends React.Component {
       case 'reaction':
         return (
           <ReactionView
+            fanProfile={orderDetails.fan_photo && orderDetails.fan_photo.thumbnail_url}
             orderDetails={orderDetails}
             closePopup={this.closePopup}
           />

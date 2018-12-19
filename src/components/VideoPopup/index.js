@@ -307,11 +307,6 @@ class VideoPopup extends React.Component {
                             innerRef={(node) => { this.scrollBarRef = node }}
                             renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
                           >
-                            {/* <VideoPopupStyled.commentItem>
-                              <VideoPopupStyled.CommentBox
-                                placeholder="Enter your comment"
-                              />
-                            </VideoPopupStyled.commentItem> */}
                             {
                               props.commentList.data.map((item, index) => (
                                 <VideoPopupStyled.commentItem key={index}>

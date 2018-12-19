@@ -100,6 +100,7 @@ export default class RequestDetails extends React.Component {
           };
         }
       });
+      videoPlayerProps.video_id = requestVideo.find(video => video.video_status === 1).video_id;
     } else {
       const questionVideo = requestVideo.filter(video => video.video_status === 4)[0]; // question video 
       videoPlayerProps = {
