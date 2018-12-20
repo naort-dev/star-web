@@ -49,9 +49,14 @@ VideoRenderDiv.ImageSection = styled.div`
 `;
 
 VideoRenderDiv.ReactionControl = styled.span`
-  text-align: center;
-  display: block;
+  text-align: ${props => (props.mobileOnly ? 'left' : 'center')};
+  display: ${props => (props.mobileOnly ? 'block' : 'none')};
+  padding-left: ${props => (props.mobileOnly ? '62px' : '0')}
   margin-top: 5px;
+  order: ${props => props.mobileOnly && '2'};
+  @media(min-width: 768px) {
+    display: ${props => (props.mobileOnly ? 'none' : 'block')};
+  }
 `;
 
 VideoRenderDiv.ReactionControlText = styled.span`

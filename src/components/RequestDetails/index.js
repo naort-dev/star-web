@@ -539,6 +539,14 @@ export default class RequestDetails extends React.Component {
                 </VideoRenderDiv.RequestStatus>
                 {this.renderTimeLeft()}
               </VideoRenderDiv.StatusDetails>
+              {
+                props.starMode && props.orderDetails.fan_rating !== null &&
+                  <VideoRenderDiv.ReactionControl mobileOnly>
+                    <VideoRenderDiv.ReactionControlText onClick={() => this.props.selectItem('reaction')} >
+                      View reaction
+                    </VideoRenderDiv.ReactionControlText>
+                  </VideoRenderDiv.ReactionControl>
+              }
               <VideoRenderDiv.ControlWrapper>
                 <VideoRenderDiv.ControlButton onClick={this.showDetails} alternate>
                   {this.state.showDetails ? 'Hide details' : 'View details'}
