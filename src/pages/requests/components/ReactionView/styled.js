@@ -27,6 +27,47 @@ ReactionStyled.Header = styled.div`
   align-items: center;
   font-family: 'Avenir-Medium';
   margin-bottom: 10px;
+  position: relative;
+`;
+
+ReactionStyled.MoreSettings = styled.div`
+  position: absolute;
+  right: 8px;
+  top: 1px;
+`;
+
+ReactionStyled.HorizontalHamburger = styled.span`
+  background: url('assets/images/dots-vertical.svg') no-repeat;
+  background-position: center center;
+  transform: rotate(-90deg);
+  width: 20px;
+  height: 20px;
+  display: block;
+  cursor: pointer;
+`;
+
+ReactionStyled.MoreSettingsList = styled.ul`
+  position: absolute;
+  background: #fff;
+  user-select: none;
+  padding: 5px 0;
+  top: calc(100% + 5px);
+  box-shadow: 0px 4px 8px 0px #cccccc
+  right: 0;
+  width: 140px;
+  z-index: 5;
+  text-align: left;
+  margin-bottom: 11px;
+`;
+
+ReactionStyled.MoreSettingsListItem = styled.li`
+  padding: 9px;
+  font-size: 14px;
+  font-family: Avenir-Regular;
+  cursor: pointer;
+  &:hover, &:focus {
+    color: #FF6C58;
+  }
 `;
 
 ReactionStyled.OrderDetailsWrapper = styled.div`
@@ -232,7 +273,7 @@ ReactionStyled.loadMoreComments = styled.button`
 ReactionStyled.commenterImage = styled.span`
   border-radius: 50%;
   display: inline-block;
-  background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
+  background-image: ${props => (props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
   background-size:cover;

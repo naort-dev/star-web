@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Loader from '../../../../components/Loader';
+import Popup from '../../../../components/Popup';
+import ShareView from '../../../../components/ShareView';
 import StarRating from '../../../../components/StarRating';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
@@ -17,13 +19,16 @@ class ReactionView extends React.Component {
     super(props);
     const { request_details: requestDetails } = props.orderDetails;
     this.date = requestDetails ? requestDetails.date : null;
+    this.currentSlideIndex = 0;
   }
 
   state = {
     reactionsLoading: true,
     reactions: [],
+    currentAction: '',
     commentText: '',
     tipDetails: {},
+    showActions: false,
   }
 
   componentDidMount() {
@@ -32,6 +37,7 @@ class ReactionView extends React.Component {
     const videoId = requestVideo.find(video => video.video_status === 1).video_id; // find the completed video id.
     this.videoId = videoId;
     this.props.fetchCommentsList(videoId, 0, true);
+    window.addEventListener('click', this.handleGlobalClick);
     getReactions(this.props.orderDetails.booking_id)
       .then((reactions) => {
         this.setState({ reactions: reactions.reactionFiles, tipDetails: reactions.tipDetails, reactionsLoading: false });
@@ -48,6 +54,34 @@ class ReactionView extends React.Component {
       return `Q&A ${requestTypeTitle[requestType]}`;
     }
     return `${occasion} ${requestTypeTitle[requestType]}`;
+  }
+
+  getMoreSettingsRef = (node) => {
+    if (!this.moreSettings) {
+      this.moreSettings = node;
+    }
+  }
+
+  getPopupContent = (currentAction) => {
+    if (currentAction === 'share') {
+      const { reactions } = this.state;
+      const currentReaction = reactions[this.currentSlideIndex];
+      const { share_url: shareUrl, user_name: userName } = currentReaction;
+      return <ShareView iconSize={50} title={userName} shareUrl={shareUrl} />;
+    }
+    return <div>report</div>;
+  }
+
+  setCurrentReaction = (currentIndex) => {
+    this.currentSlideIndex = currentIndex;
+  }
+
+  handleGlobalClick = (event) => {
+    const moreSettingsClick = this.moreSettings && !this.moreSettings.contains(event.target)
+    const shouldHide = moreSettingsClick && this.state.showActions;
+    if (shouldHide) {
+      this.toggleActions();
+    }
   }
 
   findTime = (commentDate) => {
@@ -77,6 +111,20 @@ class ReactionView extends React.Component {
       const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
       this.props.fetchCommentsList(this.videoId, offset);
     }
+  }
+
+  downloadReaction = () => {
+    const { reactions } = this.state;
+    const currentReaction = reactions[this.currentSlideIndex];
+    const { reaction_file: fileName, reaction_file_url: url } = currentReaction;
+    const link = document.createElement('a');
+    link.target = '_blank';
+    link.download = `${fileName}`;
+    link.href = url;
+    link.style.display = 'none';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 
   addVideoComment = (videoId, comment) => {
@@ -109,6 +157,14 @@ class ReactionView extends React.Component {
     }
   }
 
+  toggleActions = () => {
+    this.setState({ showActions: !this.state.showActions });
+  }
+
+  closePopup = () => {
+    this.setState({ currentAction: '' });
+  }
+
   renderSlides = (sliderProps) => {
     if (sliderProps.fileType === 1) {
       return <img src={sliderProps.original} alt="reaction" />;
@@ -120,7 +176,7 @@ class ReactionView extends React.Component {
     const { reactions } = this.state;
     const sliderItems = reactions.map((reaction) => {
       return {
-        original: reaction.s3_reaction_file_url,
+        original: reaction.reaction_file_url,
         thumbnail: '',
         fileType: reaction.file_type,
       };
@@ -129,6 +185,7 @@ class ReactionView extends React.Component {
       return (
         <ImageGallery
           items={sliderItems}
+          onSlide={this.setCurrentReaction}
           showThumbnails={false}
           showFullscreenButton={false}
           useBrowserFullscreen={false}
@@ -144,13 +201,38 @@ class ReactionView extends React.Component {
   }
 
   render() {
-    const { orderDetails, closePopup, fanProfile } = this.props;
-    const { tipDetails } = this.state;
+    const { orderDetails, closePopup, fanProfile, commentList } = this.props;
+    const { tipDetails, currentAction } = this.state;
     return (
       <ReactionStyled>
+        {
+          currentAction !== '' &&
+            <Popup
+              smallPopup
+              closePopUp={this.closePopup}
+            >
+              { this.getPopupContent(currentAction) }
+            </Popup>
+        }
         <ReactionStyled.BackButton onClick={closePopup} />
         <ReactionStyled.Header>
           Fan reaction
+          <ReactionStyled.MoreSettings innerRef={this.getMoreSettingsRef} onClick={this.toggleActions}>
+            <ReactionStyled.HorizontalHamburger />
+            {
+              this.state.showActions &&
+                <ReactionStyled.MoreSettingsList>
+                  {
+                    this.state.reactions.length !== 0 &&
+                      <React.Fragment>
+                        <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'share' })}>Share</ReactionStyled.MoreSettingsListItem>
+                        <ReactionStyled.MoreSettingsListItem onClick={this.downloadReaction}>Download reaction</ReactionStyled.MoreSettingsListItem>
+                      </React.Fragment>
+                  }
+                  <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'report' })}>Report abuse</ReactionStyled.MoreSettingsListItem>
+                </ReactionStyled.MoreSettingsList>
+            }
+          </ReactionStyled.MoreSettings>
           <StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />
         </ReactionStyled.Header>
         {
@@ -221,7 +303,7 @@ class ReactionView extends React.Component {
               onClick={() => this.commentAdder()}
             />
             <ReactionStyled.CommentBox
-              innerRef={(node) => { this.commentInput = node }}
+              innerRef={(node) => { this.commentInput = node; }}
               placeholder="Enter your comment"
               value={this.state.commentText}
               onKeyUp={event => this.handleCommentEnter(event)}
@@ -230,11 +312,11 @@ class ReactionView extends React.Component {
           </ReactionStyled.CommentBoxWrapper>
         </ReactionStyled.PopupActions>
         {
-          !this.props.commentList.loading || this.props.commentList.data.length ?
+          !commentList.loading || commentList.data.length ?
             <ReactionStyled.CommentsList>
               {
-                this.props.commentList.data.map((item, index) => (
-                  <ReactionStyled.commentItem key={index}>
+                commentList.data.map(item => (
+                  <ReactionStyled.commentItem key={item.id}>
                     <ReactionStyled.commenterImage
                       imageUrl={item.user && item.user.image_url}
                     />
@@ -251,7 +333,7 @@ class ReactionView extends React.Component {
                 ))
               }
               {
-                this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                commentList.data.length < commentList.count && commentList.data.length ?
                   <ReactionStyled.commentItem>
                     <ReactionStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
                       Load more comments
@@ -260,14 +342,14 @@ class ReactionView extends React.Component {
                 : null
               }
               {
-                this.props.commentList.data.length && this.props.commentList.loading ?
+                commentList.data.length && commentList.loading ?
                   <ReactionStyled.loaderWrapper>
                     <Loader />
                   </ReactionStyled.loaderWrapper>
                 : null
               }
               {
-                !this.props.commentList.loading && !this.props.commentList.data.length ?
+                !commentList.loading && !commentList.data.length ?
                   <ReactionStyled.commentItem>No comments yet</ReactionStyled.commentItem>
                 : null
               }

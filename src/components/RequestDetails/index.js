@@ -50,6 +50,7 @@ export default class RequestDetails extends React.Component {
   }
   componentWillUnmount() {
     this.mounted = false;
+    window.removeEventListener('click', this.handleGlobalClick);
   }
 
   onVideoEnded = () => {
