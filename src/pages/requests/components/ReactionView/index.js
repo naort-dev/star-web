@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { connect } from 'react-redux';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Loader from '../../../../components/Loader';
@@ -7,10 +8,11 @@ import StarRating from '../../../../components/StarRating';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
 import { getReactions } from '../../../../services/requestFeedback';
+import addVideoComment from '../../../../services/addVideoComment';
+import { fetchCommentsList, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
 import ReactionStyled from './styled';
 
-export default class ReactionView extends React.Component {
-
+class ReactionView extends React.Component {
   constructor(props) {
     super(props);
     const { request_details: requestDetails } = props.orderDetails;
@@ -20,14 +22,24 @@ export default class ReactionView extends React.Component {
   state = {
     reactionsLoading: true,
     reactions: [],
+    commentText: '',
     tipDetails: {},
   }
 
   componentDidMount() {
+    const { orderDetails } = this.props;
+    const { request_video: requestVideo } = orderDetails;
+    const videoId = requestVideo.find(video => video.video_status === 1).video_id; // find the completed video id.
+    this.videoId = videoId;
+    this.props.fetchCommentsList(videoId, 0, true);
     getReactions(this.props.orderDetails.booking_id)
       .then((reactions) => {
         this.setState({ reactions: reactions.reactionFiles, tipDetails: reactions.tipDetails, reactionsLoading: false });
       });
+  }
+
+  componentWillUnmount() {
+    this.props.resetCommentsList();
   }
 
   getTitle = () => {
@@ -36,6 +48,65 @@ export default class ReactionView extends React.Component {
       return `Q&A ${requestTypeTitle[requestType]}`;
     }
     return `${occasion} ${requestTypeTitle[requestType]}`;
+  }
+
+  findTime = (commentDate) => {
+    let timeString = '';
+    const currentDate = new Date();
+    const createdDate = new Date(commentDate);
+    const timeDiff = currentDate - createdDate;
+    const diffDays = Math.floor(timeDiff / 86400000); // days
+    const diffHrs = Math.floor((timeDiff % 86400000) / 3600000); // hours
+    const diffMins = Math.round(((timeDiff % 86400000) % 3600000) / 60000); // minutes
+    if (diffDays >= 30) {
+      timeString = moment(commentDate).format('MMM DD, YYYY');
+    } else if (diffDays >= 1) {
+      timeString = diffDays === 1 ? `${diffDays} day ago` : `${diffDays} days ago`;
+    } else if (diffHrs >= 1) {
+      timeString = diffHrs === 1 ? `${diffHrs} hour ago` : `${diffHrs} hours ago`;
+    } else if (diffMins >= 1) {
+      timeString = diffMins === 1 ? `${diffMins} minute ago` : `${diffMins} minutes ago`;
+    } else {
+      timeString = 'just now';
+    }
+    return timeString;
+  }
+
+  loadMoreComments = () => {
+    if (this.props.commentList.data.length < this.props.commentList.count) {
+      const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
+      this.props.fetchCommentsList(this.videoId, offset);
+    }
+  }
+
+  addVideoComment = (videoId, comment) => {
+    this.setState({ commentText: '' });
+    addVideoComment(videoId, comment)
+      .then(() => {
+        this.props.fetchCommentsList(this.videoId, 0, true);
+      });
+  }
+
+  selectCommentField = () => {
+    if (this.commentInput) {
+      this.commentInput.focus();
+    }
+  }
+
+  handleCommentAdd = (event) => {
+    this.setState({ commentText: event.target.value });
+  }
+
+  commentAdder = () => {
+    if (this.state.commentText !== '') {
+      this.addVideoComment(this.videoId, this.state.commentText);
+    }
+  }
+
+  handleCommentEnter = (event) => {
+    if (event.keyCode === 13) {
+      this.commentAdder();
+    }
   }
 
   renderSlides = (sliderProps) => {
@@ -75,7 +146,6 @@ export default class ReactionView extends React.Component {
   render() {
     const { orderDetails, closePopup, fanProfile } = this.props;
     const { tipDetails } = this.state;
-    console.log(orderDetails);
     return (
       <ReactionStyled>
         <ReactionStyled.BackButton onClick={closePopup} />
@@ -145,7 +215,80 @@ export default class ReactionView extends React.Component {
             </ReactionStyled.RowItem>
           : null
         }
+        <ReactionStyled.PopupActions>
+          <ReactionStyled.CommentBoxWrapper>
+            <ReactionStyled.CommentSendIcon
+              onClick={() => this.commentAdder()}
+            />
+            <ReactionStyled.CommentBox
+              innerRef={(node) => { this.commentInput = node }}
+              placeholder="Enter your comment"
+              value={this.state.commentText}
+              onKeyUp={event => this.handleCommentEnter(event)}
+              onChange={event => this.handleCommentAdd(event)}
+            />
+          </ReactionStyled.CommentBoxWrapper>
+        </ReactionStyled.PopupActions>
+        {
+          !this.props.commentList.loading || this.props.commentList.data.length ?
+            <ReactionStyled.CommentsList>
+              {
+                this.props.commentList.data.map((item, index) => (
+                  <ReactionStyled.commentItem key={index}>
+                    <ReactionStyled.commenterImage
+                      imageUrl={item.user && item.user.image_url}
+                    />
+                    <ReactionStyled.commenterName>
+                      {item.user && item.user.get_short_name}
+                      <ReactionStyled.comment>
+                        {item.comments}
+                      </ReactionStyled.comment>
+                      <ReactionStyled.commentDate>
+                        {this.findTime(item.created_date)}
+                      </ReactionStyled.commentDate>
+                    </ReactionStyled.commenterName>
+                  </ReactionStyled.commentItem>
+                ))
+              }
+              {
+                this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                  <ReactionStyled.commentItem>
+                    <ReactionStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
+                      Load more comments
+                    </ReactionStyled.loadMoreComments>
+                  </ReactionStyled.commentItem>
+                : null
+              }
+              {
+                this.props.commentList.data.length && this.props.commentList.loading ?
+                  <ReactionStyled.loaderWrapper>
+                    <Loader />
+                  </ReactionStyled.loaderWrapper>
+                : null
+              }
+              {
+                !this.props.commentList.loading && !this.props.commentList.data.length ?
+                  <ReactionStyled.commentItem>No comments yet</ReactionStyled.commentItem>
+                : null
+              }
+            </ReactionStyled.CommentsList>
+          :
+            <ReactionStyled.loaderWrapper>
+              <Loader />
+            </ReactionStyled.loaderWrapper>
+        }
       </ReactionStyled>
     );
   }
 }
+
+const mapStateToProps = state => ({
+  commentList: state.commentsList,
+});
+
+const mapDispatchToProps = dispatch => ({
+  fetchCommentsList: (videoId, offset, refresh) => dispatch((fetchCommentsList(videoId, offset, refresh))),
+  resetCommentsList: () => dispatch(resetCommentsList()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ReactionView);
