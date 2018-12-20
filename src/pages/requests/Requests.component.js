@@ -357,6 +357,7 @@ export default class Requests extends React.Component {
             <RequestFlowPopup
               dotsCount={0}
               smallPopup
+              autoWidth
               closePopUp={this.closePopup}
             >
               { this.getPopupContent(requestAction) }
