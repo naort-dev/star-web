@@ -169,11 +169,11 @@ EarningStyled.AllEarningsWrapper = styled.div`
 `;
 
 EarningStyled.errorMessage = styled.span`
-  font-family: 'Avenir-Light';
   font-size: 14px;
-  color: #b5b5b5;
-  display: block;
-  margin-top: 20px;
+  display: flex;
+  margin-top: 27px;
+  justify-content: center;
+  font-weight: 600;
 `;
 
 EarningStyled.MoreButton = styled.span`

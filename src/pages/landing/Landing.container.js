@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebList';
+import { toggleSignup } from '../../store/shared/actions/toggleModals';
 import { fetchVideosList } from './actions//getVideosList';
 
 import {
@@ -34,6 +35,7 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedSubCategory: (selectedList, category) => dispatch(updateSelectedSubCategory(selectedList, category)),
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
+  toggleSignup: state => dispatch(toggleSignup(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

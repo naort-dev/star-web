@@ -2,6 +2,8 @@
 import Api from '../../../lib/api';
 import { fetch, CancelToken } from '../../../services/fetch';
 import axios from 'axios';
+import { checkPrerender } from '../../../utils/checkOS';
+
 
 export const CELEB_VIDEOS_LIST = {
   start: 'fetch_start/celeb_video_list',
@@ -54,6 +56,9 @@ export const celebVideosListFetchLoading = refresh => ({
 });
 
 export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispatch, getState) => {
+  if (checkPrerender()) {
+    return null;
+  }
   const { limit } = getState().celebVideos;
   const request = requestType ? requestType: '';
   if (typeof getState().celebVideos.token !== typeof undefined) {
