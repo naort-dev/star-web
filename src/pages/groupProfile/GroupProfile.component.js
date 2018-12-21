@@ -33,7 +33,6 @@ export default class GroupProfile extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let groupDetails = nextProps.groupDetails;
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchGroupDetails(nextProps.match.params.id.toLowerCase());      
       if (this.state.followFlag) {
@@ -147,7 +146,6 @@ export default class GroupProfile extends React.Component {
       const { featured_photo: {image_url} } = this.props.groupDetails;
       images.push({ original: image_url });
     }
-
     if (this.props.groupDetails && this.props.groupDetails.images) {
       const imagesArray = this.props.groupDetails.images.map(item =>
         ({ original: item.image_url }));
@@ -170,7 +168,7 @@ export default class GroupProfile extends React.Component {
       if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity && this.props.groupDetails.is_follow) {
         followedText = 'Following';
       } else if (this.props.userDetails.role_details.role_code === ROLES.star || this.props.userDetails.celebrity || this.props.userDetails.role_details.role_code === ROLES.group) {
-        if (this.props.groupDetails.account_follow_details && this.props.groupDetails.account_follow_details.approved) {
+        if (this.props.accountFollowDetails && this.props.accountFollowDetails.approved) {
           followedText = 'Member';
         } else {
           followedText = 'Requested';

@@ -9,6 +9,7 @@ export const GROUP_DETAILS = {
   success: 'fetch_success/group_details',
   failed: 'fetch_failed/group_details',
   reset: 'reset/group_details',
+  update: 'updateGroupDetails/group_details',
 };
 
 export const groupDetailsFetchStart = () => ({
@@ -31,6 +32,11 @@ export const groupDetailstFetchFailed = error => ({
 
 export const resetGroupDetails = () => ({
   type: GROUP_DETAILS.reset,
+});
+
+export const groupDetailstFetchUpdate = details => ({
+  type: GROUP_DETAILS.update,
+  details,
 });
 
 export const fetchGroupDetails = id => (dispatch, getState) => {
@@ -56,4 +62,27 @@ export const fetchGroupDetails = id => (dispatch, getState) => {
     dispatch(groupDetailstFetchEnd());
     dispatch(groupDetailstFetchFailed(exception.response.data));
   });
+};
+
+export const updateGroupDetails = (data, userType) => (dispatch, getState) => {
+  if (userType === 'fan') {
+    let groupDetails = getState().groupDetails.userDetails;
+    groupDetails = {
+      ...groupDetails,
+      is_follow: data.follow,
+    };
+    dispatch(groupDetailstFetchUpdate(groupDetails));
+  }
+  if (userType === 'star') {
+    let groupDetails = getState().groupDetails.userDetails;
+    groupDetails = {
+      ...groupDetails,
+      group_account_follow: true,
+      account_follow_details: {
+        celebrity_invite: data.data.celebrity_invite,
+        approved: data.data.approved,
+      },
+    };
+    dispatch(groupDetailstFetchUpdate(groupDetails));
+  }
 };
