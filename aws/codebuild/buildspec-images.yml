@@ -1,0 +1,41 @@
+version: 0.2
+
+env:
+  variables:
+    GIT_SSH_COMMAND: "ssh -i ~/.ssh/id_rsa -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+
+phases:
+  install:
+    commands:
+      - apt-get update && apt-get install -y openssh-client jq
+      - mkdir -p ~/.ssh/ && chmod 700 ~/.ssh/
+      - aws ssm get-parameter --name /codebuild/github/web/key.pem | jq -r .Parameter.Value > ~/.ssh/id_rsa
+      - chmod 600 ~/.ssh/id_rsa
+  pre_build:
+    commands:
+      - "export AWS_ACCOUNT_ID=`echo $CODEBUILD_BUILD_ARN | cut -d: -f5`"
+      - export REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
+      - export DEPLOYMENT_TYPE=aws
+      - echo Logging in to Amazon ECR...
+      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  build:
+    commands:
+      - chmod +x aws/scripts/version.sh
+      - aws/scripts/version.sh 'git@github.com:Starsona/web.git'
+      - export IMAGE_TAG=:`cat .version`
+      - echo Building the Docker images version$IMAGE_TAG...
+      - chmod +x docker/build-docker-images.sh
+      - docker/build-docker-images.sh
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
+      - echo Writing artifacts...
+      - aws ssm get-parameter --name /env/staging/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > staging-web.json
+      - aws ssm get-parameter --name /env/production/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > production-web.json
+artifacts:
+  files:
+    - staging-web.json
+    - production-web.json
+  discard-paths: yes

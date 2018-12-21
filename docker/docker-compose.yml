@@ -1,0 +1,28 @@
+version: '3.3'
+services:
+  nginx:
+    image: web-nginx-swarm
+    hostname: ${SSL_SERVER_NAME}
+    volumes:
+    - /etc/letsencrypt
+    networks:
+    - overlay
+    ports:
+    - "80:80"
+    - "443:443"
+    restart: on-failure
+    environment:
+    - SSL_SERVER_NAME
+    - SSL_SERVER_EMAIL
+    - API_URL
+    - SERVER_URL
+    - STRIPE_PUBLISH_KEY
+    - BRANCH_IO_KEY
+    - DOMAIN_NAME=$SSL_SERVER_NAME
+    - HTPASSWD=starsona:$$apr1$$i8bVNw8I$$yl2tggOZBh8.oBeVQ26b50
+    - PRERENDER_TOKEN
+    - GOOGLE_TAG_MANAGER_ID
+
+networks:
+  overlay:
+

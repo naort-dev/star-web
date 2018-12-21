@@ -25,3 +25,11 @@ export const checkDevice = () => {
   return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
     .then(() => true, () => false);
 };
+
+export const checkPrerender = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  if (/Prerender/i.test(userAgent)) {
+    return true;
+  }
+  return false;
+};

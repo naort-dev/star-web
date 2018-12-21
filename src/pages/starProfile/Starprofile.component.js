@@ -13,6 +13,7 @@ import VideoPopup from '../../components/VideoPopup';
 import { ImageStack } from '../../components/ImageStack';
 import Popup from '../../components/Popup';
 import { fetch } from '../../services/fetch';
+import { checkPrerender } from '../../utils/checkOS';
 import StarProfileStyled from '../starProfile/styled';
 import { setMetaTags } from '../../utils/setMetaTags';
 import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
@@ -210,7 +211,7 @@ export default class Starprofile extends React.Component {
   };
 
   renderVideoList = () => {
-    if (this.props.videosList.data.length) {
+    if (this.props.videosList.data.length && !checkPrerender()) {
       return (
         <ScrollList
           dataList={this.props.videosList.data}

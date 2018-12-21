@@ -76,16 +76,18 @@ class ReferStar extends React.Component {
       return <Loader />;
     } else if (this.props.referralDetails.referralList.length) {
       return (
-        <ScrollList
-          dataList={this.props.referralDetails.referralList}
-          scrollTarget="referral-wrapper"
-          referralList
-          limit={this.props.referralDetails.limit}
-          totalCount={this.props.referralDetails.count}
-          offset={this.props.referralDetails.offset}
-          loading={this.props.referralDetails.loading}
-          fetchData={(offset, refresh) => this.props.referralDetails(offset, refresh)}
-        />
+        <ReferralStyled.ReferralList>
+          <ScrollList
+            dataList={this.props.referralDetails.referralList}
+            scrollTarget={document.getElementById('referral-wrapper')}
+            referralList
+            limit={this.props.referralDetails.limit}
+            totalCount={this.props.referralDetails.count}
+            offset={this.props.referralDetails.offset}
+            loading={this.props.referralDetails.loading}
+            fetchData={(offset, refresh) => this.props.referralDetails(offset, refresh)}
+          />
+        </ReferralStyled.ReferralList>
       );
     }
     return null;

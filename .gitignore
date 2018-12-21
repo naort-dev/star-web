@@ -4,9 +4,9 @@ dist/
 *.log
 .vscode
 .chrome
+.env
 .DS_Store
 .env
 env.js
 .idea/
 yarn.lock
-package-lock.json

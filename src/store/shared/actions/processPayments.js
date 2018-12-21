@@ -159,6 +159,7 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
     source: tokenId,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
+      dataLayer.push({event: 'checkout', id: starsonaId, amount: amount});
       dispatch(paymentFetchEnd());
       dispatch(setPaymentStatus(resp.data.success));
     } else {
