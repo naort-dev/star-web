@@ -355,7 +355,6 @@ GroupProfileStyled.memberListPopup = styled.div`
     }
   }
   .memberPopup > section {
-    height: 500px;
     @media(max-width: 480px) {
       padding-left: 0;
       padding-right: 0;
@@ -448,6 +447,31 @@ GroupProfileStyled.memberDetailButton = styled.a`
   border-style: solid;
   border-color: #dadada;
   border-image: initial;
+`;
+
+GroupProfileStyled.UserPopup = styled.div`
+  text-align: center;
+  font-family: Avenir-Regular;
+`;
+
+GroupProfileStyled.UserButton = styled.button`
+  background-color: #FF6C58;
+  color: #fff;
+  padding: 5px 15px;
+  width: auto;
+  text-align: center;
+  -webkit-text-decoration: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  display: block;
+  font-size: 18px;
+  font-family: 'Avenir-Medium';
+  outline: none;
+  cursor: pointer;
+  border-radius: 10px;
+  border: 2px solid #FF6C58;
+  -webkit-appearance: none;
+  margin: 10px auto 0;
 `;
 
 GroupProfileStyled.profileImage = profilePicture;

@@ -249,8 +249,6 @@ font-size: 25px;
 margin-top: 50%;
 text-align: center;
 color: #FF6C58;
-
-
 @media(min-width:768px){
   font-size: 32px;
 }
@@ -327,6 +325,7 @@ VideoRecorderDiv.InfoText = styled.div`
     padding: 0 10px;
     text-align: center;
     width: 100%;
+    margin-top: 12px;
   `;
 
 VideoRecorderDiv.Wrapper = styled.div`
@@ -391,7 +390,7 @@ VideoRecorderDiv.UploadControlWrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   flex-direction: column;
   @media(min-width: 768px) {
     justify-content: space-between;

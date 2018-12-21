@@ -80,6 +80,7 @@ export default class Avatar extends React.Component {
   renderCropper = () => {
     return (
       <Popup
+        noDisableScroll
         closePopUp={() => this.setState({ cropMode: false })}
       >
         <AvatarContainer.CropperWrapper innerRef={(node) => {this.cropperWrapper = node}}>
@@ -304,6 +305,7 @@ export default class Avatar extends React.Component {
     }
     return (
       <Popup
+        noDisableScroll
         smallPopup
         closePopUp={() => this.setState({ imageError: false })}
       >

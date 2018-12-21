@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { cloneDeep } from 'lodash';
 import VideoRenderDiv from './styled';
 import VideoPopup from '../VideoPopup';
 import VideoPlayer from '../VideoPlayer';
@@ -11,8 +12,6 @@ import { requestExpiryDays } from '../../constants';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
 import { setVideoViewStatus } from '../../services/requestFeedback';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
-
-import { cloneDeep } from 'lodash';
 
 export default class RequestDetails extends React.Component {
   constructor(props) {
@@ -50,6 +49,7 @@ export default class RequestDetails extends React.Component {
   }
   componentWillUnmount() {
     this.mounted = false;
+    window.removeEventListener('click', this.handleGlobalClick);
   }
 
   onVideoEnded = () => {
@@ -100,6 +100,7 @@ export default class RequestDetails extends React.Component {
           };
         }
       });
+      videoPlayerProps.video_id = requestVideo.find(video => video.video_status === 1).video_id;
     } else {
       const questionVideo = requestVideo.filter(video => video.video_status === 4)[0]; // question video 
       videoPlayerProps = {
@@ -496,13 +497,23 @@ export default class RequestDetails extends React.Component {
           : null
         }
         <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.ImageSection
-            onClick={this.activateVideo}
-            height={props.imageHeight}
-            imageUrl={this.state.coverImage}
-          >
-            {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
-          </VideoRenderDiv.ImageSection>
+          <VideoRenderDiv.ImageSectionWrapper>
+            <VideoRenderDiv.ImageSection
+              onClick={this.activateVideo}
+              height={props.imageHeight}
+              imageUrl={this.state.coverImage}
+            >
+              {this.state.coverImage ? <VideoRenderDiv.PlayButton isVisible /> : null}
+            </VideoRenderDiv.ImageSection>
+            {
+              props.starMode && props.orderDetails.fan_rating !== null &&
+                <VideoRenderDiv.ReactionControl>
+                  <VideoRenderDiv.ReactionControlText onClick={() => this.props.selectItem('reaction')} >
+                    View reaction
+                  </VideoRenderDiv.ReactionControlText>
+                </VideoRenderDiv.ReactionControl>
+            }
+          </VideoRenderDiv.ImageSectionWrapper>
           <VideoRenderDiv.ContentWrapper>
             <VideoRenderDiv.ProfileDetailWrapper>
               <VideoRenderDiv.ProfileImageWrapper>
@@ -513,6 +524,12 @@ export default class RequestDetails extends React.Component {
               <VideoRenderDiv.DetailWrapper>
                 <VideoRenderDiv.StarName>
                   {props.starMode ? this.getTitle() : props.details}
+                  {
+                    props.starMode && props.requestStatus === 6 && props.orderDetails.fan_rating !== null &&
+                      <VideoRenderDiv.StarRatingWrapper>
+                        <StarRating rating={props.orderDetails.fan_rating ? props.orderDetails.fan_rating.fan_rate : 0} readOnly />
+                      </VideoRenderDiv.StarRatingWrapper>
+                  }
                 </VideoRenderDiv.StarName>
                 {this.renderTime()}
                 <VideoRenderDiv.StarDetails>{props.starMode ? props.fanName : props.starName }</VideoRenderDiv.StarDetails>
@@ -528,6 +545,14 @@ export default class RequestDetails extends React.Component {
                 </VideoRenderDiv.RequestStatus>
                 {this.renderTimeLeft()}
               </VideoRenderDiv.StatusDetails>
+              {
+                props.starMode && props.orderDetails.fan_rating !== null &&
+                  <VideoRenderDiv.ReactionControl mobileOnly>
+                    <VideoRenderDiv.ReactionControlText onClick={() => this.props.selectItem('reaction')} >
+                      View reaction
+                    </VideoRenderDiv.ReactionControlText>
+                  </VideoRenderDiv.ReactionControl>
+              }
               <VideoRenderDiv.ControlWrapper>
                 <VideoRenderDiv.ControlButton onClick={this.showDetails} alternate>
                   {this.state.showDetails ? 'Hide details' : 'View details'}

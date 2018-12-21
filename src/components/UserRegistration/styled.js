@@ -614,13 +614,18 @@ GroupStyled.Professions = styled.span`
 
 GroupStyled.ConfirmationWrapper = styled.div`
   font-family: Avenir-Light;
-  margin-top: 40px;
+  margin: 20px 0;
   padding-left: 40px;
   color: #565656;
 `;
 
 GroupStyled.ConfirmationHead = styled.span`
 
+`;
+
+GroupStyled.ConfirmationFooter = styled.span`
+  margin-top: 20px;
+  display: block;
 `;
 
 GroupStyled.confirmationSteps = styled.span`
@@ -805,7 +810,7 @@ GroupStyled.addRepWrapper = styled.div`
     font-size: 17px;
     @media(min-width:768px){
       display: inline-block;
-      max-width: 500px;
+      width: calc(100% - 55px);
     }
     p {
       font-size: 12px;
@@ -816,12 +821,14 @@ GroupStyled.addRepWrapper = styled.div`
 
 GroupStyled.AddRepresentative = styled.span`
   background-image: url(assets/images/plus-sign-in-circle.png);
-  width: 40px;
-  height: 40px;
+  width: 35px;
+  height: 35px;
   background-size: 100% auto;
   margin-right: 10px;
   cursor: pointer;
   background-repeat: no-repeat;
+  display: inline-block;
+  vertical-align: top;
 `;
 
 GroupStyled.AddRepForm = styled.div`

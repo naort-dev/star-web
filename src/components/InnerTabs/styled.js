@@ -36,8 +36,9 @@ TabStyled.tabListItem = styled.li`
   padding: 5px 10px 16px;;
   font-size: 16px;
   cursor: pointer;
+  margin-right: 10px;
   font-family: ${props => (props.selected ? 'Avenir-Bold' : 'Avenir-Regular')};
-  border-bottom: ${props => props.selected && '4px solid #FF6C58'}
+  border-bottom: ${props => props.selected && '4px solid #FF6C58'};
   color: ${props => props.selected && '#FF6C58'}
   @media(min-width: 768px) {
     font-size: 20px;

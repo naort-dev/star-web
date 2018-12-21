@@ -100,7 +100,7 @@ SupportStyled.ControlButton = styled.button`
 `;
 
 SupportStyled.InviteList = styled.div`
-  height: 500px;
+
 `;
 
 SupportStyled.LoaderWrapper = styled.div`

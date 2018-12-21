@@ -40,6 +40,13 @@ export default (state = { ...initalState }, action) => {
         ...state,
         userDetails: {},
       };
+    
+    case GROUP_DETAILS.update:
+      return {
+        ...state,
+        loading: false,
+        userDetails: action.details,
+      };
 
     default:
       return state;

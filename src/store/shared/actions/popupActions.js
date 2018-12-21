@@ -126,3 +126,19 @@ export const reportAbuse = data => (dispatch) => {
     dispatch(reportAbuseFailed(exception));
   });
 };
+
+export const reactionAbuse = (reactionId, comments) => (dispatch) => {
+  dispatch(reportAbuseStart());
+  return fetch.post(Api.reactionAbuse, {
+    reaction: reactionId,
+    comments,
+  }).then((resp) => {
+    dispatch(reportAbuseEnd());
+    if (resp.data && resp.data.success) {
+      dispatch(reportAbuseSuccess(resp.data.data));
+    }
+  }).catch((exception) => {
+    dispatch(reportAbuseEnd());
+    dispatch(reportAbuseFailed(exception));
+  });
+};

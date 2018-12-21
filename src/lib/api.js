@@ -41,7 +41,8 @@ class Api {
   static rating = 'user/fan/celebrity_rating/';
   static requestFeedback = 'request/feedback/';
   static contactSupport = 'user/contact_support/';
-  static reportAbuse = 'user/fan/celebrity_abuse/'
+  static reportAbuse = 'user/fan/celebrity_abuse/';
+  static reactionAbuse = 'request/reaction_abuse/';
   static stripeRegistration = 'payments/getstripeurl/';
   static checkStripe = 'payments/stripe_dashboard/';
   static changePassword = 'user/changepassword/';
@@ -57,6 +58,7 @@ class Api {
   static getOtpCode = 'user/validate_mobile/';
   static validateOtpCode = 'user/verify_mobile/';
   static celebRepresentative = 'user/celebrity_representative/';
+  static getReactions = 'request/reactions/'
 }
 
 export default Api;
