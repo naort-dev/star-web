@@ -190,7 +190,15 @@ class ReactionView extends React.Component {
     if (sliderProps.fileType === 1) {
       return <img src={sliderProps.original} alt="reaction" />;
     }
-    return <VideoPlayer fill pauseVideo={this.state.pauseVideo} onVideoStart={this.onVideoStart} primarySrc={sliderProps.original} />;
+    return (
+      <VideoPlayer
+        fill
+        pauseVideo={this.state.pauseVideo}
+        onVideoStart={this.onVideoStart}
+        primarySrc={sliderProps.original}
+        primaryCover={sliderProps.thumbnail}
+      />
+    );
   }
 
   renderReactions = () => {
@@ -198,7 +206,7 @@ class ReactionView extends React.Component {
     const sliderItems = reactions.map((reaction) => {
       return {
         original: reaction.reaction_file_url,
-        thumbnail: '',
+        thumbnail: reaction.reaction_thumbnail_url,
         fileType: reaction.file_type,
       };
     });
