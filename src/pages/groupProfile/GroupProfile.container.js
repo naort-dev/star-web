@@ -7,6 +7,7 @@ import { celebrityFollowStatus, fanFollowStatus } from '../../store/shared/actio
 
 const mapStateToProps = state => ({
   groupDetails: state.groupDetails.userDetails,
+  accountFollowDetails: state.groupDetails.userDetails ? state.groupDetails.userDetails.account_follow_details : {},
   memberListDetails: state.memberList,
   memberCount: state.memberList.count,
   isLoggedIn: state.session.isLoggedIn,
