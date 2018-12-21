@@ -7,14 +7,14 @@ export default class VideoPlayer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      primarySrc: this.props.primarySrc,
+      primarySrc: props.primarySrc,
       primary: {
-        thumbnail: this.props.primaryCover,
-        video: this.props.primarySrc,
+        thumbnail: props.primaryCover,
+        video: props.primarySrc,
       },
       secondary: {
-        thumbnail: this.props.secondaryCover,
-        video: this.props.secondarySrc,
+        thumbnail: props.secondaryCover,
+        video: props.secondarySrc,
       },
       videoWrapperRef: null,
       videoHeight: null,
@@ -23,7 +23,14 @@ export default class VideoPlayer extends React.Component {
 
   componentDidMount() {
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
-    window.addEventListener('resize', this.setVideoHeight)
+
+    window.addEventListener('resize', this.setVideoHeight);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (this.props.pauseVideo !== prevProps.pauseVideo && this.props.pauseVideo) {
+      this.player.pause();
+    }
   }
 
   static getDerivedStateFromProps = (nextProps, prevState) => {
@@ -80,6 +87,9 @@ export default class VideoPlayer extends React.Component {
       if (this.props.onVideoEnded) {
         this.props.onVideoEnded();
       }
+    }
+    if (prevState.hasStarted !== state.hasStarted && state.hasStarted && this.props.onVideoStart) {
+      this.props.onVideoStart();
     }
   }
 

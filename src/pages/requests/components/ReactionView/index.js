@@ -6,6 +6,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import Loader from '../../../../components/Loader';
 import Popup from '../../../../components/Popup';
 import ShareView from '../../../../components/ShareView';
+import SubmitView from '../../../../components/SubmitView';
 import StarRating from '../../../../components/StarRating';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
@@ -28,6 +29,7 @@ class ReactionView extends React.Component {
     currentAction: '',
     commentText: '',
     tipDetails: {},
+    pauseVideo: false,
     showActions: false,
   }
 
@@ -69,11 +71,26 @@ class ReactionView extends React.Component {
       const { share_url: shareUrl, user_name: userName } = currentReaction;
       return <ShareView iconSize={50} title={userName} shareUrl={shareUrl} />;
     }
-    return <div>report</div>;
+    return (
+      <SubmitView
+        heading="Report abuse"
+        onSubmit={data => this.props.reportAbuse({
+          celebrity: orderDetails.celebrity_id,
+          abuse_comment: data.comment,
+        })}
+        successMessage="The message has been sent."
+        closePopup={this.closePopup}
+      />
+    );
+  }
+
+  onVideoStart = () => {
+    this.setState({ pauseVideo: false });
   }
 
   setCurrentReaction = (currentIndex) => {
     this.currentSlideIndex = currentIndex;
+    this.setState({ pauseVideo: true });
   }
 
   handleGlobalClick = (event) => {
@@ -169,7 +186,7 @@ class ReactionView extends React.Component {
     if (sliderProps.fileType === 1) {
       return <img src={sliderProps.original} alt="reaction" />;
     }
-    return <VideoPlayer fill primarySrc={sliderProps.original} />;
+    return <VideoPlayer fill pauseVideo={this.state.pauseVideo} onVideoStart={this.onVideoStart} primarySrc={sliderProps.original} />;
   }
 
   renderReactions = () => {
@@ -260,7 +277,7 @@ class ReactionView extends React.Component {
                 this.date &&
                   <ReactionStyled.DateDetails>
                     Completed on
-                    &nbsp;{moment(this.date).format('MMM')} {moment(this.date).format('DD')}
+                    &nbsp;{moment(this.date).format('MMM')} {moment(this.date).format('DD')}, {moment(this.date).format('YY')}
                   </ReactionStyled.DateDetails>
               }
             </ReactionStyled.OrderDetailsWrapper>

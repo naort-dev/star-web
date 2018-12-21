@@ -131,6 +131,8 @@ export default class ScrollList extends React.Component {
             videoList={this.props.dataList}
             index={index}
             enableVideoPopup={() => this.enableVideoPopup(index)}
+            bookingType={item.booking_type}
+            occasion={item.occasion}
             cover={item.s3_thumbnail_url}
             fanName={item.fan_name}
             fanPhoto={item.fan_avatar_photo && item.fan_avatar_photo.thumbnail_url}

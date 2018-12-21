@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { cloneDeep } from 'lodash';
 import VideoRenderDiv from './styled';
 import VideoPopup from '../VideoPopup';
 import VideoPlayer from '../VideoPlayer';
@@ -11,8 +12,6 @@ import { requestExpiryDays } from '../../constants';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
 import { setVideoViewStatus } from '../../services/requestFeedback';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
-
-import { cloneDeep } from 'lodash';
 
 export default class RequestDetails extends React.Component {
   constructor(props) {
