@@ -188,7 +188,7 @@ class ReactionView extends React.Component {
 
   renderSlides = (sliderProps) => {
     if (sliderProps.fileType === 1) {
-      return <img src={sliderProps.thumbnail} alt="reaction" />;
+      return <img src={sliderProps.thumbnail ? sliderProps.thumbnail : sliderProps.original} alt="reaction" />;
     }
     return (
       <VideoPlayer
