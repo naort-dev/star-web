@@ -16,3 +16,8 @@ export const setVideoViewStatus = (videoId) => {
   return fetch(`${Api.setVideoView}${videoId}/`)
     .then(resp => resp.data.success)
 };
+
+export const getReactions = (bookingId) => {
+  return fetch(`${Api.getReactions}${bookingId}/`)
+    .then(resp => ({ reactionFiles: resp.data.data['reactions-details'].reaction_files, tipDetails: resp.data.data['reactions-details'].tip_details }) )
+}

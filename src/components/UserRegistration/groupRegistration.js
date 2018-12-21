@@ -136,6 +136,9 @@ class GroupRegistrationComponent extends React.Component {
                   <GroupStyled.confirmationSteps>
                     3.  Let fans know about your group page.
                   </GroupStyled.confirmationSteps>
+                  <GroupStyled.ConfirmationFooter>
+                    Thank you for signing up. Before making your profile live, we will review your sign-up to ensure you are the "real" you. Typical turnaround time is 24-48 hours.
+                  </GroupStyled.ConfirmationFooter>
                 </GroupStyled.ConfirmationWrapper>
                 <GroupStyled.DoneButtonWrapper>
                   <GroupStyled.ControlButton

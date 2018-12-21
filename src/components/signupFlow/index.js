@@ -48,6 +48,9 @@ class SignupFlow extends React.Component {
   closeSignUp = () => {
     this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     this.props.toggleSignup(false);
+    if (this.state.selectedType === 'group' && this.state.currentStep === 5) {
+      this.props.history.push('user/star-supporters');
+    }
   }
   
   renderSteps = () => {
@@ -89,7 +92,7 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             <LoginContainer.LeftSection>
               {
-                this.state.currentStep === 1 ||  this.state.currentStep === 0 ?
+                this.state.currentStep === 1 || this.state.currentStep === 0 ?
                   <HeaderSection>
                     <Link to="/">
                       <HeaderSection.LogoImage

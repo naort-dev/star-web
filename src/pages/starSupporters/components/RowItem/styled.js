@@ -36,6 +36,7 @@ RowStyled.ProfileImageWrapper = styled.span`
 RowStyled.ProfileImage = styled.span`
   border-radius: 50%;
   display: block;
+  cursor: pointer;
   background-image: ${props => (props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
@@ -72,6 +73,7 @@ RowStyled.DetailWrapper = styled.span`
 RowStyled.StarName = styled.span`
   font-size: 16px;
   color:#333333;
+  cursor: pointer;
   font-family: 'Avenir-Regular';
   @media(min-width: 768px) {
     display: inline-block;
