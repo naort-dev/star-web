@@ -524,6 +524,12 @@ export default class RequestDetails extends React.Component {
               <VideoRenderDiv.DetailWrapper>
                 <VideoRenderDiv.StarName>
                   {props.starMode ? this.getTitle() : props.details}
+                  {
+                    props.starMode && props.requestStatus === 6 && props.orderDetails.fan_rating !== null &&
+                      <VideoRenderDiv.StarRatingWrapper>
+                        <StarRating rating={props.orderDetails.fan_rating ? props.orderDetails.fan_rating.fan_rate : 0} readOnly />
+                      </VideoRenderDiv.StarRatingWrapper>
+                  }
                 </VideoRenderDiv.StarName>
                 {this.renderTime()}
                 <VideoRenderDiv.StarDetails>{props.starMode ? props.fanName : props.starName }</VideoRenderDiv.StarDetails>
