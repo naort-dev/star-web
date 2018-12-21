@@ -380,4 +380,9 @@ VideoRenderDiv.AudioIcon = styled.img`
   cursor: pointer;
 `;
 
+VideoRenderDiv.StarRatingWrapper = styled.div`
+  display: inline-block;
+  font-size: 12px;
+`;
+
 export default VideoRenderDiv;

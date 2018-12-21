@@ -12,6 +12,7 @@ import VideoPlayer from '../../../../components/VideoPlayer';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
 import { getReactions } from '../../../../services/requestFeedback';
 import addVideoComment from '../../../../services/addVideoComment';
+import { reactionAbuse } from '../../../../store/shared/actions/popupActions';
 import { fetchCommentsList, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
 import ReactionStyled from './styled';
 
@@ -50,6 +51,10 @@ class ReactionView extends React.Component {
     this.props.resetCommentsList();
   }
 
+  onVideoStart = () => {
+    this.setState({ pauseVideo: false });
+  }
+  
   getTitle = () => {
     const { request_type: requestType, occasion } = this.props.orderDetails;
     if (requestType === 3) { // Q&A video
@@ -74,23 +79,22 @@ class ReactionView extends React.Component {
     return (
       <SubmitView
         heading="Report abuse"
-        onSubmit={data => this.props.reportAbuse({
-          celebrity: orderDetails.celebrity_id,
-          abuse_comment: data.comment,
-        })}
+        onSubmit={this.reportAbuse}
         successMessage="The message has been sent."
         closePopup={this.closePopup}
       />
     );
   }
 
-  onVideoStart = () => {
-    this.setState({ pauseVideo: false });
-  }
-
   setCurrentReaction = (currentIndex) => {
     this.currentSlideIndex = currentIndex;
     this.setState({ pauseVideo: true });
+  }
+
+  reportAbuse = (data) => {
+    const { reactions } = this.state;
+    const currentReaction = reactions[this.currentSlideIndex];
+    this.props.reactionAbuse(currentReaction.reaction_id, data.comment);
   }
 
   handleGlobalClick = (event) => {
@@ -184,9 +188,17 @@ class ReactionView extends React.Component {
 
   renderSlides = (sliderProps) => {
     if (sliderProps.fileType === 1) {
-      return <img src={sliderProps.original} alt="reaction" />;
+      return <img src={sliderProps.thumbnail} alt="reaction" />;
     }
-    return <VideoPlayer fill pauseVideo={this.state.pauseVideo} onVideoStart={this.onVideoStart} primarySrc={sliderProps.original} />;
+    return (
+      <VideoPlayer
+        fill
+        pauseVideo={this.state.pauseVideo}
+        onVideoStart={this.onVideoStart}
+        primarySrc={sliderProps.original}
+        primaryCover={sliderProps.thumbnail}
+      />
+    );
   }
 
   renderReactions = () => {
@@ -194,7 +206,7 @@ class ReactionView extends React.Component {
     const sliderItems = reactions.map((reaction) => {
       return {
         original: reaction.reaction_file_url,
-        thumbnail: '',
+        thumbnail: reaction.reaction_thumbnail_url,
         fileType: reaction.file_type,
       };
     });
@@ -234,27 +246,25 @@ class ReactionView extends React.Component {
         <ReactionStyled.BackButton onClick={closePopup} />
         <ReactionStyled.Header>
           Fan reaction
-          <ReactionStyled.MoreSettings innerRef={this.getMoreSettingsRef} onClick={this.toggleActions}>
-            <ReactionStyled.HorizontalHamburger />
-            {
-              this.state.showActions &&
-                <ReactionStyled.MoreSettingsList>
-                  {
-                    this.state.reactions.length !== 0 &&
-                      <React.Fragment>
-                        <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'share' })}>Share</ReactionStyled.MoreSettingsListItem>
-                        <ReactionStyled.MoreSettingsListItem onClick={this.downloadReaction}>Download reaction</ReactionStyled.MoreSettingsListItem>
-                      </React.Fragment>
-                  }
-                  <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'report' })}>Report abuse</ReactionStyled.MoreSettingsListItem>
-                </ReactionStyled.MoreSettingsList>
-            }
-          </ReactionStyled.MoreSettings>
+          {
+            this.state.reactions.length !== 0 &&
+              <ReactionStyled.MoreSettings innerRef={this.getMoreSettingsRef} onClick={this.toggleActions}>
+                <ReactionStyled.HorizontalHamburger />
+                {
+                  this.state.showActions &&
+                    <ReactionStyled.MoreSettingsList>
+                      <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'share' })}>Share</ReactionStyled.MoreSettingsListItem>
+                      <ReactionStyled.MoreSettingsListItem onClick={this.downloadReaction}>Download reaction</ReactionStyled.MoreSettingsListItem>
+                      <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'report' })}>Report abuse</ReactionStyled.MoreSettingsListItem>
+                    </ReactionStyled.MoreSettingsList>
+                }
+              </ReactionStyled.MoreSettings>
+          }
           <StarRating rating={orderDetails.fan_rating ? orderDetails.fan_rating.fan_rate : 0} readOnly />
         </ReactionStyled.Header>
         {
-          this.state.reactionsLoading &&
-            <Loader />
+        this.state.reactionsLoading &&
+          <Loader />
         }
         {
           this.state.reactions.length !== 0 &&
@@ -388,6 +398,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCommentsList: (videoId, offset, refresh) => dispatch((fetchCommentsList(videoId, offset, refresh))),
   resetCommentsList: () => dispatch(resetCommentsList()),
+  reactionAbuse: (reactionId, comment) => dispatch(reactionAbuse(reactionId, comment)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ReactionView);
