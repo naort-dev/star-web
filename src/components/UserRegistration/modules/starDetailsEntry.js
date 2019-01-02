@@ -1,7 +1,7 @@
 import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
-import { IndustrySelection } from '../../IndustrySelection';
+import { GroupSelection, IndustrySelection } from '../../IndustrySelection';
 import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
@@ -10,6 +10,7 @@ export default class StarDetailsEntry extends React.Component {
     bio: '',
     charity: '',
     industries: [],
+    groups: [],
     stageName: '',
     bookingPrice: '',
     bookingLimit: '',
@@ -17,6 +18,8 @@ export default class StarDetailsEntry extends React.Component {
     priceCheck: false,
     limitCheck: false,
     selectedCheck: null,
+    industrySelection: false,
+    groupSelection: false,
     socialMedia: {
       facebook: '',
       twitter: '',
@@ -33,6 +36,10 @@ export default class StarDetailsEntry extends React.Component {
 
   getIndustrySelection = (industries) => {
     this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
+  }
+
+  getGroupSelection = (groups) => {
+    this.setState({ groups, groupSelection: false });
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
@@ -105,6 +112,13 @@ export default class StarDetailsEntry extends React.Component {
     this.setState({ industries });
   }
 
+  removeSelectedGroup = (id, event) => {
+    event.stopPropagation();
+    let { groups } = this.state;
+    groups = groups.filter(group => group.group_id !== id);
+    this.setState({ groups });
+  }
+
   handleFieldBlur = (fieldType, fieldValue) => {
     const newFieldValue = commaToNumberFormatter(fieldValue)
     if (fieldType === 'bookingLimit' && !this.state.limitCheck && newFieldValue > 20) {
@@ -114,6 +128,18 @@ export default class StarDetailsEntry extends React.Component {
       this.bookingPrice.blur();
       this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
+  }
+
+  renderGroups = () => {
+    const { groups } = this.state;
+    return groups.map(group => (
+      <GroupStyled.mutiSelectItemWrapper key={group.group_id}>
+        {group.account_name}
+        <GroupStyled.OptionCloseButton
+          onClick={event => this.removeSelectedGroup(group.group_id, event)}
+        />
+      </GroupStyled.mutiSelectItemWrapper>
+    ));
   }
 
   renderIndustries = () => {
@@ -148,6 +174,14 @@ export default class StarDetailsEntry extends React.Component {
           selectedProfessions={this.state.industries}
           onSelectionComplete={this.getIndustrySelection}
           limit={3}
+        />
+      );
+    } else if (this.state.groupSelection) {
+      return (
+        <GroupSelection
+          onClose={() => this.setState({ groupSelection: false })}
+          selectedProfessions={this.state.groups}
+          onSelectionComplete={this.getGroupSelection}
         />
       );
     }
@@ -297,19 +331,23 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Charity / Group</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.InputArea
-                small
-                placeholder="Optional"
-                value={this.state.charity}
-                onChange={(event) => {
-                  this.handleFieldChange('charity', event.target.value);
-                }}
-              />
-              <GroupStyled.ErrorMsg isError={this.state.errors.charity}>
-                {this.state.errors.charity
-                  ? 'Please enter a valid event title'
-                  : null}
-              </GroupStyled.ErrorMsg>
+              <GroupStyled.IndustryInput
+                onClick={() => this.setState({ groupSelection: true })}
+              >
+                {
+                  !this.state.groups.length ?
+                    <GroupStyled.CustomPlaceholder>
+                      Select ...
+                    </GroupStyled.CustomPlaceholder>
+                  :
+                    <GroupStyled.IndustryEditButton>
+                      Edit
+                    </GroupStyled.IndustryEditButton>
+                }
+                {
+                  this.renderGroups()
+                }
+              </GroupStyled.IndustryInput>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
