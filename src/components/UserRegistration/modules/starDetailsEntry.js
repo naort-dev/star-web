@@ -337,7 +337,7 @@ export default class StarDetailsEntry extends React.Component {
                 {
                   !this.state.groups.length ?
                     <GroupStyled.CustomPlaceholder>
-                      Select ...
+                      Optional ...
                     </GroupStyled.CustomPlaceholder>
                   :
                     <GroupStyled.IndustryEditButton>
