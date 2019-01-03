@@ -95,11 +95,12 @@ export default class PlacesAutoComplete extends React.Component {
     return (
       <PlacesStyled innerRef={(node) => { this.placeElement = node; }}>
         <PlacesStyled.Input
+          {...this.props}
           onChange={event => this.onFieldChange(event.target.value)}
-          type={this.props.type}
-          maxLength={this.props.maxLength}
-          placeholder={this.props.placeholder}
-          value={this.props.value}
+          // type={this.props.type}
+          // maxLength={this.props.maxLength}
+          // placeholder={this.props.placeholder}
+          // value={this.props.value}
         />
         {
           this.state.placesArray.length ?
