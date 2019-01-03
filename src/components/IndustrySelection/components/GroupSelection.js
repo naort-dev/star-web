@@ -185,7 +185,7 @@ class GroupSelection extends React.Component {
             </IndustryStyled.Description>
             <IndustryStyled.SearchWrapper>
               <IndustryStyled.SearchField
-                placeholder="search for your group"
+                placeholder="Search for your group"
                 value={searchValue}
                 onChange={this.getSearchValue}
               />
