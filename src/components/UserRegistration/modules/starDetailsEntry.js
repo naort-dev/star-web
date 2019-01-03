@@ -43,7 +43,7 @@ export default class StarDetailsEntry extends React.Component {
   }
 
   getSocialUrl = (regex, value, baseUrl) => {
-    if (value !== undefined) {
+    if (value !== undefined && value !== '') {
       if (validator.matches(value, regex)) {
         return value;
       } else if (value.indexOf('/') <= -1) {
@@ -398,6 +398,12 @@ export default class StarDetailsEntry extends React.Component {
                       small
                       value={this.state.socialMedia.facebook}
                       innerRef={(node) => { this.facebookRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, facebook: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
                       onChange={(event) => {
                         this.handleFieldChange(
                           'socialMedia',
@@ -424,6 +430,12 @@ export default class StarDetailsEntry extends React.Component {
                       small
                       value={this.state.socialMedia.twitter}
                       innerRef={(node) => { this.twitterRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, twitter: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
                       onChange={(event) => {
                         this.handleFieldChange(
                           'socialMedia',
@@ -450,6 +462,12 @@ export default class StarDetailsEntry extends React.Component {
                       small
                       value={this.state.socialMedia.instagram}
                       innerRef={(node) => { this.instagramRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, instagram: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
                       onChange={(event) => {
                         this.handleFieldChange(
                           'socialMedia',
@@ -476,6 +494,12 @@ export default class StarDetailsEntry extends React.Component {
                       small
                       value={this.state.socialMedia.youtube}
                       innerRef={(node) => { this.youtubeRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, youtube: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
                       onChange={(event) => {
                         this.handleFieldChange(
                           'socialMedia',
