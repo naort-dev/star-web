@@ -107,8 +107,21 @@ IndustryStyled.ListItem = styled.li`
   border-bottom: 1px solid #EBEBEB;
   cursor: pointer;
   display: flex;
-  justify-content: space-between;
+  justify-content: ${props => (props.childItem ? 'flex-start' : 'space-between')};
   align-items: center;
+`;
+
+IndustryStyled.ItemImage = styled.span`
+  border-radius: 50%;
+  display: block;
+  margin-right: 10px;
+  background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/profile.png)')};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  height:50px;
+  width:50px;
+  position: relative;
 `;
 
 IndustryStyled.ListItemContent = styled.span`

@@ -58,7 +58,8 @@ class Api {
   static getOtpCode = 'user/validate_mobile/';
   static validateOtpCode = 'user/verify_mobile/';
   static celebRepresentative = 'user/celebrity_representative/';
-  static getReactions = 'request/reactions/'
+  static getReactions = 'request/reactions/';
+  static getGroupsList = 'user/group_account/';
 }
 
 export default Api;
