@@ -95,13 +95,14 @@ export default class StarDetailsEntry extends React.Component {
       const userDetails = {
         nick_name: this.state.stageName,
       };
+      const groupIds = this.state.groups.map(group => group.group_id).join(',');
       const socialLinks = {
         facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
         twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
         youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
         instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
       };
-      this.props.submitAccountDetails(celebrityDetails, userDetails, socialLinks);
+      this.props.submitAccountDetails(celebrityDetails, userDetails, socialLinks, groupIds);
     }
   };
 

@@ -18,6 +18,7 @@ import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */
 import { saveImage } from '../../store/shared/actions/imageViewer';
+import { celebrityFollowStatus } from '../../store/shared/actions/followGroupCelebrity';
 import { fetchAllProfessions } from '../../store/shared/actions/getProfessions';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
@@ -144,7 +145,7 @@ class starRegistrationComponent extends React.Component {
       });
   }
 
-  submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
+  submitAccountDetails = (celebrityDetails, userDetails, socialLinks, groupIds) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
       ...celebrityDetails,
@@ -155,6 +156,7 @@ class starRegistrationComponent extends React.Component {
       user_details: userDetails,
     };
     updateSocialLinks(socialLinks);
+    this.props.celebrityFollowStatus(groupIds);
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
@@ -258,6 +260,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   fetchAllProfessions: () => dispatch(fetchAllProfessions()),
+  celebrityFollowStatus: id => dispatch(celebrityFollowStatus(id)),
   resetUserDetails: () => dispatch(resetUserDetails()),
   resetProfilePhoto: () => dispatch(resetProfilePhoto()),
   onStartRecording: () => dispatch(startRecording()),
