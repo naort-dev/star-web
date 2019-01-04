@@ -505,10 +505,10 @@ export default class StarNotification extends React.Component {
               closePopUp={this.closeOtpPopup}
             >
               <NotificationStyled.HeaderText>
-                Enter the OTP
+                Enter code
               </NotificationStyled.HeaderText>
               <NotificationStyled.SocialMediaMessage>
-                Please enter the OTP that has been sent to your phone number.
+                Please enter the code that has been sent to your phone number.
               </NotificationStyled.SocialMediaMessage>
               <NotificationStyled.OTPWrapper>
                 <NotificationStyled.OTPInput
@@ -529,7 +529,7 @@ export default class StarNotification extends React.Component {
             </Popup>
           }
           <NotificationStyled.SubHeading>
-            Get notifications via:
+            Notify me:
           </NotificationStyled.SubHeading>
           <NotificationStyled.WrapsInput className="checkboxWrapper">
             <NotificationStyled.Label className="checkbox_container">
@@ -605,7 +605,7 @@ export default class StarNotification extends React.Component {
                 </NotificationStyled.PhoneInput>
               }
               <NotificationStyled.NoteText>
-                Note: we will use your number only to send notifications.
+                Note: we will only use your number to tell you about bookings.
               </NotificationStyled.NoteText>
             </NotificationStyled.Label>
           </NotificationStyled.WrapsInput>
@@ -615,7 +615,7 @@ export default class StarNotification extends React.Component {
                 <NotificationStyled.addRepWrapper onClick={() => this.addRepForm()}>
                   <NotificationStyled.AddRepresentative />
                   <div className="addRepText">Add Representative
-                    <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
+                    <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
                     </p>
                   </div>
                 </NotificationStyled.addRepWrapper>
