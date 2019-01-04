@@ -161,6 +161,7 @@ export default class StarSupporters extends React.Component {
               this.state.inviteView &&
                 <RequestFlowPopup
                   dotsCount={0}
+                  autoWidth
                   smallPopup
                   closePopUp={this.closeInviteView}
                   getPopupRef={this.getPopupRef}
