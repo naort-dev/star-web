@@ -156,7 +156,9 @@ class starRegistrationComponent extends React.Component {
       user_details: userDetails,
     };
     updateSocialLinks(socialLinks);
-    this.props.celebrityFollowStatus(groupIds);
+    if (groupIds.length) {
+      this.props.celebrityFollowStatus(groupIds);
+    }
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
