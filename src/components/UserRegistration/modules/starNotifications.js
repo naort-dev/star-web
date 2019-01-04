@@ -446,10 +446,10 @@ export default class StarNotifications extends React.Component {
               closePopUp={this.closeOtpPopup}
             >
               <GroupStyled.HeaderText>
-                Enter the OTP
+                Enter code
               </GroupStyled.HeaderText>
               <GroupStyled.SocialMediaMessage>
-                Please enter the OTP that has been sent to your phone number.
+                Please enter the code that has been sent to your phone number.
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
                 <GroupStyled.OTPInput
@@ -474,12 +474,11 @@ export default class StarNotifications extends React.Component {
             Would you like to get notifications?
           </GroupStyled.HeaderText>
           <GroupStyled.SocialMediaMessage>
-            We need to notify you when requests for video messages are booked, and communicate with you
-            from time to time (we promise not to spam).
+            We need to notify you when you get video bookings.
           </GroupStyled.SocialMediaMessage>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.SubHeading>
-            Get notifications via:
+            Notify me:
         </GroupStyled.SubHeading>
         <GroupStyled.WrapsInput className="checkboxWrapper">
           <GroupStyled.Label className="checkbox_container">
@@ -555,7 +554,7 @@ export default class StarNotifications extends React.Component {
               </GroupStyled.PhoneInput>
             }
             <GroupStyled.NoteText>
-              Note: we will use your number only to send notifications.
+              Note: we will only use your number to tell you about bookings.
             </GroupStyled.NoteText>
           </GroupStyled.Label>
         </GroupStyled.WrapsInput>
@@ -565,7 +564,7 @@ export default class StarNotifications extends React.Component {
             <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
               <GroupStyled.AddRepresentative />
               <div className="addRepText">Add Representative
-                <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
+                <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
                 </p>
               </div>
             </GroupStyled.addRepWrapper>

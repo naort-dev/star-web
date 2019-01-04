@@ -347,7 +347,7 @@ export default class RequestDetails extends React.Component {
         <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('report')}>Report abuse</VideoRenderDiv.MoreSettingsListItem>
         {showRateButton && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
         {
-          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download video</VideoRenderDiv.MoreSettingsListItem>
+          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download Starsona video</VideoRenderDiv.MoreSettingsListItem>
         }
       </React.Fragment>
     )
