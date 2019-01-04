@@ -47,31 +47,31 @@ class ColumnLayout extends React.Component {
           enableMenu={this.activateMenu}
           history={this.props.history}
         />
-        <Scrollbars
-          renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
-        >
-          <ColumnLayoutStyled.Container>
-            <ColumnLayoutStyled.sideSection menuActive={this.state.menuActive}>
-              <Scrollbars
-                renderView={props => <div {...props} className="view" />}
-              >
-                <Sidebar
-                  noCategory
-                  history={this.props.history}
-                  selectedCategory={this.props.selectedSideBarItem}
-                  menuActive={this.state.menuActive}
-                  toggleMenu={this.activateMenu}
-                  innerLinks={this.state.innerLinks}
-                />
-              </Scrollbars>
-            </ColumnLayoutStyled.sideSection>
-            <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
+        <ColumnLayoutStyled.Container>
+          <ColumnLayoutStyled.sideSection menuActive={this.state.menuActive}>
+            <Scrollbars
+              renderView={props => <div {...props} className="view" />}
+            >
+              <Sidebar
+                noCategory
+                history={this.props.history}
+                selectedCategory={this.props.selectedSideBarItem}
+                menuActive={this.state.menuActive}
+                toggleMenu={this.activateMenu}
+                innerLinks={this.state.innerLinks}
+              />
+            </Scrollbars>
+          </ColumnLayoutStyled.sideSection>
+          <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
+            <Scrollbars
+              renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+            >
               <ColumnLayoutStyled.CenterSection>
                 {this.props.children}
               </ColumnLayoutStyled.CenterSection>
-            </ColumnLayoutStyled.mainSection>
-          </ColumnLayoutStyled.Container>
-        </Scrollbars>
+            </Scrollbars>
+          </ColumnLayoutStyled.mainSection>
+        </ColumnLayoutStyled.Container>
       </ColumnLayoutStyled>
     );
   }
