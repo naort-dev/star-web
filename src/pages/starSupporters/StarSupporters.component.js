@@ -24,6 +24,10 @@ export default class StarSupporters extends React.Component {
     this.props.fetchMemberList(0, true);
   }
 
+  getPopupRef = (popupRef) => {
+    this.setState({ popupRef });
+  }
+
   fetchList = (selectedTab, offset = 0, refresh = true) => {
     switch (selectedTab) {
       case 'Supporters':
@@ -70,10 +74,6 @@ export default class StarSupporters extends React.Component {
           }
         });
     }
-  }
-
-  getPopupRef = (popupRef) => {
-    this.setState({ popupRef });
   }
 
   showInviteView = () => {

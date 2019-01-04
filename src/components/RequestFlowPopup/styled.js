@@ -15,7 +15,7 @@ const PopupStyled = styled.div`
   bottom: 0;
   right: 0;
   left: 0;
-  background-color: rgba(0,0,0,.6);
+  background-color: #fff;
   display: flex;
   justify-content: center;
   z-index: 11;
@@ -26,6 +26,7 @@ const PopupStyled = styled.div`
   }
   @media(min-width: 768px) {
     padding: 30px 0;
+    background-color: rgba(0,0,0,.6);
   }
 `;
 
@@ -36,7 +37,6 @@ PopupStyled.Container = styled.div`
   justify-content: center;
   animation: ${popupEnter} 0.2s ease-out;
   height: 100%;
-  overflow: auto;
   -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
     overflow: initial;
