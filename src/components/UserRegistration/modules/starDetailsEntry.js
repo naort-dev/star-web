@@ -122,13 +122,14 @@ export default class StarDetailsEntry extends React.Component {
       const userDetails = {
         nick_name: this.state.stageName,
       };
+      const groupIds = this.state.groups.map(group => group.group_id).join(',');
       const socialLinks = {
         facebook_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/, this.state.socialMedia.facebook, 'https://www.facebook.com/'),
         twitter_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/, this.state.socialMedia.twitter, 'https://www.twitter.com/'),
         youtube_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/, this.state.socialMedia.youtube, 'https://www.youtube.com/'),
         instagram_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/, this.state.socialMedia.instagram, 'https://www.instagram.com/'),
       };
-      this.props.submitAccountDetails(celebrityDetails, userDetails, socialLinks);
+      this.props.submitAccountDetails(celebrityDetails, userDetails, socialLinks, groupIds);
     }
   };
 
