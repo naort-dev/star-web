@@ -128,6 +128,15 @@ export default class AccountSettings extends React.Component {
     return !firstName && !lastName;
   }
 
+  validateOnBlur = (key, value) => {
+    const { errors } = this.state;
+    if (key === 'firstName' || key === 'lastName') {
+      errors[key] = validator.isEmpty(value);
+    }
+    this.setState({ errors });
+  }
+
+
   removeSecondaryImage = (itemIndex) => {
     const { secondaryImages } = this.state;
     secondaryImages.splice(itemIndex, 1);
@@ -223,14 +232,15 @@ export default class AccountSettings extends React.Component {
                 <SettingsStyled.InputArea
                   small
                   value={this.state.firstName}
-                  placeholder="First name"
+                  placeholder={this.props.type === 'group' ? 'Group name' : 'First name'}
+                  onBlur={event => this.validateOnBlur('firstName', event.target.value)}
                   onChange={(event) => {
                     this.handleFieldChange('firstName', event.target.value);
                   }}
                 />
                 <SettingsStyled.ErrorMsg isError={this.state.errors.firstName}>
                   {this.state.errors.firstName
-                    ? 'Please enter a first name'
+                    ? `Please enter a ${this.props.type === 'group' ? 'group' : 'first'} name`
                     : null}
                 </SettingsStyled.ErrorMsg>
               </SettingsStyled.CustomInput>
@@ -246,6 +256,7 @@ export default class AccountSettings extends React.Component {
                       small
                       value={this.state.lastName}
                       placeholder="Last name"
+                      onBlur={event => this.validateOnBlur('lastName', event.target.value)}
                       onChange={(event) => {
                         this.handleFieldChange('lastName', event.target.value);
                       }}

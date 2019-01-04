@@ -318,6 +318,26 @@ GroupStyled.InputArea = styled.textarea`
   }
 `;
 
+GroupStyled.SocialCustomInput = GroupStyled.InputArea.extend`
+  height: 40px;
+  display: flex;
+  padding: 10px 8px;
+  ${GroupStyled.HighlightText} {
+    display: block;
+    width: 100%;
+  }
+  ${GroupStyled.CustomPlaceholder} {
+    position: static;
+  }
+  ${GroupStyled.InputArea} {
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    background-color: transparent;
+  }
+`.withComponent('div');
+
 GroupStyled.IndustryInput = GroupStyled.InputArea.extend`
   min-height: 80px;
   position: relative;
