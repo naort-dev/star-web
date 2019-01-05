@@ -33,9 +33,11 @@ phases:
       - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
       - echo Writing artifacts...
       - aws ssm get-parameter --name /env/staging/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > staging-web.json
+      - aws ssm get-parameter --name /env/hotfix/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > hotfix-web.json
       - aws ssm get-parameter --name /env/production/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > production-web.json
 artifacts:
   files:
     - staging-web.json
+    - hotfix-web.json
     - production-web.json
   discard-paths: yes
