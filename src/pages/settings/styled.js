@@ -293,6 +293,26 @@ SettingsStyled.InputArea = styled.textarea`
   }
 `;
 
+SettingsStyled.SocialCustomInput = SettingsStyled.InputArea.extend`
+  height: 40px;
+  display: flex;
+  padding: 10px 8px;
+  ${SettingsStyled.HighlightText} {
+    display: block;
+    width: 100%;
+  }
+  ${SettingsStyled.CustomPlaceholder} {
+    position: static;
+  }
+  ${SettingsStyled.InputArea} {
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    background-color: transparent;
+  }
+`.withComponent('div');
+
 SettingsStyled.IndustryInput = SettingsStyled.InputArea.extend`
   min-height: 80px;
   position: relative;

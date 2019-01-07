@@ -12,6 +12,7 @@ export default class SignUp extends React.Component {
       firstName: { value: "", isValid: false, message: "" },
       lastName: { value: "", isValid: true, message: "" },
       password: { value: "", isValid: false, message: "" },
+      confPassword: { value: "", isValid: false, message: "" },
       referral: '',
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
@@ -326,7 +327,7 @@ export default class SignUp extends React.Component {
 
   saveFormEntries = (event, type) => {
     this.setState({
-      [type]: { ...this.state[type], value: event.target.value }
+      [type]: { ...this.state[type], value: event.target.value },
     });
   };
 
@@ -334,18 +335,18 @@ export default class SignUp extends React.Component {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({
-        email: { ...this.state.email, message: "Enter an email address " }
+        email: { ...this.state.email, message: 'Enter an email address ' },
       });
       return false;
     }
     if (!emailRegex.test(this.state.email.value)) {
       this.setState({
-        email: { ...this.state.email, message: "Enter a valid email address" }
+        email: { ...this.state.email, message: 'Enter a valid email address' },
       });
       return false;
     }
     this.setState({
-      email: { ...this.state.email, message: "", isValid: true }
+      email: { ...this.state.email, message: '', isValid: true },
     });
     return true;
   };
@@ -355,7 +356,7 @@ export default class SignUp extends React.Component {
 
     if (validator.isEmpty(this.state.password.value)) {
       this.setState({
-        password: { ...this.state.password, message: "Enter a  password" }
+        password: { ...this.state.password, message: 'Enter a  password' },
       });
       return false;
     }
@@ -363,8 +364,12 @@ export default class SignUp extends React.Component {
       this.setState({ password: { ...this.state.password, message: 'Enter a valid password with at least one symbol' } });
       return false;
     }
+    if (this.state.confPassword.value !== this.state.password.value) {
+      this.setState({ password: { ...this.state.password, message: 'The passwords entered do not match!' } });
+      return false;
+    }
     this.setState({
-      password: { ...this.state.password, message: "", isValid: true }
+      password: { ...this.state.password, message: '', isValid: true },
     });
     return true;
   };
@@ -376,7 +381,7 @@ export default class SignUp extends React.Component {
       return false;
     }
     this.setState({
-      firstName: { ...this.state.firstName, message: "", isValid: true }
+      firstName: { ...this.state.firstName, message: '', isValid: true },
     });
     return true;
   };
@@ -502,6 +507,27 @@ export default class SignUp extends React.Component {
                         />
                         {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
                       </LoginContainer.PasswordWrapper>
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+              }
+              {
+                this.props.statusCode === '410' ?
+                  <LoginContainer.EmptyDiv />
+                  :
+                  <LoginContainer.InputWrapper>
+
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.PasswordWrapper>
+                        <LoginContainer.Input
+                          placeholder="Confirm password"
+                          type={this.state.showPassword ? 'text' : 'password'}
+                          name="confPassword"
+                          value={this.state.confPassword.value}
+                          onChange={(event) => this.saveFormEntries(event, "confPassword")}
+                          onBlur={this.checkPassword}
+                        />
+                        {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
+                      </LoginContainer.PasswordWrapper>
                       <LoginContainer.ErrorMsg>
                         {this.state.password.message}
                       </LoginContainer.ErrorMsg>
@@ -509,13 +535,6 @@ export default class SignUp extends React.Component {
                     </LoginContainer.WrapsInput>
                   </LoginContainer.InputWrapper>
               }
-              <LoginContainer.WrapsInput>
-                {this.props.statusCode === undefined ?
-                  <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                  :
-                  <LoginContainer.EmptyDiv />
-                }
-              </LoginContainer.WrapsInput>
               <LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>
                   <LoginContainer.PasswordWrapper>
@@ -529,6 +548,13 @@ export default class SignUp extends React.Component {
                   </LoginContainer.PasswordWrapper>
                 </LoginContainer.WrapsInput>
               </LoginContainer.InputWrapper>
+              <LoginContainer.WrapsInput>
+                {this.props.statusCode === undefined ?
+                  <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                  :
+                  <LoginContainer.EmptyDiv />
+                }
+              </LoginContainer.WrapsInput>
               <LoginContainer.ButtonWrapper>
                 <FooterSection.Button type="submit" value="Sign up" onClick={this.onRegister} />
               </LoginContainer.ButtonWrapper>
