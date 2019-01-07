@@ -15,7 +15,7 @@ phases:
     commands:
       - chmod +x aws/scripts/release.sh
       - aws/scripts/release.sh 'git@github.com:Starsona/web.git'
-      - export RELEASE=:`cat .release`
+      - export RELEASE=`cat .release`
       - echo New hotfix branch $RELEASE
   post_build:
     commands:
