@@ -24,6 +24,11 @@ IndustryStyled.BackButton = styled.span`
   background-color: transparent;
 `;
 
+IndustryStyled.HighlightText = styled.span`
+  color: #FF6C58;
+  cursor: pointer;
+`;
+
 IndustryStyled.HeaderContent = styled.div`
   padding: 10px;
   width: 100%;
@@ -182,6 +187,14 @@ IndustryStyled.CloseButton = styled.span`
   background: url('assets/images/close-icon-white.svg') no-repeat;
   background-position: center center;
   display: inline-block;
+`;
+
+IndustryStyled.NewItemAdd = styled.span`
+  display: block;
+  text-align: center;
+  padding: 5px 0;
+  padding-bottom: 15px;
+  user-select: none;
 `;
 
 IndustryStyled.LoaderWrapper = styled.div`

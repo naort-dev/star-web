@@ -205,6 +205,9 @@ class GroupSelection extends React.Component {
           :
             this.renderProfessions()
         }
+        <IndustryStyled.NewItemAdd>
+          Don't see your group? <IndustryStyled.HighlightText>Add it here</IndustryStyled.HighlightText>
+        </IndustryStyled.NewItemAdd>
       </IndustryStyled>
     );
   }
