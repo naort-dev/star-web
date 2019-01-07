@@ -20,8 +20,8 @@ phases:
   post_build:
     commands:
     - echo Writing artifacts...
-    - 'echo "{\"Parameters\": {\"GitBranch\":\"$RELEASE\"}}" > hotfix-codepipeline.json'
+    - 'echo "{\"Parameters\": {\"GitBranch\":\"$RELEASE\"}}" > release.json'
 artifacts:
   files:
-  - hotfix-codepipeline.json
+  - release.json
   discard-paths: yes
