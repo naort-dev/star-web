@@ -150,7 +150,7 @@ Resources:
                 Provider: Manual
               Configuration:
                 NotificationArn: arn:aws:sns:us-east-1:376169159073:ProductionDeploymentApproval
-                CustomData: Approve production deployment.
+                CustomData: Approve hotfix deployment.
               RunOrder: 1
         -
           Name: Production
