@@ -61,6 +61,7 @@ class Api {
   static getReactions = 'request/reactions/';
   static getGroupsList = 'user/group_account/';
   static groupTypeListing = 'user/active_group_types/'
+  static createGroupNotification = 'notification/new_group_notification/';
 }
 
 export default Api;

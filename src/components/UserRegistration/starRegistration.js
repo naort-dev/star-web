@@ -34,6 +34,7 @@ class starRegistrationComponent extends React.Component {
     celebrityDetails: null,
     videoUrl: null,
     professionsArray: [],
+    followedGroups: '',
     featuredImage: {
       fileName: null,
       image: null,
@@ -99,6 +100,14 @@ class starRegistrationComponent extends React.Component {
       });
   }
 
+  closeSignupFlow = () => {
+    const { followedGroups } = this.state;
+    if (followedGroups.length) {
+      this.props.celebrityFollowStatus(followedGroups);
+    }
+    this.props.closeSignupFlow();
+  }
+
   imageUpload = (secondaryImages, skip) => {
     const secondaryFileNames = secondaryImages.map((item) => {
       if (item.fileName) {
@@ -156,9 +165,7 @@ class starRegistrationComponent extends React.Component {
       user_details: userDetails,
     };
     updateSocialLinks(socialLinks);
-    if (groupIds.length) {
-      this.props.celebrityFollowStatus(groupIds);
-    }
+    this.setState({ followedGroups: groupIds });
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
@@ -232,7 +239,7 @@ class starRegistrationComponent extends React.Component {
                     <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
                     <GroupStyled.DoneButtonWrapper>
                       <GroupStyled.ControlButton
-                        onClick={() => this.props.closeSignupFlow()}
+                        onClick={this.closeSignupFlow}
                       >
                         Done
                       </GroupStyled.ControlButton>
