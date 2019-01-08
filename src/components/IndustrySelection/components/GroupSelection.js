@@ -1,16 +1,28 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Loader from '../../Loader';
+import Popup from '../../Popup';
+import AlertView from '../../AlertView';
 import { getGroupsList } from '../../../services/groupManagement';
 import IndustryStyled from '../styled';
 
-class GroupSelection extends React.Component {
+import { fetchGroupTypes } from '../../../store/shared/actions/getGroupTypes';
+
+class GroupSelectionComponent extends React.Component {
   state = {
     groupsList: [],
     listLoading: true,
+    showPopup: false,
     filterProfessions: [],
     categorySelected: null,
     searchValue: '',
+    alertText: '',
     searchProfessions: [],
+    newGroupDetails: {
+      type: '',
+      name: '',
+    },
+
     selectedProfessions: this.props.selectedProfessions,
   }
 
@@ -43,6 +55,60 @@ class GroupSelection extends React.Component {
   getSearchValue = (event) => {
     const searchValue = event.target.value.toLowerCase();
     this.setState({ searchValue });
+  }
+
+  getPopupContent = () => {
+    const { newGroupDetails, alertText } = this.state;
+    if (alertText !== '') {
+      return (
+        <AlertView
+          message={alertText}
+          closePopup={this.togglePopup}
+        />
+      );
+    }
+    return (
+      <React.Fragment>
+        <IndustryStyled.HeaderText>Add new group</IndustryStyled.HeaderText>
+        <IndustryStyled.Select
+          onChange={event => this.handleGroupData(event.target.value, 'type')}
+        >
+          <option value="">Select group type</option>
+          {
+            this.props.groupTypes.map(groupType => (
+              <option key={groupType.id} value={groupType.id}>{groupType.group_name}</option>
+            ))
+          }
+        </IndustryStyled.Select>
+        <IndustryStyled.InputArea
+          type="text"
+          placeholder="Enter group name"
+          value={newGroupDetails.name}
+          onChange={event => this.handleGroupData(event.target.value, 'name')}
+        />
+        <IndustryStyled.ControlWrapper>
+          <IndustryStyled.ControlButton
+            disabled={newGroupDetails.name === '' || newGroupDetails.type === ''}
+          >
+            Submit
+          </IndustryStyled.ControlButton>
+        </IndustryStyled.ControlWrapper>
+      </React.Fragment>
+    );
+  }
+
+  handleGroupData = (value, type) => {
+    let { newGroupDetails } = this.state;
+    newGroupDetails[type] = value;
+    this.setState({ newGroupDetails });
+  }
+
+  togglePopup = () => {
+    const { showPopup } = this.state;
+    if (!showPopup && !this.props.groupTypes.length) {
+      this.props.fetchGroupTypes();
+    }
+    this.setState({ showPopup: !showPopup, alertText: '' });
   }
 
   fetchGroupsList = () => {
@@ -167,10 +233,19 @@ class GroupSelection extends React.Component {
   }
 
   render() {
-    const { categorySelected, selectedProfessions, searchValue, listLoading } = this.state;
+    const { categorySelected, selectedProfessions, searchValue, listLoading, alertText, showPopup } = this.state;
     const { onSelectionComplete, onClose } = this.props;
     return (
       <IndustryStyled>
+        {
+          showPopup &&
+            <Popup
+              smallPopup
+              closePopUp={this.togglePopup}
+            >
+              { this.getPopupContent() }
+            </Popup>
+        }
         <IndustryStyled.HeaderWrapper>
           <IndustryStyled.BackButton onClick={onClose} />
           <IndustryStyled.HeaderContent>
@@ -206,11 +281,19 @@ class GroupSelection extends React.Component {
             this.renderProfessions()
         }
         <IndustryStyled.NewItemAdd>
-          Don't see your group? <IndustryStyled.HighlightText>Add it here</IndustryStyled.HighlightText>
+          Don't see your group? <IndustryStyled.HighlightText onClick={this.togglePopup}>Add it here</IndustryStyled.HighlightText>
         </IndustryStyled.NewItemAdd>
       </IndustryStyled>
     );
   }
 }
+const mapStateToProps = state => ({
+  groupTypes: state.groupTypes.data,
+});
 
-export { GroupSelection };
+const mapDispatchToProps = dispatch => ({
+  fetchGroupTypes: () => dispatch(fetchGroupTypes()),
+});
+
+export const GroupSelection = connect(mapStateToProps, mapDispatchToProps)(GroupSelectionComponent);
+
