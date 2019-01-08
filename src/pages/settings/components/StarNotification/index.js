@@ -362,7 +362,7 @@ export default class StarNotification extends React.Component {
         });
     } else {
       this.setState({
-        otpErrorMessage: 'Enter OTP',
+        otpErrorMessage: 'Enter code',
       });
     }
   }
@@ -516,7 +516,7 @@ export default class StarNotification extends React.Component {
                   maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
-                  placeholder="OTP"
+                  placeholder="Enter code"
                   onChange={this.acceptOTP}
                 />
                 <p className="errorElement">{this.state.otpErrorMessage}</p>
