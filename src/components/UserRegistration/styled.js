@@ -259,6 +259,9 @@ GroupStyled.WrapsInput = styled.div`
   }
   @media(min-width:768px){
     width: 77%;
+    &.notificationWrapper {
+      width: 100%;
+    }
   }
   @media(min-width:1025){
     width:352px;

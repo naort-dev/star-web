@@ -335,7 +335,7 @@ export default class StarNotifications extends React.Component {
         });
     } else {
       this.setState({
-        otpErrorMessage: 'Enter OTP',
+        otpErrorMessage: 'Enter code',
       });
     }
   }
@@ -457,7 +457,7 @@ export default class StarNotifications extends React.Component {
                   maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
-                  placeholder="OTP"
+                  placeholder="Enter code"
                   onChange={this.acceptOTP}
                 />
                 <p className="errorElement">{this.state.otpErrorMessage}</p>
@@ -480,7 +480,7 @@ export default class StarNotifications extends React.Component {
         <GroupStyled.SubHeading>
             Notify me:
         </GroupStyled.SubHeading>
-        <GroupStyled.WrapsInput className="checkboxWrapper">
+        <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
           <GroupStyled.Label className="checkbox_container">
             <span className="checkBoxHeading">Email</span>
             <p>We will use the email you gave us.</p>
@@ -514,7 +514,7 @@ export default class StarNotifications extends React.Component {
             }
           </GroupStyled.Label>
         </GroupStyled.WrapsInput>
-        <GroupStyled.WrapsInput className="checkboxWrapper">
+        <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
           <GroupStyled.Label className="checkbox_container">
             <span className="checkBoxHeading">Text (mobile phone)</span>
             <p>Add tel. number</p>
