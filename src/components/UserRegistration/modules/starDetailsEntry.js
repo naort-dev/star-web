@@ -158,6 +158,10 @@ export default class StarDetailsEntry extends React.Component {
     }
   }
 
+  closePopup = () => {
+    this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })
+  }
+
   renderGroups = () => {
     const { groups } = this.state;
     return groups.map(group => (
@@ -220,7 +224,7 @@ export default class StarDetailsEntry extends React.Component {
             <Popup
               modalView
               smallPopup
-              closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
+              closePopUp={this.closePopup}
             >
               {
                 this.renderPopup()

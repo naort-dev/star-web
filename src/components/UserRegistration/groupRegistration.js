@@ -100,7 +100,7 @@ class GroupRegistrationComponent extends React.Component {
           </GroupStyled.StepWrapper>
           <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
             <ProfileUpload
-              onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+              onComplete={this.setProfileImage}
             />
           </GroupStyled.StepWrapper>
           <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
@@ -110,8 +110,8 @@ class GroupRegistrationComponent extends React.Component {
               featuredRatio={imageSizes.groupCover}
               secondaryRatio={imageSizes.groupCover}
               groupName={this.props.userDetails.first_name}
-              onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-              onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
+              onComplete={this.setCoverImage}
+              onImageUpload={this.imageUpload}
             />
           </GroupStyled.StepWrapper>
           {

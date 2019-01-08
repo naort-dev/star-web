@@ -191,7 +191,7 @@ class starRegistrationComponent extends React.Component {
               <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
                 <ProfileUpload
                   starMode
-                  onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+                  onComplete={this.setProfileImage}
                 />
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
@@ -203,8 +203,8 @@ class starRegistrationComponent extends React.Component {
                   featuredRatio={imageSizes.featured}
                   secondaryRatio={imageSizes.first}
                   groupName={this.props.userDetails.settings_userDetails.first_name}
-                  onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                  onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
+                  onComplete={this.setCoverImage}
+                  onImageUpload={this.imageUpload}
                 />
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
