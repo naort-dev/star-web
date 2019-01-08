@@ -505,7 +505,7 @@ export default class SignUp extends React.Component {
                           onChange={(event) => this.saveFormEntries(event, "password")}
                           onBlur={this.checkPassword}
                         />
-                        {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
+                        <LoginContainer.ShowPassword onClick={this.ShowPassword} />
                       </LoginContainer.PasswordWrapper>
                     </LoginContainer.WrapsInput>
                   </LoginContainer.InputWrapper>
