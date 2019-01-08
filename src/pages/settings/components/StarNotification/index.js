@@ -533,40 +533,6 @@ export default class StarNotification extends React.Component {
           </NotificationStyled.SubHeading>
           <NotificationStyled.WrapsInput className="checkboxWrapper">
             <NotificationStyled.Label className="checkbox_container">
-              <span className="checkBoxHeading">Email</span>
-              <p>We will use the email you gave us.</p>
-              <NotificationStyled.CheckBox
-                id="emailUpdates"
-                type="checkbox"
-                checked={this.state.emailCheckedBox}
-                onChange={(event) => { this.handleFieldChange(event.target.value, this.state.emailCheckedBox); }}
-              />
-              <NotificationStyled.Span htmlFor="emailUpdates" className="checkmark" />
-              {
-                !this.state.addEmailFlag &&
-                <NotificationStyled.AddEmailText onClick={() => this.addEmailAddress()} >
-                  {props.notificationDetails.secondary_email ? 'Update email' : 'Add email'}
-                </NotificationStyled.AddEmailText>
-              }
-              {
-                this.state.addEmailFlag &&
-                <NotificationStyled.EmailWrapper>
-                  <NotificationStyled.AddEmail
-                    email={this.state.addEmailFlag}
-                    type="email"
-                    name="email"
-                    value={email.value}
-                    onChange={this.acceptEmailHandler}
-                    onBlur={this.checkEmail}
-                  />
-                  <NotificationStyled.CloseInput onClick={() => this.closeInput()}>X</NotificationStyled.CloseInput>
-                  <div className="errorElement">{email.message}</div>
-                </NotificationStyled.EmailWrapper>
-              }
-            </NotificationStyled.Label>
-          </NotificationStyled.WrapsInput>
-          <NotificationStyled.WrapsInput className="checkboxWrapper">
-            <NotificationStyled.Label className="checkbox_container">
               <span className="checkBoxHeading">Text (mobile phone)</span>
               <p>Add tel. number</p>
               <NotificationStyled.CheckBox
