@@ -135,7 +135,15 @@ class GroupSelectionComponent extends React.Component {
     if (!showPopup && !this.props.groupTypes.length) {
       this.props.fetchGroupTypes();
     }
-    this.setState({ showPopup: !showPopup, alertText: '' });
+    this.setState({
+      showPopup: !showPopup,
+      alertText: '',
+      newGroupDetails: {
+        type: '',
+        name: '',
+        comments: '',
+      },
+    });
   }
 
   fetchGroupsList = () => {
