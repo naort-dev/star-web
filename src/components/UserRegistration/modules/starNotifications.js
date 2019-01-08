@@ -335,7 +335,7 @@ export default class StarNotifications extends React.Component {
         });
     } else {
       this.setState({
-        otpErrorMessage: 'Enter OTP',
+        otpErrorMessage: 'Enter code',
       });
     }
   }
@@ -457,7 +457,7 @@ export default class StarNotifications extends React.Component {
                   maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
-                  placeholder="OTP"
+                  placeholder="Enter code"
                   onChange={this.acceptOTP}
                 />
                 <p className="errorElement">{this.state.otpErrorMessage}</p>
@@ -480,41 +480,7 @@ export default class StarNotifications extends React.Component {
         <GroupStyled.SubHeading>
             Notify me:
         </GroupStyled.SubHeading>
-        <GroupStyled.WrapsInput className="checkboxWrapper">
-          <GroupStyled.Label className="checkbox_container">
-            <span className="checkBoxHeading">Email</span>
-            <p>We will use the email you gave us.</p>
-            <GroupStyled.CheckBox
-              id="emailUpdates"
-              type="checkbox"
-              checked={this.state.emailCheckedBox}
-              onChange={(event) => { this.handleFieldChange(event.target.value, this.state.emailCheckedBox); }}
-            />
-            <GroupStyled.Span htmlFor="emailUpdates" className="checkmark" />
-            {
-              !this.state.addEmailFlag &&
-              <GroupStyled.AddEmailText onClick={() => this.addEmailAddress()} >
-                Add email
-              </GroupStyled.AddEmailText>
-            }
-            {
-              this.state.addEmailFlag &&
-              <GroupStyled.EmailWrapper>
-                <GroupStyled.AddEmail
-                  email={this.state.addEmailFlag} 
-                  type="email"
-                  name="email"
-                  value={email.value}
-                  onChange={this.acceptEmailHandler}
-                  onBlur={this.checkEmail}
-                />
-                <GroupStyled.CloseInput onClick={() => this.closeInput()}>X</GroupStyled.CloseInput>
-                <div className="errorElement">{email.message}</div>
-              </GroupStyled.EmailWrapper>
-            }
-          </GroupStyled.Label>
-        </GroupStyled.WrapsInput>
-        <GroupStyled.WrapsInput className="checkboxWrapper">
+        <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
           <GroupStyled.Label className="checkbox_container">
             <span className="checkBoxHeading">Text (mobile phone)</span>
             <p>Add tel. number</p>
