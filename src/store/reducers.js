@@ -38,6 +38,8 @@ import modals from './shared/reducers/modals';
 import commentsList from '../store/shared/reducers/commentsList';
 import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
+import groupTypesListing from './shared/reducers/groupTypeListing';
+
 
 const appReducer = combineReducers({
   config,
@@ -77,6 +79,7 @@ const appReducer = combineReducers({
   groupDetails,
   memberList,
   groupSupporters,
+  groupTypesListing,
 });
 
 const rootReducer = (state, action) => {
