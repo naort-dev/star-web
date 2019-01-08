@@ -57,3 +57,14 @@ export const getRepresentative = () => {
     .then(resp => resp.data)
   );
 };
+
+export const createGroupNotification = (category, groupName, comments) => {
+  return (fetch.post(Api.createGroupNotification, {
+    group_name: groupName,
+    group_type: category,
+    content: comments,
+  })
+    .then(resp => resp.data)
+  );
+};
+

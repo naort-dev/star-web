@@ -60,6 +60,7 @@ class Api {
   static celebRepresentative = 'user/celebrity_representative/';
   static getReactions = 'request/reactions/';
   static getGroupsList = 'user/group_account/';
+  static createGroupNotification = 'notification/new_group_notification/';
 }
 
 export default Api;

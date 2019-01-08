@@ -4,6 +4,7 @@ import Loader from '../../Loader';
 import Popup from '../../Popup';
 import AlertView from '../../AlertView';
 import { getGroupsList } from '../../../services/groupManagement';
+import { createGroupNotification } from '../../../services/userRegistration';
 import IndustryStyled from '../styled';
 
 import { fetchGroupTypes } from '../../../store/shared/actions/getGroupTypes';
@@ -21,6 +22,7 @@ class GroupSelectionComponent extends React.Component {
     newGroupDetails: {
       type: '',
       name: '',
+      comments: '',
     },
 
     selectedProfessions: this.props.selectedProfessions,
@@ -82,19 +84,37 @@ class GroupSelectionComponent extends React.Component {
         </IndustryStyled.Select>
         <IndustryStyled.InputArea
           type="text"
+          small
           placeholder="Enter group name"
           value={newGroupDetails.name}
           onChange={event => this.handleGroupData(event.target.value, 'name')}
         />
+        <IndustryStyled.InputArea
+          type="text"
+          placeholder="Comments"
+          value={newGroupDetails.comments}
+          onChange={event => this.handleGroupData(event.target.value, 'comments')}
+        />
         <IndustryStyled.ControlWrapper>
           <IndustryStyled.ControlButton
             disabled={newGroupDetails.name === '' || newGroupDetails.type === ''}
+            onClick={this.sendCreateGroupNotify}
           >
             Submit
           </IndustryStyled.ControlButton>
         </IndustryStyled.ControlWrapper>
       </React.Fragment>
     );
+  }
+
+  sendCreateGroupNotify = () => {
+    const { newGroupDetails } = this.state;
+    createGroupNotification(newGroupDetails.type, newGroupDetails.name, newGroupDetails.comments)
+      .then((resp) => {
+        if (resp.success) {
+          this.setState({ alertText: resp.data.message });
+        }
+      });
   }
 
   handleGroupData = (value, type) => {

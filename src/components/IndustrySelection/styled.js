@@ -167,7 +167,7 @@ IndustryStyled.InputArea = styled.textarea`
   text-align:left;
   outline:none;
   width: 100%;
-  height: 40px;
+  height: ${props => (props.small ? '40px' : '80px')};
   margin: 4px 0;
   padding: 8px 8px;
   resize: none;
