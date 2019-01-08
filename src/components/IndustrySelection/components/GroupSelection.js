@@ -112,7 +112,14 @@ class GroupSelectionComponent extends React.Component {
     createGroupNotification(newGroupDetails.type, newGroupDetails.name, newGroupDetails.comments)
       .then((resp) => {
         if (resp.success) {
-          this.setState({ alertText: resp.data.message });
+          this.setState({
+            alertText: resp.data.message,
+            newGroupDetails: {
+              type: '',
+              name: '',
+              comments: '',
+            },
+          });
         }
       });
   }
