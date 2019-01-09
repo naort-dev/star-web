@@ -40,7 +40,7 @@ export default class Requests extends React.Component {
     const finalParams = params && params.split('&');
     if (!this.props.starMode && finalParams) {
       finalParams.forEach((data) => {
-        if (data.split('=')[0] === 'requestid') {
+        if (data.split('=')[0] === 'reaction_id') {
           getRequestDetails(data.split('=')[1])
             .then((requestDetails) => {
               if (requestDetails.success &&
