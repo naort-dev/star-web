@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Scrollbars } from 'react-custom-scrollbars';
 import { updateGroupAccount, updateSocialLinks } from '../../services/userRegistration';
 import { imageSizes } from '../../constants/imageSizes';
 import GroupStyled from './styled';
