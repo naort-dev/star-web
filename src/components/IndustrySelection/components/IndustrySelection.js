@@ -50,7 +50,7 @@ class IndustrySelectionComponent extends React.Component {
   selectProfession = (profession) => {
     const { selectedProfessions } = this.state;
     if (selectedProfessions.length !== this.props.limit) {
-      this.setState({ selectedProfessions: [...selectedProfessions, profession] });
+      this.setState({ selectedProfessions: [...selectedProfessions, profession], searchValue: '' });
     }
   }
 
@@ -132,7 +132,7 @@ class IndustrySelectionComponent extends React.Component {
                 <IndustryStyled.BackButton onClick={() => this.updateSelectedCategory(null)} />
                 <IndustryStyled.ListContainer>
                   <IndustryStyled.ListWrapper>
-                    <IndustryStyled.ListItemContent selected>{categorySelected.title}</IndustryStyled.ListItemContent>
+                    <IndustryStyled.ListItemHeading selected>{categorySelected.title}</IndustryStyled.ListItemHeading>
                     {
                       this.renderSubProfessions(categorySelected)
                     }

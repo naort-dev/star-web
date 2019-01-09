@@ -102,6 +102,14 @@ class starRegistrationComponent extends React.Component {
 
   closeSignupFlow = () => {
     const { followedGroups } = this.state;
+    this.props.onClearStreams();
+    this.props.deleteVideo();
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
     if (followedGroups.length) {
       this.props.celebrityFollowStatus(followedGroups);
     }
