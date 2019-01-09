@@ -555,7 +555,7 @@ export default class StarNotifications extends React.Component {
         </GroupStyled.RepresentativeWrapper>
         <GroupStyled.ControlWrapper>
           <GroupStyled.ControlButton
-            onClick={() => this.submitNotification()}
+            onClick={this.submitNotification}
           >
             Submit
           </GroupStyled.ControlButton>

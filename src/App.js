@@ -65,7 +65,7 @@ class App extends React.Component {
       this.props.fetchGroupTypesListing();
       this.props.fetchGroupTypes();
     }
-    if (!nextProps.configLoading && nextProps.configData && nextProps.userDataLoaded) {
+    if (!nextProps.configLoading && nextProps.configData && (!nextProps.isLoggedIn || nextProps.userDataLoaded)) {
       this.setState({ showLoading: false });
     } else if (!nextProps.configLoading && !nextProps.configData) {
       this.props.getConfig();

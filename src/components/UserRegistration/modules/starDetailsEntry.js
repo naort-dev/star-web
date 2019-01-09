@@ -109,7 +109,8 @@ export default class StarDetailsEntry extends React.Component {
     this.setState({ errors });
   }
 
-  submitGroupAccountDetails = () => {
+  submitGroupAccountDetails = (event) => {
+    event.preventDefault();
     if (this.validateFields()) {
       const celebrityDetails = {
         description: this.state.bio,
@@ -519,7 +520,7 @@ export default class StarDetailsEntry extends React.Component {
         </GroupStyled.InputwrapperDiv>
         <GroupStyled.ControlWrapper>
           <GroupStyled.ControlButton
-            onClick={() => this.submitGroupAccountDetails()}
+            onClick={this.submitGroupAccountDetails}
           >
             Continue
           </GroupStyled.ControlButton>

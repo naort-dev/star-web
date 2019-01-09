@@ -49,6 +49,7 @@ export default (state = { ...initalState }, action) => {
         settings_userDetails: {},
         isStar: false,
         role: '',
+        userDataLoaded: false,
       };
 
     default:
