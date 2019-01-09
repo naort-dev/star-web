@@ -4,6 +4,7 @@ const initalState = {
   settings_celebrityDetails: {},
   settings_userDetails: {},
   loading: false,
+  userDataLoaded: false,
   isStar: false,
   role: '',
   error: '',
@@ -30,6 +31,7 @@ export default (state = { ...initalState }, action) => {
         settings_celebrityDetails: { ...action.details.celebrity_details },
         settings_userDetails: { ...action.details.user },
         isStar: action.details.user.celebrity,
+        userDataLoaded: true,
         role: action.details.user.role_details.role_code,
       };
 
@@ -38,13 +40,6 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: false,
         error: action.error,
-      };
-
-    case USER_DETAILS.updateUserRole:
-      return {
-        ...state,
-        isStar: action.isStar,
-        role: action.role,
       };
 
     case USER_DETAILS.reset:
