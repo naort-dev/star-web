@@ -20,7 +20,7 @@ IndustryStyled.BackButton = styled.span`
   background-size: 46px;
   cursor: pointer;
   outline: none;
-  margin-top: 10px;
+  margin-top: 14px;
   background-color: transparent;
 `;
 
@@ -133,6 +133,11 @@ IndustryStyled.ListItemContent = styled.span`
   color: ${props => props.selected && '#FF6C58'}
 `;
 
+IndustryStyled.ListItemHeading = IndustryStyled.ListItemContent.extend`
+  margin-bottom: 12px;
+  display: block;
+`.withComponent('span');
+
 IndustryStyled.ForwardButton = styled.span`
   display: block;
   background-image: url(assets/images/icon_back_40a.svg);
@@ -153,10 +158,10 @@ IndustryStyled.InnerCategoryWrapper = styled.div`
 `;
 
 IndustryStyled.ListContainer = styled.div`
-  padding: 15px 10px;
+  padding: 20px 10px;
   width: 100%;
   @media(min-width: 768px) {
-    padding: 15px 40px;
+    padding: 20px 40px;
   }
 `;
 

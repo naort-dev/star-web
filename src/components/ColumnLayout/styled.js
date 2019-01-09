@@ -44,9 +44,7 @@ ColumnLayoutStyled.mainSection = styled.section`
     display: inline-block;
     vertical-align: top;
     padding-left: 0;
-    padding-right: 50px;
     padding-top: 30px;
-    height: auto;
   }
   @media(min-width: 1920px) {
     padding-top: 72px;
@@ -58,6 +56,7 @@ ColumnLayoutStyled.CenterSection = styled.div`
   @media(min-width: 1025px) {
     width: 100%;
     display: inline-block;
+    padding-right: 50px;
     vertical-align: top;
   }
 `;

@@ -578,7 +578,6 @@ export default class DetailsEntry extends React.Component {
                 id="group-info-validation"
                 type="checkbox"
                 checked={this.state.userConfirmation}
-                onChange={() => {}}
               />
               <GroupStyled.Span
                 htmlFor="private_video"
