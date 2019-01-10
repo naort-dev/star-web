@@ -22,7 +22,6 @@ class GroupSelectionComponent extends React.Component {
     newGroupDetails: {
       type: '',
       name: '',
-      comments: '',
     },
 
     selectedProfessions: this.props.selectedProfessions,
@@ -94,12 +93,6 @@ class GroupSelectionComponent extends React.Component {
           value={newGroupDetails.name}
           onChange={this.handleGroupData('name')}
         />
-        <IndustryStyled.InputArea
-          type="text"
-          placeholder="Comments"
-          value={newGroupDetails.comments}
-          onChange={this.handleGroupData('comments')}
-        />
         <IndustryStyled.ControlWrapper>
           <IndustryStyled.ControlButton
             disabled={newGroupDetails.name === '' || newGroupDetails.type === ''}
@@ -122,7 +115,6 @@ class GroupSelectionComponent extends React.Component {
             newGroupDetails: {
               type: '',
               name: '',
-              comments: '',
             },
           });
         }
@@ -146,7 +138,6 @@ class GroupSelectionComponent extends React.Component {
       newGroupDetails: {
         type: '',
         name: '',
-        comments: '',
       },
     });
   }
