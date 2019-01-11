@@ -25,9 +25,7 @@ export default class Requests extends React.Component {
 
   renderCenterSection = () => {
     if (this.props.userDetails.role_details) {
-      if (this.props.userDetails.role_details.role_code === ROLES.star ||
-        (this.props.userDetails.role_details.role_code === ROLES.fan && this.props.userDetails.celebrity)
-      ) {
+      if (this.props.userDetails.celebrity) {
         return (
           <StarSettings
             userDetails={this.props.userDetails}
@@ -41,7 +39,7 @@ export default class Requests extends React.Component {
             changePasswordData={this.props.changePasswordData}
           />
         );
-      } else if (this.props.userDetails.role_details.role_code === ROLES.fan && !this.props.userDetails.celebrity) {
+      } else if ((this.props.userDetails.role_details.role_code === ROLES.fan || this.props.userDetails.role_details.role_code === ROLES.star) && !this.props.userDetails.celebrity) {
         return (
           <FanSettings
             userDetails={this.props.userDetails}

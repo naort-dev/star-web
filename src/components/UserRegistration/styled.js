@@ -259,6 +259,9 @@ GroupStyled.WrapsInput = styled.div`
   }
   @media(min-width:768px){
     width: 77%;
+    &.notificationWrapper {
+      width: 100%;
+    }
   }
   @media(min-width:1025){
     width:352px;
@@ -317,6 +320,26 @@ GroupStyled.InputArea = styled.textarea`
     font-size:16px;
   }
 `;
+
+GroupStyled.SocialCustomInput = GroupStyled.InputArea.extend`
+  height: 40px;
+  display: flex;
+  padding: 10px 8px;
+  ${GroupStyled.HighlightText} {
+    display: block;
+    width: 100%;
+  }
+  ${GroupStyled.CustomPlaceholder} {
+    position: static;
+  }
+  ${GroupStyled.InputArea} {
+    border: none;
+    padding: 0;
+    margin: 0;
+    height: auto;
+    background-color: transparent;
+  }
+`.withComponent('div');
 
 GroupStyled.IndustryInput = GroupStyled.InputArea.extend`
   min-height: 80px;

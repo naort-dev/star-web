@@ -18,6 +18,7 @@ import { locations } from '../../constants/locations';
 import Loader from '../Loader';
 /* Import Actions */
 import { saveImage } from '../../store/shared/actions/imageViewer';
+import { celebrityFollowStatus } from '../../store/shared/actions/followGroupCelebrity';
 import { fetchAllProfessions } from '../../store/shared/actions/getProfessions';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, uploadVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
@@ -33,6 +34,7 @@ class starRegistrationComponent extends React.Component {
     celebrityDetails: null,
     videoUrl: null,
     professionsArray: [],
+    followedGroups: '',
     featuredImage: {
       fileName: null,
       image: null,
@@ -70,15 +72,15 @@ class starRegistrationComponent extends React.Component {
 
   getVideo = () => {
     this.setState({ loader: true });
-    let uploadVideo;
+    let uploadVideoFile;
     if (this.props.videoUploader.savedFile != null) {
-      uploadVideo = this.props.videoUploader.savedFile;
+      uploadVideoFile = this.props.videoUploader.savedFile;
       this.setState({ videoUrl: this.props.videoUploader.url });
     } else {
-      uploadVideo = new File([this.props.videoRecorder.recordedBuffer], 'profile.mp4');
+      uploadVideoFile = new File([this.props.videoRecorder.recordedBuffer], 'profile.mp4');
       this.setState({ videoUrl: this.props.videoRecorder.recordedBlob });
     }
-    getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)
+    getAWSCredentials(locations.getAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideoFile)
       .then((response) => {
         if (response && response.filename) {
           axios.post(response.url, response.formData).then(() => {
@@ -96,6 +98,22 @@ class starRegistrationComponent extends React.Component {
           });
         }
       });
+  }
+
+  closeSignupFlow = () => {
+    const { followedGroups } = this.state;
+    this.props.onClearStreams();
+    this.props.deleteVideo();
+    if (window.stream) {
+      const tracks = window.stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
+    if (followedGroups.length) {
+      this.props.celebrityFollowStatus(followedGroups);
+    }
+    this.props.closeSignupFlow();
   }
 
   imageUpload = (secondaryImages, skip) => {
@@ -136,7 +154,7 @@ class starRegistrationComponent extends React.Component {
       mobile_country_code: notifications.mobile_country_code,
     };
 
-    this.props.updateNotification(newNotifications)
+    return this.props.updateNotification(newNotifications)
       .then((resp) => {
         if (resp.status == 200) {
           this.props.changeStep(this.props.currentStep + 1);
@@ -144,7 +162,7 @@ class starRegistrationComponent extends React.Component {
       });
   }
 
-  submitAccountDetails = (celebrityDetails, userDetails, socialLinks) => {
+  submitAccountDetails = (celebrityDetails, userDetails, socialLinks, groupIds) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
       ...celebrityDetails,
@@ -155,6 +173,7 @@ class starRegistrationComponent extends React.Component {
       user_details: userDetails,
     };
     updateSocialLinks(socialLinks);
+    this.setState({ followedGroups: groupIds });
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
     this.props.changeStep(this.props.currentStep + 1);
@@ -180,7 +199,7 @@ class starRegistrationComponent extends React.Component {
               <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
                 <ProfileUpload
                   starMode
-                  onComplete={(fileName, image) => this.setProfileImage(fileName, image)}
+                  onComplete={this.setProfileImage}
                 />
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
@@ -192,8 +211,8 @@ class starRegistrationComponent extends React.Component {
                   featuredRatio={imageSizes.featured}
                   secondaryRatio={imageSizes.first}
                   groupName={this.props.userDetails.settings_userDetails.first_name}
-                  onComplete={(imageType, fileName, image) => this.setCoverImage(imageType, fileName, image)}
-                  onImageUpload={(secondaryImages, skip) => this.imageUpload(secondaryImages, skip)}
+                  onComplete={this.setCoverImage}
+                  onImageUpload={this.imageUpload}
                 />
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
@@ -228,7 +247,7 @@ class starRegistrationComponent extends React.Component {
                     <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
                     <GroupStyled.DoneButtonWrapper>
                       <GroupStyled.ControlButton
-                        onClick={() => this.props.closeSignupFlow()}
+                        onClick={this.closeSignupFlow}
                       >
                         Done
                       </GroupStyled.ControlButton>
@@ -258,6 +277,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   fetchAllProfessions: () => dispatch(fetchAllProfessions()),
+  celebrityFollowStatus: id => dispatch(celebrityFollowStatus(id)),
   resetUserDetails: () => dispatch(resetUserDetails()),
   resetProfilePhoto: () => dispatch(resetProfilePhoto()),
   onStartRecording: () => dispatch(startRecording()),

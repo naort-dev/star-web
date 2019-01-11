@@ -82,6 +82,7 @@ export default class RequestDetails extends React.Component {
             ...videoPlayerProps,
             ...video,
             ...orderDetails,
+            user_id: orderDetails.celebrity_id,
             question_answer_videos: {
               ...videoPlayerProps.question_answer_videos,
               question: video.s3_video_url,
@@ -92,6 +93,7 @@ export default class RequestDetails extends React.Component {
         } else if (video.video_status === 5) { // Answer Video
           videoPlayerProps = {
             ...videoPlayerProps,
+            user_id: orderDetails.celebrity_id,
             question_answer_videos: {
               ...videoPlayerProps.question_answer_videos,
               answer_thumb: video.s3_thumbnail_url,
@@ -269,6 +271,7 @@ export default class RequestDetails extends React.Component {
       const selectedVideo = requestType === 3 ? this.getQaVideoData(requestVideo) : {
         ...requestVideo[0],
         ...orderDetails,
+        user_id: orderDetails.celebrity_id,
         full_name: orderDetails.celebrity,
       };
       if (requestStatus === 6) { // completed video
@@ -347,7 +350,7 @@ export default class RequestDetails extends React.Component {
         <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('report')}>Report abuse</VideoRenderDiv.MoreSettingsListItem>
         {showRateButton && <VideoRenderDiv.MoreSettingsListItem onClick={() => this.props.selectItem('rate')}>Rate</VideoRenderDiv.MoreSettingsListItem>}
         {
-          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download video</VideoRenderDiv.MoreSettingsListItem>
+          canDownload && <VideoRenderDiv.MoreSettingsListItem onClick={this.downloadVideo}>Download Starsona video</VideoRenderDiv.MoreSettingsListItem>
         }
       </React.Fragment>
     )

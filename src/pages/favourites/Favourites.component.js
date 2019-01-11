@@ -1,5 +1,6 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import ColumnLayout from '../../components/ColumnLayout';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Loader from '../../components/Loader';
@@ -20,59 +21,44 @@ export default class Favourites extends React.Component {
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
   }
+  updateScrollTarget = (target) => {
+    this.setState({ scrollTarget: target });
+  }
+  renderCenterSection = () => {
+    return (
+      <React.Fragment>
+        <Tabs
+          labels={['Stars', 'Videos']}
+          disableFilter
+          disableTabs
+          heading="My favorites"
+        />
+        <FavouriteStyled.sectionWrapper>
+          <ScrollList
+            scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+            dataList={this.props.favouritesList.data}
+            limit={this.props.favouritesList.limit}
+            totalCount={this.props.favouritesList.count}
+            noDataText="You haven't favorited any stars yet"
+            offset={this.props.favouritesList.offset}
+            loading={this.props.favouritesList.loading}
+            fetchData={(offset, refresh) => this.props.fetchFavouritesList(offset, refresh)}
+          />
+        </FavouriteStyled.sectionWrapper>
+      </React.Fragment>
+    );
+  }
   render() {
     return (
       <FavouriteStyled>
-        <Header
-          menuActive={this.state.menuActive}
-          enableMenu={this.activateMenu}
+        <ColumnLayout
+          selectedSideBarItem="favorites"
           history={this.props.history}
-        />
-        <FavouriteStyled.sectionWrapper>
-          <FavouriteStyled.sideSection menuActive={this.state.menuActive}>
-            <Scrollbars
-              renderView={props => <div {...props} className="view" />}
-            >
-              <Sidebar
-                list={this.props.professionsList}
-                history={this.props.history}
-                menuActive={this.state.menuActive}
-                toggleMenu={this.activateMenu}
-              />
-            </Scrollbars>
-          </FavouriteStyled.sideSection>
-          <FavouriteStyled.mainSection menuActive={this.state.menuActive}>
-            <div
-              ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
-            >
-              <Tabs
-                labels={['Stars', 'Videos']}
-                disableFilter
-                disableTabs
-                heading="My Favorites"
-              />
-            </div>
-            {
-              (!this.props.favouritesList.data.length && this.props.favouritesList.loading) ?
-                <FavouriteStyled.loaderWrapper style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                  <Loader />
-                </FavouriteStyled.loaderWrapper>
-              :
-                <div style={this.state.tabsRef && {height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                  <ScrollList
-                    dataList={this.props.favouritesList.data}
-                    limit={this.props.favouritesList.limit}
-                    totalCount={this.props.favouritesList.count}
-                    noDataText="You haven't favorited any stars yet"
-                    offset={this.props.favouritesList.offset}
-                    loading={this.props.favouritesList.loading}
-                    fetchData={(offset, refresh) => this.props.fetchFavouritesList(offset, refresh)}
-                  />
-                </div>
-            }
-          </FavouriteStyled.mainSection>
-        </FavouriteStyled.sectionWrapper>
+          getScrollTarget={this.updateScrollTarget}
+        >
+          {this.renderCenterSection()}
+        </ColumnLayout>
       </FavouriteStyled>
-    )
+    );
   }
-};
+}

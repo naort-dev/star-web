@@ -6,6 +6,7 @@ import Popup from '../../Popup';
 import { generateOtp, validateOtp } from '../../../services/otpGenerate';
 import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../services/userRegistration';
 import GroupStyled from '../styled';
+import Loader from '../../Loader';
 
 export default class StarNotifications extends React.Component {
   state = {
@@ -23,6 +24,7 @@ export default class StarNotifications extends React.Component {
     phoneNumberOriginal: '',
     countryCode: '',
     otpErrorMessage: '',
+    loading: false,
   }
 
   getOtp = () => {
@@ -237,6 +239,9 @@ export default class StarNotifications extends React.Component {
 
   submitNotification = () => {
     if (this.checkAllValidity()) {
+      this.setState({
+        loading: true,
+      });
       const {
         emailCheckedBox,
         email,
@@ -281,7 +286,12 @@ export default class StarNotifications extends React.Component {
       });
       Promise.all(repUpdateStatus)
         .then(() => {
-          this.props.onComplete(notifications);
+          this.props.onComplete(notifications)
+            .then(() => {
+              this.setState({
+                loading: false,
+              });
+            })
         });
     }
   }
@@ -335,7 +345,7 @@ export default class StarNotifications extends React.Component {
         });
     } else {
       this.setState({
-        otpErrorMessage: 'Enter OTP',
+        otpErrorMessage: 'Enter code',
       });
     }
   }
@@ -436,7 +446,11 @@ export default class StarNotifications extends React.Component {
     const {
       value,
       email,
+      loading,
     } = this.state;
+    if (loading) {
+      return <Loader />
+    }
     return (
       <GroupStyled.DetailsWrapper>
         {
@@ -446,10 +460,10 @@ export default class StarNotifications extends React.Component {
               closePopUp={this.closeOtpPopup}
             >
               <GroupStyled.HeaderText>
-                Enter the OTP
+                Enter code
               </GroupStyled.HeaderText>
               <GroupStyled.SocialMediaMessage>
-                Please enter the OTP that has been sent to your phone number.
+                Please enter the code that has been sent to your phone number.
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
                 <GroupStyled.OTPInput
@@ -457,7 +471,7 @@ export default class StarNotifications extends React.Component {
                   maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
-                  placeholder="OTP"
+                  placeholder="Enter code"
                   onChange={this.acceptOTP}
                 />
                 <p className="errorElement">{this.state.otpErrorMessage}</p>
@@ -474,48 +488,13 @@ export default class StarNotifications extends React.Component {
             Would you like to get notifications?
           </GroupStyled.HeaderText>
           <GroupStyled.SocialMediaMessage>
-            We need to notify you when requests for video messages are booked, and communicate with you
-            from time to time (we promise not to spam).
+            We need to notify you when you get video bookings.
           </GroupStyled.SocialMediaMessage>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.SubHeading>
-            Get notifications via:
+            Notify me:
         </GroupStyled.SubHeading>
-        <GroupStyled.WrapsInput className="checkboxWrapper">
-          <GroupStyled.Label className="checkbox_container">
-            <span className="checkBoxHeading">Email</span>
-            <p>We will use the email you gave us.</p>
-            <GroupStyled.CheckBox
-              id="emailUpdates"
-              type="checkbox"
-              checked={this.state.emailCheckedBox}
-              onChange={(event) => { this.handleFieldChange(event.target.value, this.state.emailCheckedBox); }}
-            />
-            <GroupStyled.Span htmlFor="emailUpdates" className="checkmark" />
-            {
-              !this.state.addEmailFlag &&
-              <GroupStyled.AddEmailText onClick={() => this.addEmailAddress()} >
-                Add email
-              </GroupStyled.AddEmailText>
-            }
-            {
-              this.state.addEmailFlag &&
-              <GroupStyled.EmailWrapper>
-                <GroupStyled.AddEmail
-                  email={this.state.addEmailFlag} 
-                  type="email"
-                  name="email"
-                  value={email.value}
-                  onChange={this.acceptEmailHandler}
-                  onBlur={this.checkEmail}
-                />
-                <GroupStyled.CloseInput onClick={() => this.closeInput()}>X</GroupStyled.CloseInput>
-                <div className="errorElement">{email.message}</div>
-              </GroupStyled.EmailWrapper>
-            }
-          </GroupStyled.Label>
-        </GroupStyled.WrapsInput>
-        <GroupStyled.WrapsInput className="checkboxWrapper">
+        <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
           <GroupStyled.Label className="checkbox_container">
             <span className="checkBoxHeading">Text (mobile phone)</span>
             <p>Add tel. number</p>
@@ -555,7 +534,7 @@ export default class StarNotifications extends React.Component {
               </GroupStyled.PhoneInput>
             }
             <GroupStyled.NoteText>
-              Note: we will use your number only to send notifications.
+              Note: we will only use your number to tell you about bookings.
             </GroupStyled.NoteText>
           </GroupStyled.Label>
         </GroupStyled.WrapsInput>
@@ -565,7 +544,7 @@ export default class StarNotifications extends React.Component {
             <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
               <GroupStyled.AddRepresentative />
               <div className="addRepText">Add Representative
-                <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
+                <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
                 </p>
               </div>
             </GroupStyled.addRepWrapper>
@@ -590,7 +569,7 @@ export default class StarNotifications extends React.Component {
         </GroupStyled.RepresentativeWrapper>
         <GroupStyled.ControlWrapper>
           <GroupStyled.ControlButton
-            onClick={() => this.submitNotification()}
+            onClick={this.submitNotification}
           >
             Submit
           </GroupStyled.ControlButton>

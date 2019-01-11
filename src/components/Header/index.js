@@ -162,6 +162,13 @@ class Header extends React.Component {
     this.props.logOut();
   }
 
+  handleSearchListClick = link => (e) => {
+    if (e.keyCode === 13) {
+      this.handleSearchItemClick();
+      this.props.history.push(link);
+    }
+  }
+
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
       return (
@@ -171,6 +178,7 @@ class Header extends React.Component {
               <HeaderSection.SuggestionListItem
                 tabIndex="0"
                 key={item.user_id}
+                onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
               >
                 <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
                   <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>

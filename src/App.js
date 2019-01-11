@@ -14,6 +14,7 @@ import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
+import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
@@ -50,10 +51,10 @@ class App extends React.Component {
     this.props.fetchProfessionsList();
     this.props.getConfig();
     this.props.fetchGroupTypes();
+    this.props.fetchGroupTypesListing();
     if (localStorage && localStorage.getItem('data') !== null) {
       const userData = JSON.parse(localStorage.getItem('data')).user;
       this.props.updateLoginStatus(userData);
-      this.props.updateUserRole(userData.celebrity, userData.role_details.role_code);
       this.props.fetchUserDetails(userData.id);
     }
   }
@@ -61,9 +62,10 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
+      this.props.fetchGroupTypesListing();
       this.props.fetchGroupTypes();
     }
-    if (!nextProps.configLoading && nextProps.configData) {
+    if (!nextProps.configLoading && nextProps.configData && (!nextProps.isLoggedIn || nextProps.userDataLoaded)) {
       this.setState({ showLoading: false });
     } else if (!nextProps.configLoading && !nextProps.configData) {
       this.props.getConfig();
@@ -186,6 +188,7 @@ App.propTypes = {
 const mapState = state => ({
   configLoading: state.config.loading,
   configData: state.config.data,
+  userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
@@ -197,6 +200,7 @@ const mapProps = dispatch => ({
   getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
+  fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   updateUserRole: (isStar, role) => dispatch(updateUserRole(isStar, role)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),

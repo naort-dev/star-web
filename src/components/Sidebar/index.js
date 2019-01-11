@@ -232,7 +232,7 @@ class Sidebar extends React.Component {
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.userDetails,
-  groupCategory: state.groupTypes.data,
+  groupCategory: state.groupTypesListing.data,
   isStar: state.userDetails.isStar,
 });
 
