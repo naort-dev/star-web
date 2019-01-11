@@ -36,12 +36,6 @@ export const resetUserDetails = () => ({
   type: USER_DETAILS.reset,
 });
 
-export const updateUserRole = (isStar, role) => ({
-  type: USER_DETAILS.updateUserRole,
-  isStar,
-  role,
-});
-
 export const fetchUserDetails = id => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   let API_URL;
@@ -57,7 +51,6 @@ export const fetchUserDetails = id => (dispatch, getState) => {
   dispatch(userDetailsFetchStart());
   return fetch.get(API_URL, options).then((resp) => {
     if (resp.data && resp.data.success) {
-      localStorage.setItem('userDetails', JSON.stringify(resp.data.data));
       dispatch(userDetailsFetchEnd());
       dispatch(userDetailsFetchSuccess(resp.data.data));
       return resp.data.data;

@@ -161,7 +161,8 @@ export default class Starprofile extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     let firstName = '';
     if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
-      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name.split(' ')[0] : this.props.userDetails.first_name;
+      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name.split(' ')[0]
+        : this.props.userDetails.first_name + ' ' + this.props.userDetails.last_name;
     }
     return (
       <React.Fragment>

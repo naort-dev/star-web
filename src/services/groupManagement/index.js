@@ -13,3 +13,9 @@ export const addGroupMember = (id) => {
   }).then(resp => resp.data.success)
   );
 };
+
+export const getGroupsList = () => {
+  return (fetch(Api.getGroupsList)
+    .then(resp => resp.data)
+  );
+};

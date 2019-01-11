@@ -14,6 +14,7 @@ class Api {
   static getCelebDetails = id => `user/user_details/${id}/get_details/`;
   static getUserFavourites = 'user/fan/favourite_stars/';
   static getUserVideos = 'request/request_list/';
+  static getRequestDetails = 'request/stargramz/';
   static followCelebrity = 'user/fan/celebrity_follow/';
   static getOccasionList = 'request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
@@ -58,7 +59,10 @@ class Api {
   static getOtpCode = 'user/validate_mobile/';
   static validateOtpCode = 'user/verify_mobile/';
   static celebRepresentative = 'user/celebrity_representative/';
-  static getReactions = 'request/reactions/'
+  static getReactions = 'request/reactions/';
+  static getGroupsList = 'user/group_account/';
+  static groupTypeListing = 'user/active_group_types/'
+  static createGroupNotification = 'notification/new_group_notification/';
 }
 
 export default Api;

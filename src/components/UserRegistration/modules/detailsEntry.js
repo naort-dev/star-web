@@ -20,10 +20,10 @@ export default class DetailsEntry extends React.Component {
     state: '',
     zip: '',
     socialMedia: {
-      facebook: '',
-      twitter: '',
-      instagram: '',
-      youtube: '',
+      facebook: undefined,
+      twitter: undefined,
+      instagram: undefined,
+      youtube: undefined,
     },
     errors: {
       bio: false,
@@ -41,6 +41,17 @@ export default class DetailsEntry extends React.Component {
     const state = address.state ? address.state : '';
     const city = address.city ? address.city : '';
     this.setState({ zip, state, city });
+  }
+
+  getSocialUrl = (regex, value, baseUrl) => {
+    if (value !== undefined && value !== '') {
+      if (validator.matches(value, regex)) {
+        return value;
+      } else if (value.indexOf('/') <= -1) {
+        return `${baseUrl}${value}`;
+      }
+    }
+    return '';
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
@@ -98,6 +109,40 @@ export default class DetailsEntry extends React.Component {
     return !phone && !groupType && !addressField && !name && !bio;
   }
 
+  validateOnBlur = (key, value) => {
+    const { errors } = this.state;
+    if (key === 'groupType' || key === 'bio') {
+      errors[key] = value === '';
+    } else if (key === 'phNo1' || key === 'phNo2' || key === 'phNo3') {
+      errors.phone = !validator.isNumeric(this.state.phNo1, { no_symbols: true })
+                    || !validator.isNumeric(this.state.phNo2, { no_symbols: true })
+                    || !validator.isNumeric(this.state.phNo3, { no_symbols: true })
+                    || this.state.phNo1.length + this.state.phNo2.length + this.state.phNo3.length !== 10;
+    } else if (key === 'addressField') {
+      if (validator.isEmpty(this.state.address, { ignore_whitespace: true })) {
+        errors.addressField = 'Please enter an Address';
+      } else if (validator.isEmpty(this.state.city, { ignore_whitespace: true })) {
+        errors.addressField = 'Please enter a city';
+      } else if (validator.isEmpty(this.state.state, { ignore_whitespace: true })) {
+        errors.addressField = 'Please enter a state';
+      } else if (!validator.isLength(this.state.zip, { min: 5, max: 5 })
+      || !validator.isNumeric(this.state.zip, { no_symbols: true })) {
+        errors.addressField = 'Please enter a zip code';
+      } else {
+        errors.addressField = false;
+      }
+    } else if (key === 'name') {
+      if (validator.isEmpty(this.state.firstName, { ignore_whitespace: true })) {
+        errors.name = 'Please Enter a first name';
+      } else if (validator.isEmpty(this.state.lastName, { ignore_whitespace: true })) {
+        errors.name = 'Please Enter a last name';
+      } else {
+        errors.name = false;
+      }
+    }
+    this.setState({ errors });
+  }
+
   submitGroupAccountDetails = () => {
     const searchTags = this.state.searchTags.map(item => (
       item.value
@@ -118,10 +163,10 @@ export default class DetailsEntry extends React.Component {
         group_type: this.state.groupType,
       };
       const socialLinks = {
-        facebook_url: validator.matches(this.state.socialMedia.facebook, /(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/) ? this.state.socialMedia.facebook : '',
-        twitter_url: validator.matches(this.state.socialMedia.twitter, /(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/) ? this.state.socialMedia.twitter : '',
-        youtube_url: validator.matches(this.state.socialMedia.youtube, /(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/) ? this.state.socialMedia.youtube : '',
-        instagram_url: validator.matches(this.state.socialMedia.instagram, /(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/) ? this.state.socialMedia.instagram : '',
+        facebook_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/, this.state.socialMedia.facebook, 'https://www.facebook.com/'),
+        twitter_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)twitter\.com\/[^\/]+/, this.state.socialMedia.twitter, 'https://www.twitter.com/'),
+        youtube_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/, this.state.socialMedia.youtube, 'https://www.youtube.com/'),
+        instagram_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/, this.state.socialMedia.instagram, 'https://www.instagram.com/'),
       };
       this.props.submitGroupDetails(accountDetails, socialLinks);
     }
@@ -162,6 +207,7 @@ export default class DetailsEntry extends React.Component {
               <GroupStyled.CustomInput>
                 <GroupStyled.InputArea
                   value={this.state.bio}
+                  onBlur={event => this.validateOnBlur('bio', event.target.value)}
                   onChange={(event) => {
                     this.handleFieldChange('bio', event.target.value);
                   }}
@@ -187,10 +233,11 @@ export default class DetailsEntry extends React.Component {
             <GroupStyled.WrapsInput>
               <GroupStyled.Select
                 value={this.state.groupType}
+                onBlur={event => this.validateOnBlur('groupType', event.target.value)}
                 onChange={event =>
                   this.handleFieldChange(
                     'groupType',
-                    event.target.value
+                    event.target.value,
                   )
                 }
               >
@@ -232,122 +279,134 @@ export default class DetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Social links</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
-                  small
-                  value={this.state.socialMedia.facebook}
-                  innerRef={(node) => { this.facebookRef = node; }}
-                  onChange={(event) => {
-                    this.handleFieldChange(
-                      'socialMedia',
-                      { ...this.state.socialMedia, facebook: event.target.value }
-                    );
-                  }}
-                />
+              <GroupStyled.SocialCustomInput>
+                <GroupStyled.CustomPlaceholder>www.facebook.com/</GroupStyled.CustomPlaceholder>
                 {
-                  this.state.socialMedia.facebook === '' ?
-                    <GroupStyled.CustomPlaceholder
-                      activePlaceHolder
+                  this.state.socialMedia.facebook === undefined ?
+                    <GroupStyled.HighlightText
                       onClick={() => {
-                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, facebook: 'https://www.facebook.com/' });
-                        this.facebookRef.focus();
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, facebook: '' });
                       }}
                     >
-                      www.facebook.com/
-                      <GroupStyled.HighlightText>
-                        add facebook
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
-                  : null
+                      add facebook
+                    </GroupStyled.HighlightText>
+                  :
+                    <GroupStyled.InputArea
+                      autoFocus
+                      small
+                      value={this.state.socialMedia.facebook}
+                      innerRef={(node) => { this.facebookRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, facebook: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
+                      onChange={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, facebook: event.target.value },
+                        );
+                      }}
+                    />
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
-                  small
-                  innerRef={(node) => { this.twitterRef = node; }}
-                  value={this.state.socialMedia.twitter}
-                  onChange={(event) => {
-                    this.handleFieldChange(
-                      'socialMedia',
-                      { ...this.state.socialMedia, twitter: event.target.value }
-                    );
-                  }}
-                />
+              </GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput>
+                <GroupStyled.CustomPlaceholder>www.twitter.com/</GroupStyled.CustomPlaceholder>
                 {
-                  this.state.socialMedia.twitter === '' ?
-                    <GroupStyled.CustomPlaceholder
-                      activePlaceHolder
+                  this.state.socialMedia.twitter === undefined ?
+                    <GroupStyled.HighlightText
                       onClick={() => {
-                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, twitter: 'https://www.twitter.com/' });
-                        this.twitterRef.focus();
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, twitter: '' });
                       }}
                     >
-                      www.twitter.com/
-                      <GroupStyled.HighlightText>
-                        add twitter
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
-                  : null
+                      add twitter
+                    </GroupStyled.HighlightText>
+                  :
+                    <GroupStyled.InputArea
+                      autoFocus
+                      small
+                      value={this.state.socialMedia.twitter}
+                      innerRef={(node) => { this.twitterRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, twitter: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
+                      onChange={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, twitter: event.target.value },
+                        );
+                      }}
+                    />
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
-                  small
-                  innerRef={(node) => { this.instagramRef = node; }}
-                  value={this.state.socialMedia.instagram}
-                  onChange={(event) => {
-                    this.handleFieldChange(
-                      'socialMedia',
-                      { ...this.state.socialMedia, instagram: event.target.value }
-                    );
-                  }}
-                />
+              </GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput>
+                <GroupStyled.CustomPlaceholder>www.instagram.com/</GroupStyled.CustomPlaceholder>
                 {
-                  this.state.socialMedia.instagram === '' ?
-                    <GroupStyled.CustomPlaceholder
-                      activePlaceHolder
+                  this.state.socialMedia.instagram === undefined ?
+                    <GroupStyled.HighlightText
                       onClick={() => {
-                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, instagram: 'https://www.instagram.com/' });
-                        this.instagramRef.focus();
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, instagram: '' });
                       }}
                     >
-                      www.instagram.com/
-                      <GroupStyled.HighlightText>
-                        add instagram
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
-                  : null
+                      add instagram
+                    </GroupStyled.HighlightText>
+                  :
+                    <GroupStyled.InputArea
+                      autoFocus
+                      small
+                      value={this.state.socialMedia.instagram}
+                      innerRef={(node) => { this.instagramRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, instagram: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
+                      onChange={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, instagram: event.target.value },
+                        );
+                      }}
+                    />
                 }
-              </GroupStyled.CustomInput>
-              <GroupStyled.CustomInput>
-                <GroupStyled.InputArea
-                  small
-                  innerRef={(node) => { this.youtubeRef = node; }}
-                  value={this.state.socialMedia.youtube}
-                  onChange={(event) => {
-                    this.handleFieldChange(
-                      'socialMedia',
-                      { ...this.state.socialMedia, youtube: event.target.value }
-                    );
-                  }}
-                />
+              </GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput>
+                <GroupStyled.CustomPlaceholder>www.youtube.com/</GroupStyled.CustomPlaceholder>
                 {
-                  this.state.socialMedia.youtube === '' ?
-                    <GroupStyled.CustomPlaceholder
-                      activePlaceHolder
+                  this.state.socialMedia.youtube === undefined ?
+                    <GroupStyled.HighlightText
                       onClick={() => {
-                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, youtube: 'https://www.youtube.com/' });
-                        this.youtubeRef.focus();
+                        this.handleFieldChange('socialMedia', { ...this.state.socialMedia, youtube: '' });
                       }}
                     >
-                      www.youtube.com/
-                      <GroupStyled.HighlightText>
-                        add youtube
-                      </GroupStyled.HighlightText>
-                    </GroupStyled.CustomPlaceholder>
-                  : null
+                      add youtube
+                    </GroupStyled.HighlightText>
+                  :
+                    <GroupStyled.InputArea
+                      autoFocus
+                      small
+                      value={this.state.socialMedia.youtube}
+                      innerRef={(node) => { this.youtubeRef = node; }}
+                      onBlur={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, youtube: event.target.value === '' ? undefined : event.target.value  },
+                        );
+                      }}
+                      onChange={(event) => {
+                        this.handleFieldChange(
+                          'socialMedia',
+                          { ...this.state.socialMedia, youtube: event.target.value },
+                        );
+                      }}
+                    />
                 }
-              </GroupStyled.CustomInput>
+              </GroupStyled.SocialCustomInput>
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
         </GroupStyled.InputwrapperDiv>
@@ -367,6 +426,7 @@ export default class DetailsEntry extends React.Component {
               small
               placeholder="First name"
               value={this.state.firstName}
+              onBlur={event => this.validateOnBlur('name', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('firstName', event.target.value);
               }}
@@ -375,6 +435,7 @@ export default class DetailsEntry extends React.Component {
               small
               placeholder="Last name"
               value={this.state.lastName}
+              onBlur={event => this.validateOnBlur('name', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('lastName', event.target.value);
               }}
@@ -397,6 +458,7 @@ export default class DetailsEntry extends React.Component {
               maxLength="3"
               placeholder="###"
               value={this.state.phNo1}
+              onBlur={event => this.validateOnBlur('phNo1', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('phNo1', event.target.value);
               }}
@@ -408,6 +470,7 @@ export default class DetailsEntry extends React.Component {
               placeholder="###"
               innerRef={(node) => { this.phNo2 = node; }}
               value={this.state.phNo2}
+              onBlur={event => this.validateOnBlur('phNo2', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('phNo2', event.target.value);
               }}
@@ -420,6 +483,7 @@ export default class DetailsEntry extends React.Component {
               innerRef={(node) => { this.phNo3 = node; }}
               placeholder="####"
               value={this.state.phNo3}
+              onBlur={event => this.validateOnBlur('phNo3', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('phNo3', event.target.value);
               }}
@@ -439,6 +503,7 @@ export default class DetailsEntry extends React.Component {
               small
               placeholder="Address 1"
               value={this.state.address}
+              onBlur={event => this.validateOnBlur('addressField', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('address', event.target.value);
               }}
@@ -447,6 +512,7 @@ export default class DetailsEntry extends React.Component {
               small
               placeholder="Address 2"
               value={this.state.address2}
+              onBlur={event => this.validateOnBlur('addressField', event.target.value)}
               onChange={(event) => {
                 this.handleFieldChange('address2', event.target.value);
               }}
@@ -456,6 +522,7 @@ export default class DetailsEntry extends React.Component {
                 placeholder="City"
                 value={this.state.city}
                 getAddress={this.setAddress}
+                onBlur={event => this.validateOnBlur('addressField', event.target.value)}
                 onChange={(value) => {
                   this.handleFieldChange('city', value);
                 }}
@@ -466,6 +533,7 @@ export default class DetailsEntry extends React.Component {
                 placeholder="State"
                 value={this.state.state}
                 getAddress={this.setAddress}
+                onBlur={event => this.validateOnBlur('addressField', event.target.value)}
                 onChange={(value) => {
                   this.handleFieldChange('state', value);
                 }}
@@ -478,6 +546,7 @@ export default class DetailsEntry extends React.Component {
                 maxLength="5"
                 value={this.state.zip}
                 getAddress={this.setAddress}
+                onBlur={event => this.validateOnBlur('addressField', event.target.value)}
                 onChange={(value) => {
                   this.handleFieldChange('zip', value);
                 }}
@@ -509,7 +578,6 @@ export default class DetailsEntry extends React.Component {
                 id="group-info-validation"
                 type="checkbox"
                 checked={this.state.userConfirmation}
-                onChange={() => {}}
               />
               <GroupStyled.Span
                 htmlFor="private_video"

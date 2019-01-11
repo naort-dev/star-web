@@ -24,6 +24,10 @@ export default class StarSupporters extends React.Component {
     this.props.fetchMemberList(0, true);
   }
 
+  getPopupRef = (popupRef) => {
+    this.setState({ popupRef });
+  }
+
   fetchList = (selectedTab, offset = 0, refresh = true) => {
     switch (selectedTab) {
       case 'Supporters':
@@ -70,10 +74,6 @@ export default class StarSupporters extends React.Component {
           }
         });
     }
-  }
-
-  getPopupRef = (popupRef) => {
-    this.setState({ popupRef });
   }
 
   showInviteView = () => {
@@ -161,6 +161,7 @@ export default class StarSupporters extends React.Component {
               this.state.inviteView &&
                 <RequestFlowPopup
                   dotsCount={0}
+                  autoWidth
                   smallPopup
                   closePopUp={this.closeInviteView}
                   getPopupRef={this.getPopupRef}

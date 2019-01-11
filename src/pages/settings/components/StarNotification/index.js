@@ -362,7 +362,7 @@ export default class StarNotification extends React.Component {
         });
     } else {
       this.setState({
-        otpErrorMessage: 'Enter OTP',
+        otpErrorMessage: 'Enter code',
       });
     }
   }
@@ -505,10 +505,10 @@ export default class StarNotification extends React.Component {
               closePopUp={this.closeOtpPopup}
             >
               <NotificationStyled.HeaderText>
-                Enter the OTP
+                Enter code
               </NotificationStyled.HeaderText>
               <NotificationStyled.SocialMediaMessage>
-                Please enter the OTP that has been sent to your phone number.
+                Please enter the code that has been sent to your phone number.
               </NotificationStyled.SocialMediaMessage>
               <NotificationStyled.OTPWrapper>
                 <NotificationStyled.OTPInput
@@ -516,7 +516,7 @@ export default class StarNotification extends React.Component {
                   maxLength="4"
                   name="otpInput"
                   value={this.state.otpValue}
-                  placeholder="OTP"
+                  placeholder="Enter code"
                   onChange={this.acceptOTP}
                 />
                 <p className="errorElement">{this.state.otpErrorMessage}</p>
@@ -529,42 +529,8 @@ export default class StarNotification extends React.Component {
             </Popup>
           }
           <NotificationStyled.SubHeading>
-            Get notifications via:
+            Notify me:
           </NotificationStyled.SubHeading>
-          <NotificationStyled.WrapsInput className="checkboxWrapper">
-            <NotificationStyled.Label className="checkbox_container">
-              <span className="checkBoxHeading">Email</span>
-              <p>We will use the email you gave us.</p>
-              <NotificationStyled.CheckBox
-                id="emailUpdates"
-                type="checkbox"
-                checked={this.state.emailCheckedBox}
-                onChange={(event) => { this.handleFieldChange(event.target.value, this.state.emailCheckedBox); }}
-              />
-              <NotificationStyled.Span htmlFor="emailUpdates" className="checkmark" />
-              {
-                !this.state.addEmailFlag &&
-                <NotificationStyled.AddEmailText onClick={() => this.addEmailAddress()} >
-                  {props.notificationDetails.secondary_email ? 'Update email' : 'Add email'}
-                </NotificationStyled.AddEmailText>
-              }
-              {
-                this.state.addEmailFlag &&
-                <NotificationStyled.EmailWrapper>
-                  <NotificationStyled.AddEmail
-                    email={this.state.addEmailFlag}
-                    type="email"
-                    name="email"
-                    value={email.value}
-                    onChange={this.acceptEmailHandler}
-                    onBlur={this.checkEmail}
-                  />
-                  <NotificationStyled.CloseInput onClick={() => this.closeInput()}>X</NotificationStyled.CloseInput>
-                  <div className="errorElement">{email.message}</div>
-                </NotificationStyled.EmailWrapper>
-              }
-            </NotificationStyled.Label>
-          </NotificationStyled.WrapsInput>
           <NotificationStyled.WrapsInput className="checkboxWrapper">
             <NotificationStyled.Label className="checkbox_container">
               <span className="checkBoxHeading">Text (mobile phone)</span>
@@ -605,7 +571,7 @@ export default class StarNotification extends React.Component {
                 </NotificationStyled.PhoneInput>
               }
               <NotificationStyled.NoteText>
-                Note: we will use your number only to send notifications.
+                Note: we will only use your number to tell you about bookings.
               </NotificationStyled.NoteText>
             </NotificationStyled.Label>
           </NotificationStyled.WrapsInput>
@@ -615,7 +581,7 @@ export default class StarNotification extends React.Component {
                 <NotificationStyled.addRepWrapper onClick={() => this.addRepForm()}>
                   <NotificationStyled.AddRepresentative />
                   <div className="addRepText">Add Representative
-                    <p>Add another person to help you manage your account. They will be cc'd on all messages you receive.
+                    <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
                     </p>
                   </div>
                 </NotificationStyled.addRepWrapper>
