@@ -109,7 +109,8 @@ export default class StarDetailsEntry extends React.Component {
     this.setState({ errors });
   }
 
-  submitGroupAccountDetails = () => {
+  submitGroupAccountDetails = (event) => {
+    event.preventDefault();
     if (this.validateFields()) {
       const celebrityDetails = {
         description: this.state.bio,
@@ -156,6 +157,10 @@ export default class StarDetailsEntry extends React.Component {
       this.bookingPrice.blur();
       this.setState({ popUpMessage: `Set your booking rate at ${numberToDollarFormatter(newFieldValue)}?`, selectedCheck: 'priceCheck' });
     }
+  }
+
+  closePopup = () => {
+    this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })
   }
 
   renderGroups = () => {
@@ -220,7 +225,7 @@ export default class StarDetailsEntry extends React.Component {
             <Popup
               modalView
               smallPopup
-              closePopUp={() => this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })}
+              closePopUp={this.closePopup}
             >
               {
                 this.renderPopup()
@@ -515,7 +520,7 @@ export default class StarDetailsEntry extends React.Component {
         </GroupStyled.InputwrapperDiv>
         <GroupStyled.ControlWrapper>
           <GroupStyled.ControlButton
-            onClick={() => this.submitGroupAccountDetails()}
+            onClick={this.submitGroupAccountDetails}
           >
             Continue
           </GroupStyled.ControlButton>

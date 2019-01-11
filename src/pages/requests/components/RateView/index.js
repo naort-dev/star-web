@@ -193,7 +193,7 @@ export default class RateView extends React.Component {
             } else {
               window.onbeforeunload = (event) => {
                 event.preventDefault();
-                event.returnValue = 'Write something clever here..';
+                event.returnValue = '';
                 const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
                 if (isChrome) {
                   this.filesUpload();
@@ -225,6 +225,19 @@ export default class RateView extends React.Component {
   }
 
   exitPaymentMode = () => {
+    const { orderDetails } = this.props;
+    const { rating, comment, reason, filesList } = this.state;
+    if (rating > 2 && filesList.length) {
+      this.filesUpload()
+        .then((finalFiles) => {
+          this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
+        })
+        .catch(() => {
+          this.setState({ alertText: 'Something went wrong' });
+        });
+    } else {
+      this.sendRequestFeedback([], orderDetails.id, comment, reason, rating);
+    }
     this.setState({ alertText: 'Tip payment successful' });
     this.props.onSuccess();
   }
@@ -249,7 +262,7 @@ export default class RateView extends React.Component {
   sendFeedback = () => {
     const { orderDetails } = this.props;
     const { tip, rating, comment, reason, filesList } = this.state;
-    if (rating > 2 && filesList.length) {
+    if (rating > 2 && filesList.length && !tip) {
       this.filesUpload()
         .then((finalFiles) => {
           this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
@@ -257,7 +270,7 @@ export default class RateView extends React.Component {
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
         });
-    } else {
+    } else if (rating > 2 && !filesList.length && !tip) {
       this.sendRequestFeedback([], orderDetails.id, comment, reason, rating);
     }
     if (rating > 2 && tip) {

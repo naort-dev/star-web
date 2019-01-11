@@ -22,7 +22,6 @@ class GroupSelectionComponent extends React.Component {
     newGroupDetails: {
       type: '',
       name: '',
-      comments: '',
     },
 
     selectedProfessions: this.props.selectedProfessions,
@@ -54,6 +53,11 @@ class GroupSelectionComponent extends React.Component {
     return ({ filterProfessions, searchProfessions });
   }
 
+  onSelectionComplete = () => {
+    const { selectedProfessions } = this.state;
+    this.props.onSelectionComplete(selectedProfessions);
+  }
+
   getSearchValue = (event) => {
     const searchValue = event.target.value.toLowerCase();
     this.setState({ searchValue });
@@ -73,7 +77,7 @@ class GroupSelectionComponent extends React.Component {
       <React.Fragment>
         <IndustryStyled.HeaderText>Add new group</IndustryStyled.HeaderText>
         <IndustryStyled.Select
-          onChange={event => this.handleGroupData(event.target.value, 'type')}
+          onChange={this.handleGroupData('type')}
         >
           <option value="">Select group type</option>
           {
@@ -87,13 +91,7 @@ class GroupSelectionComponent extends React.Component {
           small
           placeholder="Enter group name"
           value={newGroupDetails.name}
-          onChange={event => this.handleGroupData(event.target.value, 'name')}
-        />
-        <IndustryStyled.InputArea
-          type="text"
-          placeholder="Comments"
-          value={newGroupDetails.comments}
-          onChange={event => this.handleGroupData(event.target.value, 'comments')}
+          onChange={this.handleGroupData('name')}
         />
         <IndustryStyled.ControlWrapper>
           <IndustryStyled.ControlButton
@@ -117,16 +115,15 @@ class GroupSelectionComponent extends React.Component {
             newGroupDetails: {
               type: '',
               name: '',
-              comments: '',
             },
           });
         }
       });
   }
 
-  handleGroupData = (value, type) => {
+  handleGroupData = type => (event) => {
     let { newGroupDetails } = this.state;
-    newGroupDetails[type] = value;
+    newGroupDetails[type] = event.target.value;
     this.setState({ newGroupDetails });
   }
 
@@ -141,7 +138,6 @@ class GroupSelectionComponent extends React.Component {
       newGroupDetails: {
         type: '',
         name: '',
-        comments: '',
       },
     });
   }
@@ -163,7 +159,7 @@ class GroupSelectionComponent extends React.Component {
   selectProfession = (profession) => {
     const { selectedProfessions } = this.state;
     if (selectedProfessions.length !== this.props.limit) {
-      this.setState({ selectedProfessions: [...selectedProfessions, profession] });
+      this.setState({ selectedProfessions: [...selectedProfessions, profession], searchValue: '' });
     }
   }
 
@@ -247,7 +243,7 @@ class GroupSelectionComponent extends React.Component {
                 <IndustryStyled.BackButton onClick={() => this.updateSelectedCategory(null)} />
                 <IndustryStyled.ListContainer>
                   <IndustryStyled.ListWrapper>
-                    <IndustryStyled.ListItemContent selected>{categorySelected.group_name}</IndustryStyled.ListItemContent>
+                    <IndustryStyled.ListItemHeading selected>{categorySelected.group_name}</IndustryStyled.ListItemHeading>
                     {
                       this.renderSubProfessions(categorySelected)
                     }
@@ -268,8 +264,8 @@ class GroupSelectionComponent extends React.Component {
   }
 
   render() {
-    const { categorySelected, selectedProfessions, searchValue, listLoading, alertText, showPopup } = this.state;
-    const { onSelectionComplete, onClose } = this.props;
+    const { searchValue, listLoading, showPopup } = this.state;
+    const { onClose } = this.props;
     return (
       <IndustryStyled>
         {
@@ -288,7 +284,7 @@ class GroupSelectionComponent extends React.Component {
               <IndustryStyled.HeaderText>
                 Are you a part of a group?
               </IndustryStyled.HeaderText>
-              <IndustryStyled.CompleteButton onClick={() => onSelectionComplete(selectedProfessions)}>Save</IndustryStyled.CompleteButton>
+              <IndustryStyled.CompleteButton onClick={this.onSelectionComplete}>Save</IndustryStyled.CompleteButton>
             </IndustryStyled.HeaderTextWrapper>
             <IndustryStyled.Description>
               Choose the groups you’re associated with

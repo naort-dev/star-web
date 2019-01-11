@@ -13,6 +13,7 @@ import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Popup from '../../components/Popup';
 import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
+import { getRequestDetails } from '../../services/request';
 import RequestsStyled from './styled';
 import { celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
@@ -35,6 +36,24 @@ export default class Requests extends React.Component {
   }
   componentDidMount() {
     this.props.myVideosListReset();
+    const params = window.location.search && window.location.search.split('?')[1];
+    const finalParams = params && params.split('&');
+    if (!this.props.starMode && finalParams) {
+      finalParams.forEach((data) => {
+        if (data.split('=')[0] === 'request_id') {
+          getRequestDetails(data.split('=')[1])
+            .then((requestDetails) => {
+              if (requestDetails.success &&
+                requestDetails.data &&
+                requestDetails.data.stargramz_response &&
+                !requestDetails.data.stargramz_response.fan_rating
+              ) {
+                this.requestAction(requestDetails.data.stargramz_response, 'rate');
+              }
+            });
+        }
+      });
+    }
     this.props.fetchMyVideosList(0, true, this.role, 'all');
   }
 
