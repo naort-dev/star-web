@@ -6,6 +6,7 @@ import Popup from '../../Popup';
 import { generateOtp, validateOtp } from '../../../services/otpGenerate';
 import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../services/userRegistration';
 import GroupStyled from '../styled';
+import Loader from '../../Loader';
 
 export default class StarNotifications extends React.Component {
   state = {
@@ -23,6 +24,7 @@ export default class StarNotifications extends React.Component {
     phoneNumberOriginal: '',
     countryCode: '',
     otpErrorMessage: '',
+    loading: false,
   }
 
   getOtp = () => {
@@ -237,6 +239,9 @@ export default class StarNotifications extends React.Component {
 
   submitNotification = () => {
     if (this.checkAllValidity()) {
+      this.setState({
+        loading: true,
+      });
       const {
         emailCheckedBox,
         email,
@@ -281,7 +286,12 @@ export default class StarNotifications extends React.Component {
       });
       Promise.all(repUpdateStatus)
         .then(() => {
-          this.props.onComplete(notifications);
+          this.props.onComplete(notifications)
+            .then(() => {
+              this.setState({
+                loading: false,
+              });
+            })
         });
     }
   }
@@ -436,7 +446,11 @@ export default class StarNotifications extends React.Component {
     const {
       value,
       email,
+      loading,
     } = this.state;
+    if (loading) {
+      return <Loader />
+    }
     return (
       <GroupStyled.DetailsWrapper>
         {
