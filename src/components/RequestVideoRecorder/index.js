@@ -92,7 +92,7 @@ export default class RequestVideoRecorder extends React.Component {
     if (event.data && event.data.size > 0) {
       let { recordingTime } = this.state;
       const finalTime = this.recordingDate.getTime() + this.props.duration;
-      const currentTime = new Date(event.timecode).getTime();
+      const currentTime = new Date().getTime();
       const recordSeconds = parseInt((finalTime - currentTime) / 1000) % 60;
       const recordMinutes = parseInt((finalTime - currentTime) / (1000* 60)) % 60;
       recordingTime = {
