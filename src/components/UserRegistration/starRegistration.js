@@ -146,7 +146,7 @@ class starRegistrationComponent extends React.Component {
       mobile_country_code: notifications.mobile_country_code,
     };
 
-    this.props.updateNotification(newNotifications)
+    return this.props.updateNotification(newNotifications)
       .then((resp) => {
         if (resp.status == 200) {
           this.props.changeStep(this.props.currentStep + 1);
