@@ -24,14 +24,11 @@ import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
-import { Requestvideo } from './pages/requestvideo';
-import LoginFlow from './components/loginFlow';
-import ReferStar from './components/ReferStar';
-import SignupFlow from './components/signupFlow';
 import { StarSupporters } from './pages/starSupporters';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
+import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
 import { GroupProfile } from './pages/groupProfile';
@@ -84,18 +81,7 @@ class App extends React.Component {
     return (
       <div>
         <div id="content-wrapper">
-          {
-            this.props.loginModal && <LoginFlow />
-          }
-          {
-            this.props.signUpModal && <SignupFlow />
-          }
-          {
-            this.props.requestFlow && <Requestvideo />
-          }
-          {
-            this.props.referModal && <ReferStar />
-          }
+          <Modals />
           <Helmet
             title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
             meta={setMetaTags(
@@ -190,10 +176,6 @@ const mapState = state => ({
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
-  loginModal: state.modals.loginModal,
-  signUpModal: state.modals.signUpModal,
-  requestFlow: state.modals.requestFlow,
-  referModal: state.modals.referModal,
 });
 
 const mapProps = dispatch => ({

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { addGroupMember } from '../../../../services/groupManagement';
 import { starProfessionsDotFormater } from '../../../../utils/dataToStringFormatter';
@@ -130,3 +131,9 @@ export default class RowItem extends React.Component {
     );
   }
 }
+
+RowItem.propTypes = {
+  member: PropTypes.object.isRequired,
+  onAction: PropTypes.func.isRequired,
+  bookStar: PropTypes.func.isRequired,
+};
