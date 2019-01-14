@@ -409,12 +409,12 @@ export default class StarNotifications extends React.Component {
           </div>
           <div className="notifyRepresentative">
             <p>
-            Your representative will receive an invitation they will need to confirm.
+            Your representative will receive notifications about your bookings.
             </p>
-            <p>How should we send the invitation?</p>
+            <p>How should we send the notification?</p>
             <GroupStyled.WrapsInput className="checkboxWrapper">
               <GroupStyled.Label className="checkbox_container">
-                <span className="checkBoxHeading">Send an invite via email address.</span>
+                <span className="checkBoxHeading">Notify via email address.</span>
                 <GroupStyled.CheckBox
                   id={`rep${index}EmailUpdates`}
                   type="checkbox"
@@ -426,7 +426,7 @@ export default class StarNotifications extends React.Component {
             </GroupStyled.WrapsInput>
             <GroupStyled.WrapsInput className="checkboxWrapper">
               <GroupStyled.Label className="checkbox_container">
-                <span className="checkBoxHeading">Send an invite via text message.</span>
+                <span className="checkBoxHeading">Notify via text message.</span>
                 <GroupStyled.CheckBox
                   id={`rep${index}PhoneUpdates`}
                   type="checkbox"
