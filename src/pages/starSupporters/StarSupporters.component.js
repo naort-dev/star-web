@@ -82,7 +82,7 @@ export default class StarSupporters extends React.Component {
   }
 
   renderMembers = member => (
-    <RowItem onAction={this.handleAction} key={member.user_id} member={member} />
+    <RowItem onAction={this.handleAction} bookStar={this.props.setRequestFlow} key={member.user_id} member={member} />
   );
 
   renderInviteView = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
-import { Request, HeaderSection } from '../../pages/requestvideo/styled';
+import { Request } from '../../pages/requestvideo/styled';
 import { Askquestion } from '../../pages/askQuestion';
 import { Event } from '../../pages/eventAnnouncement';
 import { Personal } from '../../pages/personalizedAnnouncement';
@@ -11,12 +11,18 @@ export default class Requestvideo extends React.Component {
     this.state = {
       stepCount: props.stepCount ? props.stepCount : 0,
       selectedRequest: null,
-      requestType: "",
+      requestType: '',
       requestTypeStatus: false
     };
     this.personal = 5;
     this.event = 5;
     this.ask = 4;
+  }
+  componentDidMount() {
+    const fetchCelebDetails = (!this.props.celebrityDetails || !this.props.userDetails) && this.props.celebId;
+    if (fetchCelebDetails) {
+      this.props.fetchCelebDetails(this.props.celebId);
+    }
   }
   componentDidUpdate(prevProps) {
     if (this.props.isLoggedIn && this.state.selectedRequest) {
@@ -27,6 +33,10 @@ export default class Requestvideo extends React.Component {
       );
     }
   }
+
+  setRequestType = (value) => {
+    this.setState({ requestType: value, requestTypeStatus: true });
+  };
 
   requestFlowCheck = (requestType) => {
     if (this.props.isLoggedIn) {
@@ -58,15 +68,12 @@ export default class Requestvideo extends React.Component {
   clearStream = () => {
     if (window.stream) {
       const tracks = window.stream.getTracks();
-      tracks.forEach(track => {
+      tracks.forEach((track) => {
         track.stop();
       });
     }
     this.props.onClearStreams();
     this.props.deleteVideo();
-  };
-  setRequestType = (value) => {
-    this.setState({ requestType: value, requestTypeStatus: true });
   };
 
   changeStep = (step) => {

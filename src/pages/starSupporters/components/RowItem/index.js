@@ -103,6 +103,7 @@ export default class RowItem extends React.Component {
             {
               member.celebrity_account[0] && member.celebrity_account[0].approved && member.celebrity_account[0].celebrity_invite ?
                 <React.Fragment>
+                  <RowStyled.ControlButton onClick={() => this.props.bookStar(member.user_id)} >Book</RowStyled.ControlButton>
                   <RowStyled.ControlButton onClick={() => this.props.onAction('view', `/${member.user_id}`)} alternate>View</RowStyled.ControlButton>
                   <RowStyled.ControlButton alternate onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Remove</RowStyled.ControlButton>
                 </React.Fragment>
