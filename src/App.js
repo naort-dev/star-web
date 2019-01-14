@@ -75,6 +75,11 @@ class App extends React.Component {
     }
   }
 
+  routeToOutside = url => () => {
+    window.location = url;
+    return null;
+  }
+
   render() {
     const { showLoading } = this.state;
     const showRoutes = !showLoading;
@@ -99,12 +104,10 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                <Route path="/privacy-policy" component={() => window.location = 'https://about.starsona.com/privacy-policy'}/>
-                <Route path="/terms-service" component={() => window.location = 'https://about.starsona.com/terms-service'}/>
-                <Route path="/contact" component={() => window.location = 'https://about.starsona.com/contact'}/>
-                <Route path="/faq" component={() => window.location = 'https://about.starsona.com/faq'}/>
-                {/* <Route path="/login" component={Login} />
-                <Route path="/forgotpassword" component={Login} /> */}
+                <Route path="/privacy-policy" component={this.routeToOutside('https://about.starsona.com/privacy-policy')} />
+                <Route path="/terms-service" component={this.routeToOutside('https://about.starsona.com/terms-service')} s/>
+                <Route path="/contact" component={this.routeToOutside('https://about.starsona.com/contact')} />
+                <Route path="/faq" component={this.routeToOutside('https://about.starsona.com/faq')} />
                 <Route
                   exact
                   path="/signup"
@@ -169,6 +172,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  configLoading: PropTypes.bool.isRequired,
+  userDataLoaded: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const mapState = state => ({
