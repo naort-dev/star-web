@@ -39,7 +39,9 @@ export default class StarDetailsEntry extends React.Component {
   }
 
   getGroupSelection = (groups) => {
-    this.setState({ groups, groupSelection: false });
+    this.setState({ groups, groupSelection: false }, () => {
+      this.groupSelectionInput.focus();
+    });
   }
 
   getSocialUrl = (regex, value, baseUrl) => {
@@ -198,12 +200,22 @@ export default class StarDetailsEntry extends React.Component {
       </React.Fragment>
     );
   }
+  
+  closeSelection = type => () => {
+    if (type === 'industries') {
+      this.setState({ industrySelection: false });
+    } else if (type === 'groups') {
+      this.setState({ groupSelection: false }, () => {
+        this.groupSelectionInput.focus();
+      });
+    }
+  }
 
   render() {
     if (this.state.industrySelection) {
       return (
         <IndustrySelection
-          onClose={() => this.setState({ industrySelection: false })}
+          onClose={this.closeSelection('industries')}
           selectedProfessions={this.state.industries}
           onSelectionComplete={this.getIndustrySelection}
           limit={3}
@@ -212,7 +224,7 @@ export default class StarDetailsEntry extends React.Component {
     } else if (this.state.groupSelection) {
       return (
         <GroupSelection
-          onClose={() => this.setState({ groupSelection: false })}
+          onClose={this.closeSelection('groups')}
           selectedProfessions={this.state.groups}
           onSelectionComplete={this.getGroupSelection}
         />
@@ -369,6 +381,7 @@ export default class StarDetailsEntry extends React.Component {
             <GroupStyled.WrapsInput>
               <GroupStyled.IndustryInput
                 tabIndex="0"
+                innerRef={(node) => { this.groupSelectionInput = node; }}
                 onClick={() => this.setState({ groupSelection: true })}
               >
                 {
