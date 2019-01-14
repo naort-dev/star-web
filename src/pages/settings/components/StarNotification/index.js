@@ -463,7 +463,7 @@ export default class StarNotification extends React.Component {
             <p>How should we send the notification?</p>
             <NotificationStyled.WrapsInput className="checkboxWrapper">
               <NotificationStyled.Label className="checkbox_container">
-                <span className="checkBoxHeading">Notify via email address.</span>
+                <span className="checkBoxHeading">Notify via email.</span>
                 <NotificationStyled.CheckBox
                   id={`rep${index}EmailUpdates`}
                   type="checkbox"

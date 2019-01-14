@@ -414,7 +414,7 @@ export default class StarNotifications extends React.Component {
             <p>How should we send the notification?</p>
             <GroupStyled.WrapsInput className="checkboxWrapper">
               <GroupStyled.Label className="checkbox_container">
-                <span className="checkBoxHeading">Notify via email address.</span>
+                <span className="checkBoxHeading">Notify via email.</span>
                 <GroupStyled.CheckBox
                   id={`rep${index}EmailUpdates`}
                   type="checkbox"
