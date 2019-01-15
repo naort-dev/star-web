@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmpty } from 'lodash'
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import { Request } from '../../pages/requestvideo/styled';
 import { Askquestion } from '../../pages/askQuestion';
@@ -19,7 +20,7 @@ export default class Requestvideo extends React.Component {
     this.ask = 4;
   }
   componentDidMount() {
-    const fetchCelebDetails = (!this.props.celebrityDetails || !this.props.userDetails) && this.props.celebId;
+    const fetchCelebDetails = (isEmpty(this.props.celebrityDetails) || isEmpty(this.props.userDetails)) && this.props.celebId;
     if (fetchCelebDetails) {
       this.props.fetchCelebDetails(this.props.celebId);
     }
