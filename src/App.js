@@ -24,14 +24,11 @@ import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
 import { Starprofile } from './pages/starProfile';
-import { Requestvideo } from './pages/requestvideo';
-import LoginFlow from './components/loginFlow';
-import ReferStar from './components/ReferStar';
-import SignupFlow from './components/signupFlow';
 import { StarSupporters } from './pages/starSupporters';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
+import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
 import { GroupProfile } from './pages/groupProfile';
@@ -78,24 +75,18 @@ class App extends React.Component {
     }
   }
 
+  routeToOutside = url => () => {
+    window.location = url;
+    return null;
+  }
+
   render() {
     const { showLoading } = this.state;
     const showRoutes = !showLoading;
     return (
       <div>
         <div id="content-wrapper">
-          {
-            this.props.loginModal && <LoginFlow />
-          }
-          {
-            this.props.signUpModal && <SignupFlow />
-          }
-          {
-            this.props.requestFlow && <Requestvideo />
-          }
-          {
-            this.props.referModal && <ReferStar />
-          }
+          <Modals />
           <Helmet
             title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
             meta={setMetaTags(
@@ -113,12 +104,10 @@ class App extends React.Component {
                 {/* non logged in areas */}
 
                 <Route exact path="/" component={Landing} />
-                <Route path="/privacy-policy" component={() => window.location = 'https://about.starsona.com/privacy-policy'}/>
-                <Route path="/terms-service" component={() => window.location = 'https://about.starsona.com/terms-service'}/>
-                <Route path="/contact" component={() => window.location = 'https://about.starsona.com/contact'}/>
-                <Route path="/faq" component={() => window.location = 'https://about.starsona.com/faq'}/>
-                {/* <Route path="/login" component={Login} />
-                <Route path="/forgotpassword" component={Login} /> */}
+                <Route path="/privacy-policy" component={this.routeToOutside('https://about.starsona.com/privacy-policy')} />
+                <Route path="/terms-service" component={this.routeToOutside('https://about.starsona.com/terms-service')} s/>
+                <Route path="/contact" component={this.routeToOutside('https://about.starsona.com/contact')} />
+                <Route path="/faq" component={this.routeToOutside('https://about.starsona.com/faq')} />
                 <Route
                   exact
                   path="/signup"
@@ -183,6 +172,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  configLoading: PropTypes.bool.isRequired,
+  userDataLoaded: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const mapState = state => ({
@@ -190,10 +182,6 @@ const mapState = state => ({
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
-  loginModal: state.modals.loginModal,
-  signUpModal: state.modals.signUpModal,
-  requestFlow: state.modals.requestFlow,
-  referModal: state.modals.referModal,
 });
 
 const mapProps = dispatch => ({

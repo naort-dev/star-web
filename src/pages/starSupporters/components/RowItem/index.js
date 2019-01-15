@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { addGroupMember } from '../../../../services/groupManagement';
 import { starProfessionsDotFormater } from '../../../../utils/dataToStringFormatter';
@@ -103,6 +104,7 @@ export default class RowItem extends React.Component {
             {
               member.celebrity_account[0] && member.celebrity_account[0].approved && member.celebrity_account[0].celebrity_invite ?
                 <React.Fragment>
+                  <RowStyled.ControlButton onClick={() => this.props.bookStar(member.user_id)} >Book</RowStyled.ControlButton>
                   <RowStyled.ControlButton onClick={() => this.props.onAction('view', `/${member.user_id}`)} alternate>View</RowStyled.ControlButton>
                   <RowStyled.ControlButton alternate onClick={() => this.props.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Remove</RowStyled.ControlButton>
                 </React.Fragment>
@@ -129,3 +131,9 @@ export default class RowItem extends React.Component {
     );
   }
 }
+
+RowItem.propTypes = {
+  member: PropTypes.object.isRequired,
+  onAction: PropTypes.func.isRequired,
+  bookStar: PropTypes.func.isRequired,
+};

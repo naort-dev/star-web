@@ -3,7 +3,6 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
-import Loader from '../../components/Loader';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 import ScrollList from '../../components/ScrollList';
@@ -161,9 +160,15 @@ export default class Landing extends React.Component {
     this.setState({ filterSelected: !this.state.filterSelected }, () => {
       this.setScrollHeight();
     });
-    if (!filterState && this.props.filters.selectedTab === "Stars") {
+    if (!filterState && this.props.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(this.props.filters.category.value);
     }
+  }
+  fetchCelebrityList = category => (offset, refresh) => {
+    this.props.fetchCelebrityList(offset, refresh, category);
+  }
+  fetchVideosList = (offset, refresh) => {
+    this.props.fetchVideosList(offset, refresh);
   }
   renderScrollList() {
     if (this.props.filters.selectedTab === 'Stars') {
@@ -177,7 +182,7 @@ export default class Landing extends React.Component {
           totalCount={this.props.celebList.count}
           offset={this.props.celebList.offset}
           loading={this.props.celebList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh, 'Stars')}
+          fetchData={this.fetchCelebrityList('Stars')}
         />
       );
     } else if (this.props.filters.selectedTab === 'Videos') {
@@ -189,7 +194,7 @@ export default class Landing extends React.Component {
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
-          fetchData={(offset, refresh) => this.props.fetchVideosList(offset, refresh)}
+          fetchData={this.fetchVideosList}
         />
       );
     }
@@ -255,17 +260,9 @@ export default class Landing extends React.Component {
                 />
               }
             </div>
-            {/* {
-              (!this.props.celebList.data.length && this.props.celebList.loading) ||
-                (!this.props.videosList.data.length && this.props.videosList.loading) ?
-                  <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                    <Loader />
-                  </LandingStyled.loaderWrapper>
-                : */}
-                  <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                    {this.renderScrollList()}
-                  </div>
-            {/* } */}
+            <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+              {this.renderScrollList()}
+            </div>
           </LandingStyled.mainSection>
         </LandingStyled.sectionWrapper>
       </LandingStyled>
