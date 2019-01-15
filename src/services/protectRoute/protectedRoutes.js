@@ -7,7 +7,7 @@ export const starRoutes = [
   ...fanRoutes,
   '/user/bookings',
   '/user/earnings',
-  '/myStar',
+  '/user/group-supporters',
 ];
 export const groupRoutes = [
   ...fanRoutes,

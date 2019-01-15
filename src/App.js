@@ -138,6 +138,12 @@ class App extends React.Component {
                   })}
                 />
                 <Route
+                  path="/user/group-supporters"
+                  component={protectRoute({
+                    RouteComponent: StarSupporters,
+                  })}
+                />
+                <Route
                   path="/user/myVideos"
                   component={protectRoute({
                     RouteComponent: Requests,
