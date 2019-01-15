@@ -83,11 +83,15 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
+  let newState = { ...state };
   if (action.type === LOGIN.logout) {
-    state = undefined;
+    newState = {};
+    newState.config = state.config;
+    newState.groupTypes = state.groupTypes;
+    newState.groupTypesListing = state.groupTypesListing;
   }
 
-  return appReducer(state, action);
+  return appReducer(newState, action);
 };
 
 export default rootReducer;

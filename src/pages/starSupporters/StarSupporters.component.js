@@ -149,10 +149,11 @@ export default class StarSupporters extends React.Component {
   }
 
   render() {
+    const { isStar } = this.props;
     return (
       <div>
         <ColumnLayout
-          selectedSideBarItem="supporters"
+          selectedSideBarItem={isStar ? 'mygroups' : 'supporters'}
           history={this.props.history}
           getScrollTarget={this.updateScrollTarget}
         >
@@ -166,7 +167,11 @@ export default class StarSupporters extends React.Component {
                   closePopUp={this.closeInviteView}
                   getPopupRef={this.getPopupRef}
                 >
-                  <SupportStyled.SubHeading>Invite Stars</SupportStyled.SubHeading>
+                  <SupportStyled.SubHeading>
+                    {
+                      isStar ? 'Support group' : 'Invite stars'
+                    }
+                  </SupportStyled.SubHeading>
                   { this.renderInviteView() }
                 </RequestFlowPopup>
             }
@@ -175,7 +180,9 @@ export default class StarSupporters extends React.Component {
                 !this.props.membersList.length && !this.props.membersLoading && this.state.selectedTab === 'All' ?
                   <React.Fragment>
                     <SupportStyled.SmallHeading>
-                        Stars who support your group
+                      {
+                        isStar ? 'My groups' : 'Stars who support your group'
+                      }
                     </SupportStyled.SmallHeading>
                     <SupportStyled.Container>
                       <SupportStyled.BigHeading>
@@ -186,7 +193,9 @@ export default class StarSupporters extends React.Component {
                       </SupportStyled.Description>
                       <SupportStyled.ControlWrapper>
                         <SupportStyled.ControlButton onClick={this.showInviteView}>
-                          Invite stars
+                          {
+                            isStar ? 'Support group' : 'Invite stars'
+                          }
                         </SupportStyled.ControlButton>
                       </SupportStyled.ControlWrapper>
                     </SupportStyled.Container>
@@ -196,7 +205,9 @@ export default class StarSupporters extends React.Component {
             </SupportStyled.CenterSection>
             <SupportStyled.RightSection>
               <SupportStyled.ControlButton alternate onClick={this.showInviteView}>
-                Invite stars
+                {
+                  isStar ? 'Support group' : 'Invite stars'
+                }               
               </SupportStyled.ControlButton>
             </SupportStyled.RightSection>
           </SupportStyled>

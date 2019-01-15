@@ -10,7 +10,7 @@ export const starInnerLinks = [
   { linkName: 'Requests', selectedName: 'requests', url: '/user/bookings' },
   { linkName: 'Earnings', selectedName: 'earnings', url: '/user/earnings' },
   { linkName: 'Settings', selectedName: 'settings', url: '/settings' },
-  { linkName: 'Group supporters', selectedName: 'supporters', url: '/user/group-supporters' },
+  { linkName: 'My groups', selectedName: 'mygroups', url: '/user/my-groups' },
 ];
 
 export const groupInnerLinks = [
