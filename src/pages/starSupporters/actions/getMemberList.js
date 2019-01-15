@@ -48,14 +48,17 @@ export const removeMember = userId => (dispatch, getState) => {
   dispatch(memberListFetchSuccess(memberList, offset, count));
 };
 
-export const fetchMemberList = (offset, refresh, isMember = false, type) => (dispatch, getState) => {
+export const fetchMemberList = (offset, refresh, isStar, type) => (dispatch, getState) => {
   const { limit } = getState().groupSupporters.memberList;
   dispatch(memberListFetchStart(refresh));
-  let apiURl = `${Api.getGroupMembers}?member=${isMember}&limit=${limit}&offset=${offset}`;
+  let apiURl = `${Api.getGroupMembers}?member=true&limit=${limit}&offset=${offset}`;
   if (type === 'support') {
-    apiURl = `${Api.getGroupMembers}?member=${isMember}&status=true&limit=${limit}&offset=${offset}`;
+    apiURl = `${Api.getGroupMembers}?member=true&status=true&limit=${limit}&offset=${offset}`;
   } else if (type === 'pending') {
-    apiURl = `${Api.getGroupMembers}?member=${isMember}&status=false&limit=${limit}&offset=${offset}`;
+    apiURl = `${Api.getGroupMembers}?member=true&status=false&limit=${limit}&offset=${offset}`;
+  }
+  if (isStar) {
+    apiURl = `${apiURl}&celebrity=true`;
   }
   return fetch.get(apiURl)
     .then((resp) => {

@@ -21,7 +21,7 @@ export default class StarSupporters extends React.Component {
   }
 
   componentDidMount() {
-    this.props.fetchMemberList(0, true);
+    this.props.fetchMemberList(0, true, this.props.isStar);
   }
 
   getPopupRef = (popupRef) => {
@@ -31,13 +31,13 @@ export default class StarSupporters extends React.Component {
   fetchList = (selectedTab, offset = 0, refresh = true) => {
     switch (selectedTab) {
       case 'Supporters':
-        this.props.fetchMemberList(offset, refresh, 'support');
+        this.props.fetchMemberList(offset, refresh, this.props.isStar, 'support');
         break;
       case 'Pending':
-        this.props.fetchMemberList(offset, refresh, 'pending');
+        this.props.fetchMemberList(offset, refresh, this.props.isStar, 'pending');
         break;
       default:
-        this.props.fetchMemberList(offset, refresh);
+        this.props.fetchMemberList(offset, refresh, this.props.isStar);
         break;
     }
   }
@@ -73,16 +73,23 @@ export default class StarSupporters extends React.Component {
             this.fetchList(this.state.selectedTab);
           }
         });
+    } else if (type === 'book') {
+      this.props.setRequestFlow(actionData);
     }
   }
 
   showInviteView = () => {
     this.setState({ inviteView: true });
-    this.props.fetchNonMemberList(0, true);
+    this.props.fetchNonMemberList(0, true, this.props.isStar);
   }
 
   renderMembers = member => (
-    <RowItem onAction={this.handleAction} bookStar={this.props.setRequestFlow} key={member.user_id} member={member} />
+    <RowItem
+      isStar={this.props.isStar}
+      onAction={this.handleAction}
+      key={member.user_id}
+      member={member}
+    />
   );
 
   renderInviteView = () => {
