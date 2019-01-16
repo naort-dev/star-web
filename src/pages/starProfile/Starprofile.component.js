@@ -1,7 +1,6 @@
 import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -10,8 +9,9 @@ import AppBanner from '../../components/AppBanner';
 import Loader from '../../components/Loader';
 import ScrollList from '../../components/ScrollList';
 import VideoPopup from '../../components/VideoPopup';
-import { ImageStack } from '../../components/ImageStack';
 import Popup from '../../components/Popup';
+import { getStarsonaVideo } from '../../services';
+import { requestTypes } from '../../constants/requestTypes';
 import { fetch } from '../../services/fetch';
 import { checkPrerender } from '../../utils/checkOS';
 import StarProfileStyled from '../starProfile/styled';
@@ -38,10 +38,42 @@ export default class Starprofile extends React.Component {
 
   componentWillMount() {
     this.props.resetCelebDetails();
-    this.props.fetchCelebDetails(this.getUserId(this.props));
-    if (!this.isMyStarPage()) {
-      this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
+    // if (!this.isMyStarPage()) {
+    //   this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
+    // }
+    const params = this.props.location.search && this.props.location.search.split('?')[1];
+    const finalParams = params && params.split('&');
+    if (finalParams) {
+      if (!finalParams.find(data => data.split('=')[0] === 'video_id')) {
+        this.props.fetchCelebDetails(this.getUserId(this.props));
+      }
+      finalParams.forEach((data) => {
+        if (data.split('=')[0] === 'video_id') {
+          getStarsonaVideo(data.split('=')[1])
+            .then((resp) => {
+              this.props.fetchCelebDetails(this.getUserId(this.props));
+              if (resp.success) {
+                const starsonaVideo = resp.data.starsona_video.find(video => video.video_status === 1);
+                let videoTitle = '';
+                if (requestTypes[starsonaVideo.booking_type] === 'Shout-out') {
+                  videoTitle = `Watch this video shout-out from ${starsonaVideo.full_name}`;
+                } else if (requestTypes[starsonaVideo.booking_type] === 'Event') {
+                  videoTitle = `Check out my video announcement courtesy of ${starsonaVideo.full_name}`;
+                } else if (requestTypes[starsonaVideo.booking_type] === 'Shout-out') {
+                  videoTitle = `${starsonaVideo.full_name} answers my fan question!`;
+                }
+                this.setState({
+                  videoActive: true,
+                  selectedVideo: { ...resp.data.starsona_video[0], videoTitle },
+                });
+              }
+            });
+        }
+      });
+    } else {
+      this.props.fetchCelebDetails(this.getUserId(this.props));
     }
+
     this.props.fetchCelebVideosList(this.state.offsetValue, true, this.getUserId(this.props));
   }
   componentWillReceiveProps(nextProps) {
@@ -177,6 +209,16 @@ export default class Starprofile extends React.Component {
       sharePopup: true,
     });
   }
+
+  getPreviewImage() {
+    if (this.state.selectedVideo && this.state.selectedVideo.s3_thumbnail_url) {
+      return this.state.selectedVideo.s3_thumbnail_url;
+    } else if (this.props.userDetails.avatar_photo) {
+      return this.props.userDetails.avatar_photo.image_url;
+    }
+    return '../../assets/images/profile.png';
+  }
+
   closePopup = () => {
     this.setState({ sharePopup: false });
   }
@@ -252,7 +294,6 @@ export default class Starprofile extends React.Component {
     }
     const descriptionLength = this.props.celebrityDetails.description ?
       this.props.celebrityDetails.description.length : 0;
-
     if (this.props.detailsError) {
       return <Redirect to="/not-found" />;
     }
@@ -280,10 +321,10 @@ export default class Starprofile extends React.Component {
         {
           !this.isMyStarPage() &&
           <Helmet
-            title={fullName}
+            title={this.state.selectedVideo && this.state.selectedVideo.videoTitle ? this.state.selectedVideo.videoTitle : fullName}
             meta={[...setMetaTags(
-              fullName,
-              this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png',
+              this.state.selectedVideo && this.state.selectedVideo.videoTitle ? this.state.selectedVideo.videoTitle : fullName,
+              this.getPreviewImage(),
               `Get your personalized video from ${fullName}`,
             ),
             { property: 'al:ios:app_store_id', content: env('iosAppId') },
