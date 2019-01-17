@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { SidebarStyled } from './styled';
@@ -240,4 +241,4 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, category) => dispatch(updateCategory(label, value, category)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Sidebar));

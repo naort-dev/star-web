@@ -1,8 +1,9 @@
 import styled from 'styled-components';
 
 const StarProfileStyled = styled.div`
-  margin-top: 60px;
   background-color: #FFF;
+  height: 100%;
+  overflow: auto;
   @media(min-width: 1920px) {
     margin-top: 72px;
   }

@@ -103,7 +103,6 @@ class App extends React.Component {
               <Switch>
                 {/* non logged in areas */}
 
-                <Route exact path="/" component={Landing} />
                 <Route path="/privacy-policy" component={this.routeToOutside('https://about.starsona.com/privacy-policy')} />
                 <Route path="/terms-service" component={this.routeToOutside('https://about.starsona.com/terms-service')} s/>
                 <Route path="/contact" component={this.routeToOutside('https://about.starsona.com/contact')} />
@@ -113,7 +112,6 @@ class App extends React.Component {
                   path="/signup"
                   render={props => <Landing {...props} isSignup />}
                 />
-                <Route exact path="/group-profile/:id" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
 
@@ -160,7 +158,9 @@ class App extends React.Component {
                 {/* fallbacks, keep it last */}
                 <Route path="/unauthorized" component={Unauthorized} />
                 <Route path="/not-found" component={Page404} />
-                <Route exact path="/:id" component={Starprofile} />
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/:id" component={Landing} />
+                <Route exact path="/group-profile/:id" component={Landing} />
                 <Route component={Page404} />
               </Switch>
             )
