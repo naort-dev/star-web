@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const GroupProfileStyled = styled.div`
-  background-color: #FFF;
   height: 100%;
   overflow: auto;
+  display: ${props => (props.menuActive ? 'none' : 'block')};
   @media(min-width: 1920px) {
     margin-top: 72px;
   }
@@ -75,7 +75,7 @@ GroupProfileStyled.mainSection = styled.section`
   }
   .image-gallery-slides, .image-gallery-slides img {
     min-height: 130px;
-    max-height: 430px;
+    max-height: 350px;
     object-fit: cover;
   }
 `;
