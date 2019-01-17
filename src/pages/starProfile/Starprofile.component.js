@@ -1,17 +1,18 @@
 import React from 'react';
 import ImageGallery from 'react-image-gallery';
 import 'react-image-gallery/styles/css/image-gallery.css';
-import { Link } from 'react-router-dom';
 import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import AppBanner from '../../components/AppBanner';
 import Loader from '../../components/Loader';
+import Sidebar from '../../components/Sidebar';
 import ScrollList from '../../components/ScrollList';
 import VideoPopup from '../../components/VideoPopup';
-import { ImageStack } from '../../components/ImageStack';
 import Popup from '../../components/Popup';
+import { getStarsonaVideo } from '../../services';
+import { requestTypes } from '../../constants/requestTypes';
 import { fetch } from '../../services/fetch';
 import { checkPrerender } from '../../utils/checkOS';
 import StarProfileStyled from '../starProfile/styled';
@@ -38,10 +39,42 @@ export default class Starprofile extends React.Component {
 
   componentWillMount() {
     this.props.resetCelebDetails();
-    this.props.fetchCelebDetails(this.getUserId(this.props));
-    if (!this.isMyStarPage()) {
-      this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
+    // if (!this.isMyStarPage()) {
+    //   this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
+    // }
+    const params = this.props.location.search && this.props.location.search.split('?')[1];
+    const finalParams = params && params.split('&');
+    if (finalParams) {
+      if (!finalParams.find(data => data.split('=')[0] === 'video_id')) {
+        this.props.fetchCelebDetails(this.getUserId(this.props));
+      }
+      finalParams.forEach((data) => {
+        if (data.split('=')[0] === 'video_id') {
+          getStarsonaVideo(data.split('=')[1])
+            .then((resp) => {
+              this.props.fetchCelebDetails(this.getUserId(this.props));
+              if (resp.success) {
+                const starsonaVideo = resp.data.starsona_video.find(video => video.video_status === 1);
+                let videoTitle = '';
+                if (requestTypes[starsonaVideo.booking_type] === 'Shout-out') {
+                  videoTitle = `Watch this video shout-out from ${starsonaVideo.full_name}`;
+                } else if (requestTypes[starsonaVideo.booking_type] === 'Event') {
+                  videoTitle = `Check out my video announcement courtesy of ${starsonaVideo.full_name}`;
+                } else if (requestTypes[starsonaVideo.booking_type] === 'Shout-out') {
+                  videoTitle = `${starsonaVideo.full_name} answers my fan question!`;
+                }
+                this.setState({
+                  videoActive: true,
+                  selectedVideo: { ...resp.data.starsona_video[0], videoTitle },
+                });
+              }
+            });
+        }
+      });
+    } else {
+      this.props.fetchCelebDetails(this.getUserId(this.props));
     }
+
     this.props.fetchCelebVideosList(this.state.offsetValue, true, this.getUserId(this.props));
   }
   componentWillReceiveProps(nextProps) {
@@ -161,7 +194,7 @@ export default class Starprofile extends React.Component {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     let firstName = '';
     if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
-      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name.split(' ')[0]
+      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : this.props.userDetails.first_name + ' ' + this.props.userDetails.last_name;
     }
     return (
@@ -177,6 +210,16 @@ export default class Starprofile extends React.Component {
       sharePopup: true,
     });
   }
+
+  getPreviewImage() {
+    if (this.state.selectedVideo && this.state.selectedVideo.s3_thumbnail_url) {
+      return this.state.selectedVideo.s3_thumbnail_url;
+    } else if (this.props.userDetails.avatar_photo) {
+      return this.props.userDetails.avatar_photo.image_url;
+    }
+    return '../../assets/images/profile.png';
+  }
+
   closePopup = () => {
     this.setState({ sharePopup: false });
   }
@@ -244,7 +287,7 @@ export default class Starprofile extends React.Component {
     }
     let firstName = '';
     if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
-      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name.split(' ')[0] : this.props.userDetails.first_name;
+      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name : this.props.userDetails.first_name;
     }
     if (this.props.userDetails && this.props.userDetails.featured_photo) {
       const { featured_photo: { image_url } } = this.props.userDetails;
@@ -252,7 +295,6 @@ export default class Starprofile extends React.Component {
     }
     const descriptionLength = this.props.celebrityDetails.description ?
       this.props.celebrityDetails.description.length : 0;
-
     if (this.props.detailsError) {
       return <Redirect to="/not-found" />;
     }
@@ -280,10 +322,10 @@ export default class Starprofile extends React.Component {
         {
           !this.isMyStarPage() &&
           <Helmet
-            title={fullName}
+            title={this.state.selectedVideo && this.state.selectedVideo.videoTitle ? this.state.selectedVideo.videoTitle : fullName}
             meta={[...setMetaTags(
-              fullName,
-              this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png',
+              this.state.selectedVideo && this.state.selectedVideo.videoTitle ? this.state.selectedVideo.videoTitle : fullName,
+              this.getPreviewImage(),
               `Get your personalized video from ${fullName}`,
             ),
             { property: 'al:ios:app_store_id', content: env('iosAppId') },
@@ -319,94 +361,107 @@ export default class Starprofile extends React.Component {
           </Popup>
         }
 
-        <Header
+        {/* <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
-          disableMenu
-        />
+        /> */}
         {this.props.userDetails && !this.props.detailsLoading &&
-        <StarProfileStyled.sectionWrapper>
-          <ImageGallery
-            items={images}
-            showThumbnails={false}
-            showFullscreenButton={false}
-            useBrowserFullscreen={false}
-            showPlayButton={false}
-            autoPlay={true}
-            slideInterval={8000}
-          />
-          <StarProfileStyled.profileWrapper>
-            <div className="profileImageContainer">
-              <StarProfileStyled.profileImage src={this.props.userDetails && this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
-            </div>
-            <div className="profileDetails">
-              <div className="groupDetailsContainer">
-                <h1>
-                  {fullName}
-                  <StarProfileStyled.FavoriteButton
-                    onClick={e => this.updateFavouriteSelection(e)}
-                    selected={this.state.favouriteSelected}
-                  />
-                  {this.props.userDetails.share_url && <StarProfileStyled.shareButton onClick={() => { this.shareProfileAction(); }}></StarProfileStyled.shareButton>}
-                </h1>
-                <div className="professionDetails">{starProfessionsDotFormater(this.props.celebrityDetails.profession_details)}</div>
-                <p className={descriptionClass}>{this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}</p>
-                { descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p> : ''}
-              </div>
-
-              <div className="socialMediaIcons">
-                <StarProfileStyled.ButtonWrapper>
-                  <StarProfileStyled.getStartedButton onClick={() => this.handleRequest()}>
-                    {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.vf() : 'Alert Me'}
-                  </StarProfileStyled.getStartedButton>
-                  
-                </StarProfileStyled.ButtonWrapper>
-                {this.props.userDetails.social_links &&
-                  this.props.userDetails.social_links.map(data => this.socialMedia(data))}
-              </div>
-
-              <div className="videoListing">
-                <h2>Starsona videos from {fullName}</h2>
-                <StarProfileStyled.ScrollListWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
-                  {
-                    !this.props.videosList.data.length && this.props.videosList.loading ?
-                      <Loader />
-                      :
-                      <div>
-                        <ul>{this.props.videosList.data.map(data => this.renderItem(data))}</ul>
-                        { this.props.videosList.loading ? <Loader /> : null}
-                        {
-                          this.props.videosList.count > 6 &&
-                          (this.state.offsetValue + 6) < this.props.videosList.count &&
-                          <p className="seeAllVideos" onClick={() => this.seeAllVideosAction(this.state.offsetValue)}>See more videos</p>
-                        }
-                      </div>
-              }
-                  {this.props.videosList.count === 0 && <div>Be the first to get this type of video!</div>}
-                </StarProfileStyled.ScrollListWrapper>
-                <StarProfileStyled.ScrollMobWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
-                  <div className="videoMobScroll">
-                    <Scrollbars>
-                      <HorizontalScrollList
-                        noDataText="Be the first to get this type of video!"
-                        starVideos
-                        starsPage
-                        renderFunction={this.renderMobItem}
-                        dataList={this.props.videosList.data}
-                        limit={this.props.videosList.limit}
-                        totalCount={this.props.videosList.count}
-                        offset={this.props.videosList.offset}
-                        loading={this.props.videosList.loading}
-                        fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
-                      />
-                    </Scrollbars>
+          <StarProfileStyled.sectionWrapper>
+            {/* <StarProfileStyled.sideSection menuActive={this.state.menuActive}>
+              <Scrollbars
+                autoHide
+                renderView={props => <div {...props} className="view" />}
+              >
+                <Sidebar 
+                  list={this.props.professionsList}
+                />
+              </Scrollbars>
+            </StarProfileStyled.sideSection> */}
+            <StarProfileStyled.mainSection>
+              <Scrollbars>
+                <ImageGallery
+                  items={images}
+                  showThumbnails={false}
+                  showFullscreenButton={false}
+                  useBrowserFullscreen={false}
+                  showPlayButton={false}
+                  autoPlay={true}
+                  slideInterval={8000}
+                />
+                <StarProfileStyled.profileWrapper>
+                  <div className="profileImageContainer">
+                    <StarProfileStyled.profileImage src={this.props.userDetails && this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
                   </div>
-                </StarProfileStyled.ScrollMobWrapper>
-              </div>
-            </div>
-          </StarProfileStyled.profileWrapper>
-        </StarProfileStyled.sectionWrapper>}
+                  <div className="profileDetails">
+                    <div className="groupDetailsContainer">
+                      <h1>
+                        {fullName}
+                        <StarProfileStyled.FavoriteButton
+                          onClick={e => this.updateFavouriteSelection(e)}
+                          selected={this.state.favouriteSelected}
+                        />
+                        {this.props.userDetails.share_url && <StarProfileStyled.shareButton onClick={() => { this.shareProfileAction(); }}></StarProfileStyled.shareButton>}
+                      </h1>
+                      <div className="professionDetails">{starProfessionsDotFormater(this.props.celebrityDetails.profession_details)}</div>
+                      <p className={descriptionClass}>{this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}</p>
+                      { descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p> : ''}
+                    </div>
+
+                    <div className="socialMediaIcons">
+                      <StarProfileStyled.ButtonWrapper>
+                        <StarProfileStyled.getStartedButton onClick={() => this.handleRequest()}>
+                          {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.vf() : 'Alert Me'}
+                        </StarProfileStyled.getStartedButton>
+                        
+                      </StarProfileStyled.ButtonWrapper>
+                      {this.props.userDetails.social_links &&
+                        this.props.userDetails.social_links.map(data => this.socialMedia(data))}
+                    </div>
+
+                    <div className="videoListing">
+                      <h2>Starsona videos from {fullName}</h2>
+                      <StarProfileStyled.ScrollListWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
+                        {
+                          !this.props.videosList.data.length && this.props.videosList.loading ?
+                            <Loader />
+                            :
+                            <div>
+                              <ul>{this.props.videosList.data.map(data => this.renderItem(data))}</ul>
+                              { this.props.videosList.loading ? <Loader /> : null}
+                              {
+                                this.props.videosList.count > 6 &&
+                                (this.state.offsetValue + 6) < this.props.videosList.count &&
+                                <p className="seeAllVideos" onClick={() => this.seeAllVideosAction(this.state.offsetValue)}>See more videos</p>
+                              }
+                            </div>
+                    }
+                        {this.props.videosList.count === 0 && <div>Be the first to get this type of video!</div>}
+                      </StarProfileStyled.ScrollListWrapper>
+                      <StarProfileStyled.ScrollMobWrapper count={this.props.videosList.count > 2 ? 3 : this.props.videosList.count}>
+                        <div className="videoMobScroll">
+                          <Scrollbars>
+                            <HorizontalScrollList
+                              noDataText="Be the first to get this type of video!"
+                              starVideos
+                              starsPage
+                              renderFunction={this.renderMobItem}
+                              dataList={this.props.videosList.data}
+                              limit={this.props.videosList.limit}
+                              totalCount={this.props.videosList.count}
+                              offset={this.props.videosList.offset}
+                              loading={this.props.videosList.loading}
+                              fetchData={(offset, refresh) => this.props.fetchCelebVideosList(offset, refresh, this.getUserId(this.props))}
+                            />
+                          </Scrollbars>
+                        </div>
+                      </StarProfileStyled.ScrollMobWrapper>
+                    </div>
+                  </div>
+                </StarProfileStyled.profileWrapper>
+              </Scrollbars>
+            </StarProfileStyled.mainSection>
+          </StarProfileStyled.sectionWrapper>}
         {this.props.detailsLoading && <Loader />}
       </StarProfileStyled>
     );
