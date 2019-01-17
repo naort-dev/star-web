@@ -38,8 +38,8 @@ export default class RowItem extends React.Component {
   }
 
   inviteStar = () => {
-    const { member } = this.props;
-    addGroupMember(member.user_id)
+    const { member, isStar } = this.props;
+    addGroupMember(member.user_id, isStar)
       .then((success) => {
         if (!success) {
           this.setState({ invite: false });

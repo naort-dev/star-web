@@ -42,6 +42,10 @@ export default class StarSupporters extends React.Component {
     }
   }
 
+  fetchNonMemberList = (offset, refresh) => {
+    this.props.fetchNonMemberList(offset, refresh, this.props.isStar);
+  }
+
   switchTab = (selectedTab) => {
     this.setState({ selectedTab });
     this.fetchList(selectedTab);
@@ -80,7 +84,7 @@ export default class StarSupporters extends React.Component {
 
   showInviteView = () => {
     this.setState({ inviteView: true });
-    this.props.fetchNonMemberList(0, true, this.props.isStar);
+    this.fetchNonMemberList(0, true);
   }
 
   renderMembers = member => (
@@ -116,7 +120,7 @@ export default class StarSupporters extends React.Component {
           offset={offset}
           loading={loading}
           noDataText="No Stars"
-          fetchData={this.props.fetchNonMemberList}
+          fetchData={this.fetchNonMemberList}
         />
       </SupportStyled.InviteList>
     );
