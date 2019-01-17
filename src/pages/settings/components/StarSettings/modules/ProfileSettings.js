@@ -169,7 +169,8 @@ export default class ProfileSettings extends React.Component {
         availability: true,
       };
       const userDetails = {
-        nick_name: this.state.stageName,
+        nick_name: this.state.stageName && this.state.stageName.trim(''),
+        show_nick_name: this.state.stageName && this.state.stageName.trim('') ? true : false,
       };
       const socialLinks = {
         facebook_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/, this.state.socialMedia.facebook, 'https://www.facebook.com/'),

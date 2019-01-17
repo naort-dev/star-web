@@ -174,29 +174,36 @@ class Header extends React.Component {
       return (
         <HeaderSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
           {
-            this.props.suggestionsList.suggestions.map(item => (
-              <HeaderSection.SuggestionListItem
-                tabIndex="0"
-                key={item.user_id}
-                onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
-              >
-                <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
-                  <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                    <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
-                    <HeaderSection.SuggestionListName>
-                      {item.get_short_name}
-                      <HeaderSection.SuggestionDetails>
-                        {
-                          item.has_group_account ?
-                            item.group_type
-                          : starProfessionsFormater(item.celebrity_profession)
-                        }
-                      </HeaderSection.SuggestionDetails>
-                    </HeaderSection.SuggestionListName>
-                  </HeaderSection.SuggestionListContent>
-                </Link>
-              </HeaderSection.SuggestionListItem>
-            ))
+            this.props.suggestionsList.suggestions.map((item) => {
+              let fullName = '';
+              if (item.nick_name || item.first_name || item.last_name) {
+                fullName = item.nick_name ? item.nick_name
+                  : `${item.first_name} ${item.last_name}`;
+              }
+              return (
+                <HeaderSection.SuggestionListItem
+                  tabIndex="0"
+                  key={item.user_id}
+                  onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
+                >
+                  <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
+                    <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
+                      <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
+                      <HeaderSection.SuggestionListName>
+                        {fullName}
+                        <HeaderSection.SuggestionDetails>
+                          {
+                            item.has_group_account ?
+                              item.group_type
+                            : starProfessionsFormater(item.celebrity_profession)
+                          }
+                        </HeaderSection.SuggestionDetails>
+                      </HeaderSection.SuggestionListName>
+                    </HeaderSection.SuggestionListContent>
+                  </Link>
+                </HeaderSection.SuggestionListItem>
+              );
+            })
           }
         </HeaderSection.SuggestionList>
       );
