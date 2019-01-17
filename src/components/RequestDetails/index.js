@@ -56,12 +56,20 @@ export default class RequestDetails extends React.Component {
     const { requestStatus, requestVideo, orderDetails } = this.props;
     if (requestStatus === 6) { // completed video
       const finalVideo = requestVideo.find(video => video.video_status === 1); // find final video
-      if (!finalVideo.read_status) {
+      const videoViewCount = finalVideo.fan_view_count + 1;
+      const enableRateView = videoViewCount === 1 || videoViewCount % 5 === 0;
+      if (!orderDetails.fan_rating && enableRateView) {
         this.videoRead = true;
+      }
+      if (!orderDetails.fan_rating) {
         setVideoViewStatus(finalVideo.video_id)
-          .then((success) => {
-            if (success) {
-              finalVideo.read_status = true;
+          .then((response) => {
+            if (response.success) {
+              const checkRateEnable = response.data.read_video_status.has_comments || videoViewCount !== response.data.read_video_status.count;
+              if (checkRateEnable) {
+                this.videoRead = false;
+              }
+              finalVideo.fan_view_count = videoViewCount;
               const orderDetailsTemp = cloneDeep(orderDetails);
               const videoIndex = requestVideo.findIndex(video => video.video_status === 1);
               orderDetailsTemp.request_video[videoIndex] = finalVideo;
