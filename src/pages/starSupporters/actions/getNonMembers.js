@@ -52,7 +52,7 @@ export const removeNonMember = userId => (dispatch, getState) => {
 export const fetchNonMemberList = (offset, refresh, isStar) => (dispatch, getState) => {
   const { limit } = getState().groupSupporters.nonMemberList;
   dispatch(memberListFetchStart(refresh));
-  let apiURL = `${Api.getGroupMembers}?limit=${limit}&celebrity=true&offset=${offset}`;
+  let apiURL = `${Api.getGroupMembers}?limit=${limit}&offset=${offset}`;
   if (isStar) {
     apiURL = `${apiURL}&celebrity=true`;
   }

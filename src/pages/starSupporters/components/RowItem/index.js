@@ -57,8 +57,9 @@ export default class RowItem extends React.Component {
     }
   }
 
-  renderApproval = ({ celebrity_invite: invited }) => {
-    const { member } = this.props;
+  renderApproval = ({ celebrity_invite: celebrityInvite, approved: groupInvite }) => { 
+    const { member, isStar } = this.props;
+    const invited = isStar ? groupInvite : celebrityInvite;
     if (!invited) {
       return (
         <React.Fragment>
@@ -101,14 +102,17 @@ export default class RowItem extends React.Component {
             </RowStyled.ProfileImageWrapper>
             <RowStyled.DetailWrapper>
               <RowStyled.StarName onClick={this.onAction('view', `/${isStar ? `group-profile/${member.user_id}` : member.user_id}`)}>{member.get_short_name}</RowStyled.StarName>
-              <RowStyled.DetailItem>{starProfessionsDotFormater(member.celebrity_profession)}</RowStyled.DetailItem>
+              <RowStyled.DetailItem>{isStar ? member.group_type : starProfessionsDotFormater(member.celebrity_profession)}</RowStyled.DetailItem>
             </RowStyled.DetailWrapper>
           </RowStyled.ProfileDetailWrapper>
           <RowStyled.ControlWrapper>
             {
               member.celebrity_account[0] && member.celebrity_account[0].approved && member.celebrity_account[0].celebrity_invite ?
                 <React.Fragment>
-                  <RowStyled.ControlButton onClick={this.onAction('book', member.user_id)} >Book</RowStyled.ControlButton>
+                  {
+                    !isStar &&
+                      <RowStyled.ControlButton onClick={this.onAction('book', member.user_id)} >Book</RowStyled.ControlButton>
+                  }
                   <RowStyled.ControlButton onClick={this.onAction('view', `/${isStar ? `group-profile/${member.user_id}` : member.user_id}`)} alternate>View</RowStyled.ControlButton>
                   <RowStyled.ControlButton alternate onClick={this.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Remove</RowStyled.ControlButton>
                 </React.Fragment>

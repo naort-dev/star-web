@@ -67,7 +67,7 @@ export default class StarSupporters extends React.Component {
           }
         });
     } else if (type === 'accept') {
-      addGroupMember(actionData)
+      addGroupMember(actionData, this.props.isStar)
         .then((success) => {
           if (success) {
             this.fetchList(this.state.selectedTab);

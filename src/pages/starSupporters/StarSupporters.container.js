@@ -13,6 +13,7 @@ const mapStateToProps = state => ({
   membersLoading: state.groupSupporters.memberList.loading,
   membersOffset: state.groupSupporters.memberList.offset,
   nonMemberList: state.groupSupporters.nonMemberList,
+  userDetails: state.userDetails.settings_userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
