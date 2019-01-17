@@ -351,6 +351,7 @@ StarProfileStyled.getStartedButton = styled.button`
   }
   .bookButton {
     font-family: 'Avenir-Regular';
+    word-break: break-all;
   }
 `;
 StarProfileStyled.followingButton = styled.div`
