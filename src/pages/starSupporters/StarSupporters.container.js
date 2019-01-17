@@ -13,12 +13,13 @@ const mapStateToProps = state => ({
   membersLoading: state.groupSupporters.memberList.loading,
   membersOffset: state.groupSupporters.memberList.offset,
   nonMemberList: state.groupSupporters.nonMemberList,
+  userDetails: state.userDetails.settings_userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMemberList: (offset, refresh, type) => dispatch(fetchMemberList(offset, refresh, true, type)),
+  fetchMemberList: (offset, refresh, isStar, type) => dispatch(fetchMemberList(offset, refresh, isStar, type)),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
-  fetchNonMemberList: (offset, refresh) => dispatch(fetchNonMemberList(offset, refresh)),
+  fetchNonMemberList: (offset, refresh, isStar) => dispatch(fetchNonMemberList(offset, refresh, isStar)),
   removeMember: userId => dispatch(removeMember(userId)),
   removeNonMember: userId => dispatch(removeNonMember(userId)),
 });

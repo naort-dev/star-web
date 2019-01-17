@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 const StarProfileStyled = styled.div`
-  background-color: #FFF;
   height: 100%;
   overflow: auto;
+   display: ${props => (props.menuActive ? 'none' : 'block')};
   @media(min-width: 1920px) {
     margin-top: 72px;
   }
@@ -50,8 +50,6 @@ StarProfileStyled.sectionWrapper = styled.div`
   width: 100%;
   max-width: 1920px;
   height: 100%;
-
-  
 `;
 
 StarProfileStyled.sideSection = styled.section`
@@ -97,7 +95,7 @@ StarProfileStyled.mainSection = styled.section`
   }
   .image-gallery-slides, .image-gallery-slides img {
     min-height: 130px;
-    max-height: 400px;
+    max-height: 350px;
     object-fit: cover;
     object-position: top;
   }

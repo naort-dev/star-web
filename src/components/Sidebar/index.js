@@ -16,6 +16,9 @@ class Sidebar extends React.Component {
 
   selectCategory = (label, id, category) => {
     if (label === 'featured') this.setState({ showSubCategory: false });
+    if (this.props.history && this.props.history.location.pathname !== '/') {
+      this.props.history.push('/');
+    }
     if (this.props.selectedCategory === id && category === 'Stars') {
       this.setState({ showSubCategory: !this.state.showSubCategory});
       return;
@@ -30,9 +33,6 @@ class Sidebar extends React.Component {
     this.props.updateCategory(label, id, category);
     if (this.props.updateMainCategory) {
       this.props.updateMainCategory(label, id, category);
-    }
-    if (this.props.history && this.props.history.location.pathname !== '/') {
-      this.props.history.push('/');
     }
   }
 
@@ -161,7 +161,7 @@ class Sidebar extends React.Component {
                             <SidebarStyled.CategoryTitle
                               selected={this.props.selectedCategory === 'requests'}
                             >
-                              <Link to={'/user/bookings'}>
+                              <Link to="/user/bookings">
                                 <SidebarStyled.LinkElement>
                                   Requests
                                   {
@@ -181,12 +181,17 @@ class Sidebar extends React.Component {
                             <SidebarStyled.CategoryTitle
                               selected={this.props.selectedCategory === 'earnings'}
                             >
-                              <Link to={'/user/earnings'}>Earnings</Link>
+                              <Link to="/user/earnings">Earnings</Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                           <SidebarStyled.ListItem>
                             <SidebarStyled.CategoryTitle>
                               <Link to="/settings">Settings</Link>
+                            </SidebarStyled.CategoryTitle>
+                          </SidebarStyled.ListItem>
+                          <SidebarStyled.ListItem>
+                            <SidebarStyled.CategoryTitle>
+                              <Link to="/user/my-groups">My groups</Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                         </SidebarStyled.ListWrapper>

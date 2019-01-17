@@ -180,7 +180,7 @@ export default class GroupProfile extends React.Component {
       return <Redirect to="/not-found" />;
     }
     return (
-      <GroupProfileStyled>
+      <GroupProfileStyled menuActive={this.props.menuActive}>
         {/* <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}

@@ -297,9 +297,9 @@ export default class Starprofile extends React.Component {
       this.props.celebrityDetails.description.length : 0;
     if (this.props.detailsError) {
       return <Redirect to="/not-found" />;
-    }
+    }    
     return (
-      <StarProfileStyled>
+      <StarProfileStyled menuActive={this.props.menuActive}>
         {
           this.state.videoActive &&
           <VideoPopup
@@ -368,17 +368,7 @@ export default class Starprofile extends React.Component {
         /> */}
         {this.props.userDetails && !this.props.detailsLoading &&
           <StarProfileStyled.sectionWrapper>
-            {/* <StarProfileStyled.sideSection menuActive={this.state.menuActive}>
-              <Scrollbars
-                autoHide
-                renderView={props => <div {...props} className="view" />}
-              >
-                <Sidebar 
-                  list={this.props.professionsList}
-                />
-              </Scrollbars>
-            </StarProfileStyled.sideSection> */}
-            <StarProfileStyled.mainSection>
+            <StarProfileStyled.mainSection menuActive={this.props.menuActive}>
               <Scrollbars>
                 <ImageGallery
                   items={images}
