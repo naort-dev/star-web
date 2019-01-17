@@ -23,7 +23,7 @@ class ColumnLayout extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let { menuActive, innerLinks } = prevState;
+    let { innerLinks } = prevState;
     const { role } = nextProps;
     if (nextProps.userDetails.celebrity) {
       innerLinks = starInnerLinks;
@@ -32,7 +32,7 @@ class ColumnLayout extends React.Component {
     } else {
       innerLinks = fanInnerLinks;
     }
-    return ({ menuActive, innerLinks });
+    return ({ innerLinks });
   }
 
   activateMenu = () => {

@@ -59,13 +59,9 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
-      this.props.fetchGroupTypesListing();
-      this.props.fetchGroupTypes();
     }
     if (!nextProps.configLoading && nextProps.configData && (!nextProps.isLoggedIn || nextProps.userDataLoaded)) {
       this.setState({ showLoading: false });
-    } else if (!nextProps.configLoading && !nextProps.configData) {
-      this.props.getConfig();
     }
   }
 
@@ -131,6 +127,12 @@ class App extends React.Component {
                 />
                 <Route
                   path="/user/star-supporters"
+                  component={protectRoute({
+                    RouteComponent: StarSupporters,
+                  })}
+                />
+                <Route
+                  path="/user/my-groups"
                   component={protectRoute({
                     RouteComponent: StarSupporters,
                   })}
