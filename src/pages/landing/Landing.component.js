@@ -1,8 +1,11 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
+import { Starprofile } from '../starProfile';
+import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 import ScrollList from '../../components/ScrollList';
@@ -99,7 +102,9 @@ export default class Landing extends React.Component {
   }
   onBackButtonEvent = event => event.preventDefault()
   setScrollHeight = () => {
-    this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+    if (this.state.tabsRef) {
+      this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
+    }
   }
   getFilterCount = () => {
     let count = 0;
@@ -225,45 +230,55 @@ export default class Landing extends React.Component {
               />
             </Scrollbars>
           </LandingStyled.sideSection>
-          <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <div
-              ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
-            >
-              <Tabs
-                labels={['Stars', 'Videos']}
-                switchTab={this.props.switchTab}
-                selectedCategory={this.props.filters.category.label}
-                filterSelected={this.state.filterSelected}
-                selected={this.props.filters.selectedTab}
-                filterCount={this.getFilterCount}
-                toggleFilter={this.toggleFilterSection}
-                noTabs={this.state.groupClick}
-              />
-              {
-                this.state.filterSelected &&
-                <FilterSection
-                  selectedPriceRange={{ low: this.props.filters.lowPrice, high: this.props.filters.highPrice }}
-                  selectedTab={this.props.filters.selectedTab}
-                  selectedSort={this.props.filters.sortValue}
-                  selectedSubCategories={this.props.filters[this.props.filters.category.value]}
-                  subCategoryList={this.state.subCategoryList}
-                  selectedVideoType={this.props.filters.selectedVideoType}
-                  selectedVideoDate={this.props.filters.selectedVideoDate}
-                  filterSelected={this.state.filterSelected}
-                  updatePriceRange={this.props.updatePriceRange}
-                  updateSort={this.props.updateSort}
-                  updateSelectedSubCategory={this.updateSubCategoryList}
-                  updateSelectedVideoType={this.props.updateSelectedVideoType}
-                  updateSelectedVideoDate={this.props.updateSelectedVideoDate}
-                  toggleFilter={this.toggleFilterSection}
-                  groupClicked={this.state.groupClick}
-                />
-              }
-            </div>
-            <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-              {this.renderScrollList()}
-            </div>
-          </LandingStyled.mainSection>
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <LandingStyled.mainSection menuActive={this.state.menuActive}>
+                  <div
+                    ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
+                  >
+                    <Tabs
+                      labels={['Stars', 'Videos']}
+                      switchTab={this.props.switchTab}
+                      selectedCategory={this.props.filters.category.label}
+                      filterSelected={this.state.filterSelected}
+                      selected={this.props.filters.selectedTab}
+                      filterCount={this.getFilterCount}
+                      toggleFilter={this.toggleFilterSection}
+                      noTabs={this.state.groupClick}
+                    />
+                    {
+                      this.state.filterSelected &&
+                      <FilterSection
+                        selectedPriceRange={{ low: this.props.filters.lowPrice, high: this.props.filters.highPrice }}
+                        selectedTab={this.props.filters.selectedTab}
+                        selectedSort={this.props.filters.sortValue}
+                        selectedSubCategories={this.props.filters[this.props.filters.category.value]}
+                        subCategoryList={this.state.subCategoryList}
+                        selectedVideoType={this.props.filters.selectedVideoType}
+                        selectedVideoDate={this.props.filters.selectedVideoDate}
+                        filterSelected={this.state.filterSelected}
+                        updatePriceRange={this.props.updatePriceRange}
+                        updateSort={this.props.updateSort}
+                        updateSelectedSubCategory={this.updateSubCategoryList}
+                        updateSelectedVideoType={this.props.updateSelectedVideoType}
+                        updateSelectedVideoDate={this.props.updateSelectedVideoDate}
+                        toggleFilter={this.toggleFilterSection}
+                        groupClicked={this.state.groupClick}
+                      />
+                    }
+                  </div>
+                  <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                    {this.renderScrollList()}
+                  </div>
+                </LandingStyled.mainSection>
+              )}
+            />
+            <Route exact path="/:id" component={Starprofile} />
+            <Route exact path="/group-profile/:id" component={GroupProfile} />
+          </Switch>
         </LandingStyled.sectionWrapper>
       </LandingStyled>
     );
