@@ -123,7 +123,8 @@ export default class StarDetailsEntry extends React.Component {
         availability: true,
       };
       const userDetails = {
-        nick_name: this.state.stageName,
+        nick_name: this.state.stageName && this.state.stageName.trim(''),
+        show_nick_name: this.state.stageName && this.state.stageName.trim('') ? true : false,
       };
       const groupIds = this.state.groups.map(group => group.group_id).join(',');
       const socialLinks = {
