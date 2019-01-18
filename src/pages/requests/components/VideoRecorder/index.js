@@ -121,7 +121,11 @@ export default class VideoRecorder extends React.Component {
               this.props.onComplete(false);
             });
         }
-      });
+      })
+      .catch((e) => {
+        this.props.requestFetchFailed();
+        this.props.onComplete(false);
+      })
   }
 
   videoSubmit = () => {

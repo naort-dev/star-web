@@ -47,6 +47,7 @@ export default class RequestDetails extends React.Component {
     this.profileImage.src = this.props.starMode ? this.props.fanProfile : this.props.profile;
     window.addEventListener('click', this.handleGlobalClick);
   }
+
   componentWillUnmount() {
     this.mounted = false;
     window.removeEventListener('click', this.handleGlobalClick);

@@ -200,12 +200,12 @@ const starsonaVideo = (authToken, filename, requestId, duration, dispatch, callb
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
       if (callback) {
-        callback();
+        callback(requestId);
       }
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
+    dispatch(paymentFetchFailed(exception.response.data.error));
   });
 }
 
@@ -260,7 +260,7 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
         starsonaVideo(authToken, bookingData.fileName, resp.data.data['stargramz_response'].id, "00:00", dispatch, callback);
         //Q&A
       } else if (callback) {
-        callback();
+        callback(resp.data.data.stargramz_response.id);
       }
       dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
     } else {
@@ -268,6 +268,6 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception.data.reponse.error));
+    dispatch(paymentFetchFailed(exception.response.data.error));
   });
 };

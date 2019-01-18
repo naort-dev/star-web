@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEmpty } from 'lodash'
 import ColumnLayout from '../../components/ColumnLayout';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
@@ -24,7 +25,9 @@ export default class Requests extends React.Component {
       selectedTab: 'All',
       requestAction: '',
       showActionPopup: false,
+      loading: false,
       orderDetails: {},
+      alertText: '',
       scrollTarget: '',
     };
     this.requestType = {
@@ -58,6 +61,8 @@ export default class Requests extends React.Component {
   }
 
   onVideoUpload = (success) => {
+    const { orderDetails } = this.state;
+    const { fan } = orderDetails;
     this.props.onClearStreams();
     this.props.deleteVideo();
     if (window.stream) {
@@ -67,16 +72,19 @@ export default class Requests extends React.Component {
       });
     }
     if (success) {
-      this.requestAction(this.state.orderDetails, 'respondSuccess');
+      this.requestAction(`Thank you! Your Starsona has been sent to ${fan}`, 'alert');
     } else {
-      this.requestAction(this.state.orderDetails, 'respondFail');
+      this.requestAction('Something went wrong', 'alert');
     }
   }
 
   getPopupContent = (requestAction) => {
-    const { orderDetails } = this.state;
-    const { request_video: requestVideo, fan } = orderDetails;
-    const finalVideo = requestVideo.filter(video => video.video_status === 1)[0]; // find completed video
+    const { orderDetails, alertText } = this.state;
+    let finalVideo;
+    if (!isEmpty(orderDetails)) {
+      const { request_video: requestVideo } = orderDetails;
+      finalVideo = requestVideo.find(video => video.video_status === 1); // find completed video
+    }
     switch (requestAction) {
       case 'share':
         return <ShareView iconSize={50} title={orderDetails.booking_title} shareUrl={`https://${finalVideo.video_url}`} />;
@@ -135,17 +143,10 @@ export default class Requests extends React.Component {
             requestType={orderDetails.request_type}
           />
         );
-      case 'respondSuccess':
+      case 'alert':
         return (
           <AlertView
-            message={`Thank you! Your Starsona has been sent to ${fan}`}
-            closePopup={this.closePopup}
-          />
-        );
-      case 'respondFail':
-        return (
-          <AlertView
-            message="Something went wrong"
+            message={alertText}
             closePopup={this.closePopup}
           />
         );
@@ -240,9 +241,26 @@ export default class Requests extends React.Component {
   }
 
   requestAction = (data, actionType) => {
-    let { requestAction, showActionPopup } = this.state;
+    let { requestAction, showActionPopup, orderDetails, alertText } = this.state;
     if (actionType === 'edit') {
-      this.editRequest(data);
+      this.setState({ loading: true });
+      getRequestDetails(data.booking_id)
+        .then((requestDetails) => {
+          this.setState({ loading: false });
+          if (requestDetails.success &&
+            requestDetails.data &&
+            requestDetails.data.stargramz_response
+          ) {
+            if (requestDetails.data.stargramz_response.editable) {
+              this.editRequest(data);
+            } else {
+              this.props.updateVideosList(requestDetails.data.stargramz_response.id, requestDetails.data.stargramz_response);
+              this.requestAction('Sorry; You can no longer update this request, as we have started processing it', 'alert');
+            }
+          } else {
+            this.requestAction('Something went wrong', 'alert');
+          }
+        });
     } else if (actionType === 'share'
       || actionType === 'respond'
       || actionType === 'report'
@@ -250,14 +268,18 @@ export default class Requests extends React.Component {
       || actionType === 'rate'
       || actionType === 'decline'
       || actionType === 'cancel'
-      || actionType === 'respondSuccess'
-      || actionType === 'respondFail'
+      || actionType === 'alert'
       || actionType === 'reaction'
     ) {
       showActionPopup = true;
+      if (actionType === 'alert') {
+        alertText = data;
+      } else {
+        orderDetails = data;
+      }
     }
     requestAction = actionType;
-    this.setState({ orderDetails: data, requestAction, showActionPopup });
+    this.setState({ orderDetails, alertText, requestAction, showActionPopup });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -294,7 +316,7 @@ export default class Requests extends React.Component {
   }
 
   closePopup = () => {
-    this.setState({ showActionPopup: false });
+    this.setState({ showActionPopup: false, alertText: '' });
   }
 
   renderRequests = (request) => {
@@ -356,7 +378,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    const { requestAction, showActionPopup } = this.state;
+    const { requestAction, showActionPopup, loading } = this.state;
     return (
       <div>
         <ColumnLayout
@@ -367,7 +389,7 @@ export default class Requests extends React.Component {
           {this.renderCenterSection()}
         </ColumnLayout>
         {
-          this.props.orderDetailsLoading ?
+          this.props.orderDetailsLoading || loading ?
             <ActionLoader />
           : null
         }
