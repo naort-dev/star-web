@@ -70,7 +70,7 @@ export default class RowItem extends React.Component {
                 <RowStyled.ButtonOverlayWrapper>
                   <RowStyled.ButtonArrow />
                   <RowStyled.ButtonOverlay
-                    onClick={this.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}
+                    onClick={this.onAction('cancel', { id: member.celebrity_account[0].id, userId: member.user_id, name: member.get_short_name })}
                   >
                     Cancel request
                   </RowStyled.ButtonOverlay>
@@ -82,8 +82,8 @@ export default class RowItem extends React.Component {
     }
     return (
       <React.Fragment>
-        <RowStyled.ControlButton onClick={this.onAction('accept', member.user_id)}>Accept</RowStyled.ControlButton>
-        <RowStyled.ControlButton alternate onClick={this.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Decline</RowStyled.ControlButton>
+        <RowStyled.ControlButton onClick={this.onAction('accept', { userId: member.user_id, name: member.get_short_name })}>Accept</RowStyled.ControlButton>
+        <RowStyled.ControlButton alternate onClick={this.onAction('decline', { id: member.celebrity_account[0].id, userId: member.user_id, name: member.get_short_name })}>Decline</RowStyled.ControlButton>
       </React.Fragment>
     );
   }
@@ -114,7 +114,7 @@ export default class RowItem extends React.Component {
                       <RowStyled.ControlButton onClick={this.onAction('book', member.user_id)} >Book</RowStyled.ControlButton>
                   }
                   <RowStyled.ControlButton onClick={this.onAction('view', `/${isStar ? `group-profile/${member.user_id}` : member.user_id}`)} alternate>View</RowStyled.ControlButton>
-                  <RowStyled.ControlButton alternate onClick={this.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id })}>Remove</RowStyled.ControlButton>
+                  <RowStyled.ControlButton alternate onClick={this.onAction('remove', { id: member.celebrity_account[0].id, userId: member.user_id, name: member.get_short_name })}>Remove</RowStyled.ControlButton>
                 </React.Fragment>
               : null
             }
@@ -125,12 +125,12 @@ export default class RowItem extends React.Component {
             }
             {
               !member.celebrity_account[0] && !this.state.invite ?
-                <RowStyled.ControlButton onClick={this.inviteStar}>Invite</RowStyled.ControlButton>
+                <RowStyled.ControlButton onClick={this.inviteStar}>{isStar ? 'Support' : 'Invite' }</RowStyled.ControlButton>
               : null
             }
             {
               !member.celebrity_account[0] && this.state.invite ?
-                <RowStyled.ControlButton disabled>Invite sent</RowStyled.ControlButton>
+                <RowStyled.ControlButton disabled>{isStar ? 'Requested' : 'Invite sent' }</RowStyled.ControlButton>
               : null
             }
           </RowStyled.ControlWrapper>
