@@ -446,6 +446,7 @@ export default class StarNotification extends React.Component {
               placeholder="Mobile phone(optional)"
               value={rep.phone}
               onChange={value => this.setRepPhone(index, value)}
+              country="US"
             />
             <div className="errorElement">
               {
@@ -546,11 +547,12 @@ export default class StarNotification extends React.Component {
                 <NotificationStyled.PhoneInput>
                   <div>
                     <PhoneInput
+                      country="US"
                       placeholder="Phone number"
                       ref={(node) => this.phone = node}
                       value={value}
                       onCountryChange={value1 => this.setState({ country: value1 })}
-                    onChange={value => this.setState({ value, phoneNumberVerify: 'Verify' })}
+                      onChange={value => this.setState({ value, phoneNumberVerify: 'Verify' })}
                     // error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
                     />
                     <div className="errorElement">
