@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const IndustryStyled = styled.div`
-
+  @media(min-width: 768px) {
+    min-height: 600px;
+  }
 `;
 
 IndustryStyled.HeaderWrapper = styled.div`
