@@ -171,7 +171,7 @@ class IndustrySelectionComponent extends React.Component {
             </IndustryStyled.Description>
             <IndustryStyled.SearchWrapper>
               <IndustryStyled.SearchField
-                placeholder="search for your industry"
+                placeholder="Search for your industry"
                 value={searchValue}
                 onChange={(event) => this.getSearchValue(event)}
               />
