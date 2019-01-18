@@ -5,6 +5,8 @@ import ColumnLayout from '../../components/ColumnLayout';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
 import Loader from '../../components/Loader';
 import InnerTabs from '../../components/InnerTabs';
+import Popup from '../../components/Popup';
+import AlertView from '../../components/AlertView';
 import RowItem from './components/RowItem';
 import ScrollList from '../../components/ScrollList';
 import SupportStyled from './styled';
@@ -16,6 +18,7 @@ export default class StarSupporters extends React.Component {
       selectedTab: 'All',
       scrollTarget: '',
       inviteView: false,
+      alertText: '',
       popupRef: null,
     };
   }
@@ -63,17 +66,28 @@ export default class StarSupporters extends React.Component {
   handleAction = (type, actionData) => {
     if (type === 'view') {
       this.props.history.push(actionData);
-    } else if (type === 'remove') {
+    } else if (type === 'remove' || type === 'cancel' || type === 'decline') {
       deleteGroupMember(actionData.id)
         .then((success) => {
           if (success) {
+            let alertText;
             this.props.removeMember(actionData.userId);
+            if (type === 'cancel') {
+              alertText = `Request to ${actionData.name} has been cancelled`;
+            } else if (type === 'decline') {
+              alertText = `Request from ${actionData.name} has been declined`;
+            } else {
+              alertText = this.props.isStar ? `${actionData.name} has been removed from supported groups` : `${actionData.name} has been removed from supported stars`;
+            }
+            this.setState({ alertText });
           }
         });
     } else if (type === 'accept') {
-      addGroupMember(actionData, this.props.isStar)
+      addGroupMember(actionData.userId, this.props.isStar)
         .then((success) => {
           if (success) {
+            const alertText = this.props.isStar ? `${actionData.name} has been added to supporters list` : `${actionData.name} has been added to supporters list`;
+            this.setState({ alertText });
             this.fetchList(this.state.selectedTab);
           }
         });
@@ -85,6 +99,10 @@ export default class StarSupporters extends React.Component {
   showInviteView = () => {
     this.setState({ inviteView: true });
     this.fetchNonMemberList(0, true);
+  }
+
+  closeAlertView = () => {
+    this.setState({ alertText: '' });
   }
 
   renderMembers = member => (
@@ -169,6 +187,18 @@ export default class StarSupporters extends React.Component {
           getScrollTarget={this.updateScrollTarget}
         >
           <SupportStyled>
+            {
+              this.state.alertText !== '' &&
+                <Popup
+                  smallPopup
+                  closePopUp={this.closeAlertView}
+                >
+                  <AlertView
+                    message={this.state.alertText}
+                    closePopup={this.closeAlertView}
+                  />
+                </Popup>
+            }
             {
               this.state.inviteView &&
                 <RequestFlowPopup

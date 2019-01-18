@@ -309,11 +309,15 @@ class GroupSelectionComponent extends React.Component {
               <Loader />
             </IndustryStyled.LoaderWrapper>
           :
-            this.renderProfessions()
+            <React.Fragment>
+              {
+                this.renderProfessions()
+              }
+              <IndustryStyled.NewItemAdd>
+                Don't see your group? <IndustryStyled.HighlightText onClick={this.togglePopup}>Add it here</IndustryStyled.HighlightText>
+              </IndustryStyled.NewItemAdd>
+            </React.Fragment>
         }
-        <IndustryStyled.NewItemAdd>
-          Don't see your group? <IndustryStyled.HighlightText onClick={this.togglePopup}>Add it here</IndustryStyled.HighlightText>
-        </IndustryStyled.NewItemAdd>
       </IndustryStyled>
     );
   }
