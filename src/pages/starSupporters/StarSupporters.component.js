@@ -248,6 +248,7 @@ export default class StarSupporters extends React.Component {
                   autoWidth
                   smallPopup
                   closePopUp={this.closeInviteView}
+                  modalView={this.props.isStar}
                   getPopupRef={this.getPopupRef}
                 >
                   <SupportStyled.SubHeading>
