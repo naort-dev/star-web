@@ -61,6 +61,9 @@ sed -i -r "s#(^[ \t]*GOOGLE_TAG_MANAGER_ID:[ \t]*').*('[, \t]*$)#\1$GOOGLE_TAG_M
 echo "env.js:"
 cat env.js
 
+echo "Sitemap: https://$DOMAIN_NAME/sitemap.xml" > robots.txt
+sed -i -r "s#(set[ \t]*\\\$api_url[ \t]*').*(';$)#\1${API_URL%/}\2#g" /etc/nginx/sites-enabled/default
+
 echo "Starting main process:"
 echo "    $@"
 exec "$@"
