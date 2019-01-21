@@ -1,6 +1,7 @@
 import React from 'react';
 import EXIF from 'exif-js';
 import { awsImageUpload } from '../../../../services/awsImageUpload';
+import { imageSizes } from '../../../../constants/imageSizes';
 import ImageCropper from '../../../../components/ImageCropper';
 import Loader from '../../../../components/Loader';
 import SettingsStyled from '../../styled';
@@ -108,6 +109,16 @@ export default class ImageUpload extends React.Component {
       })
 
     })
+  }
+
+  getAspectRatio = () => {
+    const { currentImage } = this.state;
+    if (currentImage === 'featuredImage') {
+      return this.props.featuredRatio;
+    } else if (currentImage === 'profileImage') {
+      return imageSizes.profile;
+    }
+    return this.props.secondaryRatio;
   }
 
   checkResolution(file) {
@@ -239,7 +250,7 @@ export default class ImageUpload extends React.Component {
                 this.state.cropMode && this.state.cropImage &&
                   <ImageCropper
                     exifData={this.currentExif}
-                    aspectRatio={this.state.currentImage === 'featuredImage' ? this.props.featuredRatio : this.props.secondaryRatio}
+                    aspectRatio={this.getAspectRatio()}
                     afterCrop={this.getCroppedImage}
                     closeCropper={() => this.closeCropper()}
                     cropImage={this.state.cropImage}
