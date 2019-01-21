@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Confirm from './Confirm.component';
+import { updateVideosList, fetchMyVideosList } from '../requests/actions/getMyVideosList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
@@ -22,9 +23,12 @@ const mapStateToProps = state => ({
   bookingData: state.bookingData,
   paymentStatus: state.paymentDetails.paymentStatus,
   audioRecorder: state.audioRecorder,
+  sourceError: state.paymentDetails.sourceError,
 });
 
 const mapDispatchToProps = dispatch => ({
+  updateVideosList: (id, data) => dispatch(updateVideosList(id, data)),
+  fetchMyVideosList: (offset, refresh, role, requestStatus, allDataType) => dispatch(fetchMyVideosList(offset, refresh, role, requestStatus, allDataType)),
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
   setBookingDetails: data => dispatch(setBookingDetails(data)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),

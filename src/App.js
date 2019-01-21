@@ -23,7 +23,6 @@ import { Favourites } from './pages/favourites';
 import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
-import { Starprofile } from './pages/starProfile';
 import { StarSupporters } from './pages/starSupporters';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
@@ -31,7 +30,6 @@ import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
-import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -49,6 +47,15 @@ class App extends React.Component {
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
+    window.addEventListener('storage', () => {
+      if (localStorage && localStorage.getItem('data') === null && this.props.isLoggedIn) {
+        this.props.logOut();
+      } else if (localStorage && localStorage.getItem('data') !== null && !this.props.isLoggedIn) {
+        const userData = JSON.parse(localStorage.getItem('data')).user;
+        this.props.updateLoginStatus(userData);
+        this.props.fetchUserDetails(userData.id);
+      }
+    });
     if (localStorage && localStorage.getItem('data') !== null) {
       const userData = JSON.parse(localStorage.getItem('data')).user;
       this.props.updateLoginStatus(userData);

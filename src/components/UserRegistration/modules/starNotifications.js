@@ -394,6 +394,7 @@ export default class StarNotifications extends React.Component {
           </div>
           <div className="repFormElement">
             <PhoneInput
+              country="US"
               placeholder="Mobile phone(optional)"
               value={rep.phone}
               onChange={value => this.setRepPhone(index, value)}
@@ -509,6 +510,7 @@ export default class StarNotifications extends React.Component {
               <GroupStyled.PhoneInput>
                 <div>
                   <PhoneInput
+                    country="US"
                     placeholder="Phone number"
                     ref={(node) => { this.phone = node; }}
                     value={value}

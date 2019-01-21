@@ -14,7 +14,7 @@ export const requestFeedback = (files, booking, comments, reason, fanRate) => {
 
 export const setVideoViewStatus = (videoId) => {
   return fetch(`${Api.setVideoView}${videoId}/`)
-    .then(resp => resp.data.success)
+    .then(resp => resp.data)
 };
 
 export const getReactions = (bookingId) => {
