@@ -154,7 +154,7 @@ export default class Confirm extends React.Component {
               }
             })
             .catch(() => {
-              this.setState({ loading: false, alertText: 'Booking edit successful' });
+              this.setState({ loading: false, alertText: 'Something went wrong' });
             });
         });
       } else {
