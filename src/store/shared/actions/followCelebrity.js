@@ -2,7 +2,7 @@
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { updateCelebrityFollow } from '../../../pages/landing/actions/getCelebList';
-import { celebDetailstFetchUpdate } from '../../../pages/starProfile/actions/getCelebDetails';
+import { celebDetailstFetchFollowUpdate } from '../../../pages/starProfile/actions/getCelebDetails';
 import { updateFavouriteList } from '../../../pages/favourites/actions/getFavouritesList';
 
 export const FOLLOW_CELEBRITY = {
@@ -46,7 +46,7 @@ export const followCelebrity = (celebrityId, celebProfessions, follow, cancelUpd
             is_follow: follow,
           },
         };
-        dispatch(celebDetailstFetchUpdate(obj));
+        dispatch(celebDetailstFetchFollowUpdate(obj));
         // dispatch(updateCelebDetailsFollow(follow));
       }
       dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
