@@ -1,7 +1,6 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { SidebarStyled } from './styled';
 import { Footer } from '../Footer';
 import { updateCategory } from '../../pages/landing/actions/updateFilters';
