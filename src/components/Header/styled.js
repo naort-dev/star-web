@@ -139,6 +139,22 @@ HeaderSection.ProfileDropdownItem = styled.li`
     border-bottom: none;
   }
 `;
+HeaderSection.LinkElement = styled.span`
+  position: relative;
+`;
+
+HeaderSection.InnerListItemCount = styled.span`
+  font-family: 'Avenir-Medium';
+  font-size: 13px;
+  line-height: 18px;
+  margin-left: 5px;
+  padding: 0 11px;
+  text-align: center;
+  border-radius: 16px;
+  background-color: #FF6C58;
+  color: #fff;
+  display: inline-block;
+`;
 HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
   font-family: 'Avenir-Bold';
   cursor: auto;
