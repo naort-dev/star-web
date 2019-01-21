@@ -29,6 +29,14 @@ export default (state = { ...initalState }, action) => {
         userDetails: action.details.user,
       };
 
+    case CELEB_DETAILS.update:
+      return {
+        ...state,
+        loading: false,
+        celebrityDetails: action.details ? action.details.celebrityDetails: '',
+        userDetails: action.details ? action.details.userDetails: '',
+      };
+
     case CELEB_DETAILS.failed:
       return {
         ...state,
