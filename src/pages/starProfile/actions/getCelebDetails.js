@@ -32,7 +32,7 @@ export const celebDetailstFetchFailed = error => ({
   error,
 });
 
-export const celebDetailstFetchUpdate = (details) => {
+export const celebDetailstFetchFollowUpdate = (details) => {
   return (
     {
       type: CELEB_DETAILS.update,
