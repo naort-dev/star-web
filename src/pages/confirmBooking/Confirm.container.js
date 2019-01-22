@@ -4,7 +4,7 @@ import { updateVideosList, fetchMyVideosList } from '../requests/actions/getMyVi
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
-import { starsonaRequest, resetPaymentDetails } from '../../store/shared/actions/processPayments';
+import { starsonaRequest, resetPaymentDetails, resetPaymentsError } from '../../store/shared/actions/processPayments';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
 import { deleteVideo } from '../../store/shared/actions/videoUploader';
 import { clearStreams } from '../../store/shared/actions/videoRecorder'
@@ -39,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
   clearAudio: () => dispatch(clearAll()),
   onClearStreams: () => dispatch(clearStreams()),
   deleteVideo: () => dispatch(deleteVideo()),
+  resetPaymentsError: () => dispatch(resetPaymentsError()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Confirm);
