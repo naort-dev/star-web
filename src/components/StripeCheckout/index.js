@@ -53,7 +53,7 @@ class StripeCheckout extends React.Component {
     fetchEphemeralKey()
       .then((resp) => {
         if (resp.success) {
-          const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
+          const customerId = resp.data.ephemeralKey.associated_objects && resp.data.ephemeralKey.associated_objects[0] ? resp.data.ephemeralKey.associated_objects[0].id : null;
           this.props.fetchSourceList();
           this.setState({ customerId });
         }

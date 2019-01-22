@@ -4,7 +4,7 @@ import { fetch } from '../../services/fetch';
 const fetchEphemeralKey = () => {
   return (fetch.post(Api.getEphemeralKey, {
     api_key: env('stripe_api_version'),
-  }).then(resp => resp.data.data)
+  }).then(resp => ({ data: resp.data.data, success: resp.data.success }))
   );
 };
 
