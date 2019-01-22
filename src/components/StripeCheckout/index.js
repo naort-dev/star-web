@@ -52,9 +52,11 @@ class StripeCheckout extends React.Component {
   getEphemeralKey = () => {
     fetchEphemeralKey()
       .then((resp) => {
-        const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
-        this.props.fetchSourceList();
-        this.setState({ customerId });
+        if (resp.success) {
+          const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
+          this.props.fetchSourceList();
+          this.setState({ customerId });
+        }
       });
   }
   setStripe = (stripe) => {
