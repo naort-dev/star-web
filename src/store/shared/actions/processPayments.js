@@ -119,7 +119,7 @@ export const fetchSourceList = () => (dispatch, getState) => {
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(sourceListFetchFailed(exception));
+    dispatch(sourceListFetchFailed(exception.response.data.error));
   });
 };
 
@@ -147,7 +147,7 @@ export const modifySourceList = (source, customer, action, callback) => (dispatc
       }
     }).catch((exception) => {
       dispatch(paymentFetchEnd());
-      dispatch(sourceListFetchFailed(exception));
+      dispatch(sourceListFetchFailed(exception.response.data.error));
     });
 };
 

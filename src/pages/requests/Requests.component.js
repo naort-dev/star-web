@@ -189,6 +189,7 @@ export default class Requests extends React.Component {
       hostName: orderDetails.request_details.stargramto,
       userName: orderDetails.request_details.stargramfrom,
       date: orderDetails.request_details.date,
+      bookingId: orderDetails.booking_id,
     };
     this.props.fetchCelebDetails(orderDetails.celebrity_id);
     let selectedRequestType = '';
