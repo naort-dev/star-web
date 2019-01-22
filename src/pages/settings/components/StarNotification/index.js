@@ -535,7 +535,6 @@ export default class StarNotification extends React.Component {
           <NotificationStyled.WrapsInput className="checkboxWrapper">
             <NotificationStyled.Label className="checkbox_container">
               <span className="checkBoxHeading">Text (mobile phone)</span>
-              <p>Add tel. number</p>
               <NotificationStyled.CheckBox
                 id="phoneUpdates"
                 type="checkbox"

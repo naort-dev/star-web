@@ -498,7 +498,6 @@ export default class StarNotifications extends React.Component {
         <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
           <GroupStyled.Label className="checkbox_container">
             <span className="checkBoxHeading">Text (mobile phone)</span>
-            <p>Add tel. number</p>
             <GroupStyled.CheckBox
               id="phoneUpdates"
               type="checkbox"
