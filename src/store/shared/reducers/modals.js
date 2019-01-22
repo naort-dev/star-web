@@ -7,6 +7,8 @@ const initialState = {
   requestFlow: false,
   signUpDetails: null,
   requestFlowDetails: null,
+  requestPopup: false,
+  popUp: false,
 };
 
 export default (state = { ...initialState }, action) => {
@@ -62,6 +64,20 @@ export default (state = { ...initialState }, action) => {
         ...state,
         requestFlow: false,
         requestFlowDetails: null,
+      };
+
+    case TOGGLE_MODALS.toggleRequestPopup:
+      return {
+        ...state,
+        requestPopup: action.state,
+        popUp: !action.state,
+      };
+
+    case TOGGLE_MODALS.togglePopup:
+      return {
+        ...state,
+        requestPopup: !action.state,
+        popUp: action.state,
       };
 
     default:

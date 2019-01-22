@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Request, HeaderSection } from '../../pages/askQuestion/styled';
+import { Request } from '../../pages/askQuestion/styled';
 import getAWSCredentials from '../../utils/AWSUpload';
 import { locations } from '../../constants/locations';
 import { recorder } from '../../constants/videoRecorder';
 import Loader from '../../components/Loader';
-import { PaymentFooterController } from '../../components/PaymentFooterController';
 import './ask';
 import QAVideoRecorder from '../../components/QAVideoRecorder';
 import { Confirm } from '../confirmBooking';
@@ -20,8 +18,8 @@ export default class Askquestion extends React.Component {
       // showConfirm: false,
     };
   }
-  goBack = () => {
-    this.props.changeStep(this.props.currentStepCount - 1);
+  setQuestion = (question) => {
+    this.setState({ question });
   }
   cancel = () => {
     if (localStorage && localStorage.getItem('bookingData')) {
@@ -62,11 +60,6 @@ export default class Askquestion extends React.Component {
       this.props.toggleRequestFlow(false);
     }
   }
-
-
-  setQuestion = (question) => {
-    this.setState({ question });
-  }
   createBookingObject = (fileNameValue) => {
     const bookingData = {
       starDetail: this.props.userDetails,
@@ -79,40 +72,10 @@ export default class Askquestion extends React.Component {
     return bookingData;
   }
   render() {
-
-    let coverPhoto;
-    let imageList = [];
-    let profilePhoto;
-    let fullName = ``;
-    let featuredImage;
-    let firstImage;
-    let secondImage;
-    const disabled = this.props.videoRecorder.recordedBlob || this.props.videoUploader.savedFile ? false : true
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
+    let fullName = '';
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
-    }
-    if (this.props.userDetails.avatar_photo) {
-      profilePhoto = this.props.userDetails.avatar_photo.thumbnail_url && this.props.userDetails.avatar_photo.thumbnail_url;
-    } else {
-      profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
-    }
-    if (this.props.userDetails.featured_photo) {
-      coverPhoto = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url;
-    } else {
-      coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
-    }
-    if (this.props.userDetails.images && this.props.userDetails.images.length) {
-      firstImage = this.props.userDetails.images[0] ? this.props.userDetails.images[0].image_url : null;
-      secondImage = this.props.userDetails.images[1] ? this.props.userDetails.images[1].image_url : null;
-      imageList = [firstImage, secondImage];
-    }
-    if (this.props.userDetails.featured_photo) {
-      featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url
-    } else {
-      featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
     }
     return (
       <React.Fragment>

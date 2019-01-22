@@ -114,7 +114,7 @@ export default class Requestvideo extends React.Component {
   };
 
   render() {
-    let fullName = "";
+    let fullName = '';
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name
         ? this.props.userDetails.nick_name

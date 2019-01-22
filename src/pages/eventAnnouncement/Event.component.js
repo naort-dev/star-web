@@ -1,11 +1,8 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
 import moment from 'moment';
 import { Request, HeaderSection } from '../../pages/eventAnnouncement/styled';
-import { ImageStack } from '../../components/ImageStack';
 import './event';
 import RequestTemplates from '../../components/RequestTemplates';
-import { PaymentFooterController } from '../../components/PaymentFooterController';
 import { Confirm } from '../confirmBooking';
 
 export default class Event extends React.Component {
@@ -159,42 +156,14 @@ export default class Event extends React.Component {
     this.props.history.push(`/${this.props.match.params.id}`);
   }
   render() {
-    let coverPhoto;
-    let imageList = [];
-    let profilePhoto;
     let fullName = '';
-    let featuredImage;
-    let firstImage;
-    let secondImage;
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
-    const remainingBookings = this.props.celebrityDetails.remaining_limit ? this.props.celebrityDetails.remaining_limit : 0;
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
       fullName = this.props.userDetails.show_nick_name && this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
     }
-    if (this.props.userDetails.avatar_photo) {
-      profilePhoto = this.props.userDetails.avatar_photo.thumbnail_url && this.props.userDetails.avatar_photo.thumbnail_url;
-    } else {
-      profilePhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].thumbnail_url;
-    }
-    if (this.props.userDetails.featured_photo) {
-      coverPhoto = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url;
-    } else {
-      coverPhoto = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url;
-    }
-    if (this.props.userDetails.images && this.props.userDetails.images.length) {
-      firstImage = this.props.userDetails.images[0] ? this.props.userDetails.images[0].image_url : null;
-      secondImage = this.props.userDetails.images[1] ? this.props.userDetails.images[1].image_url : null;
-      imageList = [firstImage, secondImage];
-    }
-    if (this.props.userDetails.featured_photo) {
-      featuredImage = this.props.userDetails.featured_photo.image_url && this.props.userDetails.featured_photo.image_url
-    } else {
-      featuredImage = this.props.userDetails.images && this.props.userDetails.images[0] && this.props.userDetails.images[0].image_url
-    }
     const eventNames = this.props.eventsDetails;
-    const optionItems = eventNames.map(eventNames =>
-      <option value={eventNames.id} key={eventNames.id}>{eventNames.title}</option>
+    const optionItems = eventNames.map(eventNamesItem =>
+      <option value={eventNamesItem.id} key={eventNamesItem.id}>{eventNamesItem.title}</option>
     );
     return (
       <React.Fragment>

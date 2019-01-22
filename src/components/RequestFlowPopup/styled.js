@@ -10,13 +10,13 @@ const popupEnter = keyframes`
 `;
 
 const PopupStyled = styled.div`
+  display: ${props => (props.visible ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   background-color: #fff;
-  display: flex;
   justify-content: center;
   z-index: 11;
   overflow: auto;

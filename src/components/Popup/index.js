@@ -1,9 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PopupStyled from './styled';
-import smoothScroll from '../../utils/smoothScroll';
+import { togglePopup } from '../../store/shared/actions/toggleModals';
 
-export default class Popup extends React.Component {
+class Popup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,6 +14,7 @@ export default class Popup extends React.Component {
     this.popupWrapper = null;
   }
   componentDidMount() {
+    this.props.togglePopup(true);
     if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
@@ -24,6 +26,7 @@ export default class Popup extends React.Component {
     }
   }
   componentWillUnmount() {
+    this.props.togglePopup(false);
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
     }
@@ -42,7 +45,7 @@ export default class Popup extends React.Component {
   }
   renderPopup = () => {
     return (
-      <PopupStyled disableBackground={this.props.disableBackground} smallPopup={this.props.smallPopup} innerRef={node => this.popupWrapper = node}>
+      <PopupStyled visible={this.props.popupVisibility} disableBackground={this.props.disableBackground} smallPopup={this.props.smallPopup} innerRef={node => this.popupWrapper = node}>
         {
           this.props.smallPopup ?
             <PopupStyled.SmallContainer
@@ -82,3 +85,13 @@ export default class Popup extends React.Component {
     )
   }
 }
+
+const mapStateToProps = state => ({
+  popupVisibility: state.modals.popUp,
+});
+
+const mapDispatchToProps = dispatch => ({
+  togglePopup: state => dispatch(togglePopup(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Popup);
