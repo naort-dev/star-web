@@ -210,12 +210,38 @@ export default class Confirm extends React.Component {
   }
 
   closeRequestFlow = () => {
-    if (this.state.bookingData.edit) {
-      this.props.fetchMyVideosList(0, true);
+    const { bookingData } = this.state;
+    if (bookingData.edit) {
+      this.setState({ loading: true });
+      getRequestDetails(bookingData.bookingId)
+        .then((requestDetails) => {
+          this.setState({ loading: false });
+          if (requestDetails.success &&
+            requestDetails.data &&
+            requestDetails.data.stargramz_response
+          ) {
+            this.clearDetails();
+            this.props.updateVideosList(requestDetails.data.stargramz_response.id, requestDetails.data.stargramz_response);
+          }
+        })
+        .catch(() => {
+          this.setState({ loading: false });
+          this.clearDetails();
+          this.props.fetchMyVideosList(0, true);
+        });
+    } else {
+      this.clearDetails();
     }
-    this.setState({ alertText: '' });
-    this.clearDetails();
     this.props.fetchCelebDetails(this.props.userDetails.user_id);
+  }
+
+  resetAlertText = () => {
+    const { bookingData } = this.state;
+    this.setState({ alertText: '' });
+    if (bookingData.edit) {
+      this.closeRequestFlow();
+    }
+    this.props.resetPaymentsError();
   }
 
   clearStream = () => {
@@ -367,11 +393,11 @@ export default class Confirm extends React.Component {
                 alertText !== '' ?
                   <Popup
                     smallPopup
-                    closePopUp={this.closeRequestFlow}
+                    closePopUp={this.resetAlertText}
                   >
                     <AlertView
                       message={alertText}
-                      closePopup={this.closeRequestFlow}
+                      closePopup={this.resetAlertText}
                     />
                   </Popup>
                 : null
@@ -380,7 +406,7 @@ export default class Confirm extends React.Component {
                 this.state.audioUrl &&
                   <Popup
                     smallPopup
-                    closePopUp={()=>this.setState({audioUrl: null})}
+                    closePopUp={() => this.setState({ audioUrl: null })}
                   >
                     <audio src={this.state.audioUrl} controls />
                   </Popup>

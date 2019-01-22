@@ -79,6 +79,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         error: null,
+        sourceError: null,
       }
     default:
       return state;
