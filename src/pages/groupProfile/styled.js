@@ -4,6 +4,9 @@ const GroupProfileStyled = styled.div`
   height: 100%;
   overflow: auto;
   display: ${props => (props.menuActive ? 'none' : 'block')};
+  @media(min-width: 1025px) {
+    display: block;
+  }
   @media(min-width: 1920px) {
     margin-top: 72px;
   }

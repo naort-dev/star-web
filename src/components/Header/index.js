@@ -156,9 +156,7 @@ class Header extends React.Component {
 
   logoutUser = () => {
     this.setState({ profileDropdown: false });
-    if (window.gapi.auth2) {
-      window.gapi.auth2.getAuthInstance().signOut();
-    }
+    this.props.history.push('/');
     this.props.logOut();
   }
 
@@ -166,6 +164,12 @@ class Header extends React.Component {
     if (e.keyCode === 13) {
       this.handleSearchItemClick();
       this.props.history.push(link);
+    }
+  }
+
+  logoClick = () => {
+    if (this.props.history.location.pathname === '/') {
+      this.props.enableMenu();
     }
   }
 
@@ -221,17 +225,17 @@ class Header extends React.Component {
       <HeaderSection>
         <HeaderSection.HeaderDiv >
           <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <Link to="/" onClick={() => this.handleSearchItemClick()}>
+            <Link to="/" onClick={this.handleSearchItemClick}>
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
-                onClick={() => props.enableMenu()}
+                onClick={this.logoClick}
               />
             </Link>
             {
               !props.disableMenu && <HeaderSection.MenuButton
                 menuActive={props.menuActive}
-                onClick={() => props.enableMenu()}
+                onClick={props.enableMenu}
               />
             }
           </HeaderSection.HeaderLeft>
@@ -310,7 +314,7 @@ class Header extends React.Component {
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
                 </div>

@@ -130,6 +130,15 @@ class Sidebar extends React.Component {
                             </SidebarStyled.InnerListItemCount>
                           : null
                         }
+                        {
+                          (element.selectedName === 'mygroups' || element.selectedName === 'supporters') && this.props.userDetails.settings_userDetails.group_notification_count ?
+                            <SidebarStyled.InnerListItemCount>
+                              {
+                                this.props.userDetails.settings_userDetails.group_notification_count
+                              }
+                            </SidebarStyled.InnerListItemCount>
+                          : null
+                        }
                       </SidebarStyled.LinkElement>
                     </Link>
                   </SidebarStyled.InnerCategoryTitle>

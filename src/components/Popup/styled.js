@@ -34,6 +34,7 @@ PopupStyled.Container = styled.div`
   justify-content: center;
   animation: ${popupEnter} 0.2s ease-out;
   @media(min-width: 768px) {
+    border-radius: 6px;
     width: 100%;
     height: 100%;
     justify-content: center;

@@ -37,13 +37,14 @@ LandingStyled.sideSection = styled.section`
 
 LandingStyled.mainSection = styled.section`
   height: 100%;
-  display: ${props => (props.menuActive ? 'none' : 'block')};
+  display: ${props => (props.menuActive ? 'none' : 'table')};
+  width: 100%;
   @media(min-width: 768px) {
     padding-top: 40px;
   }
   @media(min-width: 1025px) {
     width: 75%;
-    display: inline-block;
+    display: table;
     vertical-align: top;
     padding-left: 50px;
     padding-right: 50px;
@@ -56,6 +57,11 @@ LandingStyled.mainSection = styled.section`
   @media(min-width: 1241px) {
     width: calc(100% - 310px);
   }
+`;
+
+LandingStyled.ScrollListWrapper = styled.div`
+  display: table-row;
+  height: 100%;
 `;
 
 LandingStyled.loaderWrapper = styled.div`

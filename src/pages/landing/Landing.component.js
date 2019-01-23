@@ -15,8 +15,6 @@ export default class Landing extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
-      tabsRef: undefined,
-      tabsClientHeight: 0,
       filterSelected: false,
       subCategoryList: [],
       groupClick: true,
@@ -78,14 +76,10 @@ export default class Landing extends React.Component {
     }
     if ((nextProps.filters.selectedTab === 'Stars' && nextProps.filters.category.label === 'featured') ||
       (tabChange && nextProps.filters.selectedTab === 'Videos')) {
-      this.setState({ filterSelected: false }, () => {
-        this.setScrollHeight();
-      });
+      this.setState({ filterSelected: false });
     }
     if (tabChange || loginChange) {
-      this.setState({ filterSelected: false }, () => {
-        this.setScrollHeight();
-      });
+      this.setState({ filterSelected: false });
       if (nextProps.filters.selectedTab === 'Videos') {
         if ((tabChange && !this.props.videosList.data.length) || loginChange) {
           this.props.fetchVideosList(0, true);
@@ -101,11 +95,6 @@ export default class Landing extends React.Component {
     window.removeEventListener('resize', this.setScrollHeight);
   }
   onBackButtonEvent = event => event.preventDefault()
-  setScrollHeight = () => {
-    if (this.state.tabsRef) {
-      this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
-    }
-  }
   getFilterCount = () => {
     let count = 0;
     switch (this.props.filters.selectedTab) {
@@ -162,9 +151,7 @@ export default class Landing extends React.Component {
   }
   toggleFilterSection = () => {
     const filterState = this.state.filterSelected;
-    this.setState({ filterSelected: !this.state.filterSelected }, () => {
-      this.setScrollHeight();
-    });
+    this.setState({ filterSelected: !this.state.filterSelected });
     if (!filterState && this.props.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(this.props.filters.category.value);
     }
@@ -236,9 +223,7 @@ export default class Landing extends React.Component {
               path="/"
               render={() => (
                 <LandingStyled.mainSection menuActive={this.state.menuActive}>
-                  <div
-                    ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
-                  >
+                  <div>
                     <Tabs
                       labels={['Stars', 'Videos']}
                       switchTab={this.props.switchTab}
@@ -270,16 +255,22 @@ export default class Landing extends React.Component {
                       />
                     }
                   </div>
-                  <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
+                  <LandingStyled.ScrollListWrapper>
                     {this.renderScrollList()}
-                  </div>
+                  </LandingStyled.ScrollListWrapper>
                 </LandingStyled.mainSection>
               )}
             />
-            <Route exact path="/:id" render={props => (
-              <Starprofile {...props} menuActive={this.state.menuActive}/>
-            )} />
-            <Route exact path="/group-profile/:id" 
+            <Route
+              exact
+              path="/:id"
+              render={props => (
+                <Starprofile {...props} menuActive={this.state.menuActive} />
+                )}
+            />
+            <Route
+              exact
+              path="/group-profile/:id"
               render={props => (
                 <GroupProfile {...props} menuActive={this.state.menuActive} />
               )}

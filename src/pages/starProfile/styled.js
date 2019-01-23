@@ -3,7 +3,10 @@ import styled from 'styled-components';
 const StarProfileStyled = styled.div`
   height: 100%;
   overflow: auto;
-   display: ${props => (props.menuActive ? 'none' : 'block')};
+  display: ${props => (props.menuActive ? 'none' : 'block')};
+  @media(min-width: 1025px) {
+    display: block;
+  }
   @media(min-width: 1920px) {
     margin-top: 72px;
   }

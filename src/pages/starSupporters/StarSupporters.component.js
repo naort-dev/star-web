@@ -86,7 +86,7 @@ export default class StarSupporters extends React.Component {
             } else if (type === 'decline') {
               alertText = `Request from ${actionData.name} has been declined`;
             } else {
-              alertText = this.props.isStar ? `${actionData.name} has been removed from supported groups` : `${actionData.name} has been removed from supported stars`;
+              alertText = this.props.isStar ? `${actionData.name} has been removed from your supported groups` : `${actionData.name} has been removed from supported stars`;
             }
             this.setState({ alertText });
           }
@@ -97,7 +97,7 @@ export default class StarSupporters extends React.Component {
         .then((success) => {
           this.toggleLoader();
           if (success) {
-            const alertText = this.props.isStar ? `${actionData.name} has been added to supporters list` : `${actionData.name} has been added to supporters list`;
+            const alertText = this.props.isStar ? `${actionData.name} has been added to your supporters groups` : `${actionData.name} has been added to supporters list`;
             this.setState({ alertText });
             this.fetchList(this.state.selectedTab);
           }
