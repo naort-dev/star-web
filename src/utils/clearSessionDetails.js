@@ -4,6 +4,5 @@ export const clearSessionDetails = () => {
     localStorage.removeItem('userDetails');
     localStorage.removeItem('bioDetails');
     localStorage.removeItem('bookingData');
-    window.location.pathname = '/';
   }
 };
