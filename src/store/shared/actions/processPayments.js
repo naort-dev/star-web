@@ -7,6 +7,7 @@ export const PAYMENTS = {
   start: 'payments/REQUEST',
   end: 'payments/REQUEST_END',
   success: 'payments/REQUEST_SUCCESS',
+  requestPostStart: 'payments/REQUEST_POST_START',
   fetchSourceStart: 'payments/SOURCE_FETCH_START',
   fetchSourceEnd: 'payments/SOURCE_FETCH_END',
   setPaymentStatus: 'payments/PAYMENT_STATUS',
@@ -26,6 +27,10 @@ export const PAYMENTS = {
 export const paymentFetchStart = () => ({
   type: PAYMENTS.start,
 });
+
+export const requestPostStart = () => ({
+  type: PAYMENTS.requestPostStart,
+})
 
 export const paymentFetchEnd = () => ({
   type: PAYMENTS.end,
@@ -248,14 +253,13 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
     ApiUrl = `${ApiUrl}${bookingData.requestId}/`;
     method = 'put';
   }
-  dispatch(paymentFetchStart());
+  dispatch(requestPostStart());
   return fetch[method](ApiUrl, formData, {
     headers: {
       'Authorization': `token ${authToken}`,
     },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
-      dispatch(paymentFetchEnd());
       if (bookingData.type === 3) {
         starsonaVideo(authToken, bookingData.fileName, resp.data.data['stargramz_response'].id, "00:00", dispatch, callback);
         //Q&A
