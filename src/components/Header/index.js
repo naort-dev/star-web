@@ -167,6 +167,12 @@ class Header extends React.Component {
     }
   }
 
+  logoClick = () => {
+    if (this.props.history.location.pathname === '/') {
+      this.props.enableMenu();
+    }
+  }
+
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
       return (
@@ -219,17 +225,17 @@ class Header extends React.Component {
       <HeaderSection>
         <HeaderSection.HeaderDiv >
           <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <Link to="/" onClick={() => this.handleSearchItemClick()}>
+            <Link to="/" onClick={this.handleSearchItemClick}>
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
-                onClick={() => props.enableMenu()}
+                onClick={this.logoClick}
               />
             </Link>
             {
               !props.disableMenu && <HeaderSection.MenuButton
                 menuActive={props.menuActive}
-                onClick={() => props.enableMenu()}
+                onClick={props.enableMenu}
               />
             }
           </HeaderSection.HeaderLeft>
