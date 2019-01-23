@@ -156,9 +156,7 @@ class Header extends React.Component {
 
   logoutUser = () => {
     this.setState({ profileDropdown: false });
-    if (window.gapi.auth2) {
-      window.gapi.auth2.getAuthInstance().signOut();
-    }
+    this.props.history.push('/');
     this.props.logOut();
   }
 
@@ -310,7 +308,7 @@ class Header extends React.Component {
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
                 </div>
