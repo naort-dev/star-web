@@ -276,10 +276,16 @@ export default class Landing extends React.Component {
                 </LandingStyled.mainSection>
               )}
             />
-            <Route exact path="/:id" render={props => (
-              <Starprofile {...props} menuActive={this.state.menuActive}/>
-            )} />
-            <Route exact path="/group-profile/:id" 
+            <Route
+              exact
+              path="/:id"
+              render={props => (
+                <Starprofile {...props} menuActive={this.state.menuActive} />
+                )}
+            />
+            <Route
+              exact
+              path="/group-profile/:id"
               render={props => (
                 <GroupProfile {...props} menuActive={this.state.menuActive} />
               )}
