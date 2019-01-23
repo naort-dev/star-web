@@ -9,6 +9,13 @@ const ReferralStyled = styled.div`
   }
 `;
 
+ReferralStyled.BannerPattern = styled.svg`
+  @media(min-width: 768px) {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
+`;
+
 ReferralStyled.Heading = styled.span`
   display: block;
   font-family: 'Avenir-Bold';
