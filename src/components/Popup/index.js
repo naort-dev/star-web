@@ -26,7 +26,9 @@ class Popup extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.props.togglePopup(false);
+    if (!this.props.confirmPopup) {
+      this.props.togglePopup(false);
+    }
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
     }

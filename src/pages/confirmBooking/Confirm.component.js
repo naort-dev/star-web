@@ -60,6 +60,11 @@ export default class Confirm extends React.Component {
     if (this.props.sourceError !== nextProps.sourceError && nextProps.sourceError) {
       this.setState({ alertText: nextProps.sourceError.message });
     }
+    const goToNextStep = this.props.loading !== nextProps.loading && nextProps.requestDetails && !nextProps.loading && !this.state.bookingData.edit;
+    if (goToNextStep) {
+      this.props.changeStep(this.props.currentStepCount + 1);
+      this.setState({ paymentMode: true });
+    }
   }
 
   getOccasionDetails = (occasionType) => {
@@ -145,7 +150,7 @@ export default class Confirm extends React.Component {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, (requestId) => {
           getRequestDetails(requestId)
             .then((requestDetails) => {
-              this.setState({ loading: false, alertText: 'Booking edit successful' });
+              this.setState({ loading: false, alertText: 'Booking edited successfully' });
               if (requestDetails.success &&
                 requestDetails.data &&
                 requestDetails.data.stargramz_response
@@ -159,8 +164,6 @@ export default class Confirm extends React.Component {
         });
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
-        this.props.changeStep(this.props.currentStepCount + 1);
-        this.setState({ paymentMode: true });
       }
     } else {
       this.props.redirectToLogin();
@@ -201,10 +204,10 @@ export default class Confirm extends React.Component {
   }
 
   clearDetails = () => {
-    this.clearStream();
     this.props.resetRequestFlow();
     this.props.resetPaymentDetails();
     this.props.deleteVideo();
+    this.clearStream();
     this.cancel();
     this.props.clearAudio();
   }
@@ -368,6 +371,7 @@ export default class Confirm extends React.Component {
     let profilePhoto;
     let fullName = '';
     const { props } = this;
+    const { loading: paymentsLoading } = props;
     const { bookingData, loading, alertText } = this.state;
     const rate = bookingData.starPrice.rate ? bookingData.starPrice.rate : 0;
     const remainingBookings = bookingData.starPrice.remaining_limit ? bookingData.starPrice.remaining_limit : 0;
@@ -386,13 +390,14 @@ export default class Confirm extends React.Component {
           <Request>
             <Request.LeftSection>
               {
-                loading &&
+                (loading || paymentsLoading) &&
                   <ActionLoader />
               }
               {
                 alertText !== '' ?
                   <Popup
                     smallPopup
+                    confirmPopup
                     closePopUp={this.resetAlertText}
                   >
                     <AlertView

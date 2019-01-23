@@ -1,8 +1,9 @@
 import { PAYMENTS } from '../actions/processPayments';
 
 const initalState = {
-  requestDetails: {},
+  requestDetails: null,
   loading: false,
+  requestPostLoading: false,
   paymentStatus: false,
   serverUpdated: false,
   sourceList: {},
@@ -21,7 +22,14 @@ export default (state = { ...initalState }, action) => {
         loading: true,
         error: null,
       };
-      
+    
+    case PAYMENTS.requestPostStart:
+      return {
+        ...state,
+        requestPostLoading: true,
+        error: null,
+      };
+
     case PAYMENTS.end:
     case PAYMENTS.fetchSourceEnd:
     case PAYMENTS.sourceListEnd:
@@ -35,6 +43,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+        requestPostLoading: false,
         requestDetails: action.data,
       };
 

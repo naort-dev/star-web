@@ -62,7 +62,7 @@ class RequestFlowPopup extends React.Component {
     return (
       DotsArray.map((item, index) => {
         return (
-          <PopupStyled.SliderDots selected={selectedDot===index} key={item} />
+          <PopupStyled.SliderDots selected={selectedDot===index} key={index} />
         );
       })
     );
