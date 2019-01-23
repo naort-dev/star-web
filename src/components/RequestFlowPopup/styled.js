@@ -40,6 +40,7 @@ PopupStyled.Container = styled.div`
   -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
     overflow: initial;
+    border-radius: 6px;
     margin: auto;
     height: auto;
     justify-content: center;
