@@ -37,7 +37,6 @@ export default class RowItem extends React.Component {
   }
 
   onAction = (type, data) => () => {
-    const { isStar } = this.props;
     if (type !== 'remove' && type !== 'decline' && type !== 'cancel') {
       this.props.onAction(type, data);
     } else {
