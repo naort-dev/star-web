@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { addGroupMember } from '../../../../services/groupManagement';
+import ConfirmPopup from '../../../../components/ConfirmPopup';
 import { starProfessionsDotFormater } from '../../../../utils/dataToStringFormatter';
 import RowStyled from './styled';
 
@@ -12,6 +13,8 @@ export default class RowItem extends React.Component {
       profileImage: null,
       showCancel: false,
       invite: false,
+      showConfirm: false,
+      selectedAction: null,
     };
     this.profileImage = new Image();
     this.mounted = true;
@@ -34,7 +37,23 @@ export default class RowItem extends React.Component {
   }
 
   onAction = (type, data) => () => {
-    this.props.onAction(type, data);
+    const { isStar } = this.props;
+    if (type !== 'remove' && type !== 'decline' && type !== 'cancel') {
+      this.props.onAction(type, data);
+    } else {
+      const selectedAction = {
+        type,
+        data,
+      };
+      if (type === 'remove') {
+        selectedAction.message = `Remove ${data.name} from your list?`;
+      } else if (type === 'cancel') {
+        selectedAction.message = `Cancel request to ${data.name}?`;
+      } else {
+        selectedAction.message = `Decline request from ${data.name}?`;
+      }
+      this.setState({ selectedAction, showConfirm: true });
+    }
   }
 
   inviteStar = () => {
@@ -49,6 +68,16 @@ export default class RowItem extends React.Component {
         this.setState({ invite: false });
       });
     this.setState({ invite: true });
+  }
+
+  confirmAction = () => {
+    const { selectedAction } = this.state;
+    this.props.onAction(selectedAction.type, selectedAction.data);
+    this.closeConfirm();
+  }
+
+  closeConfirm = () => {
+    this.setState({ selectedAction: null, showConfirm: false });
   }
 
   toggleCancel = (event) => {
@@ -90,8 +119,17 @@ export default class RowItem extends React.Component {
 
   render() {
     const { member, isStar } = this.props;
+    const { showConfirm, selectedAction } = this.state;
     return (
       <RowStyled>
+        {
+          showConfirm &&
+            <ConfirmPopup
+              heading={selectedAction.message}
+              onConfirm={this.confirmAction}
+              closePopup={this.closeConfirm}
+            />
+        }
         <RowStyled.ContentWrapper>
           <RowStyled.ProfileDetailWrapper>
             <RowStyled.ProfileImageWrapper>

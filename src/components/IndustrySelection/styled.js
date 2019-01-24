@@ -10,6 +10,10 @@ IndustryStyled.HeaderWrapper = styled.div`
   display: flex;
   background-color: #F1F1F2;
   align-items: flex-start;
+  @media(min-width: 768px) {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
 `;
 
 IndustryStyled.BackButton = styled.span`

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const LoginContainer = styled.div`
-    background-color: white;
     display:flex;
     padding: 0px 0px;
     flex-direction: column;
