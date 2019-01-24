@@ -375,6 +375,7 @@ export default class StarNotification extends React.Component {
       let repArray = [];
       this.props.representativeDetails.forEach((key, index) => {
         repArray.push({
+          repId: key.representative_id,
           firstName: key.first_name,
           lastName: key.last_name,
           email: key.email,
