@@ -15,7 +15,6 @@ export default class Askquestion extends React.Component {
     this.state = {
       question: props.bookingData.question ? props.bookingData.question : '',
       loader: false,
-      // showConfirm: false,
     };
   }
   setQuestion = (question) => {
@@ -51,7 +50,6 @@ export default class Askquestion extends React.Component {
                 localStorage.setItem('bookingData', JSON.stringify(bookObj));
                 this.props.setBookingDetails(bookObj);
                 this.props.changeStep(this.props.currentStepCount + 1);
-                this.setState({ showConfirm: true });
               }
             });
           }
