@@ -11,6 +11,7 @@ import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { saveAudioRecording } from '../../store/shared/actions/audioRecorder';
 import { setRequestFlow } from '../../store/shared/actions/toggleModals';
+import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
@@ -50,6 +51,7 @@ const mapDispatchToProps = dispatch => ({
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
   deleteVideo: () => dispatch(deleteVideo()),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
+  resetPaymentDetails: () => dispatch(resetPaymentDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

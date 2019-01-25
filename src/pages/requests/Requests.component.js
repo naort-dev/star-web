@@ -121,6 +121,7 @@ export default class Requests extends React.Component {
               comments: data.comment,
             })}
             orderDetails={orderDetails}
+            resetPaymentDetails={this.props.resetPaymentDetails}
             onSuccess={this.fetchVideosList}
             closePopup={this.closePopup}
           />

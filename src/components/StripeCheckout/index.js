@@ -10,7 +10,6 @@ import Checkout from './checkout';
 import {
   createCharge,
   tipPayment,
-  resetPaymentDetails,
   paymentFetchSourceStart,
   paymentFetchSourceEnd,
   fetchSourceList,
@@ -49,10 +48,6 @@ class StripeCheckout extends React.Component {
     if (this.props.paymentStatus) {
       this.props.exitPaymentMode();
     }
-  }
-
-  componentWillUnmount() {
-    this.props.resetPaymentDetails();
   }
 
   getEphemeralKey = () => {
@@ -265,7 +260,6 @@ const mapDispatchToProps = dispatch => ({
   paymentFetchSourceEnd: () => dispatch(paymentFetchSourceEnd()),
   fetchSourceList: () => dispatch(fetchSourceList()),
   resetPaymentsError: () => dispatch(resetPaymentsError()),
-  resetPaymentDetails: () => dispatch(resetPaymentDetails()),
   modifySourceList: (source, customer, action) => dispatch(modifySourceList(source, customer, action)),
 });
 

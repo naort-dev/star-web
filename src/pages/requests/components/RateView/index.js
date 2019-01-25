@@ -227,6 +227,7 @@ export default class RateView extends React.Component {
   exitPaymentMode = () => {
     const { orderDetails } = this.props;
     const { rating, comment, reason, filesList } = this.state;
+    this.props.resetPaymentDetails();
     if (filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
