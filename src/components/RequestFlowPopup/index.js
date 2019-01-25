@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { times, random } from 'lodash';
 import ReactDOM from 'react-dom';
-import { toggleRequestPopup } from '../../store/shared/actions/toggleModals';
+import { toggleRequestPopup, togglePopup } from '../../store/shared/actions/toggleModals';
 import PopupStyled from './styled';
 
 class RequestFlowPopup extends React.Component {
@@ -16,6 +16,7 @@ class RequestFlowPopup extends React.Component {
   }
   componentDidMount() {
     this.props.toggleRequestPopup(true);
+    this.props.togglePopup(false);
     if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
@@ -40,6 +41,7 @@ class RequestFlowPopup extends React.Component {
   }
   componentWillUnmount() {
     this.props.toggleRequestPopup(false);
+    this.props.togglePopup(true);
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
     }
@@ -115,6 +117,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   toggleRequestPopup: state => dispatch(toggleRequestPopup(state)),
+  togglePopup: state => dispatch(togglePopup(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RequestFlowPopup);
