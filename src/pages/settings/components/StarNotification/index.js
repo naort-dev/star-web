@@ -368,42 +368,37 @@ export default class StarNotification extends React.Component {
   }
 
   cancelDetails = (props) => {
-    const { representatives } = this.state;
+    let repArray = [];
+    this.props.representativeDetails.forEach((key) => {
+      repArray.push({
+        repId: key.representative_id,
+        firstName: key.first_name,
+        lastName: key.last_name,
+        email: key.email,
+        phone: key.phone,
+        firstNameError: '',
+        lastNameError: '',
+        emailError: '',
+        emailInvite: key.email_notify,
+        phoneInvite: key.sms_notify,
+        phoneCheck: false,
+      });
+    });
     this.setState({
-      representatives: [],
-    }, () => {
-      let repArray = [];
-      this.props.representativeDetails.forEach((key, index) => {
-        repArray.push({
-          repId: key.representative_id,
-          firstName: key.first_name,
-          lastName: key.last_name,
-          email: key.email,
-          phone: key.phone,
-          firstNameError: '',
-          lastNameError: '',
-          emailError: '',
-          emailInvite: key.email_notify,
-          phoneInvite: key.sms_notify,
-          phoneCheck: false,
-        });        
-      });
-      this.setState({
-        representatives: repArray,
-        emailCheckedBox: props.notificationDetails.email_notification,
-        phoneCheckedBox: props.notificationDetails.mobile_notification,
-        value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
-          `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
-          : '',
-        email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
-      });
+      representatives: repArray,
+      emailCheckedBox: props.notificationDetails.email_notification,
+      phoneCheckedBox: props.notificationDetails.mobile_notification,
+      value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
+        `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
+        : '',
+      email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
     });
   }
 
   renderRepresentatives = () => {
     const { representatives } = this.state;
     return representatives.map((rep, index) => (
-      <NotificationStyled.AddRepForm key={index}>
+      <NotificationStyled.AddRepForm key={rep.firstName}>
         <div className="RepDetailText">
           <p>Representative #{index + 1}</p>
           <NotificationStyled.CloseRepForm onClick={() => this.deleteRepForm(index)}>X</NotificationStyled.CloseRepForm>
