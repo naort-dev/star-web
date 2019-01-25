@@ -70,13 +70,11 @@ export default (state = { ...initialState }, action) => {
       return {
         ...state,
         requestPopup: action.state,
-        popUp: !action.state,
       };
 
     case TOGGLE_MODALS.togglePopup:
       return {
         ...state,
-        requestPopup: !action.state,
         popUp: action.state,
       };
 

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import ReactDOM from 'react-dom';
 import PopupStyled from './styled';
-import { togglePopup } from '../../store/shared/actions/toggleModals';
+import { togglePopup, toggleRequestPopup } from '../../store/shared/actions/toggleModals';
 
 class Popup extends React.Component {
   constructor(props) {
@@ -15,6 +15,9 @@ class Popup extends React.Component {
   }
   componentDidMount() {
     this.props.togglePopup(true);
+    if (!this.props.modalPopup) {
+      this.props.toggleRequestPopup(false);
+    }
     if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
@@ -28,6 +31,7 @@ class Popup extends React.Component {
   componentWillUnmount() {
     if (!this.props.confirmPopup) {
       this.props.togglePopup(false);
+      this.props.toggleRequestPopup(true);
     }
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
@@ -94,6 +98,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   togglePopup: state => dispatch(togglePopup(state)),
+  toggleRequestPopup: state => dispatch(toggleRequestPopup(state)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Popup);

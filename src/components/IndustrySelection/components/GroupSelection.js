@@ -13,7 +13,7 @@ class GroupSelectionComponent extends React.Component {
   state = {
     groupsList: [],
     listLoading: true,
-    showPopup: false,
+    addGroup: false,
     filterProfessions: [],
     categorySelected: null,
     searchValue: '',
@@ -63,53 +63,12 @@ class GroupSelectionComponent extends React.Component {
     this.setState({ searchValue });
   }
 
-  getPopupContent = () => {
-    const { newGroupDetails, alertText } = this.state;
-    if (alertText !== '') {
-      return (
-        <AlertView
-          message={alertText}
-          closePopup={this.togglePopup}
-        />
-      );
-    }
-    return (
-      <React.Fragment>
-        <IndustryStyled.HeaderText>Add new group</IndustryStyled.HeaderText>
-        <IndustryStyled.Select
-          onChange={this.handleGroupData('type')}
-        >
-          <option value="">Select group type</option>
-          {
-            this.props.groupTypes.map(groupType => (
-              <option key={groupType.id} value={groupType.id}>{groupType.group_name}</option>
-            ))
-          }
-        </IndustryStyled.Select>
-        <IndustryStyled.InputArea
-          type="text"
-          small
-          placeholder="Enter group name"
-          value={newGroupDetails.name}
-          onChange={this.handleGroupData('name')}
-        />
-        <IndustryStyled.ControlWrapper>
-          <IndustryStyled.ControlButton
-            disabled={newGroupDetails.name === '' || newGroupDetails.type === ''}
-            onClick={this.sendCreateGroupNotify}
-          >
-            Submit
-          </IndustryStyled.ControlButton>
-        </IndustryStyled.ControlWrapper>
-      </React.Fragment>
-    );
-  }
-
   sendCreateGroupNotify = () => {
     const { newGroupDetails } = this.state;
     createGroupNotification(newGroupDetails.type, newGroupDetails.name, newGroupDetails.comments)
       .then((resp) => {
         if (resp.success) {
+          this.toggleAddGroup();
           this.setState({
             alertText: resp.data.message,
             newGroupDetails: {
@@ -127,14 +86,13 @@ class GroupSelectionComponent extends React.Component {
     this.setState({ newGroupDetails });
   }
 
-  togglePopup = () => {
-    const { showPopup } = this.state;
-    if (!showPopup && !this.props.groupTypes.length) {
+  toggleAddGroup = () => {
+    const { addGroup } = this.state;
+    if (!addGroup && !this.props.groupTypes.length) {
       this.props.fetchGroupTypes();
     }
     this.setState({
-      showPopup: !showPopup,
-      alertText: '',
+      addGroup: !addGroup,
       newGroupDetails: {
         type: '',
         name: '',
@@ -167,6 +125,57 @@ class GroupSelectionComponent extends React.Component {
     let { selectedProfessions } = this.state;
     selectedProfessions = selectedProfessions.filter(profession => profession.group_id !== id);
     this.setState({ selectedProfessions });
+  }
+
+  closeAlertView = () => {
+    this.setState({
+      alertText: '',
+    });
+  }
+
+  renderAddGroup = () => {
+    const { newGroupDetails } = this.state;
+    return (
+      <IndustryStyled.AddGroupWrapper>
+        <IndustryStyled.HeaderWrapper>
+          <IndustryStyled.BackButton onClick={this.toggleAddGroup} />
+          <IndustryStyled.HeaderContent>
+            <IndustryStyled.HeaderTextWrapper>
+              <IndustryStyled.HeaderText>
+                Add new group
+              </IndustryStyled.HeaderText>
+            </IndustryStyled.HeaderTextWrapper>
+          </IndustryStyled.HeaderContent>
+        </IndustryStyled.HeaderWrapper>
+        <IndustryStyled.AddGroupContent>
+          <IndustryStyled.Select
+            onChange={this.handleGroupData('type')}
+          >
+            <option value="">Select group type</option>
+            {
+              this.props.groupTypes.map(groupType => (
+                <option key={groupType.id} value={groupType.id}>{groupType.group_name}</option>
+              ))
+            }
+          </IndustryStyled.Select>
+          <IndustryStyled.InputArea
+            type="text"
+            small
+            placeholder="Enter group name"
+            value={newGroupDetails.name}
+            onChange={this.handleGroupData('name')}
+          />
+          <IndustryStyled.ControlWrapper>
+            <IndustryStyled.ControlButton
+              disabled={newGroupDetails.name === '' || newGroupDetails.type === ''}
+              onClick={this.sendCreateGroupNotify}
+            >
+              Submit
+            </IndustryStyled.ControlButton>
+          </IndustryStyled.ControlWrapper>
+        </IndustryStyled.AddGroupContent>
+      </IndustryStyled.AddGroupWrapper>
+    );
   }
 
   renderProfessionList = () => {
@@ -264,17 +273,24 @@ class GroupSelectionComponent extends React.Component {
   }
 
   render() {
-    const { searchValue, listLoading, showPopup } = this.state;
+    const { searchValue, listLoading, addGroup, alertText } = this.state;
     const { onClose } = this.props;
+    if (addGroup) {
+      return this.renderAddGroup();
+    }
     return (
       <IndustryStyled>
         {
-          showPopup &&
+          alertText !== '' &&
             <Popup
               smallPopup
-              closePopUp={this.togglePopup}
+              modalPopup
+              closePopUp={this.closeAlertView}
             >
-              { this.getPopupContent() }
+              <AlertView
+                message={alertText}
+                closePopup={this.closeAlertView}
+              />
             </Popup>
         }
         <IndustryStyled.HeaderWrapper>
@@ -314,7 +330,7 @@ class GroupSelectionComponent extends React.Component {
                 this.renderProfessions()
               }
               <IndustryStyled.NewItemAdd>
-                Don't see your group? <IndustryStyled.HighlightText onClick={this.togglePopup}>Add it here</IndustryStyled.HighlightText>
+                Don't see your group? <IndustryStyled.HighlightText onClick={this.toggleAddGroup}>Add it here</IndustryStyled.HighlightText>
               </IndustryStyled.NewItemAdd>
             </React.Fragment>
         }
