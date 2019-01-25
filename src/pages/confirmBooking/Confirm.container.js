@@ -24,7 +24,7 @@ const mapStateToProps = state => ({
   requestDetails: state.paymentDetails.requestDetails,
   paymentStatus: state.paymentDetails.paymentStatus,
   audioRecorder: state.audioRecorder,
-  sourceError: state.paymentDetails.sourceError,
+  sourceError: state.paymentDetails.requestError,
 });
 
 const mapDispatchToProps = dispatch => ({

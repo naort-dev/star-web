@@ -9,6 +9,7 @@ const initalState = {
   sourceList: {},
   error: null,
   sourceError: null,
+  requestError: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -27,7 +28,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         requestPostLoading: true,
-        error: null,
+        requestError: null,
       };
 
     case PAYMENTS.end:
@@ -59,20 +60,21 @@ export default (state = { ...initalState }, action) => {
 
     case PAYMENTS.failed:
     case PAYMENTS.sourceListFailed:
-      return {
-        ...state,
-        loading: false,
-        sourceError: {
-          code: action.error.code,
-          message: action.error.message,
-        },
-      };
-
     case PAYMENTS.modifySourceListFailed:
       return {
         ...state,
         loading: false,
         error: {
+          code: action.error.code,
+          message: action.error.message,
+        },
+      };
+
+    case PAYMENTS.requestFailed:
+      return {
+        ...state,
+        loading: false,
+        requestError: {
           code: action.error.code,
           message: action.error.message,
         },
@@ -88,7 +90,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         error: null,
-        sourceError: null,
+        requestError: null,
       }
     default:
       return state;
