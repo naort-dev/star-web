@@ -29,10 +29,12 @@ class ManagePayments extends React.Component {
   componentWillMount() {
     fetchEphemeralKey(this.props.authToken)
       .then((resp) => {
-        const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
+        if (resp.success) {
+          this.props.fetchSourceList();
+        }
+        const customerId = resp.data.ephemeralKey.associated_objects && resp.data.ephemeralKey.associated_objects[0] ? resp.data.ephemeralKey.associated_objects[0].id : null;
         this.setState({ customerId });
       });
-    this.props.fetchSourceList();
   }
   setStripe = (stripe) => {
     this.setState({ stripe });

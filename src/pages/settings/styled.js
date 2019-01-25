@@ -148,7 +148,7 @@ SettingsStyled.ControlButton = styled.button`
   border-radius: 5px;
   border: 2px solid #FF6C58;
   border-image: initial;
-  &:hover {
+  &:hover, &:focus {
     background-color: #FF3B21;
   }
   &:disabled {
@@ -215,7 +215,7 @@ SettingsStyled.OptionCloseButton = SettingsStyled.CloseButton.extend`
   background: url('assets/images/close-icon-white.svg') no-repeat;
   background-position: center center;
   display: inline-block;
-`.withComponent('input');
+`;
 
 SettingsStyled.HighlightText = styled.span`
   color: #FF6C58;
@@ -315,10 +315,10 @@ SettingsStyled.SocialCustomInput = SettingsStyled.InputArea.extend`
 
 SettingsStyled.IndustryInput = SettingsStyled.InputArea.extend`
   min-height: 80px;
-  position: relative;
   cursor: pointer;
   display: block;
   height: auto;
+  position: relative;
   padding-right: 40px;
 `.withComponent('span');
 

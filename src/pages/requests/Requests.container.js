@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import Requests from './Requests.component';
 import { fetchMyVideosList, myVideosListReset, updateVideosList } from './actions/getMyVideosList';
-import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd } from './actions/handleRequests';
+import { changeRequestStatus, responseVideo, requestFetchStart, requestFetchEnd, requestFetchFailed } from './actions/handleRequests';
 import { startRecording, stopRecording, playVideo, reRecord, clearStreams } from '../../store/shared/actions/videoRecorder';
 import { saveVideo, deleteVideo } from '../../store/shared/actions/videoUploader';
 import { rateCelebrity, contactSupport, reportAbuse } from '../../store/shared/actions/popupActions';
@@ -11,6 +11,7 @@ import { updateUserDetails } from '../../store/shared/actions/saveSettings';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { saveAudioRecording } from '../../store/shared/actions/audioRecorder';
 import { setRequestFlow } from '../../store/shared/actions/toggleModals';
+import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
@@ -36,6 +37,7 @@ const mapDispatchToProps = dispatch => ({
   onClearStreams: () => dispatch(clearStreams()),
   requestFetchStart: () => dispatch(requestFetchStart()),
   requestFetchEnd: () => dispatch(requestFetchEnd()),
+  requestFetchFailed: () => dispatch(requestFetchFailed()),
   changeRequestStatus: (requestId, requestStatus, comment) => dispatch(changeRequestStatus(requestId, requestStatus, comment)),
   onSaveVideo: (videoFile) => dispatch(saveVideo(videoFile)),
   responseVideo: (requestId, fileName) => dispatch(responseVideo(requestId, fileName)),
@@ -49,6 +51,7 @@ const mapDispatchToProps = dispatch => ({
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
   deleteVideo: () => dispatch(deleteVideo()),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
+  resetPaymentDetails: () => dispatch(resetPaymentDetails()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Requests);

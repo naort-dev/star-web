@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import StarSupporters from './StarSupporters.component';
 import { fetchMemberList, removeMember } from './actions/getMemberList';
 import { fetchNonMemberList, removeNonMember } from './actions/getNonMembers';
+import { setRequestFlow } from '../../store/shared/actions/toggleModals';
 
 
 const mapStateToProps = state => ({
@@ -12,11 +13,13 @@ const mapStateToProps = state => ({
   membersLoading: state.groupSupporters.memberList.loading,
   membersOffset: state.groupSupporters.memberList.offset,
   nonMemberList: state.groupSupporters.nonMemberList,
+  userDetails: state.userDetails.settings_userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchMemberList: (offset, refresh, type) => dispatch(fetchMemberList(offset, refresh, true, type)),
-  fetchNonMemberList: (offset, refresh) => dispatch(fetchNonMemberList(offset, refresh)),
+  fetchMemberList: (offset, refresh, isStar, type) => dispatch(fetchMemberList(offset, refresh, isStar, type)),
+  setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
+  fetchNonMemberList: (offset, refresh, isStar) => dispatch(fetchNonMemberList(offset, refresh, isStar)),
   removeMember: userId => dispatch(removeMember(userId)),
   removeNonMember: userId => dispatch(removeNonMember(userId)),
 });

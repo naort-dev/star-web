@@ -156,9 +156,7 @@ class Header extends React.Component {
 
   logoutUser = () => {
     this.setState({ profileDropdown: false });
-    if (window.gapi.auth2) {
-      window.gapi.auth2.getAuthInstance().signOut();
-    }
+    this.props.history.push('/');
     this.props.logOut();
   }
 
@@ -169,34 +167,47 @@ class Header extends React.Component {
     }
   }
 
+  logoClick = () => {
+    if (this.props.history.location.pathname === '/') {
+      this.props.enableMenu();
+    }
+  }
+
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
       return (
         <HeaderSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
           {
-            this.props.suggestionsList.suggestions.map(item => (
-              <HeaderSection.SuggestionListItem
-                tabIndex="0"
-                key={item.user_id}
-                onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
-              >
-                <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
-                  <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                    <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
-                    <HeaderSection.SuggestionListName>
-                      {item.get_short_name}
-                      <HeaderSection.SuggestionDetails>
-                        {
-                          item.has_group_account ?
-                            item.group_type
-                          : starProfessionsFormater(item.celebrity_profession)
-                        }
-                      </HeaderSection.SuggestionDetails>
-                    </HeaderSection.SuggestionListName>
-                  </HeaderSection.SuggestionListContent>
-                </Link>
-              </HeaderSection.SuggestionListItem>
-            ))
+            this.props.suggestionsList.suggestions.map((item) => {
+              let fullName = '';
+              if (item.nick_name || item.first_name || item.last_name) {
+                fullName = item.nick_name ? item.nick_name
+                  : `${item.first_name} ${item.last_name}`;
+              }
+              return (
+                <HeaderSection.SuggestionListItem
+                  tabIndex="0"
+                  key={item.user_id}
+                  onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
+                >
+                  <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
+                    <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
+                      <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
+                      <HeaderSection.SuggestionListName>
+                        {fullName}
+                        <HeaderSection.SuggestionDetails>
+                          {
+                            item.has_group_account ?
+                              item.group_type
+                            : starProfessionsFormater(item.celebrity_profession)
+                          }
+                        </HeaderSection.SuggestionDetails>
+                      </HeaderSection.SuggestionListName>
+                    </HeaderSection.SuggestionListContent>
+                  </Link>
+                </HeaderSection.SuggestionListItem>
+              );
+            })
           }
         </HeaderSection.SuggestionList>
       );
@@ -214,17 +225,17 @@ class Header extends React.Component {
       <HeaderSection>
         <HeaderSection.HeaderDiv >
           <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <Link to="/" onClick={() => this.handleSearchItemClick()}>
+            <Link to="/" onClick={this.handleSearchItemClick}>
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
-                onClick={() => props.enableMenu()}
+                onClick={this.logoClick}
               />
             </Link>
             {
               !props.disableMenu && <HeaderSection.MenuButton
                 menuActive={props.menuActive}
-                onClick={() => props.enableMenu()}
+                onClick={props.enableMenu}
               />
             }
           </HeaderSection.HeaderLeft>
@@ -262,25 +273,19 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
-                  {/* <Link to="/user/favorites">
-                    <HeaderSection.FavoriteButton title="Favorites" />
-                  </Link>
-                  <Link to="/user/myVideos">
-                    <HeaderSection.MyvideoButton title="My videos" />
-                  </Link> */}
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}
                     onClick={this.activateSearch}
                   />
                   <HeaderSection.ProfileButton
                     profileUrl={this.state.profilePhoto}
-                    innerRef={(node) => { this.profileButton = node }}
+                    innerRef={(node) => { this.profileButton = node; }}
                     hide={this.state.searchActive}
-                    onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
+                    onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
                   />
                   {
                     this.state.profileDropdown &&
-                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
+                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
@@ -289,7 +294,18 @@ class Header extends React.Component {
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/myVideos">
-                            My videos
+                            <HeaderSection.LinkElement>
+                              My videos
+                              {
+                                this.props.userValue.settings_userDetails.completed_fan_unseen_count ?
+                                  <HeaderSection.InnerListItemCount>
+                                    {
+                                      this.props.userValue.settings_userDetails.completed_fan_unseen_count
+                                    }
+                                  </HeaderSection.InnerListItemCount>
+                                : null
+                              }
+                            </HeaderSection.LinkElement>
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem >
@@ -298,7 +314,7 @@ class Header extends React.Component {
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
                 </div>
@@ -332,7 +348,6 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
   isLoggedIn: state.session.isLoggedIn,
-  userDetails: state.session.auth_token,
   filters: state.filters,
   userValue: state.userDetails,
 });

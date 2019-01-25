@@ -1,6 +1,6 @@
 import React from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { SidebarStyled } from './styled';
 import { Footer } from '../Footer';
 import { updateCategory } from '../../pages/landing/actions/updateFilters';
@@ -15,6 +15,9 @@ class Sidebar extends React.Component {
 
   selectCategory = (label, id, category) => {
     if (label === 'featured') this.setState({ showSubCategory: false });
+    if (this.props.history && this.props.history.location.pathname !== '/') {
+      this.props.history.push('/');
+    }
     if (this.props.selectedCategory === id && category === 'Stars') {
       this.setState({ showSubCategory: !this.state.showSubCategory});
       return;
@@ -29,9 +32,6 @@ class Sidebar extends React.Component {
     this.props.updateCategory(label, id, category);
     if (this.props.updateMainCategory) {
       this.props.updateMainCategory(label, id, category);
-    }
-    if (this.props.history && this.props.history.location.pathname !== '/') {
-      this.props.history.push('/');
     }
   }
 
@@ -130,6 +130,15 @@ class Sidebar extends React.Component {
                             </SidebarStyled.InnerListItemCount>
                           : null
                         }
+                        {
+                          (element.selectedName === 'mygroups' || element.selectedName === 'supporters') && this.props.userDetails.settings_userDetails.group_notification_count ?
+                            <SidebarStyled.InnerListItemCount>
+                              {
+                                this.props.userDetails.settings_userDetails.group_notification_count
+                              }
+                            </SidebarStyled.InnerListItemCount>
+                          : null
+                        }
                       </SidebarStyled.LinkElement>
                     </Link>
                   </SidebarStyled.InnerCategoryTitle>
@@ -160,7 +169,7 @@ class Sidebar extends React.Component {
                             <SidebarStyled.CategoryTitle
                               selected={this.props.selectedCategory === 'requests'}
                             >
-                              <Link to={'/user/bookings'}>
+                              <Link to="/user/bookings">
                                 <SidebarStyled.LinkElement>
                                   Requests
                                   {
@@ -180,12 +189,17 @@ class Sidebar extends React.Component {
                             <SidebarStyled.CategoryTitle
                               selected={this.props.selectedCategory === 'earnings'}
                             >
-                              <Link to={'/user/earnings'}>Earnings</Link>
+                              <Link to="/user/earnings">Earnings</Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                           <SidebarStyled.ListItem>
                             <SidebarStyled.CategoryTitle>
                               <Link to="/settings">Settings</Link>
+                            </SidebarStyled.CategoryTitle>
+                          </SidebarStyled.ListItem>
+                          <SidebarStyled.ListItem>
+                            <SidebarStyled.CategoryTitle>
+                              <Link to="/user/my-groups">My groups</Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                         </SidebarStyled.ListWrapper>
@@ -240,4 +254,4 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, category) => dispatch(updateCategory(label, value, category)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sidebar);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Sidebar));

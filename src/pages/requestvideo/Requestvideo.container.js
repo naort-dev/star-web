@@ -16,7 +16,7 @@ const mapStateToProps = state => ({
   userDetails: state.celebDetails.userDetails,
   celebId: state.modals.requestFlowDetails.celebId,
   requestType: state.modals.requestFlowDetails.type,
-  stepCount: state.modals.requestFlowDetails.step
+  stepCount: state.modals.requestFlowDetails.step,
 });
 
 const mapDispatchToProps = dispatch => ({

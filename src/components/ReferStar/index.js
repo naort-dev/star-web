@@ -157,7 +157,7 @@ class ReferStar extends React.Component {
 
   renderBanner = () => (
     <Fragment>
-      <svg id="bigHalfCircle" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="120px" viewBox="0 0 100 100" preserveAspectRatio="none">
+      <ReferralStyled.BannerPattern id="bigHalfCircle" xmlns="http://www.w3.org/2000/svg" version="1.1" width="100%" height="120px" viewBox="0 0 100 100" preserveAspectRatio="none">
         <rect x="0" y="0" width="100%" height="34" fill="#ff6c58" />
         <path
           d="m0,67c40,-81 60,-81 100,0l-100,0z"
@@ -167,7 +167,7 @@ class ReferStar extends React.Component {
             transformOrigin: '50% 50%',
           }}
         />
-      </svg>
+      </ReferralStyled.BannerPattern>
       <ReferralStyled.Broadcast />
     </Fragment>
   )

@@ -1,13 +1,19 @@
 import styled from 'styled-components';
 
 const IndustryStyled = styled.div`
-
+  @media(min-width: 768px) {
+    min-height: 600px;
+  }
 `;
 
 IndustryStyled.HeaderWrapper = styled.div`
   display: flex;
   background-color: #F1F1F2;
   align-items: flex-start;
+  @media(min-width: 768px) {
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+  }
 `;
 
 IndustryStyled.BackButton = styled.span`
@@ -58,6 +64,17 @@ IndustryStyled.HeaderText = styled.div`
   @media(min-width:1920px){
     font-size: 27px;
   }
+`;
+
+
+IndustryStyled.AddGroupWrapper = IndustryStyled.extend`
+  ${IndustryStyled.HeaderContent} {
+    padding: 15px;
+  }
+`;
+
+IndustryStyled.AddGroupContent = styled.div`
+  padding: 0 10px;
 `;
 
 IndustryStyled.Description = styled.span`

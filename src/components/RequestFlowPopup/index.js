@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { times, random } from 'lodash';
 import ReactDOM from 'react-dom';
+import { toggleRequestPopup, togglePopup } from '../../store/shared/actions/toggleModals';
 import PopupStyled from './styled';
 
-export default class RequestFlowPopup extends React.Component {
+class RequestFlowPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,6 +15,8 @@ export default class RequestFlowPopup extends React.Component {
     this.popupWrapper = null;
   }
   componentDidMount() {
+    this.props.toggleRequestPopup(true);
+    this.props.togglePopup(false);
     if (!this.props.modalView) {
       window.addEventListener('click', this.hidePopup);
     }
@@ -35,6 +40,8 @@ export default class RequestFlowPopup extends React.Component {
     }
   }
   componentWillUnmount() {
+    this.props.toggleRequestPopup(false);
+    this.props.togglePopup(true);
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
     }
@@ -52,7 +59,7 @@ export default class RequestFlowPopup extends React.Component {
     }
   }
   renderSliderDots = () => {
-    const DotsArray = Array(this.props.dotsCount).fill('');
+    const DotsArray = times(this.props.dotsCount, random.bind(0, 100));
     const selectedDot = this.props.selectedDot ? this.props.selectedDot - 1 : 0;
     return (
       DotsArray.map((item, index) => {
@@ -65,7 +72,7 @@ export default class RequestFlowPopup extends React.Component {
 
   renderPopup = () => {
     return (
-      <PopupStyled id="request-flow-popup" innerRef={node => this.popupWrapper = node}>
+      <PopupStyled visible={this.props.popupVisibility} id="request-flow-popup" innerRef={node => this.popupWrapper = node}>
         <PopupStyled.SmallContainer
           modalView={this.props.modalView}
           largePopup={this.props.largePopup}
@@ -103,3 +110,14 @@ export default class RequestFlowPopup extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  popupVisibility: state.modals.requestPopup,
+});
+
+const mapDispatchToProps = dispatch => ({
+  toggleRequestPopup: state => dispatch(toggleRequestPopup(state)),
+  togglePopup: state => dispatch(togglePopup(state)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(RequestFlowPopup);

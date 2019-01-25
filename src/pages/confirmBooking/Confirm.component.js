@@ -1,15 +1,14 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import moment from 'moment';
 import { Request, HeaderSection, ConfirmationModal } from '../../pages/confirmBooking/styled';
-import { ImageStack } from '../../components/ImageStack';
+import { getRequestDetails } from '../../services/request';
 import OrderDetailsItem from '../../components/OrderDetails/orderDetailsItem';
-import Loader from '../../components/Loader';
+import AlertView from '../../components/AlertView';
 import './confirmCss';
+import ActionLoader from '../../components/ActionLoader';
 import VideoPlayer from '../../components/VideoPlayer';
 import fetchAWSVideo from '../../services/getAwsVideo';
 import Popup from '../../components/Popup';
-import { PaymentFooterController } from '../../components/PaymentFooterController';
 import StripeCheckout from '../../components/StripeCheckout';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
@@ -18,6 +17,8 @@ export default class Confirm extends React.Component {
     super(props);
     this.state = {
       bookingData: {},
+      loading: false,
+      alertText: '',
       publicRequest: true,
       audioUrl: null,
       QAVideo: {
@@ -55,6 +56,14 @@ export default class Confirm extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.paymentStatus !== nextProps.paymentStatus && nextProps.paymentStatus) {
       this.props.changeStep(this.props.currentStepCount + 1);
+    }
+    if (this.props.sourceError !== nextProps.sourceError && nextProps.sourceError) {
+      this.setState({ alertText: nextProps.sourceError.message });
+    }
+    const goToNextStep = this.props.loading !== nextProps.loading && nextProps.requestDetails && !nextProps.loading && !this.state.bookingData.edit;
+    if (goToNextStep) {
+      this.props.changeStep(this.props.currentStepCount + 1);
+      this.setState({ paymentMode: true });
     }
   }
 
@@ -137,16 +146,24 @@ export default class Confirm extends React.Component {
   handleBooking = () => {
     if (this.props.isLoggedIn) {
       if (this.state.bookingData.edit) {
-        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, () => {
-          this.props.resetRequestFlow();
-          this.props.history.push('/user/myVideos');
-          localStorage.removeItem('bookingData');
-          this.props.cancelBookingDetails();
+        this.setState({ loading: true });
+        this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest, (requestId) => {
+          getRequestDetails(requestId)
+            .then((requestDetails) => {
+              this.setState({ loading: false, alertText: 'Booking edited successfully' });
+              if (requestDetails.success &&
+                requestDetails.data &&
+                requestDetails.data.stargramz_response
+              ) {
+                this.props.updateVideosList(requestDetails.data.stargramz_response.id, requestDetails.data.stargramz_response);
+              }
+            })
+            .catch(() => {
+              this.setState({ loading: false, alertText: 'Something went wrong' });
+            });
         });
       } else {
         this.props.starsonaRequest(this.state.bookingData, this.state.publicRequest);
-        this.props.changeStep(this.props.currentStepCount + 1);
-        this.setState({ paymentMode: true });
       }
     } else {
       this.props.redirectToLogin();
@@ -158,7 +175,6 @@ export default class Confirm extends React.Component {
       localStorage.removeItem('bookingData');
     }
     this.props.cancelBookingDetails();
-    this.props.history.push(`/starDetail/${this.props.match.params.id}`);
   }
   goBack = () => {
     if (this.state.paymentMode) {
@@ -187,14 +203,48 @@ export default class Confirm extends React.Component {
     this.setState({ paymentMode: false });
   }
 
-  closeRequestFlow = () => {
-    this.clearStream();
+  clearDetails = () => {
     this.props.resetRequestFlow();
-    this.props.fetchCelebDetails(this.props.userDetails.user_id);
     this.props.resetPaymentDetails();
     this.props.deleteVideo();
-    this.props.cancelBookingDetails();
+    this.clearStream();
+    this.cancel();
     this.props.clearAudio();
+  }
+
+  closeRequestFlow = () => {
+    const { bookingData } = this.state;
+    if (bookingData.edit) {
+      this.setState({ loading: true });
+      getRequestDetails(bookingData.bookingId)
+        .then((requestDetails) => {
+          this.setState({ loading: false });
+          if (requestDetails.success &&
+            requestDetails.data &&
+            requestDetails.data.stargramz_response
+          ) {
+            this.clearDetails();
+            this.props.updateVideosList(requestDetails.data.stargramz_response.id, requestDetails.data.stargramz_response);
+          }
+        })
+        .catch(() => {
+          this.setState({ loading: false });
+          this.clearDetails();
+          this.props.fetchMyVideosList(0, true);
+        });
+    } else {
+      this.clearDetails();
+    }
+    this.props.fetchCelebDetails(this.props.userDetails.user_id);
+  }
+
+  resetAlertText = () => {
+    const { bookingData } = this.state;
+    this.setState({ alertText: '' });
+    if (bookingData.edit) {
+      this.closeRequestFlow();
+    }
+    this.props.resetPaymentsError();
   }
 
   clearStream = () => {
@@ -318,15 +368,11 @@ export default class Confirm extends React.Component {
   )
 
   render() {
-    let coverPhoto;
-    let imageList = [];
     let profilePhoto;
     let fullName = '';
-    let featuredImage;
-    let firstImage;
-    let secondImage;
     const { props } = this;
-    const { bookingData } = this.state;
+    const { loading: paymentsLoading } = props;
+    const { bookingData, loading, alertText } = this.state;
     const rate = bookingData.starPrice.rate ? bookingData.starPrice.rate : 0;
     const remainingBookings = bookingData.starPrice.remaining_limit ? bookingData.starPrice.remaining_limit : 0;
     if (bookingData.starDetail.nick_name || bookingData.starDetail.first_name || bookingData.starDetail.last_name) {
@@ -338,31 +384,34 @@ export default class Confirm extends React.Component {
     } else {
       profilePhoto = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].thumbnail_url;
     }
-    if (bookingData.starDetail.featured_photo) {
-      coverPhoto = bookingData.starDetail.featured_photo.image_url && bookingData.starDetail.featured_photo.image_url;
-    } else {
-      coverPhoto = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url;
-    }
-    if (bookingData.starDetail.images && bookingData.starDetail.images.length) {
-      firstImage = bookingData.starDetail.images[0] ? bookingData.starDetail.images[0].image_url : null;
-      secondImage = bookingData.starDetail.images[1] ? bookingData.starDetail.images[1].image_url : null;
-      imageList = [firstImage, secondImage];
-    }
-    if (bookingData.starDetail.featured_photo) {
-      featuredImage = bookingData.starDetail.featured_photo.image_url && bookingData.starDetail.featured_photo.image_url
-    } else {
-      featuredImage = bookingData.starDetail.images && bookingData.starDetail.images[0] && bookingData.starDetail.images[0].image_url
-    }
     return (
       <Request.Wrapper>
         <Request.Content>
           <Request>
             <Request.LeftSection>
               {
+                (loading || paymentsLoading) &&
+                  <ActionLoader />
+              }
+              {
+                alertText !== '' ?
+                  <Popup
+                    smallPopup
+                    confirmPopup
+                    closePopUp={this.resetAlertText}
+                  >
+                    <AlertView
+                      message={alertText}
+                      closePopup={this.resetAlertText}
+                    />
+                  </Popup>
+                : null
+              }
+              {
                 this.state.audioUrl &&
                   <Popup
                     smallPopup
-                    closePopUp={()=>this.setState({audioUrl: null})}
+                    closePopUp={() => this.setState({ audioUrl: null })}
                   >
                     <audio src={this.state.audioUrl} controls />
                   </Popup>

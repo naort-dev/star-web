@@ -143,11 +143,11 @@ export default class ProfileSettings extends React.Component {
   }
 
   validateOnBlur = (key, value) => {
-    const { errors } = this.state;
+    const { errors, industries } = this.state;
     if (key === 'bio') {
       errors[key] = value === '';
     } else if (key === 'industries') {
-      errors[key] = value.length === 0 || value[0] === '';
+      errors[key] = industries.length < 3 || industries[0] === '';
     } else if (key === 'bookingLimit') {
       errors[key] = !validator.isCurrency(value, { require_symbol: false });
       this.handleFieldBlur('bookingLimit', value);
@@ -169,7 +169,8 @@ export default class ProfileSettings extends React.Component {
         availability: true,
       };
       const userDetails = {
-        nick_name: this.state.stageName,
+        nick_name: this.state.stageName && this.state.stageName.trim(''),
+        show_nick_name: this.state.stageName && this.state.stageName.trim('') ? true : false,
       };
       const socialLinks = {
         facebook_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)facebook\.com\/[^\/]+/, this.state.socialMedia.facebook, 'https://www.facebook.com/'),
@@ -322,6 +323,8 @@ export default class ProfileSettings extends React.Component {
             <SettingsStyled.Label>Your industry</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
               <SettingsStyled.IndustryInput
+                tabIndex="0"
+                onBlur={() => this.validateOnBlur('industries')}
                 onClick={() => this.setState({ industrySelection: true })}
               >
                 {
@@ -340,7 +343,7 @@ export default class ProfileSettings extends React.Component {
               </SettingsStyled.IndustryInput>
               <SettingsStyled.ErrorMsg isError={this.state.errors.industries}>
                 {this.state.errors.industries
-                  ? 'Please enter a valid industry'
+                  ? 'Please choose a maximum of 3 industries.'
                   : 'You can choose a maximum of 3 industries.'}
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
@@ -393,7 +396,7 @@ export default class ProfileSettings extends React.Component {
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Social links</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
-              <SettingsStyled.SocialCustomInput>
+              <SettingsStyled.SocialCustomInput tabIndex="0" >
                 <SettingsStyled.CustomPlaceholder>www.facebook.com/</SettingsStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.facebook === undefined ?
@@ -425,7 +428,7 @@ export default class ProfileSettings extends React.Component {
                     />
                 }
               </SettingsStyled.SocialCustomInput>
-              <SettingsStyled.SocialCustomInput>
+              <SettingsStyled.SocialCustomInput tabIndex="0" >
                 <SettingsStyled.CustomPlaceholder>www.twitter.com/</SettingsStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.twitter === undefined ?
@@ -457,7 +460,7 @@ export default class ProfileSettings extends React.Component {
                     />
                 }
               </SettingsStyled.SocialCustomInput>
-              <SettingsStyled.SocialCustomInput>
+              <SettingsStyled.SocialCustomInput tabIndex="0" >
                 <SettingsStyled.CustomPlaceholder>www.instagram.com/</SettingsStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.instagram === undefined ?
@@ -489,7 +492,7 @@ export default class ProfileSettings extends React.Component {
                     />
                 }
               </SettingsStyled.SocialCustomInput>
-              <SettingsStyled.SocialCustomInput>
+              <SettingsStyled.SocialCustomInput tabIndex="0" >
                 <SettingsStyled.CustomPlaceholder>www.youtube.com/</SettingsStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.youtube === undefined ?

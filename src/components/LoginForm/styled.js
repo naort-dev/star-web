@@ -81,7 +81,7 @@ LoginContainer.SocialMediaSignup = styled.div`
 `;
 LoginContainer.Container = styled.div`
   @media(min-width: 768px) {
-    padding: 0 65px;
+    padding: 0 0;
   }
   @media(min-width: 1025px) {
     padding: 0 20px;

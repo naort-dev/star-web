@@ -180,13 +180,13 @@ export default class GroupProfile extends React.Component {
       return <Redirect to="/not-found" />;
     }
     return (
-      <GroupProfileStyled>
-        <Header
+      <GroupProfileStyled menuActive={this.props.menuActive}>
+        {/* <Header
           menuActive={this.state.menuActive}
           enableMenu={this.activateMenu}
           history={this.props.history}
           disableMenu
-        />
+        /> */}
         {
           this.state.memberlistModal ?
             <ModalPopup
@@ -232,70 +232,74 @@ export default class GroupProfile extends React.Component {
         }
         {this.props.groupDetails && !this.props.detailsLoading &&
         <GroupProfileStyled.sectionWrapper>
-          <ImageGallery
-            items={images}
-            showThumbnails={false}
-            showFullscreenButton={false}
-            useBrowserFullscreen={false}
-            showPlayButton={false}
-            autoPlay={true}
-            slideInterval={8000}
-          />
-          <GroupProfileStyled.profileWrapper>
-            <div className="profileImageContainer">
-              <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
-            </div>
-            <div className="profileDetails">
-              <div className="groupDetailsContainer">
-                <h1>{this.props.groupDetails.first_name} {this.props.groupDetails.last_name}</h1>
-                <p className={descriptionClass}>{this.props.groupDetails.group_details?this.props.groupDetails.group_details.description: ''}</p>
-                {descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p>:''}
-              </div>
-              <div className="socialMediaIcons">
-                <GroupProfileStyled.ButtonWrapper>
-                  {(!this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) ?
-                    <GroupProfileStyled.getStartedButton onClick={this.groupFollowStatus}>
-                      {followText}
-                    </GroupProfileStyled.getStartedButton>
-                    : <GroupProfileStyled.followingButton onClick={this.groupFollowStatus} followedText={followedText}>
-                      {followedText}
-                    </GroupProfileStyled.followingButton>}
-                </GroupProfileStyled.ButtonWrapper>
-                {this.props.groupDetails.social_links && 
-                  this.props.groupDetails.social_links.map( data => this.socialMedia(data)) }
-              </div>
-              <div className="memberList">
-                <h2>Our members</h2>
-                <div className="memberListContainer">
-                  <div className="memberScroll">
-                    <Scrollbars>
-                      <HorizontalScrollList
-                        noDataText="No members available"
-                        memberList
-                        renderFunction={this.renderMemberDetail}
-                        dataList={memberListArray}
-                        limit={this.props.memberListDetails.limit}
-                        totalCount={this.props.memberListDetails.count}
-                        offset={this.props.memberListDetails.offset}
-                        loading={this.props.memberListDetails.loading}
-                        fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
-                      />
-                    </Scrollbars>
+          <GroupProfileStyled.mainSection>
+            <Scrollbars>
+              <ImageGallery
+                items={images}
+                showThumbnails={false}
+                showFullscreenButton={false}
+                useBrowserFullscreen={false}
+                showPlayButton={false}
+                autoPlay={true}
+                slideInterval={8000}
+              />
+              <GroupProfileStyled.profileWrapper>
+                <div className="profileImageContainer">
+                  <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
+                </div>
+                <div className="profileDetails">
+                  <div className="groupDetailsContainer">
+                    <h1>{this.props.groupDetails.first_name} {this.props.groupDetails.last_name}</h1>
+                    <p className={descriptionClass}>{this.props.groupDetails.group_details?this.props.groupDetails.group_details.description: ''}</p>
+                    {descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p>:''}
                   </div>
-                  <div className="memberlistWeb">
-                    {memberListArray.length > 0 ?
-                      memberListArray.slice(0, 5).map((item, index) => this.renderMemberDetail(item, index))
-                      : <p>No members available</p>}
+                  <div className="socialMediaIcons">
+                    <GroupProfileStyled.ButtonWrapper>
+                      {(!this.props.groupDetails.group_account_follow && !this.props.groupDetails.is_follow) ?
+                        <GroupProfileStyled.getStartedButton onClick={this.groupFollowStatus}>
+                          {followText}
+                        </GroupProfileStyled.getStartedButton>
+                        : <GroupProfileStyled.followingButton onClick={this.groupFollowStatus} followedText={followedText}>
+                          {followedText}
+                        </GroupProfileStyled.followingButton>}
+                    </GroupProfileStyled.ButtonWrapper>
+                    {this.props.groupDetails.social_links && 
+                      this.props.groupDetails.social_links.map( data => this.socialMedia(data)) }
+                  </div>
+                  <div className="memberList">
+                    <h2>Our members</h2>
+                    <div className="memberListContainer">
+                      <div className="memberScroll">
+                        <Scrollbars>
+                          <HorizontalScrollList
+                            noDataText="No members available"
+                            memberList
+                            renderFunction={this.renderMemberDetail}
+                            dataList={memberListArray}
+                            limit={this.props.memberListDetails.limit}
+                            totalCount={this.props.memberListDetails.count}
+                            offset={this.props.memberListDetails.offset}
+                            loading={this.props.memberListDetails.loading}
+                            fetchData={(offset, refresh) => this.props.fetchGroupMembers(this.props.groupDetails.user_id, offset, refresh)}
+                          />
+                        </Scrollbars>
+                      </div>
+                      <div className="memberlistWeb">
+                        {memberListArray.length > 0 ?
+                          memberListArray.slice(0, 5).map((item, index) => this.renderMemberDetail(item, index))
+                          : <p>No members available</p>}
+                      </div>
+                    </div>
+                    {this.props.memberCount > 5 ?
+                      <div className="seeMemberList">
+                        <span onClick={() => { this.toggleMemberList(true); }}>See all members</span>
+                      </div>
+                    : ''}
                   </div>
                 </div>
-                {this.props.memberCount > 5 ?
-                  <div className="seeMemberList">
-                    <span onClick={() => { this.toggleMemberList(true); }}>See all members</span>
-                  </div>
-                : ''}
-              </div>
-            </div>
-          </GroupProfileStyled.profileWrapper>
+              </GroupProfileStyled.profileWrapper>
+            </Scrollbars>
+          </GroupProfileStyled.mainSection>
         </GroupProfileStyled.sectionWrapper>}
         {this.props.detailsLoading && <Loader />}
       </GroupProfileStyled>

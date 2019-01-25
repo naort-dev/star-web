@@ -5,6 +5,8 @@ export const TOGGLE_MODALS = {
   setRequestFlow: 'setRequestFlow/TOGGLEMODAL',
   toggleRequestFlow: 'toggleRequestFlow/TOGGLEMODAL',
   resetRequestFlow: 'resetRequestFlow/TOGGLEMODAL',
+  toggleRequestPopup: 'toggleRequestPopup/TOGGLEMODAL',
+  togglePopup: 'togglePopup/TOGGLEMODAL',
 };
 
 export const toggleLogin = state => ({
@@ -39,4 +41,14 @@ export const setRequestFlow = (celebId, requestType, step) => ({
 
 export const resetRequestFlow = () => ({
   type: TOGGLE_MODALS.resetRequestFlow,
+});
+
+export const togglePopup = state => ({
+  type: TOGGLE_MODALS.togglePopup,
+  state,
+});
+
+export const toggleRequestPopup = state => ({
+  type: TOGGLE_MODALS.toggleRequestPopup,
+  state,
 });

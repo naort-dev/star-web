@@ -81,6 +81,11 @@ class ImageRender extends React.Component {
   }
   render() {
     const { props } = this;
+    const { nickName, firstName, lastName } = props;
+    let fullName = '';
+    if (nickName || firstName || lastName) {
+      fullName = nickName ? nickName : `${firstName} ${lastName}`;
+    }
     return (
       <ImageRenderDiv innerRef={(node) => { this.imageDiv = node; }}>
         <ImageRenderDiv.ImageSection
@@ -112,7 +117,7 @@ class ImageRender extends React.Component {
           <ImageRenderDiv.ProfileContent>
             <ImageRenderDiv.Span>
               <ImageRenderDiv.StarName>
-                {props.starName}
+                {fullName}
               </ImageRenderDiv.StarName>
               <ImageRenderDiv.StarDetails>{props.isGroup ? props.groupType : props.details}</ImageRenderDiv.StarDetails>
             </ImageRenderDiv.Span>

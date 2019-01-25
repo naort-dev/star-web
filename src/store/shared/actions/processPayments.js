@@ -7,11 +7,12 @@ export const PAYMENTS = {
   start: 'payments/REQUEST',
   end: 'payments/REQUEST_END',
   success: 'payments/REQUEST_SUCCESS',
+  requestPostStart: 'payments/REQUEST_POST_START',
   fetchSourceStart: 'payments/SOURCE_FETCH_START',
   fetchSourceEnd: 'payments/SOURCE_FETCH_END',
   setPaymentStatus: 'payments/PAYMENT_STATUS',
   resetPayments: 'payments/RESET_PAYMENTS',
-  failed: 'payments/REQUEST_FAILED',
+  failed: 'payments/PAYMENT_FAILED',
   sourceListStart: 'payments/SOURCE_LIST_START',
   sourceListSuccess: 'payments/SOURCE_LIST_SUCCESS',
   sourceListEnd: 'payments/SOURCE_LIST_END',
@@ -19,12 +20,17 @@ export const PAYMENTS = {
   modifySourceListStart: 'payments/MODIFY_SOURCE_START',
   modifySourceListEnd: 'payments/MODIFY_SOURCE_END',
   modifySourceListFailed: 'payments/MODIFY_SOURCE_FAILED',
+  requestFailed: 'payments/REQUEST_FAILED',
   resetError: 'reset/PAYMENT_ERROR',
 };
 
 
 export const paymentFetchStart = () => ({
   type: PAYMENTS.start,
+});
+
+export const requestPostStart = () => ({
+  type: PAYMENTS.requestPostStart,
 });
 
 export const paymentFetchEnd = () => ({
@@ -41,6 +47,11 @@ export const paymentFetchSuccess = (data) => {
 
 export const paymentFetchFailed = error => ({
   type: PAYMENTS.failed,
+  error,
+});
+
+export const requestPostFailed = error => ({
+  type: PAYMENTS.requestFailed,
   error,
 });
 
@@ -119,7 +130,7 @@ export const fetchSourceList = () => (dispatch, getState) => {
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(sourceListFetchFailed(exception));
+    dispatch(sourceListFetchFailed(exception.response.data.error));
   });
 };
 
@@ -147,7 +158,7 @@ export const modifySourceList = (source, customer, action, callback) => (dispatc
       }
     }).catch((exception) => {
       dispatch(paymentFetchEnd());
-      dispatch(sourceListFetchFailed(exception));
+      dispatch(sourceListFetchFailed(exception.response.data.error));
     });
 };
 
@@ -200,12 +211,12 @@ const starsonaVideo = (authToken, filename, requestId, duration, dispatch, callb
     if (resp.data && resp.data.success) {
       dispatch(paymentFetchEnd());
       if (callback) {
-        callback();
+        callback(requestId);
       }
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception));
+    dispatch(requestPostFailed(exception.response.data.error));
   });
 }
 
@@ -248,19 +259,18 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
     ApiUrl = `${ApiUrl}${bookingData.requestId}/`;
     method = 'put';
   }
-  dispatch(paymentFetchStart());
+  dispatch(requestPostStart());
   return fetch[method](ApiUrl, formData, {
     headers: {
       'Authorization': `token ${authToken}`,
     },
   }).then((resp) => {
     if (resp.data && resp.data.success) {
-      dispatch(paymentFetchEnd());
       if (bookingData.type === 3) {
         starsonaVideo(authToken, bookingData.fileName, resp.data.data['stargramz_response'].id, "00:00", dispatch, callback);
         //Q&A
       } else if (callback) {
-        callback();
+        callback(resp.data.data.stargramz_response.id);
       }
       dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
     } else {
@@ -268,6 +278,6 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (dispatc
     }
   }).catch((exception) => {
     dispatch(paymentFetchEnd());
-    dispatch(paymentFetchFailed(exception.data.reponse.error));
+    dispatch(requestPostFailed(exception.response.data.error));
   });
 };

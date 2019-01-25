@@ -85,7 +85,7 @@ class SignupFlow extends React.Component {
       <div>
         <RequestFlowPopup
           dotsCount={0}
-          closePopUp={() => this.closeSignUp()}
+          closePopUp={this.closeSignUp}
           modalView={this.state.currentStep > 1 && !this.state.enableClose}
           smallPopup
         >

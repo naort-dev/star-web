@@ -3,8 +3,12 @@ import React from 'react';
 import { deleteGroupMember, addGroupMember } from '../../services/groupManagement';
 import ColumnLayout from '../../components/ColumnLayout';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
+import { GroupSelection } from '../../components/IndustrySelection';
 import Loader from '../../components/Loader';
+import ActionLoader from '../../components/ActionLoader';
 import InnerTabs from '../../components/InnerTabs';
+import Popup from '../../components/Popup';
+import AlertView from '../../components/AlertView';
 import RowItem from './components/RowItem';
 import ScrollList from '../../components/ScrollList';
 import SupportStyled from './styled';
@@ -16,12 +20,13 @@ export default class StarSupporters extends React.Component {
       selectedTab: 'All',
       scrollTarget: '',
       inviteView: false,
+      alertText: '',
       popupRef: null,
     };
   }
 
   componentDidMount() {
-    this.props.fetchMemberList(0, true);
+    this.props.fetchMemberList(0, true, this.props.isStar);
   }
 
   getPopupRef = (popupRef) => {
@@ -31,15 +36,24 @@ export default class StarSupporters extends React.Component {
   fetchList = (selectedTab, offset = 0, refresh = true) => {
     switch (selectedTab) {
       case 'Supporters':
-        this.props.fetchMemberList(offset, refresh, 'support');
+        this.props.fetchMemberList(offset, refresh, this.props.isStar, 'support');
         break;
       case 'Pending':
-        this.props.fetchMemberList(offset, refresh, 'pending');
+        this.props.fetchMemberList(offset, refresh, this.props.isStar, 'pending');
         break;
       default:
-        this.props.fetchMemberList(offset, refresh);
+        this.props.fetchMemberList(offset, refresh, this.props.isStar);
         break;
     }
+  }
+
+  fetchNonMemberList = (offset, refresh) => {
+    this.props.fetchNonMemberList(offset, refresh, this.props.isStar);
+  }
+
+  toggleLoader = () => {
+    const { loading } = this.state;
+    this.setState({ loading: !loading });
   }
 
   switchTab = (selectedTab) => {
@@ -59,35 +73,87 @@ export default class StarSupporters extends React.Component {
   handleAction = (type, actionData) => {
     if (type === 'view') {
       this.props.history.push(actionData);
-    } else if (type === 'remove') {
+    } else if (type === 'remove' || type === 'cancel' || type === 'decline') {
+      this.toggleLoader();
       deleteGroupMember(actionData.id)
         .then((success) => {
           if (success) {
+            this.toggleLoader();
+            let alertText;
             this.props.removeMember(actionData.userId);
+            if (type === 'cancel') {
+              alertText = `Request to ${actionData.name} has been cancelled`;
+            } else if (type === 'decline') {
+              alertText = `Request from ${actionData.name} has been declined`;
+            } else {
+              alertText = this.props.isStar ? `${actionData.name} has been removed from your supported groups` : `${actionData.name} has been removed from your supporters list`;
+            }
+            this.setState({ alertText });
           }
         });
     } else if (type === 'accept') {
-      addGroupMember(actionData)
+      this.toggleLoader();
+      addGroupMember(actionData.userId, this.props.isStar)
         .then((success) => {
+          this.toggleLoader();
           if (success) {
+            const alertText = this.props.isStar ? `${actionData.name} has been added to your supported groups` : `${actionData.name} has been added to your supporters list`;
+            this.setState({ alertText });
             this.fetchList(this.state.selectedTab);
           }
         });
+    } else if (type === 'book') {
+      this.props.setRequestFlow(actionData);
+    }
+  }
+
+  handleStarGroupInvite = (groups) => {
+    if (groups.length) {
+      const groupIds = groups.map(group => group.group_id).join(',');
+      this.toggleLoader();
+      addGroupMember(groupIds, this.props.isStar)
+        .then((success) => {
+          this.toggleLoader();
+          if (success) {
+            const alertText = 'Requests have been sent to the selected groups';
+            this.closeInviteView();
+            this.setState({ alertText });
+          }
+        });
+    } else {
+      this.closeInviteView();
     }
   }
 
   showInviteView = () => {
     this.setState({ inviteView: true });
-    this.props.fetchNonMemberList(0, true);
+    this.fetchNonMemberList(0, true);
+  }
+
+  closeAlertView = () => {
+    this.setState({ alertText: '' });
   }
 
   renderMembers = member => (
-    <RowItem onAction={this.handleAction} key={member.user_id} member={member} />
+    <RowItem
+      isStar={this.props.isStar}
+      onAction={this.handleAction}
+      key={member.user_id}
+      member={member}
+    />
   );
 
   renderInviteView = () => {
     const { loading, data, offset, count, limit } = this.props.nonMemberList;
-    if (!data.length && loading) {
+    if (this.props.isStar) {
+      return (
+        <GroupSelection
+          onClose={this.closeInviteView}
+          selectedProfessions={[]}
+          onSelectionComplete={this.handleStarGroupInvite}
+        />
+      );
+    } else if (!data.length && loading) {
       return (
         <SupportStyled.LoaderWrapper>
           <Loader />
@@ -109,7 +175,7 @@ export default class StarSupporters extends React.Component {
           offset={offset}
           loading={loading}
           noDataText="No Stars"
-          fetchData={this.props.fetchNonMemberList}
+          fetchData={this.fetchNonMemberList}
         />
       </SupportStyled.InviteList>
     );
@@ -149,14 +215,32 @@ export default class StarSupporters extends React.Component {
   }
 
   render() {
+    const { isStar } = this.props;
+    const { loading } = this.state;
     return (
       <div>
         <ColumnLayout
-          selectedSideBarItem="supporters"
+          selectedSideBarItem={isStar ? 'mygroups' : 'supporters'}
           history={this.props.history}
           getScrollTarget={this.updateScrollTarget}
         >
           <SupportStyled>
+            {
+              loading &&
+                <ActionLoader />
+            }
+            {
+              this.state.alertText !== '' &&
+                <Popup
+                  smallPopup
+                  closePopUp={this.closeAlertView}
+                >
+                  <AlertView
+                    message={this.state.alertText}
+                    closePopup={this.closeAlertView}
+                  />
+                </Popup>
+            }
             {
               this.state.inviteView &&
                 <RequestFlowPopup
@@ -164,9 +248,14 @@ export default class StarSupporters extends React.Component {
                   autoWidth
                   smallPopup
                   closePopUp={this.closeInviteView}
+                  modalView={this.props.isStar}
                   getPopupRef={this.getPopupRef}
                 >
-                  <SupportStyled.SubHeading>Invite Stars</SupportStyled.SubHeading>
+                  <SupportStyled.SubHeading>
+                    {
+                      !isStar && 'Invite stars'
+                    }
+                  </SupportStyled.SubHeading>
                   { this.renderInviteView() }
                 </RequestFlowPopup>
             }
@@ -175,7 +264,9 @@ export default class StarSupporters extends React.Component {
                 !this.props.membersList.length && !this.props.membersLoading && this.state.selectedTab === 'All' ?
                   <React.Fragment>
                     <SupportStyled.SmallHeading>
-                        Stars who support your group
+                      {
+                        isStar ? 'My groups' : 'Stars who support your group'
+                      }
                     </SupportStyled.SmallHeading>
                     <SupportStyled.Container>
                       <SupportStyled.BigHeading>
@@ -186,7 +277,9 @@ export default class StarSupporters extends React.Component {
                       </SupportStyled.Description>
                       <SupportStyled.ControlWrapper>
                         <SupportStyled.ControlButton onClick={this.showInviteView}>
-                          Invite stars
+                          {
+                            isStar ? 'Support group' : 'Invite stars'
+                          }
                         </SupportStyled.ControlButton>
                       </SupportStyled.ControlWrapper>
                     </SupportStyled.Container>
@@ -196,7 +289,9 @@ export default class StarSupporters extends React.Component {
             </SupportStyled.CenterSection>
             <SupportStyled.RightSection>
               <SupportStyled.ControlButton alternate onClick={this.showInviteView}>
-                Invite stars
+                {
+                  isStar ? 'Support group' : 'Invite stars'
+                }               
               </SupportStyled.ControlButton>
             </SupportStyled.RightSection>
           </SupportStyled>

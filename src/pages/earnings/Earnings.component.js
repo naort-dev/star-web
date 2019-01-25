@@ -1,5 +1,4 @@
 import React from 'react';
-import moment from 'moment';
 import ColumnLayout from '../../components/ColumnLayout';
 import InnerTabs from '../../components/InnerTabs';
 import EarningsList from '../../components/EarningsList';
