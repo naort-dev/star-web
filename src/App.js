@@ -23,18 +23,13 @@ import { Favourites } from './pages/favourites';
 import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
-import { Starprofile } from './pages/starProfile';
-import { Requestvideo } from './pages/requestvideo';
-import LoginFlow from './components/loginFlow';
-import ReferStar from './components/ReferStar';
-import SignupFlow from './components/signupFlow';
 import { StarSupporters } from './pages/starSupporters';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { Earnings } from './pages/earnings';
+import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
-import { GroupProfile } from './pages/groupProfile';
 
 class App extends React.Component {
   constructor(props) {
@@ -52,6 +47,15 @@ class App extends React.Component {
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
+    window.addEventListener('storage', () => {
+      if (localStorage && localStorage.getItem('data') === null && this.props.isLoggedIn) {
+        this.props.logOut();
+      } else if (localStorage && localStorage.getItem('data') !== null && !this.props.isLoggedIn) {
+        const userData = JSON.parse(localStorage.getItem('data')).user;
+        this.props.updateLoginStatus(userData);
+        this.props.fetchUserDetails(userData.id);
+      }
+    });
     if (localStorage && localStorage.getItem('data') !== null) {
       const userData = JSON.parse(localStorage.getItem('data')).user;
       this.props.updateLoginStatus(userData);
@@ -62,13 +66,9 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
-      this.props.fetchGroupTypesListing();
-      this.props.fetchGroupTypes();
     }
     if (!nextProps.configLoading && nextProps.configData && (!nextProps.isLoggedIn || nextProps.userDataLoaded)) {
       this.setState({ showLoading: false });
-    } else if (!nextProps.configLoading && !nextProps.configData) {
-      this.props.getConfig();
     }
   }
 
@@ -78,24 +78,18 @@ class App extends React.Component {
     }
   }
 
+  routeToOutside = url => () => {
+    window.location = url;
+    return null;
+  }
+
   render() {
     const { showLoading } = this.state;
     const showRoutes = !showLoading;
     return (
       <div>
         <div id="content-wrapper">
-          {
-            this.props.loginModal && <LoginFlow />
-          }
-          {
-            this.props.signUpModal && <SignupFlow />
-          }
-          {
-            this.props.requestFlow && <Requestvideo />
-          }
-          {
-            this.props.referModal && <ReferStar />
-          }
+          <Modals />
           <Helmet
             title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
             meta={setMetaTags(
@@ -112,19 +106,15 @@ class App extends React.Component {
               <Switch>
                 {/* non logged in areas */}
 
-                <Route exact path="/" component={Landing} />
-                <Route path="/privacy-policy" component={() => window.location = 'https://about.starsona.com/privacy-policy'}/>
-                <Route path="/terms-service" component={() => window.location = 'https://about.starsona.com/terms-service'}/>
-                <Route path="/contact" component={() => window.location = 'https://about.starsona.com/contact'}/>
-                <Route path="/faq" component={() => window.location = 'https://about.starsona.com/faq'}/>
-                {/* <Route path="/login" component={Login} />
-                <Route path="/forgotpassword" component={Login} /> */}
+                <Route path="/privacy-policy" component={this.routeToOutside('https://about.starsona.com/privacy-policy')} />
+                <Route path="/terms-service" component={this.routeToOutside('https://about.starsona.com/terms-service')} s/>
+                <Route path="/contact" component={this.routeToOutside('https://about.starsona.com/contact')} />
+                <Route path="/faq" component={this.routeToOutside('https://about.starsona.com/faq')} />
                 <Route
                   exact
                   path="/signup"
                   render={props => <Landing {...props} isSignup />}
                 />
-                <Route exact path="/group-profile/:id" component={GroupProfile} />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
 
@@ -144,6 +134,12 @@ class App extends React.Component {
                 />
                 <Route
                   path="/user/star-supporters"
+                  component={protectRoute({
+                    RouteComponent: StarSupporters,
+                  })}
+                />
+                <Route
+                  path="/user/my-groups"
                   component={protectRoute({
                     RouteComponent: StarSupporters,
                   })}
@@ -171,7 +167,9 @@ class App extends React.Component {
                 {/* fallbacks, keep it last */}
                 <Route path="/unauthorized" component={Unauthorized} />
                 <Route path="/not-found" component={Page404} />
-                <Route exact path="/:id" component={Starprofile} />
+                <Route exact path="/" component={Landing} />
+                <Route exact path="/:id" component={Landing} />
+                <Route exact path="/group-profile/:id" component={Landing} />
                 <Route component={Page404} />
               </Switch>
             )
@@ -183,6 +181,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
+  configLoading: PropTypes.bool.isRequired,
+  userDataLoaded: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 const mapState = state => ({
@@ -190,10 +191,6 @@ const mapState = state => ({
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
-  loginModal: state.modals.loginModal,
-  signUpModal: state.modals.signUpModal,
-  requestFlow: state.modals.requestFlow,
-  referModal: state.modals.referModal,
 });
 
 const mapProps = dispatch => ({

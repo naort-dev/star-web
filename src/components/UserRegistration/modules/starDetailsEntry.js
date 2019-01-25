@@ -39,7 +39,9 @@ export default class StarDetailsEntry extends React.Component {
   }
 
   getGroupSelection = (groups) => {
-    this.setState({ groups, groupSelection: false });
+    this.setState({ groups, groupSelection: false }, () => {
+      this.groupSelectionInput.focus();
+    });
   }
 
   getSocialUrl = (regex, value, baseUrl) => {
@@ -94,11 +96,11 @@ export default class StarDetailsEntry extends React.Component {
   }
 
   validateOnBlur = (key, value) => {
-    const { errors } = this.state;
+    const { errors, industries } = this.state;
     if (key === 'bio') {
       errors[key] = value === '';
     } else if (key === 'industries') {
-      errors[key] = value.length === 0 || value[0] === '';
+      errors[key] = industries.length < 3 || industries[0] === '';
     } else if (key === 'bookingLimit') {
       errors[key] = !validator.isCurrency(value, { require_symbol: false });
       this.handleFieldBlur('bookingLimit', value);
@@ -199,12 +201,22 @@ export default class StarDetailsEntry extends React.Component {
       </React.Fragment>
     );
   }
+  
+  closeSelection = type => () => {
+    if (type === 'industries') {
+      this.setState({ industrySelection: false });
+    } else if (type === 'groups') {
+      this.setState({ groupSelection: false }, () => {
+        this.groupSelectionInput.focus();
+      });
+    }
+  }
 
   render() {
     if (this.state.industrySelection) {
       return (
         <IndustrySelection
-          onClose={() => this.setState({ industrySelection: false })}
+          onClose={this.closeSelection('industries')}
           selectedProfessions={this.state.industries}
           onSelectionComplete={this.getIndustrySelection}
           limit={3}
@@ -213,7 +225,7 @@ export default class StarDetailsEntry extends React.Component {
     } else if (this.state.groupSelection) {
       return (
         <GroupSelection
-          onClose={() => this.setState({ groupSelection: false })}
+          onClose={this.closeSelection('groups')}
           selectedProfessions={this.state.groups}
           onSelectionComplete={this.getGroupSelection}
         />
@@ -295,6 +307,8 @@ export default class StarDetailsEntry extends React.Component {
             <GroupStyled.Label>Your industry</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.IndustryInput
+                tabIndex="0"
+                onBlur={() => this.validateOnBlur('industries')}
                 onClick={() => this.setState({ industrySelection: true })}
               >
                 {
@@ -367,6 +381,8 @@ export default class StarDetailsEntry extends React.Component {
             <GroupStyled.Label>Charity / Group</GroupStyled.Label>
             <GroupStyled.WrapsInput>
               <GroupStyled.IndustryInput
+                tabIndex="0"
+                innerRef={(node) => { this.groupSelectionInput = node; }}
                 onClick={() => this.setState({ groupSelection: true })}
               >
                 {
@@ -388,7 +404,7 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Social links</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput tabIndex="0" >
                 <GroupStyled.CustomPlaceholder>www.facebook.com/</GroupStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.facebook === undefined ?
@@ -420,7 +436,7 @@ export default class StarDetailsEntry extends React.Component {
                     />
                 }
               </GroupStyled.SocialCustomInput>
-              <GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput tabIndex="0" >
                 <GroupStyled.CustomPlaceholder>www.twitter.com/</GroupStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.twitter === undefined ?
@@ -452,7 +468,7 @@ export default class StarDetailsEntry extends React.Component {
                     />
                 }
               </GroupStyled.SocialCustomInput>
-              <GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput tabIndex="0" >
                 <GroupStyled.CustomPlaceholder>www.instagram.com/</GroupStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.instagram === undefined ?
@@ -484,7 +500,7 @@ export default class StarDetailsEntry extends React.Component {
                     />
                 }
               </GroupStyled.SocialCustomInput>
-              <GroupStyled.SocialCustomInput>
+              <GroupStyled.SocialCustomInput tabIndex="0" >
                 <GroupStyled.CustomPlaceholder>www.youtube.com/</GroupStyled.CustomPlaceholder>
                 {
                   this.state.socialMedia.youtube === undefined ?

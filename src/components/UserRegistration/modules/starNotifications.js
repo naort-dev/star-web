@@ -394,6 +394,7 @@ export default class StarNotifications extends React.Component {
           </div>
           <div className="repFormElement">
             <PhoneInput
+              country="US"
               placeholder="Mobile phone(optional)"
               value={rep.phone}
               onChange={value => this.setRepPhone(index, value)}
@@ -409,12 +410,12 @@ export default class StarNotifications extends React.Component {
           </div>
           <div className="notifyRepresentative">
             <p>
-            Your representative will receive an invitation they will need to confirm.
+            Your representative will receive notifications about your bookings.
             </p>
-            <p>How should we send the invitation?</p>
+            <p>How should we send the notification?</p>
             <GroupStyled.WrapsInput className="checkboxWrapper">
               <GroupStyled.Label className="checkbox_container">
-                <span className="checkBoxHeading">Send an invite via email address.</span>
+                <span className="checkBoxHeading">Notify via email.</span>
                 <GroupStyled.CheckBox
                   id={`rep${index}EmailUpdates`}
                   type="checkbox"
@@ -426,7 +427,7 @@ export default class StarNotifications extends React.Component {
             </GroupStyled.WrapsInput>
             <GroupStyled.WrapsInput className="checkboxWrapper">
               <GroupStyled.Label className="checkbox_container">
-                <span className="checkBoxHeading">Send an invite via text message.</span>
+                <span className="checkBoxHeading">Notify via text message.</span>
                 <GroupStyled.CheckBox
                   id={`rep${index}PhoneUpdates`}
                   type="checkbox"
@@ -497,7 +498,6 @@ export default class StarNotifications extends React.Component {
         <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
           <GroupStyled.Label className="checkbox_container">
             <span className="checkBoxHeading">Text (mobile phone)</span>
-            <p>Add tel. number</p>
             <GroupStyled.CheckBox
               id="phoneUpdates"
               type="checkbox"
@@ -509,6 +509,7 @@ export default class StarNotifications extends React.Component {
               <GroupStyled.PhoneInput>
                 <div>
                   <PhoneInput
+                    country="US"
                     placeholder="Phone number"
                     ref={(node) => { this.phone = node; }}
                     value={value}

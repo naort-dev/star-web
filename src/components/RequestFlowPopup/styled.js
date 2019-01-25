@@ -10,13 +10,13 @@ const popupEnter = keyframes`
 `;
 
 const PopupStyled = styled.div`
+  display: ${props => (props.visible ? 'flex' : 'none')};
   position: fixed;
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
   background-color: #fff;
-  display: flex;
   justify-content: center;
   z-index: 11;
   overflow: auto;
@@ -40,6 +40,7 @@ PopupStyled.Container = styled.div`
   -webkit-overflow-scrolling: touch;
   @media(min-width: 768px) {
     overflow: initial;
+    border-radius: 6px;
     margin: auto;
     height: auto;
     justify-content: center;
@@ -52,9 +53,12 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   width: 100%;
   background-color: #fff;
   @media(min-width: 768px) {
-    width: ${props => !props.autoWidth && '50%'};
+    width: ${props => !props.autoWidth && '75%'};
     min-width: 200px;
     max-width: ${props => (props.largePopup ? '900px' : '600px')};
+  }
+  @media(min-width: 1025px) {
+    width: ${props => !props.autoWidth && '50%'};
   }
 `;
 

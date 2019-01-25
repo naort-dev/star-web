@@ -156,9 +156,7 @@ class Header extends React.Component {
 
   logoutUser = () => {
     this.setState({ profileDropdown: false });
-    if (window.gapi.auth2) {
-      window.gapi.auth2.getAuthInstance().signOut();
-    }
+    this.props.history.push('/');
     this.props.logOut();
   }
 
@@ -166,6 +164,12 @@ class Header extends React.Component {
     if (e.keyCode === 13) {
       this.handleSearchItemClick();
       this.props.history.push(link);
+    }
+  }
+
+  logoClick = () => {
+    if (this.props.history.location.pathname === '/') {
+      this.props.enableMenu();
     }
   }
 
@@ -221,17 +225,17 @@ class Header extends React.Component {
       <HeaderSection>
         <HeaderSection.HeaderDiv >
           <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <Link to="/" onClick={() => this.handleSearchItemClick()}>
+            <Link to="/" onClick={this.handleSearchItemClick}>
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.png"
                 alt=""
-                onClick={() => props.enableMenu()}
+                onClick={this.logoClick}
               />
             </Link>
             {
               !props.disableMenu && <HeaderSection.MenuButton
                 menuActive={props.menuActive}
-                onClick={() => props.enableMenu()}
+                onClick={props.enableMenu}
               />
             }
           </HeaderSection.HeaderLeft>
@@ -269,25 +273,19 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
-                  {/* <Link to="/user/favorites">
-                    <HeaderSection.FavoriteButton title="Favorites" />
-                  </Link>
-                  <Link to="/user/myVideos">
-                    <HeaderSection.MyvideoButton title="My videos" />
-                  </Link> */}
                   <HeaderSection.SearchButton
                     hide={this.state.searchActive}
                     onClick={this.activateSearch}
                   />
                   <HeaderSection.ProfileButton
                     profileUrl={this.state.profilePhoto}
-                    innerRef={(node) => { this.profileButton = node }}
+                    innerRef={(node) => { this.profileButton = node; }}
                     hide={this.state.searchActive}
-                    onClick={()=>this.setState({profileDropdown: !this.state.profileDropdown})}
+                    onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
                   />
                   {
                     this.state.profileDropdown &&
-                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node }}>
+                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
                         <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
@@ -296,7 +294,18 @@ class Header extends React.Component {
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/myVideos">
-                            My videos
+                            <HeaderSection.LinkElement>
+                              My videos
+                              {
+                                this.props.userValue.settings_userDetails.completed_fan_unseen_count ?
+                                  <HeaderSection.InnerListItemCount>
+                                    {
+                                      this.props.userValue.settings_userDetails.completed_fan_unseen_count
+                                    }
+                                  </HeaderSection.InnerListItemCount>
+                                : null
+                              }
+                            </HeaderSection.LinkElement>
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem >
@@ -305,7 +314,7 @@ class Header extends React.Component {
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => this.logoutUser()}>Logout</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
                 </div>
@@ -339,7 +348,6 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
   isLoggedIn: state.session.isLoggedIn,
-  userDetails: state.session.auth_token,
   filters: state.filters,
   userValue: state.userDetails,
 });

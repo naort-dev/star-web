@@ -1,13 +1,15 @@
 import { PAYMENTS } from '../actions/processPayments';
 
 const initalState = {
-  requestDetails: {},
+  requestDetails: null,
   loading: false,
+  requestPostLoading: false,
   paymentStatus: false,
   serverUpdated: false,
   sourceList: {},
   error: null,
   sourceError: null,
+  requestError: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -21,7 +23,14 @@ export default (state = { ...initalState }, action) => {
         loading: true,
         error: null,
       };
-      
+    
+    case PAYMENTS.requestPostStart:
+      return {
+        ...state,
+        requestPostLoading: true,
+        requestError: null,
+      };
+
     case PAYMENTS.end:
     case PAYMENTS.fetchSourceEnd:
     case PAYMENTS.sourceListEnd:
@@ -35,6 +44,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
+        requestPostLoading: false,
         requestDetails: action.data,
       };
 
@@ -50,20 +60,21 @@ export default (state = { ...initalState }, action) => {
 
     case PAYMENTS.failed:
     case PAYMENTS.sourceListFailed:
-      return {
-        ...state,
-        loading: false,
-        sourceError: {
-          code: action.error.code,
-          message: action.error.message,
-        },
-      };
-
     case PAYMENTS.modifySourceListFailed:
       return {
         ...state,
         loading: false,
         error: {
+          code: action.error.code,
+          message: action.error.message,
+        },
+      };
+
+    case PAYMENTS.requestFailed:
+      return {
+        ...state,
+        loading: false,
+        requestError: {
           code: action.error.code,
           message: action.error.message,
         },
@@ -79,6 +90,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         error: null,
+        requestError: null,
       }
     default:
       return state;

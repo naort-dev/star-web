@@ -81,6 +81,9 @@ TabStyled.TitleLabel = TabStyled.FilterLabel.extend`
   @media(min-width: 768px) {
     font-size: 16px;
   }
+  @media(min-width: 1025px) {
+    font-size: 18px;
+  }
 `;
 
 TabStyled.FilterIcon = styled.span`
@@ -144,6 +147,7 @@ TabStyled.TitleControl = TabStyled.FilterControl.extend`
   }
   @media(min-width: 1025px) {
     position: relative;
+    margin-top: 0px;
     top: ${props => props.starMode && '4px'};
   }
 `;

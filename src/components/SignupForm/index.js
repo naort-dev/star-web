@@ -75,19 +75,6 @@ export default class SignUp extends React.Component {
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
     window.addEventListener("storage", this.getInstaAccessToken);
-    // const token = this.props.location.hash;
-    // const authToken = token.split('=')[1];
-    // const instaUrl = env('instaUrl') + authToken;
-    // const that = this;
-    // if (authToken !== undefined) {
-    //   axios.get(instaUrl)
-    //     .then((response) => {
-    //       that.onSocialMediaLogin(response.data.data, 4);
-    //     })
-    //     .catch((error) => {
-
-    //     });
-    // }
     if (!this.props.isLoggedIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
@@ -198,11 +185,6 @@ export default class SignUp extends React.Component {
     }
   };
 
-  onSignIn = googleUser => {
-    const profile = googleUser.getBasicProfile();
-    this.onSocialMediaLogin(profile, 3);
-  };
-
   onSocialMediaLogin = (r, source) => {
     if (source === 2) {
       this.setState({
@@ -280,6 +262,7 @@ export default class SignUp extends React.Component {
   };
 
   onGmail = () => {
+    this.setState({ gmailClick: true });
     const check = document.getElementsByClassName("abcRioButtonIcon");
     check[0].click();
   };

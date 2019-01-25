@@ -8,6 +8,7 @@ export const CELEB_DETAILS = {
   success: 'fetch_success/celeb_details',
   failed: 'fetch_failed/celeb_details',
   reset: 'reset/celeb_details',
+  update: 'reset/celeb_details',
 };
 
 export const celebDetailsFetchStart = () => ({
@@ -30,6 +31,14 @@ export const celebDetailstFetchFailed = error => ({
   type: CELEB_DETAILS.failed,
   error,
 });
+
+export const celebDetailstFetchFollowUpdate = (details) => {
+  return (
+    {
+      type: CELEB_DETAILS.update,
+      details,
+    });
+};
 
 export const resetCelebDetails = () => ({
   type: CELEB_DETAILS.reset,

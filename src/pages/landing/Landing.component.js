@@ -1,9 +1,11 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
-import Loader from '../../components/Loader';
+import { Starprofile } from '../starProfile';
+import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 import ScrollList from '../../components/ScrollList';
@@ -13,8 +15,6 @@ export default class Landing extends React.Component {
     super(props);
     this.state = {
       menuActive: false,
-      tabsRef: undefined,
-      tabsClientHeight: 0,
       filterSelected: false,
       subCategoryList: [],
       groupClick: true,
@@ -76,14 +76,10 @@ export default class Landing extends React.Component {
     }
     if ((nextProps.filters.selectedTab === 'Stars' && nextProps.filters.category.label === 'featured') ||
       (tabChange && nextProps.filters.selectedTab === 'Videos')) {
-      this.setState({ filterSelected: false }, () => {
-        this.setScrollHeight();
-      });
+      this.setState({ filterSelected: false });
     }
     if (tabChange || loginChange) {
-      this.setState({ filterSelected: false }, () => {
-        this.setScrollHeight();
-      });
+      this.setState({ filterSelected: false });
       if (nextProps.filters.selectedTab === 'Videos') {
         if ((tabChange && !this.props.videosList.data.length) || loginChange) {
           this.props.fetchVideosList(0, true);
@@ -99,9 +95,6 @@ export default class Landing extends React.Component {
     window.removeEventListener('resize', this.setScrollHeight);
   }
   onBackButtonEvent = event => event.preventDefault()
-  setScrollHeight = () => {
-    this.setState({ tabsClientHeight: this.state.tabsRef.clientHeight });
-  }
   getFilterCount = () => {
     let count = 0;
     switch (this.props.filters.selectedTab) {
@@ -158,12 +151,16 @@ export default class Landing extends React.Component {
   }
   toggleFilterSection = () => {
     const filterState = this.state.filterSelected;
-    this.setState({ filterSelected: !this.state.filterSelected }, () => {
-      this.setScrollHeight();
-    });
-    if (!filterState && this.props.filters.selectedTab === "Stars") {
+    this.setState({ filterSelected: !this.state.filterSelected });
+    if (!filterState && this.props.filters.selectedTab === 'Stars') {
       this.findSubCategoryList(this.props.filters.category.value);
     }
+  }
+  fetchCelebrityList = category => (offset, refresh) => {
+    this.props.fetchCelebrityList(offset, refresh, category);
+  }
+  fetchVideosList = (offset, refresh) => {
+    this.props.fetchVideosList(offset, refresh);
   }
   renderScrollList() {
     if (this.props.filters.selectedTab === 'Stars') {
@@ -177,7 +174,7 @@ export default class Landing extends React.Component {
           totalCount={this.props.celebList.count}
           offset={this.props.celebList.offset}
           loading={this.props.celebList.loading}
-          fetchData={(offset, refresh) => this.props.fetchCelebrityList(offset, refresh, 'Stars')}
+          fetchData={this.fetchCelebrityList('Stars')}
         />
       );
     } else if (this.props.filters.selectedTab === 'Videos') {
@@ -189,7 +186,7 @@ export default class Landing extends React.Component {
           totalCount={this.props.videosList.count}
           offset={this.props.videosList.offset}
           loading={this.props.videosList.loading}
-          fetchData={(offset, refresh) => this.props.fetchVideosList(offset, refresh)}
+          fetchData={this.fetchVideosList}
         />
       );
     }
@@ -220,53 +217,65 @@ export default class Landing extends React.Component {
               />
             </Scrollbars>
           </LandingStyled.sideSection>
-          <LandingStyled.mainSection menuActive={this.state.menuActive}>
-            <div
-              ref={node => !this.state.tabsRef && this.setState({ tabsRef: node, tabsClientHeight: node.clientHeight })}
-            >
-              <Tabs
-                labels={['Stars', 'Videos']}
-                switchTab={this.props.switchTab}
-                selectedCategory={this.props.filters.category.label}
-                filterSelected={this.state.filterSelected}
-                selected={this.props.filters.selectedTab}
-                filterCount={this.getFilterCount}
-                toggleFilter={this.toggleFilterSection}
-                noTabs={this.state.groupClick}
-              />
-              {
-                this.state.filterSelected &&
-                <FilterSection
-                  selectedPriceRange={{ low: this.props.filters.lowPrice, high: this.props.filters.highPrice }}
-                  selectedTab={this.props.filters.selectedTab}
-                  selectedSort={this.props.filters.sortValue}
-                  selectedSubCategories={this.props.filters[this.props.filters.category.value]}
-                  subCategoryList={this.state.subCategoryList}
-                  selectedVideoType={this.props.filters.selectedVideoType}
-                  selectedVideoDate={this.props.filters.selectedVideoDate}
-                  filterSelected={this.state.filterSelected}
-                  updatePriceRange={this.props.updatePriceRange}
-                  updateSort={this.props.updateSort}
-                  updateSelectedSubCategory={this.updateSubCategoryList}
-                  updateSelectedVideoType={this.props.updateSelectedVideoType}
-                  updateSelectedVideoDate={this.props.updateSelectedVideoDate}
-                  toggleFilter={this.toggleFilterSection}
-                  groupClicked={this.state.groupClick}
-                />
-              }
-            </div>
-            {/* {
-              (!this.props.celebList.data.length && this.props.celebList.loading) ||
-                (!this.props.videosList.data.length && this.props.videosList.loading) ?
-                  <LandingStyled.loaderWrapper style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                    <Loader />
-                  </LandingStyled.loaderWrapper>
-                : */}
-                  <div style={this.state.tabsRef && { height: `calc(100% - ${this.state.tabsClientHeight}px)` }}>
-                    {this.renderScrollList()}
+          <Switch>
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <LandingStyled.mainSection menuActive={this.state.menuActive}>
+                  <div>
+                    <Tabs
+                      labels={['Stars', 'Videos']}
+                      switchTab={this.props.switchTab}
+                      selectedCategory={this.props.filters.category.label}
+                      filterSelected={this.state.filterSelected}
+                      selected={this.props.filters.selectedTab}
+                      filterCount={this.getFilterCount}
+                      toggleFilter={this.toggleFilterSection}
+                      noTabs={this.state.groupClick}
+                    />
+                    {
+                      this.state.filterSelected &&
+                      <FilterSection
+                        selectedPriceRange={{ low: this.props.filters.lowPrice, high: this.props.filters.highPrice }}
+                        selectedTab={this.props.filters.selectedTab}
+                        selectedSort={this.props.filters.sortValue}
+                        selectedSubCategories={this.props.filters[this.props.filters.category.value]}
+                        subCategoryList={this.state.subCategoryList}
+                        selectedVideoType={this.props.filters.selectedVideoType}
+                        selectedVideoDate={this.props.filters.selectedVideoDate}
+                        filterSelected={this.state.filterSelected}
+                        updatePriceRange={this.props.updatePriceRange}
+                        updateSort={this.props.updateSort}
+                        updateSelectedSubCategory={this.updateSubCategoryList}
+                        updateSelectedVideoType={this.props.updateSelectedVideoType}
+                        updateSelectedVideoDate={this.props.updateSelectedVideoDate}
+                        toggleFilter={this.toggleFilterSection}
+                        groupClicked={this.state.groupClick}
+                      />
+                    }
                   </div>
-            {/* } */}
-          </LandingStyled.mainSection>
+                  <LandingStyled.ScrollListWrapper>
+                    {this.renderScrollList()}
+                  </LandingStyled.ScrollListWrapper>
+                </LandingStyled.mainSection>
+              )}
+            />
+            <Route
+              exact
+              path="/:id"
+              render={props => (
+                <Starprofile {...props} menuActive={this.state.menuActive} />
+                )}
+            />
+            <Route
+              exact
+              path="/group-profile/:id"
+              render={props => (
+                <GroupProfile {...props} menuActive={this.state.menuActive} />
+              )}
+            />
+          </Switch>
         </LandingStyled.sectionWrapper>
       </LandingStyled>
     );

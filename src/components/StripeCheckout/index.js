@@ -25,6 +25,7 @@ class StripeCheckout extends React.Component {
     super(props);
     this.state = {
       customerId: '',
+      dataLoading: false,
       stripe: null,
       cardSelection: false,
       selectedCardIndex: '0',
@@ -33,7 +34,6 @@ class StripeCheckout extends React.Component {
   }
   componentWillMount() {
     this.getEphemeralKey();
-    this.props.fetchSourceList();
     if (Object.keys(this.props.sourceList).length) {
       this.setState({ cardSelection: true });
     }
@@ -51,11 +51,18 @@ class StripeCheckout extends React.Component {
   }
 
   getEphemeralKey = () => {
+    this.setState({ dataLoading: true });
     fetchEphemeralKey()
       .then((resp) => {
-        const customerId = resp.ephemeralKey.associated_objects && resp.ephemeralKey.associated_objects[0] ? resp.ephemeralKey.associated_objects[0].id : null;
-        this.setState({ customerId });
-      });
+        if (resp.success) {
+          const customerId = resp.data.ephemeralKey.associated_objects && resp.data.ephemeralKey.associated_objects[0] ? resp.data.ephemeralKey.associated_objects[0].id : null;
+          this.props.fetchSourceList();
+          this.setState({ customerId, dataLoading: false });
+        }
+      })
+      .catch(() => {
+        this.setState({ dataLoading: false });
+      })
   }
   setStripe = (stripe) => {
     this.setState({ stripe });
@@ -138,23 +145,25 @@ class StripeCheckout extends React.Component {
     </Elements>
   )
   render() {
+    const { error, loading, profilePhoto, customHeading, fullName, requestType, rate, sourceList } = this.props;
+    const { dataLoading } = this.state;
     return (
       <PaymentStyled.wrapper>
         {
-          this.props.error ?
+          error ?
             <Popup
               smallPopup
               closePopUp={this.props.resetPaymentsError}
             >
               <AlertView
-                message={this.props.error.message.split(':')[1]}
+                message={error.message.split(':')[1]}
                 closePopup={this.props.resetPaymentsError}
               />
             </Popup>
           : null
         }
         {
-          this.props.loading &&
+          (loading || dataLoading) &&
             <PaymentStyled.LoaderWrapper>
               <Loader />
             </PaymentStyled.LoaderWrapper>
@@ -163,29 +172,29 @@ class StripeCheckout extends React.Component {
         <PaymentStyled.StarDetailsWrapper>
           <PaymentStyled.StarNameWrapper>
             <PaymentStyled.StarPhoto
-              imageUrl={this.props.profilePhoto}
+              imageUrl={profilePhoto}
             />
             <PaymentStyled.RequestDetails>
               <PaymentStyled.SubTitle>
-                { this.props.customHeading ? this.props.customHeading : 'Starsona booking' }
+                { customHeading ? customHeading : 'Starsona booking' }
               </PaymentStyled.SubTitle>
-              {this.props.fullName}
+              {fullName}
               {
-                this.props.requestType ?
+                requestType ?
                   <PaymentStyled.RequestType>
-                    {requestTypes[this.props.requestType]}
+                    {requestTypes[requestType]}
                   </PaymentStyled.RequestType>
                 : null
               }
             </PaymentStyled.RequestDetails>
           </PaymentStyled.StarNameWrapper>
           <PaymentStyled.BookingRate>
-            ${this.props.rate}
+            ${rate}
           </PaymentStyled.BookingRate>
         </PaymentStyled.StarDetailsWrapper>
         <PaymentStyled.OptionSelectionWrapper>
           {
-            Object.keys(this.props.sourceList).length ?
+            Object.keys(sourceList).length ?
               <PaymentStyled.OptionSelector>
                 <input
                   id="card-select"
@@ -224,8 +233,8 @@ class StripeCheckout extends React.Component {
           !this.state.cardSelection && this.renderAddCard()
         }
         <PaymentStyled.PaymentControllerWrapper>
-          <PaymentStyled.ContinueButton onClick={() => this.handleBooking()}>
-             Confirm Booking  -  ${this.props.rate}
+          <PaymentStyled.ContinueButton onClick={this.handleBooking}>
+             Confirm Booking  -  ${rate}
           </PaymentStyled.ContinueButton>
           <PaymentStyled.StripeLogoWrapper>
             <img alt="stripe logo" src="assets/images/powered_by_stripe.svg" />

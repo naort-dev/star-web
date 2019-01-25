@@ -67,19 +67,19 @@ export default class DeclineView extends React.Component {
               {
                 this.state.otherReason &&
                   <DeclineStyled.TextArea
-                    onChange={ event => this.setState({ declineReason: event.target.value })}
+                    onChange={event => this.setState({ declineReason: event.target.value })}
                   />
               }
             </React.Fragment>
             : null
         }
         <DeclineStyled.ConfirmButtonWrapper>
-          <DeclineStyled.ConfirmButton onClick={() => this.sendReason()}>
+          <DeclineStyled.ConfirmButton onClick={this.sendReason}>
             {this.props.starMode ? 'Decline' : 'Yes'}
           </DeclineStyled.ConfirmButton>
           {
             !this.props.starMode &&
-              <DeclineStyled.ConfirmButton onClick={() => this.props.closePopup()}>No</DeclineStyled.ConfirmButton>
+              <DeclineStyled.ConfirmButton onClick={this.props.closePopup}>No</DeclineStyled.ConfirmButton>
           }
         </DeclineStyled.ConfirmButtonWrapper>
       </DeclineStyled>

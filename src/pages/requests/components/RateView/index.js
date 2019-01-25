@@ -227,7 +227,8 @@ export default class RateView extends React.Component {
   exitPaymentMode = () => {
     const { orderDetails } = this.props;
     const { rating, comment, reason, filesList } = this.state;
-    if (rating > 2 && filesList.length) {
+    this.props.resetPaymentDetails();
+    if (filesList.length) {
       this.filesUpload()
         .then((finalFiles) => {
           this.sendRequestFeedback(finalFiles, orderDetails.id, comment, reason, rating);
@@ -270,7 +271,7 @@ export default class RateView extends React.Component {
         .catch(() => {
           this.setState({ alertText: 'Something went wrong' });
         });
-    } else if (rating > 2 && !filesList.length && !tip) {
+    } else if ((rating > 2 && !filesList.length && !tip) || rating <= 2) {
       this.sendRequestFeedback([], orderDetails.id, comment, reason, rating);
     }
     if (rating > 2 && tip) {
