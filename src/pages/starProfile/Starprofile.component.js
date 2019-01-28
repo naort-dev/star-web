@@ -4,12 +4,11 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
-import Header from '../../components/Header';
 import AppBanner from '../../components/AppBanner';
 import Loader from '../../components/Loader';
-import Sidebar from '../../components/Sidebar';
 import ScrollList from '../../components/ScrollList';
 import VideoPopup from '../../components/VideoPopup';
+import VideoShare from './components/VideoShare';
 import Popup from '../../components/Popup';
 import { getStarsonaVideo } from '../../services';
 import { requestTypes } from '../../constants/requestTypes';
@@ -39,9 +38,6 @@ export default class Starprofile extends React.Component {
 
   componentWillMount() {
     this.props.resetCelebDetails();
-    // if (!this.isMyStarPage()) {
-    //   this.props.history.replace(`/${this.props.match.params.id.toLowerCase()}`)
-    // }
     const params = this.props.location.search && this.props.location.search.split('?')[1];
     const finalParams = params && params.split('&');
     if (finalParams) {
@@ -60,7 +56,7 @@ export default class Starprofile extends React.Component {
                   videoTitle = `Watch this video shout-out from ${starsonaVideo.full_name}`;
                 } else if (requestTypes[starsonaVideo.booking_type] === 'Event') {
                   videoTitle = `Check out my video announcement courtesy of ${starsonaVideo.full_name}`;
-                } else if (requestTypes[starsonaVideo.booking_type] === 'Shout-out') {
+                } else if (requestTypes[starsonaVideo.booking_type] === 'Q&A') {
                   videoTitle = `${starsonaVideo.full_name} answers my fan question!`;
                 }
                 this.setState({
@@ -278,16 +274,11 @@ export default class Starprofile extends React.Component {
   render() {
     const images = [];
     const remainingBookings = this.props.celebrityDetails.remaining_limit != null || this.props.celebrityDetails.remaining_limit != undefined ? this.props.celebrityDetails.remaining_limit : 1;
-    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     const descriptionClass = this.state.readMoreFlag ? 'groupFullDescription' : 'groupDescription';
     let fullName = '';
     if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
         : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
-    }
-    let firstName = '';
-    if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
-      firstName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name : this.props.userDetails.first_name;
     }
     if (this.props.userDetails && this.props.userDetails.featured_photo) {
       const { featured_photo: { image_url } } = this.props.userDetails;
@@ -297,7 +288,20 @@ export default class Starprofile extends React.Component {
       this.props.celebrityDetails.description.length : 0;
     if (this.props.detailsError) {
       return <Redirect to="/not-found" />;
-    }    
+    } else if (this.state.videoActive) {
+      return (
+        <StarProfileStyled.sectionWrapper>
+          <StarProfileStyled.mainSection menuActive={this.props.menuActive}>
+            <VideoShare
+              noDisableScroll
+              videoPopupLoading={this.state.videoPopupLoading}
+              noSlider
+              selectedVideo={this.state.selectedVideo}
+            />
+          </StarProfileStyled.mainSection>
+        </StarProfileStyled.sectionWrapper>
+      );
+    }
     return (
       <StarProfileStyled menuActive={this.props.menuActive}>
         {
@@ -360,12 +364,6 @@ export default class Starprofile extends React.Component {
             <ShareView iconSize={50} title={fullName} shareUrl={this.props.userDetails.share_url} />
           </Popup>
         }
-
-        {/* <Header
-          menuActive={this.state.menuActive}
-          enableMenu={this.activateMenu}
-          history={this.props.history}
-        /> */}
         {this.props.userDetails && !this.props.detailsLoading &&
           <StarProfileStyled.sectionWrapper>
             <StarProfileStyled.mainSection menuActive={this.props.menuActive}>
@@ -376,7 +374,7 @@ export default class Starprofile extends React.Component {
                   showFullscreenButton={false}
                   useBrowserFullscreen={false}
                   showPlayButton={false}
-                  autoPlay={true}
+                  autoPlay
                   slideInterval={8000}
                 />
                 <StarProfileStyled.profileWrapper>
