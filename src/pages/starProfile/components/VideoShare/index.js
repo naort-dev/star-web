@@ -14,13 +14,12 @@ import {
   EmailIcon,
 } from 'react-share';
 import copy from 'copy-to-clipboard';
-import addVideoComment from '../../../../services/addVideoComment';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import SnackBar from '../../../../components/SnackBar';
 import Loader from '../../../../components/Loader';
 import VideoShareStyled from './styled';
-import { fetchCommentsList, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
+import { fetchCommentsList, addVideoComment, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
 import { toggleLogin } from '../../../../store/shared/actions/toggleModals';
 
 class VideoShare extends React.Component {
@@ -83,16 +82,18 @@ class VideoShare extends React.Component {
 
   loadMoreComments = () => {
     if (this.props.commentList.data.length < this.props.commentList.count) {
-      const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
+      const offset = this.props.commentList.data[0].id;
       this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset);
     }
   }
 
   addVideoComment = (videoId, comment) => {
     this.setState({ commentText: '' });
-    addVideoComment(videoId, comment)
+    this.props.addVideoComment(videoId, comment)
       .then(() => {
-        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+        if (this.scrollBarRef) {
+          this.scrollBarRef.scrollIntoView({ behavior: 'smooth' });
+        }
       });
   }
 
@@ -109,7 +110,7 @@ class VideoShare extends React.Component {
   commentAdder = () => {
     const { commentText } = this.state;
     if (commentText.trim('')) {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText)
     }
   }
 
@@ -282,7 +283,7 @@ class VideoShare extends React.Component {
                           </VideoShareStyled.VideoTitle>
                         </VideoShareStyled.VideoRequestName>
                       </VideoShareStyled.StarLink>
-                      <VideoShareStyled.UserActions>
+                      <VideoShareStyled.UserActions mobile>
                         <VideoShareStyled.ShareButton
                           onClick={this.toggleShare}
                         />
@@ -295,6 +296,67 @@ class VideoShare extends React.Component {
                         </VideoShareStyled.VideoDate>
                       </VideoShareStyled.UserActions>
                     </VideoShareStyled.VideoRequester>
+                    {
+                      !this.props.commentList.loading || this.props.commentList.data.length ?
+                        <VideoShareStyled.CommentsList>
+                          {
+                            this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                              <VideoShareStyled.commentItem>
+                                <VideoShareStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
+                                  Load more comments
+                                </VideoShareStyled.loadMoreComments>
+                              </VideoShareStyled.commentItem>
+                            : null
+                          }
+                          {
+                            this.props.commentList.data.length && this.props.commentList.loading ?
+                              <VideoShareStyled.loaderWrapper>
+                                <Loader />
+                              </VideoShareStyled.loaderWrapper>
+                            : null
+                          }
+                          {/* <VideoShareStyled.commentListScrollbar
+                            innerRef={(node) => { this.scrollBarRef = node }}
+                            autoHeight
+                            renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
+                          > */}
+                            {
+                              props.commentList.data.map((item, index) => (
+                                <VideoShareStyled.commentItem key={index}>
+                                  <VideoShareStyled.commenterName>
+                                    {item.user && item.user.get_short_name}
+                                    <VideoShareStyled.comment>
+                                      {item.comments}
+                                    </VideoShareStyled.comment>
+                                  </VideoShareStyled.commenterName>
+                                </VideoShareStyled.commentItem>
+                              ))
+                            }
+                            {
+                              !this.props.commentList.loading && !this.props.commentList.data.length ?
+                                <VideoShareStyled.commentItem>No comments yet</VideoShareStyled.commentItem>
+                              : null
+                            }
+                          {/* </VideoShareStyled.commentListScrollbar> */}
+                          <li ref={(node) => this.scrollBarRef = node} />
+                        </VideoShareStyled.CommentsList>
+                      :
+                        <VideoShareStyled.loaderWrapper>
+                          <Loader />
+                        </VideoShareStyled.loaderWrapper>
+                    }
+                    <VideoShareStyled.UserActions>
+                      <VideoShareStyled.ShareButton
+                        onClick={this.toggleShare}
+                      />
+                      <VideoShareStyled.ChatIcon
+                        onClick={() => this.selectCommentField()}
+                        chatCount={this.props.commentList.count}
+                      />
+                      <VideoShareStyled.VideoDate>
+                        {this.findTime(props.selectedVideo.created_date)}
+                      </VideoShareStyled.VideoDate>
+                    </VideoShareStyled.UserActions>
                     <VideoShareStyled.PopupActions>
                       <VideoShareStyled.CommentBoxWrapper>
                         {
@@ -320,61 +382,9 @@ class VideoShare extends React.Component {
                         }
                       </VideoShareStyled.CommentBoxWrapper>
                     </VideoShareStyled.PopupActions>
-                    {
-                      !this.props.commentList.loading || this.props.commentList.data.length ?
-                        <VideoShareStyled.CommentsList>
-                          {
-                            this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
-                              <VideoShareStyled.commentItem>
-                                <VideoShareStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
-                                  Load more comments
-                                </VideoShareStyled.loadMoreComments>
-                              </VideoShareStyled.commentItem>
-                            : null
-                          }
-                          {
-                            this.props.commentList.data.length && this.props.commentList.loading ?
-                              <VideoShareStyled.loaderWrapper>
-                                <Loader />
-                              </VideoShareStyled.loaderWrapper>
-                            : null
-                          }
-                          <VideoShareStyled.commentListScrollbar
-                            innerRef={(node) => { this.scrollBarRef = node }}
-                            renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
-                          >
-                            {
-                              props.commentList.data.map((item, index) => (
-                                <VideoShareStyled.commentItem key={index}>
-                                  {/* <VideoShareStyled.commenterImage
-                                    imageUrl={item.user && item.user.image_url}
-                                  /> */}
-                                  <VideoShareStyled.commenterName>
-                                    {item.user && item.user.get_short_name}
-                                    <VideoShareStyled.comment>
-                                      {item.comments}
-                                    </VideoShareStyled.comment>
-                                    {/* <VideoShareStyled.commentDate>
-                                      {this.findTime(item.created_date)}
-                                    </VideoShareStyled.commentDate> */}
-                                  </VideoShareStyled.commenterName>
-                                </VideoShareStyled.commentItem>
-                              ))
-                            }
-                            {
-                              !this.props.commentList.loading && !this.props.commentList.data.length ?
-                                <VideoShareStyled.commentItem>No comments yet</VideoShareStyled.commentItem>
-                              : null
-                            }
-                          </VideoShareStyled.commentListScrollbar>
-                        </VideoShareStyled.CommentsList>
-                      :
-                        <VideoShareStyled.loaderWrapper>
-                          <Loader />
-                        </VideoShareStyled.loaderWrapper>
-                    }
                   </VideoShareStyled.VideoContent>
                   <VideoShareStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+                    <VideoShareStyled.Drawer onClick={this.toggleShare} />
                     <VideoShareStyled.SocialHeading>Share</VideoShareStyled.SocialHeading>
                     {this.renderSocialIcons(props.selectedVideo)}
                   </VideoShareStyled.SocialMediaWrapper>
@@ -395,6 +405,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCommentsList: (videoId, offset, refresh) => dispatch((fetchCommentsList(videoId, offset, refresh))),
+  addVideoComment: (videoId, comment) => dispatch(addVideoComment(videoId, comment)),
   resetCommentsList: () => dispatch(resetCommentsList()),
   toggleLogin: state => dispatch(toggleLogin(state)),
 });

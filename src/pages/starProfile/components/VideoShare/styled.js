@@ -125,8 +125,11 @@ VideoShareStyled.CommentBox = styled.input`
 `;
 
 VideoShareStyled.UserActions = styled.span`
-  display: inline-block;
+  display: ${props => (props.mobile ? 'inline-block' : 'none')};
   padding-top: 11px;
+  @media(min-width: 1025px) {
+    display: ${props => (props.mobile ? 'none' : 'inline-block')};
+  }
 `;
 
 VideoShareStyled.ShareButton = styled.span`
@@ -246,21 +249,32 @@ VideoShareStyled.SocialMediaWrapper = styled.div`
 VideoShareStyled.SocialHeading = styled.span`
   display: block;
   text-align: center;
-  padding: 5px;
+  padding: 10px 5px;
   font-family: 'Avenir-Bold';
-  font-size: 14px;
+  font-size: 16px;
   border-bottom: 1px solid #CCCCCC;
+`;
+
+VideoShareStyled.Drawer = styled.span`
+  width: 35px;
+  height: 5px;
+  display: block;
+  background-color: #DADADA;
+  margin: 0 auto;
+  margin-top: 10px;
+  border-radius: 6px;
 `;
 
 VideoShareStyled.Somenetwork = styled.div`
   vertical-align: top;
   display: block;
-  padding: 5px 10px;
+  padding: 8px 10px;
   display: flex;
   align-items: center;
   padding-left: ${props => (props.isCancel ? '51px' : '10px')};
   color: ${props => (props.isCancel ? '#006eae' : '#333333')};
   cursor: pointer;
+  font-family: 'Avenir-Medium';
   .SocialMediaShareButton {
     display: flex;
     align-items: center;
@@ -315,7 +329,9 @@ VideoShareStyled.CommentsList = styled.ul`
   height: calc(100% - 92px);
   padding: 8px 0;
   @media(min-width: 1025px) {
-    height: calc(100% - 130px);
+    height: auto;
+    max-height: calc(100% - 219px);
+    overflow: auto;
   }
 `;
 
