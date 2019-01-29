@@ -15,7 +15,6 @@ import {
 } from 'react-share';
 import copy from 'copy-to-clipboard';
 import addVideoComment from '../../../../services/addVideoComment';
-import { starProfessionsFormater } from '../../../../utils/dataToStringFormatter';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import SnackBar from '../../../../components/SnackBar';
@@ -29,7 +28,6 @@ class VideoShare extends React.Component {
     super(props);
     this.state = {
       sharePopup: false,
-      pendingComment: '',
       commentText: '',
       snackBarText: '',
     };
@@ -37,23 +35,6 @@ class VideoShare extends React.Component {
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.props.isLoggedIn !== nextProps.isLoggedIn && nextProps.selectedVideo.video_id && this.state.pendingComment !== '') {
-      this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
-    }
-    if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id && nextProps.selectedVideo.video_id) {
-      this.props.resetCommentsList();
-      this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
-      if (this.state.pendingComment) {
-        this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
-      }
-      this.setState({
-        commentText: '',
-        sharePopup: false,
-      });
-    }
   }
 
   componentDidUpdate(prevProps) {
@@ -107,18 +88,12 @@ class VideoShare extends React.Component {
     }
   }
 
-  addVideoComment = (videoId, comment, isLoggedIn) => {
-    if (isLoggedIn) {
-      this.setState({ commentText: '' });
-      addVideoComment(videoId, comment)
-        .then(() => {
-          this.setState({ pendingComment: '' });
-          this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
-        });
-    } else {
-      this.setState({ pendingComment: comment });
-      this.props.toggleLogin(true);
-    }
+  addVideoComment = (videoId, comment) => {
+    this.setState({ commentText: '' });
+    addVideoComment(videoId, comment)
+      .then(() => {
+        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+      });
   }
 
   selectCommentField = () => {
@@ -132,8 +107,9 @@ class VideoShare extends React.Component {
   }
 
   commentAdder = () => {
-    if (this.state.commentText !== '') {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText, this.props.isLoggedIn);
+    const { commentText } = this.state;
+    if (commentText.trim('')) {
+      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
     }
   }
 
@@ -237,6 +213,9 @@ class VideoShare extends React.Component {
           <VideoShareStyled.Copy title="Copy to Clipboard" />
           <VideoShareStyled.SocialTitle>Copy link</VideoShareStyled.SocialTitle>
         </VideoShareStyled.Somenetwork>
+        <VideoShareStyled.Somenetwork isCancel onClick={this.toggleShare}>
+          Cancel
+        </VideoShareStyled.Somenetwork>
       </React.Fragment>
     );
   }
@@ -311,8 +290,10 @@ class VideoShare extends React.Component {
                           onClick={() => this.selectCommentField()}
                           chatCount={this.props.commentList.count}
                         />
+                        <VideoShareStyled.VideoDate>
+                          {this.findTime(props.selectedVideo.created_date)}
+                        </VideoShareStyled.VideoDate>
                       </VideoShareStyled.UserActions>
-                      {this.findTime(props.selectedVideo.created_date)}
                     </VideoShareStyled.VideoRequester>
                     <VideoShareStyled.PopupActions>
                       <VideoShareStyled.CommentBoxWrapper>
@@ -326,7 +307,7 @@ class VideoShare extends React.Component {
                           :
                             <React.Fragment>
                               <VideoShareStyled.CommentSendIcon
-                                onClick={() => this.commentAdder()}
+                                onClick={this.commentAdder}
                               />
                               <VideoShareStyled.CommentBox
                                 innerRef={(node) => { this.commentInput = node; }}
@@ -342,6 +323,22 @@ class VideoShare extends React.Component {
                     {
                       !this.props.commentList.loading || this.props.commentList.data.length ?
                         <VideoShareStyled.CommentsList>
+                          {
+                            this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                              <VideoShareStyled.commentItem>
+                                <VideoShareStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
+                                  Load more comments
+                                </VideoShareStyled.loadMoreComments>
+                              </VideoShareStyled.commentItem>
+                            : null
+                          }
+                          {
+                            this.props.commentList.data.length && this.props.commentList.loading ?
+                              <VideoShareStyled.loaderWrapper>
+                                <Loader />
+                              </VideoShareStyled.loaderWrapper>
+                            : null
+                          }
                           <VideoShareStyled.commentListScrollbar
                             innerRef={(node) => { this.scrollBarRef = node }}
                             renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
@@ -363,22 +360,6 @@ class VideoShare extends React.Component {
                                   </VideoShareStyled.commenterName>
                                 </VideoShareStyled.commentItem>
                               ))
-                            }
-                            {
-                              this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
-                                <VideoShareStyled.commentItem>
-                                  <VideoShareStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
-                                    Load more comments
-                                  </VideoShareStyled.loadMoreComments>
-                                </VideoShareStyled.commentItem>
-                              : null
-                            }
-                            {
-                              this.props.commentList.data.length && this.props.commentList.loading ?
-                                <VideoShareStyled.loaderWrapper>
-                                  <Loader />
-                                </VideoShareStyled.loaderWrapper>
-                              : null
                             }
                             {
                               !this.props.commentList.loading && !this.props.commentList.data.length ?

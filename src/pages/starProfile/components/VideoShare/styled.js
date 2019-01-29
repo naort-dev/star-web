@@ -126,7 +126,6 @@ VideoShareStyled.CommentBox = styled.input`
 
 VideoShareStyled.UserActions = styled.span`
   display: inline-block;
-  text-align: right;
   padding-top: 11px;
 `;
 
@@ -231,7 +230,7 @@ VideoShareStyled.SliderArrows = styled.span`
 
 VideoShareStyled.SocialMediaWrapper = styled.div`
   position: fixed;
-  transition: 1s padding ease-out;
+  transition: 1s opacity ease-out;
   background: rgb(248, 248, 248);
   z-index: 1;
   left: 0;
@@ -241,24 +240,26 @@ VideoShareStyled.SocialMediaWrapper = styled.div`
   border-top-right-radius: 10px;
   opacity: ${props => (props.visible ? 1 : 0)};
   display: ${props => (props.visible ? 'block' : 'none')};
-  padding: ${props => (props.visible ? '10px' : '0')};
+  padding: ${props => (props.visible ? '10px 0' : '0')};
 `;
 
 VideoShareStyled.SocialHeading = styled.span`
   display: block;
   text-align: center;
-  padding: 5px 0;
+  padding: 5px;
   font-family: 'Avenir-Bold';
   font-size: 14px;
+  border-bottom: 1px solid #CCCCCC;
 `;
 
 VideoShareStyled.Somenetwork = styled.div`
   vertical-align: top;
   display: block;
-  margin-right: 12px;
-  margin-top: 10px;
+  padding: 5px 10px;
   display: flex;
   align-items: center;
+  padding-left: ${props => (props.isCancel ? '51px' : '10px')};
+  color: ${props => (props.isCancel ? '#006eae' : '#333333')};
   cursor: pointer;
   .SocialMediaShareButton {
     display: flex;
@@ -340,27 +341,26 @@ VideoShareStyled.comment = styled.span`
   word-break: break-all;
 `;
 
-VideoShareStyled.commentDate = styled.span`
+VideoShareStyled.VideoDate = styled.span`
   display: block;
-  font-size: 11px;
+  color: #999;
+  font-size: 13px;
   font-family: 'Avenir-Light';
   padding-top: 2px;
 `;
 
 VideoShareStyled.loadMoreComments = styled.button`
-  background-color: #F8F8F8;
   padding: 6px 0;
-  width: 155px;
-  margin: 0 auto;
-  text-align: center;
   text-decoration: none;
   display: block;
   font-size: 14px;
-  font-family: 'Avenir-Bold';
+  opacity: ${props => (props.isLoading ? '0.3' : 1)};
+  color: #999;
+  font-family: 'Avenir-Regular';
   outline: none;
   cursor: pointer;
-  border-radius: 24px;
-  border: 2px solid #F8F8F8;
+  background: transparent;
+  border: none;
   -webkit-appearance: none;
 `;
 
