@@ -66,6 +66,17 @@ IndustryStyled.HeaderText = styled.div`
   }
 `;
 
+
+IndustryStyled.AddGroupWrapper = IndustryStyled.extend`
+  ${IndustryStyled.HeaderContent} {
+    padding: 15px;
+  }
+`;
+
+IndustryStyled.AddGroupContent = styled.div`
+  padding: 0 10px;
+`;
+
 IndustryStyled.Description = styled.span`
   display: block;
   font-size: 14px;
