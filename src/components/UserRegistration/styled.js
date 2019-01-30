@@ -155,7 +155,11 @@ GroupStyled.CloseInput = styled.span`
 `;
 
 GroupStyled.EmailWrapper = styled.div`
+`;
 
+GroupStyled.ResendOTP = styled.span`
+  color: #FF6C58;
+  cursor: pointer;
 `;
 
 GroupStyled.numberVerification = styled.span`
@@ -189,6 +193,7 @@ GroupStyled.Label = styled.div`
     color: #333;
     margin-bottom: 5px;
     display: block;
+    text-align: center;
   }
   & > label {
     top: 2px;
@@ -227,19 +232,41 @@ GroupStyled.Label = styled.div`
       color: ${props => (props.colorText === 'Verify' ? '#FF6C58' : 'green')};
     }
     input {
-      opacity : unset;
+      opacity: unset;
       position: relative;
       font-size: 14px;
       font-family: 'Avenir-Regular';
+      border: 1px solid #f9f9f9;
+      background: #f9f9f9;
+      box-shadow: 0px 1px 2px #fff;
+      height: 50px;
+      padding: 10px;
     }
     .react-phone-number-input {
-      width: 180px;
       display: inline-block;
+      .react-phone-number-input__row {
+        min-width: 300px;
+        .react-phone-number-input__country {
+          box-shadow: 0px 1px 2px #ddd;
+          min-width: 50px;
+          height: 48px;
+          text-align: center;
+          .react-phone-number-input__icon {
+            width: 100%;
+            height: 22px;
+            border: none;
+          }
+          .react-phone-number-input__country-select-arrow {
+            margin-right: 3px;
+            color: #000;
+          }
+        }
+      }
     }
     & .errorElement {
       color: red;
-      margin-left: 32px;
-      margin-top: 2px;
+      margin-left: 60px;
+      margin-top: 3px;
       font-size: 12px;
     }
   }
@@ -465,6 +492,12 @@ GroupStyled.ControlWrapper = styled.div`
     box-shadow: none;
     padding: 26px 0;
     border-top: ${props => (props.multiple ? 'none' : '1px solid #EBEBEB')};
+  }
+  &.registrationSubmit {
+    border-top: none;
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 0;
   }
 `;
 
@@ -761,7 +794,7 @@ GroupStyled.HeaderText = styled.div`
   text-align:center;
   color:#676767;
   font-size:20px;
-  font-family: 'Avenir-Bold';
+  font-family: 'Avenir-Medium';
   @media(min-width:768px){
     font-size:25px;
   }
@@ -818,7 +851,7 @@ GroupStyled.ButtonWrapper = styled.button`
 `;
 
 GroupStyled.RepresentativeWrapper = styled.div`
-  border-top: 1px solid #ddd;
+  border-top: ${props => (props.signupRep ? 'none' : '1px solid #ddd')};
   padding-top: 20px;
 `;
 
@@ -922,14 +955,50 @@ GroupStyled.OTPWrapper = styled.div`
     font-size: 12px;
   }
 `;
-GroupStyled.OTPInput = styled.input`
-  margin: 10px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-  font-size: 20px;
-  outline: none;
+// GroupStyled.OTPInput = styled.input`
+//   margin: 10px;
+//   border: none;
+//   border-bottom: 1px solid #ddd;
+//   text-align: center;
+//   font-size: 20px;
+//   outline: none;
+// `;
+GroupStyled.InputArea = styled.textarea`
+  font-family: 'Avenir-Regular';
+  color: #333333;
+  font-size: 14px;
+  text-align:left;
+  outline:none;
+  width: 100%;
+  height: ${props => (props.small ? '35px' : '80px')};
+  margin: 4px 0;
+  padding: 8px 8px;
+  resize: none;
+  background-color: white;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
+  @media(min-width:768px){
+    margin-top:0;
+  }
+  @media(min-width:1025px){
+    margin-top:0;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
+GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
+  width: 40px;
+  height: 60px;
+  margin-right: 12px;
+  text-align: center;
+  @media(min-width: 1025px) {
+    margin-right: 12px;
+  }
+`.withComponent('input');
 GroupStyled.OTPSubmit = styled.button`
   background-color: #FF6C58;
   color: rgb(255,255,255);

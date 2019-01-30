@@ -9,6 +9,7 @@ import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
 import StarNotifications from './modules/starNotifications';
+import AddRepresentative from './modules/addRepresentative';
 /*             */
 import { imageSizes } from '../../constants/imageSizes';
 import QAVideoRecorder from '../QAVideoRecorder';
@@ -140,11 +141,15 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
+  submitOTPForm = () => {
+    this.props.changeStep(this.props.currentStep + 1);
+  }
+
   submitNotifications = (notifications) => {
     const { notification_settings: currentNotifications } = this.props.userDetails.settings_userDetails;
     let newNotifications = {
       ...currentNotifications,
-    };    
+    };
     newNotifications = {
       ...newNotifications,
       email_notification: notifications.email_notification,
@@ -217,11 +222,16 @@ class starRegistrationComponent extends React.Component {
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
                 <StarNotifications
+                  onComplete={this.submitOTPForm}
+                />
+              </GroupStyled.StepWrapper>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
+                <AddRepresentative
                   onComplete={this.submitNotifications}
                 />
               </GroupStyled.StepWrapper>
               {
-                this.props.currentStep === 6 &&
+                this.props.currentStep === 7 &&
                   <GroupStyled.VideoRecorderWrapper>
                     <QAVideoRecorder
                       {...this.props}
@@ -235,7 +245,7 @@ class starRegistrationComponent extends React.Component {
                   </GroupStyled.VideoRecorderWrapper>
               }
               {
-                this.props.currentStep === 7 && (
+                this.props.currentStep === 8 && (
                   <GroupStyled.DetailsWrapper>
                     <GroupStyled.HeadingWrapper>
                       <GroupStyled.SubHeading>
