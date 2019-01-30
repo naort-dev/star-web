@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import moment from 'moment';
 import {
   FacebookShareButton,
@@ -19,6 +21,7 @@ import VideoPlayer from '../../../../components/VideoPlayer';
 import SnackBar from '../../../../components/SnackBar';
 import Loader from '../../../../components/Loader';
 import VideoShareStyled from './styled';
+import { setMetaTags } from '../../../../utils/setMetaTags';
 import { fetchCommentsList, addVideoComment, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
 import { toggleLogin } from '../../../../store/shared/actions/toggleModals';
 
@@ -236,6 +239,21 @@ class VideoShare extends React.Component {
     };
     return (
       <VideoShareStyled>
+        <Helmet
+          title={props.selectedVideo.videoTitle}
+          meta={[...setMetaTags(
+            props.selectedVideo.videoTitle,
+            props.selectedVideo ? props.selectedVideo.s3_thumbnail_url : '../../assets/images/profile.png',
+            `Get your personalized video from ${props.selectedVideo.full_name}`,
+          ),
+          { property: 'al:ios:app_store_id', content: env('iosAppId') },
+          { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:ios:app_name', content: 'Starsona' },
+          { property: 'al:android:package', content: env('androidAppId') },
+          { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:android:app_name', content: 'Starsona' },
+          ]}
+        />
         {
           this.state.sharePopup &&
             <VideoShareStyled.Overlay onClick={this.toggleShare} />
@@ -410,4 +428,4 @@ const mapDispatchToProps = dispatch => ({
   toggleLogin: state => dispatch(toggleLogin(state)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(VideoShare);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(VideoShare));

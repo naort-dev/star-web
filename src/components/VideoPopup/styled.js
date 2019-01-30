@@ -299,6 +299,7 @@ VideoPopupStyled.comment = styled.span`
   font-size: 13px;
   padding-left: 10px;
   font-family: 'Avenir-Regular';
+  word-break: break-all;
 `;
 
 VideoPopupStyled.commentDate = styled.span`

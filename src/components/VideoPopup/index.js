@@ -102,7 +102,7 @@ class VideoPopup extends React.Component {
 
   loadMoreComments = () => {
     if (this.props.commentList.data.length < this.props.commentList.count) {
-      const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
+      const offset = this.props.commentList.data[0].id;
       this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset);
     }
   }
@@ -177,7 +177,8 @@ class VideoPopup extends React.Component {
           >
             <GooglePlusIcon
               size={32}
-              round />
+              round
+            />
           </GooglePlusShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
@@ -241,7 +242,7 @@ class VideoPopup extends React.Component {
         autoWidth
         dotsCount={0}
         selectedDot={1}
-        closePopUp={() => props.closePopUp()}
+        closePopUp={props.closePopUp}
         largePopup
       >
         <VideoPopupStyled.VideoContentWrapper>
@@ -286,20 +287,6 @@ class VideoPopup extends React.Component {
                         />
                       </VideoPopupStyled.UserActions>
                     </VideoPopupStyled.VideoRequester>
-                    <VideoPopupStyled.PopupActions>
-                      <VideoPopupStyled.CommentBoxWrapper>
-                        <VideoPopupStyled.CommentSendIcon
-                          onClick={() => this.commentAdder()}
-                        />
-                        <VideoPopupStyled.CommentBox
-                          innerRef={(node) => { this.commentInput = node }}
-                          placeholder="Enter your comment"
-                          value={this.state.commentText}
-                          onKeyUp={event => this.handleCommentEnter(event)}
-                          onChange={event => this.handleCommentAdd(event)}
-                        />
-                      </VideoPopupStyled.CommentBoxWrapper>
-                    </VideoPopupStyled.PopupActions>
                     {
                       !this.props.commentList.loading || this.props.commentList.data.length ?
                         <VideoPopupStyled.CommentsList>
@@ -307,6 +294,22 @@ class VideoPopup extends React.Component {
                             innerRef={(node) => { this.scrollBarRef = node }}
                             renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
                           >
+                            {
+                              this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                                <VideoPopupStyled.commentItem>
+                                  <VideoPopupStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
+                                    Load more comments
+                                  </VideoPopupStyled.loadMoreComments>
+                                </VideoPopupStyled.commentItem>
+                              : null
+                            }
+                            {
+                              this.props.commentList.data.length && this.props.commentList.loading ?
+                                <VideoPopupStyled.loaderWrapper>
+                                  <Loader />
+                                </VideoPopupStyled.loaderWrapper>
+                              : null
+                            }
                             {
                               props.commentList.data.map((item, index) => (
                                 <VideoPopupStyled.commentItem key={index}>
@@ -326,22 +329,6 @@ class VideoPopup extends React.Component {
                               ))
                             }
                             {
-                              this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
-                                <VideoPopupStyled.commentItem>
-                                  <VideoPopupStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
-                                    Load more comments
-                                  </VideoPopupStyled.loadMoreComments>
-                                </VideoPopupStyled.commentItem>
-                              : null
-                            }
-                            {
-                              this.props.commentList.data.length && this.props.commentList.loading ?
-                                <VideoPopupStyled.loaderWrapper>
-                                  <Loader />
-                                </VideoPopupStyled.loaderWrapper>
-                              : null
-                            }
-                            {
                               !this.props.commentList.loading && !this.props.commentList.data.length ?
                                 <VideoPopupStyled.commentItem>No comments yet</VideoPopupStyled.commentItem>
                               : null
@@ -353,6 +340,20 @@ class VideoPopup extends React.Component {
                           <Loader />
                         </VideoPopupStyled.loaderWrapper>
                     }
+                    <VideoPopupStyled.PopupActions>
+                      <VideoPopupStyled.CommentBoxWrapper>
+                        <VideoPopupStyled.CommentSendIcon
+                          onClick={() => this.commentAdder()}
+                        />
+                        <VideoPopupStyled.CommentBox
+                          innerRef={(node) => { this.commentInput = node }}
+                          placeholder="Enter your comment"
+                          value={this.state.commentText}
+                          onKeyUp={event => this.handleCommentEnter(event)}
+                          onChange={event => this.handleCommentAdd(event)}
+                        />
+                      </VideoPopupStyled.CommentBoxWrapper>
+                    </VideoPopupStyled.PopupActions>
                   </VideoPopupStyled.VideoContent>
                   <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
                     {this.renderSocialIcons(props.selectedVideo)}

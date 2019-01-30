@@ -28,6 +28,8 @@ export default class Starprofile extends React.Component {
       favouriteSelected: props.userDetails.is_follow || false,
       showPopup: null,
       videoActive: false,
+      videoPopupLoading: false,
+      videoShareView: false,
       selectedVideo: null,
       showAppBanner: true,
       offsetValue: 0,
@@ -46,9 +48,9 @@ export default class Starprofile extends React.Component {
       }
       finalParams.forEach((data) => {
         if (data.split('=')[0] === 'video_id') {
+          this.setState({ videoPopupLoading: true });
           getStarsonaVideo(data.split('=')[1])
             .then((resp) => {
-              this.props.fetchCelebDetails(this.getUserId(this.props));
               if (resp.success) {
                 const starsonaVideo = resp.data.starsona_video.find(video => video.video_status === 1);
                 let videoTitle = '';
@@ -60,7 +62,8 @@ export default class Starprofile extends React.Component {
                   videoTitle = `${starsonaVideo.full_name} answers my fan question!`;
                 }
                 this.setState({
-                  videoActive: true,
+                  videoShareView: true,
+                  videoPopupLoading: false,
                   selectedVideo: { ...resp.data.starsona_video[0], videoTitle },
                 });
               }
@@ -98,17 +101,8 @@ export default class Starprofile extends React.Component {
   }
 
   getUserId = (props) => {
-    const userDetails = JSON.parse(localStorage.getItem('userDetails'));
-    if (this.isMyStarPage()) {
-      if (userDetails) {
-        return userDetails.user.user_id;
-      }
-      this.props.toggleLogin(true);
-    }
     return props.match.params.id.toLowerCase();
   }
-
-  isMyStarPage = () => this.props.location.pathname.includes('myStar')
 
   activateMenu = () => {
     this.setState({ menuActive: !this.state.menuActive });
@@ -131,7 +125,6 @@ export default class Starprofile extends React.Component {
     if (this.props.celebrityDetails.availability && this.props.celebrityDetails.remaining_limit > 0) {
       if (!this.props.loading && this.props.userDetails.user_id) {
         this.props.setRequestFlow(this.props.userDetails.user_id);
-        // this.props.history.push(`/${this.props.userDetails.user_id}/request`);
       }
     } else if (!this.props.isLoggedIn) {
       this.props.toggleLogin(true);
@@ -161,7 +154,7 @@ export default class Starprofile extends React.Component {
     );
   }
 
-  updateFavouriteSelection = (event) => {
+  updateFavouriteSelection = () => {
     if (this.props.isLoggedIn) {
       this.props.followCelebrity(this.props.userDetails.id, this.props.celebrityDetails.profession_details, !this.state.favouriteSelected);
       this.setState({ favouriteSelected: !this.state.favouriteSelected });
@@ -205,15 +198,6 @@ export default class Starprofile extends React.Component {
     this.setState({
       sharePopup: true,
     });
-  }
-
-  getPreviewImage() {
-    if (this.state.selectedVideo && this.state.selectedVideo.s3_thumbnail_url) {
-      return this.state.selectedVideo.s3_thumbnail_url;
-    } else if (this.props.userDetails.avatar_photo) {
-      return this.props.userDetails.avatar_photo.image_url;
-    }
-    return '../../assets/images/profile.png';
   }
 
   closePopup = () => {
@@ -288,7 +272,7 @@ export default class Starprofile extends React.Component {
       this.props.celebrityDetails.description.length : 0;
     if (this.props.detailsError) {
       return <Redirect to="/not-found" />;
-    } else if (this.state.videoActive) {
+    } else if (this.state.videoShareView) {
       return (
         <StarProfileStyled.sectionWrapper>
           <StarProfileStyled.mainSection menuActive={this.props.menuActive}>
@@ -301,6 +285,8 @@ export default class Starprofile extends React.Component {
           </StarProfileStyled.mainSection>
         </StarProfileStyled.sectionWrapper>
       );
+    } else if (this.state.videoPopupLoading) {
+      return <Loader />;
     }
     return (
       <StarProfileStyled menuActive={this.props.menuActive}>
@@ -315,7 +301,7 @@ export default class Starprofile extends React.Component {
           />
         }
         {
-          this.state.showAppBanner && !this.isMyStarPage() && Object.keys(this.props.userDetails).length && Object.keys(this.props.celebrityDetails).length ?
+          this.state.showAppBanner && Object.keys(this.props.userDetails).length && Object.keys(this.props.celebrityDetails).length ?
             <AppBanner
               androidUrl={`profile/${this.props.match.params.id.toLowerCase()}`}
               iosUrl={`profile/?profile_id=${this.props.match.params.id.toLowerCase()}`}
@@ -323,24 +309,21 @@ export default class Starprofile extends React.Component {
             />
             : null
         }
-        {
-          !this.isMyStarPage() &&
-          <Helmet
-            title={this.state.selectedVideo && this.state.selectedVideo.videoTitle ? this.state.selectedVideo.videoTitle : fullName}
-            meta={[...setMetaTags(
-              this.state.selectedVideo && this.state.selectedVideo.videoTitle ? this.state.selectedVideo.videoTitle : fullName,
-              this.getPreviewImage(),
-              `Get your personalized video from ${fullName}`,
-            ),
-            { property: 'al:ios:app_store_id', content: env('iosAppId') },
-            { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
-            { property: 'al:ios:app_name', content: 'Starsona' },
-            { property: 'al:android:package', content: env('androidAppId') },
-            { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
-            { property: 'al:android:app_name', content: 'Starsona' },
-            ]}
-          />
-        }
+        <Helmet
+          title={fullName}
+          meta={[...setMetaTags(
+            fullName,
+            this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png',
+            `Get your personalized video from ${fullName}`,
+          ),
+          { property: 'al:ios:app_store_id', content: env('iosAppId') },
+          { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:ios:app_name', content: 'Starsona' },
+          { property: 'al:android:package', content: env('androidAppId') },
+          { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:android:app_name', content: 'Starsona' },
+          ]}
+        />
 
         {this.state.showPopup ?
           <Popup
