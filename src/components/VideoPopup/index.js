@@ -336,9 +336,9 @@ class VideoPopup extends React.Component {
                           </VideoPopupStyled.commentListScrollbar>
                         </VideoPopupStyled.CommentsList>
                       :
-                        <VideoPopupStyled.loaderWrapper>
+                        <VideoPopupStyled.CommentsList>
                           <Loader />
-                        </VideoPopupStyled.loaderWrapper>
+                        </VideoPopupStyled.CommentsList>
                     }
                     <VideoPopupStyled.PopupActions>
                       <VideoPopupStyled.CommentBoxWrapper>
