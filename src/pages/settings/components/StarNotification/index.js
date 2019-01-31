@@ -13,7 +13,7 @@ export default class StarNotification extends React.Component {
     super(props);
     this.state = {
       emailCheckedBox: props.notificationDetails.email_notification,
-      phoneCheckedBox: props.notificationDetails.mobile_notification,
+      phoneCheckedBox: props.notificationDetails.mobile_verified,
       value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
         `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
         : '',
@@ -32,7 +32,7 @@ export default class StarNotification extends React.Component {
   }
 
   componentWillMount() {
-    const { representatives } = this.state;
+    const { representatives } = this.state;    
     this.props.representativeDetails.forEach((key, index) => {      
       representatives.push({
         repId: key.representative_id,
