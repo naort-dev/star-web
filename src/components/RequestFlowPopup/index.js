@@ -40,7 +40,6 @@ class RequestFlowPopup extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.props.toggleRequestPopup(false);
     this.props.togglePopup(true);
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);

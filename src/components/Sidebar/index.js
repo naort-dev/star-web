@@ -199,7 +199,20 @@ class Sidebar extends React.Component {
                           </SidebarStyled.ListItem>
                           <SidebarStyled.ListItem>
                             <SidebarStyled.CategoryTitle>
-                              <Link to="/user/my-groups">My groups</Link>
+                              <Link to="/user/my-groups">
+                                <SidebarStyled.LinkElement>
+                                  My groups
+                                  {
+                                    this.props.userDetails.settings_userDetails.group_notification_count ?
+                                      <SidebarStyled.InnerListItemCount>
+                                        {
+                                          this.props.userDetails.settings_userDetails.group_notification_count
+                                        }
+                                      </SidebarStyled.InnerListItemCount>
+                                    : null
+                                  }
+                                </SidebarStyled.LinkElement>
+                              </Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                         </SidebarStyled.ListWrapper>

@@ -209,6 +209,9 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
   bottom: 0;
   display: ${props => (props.visible ? 'block' : 'none')}
   @media(min-width: 768px) {
+    position: fixed;
+  }
+  @media(min-width: 1025px) {
     position: absolute;
     background: transparent;
     width: 50px;
@@ -217,7 +220,6 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
     display: ${props => (props.visible ? 'block' : 'none')};
     right: ${props => (props.visible ? '-52px' : '0')};
     left: auto;
-
   }
 `;
 

@@ -20,6 +20,7 @@ import VideoPlayer from '../VideoPlayer';
 import SnackBar from '../SnackBar';
 import Loader from '../Loader';
 import RequestFlowPopup from '../RequestFlowPopup';
+import { requestTypes } from '../../constants/requestTypes';
 import VideoPopupStyled from './styled';
 import { fetchCommentsList, resetCommentsList } from '../../store/shared/actions/getVideoComments';
 import { toggleLogin } from '../../store/shared/actions/toggleModals';
@@ -155,7 +156,16 @@ class VideoPopup extends React.Component {
   renderSocialIcons = (selectedVideo) => {
     const defaultUrl = selectedVideo.video_url;
     const shareUrl = `https://${defaultUrl}`;
-    const title = selectedVideo.booking_title;
+    let title = '';
+    if (requestTypes[selectedVideo.booking_type] === 'Shout-out') {
+      title = `Watch this video shout-out from ${selectedVideo.full_name}`;
+    } else if (requestTypes[selectedVideo.booking_type] === 'Event') {
+      title = `Check out my video announcement courtesy of ${selectedVideo.full_name}`;
+    } else if (requestTypes[selectedVideo.booking_type] === 'Q&A') {
+      title = `${selectedVideo.full_name} answers my fan question!`;
+    }
+    const emailSubject = `Check out this video from ${selectedVideo.full_name} !`;
+    const emailBody = `${title}\n${shareUrl}`;
     return (
       <React.Fragment>
         <VideoPopupStyled.Somenetwork>
@@ -206,8 +216,8 @@ class VideoPopup extends React.Component {
         <VideoPopupStyled.Somenetwork>
           <EmailShareButton
             url={shareUrl}
-            subject={title}
-            body={shareUrl}
+            subject={emailSubject}
+            body={emailBody}
             className="Demo__some-network__share-button"
           >
             <EmailIcon
@@ -236,9 +246,12 @@ class VideoPopup extends React.Component {
       primarySrc: props.selectedVideo.s3_video_url ? props.selectedVideo.s3_video_url : '',
       ratio: props.selectedVideo.width / props.selectedVideo.height,
     };
+    if (props.loginModal) {
+      return null;
+    }
     return (
       <RequestFlowPopup
-        noDisableScroll={this.props.noDisableScroll}
+        noDisableScroll={props.noDisableScroll}
         autoWidth
         dotsCount={0}
         selectedDot={1}
@@ -371,6 +384,7 @@ class VideoPopup extends React.Component {
 const mapStateToProps = state => ({
   commentList: state.commentsList,
   isLoggedIn: state.session.isLoggedIn,
+  loginModal: state.modals.loginModal,
 });
 
 const mapDispatchToProps = dispatch => ({
