@@ -25,6 +25,7 @@ export default class AddRepresentative extends React.Component {
     countryCode: '',
     otpErrorMessage: '',
     loading: false,
+    oneTimeForm: true,
   }
 
   getOtp = () => {
@@ -312,6 +313,7 @@ export default class AddRepresentative extends React.Component {
       representatives.splice(index, 1);
       this.setState({
         representatives,
+        oneTimeForm: false,
       });
     }
   }
@@ -464,6 +466,10 @@ export default class AddRepresentative extends React.Component {
                 </p>
               </div>
             </GroupStyled.addRepWrapper>
+          }
+          {
+            this.state.representatives.length === 0 && this.state.oneTimeForm &&
+            this.addRepForm()
           }
           {
             this.state.representatives.length !== 0 &&

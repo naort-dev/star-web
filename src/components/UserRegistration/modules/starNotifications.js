@@ -165,6 +165,7 @@ export default class StarNotifications extends React.Component {
       email,
       loading,
     } = this.state;
+    const phoneLast4digits = this.state.phoneNumberOriginal.substring(this.state.phoneNumberOriginal.length - 4);
     if (loading) {
       return <Loader />
     }
@@ -180,7 +181,7 @@ export default class StarNotifications extends React.Component {
                 Enter the verification code
               </GroupStyled.HeaderText>
               <GroupStyled.SocialMediaMessage>
-                Let's make sure it's really you. An 4-digit code has been sent to the phone ending in ******8440.
+                Let's make sure it's really you. An 4-digit code has been sent to the phone ending in ******{phoneLast4digits}.
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
                 <GroupStyled.PhoneNo
@@ -188,7 +189,7 @@ export default class StarNotifications extends React.Component {
                   type="tel"
                   innerRef={(node) => { this.phNo1 = node; }}
                   maxLength="1"
-                  placeholder="#"
+                  placeholder=""
                   value={this.state.phNo1}
                   onBlur={event => this.validateOnBlur('phNo1', event.target.value)}
                   onChange={(event) => {
@@ -199,7 +200,7 @@ export default class StarNotifications extends React.Component {
                   small
                   type="tel"
                   maxLength="1"
-                  placeholder="#"
+                  placeholder=""
                   innerRef={(node) => { this.phNo2 = node; }}
                   value={this.state.phNo2}
                   onBlur={event => this.validateOnBlur('phNo2', event.target.value)}
@@ -213,7 +214,7 @@ export default class StarNotifications extends React.Component {
                   type="tel"
                   maxLength="1"
                   innerRef={(node) => { this.phNo3 = node; }}
-                  placeholder="#"
+                  placeholder=""
                   value={this.state.phNo3}
                   onBlur={event => this.validateOnBlur('phNo3', event.target.value)}
                   onChange={(event) => {
@@ -225,7 +226,7 @@ export default class StarNotifications extends React.Component {
                   type="tel"
                   innerRef={(node) => { this.phNo4 = node; }}
                   maxLength="1"
-                  placeholder="#"
+                  placeholder=""
                   value={this.state.phNo4}
                   onBlur={event => this.validateOnBlur('phNo4', event.target.value)}
                   onChange={(event) => {
@@ -239,7 +240,7 @@ export default class StarNotifications extends React.Component {
                 <GroupStyled.OTPSubmit
                   onClick={() => this.submitOTPForm()}
                 >
-                  Submit
+                  Verify
                 </GroupStyled.OTPSubmit>
               </GroupStyled.OTPWrapper>
             </Popup>

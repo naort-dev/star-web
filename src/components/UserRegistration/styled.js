@@ -191,7 +191,7 @@ GroupStyled.Label = styled.div`
   & > .checkBoxHeading {
     font-size: 14px;
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     display: block;
     text-align: center;
   }
@@ -241,13 +241,16 @@ GroupStyled.Label = styled.div`
       box-shadow: 0px 1px 2px #fff;
       height: 50px;
       padding: 10px;
+      color: #7B797A;
+      letter-spacing: 1px;
+      cursor: text;
     }
     .react-phone-number-input {
       display: inline-block;
       .react-phone-number-input__row {
         min-width: 300px;
         .react-phone-number-input__country {
-          box-shadow: 0px 1px 2px #ddd;
+          box-shadow: 0px 1px 2px #d6d6d661;
           min-width: 50px;
           height: 48px;
           text-align: center;
@@ -952,6 +955,7 @@ GroupStyled.AnotherRepButton = styled.button`
 GroupStyled.RepFormWrapper = styled.div``;
 GroupStyled.OTPWrapper = styled.div`
   text-align: center;
+  margin-top: 35px;
   & .errorElement {
     color: red;
     margin-top: 2px;
@@ -959,14 +963,6 @@ GroupStyled.OTPWrapper = styled.div`
     font-size: 12px;
   }
 `;
-// GroupStyled.OTPInput = styled.input`
-//   margin: 10px;
-//   border: none;
-//   border-bottom: 1px solid #ddd;
-//   text-align: center;
-//   font-size: 20px;
-//   outline: none;
-// `;
 GroupStyled.InputArea = styled.textarea`
   font-family: 'Avenir-Regular';
   color: #333333;
@@ -995,8 +991,9 @@ GroupStyled.InputArea = styled.textarea`
   }
 `;
 GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
-  width: 40px;
-  height: 60px;
+  width: 42px;
+  height: 55px;
+  box-shadow: 0px 1px 10px #d6d6d6;
   margin-right: 12px;
   text-align: center;
   @media(min-width: 1025px) {
@@ -1017,6 +1014,7 @@ GroupStyled.OTPSubmit = styled.button`
   border-radius: 5px;
   border: 2px solid #FF6C58;
   border-image: initial;
+  margin-top: 10px;
   &:hover {
     background-color: #FF3B21;
   }
