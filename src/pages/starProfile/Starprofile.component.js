@@ -60,7 +60,7 @@ export default class Starprofile extends React.Component {
                   videoTitle = `Watch this video shout-out from ${starsonaVideo.full_name}`;
                 } else if (requestTypes[starsonaVideo.booking_type] === 'Event') {
                   videoTitle = `Check out my video announcement courtesy of ${starsonaVideo.full_name}`;
-                } else if (requestTypes[starsonaVideo.booking_type] === 'Shout-out') {
+                } else if (requestTypes[starsonaVideo.booking_type] === 'Q&A') {
                   videoTitle = `${starsonaVideo.full_name} answers my fan question!`;
                 }
                 this.setState({
