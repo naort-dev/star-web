@@ -66,6 +66,8 @@ export default class StarNotifications extends React.Component {
             });
           }
         });
+    } else if (this.state.phoneNumberVerify === 'Verified') {
+      this.props.onComplete();
     }
   }
 
@@ -284,7 +286,7 @@ export default class StarNotifications extends React.Component {
             Submit number
           </GroupStyled.ControlButton>
         </GroupStyled.ControlWrapper>
-        <GroupStyled.SocialMediaMessage>
+        <GroupStyled.SocialMediaMessage onClick={this.props.onComplete} className="skipText">
             No thanks. I'll manage without.
         </GroupStyled.SocialMediaMessage>
       </GroupStyled.DetailsWrapper>

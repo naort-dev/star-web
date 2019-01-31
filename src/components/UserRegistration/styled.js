@@ -288,6 +288,7 @@ GroupStyled.WrapsInput = styled.div`
     width: 77%;
     &.notificationWrapper {
       width: 100%;
+      text-align: center;
     }
   }
   @media(min-width:1025){
@@ -814,6 +815,9 @@ GroupStyled.SocialMediaMessage = styled.div`
   margin-bottom: 5px;
   margin-top: 10px;
   word-spacing: 3px;
+  &.skipText {
+    cursor: pointer;
+  }
   @media(min-width:768px){
     font-size: 18px;
   }

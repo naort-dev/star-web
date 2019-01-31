@@ -484,7 +484,7 @@ export default class AddRepresentative extends React.Component {
           }
         </GroupStyled.RepresentativeWrapper>
         <GroupStyled.ControlWrapper multiple>
-          <GroupStyled.SkipStep>
+          <GroupStyled.SkipStep onClick={this.props.skipStep}>
             Skip for now
           </GroupStyled.SkipStep>
           <GroupStyled.ControlButton

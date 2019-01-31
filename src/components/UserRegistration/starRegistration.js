@@ -166,7 +166,7 @@ class starRegistrationComponent extends React.Component {
         }
       });
   }
-
+  
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks, groupIds) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
@@ -228,6 +228,7 @@ class starRegistrationComponent extends React.Component {
               <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
                 <AddRepresentative
                   onComplete={this.submitNotifications}
+                  skipStep={this.submitOTPForm}
                 />
               </GroupStyled.StepWrapper>
               {
