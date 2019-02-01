@@ -184,7 +184,7 @@ export default class StarNotifications extends React.Component {
                 Let's make sure it's really you. An 4-digit code has been sent to the phone ending in ******{phoneLast4digits}.
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
-                <GroupStyled.PhoneNo
+                <GroupStyled.PhoneNoInput
                   small
                   type="tel"
                   innerRef={(node) => { this.phNo1 = node; }}
@@ -196,7 +196,7 @@ export default class StarNotifications extends React.Component {
                     this.handleFieldChange('phNo1', event.target.value);
                   }}
                 />
-                <GroupStyled.PhoneNo
+                <GroupStyled.PhoneNoInput
                   small
                   type="tel"
                   maxLength="1"
@@ -208,7 +208,7 @@ export default class StarNotifications extends React.Component {
                     this.handleFieldChange('phNo2', event.target.value);
                   }}
                 />
-                <GroupStyled.PhoneNo
+                <GroupStyled.PhoneNoInput
                   small
                   lastDigit
                   type="tel"
@@ -221,7 +221,7 @@ export default class StarNotifications extends React.Component {
                     this.handleFieldChange('phNo3', event.target.value);
                   }}
                 />
-                <GroupStyled.PhoneNo
+                <GroupStyled.PhoneNoInput
                   small
                   type="tel"
                   innerRef={(node) => { this.phNo4 = node; }}
