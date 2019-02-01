@@ -79,6 +79,7 @@ export default class Starprofile extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.getUserId(this.props) !== this.getUserId(nextProps)) {
       this.props.resetCelebDetails();
+      this.setState({ videoShareView: false });
       this.props.fetchCelebDetails(this.getUserId(nextProps));
       this.props.fetchCelebVideosList(this.state.offsetValue, true, this.getUserId(nextProps));
     }

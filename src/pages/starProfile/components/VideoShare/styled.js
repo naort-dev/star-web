@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Link } from 'react-router-dom';
 
 const VideoShareStyled = styled.div`
   background: #fff;
@@ -167,8 +166,11 @@ VideoShareStyled.StarLink = styled.span`
   width: 100%;
   display: ${props => (props.mobile ? 'block' : 'none')};
   padding: 10px;
-  padding-left: 0;
+  a {
+    display: inline-block;
+  }
   @media(min-width: 1025px) {
+    padding-left: 0;
     display: ${props => (props.mobile ? 'none' : 'block')};
   }
 `;

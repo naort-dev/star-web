@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import moment from 'moment';
 import {
@@ -16,7 +16,7 @@ import {
   EmailIcon,
 } from 'react-share';
 import copy from 'copy-to-clipboard';
-import { requestTypeTitle } from '../../../../constants/requestTypes';
+import { requestTypeTitle, requestTypes } from '../../../../constants/requestTypes';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import SnackBar from '../../../../components/SnackBar';
 import Loader from '../../../../components/Loader';
@@ -147,7 +147,16 @@ class VideoShare extends React.Component {
   renderSocialIcons = (selectedVideo) => {
     const defaultUrl = selectedVideo.video_url;
     const shareUrl = `https://${defaultUrl}`;
-    const title = selectedVideo.booking_title;
+    let title = '';
+    if (requestTypes[selectedVideo.booking_type] === 'Shout-out') {
+      title = `Watch this video shout-out from ${selectedVideo.full_name}`;
+    } else if (requestTypes[selectedVideo.booking_type] === 'Event') {
+      title = `Check out my video announcement courtesy of ${selectedVideo.full_name}`;
+    } else if (requestTypes[selectedVideo.booking_type] === 'Q&A') {
+      title = `${selectedVideo.full_name} answers my fan question!`;
+    }
+    const emailSubject = `Check out this video from ${selectedVideo.full_name} !`;
+    const emailBody = `${title}\n${shareUrl}`;
     return (
       <React.Fragment>
         <VideoShareStyled.Somenetwork>
@@ -202,8 +211,8 @@ class VideoShare extends React.Component {
         <VideoShareStyled.Somenetwork>
           <EmailShareButton
             url={shareUrl}
-            subject={title}
-            body={shareUrl}
+            subject={emailSubject}
+            body={emailBody}
             className="Demo__some-network__share-button"
           >
             <EmailIcon
@@ -268,15 +277,17 @@ class VideoShare extends React.Component {
               <React.Fragment>
                 <VideoShareStyled.VideoPlayer>
                   <VideoShareStyled.StarLink mobile>
-                    <VideoShareStyled.VideoRequestImage
-                      imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
-                    />
-                    <VideoShareStyled.VideoRequestName>
-                      {props.selectedVideo.full_name}
-                      <VideoShareStyled.VideoTitle>
-                        {this.renderRequesttitle()}
-                      </VideoShareStyled.VideoTitle>
-                    </VideoShareStyled.VideoRequestName>
+                    <Link to={`/${props.selectedVideo.celebrity_id}`}>
+                      <VideoShareStyled.VideoRequestImage
+                        imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
+                      />
+                      <VideoShareStyled.VideoRequestName>
+                        {props.selectedVideo.full_name}
+                        <VideoShareStyled.VideoTitle>
+                          {this.renderRequesttitle()}
+                        </VideoShareStyled.VideoTitle>
+                      </VideoShareStyled.VideoRequestName>                    
+                    </Link>
                   </VideoShareStyled.StarLink>
                   <VideoShareStyled.VideoPlayerWrapper>
                     <VideoPlayer onVideoEnded={this.onVideoEnded} {...videoPlayerProps} />
@@ -291,15 +302,17 @@ class VideoShare extends React.Component {
                   <VideoShareStyled.VideoContent>
                     <VideoShareStyled.VideoRequester>
                       <VideoShareStyled.StarLink>
-                        <VideoShareStyled.VideoRequestImage
-                          imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
-                        />
-                        <VideoShareStyled.VideoRequestName>
-                          {props.selectedVideo.full_name}
-                          <VideoShareStyled.VideoTitle>
-                            {this.renderRequesttitle()}
-                          </VideoShareStyled.VideoTitle>
-                        </VideoShareStyled.VideoRequestName>
+                        <Link to={`/${props.selectedVideo.celebrity_id}`}>
+                          <VideoShareStyled.VideoRequestImage
+                            imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
+                          />
+                          <VideoShareStyled.VideoRequestName>
+                            {props.selectedVideo.full_name}
+                            <VideoShareStyled.VideoTitle>
+                              {this.renderRequesttitle()}
+                            </VideoShareStyled.VideoTitle>
+                          </VideoShareStyled.VideoRequestName>
+                        </Link>
                       </VideoShareStyled.StarLink>
                       <VideoShareStyled.UserActions mobile>
                         <VideoShareStyled.ShareButton
