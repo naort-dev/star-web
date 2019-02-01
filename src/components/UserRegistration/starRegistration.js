@@ -166,7 +166,7 @@ class starRegistrationComponent extends React.Component {
         }
       });
   }
-  
+
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks, groupIds) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
@@ -184,12 +184,14 @@ class starRegistrationComponent extends React.Component {
     this.props.changeStep(this.props.currentStep + 1);
   }
 
-  render() { 
+  render() {
     return (
       <GroupStyled>
         {
           this.props.currentStep >= 3 &&
-            <GroupStyled.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+            <GroupStyled.BackButton
+              onClick={() => this.props.changeStep(this.props.currentStep - 1)}
+            />
         }
         {
           this.state.loader ?
