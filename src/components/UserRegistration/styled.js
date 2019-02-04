@@ -175,6 +175,7 @@ GroupStyled.Label = styled.div`
   &.checkbox_container {
     padding-top: 3px;
     font-size: 12px;
+    padding-left: 0;
     @media(min-width:768px){
       padding-right: 0;
     }
@@ -930,6 +931,7 @@ GroupStyled.AddRepForm = styled.div`
     }
     .checkbox_container {
       margin-bottom: 0;
+      padding-left: 30px;
     }
   }
 `;
