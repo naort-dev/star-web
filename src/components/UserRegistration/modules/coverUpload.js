@@ -2,7 +2,6 @@ import React from 'react';
 import EXIF from 'exif-js';
 import { awsImageUpload } from '../../../services/awsImageUpload';
 import ImageCropper from '../../ImageCropper';
-import { starProfessionsFormater } from '../../../utils/dataToStringFormatter';
 import Loader from '../../Loader';
 import GroupStyled from '../styled';
 
@@ -11,6 +10,7 @@ export default class CoverUpload extends React.Component {
   state = {
     cropImage: null,
     cropMode: false,
+    imageLoading: false,
     currentImage: null,
     featuredImage: null,
     secondaryImages: [],
@@ -69,8 +69,10 @@ export default class CoverUpload extends React.Component {
   }
 
   getCroppedImage = (file, image) => {
+    this.setState({ imageLoading: true });
     awsImageUpload(file, this.state.extension)
       .then((resp) => {
+        this.setState({ imageLoading: false });
         if (this.state.currentImage.indexOf('secondaryImage') > -1) {
           const { secondaryImages } = this.state;
           const index = this.state.currentImage.split('-')[1];
