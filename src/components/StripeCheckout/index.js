@@ -156,7 +156,7 @@ class StripeCheckout extends React.Component {
               closePopUp={this.props.resetPaymentsError}
             >
               <AlertView
-                message={error.message.split(':')[1]}
+                message={error.message.split(':')[1] || error.message}
                 closePopup={this.props.resetPaymentsError}
               />
             </Popup>
