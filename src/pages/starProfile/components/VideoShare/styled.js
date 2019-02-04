@@ -137,29 +137,18 @@ VideoShareStyled.ShareButton = styled.span`
   vertical-align: top;
   width: 20px;
   height: 20px;
-  background: url( 'assets/images/upload.svg' ) no-repeat left;
+  background: url( 'assets/images/share.svg' ) no-repeat left;
   background-size: contain;
 `;
 
 VideoShareStyled.ChatIcon = VideoShareStyled.ShareButton.extend`
   padding-top: 10px;
-  background: url( 'assets/images/chat-icon.png') no-repeat left;
-  background-size: contain;
+  background: url( 'assets/images/comment.svg') no-repeat left;
+  background-size: 21px;
   position: relative;
   vertical-align: unset;
   margin-left: 10px;
   margin-top: 3px;
-  margin-right: 23px;
-  &::after {
-    content: ${props => (props.chatCount ? `'${props.chatCount}'` : `'0'`)};
-    right: -20px;
-    top: 2px;
-    position: absolute;
-    display: block;
-    font-size: 12px;
-    text-align: center;
-    font-family: Avenir-Light;
-  }
 `;
 
 VideoShareStyled.StarLink = styled.span`

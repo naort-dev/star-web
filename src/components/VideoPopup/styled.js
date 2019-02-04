@@ -109,14 +109,14 @@ VideoPopupStyled.ShareButton = styled.span`
   vertical-align: top;
   width: 20px;
   height: 20px;
-  background: url( 'assets/images/upload.svg' ) no-repeat left;
+  background: url( 'assets/images/share.svg' ) no-repeat left;
   background-size: contain;
 `;
 
 VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
   padding-top: 10px;
-  background: url( 'assets/images/chat-icon.png') no-repeat left;
-  background-size: contain;
+  background: url( 'assets/images/comment.svg') no-repeat left;
+  background-size: 21px;
   position: relative;
   vertical-align: unset;
   margin-left: 10px;
