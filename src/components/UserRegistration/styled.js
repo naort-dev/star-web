@@ -107,7 +107,7 @@ GroupStyled.Select = styled.select`
   border-radius: 2px;
   @media(min-width:768px){
     margin-top:0;
-    height:35px;
+    height:35px;InputAreaText
   }
   @media(min-width:1025px){
     margin-top:0;
@@ -963,7 +963,7 @@ GroupStyled.OTPWrapper = styled.div`
     font-size: 12px;
   }
 `;
-GroupStyled.InputArea = styled.textarea`
+GroupStyled.InputAreaText = styled.textarea`
   font-family: 'Avenir-Regular';
   color: #333333;
   font-size: 14px;
@@ -990,7 +990,7 @@ GroupStyled.InputArea = styled.textarea`
     font-size:16px;
   }
 `;
-GroupStyled.PhoneNo = GroupStyled.InputArea.extend`
+GroupStyled.PhoneNoInput = GroupStyled.InputAreaText.extend`
   width: 42px;
   height: 55px;
   box-shadow: 0px 1px 10px #d6d6d6;
