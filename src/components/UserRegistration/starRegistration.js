@@ -113,7 +113,9 @@ class starRegistrationComponent extends React.Component {
     if (followedGroups.length) {
       this.props.celebrityFollowStatus(followedGroups);
     }
-    this.props.closeSignupFlow();
+    if (this.props.closeSignupFlow) {
+      this.props.closeSignupFlow();
+    }
   }
 
   imageUpload = (secondaryImages, skip) => {
@@ -168,6 +170,11 @@ class starRegistrationComponent extends React.Component {
 
   noRecordCallback = () => {
     const { verificationDisable } = this.state;
+    const celebrityProfileData = {
+      ...this.state.celebrityDetails,
+      profile_video: 'sample.mp4', // random file name
+    };
+    celebritySignupProfile(celebrityProfileData);
     if (!verificationDisable) {
       this.goToStep('next');
       this.setState({ verificationDisable: true });
