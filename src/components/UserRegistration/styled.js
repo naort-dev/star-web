@@ -1022,4 +1022,9 @@ GroupStyled.OTPSubmit = styled.button`
   }
 `;
 
+GroupStyled.VerificationHead = GroupStyled.InnerHeading.extend`
+  text-align: center;
+  padding-bottom: 10px;
+`;
+
 export default GroupStyled;

@@ -296,7 +296,7 @@ export default class ProfileSettings extends React.Component {
               </SettingsStyled.CustomInput>
               <SettingsStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
-                  ? 'Please enter a group bio'
+                  ? 'Please enter a bio'
                   : null}
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>

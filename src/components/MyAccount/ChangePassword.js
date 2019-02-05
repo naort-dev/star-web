@@ -1,8 +1,13 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import validator from 'validator';
+import AlertView from '../AlertView';
+import Loader from '../Loader';
+import { changePassword, resetChangePassword } from '../../store/shared/actions/changePassword';
+
 import Accounts from './styled';
 
-export default class MyAccount extends React.Component {
+class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,8 +23,15 @@ export default class MyAccount extends React.Component {
         value: '',
         message: '',
       },
+      alertText: '',
     };
-    this.props.resetChangePassord();
+    this.props.resetChangePassword();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.changePasswordData.submitStatus) {
+      this.setState({ alertText: nextProps.changePasswordData.message });
+    }
   }
 
   onChangePassword = () => {
@@ -31,14 +43,14 @@ export default class MyAccount extends React.Component {
     }
   }
 
-  onChange = (e, field) => {
+  onChange = field => (e) => {
     this.setState({ [field]: { value: e.target.value, message: '' } });
   }
 
   validate = () => {
     let flag = true;
     if (validator.isEmpty(this.state.oldPassword.value)) {
-      this.setState({ oldPassword: { ...this.state.oldPassword, message: 'Enter a  password' } });
+      this.setState({ oldPassword: { ...this.state.oldPassword, message: 'Enter a password' } });
       flag = false;
     }
     ['password1', 'password2'].forEach((item) => {
@@ -47,7 +59,12 @@ export default class MyAccount extends React.Component {
     return flag;
   }
 
-  checkPassword = (field) => {
+  clearAlertText = () => {
+    this.setState({ alertText: '' });
+    this.props.onPasswordChange();
+  }
+
+  checkPassword = field => () => {
     const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
 
     if (validator.isEmpty(this.state[field].value)) {
@@ -72,8 +89,18 @@ export default class MyAccount extends React.Component {
 
 
   render() {
-    const { oldPassword, password1, password2 } = this.state;
-    const {changePasswordData} = this.props;
+    const { oldPassword, password1, password2, alertText } = this.state;
+    const { changePasswordData } = this.props;
+    if (changePasswordData.isLoading) {
+      return <Loader />;
+    } else if (alertText !== '') {
+      return (
+        <AlertView
+          message={alertText}
+          closePopup={this.clearAlertText}
+        />
+      );
+    }
     return (
       <Accounts.PopupWrapper>
         <Accounts.PopupHeader>Change password</Accounts.PopupHeader>
@@ -84,7 +111,7 @@ export default class MyAccount extends React.Component {
               name="old-password"
               value={oldPassword.value}
               placeholder="Old password"
-              onChange={e => this.onChange(e, 'oldPassword')}
+              onChange={this.onChange('oldPassword')}
             />
             <Accounts.ErrorMsg>{oldPassword.message}</Accounts.ErrorMsg>
           </Accounts.InputWraps>
@@ -96,8 +123,8 @@ export default class MyAccount extends React.Component {
                 name="password1"
                 value={password1.value}
                 placeholder="New password"
-                onChange={e => this.onChange(e, 'password1')}
-                onBlur={() => this.checkPassword('password1')}
+                onChange={this.onChange('password1')}
+                onBlur={this.checkPassword('password1')}
               />
             </Accounts.PasswordWrapper>
             <Accounts.ErrorMsg>{password1.message}</Accounts.ErrorMsg>
@@ -110,8 +137,8 @@ export default class MyAccount extends React.Component {
                 name="password2"
                 value={password2.value}
                 placeholder="Re-enter new password"
-                onChange={e => this.onChange(e, 'password2')}
-                onBlur={() => this.checkPassword('password2')}
+                onChange={this.onChange('password2')}
+                onBlur={this.checkPassword('password2')}
               />
             </Accounts.PasswordWrapper>
             <Accounts.ErrorMsg>{password2.message}</Accounts.ErrorMsg>
@@ -130,3 +157,15 @@ export default class MyAccount extends React.Component {
     );
   }
 }
+
+
+const mapStateToProps = state => ({
+  changePasswordData: state.changePassword,
+})
+
+const mapDispatchToProps = dispatch => ({
+  changePassword: data => dispatch(changePassword(data)),
+  resetChangePassword: () => dispatch(resetChangePassword()),
+})
+
+export default connect (mapStateToProps, mapDispatchToProps)(ChangePassword);

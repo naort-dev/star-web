@@ -292,7 +292,13 @@ export default class Personal extends React.Component {
                         </HeaderSection>
                     }
                     <Request.ComponentWrapper>
-                      <Request.Heading>What is the Occasion</Request.Heading>
+                      <Request.Heading>
+                        {
+                          this.props.currentStepCount === 1 ?
+                           'What is the Occasion?'
+                          : 'Tell us about the occasion'
+                        }
+                      </Request.Heading>
                       <Request.Questionwraps>
                         <Request.Ask>
                           {
