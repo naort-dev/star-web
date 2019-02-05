@@ -284,7 +284,6 @@ class GroupSelectionComponent extends React.Component {
           alertText !== '' &&
             <Popup
               smallPopup
-              modalPopup
               closePopUp={this.closeAlertView}
             >
               <AlertView

@@ -4,6 +4,7 @@ const initalState = {
   isLoading: false,
   submitStatus: false,
   error: '',
+  message: '',
 };
 
 export default (state = { ...initalState }, action) => {
@@ -23,6 +24,7 @@ export default (state = { ...initalState }, action) => {
     case CHANGE_PASSWORD.success:
       return {
         ...state,
+        message: action.data,
         submitStatus: true,
       };
 

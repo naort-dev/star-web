@@ -179,11 +179,17 @@ export default class Event extends React.Component {
                 {
                   this.props.currentStepCount === 2 &&
                     <HeaderSection>
-                      <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                      <HeaderSection.HeaderNavigation onClick={this.goBack} />
                     </HeaderSection>
                 }
                 <Request.ComponentWrapper>
-                  <Request.Heading>What is the event</Request.Heading>
+                  <Request.Heading>
+                    {
+                      this.props.currentStepCount === 1 ?
+                        'What is your event?'
+                      : 'Tell us about your event'
+                    }
+                  </Request.Heading>
                   <Request.Questionwraps>
                     <Request.Ask>
                       {

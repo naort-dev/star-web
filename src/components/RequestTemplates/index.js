@@ -678,7 +678,7 @@ class RequestTemplates extends React.Component {
         return (
           <div>
             <Templates.InputWrapper>
-              <Templates.Label>Who's the guest of honour?</Templates.Label>
+              <Templates.Label>Who's the guest of honor?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="Enter guest name"
