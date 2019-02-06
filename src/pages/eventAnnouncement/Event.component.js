@@ -197,13 +197,13 @@ export default class Event extends React.Component {
                           <Request.EventStep1>
                             <Request.InputFieldsWrapper>
                               <Request.InputWrapper>
-                                <Request.Label>Event Type</Request.Label>
+                                <Request.Label>Event type</Request.Label>
                                 <Request.WrapsInput>
                                   <Request.Select
                                     value={this.state.selectedValue}
                                     onChange={this.handleChange}
                                   >
-                                    <option value="0" key="0">Choose One</option>
+                                    <option value="0" key="0">Choose one</option>
                                     {optionItems}
                                   </Request.Select>
                                   {this.state.selectEventerror ?
