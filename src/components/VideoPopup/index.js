@@ -367,14 +367,14 @@ class VideoPopup extends React.Component {
                         </VideoPopupStyled.loaderWrapper>
                     }
                   </VideoPopupStyled.VideoContent>
-                  <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
-                    {this.renderSocialIcons(props.selectedVideo)}
-                  </VideoPopupStyled.SocialMediaWrapper>
                 </VideoPopupStyled.VideoPlayer>
               </React.Fragment>
             : <Loader />
           }
         </VideoPopupStyled.VideoContentWrapper>
+        <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+          {this.renderSocialIcons(props.selectedVideo)}
+        </VideoPopupStyled.SocialMediaWrapper>
       </RequestFlowPopup>
     );
   }
