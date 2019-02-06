@@ -20,6 +20,7 @@ import { requestTypeTitle, requestTypes } from '../../../../constants/requestTyp
 import VideoPlayer from '../../../../components/VideoPlayer';
 import SnackBar from '../../../../components/SnackBar';
 import Loader from '../../../../components/Loader';
+import Popup from '../../../../components/Popup';
 import VideoShareStyled from './styled';
 import { setMetaTags } from '../../../../utils/setMetaTags';
 import { fetchCommentsList, addVideoComment, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
@@ -267,6 +268,17 @@ class VideoShare extends React.Component {
           this.state.sharePopup &&
             <VideoShareStyled.Overlay onClick={this.toggleShare} />
         }
+        {
+          this.state.sharePopup &&
+            <VideoShareStyled.SocialMediaWrapper>
+              <Popup
+                smallPopup
+                closePopUp={this.toggleShare}
+              >
+                { this.renderSocialIcons(props.selectedVideo) }
+              </Popup>
+            </VideoShareStyled.SocialMediaWrapper>
+        }
         <VideoShareStyled.VideoContentWrapper>
           {
             this.state.snackBarText !== '' &&
@@ -414,7 +426,7 @@ class VideoShare extends React.Component {
                       </VideoShareStyled.CommentBoxWrapper>
                     </VideoShareStyled.PopupActions>
                   </VideoShareStyled.VideoContent>
-                  <VideoShareStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+                  <VideoShareStyled.SocialMediaWrapper mobile visible={this.state.sharePopup}>
                     <VideoShareStyled.Drawer onClick={this.toggleShare} />
                     <VideoShareStyled.SocialHeading>Share</VideoShareStyled.SocialHeading>
                     {this.renderSocialIcons(props.selectedVideo)}

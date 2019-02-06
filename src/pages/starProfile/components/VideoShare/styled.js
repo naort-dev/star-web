@@ -17,6 +17,9 @@ VideoShareStyled.Overlay = styled.span`
   bottom: 0;
   z-index: 1;
   background-color: rgba(0,0,0,.6)
+  @media(min-width: 1025px) {
+    display: none;
+  }
 `;
 
 VideoShareStyled.VideoContentWrapper = styled.div`
@@ -142,13 +145,11 @@ VideoShareStyled.ShareButton = styled.span`
 `;
 
 VideoShareStyled.ChatIcon = VideoShareStyled.ShareButton.extend`
-  padding-top: 10px;
   background: url( 'assets/images/comment.svg') no-repeat left;
-  background-size: 21px;
+  background-size: 100%;
   position: relative;
   vertical-align: unset;
   margin-left: 10px;
-  margin-top: 3px;
 `;
 
 VideoShareStyled.StarLink = styled.span`
@@ -157,6 +158,10 @@ VideoShareStyled.StarLink = styled.span`
   padding: 10px;
   a {
     display: inline-block;
+    width: 100%;
+    @media(min-width: 768px) {
+      width: auto;
+    }
   }
   @media(min-width: 1025px) {
     padding-left: 0;
@@ -234,8 +239,11 @@ VideoShareStyled.SocialMediaWrapper = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   opacity: ${props => (props.visible ? 1 : 0)};
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${props => (props.visible && props.mobile ? 'block' : 'none')};
   padding: ${props => (props.visible ? '10px 0' : '0')};
+  @media(min-width: 1025px) {
+    display: ${props => (props.mobile ? 'none' : 'block')};
+  }
 `;
 
 VideoShareStyled.SocialHeading = styled.span`

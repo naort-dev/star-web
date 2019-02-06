@@ -116,16 +116,15 @@ VideoPopupStyled.ShareButton = styled.span`
 VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
   padding-top: 10px;
   background: url( 'assets/images/comment.svg') no-repeat left;
-  background-size: 21px;
+  background-size: 100%;
   position: relative;
   vertical-align: unset;
-  margin-left: 10px;
-  margin-top: 3px;
+  margin-left: 7px;
   margin-right: 23px;
   &::after {
     content: ${props => (props.chatCount ? `'${props.chatCount}'` : `'0'`)};
     right: -20px;
-    top: 2px;
+    top: 3px;
     position: absolute;
     display: block;
     font-size: 12px;
