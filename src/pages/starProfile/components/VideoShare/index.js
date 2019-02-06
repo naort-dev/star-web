@@ -416,7 +416,7 @@ class VideoShare extends React.Component {
                               />
                               <VideoShareStyled.CommentBox
                                 innerRef={(node) => { this.commentInput = node; }}
-                                placeholder="Enter your comment"
+                                placeholder="Add a comment..."
                                 value={this.state.commentText}
                                 onKeyUp={event => this.handleCommentEnter(event)}
                                 onChange={event => this.handleCommentAdd(event)}
