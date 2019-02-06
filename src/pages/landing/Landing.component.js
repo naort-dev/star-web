@@ -220,7 +220,7 @@ export default class Landing extends React.Component {
           <Switch>
             <Route
               exact
-              path="/"
+              path="/(signUp|)/"
               render={() => (
                 <LandingStyled.mainSection menuActive={this.state.menuActive}>
                   <div>

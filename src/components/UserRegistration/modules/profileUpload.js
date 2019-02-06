@@ -11,6 +11,7 @@ export default class ProfileUpload extends React.Component {
   state = {
     cropImage: null,
     cropMode: false,
+    imageLoading: false,
     finalImage: null,
     finalFile: null,
   }
@@ -156,7 +157,7 @@ export default class ProfileUpload extends React.Component {
               <GroupStyled.ControlWrapper>
                 <GroupStyled.ControlButton
                   disabled={!this.state.finalImage}
-                  onClick={() => this.onComplete()}
+                  onClick={this.onComplete}
                 >
                   Continue
                 </GroupStyled.ControlButton>

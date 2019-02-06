@@ -19,8 +19,8 @@ export const awsImageUpload = (file, extension) => {
       formData.append('file', file);
       return { formData, url: response.data.data.url, filename };
     })
-    .then((response) => {
-      axios.post(response.url, response.formData);
+    .then(async (response) => {
+      await axios.post(response.url, response.formData);
       return response.filename;
     });
 }

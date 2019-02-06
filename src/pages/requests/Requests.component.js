@@ -87,7 +87,14 @@ export default class Requests extends React.Component {
     }
     switch (requestAction) {
       case 'share':
-        return <ShareView iconSize={50} title={orderDetails.booking_title} shareUrl={`https://${finalVideo.video_url}`} />;
+        return (
+          <ShareView
+            iconSize={50}
+            title={`Check out this video from ${orderDetails.celebrity} !`}
+            body={`Watch this personalized video from ${orderDetails.celebrity}`}
+            shareUrl={`https://${finalVideo.video_url}`}
+          />
+        );
       case 'respond':
         return <VideoRecorder onComplete={this.onVideoUpload} orderDetails={this.state.orderDetails} {...this.props} />;
       case 'report':

@@ -43,6 +43,6 @@ export const changePassword = data => (dispatch) => {
   });
 };
 
-export const resetChangePassord = () => ({
+export const resetChangePassword = () => ({
   type: CHANGE_PASSWORD.reset,
 });

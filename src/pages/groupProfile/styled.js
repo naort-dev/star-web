@@ -280,8 +280,25 @@ GroupProfileStyled.profileWrapper = styled.div`
     }
   }
 `;
+
+GroupProfileStyled.DescriptionWrapper = styled.p`
+  font-size: 23px;
+  line-height: 30px;
+  max-height: ${props => (props.readMore ? '115px' : 'auto')};
+  overflow: ${props => (props.readMore ? 'hidden' : 'initial')};
+  @media(min-width: 1025px) and (max-width: 1920px) {
+    font-size: 20px;
+  }
+  @media(max-width: 1024px) {
+    font-size: 20px;
+  }
+  @media(max-width:767px) {
+    font-size: 16px;
+  }
+`;
+
 GroupProfileStyled.ButtonWrapper = styled.div`
-  margin-top: 3%;
+  margin-top: 15px;
   @media(max-width: 767px) {
     margin-top: 0;
   }

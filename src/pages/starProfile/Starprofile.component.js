@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageGallery from 'react-image-gallery';
+import { isEmpty } from 'lodash';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import { Redirect } from 'react-router-dom';
 import Helmet from 'react-helmet';
@@ -34,7 +35,9 @@ export default class Starprofile extends React.Component {
       showAppBanner: true,
       offsetValue: 0,
       sharePopup: false,
+      showReadMore: false,
     };
+    this.maxDescriptionHeight = 120;
     this.coverImage = new Image();
   }
 
@@ -99,6 +102,20 @@ export default class Starprofile extends React.Component {
         offsetValue: nextProps.videosList.offset,
       });
     }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showReadMore !== prevState.showReadMore || isEmpty(prevProps.celebrityDetails) !== isEmpty(this.props.celebrityDetails)) {
+      this.showReadMore();
+    }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
+  }
+
+  onResize = () => {
+    this.showReadMore();
   }
 
   getUserId = (props) => {
@@ -205,6 +222,17 @@ export default class Starprofile extends React.Component {
     this.setState({ sharePopup: false });
   }
 
+
+  showReadMore = () => {
+    if (this.descriptionRef && this.descriptionRef.offsetHeight) {
+      if (this.descriptionRef.offsetHeight > this.maxDescriptionHeight) {
+        this.setState({ showReadMore: true });
+      } else {
+        this.setState({ showReadMore: false });
+      }
+    }
+  }
+
   renderItem = (item) => {
     return (
       <li className="videoItem">
@@ -259,7 +287,7 @@ export default class Starprofile extends React.Component {
   render() {
     const images = [];
     const remainingBookings = this.props.celebrityDetails.remaining_limit != null || this.props.celebrityDetails.remaining_limit != undefined ? this.props.celebrityDetails.remaining_limit : 1;
-    const descriptionClass = this.state.readMoreFlag ? 'groupFullDescription' : 'groupDescription';
+    const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     let fullName = '';
     if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
       fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
@@ -269,8 +297,6 @@ export default class Starprofile extends React.Component {
       const { featured_photo: { image_url } } = this.props.userDetails;
       images.push({ original: image_url });
     }
-    const descriptionLength = this.props.celebrityDetails.description ?
-      this.props.celebrityDetails.description.length : 0;
     if (this.props.detailsError) {
       return <Redirect to="/not-found" />;
     } else if (this.state.videoShareView) {
@@ -345,7 +371,12 @@ export default class Starprofile extends React.Component {
             smallPopup
             closePopUp={this.closePopup}
           >
-            <ShareView iconSize={50} title={fullName} shareUrl={this.props.userDetails.share_url} />
+            <ShareView
+              iconSize={50}
+              title={`Starsona: ${fullName}`}
+              body={`Book a personalized video shout-out from ${fullName}`}
+              shareUrl={this.props.userDetails.share_url}
+            />
           </Popup>
         }
         {this.props.userDetails && !this.props.detailsLoading &&
@@ -376,8 +407,12 @@ export default class Starprofile extends React.Component {
                         {this.props.userDetails.share_url && <StarProfileStyled.shareButton onClick={() => { this.shareProfileAction(); }}></StarProfileStyled.shareButton>}
                       </h1>
                       <div className="professionDetails">{starProfessionsDotFormater(this.props.celebrityDetails.profession_details)}</div>
-                      <p className={descriptionClass}>{this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}</p>
-                      { descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p> : ''}
+                      <StarProfileStyled.DescriptionWrapper readMore={!this.state.readMoreFlag}>
+                        <span ref={(node) => { this.descriptionRef = node; }}>
+                          {this.props.celebrityDetails.description ? this.props.celebrityDetails.description : ''}
+                        </span>
+                      </StarProfileStyled.DescriptionWrapper>
+                      { this.state.showReadMore ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p> : ''}
                     </div>
 
                     <div className="socialMediaIcons">

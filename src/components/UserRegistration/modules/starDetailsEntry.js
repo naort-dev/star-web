@@ -280,7 +280,7 @@ export default class StarDetailsEntry extends React.Component {
               </GroupStyled.CustomInput>
               <GroupStyled.ErrorMsg isError={this.state.errors.bio}>
                 {this.state.errors.bio
-                  ? 'Please enter a group bio'
+                  ? 'Please enter a bio'
                   : null}
               </GroupStyled.ErrorMsg>
             </GroupStyled.WrapsInput>

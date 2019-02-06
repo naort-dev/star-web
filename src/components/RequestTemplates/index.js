@@ -151,7 +151,7 @@ class RequestTemplates extends React.Component {
                     value={this.props.relationshipValue}
                     onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
-                    <option value="0" key="0">Choose One</option>
+                    <option value="0" key="0">Choose one</option>
                     {optionItems}
                     <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
@@ -162,7 +162,7 @@ class RequestTemplates extends React.Component {
             }
             {this.props.relationshipValue === 'otherRelation' ?
               <Templates.InputWrapper>
-                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.Label>Other relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Please enter relationship"
@@ -190,7 +190,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
+              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -279,7 +279,7 @@ class RequestTemplates extends React.Component {
                       value={this.props.relationshipValue}
                       onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                     >
-                      <option value="0" key="0">Choose One</option>
+                      <option value="0" key="0">Choose one</option>
                       {optionItems}
                       <option value="otherRelation" key="otherRelation">Other</option>
                     </Templates.Select>
@@ -291,7 +291,7 @@ class RequestTemplates extends React.Component {
             }
             {this.props.relationshipValue === 'otherRelation' ?
               <Templates.InputWrapper>
-                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.Label>Other relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter relationship"
@@ -319,7 +319,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
+              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -408,7 +408,7 @@ class RequestTemplates extends React.Component {
                     value={this.props.relationshipValue}
                     onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
-                    <option value="0" key="0">Choose One</option>
+                    <option value="0" key="0">Choose one</option>
                     {optionItems}
                     <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
@@ -419,7 +419,7 @@ class RequestTemplates extends React.Component {
             }
             {this.props.relationshipValue === 'otherRelation' ?
               <Templates.InputWrapper>
-                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.Label>Other relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter relationship"
@@ -460,7 +460,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
+              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -548,7 +548,7 @@ class RequestTemplates extends React.Component {
                     value={this.props.relationshipValue}
                     onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
                   >
-                    <option value="0" key="0">Choose One</option>
+                    <option value="0" key="0">Choose one</option>
                     {optionItems}
                     <option value="otherRelation" key="otherRelation">Other</option>
                   </Templates.Select>
@@ -559,7 +559,7 @@ class RequestTemplates extends React.Component {
             }
             {this.props.relationshipValue === 'otherRelation' ?
               <Templates.InputWrapper>
-                <Templates.Label>Other Relationship</Templates.Label>
+                <Templates.Label>Other relationship</Templates.Label>
                 <Templates.WrapsInput>
                   <Templates.Input
                     placeholder="Enter relationship"
@@ -575,7 +575,7 @@ class RequestTemplates extends React.Component {
               null
             }
             <Templates.InputWrapper>
-              <Templates.Label>When is the Occasion?</Templates.Label>
+              <Templates.Label>When is the occasion?</Templates.Label>
               <Templates.WrapsInput>
                 <DatePicker
                   dateFormat="LL"
@@ -588,7 +588,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
+              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -660,7 +660,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
+              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -669,7 +669,6 @@ class RequestTemplates extends React.Component {
                   value={this.props.importantinfo}
                   onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
             </Templates.InputWrapper>
           </div>
@@ -678,7 +677,7 @@ class RequestTemplates extends React.Component {
         return (
           <div>
             <Templates.InputWrapper>
-              <Templates.Label>Who's the guest of honour?</Templates.Label>
+              <Templates.Label>Who's the guest of honor?</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.Input
                   placeholder="Enter guest name"
@@ -733,7 +732,7 @@ class RequestTemplates extends React.Component {
               </Templates.WrapsInput>
             </Templates.InputWrapper>
             <Templates.InputWrapper>
-              <Templates.Label>Any Important Info for {this.props.starName} to know? (optional)</Templates.Label>
+              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
@@ -742,7 +741,6 @@ class RequestTemplates extends React.Component {
                   onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
                   value={this.props.importantinfo}
                 />
-                {/* <Templates.ErrorMsg>Hi am an error</Templates.ErrorMsg> */}
               </Templates.WrapsInput>
             </Templates.InputWrapper>
           </div>
