@@ -198,7 +198,7 @@ VideoPopupStyled.SliderArrows = styled.span`
 `;
 
 VideoPopupStyled.SocialMediaWrapper = styled.div`
-  position: absolute;
+  position: fixed;
   transition: 0.2s bottom ease-out;
   padding: 10px;
   padding-top: 0;
@@ -208,9 +208,6 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
   right: 0;
   bottom: 0;
   display: ${props => (props.visible ? 'block' : 'none')}
-  @media(min-width: 768px) {
-    position: fixed;
-  }
   @media(min-width: 1025px) {
     position: absolute;
     background: transparent;
