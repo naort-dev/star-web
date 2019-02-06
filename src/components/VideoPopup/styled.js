@@ -203,7 +203,7 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
   padding: 10px;
   padding-top: 0;
   background: rgb(248, 248, 248);
-  z-index: 999;
+  z-index: 1;
   left: 0;
   right: 0;
   bottom: 0;

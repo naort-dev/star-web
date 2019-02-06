@@ -339,19 +339,19 @@ class VideoPopup extends React.Component {
                               ))
                             }
                             {
+                              this.props.commentList.data.length && this.props.commentList.loading ?
+                                <VideoPopupStyled.loaderWrapper>
+                                  <Loader />
+                                </VideoPopupStyled.loaderWrapper>
+                              : null
+                            }
+                            {
                               this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
                                 <VideoPopupStyled.commentItem>
                                   <VideoPopupStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
                                     Load more comments
                                   </VideoPopupStyled.loadMoreComments>
                                 </VideoPopupStyled.commentItem>
-                              : null
-                            }
-                            {
-                              this.props.commentList.data.length && this.props.commentList.loading ?
-                                <VideoPopupStyled.loaderWrapper>
-                                  <Loader />
-                                </VideoPopupStyled.loaderWrapper>
                               : null
                             }
                             {
