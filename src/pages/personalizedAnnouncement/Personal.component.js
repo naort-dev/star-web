@@ -295,7 +295,7 @@ export default class Personal extends React.Component {
                       <Request.Heading>
                         {
                           this.props.currentStepCount === 1 ?
-                           'What is the Occasion?'
+                           'What is the occasion?'
                           : 'Tell us about the occasion'
                         }
                       </Request.Heading>
