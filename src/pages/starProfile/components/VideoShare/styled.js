@@ -79,6 +79,10 @@ VideoShareStyled.VideoTitle = styled.span`
 
 VideoShareStyled.PopupActions = styled.div`
   padding: 10px 0;
+  @media(min-width: 1025px) {
+    border-top: 1px solid #CCCCCC;
+    margin-top: 10px;
+  }
 `;
 
 VideoShareStyled.CommentBoxWrapper = styled.div`
@@ -131,6 +135,7 @@ VideoShareStyled.UserActions = styled.span`
   padding-top: 11px;
   @media(min-width: 1025px) {
     display: ${props => (props.mobile ? 'none' : 'inline-block')};
+    padding-top: 0;
   }
 `;
 
@@ -165,6 +170,7 @@ VideoShareStyled.StarLink = styled.span`
   }
   @media(min-width: 1025px) {
     padding-left: 0;
+    border-bottom: 1px solid #CCCCCC;
     display: ${props => (props.mobile ? 'none' : 'block')};
   }
 `;
@@ -173,6 +179,9 @@ VideoShareStyled.VideoRequester = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  @media(min-width: 1025px) {
+    margin-bottom: 0;
+  }
 `;
 VideoShareStyled.VideoRequestImage = styled.span`
   border-radius: 50%;
