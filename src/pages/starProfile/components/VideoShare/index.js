@@ -297,11 +297,11 @@ class VideoShare extends React.Component {
             </Popup>
           : null
         }
+        {
+          this.state.snackBarText !== '' &&
+            <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+        }
         <VideoShareStyled.VideoContentWrapper>
-          {
-            this.state.snackBarText !== '' &&
-              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
-          }
           {
             !props.videoPopupLoading ?
               <React.Fragment>
