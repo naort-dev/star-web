@@ -153,7 +153,13 @@ class VideoShare extends React.Component {
   }
 
   toggleShare = () => {
-    this.setState({ sharePopup: !this.state.sharePopup });
+    const { sharePopup } = this.state;
+    if (sharePopup) {
+      document.body.style.overflow = 'initial';
+    } else {
+      document.body.style.overflow = 'hidden';
+    }
+    this.setState({ sharePopup: !sharePopup });
   }
 
   renderRequesttitle = () => {
@@ -316,7 +322,7 @@ class VideoShare extends React.Component {
                         <VideoShareStyled.VideoTitle>
                           {this.renderRequesttitle()}
                         </VideoShareStyled.VideoTitle>
-                      </VideoShareStyled.VideoRequestName>                    
+                      </VideoShareStyled.VideoRequestName>
                     </Link>
                   </VideoShareStyled.StarLink>
                   <VideoShareStyled.VideoPlayerWrapper>
@@ -359,21 +365,21 @@ class VideoShare extends React.Component {
                     </VideoShareStyled.VideoRequester>
                     {
                       !this.props.commentList.loading || this.props.commentList.data.length ?
-                        <VideoShareStyled.CommentsList>
+                        <VideoShareStyled.CommentsList shareEnabled={this.state.sharePopup}>
                           {
                             this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
                               <VideoShareStyled.commentItem>
                                 <VideoShareStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
                                   Load more comments
                                 </VideoShareStyled.loadMoreComments>
+                                {
+                                  this.props.commentList.data.length && this.props.commentList.loading ?
+                                    <VideoShareStyled.MoreLoader>
+                                      <Loader size={25} />
+                                    </VideoShareStyled.MoreLoader>
+                                  : null
+                                }
                               </VideoShareStyled.commentItem>
-                            : null
-                          }
-                          {
-                            this.props.commentList.data.length && this.props.commentList.loading ?
-                              <VideoShareStyled.loaderWrapper>
-                                <Loader />
-                              </VideoShareStyled.loaderWrapper>
                             : null
                           }
                           {

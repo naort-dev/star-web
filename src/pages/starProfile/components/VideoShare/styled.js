@@ -16,7 +16,7 @@ VideoShareStyled.Overlay = styled.span`
   top: 0;
   bottom: 0;
   z-index: 1;
-  background-color: rgba(0,0,0,.6)
+  background-color: rgba(0,0,0,.6);
   @media(min-width: 1025px) {
     display: none;
   }
@@ -380,7 +380,7 @@ VideoShareStyled.VideoDate = styled.span`
 VideoShareStyled.loadMoreComments = styled.button`
   padding: 6px 0;
   text-decoration: none;
-  display: block;
+  display: inline-block;
   font-size: 14px;
   opacity: ${props => (props.isLoading ? '0.3' : 1)};
   color: #999;
@@ -389,6 +389,7 @@ VideoShareStyled.loadMoreComments = styled.button`
   cursor: pointer;
   background: transparent;
   border: none;
+  vertical-align: top;
   -webkit-appearance: none;
 `;
 
@@ -402,6 +403,13 @@ VideoShareStyled.commenterImage = VideoShareStyled.VideoRequestImage.extend`
 VideoShareStyled.loaderWrapper = styled.div`
   width: 100%;
   height: 100px;
+`;
+
+VideoShareStyled.MoreLoader = styled.div`
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  padding: 0 5px;
 `;
 
 export default VideoShareStyled;
