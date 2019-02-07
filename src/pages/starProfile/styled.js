@@ -71,7 +71,6 @@ StarProfileStyled.sideSection = styled.section`
   }
   @media(min-width: 1920px) {
     top: 72px;
-    padding-top: 72px;
   }
 `;
 
