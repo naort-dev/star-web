@@ -170,6 +170,7 @@ VideoShareStyled.StarLink = styled.span`
   }
   @media(min-width: 1025px) {
     padding-left: 0;
+    padding-top: 0;
     border-bottom: 1px solid #CCCCCC;
     display: ${props => (props.mobile ? 'none' : 'block')};
   }
