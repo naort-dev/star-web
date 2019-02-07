@@ -126,6 +126,9 @@ SettingsStyled.ControlWrapper = styled.div`
     box-shadow: none;
     padding: 26px 0;
   }
+  @media(max-width: 767px) {
+    margin-top: 20px;
+  }
 `;
 
 SettingsStyled.CancelButton = styled.span`
