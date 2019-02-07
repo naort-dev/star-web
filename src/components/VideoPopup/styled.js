@@ -10,7 +10,7 @@ VideoPopupStyled.VideoContentWrapper = styled.div`
   height: 100%;
   max-width: 100%;
   cursor: initial;
-  overflow-y: auto
+  overflow-y: auto;
   @media(min-width: 768px) {
     display: flex;
   }

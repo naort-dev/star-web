@@ -39,6 +39,7 @@ class VideoPopup extends React.Component {
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
     window.addEventListener('click', this.handleWindowClick);
+    window.addEventListener('touchmove', this.handleWindowClick);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -69,6 +70,7 @@ class VideoPopup extends React.Component {
   componentWillUnmount() {
     this.props.resetCommentsList();
     window.removeEventListener('click', this.handleWindowClick);
+    window.removeEventListener('touchmove', this.handleWindowClick);
   }
   onVideoEnded = () => {
     if (this.props.onVideoEnded) {
