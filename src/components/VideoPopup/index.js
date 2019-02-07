@@ -269,11 +269,11 @@ class VideoPopup extends React.Component {
         closePopUp={props.closePopUp}
         largePopup
       >
+        {
+          this.state.snackBarText !== '' &&
+            <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+        }
         <VideoPopupStyled.VideoContentWrapper>
-          {
-            this.state.snackBarText !== '' &&
-              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
-          }
           {
             !props.videoPopupLoading ?
               <React.Fragment>
