@@ -252,6 +252,9 @@ VideoShareStyled.SocialMediaWrapper = styled.div`
   opacity: ${props => (props.visible ? 1 : 0)};
   display: ${props => (props.visible ? 'block' : 'none')};
   padding: ${props => (props.visible ? '10px 0' : '0')};
+  @media(min-width: 1025px) {
+    display: none;
+  }
 `;
 
 VideoShareStyled.SocialHeading = styled.span`
