@@ -38,6 +38,7 @@ class VideoPopup extends React.Component {
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+    window.addEventListener('click', this.handleWindowClick);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -67,8 +68,8 @@ class VideoPopup extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
+    window.removeEventListener('click', this.handleWindowClick);
   }
-
   onVideoEnded = () => {
     if (this.props.onVideoEnded) {
       this.props.onVideoEnded();
@@ -77,6 +78,16 @@ class VideoPopup extends React.Component {
 
   setSnackBarText = (text) => {
     this.setState({ snackBarText: text });
+  }
+
+  handleWindowClick = (event) => {
+    const { sharePopup } = this.state;
+    const NotShareButtonClick = this.ShareButton && !this.ShareButton.contains(event.target);
+    const NotShareWrapperClick = this.shareWrapper && !this.shareWrapper.contains(event.target);
+    const closeShareView = sharePopup && NotShareButtonClick && NotShareWrapperClick;
+    if (closeShareView) {
+      this.setState({ sharePopup: false });
+    }
   }
 
   findTime = (commentDate) => {
@@ -292,10 +303,11 @@ class VideoPopup extends React.Component {
                       </VideoPopupStyled.StarLink>
                       <VideoPopupStyled.UserActions>
                         <VideoPopupStyled.ShareButton
+                          innerRef={(node) => { this.ShareButton = node; }}
                           onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
                         />
                         <VideoPopupStyled.ChatIcon
-                          onClick={() => this.selectCommentField()}
+                          onClick={this.selectCommentField}
                           chatCount={this.props.commentList.count}
                         />
                       </VideoPopupStyled.UserActions>
@@ -373,7 +385,7 @@ class VideoPopup extends React.Component {
             : <Loader />
           }
         </VideoPopupStyled.VideoContentWrapper>
-        <VideoPopupStyled.SocialMediaWrapper visible={this.state.sharePopup}>
+        <VideoPopupStyled.SocialMediaWrapper innerRef={(node) => { this.shareWrapper = node; }} visible={this.state.sharePopup}>
           {this.renderSocialIcons(props.selectedVideo)}
         </VideoPopupStyled.SocialMediaWrapper>
       </RequestFlowPopup>

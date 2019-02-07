@@ -34,6 +34,7 @@ class VideoShare extends React.Component {
       commentText: '',
       snackBarText: '',
     };
+    this.commentSelected = false;
   }
 
   componentWillMount() {
@@ -44,6 +45,14 @@ class VideoShare extends React.Component {
     if (this.props.commentList.count - prevProps.commentList.count === 1 && this.scrollBarRef) {
       if (this.commentInput) {
         this.commentInput.focus();
+      }
+    }
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn && this.commentSelected) {
+      this.commentSelected = false;
+      if (this.commentInput) {
+        setTimeout(() => {
+          this.commentInput.focus();
+        }, 0);
       }
     }
   }
@@ -102,8 +111,13 @@ class VideoShare extends React.Component {
   }
 
   selectCommentField = () => {
-    if (this.commentInput) {
-      this.commentInput.focus();
+    if (this.props.isLoggedIn) {
+      if (this.commentInput) {
+        this.commentInput.focus();
+      }
+    } else {
+      this.commentSelected = true;
+      this.props.toggleLogin(true);
     }
   }
 
@@ -113,8 +127,13 @@ class VideoShare extends React.Component {
 
   commentAdder = () => {
     const { commentText } = this.state;
-    if (commentText.trim('')) {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText)
+    if (this.props.isLoggedIn) {
+      if (commentText.trim('')) {
+        this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+      }
+    } else {
+      this.commentSelected = true;
+      this.props.toggleLogin(true);
     }
   }
 
@@ -327,7 +346,7 @@ class VideoShare extends React.Component {
                       </VideoShareStyled.StarLink>
                       <VideoShareStyled.UserActions mobile>
                         <VideoShareStyled.ChatIcon
-                          onClick={() => this.selectCommentField()}
+                          onClick={this.selectCommentField}
                           chatCount={this.props.commentList.count}
                         />
                         <VideoShareStyled.ShareButton
@@ -383,7 +402,7 @@ class VideoShare extends React.Component {
                     }
                     <VideoShareStyled.UserActions>
                       <VideoShareStyled.ChatIcon
-                        onClick={() => this.selectCommentField()}
+                        onClick={this.selectCommentField}
                         chatCount={this.props.commentList.count}
                       />
                       <VideoShareStyled.ShareButton
@@ -398,7 +417,7 @@ class VideoShare extends React.Component {
                         {
                           !props.isLoggedIn ?
                             <VideoShareStyled.LoginReminder
-                              onClick={() => this.props.toggleLogin(true)}
+                              onClick={this.commentAdder}
                             >
                               <span>Log in</span> to comment
                             </VideoShareStyled.LoginReminder>
