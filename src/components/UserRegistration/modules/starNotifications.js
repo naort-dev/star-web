@@ -181,7 +181,7 @@ export default class StarNotifications extends React.Component {
                 Enter the verification code
               </GroupStyled.HeaderText>
               <GroupStyled.SocialMediaMessage>
-                Let's make sure it's really you. An 4-digit code has been sent to the phone ending in ******{phoneLast4digits}.
+                Let's make sure it's really you. A 4-digit code has been sent to the phone ending in ******{phoneLast4digits}.
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
                 <GroupStyled.PhoneNoInput
