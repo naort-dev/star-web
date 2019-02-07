@@ -399,6 +399,7 @@ GroupProfileStyled.memberListPopup = styled.div`
     }
   }
   .memberDetails {
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -464,6 +465,8 @@ GroupProfileStyled.memberListPopup = styled.div`
       border-style: solid;
       border-color: #dadada;
       border-image: initial;
+      max-width: 120px;
+      width: 100%;
     }
 `;
 
