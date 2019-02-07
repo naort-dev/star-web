@@ -143,8 +143,9 @@ VideoShareStyled.ShareButton = styled.span`
   display: inline-block;
   cursor: pointer;
   vertical-align: top;
-  width: 20px;
-  height: 20px;
+  width: 25px;
+  height: 25px;
+  margin-left: 17px;
   background: url( 'assets/images/share.svg' ) no-repeat left;
   background-size: contain;
 `;
@@ -154,7 +155,7 @@ VideoShareStyled.ChatIcon = VideoShareStyled.ShareButton.extend`
   background-size: 100%;
   position: relative;
   vertical-align: unset;
-  margin-left: 10px;
+  margin-left: 0;
 `;
 
 VideoShareStyled.StarLink = styled.span`
@@ -249,11 +250,8 @@ VideoShareStyled.SocialMediaWrapper = styled.div`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   opacity: ${props => (props.visible ? 1 : 0)};
-  display: ${props => (props.visible && props.mobile ? 'block' : 'none')};
+  display: ${props => (props.visible ? 'block' : 'none')};
   padding: ${props => (props.visible ? '10px 0' : '0')};
-  @media(min-width: 1025px) {
-    display: ${props => (props.mobile ? 'none' : 'block')};
-  }
 `;
 
 VideoShareStyled.SocialHeading = styled.span`
@@ -337,10 +335,11 @@ VideoShareStyled.commentListScrollbar = styled(Scrollbars)`
 VideoShareStyled.CommentsList = styled.ul`
   width: 100%;
   height: calc(100% - 92px);
-  padding: 8px 0;
+  margin: 8px 0;
   @media(min-width: 1025px) {
     height: auto;
     max-height: calc(100% - 219px);
+    -webkit-overflow-scrolling: touch;
     overflow: auto;
   }
 `;

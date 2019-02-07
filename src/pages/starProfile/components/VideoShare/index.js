@@ -269,15 +269,14 @@ class VideoShare extends React.Component {
             <VideoShareStyled.Overlay onClick={this.toggleShare} />
         }
         {
-          this.state.sharePopup &&
-            <VideoShareStyled.SocialMediaWrapper>
-              <Popup
-                smallPopup
-                closePopUp={this.toggleShare}
-              >
-                { this.renderSocialIcons(props.selectedVideo) }
-              </Popup>
-            </VideoShareStyled.SocialMediaWrapper>
+          this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025 ?
+            <Popup
+              smallPopup
+              closePopUp={this.toggleShare}
+            >
+              { this.renderSocialIcons(props.selectedVideo) }
+            </Popup>
+          : null
         }
         <VideoShareStyled.VideoContentWrapper>
           {
@@ -327,12 +326,12 @@ class VideoShare extends React.Component {
                         </Link>
                       </VideoShareStyled.StarLink>
                       <VideoShareStyled.UserActions mobile>
-                        <VideoShareStyled.ShareButton
-                          onClick={this.toggleShare}
-                        />
                         <VideoShareStyled.ChatIcon
                           onClick={() => this.selectCommentField()}
                           chatCount={this.props.commentList.count}
+                        />
+                        <VideoShareStyled.ShareButton
+                          onClick={this.toggleShare}
                         />
                         <VideoShareStyled.VideoDate>
                           {this.findTime(props.selectedVideo.created_date)}
@@ -358,29 +357,23 @@ class VideoShare extends React.Component {
                               </VideoShareStyled.loaderWrapper>
                             : null
                           }
-                          {/* <VideoShareStyled.commentListScrollbar
-                            innerRef={(node) => { this.scrollBarRef = node }}
-                            autoHeight
-                            renderView={props => <div {...props} className="comments-list-scrollbar" id="scrollable-target" />}
-                          > */}
-                            {
-                              props.commentList.data.map((item, index) => (
-                                <VideoShareStyled.commentItem key={index}>
-                                  <VideoShareStyled.commenterName>
-                                    {item.user && item.user.get_short_name}
-                                    <VideoShareStyled.comment>
-                                      {item.comments}
-                                    </VideoShareStyled.comment>
-                                  </VideoShareStyled.commenterName>
-                                </VideoShareStyled.commentItem>
-                              ))
-                            }
-                            {
-                              !this.props.commentList.loading && !this.props.commentList.data.length ?
-                                <VideoShareStyled.commentItem>No comments yet</VideoShareStyled.commentItem>
-                              : null
-                            }
-                          {/* </VideoShareStyled.commentListScrollbar> */}
+                          {
+                            props.commentList.data.map((item, index) => (
+                              <VideoShareStyled.commentItem key={index}>
+                                <VideoShareStyled.commenterName>
+                                  {item.user && item.user.get_short_name}
+                                  <VideoShareStyled.comment>
+                                    {item.comments}
+                                  </VideoShareStyled.comment>
+                                </VideoShareStyled.commenterName>
+                              </VideoShareStyled.commentItem>
+                            ))
+                          }
+                          {
+                            !this.props.commentList.loading && !this.props.commentList.data.length ?
+                              <VideoShareStyled.commentItem>No comments yet</VideoShareStyled.commentItem>
+                            : null
+                          }
                           <li ref={(node) => this.scrollBarRef = node} />
                         </VideoShareStyled.CommentsList>
                       :
@@ -389,12 +382,12 @@ class VideoShare extends React.Component {
                         </VideoShareStyled.loaderWrapper>
                     }
                     <VideoShareStyled.UserActions>
-                      <VideoShareStyled.ShareButton
-                        onClick={this.toggleShare}
-                      />
                       <VideoShareStyled.ChatIcon
                         onClick={() => this.selectCommentField()}
                         chatCount={this.props.commentList.count}
+                      />
+                      <VideoShareStyled.ShareButton
+                        onClick={this.toggleShare}
                       />
                       <VideoShareStyled.VideoDate>
                         {this.findTime(props.selectedVideo.created_date)}
