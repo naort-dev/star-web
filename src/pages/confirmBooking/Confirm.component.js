@@ -327,7 +327,7 @@ export default class Confirm extends React.Component {
         <Request.StarName>{fullName}</Request.StarName>
         <Request.StarProfessions>{starProfessionsFormater(this.state.bookingData.starPrice.profession_details)}</Request.StarProfessions>
       </Request.ProfileImageWrapper>
-      <Request.Heading>Confirm Booking</Request.Heading>
+      <Request.Heading>Confirm booking</Request.Heading>
       {
         this.state.bookingData.type === 3 &&
           <Request.smallScreenVideo>

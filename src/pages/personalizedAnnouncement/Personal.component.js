@@ -295,7 +295,7 @@ export default class Personal extends React.Component {
                       <Request.Heading>
                         {
                           this.props.currentStepCount === 1 ?
-                           'What is the Occasion?'
+                           'What is the occasion?'
                           : 'Tell us about the occasion'
                         }
                       </Request.Heading>
@@ -306,13 +306,13 @@ export default class Personal extends React.Component {
                               <Request.EventStep1>
                                 <Request.InputFieldsWrapper>
                                   <Request.InputWrapper>
-                                    <Request.Label>What is the occasion</Request.Label>
+                                    <Request.Label>What is the occasion?</Request.Label>
                                     <Request.WrapsInput>
                                       <Request.Select
                                         value={this.state.selectedValue}
                                         onChange={this.handleChange}
                                       >
-                                        <option value="0" key="0">Choose One</option>
+                                        <option value="0" key="0">Choose one</option>
                                         {optionItems}
                                       </Request.Select>
                                       {this.state.selectEventerror ?
@@ -324,13 +324,13 @@ export default class Personal extends React.Component {
                                     </Request.WrapsInput>
                                   </Request.InputWrapper>
                                   <Request.InputWrapper>
-                                    <Request.Label>Who is the video for ?</Request.Label>
+                                    <Request.Label>Who is the video for?</Request.Label>
                                     <Request.WrapsInput>
                                       <Request.Select
                                         value={this.state.selectedPersonal}
                                         onChange={this.handleChangePersonal}
                                       >
-                                        <option value="0" key="0">Choose One</option>
+                                        <option value="0" key="0">Choose one</option>
                                         <option value="1" key="1">Myself</option>
                                         <option value="2" key="2">For someone else</option>
                                       </Request.Select>

@@ -93,67 +93,79 @@ class ReferStar extends React.Component {
     return null;
   }
 
-  renderSocialIcons = shareUrl => (
-    <React.Fragment>
-      <ReferralStyled.Somenetwork>
-        <FacebookShareButton
-          url={shareUrl}
-          className="Demo__some-network__share-button"
-        >
-          <FacebookIcon
-            size={32}
-            round
-          />
-        </FacebookShareButton>
-      </ReferralStyled.Somenetwork>
-      <ReferralStyled.Somenetwork>
-        <GooglePlusShareButton
-          url={shareUrl}
-          className="Demo__some-network__share-button"
-        >
-          <GooglePlusIcon
-            size={32}
-            round
-          />
-        </GooglePlusShareButton>
-      </ReferralStyled.Somenetwork>
-      <ReferralStyled.Somenetwork>
-        <TwitterShareButton
-          url={shareUrl}
-          className="Demo__some-network__share-button"
-        >
-          <TwitterIcon
-            size={32}
-            round
-          />
-        </TwitterShareButton>
-      </ReferralStyled.Somenetwork>
-      <ReferralStyled.Somenetwork>
-        <WhatsappShareButton
-          url={shareUrl}
-          separator=":: "
-          className="Demo__some-network__share-button"
-        >
-          <WhatsappIcon size={32} round />
-        </WhatsappShareButton>
-      </ReferralStyled.Somenetwork>
-      <ReferralStyled.Somenetwork>
-        <EmailShareButton
-          url={shareUrl}
-          body={shareUrl}
-          className="Demo__some-network__share-button"
-        >
-          <EmailIcon
-            size={32}
-            round
-          />
-        </EmailShareButton>
-      </ReferralStyled.Somenetwork>
-      <ReferralStyled.Somenetwork>
-        <ReferralStyled.Copy title="Copy to Clipboard" onClick={() => this.copy(shareUrl)} />
-      </ReferralStyled.Somenetwork>
-    </React.Fragment>
-  )
+  renderSocialIcons = (shareUrl) => {
+    let fullName;
+    if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
+      fullName = this.props.userDetails.nick_name ? this.props.userDetails.nick_name
+        : `${this.props.userDetails.first_name} ${this.props.userDetails.last_name}`;
+    }
+    const title = `Starsona: ${fullName}`;
+    return (
+      <React.Fragment>
+        <ReferralStyled.Somenetwork>
+          <FacebookShareButton
+            url={shareUrl}
+            quote={title}
+            className="Demo__some-network__share-button"
+          >
+            <FacebookIcon
+              size={32}
+              round
+            />
+          </FacebookShareButton>
+        </ReferralStyled.Somenetwork>
+        <ReferralStyled.Somenetwork>
+          <GooglePlusShareButton
+            url={shareUrl}
+            className="Demo__some-network__share-button"
+          >
+            <GooglePlusIcon
+              size={32}
+              round
+            />
+          </GooglePlusShareButton>
+        </ReferralStyled.Somenetwork>
+        <ReferralStyled.Somenetwork>
+          <TwitterShareButton
+            url={shareUrl}
+            title={title}
+            className="Demo__some-network__share-button"
+          >
+            <TwitterIcon
+              size={32}
+              round
+            />
+          </TwitterShareButton>
+        </ReferralStyled.Somenetwork>
+        <ReferralStyled.Somenetwork>
+          <WhatsappShareButton
+            url={shareUrl}
+            title={title}
+            separator=":: "
+            className="Demo__some-network__share-button"
+          >
+            <WhatsappIcon size={32} round />
+          </WhatsappShareButton>
+        </ReferralStyled.Somenetwork>
+        <ReferralStyled.Somenetwork>
+          <EmailShareButton
+            url={shareUrl}
+            subject={title}
+            body={shareUrl}
+            className="Demo__some-network__share-button"
+          >
+            <EmailIcon
+              size={32}
+              round
+            />
+          </EmailShareButton>
+        </ReferralStyled.Somenetwork>
+        <ReferralStyled.Somenetwork>
+          <ReferralStyled.Copy title="Copy to Clipboard" onClick={() => this.copy(shareUrl)} />
+        </ReferralStyled.Somenetwork>
+      </React.Fragment>
+    );
+  }
 
   renderBanner = () => (
     <Fragment>
