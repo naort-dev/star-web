@@ -197,7 +197,7 @@ export default class Starprofile extends React.Component {
     this.setState({ videoActive: true, selectedVideo });
   }
 
-  vf = () => {
+  bookStar = () => {
     const rate = this.props.celebrityDetails.rate ? this.props.celebrityDetails.rate : 0;
     let firstName = '';
     if (this.props.userDetails.nick_name || this.props.userDetails.first_name || this.props.userDetails.last_name) {
@@ -206,8 +206,7 @@ export default class Starprofile extends React.Component {
     }
     return (
       <React.Fragment>
-        <span>${rate}</span>
-        <span className="bookButton"> Book {firstName}</span>
+        <span className="bookButton"> Book {firstName} for ${rate}</span>
       </React.Fragment>
     );
   }
@@ -418,7 +417,7 @@ export default class Starprofile extends React.Component {
                     <div className="socialMediaIcons">
                       <StarProfileStyled.ButtonWrapper>
                         <StarProfileStyled.getStartedButton onClick={() => this.handleRequest()}>
-                          {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.vf() : 'Alert Me'}
+                          {this.props.celebrityDetails.availability && remainingBookings > 0 ? this.bookStar() : 'Alert Me'}
                         </StarProfileStyled.getStartedButton>
                         
                       </StarProfileStyled.ButtonWrapper>
