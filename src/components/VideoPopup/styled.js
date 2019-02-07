@@ -109,23 +109,22 @@ VideoPopupStyled.ShareButton = styled.span`
   vertical-align: top;
   width: 20px;
   height: 20px;
-  background: url( 'assets/images/upload.svg' ) no-repeat left;
+  background: url( 'assets/images/share.svg' ) no-repeat left;
   background-size: contain;
 `;
 
 VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
   padding-top: 10px;
-  background: url( 'assets/images/chat-icon.png') no-repeat left;
-  background-size: contain;
+  background: url( 'assets/images/comment.svg') no-repeat left;
+  background-size: 100%;
   position: relative;
   vertical-align: unset;
-  margin-left: 10px;
-  margin-top: 3px;
+  margin-left: 7px;
   margin-right: 23px;
   &::after {
     content: ${props => (props.chatCount ? `'${props.chatCount}'` : `'0'`)};
     right: -20px;
-    top: 2px;
+    top: 3px;
     position: absolute;
     display: block;
     font-size: 12px;
@@ -298,6 +297,7 @@ VideoPopupStyled.comment = styled.span`
   font-size: 13px;
   padding-left: 10px;
   font-family: 'Avenir-Regular';
+  word-break: break-all;
 `;
 
 VideoPopupStyled.commentDate = styled.span`
