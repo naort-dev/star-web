@@ -133,8 +133,13 @@ class VideoPopup extends React.Component {
   }
 
   selectCommentField = () => {
-    if (this.commentInput) {
-      this.commentInput.focus();
+    if (this.props.isLoggedIn) {
+      if (this.commentInput) {
+        this.commentInput.focus();
+      }
+    } else {
+      this.commentSelected = true;
+      this.props.toggleLogin(true);
     }
   }
 
@@ -274,6 +279,16 @@ class VideoPopup extends React.Component {
     if (props.loginModal) {
       return null;
     }
+    if (this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025) {
+      return (
+        <Popup
+          smallPopup
+          closePopUp={this.toggleShare}
+        >
+          { this.renderSocialIcons(props.selectedVideo) }
+        </Popup>
+      );
+    }
     return (
       <RequestFlowPopup
         noDisableScroll={props.noDisableScroll}
@@ -287,16 +302,6 @@ class VideoPopup extends React.Component {
         {
           this.state.sharePopup &&
             <VideoPopupStyled.Overlay onClick={this.toggleShare} />
-        }
-        {
-          this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025 ?
-            <Popup
-              smallPopup
-              closePopUp={this.toggleShare}
-            >
-              { this.renderSocialIcons(props.selectedVideo) }
-            </Popup>
-          : null
         }
         {
           this.state.snackBarText !== '' &&
