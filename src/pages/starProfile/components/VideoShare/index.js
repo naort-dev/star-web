@@ -41,6 +41,7 @@ class VideoShare extends React.Component {
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentDidUpdate(prevProps) {
@@ -61,6 +62,7 @@ class VideoShare extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
+    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   onVideoEnded = () => {
@@ -71,6 +73,10 @@ class VideoShare extends React.Component {
 
   setSnackBarText = (text) => {
     this.setState({ snackBarText: text });
+  }
+
+  handleWindowResize = () => {
+    this.setState({ sharePopup: false });
   }
 
   findTime = (commentDate) => {
@@ -158,7 +164,7 @@ class VideoShare extends React.Component {
     const { sharePopup } = this.state;
     if (sharePopup) {
       enableBodyScroll(null);
-    } else {
+    } else if (document.body.getBoundingClientRect().width < this.popupShareResolution) {
       disableBodyScroll(null);
     }
     this.setState({ sharePopup: !sharePopup });
@@ -275,84 +281,143 @@ class VideoShare extends React.Component {
       ratio: props.selectedVideo.width / props.selectedVideo.height,
     };
     return (
-      <VideoShareStyled>
-        <Helmet
-          title={props.selectedVideo.videoTitle}
-          meta={[...setMetaTags(
-            props.selectedVideo.videoTitle,
-            props.selectedVideo ? props.selectedVideo.s3_thumbnail_url : '../../assets/images/profile.png',
-            `Get your personalized video from ${props.selectedVideo.full_name}`,
-          ),
-          { property: 'al:ios:app_store_id', content: env('iosAppId') },
-          { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
-          { property: 'al:ios:app_name', content: 'Starsona' },
-          { property: 'al:android:package', content: env('androidAppId') },
-          { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
-          { property: 'al:android:app_name', content: 'Starsona' },
-          ]}
-        />
+      <React.Fragment>
         {
           this.state.sharePopup &&
             <VideoShareStyled.Overlay onClick={this.toggleShare} />
         }
-        {
-          this.state.sharePopup && document.body.getBoundingClientRect().width >= this.popupShareResolution ?
-            <Popup
-              smallPopup
-              closePopUp={this.toggleShare}
-            >
-              { this.renderSocialIcons(props.selectedVideo) }
-            </Popup>
-          : null
-        }
-        {
-          this.state.snackBarText !== '' &&
-            <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
-        }
-        <VideoShareStyled.VideoContentWrapper>
+        <VideoShareStyled>
+          <Helmet
+            title={props.selectedVideo.videoTitle}
+            meta={[...setMetaTags(
+              props.selectedVideo.videoTitle,
+              props.selectedVideo ? props.selectedVideo.s3_thumbnail_url : '../../assets/images/profile.png',
+              `Get your personalized video from ${props.selectedVideo.full_name}`,
+            ),
+            { property: 'al:ios:app_store_id', content: env('iosAppId') },
+            { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
+            { property: 'al:ios:app_name', content: 'Starsona' },
+            { property: 'al:android:package', content: env('androidAppId') },
+            { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
+            { property: 'al:android:app_name', content: 'Starsona' },
+            ]}
+          />
           {
-            !props.videoPopupLoading ?
-              <React.Fragment>
-                <VideoShareStyled.VideoPlayer>
-                  <VideoShareStyled.StarLink mobile>
-                    <Link to={`/${props.selectedVideo.celebrity_id}`}>
-                      <VideoShareStyled.VideoRequestImage
-                        imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
-                      />
-                      <VideoShareStyled.VideoRequestName>
-                        {props.selectedVideo.full_name}
-                        <VideoShareStyled.VideoTitle>
-                          {this.renderRequesttitle()}
-                        </VideoShareStyled.VideoTitle>
-                      </VideoShareStyled.VideoRequestName>
-                    </Link>
-                  </VideoShareStyled.StarLink>
-                  <VideoShareStyled.VideoPlayerWrapper>
-                    <VideoPlayer onVideoEnded={this.onVideoEnded} {...videoPlayerProps} />
-                    {
-                      !props.noSlider &&
-                        <React.Fragment>
-                          <VideoShareStyled.LeftSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex - 1)} />
-                          <VideoShareStyled.RightSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex + 1)} />
-                        </React.Fragment>
-                    }
-                  </VideoShareStyled.VideoPlayerWrapper>
-                  <VideoShareStyled.VideoContent>
-                    <VideoShareStyled.VideoRequester>
-                      <VideoShareStyled.StarLink>
-                        <Link to={`/${props.selectedVideo.celebrity_id}`}>
-                          <VideoShareStyled.VideoRequestImage
-                            imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
+            this.state.sharePopup && document.body.getBoundingClientRect().width >= this.popupShareResolution ?
+              <Popup
+                smallPopup
+                closePopUp={this.toggleShare}
+              >
+                { this.renderSocialIcons(props.selectedVideo) }
+              </Popup>
+            : null
+          }
+          {
+            this.state.snackBarText !== '' &&
+              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+          }
+          <VideoShareStyled.VideoContentWrapper>
+            {
+              !props.videoPopupLoading ?
+                <React.Fragment>
+                  <VideoShareStyled.VideoPlayer>
+                    <VideoShareStyled.StarLink mobile>
+                      <Link to={`/${props.selectedVideo.celebrity_id}`}>
+                        <VideoShareStyled.VideoRequestImage
+                          imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
+                        />
+                        <VideoShareStyled.VideoRequestName>
+                          {props.selectedVideo.full_name}
+                          <VideoShareStyled.VideoTitle>
+                            {this.renderRequesttitle()}
+                          </VideoShareStyled.VideoTitle>
+                        </VideoShareStyled.VideoRequestName>
+                      </Link>
+                    </VideoShareStyled.StarLink>
+                    <VideoShareStyled.VideoPlayerWrapper>
+                      <VideoPlayer onVideoEnded={this.onVideoEnded} {...videoPlayerProps} />
+                      {
+                        !props.noSlider &&
+                          <React.Fragment>
+                            <VideoShareStyled.LeftSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex - 1)} />
+                            <VideoShareStyled.RightSliderArrow onClick={() => props.changeVideo(props.selectedVideoIndex + 1)} />
+                          </React.Fragment>
+                      }
+                    </VideoShareStyled.VideoPlayerWrapper>
+                    <VideoShareStyled.VideoContent>
+                      <VideoShareStyled.VideoRequester>
+                        <VideoShareStyled.StarLink>
+                          <Link to={`/${props.selectedVideo.celebrity_id}`}>
+                            <VideoShareStyled.VideoRequestImage
+                              imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
+                            />
+                            <VideoShareStyled.VideoRequestName>
+                              {props.selectedVideo.full_name}
+                              <VideoShareStyled.VideoTitle>
+                                {this.renderRequesttitle()}
+                              </VideoShareStyled.VideoTitle>
+                            </VideoShareStyled.VideoRequestName>
+                          </Link>
+                        </VideoShareStyled.StarLink>
+                        <VideoShareStyled.UserActions mobile>
+                          <VideoShareStyled.ChatIcon
+                            title="Comment on this video"
+                            onClick={this.selectCommentField}
+                            chatCount={this.props.commentList.count}
                           />
-                          <VideoShareStyled.VideoRequestName>
-                            {props.selectedVideo.full_name}
-                            <VideoShareStyled.VideoTitle>
-                              {this.renderRequesttitle()}
-                            </VideoShareStyled.VideoTitle>
-                          </VideoShareStyled.VideoRequestName>
-                        </Link>
-                      </VideoShareStyled.StarLink>
-                      <VideoShareStyled.UserActions mobile>
+                          <VideoShareStyled.ShareButton
+                            title="Share this video"
+                            onClick={this.toggleShare}
+                          />
+                          <VideoShareStyled.VideoDate>
+                            {this.findTime(props.selectedVideo.created_date)}
+                          </VideoShareStyled.VideoDate>
+                        </VideoShareStyled.UserActions>
+                      </VideoShareStyled.VideoRequester>
+                      {
+                        !this.props.commentList.loading || this.props.commentList.data.length ?
+                          <VideoShareStyled.CommentsList shareEnabled={this.state.sharePopup}>
+                            {
+                              this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
+                                <VideoShareStyled.commentItem>
+                                  <VideoShareStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
+                                    Load more comments
+                                  </VideoShareStyled.loadMoreComments>
+                                  {
+                                    this.props.commentList.data.length && this.props.commentList.loading ?
+                                      <VideoShareStyled.MoreLoader>
+                                        <Loader size={25} />
+                                      </VideoShareStyled.MoreLoader>
+                                    : null
+                                  }
+                                </VideoShareStyled.commentItem>
+                              : null
+                            }
+                            {
+                              props.commentList.data.map((item, index) => (
+                                <VideoShareStyled.commentItem key={index}>
+                                  <VideoShareStyled.commenterName>
+                                    {item.user && item.user.get_short_name}
+                                    <VideoShareStyled.comment>
+                                      {item.comments}
+                                    </VideoShareStyled.comment>
+                                  </VideoShareStyled.commenterName>
+                                </VideoShareStyled.commentItem>
+                              ))
+                            }
+                            {
+                              !this.props.commentList.loading && !this.props.commentList.data.length ?
+                                <VideoShareStyled.commentItem>No comments yet</VideoShareStyled.commentItem>
+                              : null
+                            }
+                            <li ref={(node) => this.scrollBarRef = node} />
+                          </VideoShareStyled.CommentsList>
+                        :
+                          <VideoShareStyled.loaderWrapper>
+                            <Loader />
+                          </VideoShareStyled.loaderWrapper>
+                      }
+                      <VideoShareStyled.UserActions>
                         <VideoShareStyled.ChatIcon
                           title="Comment on this video"
                           onClick={this.selectCommentField}
@@ -366,101 +431,44 @@ class VideoShare extends React.Component {
                           {this.findTime(props.selectedVideo.created_date)}
                         </VideoShareStyled.VideoDate>
                       </VideoShareStyled.UserActions>
-                    </VideoShareStyled.VideoRequester>
-                    {
-                      !this.props.commentList.loading || this.props.commentList.data.length ?
-                        <VideoShareStyled.CommentsList shareEnabled={this.state.sharePopup}>
+                      <VideoShareStyled.PopupActions>
+                        <VideoShareStyled.CommentBoxWrapper>
                           {
-                            this.props.commentList.data.length < this.props.commentList.count && this.props.commentList.data.length ?
-                              <VideoShareStyled.commentItem>
-                                <VideoShareStyled.loadMoreComments isLoading={this.props.commentList.loading} onClick={this.loadMoreComments}>
-                                  Load more comments
-                                </VideoShareStyled.loadMoreComments>
-                                {
-                                  this.props.commentList.data.length && this.props.commentList.loading ?
-                                    <VideoShareStyled.MoreLoader>
-                                      <Loader size={25} />
-                                    </VideoShareStyled.MoreLoader>
-                                  : null
-                                }
-                              </VideoShareStyled.commentItem>
-                            : null
-                          }
-                          {
-                            props.commentList.data.map((item, index) => (
-                              <VideoShareStyled.commentItem key={index}>
-                                <VideoShareStyled.commenterName>
-                                  {item.user && item.user.get_short_name}
-                                  <VideoShareStyled.comment>
-                                    {item.comments}
-                                  </VideoShareStyled.comment>
-                                </VideoShareStyled.commenterName>
-                              </VideoShareStyled.commentItem>
-                            ))
-                          }
-                          {
-                            !this.props.commentList.loading && !this.props.commentList.data.length ?
-                              <VideoShareStyled.commentItem>No comments yet</VideoShareStyled.commentItem>
-                            : null
-                          }
-                          <li ref={(node) => this.scrollBarRef = node} />
-                        </VideoShareStyled.CommentsList>
-                      :
-                        <VideoShareStyled.loaderWrapper>
-                          <Loader />
-                        </VideoShareStyled.loaderWrapper>
-                    }
-                    <VideoShareStyled.UserActions>
-                      <VideoShareStyled.ChatIcon
-                        title="Comment on this video"
-                        onClick={this.selectCommentField}
-                        chatCount={this.props.commentList.count}
-                      />
-                      <VideoShareStyled.ShareButton
-                        title="Share this video"
-                        onClick={this.toggleShare}
-                      />
-                      <VideoShareStyled.VideoDate>
-                        {this.findTime(props.selectedVideo.created_date)}
-                      </VideoShareStyled.VideoDate>
-                    </VideoShareStyled.UserActions>
-                    <VideoShareStyled.PopupActions>
-                      <VideoShareStyled.CommentBoxWrapper>
-                        {
-                          !props.isLoggedIn ?
-                            <VideoShareStyled.LoginReminder
-                              onClick={this.commentAdder}
-                            >
-                              <span>Log in</span> to comment
-                            </VideoShareStyled.LoginReminder>
-                          :
-                            <React.Fragment>
-                              <VideoShareStyled.CommentSendIcon
+                            !props.isLoggedIn ?
+                              <VideoShareStyled.LoginReminder
                                 onClick={this.commentAdder}
-                              />
-                              <VideoShareStyled.CommentBox
-                                innerRef={(node) => { this.commentInput = node; }}
-                                placeholder="Add a comment..."
-                                value={this.state.commentText}
-                                onKeyUp={event => this.handleCommentEnter(event)}
-                                onChange={event => this.handleCommentAdd(event)}
-                              />
-                            </React.Fragment>
-                        }
-                      </VideoShareStyled.CommentBoxWrapper>
-                    </VideoShareStyled.PopupActions>
-                  </VideoShareStyled.VideoContent>
-                  <VideoShareStyled.SocialMediaWrapper mobile visible={this.state.sharePopup}>
-                    <VideoShareStyled.Drawer onClick={this.toggleShare} />
-                    <VideoShareStyled.SocialHeading>Share</VideoShareStyled.SocialHeading>
-                    {this.renderSocialIcons(props.selectedVideo)}
-                  </VideoShareStyled.SocialMediaWrapper>
-                </VideoShareStyled.VideoPlayer>
-              </React.Fragment>
-            : <Loader />
-          }
-        </VideoShareStyled.VideoContentWrapper>
-      </VideoShareStyled>
+                              >
+                                <span>Log in</span> to comment
+                              </VideoShareStyled.LoginReminder>
+                            :
+                              <React.Fragment>
+                                <VideoShareStyled.CommentSendIcon
+                                  onClick={this.commentAdder}
+                                />
+                                <VideoShareStyled.CommentBox
+                                  innerRef={(node) => { this.commentInput = node; }}
+                                  placeholder="Add a comment..."
+                                  value={this.state.commentText}
+                                  onKeyUp={event => this.handleCommentEnter(event)}
+                                  onChange={event => this.handleCommentAdd(event)}
+                                />
+                              </React.Fragment>
+                          }
+                        </VideoShareStyled.CommentBoxWrapper>
+                      </VideoShareStyled.PopupActions>
+                    </VideoShareStyled.VideoContent>
+                  </VideoShareStyled.VideoPlayer>
+                </React.Fragment>
+              : <Loader />
+            }
+          </VideoShareStyled.VideoContentWrapper>
+        </VideoShareStyled>
+        <VideoShareStyled.SocialMediaWrapper mobile visible={this.state.sharePopup}>
+          <VideoShareStyled.Drawer onClick={this.toggleShare} />
+          <VideoShareStyled.SocialHeading>Share</VideoShareStyled.SocialHeading>
+          {this.renderSocialIcons(props.selectedVideo)}
+        </VideoShareStyled.SocialMediaWrapper>
+      </React.Fragment>
     );
   }
 }

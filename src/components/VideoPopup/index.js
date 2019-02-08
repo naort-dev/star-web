@@ -40,6 +40,7 @@ class VideoPopup extends React.Component {
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -74,6 +75,7 @@ class VideoPopup extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
+    window.removeEventListener('resize', this.handleWindowResize);
   }
   onVideoEnded = () => {
     if (this.props.onVideoEnded) {
@@ -83,6 +85,10 @@ class VideoPopup extends React.Component {
 
   setSnackBarText = (text) => {
     this.setState({ snackBarText: text });
+  }
+
+  handleWindowResize = () => {
+    this.setState({ sharePopup: false });
   }
 
   findTime = (commentDate) => {
@@ -126,15 +132,20 @@ class VideoPopup extends React.Component {
     const { sharePopup } = this.state;
     if (sharePopup) {
       enableBodyScroll(null);
-    } else {
+    } else if (document.body.getBoundingClientRect().width < this.popupShareResolution) {
       disableBodyScroll(null);
     }
     this.setState({ sharePopup: !sharePopup });
   }
 
   selectCommentField = () => {
-    if (this.commentInput) {
-      this.commentInput.focus();
+    if (this.props.isLoggedIn) {
+      if (this.commentInput) {
+        this.commentInput.focus();
+      }
+    } else {
+      this.commentSelected = true;
+      this.props.toggleLogin(true);
     }
   }
 
@@ -274,6 +285,16 @@ class VideoPopup extends React.Component {
     if (props.loginModal) {
       return null;
     }
+    if (this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025) {
+      return (
+        <Popup
+          smallPopup
+          closePopUp={this.toggleShare}
+        >
+          { this.renderSocialIcons(props.selectedVideo) }
+        </Popup>
+      );
+    }
     return (
       <RequestFlowPopup
         noDisableScroll={props.noDisableScroll}
@@ -287,16 +308,6 @@ class VideoPopup extends React.Component {
         {
           this.state.sharePopup &&
             <VideoPopupStyled.Overlay onClick={this.toggleShare} />
-        }
-        {
-          this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025 ?
-            <Popup
-              smallPopup
-              closePopUp={this.toggleShare}
-            >
-              { this.renderSocialIcons(props.selectedVideo) }
-            </Popup>
-          : null
         }
         {
           this.state.snackBarText !== '' &&
