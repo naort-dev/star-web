@@ -331,14 +331,14 @@ class VideoPopup extends React.Component {
                         </VideoPopupStyled.VideoRequestName>
                       </VideoPopupStyled.StarLink>
                       <VideoPopupStyled.UserActions>
-                        <VideoPopupStyled.ShareButton
-                          title="Share this video"
-                          onClick={this.toggleShare}
-                        />
                         <VideoPopupStyled.ChatIcon
                           title="Comment on this video"
                           onClick={this.selectCommentField}
-                          chatCount={this.props.commentList.count}
+                        />
+                        <VideoPopupStyled.ChatCount>{this.props.commentList.count}</VideoPopupStyled.ChatCount>
+                        <VideoPopupStyled.ShareButton
+                          title="Share this video"
+                          onClick={this.toggleShare}
                         />
                       </VideoPopupStyled.UserActions>
                     </VideoPopupStyled.VideoRequester>
