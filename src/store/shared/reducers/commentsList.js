@@ -5,7 +5,7 @@ const initalState = {
   loading: false,
   offset: -1,
   count: 0,
-  limit: 10,
+  limit: 20,
   error: null,
 };
 

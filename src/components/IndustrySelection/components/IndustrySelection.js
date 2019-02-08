@@ -164,7 +164,7 @@ class IndustrySelectionComponent extends React.Component {
               <IndustryStyled.HeaderText>
                 Select your industry
               </IndustryStyled.HeaderText>
-              <IndustryStyled.CompleteButton onClick={() => onSelectionComplete(selectedProfessions)}>Done</IndustryStyled.CompleteButton>
+              <IndustryStyled.CompleteButton onClick={() => onSelectionComplete(selectedProfessions)}>Save</IndustryStyled.CompleteButton>
             </IndustryStyled.HeaderTextWrapper>
             <IndustryStyled.Description>
               Choose the groups you're associated with

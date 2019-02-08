@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import SnackBarStyled from './styled';
 
 export default class SnackBar extends React.Component {
@@ -12,13 +13,20 @@ export default class SnackBar extends React.Component {
     }, 1000);
   }
 
-  render() {
+  renderSnackBar = () => {
     return (
       <SnackBarStyled>
         <SnackBarStyled.Content>
           { this.props.text }
         </SnackBarStyled.Content>
       </SnackBarStyled>
+    );
+  }
+
+  render() {
+    return ReactDOM.createPortal(
+      this.renderSnackBar(),
+      document.getElementById('modal-root'),
     );
   }
 }

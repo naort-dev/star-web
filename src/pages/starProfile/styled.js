@@ -71,7 +71,6 @@ StarProfileStyled.sideSection = styled.section`
   }
   @media(min-width: 1920px) {
     top: 72px;
-    padding-top: 72px;
   }
 `;
 
@@ -150,13 +149,6 @@ StarProfileStyled.profileWrapper = styled.div`
       p {
         font-size: 23px;
         line-height: 30px;
-        &.groupDescription {
-          height: 115px;
-          overflow: hidden;
-        }
-        &.groupFullDescription {
-          height: auto;
-        }
         &.readMore {
           margin-top:  10px;
           color: #ccc;
@@ -313,8 +305,25 @@ StarProfileStyled.profileWrapper = styled.div`
     }
   }
 `;
+
+StarProfileStyled.DescriptionWrapper = styled.p`
+  font-size: 23px;
+  line-height: 30px;
+  max-height: ${props => (props.readMore ? '115px' : 'auto')};
+  overflow: ${props => (props.readMore ? 'hidden' : 'initial')};
+  @media(min-width: 1025px) and (max-width: 1920px) {
+    font-size: 20px;
+  }
+  @media(max-width: 1024px) {
+    font-size: 20px;
+  }
+  @media(max-width:767px) {
+    font-size: 16px;
+  }
+`;
+
 StarProfileStyled.ButtonWrapper = styled.div`
-  margin-top: 3%;
+  margin-top: 15px;
   @media(max-width: 767px) {
     margin-top: 0;
   }
@@ -352,7 +361,7 @@ StarProfileStyled.getStartedButton = styled.button`
   }
   .bookButton {
     font-family: 'Avenir-Regular';
-    word-break: break-all;
+    word-break: break-word;
   }
 `;
 StarProfileStyled.followingButton = styled.div`
@@ -593,7 +602,7 @@ StarProfileStyled.shareButton = styled.span`
   margin-left: 10px;
   width: 23px;
   height: 23px;
-  background: url(assets/images/upload.svg) left center/contain no-repeat;
+  background: url(assets/images/share.svg) left center/contain no-repeat;
 `;
 
 StarProfileStyled.profileImage = profilePicture;

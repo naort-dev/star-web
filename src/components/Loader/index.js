@@ -9,8 +9,8 @@ const Loader = props => (
         id="loader-1"
         x="0px"
         y="0px"
-        width="40px"
-        height="40px"
+        width={props.size ? `${props.size}px` : '40px'}
+        height={props.size ? `${props.size}px` : '40px'}
         viewBox="0 0 50 50"
         style={{ enableBackground: 'new 0 0 50 50' }}
       >

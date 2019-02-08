@@ -129,7 +129,7 @@ class ReactionView extends React.Component {
 
   loadMoreComments = () => {
     if (this.props.commentList.data.length < this.props.commentList.count) {
-      const offset = this.props.commentList.data[this.props.commentList.data.length - 1].id;
+      const offset = this.props.commentList.data[0].id;
       this.props.fetchCommentsList(this.videoId, offset);
     }
   }
@@ -324,23 +324,25 @@ class ReactionView extends React.Component {
             </ReactionStyled.RowItem>
           : null
         }
-        <ReactionStyled.PopupActions>
-          <ReactionStyled.CommentBoxWrapper>
-            <ReactionStyled.CommentSendIcon
-              onClick={() => this.commentAdder()}
-            />
-            <ReactionStyled.CommentBox
-              innerRef={(node) => { this.commentInput = node; }}
-              placeholder="Enter your comment"
-              value={this.state.commentText}
-              onKeyUp={event => this.handleCommentEnter(event)}
-              onChange={event => this.handleCommentAdd(event)}
-            />
-          </ReactionStyled.CommentBoxWrapper>
-        </ReactionStyled.PopupActions>
         {
           !commentList.loading || commentList.data.length ?
             <ReactionStyled.CommentsList>
+              {
+                commentList.data.length < commentList.count && commentList.data.length ?
+                  <ReactionStyled.commentItem>
+                    <ReactionStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
+                      Load more comments
+                    </ReactionStyled.loadMoreComments>
+                  </ReactionStyled.commentItem>
+                : null
+              }
+              {
+                commentList.data.length && commentList.loading ?
+                  <ReactionStyled.loaderWrapper>
+                    <Loader />
+                  </ReactionStyled.loaderWrapper>
+                : null
+              }
               {
                 commentList.data.map(item => (
                   <ReactionStyled.commentItem key={item.id}>
@@ -360,22 +362,6 @@ class ReactionView extends React.Component {
                 ))
               }
               {
-                commentList.data.length < commentList.count && commentList.data.length ?
-                  <ReactionStyled.commentItem>
-                    <ReactionStyled.loadMoreComments onClick={() => this.loadMoreComments()}>
-                      Load more comments
-                    </ReactionStyled.loadMoreComments>
-                  </ReactionStyled.commentItem>
-                : null
-              }
-              {
-                commentList.data.length && commentList.loading ?
-                  <ReactionStyled.loaderWrapper>
-                    <Loader />
-                  </ReactionStyled.loaderWrapper>
-                : null
-              }
-              {
                 !commentList.loading && !commentList.data.length ?
                   <ReactionStyled.commentItem>No comments yet</ReactionStyled.commentItem>
                 : null
@@ -386,6 +372,20 @@ class ReactionView extends React.Component {
               <Loader />
             </ReactionStyled.loaderWrapper>
         }
+        <ReactionStyled.PopupActions>
+          <ReactionStyled.CommentBoxWrapper>
+            <ReactionStyled.CommentSendIcon
+              onClick={() => this.commentAdder()}
+            />
+            <ReactionStyled.CommentBox
+              innerRef={(node) => { this.commentInput = node; }}
+              placeholder="Enter your comment"
+              value={this.state.commentText}
+              onKeyUp={event => this.handleCommentEnter(event)}
+              onChange={event => this.handleCommentAdd(event)}
+            />
+          </ReactionStyled.CommentBoxWrapper>
+        </ReactionStyled.PopupActions>
       </ReactionStyled>
     );
   }

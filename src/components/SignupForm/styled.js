@@ -519,5 +519,4 @@ LoginContainer.SignupLine = styled.div`
   
 `;
 
-
 export { LoginContainer, HeaderSection, FooterSection };

@@ -9,6 +9,7 @@ import StarDetailsEntry from './modules/starDetailsEntry';
 import ProfileUpload from './modules/profileUpload';
 import CoverUpload from './modules/coverUpload';
 import StarNotifications from './modules/starNotifications';
+import AddRepresentative from './modules/addRepresentative';
 /*             */
 import { imageSizes } from '../../constants/imageSizes';
 import QAVideoRecorder from '../QAVideoRecorder';
@@ -26,8 +27,6 @@ import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { updateUserDetails, resetUserDetails } from '../../store/shared/actions/saveSettings';
 import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
 import { updateNotification } from '../../store/shared/actions/updateNotification';
-import { changePassword, resetChangePassord } from '../../store/shared/actions/changePassword';
-import { logOutUser } from '../../store/shared/actions/login';
 
 class starRegistrationComponent extends React.Component {
   state = {
@@ -43,6 +42,7 @@ class starRegistrationComponent extends React.Component {
       fileName: null,
       image: null,
     },
+    verificationDisable: false,
   }
 
   componentWillMount() {
@@ -57,7 +57,7 @@ class starRegistrationComponent extends React.Component {
         image,
       },
     });
-    this.props.changeStep(this.props.currentStep + 1);
+    this.goToStep('next');
   }
 
   setCoverImage = (imagetype, fileName, image) => {
@@ -92,7 +92,7 @@ class starRegistrationComponent extends React.Component {
               .then((success) => {
                 this.setState({ loader: false })
                 if (success) {
-                  this.props.changeStep(this.props.currentStep + 1);
+                  this.goToStep('next');
                 }
               });
           });
@@ -113,7 +113,9 @@ class starRegistrationComponent extends React.Component {
     if (followedGroups.length) {
       this.props.celebrityFollowStatus(followedGroups);
     }
-    this.props.closeSignupFlow();
+    if (this.props.closeSignupFlow) {
+      this.props.closeSignupFlow();
+    }
   }
 
   imageUpload = (secondaryImages, skip) => {
@@ -137,14 +139,18 @@ class starRegistrationComponent extends React.Component {
       .then(() => {
         this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
       });
-    this.props.changeStep(this.props.currentStep + 1);
+      this.goToStep('next');
+  }
+
+  submitOTPForm = () => {
+    this.goToStep('next');
   }
 
   submitNotifications = (notifications) => {
     const { notification_settings: currentNotifications } = this.props.userDetails.settings_userDetails;
     let newNotifications = {
       ...currentNotifications,
-    };    
+    };
     newNotifications = {
       ...newNotifications,
       email_notification: notifications.email_notification,
@@ -157,9 +163,37 @@ class starRegistrationComponent extends React.Component {
     return this.props.updateNotification(newNotifications)
       .then((resp) => {
         if (resp.status == 200) {
-          this.props.changeStep(this.props.currentStep + 1);
+          this.goToStep('next');
         }
       });
+  }
+
+  noRecordCallback = () => {
+    const { verificationDisable } = this.state;
+    const celebrityProfileData = {
+      ...this.state.celebrityDetails,
+      profile_video: 'sample.mp4', // random file name
+    };
+    celebritySignupProfile(celebrityProfileData);
+    if (!verificationDisable) {
+      this.goToStep('next');
+      this.setState({ verificationDisable: true });
+    }
+  }
+
+  goToStep = (type) => {
+    const { verificationDisable } = this.state;
+    if (type === 'prev') {
+      if (verificationDisable && this.props.currentStep === 8) {
+        this.props.changeStep(this.props.currentStep - 2);
+      } else {
+        this.props.changeStep(this.props.currentStep - 1);
+      }
+    } else if (verificationDisable && this.props.currentStep === 6) {
+      this.props.changeStep(this.props.currentStep + 2);
+    } else {
+      this.props.changeStep(this.props.currentStep + 1);
+    }
   }
 
   submitAccountDetails = (celebrityDetails, userDetails, socialLinks, groupIds) => {
@@ -176,15 +210,18 @@ class starRegistrationComponent extends React.Component {
     this.setState({ followedGroups: groupIds });
     this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
     this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
-    this.props.changeStep(this.props.currentStep + 1);
+    this.goToStep('next');
   }
 
-  render() { 
+  render() {
+    const { verificationDisable } = this.state;
     return (
       <GroupStyled>
         {
           this.props.currentStep >= 3 &&
-            <GroupStyled.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+            <GroupStyled.BackButton
+              onClick={() => this.goToStep('prev')}
+            />
         }
         {
           this.state.loader ?
@@ -217,12 +254,19 @@ class starRegistrationComponent extends React.Component {
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
                 <StarNotifications
+                  onComplete={this.submitOTPForm}
+                />
+              </GroupStyled.StepWrapper>
+              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
+                <AddRepresentative
                   onComplete={this.submitNotifications}
+                  skipStep={this.submitOTPForm}
                 />
               </GroupStyled.StepWrapper>
               {
-                this.props.currentStep === 6 &&
+                this.props.currentStep === 7 && !verificationDisable &&
                   <GroupStyled.VideoRecorderWrapper>
+                    <GroupStyled.VerificationHead>Video verification</GroupStyled.VerificationHead>
                     <QAVideoRecorder
                       {...this.props}
                       src={this.state.videoUrl}
@@ -231,11 +275,12 @@ class starRegistrationComponent extends React.Component {
                       recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
                       duration={recorder.signUpTimeOut}
                       onSubmit={this.getVideo}
+                      noRecordCallback={this.noRecordCallback}
                     />
                   </GroupStyled.VideoRecorderWrapper>
               }
               {
-                this.props.currentStep === 7 && (
+                this.props.currentStep === 8 && (
                   <GroupStyled.DetailsWrapper>
                     <GroupStyled.HeadingWrapper>
                       <GroupStyled.SubHeading>
@@ -270,7 +315,6 @@ const mapStateToProps = state => ({
   videoUploader: state.videoUploader,
   settingsSave: state.saveSettings,
   stripeRegistration: state.stripeRegistration,
-  changePasswordData: state.changePassword,
   profileUploadStatus: state.photoUpload.profileUploadStatus,
 });
 
@@ -292,9 +336,9 @@ const mapDispatchToProps = dispatch => ({
   updateUserDetails: (id, obj) => dispatch(updateUserDetails(id, obj)),
   updateNotification: obj => dispatch(updateNotification(obj)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
-  changePassword: data => dispatch(changePassword(data)),
-  logOut: () => dispatch(logOutUser()),
-  resetChangePassord: () => dispatch(resetChangePassord()),
 });
 
-export const StarRegistration = connect(mapStateToProps, mapDispatchToProps)(starRegistrationComponent);
+export const StarRegistration = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(starRegistrationComponent);

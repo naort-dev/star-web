@@ -1,11 +1,12 @@
 import React from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import { connect } from 'react-redux';
 import validator from 'validator';
 import axios from 'axios';
-import { LoginContainer, HeaderSection, FooterSection } from './styled';
+import ActionLoader from '../ActionLoader';
+import { LoginContainer, FooterSection } from './styled';
 import { ROLES } from '../../constants/usertype';
 
-export default class SignUp extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,6 +18,7 @@ export default class SignUp extends React.Component {
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
       role: ROLES[props.signupRole],
+      loading: false,
       socialMedia: {
         username: '',
         first_name: '',
@@ -101,6 +103,9 @@ export default class SignUp extends React.Component {
           );
         }
       }
+    }
+    if (this.props.loading !== nextProps.loading) {
+      this.setState({ loading: nextProps.loading });
     }
   }
 
@@ -272,10 +277,26 @@ export default class SignUp extends React.Component {
     const url = `${env('instaAuthUrl')}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
     window.open(url, '_blank');
   }
+
+  getInstaAccessToken = () => {
+    if (localStorage.getItem("InstaAccessToken")) {
+      const instaUrl =
+        env("instaUrl") + localStorage.getItem("InstaAccessToken");
+      const that = this;
+      axios
+        .get(instaUrl)
+        .then(function(response) {
+          that.onSocialMediaLogin(response.data.data, 4);
+          localStorage.removeItem("InstaAccessToken");
+        })
+        .catch(function(error) {});
+    }
+  };
+
   OnFBlogin = () => {
     const that = this;
     window.FB.login(
-      response => {
+      (response) => {
         if (response.authResponse) {
           window.FB.api(
             "/me",
@@ -291,21 +312,6 @@ export default class SignUp extends React.Component {
       },
       { scope: "email", return_scopes: true }
     );
-  };
-
-  getInstaAccessToken = () => {
-    if (localStorage.getItem("InstaAccessToken")) {
-      const instaUrl =
-        env("instaUrl") + localStorage.getItem("InstaAccessToken");
-      const that = this;
-      axios
-        .get(instaUrl)
-        .then(function(response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-          localStorage.removeItem("InstaAccessToken");
-        })
-        .catch(function(error) {});
-    }
   };
 
   saveFormEntries = (event, type) => {
@@ -387,6 +393,10 @@ export default class SignUp extends React.Component {
   render() {
     return (
       <LoginContainer.SocialMediaSignup>
+        {
+          this.state.loading &&
+            <ActionLoader />
+        }
         {
           <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         }
@@ -553,3 +563,9 @@ export default class SignUp extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  loading: state.session.loading,
+});
+
+export default connect(mapStateToProps)(SignUp);

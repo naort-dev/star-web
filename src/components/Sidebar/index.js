@@ -151,7 +151,7 @@ class Sidebar extends React.Component {
     );
   }
 
-  render() {
+  render() {    
     return (
       <SidebarStyled menuActive={this.props.menuActive}>
         {
@@ -236,15 +236,18 @@ class Sidebar extends React.Component {
                       }
                     </SidebarStyled.ListWrapper>
                   </SidebarStyled.Filter>
-                  <SidebarStyled.Filter>
-                    <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
-                    <SidebarStyled.Separator />
-                    <SidebarStyled.ListWrapper>
-                      {
-                        this.renderGroupCategoryList()
-                      }
-                    </SidebarStyled.ListWrapper>
-                  </SidebarStyled.Filter>
+                  {
+                    this.props.groupCategory.length > 0 &&
+                    <SidebarStyled.Filter>
+                      <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
+                      <SidebarStyled.Separator />
+                      <SidebarStyled.ListWrapper>
+                        {
+                          this.renderGroupCategoryList()
+                        }
+                      </SidebarStyled.ListWrapper>
+                    </SidebarStyled.Filter>
+                  }
                 </SidebarStyled.FilterWrapper>
               </section>
               <Footer isLoggedIn={this.props.isLoggedIn}/>
