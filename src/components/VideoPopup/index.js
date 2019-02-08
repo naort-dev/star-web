@@ -335,7 +335,11 @@ class VideoPopup extends React.Component {
                           title="Comment on this video"
                           onClick={this.selectCommentField}
                         />
-                        <VideoPopupStyled.ChatCount>{this.props.commentList.count}</VideoPopupStyled.ChatCount>
+                        {
+                          this.props.commentList.count > 0 ?
+                            <VideoPopupStyled.ChatCount>{this.props.commentList.count}</VideoPopupStyled.ChatCount>
+                          : null
+                        }
                         <VideoPopupStyled.ShareButton
                           title="Share this video"
                           onClick={this.toggleShare}
