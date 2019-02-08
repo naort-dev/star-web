@@ -32,10 +32,10 @@ class VideoPopup extends React.Component {
     super(props);
     this.state = {
       sharePopup: false,
-      pendingComment: '',
       commentText: '',
       snackBarText: '',
     };
+    this.commentSelected = false;
   }
 
   componentWillMount() {
@@ -49,9 +49,6 @@ class VideoPopup extends React.Component {
     if (this.props.selectedVideo.video_id !== nextProps.selectedVideo.video_id && nextProps.selectedVideo.video_id) {
       this.props.resetCommentsList();
       this.props.fetchCommentsList(nextProps.selectedVideo.video_id, 0, true);
-      if (this.state.pendingComment) {
-        this.addVideoComment(nextProps.selectedVideo.video_id, this.state.pendingComment, nextProps.isLoggedIn);
-      }
       this.setState({
         commentText: '',
         sharePopup: false,
@@ -63,6 +60,14 @@ class VideoPopup extends React.Component {
     if (this.props.commentList.count - prevProps.commentList.count === 1 && this.scrollBarRef) {
       if (this.commentInput) {
         this.commentInput.focus();
+      }
+    }
+    if (prevProps.isLoggedIn !== this.props.isLoggedIn && this.commentSelected) {
+      this.commentSelected = false;
+      if (this.commentInput) {
+        setTimeout(() => {
+          this.commentInput.focus();
+        }, 0);
       }
     }
   }
@@ -109,18 +114,12 @@ class VideoPopup extends React.Component {
     }
   }
 
-  addVideoComment = (videoId, comment, isLoggedIn) => {
-    if (isLoggedIn) {
-      this.setState({ commentText: '' });
-      addVideoComment(videoId, comment)
-        .then(() => {
-          this.setState({ pendingComment: '' });
-          this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
-        });
-    } else {
-      this.setState({ pendingComment: comment });
-      this.props.toggleLogin(true);
-    }
+  addVideoComment = (videoId, comment) => {
+    this.setState({ commentText: '' });
+    addVideoComment(videoId, comment)
+      .then(() => {
+        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+      });
   }
 
   toggleShare = () => {
@@ -144,8 +143,14 @@ class VideoPopup extends React.Component {
   }
 
   commentAdder = () => {
-    if (this.state.commentText !== '') {
-      this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText, this.props.isLoggedIn);
+    const { commentText } = this.state;
+    if (this.props.isLoggedIn) {
+      if (commentText.trim('')) {
+        this.addVideoComment(this.props.selectedVideo.video_id, this.state.commentText);
+      }
+    } else {
+      this.commentSelected = true;
+      this.props.toggleLogin(true);
     }
   }
 
@@ -280,10 +285,6 @@ class VideoPopup extends React.Component {
         largePopup
       >
         {
-          this.state.snackBarText !== '' &&
-            <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
-        }
-        {
           this.state.sharePopup &&
             <VideoPopupStyled.Overlay onClick={this.toggleShare} />
         }
@@ -296,6 +297,10 @@ class VideoPopup extends React.Component {
               { this.renderSocialIcons(props.selectedVideo) }
             </Popup>
           : null
+        }
+        {
+          this.state.snackBarText !== '' &&
+            <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
         }
         <VideoPopupStyled.VideoContentWrapper>
           {
@@ -326,12 +331,14 @@ class VideoPopup extends React.Component {
                         </VideoPopupStyled.VideoRequestName>
                       </VideoPopupStyled.StarLink>
                       <VideoPopupStyled.UserActions>
-                        <VideoPopupStyled.ShareButton
-                          onClick={this.toggleShare}
-                        />
                         <VideoPopupStyled.ChatIcon
+                          title="Comment on this video"
                           onClick={this.selectCommentField}
-                          chatCount={this.props.commentList.count}
+                        />
+                        <VideoPopupStyled.ChatCount>{this.props.commentList.count}</VideoPopupStyled.ChatCount>
+                        <VideoPopupStyled.ShareButton
+                          title="Share this video"
+                          onClick={this.toggleShare}
                         />
                       </VideoPopupStyled.UserActions>
                     </VideoPopupStyled.VideoRequester>
@@ -390,16 +397,27 @@ class VideoPopup extends React.Component {
                     }
                     <VideoPopupStyled.PopupActions>
                       <VideoPopupStyled.CommentBoxWrapper>
-                        <VideoPopupStyled.CommentSendIcon
-                          onClick={this.commentAdder}
-                        />
-                        <VideoPopupStyled.CommentBox
-                          innerRef={(node) => { this.commentInput = node }}
-                          placeholder="Enter your comment"
-                          value={this.state.commentText}
-                          onKeyUp={event => this.handleCommentEnter(event)}
-                          onChange={event => this.handleCommentAdd(event)}
-                        />
+                        {
+                          !props.isLoggedIn ?
+                            <VideoPopupStyled.LoginReminder
+                              onClick={this.commentAdder}
+                            >
+                              <span>Log in</span> to comment
+                            </VideoPopupStyled.LoginReminder>
+                          :
+                            <React.Fragment>
+                              <VideoPopupStyled.CommentSendIcon
+                                onClick={this.commentAdder}
+                              />
+                              <VideoPopupStyled.CommentBox
+                                innerRef={(node) => { this.commentInput = node }}
+                                placeholder="Add a comment..."
+                                value={this.state.commentText}
+                                onKeyUp={event => this.handleCommentEnter(event)}
+                                onChange={event => this.handleCommentAdd(event)}
+                              />
+                            </React.Fragment>
+                        }
                       </VideoPopupStyled.CommentBoxWrapper>
                     </VideoPopupStyled.PopupActions>
                   </VideoPopupStyled.VideoContent>
