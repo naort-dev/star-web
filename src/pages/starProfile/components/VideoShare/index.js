@@ -354,10 +354,12 @@ class VideoShare extends React.Component {
                       </VideoShareStyled.StarLink>
                       <VideoShareStyled.UserActions mobile>
                         <VideoShareStyled.ChatIcon
+                          title="Comment on this video"
                           onClick={this.selectCommentField}
                           chatCount={this.props.commentList.count}
                         />
                         <VideoShareStyled.ShareButton
+                          title="Share this video"
                           onClick={this.toggleShare}
                         />
                         <VideoShareStyled.VideoDate>
@@ -410,10 +412,12 @@ class VideoShare extends React.Component {
                     }
                     <VideoShareStyled.UserActions>
                       <VideoShareStyled.ChatIcon
+                        title="Comment on this video"
                         onClick={this.selectCommentField}
                         chatCount={this.props.commentList.count}
                       />
                       <VideoShareStyled.ShareButton
+                        title="Share this video"
                         onClick={this.toggleShare}
                       />
                       <VideoShareStyled.VideoDate>

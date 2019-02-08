@@ -81,8 +81,19 @@ VideoPopupStyled.CommentBoxWrapper = styled.div`
   padding-right: 35px;
   padding-left: 10px;
   height: 40px;
+  display: flex;
+  align-items: center;
   @media(min-width: 1025px) {
     margin-top: 6px;
+  }
+`;
+
+VideoPopupStyled.LoginReminder = styled.span`
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  span {
+    color: #006eae;
   }
 `;
 
@@ -121,6 +132,7 @@ VideoPopupStyled.ShareButton = styled.span`
   vertical-align: top;
   width: 20px;
   height: 20px;
+  margin-left: 7px;
   background: url( 'assets/images/share.svg' ) no-repeat left;
   background-size: contain;
 `;
@@ -129,20 +141,15 @@ VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
   padding-top: 10px;
   background: url( 'assets/images/comment.svg') no-repeat left;
   background-size: 100%;
-  position: relative;
   vertical-align: unset;
+  margin-left: 0;
+`;
+
+VideoPopupStyled.ChatCount = styled.span`
   margin-left: 7px;
-  margin-right: 23px;
-  &::after {
-    content: ${props => (props.chatCount ? `'${props.chatCount}'` : `'0'`)};
-    right: -20px;
-    top: 3px;
-    position: absolute;
-    display: block;
-    font-size: 12px;
-    text-align: center;
-    font-family: Avenir-Light;
-  }
+  vertical-align: top;
+  padding-top: 3px;
+  display: inline-block;
 `;
 
 VideoPopupStyled.StarLink = styled(Link)`
@@ -250,6 +257,7 @@ VideoPopupStyled.Somenetwork = styled.div`
   display: block;
   padding: 8px 10px;
   display: flex;
+  user-select: none;
   align-items: center;
   padding-left: ${props => (props.isCancel ? '51px' : '10px')};
   color: ${props => (props.isCancel ? '#006eae' : '#333333')};
