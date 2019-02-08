@@ -81,8 +81,19 @@ VideoPopupStyled.CommentBoxWrapper = styled.div`
   padding-right: 35px;
   padding-left: 10px;
   height: 40px;
+  display: flex;
+  align-items: center;
   @media(min-width: 1025px) {
     margin-top: 6px;
+  }
+`;
+
+VideoPopupStyled.LoginReminder = styled.span`
+  display: block;
+  cursor: pointer;
+  width: 100%;
+  span {
+    color: #006eae;
   }
 `;
 
@@ -250,6 +261,7 @@ VideoPopupStyled.Somenetwork = styled.div`
   display: block;
   padding: 8px 10px;
   display: flex;
+  user-select: none;
   align-items: center;
   padding-left: ${props => (props.isCancel ? '51px' : '10px')};
   color: ${props => (props.isCancel ? '#006eae' : '#333333')};

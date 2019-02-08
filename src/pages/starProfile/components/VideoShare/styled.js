@@ -101,6 +101,9 @@ VideoShareStyled.CommentBoxWrapper = styled.div`
 `;
 
 VideoShareStyled.LoginReminder = styled.span`
+  display: block;
+  cursor: pointer;
+  width: 100%;
   span {
     color: #006eae;
     cursor: pointer;
@@ -282,6 +285,7 @@ VideoShareStyled.Somenetwork = styled.div`
   padding: 8px 10px;
   display: flex;
   align-items: center;
+  user-select: none;
   padding-left: ${props => (props.isCancel ? '51px' : '10px')};
   color: ${props => (props.isCancel ? '#006eae' : '#333333')};
   cursor: pointer;
@@ -339,6 +343,7 @@ VideoShareStyled.CommentsList = styled.ul`
   width: 100%;
   height: calc(100% - 92px);
   margin: 8px 0;
+  box-shadow: 0px 1px 0 0px #cccccc;
   @media(min-width: 1025px) {
     height: auto;
     max-height: calc(100% - 219px);
