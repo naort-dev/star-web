@@ -602,7 +602,7 @@ StarProfileStyled.shareButton = styled.span`
   margin-left: 10px;
   width: 23px;
   height: 23px;
-  background: url(assets/images/upload.svg) left center/contain no-repeat;
+  background: url(assets/images/share.svg) left center/contain no-repeat;
 `;
 
 StarProfileStyled.profileImage = profilePicture;
