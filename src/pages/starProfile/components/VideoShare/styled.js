@@ -16,7 +16,7 @@ VideoShareStyled.Overlay = styled.span`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 1;
+  z-index: 10;
   background-color: rgba(0,0,0,.6);
   @media(min-width: 1025px) {
     display: none;
@@ -230,7 +230,7 @@ VideoShareStyled.SocialMediaWrapper = styled.div`
   position: fixed;
   transition: 1s opacity ease-out;
   background: rgb(248, 248, 248);
-  z-index: 1;
+  z-index: 10;
   left: 0;
   right: 0;
   bottom: 0;
