@@ -970,6 +970,9 @@ GroupStyled.OTPWrapper = styled.div`
     margin-top: 2px;
     margin-bottom: 2px;
     font-size: 12px;
+    &.resentConfirmation {
+      color: #333333;
+    }
   }
 `;
 GroupStyled.InputAreaText = styled.textarea`
