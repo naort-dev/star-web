@@ -241,9 +241,9 @@ GroupStyled.Label = styled.div`
       background: #f9f9f9;
       box-shadow: 0px 1px 2px #fff;
       height: 50px;
-      padding: 10px;
+      padding: 10px 15px;
       color: #7B797A;
-      letter-spacing: 1px;
+      letter-spacing: 2px;
       cursor: text;
     }
     .react-phone-number-input {
@@ -503,6 +503,10 @@ GroupStyled.ControlWrapper = styled.div`
     text-align: center;
     justify-content: center;
     padding-bottom: 0;
+
+    & > button {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -932,6 +936,9 @@ GroupStyled.AddRepForm = styled.div`
     .checkbox_container {
       margin-bottom: 0;
       padding-left: 30px;
+      .checkBoxHeading {
+        margin-bottom: 5px;
+      }
     }
   }
 `;
