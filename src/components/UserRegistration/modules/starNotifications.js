@@ -247,10 +247,10 @@ export default class StarNotifications extends React.Component {
         }
         <GroupStyled.HeadingWrapper>
           <GroupStyled.HeaderText>
-            Would you like to get notifications?
+            Would you like to receive notifications?
           </GroupStyled.HeaderText>
           <GroupStyled.SocialMediaMessage>
-            We’ll only use your number to notify when you have booking requests.
+            We’ll only use your number to notify when you have booking requests
           </GroupStyled.SocialMediaMessage>
         </GroupStyled.HeadingWrapper>
         <GroupStyled.WrapsInput className="checkboxWrapper notificationWrapper">
