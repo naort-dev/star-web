@@ -292,12 +292,18 @@ class VideoPopup extends React.Component {
     }
     if (this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025) {
       return (
-        <Popup
-          smallPopup
-          closePopUp={this.toggleShare}
-        >
-          { this.renderSocialIcons(props.selectedVideo) }
-        </Popup>
+        <React.Fragment>
+          <Popup
+            smallPopup
+            closePopUp={this.toggleShare}
+          >
+            { this.renderSocialIcons(props.selectedVideo) }
+          </Popup>
+          {
+            this.state.snackBarText !== '' &&
+              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+          }
+        </React.Fragment>
       );
     }
     return (
