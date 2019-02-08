@@ -398,7 +398,7 @@ export default class StarNotification extends React.Component {
   renderRepresentatives = () => {
     const { representatives } = this.state;
     return representatives.map((rep, index) => (
-      <NotificationStyled.AddRepForm key={rep.firstName}>
+      <NotificationStyled.AddRepForm key={index}>
         <div className="RepDetailText">
           <p>Representative #{index + 1}</p>
           <NotificationStyled.CloseRepForm onClick={() => this.deleteRepForm(index)}>X</NotificationStyled.CloseRepForm>
