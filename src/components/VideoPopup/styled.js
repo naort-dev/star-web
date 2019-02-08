@@ -10,12 +10,24 @@ VideoPopupStyled.VideoContentWrapper = styled.div`
   height: 100%;
   max-width: 100%;
   cursor: initial;
-  overflow-y: auto
   @media(min-width: 768px) {
     display: flex;
   }
   @media(min-width: 1025px) {
     overflow: hidden;
+  }
+`;
+
+VideoPopupStyled.Overlay = styled.span`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgba(0,0,0,.6);
+  @media(min-width: 1025px) {
+    display: none;
   }
 `;
 
@@ -198,34 +210,62 @@ VideoPopupStyled.SliderArrows = styled.span`
 
 VideoPopupStyled.SocialMediaWrapper = styled.div`
   position: fixed;
-  transition: 0.2s bottom ease-out;
-  padding: 10px;
-  padding-top: 0;
+  transition: 1s opacity ease-out;
   background: rgb(248, 248, 248);
   z-index: 1;
   left: 0;
   right: 0;
   bottom: 0;
-  display: ${props => (props.visible ? 'block' : 'none')}
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  opacity: ${props => (props.visible ? 1 : 0)};
+  display: ${props => (props.visible ? 'block' : 'none')};
+  padding: ${props => (props.visible ? '10px 0' : '0')};
   @media(min-width: 1025px) {
-    position: absolute;
-    background: transparent;
-    width: 50px;
-    bottom: 0;
-    top: 0;
-    display: ${props => (props.visible ? 'block' : 'none')};
-    right: ${props => (props.visible ? '-52px' : '0')};
-    left: auto;
+    display: none;
   }
+`;
+
+VideoPopupStyled.SocialHeading = styled.span`
+  display: block;
+  text-align: center;
+  padding: 10px 5px;
+  font-family: 'Avenir-Bold';
+  font-size: 16px;
+  border-bottom: 1px solid #CCCCCC;
+`;
+
+VideoPopupStyled.Drawer = styled.span`
+  width: 35px;
+  height: 5px;
+  display: block;
+  background-color: #DADADA;
+  margin: 0 auto;
+  margin-top: 10px;
+  border-radius: 6px;
 `;
 
 VideoPopupStyled.Somenetwork = styled.div`
   vertical-align: top;
-  display: inline-block;
-  margin-right: 12px;
-  margin-top: 10px;
-  text-align: center;
+  display: block;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  padding-left: ${props => (props.isCancel ? '51px' : '10px')};
+  color: ${props => (props.isCancel ? '#006eae' : '#333333')};
   cursor: pointer;
+  font-family: 'Avenir-Medium';
+  .SocialMediaShareButton {
+    display: flex;
+    align-items: center;
+    & > div {
+      display: inline-block;
+    }
+  }
+`;
+
+VideoPopupStyled.SocialTitle = styled.span`
+  padding-left: 10px;
 `;
 
 VideoPopupStyled.LeftSliderArrow = VideoPopupStyled.SliderArrows.extend`

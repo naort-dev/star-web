@@ -1,4 +1,5 @@
 import React from 'react';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { connect } from 'react-redux';
 import moment from 'moment';
 import {
@@ -19,6 +20,7 @@ import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import VideoPlayer from '../VideoPlayer';
 import SnackBar from '../SnackBar';
 import Loader from '../Loader';
+import Popup from '../Popup';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { requestTypes } from '../../constants/requestTypes';
 import VideoPopupStyled from './styled';
@@ -38,7 +40,6 @@ class VideoPopup extends React.Component {
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
-    window.addEventListener('click', this.handleWindowClick);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -68,7 +69,6 @@ class VideoPopup extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
-    window.removeEventListener('click', this.handleWindowClick);
   }
   onVideoEnded = () => {
     if (this.props.onVideoEnded) {
@@ -78,16 +78,6 @@ class VideoPopup extends React.Component {
 
   setSnackBarText = (text) => {
     this.setState({ snackBarText: text });
-  }
-
-  handleWindowClick = (event) => {
-    const { sharePopup } = this.state;
-    const NotShareButtonClick = this.ShareButton && !this.ShareButton.contains(event.target);
-    const NotShareWrapperClick = this.shareWrapper && !this.shareWrapper.contains(event.target);
-    const closeShareView = sharePopup && NotShareButtonClick && NotShareWrapperClick;
-    if (closeShareView) {
-      this.setState({ sharePopup: false });
-    }
   }
 
   findTime = (commentDate) => {
@@ -131,6 +121,16 @@ class VideoPopup extends React.Component {
       this.setState({ pendingComment: comment });
       this.props.toggleLogin(true);
     }
+  }
+
+  toggleShare = () => {
+    const { sharePopup } = this.state;
+    if (sharePopup) {
+      enableBodyScroll(null);
+    } else {
+      disableBodyScroll(null);
+    }
+    this.setState({ sharePopup: !sharePopup });
   }
 
   selectCommentField = () => {
@@ -189,6 +189,7 @@ class VideoPopup extends React.Component {
               size={32}
               round
             />
+            <VideoPopupStyled.SocialTitle>Share to Facebook</VideoPopupStyled.SocialTitle>
           </FacebookShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
@@ -200,6 +201,7 @@ class VideoPopup extends React.Component {
               size={32}
               round
             />
+            <VideoPopupStyled.SocialTitle>Share to Google Plus</VideoPopupStyled.SocialTitle>
           </GooglePlusShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
@@ -212,6 +214,7 @@ class VideoPopup extends React.Component {
               size={32}
               round
             />
+            <VideoPopupStyled.SocialTitle>Share to Twitter</VideoPopupStyled.SocialTitle>
           </TwitterShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
@@ -222,6 +225,7 @@ class VideoPopup extends React.Component {
             className="Demo__some-network__share-button"
           >
             <WhatsappIcon size={32} round />
+            <VideoPopupStyled.SocialTitle>Share to Whatsapp</VideoPopupStyled.SocialTitle>
           </WhatsappShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
@@ -235,10 +239,15 @@ class VideoPopup extends React.Component {
               size={32}
               round
             />
+            <VideoPopupStyled.SocialTitle>Share via Email</VideoPopupStyled.SocialTitle>
           </EmailShareButton>
         </VideoPopupStyled.Somenetwork>
-        <VideoPopupStyled.Somenetwork>
-          <VideoPopupStyled.Copy title="Copy to Clipboard" onClick={() => this.copyUrl(shareUrl)} />
+        <VideoPopupStyled.Somenetwork onClick={() => this.copyUrl(shareUrl)}>
+          <VideoPopupStyled.Copy title="Copy to Clipboard" />
+          <VideoPopupStyled.SocialTitle>Copy link</VideoPopupStyled.SocialTitle>
+        </VideoPopupStyled.Somenetwork>
+        <VideoPopupStyled.Somenetwork isCancel onClick={this.toggleShare}>
+          Cancel
         </VideoPopupStyled.Somenetwork>
       </React.Fragment>
     );
@@ -267,11 +276,26 @@ class VideoPopup extends React.Component {
         dotsCount={0}
         selectedDot={1}
         closePopUp={props.closePopUp}
+        preventScroll={this.state.sharePopup}
         largePopup
       >
         {
           this.state.snackBarText !== '' &&
             <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+        }
+        {
+          this.state.sharePopup &&
+            <VideoPopupStyled.Overlay onClick={this.toggleShare} />
+        }
+        {
+          this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025 ?
+            <Popup
+              smallPopup
+              closePopUp={this.toggleShare}
+            >
+              { this.renderSocialIcons(props.selectedVideo) }
+            </Popup>
+          : null
         }
         <VideoPopupStyled.VideoContentWrapper>
           {
@@ -303,8 +327,7 @@ class VideoPopup extends React.Component {
                       </VideoPopupStyled.StarLink>
                       <VideoPopupStyled.UserActions>
                         <VideoPopupStyled.ShareButton
-                          innerRef={(node) => { this.ShareButton = node; }}
-                          onClick={() => this.setState({ sharePopup: !this.state.sharePopup })}
+                          onClick={this.toggleShare}
                         />
                         <VideoPopupStyled.ChatIcon
                           onClick={this.selectCommentField}
@@ -368,7 +391,7 @@ class VideoPopup extends React.Component {
                     <VideoPopupStyled.PopupActions>
                       <VideoPopupStyled.CommentBoxWrapper>
                         <VideoPopupStyled.CommentSendIcon
-                          onClick={() => this.commentAdder()}
+                          onClick={this.commentAdder}
                         />
                         <VideoPopupStyled.CommentBox
                           innerRef={(node) => { this.commentInput = node }}
@@ -385,7 +408,9 @@ class VideoPopup extends React.Component {
             : <Loader />
           }
         </VideoPopupStyled.VideoContentWrapper>
-        <VideoPopupStyled.SocialMediaWrapper innerRef={(node) => { this.shareWrapper = node; }} visible={this.state.sharePopup}>
+        <VideoPopupStyled.SocialMediaWrapper innerRef={(node) => {this.shareWrapper = node;}} mobile visible={this.state.sharePopup}>
+          <VideoPopupStyled.Drawer onClick={this.toggleShare} />
+          <VideoPopupStyled.SocialHeading>Share</VideoPopupStyled.SocialHeading>
           {this.renderSocialIcons(props.selectedVideo)}
         </VideoPopupStyled.SocialMediaWrapper>
       </RequestFlowPopup>

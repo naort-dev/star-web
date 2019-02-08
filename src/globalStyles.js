@@ -11,6 +11,7 @@ injectGlobal`
   }
   *{
     box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
   }
 	ul,li{
 		list-style-type: none;

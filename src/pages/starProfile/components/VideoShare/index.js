@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import moment from 'moment';
@@ -35,6 +36,7 @@ class VideoShare extends React.Component {
       snackBarText: '',
     };
     this.commentSelected = false;
+    this.popupShareResolution = 1025;
   }
 
   componentWillMount() {
@@ -155,9 +157,9 @@ class VideoShare extends React.Component {
   toggleShare = () => {
     const { sharePopup } = this.state;
     if (sharePopup) {
-      document.body.style.overflow = 'initial';
+      enableBodyScroll(null);
     } else {
-      document.body.style.overflow = 'hidden';
+      disableBodyScroll(null);
     }
     this.setState({ sharePopup: !sharePopup });
   }
@@ -294,7 +296,7 @@ class VideoShare extends React.Component {
             <VideoShareStyled.Overlay onClick={this.toggleShare} />
         }
         {
-          this.state.sharePopup && document.body.getBoundingClientRect().width >= 1025 ?
+          this.state.sharePopup && document.body.getBoundingClientRect().width >= this.popupShareResolution ?
             <Popup
               smallPopup
               closePopUp={this.toggleShare}

@@ -71,7 +71,12 @@ class RequestFlowPopup extends React.Component {
 
   renderPopup = () => {
     return (
-      <PopupStyled visible={this.props.popupVisibility} id="request-flow-popup" innerRef={node => this.popupWrapper = node}>
+      <PopupStyled
+        preventScroll={this.props.preventScroll}
+        visible={this.props.popupVisibility}
+        id="request-flow-popup"
+        innerRef={node => this.popupWrapper = node}
+      >
         <PopupStyled.SmallContainer
           modalView={this.props.modalView}
           largePopup={this.props.largePopup}
