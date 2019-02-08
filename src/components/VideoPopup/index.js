@@ -124,7 +124,12 @@ class VideoPopup extends React.Component {
     this.setState({ commentText: '' });
     addVideoComment(videoId, comment)
       .then(() => {
-        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
+        this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true)
+          .then(() => {
+            if (this.scrollBarRef) {
+              this.scrollBarRef.scrollToBottom();
+            }
+          });
       });
   }
 
