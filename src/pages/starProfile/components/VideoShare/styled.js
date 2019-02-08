@@ -5,6 +5,7 @@ const VideoShareStyled = styled.div`
   background: #fff;
   @media(min-width: 1025px) {
     margin: 20px;
+    border: 1px solid #ececec;
     height: calc(100% - 40px);
   }
 `;
@@ -80,7 +81,7 @@ VideoShareStyled.VideoTitle = styled.span`
 VideoShareStyled.PopupActions = styled.div`
   padding: 10px 0;
   @media(min-width: 1025px) {
-    border-top: 1px solid #CCCCCC;
+    border-top: 1px solid #ececec;
     margin-top: 10px;
   }
 `;
@@ -175,7 +176,7 @@ VideoShareStyled.StarLink = styled.span`
   @media(min-width: 1025px) {
     padding-left: 0;
     padding-top: 0;
-    border-bottom: 1px solid #CCCCCC;
+    border-bottom: 1px solid #ececec;
     display: ${props => (props.mobile ? 'none' : 'block')};
   }
 `;
@@ -224,23 +225,6 @@ VideoShareStyled.VideoRequestName = styled.span`
     width: calc(100% - 71px);
   }
 `;
-VideoShareStyled.SliderArrows = styled.span`
-  width: 30px;
-  height: 30px;
-  border-color: #000;
-  position: absolute;
-  top: 50%;
-  margin-top: -31px;
-  cursor: pointer;
-  opacity: 0.6;
-  &:hover {
-    opacity: 1;
-  }
-  @media(min-width: 768px) {
-    width: 48px;
-    height: 48px;
-  }
-`;
 
 VideoShareStyled.SocialMediaWrapper = styled.div`
   position: fixed;
@@ -266,7 +250,7 @@ VideoShareStyled.SocialHeading = styled.span`
   padding: 10px 5px;
   font-family: 'Avenir-Bold';
   font-size: 16px;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #ececec;
 `;
 
 VideoShareStyled.Drawer = styled.span`
@@ -303,20 +287,6 @@ VideoShareStyled.SocialTitle = styled.span`
   padding-left: 10px;
 `;
 
-VideoShareStyled.LeftSliderArrow = VideoShareStyled.SliderArrows.extend`
-  border-bottom: 6px solid;
-  border-left: 6px solid;
-  transform: rotate(45deg);
-  left: 15px;
-`;
-
-VideoShareStyled.RightSliderArrow = VideoShareStyled.SliderArrows.extend`
-  border-bottom: 6px solid;
-  border-left: 6px solid;
-  transform: rotate(-135deg);
-  right: 15px;
-`;
-
 VideoShareStyled.Copy = styled.span`
   width: 32px;
   height: 32px;
@@ -328,22 +298,12 @@ VideoShareStyled.Copy = styled.span`
   border-radius: 32px;
 `;
 
-VideoShareStyled.commentListScrollbar = styled(Scrollbars)`
-  .comments-list-scrollbar {
-    overflow: hidden !important;
-    position: static !important;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
-  }
-`;
-
 VideoShareStyled.CommentsList = styled.ul`
   width: 100%;
   height: calc(100% - 92px);
-  margin: 8px 0;
-  box-shadow: 0px 1px 0 0px #cccccc;
+  padding: 5px 0;
+  margin-bottom: 10px;
+  box-shadow: 0 5px 6px -6px #ececec;
   @media(min-width: 1025px) {
     height: auto;
     max-height: calc(100% - 219px);
