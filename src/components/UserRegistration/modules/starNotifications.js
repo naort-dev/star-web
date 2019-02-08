@@ -4,15 +4,12 @@ import validator from 'validator';
 import 'react-phone-number-input/style.css';
 import Popup from '../../Popup';
 import { generateOtp, validateOtp } from '../../../services/otpGenerate';
-import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../services/userRegistration';
 import GroupStyled from '../styled';
 import Loader from '../../Loader';
 
 export default class StarNotifications extends React.Component {
   state = {
     value: '',
-    representatives: [],
-    anotherRepButton: true,
     phoneNumberVerify: 'Verify',
     country: 'US',
     otpEnterPopup: false,
@@ -25,6 +22,7 @@ export default class StarNotifications extends React.Component {
     phNo2: '',
     phNo3: '',
     phNo4: '',
+    resentConfirmation: false,
     errors: {
       phNo: false,
     },
@@ -45,15 +43,24 @@ export default class StarNotifications extends React.Component {
     return phoneValid;
   }
 
-  submitNotification = () => {
-    if (this.checkAllValidity() && this.state.phoneNumberVerify === 'Verify') {
-      const {
-        value,
-        country,
-        countryCode,
-      } = this.state;
-      const codeNumber = this.phone.props.metadata.countries[country][0];
-      const originalNumber = value.substring(codeNumber.length + 1, value.length);
+  submitNotification = (type) => {
+    const {
+      value,
+      country,
+      countryCode,
+    } = this.state;
+    const codeNumber = this.phone.props.metadata.countries[country][0];
+    const originalNumber = value.substring(codeNumber.length + 1, value.length);
+    if (type === 'reSent') {
+      generateOtp(originalNumber, codeNumber)
+        .then((resp) => {
+          if (resp.success) {
+            this.setState({
+              resentConfirmation: true,
+            });
+          }
+        });
+    } else if (this.checkAllValidity() && this.state.phoneNumberVerify === 'Verify') {
       this.setState({
         phoneNumberOriginal: originalNumber,
         countryCode: codeNumber,
@@ -63,6 +70,7 @@ export default class StarNotifications extends React.Component {
           if (resp.success) {
             this.setState({
               otpEnterPopup: true,
+              resentConfirmation: false,
             });
           }
         });
@@ -235,8 +243,12 @@ export default class StarNotifications extends React.Component {
                 />
                 <p className="errorElement">{this.state.otpErrorMessage}</p>
                 <GroupStyled.SocialMediaMessage>
-                Didn't receive a code? <GroupStyled.ResendOTP onClick={() => this.submitNotification()}>Resend</GroupStyled.ResendOTP>
+                Didn't receive a code? <GroupStyled.ResendOTP onClick={() => this.submitNotification('reSent')}>Resend</GroupStyled.ResendOTP>
                 </GroupStyled.SocialMediaMessage>
+                {
+                  this.state.resentConfirmation &&
+                  <p className="errorElement resentConfirmation">Resent verification code</p>
+                }
                 <GroupStyled.OTPSubmit
                   onClick={() => this.submitOTPForm()}
                 >
