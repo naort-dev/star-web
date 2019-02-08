@@ -19,7 +19,7 @@ const PopupStyled = styled.div`
   background-color: #fff;
   justify-content: center;
   z-index: 11;
-  overflow: auto;
+  overflow: ${props => (props.preventScroll ? 'initial' : 'auto')};
   -webkit-overflow-scrolling: touch;
   @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
     display: block;
