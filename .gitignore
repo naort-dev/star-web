@@ -4,7 +4,6 @@ dist/
 *.log
 .vscode
 .chrome
-env.js
 .env
 .DS_Store
 .idea/
