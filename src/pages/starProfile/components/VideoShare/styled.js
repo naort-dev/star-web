@@ -303,7 +303,7 @@ VideoShareStyled.CommentsList = styled.ul`
   height: calc(100% - 92px);
   padding: 5px 0;
   margin-bottom: 10px;
-  box-shadow: 0 5px 6px -6px #ececec;
+  box-shadow: 0 2px 6px -6px #ececec;
   @media(min-width: 1025px) {
     height: auto;
     max-height: calc(100% - 219px);
