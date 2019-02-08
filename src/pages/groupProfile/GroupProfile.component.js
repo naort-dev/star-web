@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ImageGallery from 'react-image-gallery';
 import { Redirect } from 'react-router-dom';
@@ -24,10 +25,13 @@ export default class GroupProfile extends React.Component {
       readMoreFlag: false,
       followFlag: false,
       showPopup: false,
+      showReadMore: false,
     };
+    this.maxDescriptionHeight = 120;
   }
 
   componentWillMount() {
+    window.addEventListener('resize', this.onResize);
     this.props.resetGroupDetails();
     this.props.fetchGroupDetails(this.props.match.params.id.toLowerCase());
   }
@@ -54,9 +58,20 @@ export default class GroupProfile extends React.Component {
     }
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.showReadMore !== prevState.showReadMore || isEmpty(prevProps.groupDetails) !== isEmpty(this.props.groupDetails)) {
+      this.showReadMore();
+    }
+  }
+
   componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize);
     this.props.resetGroupDetails();
     this.props.resetMemberDetails();
+  }
+
+  onResize = () => {
+    this.showReadMore();
   }
 
   activateMenu = () => {
@@ -100,6 +115,16 @@ export default class GroupProfile extends React.Component {
     this.setState({
       readMoreFlag: flag,
     });
+  }
+
+  showReadMore = () => {
+    if (this.descriptionRef && this.descriptionRef.offsetHeight) {
+      if (this.descriptionRef.offsetHeight > this.maxDescriptionHeight) {
+        this.setState({ showReadMore: true });
+      } else {
+        this.setState({ showReadMore: false });
+      }
+    }
   }
 
   socialMedia = (icon) => {
@@ -250,8 +275,12 @@ export default class GroupProfile extends React.Component {
                 <div className="profileDetails">
                   <div className="groupDetailsContainer">
                     <h1>{this.props.groupDetails.first_name} {this.props.groupDetails.last_name}</h1>
-                    <p className={descriptionClass}>{this.props.groupDetails.group_details?this.props.groupDetails.group_details.description: ''}</p>
-                    {descriptionLength > 390 ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p>:''}
+                    <GroupProfileStyled.DescriptionWrapper readMore={!this.state.readMoreFlag}>
+                      <span ref={(node) => { this.descriptionRef = node; }}>
+                        {this.props.groupDetails.group_details?this.props.groupDetails.group_details.description: ''}
+                      </span>
+                    </GroupProfileStyled.DescriptionWrapper>
+                    { this.state.showReadMore ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p> : ''}
                   </div>
                   <div className="socialMediaIcons">
                     <GroupProfileStyled.ButtonWrapper>

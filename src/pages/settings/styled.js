@@ -120,10 +120,14 @@ SettingsStyled.ControlWrapper = styled.div`
   width: 100%;
   display: flex;
   padding: 13px 12px;
+  border-top: 1px solid #ddd;
   justify-content: ${props => (props.multiple ? 'space-between' : 'flex-end')};
   @media(min-width: 1025px) {
     box-shadow: none;
     padding: 26px 0;
+  }
+  @media(max-width: 767px) {
+    margin-top: 20px;
   }
 `;
 

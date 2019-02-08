@@ -1,24 +1,16 @@
 import styled from 'styled-components';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Link } from 'react-router-dom';
 
-const VideoPopupStyled = styled.div`
-
-`;
-VideoPopupStyled.VideoContentWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  max-width: 100%;
-  cursor: initial;
-  @media(min-width: 768px) {
-    display: flex;
-  }
+const VideoShareStyled = styled.div`
+  background: #fff;
   @media(min-width: 1025px) {
-    overflow: hidden;
+    margin: 20px;
+    border: 1px solid #ececec;
+    height: calc(100% - 40px);
   }
 `;
 
-VideoPopupStyled.Overlay = styled.span`
+VideoShareStyled.Overlay = styled.span`
   position: fixed;
   left: 0;
   right: 0;
@@ -31,7 +23,21 @@ VideoPopupStyled.Overlay = styled.span`
   }
 `;
 
-VideoPopupStyled.VideoPlayerWrapper = styled.div`
+VideoShareStyled.VideoContentWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  cursor: initial;
+  overflow-y: auto
+  @media(min-width: 768px) {
+    display: flex;
+  }
+  @media(min-width: 1025px) {
+    overflow: hidden;
+  }
+`;
+
+VideoShareStyled.VideoPlayerWrapper = styled.div`
   position: relative;
   width: 100%;
   height: 400px;
@@ -45,13 +51,17 @@ VideoPopupStyled.VideoPlayerWrapper = styled.div`
   }
 `;
 
-VideoPopupStyled.VideoPlayer = styled.div`
+VideoShareStyled.VideoPlayer = styled.div`
   width: 100%;
   height: 100%;
-  display: table;
+  display: flex;
+  flex-direction: column;
+  @media(min-width: 1025px) {
+    flex-direction: row;
+  }
 `;
-VideoPopupStyled.VideoContent = styled.section`
-  padding-top: 10px;
+VideoShareStyled.VideoContent = styled.section`
+  padding: 10px;
   background-color: #fff;
   @media(min-width: 1025px) {
     width: 50%;
@@ -59,21 +69,24 @@ VideoPopupStyled.VideoContent = styled.section`
     position: relative;
     vertical-align: top;
     padding: 10px 20px;
-    padding-top: 0;
   }
 `;
 
-VideoPopupStyled.VideoTitle = styled.span`
+VideoShareStyled.VideoTitle = styled.span`
   display: block;
-  font-size: 11px;
+  font-size: 13px;
   font-family: 'Avenir-Regular';
 `;
 
-VideoPopupStyled.PopupActions = styled.div`
+VideoShareStyled.PopupActions = styled.div`
   padding: 10px 0;
+  @media(min-width: 1025px) {
+    border-top: 1px solid #ececec;
+    margin-top: 10px;
+  }
 `;
 
-VideoPopupStyled.CommentBoxWrapper = styled.div`
+VideoShareStyled.CommentBoxWrapper = styled.div`
   width: 100%;
   position: relative;
   border-radius: 5px;
@@ -88,16 +101,17 @@ VideoPopupStyled.CommentBoxWrapper = styled.div`
   }
 `;
 
-VideoPopupStyled.LoginReminder = styled.span`
+VideoShareStyled.LoginReminder = styled.span`
   display: block;
   cursor: pointer;
   width: 100%;
   span {
     color: #006eae;
+    cursor: pointer;
   }
 `;
 
-VideoPopupStyled.CommentSendIcon = styled.span`
+VideoShareStyled.CommentSendIcon = styled.span`
   display: block;
   width: 20px;
   height: 20px;
@@ -109,7 +123,7 @@ VideoPopupStyled.CommentSendIcon = styled.span`
   background-size: contain;
 `;
 
-VideoPopupStyled.CommentBox = styled.input`
+VideoShareStyled.CommentBox = styled.input`
   display: block;
   width: 100%;
   outline: none;
@@ -120,48 +134,62 @@ VideoPopupStyled.CommentBox = styled.input`
   background: transparent;
 `;
 
-VideoPopupStyled.UserActions = styled.span`
-  display: inline-block;
-  text-align: right;
+VideoShareStyled.UserActions = styled.span`
+  display: ${props => (props.mobile ? 'inline-block' : 'none')};
   padding-top: 11px;
+  @media(min-width: 1025px) {
+    display: ${props => (props.mobile ? 'none' : 'inline-block')};
+    padding-top: 0;
+  }
 `;
 
-VideoPopupStyled.ShareButton = styled.span`
+VideoShareStyled.ShareButton = styled.span`
   display: inline-block;
   cursor: pointer;
   vertical-align: top;
-  width: 20px;
-  height: 20px;
-  margin-left: 7px;
+  width: 25px;
+  height: 25px;
+  margin-left: 17px;
   background: url( 'assets/images/share.svg' ) no-repeat left;
   background-size: contain;
 `;
 
-VideoPopupStyled.ChatIcon = VideoPopupStyled.ShareButton.extend`
-  padding-top: 10px;
+VideoShareStyled.ChatIcon = VideoShareStyled.ShareButton.extend`
   background: url( 'assets/images/comment.svg') no-repeat left;
   background-size: 100%;
+  position: relative;
   vertical-align: unset;
   margin-left: 0;
 `;
 
-VideoPopupStyled.ChatCount = styled.span`
-  margin-left: 7px;
-  vertical-align: top;
-  padding-top: 3px;
-  display: inline-block;
+VideoShareStyled.StarLink = styled.span`
+  width: 100%;
+  display: ${props => (props.mobile ? 'block' : 'none')};
+  padding: 10px;
+  a {
+    display: inline-block;
+    width: 100%;
+    @media(min-width: 768px) {
+      width: auto;
+    }
+  }
+  @media(min-width: 1025px) {
+    padding-left: 0;
+    padding-top: 0;
+    border-bottom: 1px solid #ececec;
+    display: ${props => (props.mobile ? 'none' : 'block')};
+  }
 `;
 
-VideoPopupStyled.StarLink = styled(Link)`
-  width: calc(100% - 86px);
-`;
-
-VideoPopupStyled.VideoRequester = styled.div`
+VideoShareStyled.VideoRequester = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+  @media(min-width: 1025px) {
+    margin-bottom: 0;
+  }
 `;
-VideoPopupStyled.VideoRequestImage = styled.span`
+VideoShareStyled.VideoRequestImage = styled.span`
   border-radius: 50%;
   display: inline-block;
   background-image: ${props => props.imageUrl ? 'url('+props.imageUrl+')' : 'url(assets/images/profile.png)'};
@@ -184,10 +212,10 @@ VideoPopupStyled.VideoRequestImage = styled.span`
     margin-right: 11px;
   }
 `;
-VideoPopupStyled.VideoRequestName = styled.span`
+VideoShareStyled.VideoRequestName = styled.span`
   display: inline-block;
   font-size: 16px;
-  font-family: 'Avenir-Regular';
+  font-family: 'Avenir-Bold';
   vertical-align: top;
   padding-top: 5px;
   width: calc(100% - 51px);
@@ -197,25 +225,8 @@ VideoPopupStyled.VideoRequestName = styled.span`
     width: calc(100% - 71px);
   }
 `;
-VideoPopupStyled.SliderArrows = styled.span`
-  width: 30px;
-  height: 30px;
-  border-color: #000;
-  position: absolute;
-  top: 50%;
-  margin-top: -31px;
-  cursor: pointer;
-  opacity: 0.6;
-  &:hover {
-    opacity: 1;
-  }
-  @media(min-width: 768px) {
-    width: 48px;
-    height: 48px;
-  }
-`;
 
-VideoPopupStyled.SocialMediaWrapper = styled.div`
+VideoShareStyled.SocialMediaWrapper = styled.div`
   position: fixed;
   transition: 1s opacity ease-out;
   background: rgb(248, 248, 248);
@@ -233,16 +244,16 @@ VideoPopupStyled.SocialMediaWrapper = styled.div`
   }
 `;
 
-VideoPopupStyled.SocialHeading = styled.span`
+VideoShareStyled.SocialHeading = styled.span`
   display: block;
   text-align: center;
   padding: 10px 5px;
   font-family: 'Avenir-Bold';
   font-size: 16px;
-  border-bottom: 1px solid #CCCCCC;
+  border-bottom: 1px solid #ececec;
 `;
 
-VideoPopupStyled.Drawer = styled.span`
+VideoShareStyled.Drawer = styled.span`
   width: 35px;
   height: 5px;
   display: block;
@@ -252,13 +263,13 @@ VideoPopupStyled.Drawer = styled.span`
   border-radius: 6px;
 `;
 
-VideoPopupStyled.Somenetwork = styled.div`
+VideoShareStyled.Somenetwork = styled.div`
   vertical-align: top;
   display: block;
   padding: 8px 10px;
   display: flex;
-  user-select: none;
   align-items: center;
+  user-select: none;
   padding-left: ${props => (props.isCancel ? '51px' : '10px')};
   color: ${props => (props.isCancel ? '#006eae' : '#333333')};
   cursor: pointer;
@@ -272,28 +283,14 @@ VideoPopupStyled.Somenetwork = styled.div`
   }
 `;
 
-VideoPopupStyled.SocialTitle = styled.span`
+VideoShareStyled.SocialTitle = styled.span`
   padding-left: 10px;
 `;
 
-VideoPopupStyled.LeftSliderArrow = VideoPopupStyled.SliderArrows.extend`
-  border-bottom: 6px solid;
-  border-left: 6px solid;
-  transform: rotate(45deg);
-  left: 15px;
-`;
-
-VideoPopupStyled.RightSliderArrow = VideoPopupStyled.SliderArrows.extend`
-  border-bottom: 6px solid;
-  border-left: 6px solid;
-  transform: rotate(-135deg);
-  right: 15px;
-`;
-
-VideoPopupStyled.Copy = styled.span`
+VideoShareStyled.Copy = styled.span`
   width: 32px;
   height: 32px;
-  display: block;
+  display: inline-block;
   background-image: url('../../assets/images/content_copy_48px.svg');
   background-repeat: no-repeat;
   background-color: #4a000d;
@@ -301,87 +298,83 @@ VideoPopupStyled.Copy = styled.span`
   border-radius: 32px;
 `;
 
-VideoPopupStyled.commentListScrollbar = styled(Scrollbars)`
-  .comments-list-scrollbar {
-    overflow: hidden !important;
-    position: static !important;
-    @media(min-width: 1025px) {
-      overflow: scroll !important;
-      position: absolute !important;
-    }
-  }
-`;
-
-VideoPopupStyled.CommentsList = styled.ul`
+VideoShareStyled.CommentsList = styled.ul`
   width: 100%;
   height: calc(100% - 92px);
-  border-top: 1px solid #A4A4A4;
   padding: 5px 0;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 6px -6px #ececec;
   @media(min-width: 1025px) {
-    height: calc(100% - 130px);
+    height: auto;
+    max-height: calc(100% - 219px);
+    -webkit-overflow-scrolling: touch;
+    overflow: auto;
   }
 `;
 
-VideoPopupStyled.commentItem = styled.li`
-  padding: 10px 0;
-  @media(min-width: 1025px) {
-    padding: 10px;
-    padding-left: 4px;
-  }
+VideoShareStyled.commentItem = styled.li`
+
 `;
 
-VideoPopupStyled.commenterName = styled.span`
+VideoShareStyled.commenterName = styled.span`
   font-size: 14px;
   font-family: 'Avenir-medium';
   vertical-align: top;
   display: inline-block;
-  background: #F8F8F8;
   border-radius: 9px;
-  padding: 11px;
-  width: calc(100% - 51px);
+  padding: 5px 11px;
+  padding-left: 0;
+  width: 100%;
 `;
 
-VideoPopupStyled.comment = styled.span`
+VideoShareStyled.comment = styled.span`
   font-size: 13px;
   padding-left: 10px;
   font-family: 'Avenir-Regular';
   word-break: break-all;
 `;
 
-VideoPopupStyled.commentDate = styled.span`
+VideoShareStyled.VideoDate = styled.span`
   display: block;
-  font-size: 11px;
+  color: #999;
+  font-size: 13px;
   font-family: 'Avenir-Light';
   padding-top: 2px;
 `;
 
-VideoPopupStyled.loadMoreComments = styled.button`
-  background-color: #F8F8F8;
+VideoShareStyled.loadMoreComments = styled.button`
   padding: 6px 0;
-  width: 155px;
-  margin: 0 auto;
-  text-align: center;
   text-decoration: none;
-  display: block;
+  display: inline-block;
   font-size: 14px;
-  font-family: 'Avenir-Bold';
+  opacity: ${props => (props.isLoading ? '0.3' : 1)};
+  color: #999;
+  font-family: 'Avenir-Regular';
   outline: none;
   cursor: pointer;
-  border-radius: 24px;
-  border: 2px solid #F8F8F8;
+  background: transparent;
+  border: none;
+  vertical-align: top;
   -webkit-appearance: none;
 `;
 
-VideoPopupStyled.commenterImage = VideoPopupStyled.VideoRequestImage.extend`
+VideoShareStyled.commenterImage = VideoShareStyled.VideoRequestImage.extend`
   @media(min-width: 1025px) {
     width: 30px;
     height: 30px;
   }
 `;
 
-VideoPopupStyled.loaderWrapper = styled.div`
+VideoShareStyled.loaderWrapper = styled.div`
   width: 100%;
   height: 100px;
 `;
 
-export default VideoPopupStyled;
+VideoShareStyled.MoreLoader = styled.div`
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  padding: 0 5px;
+`;
+
+export default VideoShareStyled;

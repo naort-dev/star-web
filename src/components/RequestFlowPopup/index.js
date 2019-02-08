@@ -40,7 +40,6 @@ class RequestFlowPopup extends React.Component {
     }
   }
   componentWillUnmount() {
-    this.props.toggleRequestPopup(false);
     this.props.togglePopup(true);
     if (!this.props.modalView) {
       window.removeEventListener('click', this.hidePopup);
@@ -72,7 +71,12 @@ class RequestFlowPopup extends React.Component {
 
   renderPopup = () => {
     return (
-      <PopupStyled visible={this.props.popupVisibility} id="request-flow-popup" innerRef={node => this.popupWrapper = node}>
+      <PopupStyled
+        preventScroll={this.props.preventScroll}
+        visible={this.props.popupVisibility}
+        id="request-flow-popup"
+        innerRef={node => this.popupWrapper = node}
+      >
         <PopupStyled.SmallContainer
           modalView={this.props.modalView}
           largePopup={this.props.largePopup}

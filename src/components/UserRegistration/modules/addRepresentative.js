@@ -1,54 +1,31 @@
 import React from 'react';
-import 'react-phone-number-input/style.css';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import validator from 'validator';
-import NotificationStyled from './styled';
-import { generateOtp, validateOtp } from '../../../../services/otpGenerate';
-import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../../services/userRegistration';
-import Popup from '../../../../components/Popup';
+import 'react-phone-number-input/style.css';
+import Popup from '../../Popup';
+import { generateOtp, validateOtp } from '../../../services/otpGenerate';
+import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../services/userRegistration';
+import GroupStyled from '../styled';
+import Loader from '../../Loader';
 
-export default class StarNotification extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      emailCheckedBox: props.notificationDetails.email_notification,
-      phoneCheckedBox: props.notificationDetails.mobile_verified,
-      value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
-        `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
-        : '',
-      addEmailFlag: false,
-      email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
-      representatives: [],
-      anotherRepButton: true,
-      phoneNumberVerify: props.notificationDetails.mobile_number ? 'Verified' : 'Verify',
-      country: '',
-      otpEnterPopup: false,
-      otpValue: '',
-      phoneNumberOriginal: '',
-      countryCode: props.notificationDetails.mobile_country_code,
-      otpErrorMessage: '',
-    };
-  }
-
-  componentWillMount() {
-    const { representatives } = this.state;    
-    this.props.representativeDetails.forEach((key, index) => {      
-      representatives.push({
-        repId: key.representative_id,
-        firstName: key.first_name,
-        lastName: key.last_name,
-        email: key.email,
-        phone: key.phone,
-        firstNameError: '',
-        lastNameError: '',
-        emailError: '',
-        emailInvite: key.email_notify,
-        phoneInvite: key.sms_notify,
-        phoneCheck: false,
-      });
-      this.setState({ representatives });
-    });
+export default class AddRepresentative extends React.Component {
+  state = {
+    emailCheckedBox: true,
+    phoneCheckedBox: false,
+    value: '',
+    addEmailFlag: false,
+    email: { value: '', isValid: false, message: '' },
+    representatives: [],
+    anotherRepButton: true,
+    phoneNumberVerify: 'Verify',
+    country: '',
+    otpEnterPopup: false,
+    otpValue: '',
+    phoneNumberOriginal: '',
+    countryCode: '',
+    otpErrorMessage: '',
+    loading: false,
+    oneTimeForm: true,
   }
 
   getOtp = () => {
@@ -69,7 +46,7 @@ export default class StarNotification extends React.Component {
         });
     }
   }
-  
+
   setRepPhone = (index, value) => {
     const { representatives } = this.state;
     const currentRep = { ...representatives[index] };
@@ -155,7 +132,6 @@ export default class StarNotification extends React.Component {
 
   checkEmail = () => {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // To check email validity
-
     if (validator.isEmpty(this.state.email.value)) {
       this.setState({
         email: { ...this.state.email, isValid: false, message: 'Enter an email address' },
@@ -264,6 +240,9 @@ export default class StarNotification extends React.Component {
 
   submitNotification = () => {
     if (this.checkAllValidity()) {
+      this.setState({
+        loading: true,
+      });
       const {
         emailCheckedBox,
         email,
@@ -276,16 +255,16 @@ export default class StarNotification extends React.Component {
       let originalNumber;
       if (phoneCheckedBox) {
         const codeNumber = this.phone.props.metadata.countries[country][0];
-        originalNumber = value.substring(codeNumber.length + 1, value.length);
+        originalNumber = this.state.value.substring(codeNumber.length + 1, value.length);
       } else {
         originalNumber = '';
       }
       const notifications = {
-        emailNotify: emailCheckedBox,
-        email: email.value,
-        phoneNotify: phoneCheckedBox,
-        phone: originalNumber,
-        countryCode,
+        email_notification: emailCheckedBox,
+        secondary_email: emailCheckedBox ? email.value : '',
+        mobile_notification: phoneCheckedBox,
+        mobile_number: phoneCheckedBox ? originalNumber : '',
+        mobile_country_code: countryCode,
       };
       const repUpdateStatus = representatives.map((rep, index) => {
         const currentRep = { ...rep };
@@ -308,7 +287,12 @@ export default class StarNotification extends React.Component {
       });
       Promise.all(repUpdateStatus)
         .then(() => {
-          this.props.onComplete(notifications);
+          this.props.onComplete(notifications)
+            .then(() => {
+              this.setState({
+                loading: false,
+              });
+            })
         });
     }
   }
@@ -329,6 +313,7 @@ export default class StarNotification extends React.Component {
       representatives.splice(index, 1);
       this.setState({
         representatives,
+        oneTimeForm: false,
       });
     }
   }
@@ -367,45 +352,17 @@ export default class StarNotification extends React.Component {
     }
   }
 
-  cancelDetails = (props) => {
-    let repArray = [];
-    this.props.representativeDetails.forEach((key) => {
-      repArray.push({
-        repId: key.representative_id,
-        firstName: key.first_name,
-        lastName: key.last_name,
-        email: key.email,
-        phone: key.phone,
-        firstNameError: '',
-        lastNameError: '',
-        emailError: '',
-        emailInvite: key.email_notify,
-        phoneInvite: key.sms_notify,
-        phoneCheck: false,
-      });
-    });
-    this.setState({
-      representatives: repArray,
-      emailCheckedBox: props.notificationDetails.email_notification,
-      phoneCheckedBox: props.notificationDetails.mobile_notification,
-      value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
-        `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
-        : '',
-      email: { value: props.notificationDetails.secondary_email ? props.notificationDetails.secondary_email : '', isValid: false, message: '' },
-    });
-  }
-
   renderRepresentatives = () => {
     const { representatives } = this.state;
     return representatives.map((rep, index) => (
-      <NotificationStyled.AddRepForm key={index}>
+      <GroupStyled.AddRepForm key={index}>
         <div className="RepDetailText">
           <p>Representative #{index + 1}</p>
-          <NotificationStyled.CloseRepForm onClick={() => this.deleteRepForm(index)}>X</NotificationStyled.CloseRepForm>
+          <GroupStyled.CloseRepForm onClick={() => this.deleteRepForm(index)}>X</GroupStyled.CloseRepForm>
         </div>
         <div className="representativeForm1">
           <div className="repFormElement">
-            <NotificationStyled.Rep1FirstName
+            <GroupStyled.Rep1FirstName
               type="text"
               name={`rep${index}FirstName`}
               value={rep.firstName}
@@ -416,7 +373,7 @@ export default class StarNotification extends React.Component {
             <div className="errorElement">{rep.firstNameError}</div>
           </div>
           <div className="repFormElement">
-            <NotificationStyled.Rep1LastName
+            <GroupStyled.Rep1LastName
               type="text"
               name={`rep${index}LastName`}
               value={rep.lastName}
@@ -427,7 +384,7 @@ export default class StarNotification extends React.Component {
             <div className="errorElement">{rep.lastNameError}</div>
           </div>
           <div className="repFormElement">
-            <NotificationStyled.Rep1Email
+            <GroupStyled.Rep1Email
               type="email"
               name={`rep${index}Email`}
               value={rep.email}
@@ -439,10 +396,10 @@ export default class StarNotification extends React.Component {
           </div>
           <div className="repFormElement">
             <PhoneInput
+              country="US"
               placeholder="Mobile phone(optional)"
               value={rep.phone}
               onChange={value => this.setRepPhone(index, value)}
-              country="US"
             />
             <div className="errorElement">
               {
@@ -458,173 +415,91 @@ export default class StarNotification extends React.Component {
               Your representative will receive notifications about your bookings.
             </p>
             <p>How should we send the notification?</p>
-            <NotificationStyled.WrapsInput className="checkboxWrapper">
-              <NotificationStyled.Label className="checkbox_container">
+            <GroupStyled.WrapsInput className="checkboxWrapper">
+              <GroupStyled.Label className="checkbox_container">
                 <span className="checkBoxHeading">Notify via email.</span>
-                <NotificationStyled.CheckBox
+                <GroupStyled.CheckBox
                   id={`rep${index}EmailUpdates`}
                   type="checkbox"
                   checked={rep.emailInvite}
                   onChange={event => this.handleEmailPhoneInvite(index, 'emailInvite', event.target.value)}
                 />
-                <NotificationStyled.Span htmlFor={`rep${index}EmailUpdates`} className="checkmark" />
-              </NotificationStyled.Label>
-            </NotificationStyled.WrapsInput>
-            <NotificationStyled.WrapsInput className="checkboxWrapper">
-              <NotificationStyled.Label className="checkbox_container">
+                <GroupStyled.Span htmlFor={`rep${index}EmailUpdates`} className="checkmark" />
+              </GroupStyled.Label>
+            </GroupStyled.WrapsInput>
+            <GroupStyled.WrapsInput className="checkboxWrapper">
+              <GroupStyled.Label className="checkbox_container">
                 <span className="checkBoxHeading">Notify via text message.</span>
-                <NotificationStyled.CheckBox
+                <GroupStyled.CheckBox
                   id={`rep${index}PhoneUpdates`}
                   type="checkbox"
                   checked={rep.phoneInvite}
                   onChange={event => this.handleEmailPhoneInvite(index, 'phoneInvite', event.target.value)}
                 />
-                <NotificationStyled.Span htmlFor={`rep${index}PhoneUpdates`} className="checkmark" />
-              </NotificationStyled.Label>
-            </NotificationStyled.WrapsInput>
+                <GroupStyled.Span htmlFor={`rep${index}PhoneUpdates`} className="checkmark" />
+              </GroupStyled.Label>
+            </GroupStyled.WrapsInput>
           </div>
         </div>
-      </NotificationStyled.AddRepForm>
-    ));
-  }
-
-  renderContent = (props) => {
-    const {
-      value, email,
-    } = this.state;
-    return (
-      <React.Fragment key={props}>
-        <NotificationStyled.DetailsWrapper>
-          {
-            this.state.otpEnterPopup &&
-            <Popup
-              smallPopup
-              closePopUp={this.closeOtpPopup}
-            >
-              <NotificationStyled.HeaderText>
-                Enter code
-              </NotificationStyled.HeaderText>
-              <NotificationStyled.SocialMediaMessage>
-                Please enter the code that has been sent to your phone number.
-              </NotificationStyled.SocialMediaMessage>
-              <NotificationStyled.OTPWrapper>
-                <NotificationStyled.OTPInput
-                  type="text"
-                  maxLength="4"
-                  name="otpInput"
-                  value={this.state.otpValue}
-                  placeholder="Enter code"
-                  onChange={this.acceptOTP}
-                />
-                <p className="errorElement">{this.state.otpErrorMessage}</p>
-                <NotificationStyled.OTPSubmit
-                  onClick={() => this.submitOTPForm()}
-                >
-                  Submit
-                </NotificationStyled.OTPSubmit>
-              </NotificationStyled.OTPWrapper>
-            </Popup>
-          }
-          <NotificationStyled.SubHeading>
-            Notify me:
-          </NotificationStyled.SubHeading>
-          <NotificationStyled.WrapsInput className="checkboxWrapper">
-            <NotificationStyled.Label className="checkbox_container">
-              <span className="checkBoxHeading">Text (mobile phone)</span>
-              <NotificationStyled.CheckBox
-                id="phoneUpdates"
-                type="checkbox"
-                checked={this.state.phoneCheckedBox}
-                onChange={(event) => { this.handlePhoneFieldChange(event.target.value, this.state.phoneCheckedBox); }}
-              />
-              <NotificationStyled.Span htmlFor="phoneUpdates" className="checkmark" />
-              {this.state.phoneCheckedBox &&
-                <NotificationStyled.PhoneInput>
-                  <div>
-                    <PhoneInput
-                      country="US"
-                      placeholder="Phone number"
-                      ref={(node) => this.phone = node}
-                      value={value}
-                      onCountryChange={value1 => this.setState({ country: value1 })}
-                      onChange={value => this.setState({ value, phoneNumberVerify: 'Verify' })}
-                    // error={value ? (isValidPhoneNumber(value) ? undefined : 'Invalid phone number') : 'Phone number required'}
-                    />
-                    <div className="errorElement">
-                      {
-                        value !== '' && value !== undefined && !isValidPhoneNumber(value) ? 'Invalid phone number' : undefined
-                      }
-                      {
-                        (value === '' || value === undefined) && 'Phone number required'
-                      }
-                    </div>
-                  </div>
-                  {
-                    value !== '' && value !== undefined && isValidPhoneNumber(value) &&
-                    <NotificationStyled.numberVerification verified={this.state.phoneNumberVerify === 'Verified'} onClick={() => this.getOtp()}>
-                      {this.state.phoneNumberVerify}
-                    </NotificationStyled.numberVerification>
-                  }
-                </NotificationStyled.PhoneInput>
-              }
-              <NotificationStyled.NoteText>
-                Note: we will only use your number to tell you about bookings.
-              </NotificationStyled.NoteText>
-            </NotificationStyled.Label>
-          </NotificationStyled.WrapsInput>
-          <NotificationStyled.RepresentativeWrapper>
-            {
-              this.state.representatives.length < 2 &&
-                <NotificationStyled.addRepWrapper onClick={() => this.addRepForm()}>
-                  <NotificationStyled.AddRepresentative />
-                  <div className="addRepText">Add Representative
-                    <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
-                    </p>
-                  </div>
-                </NotificationStyled.addRepWrapper>
-            }
-            {
-              this.state.representatives.length !== 0 &&
-              <NotificationStyled.RepFormWrapper>
-                {
-                  this.renderRepresentatives()
-                }
-                {
-                  this.state.representatives.length === 1 &&
-                  <NotificationStyled.AnotherRepButton
-                    buttonDisplay={this.state.anotherRepButton}
-                    onClick={() => this.addRepForm()}
-                  >
-                    Add another representative
-                  </NotificationStyled.AnotherRepButton>
-                }
-              </NotificationStyled.RepFormWrapper>
-            }
-          </NotificationStyled.RepresentativeWrapper>
-          <NotificationStyled.ControlWrapper multiple>
-            <NotificationStyled.CancelButton
-              onClick={() => this.cancelDetails(this.props)}
-            >
-              Cancel
-            </NotificationStyled.CancelButton>
-            <NotificationStyled.ControlButton
-              onClick={() => this.submitNotification()}
-            >
-              Submit
-            </NotificationStyled.ControlButton>
-          </NotificationStyled.ControlWrapper>
-        </NotificationStyled.DetailsWrapper>
-      </React.Fragment>
-    );
+      </GroupStyled.AddRepForm>
+    ))
   }
 
   render() {
+    const {
+      value,
+      email,
+      loading,
+    } = this.state;
+    if (loading) {
+      return <Loader />
+    }
     return (
-      <NotificationStyled>
-        {
-          this.renderContent(this.props)
-        }
-      </NotificationStyled>
+      <GroupStyled.DetailsWrapper>
+        <GroupStyled.RepresentativeWrapper signupRep>
+          {
+            this.state.representatives.length < 2 &&
+            <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
+              <GroupStyled.AddRepresentative />
+              <div className="addRepText">Add Representative
+                <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
+                </p>
+              </div>
+            </GroupStyled.addRepWrapper>
+          }
+          {
+            this.state.representatives.length === 0 && this.state.oneTimeForm &&
+            this.addRepForm()
+          }
+          {
+            this.state.representatives.length !== 0 &&
+            <GroupStyled.RepFormWrapper>
+              {
+                this.renderRepresentatives()
+              }
+              {
+                this.state.representatives.length === 1 &&
+                <GroupStyled.AnotherRepButton
+                  buttonDisplay={this.state.anotherRepButton}
+                  onClick={() => this.addRepForm()}
+                >
+                  Add another representative
+                </GroupStyled.AnotherRepButton>
+              }
+            </GroupStyled.RepFormWrapper>
+          }
+        </GroupStyled.RepresentativeWrapper>
+        <GroupStyled.ControlWrapper multiple>
+          <GroupStyled.SkipStep onClick={this.props.skipStep}>
+            Skip for now
+          </GroupStyled.SkipStep>
+          <GroupStyled.ControlButton
+            onClick={this.submitNotification}
+          >
+            Submit
+          </GroupStyled.ControlButton>
+        </GroupStyled.ControlWrapper>
+      </GroupStyled.DetailsWrapper>
     );
   }
 }

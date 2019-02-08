@@ -36,7 +36,7 @@ export default class ShareView extends React.Component {
   }
 
   render() {
-    const { title, shareUrl, iconSize } = this.props;
+    const { title, shareUrl, iconSize, body } = this.props;
     return (
       <ShareStyled>
         {
@@ -109,7 +109,7 @@ export default class ShareView extends React.Component {
                 <EmailShareButton
                   url={shareUrl}
                   subject={title}
-                  body={shareUrl}
+                  body={body ? `${body}\n\n${shareUrl}` : shareUrl}
                   className="Demo__some-network__share-button"
                 >
                   <EmailIcon

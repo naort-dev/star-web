@@ -11,7 +11,7 @@ const VideoRenderDiv = styled.div`
     min-width: 400px;
   }
   @media(min-width: 1025px) {
-    max-height: none;
+    max-height: 100%;
   }
 `;
 

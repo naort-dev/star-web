@@ -107,7 +107,7 @@ GroupStyled.Select = styled.select`
   border-radius: 2px;
   @media(min-width:768px){
     margin-top:0;
-    height:35px;
+    height:35px;InputAreaText
   }
   @media(min-width:1025px){
     margin-top:0;
@@ -155,7 +155,11 @@ GroupStyled.CloseInput = styled.span`
 `;
 
 GroupStyled.EmailWrapper = styled.div`
+`;
 
+GroupStyled.ResendOTP = styled.span`
+  color: #FF6C58;
+  cursor: pointer;
 `;
 
 GroupStyled.numberVerification = styled.span`
@@ -171,6 +175,7 @@ GroupStyled.Label = styled.div`
   &.checkbox_container {
     padding-top: 3px;
     font-size: 12px;
+    padding-left: 0;
     @media(min-width:768px){
       padding-right: 0;
     }
@@ -187,8 +192,9 @@ GroupStyled.Label = styled.div`
   & > .checkBoxHeading {
     font-size: 14px;
     color: #333;
-    margin-bottom: 5px;
+    margin-bottom: 25px;
     display: block;
+    text-align: center;
   }
   & > label {
     top: 2px;
@@ -227,19 +233,44 @@ GroupStyled.Label = styled.div`
       color: ${props => (props.colorText === 'Verify' ? '#FF6C58' : 'green')};
     }
     input {
-      opacity : unset;
+      opacity: unset;
       position: relative;
       font-size: 14px;
       font-family: 'Avenir-Regular';
+      border: 1px solid #f9f9f9;
+      background: #f9f9f9;
+      box-shadow: 0px 1px 2px #fff;
+      height: 50px;
+      padding: 10px 15px;
+      color: #7B797A;
+      letter-spacing: 2px;
+      cursor: text;
     }
     .react-phone-number-input {
-      width: 180px;
       display: inline-block;
+      .react-phone-number-input__row {
+        min-width: 300px;
+        .react-phone-number-input__country {
+          box-shadow: 0px 1px 2px #d6d6d661;
+          min-width: 50px;
+          height: 48px;
+          text-align: center;
+          .react-phone-number-input__icon {
+            width: 100%;
+            height: 22px;
+            border: none;
+          }
+          .react-phone-number-input__country-select-arrow {
+            margin-right: 3px;
+            color: #000;
+          }
+        }
+      }
     }
     & .errorElement {
       color: red;
-      margin-left: 32px;
-      margin-top: 2px;
+      margin-left: 60px;
+      margin-top: 3px;
       font-size: 12px;
     }
   }
@@ -261,6 +292,7 @@ GroupStyled.WrapsInput = styled.div`
     width: 77%;
     &.notificationWrapper {
       width: 100%;
+      text-align: center;
     }
   }
   @media(min-width:1025){
@@ -465,6 +497,16 @@ GroupStyled.ControlWrapper = styled.div`
     box-shadow: none;
     padding: 26px 0;
     border-top: ${props => (props.multiple ? 'none' : '1px solid #EBEBEB')};
+  }
+  &.registrationSubmit {
+    border-top: none;
+    text-align: center;
+    justify-content: center;
+    padding-bottom: 0;
+
+    & > button {
+      font-size: 16px;
+    }
   }
 `;
 
@@ -761,7 +803,7 @@ GroupStyled.HeaderText = styled.div`
   text-align:center;
   color:#676767;
   font-size:20px;
-  font-family: 'Avenir-Bold';
+  font-family: 'Avenir-Medium';
   @media(min-width:768px){
     font-size:25px;
   }
@@ -781,6 +823,9 @@ GroupStyled.SocialMediaMessage = styled.div`
   margin-bottom: 5px;
   margin-top: 10px;
   word-spacing: 3px;
+  &.skipText {
+    cursor: pointer;
+  }
   @media(min-width:768px){
     font-size: 18px;
   }
@@ -818,7 +863,7 @@ GroupStyled.ButtonWrapper = styled.button`
 `;
 
 GroupStyled.RepresentativeWrapper = styled.div`
-  border-top: 1px solid #ddd;
+  border-top: ${props => (props.signupRep ? 'none' : '1px solid #ddd')};
   padding-top: 20px;
 `;
 
@@ -890,6 +935,10 @@ GroupStyled.AddRepForm = styled.div`
     }
     .checkbox_container {
       margin-bottom: 0;
+      padding-left: 30px;
+      .checkBoxHeading {
+        margin-bottom: 5px;
+      }
     }
   }
 `;
@@ -915,6 +964,7 @@ GroupStyled.AnotherRepButton = styled.button`
 GroupStyled.RepFormWrapper = styled.div``;
 GroupStyled.OTPWrapper = styled.div`
   text-align: center;
+  margin-top: 35px;
   & .errorElement {
     color: red;
     margin-top: 2px;
@@ -922,14 +972,43 @@ GroupStyled.OTPWrapper = styled.div`
     font-size: 12px;
   }
 `;
-GroupStyled.OTPInput = styled.input`
-  margin: 10px;
-  border: none;
-  border-bottom: 1px solid #ddd;
-  text-align: center;
-  font-size: 20px;
-  outline: none;
+GroupStyled.InputAreaText = styled.textarea`
+  font-family: 'Avenir-Regular';
+  color: #333333;
+  font-size: 14px;
+  text-align:left;
+  outline:none;
+  width: 100%;
+  height: ${props => (props.small ? '35px' : '80px')};
+  margin: 4px 0;
+  padding: 8px 8px;
+  resize: none;
+  background-color: white;
+  border: 1px solid #EBEBEB;
+  border-radius: 4px;
+  &:focus {
+    border-color: #FF6C58;
+  }
+  @media(min-width:768px){
+    margin-top:0;
+  }
+  @media(min-width:1025px){
+    margin-top:0;
+  }
+  @media(min-width:1920px){
+    font-size:16px;
+  }
 `;
+GroupStyled.PhoneNoInput = GroupStyled.InputAreaText.extend`
+  width: 42px;
+  height: 55px;
+  box-shadow: 0px 1px 10px #d6d6d6;
+  margin-right: 12px;
+  text-align: center;
+  @media(min-width: 1025px) {
+    margin-right: 12px;
+  }
+`.withComponent('input');
 GroupStyled.OTPSubmit = styled.button`
   background-color: #FF6C58;
   color: rgb(255,255,255);
@@ -944,9 +1023,15 @@ GroupStyled.OTPSubmit = styled.button`
   border-radius: 5px;
   border: 2px solid #FF6C58;
   border-image: initial;
+  margin-top: 10px;
   &:hover {
     background-color: #FF3B21;
   }
+`;
+
+GroupStyled.VerificationHead = GroupStyled.InnerHeading.extend`
+  text-align: center;
+  padding-bottom: 10px;
 `;
 
 export default GroupStyled;

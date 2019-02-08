@@ -11,19 +11,12 @@ export default class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
+
     };
   }
 
   componentWillMount() {
     this.setInitialData(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.changePasswordData.submitStatus) {
-      nextProps.resetChangePassword();
-      this.setState({ changePassword: false });
-    }
   }
 
   setInitialData = (props) => {
@@ -111,6 +104,10 @@ export default class AccountSettings extends React.Component {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
+  }
+
+  toggleChangePassword = state => () => {
+    this.setState({ changePassword: state });
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
@@ -201,15 +198,13 @@ export default class AccountSettings extends React.Component {
           : null
         }
         {
-          this.state.changePassword ?
+          this.state.changePassword?
             <Popup
-              closePopUp={() => this.setState({ changePassword: false })}
+              closePopUp={this.toggleChangePassword(false)}
               smallPopup
             >
               <ChangePassword
-                changePassword={this.props.changePassword}
-                changePasswordData={this.props.changePasswordData}
-                resetChangePassord={this.props.resetChangePassword}
+                onPasswordChange={this.toggleChangePassword(false)}
               />
             </Popup>
           : null
@@ -294,7 +289,7 @@ export default class AccountSettings extends React.Component {
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Password</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
-              <SettingsStyled.ActionText onClick={() => this.setState({ changePassword: true })}>
+              <SettingsStyled.ActionText onClick={this.toggleChangePassword(true)}>
                 Manage your password
               </SettingsStyled.ActionText>
             </SettingsStyled.WrapsInput>

@@ -36,6 +36,20 @@ export const resetUserDetails = () => ({
   type: USER_DETAILS.reset,
 });
 
+
+const parseUserDetails = (userData) => {
+  const finalUserData = { ...userData };
+  let stageName = '';
+  let avatarPhoto;
+  if (finalUserData.user) {
+    stageName = finalUserData.user.nick_name !== '' ? finalUserData.user.nick_name : `${finalUserData.user.first_name} ${finalUserData.user.last_name}`;
+    avatarPhoto = finalUserData.user.avatar_photo && finalUserData.user.avatar_photo.thumbnail_url;
+  }
+  finalUserData.user.stageName = stageName;
+  finalUserData.user.avatarPhoto = avatarPhoto;
+  return finalUserData;
+};
+
 export const fetchUserDetails = id => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   let API_URL;
@@ -52,7 +66,7 @@ export const fetchUserDetails = id => (dispatch, getState) => {
   return fetch.get(API_URL, options).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(userDetailsFetchEnd());
-      dispatch(userDetailsFetchSuccess(resp.data.data));
+      dispatch(userDetailsFetchSuccess(parseUserDetails(resp.data.data)));
       return resp.data.data;
     }
     dispatch(userDetailsFetchEnd());

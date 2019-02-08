@@ -79,9 +79,17 @@ export default class QAVideoRecorder extends React.Component {
           })
           .catch((err) => {
             this.setState({ deviceSupport: false, streamed: true });
+            if (this.props.noRecordCallback) {
+              this.props.noRecordCallback();
+            }
           });
       } else {
         this.setState({ streamed: true });
+      }
+    } else {
+      this.setState({ deviceSupport: false });
+      if (this.props.noRecordCallback) {
+        this.props.noRecordCallback();
       }
     }
   }

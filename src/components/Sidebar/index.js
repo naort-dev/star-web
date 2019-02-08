@@ -151,7 +151,7 @@ class Sidebar extends React.Component {
     );
   }
 
-  render() {
+  render() {    
     return (
       <SidebarStyled menuActive={this.props.menuActive}>
         {
@@ -199,7 +199,20 @@ class Sidebar extends React.Component {
                           </SidebarStyled.ListItem>
                           <SidebarStyled.ListItem>
                             <SidebarStyled.CategoryTitle>
-                              <Link to="/user/my-groups">My groups</Link>
+                              <Link to="/user/my-groups">
+                                <SidebarStyled.LinkElement>
+                                  My groups
+                                  {
+                                    this.props.userDetails.settings_userDetails.group_notification_count ?
+                                      <SidebarStyled.InnerListItemCount>
+                                        {
+                                          this.props.userDetails.settings_userDetails.group_notification_count
+                                        }
+                                      </SidebarStyled.InnerListItemCount>
+                                    : null
+                                  }
+                                </SidebarStyled.LinkElement>
+                              </Link>
                             </SidebarStyled.CategoryTitle>
                           </SidebarStyled.ListItem>
                         </SidebarStyled.ListWrapper>
@@ -223,15 +236,18 @@ class Sidebar extends React.Component {
                       }
                     </SidebarStyled.ListWrapper>
                   </SidebarStyled.Filter>
-                  <SidebarStyled.Filter>
-                    <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
-                    <SidebarStyled.Separator />
-                    <SidebarStyled.ListWrapper>
-                      {
-                        this.renderGroupCategoryList()
-                      }
-                    </SidebarStyled.ListWrapper>
-                  </SidebarStyled.Filter>
+                  {
+                    this.props.groupCategory.length > 0 &&
+                    <SidebarStyled.Filter>
+                      <SidebarStyled.SectionHeading>Find a Group </SidebarStyled.SectionHeading>
+                      <SidebarStyled.Separator />
+                      <SidebarStyled.ListWrapper>
+                        {
+                          this.renderGroupCategoryList()
+                        }
+                      </SidebarStyled.ListWrapper>
+                    </SidebarStyled.Filter>
+                  }
                 </SidebarStyled.FilterWrapper>
               </section>
               <Footer isLoggedIn={this.props.isLoggedIn}/>

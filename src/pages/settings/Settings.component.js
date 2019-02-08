@@ -9,7 +9,6 @@ export default class Requests extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      innerLinks: [],
     };
     this.fanTabs = ['Account', 'Invite friends'];
     this.starTabs = ['Account', 'Profile details', 'Share profile', 'Notifications'];
@@ -34,9 +33,6 @@ export default class Requests extends React.Component {
             updateUserDetails={this.props.updateUserDetails}
             updateNotification={this.props.updateNotification}
             updateProfilePhoto={this.props.updateProfilePhoto}
-            resetChangePassword={this.props.resetChangePassword}
-            changePassword={this.props.changePassword}
-            changePasswordData={this.props.changePasswordData}
           />
         );
       } else if ((this.props.userDetails.role_details.role_code === ROLES.fan || this.props.userDetails.role_details.role_code === ROLES.star) && !this.props.userDetails.celebrity) {
@@ -48,9 +44,6 @@ export default class Requests extends React.Component {
             updateUserDetails={this.props.updateUserDetails}
             updateNotification={this.props.updateNotification}
             updateProfilePhoto={this.props.updateProfilePhoto}
-            resetChangePassword={this.props.resetChangePassword}
-            changePassword={this.props.changePassword}
-            changePasswordData={this.props.changePasswordData}
           />
         );
       }
@@ -62,9 +55,6 @@ export default class Requests extends React.Component {
           updateUserDetails={this.props.updateUserDetails}
           updateNotification={this.props.updateNotification}
           updateProfilePhoto={this.props.updateProfilePhoto}
-          resetChangePassword={this.props.resetChangePassword}
-          changePassword={this.props.changePassword}
-          changePasswordData={this.props.changePasswordData}
         />
       );
     }

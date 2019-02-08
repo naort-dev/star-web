@@ -3,7 +3,7 @@ import Loadable from 'react-loadable';
 import { ComponentLoading } from '../../components/ComponentLoading';
 
 const LoadableComponent = Loadable({
-  loader: () => import('./Unauthorized.component'),
+  loader: () => import('./Unauthorized.container'),
   loading: ComponentLoading,
   timeout: 5000,
 });
