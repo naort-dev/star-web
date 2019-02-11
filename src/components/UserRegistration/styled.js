@@ -826,6 +826,10 @@ GroupStyled.SocialMediaMessage = styled.div`
   &.skipText {
     cursor: pointer;
   }
+  &.phoneDesc {
+    max-width: 350px;
+    margin: 0 auto;
+  }
   @media(min-width:768px){
     font-size: 18px;
   }
