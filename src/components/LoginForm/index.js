@@ -67,20 +67,7 @@ export default class LoginForm extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
-    // const token = this.props.location.hash;
-    // const authToken = token.split('=')[1];
     window.addEventListener("storage", this.listenToStorage);
-    // const instaUrl = env('instaUrl') + authToken;
-    // const that = this;
-    // if (authToken !== undefined) {
-    //   axios.get(instaUrl)
-    //     .then(function (response) {
-    //       that.onSocialMediaLogin(response.data.data, 4);
-    //     })
-    //     .catch(function (error) {
-
-    //     });
-    // }
     if (!this.props.isLoggedIn && this.gSignIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
