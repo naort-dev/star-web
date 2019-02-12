@@ -4,6 +4,7 @@ import validator from 'validator';
 import axios from 'axios';
 import ActionLoader from '../ActionLoader';
 import { LoginContainer, FooterSection } from './styled';
+import { twitterLogin } from '../../services';
 import { ROLES } from '../../constants/usertype';
 
 class SignUp extends React.Component {
@@ -76,7 +77,7 @@ class SignUp extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
-    window.addEventListener("storage", this.getInstaAccessToken);
+    window.addEventListener("storage", this.listenToStorage);
     if (!this.props.isLoggedIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
@@ -113,7 +114,7 @@ class SignUp extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("Storage", this.getInstaAccessToken);
+    window.removeEventListener("Storage", this.listenToStorage);
   }
 
   onSignIn = (googleUser) => {
@@ -223,7 +224,7 @@ class SignUp extends React.Component {
           gp_id: r.getId()
         }
       });
-    } else {
+    } else if (source === 4) {
       const val = r;
       const name = val.full_name.trim().split(" ");
       const firstName = name[0];
@@ -238,6 +239,26 @@ class SignUp extends React.Component {
           nick_name: val.full_name,
           profile_photo: val.profile_picture,
           in_id: val.id
+        }
+      });
+    } else {
+      const val = r;
+      let firstName = val.first_name;
+      let lastName = val.last_name;
+      if (!lastName || !firstName) {
+        firstName = val.name.trim().split(" ")[0];
+        lastName = val.name.trim().split(" ")[1];
+      }
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: val.email,
+          first_name: firstName,
+          last_name: lastName,
+          sign_up_source: source,
+          nick_name: val.nick_name,
+          profile_photo: val.profile_photo,
+          tw_id: val.id,
         }
       });
     }
@@ -278,7 +299,7 @@ class SignUp extends React.Component {
     window.open(url, '_blank');
   }
 
-  getInstaAccessToken = () => {
+  listenToStorage = () => {
     if (localStorage.getItem("InstaAccessToken")) {
       const instaUrl =
         env("instaUrl") + localStorage.getItem("InstaAccessToken");
@@ -290,6 +311,9 @@ class SignUp extends React.Component {
           localStorage.removeItem("InstaAccessToken");
         })
         .catch(function(error) {});
+    } else if(localStorage.getItem("twitterData")) {
+      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
+      localStorage.removeItem("twitterData");
     }
   };
 
@@ -313,6 +337,21 @@ class SignUp extends React.Component {
       { scope: "email", return_scopes: true }
     );
   };
+
+  onTwitterLogin = () => {
+    this.setState({ loading: true });
+    twitterLogin()
+      .then((resp) => {
+        this.setState({ loading: false });
+        if (resp.success && resp.data) {
+          const url = resp.data.twitter_link;
+          window.open(url,'_blank');
+        }
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      })
+  }
 
   saveFormEntries = (event, type) => {
     this.setState({
@@ -408,17 +447,21 @@ class SignUp extends React.Component {
             </span>
           </LoginContainer.SocialMediaMessage>
           <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+            <LoginContainer.Button onClick={this.OnFBlogin}>
               <LoginContainer.FacebookContent /> 
             </LoginContainer.Button>
 
             <LoginContainer.GoogleWrapper id="g-sign-in" />
-            <LoginContainer.Button onClick={() => this.onGmail()}>
+            <LoginContainer.Button onClick={this.onGmail}>
               <LoginContainer.GoogleContent />
             </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+            <LoginContainer.Button onClick={this.onInstagramLogin}>
               <LoginContainer.InstagramContent />
+            </LoginContainer.Button>
+
+            <LoginContainer.Button onClick={this.onTwitterLogin}>
+              <LoginContainer.TwitterContent />
             </LoginContainer.Button>
           </LoginContainer.ButtonDiv>
           <LoginContainer.SignupLine>
@@ -528,19 +571,22 @@ class SignUp extends React.Component {
                     </LoginContainer.WrapsInput>
                   </LoginContainer.InputWrapper>
               }
-              <LoginContainer.InputWrapper>
-                <LoginContainer.WrapsInput>
-                  <LoginContainer.PasswordWrapper>
-                    <LoginContainer.Input
-                      placeholder="Referral code (optional)"
-                      type="text"
-                      name="referral"
-                      value={this.state.referral}
-                      onChange={event => this.setState({ referral: event.target.value })}
-                    />
-                  </LoginContainer.PasswordWrapper>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.InputWrapper>
+              {
+                this.props.statusCode !== '410' &&
+                  <LoginContainer.InputWrapper>
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.PasswordWrapper>
+                        <LoginContainer.Input
+                          placeholder="Referral code (optional)"
+                          type="text"
+                          name="referral"
+                          value={this.state.referral}
+                          onChange={event => this.setState({ referral: event.target.value })}
+                        />
+                      </LoginContainer.PasswordWrapper>
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+              }
               <LoginContainer.WrapsInput>
                 {this.props.statusCode === undefined ?
                   <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
