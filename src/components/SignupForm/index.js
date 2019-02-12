@@ -245,7 +245,7 @@ class SignUp extends React.Component {
       const val = r;
       let firstName = val.first_name;
       let lastName = val.last_name;
-      if (!lastName || !firstName) {
+      if ((!firstName || !lastName) && val.name) {
         firstName = val.name.trim().split(" ")[0];
         lastName = val.name.trim().split(" ")[1];
       }
