@@ -3,8 +3,10 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { Scrollbars } from "react-custom-scrollbars";
 import validator from "validator";
+import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
 import { LoginTypeSelector } from "../LoginTypeSelector";
+import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
 
 export default class LoginForm extends React.Component {
@@ -12,6 +14,7 @@ export default class LoginForm extends React.Component {
     super(props);
     this.state = {
       email: { value: "", isValid: false, message: "" },
+      loading: false,
       password: { value: "", isValid: false, message: "" },
       showPassword: false,
       socialMedia: {
@@ -64,20 +67,7 @@ export default class LoginForm extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
-    // const token = this.props.location.hash;
-    // const authToken = token.split('=')[1];
-    window.addEventListener("storage", this.getInstaAccessToken);
-    // const instaUrl = env('instaUrl') + authToken;
-    // const that = this;
-    // if (authToken !== undefined) {
-    //   axios.get(instaUrl)
-    //     .then(function (response) {
-    //       that.onSocialMediaLogin(response.data.data, 4);
-    //     })
-    //     .catch(function (error) {
-
-    //     });
-    // }
+    window.addEventListener("storage", this.listenToStorage);
     if (!this.props.isLoggedIn && this.gSignIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
@@ -115,7 +105,7 @@ export default class LoginForm extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("Storage", this.getInstaAccessToken);
+    window.removeEventListener("storage", this.listenToStorage);
   }
 
   onSignIn = (googleUser) => {
@@ -195,7 +185,7 @@ export default class LoginForm extends React.Component {
           gp_id: r.getId()
         },
       });
-    } else {
+    } else if (source === 4) {
       const val = r;
       const name = val.full_name.trim().split(' ');
       const firstName = name[0];
@@ -211,6 +201,26 @@ export default class LoginForm extends React.Component {
           profile_photo: val.profile_picture,
           in_id: val.id
         },
+      });
+    } else {
+      const val = r;
+      let firstName = val.first_name;
+      let lastName = val.last_name;
+      if ((!firstName || !lastName) && val.name) {
+        firstName = val.name.trim().split(" ")[0];
+        lastName = val.name.trim().split(" ")[1];
+      }
+      this.setState({
+        socialMedia: {
+          ...this.state.socialMedia,
+          username: val.email,
+          first_name: firstName,
+          last_name: lastName,
+          sign_up_source: source,
+          nick_name: val.nick_name,
+          profile_photo: val.profile_photo,
+          tw_id: val.id,
+        }
       });
     }
     this.props.setSocialMediaData(this.state.socialMedia);
@@ -266,7 +276,7 @@ export default class LoginForm extends React.Component {
     );
   };
 
-  getInstaAccessToken = () => {
+  listenToStorage = () => {
     if (localStorage.getItem("InstaAccessToken")) {
       const instaUrl =
         env("instaUrl") + localStorage.getItem("InstaAccessToken");
@@ -278,8 +288,26 @@ export default class LoginForm extends React.Component {
           localStorage.removeItem("InstaAccessToken");
         })
         .catch(function (error) { });
+    } else if(localStorage.getItem("twitterData")) {
+      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
+      localStorage.removeItem("twitterData");
     }
   };
+
+  onTwitterLogin = () => {
+    this.setState({ loading: true });
+    twitterLogin()
+      .then((resp) => {
+        this.setState({ loading: false });
+        if (resp.success && resp.data) {
+          const url = resp.data.twitter_link;
+          window.open(url,'_blank');
+        }
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      })
+  }
 
   acceptEmailHandler = e => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
@@ -353,6 +381,10 @@ export default class LoginForm extends React.Component {
     const { email, password } = this.state;
     return (
       <React.Fragment>
+        {
+          this.state.loading &&
+            <ActionLoader />
+        }
         <LoginContainer.SocialMediaSignup>
           <LoginContainer.Container>
             <LoginContainer.Heading>
@@ -366,10 +398,10 @@ export default class LoginForm extends React.Component {
             </LoginContainer.SocialMediaMessage>
             <LoginContainer.ButtonDiv>
               <LoginContainer.Button >
-                <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />
+                <LoginContainer.FacebookContent onClick={this.onFBlogin} />
               </LoginContainer.Button>
 
-              <LoginContainer.Button onClick={() => this.onGmail()}>
+              <LoginContainer.Button onClick={this.onGmail}>
                 <LoginContainer.GoogleWrapper
                   id="g-sign-in"
                   ref={gSignIn => (this.gSignIn = gSignIn)}
@@ -379,8 +411,12 @@ export default class LoginForm extends React.Component {
                 
               </LoginContainer.Button>
 
-              <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+              <LoginContainer.Button onClick={this.onInstagramLogin}>
                 <LoginContainer.InstagramContent />
+              </LoginContainer.Button>
+
+              <LoginContainer.Button onClick={this.onTwitterLogin}>
+                <LoginContainer.TwitterContent />
               </LoginContainer.Button>
             </LoginContainer.ButtonDiv>
 
