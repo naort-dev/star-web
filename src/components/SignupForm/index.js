@@ -30,6 +30,7 @@ class SignUp extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
+        tw_id: '',
         role: ROLES[props.signupRole],
       },
       gmailClick: false,
@@ -128,18 +129,22 @@ class SignUp extends React.Component {
     e.preventDefault();
     if (this.props.statusCode === '410') {
       this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.state.email.value } }, () => {
-        this.props.socialMediaLogin(
-          this.props.data.username || this.state.socialMedia.username,
-          this.state.socialMedia.first_name,
-          this.state.socialMedia.last_name,
-          this.state.socialMedia.sign_up_source,
-          this.state.socialMedia.profile_photo,
-          this.props.data.role || this.state.socialMedia.role,
-          this.state.socialMedia.fb_id,
-          this.state.socialMedia.gp_id,
-          this.state.socialMedia.in_id,
-          this.state.referral,
-        ).then((response) => {
+        const socialObject = {
+          userName: this.props.data.username || this.state.socialMedia.username,
+          firstName: this.state.socialMedia.first_name,
+          lastName: this.state.socialMedia.last_name,
+          nickName: this.state.socialMedia.nick_name,
+          source: this.state.socialMedia.sign_up_source,
+          profilePhoto: this.state.socialMedia.profile_photo,
+          role: this.props.data.role || this.state.socialMedia.role,
+          fbId: this.state.socialMedia.fb_id,
+          gpId: this.state.socialMedia.gp_id,
+          instId: this.state.socialMedia.in_id,
+          twId: this.state.socialMedia.tw_id,
+          referral: this.state.referral,
+        }
+        
+        this.props.socialMediaLogin(socialObject).then((response) => {
           if (response.status === 200) {
             if (response.data.data && response.data.data.user) {
               if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
@@ -245,6 +250,7 @@ class SignUp extends React.Component {
       const val = r;
       let firstName = val.first_name;
       let lastName = val.last_name;
+      let nickName = val.nick_name || val.name;
       if ((!firstName || !lastName) && val.name) {
         firstName = val.name.trim().split(" ")[0];
         lastName = val.name.trim().split(" ")[1];
@@ -256,24 +262,28 @@ class SignUp extends React.Component {
           first_name: firstName,
           last_name: lastName,
           sign_up_source: source,
-          nick_name: val.nick_name,
+          nick_name: nickName,
           profile_photo: val.profile_photo,
           tw_id: val.id,
         }
       });
     }
+    const socialObject = {
+      userName: this.state.socialMedia.username,
+      firstName: this.state.socialMedia.first_name,
+      lastName: this.state.socialMedia.last_name,
+      nickName: this.state.socialMedia.nick_name,
+      source: this.state.socialMedia.sign_up_source,
+      profilePhoto: this.state.socialMedia.profile_photo,
+      role: this.state.socialMedia.role,
+      fbId: this.state.socialMedia.fb_id,
+      gpId: this.state.socialMedia.gp_id,
+      instId: this.state.socialMedia.in_id,
+      twId: this.state.socialMedia.tw_id,
+      referral: this.state.referral,
+    }
     this.props.setSocialMediaData(this.state.socialMedia);
-    this.props.socialMediaLogin(
-      this.state.socialMedia.username,
-      this.state.socialMedia.first_name,
-      this.state.socialMedia.last_name,
-      this.state.socialMedia.sign_up_source,
-      this.state.socialMedia.profile_photo,
-      this.state.socialMedia.role,
-      this.state.socialMedia.fb_id,
-      this.state.socialMedia.gp_id,
-      this.state.socialMedia.in_id,
-    ).then((response) => {
+    this.props.socialMediaLogin(socialObject).then((response) => {
       if (response.status === 200) {
         if (response.data.data && response.data.data.user) {
           if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&

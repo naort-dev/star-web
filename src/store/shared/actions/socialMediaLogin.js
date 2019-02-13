@@ -38,18 +38,20 @@ export const socialMediaLoginFetchFailed = error => ({
   error,
 });
 
-export const socialMediaLogin = (userName, firstName, lastName, signUpSource, profilePhoto, roleV, fbId, gId ,instId, referral) => (dispatch, getState) => {
+export const socialMediaLogin = ({userName, firstName, lastName, nickName, source, profilePhoto, role, fbId, gpId ,instId, referral, twId}) => (dispatch, getState) => {
   dispatch(socialMediaLoginFetchStart());
   return fetch.post(Api.socialMediaLogin, {
     username: userName,
     first_name: firstName,
     last_name: lastName,
-    sign_up_source: signUpSource,
+    nick_name: nickName,
+    sign_up_source: source,
     profile_photo: profilePhoto,
-    role: roleV,
+    role: role,
     fb_id: fbId,
-    gp_id: gId,
+    gp_id: gpId,
     in_id: instId,
+    tw_id: twId,
     referral_code: referral,
   }).then((resp) => {
    
