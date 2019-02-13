@@ -114,7 +114,7 @@ class SignUp extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("Storage", this.listenToStorage);
+    window.removeEventListener("storage", this.listenToStorage);
   }
 
   onSignIn = (googleUser) => {
@@ -311,7 +311,7 @@ class SignUp extends React.Component {
           localStorage.removeItem("InstaAccessToken");
         })
         .catch(function(error) {});
-    } else if(localStorage.getItem("twitterData")) {
+    } else if (localStorage.getItem("twitterData")) {
       this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
       localStorage.removeItem("twitterData");
     }
