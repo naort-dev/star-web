@@ -137,8 +137,8 @@ const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   registerUser: (firstName, lastName, email, password, role, referral) =>
     dispatch(registerUser(firstName, lastName, email, password, role, referral)),
-  socialMediaLogin: (userName, firstName, lastName, signUpSource, profilePhoto, fbId, referral) =>
-    dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, fbId, referral)),
+  socialMediaLogin: (socialObject) =>
+    dispatch(socialMediaLogin(socialObject)),
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
   toggleLogin: state => dispatch(toggleLogin(state)),
