@@ -115,7 +115,7 @@ export default class LoginForm extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("Storage", this.getInstaAccessToken);
+    window.removeEventListener("storage", this.getInstaAccessToken);
   }
 
   onSignIn = (googleUser) => {
