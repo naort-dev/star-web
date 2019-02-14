@@ -393,7 +393,7 @@ export default class Starprofile extends React.Component {
                 />
                 <StarProfileStyled.profileWrapper>
                   <div className="profileImageContainer">
-                    <StarProfileStyled.profileImage src={this.props.userDetails && this.props.userDetails.avatarPhoto ? this.props.userDetails.avatarPhoto : '../../assets/images/profile.png'} alt="Profile" />
+                    <StarProfileStyled.profileImage src={this.props.userDetails && this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
                   </div>
                   <div className="profileDetails">
                     <div className="groupDetailsContainer">
