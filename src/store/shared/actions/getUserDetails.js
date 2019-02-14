@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep';
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
@@ -38,15 +39,23 @@ export const resetUserDetails = () => ({
 
 
 const parseUserDetails = (userData) => {
-  const finalUserData = { ...userData };
+  const finalUserData = cloneDeep(userData);
   let stageName = '';
   let avatarPhoto;
+  let avatarPhotoHD;
   if (finalUserData.user) {
     stageName = finalUserData.user.nick_name !== '' ? finalUserData.user.nick_name : `${finalUserData.user.first_name} ${finalUserData.user.last_name}`;
-    avatarPhoto = finalUserData.user.avatar_photo && finalUserData.user.avatar_photo.thumbnail_url;
+    if (finalUserData.user.avatar_photo) {
+      avatarPhoto = finalUserData.user.avatar_photo.thumbnail_url || finalUserData.user.avatar_photo.image_url;
+      avatarPhotoHD = finalUserData.user.avatar_photo.image_url;
+    } else if (finalUserData.user.profile_photo) {
+      avatarPhoto = finalUserData.user.profile_photo;
+      avatarPhotoHD = finalUserData.user.profile_photo;
+    }
   }
   finalUserData.user.stageName = stageName;
   finalUserData.user.avatarPhoto = avatarPhoto;
+  finalUserData.user.avatarPhotoHD = avatarPhotoHD;
   return finalUserData;
 };
 

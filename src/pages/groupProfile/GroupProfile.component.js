@@ -270,7 +270,7 @@ export default class GroupProfile extends React.Component {
               />
               <GroupProfileStyled.profileWrapper>
                 <div className="profileImageContainer">
-                  <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatar_photo.image_url : '../../assets/images/profile.png'} alt="Profile" />
+                  <GroupProfileStyled.profileImage src={this.props.groupDetails && this.props.groupDetails.avatar_photo ? this.props.groupDetails.avatarPhoto : '../../assets/images/profile.png'} alt="Profile" />
                 </div>
                 <div className="profileDetails">
                   <div className="groupDetailsContainer">
