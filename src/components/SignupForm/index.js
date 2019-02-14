@@ -5,6 +5,8 @@ import axios from 'axios';
 import ActionLoader from '../ActionLoader';
 import { LoginContainer, FooterSection } from './styled';
 import { twitterLogin } from '../../services';
+import { updateLoginStatus } from '../../store/shared/actions/login';
+import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
 
 class SignUp extends React.Component {
@@ -197,6 +199,7 @@ class SignUp extends React.Component {
   };
 
   onSocialMediaLogin = (r, source) => {
+    let skipSocialLogin = false;
     if (source === 2) {
       this.setState({
         socialMedia: {
@@ -248,53 +251,62 @@ class SignUp extends React.Component {
       });
     } else {
       const val = r;
-      let firstName = val.first_name;
-      let lastName = val.last_name;
-      let nickName = val.nick_name || val.name;
-      if ((!firstName || !lastName) && val.name) {
-        firstName = val.name.trim().split(" ")[0];
-        lastName = val.name.trim().split(" ")[1];
+      if (!val.authentication_token) {
+        let firstName = val.first_name;
+        let lastName = val.last_name;
+        let nickName = val.nick_name || val.name;
+        if ((!firstName || !lastName) && val.name) {
+          firstName = val.name.trim().split(" ")[0];
+          lastName = val.name.trim().split(" ")[1];
+        }
+        this.setState({
+          socialMedia: {
+            ...this.state.socialMedia,
+            username: val.email,
+            first_name: firstName,
+            last_name: lastName,
+            sign_up_source: source,
+            nick_name: nickName,
+            profile_photo: val.profile_photo,
+            tw_id: val.id,
+          }
+        });
+      } else {
+        skipSocialLogin = true;
+        this.props.updateLoginStatus(val);
+        this.props.fetchUserDetails(val.id);
+        this.props.closeSignupFlow();
       }
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: val.email,
-          first_name: firstName,
-          last_name: lastName,
-          sign_up_source: source,
-          nick_name: nickName,
-          profile_photo: val.profile_photo,
-          tw_id: val.id,
+    }
+    if (!skipSocialLogin) {
+      const socialObject = {
+        userName: this.state.socialMedia.username,
+        firstName: this.state.socialMedia.first_name,
+        lastName: this.state.socialMedia.last_name,
+        nickName: this.state.socialMedia.nick_name,
+        source: this.state.socialMedia.sign_up_source,
+        profilePhoto: this.state.socialMedia.profile_photo,
+        role: this.state.socialMedia.role,
+        fbId: this.state.socialMedia.fb_id,
+        gpId: this.state.socialMedia.gp_id,
+        instId: this.state.socialMedia.in_id,
+        twId: this.state.socialMedia.tw_id,
+        referral: this.state.referral,
+      }
+      this.props.setSocialMediaData(this.state.socialMedia);
+      this.props.socialMediaLogin(socialObject).then((response) => {
+        if (response.status === 200) {
+          if (response.data.data && response.data.data.user) {
+            if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
+            response.data.data.user.role_details.is_complete === false) {
+              this.props.changeStep(this.props.currentStep + 1);
+            } else {
+              this.props.closeSignupFlow();
+            }
+          }
         }
       });
     }
-    const socialObject = {
-      userName: this.state.socialMedia.username,
-      firstName: this.state.socialMedia.first_name,
-      lastName: this.state.socialMedia.last_name,
-      nickName: this.state.socialMedia.nick_name,
-      source: this.state.socialMedia.sign_up_source,
-      profilePhoto: this.state.socialMedia.profile_photo,
-      role: this.state.socialMedia.role,
-      fbId: this.state.socialMedia.fb_id,
-      gpId: this.state.socialMedia.gp_id,
-      instId: this.state.socialMedia.in_id,
-      twId: this.state.socialMedia.tw_id,
-      referral: this.state.referral,
-    }
-    this.props.setSocialMediaData(this.state.socialMedia);
-    this.props.socialMediaLogin(socialObject).then((response) => {
-      if (response.status === 200) {
-        if (response.data.data && response.data.data.user) {
-          if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
-          response.data.data.user.role_details.is_complete === false) {
-            this.props.changeStep(this.props.currentStep + 1);
-          } else {
-            this.props.closeSignupFlow();
-          }
-        }
-      }
-    });
   };
 
   onGmail = () => {
@@ -624,4 +636,9 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
 });
 
-export default connect(mapStateToProps)(SignUp);
+const mapProps = dispatch => ({
+  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+});
+
+export default connect(mapStateToProps, mapProps)(SignUp);
