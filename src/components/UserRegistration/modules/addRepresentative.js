@@ -2,8 +2,6 @@ import React from 'react';
 import PhoneInput, { isValidPhoneNumber } from 'react-phone-number-input';
 import validator from 'validator';
 import 'react-phone-number-input/style.css';
-import Popup from '../../Popup';
-import { generateOtp, validateOtp } from '../../../services/otpGenerate';
 import { addRepresentative, updateRepresentative, deleteRepresentative } from '../../../services/userRegistration';
 import GroupStyled from '../styled';
 import Loader from '../../Loader';
@@ -19,32 +17,9 @@ export default class AddRepresentative extends React.Component {
     anotherRepButton: true,
     phoneNumberVerify: 'Verify',
     country: '',
-    otpEnterPopup: false,
-    otpValue: '',
-    phoneNumberOriginal: '',
     countryCode: '',
-    otpErrorMessage: '',
     loading: false,
     oneTimeForm: true,
-  }
-
-  getOtp = () => {
-    if (this.state.phoneNumberVerify === 'Verify') {
-      const codeNumber = this.phone.props.metadata.countries[this.state.country][0];
-      const originalNumber = this.state.value.substring(codeNumber.length + 1, this.state.value.length);
-      this.setState({
-        phoneNumberOriginal: originalNumber,
-        countryCode: codeNumber,
-      });
-      generateOtp(originalNumber, codeNumber)
-        .then((resp) => {
-          if (resp.success) {
-            this.setState({
-              otpEnterPopup: true,
-            });
-          }
-        });
-    }
   }
 
   setRepPhone = (index, value) => {
@@ -92,12 +67,6 @@ export default class AddRepresentative extends React.Component {
     });
   }
 
-  handleFieldChange = (event, status) => {
-    this.setState({
-      emailCheckedBox: !status,
-    });
-  }
-
   handlePhoneFieldChange = (event, status) => {
     this.setState({
       phoneCheckedBox: !status,
@@ -115,19 +84,6 @@ export default class AddRepresentative extends React.Component {
     }
     representatives[index] = currentRep;
     this.setState({ representatives });
-  }
-
-  addEmailAddress = () => {
-    this.setState({
-      addEmailFlag: true,
-    });
-  }
-
-  closeInput = () => {
-    this.setState({
-      addEmailFlag: false,
-      email: { value: '', message: '', isValid: false },
-    });
   }
 
   checkEmail = () => {
@@ -200,16 +156,6 @@ export default class AddRepresentative extends React.Component {
     }
     representatives[index] = currentRep;
     this.setState({ representatives });
-  }
-
-  acceptEmailHandler = (e) => {
-    this.setState({ email: { ...this.state.email, value: e.target.value } });
-  };
-
-  acceptOTP = (e) => {
-    if (validator.isNumeric(e.target.value, { no_symbols: true }) || e.target.value === '') {
-      this.setState({ otpValue: e.target.value });
-    }
   }
 
   checkAllValidity = () => {
@@ -314,40 +260,6 @@ export default class AddRepresentative extends React.Component {
       this.setState({
         representatives,
         oneTimeForm: false,
-      });
-    }
-  }
-
-  closeOtpPopup = () => {
-    this.setState({
-      otpEnterPopup: false,
-      phoneNumberVerify: 'Verify',
-    });
-  }
-
-  submitOTPForm = () => {
-    if (this.state.otpValue !== '') {
-      validateOtp(this.state.phoneNumberOriginal, this.state.countryCode, this.state.otpValue)
-        .then((resp) => {
-          if (resp.success) {
-            this.setState({
-              phoneNumberVerify: 'Verified',
-              otpEnterPopup: false,
-              otpErrorMessage: '',
-            });
-          } else if (resp.status == '400' && resp.response.data.error.code === 1006) {
-            this.setState({
-              otpErrorMessage: resp.response.data.error.message,
-            });
-          } else if (resp.status == '400' && resp.response.data.error.code === 1009) {
-            this.setState({
-              otpErrorMessage: resp.response.data.error.message.verification_code[0],
-            });
-          }
-        });
-    } else {
-      this.setState({
-        otpErrorMessage: 'Enter code',
       });
     }
   }

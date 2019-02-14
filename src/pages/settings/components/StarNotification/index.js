@@ -64,6 +64,7 @@ export default class StarNotification extends React.Component {
           if (resp.success) {
             this.setState({
               otpEnterPopup: true,
+              otpValue: '',
             });
           }
         });
