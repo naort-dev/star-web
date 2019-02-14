@@ -272,6 +272,13 @@ export default class ScrollList extends React.Component {
                         </ListStyled.Banner>
                     }
                     {
+                      this.props.searchText ?
+                        <ListStyled.SearchContainer>
+                          You searched for <span>"{this.props.searchText}"</span>
+                        </ListStyled.SearchContainer>
+                      : null
+                    }
+                    {
                       this.infiniteScrollList('scrollable-target')
                     }
                   </Scrollbars>
