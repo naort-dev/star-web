@@ -168,6 +168,7 @@ export default class Landing extends React.Component {
         <ScrollList
           noDataText="Sorry! no matches"
           banner
+          searchText={this.props.filters.searchParam}
           dataList={this.props.celebList.data}
           menuActive={this.state.menuActive}
           limit={this.props.celebList.limit}
