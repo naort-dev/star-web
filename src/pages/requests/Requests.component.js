@@ -8,6 +8,7 @@ import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
 import RateView from './components/RateView';
+import RateReminder from './components/RateReminder';
 import ReactionView from './components/ReactionView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
@@ -116,6 +117,16 @@ export default class Requests extends React.Component {
             onSubmit={data => this.props.contactSupport({ comments: data.comment })}
             closePopup={this.closePopup}
             successMessage="The message has been sent."
+          />
+        );
+      case 'rateReminder':
+        return (
+          <RateReminder
+            title={orderDetails.booking_title}
+            requestType={orderDetails.request_type}
+            celebrity={orderDetails.celebrity}
+            selectedVideo={finalVideo}
+            selectItem={type => this.requestAction(orderDetails,type)}
           />
         );
       case 'rate':
@@ -279,6 +290,7 @@ export default class Requests extends React.Component {
       || actionType === 'cancel'
       || actionType === 'alert'
       || actionType === 'reaction'
+      || actionType === 'rateReminder'
     ) {
       showActionPopup = true;
       if (actionType === 'alert') {
