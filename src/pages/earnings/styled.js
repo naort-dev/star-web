@@ -163,9 +163,6 @@ EarningStyled.heading = styled.h1`
 EarningStyled.AllEarningsWrapper = styled.div`
   padding: 0 16px;
   background-color: #fff;
-  @media(min-width: 768px) {
-    padding: 16px 0;
-  }
 `;
 
 EarningStyled.errorMessage = styled.span`

@@ -2,20 +2,23 @@ import styled from 'styled-components';
 
 const TabStyled = styled.div`
   padding: 22px 16px 0;
-  border-bottom: 1px solid #CCCCCC;
   display: flex;
   justify-content: space-between;
-  position: relative;
   margin-bottom: 16px;
+  position: fixed;
+  top: ${props => (props.supporters ? '100px' : '59px')};
+  z-index: 2;
+  overflow: hidden;
+  width: 100%;
+  background-color: #fff;
   @media(min-width: 768px) {
     padding-top: 0;
-    padding-left: 44px;
-    padding-right: 44px;
+    top: ${props => (props.supporters ? '125px' : '90px')};
+    padding: ${props => (props.supporters ? '0 44px' : '0 20px')};
   }
   @media(min-width: 1025px) {
-    border-bottom: 1px solid #CCCCCC;
+    top: 90px;
     padding: 0;
-    position: relative;
   }
 `;
 
@@ -24,10 +27,15 @@ TabStyled.tabList = styled.ul`
   width: 100%;
   overflow-x: auto;
   white-space: nowrap;
+  border-bottom: 1px solid #CCCCCC;
   @media(min-width: 768px) {
     overflow: initial;
     height: auto;
     white-space: normal;
+  }
+  @media(min-width: 1025px) {
+    padding: 0;
+    width: 70%;
   }
 `;
 

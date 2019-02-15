@@ -50,6 +50,8 @@ ColumnLayoutStyled.mainSection = styled.section`
 
 ColumnLayoutStyled.CenterSection = styled.div`
   height: 100%;
+  padding-top: 70px;
+  position: relative;
   @media(min-width: 1025px) {
     width: 100%;
     display: inline-block;

@@ -191,6 +191,7 @@ export default class StarSupporters extends React.Component {
           labels={['All', 'Supporters', 'Pending']}
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
+          supporters
         />
         {
             (!membersList.length && membersLoading) ?

@@ -37,7 +37,11 @@ SupportStyled.Container = styled.div`
 `;
 
 SupportStyled.CenterSection = styled.div`
-  order: 2
+  order: 2;
+  padding-top: 20px;
+  @media(min-width: 768px) {
+    padding-top: 0;
+  }
   @media(min-width: 1025px) {
     width: 75%;
     display: inline-block;
@@ -48,7 +52,14 @@ SupportStyled.RightSection = styled.div`
   order: 1;
   padding: 10px;
   text-align: right;
+  position: fixed;
+  z-index: 2;
+  width: 100%;
+  background: #fff;
+  right: 0;
+  top: 65px;
   @media(min-width: 1025px) {
+    top: 90px;
     width: 25%;
     padding: 0 10px;
     text-align: left;
@@ -108,9 +119,7 @@ SupportStyled.LoaderWrapper = styled.div`
   padding: 20px 16px;
   @media(min-width: 1025px) {
     height: calc(100% - 79px);
-    padding: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px 0;
   }
   @media(min-width: 1920px) {
     padding-top: 32px;
