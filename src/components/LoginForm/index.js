@@ -159,6 +159,7 @@ export default class LoginForm extends React.Component {
   };
 
   onSocialMediaLogin = (r, source) => {
+    let skipSocialLogin = false;
     if (source === 2) {
       this.setState({
         socialMedia: {
@@ -207,41 +208,49 @@ export default class LoginForm extends React.Component {
       });
     } else {
       const val = r;
-      let firstName = val.first_name;
-      let lastName = val.last_name;
-      let nickName = val.nick_name || val.name;
-      if ((!firstName || !lastName) && val.name) {
-        firstName = val.name.trim().split(" ")[0];
-        lastName = val.name.trim().split(" ")[1];
-      }
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: val.email,
-          first_name: firstName,
-          last_name: lastName,
-          sign_up_source: source,
-          nick_name: nickName,
-          profile_photo: val.profile_photo,
-          tw_id: val.id,
+      if (!val.authentication_token) {
+        let firstName = val.first_name;
+        let lastName = val.last_name;
+        let nickName = val.nick_name || val.name;
+        if ((!firstName || !lastName) && val.name) {
+          firstName = val.name.trim().split(" ")[0];
+          lastName = val.name.trim().split(" ")[1];
         }
-      });
+        this.setState({
+          socialMedia: {
+            ...this.state.socialMedia,
+            username: val.email,
+            first_name: firstName,
+            last_name: lastName,
+            sign_up_source: source,
+            nick_name: nickName,
+            profile_photo: val.profile_photo,
+            tw_id: val.id,
+          }
+        });
+      } else {
+        skipSocialLogin = true;
+        this.props.updateLoginStatus(val);
+        this.props.fetchUserDetails(val.id);
+      }
     }
-    const socialObject = {
-      userName: this.state.socialMedia.username,
-      firstName: this.state.socialMedia.first_name,
-      lastName: this.state.socialMedia.last_name,
-      nickName: this.state.socialMedia.nick_name,
-      source: this.state.socialMedia.sign_up_source,
-      profilePhoto: this.state.socialMedia.profile_photo,
-      role: this.state.socialMedia.role,
-      fbId: this.state.socialMedia.fb_id,
-      gpId: this.state.socialMedia.gp_id,
-      instId: this.state.socialMedia.in_id,
-      twId: this.state.socialMedia.tw_id,
+    if (!skipSocialLogin) {
+      const socialObject = {
+        userName: this.state.socialMedia.username,
+        firstName: this.state.socialMedia.first_name,
+        lastName: this.state.socialMedia.last_name,
+        nickName: this.state.socialMedia.nick_name,
+        source: this.state.socialMedia.sign_up_source,
+        profilePhoto: this.state.socialMedia.profile_photo,
+        role: this.state.socialMedia.role,
+        fbId: this.state.socialMedia.fb_id,
+        gpId: this.state.socialMedia.gp_id,
+        instId: this.state.socialMedia.in_id,
+        twId: this.state.socialMedia.tw_id,
+      }
+      this.props.setSocialMediaData(this.state.socialMedia);
+      this.props.socialMediaLogin(socialObject);
     }
-    this.props.setSocialMediaData(this.state.socialMedia);
-    this.props.socialMediaLogin(socialObject);
   };
 
   onInstagramLogin = () => {

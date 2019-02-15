@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import RequestFlowPopup from '../RequestFlowPopup';
 import { LoginContainer, HeaderSection } from './styled';
-import { loginUser, resetSessionError } from '../../store/shared/actions/login';
+import { loginUser, resetSessionError, updateLoginStatus } from '../../store/shared/actions/login';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
@@ -13,6 +13,7 @@ import LoginForm from '../../components/LoginForm';
 import ForgotPassword from '../../components/ForgotPasswordForm';
 import ResetPassword from '../../components/ResetPasswordForm';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
+import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 
 class LoginFlow extends React.Component {
   constructor(props) {
@@ -93,6 +94,8 @@ const mapDispatchToProps = dispatch => ({
   loginUser: (email, password) => dispatch(loginUser(email, password)),
   socialMediaLogin: (socialObject) =>
     dispatch(socialMediaLogin(socialObject)),
+  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
