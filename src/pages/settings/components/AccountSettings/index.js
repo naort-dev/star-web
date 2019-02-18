@@ -51,8 +51,8 @@ export default class AccountSettings extends React.Component {
         file: props.userDetails.featured_photo ? props.userDetails.featured_photo.photo : null,
       },
       profileImage: {
-        image: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.image_url : null,
-        file: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.photo : null,
+        image: props.userDetails.avatarPhoto,
+        file: props.userDetails.avatarPhoto,
       },
       secondaryImages,
       firstName: props.userDetails.first_name ? props.userDetails.first_name : '',
