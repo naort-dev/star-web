@@ -5,7 +5,8 @@ export default function getAWSCredentials(url, auth_token, file) {
     .then((response) => {
       let filename = response.data.data.fields.key.split('/');
       filename = filename[2];
-      const formData = new FormData()
+      const formData = new FormData();
+      console.log(response)
       formData.append('success_action_status', response.data.data.fields.success_action_status);
       formData.append('signature', response.data.data.fields.signature);
       formData.append('x-amz-security-token', response.data.data.fields['x-amz-security-token']);
