@@ -129,11 +129,9 @@ export default class QAVideoRecorder extends React.Component {
       clearTimeout(this.timerID);
     }
     const superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
-    console.log(superBuffer);
     var newFile = new FileReader(superBuffer)
     newFile.readAsArrayBuffer(superBuffer);
     newFile.onloadend = function(a){
-      console.log(SparkMD5.ArrayBuffer.hash(this.result));
     }
     const videoSrc = window.URL.createObjectURL(superBuffer);
     this.props.onStopRecording({ videoSrc, superBuffer });
