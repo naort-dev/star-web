@@ -62,15 +62,7 @@ export default class Personal extends React.Component {
   }
 
   setLoginUserName = () => {
-    let userNameValue;
-    if (this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name !== '') {
-      userNameValue = this.props.loginDetails.nick_name;
-    } else if (!this.props.loginDetails.show_nick_name) {
-      userNameValue = this.props.loginDetails.first_name + ' ' + this.props.loginDetails.last_name;
-    } else {
-      userNameValue = 'Myself';
-    }
-    this.setState({ userName: userNameValue });
+    this.setState({ userName: this.props.loginDetails.stageName });
   }
   handleChange = (event) => {
     const occasionList = this.props.eventsDetails;

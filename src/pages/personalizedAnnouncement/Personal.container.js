@@ -8,7 +8,7 @@ import { postOtherRelation } from '../../store/shared/actions/otherRelation';
 const mapStateToProps = state => ({
   isLoggedIn: state.session.isLoggedIn,
   loading: state.session.loading,
-  loginDetails: state.session.auth_token,
+  loginDetails: state.userDetails.settings_userDetails,
   celebrityDetails: state.celebDetails.celebrityDetails,
   userDetails: state.celebDetails.userDetails,
   eventsDetails: state.occasionList.data,
