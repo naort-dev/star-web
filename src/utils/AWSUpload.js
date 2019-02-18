@@ -1,9 +1,11 @@
 import { fetch } from '../services/fetch';
+import { getFileMd5 } from './getMd5Hash';
 
 export default function getAWSCredentials(url, auth_token, file) {
   return fetch(url)
-    .then((response) => {
+    .then(async (response) => {
       let filename = response.data.data.fields.key.split('/');
+      const md5 = await getFileMd5(file);
       filename = filename[2];
       const formData = new FormData();
       formData.append('success_action_status', response.data.data.fields.success_action_status);
@@ -15,6 +17,6 @@ export default function getAWSCredentials(url, auth_token, file) {
       formData.append('key', response.data.data.fields.key);
       formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
       formData.append('file', file);
-      return { formData, url: response.data.data.url, filename };
+      return { formData, url: response.data.data.url, filename, md5 };
     });
 }

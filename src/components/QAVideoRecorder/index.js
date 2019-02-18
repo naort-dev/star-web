@@ -1,5 +1,4 @@
 import React from 'react';
-import SparkMD5 from 'spark-md5';
 import VideoRecorderDiv from './styled';
 import { getMobileOperatingSystem, checkMediaRecorderSupport } from '../../utils/checkOS';
 import VideoPlayer from '../VideoPlayer';
@@ -129,10 +128,6 @@ export default class QAVideoRecorder extends React.Component {
       clearTimeout(this.timerID);
     }
     const superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
-    var newFile = new FileReader(superBuffer)
-    newFile.readAsArrayBuffer(superBuffer);
-    newFile.onloadend = function(a){
-    }
     const videoSrc = window.URL.createObjectURL(superBuffer);
     this.props.onStopRecording({ videoSrc, superBuffer });
     this.mediaRecorder.stop();
