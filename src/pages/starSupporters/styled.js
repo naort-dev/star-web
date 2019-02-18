@@ -57,7 +57,7 @@ SupportStyled.RightSection = styled.div`
   width: 100%;
   background: #fff;
   right: 0;
-  top: 65px;
+  top: 60px;
   @media(min-width: 1025px) {
     top: 90px;
     width: 25%;
