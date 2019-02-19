@@ -16,7 +16,13 @@ EarningStyled.sectionWrapper = styled.div`
 `;
 
 EarningStyled.mainSection = styled.section`
-
+  height: calc(100% - 64px);
+  @media(min-width: 1025px) {
+    height: calc(100% - 50px);
+    #column-layout-scrollable-target {
+      padding-right: 50px;
+    }
+  }
 `;
 
 EarningStyled.Overview = styled.ul`
@@ -161,7 +167,6 @@ EarningStyled.heading = styled.h1`
 `;
 
 EarningStyled.AllEarningsWrapper = styled.div`
-  padding: 0 16px;
   background-color: #fff;
 `;
 
