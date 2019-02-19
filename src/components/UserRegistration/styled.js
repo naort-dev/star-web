@@ -541,6 +541,17 @@ GroupStyled.ControlButton = styled.button`
   }
 `;
 
+GroupStyled.CancelButton = styled.button`
+  font-family: 'Avenir-Light';
+  padding: 10px 15px;
+  color: #969696;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  margin-right: 20px;
+  border-radius: 7px;
+  background-color: #fff;
+`;
+
 GroupStyled.GroupName = styled.span`
   display: block;
   padding: 20px;
