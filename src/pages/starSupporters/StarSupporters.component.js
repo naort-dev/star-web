@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { Scrollbars } from 'react-custom-scrollbars';
 import { deleteGroupMember, addGroupMember } from '../../services/groupManagement';
 import ColumnLayout from '../../components/ColumnLayout';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
@@ -191,6 +191,7 @@ export default class StarSupporters extends React.Component {
           labels={['All', 'Supporters', 'Pending']}
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
+          supporters
         />
         {
             (!membersList.length && membersLoading) ?
@@ -198,17 +199,23 @@ export default class StarSupporters extends React.Component {
                 <Loader />
               </SupportStyled.LoaderWrapper>
             :
-              <ScrollList
-                dataList={membersList}
-                scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
-                renderFunction={this.renderMembers}
-                limit={membersLimit}
-                totalCount={membersCount}
-                offset={membersOffset}
-                loading={membersLoading}
-                noDataText="No requests"
-                fetchData={(offset, refresh) => this.fetchList(this.state.selectedTab, offset, refresh)}
-              />
+              <SupportStyled.ListWrapper>
+                <Scrollbars
+                  renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+                >
+                  <ScrollList
+                    dataList={membersList}
+                    scrollTarget="column-layout-scrollable-target"
+                    renderFunction={this.renderMembers}
+                    limit={membersLimit}
+                    totalCount={membersCount}
+                    offset={membersOffset}
+                    loading={membersLoading}
+                    noDataText="No requests"
+                    fetchData={(offset, refresh) => this.fetchList(this.state.selectedTab, offset, refresh)}
+                  />
+                </Scrollbars>
+              </SupportStyled.ListWrapper>
           }
       </React.Fragment>
     );
@@ -272,9 +279,6 @@ export default class StarSupporters extends React.Component {
                       <SupportStyled.BigHeading>
                         Invite and share your Starsona profile
                       </SupportStyled.BigHeading>
-                      <SupportStyled.Description>
-                        
-                      </SupportStyled.Description>
                       <SupportStyled.ControlWrapper>
                         <SupportStyled.ControlButton onClick={this.showInviteView}>
                           {

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
@@ -104,44 +105,48 @@ class StarSettings extends React.Component {
           selected={selectedTab}
         />
         <SettingsStyled.Container>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
-            <AccountSettings
-              type="star"
-              userDetails={this.props.userDetails}
-              fetchUserDetails={this.props.fetchUserDetails}
-              submitAccountDetails={this.submitAccountDetails}
-              resetChangePassword={this.props.resetChangePassword}
-              changePassword={this.props.changePassword}
-              changePasswordData={this.props.changePasswordData}
-            />
-          </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
-            <ProfileSettings
-              fetchUserDetails={this.props.fetchUserDetails}
-              userDetails={this.props.userDetails}
-              celebDetails={this.props.celebrityDetails}
-              fetchUrl={this.props.fetchURL}
-              stripeRegistration={this.props.stripeRegistration}
-              checkStripe={this.props.checkStripe}
-              submitProfileDetails={this.submitProfileDetails}
-            />
-          </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
-            <ShareUser
-              type="star"
-              heading="Tell your fans that you're on Starsona"
-              description=""
-              shareUrl={this.props.userDetails.share_url}
-            />
-          </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Notifications'}>
-            <StarNotification
-              type="star"
-              notificationDetails={this.props.userDetails.notification_settings}
-              representativeDetails={this.props.userDetails.celebrity_representatives}
-              onComplete={this.submitNotifications}
-            />
-          </SettingsStyled.ContentWrapper>
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
+              <AccountSettings
+                type="star"
+                userDetails={this.props.userDetails}
+                fetchUserDetails={this.props.fetchUserDetails}
+                submitAccountDetails={this.submitAccountDetails}
+                resetChangePassword={this.props.resetChangePassword}
+                changePassword={this.props.changePassword}
+                changePasswordData={this.props.changePasswordData}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Profile details'}>
+              <ProfileSettings
+                fetchUserDetails={this.props.fetchUserDetails}
+                userDetails={this.props.userDetails}
+                celebDetails={this.props.celebrityDetails}
+                fetchUrl={this.props.fetchURL}
+                stripeRegistration={this.props.stripeRegistration}
+                checkStripe={this.props.checkStripe}
+                submitProfileDetails={this.submitProfileDetails}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Share profile'}>
+              <ShareUser
+                type="star"
+                heading="Tell your fans that you're on Starsona"
+                description=""
+                shareUrl={this.props.userDetails.share_url}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Notifications'}>
+              <StarNotification
+                type="star"
+                notificationDetails={this.props.userDetails.notification_settings}
+                representativeDetails={this.props.userDetails.celebrity_representatives}
+                onComplete={this.submitNotifications}
+              />
+            </SettingsStyled.ContentWrapper>
+          </Scrollbars>
         </SettingsStyled.Container>
       </SettingsStyled>
     );

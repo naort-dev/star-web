@@ -1,5 +1,6 @@
 import React from 'react';
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash';
+import { Scrollbars } from 'react-custom-scrollbars';
 import ColumnLayout from '../../components/ColumnLayout';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
@@ -367,7 +368,7 @@ export default class Requests extends React.Component {
     return (
       <ScrollList
         dataList={this.props.requestsList}
-        scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+        scrollTarget="column-layout-scrollable-target"
         requestDetails
         renderFunction={this.renderRequests}
         starMode={this.props.starMode}
@@ -390,9 +391,13 @@ export default class Requests extends React.Component {
           selected={this.state.selectedTab}
         />
         <RequestsStyled.ContentWrapper>
-          {
-            this.renderBookings()
-          }
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            {
+              this.renderBookings()
+            }
+          </Scrollbars>
         </RequestsStyled.ContentWrapper>
       </React.Fragment>
     );
