@@ -72,34 +72,22 @@ export default class Personal extends React.Component {
     }
     this.setState({ userName: userNameValue });
   }
-  handleChange = (event) => {
-    const occasionList = this.props.eventsDetails;
-    const result = occasionList.find((find) => {
-      return find.id == event.target.value;
-    });
-    this.setState({
-      selectedValue: event.target.value,
-      templateType: result ? result.type : '0',
-      relationship: result ? result.relationships : '0',
-      eventName: result ? result.title : 'Choose One',
-    });
-    this.emptyTemplateDetails();
-  }
-  handleBooking = () => {
-    const hostNameValid = this.checkRequiredHostName();
-    const userNameValid = this.checkRequiredUserName();
-    if (!hostNameValid && !userNameValid) {
-      const bookObj = this.createBookingObject(this.state);
-      if (bookObj) {
-        if (localStorage) {
-          localStorage.setItem('bookingData', JSON.stringify(bookObj));
-        }
-        this.props.setBookingDetails(bookObj);
-        this.props.changeStep(this.props.currentStepCount + 1);
-        // this.props.history.push(`/${this.props.match.params.id}/confirm`);
+
+  getAudio() {
+    let from_audio_file = null;
+    let to_audio_file = null;
+    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
+      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
+        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
+      }
+
+      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
+        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
       }
     }
+    return { from_audio_file, to_audio_file };
   }
+
   checkRequiredHostName = () => {
     let whoIsforValue;
     if (this.state.selectedPersonal === '2') {
@@ -130,22 +118,39 @@ export default class Personal extends React.Component {
     return myselfValue;
   }
 
-  getAudio() {
-    let from_audio_file = null;
-    let to_audio_file = null;
-    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
-      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
-        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
-      }
-
-      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
-        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
+  handleBooking = () => {
+    const hostNameValid = this.checkRequiredHostName();
+    const userNameValid = this.checkRequiredUserName();
+    if (!hostNameValid && !userNameValid) {
+      const bookObj = this.createBookingObject(this.state);
+      if (bookObj) {
+        if (localStorage) {
+          localStorage.setItem('bookingData', JSON.stringify(bookObj));
+        }
+        this.props.setBookingDetails(bookObj);
+        this.props.changeStep(this.props.currentStepCount + 1);
+        // this.props.history.push(`/${this.props.match.params.id}/confirm`);
       }
     }
-    return { from_audio_file, to_audio_file };
   }
 
-
+  handleChange = (event) => {
+    const occasionList = this.props.eventsDetails;
+    const result = occasionList.find((find) => {
+      return find.id == event.target.value;
+    });
+    this.setState({
+      selectedValue: event.target.value,
+      templateType: result ? result.type : '0',
+      relationship: result ? result.relationships : '0',
+      eventName: result ? result.title : 'Choose One',
+      whoIsfor: false,
+      whoIsfrom: false,
+      eventTitle: false,
+      eventDate: false,
+    });
+    this.emptyTemplateDetails();
+  }
 
   createBookingObject = (obj) => {
     const { from_audio_file, to_audio_file } = this.getAudio();
@@ -203,7 +208,7 @@ export default class Personal extends React.Component {
     this.props.postOtherRelation(this.state.otherRelationValue);
   }
   handleChangePersonal = (e) => {
-    this.setState({ selectedPersonal: e.target.value });
+    this.setState({selectedPersonal: e.target.value });
 
     this.emptyTemplateDetails();
   }
@@ -234,6 +239,10 @@ export default class Personal extends React.Component {
       specification: '',
       importantinfo: '',
       eventdetailName: '',
+      whoIsfor: false,
+      whoIsfrom: false,
+      eventTitle: false,
+      eventDate: false,
     });
   }
   handleInput = (data, type) => {
@@ -288,7 +297,7 @@ export default class Personal extends React.Component {
                     {
                       this.props.currentStepCount === 2 &&
                         <HeaderSection>
-                          <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                          <HeaderSection.HeaderNavigation onClick={this.goBack} />
                         </HeaderSection>
                     }
                     <Request.ComponentWrapper>
