@@ -127,6 +127,9 @@ SupportStyled.ListWrapper = styled.div`
   height: calc(100% - 123px);
   @media(min-width: 1025px) {
     height: calc(100% - 50px);
+    #column-layout-scrollable-target {
+      padding-right: 50px;
+    }
   }
 `;
 
