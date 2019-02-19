@@ -9,18 +9,65 @@ import {
 
 const ReminderStyled = styled.div`
   text-align: center;
+  min-height: 500px;
+`;
+
+ReminderStyled.Overlay = styled.span`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgba(0,0,0,.6);
+  @media(min-width: 1025px) {
+    display: none;
+  }
+`;
+
+ReminderStyled.MobilePopup = ReminderStyled.extend`
+  position: fixed;
+  transition: 1s opacity ease-out;
+  background: rgb(248, 248, 248);
+  z-index: 1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-height: auto;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  opacity: 1;
+  display: block;
+  padding-top: 20px;
+  @media(min-width: 1025px) {
+    display: none;
+  }
+`;
+
+ReminderStyled.MobileCancel = styled.span`
+  display: block;
+  padding: 10px;
+  background: #fff;
+  font-family: 'Avenir-Medium';
+  cursor: pointer;
 `;
 
 ReminderStyled.Header = styled.span`
   display: block;
   font-size: 15px;
   font-family: 'Avenir-Bold';
+  @media(min-width: 1025px) {
+    font-size: 18px;
+  }
 `;
 
 ReminderStyled.Description = ReminderStyled.Header.extend`
   font-family: 'Avenir-Light';
   font-size: 14px;
   padding-top: 17px;
+  @media(min-width: 1025px) {
+    font-size: 16px;
+  }
 `;
 
 ReminderStyled.ActionButton = styled.button`
@@ -114,6 +161,9 @@ ReminderStyled.NetworkName = styled.span`
   font-family: 'Avenir-Regular';
   margin-top: 7px;
   color: #000;
+  @media(min-width: 1025px) {
+    font-size: 14px;
+  }
 `;
 
 export default ReminderStyled;
