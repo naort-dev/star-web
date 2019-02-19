@@ -63,13 +63,9 @@ class ColumnLayout extends React.Component {
             </Scrollbars>
           </ColumnLayoutStyled.sideSection>
           <ColumnLayoutStyled.mainSection menuActive={this.state.menuActive}>
-            <Scrollbars
-              renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
-            >
-              <ColumnLayoutStyled.CenterSection>
-                {this.props.children}
-              </ColumnLayoutStyled.CenterSection>
-            </Scrollbars>
+            <ColumnLayoutStyled.CenterSection>
+              {this.props.children}
+            </ColumnLayoutStyled.CenterSection>
           </ColumnLayoutStyled.mainSection>
         </ColumnLayoutStyled.Container>
       </ColumnLayoutStyled>

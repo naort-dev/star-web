@@ -541,6 +541,17 @@ GroupStyled.ControlButton = styled.button`
   }
 `;
 
+GroupStyled.CancelButton = styled.button`
+  font-family: 'Avenir-Light';
+  padding: 10px 15px;
+  color: #969696;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  margin-right: 20px;
+  border-radius: 7px;
+  background-color: #fff;
+`;
+
 GroupStyled.GroupName = styled.span`
   display: block;
   padding: 20px;
@@ -800,26 +811,16 @@ GroupStyled.SuccessTextBold = styled.p`
 `;
 
 GroupStyled.HeaderText = styled.div`
-  text-align:center;
-  color:#676767;
-  font-size:20px;
+  text-align: center;
+  color: #565555;
+  font-size: 18px;
   font-family: 'Avenir-Medium';
-  @media(min-width:768px){
-    font-size:25px;
-  }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
-  }
 `;
 
 GroupStyled.SocialMediaMessage = styled.div`
   font-family: 'Avenir-Regular';
   font-size: 14px;
   text-align: center;
-  color: #7B797A;
   margin-bottom: 5px;
   margin-top: 10px;
   word-spacing: 3px;
@@ -868,7 +869,6 @@ GroupStyled.ButtonWrapper = styled.button`
 
 GroupStyled.RepresentativeWrapper = styled.div`
   border-top: ${props => (props.signupRep ? 'none' : '1px solid #ddd')};
-  padding-top: 20px;
 `;
 
 GroupStyled.addRepWrapper = styled.div`
@@ -879,14 +879,18 @@ GroupStyled.addRepWrapper = styled.div`
     display: inline-block;
   }  
   .addRepText {
-    font-size: 17px;
+    color: #565555;
+    font-size: 18px;
+    font-family: 'Avenir-Medium';
     @media(min-width:768px){
       display: inline-block;
       width: calc(100% - 55px);
     }
     p {
-      font-size: 12px;
-      color: #aaa;
+      display: block;
+      font-size: 14px;
+      margin-top: 5px;
+      font-family: 'Avenir-Light';
     }
   }
 `;

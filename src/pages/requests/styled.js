@@ -15,7 +15,13 @@ RequestsStyled.sectionWrapper = styled.div`
 `;
 
 RequestsStyled.ContentWrapper = styled.section`
-
+  height: calc(100% - 64px);
+  @media(min-width: 1025px) {
+    height: calc(100% - 50px);
+    #column-layout-scrollable-target {
+      padding-right: 50px;
+    }
+  }
 `;
 
 RequestsStyled.StatusTypeWrapper = styled.section`
