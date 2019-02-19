@@ -5,20 +5,17 @@ const TabStyled = styled.div`
   display: flex;
   justify-content: space-between;
   margin-bottom: 16px;
-  position: fixed;
-  top: ${props => (props.supporters ? '100px' : '59px')};
-  z-index: 2;
   overflow: hidden;
   width: 100%;
   background-color: #fff;
+  border-bottom: 1px solid #CCCCCC;
   @media(min-width: 768px) {
     padding-top: 0;
-    top: ${props => (props.supporters ? '125px' : '90px')};
-    padding: ${props => (props.supporters ? '0 44px' : '0 20px')};
   }
   @media(min-width: 1025px) {
-    top: 90px;
     padding: 0;
+    padding-right: 50px;
+    border: none;
   }
 `;
 
@@ -27,7 +24,6 @@ TabStyled.tabList = styled.ul`
   width: 100%;
   overflow-x: auto;
   white-space: nowrap;
-  border-bottom: 1px solid #CCCCCC;
   @media(min-width: 768px) {
     overflow: initial;
     height: auto;
@@ -35,8 +31,8 @@ TabStyled.tabList = styled.ul`
   }
   @media(min-width: 1025px) {
     padding: 0;
-    width: 70%;
-  }
+    border-bottom: 1px solid #CCCCCC;
+ }
 `;
 
 TabStyled.tabListItem = styled.li`
