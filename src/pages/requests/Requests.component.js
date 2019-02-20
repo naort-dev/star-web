@@ -18,6 +18,7 @@ import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
 import { getRequestDetails } from '../../services/request';
 import RequestsStyled from './styled';
+import { videoTitleGenerator } from '../../utils/dataToStringFormatter';
 import { celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class Requests extends React.Component {
@@ -31,7 +32,6 @@ export default class Requests extends React.Component {
       loading: false,
       orderDetails: {},
       alertText: '',
-      scrollTarget: '',
     };
     this.requestType = {
       3: 'Q&A',
@@ -332,10 +332,6 @@ export default class Requests extends React.Component {
     return null;
   }
 
-  updateScrollTarget = (target) => {
-    this.setState({ scrollTarget: target });
-  }
-
   closePopup = () => {
     this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false });
   }
@@ -409,14 +405,13 @@ export default class Requests extends React.Component {
         <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          getScrollTarget={this.updateScrollTarget}
         >
           {this.renderCenterSection()}
         </ColumnLayout>
         {
           showRateReminder &&
             <RateReminder
-              title={orderDetails.booking_title}
+              title={videoTitleGenerator(orderDetails.request_type, orderDetails.occasion)}
               requestType={orderDetails.request_type}
               celebrity={orderDetails.celebrity}
               selectedVideo={this.findVideoByStatus(1)} // find completed video
