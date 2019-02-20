@@ -337,7 +337,7 @@ border: 2px solid #FF6C58;
 `;
 LoginContainer.ForgotButtonWrapper = styled.div`
   text-align:left;
-  margin-top:4%;
+  margin-top: 24px;
 `;
 LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;

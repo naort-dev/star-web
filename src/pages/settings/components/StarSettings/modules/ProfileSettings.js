@@ -14,7 +14,6 @@ export default class ProfileSettings extends React.Component {
     };
   }
 
-
   componentWillMount() {
     this.setInitialData(this.props);
   }
