@@ -113,7 +113,7 @@ class SignUp extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("Storage", this.getInstaAccessToken);
+    window.removeEventListener("storage", this.getInstaAccessToken);
   }
 
   onSignIn = (googleUser) => {
@@ -252,6 +252,7 @@ class SignUp extends React.Component {
       this.state.socialMedia.fb_id,
       this.state.socialMedia.gp_id,
       this.state.socialMedia.in_id,
+      this.state.referral,
     ).then((response) => {
       if (response.status === 200) {
         if (response.data.data && response.data.data.user) {
