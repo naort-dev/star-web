@@ -138,11 +138,11 @@ export default class RateReminder extends React.Component {
     );
   }
 
-  renderRateReminder = ({ title, selectedVideo }) => (
+  renderRateReminder = ({ title, selectedVideo, celebrity }) => (
     <React.Fragment>
       <ReminderStyled.Header>Rate your video</ReminderStyled.Header>
       <ReminderStyled.Description>
-        {title}
+        {title} from {celebrity}
       </ReminderStyled.Description>
       <ReminderStyled.ActionButton onClick={this.enableRateView}>
         Rate now
