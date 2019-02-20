@@ -79,7 +79,6 @@ class FanSettings extends React.Component {
                 submitAccountDetails={this.submitAccountDetails}
                 fetchUrl={this.props.fetchURL}
                 stripeRegistration={this.props.stripeRegistration}
-                checkStripe={this.props.checkStripe}
                 resetChangePassword={this.props.resetChangePassword}
                 changePassword={this.props.changePassword}
                 changePasswordData={this.props.changePasswordData}
@@ -107,7 +106,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   toggleSignup: (state, type, step, enableClose) => dispatch(toggleSignup(state, type, step, enableClose)),
   fetchURL: () => dispatch(fetchURL()),
-  checkStripe: () => dispatch(checkStripe()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FanSettings);
