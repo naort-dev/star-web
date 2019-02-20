@@ -93,14 +93,14 @@ export default class AccountSettings extends React.Component {
     }
   }
 
-  getStripe() {
+  getStripe = () => {
     this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
   }
 
-  getDashboard() {
+  getDashboard = () => {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
