@@ -10,6 +10,7 @@ import OrderDetailsItem from '../OrderDetails/orderDetailsItem';
 import StarRating from '../StarRating';
 import { requestExpiryDays } from '../../constants';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
+import { videoTitleGenerator } from '../../utils/dataToStringFormatter';
 import { setVideoViewStatus } from '../../services/requestFeedback';
 import { celebRequestStatusList, requestStatusList, openStatusList, celebOpenStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
@@ -232,10 +233,7 @@ export default class RequestDetails extends React.Component {
 
   getTitle = () => {
     const { request_type: requestType, occasion } = this.props.orderDetails;
-    if (requestType === 3) { // Q&A video
-      return `Q&A ${requestTypeTitle[requestType]}`;
-    }
-    return `${occasion} ${requestTypeTitle[requestType]}`;
+    return videoTitleGenerator(requestType, occasion);
   }
 
   handleGlobalClick = (event) => {
@@ -298,7 +296,7 @@ export default class RequestDetails extends React.Component {
     const { requestStatus } = this.props;
     if (requestStatus === 6) { // completed video
       if (this.videoRead) {
-        this.props.selectItem('rate');
+        this.props.selectItem('rateReminder');
         this.videoRead = false;
       }
     }

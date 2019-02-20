@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
@@ -66,29 +67,32 @@ class FanSettings extends React.Component {
           selected={selectedTab}
         />
         <SettingsStyled.Container>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
-            <AccountSettings
-              type="fan"
-              userDetails={this.props.userDetails}
-              enableStarSignup={this.enableStarSignup}
-              fetchUserDetails={this.props.fetchUserDetails}
-              submitAccountDetails={this.submitAccountDetails}
-              fetchUrl={this.props.fetchURL}
-              stripeRegistration={this.props.stripeRegistration}
-              checkStripe={this.props.checkStripe}
-              resetChangePassword={this.props.resetChangePassword}
-              changePassword={this.props.changePassword}
-              changePasswordData={this.props.changePasswordData}
-            />
-          </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Invite friends'}>
-            <ShareUser
-              heading="Invite your friends to join Starsona"
-              description=""
-              type="fan"
-              shareUrl="www.starsona.com"
-            />
-          </SettingsStyled.ContentWrapper>
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
+              <AccountSettings
+                type="fan"
+                userDetails={this.props.userDetails}
+                enableStarSignup={this.enableStarSignup}
+                fetchUserDetails={this.props.fetchUserDetails}
+                submitAccountDetails={this.submitAccountDetails}
+                fetchUrl={this.props.fetchURL}
+                stripeRegistration={this.props.stripeRegistration}
+                resetChangePassword={this.props.resetChangePassword}
+                changePassword={this.props.changePassword}
+                changePasswordData={this.props.changePasswordData}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Invite friends'}>
+              <ShareUser
+                heading="Invite your friends to join Starsona"
+                description=""
+                type="fan"
+                shareUrl="www.starsona.com"
+              />
+            </SettingsStyled.ContentWrapper>
+          </Scrollbars>
         </SettingsStyled.Container>
       </SettingsStyled>
     );
@@ -102,7 +106,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   toggleSignup: (state, type, step, enableClose) => dispatch(toggleSignup(state, type, step, enableClose)),
   fetchURL: () => dispatch(fetchURL()),
-  checkStripe: () => dispatch(checkStripe()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FanSettings);

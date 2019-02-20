@@ -5,12 +5,19 @@ const SettingsStyled = styled.div`
 `;
 
 SettingsStyled.Container = styled.section`
-  padding: 0 10px 20px;
-  @media(min-width: 768px) {
-    padding: 0 44px 20px;
+  height: calc(100% - 64px);
+  #column-layout-scrollable-target {
+    padding: 0 10px 20px;
+    @media(min-width: 768px) {
+      padding: 0 44px 20px;
+    }
+    @media(min-width: 1025px) {
+      padding: 0 10px 20px;
+      padding-right: 50px;
+    }
   }
   @media(min-width: 1025px) {
-    padding: 0 10px 20px;
+    height: calc(100% - 50px);
   }
 `;
 

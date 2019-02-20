@@ -1,5 +1,6 @@
 import React from 'react';
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash';
+import { Scrollbars } from 'react-custom-scrollbars';
 import ColumnLayout from '../../components/ColumnLayout';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
@@ -8,6 +9,7 @@ import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
 import RateView from './components/RateView';
+import RateReminder from './components/RateReminder';
 import ReactionView from './components/ReactionView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
@@ -25,6 +27,7 @@ export default class Requests extends React.Component {
       selectedTab: 'All',
       requestAction: '',
       showActionPopup: false,
+      showRateReminder: false,
       loading: false,
       orderDetails: {},
       alertText: '',
@@ -162,6 +165,12 @@ export default class Requests extends React.Component {
     }
   }
 
+  findVideoByStatus = (videoStatus) => {
+    const { request_video: requestVideo } = this.state.orderDetails;
+    const finalVideo = requestVideo ? requestVideo.find(video => video.video_status === videoStatus) : null;
+    return finalVideo;
+  }
+
   fetchVideosList = () => {
     this.props.fetchMyVideosList(0, true);
   }
@@ -250,7 +259,7 @@ export default class Requests extends React.Component {
   }
 
   requestAction = (data, actionType) => {
-    let { requestAction, showActionPopup, orderDetails, alertText } = this.state;
+    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder } = this.state;
     if (actionType === 'edit') {
       this.setState({ loading: true });
       getRequestDetails(data.booking_id)
@@ -270,6 +279,9 @@ export default class Requests extends React.Component {
             this.requestAction('Something went wrong', 'alert');
           }
         });
+    } else if (actionType === 'rateReminder') {
+      showRateReminder = true;
+      orderDetails = data;
     } else if (actionType === 'share'
       || actionType === 'respond'
       || actionType === 'report'
@@ -288,7 +300,7 @@ export default class Requests extends React.Component {
       }
     }
     requestAction = actionType;
-    this.setState({ orderDetails, alertText, requestAction, showActionPopup });
+    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -325,7 +337,7 @@ export default class Requests extends React.Component {
   }
 
   closePopup = () => {
-    this.setState({ showActionPopup: false, alertText: '' });
+    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false });
   }
 
   renderRequests = (request) => {
@@ -356,7 +368,7 @@ export default class Requests extends React.Component {
     return (
       <ScrollList
         dataList={this.props.requestsList}
-        scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+        scrollTarget="column-layout-scrollable-target"
         requestDetails
         renderFunction={this.renderRequests}
         starMode={this.props.starMode}
@@ -379,15 +391,19 @@ export default class Requests extends React.Component {
           selected={this.state.selectedTab}
         />
         <RequestsStyled.ContentWrapper>
-          {
-            this.renderBookings()
-          }
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            {
+              this.renderBookings()
+            }
+          </Scrollbars>
         </RequestsStyled.ContentWrapper>
       </React.Fragment>
     );
   }
   render() {
-    const { requestAction, showActionPopup, loading } = this.state;
+    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails } = this.state;
     return (
       <div>
         <ColumnLayout
@@ -397,6 +413,17 @@ export default class Requests extends React.Component {
         >
           {this.renderCenterSection()}
         </ColumnLayout>
+        {
+          showRateReminder &&
+            <RateReminder
+              title={orderDetails.booking_title}
+              requestType={orderDetails.request_type}
+              celebrity={orderDetails.celebrity}
+              selectedVideo={this.findVideoByStatus(1)} // find completed video
+              closeRateReminder={this.closePopup}
+              selectItem={type => this.requestAction(orderDetails, type)}
+            />
+        }
         {
           this.props.orderDetailsLoading || loading ?
             <ActionLoader />

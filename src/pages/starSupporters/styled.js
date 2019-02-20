@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const SupportStyled = styled.div`
   position: relative;
   display: flex;
+  height: 100%;
   flex-direction: column;
   @media(min-width: 1025px) {
     display: block;
@@ -37,7 +38,12 @@ SupportStyled.Container = styled.div`
 `;
 
 SupportStyled.CenterSection = styled.div`
-  order: 2
+  order: 2;
+  padding-top: 20px;
+  height: 100%;
+  @media(min-width: 768px) {
+    padding-top: 0;
+  }
   @media(min-width: 1025px) {
     width: 75%;
     display: inline-block;
@@ -48,6 +54,8 @@ SupportStyled.RightSection = styled.div`
   order: 1;
   padding: 10px;
   text-align: right;
+  width: 100%;
+  background: #fff;
   @media(min-width: 1025px) {
     width: 25%;
     padding: 0 10px;
@@ -108,12 +116,20 @@ SupportStyled.LoaderWrapper = styled.div`
   padding: 20px 16px;
   @media(min-width: 1025px) {
     height: calc(100% - 79px);
-    padding: 0;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px 0;
   }
   @media(min-width: 1920px) {
     padding-top: 32px;
+  }
+`;
+
+SupportStyled.ListWrapper = styled.div`
+  height: calc(100% - 123px);
+  @media(min-width: 1025px) {
+    height: calc(100% - 50px);
+    #column-layout-scrollable-target {
+      padding-right: 50px;
+    }
   }
 `;
 

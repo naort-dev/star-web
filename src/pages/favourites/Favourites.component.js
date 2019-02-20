@@ -34,16 +34,20 @@ export default class Favourites extends React.Component {
           heading="My favorites"
         />
         <FavouriteStyled.sectionWrapper>
-          <ScrollList
-            scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
-            dataList={this.props.favouritesList.data}
-            limit={this.props.favouritesList.limit}
-            totalCount={this.props.favouritesList.count}
-            noDataText="You haven't favorited any stars yet"
-            offset={this.props.favouritesList.offset}
-            loading={this.props.favouritesList.loading}
-            fetchData={(offset, refresh) => this.props.fetchFavouritesList(offset, refresh)}
-          />
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            <ScrollList
+              scrollTarget="column-layout-scrollable-target"
+              dataList={this.props.favouritesList.data}
+              limit={this.props.favouritesList.limit}
+              totalCount={this.props.favouritesList.count}
+              noDataText="You haven't favorited any stars yet"
+              offset={this.props.favouritesList.offset}
+              loading={this.props.favouritesList.loading}
+              fetchData={(offset, refresh) => this.props.fetchFavouritesList(offset, refresh)}
+            />
+          </Scrollbars>
         </FavouriteStyled.sectionWrapper>
       </React.Fragment>
     );
