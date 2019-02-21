@@ -117,6 +117,7 @@ class App extends React.Component {
                 />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
+                <Route exact path="/video/:id" component={Landing} />
 
                 {/* logged in areas */}
 
