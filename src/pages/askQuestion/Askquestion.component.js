@@ -36,8 +36,7 @@ export default class Askquestion extends React.Component {
       let uploadVideo;
       if (this.props.videoUploader.savedFile != null) {
         uploadVideo = this.props.videoUploader.savedFile;
-      }
-      else {
+      } else {
         uploadVideo = new File([this.props.videoRecorder.recordedBuffer], 'askVideo.mp4');
       }
       getAWSCredentials(locations.askAwsVideoCredentials, this.props.session.auth_token.authentication_token, uploadVideo)

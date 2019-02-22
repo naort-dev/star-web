@@ -40,7 +40,7 @@ export default class VideoRender extends React.Component {
       bookingTitle = `${occasion} ${requestTypeTitle[bookingType]}`;
     }
     if (bookingTitle.length > this.charLimit) {
-      bookingTitle = text.substring(0, this.charLimit) + '...';
+      bookingTitle = bookingTitle.substring(0, this.charLimit) + '...';
     }
     return bookingTitle;
   }

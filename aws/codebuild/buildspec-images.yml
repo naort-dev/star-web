@@ -34,10 +34,12 @@ phases:
       - echo Writing artifacts...
       - aws ssm get-parameter --name /env/staging/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > staging-web.json
       - aws ssm get-parameter --name /env/hotfix/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > hotfix-web.json
+      - aws ssm get-parameter --name /env/upgrade/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > upgrade-web.json
       - aws ssm get-parameter --name /env/production/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > production-web.json
 artifacts:
   files:
     - staging-web.json
     - hotfix-web.json
+    - upgrade-web.json
     - production-web.json
   discard-paths: yes
