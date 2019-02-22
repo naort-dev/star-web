@@ -110,18 +110,6 @@ export default class ShareUser extends React.Component {
           <ShareStyled.NetworkName>Facebook</ShareStyled.NetworkName>
         </ShareStyled.NetworkWrapper>
         <ShareStyled.NetworkWrapper>
-          <ShareStyled.GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round
-            />
-          </ShareStyled.GooglePlusShareButton>
-          <ShareStyled.NetworkName>Google Plus</ShareStyled.NetworkName>
-        </ShareStyled.NetworkWrapper>
-        <ShareStyled.NetworkWrapper>
           <ShareStyled.TwitterShareButton
             url={shareUrl}
             className="Demo__some-network__share-button"
