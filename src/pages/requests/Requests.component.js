@@ -9,6 +9,7 @@ import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
 import RateView from './components/RateView';
+import RateReminder from './components/RateReminder';
 import ReactionView from './components/ReactionView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
@@ -17,6 +18,7 @@ import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
 import { getRequestDetails } from '../../services/request';
 import RequestsStyled from './styled';
+import { videoTitleGenerator } from '../../utils/dataToStringFormatter';
 import { celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class Requests extends React.Component {
@@ -26,10 +28,10 @@ export default class Requests extends React.Component {
       selectedTab: 'All',
       requestAction: '',
       showActionPopup: false,
+      showRateReminder: false,
       loading: false,
       orderDetails: {},
       alertText: '',
-      scrollTarget: '',
     };
     this.requestType = {
       3: 'Q&A',
@@ -163,6 +165,12 @@ export default class Requests extends React.Component {
     }
   }
 
+  findVideoByStatus = (videoStatus) => {
+    const { request_video: requestVideo } = this.state.orderDetails;
+    const finalVideo = requestVideo ? requestVideo.find(video => video.video_status === videoStatus) : null;
+    return finalVideo;
+  }
+
   fetchVideosList = () => {
     this.props.fetchMyVideosList(0, true);
   }
@@ -251,7 +259,7 @@ export default class Requests extends React.Component {
   }
 
   requestAction = (data, actionType) => {
-    let { requestAction, showActionPopup, orderDetails, alertText } = this.state;
+    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder } = this.state;
     if (actionType === 'edit') {
       this.setState({ loading: true });
       getRequestDetails(data.booking_id)
@@ -271,6 +279,9 @@ export default class Requests extends React.Component {
             this.requestAction('Something went wrong', 'alert');
           }
         });
+    } else if (actionType === 'rateReminder') {
+      showRateReminder = true;
+      orderDetails = data;
     } else if (actionType === 'share'
       || actionType === 'respond'
       || actionType === 'report'
@@ -289,7 +300,7 @@ export default class Requests extends React.Component {
       }
     }
     requestAction = actionType;
-    this.setState({ orderDetails, alertText, requestAction, showActionPopup });
+    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -321,12 +332,8 @@ export default class Requests extends React.Component {
     return null;
   }
 
-  updateScrollTarget = (target) => {
-    this.setState({ scrollTarget: target });
-  }
-
   closePopup = () => {
-    this.setState({ showActionPopup: false, alertText: '' });
+    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false });
   }
 
   renderRequests = (request) => {
@@ -392,16 +399,26 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    const { requestAction, showActionPopup, loading } = this.state;
+    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails } = this.state;
     return (
       <div>
         <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          getScrollTarget={this.updateScrollTarget}
         >
           {this.renderCenterSection()}
         </ColumnLayout>
+        {
+          showRateReminder &&
+            <RateReminder
+              title={videoTitleGenerator(orderDetails.request_type, orderDetails.occasion)}
+              requestType={orderDetails.request_type}
+              celebrity={orderDetails.celebrity}
+              selectedVideo={this.findVideoByStatus(1)} // find completed video
+              closeRateReminder={this.closePopup}
+              selectItem={type => this.requestAction(orderDetails, type)}
+            />
+        }
         {
           this.props.orderDetailsLoading || loading ?
             <ActionLoader />

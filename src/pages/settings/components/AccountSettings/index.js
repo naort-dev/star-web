@@ -94,14 +94,14 @@ export default class AccountSettings extends React.Component {
     }
   }
 
-  getStripe() {
+  getStripe = () => {
     this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
   }
 
-  getDashboard() {
+  getDashboard = () => {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
@@ -356,14 +356,13 @@ export default class AccountSettings extends React.Component {
                 <SettingsStyled.WrapsInput>
                   <SettingsStyled.CustomInput>
                     {this.props.stripeRegistration.cardDetails ?
-                      <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                      <SettingsStyled.ActionText onClick={this.getDashboard}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
                       :
-                      <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
+                      <SettingsStyled.HollowButton onClick={this.getStripe}>Set up your Stripe account</SettingsStyled.HollowButton>
                     }
                   </SettingsStyled.CustomInput>
                   <SettingsStyled.ErrorMsg>
-                    Payouts for your earnings will be distributed on
-                    the first of every month
+                    Payouts for your earnings will be distributed the first week of every month
                   </SettingsStyled.ErrorMsg>
                 </SettingsStyled.WrapsInput>
               </SettingsStyled.InputWrapper>

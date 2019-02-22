@@ -2,6 +2,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { checkStripe } from './stripeRegistration';
 
 export const USER_DETAILS = {
   start: 'fetch_start/user_details',
@@ -76,6 +77,7 @@ export const fetchUserDetails = id => (dispatch, getState) => {
     if (resp.data && resp.data.success) {
       dispatch(userDetailsFetchEnd());
       dispatch(userDetailsFetchSuccess(parseUserDetails(resp.data.data)));
+      dispatch(checkStripe());
       return resp.data.data;
     }
     dispatch(userDetailsFetchEnd());
