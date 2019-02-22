@@ -94,7 +94,7 @@ export default class RateView extends React.Component {
     const { files } = this.fileInput;
     let { filesList } = this.state;
     const allowedExtensions = /((\.mp4)|(\.MOV)|(\.jpeg)|(\.jpg)|(\.png))$/i;
-    const allowedTypes = /((mp4)|(MOV)|(jpeg)|(jpg)|(png))$/i;
+    const allowedTypes = /((mp4)|(MOV)|(quicktime)|(jpeg)|(jpg)|(png))$/i;
     const videoExtensions = /((mp4)|(MOV))$/i;
     const imageExtensions = /((jpeg)|(jpg)|(png))$/i;
     if (!allowedExtensions.exec(this.fileInput.value)) {
@@ -109,7 +109,7 @@ export default class RateView extends React.Component {
           newFile = {
             fileData: file,
             fileURL: result.currentTarget.result,
-            extension: file.type.split('/')[1],
+            extension: imageExtensions.exec(file.type) ? file.type.split('/')[1] : 'mp4',
             fileType: imageExtensions.exec(file.type) ? 'image' : 'video',
           };
           if (newFile.fileType === 'image') {

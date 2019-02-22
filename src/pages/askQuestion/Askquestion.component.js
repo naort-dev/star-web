@@ -50,6 +50,8 @@ export default class Askquestion extends React.Component {
                 this.props.setBookingDetails(bookObj);
                 this.props.changeStep(this.props.currentStepCount + 1);
               }
+            }).catch(() => {
+              this.setState({ loader: false });
             });
           }
         });

@@ -26,6 +26,7 @@ import { Unauthorized } from './pages/unauthorized';
 import { StarSupporters } from './pages/starSupporters';
 import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
+import { TwitterLogin } from './pages/twitterLogin';
 import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
@@ -117,6 +118,7 @@ class App extends React.Component {
                 />
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
+                <Route path="/twitter-login" component={TwitterLogin} />
                 <Route exact path="/video/:id" component={Landing} />
 
                 {/* logged in areas */}

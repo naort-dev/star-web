@@ -2,20 +2,20 @@ import styled from 'styled-components';
 
 const TabStyled = styled.div`
   padding: 22px 16px 0;
-  border-bottom: 1px solid #CCCCCC;
   display: flex;
   justify-content: space-between;
-  position: relative;
   margin-bottom: 16px;
+  overflow: hidden;
+  width: 100%;
+  background-color: #fff;
+  border-bottom: 1px solid #CCCCCC;
   @media(min-width: 768px) {
     padding-top: 0;
-    padding-left: 44px;
-    padding-right: 44px;
   }
   @media(min-width: 1025px) {
-    border-bottom: 1px solid #CCCCCC;
     padding: 0;
-    position: relative;
+    padding-right: 50px;
+    border: none;
   }
 `;
 
@@ -29,6 +29,10 @@ TabStyled.tabList = styled.ul`
     height: auto;
     white-space: normal;
   }
+  @media(min-width: 1025px) {
+    padding: 0;
+    border-bottom: 1px solid #CCCCCC;
+ }
 `;
 
 TabStyled.tabListItem = styled.li`
