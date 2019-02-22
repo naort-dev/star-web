@@ -150,6 +150,7 @@ export default class ProfileSettings extends React.Component {
         this.phNo3.focus();
       }
     }
+    this.props.recordChange(true);
   };
 
   validateFields = () => {

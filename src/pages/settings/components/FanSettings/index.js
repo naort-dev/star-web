@@ -1,4 +1,5 @@
 import React from 'react';
+import { Prompt } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import AccountSettings from '../AccountSettings';
@@ -11,14 +12,42 @@ import { toggleSignup } from '../../../../store/shared/actions/toggleModals';
 import SettingsStyled from '../../styled';
 
 class FanSettings extends React.Component {
-  state = {
-    selectedTab: 'Account',
-    tabsList: ['Account', 'Invite friends'],
-    popupMessage: '',
+  constructor(props) {
+    super(props);
+    this.tabsList = ['Account', 'Invite friends'];
+    const changes = {};
+    this.tabsList.forEach((item) => {
+      changes[item.replace(/\s/g, '')] = false;
+    });
+    this.state = {
+      selectedTab: 'Account',
+      popupMessage: '',
+      tabsList: ['Account', 'Invite friends'],
+      changes,
+    };
   }
 
   switchTab = (item) => {
     this.setState({ selectedTab: item });
+  }
+
+  recordChange = (isChanged) => {
+    const { selectedTab, changes } = this.state;
+    this.setState({
+      changes: {
+        ...changes,
+        [selectedTab.replace(/\s/g, '')]: isChanged,
+      },
+    });
+  }
+
+  checkIfChanged = () => {
+    const { changes } = this.state;
+    const flags = Object.values(changes);
+    if (flags.indexOf(true) > -1) {
+      return true;
+    }
+    return false;
   }
 
   enableStarSignup = () => {
@@ -61,6 +90,12 @@ class FanSettings extends React.Component {
               />
             </Popup>
         }
+        <Prompt
+          when={this.checkIfChanged()}
+          message={() =>
+            'You have unsaved changes. Are you sure you want to leave the page?'
+          }
+        />
         <InnerTabs
           labels={this.state.tabsList}
           switchTab={this.switchTab}
@@ -82,6 +117,7 @@ class FanSettings extends React.Component {
                 resetChangePassword={this.props.resetChangePassword}
                 changePassword={this.props.changePassword}
                 changePasswordData={this.props.changePasswordData}
+                recordChange={this.recordChange}
               />
             </SettingsStyled.ContentWrapper>
             <SettingsStyled.ContentWrapper visible={selectedTab === 'Invite friends'}>

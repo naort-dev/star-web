@@ -136,7 +136,7 @@ class StarSettings extends React.Component {
           }
         />
         <InnerTabs
-          labels={['Account', 'Profile details', 'Share profile', 'Notifications']}
+          labels={this.tabs}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
