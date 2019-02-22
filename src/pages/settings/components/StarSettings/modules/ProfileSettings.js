@@ -142,8 +142,8 @@ export default class ProfileSettings extends React.Component {
     industries = this.state.industries.length === 0 || this.state.industries[0] === '' ;
     bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
     bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
-    const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
-    const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
+    const priceValid = !this.state.priceCheck && parseFloat(this.state.bookingPrice.replace(/,/g, '')) > 499;
+    const limitValid = !this.state.limitCheck && parseFloat(this.state.bookingLimit.replace(/,/g, '')) > 20;
     if (priceValid) {
       this.handleFieldBlur('bookingPrice', this.state.bookingPrice);
     } else if (limitValid) {
@@ -175,8 +175,8 @@ export default class ProfileSettings extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: professions,
-        rate: parseInt(this.state.bookingPrice),
-        weekly_limits: parseInt(this.state.bookingLimit),
+        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
+        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
         availability: true,
       };
       const userDetails = {
