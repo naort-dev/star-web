@@ -68,6 +68,7 @@ export default class AccountSettings extends React.Component {
   }
 
   getProfilePhotos = (type, file, image) => {
+    this.props.recordChange(true);
     if (type.indexOf('secondaryImage') > -1) {
       const { secondaryImages } = this.state;
       const index = type.split('-')[1];
@@ -111,11 +112,18 @@ export default class AccountSettings extends React.Component {
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
+    this.props.recordChange(true);
     this.setState({
       [fieldType]: fieldValue,
       errors: { ...this.state.errors, [fieldType]: false },
     });
   };
+
+  toggleNotifications = key => () => {
+    this.props.recordChange(true);
+    const value = this.state[key];
+    this.setState({ [key]: !value });
+  }
 
   validateFields = () => {
     let { firstName, lastName } = this.state.errors;
@@ -143,12 +151,12 @@ export default class AccountSettings extends React.Component {
   submitAccountDetails = () => {
     if (this.validateFields()) {
       let userDetails = {
-        first_name: this.state.firstName,
+        first_name: this.state.firstName.trim(),
       };
       if (this.props.type !== 'group') {
         userDetails = {
           ...userDetails,
-          last_name: this.state.lastName,
+          last_name: this.state.lastName.trim(),
         };
       }
       const secondaryFileNames = this.state.secondaryImages.map((item) => {
@@ -178,12 +186,14 @@ export default class AccountSettings extends React.Component {
         profileImages['featured_image'] = this.state.featuredImage.file;
         profileImages.images = [...profileImages.images, this.state.featuredImage.file]
       }
+      this.props.recordChange(false);
       this.props.submitAccountDetails(userDetails, profileImages, notifications);
     }
   }
 
   cancelDetails = () => {
     this.setInitialData(this.props);
+    this.props.recordChange(false);
     this.props.fetchUserDetails();
   }
 
@@ -312,7 +322,7 @@ export default class AccountSettings extends React.Component {
                     id="celebrityStarsonaRequest"
                     type="checkbox"
                     checked={this.state.starsonaMessage}
-                    onChange={() => this.setState({ starsonaMessage: !this.state.starsonaMessage })}
+                    onChange={this.toggleNotifications('starsonaMessage')}
                   />
                   <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -322,7 +332,7 @@ export default class AccountSettings extends React.Component {
                     id="celebrityStarsonaRequest"
                     type="checkbox"
                     checked={this.state.accountUpdates}
-                    onChange={() => this.setState({ accountUpdates: !this.state.accountUpdates })}
+                    onChange={this.toggleNotifications('accountUpdates')}
                   />
                   <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -332,7 +342,7 @@ export default class AccountSettings extends React.Component {
                     id="celebrityStarsonaRequest"
                     type="checkbox"
                     checked={this.state.starsonaVideos}
-                    onChange={() => this.setState({ starsonaVideos: !this.state.starsonaVideos })}
+                    onChange={this.toggleNotifications('starsonaVideos')}
                   />
                   <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
