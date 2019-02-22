@@ -16,7 +16,6 @@ export default function getAWSCredentials(url, auth_token, file) {
       formData.append('policy', response.data.data.fields.policy);
       formData.append('key', response.data.data.fields.key);
       formData.append('AWSAccessKeyId', response.data.data.fields.AWSAccessKeyId);
-      formData.append('Content-MD5', md5);
       formData.append('file', file);
       return { formData, url: response.data.data.url, filename, md5 };
     });
