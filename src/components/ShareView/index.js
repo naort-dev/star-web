@@ -63,19 +63,6 @@ export default class ShareView extends React.Component {
             </ShareStyled.Somenetwork>
             <ShareStyled.Somenetwork>
               <ShareStyled.NetWorkButtonWrapper>
-                <GooglePlusShareButton
-                  url={shareUrl}
-                  className="Demo__some-network__share-button"
-                >
-                  <GooglePlusIcon
-                    size={iconSize}
-                    round />
-                </GooglePlusShareButton>
-              </ShareStyled.NetWorkButtonWrapper>
-              <ShareStyled.NetworkName>Google Plus</ShareStyled.NetworkName>
-            </ShareStyled.Somenetwork>
-            <ShareStyled.Somenetwork>
-              <ShareStyled.NetWorkButtonWrapper>
                 <TwitterShareButton
                   url={shareUrl}
                   title={title}
