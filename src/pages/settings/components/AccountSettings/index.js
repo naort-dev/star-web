@@ -362,7 +362,7 @@ export default class AccountSettings extends React.Component {
                     }
                   </SettingsStyled.CustomInput>
                   <SettingsStyled.ErrorMsg>
-                    Payouts for your earnings will be distributed the first week of every month
+                    Payouts for your earnings will be distributed the first week of every month.
                   </SettingsStyled.ErrorMsg>
                 </SettingsStyled.WrapsInput>
               </SettingsStyled.InputWrapper>

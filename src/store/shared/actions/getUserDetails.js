@@ -42,10 +42,10 @@ export const resetUserDetails = () => ({
 const parseUserDetails = (userData) => {
   const finalUserData = cloneDeep(userData);
   let stageName = '';
-  let avatarPhoto;
-  let avatarPhotoHD;
+  let avatarPhoto = null;
+  let avatarPhotoHD = null;
   if (finalUserData.user) {
-    stageName = finalUserData.user.nick_name !== '' ? finalUserData.user.nick_name : `${finalUserData.user.first_name} ${finalUserData.user.last_name}`;
+    stageName = finalUserData.user.nick_name && finalUserData.user.nick_name !== '' ? finalUserData.user.nick_name : `${finalUserData.user.first_name} ${finalUserData.user.last_name}`;
     if (finalUserData.user.avatar_photo) {
       avatarPhoto = finalUserData.user.avatar_photo.thumbnail_url || finalUserData.user.avatar_photo.image_url;
       avatarPhotoHD = finalUserData.user.avatar_photo.image_url;
