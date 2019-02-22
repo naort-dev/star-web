@@ -5,12 +5,19 @@ const SettingsStyled = styled.div`
 `;
 
 SettingsStyled.Container = styled.section`
-  padding: 0 10px 20px;
-  @media(min-width: 768px) {
-    padding: 0 44px 20px;
+  height: calc(100% - 64px);
+  #column-layout-scrollable-target {
+    padding: 0 10px 20px;
+    @media(min-width: 768px) {
+      padding: 0 44px 20px;
+    }
+    @media(min-width: 1025px) {
+      padding: 0 10px 20px;
+      padding-right: 50px;
+    }
   }
   @media(min-width: 1025px) {
-    padding: 0 10px 20px;
+    height: calc(100% - 50px);
   }
 `;
 
@@ -121,7 +128,7 @@ SettingsStyled.ControlWrapper = styled.div`
   display: flex;
   padding: 13px 12px;
   border-top: 1px solid #ddd;
-  justify-content: ${props => (props.multiple ? 'space-between' : 'flex-end')};
+  justify-content: ${props => (props.multiple ? 'center' : 'flex-end')}; 
   @media(min-width: 1025px) {
     box-shadow: none;
     padding: 26px 0;
@@ -133,9 +140,12 @@ SettingsStyled.ControlWrapper = styled.div`
 
 SettingsStyled.CancelButton = styled.span`
   font-family: 'Avenir-Light';
-  padding: 10px 0;
+  padding: 10px 15px;
   color: #969696;
   cursor: pointer;
+  border: 2px solid #ccc;
+  margin-right: 20px;
+  border-radius: 7px;
 `;
 
 SettingsStyled.ControlButton = styled.button`

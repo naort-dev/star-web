@@ -84,25 +84,19 @@ export const fetchURL = () => (dispatch, getState) => {
 };
 
 
-export const checkStripe = () => (dispatch, getState) => {
-    const { authentication_token: authToken } = getState().session.auth_token;
-    dispatch(checkStripeRegistrationStart());
-    return fetch(Api.checkStripe, {
-        headers: {
-            'Authorization': `token ${authToken}`,
-        },
-    }).then((resp) => {
-        if (resp.data && resp.data.success) {
-            dispatch(checkStripeRegistrationSuccess(resp.data.data));
-            dispatch(checkStripeRegistrationEnd());
-            return resp;
-        } else {
-            dispatch(checkStripeRegistrationEnd());
-        }
-    }).catch((exception) => {
-        dispatch(checkStripeRegistrationEnd());
-        dispatch(checkStripeRegistrationFailed(exception));
-    });
+export const checkStripe = () => (dispatch) => {
+  dispatch(checkStripeRegistrationStart());
+  return fetch(Api.checkStripe).then((resp) => {
+    if (resp.data && resp.data.success) {
+      dispatch(checkStripeRegistrationSuccess(resp.data.data));
+      dispatch(checkStripeRegistrationEnd());
+      return resp;
+    }
+    dispatch(checkStripeRegistrationEnd());
+  }).catch((exception) => {
+    dispatch(checkStripeRegistrationEnd());
+    dispatch(checkStripeRegistrationFailed(exception));
+  });
 }
 
 

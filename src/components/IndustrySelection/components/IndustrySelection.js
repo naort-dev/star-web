@@ -43,6 +43,10 @@ class IndustrySelectionComponent extends React.Component {
     this.setState({ searchValue });
   }
 
+  clearSearch = () => {
+    this.setState({ searchValue: '' });
+  }
+
   updateSelectedCategory = (profession) => {
     this.setState({ categorySelected: profession });
   }
@@ -175,6 +179,11 @@ class IndustrySelectionComponent extends React.Component {
                 value={searchValue}
                 onChange={(event) => this.getSearchValue(event)}
               />
+              {
+                searchValue !== '' ?
+                  <IndustryStyled.ClearButton onClick={this.clearSearch} />
+                : null
+              }
             </IndustryStyled.SearchWrapper>
             <IndustryStyled.ListWrapper>
               {

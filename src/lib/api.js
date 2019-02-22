@@ -63,6 +63,8 @@ class Api {
   static getGroupsList = 'user/group_account/';
   static groupTypeListing = 'user/active_group_types/'
   static createGroupNotification = 'notification/new_group_notification/';
+  static twitterLogin = 'user/twitter_integration/';
+  static twitterOauth = 'user/twitter_login';
 }
 
 export default Api;
