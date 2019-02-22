@@ -247,11 +247,13 @@ export default class ProfileSettings extends React.Component {
         youtube_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/, this.state.socialMedia.youtube, 'https://www.youtube.com/'),
         instagram_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/, this.state.socialMedia.instagram, 'https://www.instagram.com/'),
       };
+      this.props.recordChange(false);
       this.props.submitProfileDetails(accountDetails, socialLinks);
     }
   };
 
   cancelDetails = () => {
+    this.props.recordChange(false);
     this.setInitialData(this.props);
   }
 
