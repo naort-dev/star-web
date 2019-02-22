@@ -38,3 +38,4 @@ Our React application is a simple web project, which consists of static files, s
 2. Build will be created in the dist folder in the project folder.
 3. Copy the contents of the dist folder and put the contents to the desired folder in the web server, Eg Nginx or Apache.
 4. Run the website url to see the output.
+

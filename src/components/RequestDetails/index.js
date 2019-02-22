@@ -56,7 +56,7 @@ export default class RequestDetails extends React.Component {
 
   onVideoEnded = () => {
     const { requestStatus, requestVideo, orderDetails } = this.props;
-    if (requestStatus === 6) { // completed video
+    if (requestStatus === 6 && !this.props.starMode) { // completed video
       const finalVideo = requestVideo.find(video => video.video_status === 1); // find final video
       const videoViewCount = finalVideo.fan_view_count + 1;
       const enableRateView = videoViewCount === 1 || videoViewCount % 5 === 0;
