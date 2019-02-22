@@ -77,6 +77,17 @@ export default class ProfileSettings extends React.Component {
   }
 
   getIndustrySelection = (industries) => {
+    if (industries.length !== this.state.industries.length) {
+      this.props.recordChange(true);
+    } else {
+      const industryLength = industries.length > this.state.industries.length ? industries.length : this.state.industries.length;
+      for (let key = 0; key < industryLength; key++) {
+        if (this.state.industries[key].id !== industries[key].id) {
+          this.props.recordChange(true);
+          break;
+        }
+      }
+    }
     this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
   }
 
@@ -92,6 +103,7 @@ export default class ProfileSettings extends React.Component {
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
+    this.props.recordChange(true);
     if (fieldType === 'industries') {
       const industriesArray = fieldValue.split(',');
       if (industriesArray.length <= 3) {
@@ -178,6 +190,7 @@ export default class ProfileSettings extends React.Component {
         youtube_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/, this.state.socialMedia.youtube, 'https://www.youtube.com/'),
         instagram_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/, this.state.socialMedia.instagram, 'https://www.instagram.com/'),
       };
+      this.props.recordChange(false);
       this.props.submitProfileDetails(celebrityDetails, userDetails, socialLinks);
     }
   };
@@ -195,6 +208,7 @@ export default class ProfileSettings extends React.Component {
 
   cancelDetails = () => {
     this.setInitialData(this.props);
+    this.props.recordChange(false);
     this.props.fetchUserDetails();
   }
 
