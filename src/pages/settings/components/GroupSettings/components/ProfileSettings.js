@@ -640,7 +640,7 @@ export default class ProfileSettings extends React.Component {
             </SettingsStyled.CustomInput>
             <SettingsStyled.ErrorMsg>
               Payouts for your earnings will be distributed on
-              the first of every month
+              the first week of every month
             </SettingsStyled.ErrorMsg>
           </SettingsStyled.WrapsInput>
         </SettingsStyled.InputWrapper>
