@@ -7,7 +7,7 @@ import ShareUser from '../ShareUser';
 import InnerTabs from '../../../../components/InnerTabs';
 import AlertView from '../../../../components/AlertView';
 import Popup from '../../../../components/Popup';
-import { fetchURL, checkStripe } from '../../../../store/shared/actions/stripeRegistration';
+import { fetchURL } from '../../../../store/shared/actions/stripeRegistration';
 import { toggleSignup } from '../../../../store/shared/actions/toggleModals';
 import SettingsStyled from '../../styled';
 
