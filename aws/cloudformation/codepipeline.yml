@@ -144,8 +144,7 @@ Resources:
                 Version: 1
                 Provider: Manual
               Configuration:
-                #NotificationArn: arn:aws:sns:us-east-1:376169159073:ProductionDeploymentApproval
-                NotificationArn: arn:aws:sns:us-east-1:376169159073:Test
+                NotificationArn: arn:aws:sns:us-east-1:376169159073:ProductionDeploymentApproval
                 CustomData: Approve production deployment.
               RunOrder: 1
         -
