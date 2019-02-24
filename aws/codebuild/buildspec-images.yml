@@ -16,14 +16,20 @@ phases:
       - "export AWS_ACCOUNT_ID=`echo $CODEBUILD_BUILD_ARN | cut -d: -f5`"
       - export REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/"
       - export DEPLOYMENT_TYPE=aws
+      - echo Reading parameters from SSM...
+      - aws ssm get-parameter --name ${PARAMETERS} | jq -r .Parameter.Value > parameters.json
+      - cat parameters.json
+      - export VERSION=`cat parameters.json | jq -r .Parameters.Version`
+      - export GIT_BRANCH=`cat parameters.json | jq -r .Parameters.GitBranch`
+      - export BASE_IMAGE_TAG=`cat parameters.json | jq -r .Parameters.BaseImageTag`
       - echo Logging in to Amazon ECR...
-      - $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+      - $(aws ecr get-login --no-include-email --region ${AWS_DEFAULT_REGION})
   build:
     commands:
       - chmod +x aws/scripts/version.sh
       - aws/scripts/version.sh 'git@github.com:Starsona/web.git'
       - export IMAGE_TAG=:`cat .version`
-      - echo Building the Docker images version$IMAGE_TAG...
+      - echo Building the Docker images version${IMAGE_TAG}...
       - chmod +x docker/build-docker-images.sh
       - docker/build-docker-images.sh
   post_build:
@@ -32,10 +38,11 @@ phases:
       - echo Pushing the Docker images...
       - docker push ${REGISTRY}web-nginx-${DEPLOYMENT_TYPE}${IMAGE_TAG}
       - echo Writing artifacts...
-      - aws ssm get-parameter --name /env/staging/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > staging-web.json
-      - aws ssm get-parameter --name /env/hotfix/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > hotfix-web.json
-      - aws ssm get-parameter --name /env/upgrade/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > upgrade-web.json
-      - aws ssm get-parameter --name /env/production/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"$IMAGE_TAG\"" > production-web.json
+      - aws ssm get-parameter --name /env/staging/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"${IMAGE_TAG}\"" > staging-web.json
+      - aws ssm get-parameter --name /env/hotfix/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"${IMAGE_TAG}\"" > hotfix-web.json
+      - aws ssm get-parameter --name /env/upgrade/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"${IMAGE_TAG}\"" > upgrade-web.json
+      - aws ssm get-parameter --name /env/production/web/web.json | jq -r .Parameter.Value | jq ".Parameters.ImageTag = \"${IMAGE_TAG}\"" > production-web.json
+      - cat staging-web.json hotfix-web.json upgrade-web.json production-web.json
 artifacts:
   files:
     - staging-web.json
