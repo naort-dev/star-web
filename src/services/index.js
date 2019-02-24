@@ -6,3 +6,15 @@ export const getStarsonaVideo = (videoId) => {
     .then(resp => resp.data)
   );
 };
+
+export const twitterLogin = () => {
+  return (fetch(Api.twitterLogin)
+    .then(resp => resp.data)
+  )
+}
+
+export const twitterAuth = (oauthToken, oauthVerifier) => {
+  return (fetch(`${Api.twitterOauth}?oauth_token=${oauthToken}&oauth_verifier=${oauthVerifier}`)
+    .then(resp => resp.data)
+  )
+}

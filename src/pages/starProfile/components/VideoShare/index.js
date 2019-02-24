@@ -207,18 +207,6 @@ class VideoShare extends React.Component {
           </FacebookShareButton>
         </VideoShareStyled.Somenetwork>
         <VideoShareStyled.Somenetwork>
-          <GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round
-            />
-            <VideoShareStyled.SocialTitle>Share to Google Plus</VideoShareStyled.SocialTitle>
-          </GooglePlusShareButton>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork>
           <TwitterShareButton
             url={shareUrl}
             title={title}

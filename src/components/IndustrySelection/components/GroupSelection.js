@@ -127,6 +127,10 @@ class GroupSelectionComponent extends React.Component {
     this.setState({ selectedProfessions });
   }
 
+  clearSearch = () => {
+    this.setState({ searchValue: '' });
+  }
+
   closeAlertView = () => {
     this.setState({
       alertText: '',
@@ -310,6 +314,11 @@ class GroupSelectionComponent extends React.Component {
                 value={searchValue}
                 onChange={this.getSearchValue}
               />
+              {
+                searchValue !== '' ?
+                  <IndustryStyled.ClearButton onClick={this.clearSearch} />
+                : null
+              }
             </IndustryStyled.SearchWrapper>
             <IndustryStyled.ListWrapper>
               {

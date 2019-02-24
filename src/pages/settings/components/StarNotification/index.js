@@ -13,7 +13,7 @@ export default class StarNotification extends React.Component {
     super(props);
     this.state = {
       emailCheckedBox: props.notificationDetails.email_notification,
-      phoneCheckedBox: props.notificationDetails.mobile_verified,
+      phoneCheckedBox: props.notificationDetails.mobile_notification,
       value: props.notificationDetails.mobile_country_code && props.notificationDetails.mobile_number ?
         `+${props.notificationDetails.mobile_country_code}${props.notificationDetails.mobile_number}`
         : '',
@@ -64,6 +64,7 @@ export default class StarNotification extends React.Component {
           if (resp.success) {
             this.setState({
               otpEnterPopup: true,
+              otpValue: '',
             });
           }
         });
@@ -80,6 +81,7 @@ export default class StarNotification extends React.Component {
     }
     representatives[index] = currentRep;
     this.setState({ representatives });
+    this.props.recordChange(true);
   }
 
   addRepForm = () => {
@@ -121,9 +123,13 @@ export default class StarNotification extends React.Component {
     });
   }
 
-  handlePhoneFieldChange = (event, status) => {
+  handlePhoneFieldChange = (event, status) => {    
     this.setState({
       phoneCheckedBox: !status,
+    }, () => {
+      if (this.state.phoneCheckedBox!== this.props.notificationDetails.mobile_notification) {
+        this.props.recordChange(true);
+      }
     });
   }
 
@@ -138,6 +144,7 @@ export default class StarNotification extends React.Component {
     }
     representatives[index] = currentRep;
     this.setState({ representatives });
+    this.props.recordChange(true);
   }
 
   addEmailAddress = () => {
@@ -196,6 +203,7 @@ export default class StarNotification extends React.Component {
   };
 
   acceptRepEmailHandler = (index, key, email) => {
+    this.props.recordChange(true);
     const { representatives } = this.state;
     const currentRep = { ...representatives[index] };
     currentRep[key] = email;
@@ -216,6 +224,7 @@ export default class StarNotification extends React.Component {
   }
 
   acceptNameHandler = (index, key, value) => {
+    this.props.recordChange(true);
     const { representatives } = this.state;
     const currentRep = { ...representatives[index] };
     currentRep[key] = value;
@@ -306,6 +315,7 @@ export default class StarNotification extends React.Component {
             })
         );
       });
+      this.props.recordChange(false);
       Promise.all(repUpdateStatus)
         .then(() => {
           this.props.onComplete(notifications);
@@ -369,6 +379,7 @@ export default class StarNotification extends React.Component {
 
   cancelDetails = (props) => {
     let repArray = [];
+    this.props.recordChange(false);
     this.props.representativeDetails.forEach((key) => {
       repArray.push({
         repId: key.representative_id,

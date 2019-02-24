@@ -115,17 +115,6 @@ class ReferStar extends React.Component {
           </FacebookShareButton>
         </ReferralStyled.Somenetwork>
         <ReferralStyled.Somenetwork>
-          <GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round
-            />
-          </GooglePlusShareButton>
-        </ReferralStyled.Somenetwork>
-        <ReferralStyled.Somenetwork>
           <TwitterShareButton
             url={shareUrl}
             title={title}

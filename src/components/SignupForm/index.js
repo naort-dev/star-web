@@ -4,6 +4,9 @@ import validator from 'validator';
 import axios from 'axios';
 import ActionLoader from '../ActionLoader';
 import { LoginContainer, FooterSection } from './styled';
+import { twitterLogin } from '../../services';
+import { updateLoginStatus } from '../../store/shared/actions/login';
+import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
 
 class SignUp extends React.Component {
@@ -29,6 +32,7 @@ class SignUp extends React.Component {
         fb_id: '',
         gp_id: '',
         in_id: '',
+        tw_id: '',
         role: ROLES[props.signupRole],
       },
       gmailClick: false,
@@ -76,7 +80,7 @@ class SignUp extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
-    window.addEventListener("storage", this.getInstaAccessToken);
+    window.addEventListener("storage", this.listenToStorage);
     if (!this.props.isLoggedIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
@@ -113,7 +117,7 @@ class SignUp extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("storage", this.getInstaAccessToken);
+    window.removeEventListener("storage", this.listenToStorage);
   }
 
   onSignIn = (googleUser) => {
@@ -127,18 +131,22 @@ class SignUp extends React.Component {
     e.preventDefault();
     if (this.props.statusCode === '410') {
       this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.state.email.value } }, () => {
-        this.props.socialMediaLogin(
-          this.props.data.username || this.state.socialMedia.username,
-          this.state.socialMedia.first_name,
-          this.state.socialMedia.last_name,
-          this.state.socialMedia.sign_up_source,
-          this.state.socialMedia.profile_photo,
-          this.props.data.role || this.state.socialMedia.role,
-          this.state.socialMedia.fb_id,
-          this.state.socialMedia.gp_id,
-          this.state.socialMedia.in_id,
-          this.state.referral,
-        ).then((response) => {
+        const socialObject = {
+          userName: this.props.data.username || this.state.socialMedia.username,
+          firstName: this.state.socialMedia.first_name,
+          lastName: this.state.socialMedia.last_name,
+          nickName: this.state.socialMedia.nick_name,
+          source: this.state.socialMedia.sign_up_source,
+          profilePhoto: this.state.socialMedia.profile_photo,
+          role: this.props.data.role || this.state.socialMedia.role,
+          fbId: this.state.socialMedia.fb_id,
+          gpId: this.state.socialMedia.gp_id,
+          instId: this.state.socialMedia.in_id,
+          twId: this.state.socialMedia.tw_id,
+          referral: this.state.referral,
+        }
+        
+        this.props.socialMediaLogin(socialObject).then((response) => {
           if (response.status === 200) {
             if (response.data.data && response.data.data.user) {
               if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
@@ -153,9 +161,9 @@ class SignUp extends React.Component {
         });
       });
     } else if (
-      this.checkEmail() &&
-      this.checkPassword() &&
-      this.checkRequired()
+      this.checkRequired() &
+      this.checkEmail() &
+      this.checkPassword()
     ) {
       this.props.registerUser(
         this.state.firstName.value,
@@ -172,25 +180,11 @@ class SignUp extends React.Component {
             }
           }
         });
-    } else if (this.checkEmail() && this.checkPassword() && this.checkRequired()) {
-      this.props.registerUser(
-        this.state.firstName.value,
-        this.state.lastName.value,
-        this.state.email.value,
-        this.state.password.value,
-        this.state.role,
-        this.state.referral,
-      ).then((response) => {
-        if (response !== undefined) {
-          if (this.props.signupRole === 'star' || this.props.signupRole === 'group') {
-            this.props.changeStep(this.props.currentStep + 1);
-          }
-        };
-      });
     }
   };
 
   onSocialMediaLogin = (r, source) => {
+    let skipSocialLogin = false;
     if (source === 2) {
       this.setState({
         socialMedia: {
@@ -223,7 +217,7 @@ class SignUp extends React.Component {
           gp_id: r.getId()
         }
       });
-    } else {
+    } else if (source === 4) {
       const val = r;
       const name = val.full_name.trim().split(" ");
       const firstName = name[0];
@@ -240,31 +234,64 @@ class SignUp extends React.Component {
           in_id: val.id
         }
       });
+    } else {
+      const val = r;
+      if (!val.authentication_token) {
+        let firstName = val.first_name;
+        let lastName = val.last_name;
+        let nickName = val.nick_name || val.name;
+        if ((!firstName || !lastName) && val.name) {
+          firstName = val.name.trim().split(" ")[0];
+          lastName = val.name.trim().split(" ")[1];
+        }
+        this.setState({
+          socialMedia: {
+            ...this.state.socialMedia,
+            username: val.email,
+            first_name: firstName,
+            last_name: lastName,
+            sign_up_source: source,
+            nick_name: nickName,
+            profile_photo: val.profile_photo,
+            tw_id: val.id,
+          }
+        });
+      } else {
+        skipSocialLogin = true;
+        this.props.updateLoginStatus(val);
+        this.props.fetchUserDetails(val.id);
+        this.props.closeSignupFlow();
+      }
     }
-    this.props.setSocialMediaData(this.state.socialMedia);
-    this.props.socialMediaLogin(
-      this.state.socialMedia.username,
-      this.state.socialMedia.first_name,
-      this.state.socialMedia.last_name,
-      this.state.socialMedia.sign_up_source,
-      this.state.socialMedia.profile_photo,
-      this.state.socialMedia.role,
-      this.state.socialMedia.fb_id,
-      this.state.socialMedia.gp_id,
-      this.state.socialMedia.in_id,
-      this.state.referral,
-    ).then((response) => {
-      if (response.status === 200) {
-        if (response.data.data && response.data.data.user) {
-          if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
-          response.data.data.user.role_details.is_complete === false) {
-            this.props.changeStep(this.props.currentStep + 1);
-          } else {
-            this.props.closeSignupFlow();
+    if (!skipSocialLogin) {
+      const socialObject = {
+        userName: this.state.socialMedia.username,
+        firstName: this.state.socialMedia.first_name,
+        lastName: this.state.socialMedia.last_name,
+        nickName: this.state.socialMedia.nick_name,
+        source: this.state.socialMedia.sign_up_source,
+        profilePhoto: this.state.socialMedia.profile_photo,
+        role: this.state.socialMedia.role,
+        fbId: this.state.socialMedia.fb_id,
+        gpId: this.state.socialMedia.gp_id,
+        instId: this.state.socialMedia.in_id,
+        twId: this.state.socialMedia.tw_id,
+        referral: this.state.referral,
+      }
+      this.props.setSocialMediaData(this.state.socialMedia);
+      this.props.socialMediaLogin(socialObject).then((response) => {
+        if (response.status === 200) {
+          if (response.data.data && response.data.data.user) {
+            if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
+            response.data.data.user.role_details.is_complete === false) {
+              this.props.changeStep(this.props.currentStep + 1);
+            } else {
+              this.props.closeSignupFlow();
+            }
           }
         }
-      }
-    });
+      });
+    }
   };
 
   onGmail = () => {
@@ -279,7 +306,7 @@ class SignUp extends React.Component {
     window.open(url, '_blank');
   }
 
-  getInstaAccessToken = () => {
+  listenToStorage = () => {
     if (localStorage.getItem("InstaAccessToken")) {
       const instaUrl =
         env("instaUrl") + localStorage.getItem("InstaAccessToken");
@@ -291,6 +318,9 @@ class SignUp extends React.Component {
           localStorage.removeItem("InstaAccessToken");
         })
         .catch(function(error) {});
+    } else if (localStorage.getItem("twitterData")) {
+      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
+      localStorage.removeItem("twitterData");
     }
   };
 
@@ -314,6 +344,21 @@ class SignUp extends React.Component {
       { scope: "email", return_scopes: true }
     );
   };
+
+  onTwitterLogin = () => {
+    this.setState({ loading: true });
+    twitterLogin()
+      .then((resp) => {
+        this.setState({ loading: false });
+        if (resp.success && resp.data) {
+          const url = resp.data.twitter_link;
+          window.open(url,'_blank');
+        }
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      })
+  }
 
   saveFormEntries = (event, type) => {
     this.setState({
@@ -365,8 +410,9 @@ class SignUp extends React.Component {
   };
 
   checkRequired = () => {
-    if (validator.isEmpty(this.state.firstName.value)) {
-      const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a Firstname';
+    const firstNameEmpty = validator.isEmpty(this.state.firstName.value);
+    if (firstNameEmpty) {
+      const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a first name';
       this.setState({ firstName: { ...this.state.firstName, message: firstNameMsg } });
       return false;
     }
@@ -409,17 +455,21 @@ class SignUp extends React.Component {
             </span>
           </LoginContainer.SocialMediaMessage>
           <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={() => this.OnFBlogin()}>
+            <LoginContainer.Button onClick={this.OnFBlogin}>
               <LoginContainer.FacebookContent /> 
             </LoginContainer.Button>
 
             <LoginContainer.GoogleWrapper id="g-sign-in" />
-            <LoginContainer.Button onClick={() => this.onGmail()}>
+            <LoginContainer.Button onClick={this.onGmail}>
               <LoginContainer.GoogleContent />
             </LoginContainer.Button>
 
-            <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+            <LoginContainer.Button onClick={this.onInstagramLogin}>
               <LoginContainer.InstagramContent />
+            </LoginContainer.Button>
+
+            <LoginContainer.Button onClick={this.onTwitterLogin}>
+              <LoginContainer.TwitterContent />
             </LoginContainer.Button>
           </LoginContainer.ButtonDiv>
           <LoginContainer.SignupLine>
@@ -529,19 +579,22 @@ class SignUp extends React.Component {
                     </LoginContainer.WrapsInput>
                   </LoginContainer.InputWrapper>
               }
-              <LoginContainer.InputWrapper>
-                <LoginContainer.WrapsInput>
-                  <LoginContainer.PasswordWrapper>
-                    <LoginContainer.Input
-                      placeholder="Referral code (optional)"
-                      type="text"
-                      name="referral"
-                      value={this.state.referral}
-                      onChange={event => this.setState({ referral: event.target.value })}
-                    />
-                  </LoginContainer.PasswordWrapper>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.InputWrapper>
+              {
+                this.props.statusCode !== '410' &&
+                  <LoginContainer.InputWrapper>
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.PasswordWrapper>
+                        <LoginContainer.Input
+                          placeholder="Referral code (optional)"
+                          type="text"
+                          name="referral"
+                          value={this.state.referral}
+                          onChange={event => this.setState({ referral: event.target.value })}
+                        />
+                      </LoginContainer.PasswordWrapper>
+                    </LoginContainer.WrapsInput>
+                  </LoginContainer.InputWrapper>
+              }
               <LoginContainer.WrapsInput>
                 {this.props.statusCode === undefined ?
                   <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
@@ -569,4 +622,9 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
 });
 
-export default connect(mapStateToProps)(SignUp);
+const mapProps = dispatch => ({
+  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+});
+
+export default connect(mapStateToProps, mapProps)(SignUp);

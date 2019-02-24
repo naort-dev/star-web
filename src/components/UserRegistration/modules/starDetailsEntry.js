@@ -535,7 +535,10 @@ export default class StarDetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
         </GroupStyled.InputwrapperDiv>
-        <GroupStyled.ControlWrapper>
+        <GroupStyled.ControlWrapper multiple>
+          <GroupStyled.CancelButton onClick={this.props.closeSignupFlow}>
+            Cancel
+          </GroupStyled.CancelButton>
           <GroupStyled.ControlButton
             onClick={this.submitGroupAccountDetails}
           >

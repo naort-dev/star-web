@@ -57,6 +57,7 @@ class Popup extends React.Component {
             <PopupStyled.SmallContainer
               popHeight={this.props.height}
               innerRef={node => this.popupContent = node}
+              popupWidth={this.props.popupWidth}
             >
               {
                 !this.props.modalView &&

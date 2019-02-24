@@ -634,7 +634,7 @@ class RequestTemplates extends React.Component {
                   onChange={event => this.props.handleChange(event.target.value, 'userName')}
                 />
                 {this.props.whoIsfrom ?
-                  <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
+                  <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                   :
                   null
                 }

@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import { Starprofile } from '../starProfile';
+import { VideoSharePage } from '../videoSharePage';
 import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
@@ -168,6 +169,7 @@ export default class Landing extends React.Component {
         <ScrollList
           noDataText="Sorry! no matches"
           banner
+          searchText={this.props.filters.searchParam}
           dataList={this.props.celebList.data}
           menuActive={this.state.menuActive}
           limit={this.props.celebList.limit}
@@ -260,6 +262,13 @@ export default class Landing extends React.Component {
                   </LandingStyled.ScrollListWrapper>
                 </LandingStyled.mainSection>
               )}
+            />
+            <Route
+              exact
+              path="/video/:id"
+              render={props => (
+                <VideoSharePage {...props} menuActive={this.state.menuActive} />
+                )}
             />
             <Route
               exact

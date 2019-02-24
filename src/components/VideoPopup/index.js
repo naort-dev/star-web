@@ -214,18 +214,6 @@ class VideoPopup extends React.Component {
           </FacebookShareButton>
         </VideoPopupStyled.Somenetwork>
         <VideoPopupStyled.Somenetwork>
-          <GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round
-            />
-            <VideoPopupStyled.SocialTitle>Share to Google Plus</VideoPopupStyled.SocialTitle>
-          </GooglePlusShareButton>
-        </VideoPopupStyled.Somenetwork>
-        <VideoPopupStyled.Somenetwork>
           <TwitterShareButton
             url={shareUrl}
             title={title}

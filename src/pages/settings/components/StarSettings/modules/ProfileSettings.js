@@ -14,7 +14,6 @@ export default class ProfileSettings extends React.Component {
     };
   }
 
-
   componentWillMount() {
     this.setInitialData(this.props);
   }
@@ -63,20 +62,31 @@ export default class ProfileSettings extends React.Component {
     props.checkStripe();
   }
 
-  getStripe() {
+  getStripe = () => {
     this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
   }
 
-  getDashboard() {
+  getDashboard = () => {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
   }
 
   getIndustrySelection = (industries) => {
+    if (industries.length !== this.state.industries.length) {
+      this.props.recordChange(true);
+    } else {
+      const industryLength = industries.length > this.state.industries.length ? industries.length : this.state.industries.length;
+      for (let key = 0; key < industryLength; key++) {
+        if (this.state.industries[key].id !== industries[key].id) {
+          this.props.recordChange(true);
+          break;
+        }
+      }
+    }
     this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
   }
 
@@ -92,6 +102,7 @@ export default class ProfileSettings extends React.Component {
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
+    this.props.recordChange(true);
     if (fieldType === 'industries') {
       const industriesArray = fieldValue.split(',');
       if (industriesArray.length <= 3) {
@@ -131,8 +142,8 @@ export default class ProfileSettings extends React.Component {
     industries = this.state.industries.length === 0 || this.state.industries[0] === '' ;
     bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
     bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
-    const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
-    const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
+    const priceValid = !this.state.priceCheck && parseFloat(this.state.bookingPrice.replace(/,/g, '')) > 499;
+    const limitValid = !this.state.limitCheck && parseFloat(this.state.bookingLimit.replace(/,/g, '')) > 20;
     if (priceValid) {
       this.handleFieldBlur('bookingPrice', this.state.bookingPrice);
     } else if (limitValid) {
@@ -164,8 +175,8 @@ export default class ProfileSettings extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: professions,
-        rate: parseInt(this.state.bookingPrice),
-        weekly_limits: parseInt(this.state.bookingLimit),
+        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
+        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
         availability: true,
       };
       const userDetails = {
@@ -178,6 +189,7 @@ export default class ProfileSettings extends React.Component {
         youtube_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/, this.state.socialMedia.youtube, 'https://www.youtube.com/'),
         instagram_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/, this.state.socialMedia.instagram, 'https://www.instagram.com/'),
       };
+      this.props.recordChange(false);
       this.props.submitProfileDetails(celebrityDetails, userDetails, socialLinks);
     }
   };
@@ -195,6 +207,7 @@ export default class ProfileSettings extends React.Component {
 
   cancelDetails = () => {
     this.setInitialData(this.props);
+    this.props.recordChange(false);
     this.props.fetchUserDetails();
   }
 
@@ -542,14 +555,13 @@ export default class ProfileSettings extends React.Component {
             <SettingsStyled.WrapsInput>
               <SettingsStyled.CustomInput>
                 {this.props.stripeRegistration.cardDetails ?
-                  <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                  <SettingsStyled.ActionText onClick={this.getDashboard}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
                   :
-                  <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
+                  <SettingsStyled.HollowButton onClick={this.getStripe}>Set up your Stripe account</SettingsStyled.HollowButton>
                 }
               </SettingsStyled.CustomInput>
               <SettingsStyled.ErrorMsg>
-                Payouts for your earnings will be distributed on
-                the first of every month
+                Payouts for your earnings will be distributed the first week of every month.
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>

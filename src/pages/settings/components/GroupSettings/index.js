@@ -1,4 +1,6 @@
 import React from 'react';
+import { Prompt } from 'react-router-dom';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { connect } from 'react-redux';
 import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
@@ -12,9 +14,19 @@ import { fetchGroupTypes } from '../../../../store/shared/actions/getGroupTypes'
 import SettingsStyled from '../../styled';
 
 class StarSettings extends React.Component {
-  state = {
-    selectedTab: 'Account',
-    popupMessage: '',
+
+  constructor(props) {
+    super(props);
+    this.tabs = ['Account', 'Group details', 'Share online'];
+    const changes = {};
+    this.tabs.forEach((item) => {
+      changes[item.replace(/\s/g, '')] = false;
+    });
+    this.state = {
+      selectedTab: 'Account',
+      popupMessage: '',
+      changes,
+    };
   }
 
   componentWillMount() {
@@ -23,6 +35,25 @@ class StarSettings extends React.Component {
 
   switchTab = (item) => {
     this.setState({ selectedTab: item });
+  }
+
+  recordChange = (isChanged) => {
+    const { selectedTab, changes } = this.state;
+    this.setState({
+      changes: {
+        ...changes,
+        [selectedTab.replace(/\s/g, '')]: isChanged,
+      },
+    });
+  }
+
+  checkIfChanged = () => {
+    const { changes } = this.state;
+    const flags = Object.values(changes);
+    if (flags.indexOf(true) > -1) {
+      return true;
+    }
+    return false;
   }
 
   closePopup = () => {
@@ -72,43 +103,55 @@ class StarSettings extends React.Component {
               />
             </Popup>
         }
+        <Prompt
+          when={this.checkIfChanged()}
+          message={() =>
+            'You have unsaved changes. Are you sure you want to leave the page?'
+          }
+        />
         <InnerTabs
-          labels={['Account', 'Group details', 'Share online']}
+          labels={this.tabs}
           switchTab={this.switchTab}
           selected={selectedTab}
         />
         <SettingsStyled.Container>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
-            <AccountSettings
-              type="group"
-              userDetails={this.props.userDetails}
-              fetchUserDetails={this.props.fetchUserDetails}
-              submitAccountDetails={this.submitAccountDetails}
-              resetChangePassword={this.props.resetChangePassword}
-              changePassword={this.props.changePassword}
-              changePasswordData={this.props.changePasswordData}
-            />
-          </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Group details'}>
-            <ProfileSettings
-              fetchUserDetails={this.props.fetchUserDetails}
-              userDetails={this.props.userDetails}
-              groupTypes={this.props.groupTypes}
-              fetchUrl={this.props.fetchURL}
-              stripeRegistration={this.props.stripeRegistration}
-              checkStripe={this.props.checkStripe}
-              submitProfileDetails={this.submitProfileDetails}
-            />
-          </SettingsStyled.ContentWrapper>
-          <SettingsStyled.ContentWrapper visible={selectedTab === 'Share online'}>
-            <ShareUser
-              type="group"
-              heading="Invite your community"
-              description=""
-              referralCode={this.props.userDetails.promo_code}
-              shareUrl={`${window.location.origin}/group-profile/${this.props.userDetails.user_id}`}
-            />
-          </SettingsStyled.ContentWrapper>
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Account'}>
+              <AccountSettings
+                type="group"
+                userDetails={this.props.userDetails}
+                fetchUserDetails={this.props.fetchUserDetails}
+                submitAccountDetails={this.submitAccountDetails}
+                resetChangePassword={this.props.resetChangePassword}
+                changePassword={this.props.changePassword}
+                changePasswordData={this.props.changePasswordData}
+                recordChange={this.recordChange}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Group details'}>
+              <ProfileSettings
+                fetchUserDetails={this.props.fetchUserDetails}
+                userDetails={this.props.userDetails}
+                groupTypes={this.props.groupTypes}
+                fetchUrl={this.props.fetchURL}
+                stripeRegistration={this.props.stripeRegistration}
+                checkStripe={this.props.checkStripe}
+                submitProfileDetails={this.submitProfileDetails}
+                recordChange={this.recordChange}
+              />
+            </SettingsStyled.ContentWrapper>
+            <SettingsStyled.ContentWrapper visible={selectedTab === 'Share online'}>
+              <ShareUser
+                type="group"
+                heading="Invite your community"
+                description=""
+                referralCode={this.props.userDetails.promo_code}
+                shareUrl={`${window.location.origin}/group-profile/${this.props.userDetails.user_id}`}
+              />
+            </SettingsStyled.ContentWrapper>
+          </Scrollbars>
         </SettingsStyled.Container>
       </SettingsStyled>
     );

@@ -184,11 +184,12 @@ export default class StarNotifications extends React.Component {
             <Popup
               smallPopup
               closePopUp={this.closeOtpPopup}
+              popupWidth
             >
               <GroupStyled.HeaderText>
                 Enter the verification code
               </GroupStyled.HeaderText>
-              <GroupStyled.SocialMediaMessage>
+              <GroupStyled.SocialMediaMessage className="phoneDesc">
                 Let's make sure it's really you. A 4-digit code has been sent to the phone ending in ******{phoneLast4digits}.
               </GroupStyled.SocialMediaMessage>
               <GroupStyled.OTPWrapper>
@@ -296,7 +297,7 @@ export default class StarNotifications extends React.Component {
           <GroupStyled.ControlButton
             onClick={this.submitNotification}
           >
-            Submit number
+            Send text
           </GroupStyled.ControlButton>
         </GroupStyled.ControlWrapper>
         <GroupStyled.SocialMediaMessage onClick={this.props.onComplete} className="skipText">

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import ColumnLayout from '../../components/ColumnLayout';
 import InnerTabs from '../../components/InnerTabs';
 import EarningsList from '../../components/EarningsList';
@@ -71,49 +72,53 @@ export default class Earnings extends React.Component {
           selected={this.state.selectedTab}
         />
         <EarningStyled.mainSection>
-          <EarningStyled.EarningsListStyled>
-            {(selectedTab === 'Paid' || selectedTab === 'Pending') &&
-            <EarningStyled.ContentWrapper>
-              {selectedItemCount != 0 && this.renderHeader()}
-              <ScrollList
-                dataList={selectedTab === 'Paid' ? paidList : pendingList}
-                limit={15}
-                earnings
-                scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
-                totalCount={selectedTab === 'Paid' ? paidCount : pendingCount}
-                offset={selectedTab === 'Paid' ? paidOffset : pendingOffset}
-                loading={selectedTab === 'Paid' ? paidLoading : pendingLoading}
-                noDataText="None at this time"
-                fetchData={(offset, refresh) => this.props.fetchEarningsList({
-                  offset,
-                  status: selectedTab === 'Paid' ? 2 : 1,
-                  limit: 15,
-                })}
-              />
-            </EarningStyled.ContentWrapper>}
-            {selectedTab === 'All' && list.length === 0 && loading && <Loader />}
-            {selectedTab === 'All' && (list.length > 0) && !(list.length === 0 && loading) &&
-              <EarningStyled.AllEarningsWrapper>
-                {list.length != 0 && this.renderHeader()}
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            <EarningStyled.EarningsListStyled>
+              {(selectedTab === 'Paid' || selectedTab === 'Pending') &&
+              <EarningStyled.ContentWrapper>
+                {selectedItemCount != 0 && this.renderHeader()}
                 <ScrollList
-                  dataList={list}
+                  dataList={selectedTab === 'Paid' ? paidList : pendingList}
                   limit={15}
                   earnings
-                  scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
-                  totalCount={allCount}
-                  offset={allOffset}
-                  loading={loading}
+                  scrollTarget="column-layout-scrollable-target"
+                  totalCount={selectedTab === 'Paid' ? paidCount : pendingCount}
+                  offset={selectedTab === 'Paid' ? paidOffset : pendingOffset}
+                  loading={selectedTab === 'Paid' ? paidLoading : pendingLoading}
                   noDataText="None at this time"
                   fetchData={(offset, refresh) => this.props.fetchEarningsList({
                     offset,
-                    status: 'all',
+                    status: selectedTab === 'Paid' ? 2 : 1,
                     limit: 15,
                   })}
                 />
-              </EarningStyled.AllEarningsWrapper>
-            }
-            {selectedTab === 'All' && list.length === 0 && !loading && <EarningStyled.errorMessage>None at this time</EarningStyled.errorMessage> }
-          </EarningStyled.EarningsListStyled>
+              </EarningStyled.ContentWrapper>}
+              {selectedTab === 'All' && list.length === 0 && loading && <Loader />}
+              {selectedTab === 'All' && (list.length > 0) && !(list.length === 0 && loading) &&
+                <EarningStyled.AllEarningsWrapper>
+                  {list.length != 0 && this.renderHeader()}
+                  <ScrollList
+                    dataList={list}
+                    limit={15}
+                    earnings
+                    scrollTarget="column-layout-scrollable-target"
+                    totalCount={allCount}
+                    offset={allOffset}
+                    loading={loading}
+                    noDataText="None at this time"
+                    fetchData={(offset, refresh) => this.props.fetchEarningsList({
+                      offset,
+                      status: 'all',
+                      limit: 15,
+                    })}
+                  />
+                </EarningStyled.AllEarningsWrapper>
+              }
+              {selectedTab === 'All' && list.length === 0 && !loading && <EarningStyled.errorMessage>None at this time</EarningStyled.errorMessage> }
+            </EarningStyled.EarningsListStyled>
+          </Scrollbars>
         </EarningStyled.mainSection>
       </EarningStyled.sectionWrapper>
     );
