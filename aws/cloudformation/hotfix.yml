@@ -91,27 +91,27 @@ Resources:
               Configuration:
                 ProjectName: !Ref 'BuildImages'
               RunOrder: 1
-#        -
-#          Name: Staging
-#          Actions:
-#            -
-#              Name: app
-#              InputArtifacts:
-#                - Name: source
-#                - Name: build
-#              ActionTypeId:
-#                Category: Deploy
-#                Owner: AWS
-#                Version: 1
-#                Provider: CloudFormation
-#              Configuration:
-#                ActionMode: CREATE_UPDATE
-#                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
-#                Capabilities: CAPABILITY_IAM
-#                StackName: hotfix-web-app
-#                TemplateConfiguration: build::hotfix-web.json
-#                TemplatePath: source::aws/cloudformation/web.yml
-#              RunOrder: 1
+        -
+          Name: Staging
+          Actions:
+            -
+              Name: app
+              InputArtifacts:
+                - Name: source
+                - Name: build
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              Configuration:
+                ActionMode: CREATE_UPDATE
+                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
+                Capabilities: CAPABILITY_IAM
+                StackName: hotfix-web-app
+                TemplateConfiguration: build::hotfix-web.json
+                TemplatePath: source::aws/cloudformation/web.yml
+              RunOrder: 1
         -
           Name: Approvals
           Actions:
@@ -127,27 +127,27 @@ Resources:
                 NotificationArn: arn:aws:sns:us-east-1:376169159073:Test
                 CustomData: Approve hotfix deployment.
               RunOrder: 1
-#        -
-#          Name: Production
-#          Actions:
-#            -
-#              Name: app
-#              InputArtifacts:
-#                - Name: source
-#                - Name: build
-#              ActionTypeId:
-#                Category: Deploy
-#                Owner: AWS
-#                Version: 1
-#                Provider: CloudFormation
-#              Configuration:
-#                ActionMode: CREATE_UPDATE
-#                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
-#                Capabilities: CAPABILITY_IAM
-#                StackName: production-web-app
-#                TemplateConfiguration: build::production-web.json
-#                TemplatePath: source::aws/cloudformation/web.yml
-#              RunOrder: 1
+        -
+          Name: Production
+          Actions:
+            -
+              Name: app
+              InputArtifacts:
+                - Name: source
+                - Name: build
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              Configuration:
+                ActionMode: CREATE_UPDATE
+                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
+                Capabilities: CAPABILITY_IAM
+                StackName: production-web-app
+                TemplateConfiguration: build::production-web.json
+                TemplatePath: source::aws/cloudformation/web.yml
+              RunOrder: 1
 
       ArtifactStore:
         Type: S3
