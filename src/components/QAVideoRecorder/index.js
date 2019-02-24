@@ -408,6 +408,15 @@ export default class QAVideoRecorder extends React.Component {
     if (!this.props.videoRecorder.recordedBlob && this.props.videoRecorder.start) {
       return (
         <VideoRecorderDiv.ControlWrapper>
+          <VideoRecorderDiv.Wrapper>
+            <VideoRecorderDiv.VideoHeading>
+              {
+                this.props.persistentTitle && this.props.responseMode ?
+                  this.props.recordTitle()
+                : null
+              }
+            </VideoRecorderDiv.VideoHeading>
+          </VideoRecorderDiv.Wrapper>
           <VideoRecorderDiv.IndicationText>
             Recording
             {

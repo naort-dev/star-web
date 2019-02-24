@@ -132,65 +132,50 @@ LoginContainer.Button = styled.button`
   background-color:white;
   cursor:pointer;
 `;
-LoginContainer.FacebookContent = styled.span`
+
+LoginContainer.SocialIcon = styled.span`
   position:relative;
   padding-left: 32px;
   width:100%;
   height: 10px;
   display:block;
-  &:before{
+  &:before {
     content:'';
     position:absolute;
     left:0px;
     right:0;
     top:-6px;
     bottom:0;
+    padding: 10px;  
+    height: 10px;
+  }
+`;
+
+LoginContainer.FacebookContent = LoginContainer.SocialIcon.extend`
+  &:before {
     background: url( 'assets/images/facebook.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
   }
   
 `;
-LoginContainer.GoogleContent = styled.span`
-  position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
-  display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
-    background: url( 'assets/images/search.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-    
+LoginContainer.GoogleContent = LoginContainer.SocialIcon.extend`
+  &:before {
+    background: url( 'assets/images/search.svg' ) no-repeat left;    
   }
   
 `;
-LoginContainer.InstagramContent = styled.span`
-  position:relative;
-  padding-left: 32px;
-  width:100%;
-  height: 10px;
-  display:block;
-  &:before{
-    content:'';
-    position:absolute;
-    left:0px;
-    right:0;
-    top:-6px;
-    bottom:0;
+LoginContainer.InstagramContent = LoginContainer.SocialIcon.extend`
+  &:before {
     background: url( 'assets/images/instagram.svg' ) no-repeat left;
-    padding: 10px;  
-    height: 10px;
-    
   }
- 
 `;
+
+LoginContainer.TwitterContent = LoginContainer.SocialIcon.extend`
+  &:before {
+    background: url( 'assets/images/twitter.png' ) no-repeat left;
+    background-size: contain;
+  }
+`;
+
 LoginContainer.InputFieldsWrapper = styled.form`
   
   padding: 0px 25px;
@@ -352,7 +337,7 @@ border: 2px solid #FF6C58;
 `;
 LoginContainer.ForgotButtonWrapper = styled.div`
   text-align:left;
-  margin-top:4%;
+  margin-top: 24px;
 `;
 LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;

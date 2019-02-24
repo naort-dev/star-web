@@ -231,7 +231,8 @@ class starRegistrationComponent extends React.Component {
               <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
                 <StarDetailsEntry
                   submitAccountDetails={this.submitAccountDetails}
-                />
+                  closeSignupFlow={this.closeSignupFlow}
+              />
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
                 <ProfileUpload
@@ -271,6 +272,7 @@ class starRegistrationComponent extends React.Component {
                       {...this.props}
                       src={this.state.videoUrl}
                       responseMode
+                      persistentTitle
                       recordPlaceHolder="Start recording"
                       recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
                       duration={recorder.signUpTimeOut}

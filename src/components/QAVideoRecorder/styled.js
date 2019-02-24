@@ -357,7 +357,7 @@ VideoRecorderDiv.RecordDuration = styled.span`
 
 VideoRecorderDiv.IndicationText = styled.div`
   position: absolute;
-  top: 5%;
+  top: 7%;
   right: 20px;
   color: #FF0000;
   text-align: right;

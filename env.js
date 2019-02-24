@@ -21,4 +21,4 @@
   window.env = function(key) {
     return config[key] || undefined;
   }
-  }(this || {}));
+}(this || {}));
