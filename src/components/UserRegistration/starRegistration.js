@@ -231,7 +231,8 @@ class starRegistrationComponent extends React.Component {
               <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
                 <StarDetailsEntry
                   submitAccountDetails={this.submitAccountDetails}
-                />
+                  closeSignupFlow={this.closeSignupFlow}
+              />
               </GroupStyled.StepWrapper>
               <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
                 <ProfileUpload

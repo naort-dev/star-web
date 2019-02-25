@@ -372,7 +372,6 @@ export default class AddRepresentative extends React.Component {
           {
             this.state.representatives.length < 2 &&
             <GroupStyled.addRepWrapper onClick={() => this.addRepForm()}>
-              <GroupStyled.AddRepresentative />
               <div className="addRepText">Add Representative
                 <p>Add another person to help you manage your bookings.  They will be cc'd on all messages you receive.
                 </p>

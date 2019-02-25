@@ -161,9 +161,9 @@ class SignUp extends React.Component {
         });
       });
     } else if (
-      this.checkEmail() &&
-      this.checkPassword() &&
-      this.checkRequired()
+      this.checkRequired() &
+      this.checkEmail() &
+      this.checkPassword()
     ) {
       this.props.registerUser(
         this.state.firstName.value,
@@ -180,21 +180,6 @@ class SignUp extends React.Component {
             }
           }
         });
-    } else if (this.checkEmail() && this.checkPassword() && this.checkRequired()) {
-      this.props.registerUser(
-        this.state.firstName.value,
-        this.state.lastName.value,
-        this.state.email.value,
-        this.state.password.value,
-        this.state.role,
-        this.state.referral,
-      ).then((response) => {
-        if (response !== undefined) {
-          if (this.props.signupRole === 'star' || this.props.signupRole === 'group') {
-            this.props.changeStep(this.props.currentStep + 1);
-          }
-        };
-      });
     }
   };
 
@@ -425,8 +410,9 @@ class SignUp extends React.Component {
   };
 
   checkRequired = () => {
-    if (validator.isEmpty(this.state.firstName.value)) {
-      const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a Firstname';
+    const firstNameEmpty = validator.isEmpty(this.state.firstName.value);
+    if (firstNameEmpty) {
+      const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a first name';
       this.setState({ firstName: { ...this.state.firstName, message: firstNameMsg } });
       return false;
     }

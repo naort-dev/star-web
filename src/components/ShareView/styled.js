@@ -25,18 +25,6 @@ ShareStyled.IconsWrapper = styled.div`
   align-items: stretch;
 `;
 
-ShareStyled.Row = styled.div`
-  display: flex;
-  justify-content: space-between;
-  &:first-child {
-    margin-top: 20px;
-    margin-bottom: 10px;
-  }
-  &:last-child {
-    margin-top: 10px;
-    margin-bottom: 12px;
-  }
-`;
 
 ShareStyled.Somenetwork = styled.div`
   vertical-align: top;
@@ -44,6 +32,24 @@ ShareStyled.Somenetwork = styled.div`
   margin-right: 18px;
   text-align: center;
   cursor: pointer;
+`;
+
+ShareStyled.Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+  &:first-child {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    justify-content: center;
+    ${ShareStyled.Somenetwork} {
+      margin-right: 0;
+      width: 40%;
+    }
+  }
+  &:last-child {
+    margin-top: 10px;
+    margin-bottom: 12px;
+  }
 `;
 
 ShareStyled.NetWorkButtonWrapper = styled.div`

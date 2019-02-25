@@ -140,6 +140,10 @@ export default class Event extends React.Component {
       specification: '',
       importantinfo: '',
       eventdetailName: '',
+      whoIsfor: false,
+      whoIsfrom: false,
+      eventTitle: false,
+      eventDate: false,
     });
   }
   goBack = () => {

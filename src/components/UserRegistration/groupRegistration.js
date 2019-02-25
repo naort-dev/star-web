@@ -94,6 +94,7 @@ class GroupRegistrationComponent extends React.Component {
           <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
             <DetailsEntry
               groupTypes={this.props.groupTypes}
+              closeSignupFlow={this.closeSignupFlow}
               submitGroupDetails={this.submitGroupAccountDetails}
             />
           </GroupStyled.StepWrapper>

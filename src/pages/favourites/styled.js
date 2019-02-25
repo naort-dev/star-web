@@ -12,7 +12,7 @@ const FavouriteStyled = styled.div`
 
 FavouriteStyled.sectionWrapper = styled.div`
   max-width: 1920px;
-  height:100%;
+  height: calc(100% - 55px);
 `;
 
 FavouriteStyled.sideSection = styled.section`

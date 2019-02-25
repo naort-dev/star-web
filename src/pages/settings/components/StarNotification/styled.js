@@ -4,9 +4,9 @@ const NotificationStyled = styled.div`
 
 `;
 NotificationStyled.DetailsWrapper = styled.div`
-  padding: 30px 10px;
+  padding: 10px 30px 10px 0;
   @media(min-width: 768px) {
-    padding: 30px 60px;
+    padding: 0 30px 60px 0;
   }
 `;
 
