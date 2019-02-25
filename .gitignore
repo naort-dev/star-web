@@ -8,5 +8,4 @@ dist/
 env.js
 .DS_Store
 .idea/
-package-lock.json
 yarn.lock
