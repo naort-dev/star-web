@@ -162,7 +162,7 @@ class SignUp extends React.Component {
       });
     } else if (
       this.checkFirstRequired() &&
-      this.checkLastRequired() &&
+      ((this.checkLastRequired() && this.props.signupRole !== 'group') || this.props.signupRole === 'group') &&
       this.checkEmail() &&
       this.checkPassword()
     ) {
