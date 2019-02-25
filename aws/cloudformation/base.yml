@@ -1,13 +1,13 @@
 Description: Create a CodePipeline to include Nested CloudFormation, CodeBuild and Approval steps.
 Parameters:
 
-  BaseImageTag:
+  PipelineName:
     Type: String
-    Description: Base image tag (placeholder only, not to be used in the template itself, but directly from SSM in codebuild projects)
-
-  Version:
-    Type: String
-    Description: major version.minor version (placeholder only, not to be used in the template itself, but directly from SSM in codebuild projects)
+    Description: Pipeline name
+    AllowedValues:
+    - codepipeline
+    - hotfix
+    - upgrade
 
   GitBranch:
     Type: String
@@ -22,17 +22,12 @@ Parameters:
     Description: Base image for codebuild - Docker
     Default: aws/codebuild/docker:18.09.0
 
-  CodebuildUbuntuImage:
-    Type: String
-    Description: Base image for codebuild - Ubuntu
-    Default: aws/codebuild/python:3.6.5
-
 Resources:
-  BuildImages:
+  BuildBase:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: !Join ['-', [!Ref 'AWS::StackName', 'images']]
-      Description: Build images
+      Name: web-base-images
+      Description: Build base images
       ServiceRole: arn:aws:iam::376169159073:role/service-role/codebuild-starsona-service-role
       Artifacts:
         Type: CODEPIPELINE
@@ -42,11 +37,11 @@ Resources:
         Image: !Ref 'CodebuildDockerImage'
         PrivilegedMode: true
         EnvironmentVariables:
-          - { Name: PARAMETERS, Value: '/codepipeline/web/upgrade.json' }
+        - { Name: CODEPIPELINE, Value: !Ref 'PipelineName' }
 
       Source:
         Type: CODEPIPELINE
-        BuildSpec: aws/codebuild/buildspec-images.yml
+        BuildSpec: aws/codebuild/buildspec-base.yml
       TimeoutInMinutes: 15
 
   Pipeline:
@@ -75,6 +70,19 @@ Resources:
                 OAuthToken: !Ref 'GithubToken'
               RunOrder: 1
         -
+          Name: Approvals
+          Actions:
+          -
+            Name: approval
+            ActionTypeId:
+              Category: Approval
+              Owner: AWS
+              Version: 1
+              Provider: Manual
+            Configuration:
+              CustomData: Approve new base images
+            RunOrder: 1
+        -
           Name: Build
           Actions:
             -
@@ -89,28 +97,7 @@ Resources:
               OutputArtifacts:
                 - Name: build
               Configuration:
-                ProjectName: !Ref 'BuildImages'
-              RunOrder: 1
-        -
-          Name: Staging
-          Actions:
-            -
-              Name: app
-              InputArtifacts:
-                - Name: source
-                - Name: build
-              ActionTypeId:
-                Category: Deploy
-                Owner: AWS
-                Version: 1
-                Provider: CloudFormation
-              Configuration:
-                ActionMode: CREATE_UPDATE
-                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
-                Capabilities: CAPABILITY_IAM
-                StackName: upgrade-web-app
-                TemplateConfiguration: build::upgrade-web.json
-                TemplatePath: source::aws/cloudformation/web.yml
+                ProjectName: !Ref 'BuildBase'
               RunOrder: 1
 
       ArtifactStore:
