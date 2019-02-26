@@ -162,6 +162,7 @@ class SignUp extends React.Component {
       });
     } else if (
       this.checkFirstRequired() &
+      this.checkLastRequired() &
       this.checkEmail() &
       this.checkPassword()
     ) {
@@ -411,28 +412,29 @@ class SignUp extends React.Component {
 
   checkFirstRequired = () => {
     const firstNameEmpty = validator.isEmpty(this.state.firstName.value);
-    const lastNameEmpty = validator.isEmpty(this.state.lastName.value);
     if (firstNameEmpty) {
       const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a first name';
       this.setState({ firstName: { ...this.state.firstName, message: firstNameMsg } });
-    } else {
-      this.setState({
-        firstName: { ...this.state.firstName, message: '', isValid: true },
-      });
+      return false;
     }
-    if (lastNameEmpty) {
+    this.setState({
+      firstName: { ...this.state.firstName, message: '', isValid: true },
+    });
+    return true;
+  };
+
+  checkLastRequired = () => {
+    const lastNameEmpty = validator.isEmpty(this.state.lastName.value);
+    if (this.props.signupRole !== 'group' && lastNameEmpty) {
       const lastNameMsg = 'Enter a last name';
       this.setState({ lastName: { ...this.state.lastName, message: lastNameMsg } });
-    } else {
-      this.setState({
-        lastName: { ...this.state.lastName, message: '', isValid: true },
-      });
+      return false;
     }
-    if (this.props.signupRole === 'group') {
-      return firstNameEmpty;
-    }
-    return firstNameEmpty && lastNameEmpty;
-  };
+    this.setState({
+      lastName: { ...this.state.lastName, message: '', isValid: true },
+    });
+    return true;
+  }
 
   isFormValid = () => {
     if (
@@ -524,7 +526,7 @@ class SignUp extends React.Component {
                         name="lastName"
                         value={this.state.lastName.value}
                         onChange={(event) => this.saveFormEntries(event, "lastName")}
-                        onBlur={this.checkFirstRequired}
+                        onBlur={this.checkLastRequired}
                       />
                       <LoginContainer.ErrorMsg>
                         {this.state.lastName.message}
