@@ -3,14 +3,22 @@ import ReactDOM from 'react-dom';
 import SnackBarStyled from './styled';
 
 export default class SnackBar extends React.Component {
-  state = {
 
+  constructor(props) {
+    super(props);
+    this.mounted = true;
   }
 
   componentDidMount() {
     setTimeout(() => {
-      this.props.closeSnackBar();
+      if (this.mounted) {
+        this.props.closeSnackBar();
+      }
     }, 1000);
+  }
+
+  componentWillUnmount() {
+    this.mounted = false;
   }
 
   renderSnackBar = () => {
