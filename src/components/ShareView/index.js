@@ -104,7 +104,7 @@ export default class ShareView extends React.Component {
         <ShareStyled.Somenetwork>
           <EmailShareButton
             url={shareUrl}
-            subject={emailSubject && title}
+            subject={emailSubject || title}
             body={body ? `${body}\n\n${shareUrl}` : shareUrl}
             className="Demo__some-network__share-button"
           >
