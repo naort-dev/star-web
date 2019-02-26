@@ -5,3 +5,8 @@ RUN apt-get update &&\
 
 RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get install -y nodejs zopfli
+COPY package.json /starsona/
+COPY package-lock.json /starsona/
+WORKDIR /starsona
+RUN npm install --no-color
+
