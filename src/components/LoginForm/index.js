@@ -507,7 +507,7 @@ export default class LoginForm extends React.Component {
                 <LoginContainer.ButtonWrapper>
                   <LoginContainer.SignIn
                     type="submit"
-                    value="Log In"
+                    value="Log in"
                     onClick={this.onLogin}
                     disabled={this.props.loading}
                   />

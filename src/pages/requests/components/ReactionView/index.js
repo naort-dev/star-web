@@ -28,6 +28,7 @@ class ReactionView extends React.Component {
     reactionsLoading: true,
     reactions: [],
     currentAction: '',
+    shareView: false,
     commentText: '',
     tipDetails: {},
     pauseVideo: false,
@@ -70,20 +71,16 @@ class ReactionView extends React.Component {
   }
 
   getPopupContent = (currentAction) => {
-    if (currentAction === 'share') {
-      const { reactions } = this.state;
-      const currentReaction = reactions[this.currentSlideIndex];
-      const { share_url: shareUrl, user_name: userName } = currentReaction;
-      return <ShareView iconSize={50} title={userName} shareUrl={shareUrl} />;
+    if (currentAction === 'report') {
+      return (
+        <SubmitView
+          heading="Report abuse"
+          onSubmit={this.reportAbuse}
+          successMessage="The message has been sent."
+          closePopup={this.closePopup}
+        />
+      );
     }
-    return (
-      <SubmitView
-        heading="Report abuse"
-        onSubmit={this.reportAbuse}
-        successMessage="The message has been sent."
-        closePopup={this.closePopup}
-      />
-    );
   }
 
   setCurrentReaction = (currentIndex) => {
@@ -186,6 +183,18 @@ class ReactionView extends React.Component {
     this.setState({ currentAction: '' });
   }
 
+  toggleShare = () => {
+    const { shareView } = this.state;
+    this.setState({ shareView: !shareView });
+  }
+
+  renderShareView = () => {
+    const { reactions } = this.state;
+    const currentReaction = reactions[this.currentSlideIndex];
+    const { share_url: shareUrl, user_name: userName } = currentReaction;
+    return <ShareView closePopUp={this.toggleShare} title={userName} shareUrl={shareUrl} />;
+  }
+
   renderSlides = (sliderProps) => {
     if (sliderProps.fileType === 1) {
       return <img src={sliderProps.thumbnail ? sliderProps.thumbnail : sliderProps.original} alt="reaction" />;
@@ -231,7 +240,7 @@ class ReactionView extends React.Component {
 
   render() {
     const { orderDetails, closePopup, fanProfile, commentList } = this.props;
-    const { tipDetails, currentAction } = this.state;
+    const { tipDetails, currentAction, shareView } = this.state;
     return (
       <ReactionStyled>
         {
@@ -243,6 +252,9 @@ class ReactionView extends React.Component {
               { this.getPopupContent(currentAction) }
             </Popup>
         }
+        {
+          shareView && this.renderShareView()
+        }
         <ReactionStyled.BackButton onClick={closePopup} />
         <ReactionStyled.Header>
           Fan reaction
@@ -253,7 +265,7 @@ class ReactionView extends React.Component {
                 {
                   this.state.showActions &&
                     <ReactionStyled.MoreSettingsList>
-                      <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'share' })}>Share</ReactionStyled.MoreSettingsListItem>
+                      <ReactionStyled.MoreSettingsListItem onClick={this.toggleShare}>Share</ReactionStyled.MoreSettingsListItem>
                       <ReactionStyled.MoreSettingsListItem onClick={this.downloadReaction}>Download reaction</ReactionStyled.MoreSettingsListItem>
                       <ReactionStyled.MoreSettingsListItem onClick={() => this.setState({ currentAction: 'report' })}>Report abuse</ReactionStyled.MoreSettingsListItem>
                     </ReactionStyled.MoreSettingsList>

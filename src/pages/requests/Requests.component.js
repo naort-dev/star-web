@@ -32,6 +32,7 @@ export default class Requests extends React.Component {
       loading: false,
       orderDetails: {},
       alertText: '',
+      shareView: false,
     };
     this.requestType = {
       3: 'Q&A',
@@ -83,21 +84,7 @@ export default class Requests extends React.Component {
 
   getPopupContent = (requestAction) => {
     const { orderDetails, alertText } = this.state;
-    let finalVideo;
-    if (!isEmpty(orderDetails)) {
-      const { request_video: requestVideo } = orderDetails;
-      finalVideo = requestVideo.find(video => video.video_status === 1); // find completed video
-    }
     switch (requestAction) {
-      case 'share':
-        return (
-          <ShareView
-            iconSize={50}
-            title={`Check out this video from ${orderDetails.celebrity} !`}
-            body={`Watch this personalized video from ${orderDetails.celebrity}`}
-            shareUrl={`https://${finalVideo.video_url}`}
-          />
-        );
       case 'respond':
         return <VideoRecorder onComplete={this.onVideoUpload} orderDetails={this.state.orderDetails} {...this.props} />;
       case 'report':
@@ -259,7 +246,7 @@ export default class Requests extends React.Component {
   }
 
   requestAction = (data, actionType) => {
-    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder } = this.state;
+    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder, shareView } = this.state;
     if (actionType === 'edit') {
       this.setState({ loading: true });
       getRequestDetails(data.booking_id)
@@ -282,8 +269,10 @@ export default class Requests extends React.Component {
     } else if (actionType === 'rateReminder') {
       showRateReminder = true;
       orderDetails = data;
-    } else if (actionType === 'share'
-      || actionType === 'respond'
+    } else if (actionType === 'share') {
+      shareView = true;
+      orderDetails = data;
+    } else if (actionType === 'respond'
       || actionType === 'report'
       || actionType === 'contact'
       || actionType === 'rate'
@@ -300,7 +289,7 @@ export default class Requests extends React.Component {
       }
     }
     requestAction = actionType;
-    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder });
+    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder, shareView });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -333,7 +322,7 @@ export default class Requests extends React.Component {
   }
 
   closePopup = () => {
-    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false });
+    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false, shareView: false });
   }
 
   renderRequests = (request) => {
@@ -399,7 +388,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails } = this.state;
+    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails, shareView } = this.state;
     return (
       <div>
         <ColumnLayout
@@ -408,6 +397,15 @@ export default class Requests extends React.Component {
         >
           {this.renderCenterSection()}
         </ColumnLayout>
+        {
+          shareView &&
+            <ShareView
+              closePopUp={this.closePopup}
+              title={`Check out this video from ${orderDetails.celebrity} !`}
+              body={`Watch this personalized video from ${orderDetails.celebrity}`}
+              shareUrl={`https://${this.findVideoByStatus(1).video_url}`}
+            />
+        }
         {
           showRateReminder &&
             <RateReminder

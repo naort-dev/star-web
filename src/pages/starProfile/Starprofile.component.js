@@ -366,17 +366,12 @@ export default class Starprofile extends React.Component {
 
         {
           this.state.sharePopup &&
-          <Popup
-            smallPopup
+          <ShareView
             closePopUp={this.closePopup}
-          >
-            <ShareView
-              iconSize={50}
-              title={`Starsona: ${fullName}`}
-              body={`Book a personalized video shout-out from ${fullName}`}
-              shareUrl={this.props.userDetails.share_url}
-            />
-          </Popup>
+            title={`Starsona: ${fullName}`}
+            body={`Book a personalized video shout-out from ${fullName}`}
+            shareUrl={this.props.userDetails.share_url}
+          />
         }
         {this.props.userDetails && !this.props.detailsLoading &&
           <StarProfileStyled.sectionWrapper>

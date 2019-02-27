@@ -161,7 +161,8 @@ class SignUp extends React.Component {
         });
       });
     } else if (
-      this.checkRequired() &
+      this.checkFirstRequired() &
+      this.checkLastRequired() &
       this.checkEmail() &
       this.checkPassword()
     ) {
@@ -409,7 +410,7 @@ class SignUp extends React.Component {
     return true;
   };
 
-  checkRequired = () => {
+  checkFirstRequired = () => {
     const firstNameEmpty = validator.isEmpty(this.state.firstName.value);
     if (firstNameEmpty) {
       const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a first name';
@@ -421,6 +422,19 @@ class SignUp extends React.Component {
     });
     return true;
   };
+
+  checkLastRequired = () => {
+    const lastNameEmpty = validator.isEmpty(this.state.lastName.value);
+    if (this.props.signupRole !== 'group' && lastNameEmpty) {
+      const lastNameMsg = 'Enter a last name';
+      this.setState({ lastName: { ...this.state.lastName, message: lastNameMsg } });
+      return false;
+    }
+    this.setState({
+      lastName: { ...this.state.lastName, message: '', isValid: true },
+    });
+    return true;
+  }
 
   isFormValid = () => {
     if (
@@ -491,7 +505,7 @@ class SignUp extends React.Component {
                         name="firstName"
                         value={this.state.firstName.value}
                         onChange={(event) => this.saveFormEntries(event, "firstName")}
-                        onBlur={this.checkRequired}
+                        onBlur={this.checkFirstRequired}
                       />
                       <LoginContainer.ErrorMsg>
                         {this.state.firstName.message}
@@ -512,6 +526,7 @@ class SignUp extends React.Component {
                         name="lastName"
                         value={this.state.lastName.value}
                         onChange={(event) => this.saveFormEntries(event, "lastName")}
+                        onBlur={this.checkLastRequired}
                       />
                       <LoginContainer.ErrorMsg>
                         {this.state.lastName.message}
