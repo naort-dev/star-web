@@ -52,7 +52,7 @@ export default class AccountSettings extends React.Component {
       },
       profileImage: {
         image: props.userDetails.avatarPhoto,
-        file: props.userDetails.avatarPhoto,
+        file: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.photo : null,
       },
       secondaryImages,
       firstName: props.userDetails.first_name ? props.userDetails.first_name : '',
