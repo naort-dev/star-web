@@ -6,6 +6,7 @@ import AccountSettings from '../AccountSettings';
 import ShareUser from '../ShareUser';
 import InnerTabs from '../../../../components/InnerTabs';
 import AlertView from '../../../../components/AlertView';
+import ActionLoader from '../../../../components/ActionLoader';
 import Popup from '../../../../components/Popup';
 import { fetchURL } from '../../../../store/shared/actions/stripeRegistration';
 import { toggleSignup } from '../../../../store/shared/actions/toggleModals';
@@ -24,6 +25,7 @@ class FanSettings extends React.Component {
       popupMessage: '',
       tabsList: ['Account', 'Invite friends'],
       changes,
+      loading: false,
     };
   }
 
@@ -64,20 +66,26 @@ class FanSettings extends React.Component {
       user_details: userDetails,
     };
     try {
+      this.setState({ loading: true });
       await this.props.updateUserDetails(this.props.userDetails.id, userData);
       await this.props.updateProfilePhoto(profileImages);
       await this.props.updateNotification(notifications);
+      this.setState({ loading: false });
       this.props.fetchUserDetails();
       this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
+      this.setState({ loading: false });
       this.setState({ popupMessage: 'Something went wrong' });
     }
   }
 
   render() {
-    const { selectedTab } = this.state;
+    const { selectedTab, loading } = this.state;
     return (
       <SettingsStyled>
+        {
+          loading && <ActionLoader />
+        }
         {
           this.state.popupMessage && this.state.popupMessage !== '' &&
             <Popup
