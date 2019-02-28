@@ -126,11 +126,18 @@ export default class Personal extends React.Component {
     }
   }
 
-  handleChange = (event) => {
+  handleChange = (event) => {    
     const occasionList = this.props.eventsDetails;
     const result = occasionList.find((find) => {
       return find.id == event.target.value;
     });
+    if (event.target.value == 5 && this.state.date) {
+      this.setState({ date: null });
+    } else {
+      this.setState({
+        date: this.props.bookingData.date ? moment(this.props.bookingData.date) : moment() 
+      });
+    }
     this.setState({
       selectedValue: event.target.value,
       templateType: result ? result.type : '0',
@@ -351,6 +358,7 @@ export default class Personal extends React.Component {
                               <Request.EventStep2>
                                 <RequestTemplates
                                   type={this.state.templateType}
+                                  selectedOccasion={this.state.selectedValue}
                                   relationship={this.state.relationship}
                                   user={this.state.selectedPersonal}
                                   eventName={this.state.eventName}
@@ -381,11 +389,11 @@ export default class Personal extends React.Component {
                       <Request.PaymentControllerWrapper>
                         {this.props.currentStepCount === 2 ?
                           <Request.ContinueButton onClick={() => this.handleBooking()}>
-                            Continue
+                            Continue 
                           </Request.ContinueButton>
                           :
                           <Request.ContinueButton onClick={() => this.steps()}>
-                            Continue
+                            Continue 
                           </Request.ContinueButton>
                         }
                       </Request.PaymentControllerWrapper>
