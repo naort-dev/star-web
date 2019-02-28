@@ -175,8 +175,10 @@ export default class ImageUpload extends React.Component {
 
 
   addFanProfileImage = () => {
-    this.inputRef.click();
-    this.setState({ currentImage: 'profileImage' });
+    if (!this.state.profileLoading) {
+      this.inputRef.click();
+      this.setState({ currentImage: 'profileImage' });
+    }
   }
 
   renderSecondaryImages = () => {
@@ -198,14 +200,20 @@ export default class ImageUpload extends React.Component {
           }
           <ImageUploadStyled.ProfileInputContainer>
             {
-              !secondaryLoading && !secondaryLoading[index] ?
+              secondaryLoading && !secondaryLoading[index] ?
                 <ImageUploadStyled.ProfileInputWrapper noImage={item.image} />
               : null
             }
           </ImageUploadStyled.ProfileInputContainer>
-          <ImageUploadStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
           {
-            item.image && <ImageUploadStyled.CloseButton onClick={() => this.props.removeSecondaryImage(index)} />
+            secondaryLoading && !secondaryLoading[index] ?
+              <ImageUploadStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+            : null
+          }
+          {
+            item.image && secondaryLoading && !secondaryLoading[index] ?
+              <ImageUploadStyled.CloseButton onClick={() => this.props.removeSecondaryImage(index)} />
+            : null
           }
         </ImageUploadStyled.SecondaryCoverImage>
       );
@@ -227,10 +235,14 @@ export default class ImageUpload extends React.Component {
                         <Loader size={30} />
                       </ImageUploadStyled.LoaderWrapper>
                   }
-                  { !this.state.profileLoading && <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} /> }
-                  <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+                  { !this.state.profileLoading &&
+                    <React.Fragment>
+                      <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} />
+                      <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+                    </React.Fragment>
+                  }
                 </ImageUploadStyled.fanProfileImage>
-                <ImageUploadStyled.fanProfileChange onClick={() => this.addFanProfileImage()}>
+                <ImageUploadStyled.fanProfileChange onClick={this.addFanProfileImage}>
                   Change image
                 </ImageUploadStyled.fanProfileChange>
               </ImageUploadStyled.fanProfileContainer>
@@ -245,13 +257,16 @@ export default class ImageUpload extends React.Component {
                   innerRef={(node) => { this.coverImage = node; }}
                   imageUrl={this.props.featuredImage}
                 >
-                  <ImageUploadStyled.UploadInput
-                    innerRef={(node) => { this.inputRef = node; }}
-                    accept=".png, .jpeg, .jpg"
-                    onClick={() => this.setState({ currentImage: 'featuredImage' })}
-                    onChange={event => this.onFileChange(event)}
-                    type="file"
-                  />
+                  {
+                    !this.state.featuredLoading &&
+                      <ImageUploadStyled.UploadInput
+                        innerRef={(node) => { this.inputRef = node; }}
+                        accept=".png, .jpeg, .jpg"
+                        onClick={() => this.setState({ currentImage: 'featuredImage' })}
+                        onChange={event => this.onFileChange(event)}
+                        type="file"
+                      />
+                  }
                   {
                     this.state.featuredLoading &&
                       <ImageUploadStyled.LoaderWrapper>
@@ -262,7 +277,8 @@ export default class ImageUpload extends React.Component {
                     { !this.state.featuredLoading && <ImageUploadStyled.ProfileInputWrapper noImage={this.props.featuredImage} /> }
                   </ImageUploadStyled.ProfileInputContainer>
                   {
-                  this.props.featuredImage && <ImageUploadStyled.CloseButton onClick={() => this.props.onComplete('featuredImage', null, null)} />
+                    this.props.featuredImage && !this.state.featuredLoading &&
+                      <ImageUploadStyled.CloseButton onClick={() => this.props.onComplete('featuredImage', null, null)} />
                   }
                   <ImageUploadStyled.ProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
                     {
