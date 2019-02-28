@@ -8,13 +8,16 @@ import SettingsStyled from '../../styled';
 import ImageUploadStyled from './styled';
 
 export default class ImageUpload extends React.Component {
-
+  
   state = {
     cropImage: null,
     cropMode: false,
     currentImage: null,
     coverImageHeight: 100,
     secondaryImageHeight: 100,
+    profileLoading: false,
+    featuredLoading: false,
+    secondaryLoading: [],
   }
 
   componentWillMount() {
@@ -30,6 +33,7 @@ export default class ImageUpload extends React.Component {
   }
 
   async onFileChange(event) {
+    const { currentImage } = this.state;
     this.setState({ imageError: false })
     const file = event.target.files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
@@ -38,12 +42,26 @@ export default class ImageUpload extends React.Component {
     } else if (file) {
       const correctResolution = await this.checkResolution(file);
       if (correctResolution) {
-        this.setState({ imageLoading: true });
+        this.setLoading(currentImage, true);
         await this.getImageData(file);
       } else {
-        this.setState({ imageError: { sizeError: true }, imageLoading: false });
+        this.setLoading(currentImage, false);
+        this.setState({ imageError: { sizeError: true } });
       }
     }
+  }
+
+  setLoading = (type, loadState) => {
+    let { profileLoading, featuredLoading, secondaryLoading } = this.state;
+    if (type === 'profileImage') {
+      profileLoading = loadState;
+    } else if (type === 'featuredImage') {
+      featuredLoading = loadState;
+    } else if (type && type.indexOf('secondaryImage') > -1) {
+      const secondaryImageIndex = type.split('-')[1];
+      secondaryLoading[secondaryImageIndex] = loadState;
+    }
+    this.setState({ profileLoading, featuredLoading, secondaryLoading });
   }
 
   setImageSize = () => {
@@ -59,23 +77,28 @@ export default class ImageUpload extends React.Component {
   }
 
   getCroppedImage = (file, image) => {
-    awsImageUpload(file, this.state.extension)
+    const { currentImage, extension } = this.state;
+    this.setLoading(currentImage, true);
+    awsImageUpload(file, extension)
       .then((resp) => {
-        this.props.onComplete(this.state.currentImage, resp, image);
+        this.props.onComplete(currentImage, resp, image);
+        this.setLoading(currentImage, false);
         this.setState({ currentImage: null });
       });
   }
 
   async getImageData(file) {
+    const { currentImage } = this.state;
     const extension = file.type.split('/')[1];
     const reader = new FileReader();
     const exif = await this.getExif(file);
     this.currentExif = exif;
     reader.onload = () => {
-      this.setState({ cropMode: true, cropImage: reader.result, extension, imageLoading: false });
+      this.setLoading(currentImage, false);
+      this.setState({ cropMode: true, cropImage: reader.result, extension });
     };
     if (file) {
-      this.setState({ imageLoading: true });
+      this.setLoading(currentImage, true);
       reader.readAsDataURL(file);
     }
   }
@@ -157,6 +180,7 @@ export default class ImageUpload extends React.Component {
   }
 
   renderSecondaryImages = () => {
+    const { secondaryLoading } = this.state;
     return this.props.secondaryImages.map((item, index) => {
       return (
         <ImageUploadStyled.SecondaryCoverImage
@@ -165,8 +189,19 @@ export default class ImageUpload extends React.Component {
           imageUrl={item.image}
           onClick={() => this.setState({ currentImage: `secondaryImage-${index}` })} 
         >
+          {
+            secondaryLoading && secondaryLoading[index] ?
+              <ImageUploadStyled.LoaderWrapper>
+                <Loader size={30} />
+              </ImageUploadStyled.LoaderWrapper>
+            : null
+          }
           <ImageUploadStyled.ProfileInputContainer>
-            <ImageUploadStyled.ProfileInputWrapper noImage={item.image} />
+            {
+              !secondaryLoading && !secondaryLoading[index] ?
+                <ImageUploadStyled.ProfileInputWrapper noImage={item.image} />
+              : null
+            }
           </ImageUploadStyled.ProfileInputContainer>
           <ImageUploadStyled.UploadInput accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
           {
@@ -181,82 +216,93 @@ export default class ImageUpload extends React.Component {
     return (
       <ImageUploadStyled>
         {
-          this.state.imageLoading ?
-            <Loader />
+          this.props.type === 'fan' ?
+            <ImageUploadStyled.fanProfileWrapper>
+              <SettingsStyled.Label>Profile image</SettingsStyled.Label>
+              <ImageUploadStyled.fanProfileContainer>
+                <ImageUploadStyled.fanProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
+                  {
+                    this.state.profileLoading &&
+                      <ImageUploadStyled.LoaderWrapper>
+                        <Loader size={30} />
+                      </ImageUploadStyled.LoaderWrapper>
+                  }
+                  { !this.state.profileLoading && <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} /> }
+                  <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+                </ImageUploadStyled.fanProfileImage>
+                <ImageUploadStyled.fanProfileChange onClick={() => this.addFanProfileImage()}>
+                  Change image
+                </ImageUploadStyled.fanProfileChange>
+              </ImageUploadStyled.fanProfileContainer>
+            </ImageUploadStyled.fanProfileWrapper>
           :
             <React.Fragment>
+              <ImageUploadStyled.CoverLayout
+                style={{ height: this.state.coverImageHeight }}
+                featuredPresent={this.props.featuredImage}
+              >
+                <ImageUploadStyled.CoverImage
+                  innerRef={(node) => { this.coverImage = node; }}
+                  imageUrl={this.props.featuredImage}
+                >
+                  <ImageUploadStyled.UploadInput
+                    innerRef={(node) => { this.inputRef = node; }}
+                    accept=".png, .jpeg, .jpg"
+                    onClick={() => this.setState({ currentImage: 'featuredImage' })}
+                    onChange={event => this.onFileChange(event)}
+                    type="file"
+                  />
+                  {
+                    this.state.featuredLoading &&
+                      <ImageUploadStyled.LoaderWrapper>
+                        <Loader size={30} />
+                      </ImageUploadStyled.LoaderWrapper>
+                  }
+                  <ImageUploadStyled.ProfileInputContainer>
+                    { !this.state.featuredLoading && <ImageUploadStyled.ProfileInputWrapper noImage={this.props.featuredImage} /> }
+                  </ImageUploadStyled.ProfileInputContainer>
+                  {
+                  this.props.featuredImage && <ImageUploadStyled.CloseButton onClick={() => this.props.onComplete('featuredImage', null, null)} />
+                  }
+                  <ImageUploadStyled.ProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
+                    {
+                      this.state.profileLoading &&
+                        <ImageUploadStyled.LoaderWrapper>
+                          <Loader size={30} />
+                        </ImageUploadStyled.LoaderWrapper>
+                    }
+                    { !this.state.profileLoading && <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} /> }
+                    <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
+                  </ImageUploadStyled.ProfileImage>
+                </ImageUploadStyled.CoverImage>
+              </ImageUploadStyled.CoverLayout>
               {
-                this.props.type === 'fan' ?
-                  <ImageUploadStyled.fanProfileWrapper>
-                    <SettingsStyled.Label>Profile image</SettingsStyled.Label>
-                    <ImageUploadStyled.fanProfileContainer>
-                      <ImageUploadStyled.fanProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
-                        <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} />
-                        <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
-                      </ImageUploadStyled.fanProfileImage>
-                      <ImageUploadStyled.fanProfileChange onClick={() => this.addFanProfileImage()}>
-                        Change image
-                      </ImageUploadStyled.fanProfileChange>
-                    </ImageUploadStyled.fanProfileContainer>
-                  </ImageUploadStyled.fanProfileWrapper>
-                :
-                  <React.Fragment>
-                    <ImageUploadStyled.CoverLayout
-                      style={{ height: this.state.coverImageHeight }}
-                      featuredPresent={this.props.featuredImage}
-                    >
-                      <ImageUploadStyled.CoverImage
-                        innerRef={(node) => { this.coverImage = node; }}
-                        imageUrl={this.props.featuredImage}
-                      >
-                        <ImageUploadStyled.UploadInput
-                          innerRef={(node) => { this.inputRef = node; }}
-                          accept=".png, .jpeg, .jpg"
-                          onClick={() => this.setState({ currentImage: 'featuredImage' })}
-                          onChange={event => this.onFileChange(event)}
-                          type="file"
-                        />
-                        <ImageUploadStyled.ProfileInputContainer>
-                          <ImageUploadStyled.ProfileInputWrapper noImage={this.props.featuredImage} />
-                        </ImageUploadStyled.ProfileInputContainer>
-                        {
-                        this.props.featuredImage && <ImageUploadStyled.CloseButton onClick={() => this.props.onComplete('featuredImage', null, null)} />
-                        }
-                        <ImageUploadStyled.ProfileImage imageUrl={this.props.profileImage} onClick={() => this.setState({ currentImage: 'profileImage' })}>
-                          <ImageUploadStyled.ProfileInputWrapper noImage={this.props.profileImage} />
-                          <ImageUploadStyled.UploadInput innerRef={(node) => { this.inputRef = node; }} accept=".png, .jpeg, .jpg" onChange={event => this.onFileChange(event)} type="file" />
-                        </ImageUploadStyled.ProfileImage>
-                      </ImageUploadStyled.CoverImage>
-                    </ImageUploadStyled.CoverLayout>
+                (this.props.featuredImage || this.props.secondaryImages.length) ?
+                  <ImageUploadStyled.SecondaryCoverWrapper>
                     {
-                      (this.props.featuredImage || this.props.secondaryImages.length) ?
-                        <ImageUploadStyled.SecondaryCoverWrapper>
-                          {
-                            this.renderSecondaryImages()
-                          }
-                        </ImageUploadStyled.SecondaryCoverWrapper>
-                      : null
+                      this.renderSecondaryImages()
                     }
-                    {
-                      this.props.secondaryImages.length < 2 ?
-                        <ImageUploadStyled.AddCoverWrapper>
-                          <ImageUploadStyled.AddCoverButton onClick={() => this.addNewCover()}>Add cover</ImageUploadStyled.AddCoverButton>
-                        </ImageUploadStyled.AddCoverWrapper>
-                      : null
-                    }
-                  </React.Fragment>
+                  </ImageUploadStyled.SecondaryCoverWrapper>
+                : null
               }
               {
-                this.state.cropMode && this.state.cropImage &&
-                  <ImageCropper
-                    exifData={this.currentExif}
-                    aspectRatio={this.getAspectRatio()}
-                    afterCrop={this.getCroppedImage}
-                    closeCropper={() => this.closeCropper()}
-                    cropImage={this.state.cropImage}
-                  />
+                this.props.secondaryImages.length < 2 ?
+                  <ImageUploadStyled.AddCoverWrapper>
+                    <ImageUploadStyled.AddCoverButton onClick={() => this.addNewCover()}>Add cover</ImageUploadStyled.AddCoverButton>
+                  </ImageUploadStyled.AddCoverWrapper>
+                : null
               }
             </React.Fragment>
+        }
+        {
+          this.state.cropMode && this.state.cropImage &&
+            <ImageCropper
+              exifData={this.currentExif}
+              aspectRatio={this.getAspectRatio()}
+              afterCrop={this.getCroppedImage}
+              closeCropper={() => this.closeCropper()}
+              cropImage={this.state.cropImage}
+            />
         }
       </ImageUploadStyled>
     );
