@@ -8,6 +8,7 @@ import StarNotification from '../StarNotification';
 import ProfileSettings from './modules/ProfileSettings';
 import { updateSocialLinks } from '../../../../services/userRegistration';
 import InnerTabs from '../../../../components/InnerTabs';
+import ActionLoader from '../../../../components/ActionLoader';
 import AlertView from '../../../../components/AlertView';
 import Popup from '../../../../components/Popup';
 import { fetchAllProfessions } from '../../../../store/shared/actions/getProfessions';
@@ -27,6 +28,7 @@ class StarSettings extends React.Component {
       selectedTab: 'Account',
       popupMessage: '',
       changes,
+      loading: false,
     };
   }
 
@@ -63,12 +65,15 @@ class StarSettings extends React.Component {
       user_details: userDetails,
     };
     try {
+      this.setState({ loading: true });
       await this.props.updateUserDetails(this.props.userDetails.id, userData);
       await this.props.updateProfilePhoto(profileImages);
       await this.props.updateNotification(notifications);
+      this.setState({ loading: false });
       this.props.fetchUserDetails();
       this.setState({ popupMessage: 'Successfully updated settings' });
     } catch (e) {
+      this.setState({ loading: false });
       this.setState({ popupMessage: 'Something went wrong' });
     }
   }
@@ -90,9 +95,10 @@ class StarSettings extends React.Component {
       mobile_number: notifications.phone,
       mobile_country_code: notifications.countryCode,
     };
-
+    this.setState({ loading: true });
     this.props.updateNotification(newNotifications)
       .then((resp) => {
+        this.setState({ loading: false });
         if (resp.status == 200) {
           this.setState({ popupMessage: 'Successfully updated settings' });
           this.props.fetchUserDetails();
@@ -107,16 +113,21 @@ class StarSettings extends React.Component {
       celebrity_details: celebrityDetails,
       user_details: userDetails,
     };
+    this.setState({ loading: true });
     await updateSocialLinks(socialLinks);
     await this.props.updateUserDetails(this.props.userDetails.id, userData);
+    this.setState({ loading: false });
     this.props.fetchUserDetails();
     this.setState({ popupMessage: 'Successfully updated settings' });
   }
 
   render() {
-    const { selectedTab, changes } = this.state;
+    const { selectedTab, loading } = this.state;
     return (
       <SettingsStyled>
+        {
+          loading && <ActionLoader />
+        }
         {
           this.state.popupMessage && this.state.popupMessage !== '' &&
             <Popup

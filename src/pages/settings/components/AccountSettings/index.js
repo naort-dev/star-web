@@ -69,7 +69,7 @@ export default class AccountSettings extends React.Component {
 
   getProfilePhotos = (type, file, image) => {
     this.props.recordChange(true);
-    if (type.indexOf('secondaryImage') > -1) {
+    if (type && type.indexOf('secondaryImage') > -1) {
       const { secondaryImages } = this.state;
       const index = type.split('-')[1];
       if (!secondaryImages.length) {

@@ -26,8 +26,6 @@ ImageUploadStyled.UploadInput = styled.input`
 ImageUploadStyled.CoverLayout = styled.div`
   width: 100%;
   max-width: 550px;
-  border: 1px solid #d0d2d3;
-  border-radius: 10px;
   margin: 0 auto;
   margin-bottom: ${props => !props.featuredPresent && '60px'};
   @media(min-width: 1500px) {
@@ -42,6 +40,8 @@ ImageUploadStyled.CoverImage = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  border: 1px solid #d0d2d3;
+  border-radius: 10px;
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
   background-repeat: no-repeat;
   background-size: cover;
@@ -64,6 +64,7 @@ ImageUploadStyled.SecondaryCoverImage = ImageUploadStyled.CoverImage.extend`
   display: inline-block;
   border: 1px solid #d0d2d3;
   border-radius: 10px;
+  min-height: 34px;
 `;
 
 ImageUploadStyled.ProfileImageWrapper = ImageUploadStyled.CoverImage.extend`
@@ -150,10 +151,18 @@ ImageUploadStyled.ProfileImage = styled.span`
 `;
 
 ImageUploadStyled.fanProfileImage = ImageUploadStyled.ProfileImage.extend`
-  position: static;
+  position: relative;
+  left: 0;
+  right: 0
+  bottom: 0;
+  top: 0;
   display: inline-block;
   width: 60px;
   height: 60px;
+  @media(min-width: 768px) {
+    left: 0;
+    bottom: 0;
+  }
   ${ImageUploadStyled.ProfileInputWrapper} {
     position: absolute;
     width: 20px;
@@ -223,6 +232,19 @@ ImageUploadStyled.AddCoverButton = styled.span`
     height: 35px;
     background-size: contain;
   }
+`;
+
+ImageUploadStyled.LoaderWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.6);
+  border-radius: inherit;
 `;
 
 export default ImageUploadStyled;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ColumnLayout from '../../components/ColumnLayout';
 import ScrollList from '../../components/ScrollList';
@@ -24,6 +23,7 @@ import { celebOpenStatusList, openStatusList, celebCompletedStatusList, complete
 export default class Requests extends React.Component {
   constructor(props) {
     super(props);
+    this.tabs = ['All', 'Open', 'Completed', 'Cancelled'];
     this.state = {
       selectedTab: 'All',
       requestAction: '',
@@ -45,17 +45,20 @@ export default class Requests extends React.Component {
     this.props.myVideosListReset();
     const params = window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
-    if (!this.props.starMode && finalParams) {
+    if (finalParams) {
       finalParams.forEach((data) => {
         if (data.split('=')[0] === 'request_id') {
           getRequestDetails(data.split('=')[1])
             .then((requestDetails) => {
               if (requestDetails.success &&
                 requestDetails.data &&
-                requestDetails.data.stargramz_response &&
-                !requestDetails.data.stargramz_response.fan_rating
+                requestDetails.data.stargramz_response
               ) {
-                this.requestAction(requestDetails.data.stargramz_response, 'rate');
+                if (!this.props.starMode && !requestDetails.data.stargramz_response.fan_rating) {
+                  this.requestAction(requestDetails.data.stargramz_response, 'rate');
+                } else if (requestDetails.data.stargramz_response.fan_rating) {
+                  this.requestAction(requestDetails.data.stargramz_response, 'reaction');
+                }
               }
             });
         }
@@ -371,7 +374,7 @@ export default class Requests extends React.Component {
     return (
       <React.Fragment>
         <InnerTabs
-          labels={['All', 'Open', 'Completed', 'Cancelled']}
+          labels={this.tabs}
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
         />
