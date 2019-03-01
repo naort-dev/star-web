@@ -586,6 +586,7 @@ class RequestTemplates extends React.Component {
                       popperPlacement="bottom"
                       selected={this.props.date}
                       onChange={this.handleChange}
+                      placeholderText="Enter date"
                     />
                   </Templates.WrapsInput>
                 </Templates.InputWrapper> :
