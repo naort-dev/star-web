@@ -1,5 +1,4 @@
 import React from 'react';
-import { isEmpty } from 'lodash';
 import { Scrollbars } from 'react-custom-scrollbars';
 import ColumnLayout from '../../components/ColumnLayout';
 import ScrollList from '../../components/ScrollList';
@@ -24,6 +23,7 @@ import { celebOpenStatusList, openStatusList, celebCompletedStatusList, complete
 export default class Requests extends React.Component {
   constructor(props) {
     super(props);
+    this.tabs = ['All', 'Open', 'Completed', 'Cancelled'];
     this.state = {
       selectedTab: 'All',
       requestAction: '',
@@ -32,6 +32,7 @@ export default class Requests extends React.Component {
       loading: false,
       orderDetails: {},
       alertText: '',
+      shareView: false,
     };
     this.requestType = {
       3: 'Q&A',
@@ -44,17 +45,20 @@ export default class Requests extends React.Component {
     this.props.myVideosListReset();
     const params = window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
-    if (!this.props.starMode && finalParams) {
+    if (finalParams) {
       finalParams.forEach((data) => {
         if (data.split('=')[0] === 'request_id') {
           getRequestDetails(data.split('=')[1])
             .then((requestDetails) => {
               if (requestDetails.success &&
                 requestDetails.data &&
-                requestDetails.data.stargramz_response &&
-                !requestDetails.data.stargramz_response.fan_rating
+                requestDetails.data.stargramz_response
               ) {
-                this.requestAction(requestDetails.data.stargramz_response, 'rate');
+                if (!this.props.starMode && !requestDetails.data.stargramz_response.fan_rating) {
+                  this.requestAction(requestDetails.data.stargramz_response, 'rate');
+                } else if (requestDetails.data.stargramz_response.fan_rating) {
+                  this.requestAction(requestDetails.data.stargramz_response, 'reaction');
+                }
               }
             });
         }
@@ -83,21 +87,7 @@ export default class Requests extends React.Component {
 
   getPopupContent = (requestAction) => {
     const { orderDetails, alertText } = this.state;
-    let finalVideo;
-    if (!isEmpty(orderDetails)) {
-      const { request_video: requestVideo } = orderDetails;
-      finalVideo = requestVideo.find(video => video.video_status === 1); // find completed video
-    }
     switch (requestAction) {
-      case 'share':
-        return (
-          <ShareView
-            iconSize={50}
-            title={`Check out this video from ${orderDetails.celebrity} !`}
-            body={`Watch this personalized video from ${orderDetails.celebrity}`}
-            shareUrl={`https://${finalVideo.video_url}`}
-          />
-        );
       case 'respond':
         return <VideoRecorder onComplete={this.onVideoUpload} orderDetails={this.state.orderDetails} {...this.props} />;
       case 'report':
@@ -258,8 +248,8 @@ export default class Requests extends React.Component {
     this.props.setRequestFlow(orderDetails.celebrity_id, selectedRequestType, 1);
   }
 
-  requestAction = (data, actionType) => {
-    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder } = this.state;
+  requestAction = (data, actionType) => {    
+    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder, shareView } = this.state;
     if (actionType === 'edit') {
       this.setState({ loading: true });
       getRequestDetails(data.booking_id)
@@ -282,8 +272,10 @@ export default class Requests extends React.Component {
     } else if (actionType === 'rateReminder') {
       showRateReminder = true;
       orderDetails = data;
-    } else if (actionType === 'share'
-      || actionType === 'respond'
+    } else if (actionType === 'share') {
+      shareView = true;
+      orderDetails = data;
+    } else if (actionType === 'respond'
       || actionType === 'report'
       || actionType === 'contact'
       || actionType === 'rate'
@@ -300,7 +292,7 @@ export default class Requests extends React.Component {
       }
     }
     requestAction = actionType;
-    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder });
+    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder, shareView });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -333,7 +325,7 @@ export default class Requests extends React.Component {
   }
 
   closePopup = () => {
-    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false });
+    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false, shareView: false });
   }
 
   renderRequests = (request) => {
@@ -382,7 +374,7 @@ export default class Requests extends React.Component {
     return (
       <React.Fragment>
         <InnerTabs
-          labels={['All', 'Open', 'Completed', 'Cancelled']}
+          labels={this.tabs}
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
         />
@@ -399,7 +391,7 @@ export default class Requests extends React.Component {
     );
   }
   render() {
-    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails } = this.state;
+    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails, shareView } = this.state;
     return (
       <div>
         <ColumnLayout
@@ -408,6 +400,15 @@ export default class Requests extends React.Component {
         >
           {this.renderCenterSection()}
         </ColumnLayout>
+        {
+          shareView &&
+            <ShareView
+              closePopUp={this.closePopup}
+              title={`Check out this video from ${orderDetails.celebrity} !`}
+              body={`Watch this personalized video from ${orderDetails.celebrity}`}
+              shareUrl={`https://${this.findVideoByStatus(1).video_url}`}
+            />
+        }
         {
           showRateReminder &&
             <RateReminder

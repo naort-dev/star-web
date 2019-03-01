@@ -139,6 +139,7 @@ export default class ImageCropper extends React.Component {
   render() {
     return (
       <Popup
+        modalView
         disableBackground
         closePopUp={() => this.props.closeCropper()}
       >
