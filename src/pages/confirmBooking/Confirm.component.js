@@ -74,7 +74,7 @@ export default class Confirm extends React.Component {
       case 1:
       case 5:
         return (
-          <OrderDetailsItem title="Occasion Date" value={moment(that.date).format('MMM DD, YYYY')} />
+          <OrderDetailsItem title="Occasion Date" value={that.date && moment(that.date).format('MMM DD, YYYY')} />
         );
       case 2:
         return <OrderDetailsItem title="What specifically for" value={that.specification} />;

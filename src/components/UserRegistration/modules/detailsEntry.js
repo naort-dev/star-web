@@ -577,6 +577,7 @@ export default class DetailsEntry extends React.Component {
               <GroupStyled.CheckBox
                 id="group-info-validation"
                 type="checkbox"
+                readOnly
                 checked={this.state.userConfirmation}
               />
               <GroupStyled.Span

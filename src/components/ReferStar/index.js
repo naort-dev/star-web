@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
 import {
   FacebookShareButton,
-  GooglePlusShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   EmailShareButton,
   WhatsappIcon,
   FacebookIcon,
   TwitterIcon,
-  GooglePlusIcon,
   EmailIcon,
 } from 'react-share';
 import Loader from '../Loader';
