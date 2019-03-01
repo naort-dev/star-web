@@ -9,6 +9,13 @@ import { Confirm } from '../confirmBooking';
 export default class Personal extends React.Component {
   constructor(props) {
     super(props);
+    // In case Birthday option is selected
+    let date;
+    if (props.bookingData.selectedValue == 5 && props.bookingData.edit) {
+      date = props.bookingData.date === '' ? '' : moment(props.bookingData.date);
+    } else {
+      date = props.bookingData.date ? moment(props.bookingData.date) : moment();
+    }
     this.state = {
       selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0',
       selectedPersonal: props.bookingData.selectedPersonal ? props.bookingData.selectedPersonal : '0',
@@ -21,7 +28,7 @@ export default class Personal extends React.Component {
       relationshipObjName: '',
       specification: props.bookingData.specification ? props.bookingData.specification : '',
       importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
-      date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
+      date,
       eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       selectVideoerror: false,
@@ -114,7 +121,7 @@ export default class Personal extends React.Component {
     const hostNameValid = this.checkRequiredHostName();
     const userNameValid = this.checkRequiredUserName();
     if (!hostNameValid && !userNameValid) {
-      const bookObj = this.createBookingObject(this.state);
+      const bookObj = this.createBookingObject(this.state);      
       if (bookObj) {
         if (localStorage) {
           localStorage.setItem('bookingData', JSON.stringify(bookObj));
@@ -132,10 +139,10 @@ export default class Personal extends React.Component {
       return find.id == event.target.value;
     });
     if (event.target.value == 5 && this.state.date) {
-      this.setState({ date: null });
+      this.setState({ date: '' });
     } else {
       this.setState({
-        date: this.props.bookingData.date ? moment(this.props.bookingData.date) : moment() 
+        date: this.props.bookingData.date ? moment(this.props.bookingData.date) : moment(),
       });
     }
     this.setState({
@@ -200,7 +207,7 @@ export default class Personal extends React.Component {
       from_audio_file,
       to_audio_file,
       remove_audios: removeAudios,
-    };
+    };    
     return bookingData;
   }
   otherRelationship = () => {
@@ -271,8 +278,6 @@ export default class Personal extends React.Component {
     this.props.history.push(`/${this.props.match.params.id}`);
   }
 
-
-
   render() {
     let fullName = '';
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
@@ -281,8 +286,8 @@ export default class Personal extends React.Component {
     }
     const eventNames = this.props.eventsDetails;
     const optionItems = eventNames.map(eventNamesItem =>
-      <option value={eventNamesItem.id} key={eventNamesItem.id}>{eventNamesItem.title}</option>
-    );
+      <option value={eventNamesItem.id} key={eventNamesItem.id}>{eventNamesItem.title}</option>);
+
     return (
       <React.Fragment>
         {
