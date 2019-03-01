@@ -248,7 +248,7 @@ export default class Requests extends React.Component {
     this.props.setRequestFlow(orderDetails.celebrity_id, selectedRequestType, 1);
   }
 
-  requestAction = (data, actionType) => {
+  requestAction = (data, actionType) => {    
     let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder, shareView } = this.state;
     if (actionType === 'edit') {
       this.setState({ loading: true });
