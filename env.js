@@ -16,6 +16,8 @@
   instaAuthUrl: 'https://api.instagram.com/oauth/authorize/',
   stripe_api_version: '2017-08-15',
   GOOGLE_TAG_MANAGER_ID: 'GTM-NHBZLQ9',
+  ROLLBAR_ACCESS_TOKEN: 'eefe0b1cb1ad4952b96d8a455ff0c3e9',
+  ROLLBAR_ENV: 'development',
   GOOGLE_PLACES_KEY: 'AIzaSyCpIT3xFt_pYXmUt1u7FAFckO6EbYVsQDY',
   };
   window.env = function(key) {
