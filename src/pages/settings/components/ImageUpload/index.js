@@ -169,6 +169,7 @@ export default class ImageUpload extends React.Component {
 
   addNewCover = () => {
     const { secondaryImages } = this.props;
+    this.inputRef.value = '';
     this.inputRef.click();
     this.setState({ currentImage: `secondaryImage-${secondaryImages.length}` });
   }
@@ -221,6 +222,7 @@ export default class ImageUpload extends React.Component {
   }
 
   render() {
+    const { currentImage } = this.state;
     return (
       <ImageUploadStyled>
         {
@@ -293,10 +295,21 @@ export default class ImageUpload extends React.Component {
                 </ImageUploadStyled.CoverImage>
               </ImageUploadStyled.CoverLayout>
               {
-                (this.props.featuredImage || this.props.secondaryImages.length) ?
+                (this.props.featuredImage) ?
                   <ImageUploadStyled.SecondaryCoverWrapper>
                     {
                       this.renderSecondaryImages()
+                    }
+                    {
+                      currentImage && currentImage.indexOf('secondaryImage') > -1 && currentImage.split('-')[1] >= this.props.secondaryImages.length && this.state.secondaryLoading[currentImage.split('-')[1]] ?
+                        <ImageUploadStyled.SecondaryCoverImage
+                          style={{ height: this.state.secondaryImageHeight }}
+                        >
+                          <ImageUploadStyled.LoaderWrapper>
+                            <Loader size={30} />
+                          </ImageUploadStyled.LoaderWrapper>
+                        </ImageUploadStyled.SecondaryCoverImage>
+                      : null
                     }
                   </ImageUploadStyled.SecondaryCoverWrapper>
                 : null
@@ -304,7 +317,7 @@ export default class ImageUpload extends React.Component {
               {
                 this.props.secondaryImages.length < 2 ?
                   <ImageUploadStyled.AddCoverWrapper>
-                    <ImageUploadStyled.AddCoverButton onClick={() => this.addNewCover()}>Add cover</ImageUploadStyled.AddCoverButton>
+                    <ImageUploadStyled.AddCoverButton onClick={this.addNewCover}>Add cover</ImageUploadStyled.AddCoverButton>
                   </ImageUploadStyled.AddCoverWrapper>
                 : null
               }

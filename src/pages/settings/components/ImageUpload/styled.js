@@ -26,8 +26,6 @@ ImageUploadStyled.UploadInput = styled.input`
 ImageUploadStyled.CoverLayout = styled.div`
   width: 100%;
   max-width: 550px;
-  border: 1px solid #d0d2d3;
-  border-radius: 10px;
   margin: 0 auto;
   margin-bottom: ${props => !props.featuredPresent && '60px'};
   @media(min-width: 1500px) {
@@ -42,6 +40,8 @@ ImageUploadStyled.CoverImage = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
+  border: 1px solid #d0d2d3;
+  border-radius: 10px;
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
   background-repeat: no-repeat;
   background-size: cover;
