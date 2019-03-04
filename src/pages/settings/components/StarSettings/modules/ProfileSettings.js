@@ -3,7 +3,7 @@ import validator from 'validator';
 import Popup from '../../../../../components/Popup';
 import RequestFlowPopup from './../../../../../components/RequestFlowPopup';
 import { IndustrySelection } from './../../../../../components/IndustrySelection';
-import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../../../utils/dataformatter';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter, iosPriceFinder } from '../../../../../utils/dataformatter';
 import SettingsStyled from '../../../styled';
 
 export default class ProfileSettings extends React.Component {
@@ -46,6 +46,7 @@ export default class ProfileSettings extends React.Component {
       bio: props.celebDetails.description ? props.celebDetails.description : '',
       stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
       bookingPrice: props.celebDetails.rate ? numberToCommaFormatter(props.celebDetails.rate) : '',
+      iosPrice: props.celebDetails.in_app_price ? props.celebDetails.in_app_price : null,
       bookingLimit: props.celebDetails.weekly_limits ? numberToCommaFormatter(props.celebDetails.weekly_limits) : '',
       popUpMessage: null,
       priceCheck: false,
@@ -115,6 +116,15 @@ export default class ProfileSettings extends React.Component {
           [fieldType]: newFieldValue,
           errors: { ...this.state.errors, [fieldType]: false },
         }, () => {
+          if (fieldType === 'bookingPrice') {
+            const { bookingPrice } = this.state;
+            const actualPrice = parseInt(commaToNumberFormatter(bookingPrice))
+            if (actualPrice <= 1000) {
+              this.setState({ iosPrice: iosPriceFinder(actualPrice, this.props.inAppPriceList) });
+            } else {
+              this.setState({ iosPrice: null });
+            }
+          }
           if (fieldType === 'bookingPrice' && this.state.priceCheck) {
             this.setState({ priceCheck: false });
           } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
@@ -176,6 +186,7 @@ export default class ProfileSettings extends React.Component {
         description: this.state.bio,
         profession: professions,
         rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
+        in_app_price: this.state.iosPrice,
         weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
         availability: true,
       };
@@ -364,25 +375,51 @@ export default class ProfileSettings extends React.Component {
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Booking price</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
-              <SettingsStyled.CustomPlaceholder>
-                $
-              </SettingsStyled.CustomPlaceholder>
-              <SettingsStyled.PriceInput
-                small
-                innerRef={(node) => {this.bookingPrice = node;}}
-                type="text"
-                placeholder="0"
-                value={this.state.bookingPrice}
-                onBlur={event => this.validateOnBlur('bookingPrice', event.target.value)}
-                onChange={(event) => {
-                  this.handleFieldChange('bookingPrice', event.target.value);
-                }}
-              />
-              <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
-                {this.state.errors.bookingPrice
-                  ? 'Please enter a valid booking price'
-                  : 'Our pricing engines will automatically maximize your earnings based on demand.'}
-              </SettingsStyled.ErrorMsg>
+              <SettingsStyled.PriceWrapper>
+                <SettingsStyled.CustomPlaceholder>
+                  $
+                </SettingsStyled.CustomPlaceholder>
+                <SettingsStyled.PriceInput
+                  small
+                  innerRef={(node) => {this.bookingPrice = node;}}
+                  type="text"
+                  placeholder="0"
+                  value={this.state.bookingPrice}
+                  onBlur={event => this.validateOnBlur('bookingPrice', event.target.value)}
+                  onChange={(event) => {
+                    this.handleFieldChange('bookingPrice', event.target.value);
+                  }}
+                />
+              </SettingsStyled.PriceWrapper>
+              <SettingsStyled.PriceNotification>
+                <SettingsStyled.PriceNotificationTitle>Converted Apple price</SettingsStyled.PriceNotificationTitle>
+                <SettingsStyled.PriceNotificationContent>
+                  {this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}
+                </SettingsStyled.PriceNotificationContent>
+              </SettingsStyled.PriceNotification>
+              {
+                this.state.errors.bookingPrice &&
+                  <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
+                    Please enter a valid booking price
+                  </SettingsStyled.ErrorMsg>
+              }
+              {
+                !this.state.errors.bookingPrice &&
+                  <React.Fragment>
+                    {
+                      this.state.iosPrice === null ?
+                        <SettingsStyled.ErrorMsg>
+                          Please tell your fans that they will not be able to book you using the iOS app because Apple does not support purchases over $999.99.
+                          They will still be able to book you using their browser (mobile or desktop) or the Android app.
+                        </SettingsStyled.ErrorMsg>
+                      :
+                        <SettingsStyled.ErrorMsg>
+                          Please note, for purchases made using the iOS app Apple has required us to use Apple’s payment system which charges a 30% commission before your earnings are calculated.
+                          In addition, in the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
+                        </SettingsStyled.ErrorMsg>
+                    }
+                  </React.Fragment>
+              }
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
           <SettingsStyled.InputWrapper>

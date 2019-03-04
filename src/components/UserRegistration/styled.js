@@ -29,6 +29,7 @@ GroupStyled.StepWrapper = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   height: 100%;
+  display: ${props => (props.hide ? 'none' : 'block')}
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -300,6 +301,12 @@ GroupStyled.WrapsInput = styled.div`
   }
 `;
 
+GroupStyled.PriceWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 100px;
+`;
+
 GroupStyled.CustomInput = styled.div`
   width: 100%;
   position: relative;
@@ -432,6 +439,25 @@ GroupStyled.NumberInput = GroupStyled.InputArea.extend`
 
 GroupStyled.PriceInput = GroupStyled.NumberInput.extend`
   padding-left: 18px;
+`;
+
+GroupStyled.PriceNotification = styled.span`
+  display: inline-block;
+  padding: 0 20px;
+  width: calc(100% - 100px);
+  line-height: 18px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+GroupStyled.PriceNotificationTitle = styled.span`
+  font-family: 'Avenir-Regular';
+  display: block;
+`;
+
+GroupStyled.PriceNotificationContent = styled.span`
+  display: block;
 `;
 
 GroupStyled.ErrorMsg = styled.div`
@@ -1058,6 +1084,13 @@ GroupStyled.ImageLoaderWrapper = styled.div`
   align-items: center;
   background-color: rgba(0,0,0,.6);
   border-radius: inherit;
+`;
+
+GroupStyled.MainLoaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 `;
 
 export default GroupStyled;

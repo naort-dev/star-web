@@ -121,6 +121,12 @@ SettingsStyled.WrapsInput = styled.div`
   }
 `;
 
+SettingsStyled.PriceWrapper = styled.div`
+  position: relative;
+  display: inline-block;
+  width: 100px;
+`;
+
 SettingsStyled.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
   z-index: 1;
@@ -187,7 +193,7 @@ SettingsStyled.CustomPlaceholder = styled.span`
   font-size: 14px;
   pointer-events: ${props => (props.activePlaceHolder ? 'auto' : 'none')};
   @media(min-width: 768px) {
-    top: 8.5px;
+    top: 9px;
   }
 `;
 
@@ -395,6 +401,25 @@ SettingsStyled.NumberInput = SettingsStyled.InputArea.extend`
 
 SettingsStyled.PriceInput = SettingsStyled.NumberInput.extend`
   padding-left: 18px;
+`;
+
+SettingsStyled.PriceNotification = styled.div`
+  display: inline-block;
+  padding: 0 20px;
+  width: calc(100% - 100px);
+  line-height: 18px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+SettingsStyled.PriceNotificationTitle = styled.span`
+  font-family: 'Avenir-Regular';
+  display: block;
+`;
+
+SettingsStyled.PriceNotificationContent = styled.span`
+  display: block;
 `;
 
 SettingsStyled.ReadOnlySection = SettingsStyled.InputArea.extend`
