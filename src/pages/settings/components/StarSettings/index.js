@@ -172,6 +172,7 @@ class StarSettings extends React.Component {
                 fetchUserDetails={this.props.fetchUserDetails}
                 userDetails={this.props.userDetails}
                 celebDetails={this.props.celebrityDetails}
+                inAppPriceList={this.props.inAppPriceList}
                 fetchUrl={this.props.fetchURL}
                 recordChange={this.recordChange}
                 stripeRegistration={this.props.stripeRegistration}
@@ -205,6 +206,7 @@ class StarSettings extends React.Component {
 
 const mapStateToProps = state => ({
   stripeRegistration: state.stripeRegistration,
+  inAppPriceList: state.config.data.in_app_pricing,
 });
 
 const mapDispatchToProps = dispatch => ({

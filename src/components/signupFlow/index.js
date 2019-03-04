@@ -8,7 +8,6 @@ import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import { LoginContainer, HeaderSection } from './styled';
-// import { HeaderSection } from '../loginFlow/styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';

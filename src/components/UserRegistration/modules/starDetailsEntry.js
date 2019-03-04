@@ -13,7 +13,7 @@ export default class StarDetailsEntry extends React.Component {
     groups: [],
     stageName: '',
     bookingPrice: '',
-    iosPrice: 0,
+    iosPrice: null,
     bookingLimit: '',
     popUpMessage: null,
     priceCheck: false,
