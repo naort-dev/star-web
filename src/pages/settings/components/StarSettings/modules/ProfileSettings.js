@@ -111,7 +111,9 @@ export default class ProfileSettings extends React.Component {
       }
     } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
       const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
-      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+      if ((validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '')
+        && newFieldValue !== '0'
+      ) {
         this.setState({
           [fieldType]: newFieldValue,
           errors: { ...this.state.errors, [fieldType]: false },
@@ -121,6 +123,8 @@ export default class ProfileSettings extends React.Component {
             const actualPrice = parseInt(commaToNumberFormatter(bookingPrice))
             if (actualPrice <= 1000) {
               this.setState({ iosPrice: iosPriceFinder(actualPrice, this.props.inAppPriceList) });
+            } else if (!actualPrice) {
+              this.setState({ iosPrice: 0 });
             } else {
               this.setState({ iosPrice: null });
             }
