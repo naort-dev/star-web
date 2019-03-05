@@ -379,28 +379,20 @@ export default class ProfileSettings extends React.Component {
           <SettingsStyled.InputWrapper>
             <SettingsStyled.Label>Booking price</SettingsStyled.Label>
             <SettingsStyled.WrapsInput>
-              <SettingsStyled.PriceWrapper>
-                <SettingsStyled.CustomPlaceholder>
-                  $
-                </SettingsStyled.CustomPlaceholder>
-                <SettingsStyled.PriceInput
-                  small
-                  innerRef={(node) => {this.bookingPrice = node;}}
-                  type="text"
-                  placeholder="0"
-                  value={this.state.bookingPrice}
-                  onBlur={event => this.validateOnBlur('bookingPrice', event.target.value)}
-                  onChange={(event) => {
-                    this.handleFieldChange('bookingPrice', event.target.value);
-                  }}
-                />
-              </SettingsStyled.PriceWrapper>
-              <SettingsStyled.PriceNotification>
-                <SettingsStyled.PriceNotificationTitle>Converted Apple price</SettingsStyled.PriceNotificationTitle>
-                <SettingsStyled.PriceNotificationContent>
-                  {this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}
-                </SettingsStyled.PriceNotificationContent>
-              </SettingsStyled.PriceNotification>
+              <SettingsStyled.CustomPlaceholder>
+                $
+              </SettingsStyled.CustomPlaceholder>
+              <SettingsStyled.PriceInput
+                small
+                innerRef={(node) => {this.bookingPrice = node;}}
+                type="text"
+                placeholder="0"
+                value={this.state.bookingPrice}
+                onBlur={event => this.validateOnBlur('bookingPrice', event.target.value)}
+                onChange={(event) => {
+                  this.handleFieldChange('bookingPrice', event.target.value);
+                }}
+              />
               {
                 this.state.errors.bookingPrice &&
                   <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
@@ -418,8 +410,13 @@ export default class ProfileSettings extends React.Component {
                         </SettingsStyled.ErrorMsg>
                       :
                         <SettingsStyled.ErrorMsg>
-                          Please note, for purchases made using the iOS app Apple has required us to use Apple’s payment system which charges a 30% commission before your earnings are calculated.
-                          In addition, in the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
+                          {
+                            this.state.iosPrice !== 0 &&
+                              <React.Fragment>
+                                Converted Apple price: <strong>{this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}</strong>.&nbsp;
+                              </React.Fragment>
+                          }
+                          In the iOS app, we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
                         </SettingsStyled.ErrorMsg>
                     }
                   </React.Fragment>
