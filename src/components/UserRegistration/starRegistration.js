@@ -127,7 +127,7 @@ class starRegistrationComponent extends React.Component {
     }
   }
 
-  imageUpload = (secondaryImages, skip) => {
+  imageUpload = async (secondaryImages, skip) => {
     const secondaryFileNames = secondaryImages.map((item) => {
       if (item.fileName) {
         return item.fileName;
@@ -144,11 +144,9 @@ class starRegistrationComponent extends React.Component {
         profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
       }
     }
-    this.props.updateProfilePhoto(profileImage)
-      .then(() => {
-        this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
-      });
-      this.goToStep('next');
+    await this.props.updateProfilePhoto(profileImage);
+    this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
+    this.goToStep('next');
   }
 
   submitOTPForm = () => {

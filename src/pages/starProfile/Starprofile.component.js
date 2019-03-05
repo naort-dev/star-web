@@ -339,7 +339,7 @@ export default class Starprofile extends React.Component {
           title={fullName}
           meta={[...setMetaTags(
             fullName,
-            this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png',
+            this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
             `Get your personalized video from ${fullName}`,
           ),
           { property: 'al:ios:app_store_id', content: env('iosAppId') },
