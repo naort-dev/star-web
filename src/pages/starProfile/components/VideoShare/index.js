@@ -6,6 +6,7 @@ import moment from 'moment';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import Loader from '../../../../components/Loader';
+import AppBanner from '../../../../components/AppBanner';
 import ShareView from '../../../../components/ShareView';
 import VideoShareStyled from './styled';
 import { setMetaTags } from '../../../../utils/setMetaTags';
@@ -18,6 +19,7 @@ class VideoShare extends React.Component {
     super(props);
     this.state = {
       commentText: '',
+      showAppBanner: true,
     };
     this.commentSelected = false;
   }
@@ -161,13 +163,21 @@ class VideoShare extends React.Component {
               `Get your personalized video from ${props.selectedVideo.full_name}`,
             ),
             { property: 'al:ios:app_store_id', content: env('iosAppId') },
-            { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
+            { property: 'al:ios:url', content: `${env('androidAppId')}://video/${props.selectedVideo.video_id}` },
             { property: 'al:ios:app_name', content: 'Starsona' },
             { property: 'al:android:package', content: env('androidAppId') },
-            { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
+            { property: 'al:android:url', content: `${env('androidAppId')}://video/${props.selectedVideo.video_id}` },
             { property: 'al:android:app_name', content: 'Starsona' },
             ]}
           />
+          {
+            this.state.showAppBanner &&
+            <AppBanner
+              androidUrl={`profile/${props.selectedVideo.video_id}`}
+              iosUrl={`profile/?profile_id=${props.selectedVideo.video_id}`}
+              hideAppBanner={() => this.setState({ showAppBanner: false })}
+            />
+          }
           {
             this.state.shareView &&
               <ShareView
