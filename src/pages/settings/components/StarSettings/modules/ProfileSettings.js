@@ -111,8 +111,9 @@ export default class ProfileSettings extends React.Component {
       }
     } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
       const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
+      const fieldNumber = commaToNumberFormatter(newFieldValue);
       if ((validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '')
-        && newFieldValue !== '0'
+        && (isNaN(fieldNumber) || (fieldNumber > 0 && fieldNumber <= 99999))
       ) {
         this.setState({
           [fieldType]: newFieldValue,
@@ -120,7 +121,7 @@ export default class ProfileSettings extends React.Component {
         }, () => {
           if (fieldType === 'bookingPrice') {
             const { bookingPrice } = this.state;
-            const actualPrice = parseInt(commaToNumberFormatter(bookingPrice))
+            const actualPrice = commaToNumberFormatter(bookingPrice);
             if (actualPrice <= 1000) {
               this.setState({ iosPrice: iosPriceFinder(actualPrice, this.props.inAppPriceList) });
             } else if (!actualPrice) {
@@ -189,9 +190,9 @@ export default class ProfileSettings extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: professions,
-        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
+        rate: commaToNumberFormatter(this.state.bookingPrice),
         in_app_price: this.state.iosPrice,
-        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
+        weekly_limits: commaToNumberFormatter(this.state.bookingLimit),
         availability: true,
       };
       const userDetails = {
