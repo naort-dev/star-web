@@ -301,12 +301,6 @@ GroupStyled.WrapsInput = styled.div`
   }
 `;
 
-GroupStyled.PriceWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-  width: 100px;
-`;
-
 GroupStyled.CustomInput = styled.div`
   width: 100%;
   position: relative;
@@ -466,6 +460,9 @@ GroupStyled.ErrorMsg = styled.div`
   margin-top:4px;
   font-family: 'Avenir-light';
   text-align:left;
+  strong {
+    font-family: 'Avenir-Regular';
+  }
   ${props => !props.isError && ({
     color: 'grey',
   })

@@ -350,28 +350,20 @@ export default class StarDetailsEntry extends React.Component {
           <GroupStyled.InputWrapper>
             <GroupStyled.Label>Booking price</GroupStyled.Label>
             <GroupStyled.WrapsInput>
-              <GroupStyled.PriceWrapper>
-                <GroupStyled.CustomPlaceholder>
-                  $
-                </GroupStyled.CustomPlaceholder>
-                <GroupStyled.PriceInput
-                  small
-                  innerRef={(node) => {this.bookingPrice = node;}}
-                  type="text"
-                  placeholder="0"
-                  value={this.state.bookingPrice}
-                  onBlur={event => this.validateOnBlur('bookingPrice', event.target.value)}
-                  onChange={(event) => {
-                    this.handleFieldChange('bookingPrice', event.target.value);
-                  }}
-                />
-              </GroupStyled.PriceWrapper>
-              <GroupStyled.PriceNotification>
-                <GroupStyled.PriceNotificationTitle>Converted Apple price</GroupStyled.PriceNotificationTitle>
-                <GroupStyled.PriceNotificationContent>
-                  {this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}
-                </GroupStyled.PriceNotificationContent>
-              </GroupStyled.PriceNotification>
+              <GroupStyled.CustomPlaceholder>
+                $
+              </GroupStyled.CustomPlaceholder>
+              <GroupStyled.PriceInput
+                small
+                innerRef={(node) => {this.bookingPrice = node;}}
+                type="text"
+                placeholder="0"
+                value={this.state.bookingPrice}
+                onBlur={event => this.validateOnBlur('bookingPrice', event.target.value)}
+                onChange={(event) => {
+                  this.handleFieldChange('bookingPrice', event.target.value);
+                }}
+              />
               {
                 this.state.errors.bookingPrice &&
                   <GroupStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
@@ -389,8 +381,13 @@ export default class StarDetailsEntry extends React.Component {
                         </GroupStyled.ErrorMsg>
                       :
                         <GroupStyled.ErrorMsg>
-                          Please note, for purchases made using the iOS app Apple has required us to use Apple’s payment system which charges a 30% commission before your earnings are calculated.
-                          In addition, in the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
+                          {
+                            this.state.iosPrice !== 0 &&
+                              <React.Fragment>
+                                Converted Apple price: <strong>{this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}</strong>.&nbsp;
+                              </React.Fragment>
+                          }
+                          In the iOS app, we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
                         </GroupStyled.ErrorMsg>
                     }
                   </React.Fragment>
