@@ -8,6 +8,7 @@ export const setMetaTags = (title, imageUrl, description) => (
     { property: 'og:url', content: window.location.href },
     { property: 'og:description', content: description },
     { property: 'og:type', content: 'website' },
+    { property: 'fb:app_id', content: env('fbId') },
     { property: 'twitter:description', content: description },
     { property: 'twitter:title', content: title },
     { property: 'twitter:site', content: 'Starsona' },
