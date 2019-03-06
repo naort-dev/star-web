@@ -6,6 +6,7 @@ import moment from 'moment';
 import { requestTypeTitle } from '../../../../constants/requestTypes';
 import VideoPlayer from '../../../../components/VideoPlayer';
 import Loader from '../../../../components/Loader';
+import AppBanner from '../../../../components/AppBanner';
 import ShareView from '../../../../components/ShareView';
 import VideoShareStyled from './styled';
 import { setMetaTags } from '../../../../utils/setMetaTags';
@@ -18,6 +19,7 @@ class VideoShare extends React.Component {
     super(props);
     this.state = {
       commentText: '',
+      showAppBanner: true,
     };
     this.commentSelected = false;
   }
@@ -160,14 +162,22 @@ class VideoShare extends React.Component {
               props.selectedVideo ? props.selectedVideo.s3_thumbnail_url : '../../assets/images/profile.png',
               `Get your personalized video from ${props.selectedVideo.full_name}`,
             ),
-            { property: 'al:ios:app_store_id', content: env('iosAppId') },
-            { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
-            { property: 'al:ios:app_name', content: 'Starsona' },
-            { property: 'al:android:package', content: env('androidAppId') },
-            { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
-            { property: 'al:android:app_name', content: 'Starsona' },
+            { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+            { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://video/${props.selectedVideo.video_id}` },
+            { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+            { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+            { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://video/${props.selectedVideo.video_id}` },
+            { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
             ]}
           />
+          {
+            this.state.showAppBanner &&
+            <AppBanner
+              androidUrl={`video/${props.selectedVideo.video_id}`}
+              iosUrl={`video/${props.selectedVideo.video_id}`}
+              hideAppBanner={() => this.setState({ showAppBanner: false })}
+            />
+          }
           {
             this.state.shareView &&
               <ShareView

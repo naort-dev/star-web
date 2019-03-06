@@ -90,13 +90,22 @@ class starRegistrationComponent extends React.Component {
             };
             celebritySignupProfile(celebrityProfileData)
               .then((success) => {
-                this.setState({ loader: false })
+                this.setState({ loader: false });
                 if (success) {
                   this.goToStep('next');
                 }
+              })
+              .catch(() => {
+                this.setState({ loader: false });
               });
-          });
+          })
+            .catch(() => {
+              this.setState({ loader: false });
+            });
         }
+      })
+      .catch(() => {
+        this.setState({ loader: false });
       });
   }
 
@@ -118,7 +127,7 @@ class starRegistrationComponent extends React.Component {
     }
   }
 
-  imageUpload = (secondaryImages, skip) => {
+  imageUpload = async (secondaryImages, skip) => {
     const secondaryFileNames = secondaryImages.map((item) => {
       if (item.fileName) {
         return item.fileName;
@@ -135,11 +144,9 @@ class starRegistrationComponent extends React.Component {
         profileImage.images = [...profileImage.images, this.state.featuredImage.fileName];
       }
     }
-    this.props.updateProfilePhoto(profileImage)
-      .then(() => {
-        this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
-      });
-      this.goToStep('next');
+    await this.props.updateProfilePhoto(profileImage);
+    this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
+    this.goToStep('next');
   }
 
   submitOTPForm = () => {
@@ -168,13 +175,19 @@ class starRegistrationComponent extends React.Component {
       });
   }
 
-  noRecordCallback = () => {
+  noRecordCallback = async () => {
     const { verificationDisable } = this.state;
     const celebrityProfileData = {
       ...this.state.celebrityDetails,
       profile_video: 'sample.mp4', // random file name
     };
-    celebritySignupProfile(celebrityProfileData);
+    this.setState({ loader: true });
+    try {
+      await celebritySignupProfile(celebrityProfileData);
+    } catch (e) {
+      this.setState({ loader: false });
+    }
+    this.setState({ loader: false });
     if (!verificationDisable) {
       this.goToStep('next');
       this.setState({ verificationDisable: true });
@@ -196,7 +209,7 @@ class starRegistrationComponent extends React.Component {
     }
   }
 
-  submitAccountDetails = (celebrityDetails, userDetails, socialLinks, groupIds) => {
+  submitAccountDetails = async (celebrityDetails, userDetails, socialLinks, groupIds) => {
     const professionsArray = celebrityDetails.profession;
     const newCelebrityDetails = {
       ...celebrityDetails,
@@ -206,10 +219,14 @@ class starRegistrationComponent extends React.Component {
       celebrity_details: {},
       user_details: userDetails,
     };
-    updateSocialLinks(socialLinks);
-    this.setState({ followedGroups: groupIds });
-    this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
-    this.setState({ celebrityDetails: newCelebrityDetails, professionsArray });
+    this.setState({ followedGroups: groupIds, loader: true });
+    try {
+      await updateSocialLinks(socialLinks);
+      await this.props.updateUserDetails(this.props.userDetails.settings_userDetails.id, finalUserDetails);
+    } catch (e) {
+      this.setState({ loader: false });
+    }
+    this.setState({ celebrityDetails: newCelebrityDetails, professionsArray, loader: false });
     this.goToStep('next');
   }
 
@@ -224,86 +241,88 @@ class starRegistrationComponent extends React.Component {
             />
         }
         {
-          this.state.loader ?
-            <Loader />
-          :
-            <GroupStyled.ContentWrapper>
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
-                <StarDetailsEntry
-                  submitAccountDetails={this.submitAccountDetails}
-                  closeSignupFlow={this.closeSignupFlow}
-              />
-              </GroupStyled.StepWrapper>
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
-                <ProfileUpload
-                  starMode
-                  onComplete={this.setProfileImage}
-                />
-              </GroupStyled.StepWrapper>
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
-                <CoverUpload
-                  visible={this.props.currentStep === 4}
-                  starMode
-                  professionsList={this.state.professionsArray}
-                  profileImage={this.state.profileImage.image}
-                  featuredRatio={imageSizes.featured}
-                  secondaryRatio={imageSizes.first}
-                  groupName={this.props.userDetails.settings_userDetails.first_name}
-                  onComplete={this.setCoverImage}
-                  onImageUpload={this.imageUpload}
-                />
-              </GroupStyled.StepWrapper>
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
-                <StarNotifications
-                  onComplete={this.submitOTPForm}
-                />
-              </GroupStyled.StepWrapper>
-              <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
-                <AddRepresentative
-                  onComplete={this.submitNotifications}
-                  skipStep={this.submitOTPForm}
-                />
-              </GroupStyled.StepWrapper>
-              {
-                this.props.currentStep === 7 && !verificationDisable &&
-                  <GroupStyled.VideoRecorderWrapper>
-                    <GroupStyled.VerificationHead>Video verification</GroupStyled.VerificationHead>
-                    <QAVideoRecorder
-                      {...this.props}
-                      src={this.state.videoUrl}
-                      responseMode
-                      persistentTitle
-                      recordPlaceHolder="Start recording"
-                      recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
-                      duration={recorder.signUpTimeOut}
-                      onSubmit={this.getVideo}
-                      noRecordCallback={this.noRecordCallback}
-                    />
-                  </GroupStyled.VideoRecorderWrapper>
-              }
-              {
-                this.props.currentStep === 8 && (
-                  <GroupStyled.DetailsWrapper>
-                    <GroupStyled.HeadingWrapper>
-                      <GroupStyled.SubHeading>
-                        Your Star profile has been created!
-                      </GroupStyled.SubHeading>
-                    </GroupStyled.HeadingWrapper>
-                    <GroupStyled.SuccessText>
-                      Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
-                    <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
-                    <GroupStyled.DoneButtonWrapper>
-                      <GroupStyled.ControlButton
-                        onClick={this.closeSignupFlow}
-                      >
-                        Done
-                      </GroupStyled.ControlButton>
-                    </GroupStyled.DoneButtonWrapper>
-                  </GroupStyled.DetailsWrapper>
-                )
-              }
-            </GroupStyled.ContentWrapper>
+          this.state.loader &&
+            <GroupStyled.MainLoaderWrapper>
+              <Loader />
+            </GroupStyled.MainLoaderWrapper>
         }
+        <GroupStyled.ContentWrapper hide={this.state.loader}>
+          <GroupStyled.StepWrapper visible={this.props.currentStep === 2}>
+            <StarDetailsEntry
+              inAppPriceList={this.props.inAppPriceList}
+              submitAccountDetails={this.submitAccountDetails}
+              closeSignupFlow={this.closeSignupFlow}
+            />
+          </GroupStyled.StepWrapper>
+          <GroupStyled.StepWrapper visible={this.props.currentStep === 3}>
+            <ProfileUpload
+              starMode
+              onComplete={this.setProfileImage}
+            />
+          </GroupStyled.StepWrapper>
+          <GroupStyled.StepWrapper visible={this.props.currentStep === 4}>
+            <CoverUpload
+              visible={this.props.currentStep === 4}
+              starMode
+              professionsList={this.state.professionsArray}
+              profileImage={this.state.profileImage.image}
+              featuredRatio={imageSizes.featured}
+              secondaryRatio={imageSizes.first}
+              groupName={this.props.userDetails.settings_userDetails.first_name}
+              onComplete={this.setCoverImage}
+              onImageUpload={this.imageUpload}
+            />
+          </GroupStyled.StepWrapper>
+          <GroupStyled.StepWrapper visible={this.props.currentStep === 5}>
+            <StarNotifications
+              onComplete={this.submitOTPForm}
+            />
+          </GroupStyled.StepWrapper>
+          <GroupStyled.StepWrapper visible={this.props.currentStep === 6}>
+            <AddRepresentative
+              onComplete={this.submitNotifications}
+              skipStep={this.submitOTPForm}
+            />
+          </GroupStyled.StepWrapper>
+          {
+            this.props.currentStep === 7 && !verificationDisable &&
+              <GroupStyled.VideoRecorderWrapper>
+                <GroupStyled.VerificationHead>Video verification</GroupStyled.VerificationHead>
+                <QAVideoRecorder
+                  {...this.props}
+                  src={this.state.videoUrl}
+                  responseMode
+                  persistentTitle
+                  recordPlaceHolder="Start recording"
+                  recordTitle={() => `Hi Starsona team, this is a quick video to verify that I am "the real" ${this.props.userDetails.settings_userDetails.first_name}`}
+                  duration={recorder.signUpTimeOut}
+                  onSubmit={this.getVideo}
+                  noRecordCallback={this.noRecordCallback}
+                />
+              </GroupStyled.VideoRecorderWrapper>
+          }
+          {
+            this.props.currentStep === 8 && (
+              <GroupStyled.DetailsWrapper>
+                <GroupStyled.HeadingWrapper>
+                  <GroupStyled.SubHeading>
+                    Your Star profile has been created!
+                  </GroupStyled.SubHeading>
+                </GroupStyled.HeadingWrapper>
+                <GroupStyled.SuccessText>
+                  Congratulations, you just created your Star profile. Someone from our team will review your video to verify your identity. As soon as you are verified you can start accepting requests.</GroupStyled.SuccessText>
+                <GroupStyled.SuccessTextBold>-    Starsona Team</GroupStyled.SuccessTextBold>
+                <GroupStyled.DoneButtonWrapper>
+                  <GroupStyled.ControlButton
+                    onClick={this.closeSignupFlow}
+                  >
+                    Done
+                  </GroupStyled.ControlButton>
+                </GroupStyled.DoneButtonWrapper>
+              </GroupStyled.DetailsWrapper>
+            )
+          }
+        </GroupStyled.ContentWrapper>
       </GroupStyled>
     );
   }
@@ -311,6 +330,7 @@ class starRegistrationComponent extends React.Component {
 
 const mapStateToProps = state => ({
   session: state.session,
+  inAppPriceList: state.config.data.in_app_pricing,
   imageViewer: state.imageViewer,
   userDetails: state.userDetails,
   videoRecorder: state.videoRecorder,
