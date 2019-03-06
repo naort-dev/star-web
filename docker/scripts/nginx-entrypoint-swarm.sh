@@ -56,6 +56,10 @@ sed -i -r "s#(^[ \t]*STRIPE_PUBLISH_KEY:[ \t]*').*('[, \t]*$)#\1$STRIPE_PUBLISH_
 sed -i -r "s#(^[ \t]*BRANCH_IO_KEY:[ \t]*').*('[, \t]*$)#\1$BRANCH_IO_KEY\2#g" env.js
 sed -i -r "s#(^[ \t]*GOOGLE_TAG_MANAGER_ID:[ \t]*').*('[, \t]*$)#\1$GOOGLE_TAG_MANAGER_ID\2#g" env.js
 sed -i -r "s#(^[ \t]*ROLLBAR_ENV:[ \t]*').*('[, \t]*$)#\1$ROLLBAR_ENV\2#g" env.js
+sed -i -r "s#(^[ \t]*ANDROID_APP_ID:[ \t]*').*('[, \t]*$)#\1$ANDROID_APP_ID\2#g" env.js
+sed -i -r "s#(^[ \t]*IOS_APP_ID:[ \t]*').*('[, \t]*$)#\1$IOS_APP_ID\2#g" env.js
+sed -i -r "s#(^[ \t]*ANDROID_APP_NAME:[ \t]*').*('[, \t]*$)#\1$ANDROID_APP_NAME\2#g" env.js
+sed -i -r "s#(^[ \t]*IOS_APP_NAME:[ \t]*').*('[, \t]*$)#\1$IOS_APP_NAME\2#g" env.js
 
 echo "env.js:"
 cat env.js
