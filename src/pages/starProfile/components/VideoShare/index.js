@@ -162,12 +162,12 @@ class VideoShare extends React.Component {
               props.selectedVideo ? props.selectedVideo.s3_thumbnail_url : '../../assets/images/profile.png',
               `Get your personalized video from ${props.selectedVideo.full_name}`,
             ),
-            { property: 'al:ios:app_store_id', content: env('iosAppId') },
-            { property: 'al:ios:url', content: `${env('androidAppId')}://video/${props.selectedVideo.video_id}` },
-            { property: 'al:ios:app_name', content: env('iosAppName') },
-            { property: 'al:android:package', content: env('androidAppId') },
-            { property: 'al:android:url', content: `${env('androidAppId')}://video/${props.selectedVideo.video_id}` },
-            { property: 'al:android:app_name', content: env('androidAppName') },
+            { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+            { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://video/${props.selectedVideo.video_id}` },
+            { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+            { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+            { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://video/${props.selectedVideo.video_id}` },
+            { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
             ]}
           />
           {
