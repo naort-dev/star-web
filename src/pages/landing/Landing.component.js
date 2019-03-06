@@ -72,7 +72,7 @@ export default class Landing extends React.Component {
           this.props.fetchVideosList(0, true, 'Stars');
         }
       } else {
-        this.props.fetchCelebrityList(0, true, this.props.filters.category.selectedCategory);
+        this.props.fetchCelebrityList(0, true, nextProps.filters.category.selectedCategory);
       }
     }
     if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
