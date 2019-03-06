@@ -344,10 +344,10 @@ export default class Starprofile extends React.Component {
           ),
           { property: 'al:ios:app_store_id', content: env('iosAppId') },
           { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
-          { property: 'al:ios:app_name', content: 'Starsona' },
+          { property: 'al:ios:app_name', content: env('iosAppName') },
           { property: 'al:android:package', content: env('androidAppId') },
           { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
-          { property: 'al:android:app_name', content: 'Starsona' },
+          { property: 'al:android:app_name', content: env('androidAppName') },
           ]}
         />
 

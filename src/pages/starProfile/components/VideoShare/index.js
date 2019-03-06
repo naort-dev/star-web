@@ -164,10 +164,10 @@ class VideoShare extends React.Component {
             ),
             { property: 'al:ios:app_store_id', content: env('iosAppId') },
             { property: 'al:ios:url', content: `${env('androidAppId')}://video/${props.selectedVideo.video_id}` },
-            { property: 'al:ios:app_name', content: 'Starsona' },
+            { property: 'al:ios:app_name', content: env('iosAppName') },
             { property: 'al:android:package', content: env('androidAppId') },
             { property: 'al:android:url', content: `${env('androidAppId')}://video/${props.selectedVideo.video_id}` },
-            { property: 'al:android:app_name', content: 'Starsona' },
+            { property: 'al:android:app_name', content: env('androidAppName') },
             ]}
           />
           {
