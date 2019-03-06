@@ -3,6 +3,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { checkStripe } from './stripeRegistration';
+import { updateLoginStatus } from './login';
 
 export const USER_DETAILS = {
   start: 'fetch_start/user_details',
@@ -62,6 +63,7 @@ const parseUserDetails = (userData) => {
 
 export const fetchUserDetails = id => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
+  const { userDataLoaded } = getState().userDetails;
   let API_URL;
   let options;
   if (isLoggedIn) {
@@ -76,6 +78,9 @@ export const fetchUserDetails = id => (dispatch, getState) => {
   return fetch.get(API_URL, options).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(userDetailsFetchEnd());
+      if (!userDataLoaded) {
+        dispatch(updateLoginStatus(resp.data.data.user));
+      }
       dispatch(userDetailsFetchSuccess(parseUserDetails(resp.data.data)));
       dispatch(checkStripe());
       return resp.data.data;
