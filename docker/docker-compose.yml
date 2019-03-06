@@ -23,6 +23,7 @@ services:
     - PRERENDER_TOKEN
     - GOOGLE_TAG_MANAGER_ID
     - HTTP_PORT
+    - ROLLBAR_ENV
 
 networks:
   overlay:
