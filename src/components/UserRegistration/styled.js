@@ -29,6 +29,7 @@ GroupStyled.StepWrapper = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   height: 100%;
+  display: ${props => (props.hide ? 'none' : 'block')}
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -434,12 +435,34 @@ GroupStyled.PriceInput = GroupStyled.NumberInput.extend`
   padding-left: 18px;
 `;
 
+GroupStyled.PriceNotification = styled.span`
+  display: inline-block;
+  padding: 0 20px;
+  width: calc(100% - 100px);
+  line-height: 18px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+GroupStyled.PriceNotificationTitle = styled.span`
+  font-family: 'Avenir-Regular';
+  display: block;
+`;
+
+GroupStyled.PriceNotificationContent = styled.span`
+  display: block;
+`;
+
 GroupStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 12px;
   margin-top:4px;
   font-family: 'Avenir-light';
   text-align:left;
+  strong {
+    font-family: 'Avenir-Regular';
+  }
   ${props => !props.isError && ({
     color: 'grey',
   })
@@ -1058,6 +1081,13 @@ GroupStyled.ImageLoaderWrapper = styled.div`
   align-items: center;
   background-color: rgba(0,0,0,.6);
   border-radius: inherit;
+`;
+
+GroupStyled.MainLoaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 `;
 
 export default GroupStyled;

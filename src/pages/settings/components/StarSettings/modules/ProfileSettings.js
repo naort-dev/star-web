@@ -3,7 +3,7 @@ import validator from 'validator';
 import Popup from '../../../../../components/Popup';
 import RequestFlowPopup from './../../../../../components/RequestFlowPopup';
 import { IndustrySelection } from './../../../../../components/IndustrySelection';
-import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../../../utils/dataformatter';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter, iosPriceFinder } from '../../../../../utils/dataformatter';
 import SettingsStyled from '../../../styled';
 
 export default class ProfileSettings extends React.Component {
@@ -46,6 +46,7 @@ export default class ProfileSettings extends React.Component {
       bio: props.celebDetails.description ? props.celebDetails.description : '',
       stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
       bookingPrice: props.celebDetails.rate ? numberToCommaFormatter(props.celebDetails.rate) : '',
+      iosPrice: props.celebDetails.in_app_price ? props.celebDetails.in_app_price : null,
       bookingLimit: props.celebDetails.weekly_limits ? numberToCommaFormatter(props.celebDetails.weekly_limits) : '',
       popUpMessage: null,
       priceCheck: false,
@@ -110,11 +111,25 @@ export default class ProfileSettings extends React.Component {
       }
     } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
       const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
-      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+      const fieldNumber = commaToNumberFormatter(newFieldValue);
+      if ((validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '')
+        && (isNaN(fieldNumber) || (fieldNumber > 0 && fieldNumber <= 99999))
+      ) {
         this.setState({
           [fieldType]: newFieldValue,
           errors: { ...this.state.errors, [fieldType]: false },
         }, () => {
+          if (fieldType === 'bookingPrice') {
+            const { bookingPrice } = this.state;
+            const actualPrice = commaToNumberFormatter(bookingPrice);
+            if (actualPrice <= 1000) {
+              this.setState({ iosPrice: iosPriceFinder(actualPrice, this.props.inAppPriceList) });
+            } else if (!actualPrice) {
+              this.setState({ iosPrice: 0 });
+            } else {
+              this.setState({ iosPrice: null });
+            }
+          }
           if (fieldType === 'bookingPrice' && this.state.priceCheck) {
             this.setState({ priceCheck: false });
           } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
@@ -175,8 +190,9 @@ export default class ProfileSettings extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: professions,
-        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
-        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
+        rate: commaToNumberFormatter(this.state.bookingPrice),
+        in_app_price: this.state.iosPrice,
+        weekly_limits: commaToNumberFormatter(this.state.bookingLimit),
         availability: true,
       };
       const userDetails = {
@@ -378,11 +394,34 @@ export default class ProfileSettings extends React.Component {
                   this.handleFieldChange('bookingPrice', event.target.value);
                 }}
               />
-              <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
-                {this.state.errors.bookingPrice
-                  ? 'Please enter a valid booking price'
-                  : 'Our pricing engines will automatically maximize your earnings based on demand.'}
-              </SettingsStyled.ErrorMsg>
+              {
+                this.state.errors.bookingPrice &&
+                  <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
+                    Please enter a valid booking price
+                  </SettingsStyled.ErrorMsg>
+              }
+              {
+                !this.state.errors.bookingPrice &&
+                  <React.Fragment>
+                    {
+                      this.state.iosPrice === null ?
+                        <SettingsStyled.ErrorMsg>
+                          Please tell your fans that they will not be able to book you using the iOS app because Apple does not support purchases over $999.99.
+                          They will still be able to book you using their browser (mobile or desktop) or the Android app.
+                        </SettingsStyled.ErrorMsg>
+                      :
+                        <SettingsStyled.ErrorMsg>
+                          {
+                            this.state.iosPrice !== 0 &&
+                              <React.Fragment>
+                                Converted Apple price: <strong>{this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}</strong>.&nbsp;
+                              </React.Fragment>
+                          }
+                          In the iOS app, we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
+                        </SettingsStyled.ErrorMsg>
+                    }
+                  </React.Fragment>
+              }
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
           <SettingsStyled.InputWrapper>

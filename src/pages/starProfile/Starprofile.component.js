@@ -339,15 +339,15 @@ export default class Starprofile extends React.Component {
           title={fullName}
           meta={[...setMetaTags(
             fullName,
-            this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.image_url : '../../assets/images/profile.png',
+            this.props.userDetails.avatar_photo ? this.props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
             `Get your personalized video from ${fullName}`,
           ),
-          { property: 'al:ios:app_store_id', content: env('iosAppId') },
-          { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
-          { property: 'al:ios:app_name', content: 'Starsona' },
-          { property: 'al:android:package', content: env('androidAppId') },
-          { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
-          { property: 'al:android:app_name', content: 'Starsona' },
+          { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+          { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+          { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+          { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://profile/${this.props.match.params.id.toLowerCase()}` },
+          { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
           ]}
         />
 

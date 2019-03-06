@@ -56,12 +56,12 @@ export const logOutUser = () => (dispatch) => {
   clearSessionDetails();
 };
 
-export const updateLoginStatus = (sessionDetails) => (dispatch) => {
+export const updateLoginStatus = sessionDetails => (dispatch) => {
   dispatch(updateLoginData(sessionDetails));
-  if (window.localStorage && !window.localStorage.getItem('data')) {
-    localStorage.setItem('data', JSON.stringify({user: {...sessionDetails}}));
+  if (window.localStorage) {
+    localStorage.setItem('data', JSON.stringify({ user: { ...sessionDetails } }));
   }
-}
+};
 
 export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => {
   dispatch(loginFetchStart());

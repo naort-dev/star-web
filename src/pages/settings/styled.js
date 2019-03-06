@@ -187,7 +187,7 @@ SettingsStyled.CustomPlaceholder = styled.span`
   font-size: 14px;
   pointer-events: ${props => (props.activePlaceHolder ? 'auto' : 'none')};
   @media(min-width: 768px) {
-    top: 8.5px;
+    top: 9px;
   }
 `;
 
@@ -397,6 +397,25 @@ SettingsStyled.PriceInput = SettingsStyled.NumberInput.extend`
   padding-left: 18px;
 `;
 
+SettingsStyled.PriceNotification = styled.div`
+  display: inline-block;
+  padding: 0 20px;
+  width: calc(100% - 100px);
+  line-height: 18px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+SettingsStyled.PriceNotificationTitle = styled.span`
+  font-family: 'Avenir-Regular';
+  display: block;
+`;
+
+SettingsStyled.PriceNotificationContent = styled.span`
+  display: block;
+`;
+
 SettingsStyled.ReadOnlySection = SettingsStyled.InputArea.extend`
   display: flex;
   justify-content: space-between;
@@ -409,6 +428,9 @@ SettingsStyled.ErrorMsg = styled.div`
   margin-top:4px;
   font-family: 'Avenir-light';
   text-align:left;
+  strong {
+    font-family: 'Avenir-Regular';
+  }
   ${props => !props.isError && ({
     color: 'grey',
   })
