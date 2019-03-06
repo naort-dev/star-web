@@ -173,8 +173,8 @@ class VideoShare extends React.Component {
           {
             this.state.showAppBanner &&
             <AppBanner
-              androidUrl={`profile/${props.selectedVideo.video_id}`}
-              iosUrl={`profile/?profile_id=${props.selectedVideo.video_id}`}
+              androidUrl={`video/${props.selectedVideo.video_id}`}
+              iosUrl={`video/${props.selectedVideo.video_id}`}
               hideAppBanner={() => this.setState({ showAppBanner: false })}
             />
           }
