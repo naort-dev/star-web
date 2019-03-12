@@ -98,6 +98,20 @@ IndustryStyled.SearchWrapper = styled.div`
   }
 `;
 
+IndustryStyled.ClearButton = styled.span`
+  cursor: pointer;
+  position: absolute;
+  right: 0;
+  top: 12px;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  background-image: url( 'assets/images/close-icon.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
 IndustryStyled.SearchField = styled.input`
   font-family: 'Avenir-Regular';
   color: #333333;
@@ -108,6 +122,7 @@ IndustryStyled.SearchField = styled.input`
   height: 40px;
   padding: 8px 8px;
   padding-left: 40px;
+  padding-right: 30px;
   resize: none;
   background-color: #fff;
   border: 1px solid #EBEBEB;

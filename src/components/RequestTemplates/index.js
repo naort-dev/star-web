@@ -13,20 +13,20 @@ class RequestTemplates extends React.Component {
       type: props.type,
       relationship: props.relationship,
       user: props.user,
-      showPopup: true,
       eventname: props.eventName,
+      startDate: null,
     };
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
-    const datePicker=document.getElementsByClassName("react-datepicker__input-container")[0];
+    const datePicker = document.getElementsByClassName("react-datepicker__input-container")[0];
     if (datePicker && datePicker.childNodes && datePicker.childNodes[0]) {
       datePicker.childNodes[0].setAttribute("readOnly",true);
     }
   }
-  handleChange(date) {
+  handleChange(date) {    
     this.setState({
-      startDate: this.props.date,
+      startDate: date,
     });
     this.props.handleChange(date, 'date');
   }
@@ -574,19 +574,37 @@ class RequestTemplates extends React.Component {
               :
               null
             }
-            <Templates.InputWrapper>
-              <Templates.Label>When is the occasion?</Templates.Label>
-              <Templates.WrapsInput>
-                <DatePicker
-                  dateFormat="LL"
-                  withPortal
-                  customInput={<Templates.Input />}
-                  popperPlacement="bottom"
-                  selected={this.props.date}
-                  onChange={this.handleChange}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
+            {
+              this.props.selectedOccasion == 5 ?
+                <Templates.InputWrapper>
+                  <Templates.Label>When is the occasion? (optional)</Templates.Label>
+                  <Templates.WrapsInput>
+                    <DatePicker
+                      dateFormat="LL"
+                      withPortal
+                      customInput={<Templates.Input />}
+                      popperPlacement="bottom"
+                      selected={this.props.date}
+                      onChange={this.handleChange}
+                      placeholderText="Enter date"
+                    />
+                  </Templates.WrapsInput>
+                </Templates.InputWrapper> :
+                <Templates.InputWrapper>
+                  <Templates.Label>When is the occasion?</Templates.Label>
+                  <Templates.WrapsInput>
+                    <DatePicker
+                      dateFormat="LL"
+                      withPortal
+                      customInput={<Templates.Input />}
+                      popperPlacement="bottom"
+                      selected={this.props.date}
+                      onChange={this.handleChange}
+                    />
+                  </Templates.WrapsInput>
+                </Templates.InputWrapper>
+            }
+            
             <Templates.InputWrapper>
               <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
               <Templates.WrapsInput>
@@ -634,7 +652,7 @@ class RequestTemplates extends React.Component {
                   onChange={event => this.props.handleChange(event.target.value, 'userName')}
                 />
                 {this.props.whoIsfrom ?
-                  <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
+                  <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
                   :
                   null
                 }

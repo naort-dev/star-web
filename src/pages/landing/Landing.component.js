@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import { Starprofile } from '../starProfile';
+import { VideoSharePage } from '../videoSharePage';
 import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
@@ -25,23 +26,25 @@ export default class Landing extends React.Component {
     if (this.props.isSignup && !this.props.isLoggedIn) {
       this.props.toggleSignup(true);
     }
-    switch (this.props.filters.selectedTab) {
-      case 'Stars':
-        if (!this.props.celebList.data.length ||
-          this.props.isLoggedIn !== this.props.celebList.isLoggedIn ||
-          this.props.filters.searchParam !== this.props.celebList.currentSearchParam
-
-        ) {
+    if (this.props.location.pathname === '/' || this.props.isSignup) {
+      switch (this.props.filters.selectedTab) {
+        case 'Stars':
+          if (!this.props.celebList.data.length ||
+            this.props.isLoggedIn !== this.props.celebList.isLoggedIn ||
+            this.props.filters.searchParam !== this.props.celebList.currentSearchParam
+  
+          ) {
+            this.props.fetchCelebrityList(0, true, 'Stars');
+          }
+          break;
+        case 'Videos':
+          if (!this.props.videosList.data.length) {
+            this.props.fetchVideosList(0, true);
+          }
+          break;
+        default:
           this.props.fetchCelebrityList(0, true, 'Stars');
-        }
-        break;
-      case 'Videos':
-        if (!this.props.videosList.data.length) {
-          this.props.fetchVideosList(0, true);
-        }
-        break;
-      default:
-        this.props.fetchCelebrityList(0, true, 'Stars');
+      }
     }
     window.addEventListener('resize', this.setScrollHeight);
   }
@@ -60,7 +63,8 @@ export default class Landing extends React.Component {
     const selectedVideoTypeChange = this.props.filters.selectedVideoType !== nextProps.filters.selectedVideoType;
     const selectedVideoDateChange = this.props.filters.selectedVideoDate !== nextProps.filters.selectedVideoDate;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange) {
+    const locationChange = this.props.location.pathname !== nextProps.location.pathname && nextProps.location.pathname === '/';
+    if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange || locationChange ) {
       if (nextProps.filters.selectedTab === 'Videos') {
         if (searchParamChange) {
           this.props.switchTab('Stars');
@@ -68,7 +72,7 @@ export default class Landing extends React.Component {
           this.props.fetchVideosList(0, true, 'Stars');
         }
       } else {
-        this.props.fetchCelebrityList(0, true, this.props.filters.category.selectedCategory);
+        this.props.fetchCelebrityList(0, true, nextProps.filters.category.selectedCategory);
       }
     }
     if (categoryChange && nextProps.filters.selectedTab === 'Stars') {
@@ -168,6 +172,7 @@ export default class Landing extends React.Component {
         <ScrollList
           noDataText="Sorry! no matches"
           banner
+          searchText={this.props.filters.searchParam}
           dataList={this.props.celebList.data}
           menuActive={this.state.menuActive}
           limit={this.props.celebList.limit}
@@ -260,6 +265,13 @@ export default class Landing extends React.Component {
                   </LandingStyled.ScrollListWrapper>
                 </LandingStyled.mainSection>
               )}
+            />
+            <Route
+              exact
+              path="/video/:id"
+              render={props => (
+                <VideoSharePage {...props} menuActive={this.state.menuActive} />
+                )}
             />
             <Route
               exact

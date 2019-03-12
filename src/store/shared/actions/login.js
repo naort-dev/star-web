@@ -46,7 +46,7 @@ export const logOut = () => ({
   type: LOGIN.logout,
 });
 
-export const updateLoginStatus = sessionDetails => ({
+export const updateLoginData = sessionDetails => ({
   type: LOGIN.updateLoginStatus,
   sessionDetails,
 });
@@ -54,6 +54,13 @@ export const updateLoginStatus = sessionDetails => ({
 export const logOutUser = () => (dispatch) => {
   dispatch(logOut());
   clearSessionDetails();
+};
+
+export const updateLoginStatus = sessionDetails => (dispatch) => {
+  dispatch(updateLoginData(sessionDetails));
+  if (window.localStorage) {
+    localStorage.setItem('data', JSON.stringify({ user: { ...sessionDetails } }));
+  }
 };
 
 export const loginUser = (loginEmail, loginPassword) => (dispatch, getState) => {

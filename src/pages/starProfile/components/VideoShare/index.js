@@ -1,29 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import { withRouter, Link } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import moment from 'moment';
-import {
-  FacebookShareButton,
-  GooglePlusShareButton,
-  TwitterShareButton,
-  WhatsappShareButton,
-  EmailShareButton,
-  WhatsappIcon,
-  FacebookIcon,
-  TwitterIcon,
-  GooglePlusIcon,
-  EmailIcon,
-} from 'react-share';
-import copy from 'copy-to-clipboard';
-import { requestTypeTitle, requestTypes } from '../../../../constants/requestTypes';
+import { requestTypeTitle } from '../../../../constants/requestTypes';
 import VideoPlayer from '../../../../components/VideoPlayer';
-import SnackBar from '../../../../components/SnackBar';
 import Loader from '../../../../components/Loader';
-import Popup from '../../../../components/Popup';
+import AppBanner from '../../../../components/AppBanner';
+import ShareView from '../../../../components/ShareView';
 import VideoShareStyled from './styled';
 import { setMetaTags } from '../../../../utils/setMetaTags';
+import { shareTitleGenerator } from '../../../../utils/dataToStringFormatter';
 import { fetchCommentsList, addVideoComment, resetCommentsList } from '../../../../store/shared/actions/getVideoComments';
 import { toggleLogin } from '../../../../store/shared/actions/toggleModals';
 
@@ -31,17 +18,14 @@ class VideoShare extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      sharePopup: false,
       commentText: '',
-      snackBarText: '',
+      showAppBanner: true,
     };
     this.commentSelected = false;
-    this.popupShareResolution = 1025;
   }
 
   componentWillMount() {
     this.props.fetchCommentsList(this.props.selectedVideo.video_id, 0, true);
-    window.addEventListener('resize', this.handleWindowResize);
   }
 
   componentDidUpdate(prevProps) {
@@ -62,21 +46,12 @@ class VideoShare extends React.Component {
 
   componentWillUnmount() {
     this.props.resetCommentsList();
-    window.removeEventListener('resize', this.handleWindowResize);
   }
 
   onVideoEnded = () => {
     if (this.props.onVideoEnded) {
       this.props.onVideoEnded();
     }
-  }
-
-  setSnackBarText = (text) => {
-    this.setState({ snackBarText: text });
-  }
-
-  handleWindowResize = () => {
-    this.setState({ sharePopup: false });
   }
 
   findTime = (commentDate) => {
@@ -106,6 +81,11 @@ class VideoShare extends React.Component {
       const offset = this.props.commentList.data[0].id;
       this.props.fetchCommentsList(this.props.selectedVideo.video_id, offset);
     }
+  }
+
+  toggleShare = () => {
+    const { shareView } = this.state;
+    this.setState({ shareView: !shareView });
   }
 
   addVideoComment = (videoId, comment) => {
@@ -150,25 +130,6 @@ class VideoShare extends React.Component {
       this.commentAdder();
     }
   }
-  
-  closeSnackBar = () => {
-    this.setState({ snackBarText: '' });
-  }
-
-  copyUrl = (shareUrl) => {
-    copy(shareUrl);
-    this.setSnackBarText('Link copied to clipboard');
-  }
-
-  toggleShare = () => {
-    const { sharePopup } = this.state;
-    if (sharePopup) {
-      enableBodyScroll(null);
-    } else if (document.body.getBoundingClientRect().width < this.popupShareResolution) {
-      disableBodyScroll(null);
-    }
-    this.setState({ sharePopup: !sharePopup });
-  }
 
   renderRequesttitle = () => {
     const { selectedVideo } = this.props;
@@ -176,95 +137,6 @@ class VideoShare extends React.Component {
       return `Q&A ${requestTypeTitle[selectedVideo.booking_type]}`;
     }
     return `${selectedVideo.occasion} ${requestTypeTitle[selectedVideo.booking_type]}`;
-  }
-
-  renderSocialIcons = (selectedVideo) => {
-    const defaultUrl = selectedVideo.video_url;
-    const shareUrl = `https://${defaultUrl}`;
-    let title = '';
-    if (requestTypes[selectedVideo.booking_type] === 'Shout-out') {
-      title = `Watch this video shout-out from ${selectedVideo.full_name}`;
-    } else if (requestTypes[selectedVideo.booking_type] === 'Event') {
-      title = `Check out my video announcement courtesy of ${selectedVideo.full_name}`;
-    } else if (requestTypes[selectedVideo.booking_type] === 'Q&A') {
-      title = `${selectedVideo.full_name} answers my fan question!`;
-    }
-    const emailSubject = `Check out this video from ${selectedVideo.full_name} !`;
-    const emailBody = `${title}\n${shareUrl}`;
-    return (
-      <React.Fragment>
-        <VideoShareStyled.Somenetwork>
-          <FacebookShareButton
-            url={shareUrl}
-            quote={title}
-            className="Demo__some-network__share-button"
-          >
-            <FacebookIcon
-              size={32}
-              round
-            />
-            <VideoShareStyled.SocialTitle>Share to Facebook</VideoShareStyled.SocialTitle>
-          </FacebookShareButton>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork>
-          <GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round
-            />
-            <VideoShareStyled.SocialTitle>Share to Google Plus</VideoShareStyled.SocialTitle>
-          </GooglePlusShareButton>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork>
-          <TwitterShareButton
-            url={shareUrl}
-            title={title}
-            className="Demo__some-network__share-button"
-          >
-            <TwitterIcon
-              size={32}
-              round
-            />
-            <VideoShareStyled.SocialTitle>Share to Twitter</VideoShareStyled.SocialTitle>
-          </TwitterShareButton>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork>
-          <WhatsappShareButton
-            url={shareUrl}
-            title={title}
-            separator=":: "
-            className="Demo__some-network__share-button"
-          >
-            <WhatsappIcon size={32} round />
-            <VideoShareStyled.SocialTitle>Share to Whatsapp</VideoShareStyled.SocialTitle>
-          </WhatsappShareButton>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork>
-          <EmailShareButton
-            url={shareUrl}
-            subject={emailSubject}
-            body={emailBody}
-            className="Demo__some-network__share-button"
-          >
-            <EmailIcon
-              size={32}
-              round
-            />
-            <VideoShareStyled.SocialTitle>Share via Email</VideoShareStyled.SocialTitle>
-          </EmailShareButton>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork onClick={() => this.copyUrl(shareUrl)}>
-          <VideoShareStyled.Copy title="Copy to Clipboard" />
-          <VideoShareStyled.SocialTitle>Copy link</VideoShareStyled.SocialTitle>
-        </VideoShareStyled.Somenetwork>
-        <VideoShareStyled.Somenetwork isCancel onClick={this.toggleShare}>
-          Cancel
-        </VideoShareStyled.Somenetwork>
-      </React.Fragment>
-    );
   }
 
   render() {
@@ -282,10 +154,6 @@ class VideoShare extends React.Component {
     };
     return (
       <React.Fragment>
-        {
-          this.state.sharePopup &&
-            <VideoShareStyled.Overlay onClick={this.toggleShare} />
-        }
         <VideoShareStyled>
           <Helmet
             title={props.selectedVideo.videoTitle}
@@ -294,27 +162,33 @@ class VideoShare extends React.Component {
               props.selectedVideo ? props.selectedVideo.s3_thumbnail_url : '../../assets/images/profile.png',
               `Get your personalized video from ${props.selectedVideo.full_name}`,
             ),
-            { property: 'al:ios:app_store_id', content: env('iosAppId') },
-            { property: 'al:ios:url', content: `${env('androidAppId')}://profile/?profile_id=${this.props.match.params.id.toLowerCase()}` },
-            { property: 'al:ios:app_name', content: 'Starsona' },
-            { property: 'al:android:package', content: env('androidAppId') },
-            { property: 'al:android:url', content: `${env('androidAppId')}://profile/${this.props.match.params.id.toLowerCase()}` },
-            { property: 'al:android:app_name', content: 'Starsona' },
+            { property: 'og:image:width', content: props.selectedVideo.width },
+            { property: 'og:image:height', content: props.selectedVideo.height },
+            { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+            { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://video/${props.selectedVideo.video_id}` },
+            { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+            { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+            { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://video/${props.selectedVideo.video_id}` },
+            { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
             ]}
           />
           {
-            this.state.sharePopup && document.body.getBoundingClientRect().width >= this.popupShareResolution ?
-              <Popup
-                smallPopup
-                closePopUp={this.toggleShare}
-              >
-                { this.renderSocialIcons(props.selectedVideo) }
-              </Popup>
-            : null
+            this.state.showAppBanner &&
+            <AppBanner
+              androidUrl={`video/${props.selectedVideo.video_id}`}
+              iosUrl={`video/${props.selectedVideo.video_id}`}
+              hideAppBanner={() => this.setState({ showAppBanner: false })}
+            />
           }
           {
-            this.state.snackBarText !== '' &&
-              <SnackBar text={this.state.snackBarText} closeSnackBar={this.closeSnackBar} />
+            this.state.shareView &&
+              <ShareView
+                closePopUp={this.toggleShare}
+                title={shareTitleGenerator(props.selectedVideo.booking_type, props.selectedVideo.full_name)}
+                emailSubject={`Check out this video from ${props.selectedVideo.full_name} !`}
+                body={shareTitleGenerator(props.selectedVideo.booking_type, props.selectedVideo.full_name)}
+                shareUrl={`https://${props.selectedVideo.video_url}`}
+              />
           }
           <VideoShareStyled.VideoContentWrapper>
             {
@@ -463,11 +337,6 @@ class VideoShare extends React.Component {
             }
           </VideoShareStyled.VideoContentWrapper>
         </VideoShareStyled>
-        <VideoShareStyled.SocialMediaWrapper mobile visible={this.state.sharePopup}>
-          <VideoShareStyled.Drawer onClick={this.toggleShare} />
-          <VideoShareStyled.SocialHeading>Share</VideoShareStyled.SocialHeading>
-          {this.renderSocialIcons(props.selectedVideo)}
-        </VideoShareStyled.SocialMediaWrapper>
       </React.Fragment>
     );
   }

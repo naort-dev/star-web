@@ -51,7 +51,7 @@ export default class AccountSettings extends React.Component {
         file: props.userDetails.featured_photo ? props.userDetails.featured_photo.photo : null,
       },
       profileImage: {
-        image: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.image_url : null,
+        image: props.userDetails.avatarPhoto,
         file: props.userDetails.avatar_photo ? props.userDetails.avatar_photo.photo : null,
       },
       secondaryImages,
@@ -68,7 +68,8 @@ export default class AccountSettings extends React.Component {
   }
 
   getProfilePhotos = (type, file, image) => {
-    if (type.indexOf('secondaryImage') > -1) {
+    this.props.recordChange(true);
+    if (type && type.indexOf('secondaryImage') > -1) {
       const { secondaryImages } = this.state;
       const index = type.split('-')[1];
       if (!secondaryImages.length) {
@@ -93,14 +94,14 @@ export default class AccountSettings extends React.Component {
     }
   }
 
-  getStripe() {
+  getStripe = () => {
     this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
   }
 
-  getDashboard() {
+  getDashboard = () => {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
@@ -111,11 +112,18 @@ export default class AccountSettings extends React.Component {
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
+    this.props.recordChange(true);
     this.setState({
       [fieldType]: fieldValue,
       errors: { ...this.state.errors, [fieldType]: false },
     });
   };
+
+  toggleNotifications = key => () => {
+    this.props.recordChange(true);
+    const value = this.state[key];
+    this.setState({ [key]: !value });
+  }
 
   validateFields = () => {
     let { firstName, lastName } = this.state.errors;
@@ -143,12 +151,12 @@ export default class AccountSettings extends React.Component {
   submitAccountDetails = () => {
     if (this.validateFields()) {
       let userDetails = {
-        first_name: this.state.firstName,
+        first_name: this.state.firstName.trim(),
       };
       if (this.props.type !== 'group') {
         userDetails = {
           ...userDetails,
-          last_name: this.state.lastName,
+          last_name: this.state.lastName.trim(),
         };
       }
       const secondaryFileNames = this.state.secondaryImages.map((item) => {
@@ -178,12 +186,14 @@ export default class AccountSettings extends React.Component {
         profileImages['featured_image'] = this.state.featuredImage.file;
         profileImages.images = [...profileImages.images, this.state.featuredImage.file]
       }
+      this.props.recordChange(false);
       this.props.submitAccountDetails(userDetails, profileImages, notifications);
     }
   }
 
   cancelDetails = () => {
     this.setInitialData(this.props);
+    this.props.recordChange(false);
     this.props.fetchUserDetails();
   }
 
@@ -312,7 +322,7 @@ export default class AccountSettings extends React.Component {
                     id="celebrityStarsonaRequest"
                     type="checkbox"
                     checked={this.state.starsonaMessage}
-                    onChange={() => this.setState({ starsonaMessage: !this.state.starsonaMessage })}
+                    onChange={this.toggleNotifications('starsonaMessage')}
                   />
                   <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -322,7 +332,7 @@ export default class AccountSettings extends React.Component {
                     id="celebrityStarsonaRequest"
                     type="checkbox"
                     checked={this.state.accountUpdates}
-                    onChange={() => this.setState({ accountUpdates: !this.state.accountUpdates })}
+                    onChange={this.toggleNotifications('accountUpdates')}
                   />
                   <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -332,7 +342,7 @@ export default class AccountSettings extends React.Component {
                     id="celebrityStarsonaRequest"
                     type="checkbox"
                     checked={this.state.starsonaVideos}
-                    onChange={() => this.setState({ starsonaVideos: !this.state.starsonaVideos })}
+                    onChange={this.toggleNotifications('starsonaVideos')}
                   />
                   <span htmlFor="celebrityStarsonaRequest" className="checkmark" />
                 </SettingsStyled.CheckBoxWrapper>
@@ -346,14 +356,13 @@ export default class AccountSettings extends React.Component {
                 <SettingsStyled.WrapsInput>
                   <SettingsStyled.CustomInput>
                     {this.props.stripeRegistration.cardDetails ?
-                      <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                      <SettingsStyled.ActionText onClick={this.getDashboard}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
                       :
-                      <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
+                      <SettingsStyled.HollowButton onClick={this.getStripe}>Set up your Stripe account</SettingsStyled.HollowButton>
                     }
                   </SettingsStyled.CustomInput>
                   <SettingsStyled.ErrorMsg>
-                    Payouts for your earnings will be distributed on
-                    the first of every month
+                    Payouts for your earnings will be distributed the first week of every month.
                   </SettingsStyled.ErrorMsg>
                 </SettingsStyled.WrapsInput>
               </SettingsStyled.InputWrapper>

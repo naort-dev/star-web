@@ -3,7 +3,7 @@ import validator from 'validator';
 import Popup from '../../../../../components/Popup';
 import RequestFlowPopup from './../../../../../components/RequestFlowPopup';
 import { IndustrySelection } from './../../../../../components/IndustrySelection';
-import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../../../utils/dataformatter';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter, iosPriceFinder } from '../../../../../utils/dataformatter';
 import SettingsStyled from '../../../styled';
 
 export default class ProfileSettings extends React.Component {
@@ -13,7 +13,6 @@ export default class ProfileSettings extends React.Component {
       
     };
   }
-
 
   componentWillMount() {
     this.setInitialData(this.props);
@@ -47,6 +46,7 @@ export default class ProfileSettings extends React.Component {
       bio: props.celebDetails.description ? props.celebDetails.description : '',
       stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
       bookingPrice: props.celebDetails.rate ? numberToCommaFormatter(props.celebDetails.rate) : '',
+      iosPrice: props.celebDetails.in_app_price ? props.celebDetails.in_app_price : null,
       bookingLimit: props.celebDetails.weekly_limits ? numberToCommaFormatter(props.celebDetails.weekly_limits) : '',
       popUpMessage: null,
       priceCheck: false,
@@ -63,20 +63,31 @@ export default class ProfileSettings extends React.Component {
     props.checkStripe();
   }
 
-  getStripe() {
+  getStripe = () => {
     this.props.fetchUrl()
       .then((response) => {
         window.location = response.data.data.stripe_url;
       });
   }
 
-  getDashboard() {
+  getDashboard = () => {
     if (this.props.stripeRegistration.dashboardURL) {
       window.open(this.props.stripeRegistration.dashboardURL, '_blank');
     }
   }
 
   getIndustrySelection = (industries) => {
+    if (industries.length !== this.state.industries.length) {
+      this.props.recordChange(true);
+    } else {
+      const industryLength = industries.length > this.state.industries.length ? industries.length : this.state.industries.length;
+      for (let key = 0; key < industryLength; key++) {
+        if (this.state.industries[key].id !== industries[key].id) {
+          this.props.recordChange(true);
+          break;
+        }
+      }
+    }
     this.setState({ industries, industrySelection: false, errors: { ...this.state.errors, industries: false } });
   }
 
@@ -92,6 +103,7 @@ export default class ProfileSettings extends React.Component {
   }
 
   handleFieldChange = (fieldType, fieldValue) => {
+    this.props.recordChange(true);
     if (fieldType === 'industries') {
       const industriesArray = fieldValue.split(',');
       if (industriesArray.length <= 3) {
@@ -99,11 +111,25 @@ export default class ProfileSettings extends React.Component {
       }
     } else if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
       const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
-      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+      const fieldNumber = commaToNumberFormatter(newFieldValue);
+      if ((validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '')
+        && (isNaN(fieldNumber) || (fieldNumber > 0 && fieldNumber <= 99999))
+      ) {
         this.setState({
           [fieldType]: newFieldValue,
           errors: { ...this.state.errors, [fieldType]: false },
         }, () => {
+          if (fieldType === 'bookingPrice') {
+            const { bookingPrice } = this.state;
+            const actualPrice = commaToNumberFormatter(bookingPrice);
+            if (actualPrice <= 1000) {
+              this.setState({ iosPrice: iosPriceFinder(actualPrice, this.props.inAppPriceList) });
+            } else if (!actualPrice) {
+              this.setState({ iosPrice: 0 });
+            } else {
+              this.setState({ iosPrice: null });
+            }
+          }
           if (fieldType === 'bookingPrice' && this.state.priceCheck) {
             this.setState({ priceCheck: false });
           } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
@@ -131,8 +157,8 @@ export default class ProfileSettings extends React.Component {
     industries = this.state.industries.length === 0 || this.state.industries[0] === '' ;
     bookingLimit = !validator.isCurrency(this.state.bookingLimit, { require_symbol: false });
     bookingPrice = !validator.isCurrency(this.state.bookingPrice, { require_symbol: false });
-    const priceValid = !this.state.priceCheck && this.state.bookingPrice > 499;
-    const limitValid = !this.state.limitCheck && this.state.bookingLimit > 20;
+    const priceValid = !this.state.priceCheck && parseFloat(this.state.bookingPrice.replace(/,/g, '')) > 499;
+    const limitValid = !this.state.limitCheck && parseFloat(this.state.bookingLimit.replace(/,/g, '')) > 20;
     if (priceValid) {
       this.handleFieldBlur('bookingPrice', this.state.bookingPrice);
     } else if (limitValid) {
@@ -164,8 +190,9 @@ export default class ProfileSettings extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: professions,
-        rate: parseInt(this.state.bookingPrice),
-        weekly_limits: parseInt(this.state.bookingLimit),
+        rate: commaToNumberFormatter(this.state.bookingPrice),
+        in_app_price: this.state.iosPrice,
+        weekly_limits: commaToNumberFormatter(this.state.bookingLimit),
         availability: true,
       };
       const userDetails = {
@@ -178,6 +205,7 @@ export default class ProfileSettings extends React.Component {
         youtube_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)youtube\.com\/[^\/]+/, this.state.socialMedia.youtube, 'https://www.youtube.com/'),
         instagram_url: this.getSocialUrl(/(?:https?:\/\/)(?:www\.)instagram\.com\/[^\/]+/, this.state.socialMedia.instagram, 'https://www.instagram.com/'),
       };
+      this.props.recordChange(false);
       this.props.submitProfileDetails(celebrityDetails, userDetails, socialLinks);
     }
   };
@@ -195,6 +223,7 @@ export default class ProfileSettings extends React.Component {
 
   cancelDetails = () => {
     this.setInitialData(this.props);
+    this.props.recordChange(false);
     this.props.fetchUserDetails();
   }
 
@@ -365,11 +394,34 @@ export default class ProfileSettings extends React.Component {
                   this.handleFieldChange('bookingPrice', event.target.value);
                 }}
               />
-              <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
-                {this.state.errors.bookingPrice
-                  ? 'Please enter a valid booking price'
-                  : 'Our pricing engines will automatically maximize your earnings based on demand.'}
-              </SettingsStyled.ErrorMsg>
+              {
+                this.state.errors.bookingPrice &&
+                  <SettingsStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
+                    Please enter a valid booking price
+                  </SettingsStyled.ErrorMsg>
+              }
+              {
+                !this.state.errors.bookingPrice &&
+                  <React.Fragment>
+                    {
+                      this.state.iosPrice === null ?
+                        <SettingsStyled.ErrorMsg>
+                          Please tell your fans that they will not be able to book you using the iOS app because Apple does not support purchases over $999.99.
+                          They will still be able to book you using their browser (mobile or desktop) or the Android app.
+                        </SettingsStyled.ErrorMsg>
+                      :
+                        <SettingsStyled.ErrorMsg>
+                          {
+                            this.state.iosPrice !== 0 &&
+                              <React.Fragment>
+                                Converted Apple price: <strong>{this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}</strong>.&nbsp;
+                              </React.Fragment>
+                          }
+                          In the iOS app, we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
+                        </SettingsStyled.ErrorMsg>
+                    }
+                  </React.Fragment>
+              }
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
           <SettingsStyled.InputWrapper>
@@ -542,14 +594,13 @@ export default class ProfileSettings extends React.Component {
             <SettingsStyled.WrapsInput>
               <SettingsStyled.CustomInput>
                 {this.props.stripeRegistration.cardDetails ?
-                  <SettingsStyled.ActionText onClick={() => this.getDashboard()}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
+                  <SettingsStyled.ActionText onClick={this.getDashboard}>{this.props.stripeRegistration.cardDetails}</SettingsStyled.ActionText>
                   :
-                  <SettingsStyled.HollowButton onClick={() => this.getStripe()}>Set up your Stripe account</SettingsStyled.HollowButton>
+                  <SettingsStyled.HollowButton onClick={this.getStripe}>Set up your Stripe account</SettingsStyled.HollowButton>
                 }
               </SettingsStyled.CustomInput>
               <SettingsStyled.ErrorMsg>
-                Payouts for your earnings will be distributed on
-                the first of every month
+                Payouts for your earnings will be distributed the first week of every month.
               </SettingsStyled.ErrorMsg>
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>

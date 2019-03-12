@@ -33,7 +33,7 @@ class Header extends React.Component {
 
   componentWillMount() { 
     if (this.props.isLoggedIn) {
-      const profilePhoto = this.props.userValue.settings_userDetails.avatar_photo && (this.props.userValue.settings_userDetails.avatar_photo.thumbnail_url || this.props.userValue.settings_userDetails.avatar_photo.image_url);
+      const profilePhoto = this.props.userValue.settings_userDetails.avatarPhoto;
       this.setProfileImage(profilePhoto);
     }
   }
@@ -53,8 +53,8 @@ class Header extends React.Component {
       this.handleSearchItemClick();
     }
 
-    if (JSON.stringify(nextProps.userValue.settings_userDetails.avatar_photo) !== JSON.stringify(this.props.userValue.settings_userDetails.avatar_photo)) {
-      const profilePhoto = nextProps.userValue.settings_userDetails.avatar_photo && (nextProps.userValue.settings_userDetails.avatar_photo.thumbnail_url || nextProps.userValue.settings_userDetails.avatar_photo.image_url);
+    if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatar_photo) {
+      const profilePhoto = nextProps.userValue.settings_userDetails.avatarPhoto;
       this.setProfileImage(profilePhoto);
       this.setState({ profilePhoto: null });
     }

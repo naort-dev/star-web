@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEmpty } from 'lodash'
+import { Scrollbars } from 'react-custom-scrollbars';
 import ColumnLayout from '../../components/ColumnLayout';
 import ScrollList from '../../components/ScrollList';
 import RequestDetails from '../../components/RequestDetails';
@@ -8,6 +8,7 @@ import VideoRecorder from './components/VideoRecorder';
 import DeclineView from './components/DeclineView';
 import ShareView from '../../components/ShareView';
 import RateView from './components/RateView';
+import RateReminder from './components/RateReminder';
 import ReactionView from './components/ReactionView';
 import AlertView from '../../components/AlertView';
 import RequestFlowPopup from '../../components/RequestFlowPopup';
@@ -16,19 +17,22 @@ import InnerTabs from '../../components/InnerTabs';
 import ActionLoader from '../../components/ActionLoader';
 import { getRequestDetails } from '../../services/request';
 import RequestsStyled from './styled';
+import { videoTitleGenerator } from '../../utils/dataToStringFormatter';
 import { celebOpenStatusList, openStatusList, celebCompletedStatusList, completedStatusList } from '../../constants/requestStatusList';
 
 export default class Requests extends React.Component {
   constructor(props) {
     super(props);
+    this.tabs = ['All', 'Open', 'Completed', 'Cancelled'];
     this.state = {
       selectedTab: 'All',
       requestAction: '',
       showActionPopup: false,
+      showRateReminder: false,
       loading: false,
       orderDetails: {},
       alertText: '',
-      scrollTarget: '',
+      shareView: false,
     };
     this.requestType = {
       3: 'Q&A',
@@ -41,17 +45,20 @@ export default class Requests extends React.Component {
     this.props.myVideosListReset();
     const params = window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
-    if (!this.props.starMode && finalParams) {
+    if (finalParams) {
       finalParams.forEach((data) => {
         if (data.split('=')[0] === 'request_id') {
           getRequestDetails(data.split('=')[1])
             .then((requestDetails) => {
               if (requestDetails.success &&
                 requestDetails.data &&
-                requestDetails.data.stargramz_response &&
-                !requestDetails.data.stargramz_response.fan_rating
+                requestDetails.data.stargramz_response
               ) {
-                this.requestAction(requestDetails.data.stargramz_response, 'rate');
+                if (!this.props.starMode && !requestDetails.data.stargramz_response.fan_rating) {
+                  this.requestAction(requestDetails.data.stargramz_response, 'rate');
+                } else if (requestDetails.data.stargramz_response.fan_rating) {
+                  this.requestAction(requestDetails.data.stargramz_response, 'reaction');
+                }
               }
             });
         }
@@ -80,21 +87,7 @@ export default class Requests extends React.Component {
 
   getPopupContent = (requestAction) => {
     const { orderDetails, alertText } = this.state;
-    let finalVideo;
-    if (!isEmpty(orderDetails)) {
-      const { request_video: requestVideo } = orderDetails;
-      finalVideo = requestVideo.find(video => video.video_status === 1); // find completed video
-    }
     switch (requestAction) {
-      case 'share':
-        return (
-          <ShareView
-            iconSize={50}
-            title={`Check out this video from ${orderDetails.celebrity} !`}
-            body={`Watch this personalized video from ${orderDetails.celebrity}`}
-            shareUrl={`https://${finalVideo.video_url}`}
-          />
-        );
       case 'respond':
         return <VideoRecorder onComplete={this.onVideoUpload} orderDetails={this.state.orderDetails} {...this.props} />;
       case 'report':
@@ -160,6 +153,12 @@ export default class Requests extends React.Component {
         );
       default: return null;
     }
+  }
+
+  findVideoByStatus = (videoStatus) => {
+    const { request_video: requestVideo } = this.state.orderDetails;
+    const finalVideo = requestVideo ? requestVideo.find(video => video.video_status === videoStatus) : null;
+    return finalVideo;
   }
 
   fetchVideosList = () => {
@@ -249,8 +248,8 @@ export default class Requests extends React.Component {
     this.props.setRequestFlow(orderDetails.celebrity_id, selectedRequestType, 1);
   }
 
-  requestAction = (data, actionType) => {
-    let { requestAction, showActionPopup, orderDetails, alertText } = this.state;
+  requestAction = (data, actionType) => {    
+    let { requestAction, showActionPopup, orderDetails, alertText, showRateReminder, shareView } = this.state;
     if (actionType === 'edit') {
       this.setState({ loading: true });
       getRequestDetails(data.booking_id)
@@ -270,8 +269,13 @@ export default class Requests extends React.Component {
             this.requestAction('Something went wrong', 'alert');
           }
         });
-    } else if (actionType === 'share'
-      || actionType === 'respond'
+    } else if (actionType === 'rateReminder') {
+      showRateReminder = true;
+      orderDetails = data;
+    } else if (actionType === 'share') {
+      shareView = true;
+      orderDetails = data;
+    } else if (actionType === 'respond'
       || actionType === 'report'
       || actionType === 'contact'
       || actionType === 'rate'
@@ -288,7 +292,7 @@ export default class Requests extends React.Component {
       }
     }
     requestAction = actionType;
-    this.setState({ orderDetails, alertText, requestAction, showActionPopup });
+    this.setState({ orderDetails, alertText, requestAction, showActionPopup, showRateReminder, shareView });
   }
   hideRequest = () => {
     this.props.onClearStreams();
@@ -320,12 +324,8 @@ export default class Requests extends React.Component {
     return null;
   }
 
-  updateScrollTarget = (target) => {
-    this.setState({ scrollTarget: target });
-  }
-
   closePopup = () => {
-    this.setState({ showActionPopup: false, alertText: '' });
+    this.setState({ showActionPopup: false, requestAction: '', alertText: '', showRateReminder: false, shareView: false });
   }
 
   renderRequests = (request) => {
@@ -356,7 +356,7 @@ export default class Requests extends React.Component {
     return (
       <ScrollList
         dataList={this.props.requestsList}
-        scrollTarget={this.state.scrollTarget !== '' ? this.state.scrollTarget : null}
+        scrollTarget="column-layout-scrollable-target"
         requestDetails
         renderFunction={this.renderRequests}
         starMode={this.props.starMode}
@@ -374,29 +374,52 @@ export default class Requests extends React.Component {
     return (
       <React.Fragment>
         <InnerTabs
-          labels={['All', 'Open', 'Completed', 'Cancelled']}
+          labels={this.tabs}
           switchTab={this.switchTab}
           selected={this.state.selectedTab}
         />
         <RequestsStyled.ContentWrapper>
-          {
-            this.renderBookings()
-          }
+          <Scrollbars
+            renderView={props => <div {...props} className="view" id="column-layout-scrollable-target" />}
+          >
+            {
+              this.renderBookings()
+            }
+          </Scrollbars>
         </RequestsStyled.ContentWrapper>
       </React.Fragment>
     );
   }
   render() {
-    const { requestAction, showActionPopup, loading } = this.state;
+    const { requestAction, showActionPopup, loading, showRateReminder, orderDetails, shareView } = this.state;
     return (
       <div>
         <ColumnLayout
           selectedSideBarItem={this.props.starMode ? 'requests' : 'myVideos'}
           history={this.props.history}
-          getScrollTarget={this.updateScrollTarget}
         >
           {this.renderCenterSection()}
         </ColumnLayout>
+        {
+          shareView &&
+            <ShareView
+              closePopUp={this.closePopup}
+              title={`Check out this video from ${orderDetails.celebrity} !`}
+              body={`Watch this personalized video from ${orderDetails.celebrity}`}
+              shareUrl={`https://${this.findVideoByStatus(1).video_url}`}
+            />
+        }
+        {
+          showRateReminder &&
+            <RateReminder
+              title={videoTitleGenerator(orderDetails.request_type, orderDetails.occasion)}
+              requestType={orderDetails.request_type}
+              celebrity={orderDetails.celebrity}
+              selectedVideo={this.findVideoByStatus(1)} // find completed video
+              closeRateReminder={this.closePopup}
+              selectItem={type => this.requestAction(orderDetails, type)}
+            />
+        }
         {
           this.props.orderDetailsLoading || loading ?
             <ActionLoader />

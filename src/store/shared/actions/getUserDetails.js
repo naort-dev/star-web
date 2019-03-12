@@ -1,6 +1,9 @@
+import cloneDeep from 'lodash/cloneDeep';
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { checkStripe } from './stripeRegistration';
+import { updateLoginStatus } from './login';
 
 export const USER_DETAILS = {
   start: 'fetch_start/user_details',
@@ -38,20 +41,29 @@ export const resetUserDetails = () => ({
 
 
 const parseUserDetails = (userData) => {
-  const finalUserData = { ...userData };
+  const finalUserData = cloneDeep(userData);
   let stageName = '';
-  let avatarPhoto;
+  let avatarPhoto = null;
+  let avatarPhotoHD = null;
   if (finalUserData.user) {
-    stageName = finalUserData.user.nick_name !== '' ? finalUserData.user.nick_name : `${finalUserData.user.first_name} ${finalUserData.user.last_name}`;
-    avatarPhoto = finalUserData.user.avatar_photo && finalUserData.user.avatar_photo.thumbnail_url;
+    stageName = finalUserData.user.nick_name && finalUserData.user.nick_name !== '' ? finalUserData.user.nick_name : `${finalUserData.user.first_name} ${finalUserData.user.last_name}`;
+    if (finalUserData.user.avatar_photo) {
+      avatarPhoto = finalUserData.user.avatar_photo.thumbnail_url || finalUserData.user.avatar_photo.image_url;
+      avatarPhotoHD = finalUserData.user.avatar_photo.image_url;
+    } else if (finalUserData.user.profile_photo) {
+      avatarPhoto = finalUserData.user.profile_photo;
+      avatarPhotoHD = finalUserData.user.profile_photo;
+    }
   }
   finalUserData.user.stageName = stageName;
   finalUserData.user.avatarPhoto = avatarPhoto;
+  finalUserData.user.avatarPhotoHD = avatarPhotoHD;
   return finalUserData;
 };
 
 export const fetchUserDetails = id => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
+  const { userDataLoaded } = getState().userDetails;
   let API_URL;
   let options;
   if (isLoggedIn) {
@@ -66,7 +78,11 @@ export const fetchUserDetails = id => (dispatch, getState) => {
   return fetch.get(API_URL, options).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(userDetailsFetchEnd());
+      if (!userDataLoaded) {
+        dispatch(updateLoginStatus(resp.data.data.user));
+      }
       dispatch(userDetailsFetchSuccess(parseUserDetails(resp.data.data)));
+      dispatch(checkStripe());
       return resp.data.data;
     }
     dispatch(userDetailsFetchEnd());

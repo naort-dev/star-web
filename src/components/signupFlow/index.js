@@ -8,7 +8,6 @@ import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import { LoginContainer, HeaderSection } from './styled';
-// import { HeaderSection } from '../loginFlow/styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
@@ -55,22 +54,22 @@ class SignupFlow extends React.Component {
   
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
-      return <SignUpForm {...this.props} changeStep={this.changeStep} currentStep={this.state.currentStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+      return <SignUpForm {...this.props} changeStep={this.changeStep} currentStep={this.state.currentStep} signupRole={this.state.selectedType} data={this.state.socialData} closeSignupFlow={this.closeSignUp} />;
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} closeSignupFlow={this.closeSignUp} data={this.state.socialData} />;
         case 2:
         case 3:
         case 4:
         case 5:
         case 6:
         case 7:
-        case 8: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={() => this.closeSignUp()} />;
+        case 8: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={this.closeSignUp} />;
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
       switch (this.state.currentStep) {
-        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={this.closeSignUp} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
         case 2:
         case 3:
         case 4:
@@ -137,8 +136,8 @@ const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   registerUser: (firstName, lastName, email, password, role, referral) =>
     dispatch(registerUser(firstName, lastName, email, password, role, referral)),
-  socialMediaLogin: (userName, firstName, lastName, signUpSource, profilePhoto, fbId, referral) =>
-    dispatch(socialMediaLogin(userName, firstName, lastName, signUpSource, profilePhoto, fbId, referral)),
+  socialMediaLogin: socialObject =>
+    dispatch(socialMediaLogin(socialObject)),
   resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
   toggleLogin: state => dispatch(toggleLogin(state)),

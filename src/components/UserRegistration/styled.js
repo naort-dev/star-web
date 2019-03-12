@@ -29,6 +29,7 @@ GroupStyled.StepWrapper = styled.div`
 
 GroupStyled.ContentWrapper = styled.div`
   height: 100%;
+  display: ${props => (props.hide ? 'none' : 'block')}
 `;
 
 GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
@@ -434,12 +435,34 @@ GroupStyled.PriceInput = GroupStyled.NumberInput.extend`
   padding-left: 18px;
 `;
 
+GroupStyled.PriceNotification = styled.span`
+  display: inline-block;
+  padding: 0 20px;
+  width: calc(100% - 100px);
+  line-height: 18px;
+  font-size: 12px;
+  text-align: center;
+  vertical-align: middle;
+`;
+
+GroupStyled.PriceNotificationTitle = styled.span`
+  font-family: 'Avenir-Regular';
+  display: block;
+`;
+
+GroupStyled.PriceNotificationContent = styled.span`
+  display: block;
+`;
+
 GroupStyled.ErrorMsg = styled.div`
   color:red;
   font-size: 12px;
   margin-top:4px;
   font-family: 'Avenir-light';
   text-align:left;
+  strong {
+    font-family: 'Avenir-Regular';
+  }
   ${props => !props.isError && ({
     color: 'grey',
   })
@@ -538,6 +561,19 @@ GroupStyled.ControlButton = styled.button`
     background-color: #b6b6b6;
     color: #676767;
     border-color: #b6b6b6;
+  }
+`;
+
+GroupStyled.CancelButton = GroupStyled.ControlButton.extend`
+  font-family: 'Avenir-Light';
+  color: #969696;
+  cursor: pointer;
+  border: 2px solid #ccc;
+  margin-right: 20px;
+  border-radius: 7px;
+  background-color: #fff;
+  &:hover, &:focus {
+    background-color: #fff;
   }
 `;
 
@@ -800,31 +836,25 @@ GroupStyled.SuccessTextBold = styled.p`
 `;
 
 GroupStyled.HeaderText = styled.div`
-  text-align:center;
-  color:#676767;
-  font-size:20px;
+  text-align: center;
+  color: #565555;
+  font-size: 18px;
   font-family: 'Avenir-Medium';
-  @media(min-width:768px){
-    font-size:25px;
-  }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
-  }
 `;
 
 GroupStyled.SocialMediaMessage = styled.div`
   font-family: 'Avenir-Regular';
   font-size: 14px;
   text-align: center;
-  color: #7B797A;
   margin-bottom: 5px;
   margin-top: 10px;
   word-spacing: 3px;
   &.skipText {
     cursor: pointer;
+  }
+  &.phoneDesc {
+    max-width: 350px;
+    margin: 0 auto;
   }
   @media(min-width:768px){
     font-size: 18px;
@@ -864,7 +894,6 @@ GroupStyled.ButtonWrapper = styled.button`
 
 GroupStyled.RepresentativeWrapper = styled.div`
   border-top: ${props => (props.signupRep ? 'none' : '1px solid #ddd')};
-  padding-top: 20px;
 `;
 
 GroupStyled.addRepWrapper = styled.div`
@@ -875,14 +904,18 @@ GroupStyled.addRepWrapper = styled.div`
     display: inline-block;
   }  
   .addRepText {
-    font-size: 17px;
+    color: #565555;
+    font-size: 18px;
+    font-family: 'Avenir-Medium';
     @media(min-width:768px){
       display: inline-block;
       width: calc(100% - 55px);
     }
     p {
-      font-size: 12px;
-      color: #aaa;
+      display: block;
+      font-size: 14px;
+      margin-top: 5px;
+      font-family: 'Avenir-Light';
     }
   }
 `;
@@ -1035,6 +1068,26 @@ GroupStyled.OTPSubmit = styled.button`
 GroupStyled.VerificationHead = GroupStyled.InnerHeading.extend`
   text-align: center;
   padding-bottom: 10px;
+`;
+
+GroupStyled.ImageLoaderWrapper = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,.6);
+  border-radius: inherit;
+`;
+
+GroupStyled.MainLoaderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
 `;
 
 export default GroupStyled;

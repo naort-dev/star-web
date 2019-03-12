@@ -2,7 +2,7 @@ import React from 'react';
 import validator from 'validator';
 import Popup from '../../Popup';
 import { GroupSelection, IndustrySelection } from '../../IndustrySelection';
-import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter } from '../../../utils/dataformatter';
+import { numberToDollarFormatter, numberToCommaFormatter, commaToNumberFormatter, iosPriceFinder } from '../../../utils/dataformatter';
 import GroupStyled from '../styled';
 
 export default class StarDetailsEntry extends React.Component {
@@ -13,6 +13,7 @@ export default class StarDetailsEntry extends React.Component {
     groups: [],
     stageName: '',
     bookingPrice: '',
+    iosPrice: 0,
     bookingLimit: '',
     popUpMessage: null,
     priceCheck: false,
@@ -58,11 +59,25 @@ export default class StarDetailsEntry extends React.Component {
   handleFieldChange = (fieldType, fieldValue) => {
     if (fieldType === 'bookingPrice' || fieldType === 'bookingLimit') {
       const newFieldValue = fieldValue === '' ? fieldValue : numberToCommaFormatter(commaToNumberFormatter(fieldValue));
-      if (validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '') {
+      const fieldNumber = commaToNumberFormatter(newFieldValue);
+      if ((validator.matches(numberToCommaFormatter(fieldValue), /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/) || newFieldValue === '')
+        && (isNaN(fieldNumber) || (fieldNumber > 0 && fieldNumber <= 99999))
+      ) {
         this.setState({
           [fieldType]: newFieldValue,
           errors: { ...this.state.errors, [fieldType]: false },
         }, () => {
+          if (fieldType === 'bookingPrice') {
+            const { bookingPrice } = this.state;
+            const actualPrice = commaToNumberFormatter(bookingPrice);
+            if (actualPrice <= 1000) {
+              this.setState({ iosPrice: iosPriceFinder(actualPrice, this.props.inAppPriceList) });
+            } else if (!actualPrice) {
+              this.setState({ iosPrice: 0 });
+            } else {
+              this.setState({ iosPrice: null });
+            }
+          }
           if (fieldType === 'bookingPrice' && this.state.priceCheck) {
             this.setState({ priceCheck: false });
           } else if (fieldType === 'bookingLimit' && this.state.limitCheck) {
@@ -117,9 +132,10 @@ export default class StarDetailsEntry extends React.Component {
       const celebrityDetails = {
         description: this.state.bio,
         profession: this.state.industries,
-        rate: parseInt(commaToNumberFormatter(this.state.bookingPrice)),
+        rate: commaToNumberFormatter(this.state.bookingPrice),
+        in_app_price: this.state.iosPrice,
         charity: this.state.charity,
-        weekly_limits: parseInt(commaToNumberFormatter(this.state.bookingLimit)),
+        weekly_limits: commaToNumberFormatter(this.state.bookingLimit),
         availability: true,
       };
       const userDetails = {
@@ -165,6 +181,16 @@ export default class StarDetailsEntry extends React.Component {
   closePopup = () => {
     this.setState({ popUpMessage: null, [this.state.selectedCheck]: true, selectedCheck: null })
   }
+  
+  closeSelection = type => () => {
+    if (type === 'industries') {
+      this.setState({ industrySelection: false });
+    } else if (type === 'groups') {
+      this.setState({ groupSelection: false }, () => {
+        this.groupSelectionInput.focus();
+      });
+    }
+  }
 
   renderGroups = () => {
     const { groups } = this.state;
@@ -200,16 +226,6 @@ export default class StarDetailsEntry extends React.Component {
         </GroupStyled.PopupButtonWrapper>
       </React.Fragment>
     );
-  }
-  
-  closeSelection = type => () => {
-    if (type === 'industries') {
-      this.setState({ industrySelection: false });
-    } else if (type === 'groups') {
-      this.setState({ groupSelection: false }, () => {
-        this.groupSelectionInput.focus();
-      });
-    }
   }
 
   render() {
@@ -349,11 +365,34 @@ export default class StarDetailsEntry extends React.Component {
                   this.handleFieldChange('bookingPrice', event.target.value);
                 }}
               />
-              <GroupStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
-                {this.state.errors.bookingPrice
-                  ? 'Please enter a valid booking price'
-                  : 'Our pricing engines will automatically maximize your earnings based on demand.'}
-              </GroupStyled.ErrorMsg>
+              {
+                this.state.errors.bookingPrice &&
+                  <GroupStyled.ErrorMsg isError={this.state.errors.bookingPrice}>
+                    Please enter a valid booking price
+                  </GroupStyled.ErrorMsg>
+              }
+              {
+                !this.state.errors.bookingPrice &&
+                  <React.Fragment>
+                    {
+                      this.state.iosPrice === null ?
+                        <GroupStyled.ErrorMsg>
+                          Please tell your fans that they will not be able to book you using the iOS app because Apple does not support purchases over $999.99.
+                          They will still be able to book you using their browser (mobile or desktop) or the Android app.
+                        </GroupStyled.ErrorMsg>
+                      :
+                        <GroupStyled.ErrorMsg>
+                          {
+                            this.state.iosPrice !== 0 &&
+                              <React.Fragment>
+                                Converted Apple price: <strong>{this.state.iosPrice !== null && '$'}{this.state.iosPrice === null ? 'N/A' : this.state.iosPrice}</strong>.&nbsp;
+                              </React.Fragment>
+                          }
+                          In the iOS app, we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).
+                        </GroupStyled.ErrorMsg>
+                    }
+                  </React.Fragment>
+              }
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>
@@ -535,7 +574,10 @@ export default class StarDetailsEntry extends React.Component {
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
         </GroupStyled.InputwrapperDiv>
-        <GroupStyled.ControlWrapper>
+        <GroupStyled.ControlWrapper multiple>
+          <GroupStyled.CancelButton onClick={this.props.closeSignupFlow}>
+            Cancel
+          </GroupStyled.CancelButton>
           <GroupStyled.ControlButton
             onClick={this.submitGroupAccountDetails}
           >

@@ -105,6 +105,16 @@ ListStyled.BannerPlayButton = styled.img`
   }
 `;
 
+ListStyled.SearchContainer = styled.span`
+  font-size: 16px;
+  font-family: 'Avenir-Medium';
+  margin-bottom: 15px;
+  display: inline-block;
+  span {
+    color: #FF6C58;
+  }
+`;
+
 ListStyled.NoDataText = styled.div`
   position: absolute;
   left: 0;

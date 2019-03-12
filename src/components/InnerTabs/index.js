@@ -27,7 +27,7 @@ export default class InnerTabs extends React.Component {
 
   render() {
     return (
-      <TabStyled>
+      <TabStyled supporters={this.props.supporters}>
         {
           !this.props.disableTabs ?
             <TabStyled.tabList innerRef={node => this.tabList = node}>

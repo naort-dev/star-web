@@ -9,6 +9,13 @@ import { Confirm } from '../confirmBooking';
 export default class Personal extends React.Component {
   constructor(props) {
     super(props);
+    // In case Birthday option is selected
+    let date;
+    if (props.bookingData.selectedValue == 5 && props.bookingData.edit) {
+      date = props.bookingData.date === '' ? '' : moment(props.bookingData.date);
+    } else {
+      date = props.bookingData.date ? moment(props.bookingData.date) : moment();
+    }
     this.state = {
       selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0',
       selectedPersonal: props.bookingData.selectedPersonal ? props.bookingData.selectedPersonal : '0',
@@ -21,7 +28,7 @@ export default class Personal extends React.Component {
       relationshipObjName: '',
       specification: props.bookingData.specification ? props.bookingData.specification : '',
       importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
-      date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
+      date,
       eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
       selectEventerror: false,
       selectVideoerror: false,
@@ -62,44 +69,24 @@ export default class Personal extends React.Component {
   }
 
   setLoginUserName = () => {
-    let userNameValue;
-    if (this.props.loginDetails.show_nick_name && this.props.loginDetails.nick_name !== '') {
-      userNameValue = this.props.loginDetails.nick_name;
-    } else if (!this.props.loginDetails.show_nick_name) {
-      userNameValue = this.props.loginDetails.first_name + ' ' + this.props.loginDetails.last_name;
-    } else {
-      userNameValue = 'Myself';
-    }
-    this.setState({ userName: userNameValue });
+    this.setState({ userName: this.props.loginDetails.stageName });
   }
-  handleChange = (event) => {
-    const occasionList = this.props.eventsDetails;
-    const result = occasionList.find((find) => {
-      return find.id == event.target.value;
-    });
-    this.setState({
-      selectedValue: event.target.value,
-      templateType: result ? result.type : '0',
-      relationship: result ? result.relationships : '0',
-      eventName: result ? result.title : 'Choose One',
-    });
-    this.emptyTemplateDetails();
-  }
-  handleBooking = () => {
-    const hostNameValid = this.checkRequiredHostName();
-    const userNameValid = this.checkRequiredUserName();
-    if (!hostNameValid && !userNameValid) {
-      const bookObj = this.createBookingObject(this.state);
-      if (bookObj) {
-        if (localStorage) {
-          localStorage.setItem('bookingData', JSON.stringify(bookObj));
-        }
-        this.props.setBookingDetails(bookObj);
-        this.props.changeStep(this.props.currentStepCount + 1);
-        // this.props.history.push(`/${this.props.match.params.id}/confirm`);
+
+  getAudio() {
+    let from_audio_file = null;
+    let to_audio_file = null;
+    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
+      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
+        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
+      }
+
+      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
+        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
       }
     }
+    return { from_audio_file, to_audio_file };
   }
+
   checkRequiredHostName = () => {
     let whoIsforValue;
     if (this.state.selectedPersonal === '2') {
@@ -130,22 +117,46 @@ export default class Personal extends React.Component {
     return myselfValue;
   }
 
-  getAudio() {
-    let from_audio_file = null;
-    let to_audio_file = null;
-    if (checkMediaRecorderSupport() && !getMobileOperatingSystem()) {
-      if (this.props.audioRecorder.recorded.from && this.props.audioRecorder.recorded.from.recordedBlob) {
-        from_audio_file = new File([this.props.audioRecorder.recorded.from.recordedBlob], "recorded-from.webm");
-      }
-
-      if (this.props.audioRecorder.recorded.for && this.props.audioRecorder.recorded.for.recordedBlob) {
-        to_audio_file = new File([this.props.audioRecorder.recorded.for.recordedBlob], "recorded-for.webm");
+  handleBooking = () => {
+    const hostNameValid = this.checkRequiredHostName();
+    const userNameValid = this.checkRequiredUserName();
+    if (!hostNameValid && !userNameValid) {
+      const bookObj = this.createBookingObject(this.state);      
+      if (bookObj) {
+        if (localStorage) {
+          localStorage.setItem('bookingData', JSON.stringify(bookObj));
+        }
+        this.props.setBookingDetails(bookObj);
+        this.props.changeStep(this.props.currentStepCount + 1);
+        // this.props.history.push(`/${this.props.match.params.id}/confirm`);
       }
     }
-    return { from_audio_file, to_audio_file };
   }
 
-
+  handleChange = (event) => {    
+    const occasionList = this.props.eventsDetails;
+    const result = occasionList.find((find) => {
+      return find.id == event.target.value;
+    });
+    if (event.target.value == 5 && this.state.date) {
+      this.setState({ date: '' });
+    } else {
+      this.setState({
+        date: this.props.bookingData.date ? moment(this.props.bookingData.date) : moment(),
+      });
+    }
+    this.setState({
+      selectedValue: event.target.value,
+      templateType: result ? result.type : '0',
+      relationship: result ? result.relationships : '0',
+      eventName: result ? result.title : 'Choose One',
+      whoIsfor: false,
+      whoIsfrom: false,
+      eventTitle: false,
+      eventDate: false,
+    });
+    this.emptyTemplateDetails();
+  }
 
   createBookingObject = (obj) => {
     const { from_audio_file, to_audio_file } = this.getAudio();
@@ -196,14 +207,14 @@ export default class Personal extends React.Component {
       from_audio_file,
       to_audio_file,
       remove_audios: removeAudios,
-    };
+    };    
     return bookingData;
   }
   otherRelationship = () => {
     this.props.postOtherRelation(this.state.otherRelationValue);
   }
   handleChangePersonal = (e) => {
-    this.setState({ selectedPersonal: e.target.value });
+    this.setState({selectedPersonal: e.target.value });
 
     this.emptyTemplateDetails();
   }
@@ -234,6 +245,10 @@ export default class Personal extends React.Component {
       specification: '',
       importantinfo: '',
       eventdetailName: '',
+      whoIsfor: false,
+      whoIsfrom: false,
+      eventTitle: false,
+      eventDate: false,
     });
   }
   handleInput = (data, type) => {
@@ -263,8 +278,6 @@ export default class Personal extends React.Component {
     this.props.history.push(`/${this.props.match.params.id}`);
   }
 
-
-
   render() {
     let fullName = '';
     if (this.props.userDetails.first_name && this.props.userDetails.last_name) {
@@ -273,8 +286,8 @@ export default class Personal extends React.Component {
     }
     const eventNames = this.props.eventsDetails;
     const optionItems = eventNames.map(eventNamesItem =>
-      <option value={eventNamesItem.id} key={eventNamesItem.id}>{eventNamesItem.title}</option>
-    );
+      <option value={eventNamesItem.id} key={eventNamesItem.id}>{eventNamesItem.title}</option>);
+
     return (
       <React.Fragment>
         {
@@ -288,7 +301,7 @@ export default class Personal extends React.Component {
                     {
                       this.props.currentStepCount === 2 &&
                         <HeaderSection>
-                          <HeaderSection.HeaderNavigation onClick={() => this.goBack()} />
+                          <HeaderSection.HeaderNavigation onClick={this.goBack} />
                         </HeaderSection>
                     }
                     <Request.ComponentWrapper>
@@ -350,6 +363,7 @@ export default class Personal extends React.Component {
                               <Request.EventStep2>
                                 <RequestTemplates
                                   type={this.state.templateType}
+                                  selectedOccasion={this.state.selectedValue}
                                   relationship={this.state.relationship}
                                   user={this.state.selectedPersonal}
                                   eventName={this.state.eventName}
@@ -380,11 +394,11 @@ export default class Personal extends React.Component {
                       <Request.PaymentControllerWrapper>
                         {this.props.currentStepCount === 2 ?
                           <Request.ContinueButton onClick={() => this.handleBooking()}>
-                            Continue
+                            Continue 
                           </Request.ContinueButton>
                           :
                           <Request.ContinueButton onClick={() => this.steps()}>
-                            Continue
+                            Continue 
                           </Request.ContinueButton>
                         }
                       </Request.PaymentControllerWrapper>

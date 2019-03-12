@@ -3,14 +3,12 @@ import { connect } from 'react-redux';
 import copy from 'copy-to-clipboard';
 import {
   FacebookShareButton,
-  GooglePlusShareButton,
   TwitterShareButton,
   WhatsappShareButton,
   EmailShareButton,
   WhatsappIcon,
   FacebookIcon,
   TwitterIcon,
-  GooglePlusIcon,
   EmailIcon,
 } from 'react-share';
 import Loader from '../Loader';
@@ -113,17 +111,6 @@ class ReferStar extends React.Component {
               round
             />
           </FacebookShareButton>
-        </ReferralStyled.Somenetwork>
-        <ReferralStyled.Somenetwork>
-          <GooglePlusShareButton
-            url={shareUrl}
-            className="Demo__some-network__share-button"
-          >
-            <GooglePlusIcon
-              size={32}
-              round
-            />
-          </GooglePlusShareButton>
         </ReferralStyled.Somenetwork>
         <ReferralStyled.Somenetwork>
           <TwitterShareButton

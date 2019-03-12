@@ -1,0 +1,119 @@
+Description: Create a CodePipeline to include Nested CloudFormation, CodeBuild and Approval steps.
+Parameters:
+
+  BaseImageTag:
+    Type: String
+    Description: Base image tag (placeholder only, not to be used in the template itself, but directly from SSM in codebuild projects)
+
+  Version:
+    Type: String
+    Description: major version.minor version (placeholder only, not to be used in the template itself, but directly from SSM in codebuild projects)
+
+  GitBranch:
+    Type: String
+    Description: Git branch
+
+  GithubToken:
+    Type: String
+    Description: Github OAuth token
+
+  CodebuildDockerImage:
+    Type: String
+    Description: Base image for codebuild - Docker
+    Default: aws/codebuild/docker:18.09.0
+
+  CodebuildUbuntuImage:
+    Type: String
+    Description: Base image for codebuild - Ubuntu
+    Default: aws/codebuild/python:3.6.5
+
+Resources:
+  BuildImages:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: !Join ['-', [!Ref 'AWS::StackName', 'images']]
+      Description: Build images
+      ServiceRole: arn:aws:iam::376169159073:role/service-role/codebuild-starsona-service-role
+      Artifacts:
+        Type: CODEPIPELINE
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: !Ref 'CodebuildDockerImage'
+        PrivilegedMode: true
+        EnvironmentVariables:
+          - { Name: PARAMETERS, Value: '/codepipeline/web/upgrade.json' }
+
+      Source:
+        Type: CODEPIPELINE
+        BuildSpec: aws/codebuild/buildspec-images.yml
+      TimeoutInMinutes: 15
+
+  Pipeline:
+    Type: "AWS::CodePipeline::Pipeline"
+    Properties:
+      Name: !Ref AWS::StackName
+      RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
+      Stages:
+        -
+          Name: Source
+          Actions:
+            -
+              Name: github
+              ActionTypeId:
+                Category: Source
+                Owner: ThirdParty
+                Version: 1
+                Provider: GitHub
+              OutputArtifacts:
+                - Name: source
+              Configuration:
+                Owner: Starsona
+                Repo: web
+                PollForSourceChanges: false
+                Branch: !Ref 'GitBranch'
+                OAuthToken: !Ref 'GithubToken'
+              RunOrder: 1
+        -
+          Name: Build
+          Actions:
+            -
+              Name: images
+              InputArtifacts:
+                - Name: source
+              ActionTypeId:
+                Category: Build
+                Owner: AWS
+                Version: 1
+                Provider: CodeBuild
+              OutputArtifacts:
+                - Name: build
+              Configuration:
+                ProjectName: !Ref 'BuildImages'
+              RunOrder: 1
+        -
+          Name: Staging
+          Actions:
+            -
+              Name: app
+              InputArtifacts:
+                - Name: source
+                - Name: build
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              Configuration:
+                ActionMode: CREATE_UPDATE
+                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
+                Capabilities: CAPABILITY_IAM
+                StackName: upgrade-web-app
+                TemplateConfiguration: build::upgrade-web.json
+                TemplatePath: source::aws/cloudformation/web.yml
+              RunOrder: 1
+
+      ArtifactStore:
+        Type: S3
+        Location: codepipeline-us-east-1-219080120354
+

@@ -3,8 +3,10 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { Scrollbars } from "react-custom-scrollbars";
 import validator from "validator";
+import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
 import { LoginTypeSelector } from "../LoginTypeSelector";
+import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
 
 export default class LoginForm extends React.Component {
@@ -12,6 +14,7 @@ export default class LoginForm extends React.Component {
     super(props);
     this.state = {
       email: { value: "", isValid: false, message: "" },
+      loading: false,
       password: { value: "", isValid: false, message: "" },
       showPassword: false,
       socialMedia: {
@@ -64,20 +67,7 @@ export default class LoginForm extends React.Component {
       js.src = "https://connect.facebook.net/en_US/sdk.js";
       fjs.parentNode.insertBefore(js, fjs);
     })(document, "script", "facebook-jssdk");
-    // const token = this.props.location.hash;
-    // const authToken = token.split('=')[1];
-    window.addEventListener("storage", this.getInstaAccessToken);
-    // const instaUrl = env('instaUrl') + authToken;
-    // const that = this;
-    // if (authToken !== undefined) {
-    //   axios.get(instaUrl)
-    //     .then(function (response) {
-    //       that.onSocialMediaLogin(response.data.data, 4);
-    //     })
-    //     .catch(function (error) {
-
-    //     });
-    // }
+    window.addEventListener("storage", this.listenToStorage);
     if (!this.props.isLoggedIn && this.gSignIn) {
       gapi.signin2.render("g-sign-in", {
         scope: "profile email",
@@ -115,7 +105,7 @@ export default class LoginForm extends React.Component {
     if (this.props.isLoggedIn) {
       this.props.resetRedirectUrls();
     }
-    window.removeEventListener("Storage", this.getInstaAccessToken);
+    window.removeEventListener("storage", this.listenToStorage);
   }
 
   onSignIn = (googleUser) => {
@@ -138,17 +128,20 @@ export default class LoginForm extends React.Component {
             }
           },
           () => {
-            this.props.socialMediaLogin(
-              this.props.data.username || this.state.socialMedia.username,
-              this.state.socialMedia.first_name,
-              this.state.socialMedia.last_name,
-              this.state.socialMedia.sign_up_source,
-              this.state.socialMedia.profile_photo,
-              this.props.data.role || this.state.socialMedia.role,
-              this.state.socialMedia.fb_id,
-              this.state.socialMedia.gp_id,
-              this.state.socialMedia.in_id
-            );
+            const socialObject = {
+              userName: this.props.data.username || this.state.socialMedia.username,
+              firstName: this.state.socialMedia.first_name,
+              lastName: this.state.socialMedia.last_name,
+              nickName: this.state.socialMedia.nick_name,
+              source: this.state.socialMedia.sign_up_source,
+              profilePhoto: this.state.socialMedia.profile_photo,
+              role: this.props.data.role || this.state.socialMedia.role,
+              fbId: this.state.socialMedia.fb_id,
+              gpId: this.state.socialMedia.gp_id,
+              instId: this.state.socialMedia.in_id,
+              twId: this.state.socialMedia.tw_id,
+            }
+            this.props.socialMediaLogin(socialObject);
           }
         );
       }
@@ -166,6 +159,7 @@ export default class LoginForm extends React.Component {
   };
 
   onSocialMediaLogin = (r, source) => {
+    let skipSocialLogin = false;
     if (source === 2) {
       this.setState({
         socialMedia: {
@@ -195,7 +189,7 @@ export default class LoginForm extends React.Component {
           gp_id: r.getId()
         },
       });
-    } else {
+    } else if (source === 4) {
       const val = r;
       const name = val.full_name.trim().split(' ');
       const firstName = name[0];
@@ -212,19 +206,51 @@ export default class LoginForm extends React.Component {
           in_id: val.id
         },
       });
+    } else {
+      const val = r;
+      if (!val.authentication_token) {
+        let firstName = val.first_name;
+        let lastName = val.last_name;
+        let nickName = val.nick_name || val.name;
+        if ((!firstName || !lastName) && val.name) {
+          firstName = val.name.trim().split(" ")[0];
+          lastName = val.name.trim().split(" ")[1];
+        }
+        this.setState({
+          socialMedia: {
+            ...this.state.socialMedia,
+            username: val.email,
+            first_name: firstName,
+            last_name: lastName,
+            sign_up_source: source,
+            nick_name: nickName,
+            profile_photo: val.profile_photo,
+            tw_id: val.id,
+          }
+        });
+      } else {
+        skipSocialLogin = true;
+        this.props.updateLoginStatus(val);
+        this.props.fetchUserDetails(val.id);
+      }
     }
-    this.props.setSocialMediaData(this.state.socialMedia);
-    this.props.socialMediaLogin(
-      this.state.socialMedia.username,
-      this.state.socialMedia.first_name,
-      this.state.socialMedia.last_name,
-      this.state.socialMedia.sign_up_source,
-      this.state.socialMedia.profile_photo,
-      this.state.socialMedia.role,
-      this.state.socialMedia.fb_id,
-      this.state.socialMedia.gp_id,
-      this.state.socialMedia.in_id
-    );
+    if (!skipSocialLogin) {
+      const socialObject = {
+        userName: this.state.socialMedia.username,
+        firstName: this.state.socialMedia.first_name,
+        lastName: this.state.socialMedia.last_name,
+        nickName: this.state.socialMedia.nick_name,
+        source: this.state.socialMedia.sign_up_source,
+        profilePhoto: this.state.socialMedia.profile_photo,
+        role: this.state.socialMedia.role,
+        fbId: this.state.socialMedia.fb_id,
+        gpId: this.state.socialMedia.gp_id,
+        instId: this.state.socialMedia.in_id,
+        twId: this.state.socialMedia.tw_id,
+      }
+      this.props.setSocialMediaData(this.state.socialMedia);
+      this.props.socialMediaLogin(socialObject);
+    }
   };
 
   onInstagramLogin = () => {
@@ -266,7 +292,7 @@ export default class LoginForm extends React.Component {
     );
   };
 
-  getInstaAccessToken = () => {
+  listenToStorage = () => {
     if (localStorage.getItem("InstaAccessToken")) {
       const instaUrl =
         env("instaUrl") + localStorage.getItem("InstaAccessToken");
@@ -278,8 +304,26 @@ export default class LoginForm extends React.Component {
           localStorage.removeItem("InstaAccessToken");
         })
         .catch(function (error) { });
+    } else if(localStorage.getItem("twitterData")) {
+      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
+      localStorage.removeItem("twitterData");
     }
   };
+
+  onTwitterLogin = () => {
+    this.setState({ loading: true });
+    twitterLogin()
+      .then((resp) => {
+        this.setState({ loading: false });
+        if (resp.success && resp.data) {
+          const url = resp.data.twitter_link;
+          window.open(url,'_blank');
+        }
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      })
+  }
 
   acceptEmailHandler = e => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
@@ -353,6 +397,10 @@ export default class LoginForm extends React.Component {
     const { email, password } = this.state;
     return (
       <React.Fragment>
+        {
+          this.state.loading &&
+            <ActionLoader />
+        }
         <LoginContainer.SocialMediaSignup>
           <LoginContainer.Container>
             <LoginContainer.Heading>
@@ -366,10 +414,10 @@ export default class LoginForm extends React.Component {
             </LoginContainer.SocialMediaMessage>
             <LoginContainer.ButtonDiv>
               <LoginContainer.Button >
-                <LoginContainer.FacebookContent onClick={() => this.onFBlogin()} />
+                <LoginContainer.FacebookContent onClick={this.onFBlogin} />
               </LoginContainer.Button>
 
-              <LoginContainer.Button onClick={() => this.onGmail()}>
+              <LoginContainer.Button onClick={this.onGmail}>
                 <LoginContainer.GoogleWrapper
                   id="g-sign-in"
                   ref={gSignIn => (this.gSignIn = gSignIn)}
@@ -379,8 +427,12 @@ export default class LoginForm extends React.Component {
                 
               </LoginContainer.Button>
 
-              <LoginContainer.Button onClick={() => this.onInstagramLogin()}>
+              <LoginContainer.Button onClick={this.onInstagramLogin}>
                 <LoginContainer.InstagramContent />
+              </LoginContainer.Button>
+
+              <LoginContainer.Button onClick={this.onTwitterLogin}>
+                <LoginContainer.TwitterContent />
               </LoginContainer.Button>
             </LoginContainer.ButtonDiv>
 
@@ -455,7 +507,7 @@ export default class LoginForm extends React.Component {
                 <LoginContainer.ButtonWrapper>
                   <LoginContainer.SignIn
                     type="submit"
-                    value="Log In"
+                    value="Log in"
                     onClick={this.onLogin}
                     disabled={this.props.loading}
                   />

@@ -153,27 +153,26 @@ LoginContainer.Button = styled.button`
   background-color:white;
   cursor:pointer;
 `;
-LoginContainer.FacebookContent = styled.span`
+
+LoginContainer.SocialIcon = styled.span`
   position:relative;
   width: 30px;
-  background: url( 'assets/images/facebook.svg' ) no-repeat left;
   height: 30px;
   display:block;
-  
 `;
-LoginContainer.GoogleContent = styled.span`
-  position:relative;
-  width: 30px;
-  height: 30px;
+
+LoginContainer.FacebookContent = LoginContainer.SocialIcon.extend`
+  background: url( 'assets/images/facebook.svg' ) no-repeat left; 
+`;
+LoginContainer.GoogleContent = LoginContainer.SocialIcon.extend`
   background: url( 'assets/images/search.svg' ) no-repeat left;
-  display:block; 
 `;
-LoginContainer.InstagramContent = styled.span`
-  position:relative;
-  width: 30px;
-  height: 30px;
+LoginContainer.InstagramContent = LoginContainer.SocialIcon.extend`
   background: url( 'assets/images/instagram.svg' ) no-repeat left;
-  display:block;
+`;
+LoginContainer.TwitterContent = LoginContainer.SocialIcon.extend`
+  background: url( 'assets/images/twitter.png' ) no-repeat left;
+  background-size: contain;
 `;
 LoginContainer.Line = styled.hr`
   width:230px;

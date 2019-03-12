@@ -577,6 +577,7 @@ export default class DetailsEntry extends React.Component {
               <GroupStyled.CheckBox
                 id="group-info-validation"
                 type="checkbox"
+                readOnly
                 checked={this.state.userConfirmation}
               />
               <GroupStyled.Span
@@ -586,7 +587,10 @@ export default class DetailsEntry extends React.Component {
             </GroupStyled.CheckBoxLabel>
           </GroupStyled.CheckBoxWrapper>
         </GroupStyled.OptionWrapper>
-        <GroupStyled.ControlWrapper>
+        <GroupStyled.ControlWrapper multiple>
+          <GroupStyled.CancelButton onClick={this.props.closeSignupFlow}>
+            Cancel
+          </GroupStyled.CancelButton>
           <GroupStyled.ControlButton
             disabled={!this.state.userConfirmation}
             onClick={() => this.submitGroupAccountDetails()}
