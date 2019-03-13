@@ -39,7 +39,9 @@ class ReferStar extends React.Component {
     const data = {
       code: this.props.userDetails.promo_code,
     };
-    if (data.code) this.props.getReferalLink(data);
+    if (data.code) {
+      this.referralLink = `${this.props.configData.web_url}signup?referral=${data.code}`;
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,7 +49,9 @@ class ReferStar extends React.Component {
       const data = {
         code: nextProps.userDetails.promo_code,
       };
-      if (data.code) this.props.getReferalLink(data);
+      if (data.code) {
+        this.referralLink = `${this.props.configData.web_url}signup?referral=${data.code}`;
+      };
     }
   }
 
@@ -184,10 +188,10 @@ class ReferStar extends React.Component {
           <ReferralStyled.CopyReferral onClick={() => this.copy(props.userDetails.promo_code)}>
             Copy
           </ReferralStyled.CopyReferral>
-          {this.props.referralDetails.link && <ReferralStyled.referButton onClick={() => this.setState({ share: !this.state.share })}>Invite a star</ReferralStyled.referButton>}
+          <ReferralStyled.referButton onClick={() => this.setState({ share: !this.state.share })}>Invite a star</ReferralStyled.referButton>
           {
             this.state.share &&
-              <ReferralStyled.IconWrapper>{ this.renderSocialIcons(this.props.referralDetails.link)}</ReferralStyled.IconWrapper>
+              <ReferralStyled.IconWrapper>{ this.renderSocialIcons(this.referralLink)}</ReferralStyled.IconWrapper>
           }
           {
             this.renderReferralList()
@@ -259,6 +263,7 @@ const mapStateToProps = state => ({
   userDetails: state.userDetails.settings_userDetails,
   sessionDetails: state.session.auth_token,
   loading: state.userDetails.loading,
+  configData: state.config.data,
   referralDetails: state.referralDetails,
   referralListLoading: state.referralDetails.loading,
 });

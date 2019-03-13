@@ -28,17 +28,7 @@ export default class Confirm extends React.Component {
     };
   }
   componentWillMount() {
-    const StoreEmpty = this.checkDataInStore(this.props.bookingData);
-    let bookingData;
-    if (StoreEmpty) {
-      if (localStorage && localStorage.getItem('bookingData')) {
-        const localStorageValue = localStorage.getItem('bookingData');
-        bookingData = JSON.parse(localStorageValue);
-        this.updateDataToStore();
-      }
-    } else {
-      bookingData = this.props.bookingData;
-    }
+    const { bookingData } = this.props;
     if (bookingData.type === 3) {
       fetchAWSVideo(this.props.authToken, bookingData.fileName)
         .then((videoUrl) => {
@@ -106,7 +96,7 @@ export default class Confirm extends React.Component {
             <OrderDetailsItem title="From"
               value={this.renderStargramDestinationDetails(that.userName, props.fromAudio && props.fromAudio.recordedUrl)}
             />
-            <OrderDetailsItem title={`${that.userName} is ${that.hostName}'s`} value={that.relationship} />
+            <OrderDetailsItem title={`${that.userName} is ${that.hostName}'s`} value={that.relationship || that.otherRelationValue} />
             {
               this.getOccasionDetails(that.occasionType)
             }
@@ -133,13 +123,13 @@ export default class Confirm extends React.Component {
     }
   }
 
-  checkDataInStore = (obj) => {
-    return Object.keys(obj).length === 0;
-  }
-  updateDataToStore = () => {
-    if (localStorage && localStorage.getItem('bookingData')) {
-      const localStorageValue = localStorage.getItem('bookingData');
-      this.props.setBookingDetails(JSON.parse(localStorageValue));
+  getRequestType = () => {
+    const { type } = this.state.bookingData
+    switch (type) {
+      case 1: return 'personalized video';
+      case 2: return 'event announcement';
+      case 3: return 'live question and answer';
+      default: return null;
     }
   }
 
@@ -257,16 +247,6 @@ export default class Confirm extends React.Component {
     this.props.onClearStreams();
   }
 
-  getRequestType = () => {
-    const { type } = this.state.bookingData
-    switch (type) {
-      case 1: return 'personalized video';
-      case 2: return 'event announcement';
-      case 3: return 'live question and answer';
-      default: return null;
-    }
-  }
-
   orderConfirmationView = fullName => (
     <ConfirmationModal>
       <ConfirmationModal.confirmationWrapper>
@@ -282,9 +262,9 @@ export default class Confirm extends React.Component {
   )
 
 
-  playAudio(audioSrc){
-    const audio = new Audio(audioSrc)
-    audio.play()
+  playAudio = (audioSrc) => {
+    const audio = new Audio(audioSrc);
+    audio.play();
   }
 
   renderStargramDestinationDetails = (text, audioSrc) => {
@@ -296,7 +276,7 @@ export default class Confirm extends React.Component {
         {
           audioSrc &&
             <Request.AudioIcon
-              src='assets/images/voice.png'
+              src="assets/images/voice.png"
               onClick={() => this.playAudio(audioSrc)}
             />
         }

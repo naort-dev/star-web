@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import cloneDeep from 'lodash/cloneDeep';
 import { Request, HeaderSection } from '../../pages/personalizedAnnouncement/styled';
 import './personal';
 import RequestTemplates from '../../components/RequestTemplates';
@@ -49,11 +50,11 @@ export default class Personal extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.bookingData.edit && nextProps.eventsDetails.length) {
-      let result = nextProps.eventsDetails.find((find) => {
+    if (this.props.bookingData.edit && !this.state.relationship.length && nextProps.eventsDetails.length && this.props.bookingData.relationshipValue) {
+      const result = cloneDeep(nextProps.eventsDetails.find((find) => {
         return find.id === this.props.bookingData.occasionType;
-      });
-      let foundRelation = result.relationships && result.relationships.find((find) => {
+      }));
+      const foundRelation = result.relationships && result.relationships.find((find) => {
         return find.id === this.props.bookingData.relationshipValue;
       });
       if (!foundRelation && result.relationships) {
@@ -63,8 +64,15 @@ export default class Personal extends React.Component {
         });
       }
       this.setState({
-        relationship: result ? result.relationships : '0',
+        relationship: result ? result.relationships : [],
       })
+    } else if (!this.state.relationship.length && this.props.bookingData.edit) {
+      const result = nextProps.eventsDetails.find((find) => {
+        return find.id === this.state.templateType;
+      });
+      this.setState({
+        relationship: result ? result.relationships : [],
+      });
     }
   }
 
@@ -148,7 +156,7 @@ export default class Personal extends React.Component {
     this.setState({
       selectedValue: event.target.value,
       templateType: result ? result.type : '0',
-      relationship: result ? result.relationships : '0',
+      relationship: result ? result.relationships : [],
       eventName: result ? result.title : 'Choose One',
       whoIsfor: false,
       whoIsfrom: false,
@@ -182,7 +190,6 @@ export default class Personal extends React.Component {
     if (this.state.relationshipValue === 'otherRelation') {
       relationshipName = this.props.otherRelationData
     }
-
     const userNameValue = this.checkMyself('userName');
     const hostNameValue = this.checkMyself('hostName');
     const bookingData = {
@@ -203,7 +210,7 @@ export default class Personal extends React.Component {
       occasionType: this.state.templateType,
       selectedValue: this.state.selectedValue,
       selectedPersonal: this.state.selectedPersonal,
-      otherRelationValue: this.state.otherRelationValue,
+      otherRelationValue: this.state.relationshipValue === 'otherRelation' && this.state.otherRelationValue,
       from_audio_file,
       to_audio_file,
       remove_audios: removeAudios,
