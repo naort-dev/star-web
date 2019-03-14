@@ -65,6 +65,7 @@ class Api {
   static createGroupNotification = 'notification/new_group_notification/';
   static twitterLogin = 'user/twitter_integration/';
   static twitterOauth = 'user/twitter_login';
+  static validatePromo = 'user/referral_validate/';
 }
 
 export default Api;
