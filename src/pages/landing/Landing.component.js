@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
+import { Footer } from '../../components/Footer';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import { Starprofile } from '../starProfile';
@@ -203,112 +204,10 @@ export default class Landing extends React.Component {
     return (
       <LandingStyled>
         <Header
-          menuActive={this.state.menuActive}
-          enableMenu={this.activateMenu}
-          history={this.props.history}
+          disableLogo
+          disableSearch
         />
-        {
-          this.props.isSignup &&
-            <Helmet
-              title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
-              meta={[...setMetaTags(
-                'Starsona ~ Personalized Video Grams & Shout-Outs from the Stars',
-                'https://starsona.com/assets/images/logo_starsona.png',
-                'Starsona - personalized video grams and shout-outs from the stars, to help you celebrate everyday moments. Find actors, athletes, musicians, YouTubers and more with the Starsona app. Select a star, and request a personalized video shout-out. Then share your shout-out via SMS, email, or social media!',
-              ),
-              { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
-              { property: 'al:ios:url', content: `${this.props.configData.web_url}signup${this.props.history.location.search}` },
-              { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
-              { property: 'al:android:package', content: env('ANDROID_APP_ID') },
-              { property: 'al:android:url', content: `${this.props.configData.web_url}signup${this.props.history.location.search}` },
-              { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
-              ]}
-            />
-        }
-        <LandingStyled.sectionWrapper>
-          <LandingStyled.sideSection menuActive={this.state.menuActive}>
-            <Scrollbars
-              autoHide
-              renderView={props => <div {...props} className="view" />}
-            >
-              <Sidebar
-                list={this.props.professionsList}
-                selectedCategory={this.props.filters.category.value}
-                selectedSubCategories={{ ...this.props.filters[this.props.filters.category.value] }}
-                menuActive={this.state.menuActive}
-                toggleMenu={this.activateMenu}
-                updateMainCategory={this.updateCategory}
-                updateSelectedSubCategory={this.updateSubCategoryList}
-              />
-            </Scrollbars>
-          </LandingStyled.sideSection>
-          <Switch>
-            <Route
-              exact
-              path="/(signUp|)/"
-              render={() => (
-                <LandingStyled.mainSection menuActive={this.state.menuActive}>
-                  <div>
-                    <Tabs
-                      labels={['Stars', 'Videos']}
-                      switchTab={this.props.switchTab}
-                      selectedCategory={this.props.filters.category.label}
-                      filterSelected={this.state.filterSelected}
-                      selected={this.props.filters.selectedTab}
-                      filterCount={this.getFilterCount}
-                      toggleFilter={this.toggleFilterSection}
-                      noTabs={this.state.groupClick}
-                    />
-                    {
-                      this.state.filterSelected &&
-                      <FilterSection
-                        selectedPriceRange={{ low: this.props.filters.lowPrice, high: this.props.filters.highPrice }}
-                        selectedTab={this.props.filters.selectedTab}
-                        selectedSort={this.props.filters.sortValue}
-                        selectedSubCategories={this.props.filters[this.props.filters.category.value]}
-                        subCategoryList={this.state.subCategoryList}
-                        selectedVideoType={this.props.filters.selectedVideoType}
-                        selectedVideoDate={this.props.filters.selectedVideoDate}
-                        filterSelected={this.state.filterSelected}
-                        updatePriceRange={this.props.updatePriceRange}
-                        updateSort={this.props.updateSort}
-                        updateSelectedSubCategory={this.updateSubCategoryList}
-                        updateSelectedVideoType={this.props.updateSelectedVideoType}
-                        updateSelectedVideoDate={this.props.updateSelectedVideoDate}
-                        toggleFilter={this.toggleFilterSection}
-                        groupClicked={this.state.groupClick}
-                      />
-                    }
-                  </div>
-                  <LandingStyled.ScrollListWrapper>
-                    {this.renderScrollList()}
-                  </LandingStyled.ScrollListWrapper>
-                </LandingStyled.mainSection>
-              )}
-            />
-            <Route
-              exact
-              path="/video/:id"
-              render={props => (
-                <VideoSharePage {...props} menuActive={this.state.menuActive} />
-                )}
-            />
-            <Route
-              exact
-              path="/:id"
-              render={props => (
-                <Starprofile {...props} menuActive={this.state.menuActive} />
-                )}
-            />
-            <Route
-              exact
-              path="/group-profile/:id"
-              render={props => (
-                <GroupProfile {...props} menuActive={this.state.menuActive} />
-              )}
-            />
-          </Switch>
-        </LandingStyled.sectionWrapper>
+        <Footer />
       </LandingStyled>
     );
   }

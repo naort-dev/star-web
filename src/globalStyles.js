@@ -7,7 +7,6 @@ injectGlobal`
     font-family: 'Avenir-Regular';
     color: #333333;
     margin: 0;
-    background-color: rgb(248, 248, 248);
   }
   *{
     box-sizing: border-box;

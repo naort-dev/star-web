@@ -6,18 +6,17 @@ const HeaderSection = styled.header`
   left: 0;
   right: 0;
   background: white;
-  box-shadow: 0px 4px 8px 0px #cccccc;
   height: 60px;
   z-index: 10;
-  @media(min-width: 1920px) {
-    height: 72px;
+  @media(min-width: 1025px) {
+    height: 100px;
   }
 `;
 
 HeaderSection.HeaderDiv = styled.div`
   display:flex;
   padding: 3px 16px;
-  justify-content: space-between;
+  justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
   align-items: center;
   max-width: 1920px;
   height: 100%;  
@@ -25,7 +24,7 @@ HeaderSection.HeaderDiv = styled.div`
     padding: 10px 44px;
   }
   @media (min-width: 1025px) {
-    padding: 10px 50px;
+    padding: 32px 30px;
   }
 `;
 HeaderSection.HeaderRight = styled.div`
@@ -394,44 +393,25 @@ HeaderSection.SignIn = styled.button`
     font-size: 16px;
   }
 `;
-HeaderSection.Join = styled.button`
-  background-color: #fff; 
-  color: #FF6C58;
-  padding: 6px 13px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 13px;
+HeaderSection.AuthButton = styled.button`
+  padding: 7px 10px;
+  border-radius: 5px;
+  border: solid 1px #2f839d;
+  background-color: #2f839d;
   font-family: 'Avenir-Bold';
   outline:none;
-  border-radius:5px;
+  font-size: 16px;
+  font-weight: bold;
   cursor: pointer;
-  outline:none;
-  border: 2px solid #FF6C58;
+  line-height: 1.44;
+  letter-spacing: normal;
+  text-align: left;
+  color: #ffffff;
+  margin-left: 16.4px;
   @media(max-width:767px){
     display:none;
   }
-  @media(min-width: 1920px) {
-    font-size: 20px;
-    width: 160px;
-    height: 40px;
-  }
 `;
-HeaderSection.SignInIcon = styled.img`
-  display: none;
-  width: 25px;
-  height: 25px;
-  position: relative;
-  top: 7px;
-  @media(min-width: 768px) {
-    display: inline-block;
-    margin-right: 13px;
-  }
-  @media(min-width: 1920px) {
-
-  }
-`;
-
 
 export default HeaderSection;
 
