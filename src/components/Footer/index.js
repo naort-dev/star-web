@@ -1,4 +1,11 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+  faWhatsappSquare,
+} from '@fortawesome/free-brands-svg-icons';
+import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
 import { FooterStyled } from './styled';
 
 export const Footer = props => (
@@ -6,16 +13,20 @@ export const Footer = props => (
     <FooterStyled.Column>
       <FooterStyled.shareIconWrapper>
         <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/getstarsona/">
-          <FooterStyled.shareIcon alt="playsore icon" src="assets/images/fb-icon.svg" />
+          <FontAwesomeIcon icon={faFacebookSquare} />
+          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/fb-icon.svg" /> */}
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/getstarsona">
-          <FooterStyled.shareIcon alt="playsore icon" src="assets/images/twitter-icon.svg" />
+          <FontAwesomeIcon icon={faTwitterSquare} />
+          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/twitter-icon.svg" /> */}
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/getstarsona/">
-          <FooterStyled.shareIcon alt="playsore icon" src="assets/images/insta-icon.svg" />
+          <FontAwesomeIcon icon={faWhatsappSquare} />
+          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/insta-icon.svg" /> */}
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCmmN9QPqAGE18yWENxsw7jQ">
-          <FooterStyled.shareIcon alt="playsore icon" src="assets/images/youtube-icon.svg" />
+          <FontAwesomeIcon icon={faEnvelopeSquare} />
+          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/youtube-icon.svg" /> */}
         </a>
       </FooterStyled.shareIconWrapper>
       <FooterStyled.list>
@@ -31,12 +42,12 @@ export const Footer = props => (
         </FooterStyled.listItem>
         <FooterStyled.listItem>
           <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/privacy-policy/">
-            Privacy Policy
+            Privacy<br />Policy
           </FooterStyled.Anchor>
         </FooterStyled.listItem>
         <FooterStyled.listItem>
           <FooterStyled.Anchor target="_blank" rel="noopener noreferrer" href="https://about.starsona.com/terms-service/">
-            Terms of Service
+            Terms of<br />Service
           </FooterStyled.Anchor>
         </FooterStyled.listItem>
       </FooterStyled.list>

@@ -70,10 +70,12 @@ const shareIconWrapper = styled.div`
     text-align: center;
     display: flex;
     align-items: center;
-    margin-left: 0;
-    margin: 0 20px;
+    margin: 0;
     a {
       font-size: 32px;
+      display: block;
+      margin-right: 25px;
+      color: #999;
     }
   }
 `;
