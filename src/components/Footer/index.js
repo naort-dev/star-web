@@ -14,19 +14,15 @@ export const Footer = props => (
       <FooterStyled.shareIconWrapper>
         <a target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/getstarsona/">
           <FontAwesomeIcon icon={faFacebookSquare} />
-          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/fb-icon.svg" /> */}
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://twitter.com/getstarsona">
           <FontAwesomeIcon icon={faTwitterSquare} />
-          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/twitter-icon.svg" /> */}
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/getstarsona/">
           <FontAwesomeIcon icon={faWhatsappSquare} />
-          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/insta-icon.svg" /> */}
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCmmN9QPqAGE18yWENxsw7jQ">
           <FontAwesomeIcon icon={faEnvelopeSquare} />
-          {/* <FooterStyled.shareIcon alt="playsore icon" src="assets/images/youtube-icon.svg" /> */}
         </a>
       </FooterStyled.shareIconWrapper>
       <FooterStyled.list>

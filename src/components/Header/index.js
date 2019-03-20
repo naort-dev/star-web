@@ -222,7 +222,7 @@ class Header extends React.Component {
   render() {
     const { props } = this;
     return (
-      <HeaderSection>
+      <HeaderSection notFixed={props.notFixed}>
         <HeaderSection.HeaderDiv shouldAlign={props.disableLogo && props.disableSearch}>
           {
             !props.disableLogo &&

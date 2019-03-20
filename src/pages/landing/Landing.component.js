@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
+import DesktopHome from './components/DesktopHome';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
 import { Starprofile } from '../starProfile';
@@ -204,9 +205,13 @@ export default class Landing extends React.Component {
     return (
       <LandingStyled>
         <Header
+          notFixed
           disableLogo
           disableSearch
         />
+        <LandingStyled.Desktop>
+          <DesktopHome />
+        </LandingStyled.Desktop>
         <Footer />
       </LandingStyled>
     );

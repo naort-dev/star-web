@@ -39,7 +39,7 @@ const List = styled.ul`
 
 const ListItem = styled.li`
   padding: 0 15px;
-  font-family: 'Avenir-Regular';
+  font-family: 'Avenir-Heavy';
   cursor: pointer;
   text-align: left;
   a, a:visited {
@@ -53,7 +53,7 @@ const ListItem = styled.li`
     padding: 0 10px;
   }
   @media(min-width: 1025px) {
-    padding: 0 20px;
+    padding: 0 32px;
     font-size: 12px;
   }
 `;
@@ -75,7 +75,7 @@ const shareIconWrapper = styled.div`
       font-size: 32px;
       display: block;
       margin-right: 25px;
-      color: #999;
+      color: ${props => props.theme.brownGrey};
     }
   }
 `;

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const HeaderSection = styled.header`
-  position: fixed;
+  position: ${props => (props.notFixed ? 'static' : 'fixed')};
   top: 0;
   left: 0;
   right: 0;
@@ -396,9 +396,9 @@ HeaderSection.SignIn = styled.button`
 HeaderSection.AuthButton = styled.button`
   padding: 7px 10px;
   border-radius: 5px;
-  border: solid 1px #2f839d;
-  background-color: #2f839d;
-  font-family: 'Avenir-Bold';
+  border: ${props => `solid 1px ${props.theme.flatBlue}`};
+  background-color: ${props => props.theme.flatBlue};
+  font-family: Gilroy-Bold;;
   outline:none;
   font-size: 16px;
   font-weight: bold;
