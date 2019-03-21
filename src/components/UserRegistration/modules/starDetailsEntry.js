@@ -134,7 +134,7 @@ export default class StarDetailsEntry extends React.Component {
         profession: this.state.industries,
         rate: commaToNumberFormatter(this.state.bookingPrice),
         in_app_price: this.state.iosPrice,
-        charity: this.state.charity,
+        charity: this.state.charity && this.state.charity.trim(''),
         weekly_limits: commaToNumberFormatter(this.state.bookingLimit),
         availability: true,
       };
@@ -317,6 +317,19 @@ export default class StarDetailsEntry extends React.Component {
                   ? 'Please enter a valid event title'
                   : null}
               </GroupStyled.ErrorMsg>
+            </GroupStyled.WrapsInput>
+          </GroupStyled.InputWrapper>
+          <GroupStyled.InputWrapper>
+            <GroupStyled.Label>Charity</GroupStyled.Label>
+            <GroupStyled.WrapsInput>
+              <GroupStyled.InputArea
+                small
+                placeholder="Optional"
+                value={this.state.charity}
+                onChange={(event) => {
+                  this.handleFieldChange('charity', event.target.value);
+                }}
+              />
             </GroupStyled.WrapsInput>
           </GroupStyled.InputWrapper>
           <GroupStyled.InputWrapper>

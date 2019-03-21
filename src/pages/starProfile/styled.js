@@ -103,6 +103,10 @@ StarProfileStyled.mainSection = styled.section`
   }
 `;
 
+StarProfileStyled.CharityDetails = styled.h2`
+  margin: 10px 0;
+`;
+
 StarProfileStyled.profileWrapper = styled.div`
   max-width: 1200px;
   text-align: center;
