@@ -12,7 +12,7 @@ const SvgStyled = styled.svg`
         c 2 35 50 30 50 30
         h 300
         c 35 0 30 30 30 30
-        v 400
+        v 300
         c -10 25 -20 20 -20 20");
       }
       @media(min-width: 1280px) {
@@ -20,7 +20,7 @@ const SvgStyled = styled.svg`
         c 2 35 50 30 50 30
         h 450
         c 35 0 30 30 30 30
-        v 400
+        v 300
         c -10 25 -20 20 -20 20");
       }
     }

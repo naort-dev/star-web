@@ -73,7 +73,41 @@ const DesktopHome = (props) => {
           </DesktopStyled.StarContent>
         </DesktopStyled.StarSection>
         <DesktopStyled.ProcessSection>
-          asdasdasd
+          <DesktopStyled.SubHeader>
+            Make your  request
+          </DesktopStyled.SubHeader>
+          <DesktopStyled.ColumnDivider className="main-column">
+            <DesktopStyled.RowDivider>
+              <DesktopStyled.Avatar />
+              <DesktopStyled.ColumnDivider>
+                <DesktopStyled.Title>Shout-Outs</DesktopStyled.Title>
+                <p>
+                  Birthdays, words of encouragement, or to make fun
+                  of your buddy who lost in fantasy football. It’s your choice!
+                </p>
+              </DesktopStyled.ColumnDivider>
+            </DesktopStyled.RowDivider>
+            <DesktopStyled.RowDivider>
+              <DesktopStyled.Avatar />
+              <DesktopStyled.ColumnDivider>
+                <DesktopStyled.Title>Announcements</DesktopStyled.Title>
+                <p>
+                  Birthdays, words of encouragement, or to make fun
+                  of your buddy who lost in fantasy football. It’s your choice!
+                </p>
+              </DesktopStyled.ColumnDivider>
+            </DesktopStyled.RowDivider>
+            <DesktopStyled.RowDivider>
+              <DesktopStyled.Avatar />
+              <DesktopStyled.ColumnDivider>
+                <DesktopStyled.Title>Ask A Question</DesktopStyled.Title>
+                <p>
+                  Birthdays, words of encouragement, or to make fun
+                  of your buddy who lost in fantasy football. It’s your choice!
+                </p>
+              </DesktopStyled.ColumnDivider>
+            </DesktopStyled.RowDivider>
+          </DesktopStyled.ColumnDivider>
         </DesktopStyled.ProcessSection>
         <PathDrawer />
       </DesktopStyled.FlowWrapper>
