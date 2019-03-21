@@ -410,8 +410,8 @@ export default class Starprofile extends React.Component {
                       {
                         !isEmpty(this.props.celebrityDetails.charity) &&
                           <React.Fragment>
-                            <StarProfileStyled.CharityDetails>Charity</StarProfileStyled.CharityDetails>
-                            { this.props.celebrityDetails.charity }
+                            <StarProfileStyled.CharityHeading>Charity</StarProfileStyled.CharityHeading>
+                            <StarProfileStyled.CharityDetails>{ this.props.celebrityDetails.charity }</StarProfileStyled.CharityDetails>
                           </React.Fragment>
                       }
                     </div>
