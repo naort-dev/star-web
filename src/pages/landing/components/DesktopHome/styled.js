@@ -115,6 +115,9 @@ DesktopStyled.Avatar = styled.div`
     height: 140px;
     margin: 10px;
   }
+  @media(min-width: 1280px) {
+    margin: 12px;
+  }
 `;
 
 DesktopStyled.AvatarContent = styled.div`
@@ -256,7 +259,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
     }
   }
   @media(min-width: 1280px) {
-    left: 323px;
+    left: 317px;
     top: 649px;
     ${DesktopStyled.ColumnDivider} {
       padding-top: 17px;
@@ -319,6 +322,14 @@ DesktopStyled.ReceiveContent = styled.div`
   @media(min-width: 1280px) {
     padding-left: 257px;
   }
+`;
+
+DesktopStyled.StarWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 `;
 
 DesktopStyled.StarContent = styled.div`

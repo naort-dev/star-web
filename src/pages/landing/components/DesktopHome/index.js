@@ -9,6 +9,7 @@ import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
 import PathDrawer from './components/PathDrawer';
 import VideoRender from '../../../../components/VideoRender';
+import StarDrawer from '../../../../components/StarDrawer';
 import DesktopStyled from './styled';
 
 const AvatarContent = () => {
@@ -23,6 +24,12 @@ const AvatarContent = () => {
 };
 
 const DesktopHome = (props) => {
+  const starData = [{
+    size: '50px',
+    horizontal: '10px',
+    vertical: '70px',
+    color: '#cee8f0',
+  }];
   return (
     <DesktopStyled>
       <DesktopStyled.Logo src="assets/images/logo_starsona.svg" />
@@ -130,6 +137,9 @@ const DesktopHome = (props) => {
           </DesktopStyled.ColumnDivider>
         </DesktopStyled.RespondSection>
         <PathDrawer />
+        <DesktopStyled.StarWrapper>
+          <StarDrawer starData={starData} />
+        </DesktopStyled.StarWrapper>
       </DesktopStyled.FlowWrapper>
       <DesktopStyled.ReceiveSection>
         <DesktopStyled.FlowWrapper>
