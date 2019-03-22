@@ -15,7 +15,6 @@ const SearchSection = styled.div`
     align-items: center;
   }
   @media(min-width: 1025px) {
-    width: 50%;
     max-width: 640px;
   }
 `;
@@ -46,6 +45,7 @@ SearchSection.SuggestionListWrapper = styled.div`
   bottom: 0;
   background-color: #FFFFFF;
   box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+  z-index: 1;
   @media(min-width: 768px) {
     box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
@@ -72,6 +72,7 @@ SearchSection.noDataWrapper = styled.div`
   display: table;
   width: 100%;
   height: 100%;
+  color: #333;
 `;
 SearchSection.noDataText = styled.span`
   display: table-cell;
@@ -86,6 +87,7 @@ SearchSection.SuggestionListItem = styled.li`
   cursor: pointer;
   font-size: 18px;
   line-height: 23px;
+  color: #333;
   &:hover, &:focus{
     background-color: #F8F8F8;
   }
@@ -115,6 +117,7 @@ SearchSection.StarHeading = styled.p`
 
 SearchSection.CategoryList = styled.div`
   padding: 10px 0 10px 30px;
+  color: #333;
 `;
 
 SearchSection.CategoryItem = styled.span`
@@ -157,20 +160,12 @@ SearchSection.InputWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  &::before {
-    content: '';
-    position: absolute;
-    background-image: url( 'assets/images/icon_search_40a.png' );
-    background-repeat:no-repeat;
-    background-position: center;
-    left: 15px;
-    top: 20%;
-    width: 35px;
-    height: 35px;
-  }
+  padding-left: 20px;
+  color: ${props => props.theme.fadedOrange};
+  font-size: 18px;
   @media(min-width: 768px) {
     width: 319px;
-    height: 32px;
+    height: 35px;
     background-color: #F8F8F8;
     &::before {
       width: 20px;
@@ -185,21 +180,21 @@ SearchSection.InputWrapper = styled.div`
   }
 `;
 SearchSection.Input = styled.input`
-  padding-left: 64px;
-  width: calc(100% - 28px);
-  outline:none;
+  padding-left: 15px;
+  width: calc(100% - 55px);
+  outline: none;
   height: 100%;
-  font-family: 'Avenir-Light';
+  font-family: 'Avenir-Medium';
   font-size: 16px;
   border: none;
   border-radius: 5px;
+  color: ${props => props.theme.twilight};
   background: transparent;
   @media(min-width: 768px) {
     text-indent: 24px;
   } 
   @media(min-width : 1025px){
     text-indent: 0;
-    text-align: center;
     font-size: 18px;
   }
   @media(min-width: 1920px) {

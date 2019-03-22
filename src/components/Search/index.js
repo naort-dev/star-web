@@ -3,12 +3,15 @@ import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import SearchSection from './styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../Loader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
+import { colorThemes } from '../../styles/colorThemes';
 
 
 class Search extends React.Component {
@@ -202,14 +205,16 @@ class Search extends React.Component {
   render() {
     return (
       <SearchSection innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
-        <SearchSection.InputWrapper>
+        <SearchSection.InputWrapper theme={colorThemes}>
+          <FontAwesomeIcon icon={faSearch} />
           <SearchSection.Input
             innerRef={(node) => { this.searchInput = node; }}
-            placeholder="Search Starsona"
+            placeholder="Search for your favorite stars!"
             value={this.state.searchText}
             onClick={this.showSuggestions}
             onChange={this.handleSearchChange}
             onKeyUp={this.handleSearchSubmit}
+            theme={colorThemes}
           />
           {
             this.state.searchText.length >= 3 ?

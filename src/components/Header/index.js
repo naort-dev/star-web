@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
@@ -223,24 +223,26 @@ class Header extends React.Component {
   render() {
     const { props } = this;
     return (
-      <HeaderSection>
-        <HeaderSection.HeaderDiv >
-          <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-            <Link to="/" onClick={this.handleSearchItemClick}>
-              <HeaderSection.ImgLogo
-                src="assets/images/logo_starsona.png"
-                alt=""
-                onClick={this.logoClick}
-              />
-            </Link>
-            {
-              !props.disableMenu && <HeaderSection.MenuButton
-                menuActive={props.menuActive}
-                onClick={props.enableMenu}
-              />
-            }
-          </HeaderSection.HeaderLeft>
-          <Search />
+      <HeaderSection notFixed={props.notFixed}>
+        <HeaderSection.HeaderDiv shouldAlign={props.disableLogo && props.disableSearch}>
+          {
+            !props.disableLogo &&
+              <HeaderSection.HeaderLeft hide={this.state.searchActive}>
+                <Link to="/" onClick={this.handleSearchItemClick}>
+                  <HeaderSection.ImgLogo
+                    src="assets/images/logo_starsona.png"
+                    alt=""
+                    onClick={this.logoClick}
+                  />
+                </Link>
+                {
+                  !props.disableMenu && <HeaderSection.MenuButton
+                    menuActive={props.menuActive}
+                    onClick={props.enableMenu}
+                  />
+                }
+              </HeaderSection.HeaderLeft>
+          }
           <HeaderSection.HeaderRight>
             {
               this.props.isLoggedIn ?
@@ -296,18 +298,12 @@ class Header extends React.Component {
                   <span onClick={() => this.props.toggleLogin(true)}>
                     <HeaderSection.SignInButtonMobile />
                   </span>
-                  <span onClick={() => this.props.toggleLogin(true)}>
-                    <HeaderSection.SignIn>
-                      Log in
-                    </HeaderSection.SignIn>
-                    <HeaderSection.SignInIcon
-                      src="assets/images/icon_profile_40a.png"
-                      alt=""
-                    />
-                  </span>
-                  <span onClick={() => this.props.toggleSignup(true)}>
-                    <HeaderSection.Join>Sign up!</HeaderSection.Join>
-                  </span>
+                  <HeaderSection.AuthButton onClick={() => this.props.toggleSignup(true)}>
+                    Sign up!
+                  </HeaderSection.AuthButton>
+                  <HeaderSection.AuthButton onClick={() => this.props.toggleLogin(true)}>
+                    Log in
+                  </HeaderSection.AuthButton>
                 </div>
             }
           </HeaderSection.HeaderRight>
@@ -326,7 +322,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
-  toggleRefer: state => dispatch(toggleRefer(state)), 
+  toggleRefer: state => dispatch(toggleRefer(state)),
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   logOut: () => dispatch(logOutUser()),
@@ -335,4 +331,4 @@ const mapDispatchToProps = dispatch => ({
   toggleSignup: state => dispatch(toggleSignup(state)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

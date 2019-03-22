@@ -4,10 +4,9 @@ injectGlobal`
   html, body {
     width: 100%;
     padding: 0;
-    font-family: 'Avenir-Regular';
+    font-family: 'Gilroy-Regular';
     color: #333333;
     margin: 0;
-    background-color: rgb(248, 248, 248);
   }
   *{
     box-sizing: border-box;

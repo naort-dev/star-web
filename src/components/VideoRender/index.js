@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { requestTypeTitle } from '../../constants/requestTypes';
 import VideoRenderDiv from './styled';
 
@@ -53,10 +55,19 @@ export default class VideoRender extends React.Component {
   }
   render() {
     const { props } = this;
-    this.getTitle();
+    // this.getTitle();
     return (
-      <VideoRenderDiv onClick={() => this.props.enableVideoPopup()}>
-        <VideoRenderDiv.ImageSection
+      <VideoRenderDiv onClick={props.enableVideoPopup}>
+        <VideoRenderDiv.Container>
+          <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
+            <VideoRenderDiv.ControlIconWrapper>
+              <VideoRenderDiv.ControlIcon>
+                <FontAwesomeIcon icon={faPlay} />
+              </VideoRenderDiv.ControlIcon>
+            </VideoRenderDiv.ControlIconWrapper>
+          </VideoRenderDiv.Content>
+        </VideoRenderDiv.Container>
+        {/* <VideoRenderDiv.ImageSection
           height={props.imageHeight}
           imageUrl={this.state.coverImage}
         >
@@ -73,7 +84,7 @@ export default class VideoRender extends React.Component {
             </VideoRenderDiv.StarName>
             <VideoRenderDiv.StarDetails>{this.getTitle()}</VideoRenderDiv.StarDetails>
           </VideoRenderDiv.Span>
-        </VideoRenderDiv.ProfileContent>
+        </VideoRenderDiv.ProfileContent> */}
       </VideoRenderDiv>
     );
   }
