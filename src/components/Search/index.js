@@ -2,17 +2,19 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import HeaderSection from './styled';
+import SearchSection from './styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import Loader from '../Loader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
-import { logOutUser } from '../../store/shared/actions/login';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
-import Search from '../Search';
+import { colorThemes } from '../../styles/colorThemes';
 
-class Header extends React.Component {
+
+class Search extends React.Component {
   constructor(props) {
     super(props);
     let searchText = '';
@@ -32,10 +34,9 @@ class Header extends React.Component {
     this.mounted = true;
   }
 
-  componentWillMount() { 
+  componentWillMount() {
     if (this.props.isLoggedIn) {
       const profilePhoto = this.props.userValue.settings_userDetails.avatarPhoto;
-      this.setProfileImage(profilePhoto);
     }
   }
 
@@ -56,7 +57,6 @@ class Header extends React.Component {
 
     if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatar_photo) {
       const profilePhoto = nextProps.userValue.settings_userDetails.avatarPhoto;
-      this.setProfileImage(profilePhoto);
       this.setState({ profilePhoto: null });
     }
   }
@@ -64,15 +64,6 @@ class Header extends React.Component {
   componentWillUnmount() {
     window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
     this.mounted = false;
-  }
-
-  setProfileImage = (photo) => {
-    this.profileImage.src = photo;
-    this.profileImage.onload = () => {
-      if (this.mounted) {
-        this.setState({ profilePhoto: this.profileImage.src });
-      }
-    };
   }
 
   setListFocus = (e) => {
@@ -131,16 +122,6 @@ class Header extends React.Component {
     }
   }
 
-  activateSearch = () => {
-    this.setState({ searchActive: true }, () => {
-      this.searchInput.focus();
-    });
-    if (this.state.searchText.trim('').length >= 3) {
-      this.setState({ showSuggestions: true });
-      this.cursorPos = -1;
-    }
-  }
-
   deactivateSearch = () => {
     this.setState({ searchActive: false, searchText: '', showSuggestions: false });
     this.cursorPos = -1;
@@ -155,12 +136,6 @@ class Header extends React.Component {
     this.cursorPos = -1;
   }
 
-  logoutUser = () => {
-    this.setState({ profileDropdown: false });
-    this.props.history.push('/');
-    this.props.logOut();
-  }
-
   handleSearchListClick = link => (e) => {
     if (e.keyCode === 13) {
       this.handleSearchItemClick();
@@ -168,16 +143,23 @@ class Header extends React.Component {
     }
   }
 
-  logoClick = () => {
-    if (this.props.history.location.pathname === '/') {
-      this.props.enableMenu();
-    }
-  }
-
   renderSuggestionsList = () => {
     if (this.props.suggestionsList.suggestions.length) {
       return (
-        <HeaderSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
+        <SearchSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
+          <SearchSection.StarHeading>Categories</SearchSection.StarHeading>
+          <SearchSection.CategoryList>
+            <SearchSection.CategoryItem>
+              <Link to={`/jordanloyd`}>Baseball</Link>
+            </SearchSection.CategoryItem>
+            <SearchSection.CategoryItem>
+              <Link to={`/jordanloyd`}>Baseball</Link>
+            </SearchSection.CategoryItem>
+            <SearchSection.CategoryItem>
+              <Link to={`/jordanloyd`}>Baseball</Link>
+            </SearchSection.CategoryItem>
+          </SearchSection.CategoryList>
+          <SearchSection.StarHeading>Stars</SearchSection.StarHeading>
           {
             this.props.suggestionsList.suggestions.map((item) => {
               let fullName = '';
@@ -186,129 +168,74 @@ class Header extends React.Component {
                   : `${item.first_name} ${item.last_name}`;
               }
               return (
-                <HeaderSection.SuggestionListItem
+                <SearchSection.SuggestionListItem
                   tabIndex="0"
                   key={item.user_id}
                   onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
                 >
                   <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
-                    <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                      <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
-                      <HeaderSection.SuggestionListName>
-                        {fullName}
-                        <HeaderSection.SuggestionDetails>
+                    <SearchSection.SuggestionListContent onClick={this.handleSearchItemClick}>
+                      <SearchSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
+                      <SearchSection.SuggestionListName>
+                        <SearchSection.SuggestionDetails>
                           {
                             item.has_group_account ?
                               item.group_type
-                            : starProfessionsFormater(item.celebrity_profession)
+                              : starProfessionsFormater(item.celebrity_profession)
                           }
-                        </HeaderSection.SuggestionDetails>
-                      </HeaderSection.SuggestionListName>
-                    </HeaderSection.SuggestionListContent>
+                        </SearchSection.SuggestionDetails>
+                        {fullName}
+                      </SearchSection.SuggestionListName>
+                    </SearchSection.SuggestionListContent>
                   </Link>
-                </HeaderSection.SuggestionListItem>
+                </SearchSection.SuggestionListItem>
               );
             })
           }
-        </HeaderSection.SuggestionList>
+        </SearchSection.SuggestionList>
       );
     }
     return (
-      <HeaderSection.noDataWrapper>
-        <HeaderSection.noDataText>No Results</HeaderSection.noDataText>
-      </HeaderSection.noDataWrapper>
+      <SearchSection.noDataWrapper>
+        <SearchSection.noDataText>No Results</SearchSection.noDataText>
+      </SearchSection.noDataWrapper>
     );
   }
 
   render() {
-    const { props } = this;
     return (
-      <HeaderSection notFixed={props.notFixed}>
-        <HeaderSection.HeaderDiv shouldAlign={props.disableLogo && props.disableSearch}>
+      <SearchSection innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
+        <SearchSection.InputWrapper theme={colorThemes}>
+          <FontAwesomeIcon icon={faSearch} />
+          <SearchSection.Input
+            innerRef={(node) => { this.searchInput = node; }}
+            placeholder="Search for your favorite stars!"
+            value={this.state.searchText}
+            onClick={this.showSuggestions}
+            onChange={this.handleSearchChange}
+            onKeyUp={this.handleSearchSubmit}
+            theme={colorThemes}
+          />
           {
-            !props.disableLogo &&
-              <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-                <Link to="/" onClick={this.handleSearchItemClick}>
-                  <HeaderSection.ImgLogo
-                    src="assets/images/logo_starsona.png"
-                    alt=""
-                    onClick={this.logoClick}
-                  />
-                </Link>
-                {
-                  !props.disableMenu && <HeaderSection.MenuButton
-                    menuActive={props.menuActive}
-                    onClick={props.enableMenu}
-                  />
-                }
-              </HeaderSection.HeaderLeft>
+            this.state.searchText.length >= 3 ?
+              <SearchSection.ClearButton onClick={this.deactivateSearch} />
+              : null
           }
-          <HeaderSection.HeaderRight>
-            {
-              this.props.isLoggedIn ?
-                <div style={{position: 'relative'}}>
-                  <HeaderSection.SearchButton
-                    hide={this.state.searchActive}
-                    onClick={this.activateSearch}
-                  />
-                  <HeaderSection.ProfileButton
-                    profileUrl={this.state.profilePhoto}
-                    innerRef={(node) => { this.profileButton = node; }}
-                    hide={this.state.searchActive}
-                    onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
-                  />
+          {this.state.showSuggestions &&
+            <SearchSection.SuggestionListWrapper>
+              <SearchSection.AutoSuggest>
+                <Scrollbars>
                   {
-                    this.state.profileDropdown &&
-                      <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
-                        <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
-                        <HeaderSection.ProfileDropdownItem>
-                          <Link to="/user/favorites">
-                            Favorite stars
-                          </Link>
-                        </HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem>
-                          <Link to="/user/myVideos">
-                            <HeaderSection.LinkElement>
-                              My videos
-                              {
-                                this.props.userValue.settings_userDetails.completed_fan_unseen_count ?
-                                  <HeaderSection.InnerListItemCount>
-                                    {
-                                      this.props.userValue.settings_userDetails.completed_fan_unseen_count
-                                    }
-                                  </HeaderSection.InnerListItemCount>
-                                : null
-                              }
-                            </HeaderSection.LinkElement>
-                          </Link>
-                        </HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem >
-                          <Link to="/settings">
-                            Settings
-                          </Link>
-                        </HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
-                      </HeaderSection.ProfileDropdown>
+                    this.props.suggestionsList.loading ?
+                      <Loader />
+                      : this.renderSuggestionsList()
                   }
-                </div>
-            :
-                <div>
-                  <HeaderSection.SearchButton onClick={this.activateSearch} />
-                  <span onClick={() => this.props.toggleLogin(true)}>
-                    <HeaderSection.SignInButtonMobile />
-                  </span>
-                  <HeaderSection.AuthButton onClick={() => this.props.toggleSignup(true)}>
-                    Sign up!
-                  </HeaderSection.AuthButton>
-                  <HeaderSection.AuthButton onClick={() => this.props.toggleLogin(true)}>
-                    Log in
-                  </HeaderSection.AuthButton>
-                </div>
-            }
-          </HeaderSection.HeaderRight>
-        </HeaderSection.HeaderDiv>
-      </HeaderSection>
+                </Scrollbars>
+              </SearchSection.AutoSuggest>
+            </SearchSection.SuggestionListWrapper>
+          }
+        </SearchSection.InputWrapper>
+      </SearchSection>
     );
   }
 }
@@ -325,10 +252,9 @@ const mapDispatchToProps = dispatch => ({
   toggleRefer: state => dispatch(toggleRefer(state)),
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
-  logOut: () => dispatch(logOutUser()),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
 });
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Search));

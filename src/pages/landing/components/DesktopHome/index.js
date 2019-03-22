@@ -12,6 +12,7 @@ import PathDrawer from './components/PathDrawer';
 import VideoRender from '../../../../components/VideoRender';
 import StarDrawer from '../../../../components/StarDrawer';
 import DesktopStyled from './styled';
+import Search from '../../../../components/Search';
 
 const AvatarContent = () => {
   return (
@@ -88,7 +89,7 @@ const DesktopHome = (props) => {
           <DesktopStyled.StarContent>
             <DesktopStyled.Divider>
               <DesktopStyled.FilterSection>
-
+                <Search />
               </DesktopStyled.FilterSection>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.RowDivider>
