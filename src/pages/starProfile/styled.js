@@ -103,6 +103,29 @@ StarProfileStyled.mainSection = styled.section`
   }
 `;
 
+StarProfileStyled.CharityHeading = styled.h2`
+  margin: 10px 0;
+`;
+
+StarProfileStyled.CharityDetails = styled.span`
+  font-size: 23px;
+  line-height: 30px;
+  &.readMore {
+    margin-top:  10px;
+    color: #ccc;
+    cursor: pointer;
+  }
+  @media(min-width: 1025px) and (max-width: 1920px) {
+    font-size: 20px;
+  }
+  @media(max-width: 1024px) {
+    font-size: 20px;
+  }
+  @media(max-width:767px) {
+    font-size: 16px;
+  }
+`;
+
 StarProfileStyled.profileWrapper = styled.div`
   max-width: 1200px;
   text-align: center;
