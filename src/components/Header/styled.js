@@ -8,7 +8,7 @@ const HeaderSection = styled.header`
   background: white;
   height: 60px;
   z-index: 10;
-  @media(min-width: 1025px) {
+  @media(min-width: 834px) {
     height: 100px;
   }
 `;
@@ -20,10 +20,7 @@ HeaderSection.HeaderDiv = styled.div`
   align-items: center;
   max-width: 1920px;
   height: 100%;  
-  @media (min-width:768px){
-    padding: 10px 44px;
-  }
-  @media (min-width: 1025px) {
+  @media (min-width: 834px) {
     padding: 32px 30px;
   }
 `;

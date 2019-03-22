@@ -2,16 +2,13 @@ import styled from 'styled-components';
 
 const FooterStyled = styled.footer`
   padding: 20px 0;
-  @media(min-width: 768px) and (max-width: 1024px) {
+  @media(min-width: 834px) {
     display: flex;
-    justify-content: space-between;
-    padding: 0 40px;
-    border-top: 1px solid #CCCCCC;
-  }
-  @media(min-width: 1025px) {
-    display: flex;
-    padding: 20px 51px;
+    padding: 20px 28px;
     height: 124px;
+  }
+  @media(min-width: 1280px) {
+    padding: 20px 51px;
   }
 `;
 
@@ -23,14 +20,7 @@ const Column = styled.div`
 const List = styled.ul`
   padding: 20px 0;
   line-height: 30px;
-  @media(min-width: 768px) and (max-width: 1024px) {
-    padding: 10px 0;
-    line-height: 42px;
-    display: flex;
-    flex-wrap: wrap;
-    width: 40%;
-  }
-  @media(min-width: 1025px) {
+  @media(min-width: 834px) {
     margin-left: 20px;
     display: flex;
     align-items: center;
@@ -49,23 +39,15 @@ const ListItem = styled.li`
     line-height: 1.07;
     display: block;
   }
-  @media(min-width: 768px) and (max-width: 1024px) {
-    padding: 0 10px;
-  }
-  @media(min-width: 1025px) {
-    padding: 0 32px;
+  @media(min-width: 834px) {
+    padding-right: 32px;
     font-size: 12px;
   }
 `;
 
 const shareIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 768px) and (max-width: 1024px) {
-    display: inline-block;
-    margin: 0;
-    margin-top: 10px;
-  }
-  @media(min-width: 1025px) {
+  @media(min-width: 834px) {
     margin: 0;
     text-align: center;
     display: flex;
@@ -74,7 +56,7 @@ const shareIconWrapper = styled.div`
     a {
       font-size: 32px;
       display: block;
-      margin-right: 25px;
+      margin-right: 20px;
       color: ${props => props.theme.brownGrey};
     }
   }
@@ -91,11 +73,7 @@ const shareIcon = styled.img`
 
 const StoreIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 768px) and (max-width: 1024px) {
-    display: inline-block;
-    margin: 0;
-  }
-  @media(min-width: 1025px) {
+  @media(min-width: 834px) {
     margin: 0;
     text-align: center;
     display: flex;
