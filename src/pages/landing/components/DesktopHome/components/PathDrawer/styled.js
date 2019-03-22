@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const SvgStyled = styled.svg`
   width:100%;
-  height: 1400px;
+  height: 1520px;
   #flow-path {
     stroke: ${props => props.theme.orangePink};
     fill: none;
@@ -10,7 +10,7 @@ const SvgStyled = styled.svg`
     stroke-dasharray: 9;
     path {
       @media(min-width: 834px) {
-        d: path("M 60 0 v 450
+        d: path("M 60 0 v 600
         c 2 35 50 30 50 30
         h 300
         c 35 0 30 30 30 30

@@ -48,15 +48,15 @@ const DesktopHome = (props) => {
                     { AvatarContent() }
                   </DesktopStyled.Avatar>
                 </DesktopStyled.RowDivider>
-                <DesktopStyled.BigAvatar>
+                <DesktopStyled.SecondaryAvatar>
                   { AvatarContent() }
-                </DesktopStyled.BigAvatar>
+                </DesktopStyled.SecondaryAvatar>
               </DesktopStyled.ColumnDivider>
             </DesktopStyled.Divider>
-            <DesktopStyled.SecondaryDivider>
-              <DesktopStyled.SecondaryAvatar>
+            <DesktopStyled.SecondaryDivider id="second-column">
+              <DesktopStyled.BigAvatar>
                 { AvatarContent() }
-              </DesktopStyled.SecondaryAvatar>
+              </DesktopStyled.BigAvatar>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.Avatar>
                   { AvatarContent() }

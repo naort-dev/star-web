@@ -111,14 +111,9 @@ DesktopStyled.Avatar = styled.div`
   display: block;
   perspective: 50% 50%;
   @media(min-width: 834px) {
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
     margin: 10px;
-  }
-  @media(min-width: 1280px) {
-    width: 130px;
-    height: 130px;
-    margin: 6px;
   }
 `;
 
@@ -161,23 +156,15 @@ DesktopStyled.AvatarBack = DesktopStyled.AvatarFace.extend`
 
 DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
   @media(min-width: 834px) {
-    width: 187px;
-    height: 187px;
-  }
-  @media(min-width: 1280px) {
-    width: 276px;
-    height: 276px;
+    width: 299px;
+    height: 299px;
   }
 `;
 
 DesktopStyled.SecondaryAvatar = DesktopStyled.Avatar.extend`
   @media(min-width: 834px) {
-    width: 180px;
-    height: 180px;
-  }
-  @media(min-width: 1280px) {
-    width: 270px;
-    height: 270px;
+    width: 300px;
+    height: 300px;
   }
 `;
 
@@ -203,12 +190,15 @@ DesktopStyled.StarSection = DesktopStyled.BookProcessContent.extend`
   position: absolute;
   right: 30px;
   @media(min-width: 834px) {
-    left: 127px;
-    height: 450px;
+    left: 149px;
+    #second-column {
+      display: none;
+    }
   }
   @media(min-width: 1280px) {
-    height: 560px;
-    left: 138px;
+    #second-column {
+      display: flex;
+    }
     padding-top: 30px;
   }
 `;
@@ -218,7 +208,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
   align-items: center;
   @media(min-width: 834px) {
     left: 242px;
-    top: 520px;
+    top: 664px;
     right: 30px;
     ${DesktopStyled.SubHeader} {
       width: 200px;
@@ -325,6 +315,9 @@ DesktopStyled.ReceiveContent = styled.div`
         width: 330px;
       }
     }
+  }
+  @media(min-width: 1280px) {
+    padding-left: 257px;
   }
 `;
 
