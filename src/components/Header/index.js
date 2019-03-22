@@ -10,6 +10,7 @@ import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
+import Search from '../Search';
 
 class Header extends React.Component {
   constructor(props) {
@@ -239,37 +240,8 @@ class Header extends React.Component {
               />
             }
           </HeaderSection.HeaderLeft>
-          <HeaderSection.SearchBar innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
-            <HeaderSection.InputWrapper>
-              <HeaderSection.Input
-                innerRef={(node) => { this.searchInput = node; }}
-                placeholder="Search Starsona"
-                value={this.state.searchText}
-                onClick={this.showSuggestions}
-                onChange={this.handleSearchChange}
-                onKeyUp={this.handleSearchSubmit}
-              />
-              {
-                this.state.searchText.length >= 3 ?
-                  <HeaderSection.ClearButton onClick={this.deactivateSearch} />
-                : null
-              }
-              {this.state.showSuggestions &&
-                <HeaderSection.SuggestionListWrapper>
-                  <HeaderSection.AutoSuggest>
-                    <Scrollbars>
-                      {
-                        this.props.suggestionsList.loading ?
-                          <Loader />
-                        : this.renderSuggestionsList()
-                      }
-                    </Scrollbars>
-                  </HeaderSection.AutoSuggest>
-                </HeaderSection.SuggestionListWrapper>
-              }
-            </HeaderSection.InputWrapper>
-          </HeaderSection.SearchBar>
-          <HeaderSection.HeaderRight>      
+          <Search />
+          <HeaderSection.HeaderRight>
             {
               this.props.isLoggedIn ?
                 <div style={{position: 'relative'}}>
