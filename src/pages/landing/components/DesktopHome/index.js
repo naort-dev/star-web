@@ -39,9 +39,9 @@ const DesktopHome = (props) => {
     rotation: '30deg',
     color: '#fff4eb',
   }, {
-    size: '50px',
-    horizontal: '600px',
-    vertical: '200px',
+    size: '78px',
+    horizontal: '860px',
+    vertical: '300px',
     rotation: '0deg',
     color: props.theme.paleSkyBlue,
   }, {

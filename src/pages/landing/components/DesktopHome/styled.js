@@ -150,11 +150,19 @@ DesktopStyled.AvatarFront = DesktopStyled.AvatarFace.extend`
 
 DesktopStyled.AvatarBack = DesktopStyled.AvatarFace.extend`
   transform: rotateY(180deg);
-  background: blue;
+  background: ${props => props.theme.flatBlue};
+  color: #fff;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px;
+  font-family: Gilroy;
+  font-size: 30px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.07;
+  letter-spacing: normal;
 `;
 
 DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
