@@ -42,7 +42,7 @@ const DesktopHome = (props) => {
     size: '78px',
     horizontal: '860px',
     vertical: '300px',
-    rotation: '0deg',
+    rotation: '15deg',
     color: props.theme.paleSkyBlue,
   }, {
     size: '60px',
