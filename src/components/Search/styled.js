@@ -6,8 +6,9 @@ const SearchSection = styled.div`
   left: 0;
   right: 0;
   top: 0;
-  height: 60px;
+  height: 50px;
   background: #fff;
+  font-family: Gilroy;
   @media(min-width : 768px){
     position: relative;
     display: inline-block;
@@ -33,11 +34,11 @@ SearchSection.ClearButton = styled.span`
 SearchSection.AutoSuggest = styled.div`
   height: 100%;
   @media(min-width: 1025px) {
-    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
   }
 `;
 SearchSection.SuggestionListWrapper = styled.div`
-  font-family: Avenir-Light;
+  font-family: Gilroy;
   position: fixed;
   top: 60px;
   left: 0;
@@ -106,9 +107,9 @@ SearchSection.SuggestionListContent = styled.span`
 `;
 
 SearchSection.StarHeading = styled.p`
-  color: #FF6C58;
-  font-size: 15px;
-  font-family: 'Avenir-Medium';
+  color: ${props => props.theme.orangePink};
+  font-size: 13px;
+  font-family: Gilroy;
   text-transform: uppercase;
   padding-left: 30px;
   margin-top: 10px;
@@ -127,12 +128,12 @@ SearchSection.CategoryItem = styled.span`
   display: inline-block;
   margin-right: 7px;
   font-size: 14px;
+  font-family: Gilroy;
 `;
 
 SearchSection.SuggestionDetails = styled.p`
   font-size: 12px;
-  color: rgba(34, 34, 34, 0.7);
-  font-family: 'Avenir-Light';
+  color: ${props => props.theme.greyishBrown};
   line-height: 18px;
   font-weight: normal;
   @media(min-width: 768px) {
@@ -151,7 +152,8 @@ SearchSection.SuggestionListImage = styled.span`
 `;
 SearchSection.SuggestionListName = styled.span`
   margin-left: 10px;
-  color: #58b0cb;
+  color: #68b5cd;
+  font-family: Gilroy;
   font-weight: 600;
   font-size: 16px;
 `;
@@ -161,6 +163,7 @@ SearchSection.InputWrapper = styled.div`
   height: 100%;
   position: relative;
   padding-left: 20px;
+  border-radius: 10px;
   color: ${props => props.theme.fadedOrange};
   font-size: 18px;
   @media(min-width: 768px) {
@@ -174,9 +177,7 @@ SearchSection.InputWrapper = styled.div`
   }
   @media(min-width: 1025px) {
     width: 100%;
-  }
-  @media(min-width: 1920px) {
-    height: 48px;
+    height: 100%
   }
 `;
 SearchSection.Input = styled.input`
@@ -184,7 +185,7 @@ SearchSection.Input = styled.input`
   width: calc(100% - 55px);
   outline: none;
   height: 100%;
-  font-family: 'Avenir-Medium';
+  font-family: 'Gilroy';
   font-size: 16px;
   border: none;
   border-radius: 5px;
@@ -196,9 +197,6 @@ SearchSection.Input = styled.input`
   @media(min-width : 1025px){
     text-indent: 0;
     font-size: 18px;
-  }
-  @media(min-width: 1920px) {
-    font-size: 20px;
   }
 `;
 SearchSection.SignIn = styled.button`
@@ -243,11 +241,6 @@ SearchSection.Join = styled.button`
   @media(max-width:767px){
     display:none;
   }
-  @media(min-width: 1920px) {
-    font-size: 20px;
-    width: 160px;
-    height: 40px;
-  }
 `;
 SearchSection.SignInIcon = styled.img`
   display: none;
@@ -258,9 +251,6 @@ SearchSection.SignInIcon = styled.img`
   @media(min-width: 768px) {
     display: inline-block;
     margin-right: 13px;
-  }
-  @media(min-width: 1920px) {
-
   }
 `;
 
