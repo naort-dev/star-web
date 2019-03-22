@@ -5,6 +5,7 @@ import {
   faTwitterSquare,
   faWhatsappSquare,
 } from '@fortawesome/free-brands-svg-icons';
+import { withTheme } from 'styled-components';
 import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
 import PathDrawer from './components/PathDrawer';
@@ -26,9 +27,52 @@ const AvatarContent = () => {
 const DesktopHome = (props) => {
   const starData = [{
     size: '50px',
-    horizontal: '10px',
-    vertical: '70px',
-    color: '#cee8f0',
+    horizontal: '5px',
+    vertical: '150px',
+    rotation: '0deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '380px',
+    horizontal: '0px',
+    vertical: '460px',
+    rotation: '30deg',
+    color: '#fff4eb',
+  }, {
+    size: '50px',
+    horizontal: '600px',
+    vertical: '200px',
+    rotation: '0deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '60px',
+    horizontal: '250px',
+    vertical: '900px',
+    rotation: '-15deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '100px',
+    horizontal: '600px',
+    vertical: '1000px',
+    rotation: '15deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '50px',
+    horizontal: '660px',
+    vertical: '950px',
+    rotation: '0deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '60px',
+    horizontal: '800px',
+    vertical: '1300px',
+    rotation: '-15deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '100px',
+    horizontal: '30px',
+    vertical: '1300px',
+    rotation: '-15deg',
+    color: props.theme.paleSkyBlue,
   }];
   return (
     <DesktopStyled>
@@ -174,4 +218,4 @@ const DesktopHome = (props) => {
   );
 };
 
-export default DesktopHome;
+export default withTheme(DesktopHome);

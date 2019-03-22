@@ -177,23 +177,24 @@ DesktopStyled.FlowWrapper = styled.div`
   margin-top: 20px;
   padding: 0 30px;
   @media (min-width: 834px) {
-    width: 834px;
+    width: 818px;
   }
   @media (min-width: 1280px) {
-    width: 1280px;
+    width: calc(1280px - 120px);
   }
 `;
 
 DesktopStyled.BookProcessContent = styled.div`
   position: absolute;
   display: block;
+  z-index: 2;
 `;
 
 DesktopStyled.StarSection = DesktopStyled.BookProcessContent.extend`
   position: absolute;
   right: 30px;
   @media(min-width: 834px) {
-    left: 149px;
+    left: 129px;
     #second-column {
       display: none;
     }
@@ -215,6 +216,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
     right: 30px;
     ${DesktopStyled.SubHeader} {
       width: 200px;
+      text-align: right;
     }
     ${DesktopStyled.ColumnDivider} {
       flex-direction: column;
@@ -260,7 +262,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
   }
   @media(min-width: 1280px) {
     left: 317px;
-    top: 649px;
+    top: 664px;
     ${DesktopStyled.ColumnDivider} {
       padding-top: 17px;
       padding-left: 19px;
@@ -327,9 +329,10 @@ DesktopStyled.ReceiveContent = styled.div`
 DesktopStyled.StarWrapper = styled.div`
   position: absolute;
   top: 0;
-  right: 0;
-  left: 0;
+  right: 30px;
+  left: 30px;
   bottom: 0;
+  z-index: -1;
 `;
 
 DesktopStyled.StarContent = styled.div`
