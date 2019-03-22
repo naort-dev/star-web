@@ -1,11 +1,65 @@
 import styled from 'styled-components';
 
 const VideoRenderDiv = styled.div`
-  right:0;
-  cursor: pointer;
- 
- 
+
 `;
+
+VideoRenderDiv.Container = styled.div`
+  display: inline-block;
+  border-radius: 38px;
+  box-shadow: 0 3px 56px 0 rgba(0, 0, 0, 0.16);
+  background-color: #ffffff;
+  padding: 14px;
+  @media(min-width: 1025px) {
+    width: 200px;
+    height: 304px;
+  }
+  @media(min-width: 1280px) {
+    width: 274px;
+    height: 417px;
+    padding: 19px;
+  }
+`;
+
+VideoRenderDiv.Content = styled.div`
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  position: relative;
+`;
+
+VideoRenderDiv.ControlIcon = styled.span`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  margin: 0 auto;
+  cursor: pointer;
+  color: ${props => props.theme.orangePink};
+  @media(min-width: 1280px) {
+    width: 72px;
+    height: 72px;
+    font-size: 30px;
+  }
+`;
+
+VideoRenderDiv.ControlIconWrapper = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  @media(min-width: 1280px) {
+    bottom: 42px;
+  }
+`;
+
 VideoRenderDiv.ImageSection = styled.div`
   right:0;
   position:relative;

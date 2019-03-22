@@ -2,17 +2,18 @@ import styled from 'styled-components';
 
 const DesktopStyled = styled.div`
   display: block;
-  padding: 0 30px;
 `;
 
 DesktopStyled.Logo = styled.img`
   width: 451px;
   display: block;
   margin: 0 auto;
+  padding: 0 30px;
 `;
 
 DesktopStyled.Heading = styled.span`
   margin-top: 20px;
+  padding: 0 30px;
   font-family: Gilroy-Medium;
   font-size: 50px;
   font-weight: 500;
@@ -51,6 +52,35 @@ DesktopStyled.Title = styled.span`
   letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.twilight};
+`;
+
+DesktopStyled.Description = styled.span`
+  font-family: Gilroy;
+  font-size: 20px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.6;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${props => props.theme.brownGrey};
+`;
+
+DesktopStyled.ShareIconWrapper = styled.div`
+  margin: 0 40px;
+  @media(min-width: 1025px) {
+    margin: 0;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    span {
+      font-size: 45px;
+      display: block;
+      margin-right: 25px;
+      color: ${props => props.theme.brownGrey};
+    }
+  }
 `;
 
 DesktopStyled.Divider = styled.div`
@@ -155,11 +185,12 @@ DesktopStyled.FlowWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   margin-top: 20px;
+  padding: 0 30px;
   @media (min-width: 1025px) {
-    width: 700px;
+    width: 900px;
   }
   @media (min-width: 1280px) {
-    width: 900px;
+    width: 1280px;
   }
 `;
 
@@ -169,15 +200,15 @@ DesktopStyled.BookProcessContent = styled.div`
 `;
 
 DesktopStyled.StarSection = DesktopStyled.BookProcessContent.extend`
-  margin-left: 20px;
-  width: 100%;
   position: absolute;
+  right: 30px;
   @media(min-width: 1025px) {
+    left: 127px;
     height: 450px;
   }
   @media(min-width: 1280px) {
     height: 560px;
-    margin-left: 48px;
+    left: 138px;
     padding-top: 30px;
   }
 `;
@@ -186,8 +217,9 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
   display: flex;
   align-items: center;
   @media(min-width: 1025px) {
-    left: 170px;
-    top: 522px;
+    left: 260px;
+    top: 520px;
+    right: 30px;
     ${DesktopStyled.SubHeader} {
       width: 200px;
     }
@@ -203,6 +235,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
       align-items: flex-start;
       margin: 10px 0;
       ${DesktopStyled.ColumnDivider} {
+        padding-left: 4px;
         padding-top: 7px;
         p {
           font-family: Gilroy;
@@ -219,20 +252,78 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
       }
     }
     ${DesktopStyled.Avatar} {
-      width: 113px;
+      width: 50px;
       height: 50px;
       background: #fff;
       margin-top: 0;
       margin-bottom: 0;
       border: solid 2px #707070;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      color: ${props => props.theme.orangePink};
     }
   }
   @media(min-width: 1280px) {
-    left: 324px;
-    top: 622px;
+    left: 323px;
+    top: 649px;
+    ${DesktopStyled.ColumnDivider} {
+      padding-top: 17px;
+      padding-left: 19px;
+      p {
+        max-width: 372px;
+      }
+    }
     ${DesktopStyled.Avatar} {
-      width: 97px;
-      height: 50px;
+      width: 82px;
+      height: 82px;
+      font-size: 40px;
+    }
+  }
+`;
+
+DesktopStyled.RespondSection = DesktopStyled.BookProcessContent.extend`
+  @media(min-width: 1025px) {
+    right: 30px;
+    bottom: 46px;
+    left: 116px;
+    display: flex;
+    align-items: center;
+    ${DesktopStyled.ColumnDivider} {
+      padding-left: 46px;
+      flex-Direction: column;
+      ${DesktopStyled.Description} {
+        width: 330px;
+      }
+    }
+  }
+  @media(min-width: 1280px) {
+    bottom: 30px;
+    left: 227px;
+  }
+`;
+
+DesktopStyled.ReceiveSection = styled.div`
+  width: 100%;
+  background: ${props => props.theme.white};
+  @media(min-width: 1025px) {
+    padding: 46px 0;
+  }
+`;
+
+DesktopStyled.ReceiveContent = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  @media(min-width: 1025px) {
+    padding-left: 250px;
+    ${DesktopStyled.ColumnDivider} {
+      padding-left: 46px;
+      flex-Direction: column;
+      ${DesktopStyled.Description} {
+        width: 330px;
+      }
     }
   }
 `;

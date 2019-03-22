@@ -1,5 +1,14 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faFacebookSquare,
+  faTwitterSquare,
+  faWhatsappSquare,
+} from '@fortawesome/free-brands-svg-icons';
+import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
 import PathDrawer from './components/PathDrawer';
+import VideoRender from '../../../../components/VideoRender';
 import DesktopStyled from './styled';
 
 const AvatarContent = () => {
@@ -16,7 +25,7 @@ const AvatarContent = () => {
 const DesktopHome = (props) => {
   return (
     <DesktopStyled>
-      <DesktopStyled.Logo src="assets/images/logo_starsona.png" />
+      <DesktopStyled.Logo src="assets/images/logo_starsona.svg" />
       <DesktopStyled.Heading>
        Personalized Videos From The Stars
       </DesktopStyled.Heading>
@@ -78,7 +87,7 @@ const DesktopHome = (props) => {
           </DesktopStyled.SubHeader>
           <DesktopStyled.ColumnDivider className="main-column">
             <DesktopStyled.RowDivider>
-              <DesktopStyled.Avatar />
+              <div><DesktopStyled.Avatar><FontAwesomeIcon icon={faComment} /></DesktopStyled.Avatar></div>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.Title>Shout-Outs</DesktopStyled.Title>
                 <p>
@@ -88,7 +97,7 @@ const DesktopHome = (props) => {
               </DesktopStyled.ColumnDivider>
             </DesktopStyled.RowDivider>
             <DesktopStyled.RowDivider>
-              <DesktopStyled.Avatar />
+              <div><DesktopStyled.Avatar><FontAwesomeIcon icon={faCalendarAlt} /></DesktopStyled.Avatar></div>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.Title>Announcements</DesktopStyled.Title>
                 <p>
@@ -98,7 +107,7 @@ const DesktopHome = (props) => {
               </DesktopStyled.ColumnDivider>
             </DesktopStyled.RowDivider>
             <DesktopStyled.RowDivider>
-              <DesktopStyled.Avatar />
+              <div><DesktopStyled.Avatar><FontAwesomeIcon icon={faQuestion} /></DesktopStyled.Avatar></div>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.Title>Ask A Question</DesktopStyled.Title>
                 <p>
@@ -109,8 +118,48 @@ const DesktopHome = (props) => {
             </DesktopStyled.RowDivider>
           </DesktopStyled.ColumnDivider>
         </DesktopStyled.ProcessSection>
+        <DesktopStyled.RespondSection>
+          <VideoRender cover={`${window.location.href}/assets/images/default-cover.jpg`} />
+          <DesktopStyled.ColumnDivider>
+            <DesktopStyled.SubHeader>
+              The star delivers
+            </DesktopStyled.SubHeader>
+            <DesktopStyled.Description>
+              The video is delivered right to your device for you to keep forever.
+            </DesktopStyled.Description>
+          </DesktopStyled.ColumnDivider>
+        </DesktopStyled.RespondSection>
         <PathDrawer />
       </DesktopStyled.FlowWrapper>
+      <DesktopStyled.ReceiveSection>
+        <DesktopStyled.FlowWrapper>
+          <DesktopStyled.ReceiveContent>
+            <VideoRender cover={`${window.location.href}/assets/images/default-cover.jpg`} />
+            <DesktopStyled.ColumnDivider>
+              <DesktopStyled.SubHeader>
+                Watch & Share!
+              </DesktopStyled.SubHeader>
+              <DesktopStyled.Description>
+                Your video is yours to download, send to a friend, share on social, and keep forever! It’s the new digital autograph.
+              </DesktopStyled.Description>
+              <DesktopStyled.ShareIconWrapper>
+                <span>
+                  <FontAwesomeIcon icon={faFacebookSquare} />
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faTwitterSquare} />
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faWhatsappSquare} />
+                </span>
+                <span>
+                  <FontAwesomeIcon icon={faEnvelopeSquare} />
+                </span>
+              </DesktopStyled.ShareIconWrapper>
+            </DesktopStyled.ColumnDivider>
+          </DesktopStyled.ReceiveContent>
+        </DesktopStyled.FlowWrapper>
+      </DesktopStyled.ReceiveSection>
     </DesktopStyled>
   );
 };

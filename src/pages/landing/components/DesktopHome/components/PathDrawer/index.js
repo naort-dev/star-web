@@ -25,7 +25,7 @@ export default class PathDrawer extends React.Component {
 
   render() {
     return (
-      <SvgStyled ref={this.svgNode} width="100%" height="1500">
+      <SvgStyled ref={this.svgNode}>
         <g id="flow-path">
           <path
             d=""
