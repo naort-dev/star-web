@@ -205,7 +205,7 @@ class Search extends React.Component {
   render() {
     return (
       <SearchSection innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
-        <SearchSection.InputWrapper theme={colorThemes}>
+        <SearchSection.InputWrapper alternate={this.props.alternate}>
           <FontAwesomeIcon icon={faSearch} />
           <SearchSection.Input
             innerRef={(node) => { this.searchInput = node; }}
@@ -214,7 +214,6 @@ class Search extends React.Component {
             onClick={this.showSuggestions}
             onChange={this.handleSearchChange}
             onKeyUp={this.handleSearchSubmit}
-            theme={colorThemes}
           />
           {
             this.state.searchText.length >= 3 ?

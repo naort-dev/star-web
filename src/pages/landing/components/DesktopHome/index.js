@@ -9,6 +9,7 @@ import { withTheme } from 'styled-components';
 import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
 import PathDrawer from './components/PathDrawer';
+import CategoryList from './components/CategoryList';
 import VideoRender from '../../../../components/VideoRender';
 import StarDrawer from '../../../../components/StarDrawer';
 import DesktopStyled from './styled';
@@ -89,7 +90,9 @@ const DesktopHome = (props) => {
           <DesktopStyled.StarContent>
             <DesktopStyled.Divider>
               <DesktopStyled.FilterSection>
-                <Search />
+                <DesktopStyled.MainSearch>
+                  <Search />
+                </DesktopStyled.MainSearch>
               </DesktopStyled.FilterSection>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.RowDivider>
@@ -171,7 +174,7 @@ const DesktopHome = (props) => {
           </DesktopStyled.ColumnDivider>
         </DesktopStyled.ProcessSection>
         <DesktopStyled.RespondSection>
-          <VideoRender cover={`${window.location.href}/assets/images/default-cover.jpg`} />
+          <VideoRender cover="assets/images/default-cover.jpg" />
           <DesktopStyled.ColumnDivider>
             <DesktopStyled.SubHeader>
               The star delivers
@@ -189,7 +192,7 @@ const DesktopHome = (props) => {
       <DesktopStyled.ReceiveSection>
         <DesktopStyled.FlowWrapper>
           <DesktopStyled.ReceiveContent>
-            <VideoRender cover={`${window.location.href}/assets/images/default-cover.jpg`} />
+            <VideoRender cover="assets/images/default-cover.jpg" />
             <DesktopStyled.ColumnDivider>
               <DesktopStyled.SubHeader>
                 Watch & Share!
@@ -198,23 +201,25 @@ const DesktopHome = (props) => {
                 Your video is yours to download, send to a friend, share on social, and keep forever! It’s the new digital autograph.
               </DesktopStyled.Description>
               <DesktopStyled.ShareIconWrapper>
-                <span>
-                  <FontAwesomeIcon icon={faFacebookSquare} />
-                </span>
-                <span>
-                  <FontAwesomeIcon icon={faTwitterSquare} />
-                </span>
-                <span>
-                  <FontAwesomeIcon icon={faWhatsappSquare} />
-                </span>
-                <span>
-                  <FontAwesomeIcon icon={faEnvelopeSquare} />
-                </span>
+                <span><FontAwesomeIcon icon={faFacebookSquare} /></span>
+                <span><FontAwesomeIcon icon={faTwitterSquare} /></span>
+                <span><FontAwesomeIcon icon={faWhatsappSquare} /></span>
+                <span><FontAwesomeIcon icon={faEnvelopeSquare} /></span>
               </DesktopStyled.ShareIconWrapper>
             </DesktopStyled.ColumnDivider>
           </DesktopStyled.ReceiveContent>
         </DesktopStyled.FlowWrapper>
       </DesktopStyled.ReceiveSection>
+      <DesktopStyled.CategorySection>
+        <DesktopStyled.SubHeader>
+          Let’s get started…
+        </DesktopStyled.SubHeader>
+        <DesktopStyled.SubTitle>Select a category below to browse our stars</DesktopStyled.SubTitle>
+        <CategoryList />
+        <DesktopStyled.CategorySearch>
+          <Search alternate />
+        </DesktopStyled.CategorySearch>
+      </DesktopStyled.CategorySection>
     </DesktopStyled>
   );
 };

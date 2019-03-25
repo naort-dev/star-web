@@ -31,6 +31,12 @@ DesktopStyled.Heading = styled.span`
   }
 `;
 
+DesktopStyled.MainSearch = styled.div`
+  @media(min-width: 834px) {
+    height: 50px;
+  }
+`;
+
 DesktopStyled.SubHeader = styled.span`
   font-family: Gilroy-Bold;
   font-size: 36px;
@@ -52,6 +58,19 @@ DesktopStyled.Title = styled.span`
   letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.twilight};
+`;
+
+DesktopStyled.SubTitle = styled.span`
+  display: block;
+  font-family: Gilroy;
+  font-size: 25px;
+  font-weight: 500;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.48;
+  letter-spacing: normal;
+  text-align: left;
+  color: ${props => props.theme.greyishBrown};
 `;
 
 DesktopStyled.Description = styled.span`
@@ -351,6 +370,24 @@ DesktopStyled.StarContent = styled.div`
 DesktopStyled.FilterSection = styled.div`
   width: 100%;
   height: 200px;
+`;
+
+DesktopStyled.CategorySection = styled.section`
+  margin: 0 auto;
+  padding: 46px 36px;
+  @media (min-width: 834px) {
+    width: 100%;
+  }
+  @media (min-width: 1280px) {
+    padding: 46px 19px;
+    width: 1280px;
+  }
+`;
+
+DesktopStyled.CategorySearch = styled.div`
+  @media(min-width: 834px) {
+    height: 39px;
+  }
 `;
 
 export default DesktopStyled;

@@ -9,11 +9,12 @@ const SearchSection = styled.div`
   height: 50px;
   background: #fff;
   font-family: Gilroy;
-  @media(min-width : 768px){
+  @media(min-width : 834px){
     position: relative;
     display: inline-block;
     display: flex;
     align-items: center;
+    height: 100%;
   }
   @media(min-width: 1025px) {
     max-width: 640px;
@@ -164,20 +165,18 @@ SearchSection.InputWrapper = styled.div`
   position: relative;
   padding-left: 20px;
   border-radius: 10px;
+  display: flex;
+  align-items: center;
+  background-color: ${props => (props.alternate ? 'transparent' : '#F8F8F8')};
+  border: ${props => (props.alternate ? `solid 1px ${props.theme.flatBlue}` : 'none')};
   color: ${props => props.theme.fadedOrange};
   font-size: 18px;
-  @media(min-width: 768px) {
-    width: 319px;
-    height: 35px;
-    background-color: #F8F8F8;
-    &::before {
-      width: 20px;
-      height: 23px;  
-    }
+  @media(min-width: 834px) {
+    width: 360px;
   }
   @media(min-width: 1025px) {
     width: 100%;
-    height: 100%
+    height: 100%;
   }
 `;
 SearchSection.Input = styled.input`
@@ -191,12 +190,8 @@ SearchSection.Input = styled.input`
   border-radius: 5px;
   color: ${props => props.theme.twilight};
   background: transparent;
-  @media(min-width: 768px) {
-    text-indent: 24px;
-  } 
-  @media(min-width : 1025px){
-    text-indent: 0;
-    font-size: 18px;
+  @media(min-width: 834px) {
+    font-size: 20px;
   }
 `;
 SearchSection.SignIn = styled.button`
