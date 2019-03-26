@@ -8,25 +8,12 @@ export default class PathDrawer extends React.Component {
     this.state = {
 
     };
-    this.svgNode = React.createRef();
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.drawPath);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.drawPath);
-  }
-
-  drawPath = () => {
-    console.log('hi');
   }
 
   render() {
     return (
-      <SvgStyled ref={this.svgNode}>
-        <g id="flow-path">
+      <SvgStyled>
+        <g className="flow-path">
           <path
             d=""
           />

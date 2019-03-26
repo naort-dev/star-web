@@ -1,4 +1,5 @@
 import React from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import DropdownStyled from './styled';
 
 export default class Dropdown extends React.Component {
@@ -89,18 +90,20 @@ export default class Dropdown extends React.Component {
           {
             showDropList &&
               <DropdownStyled.OptionsList innerRef={this.optionList}>
-                {
-                  list.map(item => (
-                    <DropdownStyled.OptionItem
-                      tabIndex="0"
-                      onClick={this.selectOption(item)}
-                      onKeyUp={this.selectOption(item)}
-                      key={item.value}
-                    >
-                      {item.label}
-                    </DropdownStyled.OptionItem>
-                  ))
-                }
+                <Scrollbars>
+                  {
+                    list.map(item => (
+                      <DropdownStyled.OptionItem
+                        tabIndex="0"
+                        onClick={this.selectOption(item)}
+                        onKeyUp={this.selectOption(item)}
+                        key={item.value}
+                      >
+                        {item.label}
+                      </DropdownStyled.OptionItem>
+                    ))
+                  }
+                </Scrollbars>
               </DropdownStyled.OptionsList>
           }
         </DropdownStyled.Select>
