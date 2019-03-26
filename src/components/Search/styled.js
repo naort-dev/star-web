@@ -16,7 +16,7 @@ const SearchSection = styled.div`
     align-items: center;
     height: 100%;
   }
-  @media(min-width: 1025px) {
+  @media(min-width: 1280px) {
     max-width: 640px;
   }
 `;
@@ -48,14 +48,13 @@ SearchSection.SuggestionListWrapper = styled.div`
   background-color: #FFFFFF;
   box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   z-index: 1;
-  @media(min-width: 768px) {
+  @media(min-width: 834px) {
     box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
     top: 50px;
     left: 0;
-    right: initial;
+    right: 0;
     height: 300px;
-    width: 400px;
     bottom: initial;
     box-shadow: none;
   }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookSquare,
@@ -12,8 +13,10 @@ import PathDrawer from './components/PathDrawer';
 import CategoryList from './components/CategoryList';
 import VideoRender from '../../../../components/VideoRender';
 import StarDrawer from '../../../../components/StarDrawer';
-import DesktopStyled from './styled';
+import Dropdown from '../../../../components/Dropdown';
+import StarAvatar from '../../../../components/StarAvatar';
 import Search from '../../../../components/Search';
+import DesktopStyled from './styled';
 
 const AvatarContent = () => {
   return (
@@ -93,6 +96,13 @@ const DesktopHome = (props) => {
                 <DesktopStyled.MainSearch>
                   <Search />
                 </DesktopStyled.MainSearch>
+                <DesktopStyled.SearchDivider>OR</DesktopStyled.SearchDivider>
+                <Dropdown
+                  options={[{ title: 'Featured', id: 0 }, ...props.professionsList.professions]}
+                  labelKey="title"
+                  valueKey="id"
+                  placeHolder="Select a category to browse"
+                />
               </DesktopStyled.FilterSection>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.RowDivider>
@@ -220,8 +230,36 @@ const DesktopHome = (props) => {
           <Search alternate />
         </DesktopStyled.CategorySearch>
       </DesktopStyled.CategorySection>
+      <DesktopStyled.Trending>
+        <DesktopStyled.TrendingContent>
+          <DesktopStyled.SubTitle>
+            Or choose from one of our trending stars!
+          </DesktopStyled.SubTitle>
+          <DesktopStyled.TrendingList>
+            <DesktopStyled.TrendingItem>
+              <StarAvatar />
+            </DesktopStyled.TrendingItem>
+            <DesktopStyled.TrendingItem>
+              <StarAvatar />
+            </DesktopStyled.TrendingItem>
+            <DesktopStyled.TrendingItem>
+              <StarAvatar />
+            </DesktopStyled.TrendingItem>
+            <DesktopStyled.TrendingItem>
+              <StarAvatar />
+            </DesktopStyled.TrendingItem>
+            <DesktopStyled.TrendingItem>
+              <StarAvatar />
+            </DesktopStyled.TrendingItem>
+          </DesktopStyled.TrendingList>
+        </DesktopStyled.TrendingContent>
+      </DesktopStyled.Trending>
     </DesktopStyled>
   );
 };
 
-export default withTheme(DesktopHome);
+const mapStateToProps = state => ({
+  professionsList: state.professionsList,
+});
+
+export default withTheme(connect(mapStateToProps)(DesktopHome));

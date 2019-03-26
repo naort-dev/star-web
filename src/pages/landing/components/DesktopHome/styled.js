@@ -37,6 +37,18 @@ DesktopStyled.MainSearch = styled.div`
   }
 `;
 
+DesktopStyled.SearchDivider = styled.span`
+  margin: 10px 0;
+  display: block;
+  text-align: center;
+  width: 360px;
+  font-family: Avenir-Regular;
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 2.53;
+  color: ${props => props.theme.greyishBrown};
+`;
+
 DesktopStyled.SubHeader = styled.span`
   font-family: Gilroy-Bold;
   font-size: 36px;
@@ -370,6 +382,7 @@ DesktopStyled.StarContent = styled.div`
 DesktopStyled.FilterSection = styled.div`
   width: 100%;
   height: 200px;
+  padding: 10px 0;
 `;
 
 DesktopStyled.CategorySection = styled.section`
@@ -386,8 +399,27 @@ DesktopStyled.CategorySection = styled.section`
 
 DesktopStyled.CategorySearch = styled.div`
   @media(min-width: 834px) {
+    width: 520px;
     height: 39px;
   }
 `;
+
+DesktopStyled.Trending = styled.section`
+  background: ${props => props.theme.white};
+`;
+
+DesktopStyled.TrendingContent = DesktopStyled.CategorySection.extend`
+
+`;
+
+DesktopStyled.TrendingItem = styled.li`
+  display: inline-block;
+  padding-top: 46px;
+`;
+
+DesktopStyled.TrendingList = DesktopStyled.ColumnDivider.extend`
+  flex-wrap: wrap;
+  justify-content: space-between;
+`.withComponent('ul');
 
 export default DesktopStyled;
