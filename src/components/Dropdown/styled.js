@@ -54,12 +54,17 @@ DropdownStyled.OptionsList = styled.ul`
   z-index: 1;
 `;
 
-DropdownStyled.OptionItem = styled.li`
+DropdownStyled.Options = styled.li`
+  
+`;
+
+DropdownStyled.OptionItem = styled.span`
   padding: 5px 18px;
   font-family: Gilroy;
   font-size: 18px;
   font-weight: 500;
   line-height: 2.11;
+  display: block;
   text-align: left;
   color: ${props => props.theme.greyishBrown};
   &:hover, &:focus {

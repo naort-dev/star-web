@@ -89,20 +89,22 @@ export default class Dropdown extends React.Component {
           <DropdownStyled.DropIcon />
           {
             showDropList &&
-              <DropdownStyled.OptionsList innerRef={this.optionList}>
+              <DropdownStyled.OptionsList>
                 <Scrollbars>
-                  {
-                    list.map(item => (
-                      <DropdownStyled.OptionItem
-                        tabIndex="0"
-                        onClick={this.selectOption(item)}
-                        onKeyUp={this.selectOption(item)}
-                        key={item.value}
-                      >
-                        {item.label}
-                      </DropdownStyled.OptionItem>
-                    ))
-                  }
+                  <DropdownStyled.Options innerRef={this.optionList}>
+                    {
+                      list.map(item => (
+                        <DropdownStyled.OptionItem
+                          tabIndex="0"
+                          onClick={this.selectOption(item)}
+                          onKeyUp={this.selectOption(item)}
+                          key={item.value}
+                        >
+                          {item.label}
+                        </DropdownStyled.OptionItem>
+                      ))
+                    }
+                  </DropdownStyled.Options>
                 </Scrollbars>
               </DropdownStyled.OptionsList>
           }

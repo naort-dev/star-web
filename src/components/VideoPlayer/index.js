@@ -1,5 +1,7 @@
 import React from 'react';
-import { Player, BigPlayButton, LoadingSpinner } from 'video-react';
+import { Player, BigPlayButton, LoadingSpinner, ControlBar } from 'video-react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
 import './video';
 import VideoRenderDiv from './styled';
 
@@ -18,13 +20,15 @@ export default class VideoPlayer extends React.Component {
       },
       videoWrapperRef: null,
       videoHeight: null,
+      isPlaying: false,
     };
+    this.videoRef = React.createRef();
   }
 
   componentDidMount() {
+    this.checkInViewPort();
     this.player.subscribeToStateChange(this.handleStateChange.bind(this));
-
-    window.addEventListener('resize', this.setVideoHeight);
+    window.addEventListener('scroll', this.checkInViewPort);
   }
 
   componentDidUpdate(prevProps) {
@@ -57,22 +61,38 @@ export default class VideoPlayer extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.setVideoHeight);
+    window.removeEventListener('scroll', this.checkInViewPort);
   }
 
-  setVideoHeight = () => {
-    let videoHeight;
-    if (this.state.videoWrapperRef && this.props.ratio) {
-      videoHeight = this.state.videoWrapperRef.clientWidth / this.props.ratio;
+  checkInViewPort = () => {
+    const videoElement = this.videoRef.current;
+    const { player } = this.player.getState();
+    const bounding = videoElement.getBoundingClientRect();
+    if (
+      bounding.top >= 0 &&
+      bounding.left >= 0 &&
+      bounding.right <= (window.innerWidth || document.documentElement.clientWidth) &&
+      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      player.paused
+    ) {
+      this.toggleVideoPlay();
     }
-    this.setState({ videoHeight });
   }
 
-  setVideoWrapperRef = (node) => {
-    if (!this.state.videoWrapperRef) {
-      this.setState({ videoWrapperRef: node }, () => {
-        this.setVideoHeight();
-      });
+  pauseAllVideos = () => {
+    const videoElements = Array.prototype.slice.call(document.getElementsByTagName('video'));
+    videoElements.forEach((video) => {
+      video.pause();
+    });
+  }
+
+  toggleVideoPlay = () => {
+    const { player } = this.player.getState();
+    this.pauseAllVideos();
+    if (player.paused) {
+      this.player.play();
+    } else {
+      this.player.pause();
     }
   }
 
@@ -91,6 +111,9 @@ export default class VideoPlayer extends React.Component {
     if (prevState.hasStarted !== state.hasStarted && state.hasStarted && this.props.onVideoStart) {
       this.props.onVideoStart();
     }
+    this.setState({
+      isPlaying: !state.paused,
+    });
   }
 
   swapVideos = () => {
@@ -109,29 +132,36 @@ export default class VideoPlayer extends React.Component {
   }
 
   render() {
+    const { props } = this;
+    const { isPlaying } = this.state;
     return (
       <VideoRenderDiv
-        innerRef={node => this.setVideoWrapperRef(node)}
-        height={this.state.videoHeight}
+        onClick={this.toggleVideoPlay}
+        innerRef={this.videoRef}
       >
         {this.state.secondary.thumbnail && <VideoRenderDiv.answerVideo
           onClick={this.swapVideos}
           src={this.state.secondary.thumbnail}
           fullScreen={this.state.fullScreen}
         />}
-        <div id="player">
+        <div className="player">
           <Player
             playsInline
             ref={player => this.player = player}
             poster={this.state.primary.thumbnail}
             src={this.state.primary.video}
             fluid
-            autoPlay={this.state.primary.video === this.props.secondarySrc || this.props.autoPlay}
-            
+            {...this.props}
           >
             <LoadingSpinner />
-            <BigPlayButton position="center" />
+            <ControlBar autoHide={false} disabled={!props.controls} />
+            <BigPlayButton position="center-bottom" disabled />
           </Player>
+          <VideoRenderDiv.ControlIconWrapper>
+            <VideoRenderDiv.ControlIcon>
+              <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+            </VideoRenderDiv.ControlIcon>
+          </VideoRenderDiv.ControlIconWrapper>
         </div>
       </VideoRenderDiv>
     );

@@ -2,6 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { requestTypeTitle } from '../../constants/requestTypes';
+import VideoPlayer from '../VideoPlayer';
 import VideoRenderDiv from './styled';
 
 export default class VideoRender extends React.Component {
@@ -55,16 +56,14 @@ export default class VideoRender extends React.Component {
   }
   render() {
     const { props } = this;
-    // this.getTitle();
     return (
       <VideoRenderDiv onClick={props.enableVideoPopup}>
         <VideoRenderDiv.Container>
           <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
-            <VideoRenderDiv.ControlIconWrapper>
-              <VideoRenderDiv.ControlIcon>
-                <FontAwesomeIcon icon={faPlay} />
-              </VideoRenderDiv.ControlIcon>
-            </VideoRenderDiv.ControlIconWrapper>
+            <VideoPlayer
+              primarySrc="assets/Footboys.mp4"
+
+            />
           </VideoRenderDiv.Content>
         </VideoRenderDiv.Container>
         {/* <VideoRenderDiv.ImageSection

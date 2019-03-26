@@ -38,7 +38,7 @@ DesktopStyled.MainSearch = styled.div`
 `;
 
 DesktopStyled.SearchDivider = styled.span`
-  margin: 10px 0;
+  margin: 10px auto;
   display: block;
   text-align: center;
   width: 360px;
@@ -393,7 +393,7 @@ DesktopStyled.CategorySection = styled.section`
   }
   @media (min-width: 1280px) {
     padding: 46px 19px;
-    width: 1280px;
+    max-width: 1280px;
   }
 `;
 

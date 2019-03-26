@@ -299,10 +299,10 @@ class Header extends React.Component {
                     <HeaderSection.SignInButtonMobile />
                   </span>
                   <HeaderSection.AuthButton onClick={() => this.props.toggleSignup(true)}>
-                    Sign up!
+                    Sign Up
                   </HeaderSection.AuthButton>
                   <HeaderSection.AuthButton onClick={() => this.props.toggleLogin(true)}>
-                    Log in
+                    Log In
                   </HeaderSection.AuthButton>
                 </div>
             }

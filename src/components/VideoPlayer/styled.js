@@ -4,14 +4,39 @@ const VideoRenderDiv = styled.div`
   cursor: pointer;
   width: 100%;
   height: 100%;
-  @media(min-width: 768px) {
-    max-height: 80vh;
-    height: ${props => (props.height ? `${props.height}px` : '100%')};
-    min-height: 200px;
-    min-width: 400px;
+  border-radius: inherit;
+  position: relative;
+  video {
+    border-radius: inherit;
+    object-fit: cover;
   }
-  @media(min-width: 1025px) {
-    max-height: 100%;
+`;
+
+VideoRenderDiv.ControlIcon = styled.span`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  margin: 0 auto;
+  cursor: pointer;
+  color: ${props => props.theme.orangePink};
+  @media(min-width: 1280px) {
+    width: 72px;
+    height: 72px;
+    font-size: 30px;
+  }
+`;
+
+VideoRenderDiv.ControlIconWrapper = styled.div`
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  @media(min-width: 1280px) {
+    bottom: 42px;
   }
 `;
 
