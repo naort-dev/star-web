@@ -251,6 +251,9 @@ const DesktopHome = (props) => {
             <DesktopStyled.TrendingItem>
               <StarAvatar />
             </DesktopStyled.TrendingItem>
+            <DesktopStyled.TrendingItem>
+              <StarAvatar />
+            </DesktopStyled.TrendingItem>
           </DesktopStyled.TrendingList>
         </DesktopStyled.TrendingContent>
       </DesktopStyled.Trending>
