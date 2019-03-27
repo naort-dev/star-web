@@ -8,16 +8,7 @@ export default class PathDrawer extends React.Component {
     this.state = {
       pathData: '',
     };
-    this.pathDesktop = `M 60 0 v 600
-    c 2 35 50 30 50 30
-    h 300
-    c 35 0 30 30 30 30
-    v 330
-    c -10 25 -20 20 -20 20
-    h -200
-    c -40 0 -35 40 -35 40
-    v 600`;
-    this.pathIpad = `M 60 0 v 610
+    this.pathDesktop = `M 60 0 v 610
     c 2 35 50 30 50 30
     h 450
     c 35 0 33 30 33 30
@@ -26,6 +17,15 @@ export default class PathDrawer extends React.Component {
     h -200
     c -40 0 -40 40 -40 40
     v 480`;
+    this.pathIpad = `M 60 0 v 600
+    c 2 35 50 30 50 30
+    h 300
+    c 35 0 30 30 30 30
+    v 330
+    c -10 25 -20 20 -20 20
+    h -200
+    c -40 0 -35 40 -35 40
+    v 600`;
   }
 
   componentDidMount() {
@@ -39,6 +39,7 @@ export default class PathDrawer extends React.Component {
 
   togglePathData = () => {
     let { pathData } = this.state;
+    console.log(document.body.getBoundingClientRect().width)
     if (document.body.getBoundingClientRect().width >= 1280) {
       pathData = this.pathDesktop;
     } else if (document.body.getBoundingClientRect().width >= 864) {
