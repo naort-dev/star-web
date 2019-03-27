@@ -183,7 +183,7 @@ SearchSection.Input = styled.input`
   width: calc(100% - 55px);
   outline: none;
   height: 100%;
-  font-family: 'Gilroy';
+  font-family: Gilroy-Medium;
   font-size: 16px;
   border: none;
   border-radius: 5px;

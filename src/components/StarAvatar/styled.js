@@ -41,11 +41,8 @@ AvatarContainer.Category = styled.span`
 AvatarContainer.Name = styled.span`
   display: block;
   font-size: 17px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
+  font-family: Gilroy-Bold;
   line-height: 1.41;
-  letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.flatBlue};
   width: 100%;
@@ -57,12 +54,9 @@ AvatarContainer.Name = styled.span`
 AvatarContainer.Price = styled.span`
   display: inline-block;
   width: 15%;
+  font-family: Gilroy-Semibold;
   font-size: 17px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 1.41;
-  letter-spacing: normal;
   text-align: right;
   color: ${props => props.theme.greyishBrown};
 `;

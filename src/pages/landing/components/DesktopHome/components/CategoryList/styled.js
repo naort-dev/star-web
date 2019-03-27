@@ -14,20 +14,15 @@ const CategoryListItem = styled.li`
 
 
 const CategoryName = styled.span`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-Black;
   font-size: 18px;
-  font-weight: 900;
   color: ${props => props.theme.flatBlue};
 `;
 
 const CategoryDescription = styled.p`
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
   font-size: 16px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 1.13;
-  letter-spacing: normal;
   color: ${props => props.theme.greyishBrown};
 `;
 

@@ -25,9 +25,8 @@ DropdownStyled.Select = styled.div`
 `;
 
 DropdownStyled.CurrentSelected = styled.span`
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
   font-size: 20px;
-  font-weight: 500;
   line-height: 1.9;
   text-align: left;
   width: calc(100% - 20px);
@@ -46,7 +45,7 @@ DropdownStyled.OptionsList = styled.ul`
   position: absolute;
   left: 0;
   right: 0;
-  top: 100%;
+  top: calc(100% + 1px);
   height: 346px;
   overflow: auto;
   padding: 5px 0;
@@ -55,20 +54,21 @@ DropdownStyled.OptionsList = styled.ul`
 `;
 
 DropdownStyled.Options = styled.li`
-  
+  font-family: Gilroy-Medium;
+  font-size: 20px;
 `;
 
 DropdownStyled.OptionItem = styled.span`
-  padding: 5px 18px;
-  font-family: Gilroy;
-  font-size: 18px;
-  font-weight: 500;
+  padding: 5px 18px
   line-height: 2.11;
   display: block;
   text-align: left;
   color: ${props => props.theme.greyishBrown};
   &:hover, &:focus {
     outline: none;
+    font-family: Gilroy-Bold;
+    font-size: 18px;
+    padding: 8px 18px;
     background: ${props => props.theme.veryLightPinkTwo};
   }
 `;

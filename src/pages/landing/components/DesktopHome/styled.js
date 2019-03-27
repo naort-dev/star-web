@@ -16,11 +16,7 @@ DesktopStyled.Heading = styled.span`
   padding: 0 30px;
   font-family: Gilroy-Medium;
   font-size: 50px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 50px;
-  letter-spacing: normal;
   text-align: center;
   color: ${props => props.theme.twilight};
   display: block;
@@ -52,47 +48,33 @@ DesktopStyled.SearchDivider = styled.span`
 DesktopStyled.SubHeader = styled.span`
   font-family: Gilroy-Bold;
   font-size: 36px;
-  font-weight: bold;
   line-height: 1.19;
-  letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.greyishBrown};
   display: block;
 `;
 
 DesktopStyled.Title = styled.span`
-  font-family: Gilroy;
+  font-family: Gilroy-Bold;
   font-size: 20px;
-  font-weight: bold;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 0.9;
-  letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.twilight};
 `;
 
 DesktopStyled.SubTitle = styled.span`
   display: block;
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
   font-size: 25px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 1.48;
-  letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.greyishBrown};
 `;
 
 DesktopStyled.Description = styled.span`
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
   font-size: 20px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 1.6;
-  letter-spacing: normal;
   text-align: left;
   color: ${props => props.theme.brownGrey};
 `;
@@ -272,14 +254,10 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
         padding-left: 4px;
         padding-top: 7px;
         p {
-          font-family: Gilroy;
+          font-family: Gilroy-Light;
           padding-top: 6px;
           font-size: 14px;
-          font-weight: 300;
-          font-style: normal;
-          font-stretch: normal;
           line-height: 1.29;
-          letter-spacing: normal;
           text-align: left;
           color: ${props => props.theme.greyishBrown};
         }
@@ -380,7 +358,7 @@ DesktopStyled.StarContent = styled.div`
 `;
 
 DesktopStyled.FilterSection = styled.div`
-  width: 100%;
+  display: inline-block;
   height: 200px;
   padding: 10px 0;
 `;
