@@ -9,7 +9,7 @@ import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
 
-import { protectRoute } from './services/protectRoute';
+// import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList } from './store/shared/actions/getProfessions';
@@ -19,15 +19,15 @@ import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
-import { Favourites } from './pages/favourites';
-import { Requests } from './pages/requests';
+// import { Favourites } from './pages/favourites';
+// import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
-import { StarSupporters } from './pages/starSupporters';
-import { Settings } from './pages/settings';
+// import { StarSupporters } from './pages/starSupporters';
+// import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
-import { Earnings } from './pages/earnings';
+// import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
@@ -123,7 +123,7 @@ class App extends React.Component {
 
                 {/* logged in areas */}
 
-                <Route
+                {/* <Route
                   path="/user/favorites"
                   component={protectRoute({
                     RouteComponent: Favourites,
@@ -165,14 +165,14 @@ class App extends React.Component {
                   component={protectRoute({
                     RouteComponent: Earnings,
                   })}
-                />
+                /> */}
 
                 {/* fallbacks, keep it last */}
                 <Route path="/unauthorized" component={Unauthorized} />
                 <Route path="/not-found" component={Page404} />
                 <Route exact path="/" component={Landing} />
-                <Route exact path="/:id" component={Landing} />
-                <Route exact path="/group-profile/:id" component={Landing} />
+                {/* <Route exact path="/:id" component={Landing} />
+                <Route exact path="/group-profile/:id" component={Landing} /> */}
                 <Route component={Page404} />
               </Switch>
             )

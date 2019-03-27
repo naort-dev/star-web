@@ -39,7 +39,6 @@ export default class PathDrawer extends React.Component {
 
   togglePathData = () => {
     let { pathData } = this.state;
-    console.log(document.body.getBoundingClientRect().width)
     if (document.body.getBoundingClientRect().width >= 1280) {
       pathData = this.pathDesktop;
     } else if (document.body.getBoundingClientRect().width >= 864) {

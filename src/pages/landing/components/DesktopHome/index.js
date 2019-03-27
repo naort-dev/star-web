@@ -10,24 +10,14 @@ import { withTheme } from 'styled-components';
 import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
 import PathDrawer from './components/PathDrawer';
+import AvatarContent from './components/AvatarContent';
 import CategoryList from './components/CategoryList';
 import VideoRender from '../../../../components/VideoRender';
 import StarDrawer from '../../../../components/StarDrawer';
 import Dropdown from '../../../../components/Dropdown';
-import StarAvatar from '../../../../components/StarAvatar';
+import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
 import DesktopStyled from './styled';
-
-const AvatarContent = () => {
-  return (
-    <DesktopStyled.AvatarContent>
-      <DesktopStyled.AvatarFront />
-      <DesktopStyled.AvatarBack>
-        Name and details
-      </DesktopStyled.AvatarBack>
-    </DesktopStyled.AvatarContent>
-  );
-};
 
 const DesktopHome = (props) => {
   const starData = [{
@@ -107,40 +97,40 @@ const DesktopHome = (props) => {
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.RowDivider>
                   <DesktopStyled.Avatar>
-                    { AvatarContent() }
+                    <AvatarContent />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    { AvatarContent() }
+                    <AvatarContent />
                   </DesktopStyled.Avatar>
                 </DesktopStyled.RowDivider>
                 <DesktopStyled.SecondaryAvatar>
-                  { AvatarContent() }
+                  <AvatarContent />
                 </DesktopStyled.SecondaryAvatar>
               </DesktopStyled.ColumnDivider>
             </DesktopStyled.Divider>
             <DesktopStyled.SecondaryDivider id="second-column">
               <DesktopStyled.BigAvatar>
-                { AvatarContent() }
+                <AvatarContent />
               </DesktopStyled.BigAvatar>
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.Avatar>
-                  { AvatarContent() }
+                  <AvatarContent />
                 </DesktopStyled.Avatar>
                 <DesktopStyled.Avatar>
-                  { AvatarContent() }
+                  <AvatarContent />
                 </DesktopStyled.Avatar>
               </DesktopStyled.ColumnDivider>
             </DesktopStyled.SecondaryDivider>
             <DesktopStyled.SecondaryDivider>
               <DesktopStyled.RowDivider>
                 <DesktopStyled.Avatar>
-                  { AvatarContent() }
+                  <AvatarContent />
                 </DesktopStyled.Avatar>
                 <DesktopStyled.Avatar>
-                  { AvatarContent() }
+                  <AvatarContent />
                 </DesktopStyled.Avatar>
                 <DesktopStyled.Avatar>
-                  { AvatarContent() }
+                  <AvatarContent />
                 </DesktopStyled.Avatar>
               </DesktopStyled.RowDivider>
             </DesktopStyled.SecondaryDivider>
@@ -235,26 +225,12 @@ const DesktopHome = (props) => {
           <DesktopStyled.SubTitle>
             Or choose from one of our trending stars!
           </DesktopStyled.SubTitle>
-          <DesktopStyled.TrendingList>
-            <DesktopStyled.TrendingItem>
-              <StarAvatar />
-            </DesktopStyled.TrendingItem>
-            <DesktopStyled.TrendingItem>
-              <StarAvatar />
-            </DesktopStyled.TrendingItem>
-            <DesktopStyled.TrendingItem>
-              <StarAvatar />
-            </DesktopStyled.TrendingItem>
-            <DesktopStyled.TrendingItem>
-              <StarAvatar />
-            </DesktopStyled.TrendingItem>
-            <DesktopStyled.TrendingItem>
-              <StarAvatar />
-            </DesktopStyled.TrendingItem>
-            <DesktopStyled.TrendingItem>
-              <StarAvatar />
-            </DesktopStyled.TrendingItem>
-          </DesktopStyled.TrendingList>
+          <StarListing
+            dataList={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+            noScroll
+            totalCount={10}
+            limit={10}
+          />
         </DesktopStyled.TrendingContent>
       </DesktopStyled.Trending>
     </DesktopStyled>

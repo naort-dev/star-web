@@ -7,13 +7,12 @@ import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
-import { Starprofile } from '../starProfile';
+// import { Starprofile } from '../starProfile';
 import { VideoSharePage } from '../videoSharePage';
-import { GroupProfile } from '../groupProfile';
+// import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 import { setMetaTags } from '../../utils/setMetaTags';
-import ScrollList from '../../components/ScrollList';
 
 export default class Landing extends React.Component {
   constructor(props) {
@@ -169,37 +168,6 @@ export default class Landing extends React.Component {
   }
   fetchVideosList = (offset, refresh) => {
     this.props.fetchVideosList(offset, refresh);
-  }
-  renderScrollList() {
-    if (this.props.filters.selectedTab === 'Stars') {
-      return (
-        <ScrollList
-          noDataText="Sorry! no matches"
-          banner
-          searchText={this.props.filters.searchParam}
-          dataList={this.props.celebList.data}
-          menuActive={this.state.menuActive}
-          limit={this.props.celebList.limit}
-          totalCount={this.props.celebList.count}
-          offset={this.props.celebList.offset}
-          loading={this.props.celebList.loading}
-          fetchData={this.fetchCelebrityList('Stars')}
-        />
-      );
-    } else if (this.props.filters.selectedTab === 'Videos') {
-      return (
-        <ScrollList
-          dataList={this.props.videosList.data}
-          videos
-          limit={this.props.videosList.limit}
-          totalCount={this.props.videosList.count}
-          offset={this.props.videosList.offset}
-          loading={this.props.videosList.loading}
-          fetchData={this.fetchVideosList}
-        />
-      );
-    }
-    return null;
   }
   render() {
     return (
