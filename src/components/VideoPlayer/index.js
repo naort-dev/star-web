@@ -2,6 +2,7 @@ import React from 'react';
 import { Player, BigPlayButton, LoadingSpinner, ControlBar } from 'video-react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
+import { CheckInViewport } from '../../utils/domUtils';
 import './video';
 import VideoRenderDiv from './styled';
 
@@ -67,12 +68,9 @@ export default class VideoPlayer extends React.Component {
   checkInViewPort = () => {
     const videoElement = this.videoRef.current;
     const { player } = this.player.getState();
-    const bounding = videoElement.getBoundingClientRect();
+    const visible = CheckInViewport(videoElement);
     if (
-      bounding.top >= 0 &&
-      bounding.left >= 0 &&
-      bounding.right <= (window.innerWidth || document.documentElement.clientWidth) &&
-      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      visible &&
       player.paused
     ) {
       this.toggleVideoPlay();

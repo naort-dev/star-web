@@ -278,7 +278,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
     }
   }
   @media(min-width: 1280px) {
-    left: 317px;
+    left: 322px;
     top: 664px;
     ${DesktopStyled.ColumnDivider} {
       padding-top: 17px;

@@ -96,21 +96,9 @@ export default class ScrollList extends React.Component {
         next={this.fetchMoreData}
         scrollableTarget={scrollTarget}
         refreshFunction={this.refresh}
-        // pullDownToRefresh
-        // pullDownToRefreshContent={
-        //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
-        // }
-        // releaseToRefreshContent={
-        //   <h4 style={{ textAlign: 'center' }}><img alt="" height="50" src="assets/images/loading-icon.gif" /></h4>
-        // }
         scrollThreshold={0.5}
         hasMore={this.state.hasMore}
         loader={this.props.dataList.length ? <Loader /> : <ListStyled.NoDataText>{this.props.noDataText}</ListStyled.NoDataText>}
-        // endMessage={
-        //   <p style={{ textAlign: 'center' }}>
-        //     <b>End of list</b>
-        //   </p>
-        // }
       >
         <ListStyled.listWrapper videos={this.props.videos}>
           {this.renderList()}
