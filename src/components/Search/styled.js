@@ -109,7 +109,7 @@ SearchSection.SuggestionListContent = styled.span`
 SearchSection.StarHeading = styled.p`
   color: ${props => props.theme.orangePink};
   font-size: 13px;
-  font-family: Gilroy;
+  font-family: Gilroy-Semibold;
   text-transform: uppercase;
   padding-left: 30px;
   margin-top: 10px;
@@ -139,9 +139,10 @@ SearchSection.CategoryItem = styled.span`
 `;
 
 SearchSection.SuggestionDetails = styled.p`
-  font-size: 12px;
+  font-size: 13px;
+  font-family: Gilroy-Medium;
   color: ${props => props.theme.greyishBrown};
-  line-height: 18px;
+  line-height: 19px;
   font-weight: normal;
   @media(min-width: 768px) {
     font-size: 14px;
@@ -151,6 +152,7 @@ SearchSection.SuggestionDetails = styled.p`
 SearchSection.SuggestionListImage = styled.span`
   width: 50px;
   height: 50px;
+  display: block;
   background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
@@ -160,9 +162,8 @@ SearchSection.SuggestionListImage = styled.span`
 SearchSection.SuggestionListName = styled.span`
   margin-left: 10px;
   color: #68b5cd;
-  font-family: Gilroy;
-  font-weight: 600;
-  font-size: 16px;
+  font-family: Gilroy-Bold;
+  font-size: 17px;
 `;
 
 SearchSection.InputWrapper = styled.div`

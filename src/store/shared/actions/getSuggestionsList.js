@@ -77,16 +77,4 @@ export const fetchSuggestionList = searchParam => (dispatch, getState) => {
     dispatch(suggestionListtFetchEnd());
     dispatch(suggestionListtFetchFailed(exception));
   })
-
-  // return fetch.get(Api.getSuggestionList + '?s=' + searchParam).then((resp) => {
-  //   if (resp.data && resp.data.success && searchParam === getState().suggestionsList.searchText) {
-  //     dispatch(suggestionListtFetchEnd());
-  //     dispatch(suggestionListtFetchSuccess(resp.data.data.suggestion_list));
-  //   } else if (searchParam === getState().suggestionsList.searchText) {
-  //     dispatch(suggestionListtFetchEnd());
-  //   }
-  // }).catch((exception) => {
-  //   dispatch(suggestionListtFetchEnd());
-  //   dispatch(suggestionListtFetchFailed(exception));
-  // });
 };

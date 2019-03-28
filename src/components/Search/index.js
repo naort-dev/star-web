@@ -146,44 +146,56 @@ class Search extends React.Component {
     if (suggestions && (suggestions.professions.length || suggestions.stars.length)) {
       return (
         <SearchSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
-          <SearchSection.StarHeading>Categories</SearchSection.StarHeading>
-          <SearchSection.CategoryList>
-            {
-              suggestions.professions.map(profession => (
-                <SearchSection.CategoryItem key={profession.id}>
-                  <Link to={`/${profession.id}`}>{profession.title}</Link>
-                </SearchSection.CategoryItem>
-              ))
-            }
-          </SearchSection.CategoryList>
-          <SearchSection.StarHeading>Stars</SearchSection.StarHeading>
           {
-            suggestions.stars.map((item) => {
-              let fullName = '';
-              if (item.nick_name || item.first_name || item.last_name) {
-                fullName = item.nick_name ? item.nick_name
-                  : `${item.first_name} ${item.last_name}`;
-              }
-              return (
-                <SearchSection.SuggestionListItem
-                  tabIndex="0"
-                  key={item.user_id}
-                  onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
-                >
-                  <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
-                    <SearchSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                      <SearchSection.SuggestionListImage imageUrl={item.image_url} />
-                      <SearchSection.SuggestionListName>
-                        <SearchSection.SuggestionDetails>
-                          { item.professions }
-                        </SearchSection.SuggestionDetails>
-                        {fullName}
-                      </SearchSection.SuggestionListName>
-                    </SearchSection.SuggestionListContent>
-                  </Link>
-                </SearchSection.SuggestionListItem>
-              );
-            })
+            suggestions.professions.length > 0 &&
+              <React.Fragment>
+                <SearchSection.StarHeading>Categories</SearchSection.StarHeading>
+                <SearchSection.CategoryList>
+                  {
+                    suggestions.professions.map(profession => (
+                      <SearchSection.CategoryItem key={profession.id}>
+                        <Link to={`/${profession.id}`}>{profession.title}</Link>
+                      </SearchSection.CategoryItem>
+                    ))
+                  }
+                </SearchSection.CategoryList>
+              </React.Fragment>
+          }
+          {
+            suggestions.stars.length > 0 &&
+              <React.Fragment>
+                <SearchSection.StarHeading>Stars</SearchSection.StarHeading>
+                {
+                  suggestions.stars.map((item) => {
+                    let fullName = '';
+                    if (item.nick_name || item.first_name || item.last_name) {
+                      fullName = item.nick_name ? item.nick_name
+                        : `${item.first_name} ${item.last_name}`;
+                    }
+                    return (
+                      <SearchSection.SuggestionListItem
+                        tabIndex="0"
+                        key={item.user_id}
+                        onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
+                      >
+                        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
+                          <SearchSection.SuggestionListContent onClick={this.handleSearchItemClick}>
+                            <span>
+                              <SearchSection.SuggestionListImage imageUrl={item.image_url} />
+                            </span>
+                            <SearchSection.SuggestionListName>
+                              <SearchSection.SuggestionDetails>
+                                { item.professions }
+                              </SearchSection.SuggestionDetails>
+                              {fullName}
+                            </SearchSection.SuggestionListName>
+                          </SearchSection.SuggestionListContent>
+                        </Link>
+                      </SearchSection.SuggestionListItem>
+                    );
+                  })
+                }
+              </React.Fragment>
           }
         </SearchSection.SuggestionList>
       );
