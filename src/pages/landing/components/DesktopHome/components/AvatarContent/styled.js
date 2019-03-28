@@ -37,9 +37,7 @@ AvatarStyled.AvatarBack = AvatarStyled.AvatarFace.extend`
   justify-content: center;
   align-items: center;
   padding: 10px;
-  font-family: Gilroy-Medium;
-  font-size: 30px;
-  line-height: 1.07;
+  text-align: center;
 `;
 
 export default AvatarStyled;

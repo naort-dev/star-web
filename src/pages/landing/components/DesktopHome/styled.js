@@ -123,6 +123,9 @@ DesktopStyled.Avatar = styled.div`
   border-radius: 50%;
   display: block;
   perspective: 50% 50%;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  line-height: 1.17;
   @media(min-width: 834px) {
     width: 140px;
     height: 140px;
@@ -134,6 +137,9 @@ DesktopStyled.Avatar = styled.div`
 `;
 
 DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
+  font-family: Gilroy-Medium;
+  font-size: 30px;
+  line-height: 1.07;
   @media(min-width: 834px) {
     width: 299px;
     height: 299px;
@@ -141,6 +147,9 @@ DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
 `;
 
 DesktopStyled.SecondaryAvatar = DesktopStyled.Avatar.extend`
+  font-family: Gilroy-Medium;
+  font-size: 30px;
+  line-height: 1.07;
   @media(min-width: 834px) {
     width: 300px;
     height: 300px;
