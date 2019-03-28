@@ -142,24 +142,23 @@ class Search extends React.Component {
   }
 
   renderSuggestionsList = () => {
-    if (this.props.suggestionsList.suggestions.length) {
+    const { suggestions } = this.props.suggestionsList;
+    if (suggestions && (suggestions.professions.length || suggestions.stars.length)) {
       return (
         <SearchSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
           <SearchSection.StarHeading>Categories</SearchSection.StarHeading>
           <SearchSection.CategoryList>
-            <SearchSection.CategoryItem>
-              <Link to={`/jordanloyd`}>Baseball</Link>
-            </SearchSection.CategoryItem>
-            <SearchSection.CategoryItem>
-              <Link to={`/jordanloyd`}>Baseball</Link>
-            </SearchSection.CategoryItem>
-            <SearchSection.CategoryItem>
-              <Link to={`/jordanloyd`}>Baseball</Link>
-            </SearchSection.CategoryItem>
+            {
+              suggestions.professions.map(profession => (
+                <SearchSection.CategoryItem key={profession.id}>
+                  <Link to={`/${profession.id}`}>{profession.title}</Link>
+                </SearchSection.CategoryItem>
+              ))
+            }
           </SearchSection.CategoryList>
           <SearchSection.StarHeading>Stars</SearchSection.StarHeading>
           {
-            this.props.suggestionsList.suggestions.map((item) => {
+            suggestions.stars.map((item) => {
               let fullName = '';
               if (item.nick_name || item.first_name || item.last_name) {
                 fullName = item.nick_name ? item.nick_name
@@ -173,14 +172,10 @@ class Search extends React.Component {
                 >
                   <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
                     <SearchSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                      <SearchSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
+                      <SearchSection.SuggestionListImage imageUrl={item.image_url} />
                       <SearchSection.SuggestionListName>
                         <SearchSection.SuggestionDetails>
-                          {
-                            item.has_group_account ?
-                              item.group_type
-                              : starProfessionsFormater(item.celebrity_profession)
-                          }
+                          { item.professions }
                         </SearchSection.SuggestionDetails>
                         {fullName}
                       </SearchSection.SuggestionListName>

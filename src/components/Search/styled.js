@@ -67,7 +67,7 @@ SearchSection.SuggestionListWrapper = styled.div`
   }
 `;
 SearchSection.SuggestionList = styled.ul`
-  padding: 16px 10px;
+  padding: 16px 0;
 `;
 SearchSection.noDataWrapper = styled.div`
   display: table;
@@ -117,18 +117,25 @@ SearchSection.StarHeading = styled.p`
 `;
 
 SearchSection.CategoryList = styled.div`
-  padding: 10px 0 10px 30px;
+  padding: 5px 0 5px 30px;
   color: #333;
 `;
 
 SearchSection.CategoryItem = styled.span`
   border: 2px solid #58B0CB;
   border-radius: 15px;
-  padding: 1px 8px;
   display: inline-block;
+  margin: 5px 0;
   margin-right: 7px;
   font-size: 14px;
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
+  a {
+    color: ${props => props.theme.greyishBrown};
+    padding: 8px 15px;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 SearchSection.SuggestionDetails = styled.p`

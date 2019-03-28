@@ -1,3 +1,4 @@
+import axios from 'axios';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 
@@ -36,17 +37,56 @@ export const resetSearchParam = searchParam => ({
   searchParam,
 });
 
+const parseSearchResult = (results) => {
+  let professions = [];
+  let stars = [];
+  results.forEach((searchItem) => {
+    if (searchItem['_index'] === 'celebrities') {
+      stars = [...stars, { ...searchItem['_source'] }];
+    } else if (searchItem['_index'] === 'professions') {
+      professions = [...professions, { ...searchItem['_source'] }]
+    }
+  });
+  return { stars, professions };
+};
+
 export const fetchSuggestionList = searchParam => (dispatch, getState) => {
   dispatch(suggestionListFetchStart(searchParam));
-  return fetch.get(Api.getSuggestionList + '?s=' + searchParam).then((resp) => {
-    if (resp.data && resp.data.success && searchParam === getState().suggestionsList.searchText) {
+  const query = {
+    query: {
+      multi_match: {
+        query: searchParam,
+        fields: ['title', 'first_name', 'last_name'],
+        type: 'phrase_prefix',
+      },
+    },
+  };
+  return axios.get('https://search-staging-backend-app-3mhclsqtvzuvr6zxmyhmlcpb2q.us-east-1.es.amazonaws.com/_search?size=10000', {
+    params: {
+      source: JSON.stringify(query),
+      source_content_type: 'application/json',
+    },
+  }).then((resp) => {
+    if (resp.data && resp.data.hits && resp.data.hits.hits && searchParam === getState().suggestionsList.searchText) {
       dispatch(suggestionListtFetchEnd());
-      dispatch(suggestionListtFetchSuccess(resp.data.data.suggestion_list));
+      dispatch(suggestionListtFetchSuccess(parseSearchResult(resp.data.hits.hits)));
     } else if (searchParam === getState().suggestionsList.searchText) {
       dispatch(suggestionListtFetchEnd());
     }
   }).catch((exception) => {
     dispatch(suggestionListtFetchEnd());
     dispatch(suggestionListtFetchFailed(exception));
-  });
+  })
+
+  // return fetch.get(Api.getSuggestionList + '?s=' + searchParam).then((resp) => {
+  //   if (resp.data && resp.data.success && searchParam === getState().suggestionsList.searchText) {
+  //     dispatch(suggestionListtFetchEnd());
+  //     dispatch(suggestionListtFetchSuccess(resp.data.data.suggestion_list));
+  //   } else if (searchParam === getState().suggestionsList.searchText) {
+  //     dispatch(suggestionListtFetchEnd());
+  //   }
+  // }).catch((exception) => {
+  //   dispatch(suggestionListtFetchEnd());
+  //   dispatch(suggestionListtFetchFailed(exception));
+  // });
 };
