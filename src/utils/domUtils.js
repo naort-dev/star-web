@@ -1,6 +1,5 @@
 export const CheckInViewport = (node) => {
   const bounding = node.getBoundingClientRect();
-  console.log(bounding, window.innerHeight / 2)
   // if (
   //   bounding.top >= 0 &&
   //   bounding.left >= 0 &&
