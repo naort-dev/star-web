@@ -17,6 +17,9 @@ import StarDrawer from '../../../../components/StarDrawer';
 import Dropdown from '../../../../components/Dropdown';
 import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
+
+import { fetchFeaturedStars } from '../../actions/getFeaturedStars';
+
 import DesktopStyled from './styled';
 
 class DesktopHome extends React.Component {
@@ -79,6 +82,9 @@ class DesktopHome extends React.Component {
 
   componentDidMount() {
     this.setTrendingData();
+    if (!this.props.featuredStars.data.length) {
+      this.props.fetchFeaturedStars();
+    }
     window.addEventListener('resize', this.setTrendingData);
   }
 
@@ -92,6 +98,11 @@ class DesktopHome extends React.Component {
     } else {
       this.setState({ trendingList: this.dataList.slice(0, this.dataList.length - 1) });
     }
+  }
+
+  getAvatarContent = (index) => {
+    const featuredData = this.props.featuredStars.data;
+    return featuredData[index];
   }
 
   render() {
@@ -124,40 +135,40 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.RowDivider>
                     <DesktopStyled.Avatar>
-                      <AvatarContent />
+                      <AvatarContent data={this.getAvatarContent(3)} />
                     </DesktopStyled.Avatar>
                     <DesktopStyled.Avatar>
-                      <AvatarContent />
+                      <AvatarContent data={this.getAvatarContent(4)} />
                     </DesktopStyled.Avatar>
                   </DesktopStyled.RowDivider>
                   <DesktopStyled.SecondaryAvatar>
-                    <AvatarContent />
+                    <AvatarContent data={this.getAvatarContent(2)} />
                   </DesktopStyled.SecondaryAvatar>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.Divider>
               <DesktopStyled.SecondaryDivider id="second-column">
                 <DesktopStyled.BigAvatar>
-                  <AvatarContent />
+                  <AvatarContent data={this.getAvatarContent(1)} />
                 </DesktopStyled.BigAvatar>
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.Avatar>
-                    <AvatarContent />
+                    <AvatarContent data={this.getAvatarContent(5)} />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    <AvatarContent />
+                    <AvatarContent data={this.getAvatarContent(6)} />
                   </DesktopStyled.Avatar>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.SecondaryDivider>
               <DesktopStyled.SecondaryDivider>
                 <DesktopStyled.RowDivider>
                   <DesktopStyled.Avatar>
-                    <AvatarContent />
+                    <AvatarContent data={this.getAvatarContent(7)} />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    <AvatarContent />
+                    <AvatarContent data={this.getAvatarContent(8)} />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    <AvatarContent />
+                    <AvatarContent data={this.getAvatarContent(9)} />
                   </DesktopStyled.Avatar>
                 </DesktopStyled.RowDivider>
               </DesktopStyled.SecondaryDivider>
@@ -267,6 +278,11 @@ class DesktopHome extends React.Component {
 
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
+  featuredStars: state.featuredStars,
 });
 
-export default withTheme(connect(mapStateToProps)(DesktopHome));
+const mapDispatchToProps = dispatch => ({
+  fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
+});
+
+export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));

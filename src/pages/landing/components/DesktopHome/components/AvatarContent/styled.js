@@ -24,7 +24,7 @@ AvatarStyled.AvatarFace = styled.div`
 `;
 
 AvatarStyled.AvatarFront = AvatarStyled.AvatarFace.extend`
-  background: url('assets/images/default-cover.jpg') no-repeat;
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: contain;
 `;
@@ -37,13 +37,9 @@ AvatarStyled.AvatarBack = AvatarStyled.AvatarFace.extend`
   justify-content: center;
   align-items: center;
   padding: 10px;
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
   font-size: 30px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
   line-height: 1.07;
-  letter-spacing: normal;
 `;
 
 export default AvatarStyled;

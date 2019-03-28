@@ -1,5 +1,6 @@
 class Api {
   static getConfig = 'config/';
+  static getFeaturedStars = 'user/celebrity_display/';
   static getCelebList = 'user/fan/celebrity_list/get_list/';
   static authGetCelebList = 'user/fan/celebrity_list/';
   static getProfessionsList = 'user/filtered_professions/';
