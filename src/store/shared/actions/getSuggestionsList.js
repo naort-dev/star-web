@@ -56,7 +56,7 @@ export const fetchSuggestionList = searchParam => (dispatch, getState) => {
     query: {
       multi_match: {
         query: searchParam,
-        fields: ['title', 'first_name', 'last_name'],
+        fields: ['title', 'first_name', 'last_name', 'nick_name'],
         type: 'phrase_prefix',
       },
     },
