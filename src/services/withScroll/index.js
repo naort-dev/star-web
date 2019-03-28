@@ -79,7 +79,7 @@ export const withScroll = (WrappedComponent) => {
 
     renderList = () => {
       if (this.props.noScroll) {
-        return this.infiniteScrollList();
+        return <WrappedComponent {...this.props} />;
       } else if (this.props.scrollTarget) {
         return this.infiniteScrollList(this.props.scrollTarget)
       }
