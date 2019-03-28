@@ -102,7 +102,7 @@ class DesktopHome extends React.Component {
 
   getAvatarContent = (index) => {
     const featuredData = this.props.featuredStars.data;
-    return featuredData[index];
+    return featuredData[index - 1];
   }
 
   render() {
