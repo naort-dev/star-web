@@ -324,7 +324,8 @@ DesktopStyled.StarContent = styled.div`
 DesktopStyled.FilterSection = styled.div`
   display: inline-block;
   height: 200px;
-  padding: 10px 0;
+  width: 100%;
+  padding: 10px;
 `;
 
 DesktopStyled.CategorySection = styled.section`

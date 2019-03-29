@@ -15,9 +15,6 @@ DropdownStyled.Select = styled.div`
   display: flex;
   cursor: pointer;
   align-items: center;
-  @media(min-width: 834px) {
-    width: 360px;
-  }
   @media(min-width: 1280px) {
     max-width: 640px;
     width: 100%;
