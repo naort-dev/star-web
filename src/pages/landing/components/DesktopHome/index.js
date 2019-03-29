@@ -194,8 +194,8 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.Title>Announcements</DesktopStyled.Title>
                   <p>
-                    Birthdays, words of encouragement, or to make fun
-                    of your buddy who lost in fantasy football. It’s your choice!
+                    Announce your next party, a wedding, graduation,
+                    or life update with a star!
                   </p>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.RowDivider>
@@ -204,8 +204,7 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.Title>Ask A Question</DesktopStyled.Title>
                   <p>
-                    Birthdays, words of encouragement, or to make fun
-                    of your buddy who lost in fantasy football. It’s your choice!
+                    Video yourself asking a question, and watch the star respond!
                   </p>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.RowDivider>
