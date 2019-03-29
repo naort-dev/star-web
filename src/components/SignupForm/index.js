@@ -297,18 +297,6 @@ class SignUp extends React.Component {
     }
   };
 
-  onGmail = () => {
-    this.setState({ gmailClick: true });
-    const check = document.getElementsByClassName("abcRioButtonIcon");
-    check[0].click();
-  };
-  onInstagramLogin = () => {
-    const clientId = env('instaId');
-    const redirectUri = env('loginInstaRedirectUri');
-    const url = `${env('instaAuthUrl')}?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token`;
-    window.open(url, '_blank');
-  }
-
   listenToStorage = () => {
     if (localStorage.getItem("InstaAccessToken")) {
       const instaUrl =
@@ -326,42 +314,6 @@ class SignUp extends React.Component {
       localStorage.removeItem("twitterData");
     }
   };
-
-  OnFBlogin = () => {
-    const that = this;
-    window.FB.login(
-      (response) => {
-        if (response.authResponse) {
-          window.FB.api(
-            "/me",
-            {
-              locale: "en_US",
-              fields: "name, email,first_name,last_name,picture"
-            },
-            function(response) {
-              that.onSocialMediaLogin(response, 2);
-            }
-          );
-        }
-      },
-      { scope: "email", return_scopes: true }
-    );
-  };
-
-  onTwitterLogin = () => {
-    this.setState({ loading: true });
-    twitterLogin()
-      .then((resp) => {
-        this.setState({ loading: false });
-        if (resp.success && resp.data) {
-          const url = resp.data.twitter_link;
-          window.open(url,'_blank');
-        }
-      })
-      .catch(() => {
-        this.setState({ loading: false });
-      })
-  }
 
   saveFormEntries = (event, type) => {
     this.setState({
@@ -482,34 +434,7 @@ class SignUp extends React.Component {
         }
         <LoginContainer.Container>
           <LoginContainer.Heading>Create your account</LoginContainer.Heading>
-          <LoginContainer.SocialMediaMessage>Already have an account?
-            <span onClick={() => this.props.toggleLogin(true)}>
-              <LoginContainer.LoginDiv>Log in</LoginContainer.LoginDiv>
-            </span>
-          </LoginContainer.SocialMediaMessage>
-          <LoginContainer.ButtonDiv>
-            <LoginContainer.Button onClick={this.OnFBlogin}>
-              <LoginContainer.FacebookContent /> 
-            </LoginContainer.Button>
-
-            <LoginContainer.GoogleWrapper id="g-sign-in" />
-            <LoginContainer.Button onClick={this.onGmail}>
-              <LoginContainer.GoogleContent />
-            </LoginContainer.Button>
-
-            <LoginContainer.Button onClick={this.onInstagramLogin}>
-              <LoginContainer.InstagramContent />
-            </LoginContainer.Button>
-
-            <LoginContainer.Button onClick={this.onTwitterLogin}>
-              <LoginContainer.TwitterContent />
-            </LoginContainer.Button>
-          </LoginContainer.ButtonDiv>
-          <LoginContainer.SignupLine>
-            <span>or signup with email</span>
-          </LoginContainer.SignupLine>
           <LoginContainer.InputFieldsWrapper>
-
             <LoginContainer.InputContainer>
               {
                 this.props.statusCode === '410' ?
