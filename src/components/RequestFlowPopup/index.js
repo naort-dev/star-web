@@ -10,43 +10,30 @@ class RequestFlowPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      fullScreen: false,
     };
     this.popupContent = null;
     this.popupWrapper = null;
   }
-  // componentDidMount() {
-  //   this.props.toggleRequestPopup(true);
-  //   this.props.togglePopup(false);
-  //   if (this.props.getPopupRef) {
-  //     this.props.getPopupRef(this.popupWrapper);
-  //   }
-  //   if (!this.props.noDisableScroll) {
-  //     document.body.style.overflow = 'hidden';
-  //     document.body.style.position = 'fixed';
-  //   }
-  //   if (this.props.noScrollToTop) {
-  //     document.body.style.overflow = 'hidden';
-  //     document.body.style.position = 'initial';
-  //   }
-  // }
-  // componentWillReceiveProps(nextProps) {
-  //   if (this.props.modalView !== nextProps.modalView && nextProps.modalView) {
-  //     window.removeEventListener('click', this.hidePopup);
-  //   } else if (this.props.modalView !== nextProps.modalView && !nextProps.modalView) {
-  //     window.addEventListener('click', this.hidePopup);
-  //   }
-  // }
-  // componentWillUnmount() {
-  //   this.props.togglePopup(true);
-  //   document.body.style.overflow = 'initial';
-  //   document.body.style.position = 'initial';
-  //   if (this.props.scrollTarget) {
-  //     if (document.body.getBoundingClientRect().width < 1025) {
-  //       this.props.scrollTarget.scrollIntoView();
-  //     }
-  //   }
-  // }
+
+  componentDidMount() {
+    this.handleResize();
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.handleResize);
+  }
+
+  handleResize = () => {
+    const { fullScreen } = this.state;
+    if (fullScreen && document.body.getBoundingClientRect().width >= 834) {
+      this.setState({ fullScreen: false });
+    } else if (!fullScreen && document.body.getBoundingClientRect().width < 834) {
+      this.setState({ fullScreen: true });
+    }
+  }
+
   renderSliderDots = () => {
     const DotsArray = times(this.props.dotsCount, random.bind(0, 100));
     const selectedDot = this.props.selectedDot ? this.props.selectedDot - 1 : 0;
@@ -62,10 +49,10 @@ class RequestFlowPopup extends React.Component {
   renderPopup = () => {
     return (
       <Dialog
-        fullScreen={false}
+        fullScreen={this.state.fullScreen}
         open
         onClose={this.props.closePopUp}
-        TransitionComponent={(props) => <Slide direction="up" {...props} />}
+        TransitionComponent={props => <Slide direction="up" {...props} />}
         aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer

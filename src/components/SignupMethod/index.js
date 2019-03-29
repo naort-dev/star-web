@@ -214,7 +214,7 @@ class SignupMethod extends React.Component {
         this.props.closeSignupFlow();
       }
     }
-    if (!skipSocialLogin && await this.checkPromo()) {
+    if (!skipSocialLogin) {
       const socialObject = {
         userName: this.state.socialMedia.username,
         firstName: this.state.socialMedia.first_name,

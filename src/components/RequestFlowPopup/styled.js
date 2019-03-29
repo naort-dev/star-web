@@ -36,20 +36,16 @@ PopupStyled.Container = styled.div`
   position: relative;
   justify-content: center;
   animation: ${popupEnter} 0.2s ease-out;
-  height: 100%;
   -webkit-overflow-scrolling: touch;
-  @media(min-width: 768px) {
-    overflow: initial;
+  justify-content: center;
+  align-items: center;
+  @media(min-width: 834px) {
     border-radius: 6px;
-    margin: auto;
-    height: auto;
-    justify-content: center;
-    align-items: center;
   }
 `;
 
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
-  padding: ${props => (props.modalView ? '0' : '58px 7px')};
+  padding: ${props => (props.modalView ? '0' : '58px 49.5px')};
   width: 100%;
   background-color: #fff;
   @media(min-width: 834px) {
