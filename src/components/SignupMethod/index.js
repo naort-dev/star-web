@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { connect } from 'react-redux';
 import validator from 'validator';
 import axios from 'axios';
-import ActionLoader from '../ActionLoader';
-
 import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
+import ActionLoader from '../ActionLoader';
+
 import { SignUpMethod } from './styled';
-import { twitterLogin, validatePromo } from '../../services';
+import { twitterLogin } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
@@ -68,7 +68,7 @@ class SignupMethod extends React.Component {
         xfbml: true,
         version: 'v3.0',
       });
-      window.FB.getLoginStatus = response => {
+      window.FB.getLoginStatus = (response) => {
         if (response.status === 'connected') {
           // for already connected
         } else {
@@ -214,7 +214,7 @@ class SignupMethod extends React.Component {
         this.props.closeSignupFlow();
       }
     }
-    if (!skipSocialLogin && await this.checkPromo()) {
+    if (!skipSocialLogin) {
       const socialObject = {
         userName: this.state.socialMedia.username,
         firstName: this.state.socialMedia.first_name,
@@ -257,6 +257,27 @@ class SignupMethod extends React.Component {
     window.open(url, '_blank');
   }
 
+  onEmailLogin = () => {
+    this.setState({
+      emailClick: true,
+    });
+  }
+
+  onTwitterLogin = () => {
+    this.setState({ loading: true });
+    twitterLogin()
+      .then((resp) => {
+        this.setState({ loading: false });
+        if (resp.success && resp.data) {
+          const url = resp.data.twitter_link;
+          window.open(url, '_blank');
+        }
+      })
+      .catch(() => {
+        this.setState({ loading: false });
+      });
+  }
+
   listenToStorage = () => {
     if (localStorage.getItem('InstaAccessToken')) {
       const instaUrl =
@@ -295,21 +316,6 @@ class SignupMethod extends React.Component {
       { scope: 'email', return_scopes: true },
     );
   };
-
-  onTwitterLogin = () => {
-    this.setState({ loading: true });
-    twitterLogin()
-      .then((resp) => {
-        this.setState({ loading: false });
-        if (resp.success && resp.data) {
-          const url = resp.data.twitter_link;
-          window.open(url, '_blank');
-        }
-      })
-      .catch(() => {
-        this.setState({ loading: false });
-      });
-  }
 
   saveFormEntries = (event, type) => {
     this.setState({
@@ -373,11 +379,6 @@ class SignupMethod extends React.Component {
     return true;
   };
 
-  onEmailLogin = () => {
-    this.setState({
-      emailClick: true,
-    });
-  }
   render() {
     return (
       this.state.emailClick ?
@@ -422,6 +423,7 @@ class SignupMethod extends React.Component {
               </SignUpMethod.Button>
               <SignUpMethod.Button onClick={this.onGmail}>
                 <SignUpMethod.SocialMediaIcon>
+                  <SignUpMethod.GoogleWrapper id="g-sign-in" />
                   <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
                   <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
                 </SignUpMethod.SocialMediaIcon>

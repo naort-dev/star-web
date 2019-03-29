@@ -1,11 +1,9 @@
 import React from "react";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
-import { Scrollbars } from "react-custom-scrollbars";
 import validator from "validator";
 import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
-import { LoginTypeSelector } from "../LoginTypeSelector";
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
 
@@ -119,7 +117,7 @@ export default class LoginForm extends React.Component {
     /* Status code 410 means Socialmedia account doesn't have email id */
     e.preventDefault();
     if (this.props.statusCode === "410") {
-      if (this.checkEmail) {
+      if (this.checkEmail()) {
         this.setState(
           {
             socialMedia: {
@@ -325,7 +323,7 @@ export default class LoginForm extends React.Component {
       })
   }
 
-  acceptEmailHandler = e => {
+  acceptEmailHandler = (e) => {
     this.setState({ email: { ...this.state.email, value: e.target.value } });
     this.props.saveData({ username: e.target.value });
   };
