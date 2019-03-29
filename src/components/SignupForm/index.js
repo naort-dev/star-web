@@ -54,44 +54,6 @@ class SignUp extends React.Component {
     }
   }
 
-  componentDidMount() {
-    window.fbAsyncInit = () => {
-      window.FB.init({
-        appId: env("fbId"),
-        cookie: true,
-        xfbml: true,
-        version: "v3.0"
-      });
-      window.FB.getLoginStatus = response => {
-        if (response.status === "connected") {
-          // for already connected
-        } else {
-          // user is not authorized
-        }
-      };
-    };
-    (function(d, s, id) {
-      let js,
-        fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) {
-        return;
-      }
-      js = d.createElement(s);
-      js.id = id;
-      js.src = "https://connect.facebook.net/en_US/sdk.js";
-      fjs.parentNode.insertBefore(js, fjs);
-    })(document, "script", "facebook-jssdk");
-    window.addEventListener("storage", this.listenToStorage);
-    if (!this.props.isLoggedIn) {
-      gapi.signin2.render("g-sign-in", {
-        scope: "profile email",
-        width: 200,
-        height: 50,
-        theme: "dark",
-        onsuccess: this.onSignIn
-      });
-    }
-  }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
       if (this.props.signupRole === "fan") {
@@ -111,20 +73,6 @@ class SignUp extends React.Component {
     }
     if (this.props.loading !== nextProps.loading) {
       this.setState({ loading: nextProps.loading });
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.props.isLoggedIn) {
-      this.props.resetRedirectUrls();
-    }
-    window.removeEventListener("storage", this.listenToStorage);
-  }
-
-  onSignIn = (googleUser) => {
-    if (this.state.gmailClick) {
-      const profile = googleUser.getBasicProfile();
-      this.onSocialMediaLogin(profile, 3);
     }
   }
 
@@ -294,24 +242,6 @@ class SignUp extends React.Component {
           }
         }
       });
-    }
-  };
-
-  listenToStorage = () => {
-    if (localStorage.getItem("InstaAccessToken")) {
-      const instaUrl =
-        env("instaUrl") + localStorage.getItem("InstaAccessToken");
-      const that = this;
-      axios
-        .get(instaUrl)
-        .then(function(response) {
-          that.onSocialMediaLogin(response.data.data, 4);
-          localStorage.removeItem("InstaAccessToken");
-        })
-        .catch(function(error) {});
-    } else if (localStorage.getItem("twitterData")) {
-      this.onSocialMediaLogin(JSON.parse(localStorage.getItem("twitterData")), 5);
-      localStorage.removeItem("twitterData");
     }
   };
 

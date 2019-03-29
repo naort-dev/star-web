@@ -96,4 +96,8 @@ SignUpMethod.SocialMediaLabel = styled.div`
   text-align: center;
   color: #2f839d;
 `;
+SignUpMethod.GoogleWrapper = styled.div`
+  display:none;
+`;
+
 export { SignUpMethod };
