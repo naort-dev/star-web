@@ -7,6 +7,7 @@ import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferre
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
+import SignupMethod from '../SignupMethod';
 import { LoginContainer, HeaderSection } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
@@ -51,29 +52,59 @@ class SignupFlow extends React.Component {
       this.props.history.push('user/star-supporters');
     }
   }
-  
+
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
-      return <SignUpForm {...this.props} changeStep={this.changeStep} currentStep={this.state.currentStep} signupRole={this.state.selectedType} data={this.state.socialData} closeSignupFlow={this.closeSignUp} />;
+      return (<SignupMethod
+        {...this.props}
+        changeStep={this.changeStep}
+        currentStep={this.state.currentStep}
+        signupRole={this.state.selectedType}
+        data={this.state.socialData}
+        closeSignupFlow={this.closeSignUp}
+      />
+      );
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} signupRole={this.state.selectedType} closeSignupFlow={this.closeSignUp} data={this.state.socialData} />;
+        case 1: return (<SignupMethod
+          {...this.props}
+          changeStep={this.changeStep}
+          currentStep={this.state.currentStep}
+          signupRole={this.state.selectedType}
+          data={this.state.socialData}
+          closeSignupFlow={this.closeSignUp}
+        />);
         case 2:
         case 3:
         case 4:
         case 5:
         case 6:
         case 7:
-        case 8: return <StarRegistration currentStep={this.state.currentStep} changeStep={this.changeStep} closeSignupFlow={this.closeSignUp} />;
+        case 8: return (<StarRegistration
+          currentStep={this.state.currentStep}
+          changeStep={this.changeStep}
+          closeSignupFlow={this.closeSignUp}
+        />);
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
       switch (this.state.currentStep) {
-        case 1: return <SignUpForm {...this.props} currentStep={this.state.currentStep} closeSignupFlow={this.closeSignUp} changeStep={this.changeStep} signupRole={this.state.selectedType} data={this.state.socialData} />;
+        case 1: return (<SignUpForm
+          {...this.props}
+          currentStep={this.state.currentStep}
+          closeSignupFlow={this.closeSignUp}
+          changeStep={this.changeStep}
+          signupRole={this.state.selectedType}
+          data={this.state.socialData}
+        />);
         case 2:
         case 3:
         case 4:
-        case 5: return <GroupRegistration currentStep={this.state.currentStep} closeSignupFlow={() => this.closeSignUp()} changeStep={this.changeStep} />;
+        case 5: return (<GroupRegistration
+          currentStep={this.state.currentStep}
+          closeSignupFlow={() => this.closeSignUp()}
+          changeStep={this.changeStep}
+        />);
         default: return null;
       }
     }
@@ -92,20 +123,12 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             <LoginContainer.LeftSection>
               {
-                this.state.currentStep === 1 || this.state.currentStep === 0 ?
-                  <HeaderSection>
-                    <Link to="/">
-                      <HeaderSection.LogoImage
-                        src="assets/images/logo_starsona.png"
-                        alt=""
-                      />
-                    </Link>
-                  </HeaderSection>
-                : null
-              }
-              {
                 !this.state.selectedType || this.state.currentStep === 0 ?
-                  <LoginTypeSelector {...this.props} isSignUp changeSignUpRole={this.changeSignUpRole} />
+                  <LoginTypeSelector
+                    {...this.props}
+                    isSignUp
+                    changeSignUpRole={this.changeSignUpRole}
+                  />
                 :
                   <LoginContainer.SignupFlow currentStep={this.state.currentStep}>
                     {
