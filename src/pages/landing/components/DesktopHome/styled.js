@@ -123,6 +123,9 @@ DesktopStyled.Avatar = styled.div`
   border-radius: 50%;
   display: block;
   perspective: 50% 50%;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  line-height: 1.17;
   @media(min-width: 834px) {
     width: 140px;
     height: 140px;
@@ -133,52 +136,10 @@ DesktopStyled.Avatar = styled.div`
   }
 `;
 
-DesktopStyled.AvatarContent = styled.div`
-  width: 100%;
-  height: 100%;
-  position: relative;
-  transition: transform 1s;
-  transform-style: preserve-3d;
-  &:hover {
-    transform: rotateY(180deg);
-  }
-`;
-
-DesktopStyled.AvatarFace = styled.div`
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  border-radius: 50%;
-  box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
-  backface-visibility: hidden;
-`;
-
-DesktopStyled.AvatarFront = DesktopStyled.AvatarFace.extend`
-  background: url('assets/images/default-cover.jpg') no-repeat;
-  background-position: center center;
-  background-size: contain;
-`;
-
-DesktopStyled.AvatarBack = DesktopStyled.AvatarFace.extend`
-  transform: rotateY(180deg);
-  background: ${props => props.theme.flatBlue};
-  color: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px;
-  font-family: Gilroy;
-  font-size: 30px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.07;
-  letter-spacing: normal;
-`;
-
 DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
+  font-family: Gilroy-Medium;
+  font-size: 30px;
+  line-height: 1.07;
   @media(min-width: 834px) {
     width: 299px;
     height: 299px;
@@ -186,6 +147,9 @@ DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
 `;
 
 DesktopStyled.SecondaryAvatar = DesktopStyled.Avatar.extend`
+  font-family: Gilroy-Medium;
+  font-size: 30px;
+  line-height: 1.07;
   @media(min-width: 834px) {
     width: 300px;
     height: 300px;
@@ -360,7 +324,8 @@ DesktopStyled.StarContent = styled.div`
 DesktopStyled.FilterSection = styled.div`
   display: inline-block;
   height: 200px;
-  padding: 10px 0;
+  width: 100%;
+  padding: 10px;
 `;
 
 DesktopStyled.CategorySection = styled.section`

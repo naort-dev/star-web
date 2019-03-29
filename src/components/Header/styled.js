@@ -391,7 +391,7 @@ HeaderSection.SignIn = styled.button`
   }
 `;
 HeaderSection.AuthButton = styled.button`
-  padding: 7px 10px;
+  padding: 5px 8px;
   border-radius: 5px;
   border: ${props => `solid 1px ${props.theme.flatBlue}`};
   background-color: ${props => props.theme.flatBlue};

@@ -1,12 +1,13 @@
 import React from 'react';
 import AvatarStyled from './styled';
 
-const AvatarContent = () => {
+const AvatarContent = ({ data = {} }) => {
+  const avatarImage = data.avatar_photo ? data.avatar_photo.image_url : null;
   return (
     <AvatarStyled>
-      <AvatarStyled.AvatarFront />
+      <AvatarStyled.AvatarFront imageUrl={avatarImage} />
       <AvatarStyled.AvatarBack>
-        Name and details
+        { data.name }
       </AvatarStyled.AvatarBack>
     </AvatarStyled>
   );

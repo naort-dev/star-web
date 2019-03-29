@@ -19,6 +19,29 @@ AvatarContainer.Avatar = styled.span`
   }
 `;
 
+AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
+  width: 140px;
+  height: 140px;
+  @media(min-width: 834px) {
+    width: 200px;
+    height: 200px;
+  }
+`;
+
+AvatarContainer.MediumAvatar = AvatarContainer.Avatar.extend`
+  width: 140px;
+  height: 140px;
+`;
+
+AvatarContainer.SmallAvatar = AvatarContainer.Avatar.extend`
+  width: 100px;
+  height: 100px;
+  @media(min-width: 834px) {
+    width: 200px;
+    height: 200px;
+  }
+`;
+
 AvatarContainer.Content = styled.article`
   border-top: ${props => `1px solid ${props.theme.white}`};
   padding-top: 0.2px;

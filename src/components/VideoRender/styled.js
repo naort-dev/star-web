@@ -9,14 +9,9 @@ VideoRenderDiv.Container = styled.div`
   border-radius: 38px;
   box-shadow: 0 3px 56px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
-  padding: 14px;
+  padding: 19px;
   width: 274px;
   height: 417px;
-  @media(min-width: 1280px) {
-    width: 274px;
-    height: 417px;
-    padding: 19px;
-  }
 `;
 
 VideoRenderDiv.Content = styled.div`

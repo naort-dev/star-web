@@ -67,7 +67,7 @@ SearchSection.SuggestionListWrapper = styled.div`
   }
 `;
 SearchSection.SuggestionList = styled.ul`
-  padding: 16px 10px;
+  padding: 16px 0;
 `;
 SearchSection.noDataWrapper = styled.div`
   display: table;
@@ -109,7 +109,7 @@ SearchSection.SuggestionListContent = styled.span`
 SearchSection.StarHeading = styled.p`
   color: ${props => props.theme.orangePink};
   font-size: 13px;
-  font-family: Gilroy;
+  font-family: Gilroy-Semibold;
   text-transform: uppercase;
   padding-left: 30px;
   margin-top: 10px;
@@ -117,24 +117,32 @@ SearchSection.StarHeading = styled.p`
 `;
 
 SearchSection.CategoryList = styled.div`
-  padding: 10px 0 10px 30px;
+  padding: 5px 0 5px 30px;
   color: #333;
 `;
 
 SearchSection.CategoryItem = styled.span`
   border: 2px solid #58B0CB;
   border-radius: 15px;
-  padding: 1px 8px;
   display: inline-block;
+  margin: 5px 0;
   margin-right: 7px;
   font-size: 14px;
-  font-family: Gilroy;
+  font-family: Gilroy-Medium;
+  a {
+    color: ${props => props.theme.greyishBrown};
+    padding: 8px 15px;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 SearchSection.SuggestionDetails = styled.p`
-  font-size: 12px;
+  font-size: 13px;
+  font-family: Gilroy-Medium;
   color: ${props => props.theme.greyishBrown};
-  line-height: 18px;
+  line-height: 19px;
   font-weight: normal;
   @media(min-width: 768px) {
     font-size: 14px;
@@ -144,6 +152,7 @@ SearchSection.SuggestionDetails = styled.p`
 SearchSection.SuggestionListImage = styled.span`
   width: 50px;
   height: 50px;
+  display: block;
   background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/profile.png)')};
   background-repeat:no-repeat;
   background-position: center;
@@ -153,9 +162,8 @@ SearchSection.SuggestionListImage = styled.span`
 SearchSection.SuggestionListName = styled.span`
   margin-left: 10px;
   color: #68b5cd;
-  font-family: Gilroy;
-  font-weight: 600;
-  font-size: 16px;
+  font-family: Gilroy-Bold;
+  font-size: 17px;
 `;
 
 SearchSection.InputWrapper = styled.div`
@@ -170,9 +178,6 @@ SearchSection.InputWrapper = styled.div`
   border: ${props => (props.alternate ? `solid 1px ${props.theme.flatBlue}` : 'none')};
   color: ${props => props.theme.fadedOrange};
   font-size: 18px;
-  @media(min-width: 834px) {
-    width: 360px;
-  }
   @media(min-width: 1280px) {
     width: 100%;
     height: 100%;
