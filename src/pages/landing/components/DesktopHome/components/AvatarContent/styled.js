@@ -25,8 +25,8 @@ AvatarStyled.AvatarFace = styled.div`
 
 AvatarStyled.AvatarFront = AvatarStyled.AvatarFace.extend`
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
+  background-size: cover;
   background-position: center center;
-  background-size: contain;
 `;
 
 AvatarStyled.AvatarBack = AvatarStyled.AvatarFace.extend`
