@@ -1,12 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { times, random } from 'lodash';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
-import { toggleRequestPopup, togglePopup } from '../../store/shared/actions/toggleModals';
 import PopupStyled from './styled';
 
-class RequestFlowPopup extends React.Component {
+export default class RequestFlowPopup extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,7 +71,7 @@ class RequestFlowPopup extends React.Component {
             !this.props.modalView &&
               <PopupStyled.CloseButton
                 smallPopup={this.props.smallPopup || this.props.largePopup}
-                onClick={() => this.props.closePopUp()}
+                onClick={this.props.closePopUp}
                 closeIconColor={this.props.closeIconColor}
               />
           }
@@ -89,14 +87,3 @@ class RequestFlowPopup extends React.Component {
     return this.renderPopup();
   }
 }
-
-const mapStateToProps = state => ({
-  popupVisibility: state.modals.requestPopup,
-});
-
-const mapDispatchToProps = dispatch => ({
-  toggleRequestPopup: state => dispatch(toggleRequestPopup(state)),
-  togglePopup: state => dispatch(togglePopup(state)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(RequestFlowPopup);
