@@ -31,9 +31,8 @@ SignUpMethod.BackButton = styled.span`
 SignUpMethod.SocialMediaSignup = styled.div`
   text-align:center;
   height: 100%;
-  @media(min-width:768px){
-    padding: 5px 0;
-    padding-bottom: 0;  
+  @media(min-width: 834px){
+    padding-top: 74px;
   }
 `;
 
@@ -51,7 +50,7 @@ SignUpMethod.Heading = styled.div`
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
-  padding-bottom: 20px;
+  padding: 20px 0;
   @media(min-width:768px){
     font-size: 24px;
   }

@@ -34,11 +34,9 @@ PopupStyled.Container = styled.div`
   display: flex;
   max-width: 100%;
   position: relative;
-  justify-content: center;
   animation: ${popupEnter} 0.2s ease-out;
   -webkit-overflow-scrolling: touch;
   justify-content: center;
-  align-items: center;
   @media(min-width: 834px) {
     border-radius: 6px;
   }
@@ -50,6 +48,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   background-color: #fff;
   @media(min-width: 834px) {
     width: 700px;
+    height: 700px;
   }
 `;
 

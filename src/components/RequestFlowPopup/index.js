@@ -52,7 +52,6 @@ class RequestFlowPopup extends React.Component {
         fullScreen={this.state.fullScreen}
         open
         onClose={this.props.closePopUp}
-        TransitionComponent={props => <Slide direction="up" {...props} />}
         aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer
