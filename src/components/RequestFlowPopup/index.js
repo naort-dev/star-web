@@ -1,7 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { times, random } from 'lodash';
-import ReactDOM from 'react-dom';
+import Slide from '@material-ui/core/Slide';
+import Dialog from '@material-ui/core/Dialog';
 import { toggleRequestPopup, togglePopup } from '../../store/shared/actions/toggleModals';
 import PopupStyled from './styled';
 
@@ -14,49 +15,38 @@ class RequestFlowPopup extends React.Component {
     this.popupContent = null;
     this.popupWrapper = null;
   }
-  componentDidMount() {
-    this.props.toggleRequestPopup(true);
-    this.props.togglePopup(false);
-    if (!this.props.modalView) {
-      window.addEventListener('click', this.hidePopup);
-    }
-    if (this.props.getPopupRef) {
-      this.props.getPopupRef(this.popupWrapper);
-    }
-    if (!this.props.noDisableScroll) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'fixed';
-    }
-    if (this.props.noScrollToTop) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.position = 'initial';
-    }
-  }
-  componentWillReceiveProps(nextProps) {
-    if (this.props.modalView !== nextProps.modalView && nextProps.modalView) {
-      window.removeEventListener('click', this.hidePopup);
-    } else if (this.props.modalView !== nextProps.modalView && !nextProps.modalView) {
-      window.addEventListener('click', this.hidePopup);
-    }
-  }
-  componentWillUnmount() {
-    this.props.togglePopup(true);
-    if (!this.props.modalView) {
-      window.removeEventListener('click', this.hidePopup);
-    }
-    document.body.style.overflow = 'initial';
-    document.body.style.position = 'initial';
-    if (this.props.scrollTarget) {
-      if (document.body.getBoundingClientRect().width < 1025) {
-        this.props.scrollTarget.scrollIntoView();
-      }
-    }
-  }
-  hidePopup = (e) => {
-    if (this.popupContent && this.popupWrapper.contains(e.target) && !this.popupContent.contains(e.target)) {
-      this.props.closePopUp();
-    }
-  }
+  // componentDidMount() {
+  //   this.props.toggleRequestPopup(true);
+  //   this.props.togglePopup(false);
+  //   if (this.props.getPopupRef) {
+  //     this.props.getPopupRef(this.popupWrapper);
+  //   }
+  //   if (!this.props.noDisableScroll) {
+  //     document.body.style.overflow = 'hidden';
+  //     document.body.style.position = 'fixed';
+  //   }
+  //   if (this.props.noScrollToTop) {
+  //     document.body.style.overflow = 'hidden';
+  //     document.body.style.position = 'initial';
+  //   }
+  // }
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.modalView !== nextProps.modalView && nextProps.modalView) {
+  //     window.removeEventListener('click', this.hidePopup);
+  //   } else if (this.props.modalView !== nextProps.modalView && !nextProps.modalView) {
+  //     window.addEventListener('click', this.hidePopup);
+  //   }
+  // }
+  // componentWillUnmount() {
+  //   this.props.togglePopup(true);
+  //   document.body.style.overflow = 'initial';
+  //   document.body.style.position = 'initial';
+  //   if (this.props.scrollTarget) {
+  //     if (document.body.getBoundingClientRect().width < 1025) {
+  //       this.props.scrollTarget.scrollIntoView();
+  //     }
+  //   }
+  // }
   renderSliderDots = () => {
     const DotsArray = times(this.props.dotsCount, random.bind(0, 100));
     const selectedDot = this.props.selectedDot ? this.props.selectedDot - 1 : 0;
@@ -71,11 +61,12 @@ class RequestFlowPopup extends React.Component {
 
   renderPopup = () => {
     return (
-      <PopupStyled
-        preventScroll={this.props.preventScroll}
-        visible={this.props.popupVisibility}
-        id="request-flow-popup"
-        innerRef={node => this.popupWrapper = node}
+      <Dialog
+        fullScreen={false}
+        open
+        onClose={this.props.closePopUp}
+        TransitionComponent={(props) => <Slide direction="up" {...props} />}
+        aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer
           modalView={this.props.modalView}
@@ -103,15 +94,12 @@ class RequestFlowPopup extends React.Component {
             {this.props.children}
           </PopupStyled.SmallContent>
         </PopupStyled.SmallContainer>
-      </PopupStyled>
+      </Dialog>
     );
   }
 
   render() {
-    return ReactDOM.createPortal(
-      this.renderPopup(),
-      document.getElementById('modal-root'),
-    );
+    return this.renderPopup();
   }
 }
 
