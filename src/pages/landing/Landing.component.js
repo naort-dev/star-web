@@ -1,18 +1,12 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import Helmet from 'react-helmet';
-import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
+import MobileHome from './components/MobileHome';
 import Sidebar from '../../components/Sidebar';
 import Tabs from '../../components/Tabs';
-// import { Starprofile } from '../starProfile';
-import { VideoSharePage } from '../videoSharePage';
-// import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
-import { setMetaTags } from '../../utils/setMetaTags';
 
 export default class Landing extends React.Component {
   constructor(props) {
@@ -22,6 +16,7 @@ export default class Landing extends React.Component {
       filterSelected: false,
       subCategoryList: [],
       groupClick: true,
+      desktopLanding: true,
     };
   }
 
@@ -49,10 +44,11 @@ export default class Landing extends React.Component {
           this.props.fetchCelebrityList(0, true, 'Stars');
       }
     }
-    window.addEventListener('resize', this.setScrollHeight);
+    window.addEventListener('resize', this.handleResize);
   }
 
   componentDidMount() {
+    this.handleResize();
     window.onpopstate = this.onBackButtonEvent;
   }
 
@@ -99,8 +95,9 @@ export default class Landing extends React.Component {
     }
   }
   componentWillUnmount() {
-    window.removeEventListener('resize', this.setScrollHeight);
+    window.removeEventListener('resize', this.handleResize);
   }
+
   onBackButtonEvent = event => event.preventDefault()
   getFilterCount = () => {
     let count = 0;
@@ -122,6 +119,13 @@ export default class Landing extends React.Component {
         break;
     }
     return count;
+  }
+  handleResize = () => {
+    if (document.body.getBoundingClientRect().width >= 834) {
+      this.setState({ desktopLanding: true });
+    } else {
+      this.setState({ desktopLanding: false });
+    }
   }
   findSubCategoryList = (selectedCategory) => {
     const { professions } = this.props.professionsList;
@@ -170,6 +174,7 @@ export default class Landing extends React.Component {
     this.props.fetchVideosList(offset, refresh);
   }
   render() {
+    const { desktopLanding } = this.state;
     return (
       <LandingStyled>
         <Header
@@ -177,10 +182,16 @@ export default class Landing extends React.Component {
           disableLogo
           disableSearch
         />
-        <LandingStyled.Desktop>
-          <DesktopHome />
-        </LandingStyled.Desktop>
-        <Footer />
+        <LandingStyled.Container>
+          {
+            desktopLanding ?
+              <React.Fragment>
+                <DesktopHome />
+                <Footer />
+              </React.Fragment>
+            : <MobileHome />
+          }
+        </LandingStyled.Container>
       </LandingStyled>
     );
   }

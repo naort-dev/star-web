@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
 const LandingStyled = styled.div`
-  margin-top: 60px;
-  height: calc(100vh - 60px);
+  margin-top: 0;
   @media(min-width: 834px) {
     margin-top: 0;
     height: auto;
   }
 `;
 
-LandingStyled.Desktop = styled.div`
+LandingStyled.Container = styled.div`
   display: none;
   @media(min-width: 834px) {
     display: block;
