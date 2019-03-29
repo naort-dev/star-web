@@ -43,13 +43,13 @@ const CategoryList = (props) => {
       <CategoryListItem>
         <div>
           <CategoryName>MOVIES/TV</CategoryName>
-          <CategoryDescription>From the big screen to your small screen..</CategoryDescription>
+          <CategoryDescription>From the big screen to your small screen.</CategoryDescription>
         </div>
       </CategoryListItem>
       <CategoryListItem>
         <div>
           <CategoryName>SOCIAL/YOUTUBE</CategoryName>
-          <CategoryDescription> Instagrammers, Youtubers, Bloggers. .</CategoryDescription>
+          <CategoryDescription> Instagrammers, Youtubers, Bloggers.</CategoryDescription>
         </div>
       </CategoryListItem>
       <CategoryListItem>
