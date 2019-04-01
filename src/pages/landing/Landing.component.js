@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import Helmet from 'react-helmet';
 import { Scrollbars } from 'react-custom-scrollbars';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
@@ -9,6 +10,7 @@ import { VideoSharePage } from '../videoSharePage';
 import { GroupProfile } from '../groupProfile';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
+import { setMetaTags } from '../../utils/setMetaTags';
 import ScrollList from '../../components/ScrollList';
 
 export default class Landing extends React.Component {
@@ -205,6 +207,24 @@ export default class Landing extends React.Component {
           enableMenu={this.activateMenu}
           history={this.props.history}
         />
+        {
+          this.props.isSignup &&
+            <Helmet
+              title="Starsona ~ Personalized Video Grams & Shout-Outs from the Stars"
+              meta={[...setMetaTags(
+                'Starsona ~ Personalized Video Grams & Shout-Outs from the Stars',
+                'https://starsona.com/assets/images/logo_starsona.png',
+                'Starsona - personalized video grams and shout-outs from the stars, to help you celebrate everyday moments. Find actors, athletes, musicians, YouTubers and more with the Starsona app. Select a star, and request a personalized video shout-out. Then share your shout-out via SMS, email, or social media!',
+              ),
+              { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+              { property: 'al:ios:url', content: `${this.props.configData.web_url}signup${this.props.history.location.search}` },
+              { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+              { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+              { property: 'al:android:url', content: `${this.props.configData.web_url}signup${this.props.history.location.search}` },
+              { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
+              ]}
+            />
+        }
         <LandingStyled.sectionWrapper>
           <LandingStyled.sideSection menuActive={this.state.menuActive}>
             <Scrollbars
