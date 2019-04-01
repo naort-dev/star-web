@@ -10,6 +10,7 @@ DropdownStyled.Select = styled.div`
   background: ${props => props.theme.white};
   padding: 18px;
   height: 50px;
+  outline: none;
   font-family: Gilroy-Medium;
   font-size: 20px;
   display: flex;

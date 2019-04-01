@@ -189,7 +189,7 @@ export default class Landing extends React.Component {
                 <DesktopHome />
                 <Footer />
               </React.Fragment>
-            : null
+            : <MobileHome />
           }
         </LandingStyled.Container>
       </LandingStyled>
