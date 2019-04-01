@@ -1,6 +1,5 @@
 import { connect } from 'react-redux';
 import Requestvideo from './Requestvideo.component';
-import { setRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { resetPaymentDetails } from '../../store/shared/actions/processPayments';
 import { cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { clearAll } from '../../store/shared/actions/audioRecorder';
@@ -21,7 +20,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
-  setRedirectUrls: (to, from) => dispatch(setRedirectUrls(to, from)),
   cancelBookingDetails: () => dispatch(cancelBookingDetails()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   clearAll: () => dispatch(clearAll()),

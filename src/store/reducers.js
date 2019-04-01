@@ -19,16 +19,13 @@ import myVideosList from '../pages/requests/reducers/myVideosList';
 import groupSupporters from '../pages/starSupporters/reducers';
 import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
-import redirectReferrer from '../store/shared/reducers/redirect';
 import otherRelation from '../store/shared/reducers/other';
 import paymentDetails from '../store/shared/reducers/payments';
 import videoRecorder from '../store/shared/reducers/videoRecording';
 import videoUploader from '../store/shared/reducers/videoUploader';
 import requestHandler from '../pages/requests/reducers/requestHandler';
-import imageViewer from '../store/shared/reducers/imageViewer';
 import audioRecorder from '../store/shared/reducers/audioRecorder';
 import referralDetails from '../store/shared/reducers/starReferral';
-import popupData from './shared/reducers/popupData';
 import userDetails from '../store/shared/reducers/userDetails';
 import saveSettings from '../store/shared/reducers/saveSettings';
 import stripeRegistration from '../store/shared/reducers/stripeRegistrations';
@@ -60,14 +57,11 @@ const appReducer = combineReducers({
   myVideosList,
   bookingData,
   otherRelation,
-  redirectReferrer,
   paymentDetails,
   videoRecorder,
   videoUploader,
-  imageViewer,
   requestHandler,
   audioRecorder,
-  popupData,
   userDetails,
   saveSettings,
   stripeRegistration,

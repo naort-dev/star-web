@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
@@ -30,7 +31,7 @@ export const withScroll = (WrappedComponent) => {
       };
     }
     componentWillMount() {
-      const endOfList = this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
+      const endOfList = this.props.dataList && this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
       if ((!this.props.loading && endOfList) || this.props.finite) {
         this.setState({ hasMore: false });
       }
@@ -107,4 +108,12 @@ export const withScroll = (WrappedComponent) => {
       );
     }
   };
+};
+
+withScroll.defaultProps = {
+  dataList: [],
+};
+
+withScroll.propsTypes = {
+  dataList: PropTypes.array.isRequired,
 };
