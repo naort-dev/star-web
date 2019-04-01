@@ -5,6 +5,7 @@ const CategoryListItem = styled.li`
   padding-top: 40px;
   padding-left: 0;
   display: flex;
+  align-items: center;
   cursor: pointer;
   @media(min-width: 1280px) {
     padding-top: 41px;
@@ -31,6 +32,12 @@ const CategoryIcon = styled.span`
   color: ${props => props.theme.greyishBrown};
 `;
 
+const CategoryContent = styled.div`
+  display: block;
+  padding-left: 24.9px;
+  padding-top: 5px;
+`;
+
 const CategoryListWrapper = styled.ul`
   display: flex;
   flex-direction: column;
@@ -55,4 +62,4 @@ const CategoryListWrapper = styled.ul`
   }
 `;
 
-export { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryDescription };
+export { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryContent, CategoryDescription };
