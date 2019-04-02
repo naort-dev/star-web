@@ -4,7 +4,6 @@ import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
 import MobileHome from './components/MobileHome';
 import Sidebar from '../../components/Sidebar';
-import Tabs from '../../components/Tabs';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 
