@@ -10,6 +10,12 @@ export const withScroll = (WrappedComponent) => {
   const ListStyled = styled.section`
     width: 100%;
     height: 100%;
+    min-height: 300px;
+    ${props => props.loading && (`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `)}
   `;
 
   const NoDataText = styled.span`
@@ -79,7 +85,9 @@ export const withScroll = (WrappedComponent) => {
     }
 
     renderList = () => {
-      if (this.props.noScroll) {
+      if (this.props.loading) {
+        return <Loader />
+      } else if (this.props.noScroll) {
         return <WrappedComponent {...this.props} />;
       } else if (this.props.scrollTarget) {
         return this.infiniteScrollList(this.props.scrollTarget)
@@ -97,7 +105,7 @@ export const withScroll = (WrappedComponent) => {
 
     render() {
       return (
-        <ListStyled>
+        <ListStyled loading={this.props.loading}>
           {
             !this.props.dataList.length && this.props.loading ?
               <Loader />
