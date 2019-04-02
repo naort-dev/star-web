@@ -5,7 +5,7 @@ import {
   faTwitterSquare,
   faWhatsappSquare,
 } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelopeSquare } from '@fortawesome/free-solid-svg-icons';
+import { faEnvelopeSquare } from '@fortawesome/pro-regular-svg-icons';
 import { FooterStyled } from './styled';
 
 export const Footer = props => (

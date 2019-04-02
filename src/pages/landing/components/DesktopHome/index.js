@@ -7,8 +7,8 @@ import {
   faWhatsappSquare,
 } from '@fortawesome/free-brands-svg-icons';
 import { withTheme } from 'styled-components';
-import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons';
-import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelopeSquare } from '@fortawesome/pro-regular-svg-icons';
+import { faComment, faCalendarAlt, faQuestion } from '@fortawesome/pro-light-svg-icons';
 import PathDrawer from './components/PathDrawer';
 import AvatarContent from './components/AvatarContent';
 import CategoryList from './components/CategoryList';
