@@ -33,7 +33,7 @@ export const Header = styled.section`
     color: #fff;
   }
   :after {
-    content:'';
+    content: '';
     position: absolute;
     top: 100%;
     left: 47%;
@@ -46,12 +46,14 @@ export const Header = styled.section`
 `;
 
 export const Content = styled.section`
-  padding: 50px;
   position: relative;
+  padding-top: 30px;
+  height: calc(100% - 157px);
 `;
 
 export const ModalContainer = styled.section`
   overflow: hidden;
+  height: 100%;
 `;
 
 export const FlexBoxSB = styled.section`

@@ -1,3 +1,22 @@
 export const dataModal = {
-  category: [{ header: '', text: '', icon: '' }, {}, {}],
+  category: [
+    {
+      header: 'Personalized Shout-Out',
+      text:
+        'Celebrate everyday moments with a personalized video greeting from Viv Richards. Birthdays, encouragement, graduations… you pick.',
+      icon: '../../assets/images/shoutout.svg',
+    },
+    {
+      header: 'Announcement',
+      text:
+        'Have Viv Richards invite everyone to your next party, the big game, your wedding, life update, etc. Then send it out!',
+      icon: '../../assets/images/annoucement.svg',
+    },
+    {
+      header: 'Ask a Question ',
+      text:
+        'Video yourself asking Viv Richards a question. When they respond, we’ll stitch the two videos together so you get a great Q&A interaction.',
+      icon: '../../assets/images/question.svg',
+    },
+  ],
 };
