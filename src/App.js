@@ -1,13 +1,12 @@
 import React from 'react';
-import {
-  Switch,
-  Route,
-  withRouter,
-} from 'react-router-dom';
+import { Switch, Route, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
+
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faAngleLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
@@ -19,6 +18,7 @@ import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
+import { Purchase } from './pages/Purchase/Purchase.Loadable';
 // import { Favourites } from './pages/favourites';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
@@ -29,9 +29,13 @@ import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
 // import { Earnings } from './pages/earnings';
 import Modals from './modals';
-import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
+import {
+  fetchUserDetails,
+  updateUserRole,
+} from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
 
+library.add(faAngleLeft, faTimes);
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -49,9 +53,17 @@ class App extends React.Component {
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
     window.addEventListener('storage', () => {
-      if (localStorage && localStorage.getItem('data') === null && this.props.isLoggedIn) {
+      if (
+        localStorage &&
+        localStorage.getItem('data') === null &&
+        this.props.isLoggedIn
+      ) {
         this.props.logOut();
-      } else if (localStorage && localStorage.getItem('data') !== null && !this.props.isLoggedIn) {
+      } else if (
+        localStorage &&
+        localStorage.getItem('data') !== null &&
+        !this.props.isLoggedIn
+      ) {
         const userData = JSON.parse(localStorage.getItem('data')).user;
         this.props.updateLoginStatus(userData);
         this.props.fetchUserDetails(userData.id);
@@ -68,7 +80,11 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
     }
-    if (!nextProps.configLoading && nextProps.configData && (!nextProps.isLoggedIn || nextProps.userDataLoaded)) {
+    if (
+      !nextProps.configLoading &&
+      nextProps.configData &&
+      (!nextProps.isLoggedIn || nextProps.userDataLoaded)
+    ) {
       this.setState({ showLoading: false });
     }
   }
@@ -82,7 +98,7 @@ class App extends React.Component {
   routeToOutside = url => () => {
     window.location = url;
     return null;
-  }
+  };
 
   render() {
     const { showLoading } = this.state;
@@ -99,31 +115,49 @@ class App extends React.Component {
               'Starsona - personalized video grams and shout-outs from the stars, to help you celebrate everyday moments. Find actors, athletes, musicians, YouTubers and more with the Starsona app. Select a star, and request a personalized video shout-out. Then share your shout-out via SMS, email, or social media!',
             )}
           />
-          {
-            showLoading && <ComponentLoading timedOut={this.state.timedOut} />
-          }
-          {
-            showRoutes && (
-              <Switch>
-                {/* non logged in areas */}
+          {showLoading && <ComponentLoading timedOut={this.state.timedOut} />}
+          {showRoutes && (
+            <Switch>
+              {/* non logged in areas */}
 
-                <Route path="/privacy-policy" component={this.routeToOutside('https://about.starsona.com/privacy-policy')} />
-                <Route path="/terms-service" component={this.routeToOutside('https://about.starsona.com/terms-service')} s/>
-                <Route path="/contact" component={this.routeToOutside('https://about.starsona.com/contact')} />
-                <Route path="/faq" component={this.routeToOutside('https://about.starsona.com/faq')} />
-                <Route
-                  exact
-                  path="/signup"
-                  render={props => <Landing {...props} isSignup />}
-                />
-                <Route path="/resetpassword" component={Login} />
-                <Route path="/instalogin" component={InstaLogin} />
-                <Route path="/twitter-login" component={TwitterLogin} />
-                <Route exact path="/video/:id" component={Landing} />
+              <Route
+                path="/privacy-policy"
+                component={this.routeToOutside(
+                  'https://about.starsona.com/privacy-policy',
+                )}
+              />
+              <Route
+                path="/terms-service"
+                component={this.routeToOutside(
+                  'https://about.starsona.com/terms-service',
+                )}
+                s
+              />
+              <Route
+                path="/contact"
+                component={this.routeToOutside(
+                  'https://about.starsona.com/contact',
+                )}
+              />
+              <Route
+                path="/faq"
+                component={this.routeToOutside(
+                  'https://about.starsona.com/faq',
+                )}
+              />
+              <Route
+                exact
+                path="/signup"
+                render={props => <Landing {...props} isSignup />}
+              />
+              <Route path="/resetpassword" component={Login} />
+              <Route path="/instalogin" component={InstaLogin} />
+              <Route path="/twitter-login" component={TwitterLogin} />
+              <Route exact path="/video/:id" component={Landing} />
 
-                {/* logged in areas */}
+              {/* logged in areas */}
 
-                {/* <Route
+              {/* <Route
                   path="/user/favorites"
                   component={protectRoute({
                     RouteComponent: Favourites,
@@ -167,16 +201,16 @@ class App extends React.Component {
                   })}
                 /> */}
 
-                {/* fallbacks, keep it last */}
-                <Route path="/unauthorized" component={Unauthorized} />
-                <Route path="/not-found" component={Page404} />
-                <Route exact path="/" component={Landing} />
-                {/* <Route exact path="/:id" component={Landing} />
+              {/* fallbacks, keep it last */}
+              <Route path="/unauthorized" component={Unauthorized} />
+              <Route path="/not-found" component={Page404} />
+              <Route exact path="/" component={Landing} />
+              {/* <Route exact path="/:id" component={Landing} />
                 <Route exact path="/group-profile/:id" component={Landing} /> */}
-                <Route component={Page404} />
-              </Switch>
-            )
-          }
+              <Route path="/purchase" component={Purchase} />
+              <Route component={Page404} />
+            </Switch>
+          )}
         </div>
       </div>
     );
@@ -201,10 +235,16 @@ const mapProps = dispatch => ({
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
-  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  updateLoginStatus: sessionDetails =>
+    dispatch(updateLoginStatus(sessionDetails)),
   updateUserRole: (isStar, role) => dispatch(updateUserRole(isStar, role)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   logOut: () => dispatch(logOut()),
 });
 
-export default withRouter(connect(mapState, mapProps)(App));
+export default withRouter(
+  connect(
+    mapState,
+    mapProps,
+  )(App),
+);
