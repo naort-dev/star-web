@@ -23,6 +23,9 @@ export default class Landing extends React.Component {
     if (this.props.isSignup && !this.props.isLoggedIn) {
       this.props.toggleSignup(true);
     }
+    if (!this.props.featuredStars.data.length) {
+      this.props.fetchFeaturedStars();
+    }
     if (this.props.location.pathname === '/' || this.props.isSignup) {
       switch (this.props.filters.selectedTab) {
         case 'Stars':

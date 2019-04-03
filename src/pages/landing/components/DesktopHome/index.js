@@ -83,9 +83,6 @@ class DesktopHome extends React.Component {
 
   componentDidMount() {
     this.setTrendingData();
-    if (!this.props.featuredStars.data.length) {
-      this.props.fetchFeaturedStars();
-    }
     if (!this.props.trendingStars.data.length) {
       this.props.fetchTrendingStars();
     }
@@ -299,7 +296,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
   fetchTrendingStars: () => dispatch(fetchTrendingStars()),
 });
 
