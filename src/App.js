@@ -6,7 +6,6 @@ import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faAngleLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
@@ -35,7 +34,6 @@ import {
 } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
 
-library.add(faAngleLeft, faTimes);
 class App extends React.Component {
   constructor(props) {
     super(props);
