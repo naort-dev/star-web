@@ -19,6 +19,7 @@ import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
 
 import { fetchFeaturedStars } from '../../actions/getFeaturedStars';
+import { fetchTrendingStars } from '../../actions/getTrendingStars';
 
 import DesktopStyled from './styled';
 
@@ -27,7 +28,7 @@ class DesktopHome extends React.Component {
     super(props);
     this.dataList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     this.state = {
-      trendingList: this.dataList,
+      trendingList: props.trendingStars.data,
     };
     this.starData = [{
       size: '50px',
@@ -85,7 +86,21 @@ class DesktopHome extends React.Component {
     if (!this.props.featuredStars.data.length) {
       this.props.fetchFeaturedStars();
     }
+    if (!this.props.trendingStars.data.length) {
+      this.props.fetchTrendingStars();
+    }
     window.addEventListener('resize', this.setTrendingData);
+  }
+
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    let { trendingList } = prevState;
+    const trendingStars = nextProps.trendingStars.data;
+    if (document.body.getBoundingClientRect().width >= 1280) {
+      trendingList = trendingStars.slice(0, trendingStars.length);
+    } else {
+      trendingList = trendingStars.slice(0, trendingStars.length - 1);
+    }
+    return { trendingList };
   }
 
   componentWillUnmount() {
@@ -93,10 +108,11 @@ class DesktopHome extends React.Component {
   }
 
   setTrendingData = () => {
+    const trendingStars = this.props.trendingStars.data;
     if (document.body.getBoundingClientRect().width >= 1280) {
-      this.setState({ trendingList: this.dataList.slice(0, this.dataList.length) });
+      this.setState({ trendingList: trendingStars.slice(0, trendingStars.length) });
     } else {
-      this.setState({ trendingList: this.dataList.slice(0, this.dataList.length - 1) });
+      this.setState({ trendingList: trendingStars.slice(0, trendingStars.length - 1) });
     }
   }
 
@@ -264,6 +280,7 @@ class DesktopHome extends React.Component {
             </DesktopStyled.SubTitle>
             <StarListing
               dataList={this.state.trendingList}
+              loading={this.props.trendingStars.loading}
               noScroll
               totalCount={this.state.trendingList.length}
               limit={10}
@@ -278,10 +295,12 @@ class DesktopHome extends React.Component {
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   featuredStars: state.featuredStars,
+  trendingStars: state.trendingStars,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
+  fetchTrendingStars: () => dispatch(fetchTrendingStars()),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));

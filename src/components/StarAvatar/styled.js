@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const AvatarContainer = styled.section`
-  
+  cursor: pointer;
 `;
 
 AvatarContainer.Avatar = styled.span`
@@ -10,9 +10,9 @@ AvatarContainer.Avatar = styled.span`
   display: block;
   width: 100px;
   height: 100px;
-  background: url('assets/images/default-cover.jpg') no-repeat;
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
   @media(min-width: 834px) {
     width: 200px;
     height: 200px;
@@ -54,11 +54,16 @@ AvatarContainer.Content = styled.article`
 AvatarContainer.StarDescription = styled.div`
   display: inline-block;
   width: 85%;
+  padding-top: 7px;
 `;
 
 AvatarContainer.Category = styled.span`
   font-family: Gilroy-Medium;
   font-size: 13px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 AvatarContainer.Name = styled.span`

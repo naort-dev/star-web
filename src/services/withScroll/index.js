@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
@@ -9,6 +10,12 @@ export const withScroll = (WrappedComponent) => {
   const ListStyled = styled.section`
     width: 100%;
     height: 100%;
+    min-height: 300px;
+    ${props => props.loading && (`
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    `)}
   `;
 
   const NoDataText = styled.span`
@@ -30,7 +37,7 @@ export const withScroll = (WrappedComponent) => {
       };
     }
     componentWillMount() {
-      const endOfList = this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
+      const endOfList = this.props.dataList && this.props.dataList.length !== 0 && this.props.dataList.length >= this.props.totalCount;
       if ((!this.props.loading && endOfList) || this.props.finite) {
         this.setState({ hasMore: false });
       }
@@ -78,7 +85,9 @@ export const withScroll = (WrappedComponent) => {
     }
 
     renderList = () => {
-      if (this.props.noScroll) {
+      if (this.props.loading) {
+        return <Loader />
+      } else if (this.props.noScroll) {
         return <WrappedComponent {...this.props} />;
       } else if (this.props.scrollTarget) {
         return this.infiniteScrollList(this.props.scrollTarget)
@@ -96,7 +105,7 @@ export const withScroll = (WrappedComponent) => {
 
     render() {
       return (
-        <ListStyled>
+        <ListStyled loading={this.props.loading}>
           {
             !this.props.dataList.length && this.props.loading ?
               <Loader />
@@ -107,4 +116,12 @@ export const withScroll = (WrappedComponent) => {
       );
     }
   };
+};
+
+withScroll.defaultProps = {
+  dataList: [],
+};
+
+withScroll.propsTypes = {
+  dataList: PropTypes.array.isRequired,
 };
