@@ -6,7 +6,7 @@ const AvatarContainer = styled.section`
 
 AvatarContainer.ControlWrapper = styled.span`
   position: absolute;
-  bottom: 10px;
+  bottom: 7.5px;
   left: 0;
   right: 0;
   text-align: center;
