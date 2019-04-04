@@ -8,7 +8,7 @@ import {
   Message,
   ContentWrapper,
   Layout,
-} from './CategoryList.styles';
+} from './styled';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 
 class CategoryList extends Component {

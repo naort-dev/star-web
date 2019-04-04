@@ -9,7 +9,7 @@ import {
   ProfileIcon,
 } from './styled';
 import Modal from '../../components/Modal/Modal';
-import CategoryList from './Components/CategoryList/CategoryList';
+import CategoryList from './Components/CategoryList';
 import ModalSwitcher from './ModalSwitcher';
 import StarDrawer from '../../components/StarDrawer';
 import { dataModal } from './DataModals/formModals';
