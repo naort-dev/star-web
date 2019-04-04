@@ -25,13 +25,13 @@ class MobileHome extends React.Component {
       color: '#fff4eb',
     }, {
       size: '60px',
-      horizontal: '10px',
+      horizontal: '5%',
       vertical: '460px',
       rotation: '-15deg',
       color: props.theme.paleSkyBlue,
     }, {
       size: '78px',
-      horizontal: '280px',
+      horizontal: '85%',
       vertical: '60px',
       rotation: '15deg',
       color: props.theme.paleSkyBlue,
