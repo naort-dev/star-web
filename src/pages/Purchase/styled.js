@@ -26,11 +26,12 @@ export const DialogStyled = styled(Dialog)`
 export const Header = styled.section`
   height: 157px;
   background: #ff6c58;
-  padding: 30px 50px;
+  padding: 20px 40px;
   position: relative;
   .svg-inline--fa {
     font-size: 50px;
     color: #fff;
+    cursor: pointer;
   }
   :after {
     content: '';
@@ -68,9 +69,19 @@ export const HeaderText = styled.section`
   font-family: Gilroy;
   font-size: 18px;
   font-weight: 600;
-  padding-top: 30px;
+  padding-top: 15px;
 `;
 export const FlexCenter = styled.section`
   display: flex;
   justify-content: center;
+`;
+
+export const ProfileIcon = styled.section`
+  width: 120px;
+  display: flex;
+  justify-content: center;
+  img {
+    width: 70px;
+    height: 70px;
+  }
 `;

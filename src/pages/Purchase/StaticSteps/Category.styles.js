@@ -14,6 +14,7 @@ export const Layout = styled.section`
 
 export const ContentWrapper = styled.section`
   padding-bottom: 10px;
+  cursor: pointer;
 `;
 
 export const HeaderText = styled.h3`

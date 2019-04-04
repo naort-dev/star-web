@@ -6,6 +6,7 @@ import {
   ModalContainer,
   FlexBoxSB,
   HeaderText,
+  ProfileIcon,
 } from './styled';
 import Modal from '../../components/Common/Modal/Modal';
 import Category from './StaticSteps/Category';
@@ -26,7 +27,9 @@ class Purchase extends Component {
           <Header>
             <FlexBoxSB>
               <FontAwesomeIcon icon={faAngleLeft} />
-              Well
+              <ProfileIcon>
+                <img src="../assets/images/profile.png" alt="profile_icon" />
+              </ProfileIcon>
               <FontAwesomeIcon icon={faTimes} />
             </FlexBoxSB>
             <HeaderText>What kind of video message do you want?</HeaderText>
