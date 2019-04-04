@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
@@ -9,13 +10,19 @@ import RequestFlowPopup from '../../../../components/RequestFlowPopup';
 import StarDrawer from '../../../../components/StarDrawer';
 import AvatarSection from './components/AvatarSection';
 import ActionChooser from './components/ActionChooser';
+import { toggleLogin, toggleSignup } from '../../../../store/shared/actions/toggleModals';
 import MobileStyled from './styled';
 
 class MobileHome extends React.Component {
   constructor(props) {
     super(props);
+    let landingVisited = false;
+    if (localStorage) {
+      landingVisited = JSON.parse(localStorage.getItem('landingVisited'));
+    }
     this.state = {
       currentStep: 1,
+      landingVisited,
     };
     this.starData = [{
       size: '130px',
@@ -39,8 +46,29 @@ class MobileHome extends React.Component {
   }
 
   goToNextStep = () => {
-    const { currentStep } = this.state;
-    this.setState({ currentStep: currentStep + 1 });
+    const { currentStep, landingVisited } = this.state;
+    if (!landingVisited) {
+      this.setState({ currentStep: currentStep + 1 });
+    } else {
+      this.closeLandingFlow();
+    }
+  }
+
+  loginOrSignup = type => () => {
+    if (type === 'signup') {
+      this.props.toggleSignup(true);
+    } else {
+      this.props.toggleLogin(true);
+    }
+    this.closeLandingFlow();
+  }
+
+  closeLandingFlow = () => {
+    const { landingVisited } = this.state;
+    if (!landingVisited && localStorage) {
+      localStorage.setItem('landingVisited', true);
+    }
+    this.props.closeLandingFlow();
   }
 
   render() {
@@ -54,7 +82,7 @@ class MobileHome extends React.Component {
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
           {
             currentStep === 1 &&
-              <ActionChooser goToNextStep={this.goToNextStep} />
+              <ActionChooser toggleSignup={this.loginOrSignup('signup')} toggleLogin={this.loginOrSignup('login')} goToNextStep={this.goToNextStep} />
           }
           {
             currentStep === 2 &&
@@ -122,7 +150,7 @@ class MobileHome extends React.Component {
                   <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
-                  <PrimaryButton onClick={this.goToNextStep}>View Featured Stars</PrimaryButton>
+                  <PrimaryButton onClick={this.closeLandingFlow}>View Featured Stars</PrimaryButton>
                 </MobileStyled.ButtonWrapper>
               </React.Fragment>
           }
@@ -131,7 +159,7 @@ class MobileHome extends React.Component {
           </MobileStyled.StarWrapper>
           {
             currentStep > 1 &&
-              <MobileStyled.CloseButtonWrapper>
+              <MobileStyled.CloseButtonWrapper onClick={this.closeLandingFlow}>
                 <FontAwesomeIcon icon={faTimes} />
               </MobileStyled.CloseButtonWrapper>
           }
@@ -145,4 +173,17 @@ const mapStateToProps = state => ({
   featuredStars: state.featuredStars,
 });
 
-export default withTheme(connect(mapStateToProps)(MobileHome));
+const mapDispatchToProps = dispatch => ({
+  toggleLogin: state => dispatch(toggleLogin(state)),
+  toggleSignup: state => dispatch(toggleSignup(state)),
+});
+
+MobileHome.propTypes = {
+  featuredStars: PropTypes.object.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
+  toggleSignup: PropTypes.func.isRequired,
+  closeLandingFlow: PropTypes.func.isRequired,
+  theme: PropTypes.object.isRequired,
+};
+
+export default withTheme(connect(mapStateToProps, mapDispatchToProps)(MobileHome));
