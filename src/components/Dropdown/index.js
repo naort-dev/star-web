@@ -5,10 +5,12 @@ import DropdownStyled from './styled';
 export default class Dropdown extends React.Component {
   constructor(props) {
     super(props);
-    const list = props.options ? props.options.map(option => ({
-      label: option[props.labelKey],
-      value: option[props.valueKey],
-    })) : [];
+    const list = props.options
+      ? props.options.map(option => ({
+          label: option[props.labelKey],
+          value: option[props.valueKey],
+        }))
+      : [];
     this.state = {
       showDropList: false,
       list,
@@ -31,25 +33,27 @@ export default class Dropdown extends React.Component {
 
   static getDerivedStateFromProps(nextProps, prevState) {
     let { list } = prevState;
-    list = nextProps.options ? nextProps.options.map(option => ({
-      label: option[nextProps.labelKey],
-      value: option[nextProps.valueKey],
-    })) : [];
+    list = nextProps.options
+      ? nextProps.options.map(option => ({
+          label: option[nextProps.labelKey],
+          value: option[nextProps.valueKey],
+        }))
+      : [];
     return { list };
   }
 
   toggleDropDown = state => () => {
     this.cursorPos = -1;
     this.setState({ showDropList: state });
-  }
+  };
 
-  checkWindowClick = (e) => {
+  checkWindowClick = e => {
     if (this.selectRef.current && !this.selectRef.current.contains(e.target)) {
       this.toggleDropDown(false)();
     }
-  }
+  };
 
-  selectOption = option => (event) => {
+  selectOption = option => event => {
     if (event.nativeEvent.type === 'click') {
       this.setState({ selected: option });
       this.toggleDropDown(false)();
@@ -57,20 +61,24 @@ export default class Dropdown extends React.Component {
       this.setState({ selected: option });
       this.toggleDropDown(false)();
     }
-  }
+  };
 
-  handleListKeyUp = (event) => {
+  handleListKeyUp = event => {
     const { showDropList } = this.state;
     const { cursorPos } = this;
     const { options } = this.props;
     if (event.key === 'ArrowUp' && showDropList && cursorPos - 1 >= 0) {
       this.optionList.current.childNodes[cursorPos - 1].focus();
       this.cursorPos = cursorPos - 1;
-    } else if (event.key === 'ArrowDown' && showDropList && cursorPos + 1 < options.length) {
+    } else if (
+      event.key === 'ArrowDown' &&
+      showDropList &&
+      cursorPos + 1 < options.length
+    ) {
       this.optionList.current.childNodes[cursorPos + 1].focus();
       this.cursorPos = cursorPos + 1;
     }
-  }
+  };
 
   render() {
     const { showDropList, list, selected } = this.state;
@@ -84,31 +92,28 @@ export default class Dropdown extends React.Component {
           innerRef={this.selectRef}
           className={this.props.className && this.props.className}
         >
-          <DropdownStyled.CurrentSelected>
-            { (selected && selected.label) || placeHolder || 'select' }
+          <DropdownStyled.CurrentSelected className="customPlaceholder">
+            {(selected && selected.label) || placeHolder || 'select'}
           </DropdownStyled.CurrentSelected>
           <DropdownStyled.DropIcon />
-          {
-            showDropList &&
-              <DropdownStyled.OptionsList>
-                <Scrollbars>
-                  <DropdownStyled.Options innerRef={this.optionList}>
-                    {
-                      list.map(item => (
-                        <DropdownStyled.OptionItem
-                          tabIndex="0"
-                          onClick={this.selectOption(item)}
-                          onKeyUp={this.selectOption(item)}
-                          key={item.value}
-                        >
-                          {item.label}
-                        </DropdownStyled.OptionItem>
-                      ))
-                    }
-                  </DropdownStyled.Options>
-                </Scrollbars>
-              </DropdownStyled.OptionsList>
-          }
+          {showDropList && (
+            <DropdownStyled.OptionsList>
+              <Scrollbars>
+                <DropdownStyled.Options innerRef={this.optionList}>
+                  {list.map(item => (
+                    <DropdownStyled.OptionItem
+                      tabIndex="0"
+                      onClick={this.selectOption(item)}
+                      onKeyUp={this.selectOption(item)}
+                      key={item.value}
+                    >
+                      {item.label}
+                    </DropdownStyled.OptionItem>
+                  ))}
+                </DropdownStyled.Options>
+              </Scrollbars>
+            </DropdownStyled.OptionsList>
+          )}
         </DropdownStyled.Select>
       </DropdownStyled>
     );
