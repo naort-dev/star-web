@@ -14,6 +14,7 @@ import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
+import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 
 class SignupFlow extends React.Component {
   constructor(props) {
