@@ -31,6 +31,7 @@ AvatarContainer.Avatar = styled.span`
   display: block;
   width: 100px;
   height: 100px;
+  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
