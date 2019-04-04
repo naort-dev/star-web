@@ -4,6 +4,27 @@ const AvatarContainer = styled.section`
   cursor: pointer;
 `;
 
+AvatarContainer.ControlWrapper = styled.span`
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  text-align: center;
+`;
+
+AvatarContainer.ControlButton = styled.span`
+  width: 26.4px;
+  height: 26.4px;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 14px;
+  color: ${props => props.theme.orangePink};
+  border-radius: 50%;
+`;
+
 AvatarContainer.Avatar = styled.span`
   border: none;
   border-radius: 50%;
@@ -13,6 +34,7 @@ AvatarContainer.Avatar = styled.span`
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
+  position: relative;
   @media(min-width: 834px) {
     width: 200px;
     height: 200px;
@@ -22,20 +44,20 @@ AvatarContainer.Avatar = styled.span`
 AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
   width: 140px;
   height: 140px;
+  ${AvatarContainer.ControlButton} {
+    width: 49px;
+    height: 49px;
+    font-size: 25px;
+  }
   @media(min-width: 834px) {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
   }
 `;
 
 AvatarContainer.MediumAvatar = AvatarContainer.Avatar.extend`
   width: 140px;
   height: 140px;
-`;
-
-AvatarContainer.SmallAvatar = AvatarContainer.Avatar.extend`
-  width: 100px;
-  height: 100px;
   @media(min-width: 834px) {
     width: 200px;
     height: 200px;
