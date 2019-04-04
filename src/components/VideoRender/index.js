@@ -58,7 +58,7 @@ export default class VideoRender extends React.Component {
     const { props } = this;
     return (
       <VideoRenderDiv onClick={props.enableVideoPopup}>
-        <VideoRenderDiv.Container>
+        <VideoRenderDiv.Container varibleWidth={props.variableWidth} variableHeight={props.variableHeight}>
           <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
             <VideoPlayer
               primarySrc="assets/Footboys.mp4"
