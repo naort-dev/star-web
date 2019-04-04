@@ -18,7 +18,6 @@ import Dropdown from '../../../../components/Dropdown';
 import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
 
-import { fetchFeaturedStars } from '../../actions/getFeaturedStars';
 import { fetchTrendingStars } from '../../actions/getTrendingStars';
 
 import DesktopStyled from './styled';
