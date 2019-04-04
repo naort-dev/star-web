@@ -2,28 +2,31 @@ import styled from 'styled-components';
 
 const DesktopStyled = styled.div`
   display: block;
+  text-align: center;
+  overflow: hidden;
 `;
 
 DesktopStyled.Logo = styled.img`
   width: 451px;
   display: block;
   margin: 0 auto;
-  padding: 0 30px;
 `;
 
 DesktopStyled.Heading = styled.span`
-  margin-top: 20px;
   padding: 0 30px;
   font-family: Gilroy-Medium;
-  font-size: 50px;
-  line-height: 50px;
+  font-size: 80px;
+  line-height: 80px;
   text-align: center;
   color: ${props => props.theme.twilight};
-  display: block;
+  display: inline-block;
+  max-width: 800px;
+  margin-bottom: 13px;
   @media(min-width: 1280px) {
     font-size: 80px;
-    margin: 30px 0;
+    margin: 30px 0 8px;
     line-height: 80px;
+    max-width: 100%;
   }
 `;
 
@@ -34,14 +37,13 @@ DesktopStyled.MainSearch = styled.div`
 `;
 
 DesktopStyled.SearchDivider = styled.span`
-  margin: 10px auto;
+  margin: 12px auto 8px;
   display: block;
   text-align: center;
   width: 360px;
   font-family: Avenir-Regular;
   font-size: 15px;
   font-weight: 900;
-  line-height: 2.53;
   color: ${props => props.theme.greyishBrown};
 `;
 
@@ -52,6 +54,10 @@ DesktopStyled.SubHeader = styled.span`
   text-align: left;
   color: ${props => props.theme.greyishBrown};
   display: block;
+  margin-bottom: 2px;
+  @media(min-width: 1280px) {
+    margin-bottom: 7px;
+  }
 `;
 
 DesktopStyled.Title = styled.span`
@@ -86,7 +92,6 @@ DesktopStyled.ShareIconWrapper = styled.div`
     text-align: center;
     display: flex;
     align-items: center;
-    margin: 0;
     span {
       font-size: 45px;
       display: block;
@@ -103,6 +108,10 @@ DesktopStyled.Divider = styled.div`
 DesktopStyled.ColumnDivider = DesktopStyled.Divider.extend`
   padding: 0;
   display: flex;
+
+  &.second-bottom-section {
+    padding-top: 18px;
+  }
 `;
 
 DesktopStyled.RowDivider = DesktopStyled.Divider.extend`
@@ -115,7 +124,7 @@ DesktopStyled.SecondaryDivider = DesktopStyled.Divider.extend`
   padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
 `;
 
 DesktopStyled.Avatar = styled.div`
@@ -130,9 +139,10 @@ DesktopStyled.Avatar = styled.div`
     width: 140px;
     height: 140px;
     margin: 10px;
-  }
-  @media(min-width: 1280px) {
-    margin: 12px;
+
+    &.left-spacing-none {
+      margin-left: 0;
+    }
   }
 `;
 
@@ -143,6 +153,9 @@ DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
   @media(min-width: 834px) {
     width: 299px;
     height: 299px;
+  }
+  @media(min-width: 1280px) {
+    margin: 26px 10px 0;
   }
 `;
 
@@ -159,13 +172,13 @@ DesktopStyled.SecondaryAvatar = DesktopStyled.Avatar.extend`
 DesktopStyled.FlowWrapper = styled.div`
   margin: 0 auto;
   position: relative;
-  margin-top: 20px;
   padding: 0 30px;
   @media (min-width: 834px) {
     width: 818px;
   }
   @media (min-width: 1280px) {
     width: calc(1280px - 120px);
+    padding-left: 66px;
   }
 `;
 
@@ -179,16 +192,22 @@ DesktopStyled.StarSection = DesktopStyled.BookProcessContent.extend`
   position: absolute;
   right: 30px;
   @media(min-width: 834px) {
-    left: 129px;
+    left: 99px;
+    padding-top: 45px;
     #second-column {
       display: none;
     }
+    #third-column {
+      padding-top: 23px;
+    }
   }
   @media(min-width: 1280px) {
+    left: 139px;
+    padding-top: 44px;
+    padding-left: 34px;
     #second-column {
       display: flex;
     }
-    padding-top: 30px;
   }
 `;
 
@@ -196,26 +215,26 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
   display: flex;
   align-items: center;
   @media(min-width: 834px) {
-    left: 242px;
+    left: 34px;
     top: 664px;
-    right: 30px;
+    right: 25px;
     ${DesktopStyled.SubHeader} {
-      width: 200px;
+      width: 345px;
       text-align: right;
     }
     ${DesktopStyled.ColumnDivider} {
       flex-direction: column;
       &.main-column {
-        padding-left: 49px;
-        padding-top: 0;
+        padding-left: 28px;
+        padding-top: 25px;
       }
     }
     ${DesktopStyled.RowDivider} {
       flex-direction: row;
       align-items: flex-start;
-      margin: 10px 0;
+      margin: 0 0 15px;
       ${DesktopStyled.ColumnDivider} {
-        padding-left: 4px;
+        padding-left: 8px;
         padding-top: 7px;
         p {
           font-family: Gilroy-Light;
@@ -242,8 +261,12 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
     }
   }
   @media(min-width: 1280px) {
-    left: 322px;
+    left: 320px;
     top: 664px;
+    ${DesktopStyled.SubHeader} {
+      margin-left: 118px;
+      width: 200px;
+    }
     ${DesktopStyled.ColumnDivider} {
       padding-top: 17px;
       padding-left: 19px;
@@ -262,12 +285,12 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
 DesktopStyled.RespondSection = DesktopStyled.BookProcessContent.extend`
   @media(min-width: 834px) {
     right: 30px;
-    bottom: 46px;
-    left: 80px;
+    bottom: 45px;
+    left: 14px;
     display: flex;
     align-items: center;
     ${DesktopStyled.ColumnDivider} {
-      padding-left: 46px;
+      padding-left: 36px;
       flex-Direction: column;
       ${DesktopStyled.Description} {
         width: 330px;
@@ -275,16 +298,16 @@ DesktopStyled.RespondSection = DesktopStyled.BookProcessContent.extend`
     }
   }
   @media(min-width: 1280px) {
-    bottom: 30px;
-    left: 227px;
+    left: 215px;
   }
 `;
 
 DesktopStyled.ReceiveSection = styled.div`
   width: 100%;
+  padding: 47px 0;
   background: ${props => props.theme.white};
-  @media(min-width: 834px) {
-    padding: 46px 0;
+  @media(min-width: 1280px) {
+    padding: 47px 0 52px;
   }
 `;
 
@@ -292,8 +315,12 @@ DesktopStyled.ReceiveContent = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
+
+  ${DesktopStyled.ShareIconWrapper} {
+    margin-top: 15px;
+  }
   @media(min-width: 834px) {
-    padding-left: 121px;
+    padding-left: 46px;
     ${DesktopStyled.ColumnDivider} {
       padding-left: 46px;
       flex-Direction: column;
@@ -303,7 +330,7 @@ DesktopStyled.ReceiveContent = styled.div`
     }
   }
   @media(min-width: 1280px) {
-    padding-left: 257px;
+    padding-left: 212px;
   }
 `;
 
@@ -319,18 +346,24 @@ DesktopStyled.StarWrapper = styled.div`
 DesktopStyled.StarContent = styled.div`
   display: flex;
   height: calc(100% - 50px);
+  justify-content: flex-start;
+
+  ${DesktopStyled.Divider} {
+    text-align: left;
+  }
 `;
 
 DesktopStyled.FilterSection = styled.div`
   display: inline-block;
-  height: 200px;
+  height: 183px;
   width: 100%;
-  padding: 10px;
+  padding: 18px 10px 10px 0;
+  max-width: 444px;
 `;
 
 DesktopStyled.CategorySection = styled.section`
   margin: 0 auto;
-  padding: 46px 36px;
+  padding: 38px 36px;
   @media (min-width: 834px) {
     width: 100%;
   }
@@ -352,7 +385,9 @@ DesktopStyled.Trending = styled.section`
 `;
 
 DesktopStyled.TrendingContent = DesktopStyled.CategorySection.extend`
-
+  @media (min-width: 1280px) {
+    padding: 35px 19px 52px;
+  }
 `;
 
 DesktopStyled.TrendingItem = styled.li`

@@ -170,7 +170,7 @@ SearchSection.InputWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding-left: 20px;
+  padding-left: ${props => (props.alternate ? '13px' : '20px')};
   border-radius: 10px;
   display: flex;
   align-items: center;

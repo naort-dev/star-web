@@ -4,11 +4,12 @@ const FooterStyled = styled.footer`
   padding: 20px 0;
   @media(min-width: 834px) {
     display: flex;
-    padding: 20px 28px;
-    height: 124px;
+    padding: 0 30px;
+    height: 90px;
   }
   @media(min-width: 1280px) {
-    padding: 20px 51px;
+    padding: 0 51px;
+    height: 114px;
   }
 `;
 
