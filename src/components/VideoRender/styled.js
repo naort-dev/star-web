@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const VideoRenderDiv = styled.div`
-  width: 100%;
-  height: 100%;
+  width: ${props => (props.variableWidth ? '100%' : 'auto')};
+  height: ${props => (props.variableHeight ? '100%' : 'auto')};
 `;
 
 VideoRenderDiv.Container = styled.div`
