@@ -104,6 +104,6 @@ export const StarWrapper = styled.section`
   z-index: -1;
 `;
 
-export const FormParent = styled.section`
+export const FormContent = styled.section`
   height: calc(100% - 150px);
 `;

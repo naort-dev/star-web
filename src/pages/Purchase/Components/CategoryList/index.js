@@ -18,7 +18,10 @@ class CategoryList extends Component {
       <Layout>
         {this.props.dataModal.map((item, index) => {
           return (
-            <ContentWrapper>
+            <ContentWrapper
+              onClick={() => this.props.getCategory(item.type)}
+              key={item.type}
+            >
               <FlexBoxSB key={item.header}>
                 <ImageWrapper>
                   <img

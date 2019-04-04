@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import {Scrollbars} from 'react-custom-scrollbars';
+import React, { Component } from 'react';
+import { Scrollbars } from 'react-custom-scrollbars';
 import {
   Header,
   Content,
@@ -7,21 +7,21 @@ import {
   FlexBoxSBC,
   HeaderText,
   ProfileIcon,
-  FormParent,
+  FormContent,
 } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
 import ModalSwitcher from './ModalSwitcher';
 import StarDrawer from '../../components/StarDrawer';
-import {dataModal} from './DataModals/formModals';
+import { dataModal } from './DataModals/formModals';
 import FormContainer from './Components/FormContainer';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTimes, faAngleLeft} from '@fortawesome/pro-light-svg-icons';
-
+import ScriptBuilder from './Components/ScriptBuilder';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 class Purchase extends Component {
-  constructor (props) {
-    super (props);
-    this.state = {open: true, stepCount: 2};
+  constructor(props) {
+    super(props);
+    this.state = { open: true, stepCount: 3 };
     this.starData = [
       {
         size: '28px',
@@ -46,16 +46,54 @@ class Purchase extends Component {
       },
     ];
   }
-  handleClose = () => {
-    this.setState ({open: false});
+
+  getBodyComponent = () => {
+    if (this.state.stepCount === 1) {
+      return <CategoryList getCategory={this.getCategory} />;
+    } else if (this.state.stepCount === 2) {
+      return (
+        <FormContainer submitClick={this.submitClick}>
+          <FormContent />
+        </FormContainer>
+      );
+    } else {
+      return <ScriptBuilder />;
+    }
   };
-  render () {
+
+  getCategory = type => {
+    this.setState({
+      stepCount: this.state.stepCount + 1,
+    });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+  };
+
+  backArrowHandler = () => {
+    this.setState({
+      stepCount: this.state.stepCount - 1,
+    });
+  };
+
+  submitClick = () => {
+    this.setState({
+      stepCount: this.state.stepCount + 1,
+    });
+  };
+
+  render() {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
           <Header step={this.state.stepCount}>
             <FlexBoxSBC>
-              <FontAwesomeIcon icon={faAngleLeft} className="arrow" />
+              <FontAwesomeIcon
+                icon={faAngleLeft}
+                className="arrow"
+                onClick={this.backArrowHandler}
+              />
               <ProfileIcon>
                 <StarDrawer starData={this.starData} />
                 <img src="../assets/images/profile.png" alt="profile_icon" />
@@ -67,10 +105,7 @@ class Purchase extends Component {
           <Content>
             <Scrollbars>
               <ModalSwitcher dataModal={dataModal.category}>
-                {/* <CategoryList /> */}
-                <FormContainer>
-                  <FormParent />
-                </FormContainer>
+                {this.getBodyComponent()}
               </ModalSwitcher>
             </Scrollbars>
           </Content>
