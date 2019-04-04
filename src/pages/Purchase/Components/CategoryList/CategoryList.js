@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FlexBoxSB } from '../../../components/Common/CommonStyled';
+import { FlexBoxSB } from '../../../../styles/CommonStyled';
 import {
   Icon,
   HeaderText,
@@ -8,10 +8,10 @@ import {
   Message,
   ContentWrapper,
   Layout,
-} from './Category.styles';
+} from './CategoryList.styles';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 
-class DefaultStep extends Component {
+class CategoryList extends Component {
   state = {};
   render() {
     return (
@@ -41,4 +41,4 @@ class DefaultStep extends Component {
   }
 }
 
-export default DefaultStep;
+export default CategoryList;

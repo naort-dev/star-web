@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog';
 import { media } from '../../styles/mediaQueries';
+import { FlexBoxSB } from '../../styles/CommonStyled';
 
 export const DialogStyled = styled(Dialog)`
   .body {
@@ -25,24 +26,31 @@ export const DialogStyled = styled(Dialog)`
 
 export const Header = styled.section`
   height: 157px;
+  ${media.mobileScreen} {
+    height: 178px;
+  }
   background: #ff6c58;
-  padding: 20px 40px;
+  padding: 15px 40px;
   position: relative;
   .svg-inline--fa {
     font-size: 50px;
     color: #fff;
     cursor: pointer;
   }
+  .arrow {
+    visibility: ${props => props.step === 1 && 'hidden'};
+  }
   :after {
     content: '';
     position: absolute;
     top: 100%;
-    left: 47%;
+    left: 50%;
     width: 0;
     height: 0;
     border-top: solid 20px #ff6c58;
     border-left: solid 20px transparent;
     border-right: solid 20px transparent;
+    transform: translateX(-50%);
   }
 `;
 
@@ -57,9 +65,7 @@ export const ModalContainer = styled.section`
   height: 100%;
 `;
 
-export const FlexBoxSB = styled.section`
-  display: flex;
-  justify-content: space-between;
+export const FlexBoxSBC = styled(FlexBoxSB)`
   align-items: center;
 `;
 
@@ -80,8 +86,20 @@ export const ProfileIcon = styled.section`
   width: 120px;
   display: flex;
   justify-content: center;
+  position: relative;
+  height: 85px;
   img {
     width: 70px;
-    height: 70px;
+    height: 80px;
+    padding-top: 10px;
   }
+`;
+
+export const StarWrapper = styled.section`
+  position: absolute;
+  top: 0;
+  right: 30px;
+  left: 30px;
+  bottom: 0;
+  z-index: -1;
 `;

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog';
-import { media } from '../../../styles/mediaQueries';
+import { media } from '../../styles/mediaQueries';
 
 export const DialogStyled = styled(Dialog)`
   .body {
