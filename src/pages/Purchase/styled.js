@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog';
-import { media } from '../../styles/mediaQueries';
-import { FlexBoxSB } from '../../styles/CommonStyled';
+import {media} from '../../styles/mediaQueries';
+import {FlexBoxSB} from '../../styles/CommonStyled';
 
-export const DialogStyled = styled(Dialog)`
+export const DialogStyled = styled (Dialog)`
   .body {
     width: 700px;
     height: 700px;
@@ -65,7 +65,7 @@ export const ModalContainer = styled.section`
   height: 100%;
 `;
 
-export const FlexBoxSBC = styled(FlexBoxSB)`
+export const FlexBoxSBC = styled (FlexBoxSB)`
   align-items: center;
 `;
 
@@ -102,4 +102,8 @@ export const StarWrapper = styled.section`
   left: 30px;
   bottom: 0;
   z-index: -1;
+`;
+
+export const FormParent = styled.section`
+  height: calc(100% - 150px);
 `;

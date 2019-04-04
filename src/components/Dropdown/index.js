@@ -82,6 +82,7 @@ export default class Dropdown extends React.Component {
           tabIndex="0"
           onKeyUp={this.handleListKeyUp}
           innerRef={this.selectRef}
+          className={this.props.className && this.props.className}
         >
           <DropdownStyled.CurrentSelected>
             { (selected && selected.label) || placeHolder || 'select' }

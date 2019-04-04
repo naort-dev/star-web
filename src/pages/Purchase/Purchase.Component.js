@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Scrollbars } from 'react-custom-scrollbars';
+import React, {Component} from 'react';
+import {Scrollbars} from 'react-custom-scrollbars';
 import {
   Header,
   Content,
@@ -7,19 +7,21 @@ import {
   FlexBoxSBC,
   HeaderText,
   ProfileIcon,
+  FormParent,
 } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
 import ModalSwitcher from './ModalSwitcher';
 import StarDrawer from '../../components/StarDrawer';
-import { dataModal } from './DataModals/formModals';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
+import {dataModal} from './DataModals/formModals';
+import FormContainer from './Components/FormContainer';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTimes, faAngleLeft} from '@fortawesome/pro-light-svg-icons';
 
 class Purchase extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { open: true, stepCount: 2 };
+  constructor (props) {
+    super (props);
+    this.state = {open: true, stepCount: 2};
     this.starData = [
       {
         size: '28px',
@@ -45,9 +47,9 @@ class Purchase extends Component {
     ];
   }
   handleClose = () => {
-    this.setState({ open: false });
+    this.setState ({open: false});
   };
-  render() {
+  render () {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
@@ -65,7 +67,10 @@ class Purchase extends Component {
           <Content>
             <Scrollbars>
               <ModalSwitcher dataModal={dataModal.category}>
-                <CategoryList />
+                {/* <CategoryList /> */}
+                <FormContainer>
+                  <FormParent />
+                </FormContainer>
               </ModalSwitcher>
             </Scrollbars>
           </Content>
