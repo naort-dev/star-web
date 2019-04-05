@@ -1,62 +1,91 @@
 import React from 'react';
-import { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryDescription } from './styled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStarExclamation, faMusic, faMagic, faFutbol, faPodcast, faBug, faFilm, faGlobe, faTv } from '@fortawesome/pro-light-svg-icons';
+import { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryDescription, CategoryContent } from './styled';
 
 const CategoryList = (props) => {
   return (
     <CategoryListWrapper>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faStarExclamation} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>FEATURED</CategoryName>
           <CategoryDescription>Stars creating a buzz.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faMusic} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>MUSIC</CategoryName>
           <CategoryDescription>Bands, beats, battlestar galactica.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faMagic} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>COMEDIANS</CategoryName>
           <CategoryDescription>Knock knock…</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faFutbol} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>SPORTS</CategoryName>
           <CategoryDescription>Today’s superstars and yesterday’s heroes.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faPodcast} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>RADIO/PODCAST</CategoryName>
           <CategoryDescription>Your morning DJ or fav talk show host.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faBug} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>EVERYDAY STARS</CategoryName>
           <CategoryDescription>Local legends and leaders.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faFilm} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>MOVIES/TV</CategoryName>
           <CategoryDescription>From the big screen to your small screen.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faGlobe} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>SOCIAL/YOUTUBE</CategoryName>
           <CategoryDescription> Instagrammers, Youtubers, Bloggers.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
       <CategoryListItem>
-        <div>
+        <CategoryIcon>
+          <FontAwesomeIcon icon={faTv} />
+        </CategoryIcon>
+        <CategoryContent>
           <CategoryName>IMITATORS</CategoryName>
           <CategoryDescription>Tupac is alive here.</CategoryDescription>
-        </div>
+        </CategoryContent>
       </CategoryListItem>
     </CategoryListWrapper>
   );

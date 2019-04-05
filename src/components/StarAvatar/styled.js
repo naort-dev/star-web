@@ -1,7 +1,28 @@
 import styled from 'styled-components';
 
 const AvatarContainer = styled.section`
-  
+  cursor: pointer;
+`;
+
+AvatarContainer.ControlWrapper = styled.span`
+  position: absolute;
+  bottom: 7.5px;
+  left: 0;
+  right: 0;
+  text-align: center;
+`;
+
+AvatarContainer.ControlButton = styled.span`
+  width: 26.4px;
+  height: 26.4px;
+  background: rgba(255, 255, 255, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  font-size: 14px;
+  color: ${props => props.theme.orangePink};
+  border-radius: 50%;
 `;
 
 AvatarContainer.Avatar = styled.span`
@@ -10,9 +31,11 @@ AvatarContainer.Avatar = styled.span`
   display: block;
   width: 100px;
   height: 100px;
-  background: url('assets/images/default-cover.jpg') no-repeat;
+  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
-  background-size: contain;
+  background-size: cover;
+  position: relative;
   @media(min-width: 834px) {
     width: 200px;
     height: 200px;
@@ -22,20 +45,20 @@ AvatarContainer.Avatar = styled.span`
 AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
   width: 140px;
   height: 140px;
+  ${AvatarContainer.ControlButton} {
+    width: 49px;
+    height: 49px;
+    font-size: 25px;
+  }
   @media(min-width: 834px) {
-    width: 200px;
-    height: 200px;
+    width: 300px;
+    height: 300px;
   }
 `;
 
 AvatarContainer.MediumAvatar = AvatarContainer.Avatar.extend`
   width: 140px;
   height: 140px;
-`;
-
-AvatarContainer.SmallAvatar = AvatarContainer.Avatar.extend`
-  width: 100px;
-  height: 100px;
   @media(min-width: 834px) {
     width: 200px;
     height: 200px;
@@ -54,11 +77,16 @@ AvatarContainer.Content = styled.article`
 AvatarContainer.StarDescription = styled.div`
   display: inline-block;
   width: 85%;
+  padding-top: 7px;
 `;
 
 AvatarContainer.Category = styled.span`
   font-family: Gilroy-Medium;
   font-size: 13px;
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 AvatarContainer.Name = styled.span`

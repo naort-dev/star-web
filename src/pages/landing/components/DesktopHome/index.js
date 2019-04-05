@@ -7,8 +7,8 @@ import {
   faWhatsappSquare,
 } from '@fortawesome/free-brands-svg-icons';
 import { withTheme } from 'styled-components';
-import { faEnvelopeSquare, faQuestion } from '@fortawesome/free-solid-svg-icons';
-import { faCalendarAlt, faComment } from '@fortawesome/free-regular-svg-icons';
+import { faEnvelopeSquare } from '@fortawesome/pro-regular-svg-icons';
+import { faComment, faCalendarAlt, faQuestion } from '@fortawesome/pro-light-svg-icons';
 import PathDrawer from './components/PathDrawer';
 import AvatarContent from './components/AvatarContent';
 import CategoryList from './components/CategoryList';
@@ -18,7 +18,7 @@ import Dropdown from '../../../../components/Dropdown';
 import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
 
-import { fetchFeaturedStars } from '../../actions/getFeaturedStars';
+import { fetchTrendingStars } from '../../actions/getTrendingStars';
 
 import DesktopStyled from './styled';
 
@@ -27,7 +27,7 @@ class DesktopHome extends React.Component {
     super(props);
     this.dataList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
     this.state = {
-      trendingList: this.dataList,
+      trendingList: props.trendingStars.data,
     };
     this.starData = [{
       size: '50px',
@@ -82,10 +82,21 @@ class DesktopHome extends React.Component {
 
   componentDidMount() {
     this.setTrendingData();
-    if (!this.props.featuredStars.data.length) {
-      this.props.fetchFeaturedStars();
+    if (!this.props.trendingStars.data.length) {
+      this.props.fetchTrendingStars();
     }
     window.addEventListener('resize', this.setTrendingData);
+  }
+
+  static getDerivedStateFromProps = (nextProps, prevState) => {
+    let { trendingList } = prevState;
+    const trendingStars = nextProps.trendingStars.data;
+    if (document.body.getBoundingClientRect().width >= 1280) {
+      trendingList = trendingStars.slice(0, trendingStars.length);
+    } else {
+      trendingList = trendingStars.slice(0, trendingStars.length - 1);
+    }
+    return { trendingList };
   }
 
   componentWillUnmount() {
@@ -93,10 +104,11 @@ class DesktopHome extends React.Component {
   }
 
   setTrendingData = () => {
+    const trendingStars = this.props.trendingStars.data;
     if (document.body.getBoundingClientRect().width >= 1280) {
-      this.setState({ trendingList: this.dataList.slice(0, this.dataList.length) });
+      this.setState({ trendingList: trendingStars.slice(0, trendingStars.length) });
     } else {
-      this.setState({ trendingList: this.dataList.slice(0, this.dataList.length - 1) });
+      this.setState({ trendingList: trendingStars.slice(0, trendingStars.length - 1) });
     }
   }
 
@@ -134,10 +146,10 @@ class DesktopHome extends React.Component {
                 </DesktopStyled.FilterSection>
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.RowDivider>
-                    <DesktopStyled.Avatar>
+                    <DesktopStyled.Avatar className="left-spacing-none">
                       <AvatarContent data={this.getAvatarContent(3)} />
                     </DesktopStyled.Avatar>
-                    <DesktopStyled.Avatar>
+                    <DesktopStyled.Avatar className="left-spacing-none">
                       <AvatarContent data={this.getAvatarContent(4)} />
                     </DesktopStyled.Avatar>
                   </DesktopStyled.RowDivider>
@@ -150,7 +162,7 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.BigAvatar>
                   <AvatarContent data={this.getAvatarContent(1)} />
                 </DesktopStyled.BigAvatar>
-                <DesktopStyled.ColumnDivider>
+                <DesktopStyled.ColumnDivider className="second-bottom-section">
                   <DesktopStyled.Avatar>
                     <AvatarContent data={this.getAvatarContent(5)} />
                   </DesktopStyled.Avatar>
@@ -159,7 +171,7 @@ class DesktopHome extends React.Component {
                   </DesktopStyled.Avatar>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.SecondaryDivider>
-              <DesktopStyled.SecondaryDivider>
+              <DesktopStyled.SecondaryDivider id="third-column">
                 <DesktopStyled.RowDivider>
                   <DesktopStyled.Avatar>
                     <AvatarContent data={this.getAvatarContent(7)} />
@@ -176,7 +188,7 @@ class DesktopHome extends React.Component {
           </DesktopStyled.StarSection>
           <DesktopStyled.ProcessSection>
             <DesktopStyled.SubHeader>
-              Make your  request
+              Make your request
             </DesktopStyled.SubHeader>
             <DesktopStyled.ColumnDivider className="main-column">
               <DesktopStyled.RowDivider>
@@ -264,6 +276,7 @@ class DesktopHome extends React.Component {
             </DesktopStyled.SubTitle>
             <StarListing
               dataList={this.state.trendingList}
+              loading={this.props.trendingStars.loading}
               noScroll
               totalCount={this.state.trendingList.length}
               limit={10}
@@ -278,10 +291,11 @@ class DesktopHome extends React.Component {
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   featuredStars: state.featuredStars,
+  trendingStars: state.trendingStars,
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
+  fetchTrendingStars: () => dispatch(fetchTrendingStars()),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));

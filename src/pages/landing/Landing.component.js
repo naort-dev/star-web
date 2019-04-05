@@ -4,7 +4,6 @@ import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
 import MobileHome from './components/MobileHome';
 import Sidebar from '../../components/Sidebar';
-import Tabs from '../../components/Tabs';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
 
@@ -16,6 +15,7 @@ export default class Landing extends React.Component {
       filterSelected: false,
       subCategoryList: [],
       groupClick: true,
+      showLanding: true,
       desktopLanding: true,
     };
   }
@@ -23,6 +23,9 @@ export default class Landing extends React.Component {
   componentWillMount() {
     if (this.props.isSignup && !this.props.isLoggedIn) {
       this.props.toggleSignup(true);
+    }
+    if (!this.props.featuredStars.data.length) {
+      this.props.fetchFeaturedStars();
     }
     if (this.props.location.pathname === '/' || this.props.isSignup) {
       switch (this.props.filters.selectedTab) {
@@ -120,6 +123,11 @@ export default class Landing extends React.Component {
     }
     return count;
   }
+
+  closeLandingFlow = () => {
+    this.setState({ showLanding: false });
+  }
+
   handleResize = () => {
     if (document.body.getBoundingClientRect().width >= 834) {
       this.setState({ desktopLanding: true });
@@ -174,7 +182,7 @@ export default class Landing extends React.Component {
     this.props.fetchVideosList(offset, refresh);
   }
   render() {
-    const { desktopLanding } = this.state;
+    const { desktopLanding, showLanding } = this.state;
     return (
       <LandingStyled>
         <Header
@@ -184,12 +192,17 @@ export default class Landing extends React.Component {
         />
         <LandingStyled.Container>
           {
-            desktopLanding ?
+            showLanding &&
               <React.Fragment>
-                <DesktopHome />
-                <Footer />
+                {
+                  desktopLanding ?
+                    <React.Fragment>
+                      <DesktopHome />
+                      <Footer />
+                    </React.Fragment>
+                  : <MobileHome closeLandingFlow={this.closeLandingFlow} />
+                }
               </React.Fragment>
-            : null
           }
         </LandingStyled.Container>
       </LandingStyled>

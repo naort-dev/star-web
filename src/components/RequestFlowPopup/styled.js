@@ -1,13 +1,4 @@
-import styled, {keyframes} from 'styled-components';
-
-const popupEnter = keyframes`
-  0% {
-    top: 100%;
-  }
-  100% {
-    top: 0;
-  }
-`;
+import styled from 'styled-components';
 
 const PopupStyled = styled.div`
   display: ${props => (props.visible ? 'flex' : 'none')};
@@ -34,9 +25,9 @@ PopupStyled.Container = styled.div`
   display: flex;
   max-width: 100%;
   position: relative;
-  animation: ${popupEnter} 0.2s ease-out;
   -webkit-overflow-scrolling: touch;
   justify-content: center;
+  height: 100%;
   @media(min-width: 834px) {
     border-radius: 6px;
   }

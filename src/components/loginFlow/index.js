@@ -5,7 +5,6 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import { LoginContainer, HeaderSection } from './styled';
 import { loginUser, resetSessionError, updateLoginStatus } from '../../store/shared/actions/login';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
-import { resetRedirectUrls } from '../../store/shared/actions/setRedirectReferrer';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import Loader from '../../components/Loader';
@@ -92,11 +91,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   loginUser: (email, password) => dispatch(loginUser(email, password)),
-  socialMediaLogin: (socialObject) =>
+  socialMediaLogin: socialObject =>
     dispatch(socialMediaLogin(socialObject)),
   updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
-  resetRedirectUrls: () => dispatch(resetRedirectUrls()),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
