@@ -1,12 +1,15 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import validator from 'validator';
-import axios from 'axios';
 import ActionLoader from '../ActionLoader';
+
+import Checkbox from '@material-ui/core/Checkbox';
+import TextField from '@material-ui/core/TextField';
 import { LoginContainer, FooterSection } from './styled';
-import { twitterLogin, validatePromo } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
+import { TermsAndConditions } from './components/TermsAndConditions'
+
 import { ROLES } from '../../constants/usertype';
 
 class SignUp extends React.Component {
@@ -15,28 +18,12 @@ class SignUp extends React.Component {
     this.state = {
       firstName: { value: "", isValid: false, message: "" },
       lastName: { value: "", isValid: true, message: "" },
-      password: { value: "", isValid: false, message: "" },
-      confPassword: { value: "", isValid: false, message: "" },
-      referral: '',
-      referralError: '',
-      showPassword: false,
-      email: { value: '', isValid: false, message: '' },
+      nickName: { value: "", isValid: true, message: "" },
+      email: { value: "", isValid: false, message: '' },
+      termsAndConditions: { value: true, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
-      socialMedia: {
-        username: '',
-        first_name: '',
-        last_name: '',
-        sign_up_source: '',
-        profile_photo: '',
-        nick_name: '',
-        fb_id: '',
-        gp_id: '',
-        in_id: '',
-        tw_id: '',
-        role: ROLES[props.signupRole],
-      },
-      gmailClick: false,
+      acceptTerms: false,
     };
   }
   componentWillMount() {
@@ -78,51 +65,19 @@ class SignUp extends React.Component {
 
   onRegister = async (e) => {
     e.preventDefault();
-    if (this.props.statusCode === '410') {
-      this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.state.email.value } }, () => {
-        const socialObject = {
-          userName: this.props.data.username || this.state.socialMedia.username,
-          firstName: this.state.socialMedia.first_name,
-          lastName: this.state.socialMedia.last_name,
-          nickName: this.state.socialMedia.nick_name,
-          source: this.state.socialMedia.sign_up_source,
-          profilePhoto: this.state.socialMedia.profile_photo,
-          role: this.props.data.role || this.state.socialMedia.role,
-          fbId: this.state.socialMedia.fb_id,
-          gpId: this.state.socialMedia.gp_id,
-          instId: this.state.socialMedia.in_id,
-          twId: this.state.socialMedia.tw_id,
-          referral: this.state.referral,
-        }
-        
-        this.props.socialMediaLogin(socialObject).then((response) => {
-          if (response.status === 200) {
-            if (response.data.data && response.data.data.user) {
-              if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
-                response.data.data.user.role_details.is_complete === false
-              ) {
-                this.props.changeStep(this.props.currentStep + 1);
-              } else {
-                this.props.closeSignupFlow();
-              }
-            }
-          }
-        });
-      });
-    } else if (
+    if (
+      this.checkTermsAndConditionsRequired() &&
       this.checkFirstRequired() &
       this.checkLastRequired() &
       this.checkEmail() &
-      this.checkPassword() &
-      await this.checkPromo()
+      this.checkNickNameRequired()
     ) {
       this.props.registerUser(
         this.state.firstName.value,
         this.state.lastName.value,
         this.state.email.value,
-        this.state.password.value,
+        this.state.nickName.value,
         this.state.role,
-        this.state.referral,
       )
         .then((response) => {
           if (response != undefined) {
@@ -134,123 +89,29 @@ class SignUp extends React.Component {
     }
   };
 
-  onSocialMediaLogin = async (r, source) => {
-    let skipSocialLogin = false;
-    if (source === 2) {
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: r.email === "" ? "facebook" : r.email,
-          first_name: r.first_name,
-          last_name: r.last_name,
-          sign_up_source: source,
-          nick_name: r.name,
-          profile_photo: r.picture.data.url,
-          fb_id: r.id
-        }
-      });
-    } else if (source === 3) {
-      const name = r
-        .getName()
-        .trim()
-        .split("");
-      const firstName = name[0];
-      const lastName = name[1];
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: r.getEmail(),
-          first_name: firstName,
-          last_name: lastName,
-          sign_up_source: source,
-          nick_name: r.getName(),
-          profile_photo: r.getImageUrl(),
-          gp_id: r.getId()
-        }
-      });
-    } else if (source === 4) {
-      const val = r;
-      const name = val.full_name.trim().split(" ");
-      const firstName = name[0];
-      const lastName = name[1];
-      this.setState({
-        socialMedia: {
-          ...this.state.socialMedia,
-          username: val.username,
-          first_name: firstName,
-          last_name: lastName,
-          sign_up_source: source,
-          nick_name: val.full_name,
-          profile_photo: val.profile_picture,
-          in_id: val.id
-        }
-      });
-    } else {
-      const val = r;
-      if (!val.authentication_token) {
-        let firstName = val.first_name;
-        let lastName = val.last_name;
-        let nickName = val.nick_name || val.name;
-        if ((!firstName || !lastName) && val.name) {
-          firstName = val.name.trim().split(" ")[0];
-          lastName = val.name.trim().split(" ")[1];
-        }
-        this.setState({
-          socialMedia: {
-            ...this.state.socialMedia,
-            username: val.email,
-            first_name: firstName,
-            last_name: lastName,
-            sign_up_source: source,
-            nick_name: nickName,
-            profile_photo: val.profile_photo,
-            tw_id: val.id,
-          }
-        });
-      } else {
-        skipSocialLogin = true;
-        this.props.updateLoginStatus(val);
-        this.props.fetchUserDetails(val.id);
-        this.props.closeSignupFlow();
-      }
-    }
-    if (!skipSocialLogin && await this.checkPromo()) {
-      const socialObject = {
-        userName: this.state.socialMedia.username,
-        firstName: this.state.socialMedia.first_name,
-        lastName: this.state.socialMedia.last_name,
-        nickName: this.state.socialMedia.nick_name,
-        source: this.state.socialMedia.sign_up_source,
-        profilePhoto: this.state.socialMedia.profile_photo,
-        role: this.state.socialMedia.role,
-        fbId: this.state.socialMedia.fb_id,
-        gpId: this.state.socialMedia.gp_id,
-        instId: this.state.socialMedia.in_id,
-        twId: this.state.socialMedia.tw_id,
-        referral: this.state.referral,
-      }
-      this.props.setSocialMediaData(this.state.socialMedia);
-      this.props.socialMediaLogin(socialObject).then((response) => {
-        if (response.status === 200) {
-          if (response.data.data && response.data.data.user) {
-            if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
-            response.data.data.user.role_details.is_complete === false) {
-              this.props.changeStep(this.props.currentStep + 1);
-            } else {
-              this.props.closeSignupFlow();
-            }
-          }
-        }
-      });
-    }
-  };
-
   saveFormEntries = (event, type) => {
     this.setState({
       [type]: { ...this.state[type], value: event.target.value },
     });
   };
 
+  toggleTermsAndConditions = name => event => {
+    this.setState({
+      termsAndConditions: {
+        ...this.state.termsAndConditions,
+        value: event.target.checked
+      }
+    });
+  }
+  agreeTermsConditions = () => {
+    this.setState({
+      acceptTerms: false,
+      termsAndConditions: {
+        ...this.state.termsAndConditions,
+        value: true
+      }
+    })
+  }
   checkEmail = () => {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
     if (validator.isEmpty(this.state.email.value)) {
@@ -271,33 +132,10 @@ class SignUp extends React.Component {
     return true;
   };
 
-  checkPassword = () => {
-    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
-
-    if (validator.isEmpty(this.state.password.value)) {
-      this.setState({
-        password: { ...this.state.password, message: 'Enter a  password' },
-      });
-      return false;
-    }
-    if (!pattern.test(this.state.password.value)) {
-      this.setState({ password: { ...this.state.password, message: 'Enter a valid password with at least one symbol' } });
-      return false;
-    }
-    if (this.state.confPassword.value !== this.state.password.value) {
-      this.setState({ password: { ...this.state.password, message: 'The passwords entered do not match!' } });
-      return false;
-    }
-    this.setState({
-      password: { ...this.state.password, message: '', isValid: true },
-    });
-    return true;
-  };
-
   checkFirstRequired = () => {
-    const firstNameEmpty = validator.isEmpty(this.state.firstName.value);
+    const firstNameEmpty = !this.state.firstName.value
     if (firstNameEmpty) {
-      const firstNameMsg = this.props.signupRole === 'group' ? 'Enter a group name' : 'Enter a first name';
+      const firstNameMsg = 'Enter a first name';
       this.setState({ firstName: { ...this.state.firstName, message: firstNameMsg } });
       return false;
     }
@@ -309,9 +147,14 @@ class SignUp extends React.Component {
 
   checkLastRequired = () => {
     const lastNameEmpty = validator.isEmpty(this.state.lastName.value);
-    if (this.props.signupRole !== 'group' && lastNameEmpty) {
+    if (lastNameEmpty) {
       const lastNameMsg = 'Enter a last name';
-      this.setState({ lastName: { ...this.state.lastName, message: lastNameMsg } });
+      this.setState({
+        lastName: {
+          ...this.state.lastName, message:
+            lastNameMsg
+        }
+      })
       return false;
     }
     this.setState({
@@ -319,174 +162,118 @@ class SignUp extends React.Component {
     });
     return true;
   }
-
-  checkPromo = async () => {
-    const { referral } = this.state;
-    if (referral === '') {
-      this.setState({ referralError: '' });
-      return true;
-    }
-    this.setState({ loading: true, referralError: '' });
-    try {
-      const promoResp = await validatePromo(referral);
-      this.setState({ loading: false });
-      return promoResp.success;
-    } catch (exception) {
-      this.setState({ loading: false, referralError: exception.response ? exception.response.data.error.message : '' });
+  checkNickNameRequired = () => {
+    const nickNameEmpty = validator.isEmpty(this.state.nickName.value);
+    if (nickNameEmpty) {
+      const nickNameMsg = 'Enter a stage name';
+      this.setState({ nickName: { ...this.state.nickName, message: nickNameMsg } });
       return false;
     }
+    this.setState({
+      nickName: { ...this.state.nickName, message: '', isValid: true },
+    });
+    return true;
   }
-
-  isFormValid = () => {
-    if (
-      this.state.email.isValid &&
-      this.state.firstName.isValid &&
-      this.state.password.isValid
-    ) {
-      return true;
+  checkTermsAndConditionsRequired = () => {
+    const termsAndConditionsEmpty = !(this.state.termsAndConditions.value)
+    if (termsAndConditionsEmpty) {
+      const termsAndConditionsMsg = 'Terms and conditions not accepted';
+      this.setState({ termsAndConditions: { ...this.state.termsAndConditions, message: termsAndConditionsMsg } });
+      return false;
     }
-    return false;
-  };
-
-  ShowPassword = () => {
-    this.setState({ showPassword: !this.state.showPassword });
-  };
-
+    this.setState({
+      termsAndConditions: { ...this.state.termsAndConditions, message: '', isValid: true },
+    });
+    return true;
+  }
+  agreeTerms = () => {
+    this.setState({
+      acceptTerms: true
+    })
+  }
   render() {
     return (
+      this.state.acceptTerms ?
+        <TermsAndConditions agreeTermsConditions={this.agreeTermsConditions}/> :
       <LoginContainer.SocialMediaSignup>
         {
           this.state.loading &&
-            <ActionLoader />
+          <ActionLoader />
         }
         {
           <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         }
         <LoginContainer.Container>
-          <LoginContainer.Heading>Create your account</LoginContainer.Heading>
+          <LoginContainer.Heading>Tell us about yourself</LoginContainer.Heading>
+
           <LoginContainer.InputFieldsWrapper>
+
             <LoginContainer.InputContainer>
+
               {
                 this.props.statusCode === '410' ?
                   <LoginContainer.EmptyDiv />
-
                   :
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder={this.props.signupRole === 'group' ? 'Group name' : 'First name'}
-                        type="text"
-                        name="firstName"
-                        value={this.state.firstName.value}
-                        onChange={(event) => this.saveFormEntries(event, "firstName")}
-                        onBlur={this.checkFirstRequired}
-                      />
-                      <LoginContainer.ErrorMsg>
-                        {this.state.firstName.message}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
+                  <div>
+                    <LoginContainer.Label>Use your real name so we can pay you</LoginContainer.Label>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
+                        <TextField
+                          placeholder={'First name'}
+                          type="text"
+                          name="firstName"
+                          value={this.state.firstName.value}
+                          onChange={(event) => this.saveFormEntries(event, "firstName")}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.firstName.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                      <LoginContainer.WrapsInput>
+                        <TextField
+                          placeholder="Last name"
+                          type="text"
+                          name="lastName"
+                          value={this.state.lastName.value}
+                          onChange={(event) => this.saveFormEntries(event, "lastName")}
+                        />
+                        <LoginContainer.ErrorMsg>
+                          {this.state.lastName.message}
+                        </LoginContainer.ErrorMsg>
+                      </LoginContainer.WrapsInput>
+                    </LoginContainer.InputWrapper>
+                  </div>
               }
-              {
-                this.props.statusCode === '410' || this.props.signupRole === 'group' ?
-                  <LoginContainer.EmptyDiv />
-
-                  :
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.Input
-                        placeholder="Last name"
-                        type="text"
-                        name="lastName"
-                        value={this.state.lastName.value}
-                        onChange={(event) => this.saveFormEntries(event, "lastName")}
-                        onBlur={this.checkLastRequired}
-                      />
-                      <LoginContainer.ErrorMsg>
-                        {this.state.lastName.message}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-              }
+              <LoginContainer.Label>Optional, only if different than your real name</LoginContainer.Label>
               <LoginContainer.InputWrapper>
-
                 <LoginContainer.WrapsInput>
-                  <LoginContainer.Input
-                    placeholder="Email"
+                  <TextField
+                    placeholder={this.props.signupRole === 'star' ?
+                      'What is your stage name?' : 'What name does everyone know you as?'}
+                    type="text"
+                    name="nickName"
+                    fullWidth={true}
+                    value={this.state.nickName.value}
+                    onChange={(event) => this.saveFormEntries(event, "nickName")}
+                  />
+                  <LoginContainer.ErrorMsg>{this.state.nickName.message}</LoginContainer.ErrorMsg>
+                </LoginContainer.WrapsInput>
+              </LoginContainer.InputWrapper>
+              <LoginContainer.Label>Email address</LoginContainer.Label>
+              <LoginContainer.InputWrapper>
+                <LoginContainer.WrapsInput>
+                  <TextField
+                    placeholder={this.props.signupRole === 'star' ?
+                      'Where do you want your bookings to go?' : 'Whats your email?'}
                     type="email"
                     name="email"
+                    fullWidth={true}
                     value={this.state.email.value}
                     onChange={(event) => this.saveFormEntries(event, "email")}
-                    onBlur={this.checkEmail}
                   />
                   <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
                 </LoginContainer.WrapsInput>
               </LoginContainer.InputWrapper>
-              {
-                this.props.statusCode === '410' ?
-                  <LoginContainer.EmptyDiv />
-                  :
-                  <LoginContainer.InputWrapper>
-
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.PasswordWrapper>
-                        <LoginContainer.Input
-                          placeholder="Password"
-                          type={this.state.showPassword ? 'text' : 'password'}
-                          name="password"
-                          value={this.state.password.value}
-                          onChange={(event) => this.saveFormEntries(event, "password")}
-                          onBlur={this.checkPassword}
-                        />
-                        <LoginContainer.ShowPassword onClick={this.ShowPassword} />
-                      </LoginContainer.PasswordWrapper>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-              }
-              {
-                this.props.statusCode === '410' ?
-                  <LoginContainer.EmptyDiv />
-                  :
-                  <LoginContainer.InputWrapper>
-
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.PasswordWrapper>
-                        <LoginContainer.Input
-                          placeholder="Confirm password"
-                          type={this.state.showPassword ? 'text' : 'password'}
-                          name="confPassword"
-                          value={this.state.confPassword.value}
-                          onChange={(event) => this.saveFormEntries(event, "confPassword")}
-                          onBlur={this.checkPassword}
-                        />
-                        {/* <LoginContainer.ShowPassword onClick={this.ShowPassword} /> */}
-                      </LoginContainer.PasswordWrapper>
-                      <LoginContainer.ErrorMsg>
-                        {this.state.password.message}
-                      </LoginContainer.ErrorMsg>
-
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-              }
-              {
-                this.props.statusCode !== '410' &&
-                  <LoginContainer.InputWrapper>
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.PasswordWrapper>
-                        <LoginContainer.Input
-                          placeholder="Referral code (optional)"
-                          type="text"
-                          name="referral"
-                          value={this.state.referral}
-                          onChange={event => this.setState({ referral: event.target.value })}
-                        />
-                      </LoginContainer.PasswordWrapper>
-                      <LoginContainer.ErrorMsg>
-                        {this.state.referralError}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                  </LoginContainer.InputWrapper>
-              }
               <LoginContainer.WrapsInput>
                 {this.props.statusCode === undefined ?
                   <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
@@ -494,16 +281,23 @@ class SignUp extends React.Component {
                   <LoginContainer.EmptyDiv />
                 }
               </LoginContainer.WrapsInput>
-              <LoginContainer.ButtonWrapper>
-                <FooterSection.Button type="submit" value="Sign up" onClick={this.onRegister} />
-              </LoginContainer.ButtonWrapper>
               <LoginContainer.PrivacyContent>
-                By creating an account you agree to Starsona’s
-                <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/privacy-policy/"> Privacy Policy </LoginContainer.Anchor>
-                and  <LoginContainer.Anchor target="_blank" rel="noopener noreferrer" href="https://starsona.com/terms-service/"> Terms of Use </LoginContainer.Anchor>
+                <Checkbox
+                  checked={this.state.termsAndConditions.value}
+                  onChange={this.toggleTermsAndConditions('termsAndConditions')}
+                  value="termsAndConditions"
+                />
+                I have read and agree to
+                <LoginContainer.Anchor onClick={this.agreeTerms}> Starsona’s Terms and Conditions and Privacy Policy </LoginContainer.Anchor>
               </LoginContainer.PrivacyContent>
+
+              <LoginContainer.ErrorMsg>{this.state.termsAndConditions.message}</LoginContainer.ErrorMsg>
+              <LoginContainer.ButtonWrapper>
+                <LoginContainer.ContinueButton type="submit" onClick={this.onRegister}>Continue</LoginContainer.ContinueButton>
+              </LoginContainer.ButtonWrapper>
             </LoginContainer.InputContainer>
           </LoginContainer.InputFieldsWrapper>
+          
         </LoginContainer.Container>
       </LoginContainer.SocialMediaSignup>
     );
