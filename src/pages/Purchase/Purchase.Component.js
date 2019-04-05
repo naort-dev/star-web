@@ -61,7 +61,7 @@ class Purchase extends Component {
     }
   };
 
-  getCategory = type => {
+  getCategory = (type) => {
     this.setState({
       stepCount: this.state.stepCount + 1,
     });

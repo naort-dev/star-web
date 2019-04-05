@@ -5,6 +5,7 @@ export const media = {
   portrait: '@media screen and (orientation: portrait)',
   landscape: '@media screen and (orientation: landscape)',
   mobileScreen: '@media only screen and (max-width: 833px)',
+  realMobile: '@media only screen and (max-width: 767px)',
   smallScreen: '@media (max-width: 580px)',
   smallScreen2: '@media only screen and (max-width: 367px)',
 };

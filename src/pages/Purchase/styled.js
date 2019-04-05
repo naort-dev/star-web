@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 import Dialog from '@material-ui/core/Dialog';
-import {media} from '../../styles/mediaQueries';
-import {FlexBoxSB} from '../../styles/CommonStyled';
+import { media } from '../../styles/mediaQueries';
+import { FlexBoxSB } from '../../styles/CommonStyled';
 
-export const DialogStyled = styled (Dialog)`
+export const DialogStyled = styled(Dialog)`
   .body {
     width: 700px;
     height: 700px;
     max-width: 100%;
+    font-family: Gilroy;
     ${media.mobileScreen} {
       position: absolute;
       top: 0;
@@ -65,7 +66,7 @@ export const ModalContainer = styled.section`
   height: 100%;
 `;
 
-export const FlexBoxSBC = styled (FlexBoxSB)`
+export const FlexBoxSBC = styled(FlexBoxSB)`
   align-items: center;
 `;
 
