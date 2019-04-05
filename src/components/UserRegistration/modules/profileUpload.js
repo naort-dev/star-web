@@ -121,18 +121,6 @@ export default class ProfileUpload extends React.Component {
             <Loader />
           :
             <React.Fragment>
-              <GroupStyled.HeadingWrapper>
-                <GroupStyled.InnerHeading>
-                  Pick a profile picture
-                </GroupStyled.InnerHeading>
-                <GroupStyled.InnerDescription>
-                  {
-                    this.props.starMode ?
-                      'Are you ready for your close up? Upload it now.'
-                    : 'Have your group logo? Upload it now.'
-                  }
-                </GroupStyled.InnerDescription>
-              </GroupStyled.HeadingWrapper>
               <GroupStyled.ProfileInputButton>
                 <GroupStyled.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
@@ -140,12 +128,23 @@ export default class ProfileUpload extends React.Component {
                   <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
                   <GroupStyled.ProfileInputContainer>
                     <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
-                    {!this.state.finalImage ? <GroupStyled.UploadText>Upload image</GroupStyled.UploadText> : null}
+                    {!this.state.finalImage ? <GroupStyled.UploadText>Upload profile picture</GroupStyled.UploadText> : null}
+                  </GroupStyled.ProfileInputContainer>
+                </GroupStyled.ProfileImageWrapper>
+                <GroupStyled.ProfileImageWrapper
+                  imageUrl={this.state.finalImage}
+                >
+                  <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+                  <GroupStyled.ProfileInputContainer>
+                    <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
+                    {!this.state.finalImage ? <GroupStyled.UploadText>Take a profile picture</GroupStyled.UploadText> : null}
                   </GroupStyled.ProfileInputContainer>
                 </GroupStyled.ProfileImageWrapper>
               </GroupStyled.ProfileInputButton>
               {
                 this.state.cropMode && this.state.cropImage &&
+                <GroupStyled.CropWrapper>
+                  <GroupStyled.Heading>Crop your photo</GroupStyled.Heading>
                   <ImageCropper
                     exifData={this.currentExif}
                     aspectRatio={imageSizes.profile}
@@ -153,6 +152,7 @@ export default class ProfileUpload extends React.Component {
                     closeCropper={() => this.closeCropper()}
                     cropImage={this.state.cropImage}
                   />
+                </GroupStyled.CropWrapper>
               }
               <GroupStyled.ControlWrapper>
                 <GroupStyled.ControlButton

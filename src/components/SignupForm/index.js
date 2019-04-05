@@ -8,6 +8,7 @@ import { twitterLogin, validatePromo } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
+import SignUpImageUpload from '../SignUpImageUpload';
 
 class SignUp extends React.Component {
   constructor(props) {
@@ -363,6 +364,7 @@ class SignUp extends React.Component {
           <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         }
         <LoginContainer.Container>
+          <SignUpImageUpload />
           <LoginContainer.Heading>Create your account</LoginContainer.Heading>
           <LoginContainer.InputFieldsWrapper>
             <LoginContainer.InputContainer>
