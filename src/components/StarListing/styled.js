@@ -9,17 +9,19 @@ const ListingStyled = styled.ul`
   height: 100%;
   background: ${props => props.theme.white};
   max-width: 834px;
+  padding-top: 30px;
   @media(min-width: 1280px) {
     max-width: 100%;
+    padding-top: 30px;
   }
 `;
 
 ListingStyled.Content = styled.li`
   display: flex;
   justify-content: center;
-  padding-top: 46px;
   padding-right: 10px;
   max-width: 33.3%;
+  padding-bottom: 35px;
   @media(min-width: 1280px) {
     max-width: 20%;
   }
