@@ -10,22 +10,22 @@ export default class PathDrawer extends React.Component {
     };
     this.pathDesktop = `M 60 0 v 610
     c 2 35 50 30 50 30
-    h 450
+    h 505
     c 35 0 33 30 33 30
-    v 300
+    v 335
     c -10 25 -20 20 -20 20
-    h -200
+    h -302
     c -40 0 -40 40 -40 40
-    v 480`;
-    this.pathIpad = `M 60 0 v 600
+    v 545`;
+    this.pathIpad = `M 21 0 v 600
     c 2 35 50 30 50 30
-    h 300
+    h 200
     c 35 0 30 30 30 30
-    v 330
+    v 338
     c -10 25 -20 20 -20 20
-    h -200
+    h -125
     c -40 0 -35 40 -35 40
-    v 600`;
+    v 627`;
   }
 
   componentDidMount() {
