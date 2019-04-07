@@ -36,6 +36,7 @@ cat env.js
 
 echo "Sitemap: https://$DOMAIN_NAME/sitemap.xml" > robots.txt
 sed -i -r "s#(set[ \t]*\\\$api_url[ \t]*').*(';$)#\1${API_URL%/}\2#g" /etc/nginx/sites-enabled/default
+sed -i -r "s#(set[ \t]*\\\$server_url[ \t]*').*(';$)#\1${SERVER_URL%/}\2#g" /etc/nginx/sites-enabled/default
 
 echo "Starting main process:"
 echo "    $@"
