@@ -1,29 +1,23 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/pro-light-svg-icons';
+import { faUserCircle } from '@fortawesome/pro-regular-svg-icons';
 import { connect } from 'react-redux';
-import { Scrollbars } from 'react-custom-scrollbars';
 import HeaderSection from './styled';
-import Loader from '../Loader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
-import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 import Search from '../Search';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
-    let searchText = '';
-    if (this.props.history.location.pathname === '/') {
-      searchText = this.props.filters.searchParam || '';
-    }
     this.state = {
       searchActive: false,
-      showSuggestions: false,
       profileDropdown: false,
-      searchText,
       profilePhoto: null,
     };
     this.cursorPos = -1;
@@ -37,10 +31,6 @@ class Header extends React.Component {
       const profilePhoto = this.props.userValue.settings_userDetails.avatarPhoto;
       this.setProfileImage(profilePhoto);
     }
-  }
-
-  componentDidMount() {
-    window.addEventListener('mousedown', this.removeSuggestions.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
@@ -62,7 +52,6 @@ class Header extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
     this.mounted = false;
   }
 
@@ -73,79 +62,6 @@ class Header extends React.Component {
         this.setState({ profilePhoto: this.profileImage.src });
       }
     };
-  }
-
-  setListFocus = (e) => {
-    const { showSuggestions } = this.state;
-    let { cursorPos } = this;
-    const { suggestions } = this.props.suggestionsList;
-    if (e.key === 'ArrowUp' && showSuggestions && cursorPos - 1 >= 0) {
-      this.suggestionList.childNodes[cursorPos - 1].focus();
-      this.cursorPos = cursorPos - 1;
-    } else if (e.key === 'ArrowDown' && showSuggestions && cursorPos + 1 < suggestions.length) {
-      this.suggestionList.childNodes[cursorPos + 1].focus();
-      this.cursorPos = cursorPos + 1;
-    }
-  }
-
-  handleSearchChange = (e) => {
-    this.setState({ searchText: e.target.value });
-    if (e.target.value.trim('').length >= 3) {
-      this.setState({ showSuggestions: true });
-      if (this.suggestionsFetchDelay) {
-        clearTimeout(this.suggestionsFetchDelay);
-      }
-      this.suggestionsFetchDelay = setTimeout(() => {
-        this.props.fetchSuggestionList(this.state.searchText.trim(''));
-      }, 500);
-    } else {
-      this.setState({ showSuggestions: false });
-      this.cursorPos = -1;
-    }
-  }
-
-  handleSearchSubmit = (e) => {
-    if (e.keyCode === 13) {
-      this.props.updateSearchParam(e.target.value.trim(''));
-      if (this.props.history.location.pathname != '/') {
-        this.props.history.push('/');
-      }
-      this.setState({ searchText: e.target.value.trim(''), searchActive: false, showSuggestions: false });
-    }
-    this.setListFocus(e);
-  }
-
-  showSuggestions = () => {
-    if (this.state.searchText.trim('').length >= 3) {
-      this.setState({ showSuggestions: true });
-    }
-  }
-
-  removeSuggestions = (e) => {
-    if (this.searchRef && !this.searchRef.contains(e.target)) {
-      this.setState({ showSuggestions: false, searchActive: false });
-      this.cursorPos = -1;
-    }
-    if (this.profileDropDown && !this.profileButton.contains(e.target) && !this.profileDropDown.contains(e.target)) {
-      this.setState({ profileDropdown: false });
-    }
-  }
-
-  activateSearch = () => {
-    this.setState({ searchActive: true }, () => {
-      this.searchInput.focus();
-    });
-    if (this.state.searchText.trim('').length >= 3) {
-      this.setState({ showSuggestions: true });
-      this.cursorPos = -1;
-    }
-  }
-
-  deactivateSearch = () => {
-    this.setState({ searchActive: false, searchText: '', showSuggestions: false });
-    this.cursorPos = -1;
-    this.props.updateSearchParam('');
-    this.props.fetchSuggestionList('');
   }
 
   handleSearchItemClick = () => {
@@ -174,87 +90,32 @@ class Header extends React.Component {
     }
   }
 
-  renderSuggestionsList = () => {
-    if (this.props.suggestionsList.suggestions.length) {
-      return (
-        <HeaderSection.SuggestionList onKeyDown={this.setListFocus} innerRef={node => this.suggestionList = node}>
-          {
-            this.props.suggestionsList.suggestions.map((item) => {
-              let fullName = '';
-              if (item.nick_name || item.first_name || item.last_name) {
-                fullName = item.nick_name ? item.nick_name
-                  : `${item.first_name} ${item.last_name}`;
-              }
-              return (
-                <HeaderSection.SuggestionListItem
-                  tabIndex="0"
-                  key={item.user_id}
-                  onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
-                >
-                  <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
-                    <HeaderSection.SuggestionListContent onClick={this.handleSearchItemClick}>
-                      <HeaderSection.SuggestionListImage imageUrl={item.avatar_photo && item.avatar_photo.thumbnail_url} />
-                      <HeaderSection.SuggestionListName>
-                        {fullName}
-                        <HeaderSection.SuggestionDetails>
-                          {
-                            item.has_group_account ?
-                              item.group_type
-                            : starProfessionsFormater(item.celebrity_profession)
-                          }
-                        </HeaderSection.SuggestionDetails>
-                      </HeaderSection.SuggestionListName>
-                    </HeaderSection.SuggestionListContent>
-                  </Link>
-                </HeaderSection.SuggestionListItem>
-              );
-            })
-          }
-        </HeaderSection.SuggestionList>
-      );
-    }
-    return (
-      <HeaderSection.noDataWrapper>
-        <HeaderSection.noDataText>No Results</HeaderSection.noDataText>
-      </HeaderSection.noDataWrapper>
-    );
-  }
-
   render() {
     const { props } = this;
     return (
       <HeaderSection notFixed={props.notFixed}>
-        <HeaderSection.HeaderDiv shouldAlign={props.disableLogo && props.disableSearch}>
+        <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
+          <HeaderSection.MenuButton>
+            <FontAwesomeIcon icon={faBars} />
+          </HeaderSection.MenuButton>
           {
             !props.disableLogo &&
               <HeaderSection.HeaderLeft hide={this.state.searchActive}>
                 <Link to="/" onClick={this.handleSearchItemClick}>
                   <HeaderSection.ImgLogo
-                    src="assets/images/logo_starsona.png"
+                    src="assets/images/logo_starsona.svg"
                     alt=""
                     onClick={this.logoClick}
                   />
                 </Link>
-                {
-                  !props.disableMenu && <HeaderSection.MenuButton
-                    menuActive={props.menuActive}
-                    onClick={props.enableMenu}
-                  />
-                }
               </HeaderSection.HeaderLeft>
           }
           <HeaderSection.HeaderRight>
             {
               this.props.isLoggedIn ?
-                <div style={{position: 'relative'}}>
-                  <HeaderSection.SearchButton
-                    hide={this.state.searchActive}
-                    onClick={this.activateSearch}
-                  />
+                <React.Fragment>
                   <HeaderSection.ProfileButton
                     profileUrl={this.state.profilePhoto}
-                    innerRef={(node) => { this.profileButton = node; }}
-                    hide={this.state.searchActive}
                     onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
                   />
                   {
@@ -291,22 +152,27 @@ class Header extends React.Component {
                         <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
-                </div>
+                </React.Fragment>
             :
-                <div>
-                  <HeaderSection.SearchButton onClick={this.activateSearch} />
-                  <span onClick={() => this.props.toggleLogin(true)}>
-                    <HeaderSection.SignInButtonMobile />
-                  </span>
-                  <HeaderSection.AuthButton onClick={() => this.props.toggleSignup(true)}>
+                <React.Fragment>
+                  <HeaderSection.SignInButtonMobile onClick={() => this.props.toggleLogin(true)}>
+                    <FontAwesomeIcon icon={faUserCircle} />
+                  </HeaderSection.SignInButtonMobile>
+                  <HeaderSection.AuthButton notFixed={props.notFixed} onClick={() => this.props.toggleSignup(true)}>
                     Sign Up
                   </HeaderSection.AuthButton>
-                  <HeaderSection.AuthButton onClick={() => this.props.toggleLogin(true)}>
+                  <HeaderSection.AuthButton notFixed={props.notFixed} onClick={() => this.props.toggleLogin(true)}>
                     Log In
                   </HeaderSection.AuthButton>
-                </div>
+                </React.Fragment>
             }
           </HeaderSection.HeaderRight>
+          {
+            !this.props.disableSearch &&
+              <HeaderSection.SearchWrapper>
+                <Search />
+              </HeaderSection.SearchWrapper>
+          }
         </HeaderSection.HeaderDiv>
       </HeaderSection>
     );
