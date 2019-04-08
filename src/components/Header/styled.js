@@ -9,7 +9,7 @@ const HeaderSection = styled.header`
   height: 60px;
   z-index: 10;
   @media(min-width: 834px) {
-    height: 100px;
+    height: 95px;
   }
 `;
 
@@ -21,7 +21,7 @@ HeaderSection.HeaderDiv = styled.div`
   max-width: 1920px;
   height: 100%;  
   @media (min-width: 834px) {
-    padding: 32px 30px;
+    padding: 32px 30px 25px;
   }
 `;
 HeaderSection.HeaderRight = styled.div`
@@ -391,7 +391,7 @@ HeaderSection.SignIn = styled.button`
   }
 `;
 HeaderSection.AuthButton = styled.button`
-  padding: 5px 8px;
+  padding: 0 14px;
   border-radius: 5px;
   border: ${props => `solid 1px ${props.theme.flatBlue}`};
   background-color: ${props => props.theme.flatBlue};
@@ -400,11 +400,12 @@ HeaderSection.AuthButton = styled.button`
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  line-height: 1.44;
+  line-height: 36px;
+  height: 36px;
   letter-spacing: normal;
   text-align: left;
   color: #ffffff;
-  margin-left: 16.4px;
+  margin-left: 18px;
   @media(max-width:767px){
     display:none;
   }

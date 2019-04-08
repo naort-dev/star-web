@@ -121,9 +121,6 @@ class SignupMethod extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.props.isLoggedIn) {
-      this.props.resetRedirectUrls();
-    }
     window.removeEventListener('storage', this.listenToStorage);
   }
 

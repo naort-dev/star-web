@@ -10,10 +10,10 @@ const ActionChooser = props => (
       <PrimaryButton onClick={props.goToNextStep}>Browse Stars</PrimaryButton>
     </ButtonWrapper>
     <ButtonWrapper>
-      <PrimaryButton>Log In</PrimaryButton>
+      <PrimaryButton onClick={props.toggleLogin}>Log In</PrimaryButton>
     </ButtonWrapper>
     <ButtonWrapper>
-      <PrimaryButton>Sign Up</PrimaryButton>
+      <PrimaryButton onClick={props.toggleSignup}>Sign Up</PrimaryButton>
     </ButtonWrapper>
   </React.Fragment>
 );

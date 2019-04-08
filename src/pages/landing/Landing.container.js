@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebList';
+import { fetchFeaturedStars } from './actions/getFeaturedStars';
 import { toggleSignup } from '../../store/shared/actions/toggleModals';
 import { fetchVideosList } from './actions//getVideosList';
 
@@ -19,6 +20,7 @@ import Landing from './Landing.component';
 const mapStateToProps = state => ({
   celebList: state.celebList,
   videosList: state.videosList,
+  featuredStars: state.featuredStars,
   professionsList: state.professionsList,
   filters: state.filters,
   configData: state.config.data,
@@ -37,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
   toggleSignup: state => dispatch(toggleSignup(state)),
+  fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);
