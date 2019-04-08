@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/pro-light-svg-icons';
 
 const QuestionBuilder = ({ questionsList }) => {
-  debugger;
   return (
     <React.Fragment>
       {questionsList.map(question => (

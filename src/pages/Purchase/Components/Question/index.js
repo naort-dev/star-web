@@ -1,10 +1,11 @@
-import React from 'react';
-import { Layout, VideoContainer, QuestionContainer } from './styled';
+import React, { useState } from 'react';
+import { Layout, VideoContainer, QuestionContainer, ShowHide } from './styled';
 import QuestionBuilder from '../../../../components/QuestionBuilder';
 import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 
 const Question = () => {
+  const [showHideFlg, showHideScript] = useState(false);
   const questions = [
     {
       key: 'que1',
@@ -22,13 +23,16 @@ const Question = () => {
   return (
     <Layout>
       <VideoContainer />{' '}
-      <QuestionContainer>
+      <QuestionContainer isShow={showHideFlg}>
         <h1>What you should say?</h1>
         <QuestionBuilder questionsList={questions} />
         <FlexCenter>
           <Button>Record</Button>
         </FlexCenter>
       </QuestionContainer>
+      <ShowHide onClick={() => showHideScript(!showHideFlg)}>
+        Show Script
+      </ShowHide>
     </Layout>
   );
 };
