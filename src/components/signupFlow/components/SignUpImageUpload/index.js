@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { updateLoginStatus } from '../../store/shared/actions/login';
+import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer } from './styled';
-import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
-import ProfileUpload from '../UserRegistration/modules/profileUpload';
+import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
+import ProfileUpload from './components/profileUpload';
 
 class SignUpImageUpload extends React.Component {
 

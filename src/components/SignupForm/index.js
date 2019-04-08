@@ -8,16 +8,16 @@ import { twitterLogin, validatePromo } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
-import SignUpImageUpload from '../SignUpImageUpload';
+import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: { value: "", isValid: false, message: "" },
-      lastName: { value: "", isValid: true, message: "" },
-      password: { value: "", isValid: false, message: "" },
-      confPassword: { value: "", isValid: false, message: "" },
+      firstName: { value: '', isValid: false, message: '' },
+      lastName: { value: '', isValid: true, message: '' },
+      password: { value: '', isValid: false, message: '' },
+      confPassword: { value: '', isValid: false, message: '' },
       referral: '',
       referralError: '',
       showPassword: false,
