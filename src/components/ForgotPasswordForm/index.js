@@ -1,5 +1,4 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import Api from '../../lib/api';
 import forgotPassword from '../../utils/forgotPassword';
@@ -49,11 +48,7 @@ export default class ForgotPassword extends React.Component {
   }
   render() {
     const { email } = this.state;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
+
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
