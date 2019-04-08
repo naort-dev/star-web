@@ -30,7 +30,10 @@ const Question = () => {
           <Button>Record</Button>
         </FlexCenter>
       </QuestionContainer>
-      <ShowHide onClick={() => showHideScript(!showHideFlg)}>
+      <ShowHide
+        onClick={() => showHideScript(!showHideFlg)}
+        isShow={showHideFlg}
+      >
         Show Script
       </ShowHide>
     </Layout>

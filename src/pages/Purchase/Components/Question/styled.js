@@ -7,7 +7,7 @@ export const Layout = styled.section`
   display: flex;
   ${media.mobileScreen} {
     justify-content: center;
-    padding: 20px 20px;
+    padding: 0 20px;
   }
 `;
 
@@ -71,7 +71,7 @@ export const QuestionTag = styled.span`
 export const ShowHide = styled.span`
   display: none;
   position: absolute;
-  bottom: 0;
+  top: 365px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -82,5 +82,19 @@ export const ShowHide = styled.span`
   font-family: Gilroy-Extrabold;
   ${media.mobileScreen} {
     display: block;
+  }
+  :after,
+  :before {
+    position: relative;
+    top: ${props => (props.isShow ? '-3px' : '3px')};
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-right: 1px solid #2f839d;
+    border-top: 1px solid #2f839d;
+    transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
+    margin-right: 28px;
+    margin-left: 28px;
   }
 `;
