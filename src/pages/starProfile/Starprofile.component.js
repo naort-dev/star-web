@@ -111,6 +111,7 @@ export default class Starprofile extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.resetCelebDetails();
     window.removeEventListener('resize', this.onResize);
   }
 
