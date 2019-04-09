@@ -63,6 +63,7 @@ export const Content = styled.section`
   height: calc(100% - 157px);
   ${media.mobileScreen} {
     padding-top: 70px;
+    height: calc(100% - 200px);
   }
 `;
 

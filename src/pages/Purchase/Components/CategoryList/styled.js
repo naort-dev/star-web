@@ -34,9 +34,6 @@ export const Layout = styled.section`
 export const ContentWrapper = styled.section`
   padding-bottom: 46px;
   cursor: pointer;
-  &:last-child {
-    padding-bottom: 10px;
-  }
   ${media.mobileScreen} {
     padding-bottom: 38px;
   }
