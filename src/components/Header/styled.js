@@ -58,10 +58,10 @@ HeaderSection.SearchWrapper = styled.div`
   margin: 0 auto;
   @media(min-width: 834px) {
     height: 50px;
-    top: 93px;
+    position: static;
+    margin-top: 15px;
   }
   @media(min-width: 1280px) {
-    position: static;
     order: 2;
     padding: 0;
   }
@@ -78,12 +78,14 @@ HeaderSection.BackIcon = styled.span`
 
 HeaderSection.CategoryWrapper = styled.div`
   position: fixed;
+  display: ${props => (props.visible ? 'block' : 'none')};
   top: 56px;
   bottom: 0;
   left: 0;
   right: 0;
   background: #fff;
   @media(min-width: 834px) {
+    display: block;
     position: static;
   }
 `;

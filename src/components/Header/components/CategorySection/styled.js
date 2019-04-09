@@ -6,6 +6,9 @@ const CategoryStyled = styled.ul`
   @media(min-width: 834px) {
     display: flex;
     flex-wrap: wrap;
+    padding-top: 0;
+    max-width: 834px;
+    margin: 0 auto;
     justify-content: center;
   }
 `;
@@ -21,6 +24,10 @@ CategoryStyled.Item = styled.li`
     color: ${props => props.theme.flatBlue};
   }
   @media(min-width: 834px) {
+    font-family: Gilroy-Medium;
+    font-size: 18px;
+    line-height: 38px;
+    padding-left: 36px;
     &:hover {
       border: none;
     }

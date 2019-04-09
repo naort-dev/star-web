@@ -181,8 +181,8 @@ class Header extends React.Component {
           }
         </HeaderSection.HeaderDiv>
         {
-          showCategories &&
-            <HeaderSection.CategoryWrapper>
+          !props.notFixed &&
+            <HeaderSection.CategoryWrapper visible={showCategories}>
               <CategorySection />
             </HeaderSection.CategoryWrapper>
         }
