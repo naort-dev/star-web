@@ -294,6 +294,7 @@ DesktopStyled.RespondSection = DesktopStyled.BookProcessContent.extend`
       flex-Direction: column;
       ${DesktopStyled.Description} {
         width: 330px;
+        font-family: Gilroy-Light;
       }
     }
   }
@@ -306,6 +307,9 @@ DesktopStyled.ReceiveSection = styled.div`
   width: 100%;
   padding: 47px 0;
   background: ${props => props.theme.white};
+  ${DesktopStyled.Description} {
+    font-family: Gilroy-Light;
+  }
   @media(min-width: 1280px) {
     padding: 47px 0 52px;
   }
@@ -364,6 +368,9 @@ DesktopStyled.FilterSection = styled.div`
 DesktopStyled.CategorySection = styled.section`
   margin: 0 auto;
   padding: 38px 36px;
+  ${DesktopStyled.SubTitle} {
+    font-family: Gilroy-Light;
+  }
   @media (min-width: 834px) {
     width: 100%;
   }
