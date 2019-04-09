@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/pro-light-svg-icons';
+import { faBars, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import { faUserCircle } from '@fortawesome/pro-regular-svg-icons';
 import { connect } from 'react-redux';
 import HeaderSection from './styled';
+import CategorySection from './components/CategorySection';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
@@ -19,6 +20,7 @@ class Header extends React.Component {
       searchActive: false,
       profileDropdown: false,
       profilePhoto: null,
+      showCategories: false,
     };
     this.cursorPos = -1;
     this.suggestionsFetchDelay = undefined;
@@ -38,10 +40,6 @@ class Header extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.updateSearchParam('');
       this.setState({ searchText: '' });
-    }
-
-    if (categoryChange) {
-      this.handleSearchItemClick();
     }
 
     if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatar_photo) {
@@ -64,24 +62,22 @@ class Header extends React.Component {
     };
   }
 
-  handleSearchItemClick = () => {
-    this.props.resetSearchParam('');
-    this.props.updateSearchParam('');
-    this.setState({ searchActive: false, searchText: '', showSuggestions: false });
-    this.cursorPos = -1;
-  }
-
   logoutUser = () => {
     this.setState({ profileDropdown: false });
     this.props.history.push('/');
     this.props.logOut();
   }
 
-  handleSearchListClick = link => (e) => {
-    if (e.keyCode === 13) {
-      this.handleSearchItemClick();
-      this.props.history.push(link);
+  handleBackClick = () => {
+    const { showCategories } = this.state;
+    if (showCategories) {
+      this.toggleCategories();
     }
+  }
+
+  toggleCategories = () => {
+    const { showCategories } = this.state;
+    this.setState({ showCategories: !showCategories });
   }
 
   logoClick = () => {
@@ -92,12 +88,22 @@ class Header extends React.Component {
 
   render() {
     const { props } = this;
+    const { showCategories } = this.state;
     return (
       <HeaderSection notFixed={props.notFixed}>
         <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
-          <HeaderSection.MenuButton>
-            <FontAwesomeIcon icon={faBars} />
-          </HeaderSection.MenuButton>
+          {
+            !showCategories &&
+              <HeaderSection.MenuButton onClick={this.toggleCategories} >
+                <FontAwesomeIcon icon={faBars} />
+              </HeaderSection.MenuButton>
+          }
+          {
+            showCategories &&
+              <HeaderSection.BackIcon>
+                <FontAwesomeIcon icon={faChevronLeft} onClick={this.handleBackClick} />
+              </HeaderSection.BackIcon>
+          }
           {
             !props.disableLogo &&
               <HeaderSection.HeaderLeft hide={this.state.searchActive}>
@@ -110,7 +116,7 @@ class Header extends React.Component {
                 </Link>
               </HeaderSection.HeaderLeft>
           }
-          <HeaderSection.HeaderRight>
+          <HeaderSection.HeaderRight visible={!showCategories}>
             {
               this.props.isLoggedIn ?
                 <React.Fragment>
@@ -174,6 +180,12 @@ class Header extends React.Component {
               </HeaderSection.SearchWrapper>
           }
         </HeaderSection.HeaderDiv>
+        {
+          showCategories &&
+            <HeaderSection.CategoryWrapper>
+              <CategorySection />
+            </HeaderSection.CategoryWrapper>
+        }
       </HeaderSection>
     );
   }
