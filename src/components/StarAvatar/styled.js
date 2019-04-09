@@ -72,11 +72,13 @@ AvatarContainer.Content = styled.article`
   display: flex;
   max-width: 200px;
   align-items: flex-end;
+  margin-top: 8px;
+  border-top: 1px solid #ccc;
 `;
 
 AvatarContainer.StarDescription = styled.div`
   display: inline-block;
-  width: 85%;
+  width: calc(100% - 50px);
   padding-top: 7px;
 `;
 
@@ -87,6 +89,8 @@ AvatarContainer.Category = styled.span`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
+  margin-bottom: 3px;
 `;
 
 AvatarContainer.Name = styled.span`
@@ -104,7 +108,7 @@ AvatarContainer.Name = styled.span`
 
 AvatarContainer.Price = styled.span`
   display: inline-block;
-  width: 15%;
+  width: 50px;
   font-family: Gilroy-Semibold;
   font-size: 17px;
   line-height: 1.41;

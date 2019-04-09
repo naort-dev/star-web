@@ -41,7 +41,7 @@ const ListItem = styled.li`
     display: block;
   }
   @media(min-width: 834px) {
-    padding-right: 32px;
+    padding-right: 30px;
     font-size: 12px;
   }
 `;

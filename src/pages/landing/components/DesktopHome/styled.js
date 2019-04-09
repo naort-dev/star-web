@@ -385,8 +385,9 @@ DesktopStyled.Trending = styled.section`
 `;
 
 DesktopStyled.TrendingContent = DesktopStyled.CategorySection.extend`
+  padding: 38px 36px 18px;
   @media (min-width: 1280px) {
-    padding: 35px 19px 52px;
+    padding: 35px 19px 18px;
   }
 `;
 
