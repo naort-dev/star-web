@@ -23,7 +23,7 @@ import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 4 };
+    this.state = { open: true, stepCount: 1, category: '' };
     this.starData = [
       {
         size: '28px',
@@ -53,21 +53,24 @@ class Purchase extends Component {
     if (this.state.stepCount === 1) {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
-      return (
-        <FormContainer submitClick={this.submitClick}>
-          <FormContent />
-        </FormContainer>
-      );
+      if (this.state.category === 'question') {
+        return <Question />;
+      } else {
+        return (
+          <FormContainer submitClick={this.submitClick}>
+            <FormContent />
+          </FormContainer>
+        );
+      }
     } else if (this.state.stepCount === 3) {
       return <ScriptBuilder />;
-    } else {
-      return <Question />;
     }
   };
 
-  getCategory = type => {
+  getCategory = (type) => {
     this.setState({
-      stepCount: this.state.stepCount + 1,
+      stepCount: 2,
+      category: type,
     });
   };
 
