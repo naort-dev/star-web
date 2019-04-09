@@ -66,29 +66,28 @@ class SignUp extends React.Component {
 
   onRegister = async (e) => {
     e.preventDefault();
-    this.props.changeStep(this.props.currentStep + 1);
-    // if (
-    //   this.checkTermsAndConditionsRequired() &&
-    //   this.checkFirstRequired() &
-    //   this.checkLastRequired() &
-    //   this.checkEmail() &
-    //   this.checkNickNameRequired()
-    // ) {
-    //   this.props.registerUser(
-    //     this.state.firstName.value,
-    //     this.state.lastName.value,
-    //     this.state.email.value,
-    //     this.state.nickName.value,
-    //     this.state.role,
-    //   )
-    //     .then((response) => {
-    //       if (response != undefined) {
-    //         if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
-    //           this.props.changeStep(this.props.currentStep + 1);
-    //         }
-    //       }
-    //     });
-    // }
+    if (
+      this.checkTermsAndConditionsRequired() &&
+      this.checkFirstRequired() &
+      this.checkLastRequired() &
+      this.checkEmail() &
+      this.checkNickNameRequired()
+    ) {
+      this.props.registerUser(
+        this.state.firstName.value,
+        this.state.lastName.value,
+        this.state.email.value,
+        this.state.nickName.value,
+        this.state.role,
+      )
+        .then((response) => {
+          if (response != undefined) {
+            if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
+              this.props.changeStep(this.props.currentStep + 1);
+            }
+          }
+        });
+    }
   };
 
   saveFormEntries = (event, type) => {
