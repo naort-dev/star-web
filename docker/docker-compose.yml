@@ -24,6 +24,10 @@ services:
     - GOOGLE_TAG_MANAGER_ID
     - HTTP_PORT
     - ROLLBAR_ENV
+    - ANDROID_APP_ID
+    - IOS_APP_ID
+    - ANDROID_APP_NAME
+    - IOS_APP_NAME
 
 networks:
   overlay:

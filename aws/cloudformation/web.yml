@@ -30,6 +30,22 @@ Parameters:
     - development
     - production
 
+  AndroidAppId:
+    Type: String
+    Description: Android app ID
+
+  IOSAppId:
+    Type: String
+    Description: IOS app ID
+
+  AndroidAppName:
+    Type: String
+    Description: Android app name
+
+  IOSAppName:
+    Type: String
+    Description: IOS app name
+
   PriorityPrefix:
     Type: Number
     Description: Prefix for ALB routing priorities
@@ -136,6 +152,10 @@ Resources:
           - { Name: GOOGLE_TAG_MANAGER_ID, Value: !Ref 'GoogleTagManagerId' }
           - { Name: BRANCH_IO_KEY, Value: !Ref 'BranchIOKey' }
           - { Name: ROLLBAR_ENV, Value: !Ref 'RollbarEnv' }
+          - { Name: ANDROID_APP_ID, Value: !Ref 'AndroidAppId' }
+          - { Name: IOS_APP_ID, Value: !Ref 'IOSAppId' }
+          - { Name: ANDROID_APP_NAME, Value: !Ref 'AndroidAppName' }
+          - { Name: IOS_APP_NAME, Value: !Ref 'IOSAppName' }
 
   WebService:
     Type: AWS::ECS::Service
