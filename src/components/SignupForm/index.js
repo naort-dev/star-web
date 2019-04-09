@@ -4,7 +4,7 @@ import validator from 'validator';
 import axios from 'axios';
 import ActionLoader from '../ActionLoader';
 import { LoginContainer, FooterSection } from './styled';
-import { twitterLogin } from '../../services';
+import { twitterLogin, validatePromo } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
@@ -18,6 +18,7 @@ class SignUp extends React.Component {
       password: { value: "", isValid: false, message: "" },
       confPassword: { value: "", isValid: false, message: "" },
       referral: '',
+      referralError: '',
       showPassword: false,
       email: { value: '', isValid: false, message: '' },
       role: ROLES[props.signupRole],
@@ -127,7 +128,7 @@ class SignUp extends React.Component {
     }
   }
 
-  onRegister = (e) => {
+  onRegister = async (e) => {
     e.preventDefault();
     if (this.props.statusCode === '410') {
       this.setState({ socialMedia: { ...this.props.socialMediaStore, username: this.state.email.value } }, () => {
@@ -164,7 +165,8 @@ class SignUp extends React.Component {
       this.checkFirstRequired() &
       this.checkLastRequired() &
       this.checkEmail() &
-      this.checkPassword()
+      this.checkPassword() &
+      await this.checkPromo()
     ) {
       this.props.registerUser(
         this.state.firstName.value,
@@ -174,7 +176,7 @@ class SignUp extends React.Component {
         this.state.role,
         this.state.referral,
       )
-        .then(response => {
+        .then((response) => {
           if (response != undefined) {
             if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
               this.props.changeStep(this.props.currentStep + 1);
@@ -184,7 +186,7 @@ class SignUp extends React.Component {
     }
   };
 
-  onSocialMediaLogin = (r, source) => {
+  onSocialMediaLogin = async (r, source) => {
     let skipSocialLogin = false;
     if (source === 2) {
       this.setState({
@@ -264,7 +266,7 @@ class SignUp extends React.Component {
         this.props.closeSignupFlow();
       }
     }
-    if (!skipSocialLogin) {
+    if (!skipSocialLogin && await this.checkPromo()) {
       const socialObject = {
         userName: this.state.socialMedia.username,
         firstName: this.state.socialMedia.first_name,
@@ -434,6 +436,23 @@ class SignUp extends React.Component {
       lastName: { ...this.state.lastName, message: '', isValid: true },
     });
     return true;
+  }
+
+  checkPromo = async () => {
+    const { referral } = this.state;
+    if (referral === '') {
+      this.setState({ referralError: '' });
+      return true;
+    }
+    this.setState({ loading: true, referralError: '' });
+    try {
+      const promoResp = await validatePromo(referral);
+      this.setState({ loading: false });
+      return promoResp.success;
+    } catch (exception) {
+      this.setState({ loading: false, referralError: exception.response ? exception.response.data.error.message : '' });
+      return false;
+    }
   }
 
   isFormValid = () => {
@@ -607,6 +626,9 @@ class SignUp extends React.Component {
                           onChange={event => this.setState({ referral: event.target.value })}
                         />
                       </LoginContainer.PasswordWrapper>
+                      <LoginContainer.ErrorMsg>
+                        {this.state.referralError}
+                      </LoginContainer.ErrorMsg>
                     </LoginContainer.WrapsInput>
                   </LoginContainer.InputWrapper>
               }
