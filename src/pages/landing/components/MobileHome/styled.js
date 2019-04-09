@@ -10,6 +10,9 @@ const MobileStyled = styled.div`
   position: relative;
   z-index: 1;
   padding: 60px 23px;
+  &.grey-background {
+    background: #f6f6f6;
+  }
   .common-button {
     height: 60px;
     line-height: 60px;
