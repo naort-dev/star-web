@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const Heading = styled.span`
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 0 30px;
   font-family: Gilroy-SemiBold;
   font-size: 34px;
@@ -9,7 +9,8 @@ const Heading = styled.span`
   text-align: center;
   color: ${props => props.theme.twilight};
   display: block;
-  margin-bottom: 40px;
+  margin-bottom: 50px;
+  max-width: 330px;
   @media(min-width: 375px) {
     font-size: 43px;
     line-height: 50px;

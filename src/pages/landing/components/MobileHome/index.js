@@ -78,7 +78,7 @@ class MobileHome extends React.Component {
       <RequestFlowPopup
         modalView
       >
-        <MobileStyled>
+        <MobileStyled className={currentStep === 5?"grey-background":""}>
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
           {
             currentStep === 1 &&
@@ -89,7 +89,7 @@ class MobileHome extends React.Component {
               <React.Fragment>
                 <MobileStyled.SubHeader>Select from our selection of stars</MobileStyled.SubHeader>
                 <AvatarSection stars={featuredStars.data} />
-                <PrimaryButton onClick={this.goToNextStep}>Next</PrimaryButton>
+                <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
               </React.Fragment>
           }
           {
@@ -98,7 +98,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>Make your request</MobileStyled.SubHeader>
                 <MobileStyled.RowDivider>
                   <MobileStyled.ColumnDivider>
-                    <MobileStyled.BookIcon src="assets/images/shoutout.svg" />
+                    <MobileStyled.BookIcon className="shout-out" src="assets/images/shoutout.svg" />
                     <MobileStyled.BookContent>
                       <MobileStyled.Title>Shout-Outs</MobileStyled.Title>
                       <MobileStyled.SubDescription>
@@ -107,7 +107,7 @@ class MobileHome extends React.Component {
                     </MobileStyled.BookContent>
                   </MobileStyled.ColumnDivider>
                   <MobileStyled.ColumnDivider>
-                    <MobileStyled.BookIcon src="assets/images/announcement.svg" />
+                    <MobileStyled.BookIcon className="announcement" src="assets/images/announcement.svg" />
                     <MobileStyled.BookContent>
                       <MobileStyled.Title>Announcements</MobileStyled.Title>
                       <MobileStyled.SubDescription>
@@ -116,7 +116,7 @@ class MobileHome extends React.Component {
                     </MobileStyled.BookContent>
                   </MobileStyled.ColumnDivider>
                   <MobileStyled.ColumnDivider>
-                    <MobileStyled.BookIcon src="assets/images/question.svg" />
+                    <MobileStyled.BookIcon className="ask-question" src="assets/images/question.svg" />
                     <MobileStyled.BookContent>
                       <MobileStyled.Title>Ask A Question</MobileStyled.Title>
                       <MobileStyled.SubDescription>
@@ -125,7 +125,7 @@ class MobileHome extends React.Component {
                     </MobileStyled.BookContent>
                   </MobileStyled.ColumnDivider>
                 </MobileStyled.RowDivider>
-                <PrimaryButton onClick={this.goToNextStep}>Next</PrimaryButton>
+                <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
               </React.Fragment>
           }
           {
@@ -137,7 +137,7 @@ class MobileHome extends React.Component {
                   <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
-                  <PrimaryButton onClick={this.goToNextStep}>Next</PrimaryButton>
+                  <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
                 </MobileStyled.ButtonWrapper>
               </React.Fragment>
           }
@@ -145,18 +145,21 @@ class MobileHome extends React.Component {
             currentStep === 5 &&
               <React.Fragment>
                 <MobileStyled.SubHeader>Watch & share</MobileStyled.SubHeader>
-                <MobileStyled.Description>The video is delivered right to your device for you to keep forever.</MobileStyled.Description>
-                <MobileStyled.VideoWrapper>
+                <MobileStyled.Description>Your video is yours to download, send to a friend, share on social, and keep forever! It’s the new digital autograph.</MobileStyled.Description>
+                <MobileStyled.VideoWrapper className="small-video">
                   <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
-                  <PrimaryButton onClick={this.closeLandingFlow}>View Featured Stars</PrimaryButton>
+                  <PrimaryButton className="common-button" onClick={this.closeLandingFlow}>View Featured Stars</PrimaryButton>
                 </MobileStyled.ButtonWrapper>
               </React.Fragment>
           }
-          <MobileStyled.StarWrapper>
-            <StarDrawer starData={this.starData} />
-          </MobileStyled.StarWrapper>
+          {
+            currentStep !== 3 && currentStep !==5 &&
+              <MobileStyled.StarWrapper>
+                <StarDrawer starData={this.starData} />
+              </MobileStyled.StarWrapper>              
+          }
           {
             currentStep > 1 &&
               <MobileStyled.CloseButtonWrapper onClick={this.closeLandingFlow}>
