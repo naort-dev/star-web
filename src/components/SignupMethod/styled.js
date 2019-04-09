@@ -31,9 +31,6 @@ SignUpMethod.BackButton = styled.span`
 SignUpMethod.SocialMediaSignup = styled.div`
   text-align:center;
   height: 100%;
-  @media(min-width: 834px){
-    padding-top: 74px;
-  }
 `;
 
 SignUpMethod.Container = styled.div`
@@ -75,8 +72,11 @@ SignUpMethod.Button = styled.button`
   outline:none;
   background-color:white;
   cursor:pointer;
-  transition: all .4s ease-in-out;
-  &:hover { transform: scale(1.1);
+  box-sizing: border-box;
+  border: 2px solid #fff;
+  &:hover { 
+    border: 2px solid #2f839d;
+    border-radius: 10px;
 `;
 
 SignUpMethod.Icon = styled.div`

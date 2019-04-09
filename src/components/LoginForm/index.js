@@ -1,12 +1,14 @@
 import React from "react";
-import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import validator from "validator";
 import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
+import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
+import TextField from '@material-ui/core/TextField';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
-
+import { SignUpMethod } from '../SignupMethod/styled';
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -396,57 +398,50 @@ export default class LoginForm extends React.Component {
           this.state.loading &&
             <ActionLoader />
         }
-        <LoginContainer.SocialMediaSignup>
-          <LoginContainer.Container>
-            <LoginContainer.Heading>
-              Welcome back to Starsona!
-            </LoginContainer.Heading>
-            <LoginContainer.SocialMediaMessage>
-              Don't have an account?
-              <span onClick={() => this.props.toggleSignup(true)}>
-                <LoginContainer.LoginDiv>Sign up</LoginContainer.LoginDiv>
-              </span>
-            </LoginContainer.SocialMediaMessage>
-            <LoginContainer.ButtonDiv>
-              <LoginContainer.Button >
-                <LoginContainer.FacebookContent onClick={this.onFBlogin} />
-              </LoginContainer.Button>
+        <SignUpMethod.SocialMediaSignup>
+          <SignUpMethod.Container>
+            <SignUpMethod.Heading>
+            How do you want to log in?
+            </SignUpMethod.Heading>
+            <SignUpMethod.ButtonDiv>
+            <SignUpMethod.Button onClick={this.onFBlogin}>
+                <SignUpMethod.SocialMediaIcon>
+                  <SignUpMethod.Icon><FontAwesomeIcon icon={faFacebookF} /></SignUpMethod.Icon>
+                  <SignUpMethod.SocialMediaLabel>Facebook</SignUpMethod.SocialMediaLabel>
+                </SignUpMethod.SocialMediaIcon>
+              </SignUpMethod.Button>
+              <SignUpMethod.Button onClick={this.onTwitterLogin}>
+                <SignUpMethod.SocialMediaIcon>
+                  <SignUpMethod.Icon><FontAwesomeIcon icon={faTwitter} /></SignUpMethod.Icon>
+                  <SignUpMethod.SocialMediaLabel>Twitter</SignUpMethod.SocialMediaLabel>
+                </SignUpMethod.SocialMediaIcon>
+              </SignUpMethod.Button>
+              <SignUpMethod.Button onClick={this.onInstagramLogin}>
+                <SignUpMethod.SocialMediaIcon>
+                  <SignUpMethod.Icon><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
+                  <SignUpMethod.SocialMediaLabel>Instagram</SignUpMethod.SocialMediaLabel>
+                </SignUpMethod.SocialMediaIcon>
+              </SignUpMethod.Button>
+              <SignUpMethod.Button onClick={this.onGmail}>
+                <SignUpMethod.SocialMediaIcon>
+                  <SignUpMethod.GoogleWrapper id="g-sign-in" />
+                  <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
+                  <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
+                </SignUpMethod.SocialMediaIcon>
+              </SignUpMethod.Button>
+            </SignUpMethod.ButtonDiv>
+            <SignUpMethod.Heading>Login with email</SignUpMethod.Heading>
 
-              <LoginContainer.Button onClick={this.onGmail}>
-                <LoginContainer.GoogleWrapper
-                  id="g-sign-in"
-                  ref={gSignIn => (this.gSignIn = gSignIn)}
-                />
-                <LoginContainer.GoogleContent />
-                  
-                
-              </LoginContainer.Button>
-
-              <LoginContainer.Button onClick={this.onInstagramLogin}>
-                <LoginContainer.InstagramContent />
-              </LoginContainer.Button>
-
-              <LoginContainer.Button onClick={this.onTwitterLogin}>
-                <LoginContainer.TwitterContent />
-              </LoginContainer.Button>
-            </LoginContainer.ButtonDiv>
-
-            <LoginContainer.SignupLine>
-              <span>or log in with email</span>
-            </LoginContainer.SignupLine>
             <LoginContainer.InputFieldsWrapper>
               <LoginContainer.InputContainer>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
-                    <LoginContainer.Input
+                    <TextField
+                      fullWidth={true}
                       type="email"
                       name="email"
                       value={email.value}
-                      placeholder={
-                        this.props.statusCode === "410"
-                          ? "Please enter an email"
-                          : "Email"
-                      }
+                      placeholder={'What is your email address?'}
                       onChange={this.acceptEmailHandler}
                       onBlur={this.checkEmail}
                     />
@@ -461,11 +456,12 @@ export default class LoginForm extends React.Component {
                     <LoginContainer.InputWrapper>
                       <LoginContainer.WrapsInput>
                         <LoginContainer.PasswordWrapper>
-                          <LoginContainer.Input
+                          <TextField
+                            fullWidth={true}
                             type={this.state.showPassword ? "text" : "password"}
                             name="password"
                             value={password.value}
-                            placeholder="Password"
+                            placeholder="What is your password?"
                             onChange={this.acceptPasswordHandler}
                             onBlur={this.checkPassword}
                           />
@@ -477,6 +473,22 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                   )}
+                {
+                  this.props.statusCode !== '410' && 
+                  this.props.statusCode !== '310' && 
+                  this.props.error &&
+                    <LoginContainer.WrapsInput>
+                      <LoginContainer.ErrorMsg>
+                        {this.props.error}
+                      </LoginContainer.ErrorMsg>
+                    </LoginContainer.WrapsInput>
+                }
+                  <LoginContainer.SignIn
+                    type="submit"
+                    value="Log in"
+                    onClick={this.onLogin}
+                    disabled={this.props.loading}
+                  />
                 {this.props.statusCode === '410' ? (
                   <React.Fragment />
                 ) : (
@@ -491,26 +503,10 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.actionText>
                     </LoginContainer.ForgotButtonWrapper>
                   )}
-                {
-                  this.props.statusCode !== '410' && this.props.statusCode !== '310' && this.props.error &&
-                    <LoginContainer.WrapsInput>
-                      <LoginContainer.ErrorMsg>
-                        {this.props.error}
-                      </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                }
-                <LoginContainer.ButtonWrapper>
-                  <LoginContainer.SignIn
-                    type="submit"
-                    value="Log in"
-                    onClick={this.onLogin}
-                    disabled={this.props.loading}
-                  />
-                </LoginContainer.ButtonWrapper>
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
-          </LoginContainer.Container>
-         </LoginContainer.SocialMediaSignup>
+          </SignUpMethod.Container>
+         </SignUpMethod.SocialMediaSignup>
       </React.Fragment>
     );
   }
