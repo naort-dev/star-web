@@ -33,11 +33,11 @@ class SignupFlow extends React.Component {
     this.setState({ bioDetails });
   }
   changeSignUpRole = (role) => {
-    this.setState({ selectedType: role, currentStep: 1, stepCount: 0 });
+    this.setState({ selectedType: role, stepCount: 0 });
     if (role === 'star') {
-      this.setState({ stepCount: this.starRegistrationSteps, currentStep: 1 });
+      this.setState({ stepCount: this.starRegistrationSteps });
     } else if (role === 'group') {
-      this.setState({ stepCount: this.groupRegistrationSteps, currentStep: 1 });
+      this.setState({ stepCount: this.groupRegistrationSteps });
     }
   }
   saveData = data => this.setState({ socialData: { ...this.state.socialData, ...data } });
@@ -56,7 +56,7 @@ class SignupFlow extends React.Component {
 
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
-      return (<SignupMethod
+      return (<SignUpForm
         {...this.props}
         changeStep={this.changeStep}
         currentStep={this.state.currentStep}
@@ -67,7 +67,7 @@ class SignupFlow extends React.Component {
       );
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 1: return (<SignupMethod
+        case 1: return (<SignUpForm
           {...this.props}
           changeStep={this.changeStep}
           currentStep={this.state.currentStep}
@@ -123,7 +123,7 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             <LoginContainer.LeftSection>
               {
-                !this.state.selectedType || this.state.currentStep === 0 ?
+                !this.state.selectedType ?
                   <LoginTypeSelector
                     {...this.props}
                     isSignUp
@@ -132,7 +132,16 @@ class SignupFlow extends React.Component {
                 :
                   <LoginContainer.SignupFlow currentStep={this.state.currentStep}>
                     {
-                      this.renderSteps()
+                      this.state.currentStep === 0 ?
+                        <SignupMethod
+                          {...this.props}
+                          changeStep={this.changeStep}
+                          currentStep={this.state.currentStep}
+                          signupRole={this.state.selectedType}
+                          data={this.state.socialData}
+                          closeSignupFlow={this.closeSignUp}
+                        />
+                      : this.renderSteps()
                     }
                   </LoginContainer.SignupFlow>
               }
