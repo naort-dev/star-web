@@ -26,13 +26,15 @@ export const DialogStyled = styled(Dialog)`
 `;
 
 export const Header = styled.section`
-  height: 157px;
+  height: 160px;
   ${media.mobileScreen} {
     height: 178px;
   }
+  height: 157px;
   background: #ff6c58;
-  padding: 15px 40px;
+  padding: 12px 40px 0;
   position: relative;
+
   .svg-inline--fa {
     font-size: 50px;
     color: #fff;
@@ -59,6 +61,9 @@ export const Content = styled.section`
   position: relative;
   padding-top: 30px;
   height: calc(100% - 157px);
+  ${media.mobileScreen} {
+    padding-top: 70px;
+  }
 `;
 
 export const ModalContainer = styled.section`
@@ -73,10 +78,10 @@ export const FlexBoxSBC = styled(FlexBoxSB)`
 export const HeaderText = styled.section`
   color: #fff;
   text-align: center;
-  font-family: Gilroy;
+  font-family: Gilroy-Thin;
   font-size: 18px;
   font-weight: 600;
-  padding-top: 15px;
+  padding-top: 17px;
 `;
 export const FlexCenter = styled.section`
   display: flex;
@@ -89,10 +94,18 @@ export const ProfileIcon = styled.section`
   justify-content: center;
   position: relative;
   height: 85px;
+`;
+
+export const Image = styled.span`
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  box-shadow: 0 8px 13px 0 rgba(0, 0, 0, 0.28);
+  margin-top: 8px;
   img {
-    width: 70px;
+    width: 80px;
     height: 80px;
-    padding-top: 10px;
+    border-radius: 50%;
   }
 `;
 
