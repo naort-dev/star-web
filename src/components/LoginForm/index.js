@@ -8,7 +8,7 @@ import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free
 import TextField from '@material-ui/core/TextField';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
-import { SignUpMethod } from '../SignUpMethod/styled';
+import { SignUpMethod } from '../SignupMethod/styled';
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
