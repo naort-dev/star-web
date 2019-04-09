@@ -3,10 +3,12 @@ import styled from 'styled-components';
 const AvatarStyled = styled.div`
   width: 100%;
   position: relative;
-  max-width: 375px;
+  max-width: 335px;
   margin-bottom: 46px;
   margin-top: 41px;
   height: calc(100vh - 288px);
+  max-height: 405px;
+  min-height: 350px;
 `;
 
 AvatarStyled.Avatar = styled.span`
@@ -20,27 +22,27 @@ AvatarStyled.Avatar = styled.span`
   box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
   &.avatar-1 {
     bottom: 0;
-    right: 50px;
+    right: 74px;
   }
   &.avatar-2 {
-    bottom: 20px;
-    left: 28px;
+    bottom: 37px;
+    left: 7px;
   }
   &.avatar-3 {
-    bottom: 87px;
-    right: 30px;
+    bottom: 82px;
+    right: 41px;
   }
   &.avatar-4 {
-    bottom: 107px;
-    left: 44px;
+    bottom: 101px;
+    left: 42px;
   }
   &.avatar-5 {
-    top: 102px;
-    right: 52px;
+    top: 95px;
+    right: 54px;
   }
   &.avatar-6 {
-    top: 74px;
-    left: 40px;
+    top: 38px;
+    left: 47px;
   }
   &.avatar-7 {
     top: 0;
