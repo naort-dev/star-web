@@ -20,7 +20,6 @@ HeaderSection.HeaderDiv = styled.div`
   padding: ${props => (props.notFixed ? '3px 16px' : '0')};
   justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
   align-items: center;
-  max-width: 1920px;
   height: 100%;  
   flex-wrap: wrap;
   @media (min-width: 834px) {
@@ -39,7 +38,11 @@ HeaderSection.HeaderRight = styled.div`
 `;
 HeaderSection.HeaderLeft = styled.div`
   display: inline-block;
+  @media(min-width: 834px) {
+    width: 50%;
+  }
   @media(min-width: 1280px) {
+    width: auto;
     position: static;
     order: 1;
   }
@@ -94,10 +97,6 @@ HeaderSection.CategoryWrapper = styled.div`
 HeaderSection.ImgLogo = styled.img`
   width:  154px;
   height: 40px;
-  @media(min-width: 1920px) {
-    width: auto;
-    height: 26px;
-  }
 `;
 
 HeaderSection.MenuButton = styled.span`

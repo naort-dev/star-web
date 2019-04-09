@@ -42,7 +42,7 @@ CategoryStyled.Item = styled.li`
     }
   }
   @media(min-width: 1280px) {
-
+    line-height: 18px;
   }
 `;
 
