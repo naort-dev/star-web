@@ -119,7 +119,6 @@ class DesktopHome extends React.Component {
   }
 
   handleCategoryChange = (category) => {
-    console.log(category);
     this.props.closeLandingFlow();
     this.props.updateCategory(category.title, category.id);
   }

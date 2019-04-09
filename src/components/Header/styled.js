@@ -64,6 +64,7 @@ HeaderSection.SearchWrapper = styled.div`
   @media(min-width: 1280px) {
     order: 2;
     padding: 0;
+    margin-top: 0;
   }
 `;
 

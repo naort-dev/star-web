@@ -21,6 +21,7 @@ const CategorySection = (props) => {
         professionsList.map((profession) => {
           return (
             <CategoryStyled.Item
+              key={profession.id}
               onClick={updateMainCategory(profession.title, profession.id)}
               selected={props.category.label === profession.title}
             >

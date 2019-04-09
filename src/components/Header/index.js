@@ -80,12 +80,6 @@ class Header extends React.Component {
     this.setState({ showCategories: !showCategories });
   }
 
-  logoClick = () => {
-    if (this.props.history.location.pathname === '/') {
-      this.props.enableMenu();
-    }
-  }
-
   render() {
     const { props } = this;
     const { showCategories } = this.state;
@@ -107,11 +101,10 @@ class Header extends React.Component {
           {
             !props.disableLogo &&
               <HeaderSection.HeaderLeft hide={this.state.searchActive}>
-                <Link to="/" onClick={this.handleSearchItemClick}>
+                <Link to="/">
                   <HeaderSection.ImgLogo
                     src="assets/images/logo_starsona.svg"
                     alt=""
-                    onClick={this.logoClick}
                   />
                 </Link>
               </HeaderSection.HeaderLeft>

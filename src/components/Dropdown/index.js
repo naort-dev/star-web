@@ -54,14 +54,19 @@ export default class Dropdown extends React.Component {
     }
   };
 
+  findActualOption = (option) => {
+    const { options, labelKey } = this.props;
+    return options.find(optionItem => optionItem[labelKey] === option.label);
+  }
+
   selectOption = option => (event) => {
     if (event.nativeEvent.type === 'click') {
       this.setState({ selected: option });
-      this.props.onChange(option);
+      this.props.onChange(this.findActualOption(option));
       this.toggleDropDown(false)();
     } else if (event.nativeEvent.type === 'keyup' && event.keyCode === 13) {
       this.setState({ selected: option });
-      this.props.onChange(option);
+      this.props.onChange(this.findActualOption(option));
       this.toggleDropDown(false)();
     }
   };

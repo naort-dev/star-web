@@ -11,6 +11,9 @@ const CategoryStyled = styled.ul`
     margin: 0 auto;
     justify-content: center;
   }
+  @media(min-width: 1280px) {
+    max-width: 1280px;
+  }
 `;
 
 CategoryStyled.Item = styled.li`
@@ -26,14 +29,20 @@ CategoryStyled.Item = styled.li`
     color: ${props => props.theme.flatBlue};
   }
   @media(min-width: 834px) {
-    font-family: Gilroy-Medium;
-    font-size: 18px;
+    font-family: ${props => (props.selected ? 'Gilroy-Heavy' : 'Gilroy-Medium')};
+    font-size: ${props => (props.selected ? '20px' : '18px')};
     line-height: 38px;
-    padding-left: 36px;
+    padding: 0;
+    margin-left: 36px;
     border: none;
     &:hover {
+      font-family: Gilroy-Heavy;
+      font-size: 20px;
       border: none;
     }
+  }
+  @media(min-width: 1280px) {
+
   }
 `;
 
