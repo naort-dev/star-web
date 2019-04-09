@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import TextField from '@material-ui/core/TextField';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
@@ -47,11 +48,21 @@ class SignUpImageUpload extends React.Component {
   render() {
     return (
       <UploadContainer.Container>
+        <UploadContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         <UploadContainer.Heading>Give your fans what they want</UploadContainer.Heading>
         <ProfileUpload
           starMode
           onComplete={this.setProfileImage}
         />
+
+        <UploadContainer.CategoriesWrapper>
+          <TextField
+            placeholder="Categorize yourself. This helps fans find you. (up to 3)"
+            type="text"
+            name="categoriesList"
+            value=""
+          />
+        </UploadContainer.CategoriesWrapper>
       </UploadContainer.Container>
     );
   }

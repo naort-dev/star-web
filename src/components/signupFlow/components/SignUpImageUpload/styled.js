@@ -62,24 +62,41 @@ UploadContainer.Heading = styled.div`
   }
 `;
 
-const GroupStyled = styled.div`
+UploadContainer.BackButton = styled.span`
+  position: absolute;
+  top: 2px;
+  left: 5px;
+  background-image: url(assets/images/icon_back_40a.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  padding: 15px;
+  background-size: 26px;
+  background-color: white;
+  cursor: pointer;
+  outline: none;
+`;
+
+UploadContainer.CategoriesWrapper = styled.div``;
+
+const ImageUpload = styled.div`
   height: 100%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
 `;
-GroupStyled.ContentWrapper = styled.div`
+ImageUpload.ContentWrapper = styled.div`
   height: 100%;
   display: ${props => (props.hide ? 'none' : 'block')}
 `;
 
-GroupStyled.DetailsWrapper = GroupStyled.ContentWrapper.extend`
+ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
     padding: 30px 60px;
   }
 `;
 
-GroupStyled.ProfileInputButton = styled.div`
+ImageUpload.ProfileInputButton = styled.div`
   display: flex;
   height: calc(100% - 150px);
   align-items: center;
@@ -87,7 +104,7 @@ GroupStyled.ProfileInputButton = styled.div`
   padding-bottom: 18px;
 `;
 
-GroupStyled.CoverImage = styled.div`
+ImageUpload.CoverImage = styled.div`
   position: relative;
   height: 50%;
   display: flex;
@@ -99,7 +116,7 @@ GroupStyled.CoverImage = styled.div`
   background-size: cover;
 `;
 
-GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
+ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   width: 150px;
   height: 150px;
   position: relative;
@@ -111,7 +128,7 @@ GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
   cursor: pointer;
 `;
 
-GroupStyled.ProfileInputContainer = styled.span`
+ImageUpload.ProfileInputContainer = styled.span`
   position: absolute;
   top: 0;
   bottom: 0;
@@ -124,7 +141,7 @@ GroupStyled.ProfileInputContainer = styled.span`
   pointer-events: none;
 `;
 
-GroupStyled.ProfileInputWrapper = styled.span`
+ImageUpload.ProfileInputWrapper = styled.span`
   background: ${props => !props.noImage && "url('assets/images/image-upload.png') no-repeat"};
   width: 35px;
   height: 35px;
@@ -133,22 +150,22 @@ GroupStyled.ProfileInputWrapper = styled.span`
   background-size: contain;
 `;
 
-GroupStyled.UploadInput = styled.input`
+ImageUpload.UploadInput = styled.input`
   width: 100%;
   height: 100%;
   cursor: pointer;
 `;
 
-GroupStyled.UploadText = styled.span`
+ImageUpload.UploadText = styled.span`
   color: #555;
   font-family: 'Avenir-Light';
   font-size: 14px;
   max-width: 110px;
 `;
 
-GroupStyled.CropWrapper = styled.div``;
+ImageUpload.CropWrapper = styled.div``;
 
-GroupStyled.Heading = styled.div`
+ImageUpload.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
@@ -163,7 +180,7 @@ GroupStyled.Heading = styled.div`
     font-size: 27px;
   }
 `;
-GroupStyled.ControlWrapper = styled.div`
+ImageUpload.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
   z-index: 1;
   width: 100%;
@@ -187,7 +204,7 @@ GroupStyled.ControlWrapper = styled.div`
   }
 `;
 
-GroupStyled.ControlButton = styled.button`
+ImageUpload.ControlButton = styled.button`
   background-color: #FF6C58;
   color: rgb(255,255,255);
   text-align: center;
@@ -211,4 +228,4 @@ GroupStyled.ControlButton = styled.button`
   }
 `;
 
-export { UploadContainer, GroupStyled };
+export { UploadContainer, ImageUpload };

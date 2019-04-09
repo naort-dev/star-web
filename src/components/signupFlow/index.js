@@ -7,12 +7,14 @@ import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
+import SignUpImageUpload from './components/SignUpImageUpload';
 import { LoginContainer, HeaderSection } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
+import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -73,13 +75,12 @@ class SignupFlow extends React.Component {
           data={this.state.socialData}
           closeSignupFlow={this.closeSignUp}
         />);
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-        case 7:
-        case 8: return (<StarRegistration
+        case 2: return (<SignUpImageUpload
+          {...this.props}
+          changeStep={this.changeStep}
+          currentStep={this.state.currentStep}
+        />);
+        case 3: return (<StarRegistration
           currentStep={this.state.currentStep}
           changeStep={this.changeStep}
           closeSignupFlow={this.closeSignUp}

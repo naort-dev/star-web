@@ -98,6 +98,7 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 `;
 LoginContainer.Container = styled.div`
+  display: block;
   @media(min-width: 768px) {
     padding: 0 0;
   }
@@ -106,12 +107,11 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  text-align: center;
-  color: #676767;
+  font-family: Gilroy-Medium;
+  color: #ff6c58;
   font-size: 20px;
-  font-family: 'Avenir-Bold';
   @media(min-width:768px){
-    font-size:25px;
+    font-size: 24px;
   }
   @media(min-width: 1025px){
     font-size: 25px;
@@ -120,6 +120,21 @@ LoginContainer.Heading = styled.div`
     font-size: 27px;
   }
   
+`;
+
+LoginContainer.ContinueButton = styled.button`
+  background-color: #2f839d;
+  font-family: Gilroy-Extrabold;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  width: 300px;
+  height: 60px;
+  outline: none;
 `;
 
 LoginContainer.ButtonIcon = styled.img`  
@@ -204,10 +219,12 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  color:#333333;
-  font-family: 'Avenir-Bold';
-  font-size:16px;
-  text-align:left;
+  font-family: Gilroy-Medium;
+  font-size: 12px;
+  line-height: 2.08;
+  text-align: center;
+  color: #555555;
+  padding-top: 25px
   @media(min-width:768px){
     width:55%;
     align-items:center;
@@ -285,16 +302,15 @@ LoginContainer.InputWrapper = styled.div`
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
-  text-align:left;
-  font-family: 'Avenir-Regular';
-  font-size:12px;
-  padding: 17px 23px;
-  line-height: 18px;
-  color: #707070;
+  font-family: Gilroy-Medium;
+  font-size: 14px;
+  line-height: 1.57;
+  text-align: left;
+  color: #555555;
   ${LoginContainer.Anchor} {
-    color: #707070;
-    margin: 0 5px;
-    text-decoration: underline;
+    color: #2f839d;
+    cursor: pointer;
+    text-decoration: none;
   }
   @media(min-width:768px){
     text-align:center;
@@ -425,6 +441,14 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  .textField {
+    font-family: Gilroy-Semibold;
+    font-size: 22px;
+    font-weight: 600;
+    line-height: 1.14;
+    text-align: center;
+    color: #615195;
+  }
   @media(min-width:768px){
     width:100%;
   }

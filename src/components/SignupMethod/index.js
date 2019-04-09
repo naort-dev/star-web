@@ -376,7 +376,7 @@ class SignupMethod extends React.Component {
     return true;
   };
 
-  render() {
+  render() {    
     return (
       this.state.emailClick ?
         <SignUpForm

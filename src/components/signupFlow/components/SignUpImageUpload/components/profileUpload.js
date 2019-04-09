@@ -4,7 +4,7 @@ import { awsImageUpload } from '../../../../../services/awsImageUpload';
 import { imageSizes } from '../../../../../constants/imageSizes';
 import ImageCropper from '../../../../ImageCropper';
 import Loader from '../../../../Loader';
-import { GroupStyled } from '../styled';
+import { ImageUpload } from '../styled';
 
 export default class ProfileUpload extends React.Component {
 
@@ -115,36 +115,36 @@ export default class ProfileUpload extends React.Component {
 
   render() {
     return (
-      <GroupStyled.DetailsWrapper>
+      <ImageUpload.DetailsWrapper>
         {
           this.state.imageLoading ?
             <Loader />
             :
             <React.Fragment>
-              <GroupStyled.ProfileInputButton>
-                <GroupStyled.ProfileImageWrapper
+              <ImageUpload.ProfileInputButton>
+                <ImageUpload.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
                 >
-                  <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
-                  <GroupStyled.ProfileInputContainer>
-                    <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
-                    {!this.state.finalImage ? <GroupStyled.UploadText>Upload profile picture</GroupStyled.UploadText> : null}
-                  </GroupStyled.ProfileInputContainer>
-                </GroupStyled.ProfileImageWrapper>
-                <GroupStyled.ProfileImageWrapper
+                  <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+                  <ImageUpload.ProfileInputContainer>
+                    <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage} />
+                    {!this.state.finalImage ? <ImageUpload.UploadText>Upload profile picture</ImageUpload.UploadText> : null}
+                  </ImageUpload.ProfileInputContainer>
+                </ImageUpload.ProfileImageWrapper>
+                <ImageUpload.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
                 >
-                  <GroupStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
-                  <GroupStyled.ProfileInputContainer>
-                    <GroupStyled.ProfileInputWrapper noImage={this.state.finalImage} />
-                    {!this.state.finalImage ? <GroupStyled.UploadText>Take a profile picture</GroupStyled.UploadText> : null}
-                  </GroupStyled.ProfileInputContainer>
-                </GroupStyled.ProfileImageWrapper>
-              </GroupStyled.ProfileInputButton>
+                  <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
+                  <ImageUpload.ProfileInputContainer>
+                    <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage} />
+                    {!this.state.finalImage ? <ImageUpload.UploadText>Take a profile picture</ImageUpload.UploadText> : null}
+                  </ImageUpload.ProfileInputContainer>
+                </ImageUpload.ProfileImageWrapper>
+              </ImageUpload.ProfileInputButton>
               {
                 this.state.cropMode && this.state.cropImage &&
-                <GroupStyled.CropWrapper>
-                  <GroupStyled.Heading>Crop your photo</GroupStyled.Heading>
+                <ImageUpload.CropWrapper>
+                  <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
                   <ImageCropper
                     exifData={this.currentExif}
                     aspectRatio={imageSizes.profile}
@@ -152,19 +152,19 @@ export default class ProfileUpload extends React.Component {
                     closeCropper={() => this.closeCropper()}
                     cropImage={this.state.cropImage}
                   />
-                </GroupStyled.CropWrapper>
+                </ImageUpload.CropWrapper>
               }
-              <GroupStyled.ControlWrapper>
-                <GroupStyled.ControlButton
+              <ImageUpload.ControlWrapper>
+                <ImageUpload.ControlButton
                   disabled={!this.state.finalImage}
                   onClick={this.onComplete}
                 >
                   Continue
-                </GroupStyled.ControlButton>
-              </GroupStyled.ControlWrapper>
+                </ImageUpload.ControlButton>
+              </ImageUpload.ControlWrapper>
             </React.Fragment>
         }
-      </GroupStyled.DetailsWrapper>
+      </ImageUpload.DetailsWrapper>
     );
   }
 }
