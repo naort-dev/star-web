@@ -36,6 +36,9 @@ const Question = () => {
       >
         Show Script
       </ShowHide>
+      <FlexCenter className="mobileBtn">
+        <Button>Record</Button>
+      </FlexCenter>
     </Layout>
   );
 };

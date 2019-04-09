@@ -9,6 +9,18 @@ export const Layout = styled.section`
     justify-content: center;
     padding: 0 20px;
   }
+  .mobileBtn {
+    display: none;
+    position: absolute;
+    top: 450px;
+    padding-bottom: 60px;
+    button {
+      width: 242px;
+    }
+    ${media.mobileScreen} {
+      display: block;
+    }
+  }
 `;
 
 export const VideoContainer = styled.section`
@@ -27,7 +39,7 @@ export const QuestionContainer = styled.section`
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 24px;
-    bottom: 50px;
+    top: 170px;
     background: transparent;
     left: 50%;
     width: 269px;
