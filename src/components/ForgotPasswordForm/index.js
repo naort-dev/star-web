@@ -5,7 +5,7 @@ import forgotPassword from '../../utils/forgotPassword';
 import Loader from '../Loader';
 import { LoginContainer } from '../../components/LoginForm/styled';
 import { ForgotPasswordWrap } from './styled';
-
+import TextField from '@material-ui/core/TextField';
 export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
@@ -80,7 +80,8 @@ export default class ForgotPassword extends React.Component {
                   <LoginContainer.InputContainer>
                     <LoginContainer.InputWrapper>
                       <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
+                        <TextField
+                          fullWidth={true}
                           type="text"
                           name="email"
                           value={email.value}
