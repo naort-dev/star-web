@@ -198,7 +198,7 @@ export default class Landing extends React.Component {
                         disableLogo
                         disableSearch
                       />
-                      <DesktopHome />
+                      <DesktopHome closeLandingFlow={this.closeLandingFlow} />
                       <Footer />
                     </React.Fragment>
                   : <MobileHome closeLandingFlow={this.closeLandingFlow} />

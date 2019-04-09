@@ -18,7 +18,9 @@ CategoryStyled.Item = styled.li`
   font-size: 21px;
   line-height: 46px;
   padding-left: 18px;
-  color: ${props => props.theme.brownGrey};
+  cursor: pointer;
+  color: ${props => (props.selected ? props.theme.flatBlue : props.theme.brownGrey)};
+  border-left: ${props => (props.selected ? `5px solid ${props.theme.flatBlue}` : 'none')};
   &:hover {
     border-left: ${props => `5px solid ${props.theme.flatBlue}`};
     color: ${props => props.theme.flatBlue};
@@ -28,6 +30,7 @@ CategoryStyled.Item = styled.li`
     font-size: 18px;
     line-height: 38px;
     padding-left: 36px;
+    border: none;
     &:hover {
       border: none;
     }

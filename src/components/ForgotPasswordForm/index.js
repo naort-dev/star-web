@@ -1,12 +1,11 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
 import validator from 'validator';
 import Api from '../../lib/api';
 import forgotPassword from '../../utils/forgotPassword';
 import Loader from '../Loader';
 import { LoginContainer } from '../../components/LoginForm/styled';
 import { ForgotPasswordWrap } from './styled';
-
+import TextField from '@material-ui/core/TextField';
 export default class ForgotPassword extends React.Component {
   constructor(props) {
     super(props);
@@ -49,11 +48,7 @@ export default class ForgotPassword extends React.Component {
   }
   render() {
     const { email } = this.state;
-    const to = this.props.redirectUrls.to || '/';
-    const { redirectToReferrer } = this.state;
-    if (redirectToReferrer) {
-      return <Redirect to={to} />;
-    }
+
     return (
       <LoginContainer.SocialMediaSignup>
         <LoginContainer.Container>
@@ -85,7 +80,8 @@ export default class ForgotPassword extends React.Component {
                   <LoginContainer.InputContainer>
                     <LoginContainer.InputWrapper>
                       <LoginContainer.WrapsInput>
-                        <LoginContainer.Input
+                        <TextField
+                          fullWidth={true}
                           type="text"
                           name="email"
                           value={email.value}
