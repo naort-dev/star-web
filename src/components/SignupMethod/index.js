@@ -426,7 +426,7 @@ class SignupMethod extends React.Component {
                 </SignUpMethod.SocialMediaIcon>
               </SignUpMethod.Button>
             </SignUpMethod.ButtonDiv>
-            <SignUpMethod.Heading>or</SignUpMethod.Heading>
+            <SignUpMethod.Heading className="or-section">or</SignUpMethod.Heading>
             <SignUpMethod.Button onClick={this.onEmailLogin}>
               <SignUpMethod.SocialMediaIcon>
                 <SignUpMethod.Icon><FontAwesomeIcon icon={faEnvelope} /></SignUpMethod.Icon>
