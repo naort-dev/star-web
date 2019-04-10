@@ -1,5 +1,7 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import PropTypes from 'prop-types';
+
 import DropdownStyled from './styled';
 
 export default class Dropdown extends React.Component {
@@ -61,6 +63,7 @@ export default class Dropdown extends React.Component {
       this.setState({ selected: option });
       this.toggleDropDown(false)();
     }
+    this.props.handleChange(option);
   };
 
   handleListKeyUp = event => {
@@ -119,3 +122,7 @@ export default class Dropdown extends React.Component {
     );
   }
 }
+
+Dropdown.propTypes = {
+  handleChange: PropTypes.func.isRequired,
+};

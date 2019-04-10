@@ -4,19 +4,27 @@ import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import { Layout } from './styled';
 
-const list = [{ label: 'Birthday', key: 1 }, { label: 'Other', key: 2 }];
 class FormContainer extends Component {
+  onSelectOccasion = (occasion) => {
+    // this.props.detailList.filter((item) => {
+    //   if (item.id === occasion.value) {
+    //     switchTemplate(item.type);
+    //   }
+    // });
+  }
   render() {
-    const { children, ...rest } = { ...this.props };
+    const { children, detailList, ...rest } = { ...this.props };
+    const optionsList = detailList.map(item => ({ label: item.title, key: item.id }));
     return (
       <Layout>
         <FlexCenter>
           <Dropdown
-            options={[{ title: 'Featured', id: 0 }, ...list]}
+            options={optionsList}
             labelKey="label"
             valueKey="key"
             placeHolder="What is the occasion?"
             className="custom"
+            handleChange={occasion => this.onSelectOccasion(occasion)}
           />
         </FlexCenter>
         {React.cloneElement(children, {

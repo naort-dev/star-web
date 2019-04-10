@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import PropTypes from 'prop-types';
 import {
   Header,
   Content,
@@ -22,7 +23,7 @@ import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 4 };
+    this.state = { open: true, stepCount: 1 };
     this.starData = [
       {
         size: '28px',
@@ -53,7 +54,7 @@ class Purchase extends Component {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
       return (
-        <FormContainer submitClick={this.submitClick}>
+        <FormContainer detailList={this.props.OccasionDetails} submitClick={this.submitClick}>
           <FormContent />
         </FormContainer>
       );
@@ -64,10 +65,11 @@ class Purchase extends Component {
     }
   };
 
-  getCategory = type => {
+  getCategory = (type) => {
     this.setState({
       stepCount: this.state.stepCount + 1,
     });
+    this.props.fetchOccasionlist(type);
   };
 
   handleClose = () => {
@@ -85,7 +87,6 @@ class Purchase extends Component {
       stepCount: this.state.stepCount + 1,
     });
   };
-
   render() {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
@@ -117,5 +118,10 @@ class Purchase extends Component {
     );
   }
 }
+
+Purchase.propTypes = {
+  fetchOccasionlist: PropTypes.func,
+  OccasionDetails: PropTypes.object,
+};
 
 export default Purchase;
