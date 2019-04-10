@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 
 const SearchSection = styled.div`
-  position:absolute;
-  display: ${props => (props.hide ? 'none' : 'block')};
-  left: 0;
-  right: 0;
-  top: 0;
+  display: block;
   height: 50px;
   background: #fff;
   font-family: Gilroy;
@@ -40,20 +36,22 @@ SearchSection.AutoSuggest = styled.div`
 `;
 SearchSection.SuggestionListWrapper = styled.div`
   font-family: Gilroy;
-  position: fixed;
-  top: 60px;
+  position: absolute;
+  top: 100%;
   left: 0;
   right: 0;
-  bottom: 0;
+  width: 100%;
   background-color: #FFFFFF;
-  box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   z-index: 1;
+  height: calc(100vh - 126px);
   @media(min-width: 834px) {
     box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
     top: 50px;
     left: 0;
     right: 0;
+    height: auto;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
     height: 300px;
     bottom: initial;
     box-shadow: none;
@@ -111,9 +109,11 @@ SearchSection.StarHeading = styled.p`
   font-size: 13px;
   font-family: Gilroy-Semibold;
   text-transform: uppercase;
-  padding-left: 30px;
   margin-top: 10px;
   font-weight: 600;
+  @media(min-width: 834px) {
+    padding-left: 30px;
+  }
 `;
 
 SearchSection.CategoryList = styled.div`

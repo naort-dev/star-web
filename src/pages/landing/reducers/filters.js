@@ -4,9 +4,7 @@ const initalState = {
   category: {
     label: 'featured',
     value: '',
-    selectedCategory: 'Stars',
   },
-  selectedTab: 'Stars',
   searchParam: '',
   lowPrice: '',
   highPrice: '',
@@ -23,14 +21,7 @@ export default (state = { ...initalState }, action) => {
         category: {
           label: action.label,
           value: action.value,
-          selectedCategory: action.category,
         },
-      };
-
-    case UPDATEFILTER.switchTab:
-      return {
-        ...state,
-        selectedTab: action.label,
       };
 
     case UPDATEFILTER.updateSearchParam:

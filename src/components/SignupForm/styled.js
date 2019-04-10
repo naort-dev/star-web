@@ -441,13 +441,13 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
-  .textField {
-    font-family: Gilroy-Semibold;
-    font-size: 22px;
-    font-weight: 600;
+  input {
+    font-family: Gilroy;
+    font-size: 18px;
     line-height: 1.14;
     text-align: center;
     color: #615195;
+    text-align: center;
   }
   @media(min-width:768px){
     width:100%;
