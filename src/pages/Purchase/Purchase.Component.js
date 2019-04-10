@@ -20,10 +20,11 @@ import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
+
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 1 };
+    this.state = { open: true, stepCount: 1, category: '' };
     this.starData = [
       {
         size: '28px',
@@ -53,21 +54,24 @@ class Purchase extends Component {
     if (this.state.stepCount === 1) {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
-      return (
-        <FormContainer detailList={this.props.OccasionDetails} submitClick={this.submitClick}>
-          <FormContent />
-        </FormContainer>
-      );
+      if (this.state.category === 'question') {
+        return <Question />;
+      } else {
+        return (
+          <FormContainer detailList={this.props.OccasionDetails} submitClick={this.submitClick}>
+            <FormContent />
+          </FormContainer>
+        );
+      }
     } else if (this.state.stepCount === 3) {
       return <ScriptBuilder />;
-    } else {
-      return <Question />;
     }
   };
 
   getCategory = (type) => {
     this.setState({
-      stepCount: this.state.stepCount + 1,
+      stepCount: 2,
+      category: type,
     });
     this.props.fetchOccasionlist(type);
   };
