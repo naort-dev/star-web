@@ -4,7 +4,7 @@ import validator from 'validator';
 import ActionLoader from '../ActionLoader';
 
 import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
+import { TextInput } from '../TextField';
 import { LoginContainer, FooterSection } from './styled';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
@@ -192,34 +192,37 @@ class SignUp extends React.Component {
       acceptTerms: true
     })
   }
-  render() {    
+  render() {
     return (
       this.state.acceptTerms ?
-        <TermsAndConditions agreeTermsConditions={this.agreeTermsConditions} /> :
+        <TermsAndConditions
+          agreeTermsConditions={this.agreeTermsConditions} /> :
         <LoginContainer.SocialMediaSignup>
           {
             this.state.loading &&
             <ActionLoader />
           }
           {
-            <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+            <LoginContainer.BackButton
+              onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
           }
           <LoginContainer.Container>
-            <LoginContainer.Heading>Tell us about yourself</LoginContainer.Heading>
-
+            <LoginContainer.Heading>
+              Tell us about yourself
+              </LoginContainer.Heading>
             <LoginContainer.InputFieldsWrapper>
-
               <LoginContainer.InputContainer>
-
                 {
                   this.props.statusCode === '410' ?
                     <LoginContainer.EmptyDiv />
                     :
                     <div>
-                      <LoginContainer.Label>Use your real name so we can pay you</LoginContainer.Label>
+                      <LoginContainer.Label>
+                        Use your real name so we can pay you
+                        </LoginContainer.Label>
                       <LoginContainer.InputWrapper>
                         <LoginContainer.WrapsInput>
-                          <TextField
+                          <TextInput
                             placeholder={'First name'}
                             type="text"
                             name="firstName"
@@ -231,7 +234,7 @@ class SignUp extends React.Component {
                           </LoginContainer.ErrorMsg>
                         </LoginContainer.WrapsInput>
                         <LoginContainer.WrapsInput>
-                          <TextField
+                          <TextInput
                             placeholder="Last name"
                             type="text"
                             name="lastName"
@@ -245,10 +248,12 @@ class SignUp extends React.Component {
                       </LoginContainer.InputWrapper>
                     </div>
                 }
-                <LoginContainer.Label>Optional, only if different than your real name</LoginContainer.Label>
+                <LoginContainer.Label>
+                  Optional, only if different than your real name
+                  </LoginContainer.Label>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
-                    <TextField
+                    <TextInput
                       placeholder={this.props.signupRole === 'star' ?
                         'What is your stage name?' : 'What name does everyone know you as?'}
                       type="text"
@@ -257,13 +262,17 @@ class SignUp extends React.Component {
                       value={this.state.nickName.value}
                       onChange={(event) => this.saveFormEntries(event, "nickName")}
                     />
-                    <LoginContainer.ErrorMsg>{this.state.nickName.message}</LoginContainer.ErrorMsg>
+                    <LoginContainer.ErrorMsg>
+                      {this.state.nickName.message}
+                    </LoginContainer.ErrorMsg>
                   </LoginContainer.WrapsInput>
                 </LoginContainer.InputWrapper>
-                <LoginContainer.Label>Email address</LoginContainer.Label>
+                <LoginContainer.Label>
+                  Email address
+                  </LoginContainer.Label>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
-                    <TextField
+                    <TextInput
                       placeholder={this.props.signupRole === 'star' ?
                         'Where do you want your bookings to go?' : 'Whats your email?'}
                       type="email"
@@ -272,12 +281,16 @@ class SignUp extends React.Component {
                       value={this.state.email.value}
                       onChange={(event) => this.saveFormEntries(event, "email")}
                     />
-                    <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
+                    <LoginContainer.ErrorMsg>
+                      {this.state.email.message}
+                    </LoginContainer.ErrorMsg>
                   </LoginContainer.WrapsInput>
                 </LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>
                   {this.props.statusCode === undefined ?
-                    <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
+                    <LoginContainer.ErrorMsg>
+                      {this.props.error}
+                    </LoginContainer.ErrorMsg>
                     :
                     <LoginContainer.EmptyDiv />
                   }
@@ -289,12 +302,21 @@ class SignUp extends React.Component {
                     value="termsAndConditions"
                   />
                   I have read and agree to
-                  <LoginContainer.Anchor onClick={this.agreeTerms}> Starsona’s Terms and Conditions and Privacy Policy </LoginContainer.Anchor>
+                  <LoginContainer.Anchor
+                    onClick={this.agreeTerms}>
+                    Starsona’s Terms and Conditions and Privacy Policy
+                  </LoginContainer.Anchor>
                 </LoginContainer.PrivacyContent>
 
-                <LoginContainer.ErrorMsg>{this.state.termsAndConditions.message}</LoginContainer.ErrorMsg>
+                <LoginContainer.ErrorMsg>
+                  {this.state.termsAndConditions.message}
+                </LoginContainer.ErrorMsg>
                 <LoginContainer.ButtonWrapper>
-                  <LoginContainer.ContinueButton type="submit" onClick={this.onRegister}>Continue</LoginContainer.ContinueButton>
+                  <LoginContainer.ContinueButton
+                    type="submit"
+                    onClick={this.onRegister}>
+                    Continue
+                  </LoginContainer.ContinueButton>
                 </LoginContainer.ButtonWrapper>
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
