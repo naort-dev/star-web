@@ -41,7 +41,7 @@ export default class PathDrawer extends React.Component {
     let { pathData } = this.state;
     if (document.body.getBoundingClientRect().width >= 1280) {
       pathData = this.pathDesktop;
-    } else if (document.body.getBoundingClientRect().width >= 864) {
+    } else if (document.body.getBoundingClientRect().width >= 834) {
       pathData = this.pathIpad;
     }
     this.setState({ pathData });

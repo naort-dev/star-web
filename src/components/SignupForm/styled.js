@@ -98,6 +98,7 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 `;
 LoginContainer.Container = styled.div`
+  display: block;
   @media(min-width: 768px) {
     padding: 0 0;
   }
@@ -107,10 +108,10 @@ LoginContainer.Container = styled.div`
 `;
 LoginContainer.Heading = styled.div`
   font-family: Gilroy-Medium;
-  font-size: 20px;
   color: #ff6c58;
+  font-size: 20px;
   @media(min-width:768px){
-    font-size:24px;
+    font-size: 24px;
   }
   @media(min-width: 1025px){
     font-size: 25px;
@@ -120,6 +121,7 @@ LoginContainer.Heading = styled.div`
   }
   
 `;
+
 LoginContainer.ContinueButton = styled.button`
   background-color: #2f839d;
   font-family: Gilroy-Extrabold;
@@ -132,8 +134,9 @@ LoginContainer.ContinueButton = styled.button`
   border-radius: 30px;
   width: 300px;
   height: 60px;
-  outiline: none;
+  outline: none;
 `;
+
 LoginContainer.ButtonIcon = styled.img`  
   width: 23px;
   height: 23px;
@@ -216,10 +219,12 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  color:#333333;
-  font-family: 'Avenir-Bold';
-  font-size:16px;
-  text-align:left;
+  font-family: Gilroy-Medium;
+  font-size: 12px;
+  line-height: 2.08;
+  text-align: center;
+  color: #555555;
+  padding-top: 25px
   @media(min-width:768px){
     width:55%;
     align-items:center;
@@ -436,13 +441,13 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
-  .textField {
-    font-family: Gilroy-Semibold;
-    font-size: 22px;
-    font-weight: 600;
+  input {
+    font-family: Gilroy;
+    font-size: 18px;
     line-height: 1.14;
     text-align: center;
     color: #615195;
+    text-align: center;
   }
   @media(min-width:768px){
     width:100%;
@@ -507,15 +512,6 @@ LoginContainer.InputContainer = styled.div`
 LoginContainer.ButtonWrapper = styled.div`
   margin-top:5%;
 `;
-LoginContainer.Label = styled.div`
-  font-family: Gilroy-Medium;
-  font-size: 12px;
-  line-height: 2.08;
-  text-align: center;
-  color: #555555;
-  padding-top: 25px
-`;
-
 LoginContainer.SignupLine = styled.div`
     display: block;
     font-family: 'Avenir-Light';

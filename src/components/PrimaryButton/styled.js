@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const ButtonStyled = styled.button`
   background-color: ${props => props.theme.flatBlue};
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-SemiBold;
   font-size: 18px;
   padding: 20px 30px;
   border-radius: 30px;

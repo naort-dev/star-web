@@ -25,7 +25,7 @@ const CategoryList = ({ dataModal, getCategory }) => {
                 <img
                   src={item.icon}
                   alt="categoryIcon"
-                  className={index > 0 ? 'iconPadding' : ''}
+                  className={`icon image-${index + 1}`}
                 />
               </ImageWrapper>
               <Message>

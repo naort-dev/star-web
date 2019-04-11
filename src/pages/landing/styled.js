@@ -9,7 +9,6 @@ const LandingStyled = styled.div`
 `;
 
 LandingStyled.Container = styled.div`
-  display: none;
   @media(min-width: 834px) {
     display: block;
   }

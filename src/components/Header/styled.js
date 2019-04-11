@@ -8,89 +8,111 @@ const HeaderSection = styled.header`
   background: white;
   height: 60px;
   z-index: 10;
+  padding: ${props => !props.notFixed && '12px 16px'};
   @media(min-width: 834px) {
-    height: 95px;
+    height: ${props => (!props.notFixed ? 'auto' : '95px')}
+    padding: 0;
   }
 `;
 
 HeaderSection.HeaderDiv = styled.div`
   display:flex;
-  padding: 3px 16px;
+  padding: ${props => (props.notFixed ? '3px 16px' : '0')};
   justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
   align-items: center;
-  max-width: 1920px;
   height: 100%;  
+  flex-wrap: wrap;
   @media (min-width: 834px) {
-    padding: 32px 30px 25px;
+    padding: ${props => (props.notFixed ? '32px 30px 25px' : '30px 36px')};
   }
 `;
 HeaderSection.HeaderRight = styled.div`
   display: inline-block;
+  visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  @media(min-width: 834px) {
+    visibility: visible;
+  }
+  @media(min-width: 1280px) {
+    order: 3;
+  }
 `;
 HeaderSection.HeaderLeft = styled.div`
   display: inline-block;
-  @media(min-width: 1025px) {
-    width: 25%;
-    max-width: 310px;
+  @media(min-width: 834px) {
+    width: 50%;
   }
-`;
-HeaderSection.ImgLogo = styled.img`
-  width:  117.61px;
-  height: 19.27px;
-  margin-top: 6px;
-  @media(min-width: 1920px) {
+  @media(min-width: 1280px) {
     width: auto;
-    height: 26px;
+    position: static;
+    order: 1;
   }
 `;
-HeaderSection.MenuButton = styled.button`
-  background-image: ${props => (props.menuActive ? "url( 'assets/images/icon_menu_-1.png' )" : "url( 'assets/images/icon_menu_16a.png' )")};
-  background-repeat:no-repeat;
-  padding: 11px;
-  margin-left:10px;
-  vertical-align: top;
-  margin-top: 10px;
-  outline: none;
-  border:none;
-  background-color:white;
-  @media(min-width : 1025px){
-    display:none;
+
+HeaderSection.SearchWrapper = styled.div`
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 70px;
+  padding: 12px 16px;
+  padding-top: 0;
+  display: block;
+  width: 100%;
+  max-width: 590px;
+  margin: 0 auto;
+  @media(min-width: 834px) {
+    height: 50px;
+    position: static;
+    margin-top: 15px;
+  }
+  @media(min-width: 1280px) {
+    order: 2;
+    padding: 0;
+    margin-top: 0;
   }
 `;
-HeaderSection.SearchButton = styled.button` 
-  display: ${props => (props.hide ? 'none' : 'inline-block')};
-  background-image: url( 'assets/images/icon_search_40a.png' );
-  background-repeat: no-repeat;
-  background-position: center;
-  border:none;
-  outline: none;
-  padding:20px;
-  background-size: 40px;
-  background-color:white;
-  @media(min-width : 768px){
-    display:none;
+
+HeaderSection.BackIcon = styled.span`
+  font-size: 20px;
+  width: 20px;
+  color: ${props => props.theme.flatBlue};
+  @media(min-width: 834px) {
+    display: none;
   }
 `;
-HeaderSection.ClearButton = styled.span`
+
+HeaderSection.CategoryWrapper = styled.div`
+  position: fixed;
+  display: ${props => (props.visible ? 'block' : 'none')};
+  top: 56px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  @media(min-width: 834px) {
+    display: block;
+    position: static;
+  }
+`;
+
+HeaderSection.ImgLogo = styled.img`
+  width:  154px;
+  height: 40px;
+`;
+
+HeaderSection.MenuButton = styled.span`
+  font-size: 20px;
   cursor: pointer;
-  display: inline-block;
-  width: 16px;
-  height: 16px;
-  margin-right: 12px;
-  background-image: url( 'assets/images/close-icon.svg' );
-  background-repeat: no-repeat;
-  background-position: center;
+  width: 20px;
+  color: ${props => props.theme.flatBlue};
+  @media(min-width: 834px){
+    display:none;
+  }
 `;
-HeaderSection.SignInButtonMobile = styled.button`
-  background-image: url( 'assets/images/icon_profile_40a.png' );
-  background-repeat:no-repeat;
-  background-position: center;
-  border:none;
-  outline: none;
-  padding:18px;
-  background-size: 35px;
-  background-color:white;
-  @media(min-width:767px){
+
+HeaderSection.SignInButtonMobile = styled.span`
+  font-size: 27.5px;
+  color: ${props => props.theme.flatBlue};
+  @media(min-width: 834px){
    display: none;
   }
 `;
@@ -159,29 +181,7 @@ HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
     color: #333333;
   }
 `;
-HeaderSection.UserLink = HeaderSection.ProfileDropdownItem.extend`
-  display: block;
-  a {
-    color: #333333;
-  }
-`;
-HeaderSection.FavoriteButton = styled.button`
-  display: none;
-  @media(min-width: 768px) {
-    display: inline;
-    cursor: pointer;
-    outline: none;
-    background-image: url( 'assets/images/icon_favorite_40a.png' );
-    background-repeat:no-repeat;
-    background-position: center;
-    border:none;
-    padding:18px;
-    background-size: 29px;
-    background-color:white;
-    margin-right: 16px;
-  }
-  
-`;
+
 HeaderSection.MyvideoButton = styled.button`
   display: none;
   @media(min-width: 768px) {
@@ -198,62 +198,14 @@ HeaderSection.MyvideoButton = styled.button`
     margin-right: 16px;
   } 
 `;
-HeaderSection.SearchBar = styled.div`
-  position:absolute;
-  display: ${props => (props.hide ? 'none' : 'block')};
-  left: 0;
-  right: 0;
-  top: 0;
-  height: 60px;
-  background: #fff;
-  @media(min-width : 768px){
-    position: relative;
-    display: inline-block;
-    display: flex;
-    align-items: center;
-  }
-  @media(min-width: 1025px) {
-    width: 50%;
-    max-width: 640px;
-  }
-`;
+
 HeaderSection.AutoSuggest = styled.div`
   height: 100%;
   @media(min-width: 1025px) {
     box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   }
 `;
-HeaderSection.SuggestionListWrapper = styled.div`
-  font-family: Avenir-Light;
-  position: fixed;
-  top: 60px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #FFFFFF;
-  box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
-  @media(min-width: 768px) {
-    box-shadow: 0px 6px 6px 0px #cccccc;
-    position: absolute;
-    top: 50px;
-    left: 0;
-    right: initial;
-    height: 300px;
-    width: 400px;
-    bottom: initial;
-    box-shadow: none;
-  }
-  @media(min-width: 1025px) {
-    width: auto;
-    top: 47px;
-    right: 0;
-    height: 320px;
-    box-shadow: 0px 6px 6px 0px #cccccc;
-  }
-`;
-HeaderSection.SuggestionList = styled.ul`
-  padding: 16px 10px;
-`;
+
 HeaderSection.noDataWrapper = styled.div`
   display: table;
   width: 100%;
@@ -264,52 +216,6 @@ HeaderSection.noDataText = styled.span`
   vertical-align: middle;
   text-align: center;
   font-size: 18px;
-`;
-HeaderSection.SuggestionListItem = styled.li`
-  width: 100%;
-  padding: 0 16px;
-  margin-top: 20px;
-  cursor: pointer;
-  font-size: 18px;
-  line-height: 23px;
-  &:hover, &:focus{
-    background-color: #F8F8F8;
-  }
-  &:first-child{
-    margin-top:0;
-  }
-  @media(min-width: 1025px) {
-    padding: 0 30px;
-  }
-`;
-HeaderSection.SuggestionListContent = styled.span`
-  color: #333333;
-  display: flex;
-  width: 100%;
-  align-items: center;
-`;
-
-HeaderSection.SuggestionDetails = styled.p`
-  font-size: 12px;
-  color:rgba(34, 34, 34, 0.7);
-  font-family: 'Avenir-Light';
-  line-height: 18px;
-  @media(min-width: 768px) {
-    font-size: 14px;
-  }
-`;
-
-HeaderSection.SuggestionListImage = styled.span`
-  width: 50px;
-  height: 50px;
-  background-image: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/profile.png)')};
-  background-repeat:no-repeat;
-  background-position: center;
-  background-size:cover;
-  border-radius: 50%;
-`;
-HeaderSection.SuggestionListName = styled.span`
-  margin-left: 10px;
 `;
 
 HeaderSection.InputWrapper = styled.div`
@@ -394,19 +300,18 @@ HeaderSection.AuthButton = styled.button`
   padding: 0 14px;
   border-radius: 5px;
   border: ${props => `solid 1px ${props.theme.flatBlue}`};
-  background-color: ${props => props.theme.flatBlue};
-  font-family: Gilroy-Bold;;
+  background-color: ${props => (!props.notFixed ? '#fff' : props.theme.flatBlue)};
+  font-family: Gilroy-Medium;
   outline:none;
   font-size: 16px;
-  font-weight: bold;
   cursor: pointer;
   line-height: 36px;
   height: 36px;
   letter-spacing: normal;
   text-align: left;
-  color: #ffffff;
+  color: ${props => (!props.notFixed ? props.theme.flatBlue : '#ffffff')};;
   margin-left: 18px;
-  @media(max-width:767px){
+  @media(max-width: 833px){
     display:none;
   }
 `;
