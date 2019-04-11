@@ -4,22 +4,23 @@ import validator from 'validator';
 import ActionLoader from '../ActionLoader';
 
 import Checkbox from '@material-ui/core/Checkbox';
-import TextField from '@material-ui/core/TextField';
+import { TextInput } from '../TextField';
 import { LoginContainer, FooterSection } from './styled';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { TermsAndConditions } from './components/TermsAndConditions'
 
 import { ROLES } from '../../constants/usertype';
+import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
 
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: { value: "", isValid: false, message: "" },
-      lastName: { value: "", isValid: true, message: "" },
-      nickName: { value: "", isValid: true, message: "" },
-      email: { value: "", isValid: false, message: '' },
+      firstName: { value: '', isValid: false, message: '' },
+      lastName: { value: '', isValid: true, message: '' },
+      nickName: { value: '', isValid: true, message: '' },
+      email: { value: '', isValid: false, message: '' },
       termsAndConditions: { value: true, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
@@ -194,112 +195,136 @@ class SignUp extends React.Component {
   render() {
     return (
       this.state.acceptTerms ?
-        <TermsAndConditions agreeTermsConditions={this.agreeTermsConditions}/> :
-      <LoginContainer.SocialMediaSignup>
-        {
-          this.state.loading &&
-          <ActionLoader />
-        }
-        {
-          <LoginContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
-        }
-        <LoginContainer.Container>
-          <LoginContainer.Heading>Tell us about yourself</LoginContainer.Heading>
-
-          <LoginContainer.InputFieldsWrapper>
-
-            <LoginContainer.InputContainer>
-
-              {
-                this.props.statusCode === '410' ?
-                  <LoginContainer.EmptyDiv />
-                  :
-                  <div>
-                    <LoginContainer.Label>Use your real name so we can pay you</LoginContainer.Label>
-                    <LoginContainer.InputWrapper>
-                      <LoginContainer.WrapsInput>
-                        <TextField
-                          placeholder={'First name'}
-                          type="text"
-                          name="firstName"
-                          value={this.state.firstName.value}
-                          onChange={(event) => this.saveFormEntries(event, "firstName")}
-                        />
-                        <LoginContainer.ErrorMsg>
-                          {this.state.firstName.message}
-                        </LoginContainer.ErrorMsg>
-                      </LoginContainer.WrapsInput>
-                      <LoginContainer.WrapsInput>
-                        <TextField
-                          placeholder="Last name"
-                          type="text"
-                          name="lastName"
-                          value={this.state.lastName.value}
-                          onChange={(event) => this.saveFormEntries(event, "lastName")}
-                        />
-                        <LoginContainer.ErrorMsg>
-                          {this.state.lastName.message}
-                        </LoginContainer.ErrorMsg>
-                      </LoginContainer.WrapsInput>
-                    </LoginContainer.InputWrapper>
-                  </div>
-              }
-              <LoginContainer.Label>Optional, only if different than your real name</LoginContainer.Label>
-              <LoginContainer.InputWrapper>
-                <LoginContainer.WrapsInput>
-                  <TextField
-                    placeholder={this.props.signupRole === 'star' ?
-                      'What is your stage name?' : 'What name does everyone know you as?'}
-                    type="text"
-                    name="nickName"
-                    fullWidth={true}
-                    value={this.state.nickName.value}
-                    onChange={(event) => this.saveFormEntries(event, "nickName")}
-                  />
-                  <LoginContainer.ErrorMsg>{this.state.nickName.message}</LoginContainer.ErrorMsg>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.InputWrapper>
-              <LoginContainer.Label>Email address</LoginContainer.Label>
-              <LoginContainer.InputWrapper>
-                <LoginContainer.WrapsInput>
-                  <TextField
-                    placeholder={this.props.signupRole === 'star' ?
-                      'Where do you want your bookings to go?' : 'Whats your email?'}
-                    type="email"
-                    name="email"
-                    fullWidth={true}
-                    value={this.state.email.value}
-                    onChange={(event) => this.saveFormEntries(event, "email")}
-                  />
-                  <LoginContainer.ErrorMsg>{this.state.email.message}</LoginContainer.ErrorMsg>
-                </LoginContainer.WrapsInput>
-              </LoginContainer.InputWrapper>
-              <LoginContainer.WrapsInput>
-                {this.props.statusCode === undefined ?
-                  <LoginContainer.ErrorMsg>{this.props.error}</LoginContainer.ErrorMsg>
-                  :
-                  <LoginContainer.EmptyDiv />
+        <TermsAndConditions
+          agreeTermsConditions={this.agreeTermsConditions} /> :
+        <LoginContainer.SocialMediaSignup>
+          {
+            this.state.loading &&
+            <ActionLoader />
+          }
+          {
+            <LoginContainer.BackButton
+              onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
+          }
+          <LoginContainer.Container>
+            <LoginContainer.Heading>
+              Tell us about yourself
+              </LoginContainer.Heading>
+            <LoginContainer.InputFieldsWrapper>
+              <LoginContainer.InputContainer>
+                {
+                  this.props.statusCode === '410' ?
+                    <LoginContainer.EmptyDiv />
+                    :
+                    <div>
+                      <LoginContainer.Label>
+                        Use your real name so we can pay you
+                        </LoginContainer.Label>
+                      <LoginContainer.InputWrapper>
+                        <LoginContainer.WrapsInput>
+                          <TextInput
+                            placeholder={'First name'}
+                            type="text"
+                            name="firstName"
+                            value={this.state.firstName.value}
+                            onChange={(event) => this.saveFormEntries(event, "firstName")}
+                          />
+                          <LoginContainer.ErrorMsg>
+                            {this.state.firstName.message}
+                          </LoginContainer.ErrorMsg>
+                        </LoginContainer.WrapsInput>
+                        <LoginContainer.WrapsInput>
+                          <TextInput
+                            placeholder="Last name"
+                            type="text"
+                            name="lastName"
+                            value={this.state.lastName.value}
+                            onChange={(event) => this.saveFormEntries(event, "lastName")}
+                          />
+                          <LoginContainer.ErrorMsg>
+                            {this.state.lastName.message}
+                          </LoginContainer.ErrorMsg>
+                        </LoginContainer.WrapsInput>
+                      </LoginContainer.InputWrapper>
+                    </div>
                 }
-              </LoginContainer.WrapsInput>
-              <LoginContainer.PrivacyContent>
-                <Checkbox
-                  checked={this.state.termsAndConditions.value}
-                  onChange={this.toggleTermsAndConditions('termsAndConditions')}
-                  value="termsAndConditions"
-                />
-                I have read and agree to
-                <LoginContainer.Anchor onClick={this.agreeTerms}> Starsona’s Terms and Conditions and Privacy Policy </LoginContainer.Anchor>
-              </LoginContainer.PrivacyContent>
+                <LoginContainer.Label>
+                  Optional, only if different than your real name
+                  </LoginContainer.Label>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.WrapsInput>
+                    <TextInput
+                      placeholder={this.props.signupRole === 'star' ?
+                        'What is your stage name?' : 'What name does everyone know you as?'}
+                      type="text"
+                      name="nickName"
+                      fullWidth={true}
+                      value={this.state.nickName.value}
+                      onChange={(event) => this.saveFormEntries(event, "nickName")}
+                    />
+                    <LoginContainer.ErrorMsg>
+                      {this.state.nickName.message}
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                <LoginContainer.Label>
+                  Email address
+                  </LoginContainer.Label>
+                <LoginContainer.InputWrapper>
+                  <LoginContainer.WrapsInput>
+                    <TextInput
+                      placeholder={this.props.signupRole === 'star' ?
+                        'Where do you want your bookings to go?' : 'Whats your email?'}
+                      type="email"
+                      name="email"
+                      fullWidth={true}
+                      value={this.state.email.value}
+                      onChange={(event) => this.saveFormEntries(event, "email")}
+                    />
+                    <LoginContainer.ErrorMsg>
+                      {this.state.email.message}
+                    </LoginContainer.ErrorMsg>
+                  </LoginContainer.WrapsInput>
+                </LoginContainer.InputWrapper>
+                <LoginContainer.WrapsInput>
+                  {this.props.statusCode === undefined ?
+                    <LoginContainer.ErrorMsg>
+                      {this.props.error}
+                    </LoginContainer.ErrorMsg>
+                    :
+                    <LoginContainer.EmptyDiv />
+                  }
+                </LoginContainer.WrapsInput>
+                <LoginContainer.PrivacyContent>
+                  <Checkbox
+                    checked={this.state.termsAndConditions.value}
+                    onChange={this.toggleTermsAndConditions('termsAndConditions')}
+                    value="termsAndConditions"
+                  />
+                  I have read and agree to
+                  <LoginContainer.Anchor
+                    onClick={this.agreeTerms}>
+                    Starsona’s Terms and Conditions and Privacy Policy
+                  </LoginContainer.Anchor>
+                </LoginContainer.PrivacyContent>
 
-              <LoginContainer.ErrorMsg>{this.state.termsAndConditions.message}</LoginContainer.ErrorMsg>
-              <LoginContainer.ButtonWrapper>
-                <LoginContainer.ContinueButton type="submit" onClick={this.onRegister}>Continue</LoginContainer.ContinueButton>
-              </LoginContainer.ButtonWrapper>
-            </LoginContainer.InputContainer>
-          </LoginContainer.InputFieldsWrapper>
-          
-        </LoginContainer.Container>
-      </LoginContainer.SocialMediaSignup>
+                <LoginContainer.ErrorMsg>
+                  {this.state.termsAndConditions.message}
+                </LoginContainer.ErrorMsg>
+                <LoginContainer.ButtonWrapper>
+                  <LoginContainer.ContinueButton
+                    type="submit"
+                    onClick={this.onRegister}>
+                    Continue
+                  </LoginContainer.ContinueButton>
+                </LoginContainer.ButtonWrapper>
+              </LoginContainer.InputContainer>
+            </LoginContainer.InputFieldsWrapper>
+          </LoginContainer.Container>
+          {/* <LoginContainer.Container visible={this.props.currentStep === 2}>
+            <SignUpImageUpload />
+          </LoginContainer.Container> */}
+        </LoginContainer.SocialMediaSignup>
     );
   }
 }

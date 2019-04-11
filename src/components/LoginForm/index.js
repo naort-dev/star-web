@@ -5,7 +5,7 @@ import validator from "validator";
 import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
 import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
-import TextField from '@material-ui/core/TextField';
+import { TextInput } from '../TextField';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
 import { SignUpMethod } from '../SignupMethod/styled';
@@ -436,7 +436,7 @@ export default class LoginForm extends React.Component {
               <LoginContainer.InputContainer>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
-                    <TextField
+                    <TextInput
                       fullWidth={true}
                       type="email"
                       name="email"
@@ -456,7 +456,7 @@ export default class LoginForm extends React.Component {
                     <LoginContainer.InputWrapper>
                       <LoginContainer.WrapsInput>
                         <LoginContainer.PasswordWrapper>
-                          <TextField
+                          <TextInput
                             fullWidth={true}
                             type={this.state.showPassword ? "text" : "password"}
                             name="password"

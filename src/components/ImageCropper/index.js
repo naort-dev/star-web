@@ -138,11 +138,11 @@ export default class ImageCropper extends React.Component {
 
   render() {
     return (
-      <Popup
-        modalView
-        disableBackground
-        closePopUp={() => this.props.closeCropper()}
-      >
+      // <Popup
+      //   modalView
+      //   disableBackground
+      //   closePopUp={() => this.props.closeCropper()}
+      // >
         <CropperStyled innerRef={(node) => {this.cropperWrapper = node}}>
           {
             this.state.cropImage &&
@@ -155,11 +155,12 @@ export default class ImageCropper extends React.Component {
               />
           }
           <CropperStyled.ButtonWrapper>
-            <CropperStyled.CropperButton onClick={this.handleCrop}>Select</CropperStyled.CropperButton>
-            <CropperStyled.CropperCancel onClick={this.props.closeCropper}>Cancel</CropperStyled.CropperCancel>
+            <CropperStyled.CropperButton onClick={this.handleCrop}>Take picture</CropperStyled.CropperButton>
+            <CropperStyled.CropperButton onClick={this.handleCrop}>I like it, continue</CropperStyled.CropperButton>
+            <CropperStyled.CropperCancel onClick={this.props.closeCropper}>Upload picture</CropperStyled.CropperCancel>
           </CropperStyled.ButtonWrapper>
         </CropperStyled>
-      </Popup>
+      // </Popup>
     )
   }
 }
