@@ -123,6 +123,7 @@ LoginContainer.Heading = styled.div`
 `;
 
 LoginContainer.ContinueButton = styled.button`
+  cursor: pointer;
   background-color: #2f839d;
   font-family: Gilroy-Extrabold;
   font-size: 18px;
@@ -224,15 +225,16 @@ LoginContainer.Label = styled.div`
   line-height: 2.08;
   text-align: center;
   color: #555555;
-  padding-top: 25px
+  padding-top: 25px;
+  width:100%;
   @media(min-width:768px){
-    width:55%;
+
     align-items:center;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
+
     line-height: 30px;
   }
   @media(min-width:1920px){

@@ -32,9 +32,9 @@ TextInput.defaultProps = {
   type: '',
   name: '',
   value: '',
-  fullWidth: '',
+  fullWidth: false,
   id: '',
-  required: '',
+  required: false,
   onBlur: () => { },
   onChange: () => { }
 };
