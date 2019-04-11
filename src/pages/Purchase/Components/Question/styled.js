@@ -87,6 +87,13 @@ export const QuestionContainer = styled.section`
       display: none;
     }
   }
+  .note {
+    color: #999;
+    ${media.mobileScreen} {
+      color: #fff;
+      padding-top: 20px;
+    }
+  }
 `;
 
 export const QuestionWrapper = styled.section`

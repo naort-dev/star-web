@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { checkMediaRecorderSupport } from '../../utils/checkOS';
+import { Progress } from './styled';
 
 class VideoRecorder extends Component {
   constructor(props) {
@@ -11,6 +12,7 @@ class VideoRecorder extends Component {
     this.superBuffer = null;
     this.videoSrc = null;
     this.isStoped = false;
+    this.state = { progress: false };
   }
 
   componentDidMount() {
@@ -18,17 +20,20 @@ class VideoRecorder extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    if (
-      this.props.shouldRecord !== newProps.shouldRecord &&
-      newProps.shouldRecord
-    ) {
-      this.recordMedia();
-    } else if (
-      this.props.shouldRecord !== newProps.shouldRecord &&
-      !newProps.shouldRecord &&
-      !this.isStoped
-    ) {
-      this.stopRecording();
+    if (checkMediaRecorderSupport()) {
+      if (
+        this.props.shouldRecord !== newProps.shouldRecord &&
+        newProps.shouldRecord
+      ) {
+        this.recordMedia();
+        this.setState({ progress: true });
+      } else if (
+        this.props.shouldRecord !== newProps.shouldRecord &&
+        !newProps.shouldRecord &&
+        !this.isStoped
+      ) {
+        this.stopRecording();
+      }
     }
   }
 
@@ -43,7 +48,7 @@ class VideoRecorder extends Component {
     this.superBuffer = null;
     this.videoSrc = null;
     this.recordedBlobs = [];
-    const videoElem = document.getElementById('video-player');
+    const videoElem = document.getElementById('video-player_tag');
     videoElem.srcObject = null;
     videoElem.src = null;
     navigator.mediaDevices
@@ -52,6 +57,7 @@ class VideoRecorder extends Component {
         audio: true,
       })
       .then((stream) => {
+        this.setState({ progress: false });
         videoElem.srcObject = stream;
         const options = {
           mimeType: 'video/webm;codecs=vp8',
@@ -88,7 +94,7 @@ class VideoRecorder extends Component {
     this.closeStream();
     this.superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
     this.videoSrc = window.URL.createObjectURL(this.superBuffer);
-    const videoElem = document.getElementById('video-player');
+    const videoElem = document.getElementById('video-player_tag');
     videoElem.src = this.videoSrc;
     videoElem.load();
     this.isStoped = true;
@@ -105,12 +111,12 @@ class VideoRecorder extends Component {
   };
 
   closeStream = () => {
-    const stream = document.getElementById('video-player').srcObject;
+    const stream = document.getElementById('video-player_tag').srcObject;
     const tracks = stream.getTracks();
     tracks.forEach((track) => {
       track.stop();
     });
-    document.getElementById('video-player').srcObject = null;
+    document.getElementById('video-player_tag').srcObject = null;
   };
 
   checkVideoOver = () => {
@@ -122,14 +128,17 @@ class VideoRecorder extends Component {
   };
   render() {
     return (
-      <video
-        autoPlay={this.props.playPauseMedia}
-        id="video-player"
-        onEnded={this.checkVideoOver}
-        onClick={this.videoClick}
-      >
-        <track kind="captions" />
-      </video>
+      <React.Fragment>
+        <video
+          autoPlay={this.props.playPauseMedia}
+          id="video-player_tag"
+          onEnded={this.checkVideoOver}
+          onClick={this.videoClick}
+        >
+          <track kind="captions" />
+        </video>
+        {this.state.progress && <Progress />}
+      </React.Fragment>
     );
   }
 }

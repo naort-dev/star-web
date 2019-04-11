@@ -11,6 +11,7 @@ import QuestionBuilder from '../../../../components/QuestionBuilder';
 import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import VideoRecorder from '../../../../components/VideoRecorder';
+import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 
@@ -59,7 +60,7 @@ const Question = (props) => {
 
   const playPauseClick = () => {
     props.playPauseMedia();
-    document.getElementById('video-player').play();
+    document.getElementById('video-player_tag').play();
     handleControls(false);
   };
 
@@ -77,6 +78,7 @@ const Question = (props) => {
     }
     if (props.playPauseFlg) {
       props.playPauseMedia();
+      document.getElementById('video-player_tag').pause();
     }
   };
 
@@ -101,16 +103,30 @@ const Question = (props) => {
           </React.Fragment>
         )}
       </VideoContainer>
-      <QuestionContainer isShow={showHideFlg}>
-        <h1>What you should say?</h1>
-        <QuestionBuilder questionsList={questions} />
-        <FlexCenter>
-          <Button onClick={buttonClickHandler} className="button">
-            {buttonLabel}
-          </Button>
-        </FlexCenter>
+      <QuestionContainer isShow={showHideFlg || !checkMediaRecorderSupport()}>
+        {checkMediaRecorderSupport() ? (
+          <React.Fragment>
+            <h1>What you should say?</h1>
+            <QuestionBuilder questionsList={questions} />
+            <FlexCenter>
+              <Button onClick={buttonClickHandler} className="button">
+                {buttonLabel}
+              </Button>
+            </FlexCenter>
+          </React.Fragment>
+        ) : (
+          <p className="note">
+            Your system does not have video recording capability, but you will
+            need to record a video to ask a question to the Star. <br />
+            <br />
+            You can:
+            <br />
+            <br /> Record with our App Use our iOS or Android app to book the
+            star.
+          </p>
+        )}
       </QuestionContainer>
-      {buttonLabel === 'Record' && (
+      {buttonLabel === 'Record' && checkMediaRecorderSupport() && (
         <ShowHide
           onClick={() => showHideScript(!showHideFlg)}
           isShow={showHideFlg}
