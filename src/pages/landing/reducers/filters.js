@@ -4,6 +4,7 @@ const initalState = {
   category: {
     label: 'featured',
     value: '',
+    subCategories: [],
   },
   searchParam: '',
   lowPrice: '',
@@ -21,6 +22,7 @@ export default (state = { ...initalState }, action) => {
         category: {
           label: action.label,
           value: action.value,
+          subCategories: action.subCategories,
         },
       };
 
