@@ -176,7 +176,7 @@ class Header extends React.Component {
         {
           !props.notFixed &&
             <HeaderSection.CategoryWrapper visible={showCategories}>
-              <CategorySection />
+              <CategorySection showCategories closeCategories={this.toggleCategories} />
             </HeaderSection.CategoryWrapper>
         }
       </HeaderSection>

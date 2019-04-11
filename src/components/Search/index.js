@@ -185,7 +185,7 @@ class Search extends React.Component {
                             </span>
                             <SearchSection.SuggestionListName>
                               <SearchSection.SuggestionDetails>
-                                { item.professions }
+                                { starProfessionsFormater(JSON.parse(item.professions.replace(/'/g, '"')), 'search') }
                               </SearchSection.SuggestionDetails>
                               {fullName}
                             </SearchSection.SuggestionListName>
