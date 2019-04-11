@@ -33,10 +33,9 @@ export const updateSort = value => ({
   value,
 });
 
-export const updateSelectedSubCategory = (selectedList, category) => ({
+export const updateSelectedSubCategory = selectedList => ({
   type: UPDATEFILTER.updateSelectedSubCategory,
   selectedList,
-  category,
 });
 
 export const updateSelectedVideoType = value => ({
