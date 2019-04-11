@@ -16,13 +16,13 @@ const CategoryListItem = styled.li`
 
 
 const CategoryName = styled.span`
-  font-family: Gilroy-Black;
+  font-family: Gilroy-Bold;
   font-size: 18px;
   color: ${props => props.theme.flatBlue};
 `;
 
 const CategoryDescription = styled.p`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 16px;
   line-height: 1.13;
   color: ${props => props.theme.greyishBrown};

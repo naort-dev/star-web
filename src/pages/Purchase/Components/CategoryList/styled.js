@@ -3,34 +3,64 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { media } from '../../../../styles/mediaQueries';
 
 export const Layout = styled.section`
-  padding: 0 50px;
+  width: 100%;
+  padding: 0 20px;
+  max-width: 581px;
+  margin: 0 auto;
+  .icon {
+    &.image-2,
+    &.image-3 {
+      margin-left: 21px;
+    }
+  }
   ${media.mobileScreen} {
     padding: 0 20px;
-  }
-  .iconPadding {
-    padding-left: 17px;
+    .icon {
+      &.image-1 {
+        width: 84px;
+      }
+      &.image-2 {
+        width: 71px;
+        margin-left: 13px;
+      }
+      &.image-3 {
+        width: 68px;
+        margin-left: 16px;
+      }
+    }
   }
 `;
 
 export const ContentWrapper = styled.section`
-  padding-bottom: 10px;
+  padding-bottom: 46px;
   cursor: pointer;
+  ${media.mobileScreen} {
+    padding-bottom: 38px;
+  }
 `;
 
 export const HeaderText = styled.h3`
-  font-family: Gilroy;
+  font-family: Gilroy-Bold;
   font-size: 20px;
-  font-weight: 800;
   color: #2f839d;
 `;
 export const Paragraph = styled.p`
   font-family: Gilroy;
   font-size: 14px;
-  font-weight: 600;
+  color: #999999;
   line-height: 1.29;
+  max-width: 337px;
+  ${media.mobileScreen} {
+    font-size: 12px;
+    max-width: 221px;
+  }
 `;
-export const ImageWrapper = styled.section`
-  width: 150px;
+export const ImageWrapper = styled.span`
+  width: 147px;
+  ${media.mobileScreen} {
+    width: 101px;
+
+  }
 `;
 
 export const Icon = styled(FontAwesomeIcon)`
@@ -45,6 +75,9 @@ export const Icon = styled(FontAwesomeIcon)`
 `;
 
 export const Message = styled.section`
-  flex: 10;
+  flex: 12;
   padding-top: 20px;
+  ${media.mobileScreen} {
+    padding-top: 7px;
+  }
 `;

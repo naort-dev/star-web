@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 
@@ -49,24 +50,30 @@ export default class Dropdown extends React.Component {
     this.setState({ showDropList: state });
   };
 
-  checkWindowClick = e => {
+  checkWindowClick = (e) => {
     if (this.selectRef.current && !this.selectRef.current.contains(e.target)) {
       this.toggleDropDown(false)();
     }
   };
 
-  selectOption = option => event => {
+  findActualOption = (option) => {
+    const { options, labelKey } = this.props;
+    return options.find(optionItem => optionItem[labelKey] === option.label);
+  }
+
+  selectOption = option => (event) => {
     if (event.nativeEvent.type === 'click') {
       this.setState({ selected: option });
+      this.props.onChange(this.findActualOption(option));
       this.toggleDropDown(false)();
     } else if (event.nativeEvent.type === 'keyup' && event.keyCode === 13) {
       this.setState({ selected: option });
+      this.props.onChange(this.findActualOption(option));
       this.toggleDropDown(false)();
     }
-    this.props.handleChange(option);
   };
 
-  handleListKeyUp = event => {
+  handleListKeyUp = (event) => {
     const { showDropList } = this.state;
     const { cursorPos } = this;
     const { options } = this.props;
@@ -123,6 +130,16 @@ export default class Dropdown extends React.Component {
   }
 }
 
+Dropdown.defaultProps = {
+  placeHolder: 'Select',
+  className: '',
+};
+
 Dropdown.propTypes = {
-  handleChange: PropTypes.func.isRequired,
+  options: PropTypes.array.isRequired,
+  labelKey: PropTypes.string.isRequired,
+  valueKey: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+  placeHolder: PropTypes.string,
+  className: PropTypes.string,
 };

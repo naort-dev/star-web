@@ -8,6 +8,7 @@ import {
   FlexBoxSBC,
   HeaderText,
   ProfileIcon,
+  Image,
   FormContent,
 } from './styled';
 import Modal from '../../components/Modal/Modal';
@@ -107,7 +108,9 @@ class Purchase extends Component {
               />
               <ProfileIcon>
                 <StarDrawer starData={this.starData} />
-                <img src="../assets/images/profile.png" alt="profile_icon" />
+                <Image>
+                  <img src="../assets/images/profile.png" alt="profile_icon" />
+                </Image>
               </ProfileIcon>
               <FontAwesomeIcon icon={faTimes} />
             </FlexBoxSBC>

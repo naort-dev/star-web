@@ -53,7 +53,6 @@ DropdownStyled.OptionsList = styled.ul`
 
 DropdownStyled.Options = styled.li`
   font-family: Gilroy-Medium;
-  font-size: 20px;
 `;
 
 DropdownStyled.OptionItem = styled.span`
@@ -61,11 +60,13 @@ DropdownStyled.OptionItem = styled.span`
   line-height: 2.11;
   display: block;
   text-align: left;
+  display: flex;
+  align-items: center;
+  height: 36px;
   color: ${props => props.theme.greyishBrown};
   &:hover, &:focus {
     outline: none;
-    font-family: Gilroy-Bold;
-    font-size: 18px;
+    font-family: Gilroy-Medium;
     padding: 8px 18px;
     background: ${props => props.theme.veryLightPinkTwo};
   }

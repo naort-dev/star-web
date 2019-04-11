@@ -6,7 +6,6 @@ import { fetchVideosList } from './actions//getVideosList';
 
 import {
   updateCategory,
-  switchTab,
   updateSearchParam,
   updatePriceRange,
   updateSort,
@@ -31,7 +30,6 @@ const mapDispatchToProps = dispatch => ({
   fetchCelebrityList: (offset, refresh, category) => dispatch(fetchCelebrityList(offset, refresh, category)),
   fetchVideosList: (offset, refresh) => dispatch(fetchVideosList(offset, refresh)),
   updateCategory: (label, value) => dispatch(updateCategory(label, value)),
-  switchTab: label => dispatch(switchTab(label)),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
   updatePriceRange: (lowPrice, highPrice) => dispatch(updatePriceRange(lowPrice, highPrice)),
   updateSort: value => dispatch(updateSort(value)),

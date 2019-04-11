@@ -19,6 +19,7 @@ import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
 
 import { fetchTrendingStars } from '../../actions/getTrendingStars';
+import { updateCategory } from '../../actions/updateFilters';
 
 import DesktopStyled from './styled';
 
@@ -117,6 +118,11 @@ class DesktopHome extends React.Component {
     return featuredData[index - 1];
   }
 
+  handleCategoryChange = (category) => {
+    this.props.closeLandingFlow();
+    this.props.updateCategory(category.title, category.id);
+  }
+
   render() {
     const { props } = this;
     return (
@@ -141,6 +147,7 @@ class DesktopHome extends React.Component {
                     options={[{ title: 'Featured', id: 0 }, ...props.professionsList.professions]}
                     labelKey="title"
                     valueKey="id"
+                    onChange={this.handleCategoryChange}
                     placeHolder="Select a category to browse"
                   />
                 </DesktopStyled.FilterSection>
@@ -296,6 +303,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchTrendingStars: () => dispatch(fetchTrendingStars()),
+  updateCategory: (label, value) => dispatch(updateCategory(label, value)),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));
