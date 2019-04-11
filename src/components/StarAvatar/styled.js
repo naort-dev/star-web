@@ -190,6 +190,18 @@ AvatarContainer.Content = styled.article`
         width: 100%;
       }
     }
+    &.secondary {
+      ${AvatarContainer.Category} {
+        font-size: 13px;
+      }
+      ${AvatarContainer.Name} {
+        font-size: 17px;
+      }
+      ${AvatarContainer.Price} {
+        font-family: Gilroy-Semibold;
+        font-size: 17px;
+      }
+    }
   }
 `;
 

@@ -41,17 +41,20 @@ const CategoryPage = (props) => {
       <Header />
       <CategoryPageStyled.Toolbar>
         <CategoryPageStyled.CategoryName>{props.category.label}</CategoryPageStyled.CategoryName>
-        <CategoryPageStyled.Filter
-          title="Filter"
-          onClick={toggleFilterCall}
-        >
-          <FontAwesomeIcon icon={faFilter} />
-        </CategoryPageStyled.Filter>
+        {
+          props.category.label !== 'Featured' &&
+            <CategoryPageStyled.Filter
+              title="Filter"
+              onClick={toggleFilterCall}
+            >
+              <FontAwesomeIcon icon={faFilter} />
+            </CategoryPageStyled.Filter>
+        }
       </CategoryPageStyled.Toolbar>
       <CategoryPageStyled.Content>
         <CategoryPageStyled.FeaturedWrapper>
           <CategoryPageStyled.Heading>Create A Winning Moment With A Sports Star!</CategoryPageStyled.Heading>
-          <CategoryPageStyled.FeaturedSection title={`Featured ${props.category.label !== 'featured' ? props.category.label : ''} stars`}>
+          <CategoryPageStyled.FeaturedSection title={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
             <CategoryPageStyled.AvatarWrapper className="featured" >
               <StarAvatar star={star} type="featured" />
             </CategoryPageStyled.AvatarWrapper>
@@ -61,14 +64,17 @@ const CategoryPage = (props) => {
             <CategoryPageStyled.AvatarWrapper className="secondary" >
               <StarAvatar star={star} type="secondary" />
             </CategoryPageStyled.AvatarWrapper>
-            <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad>
+            <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad disableMobile>
               <StarAvatar star={star} type="secondary" />
             </CategoryPageStyled.AvatarWrapper>
           </CategoryPageStyled.FeaturedSection>
         </CategoryPageStyled.FeaturedWrapper>
-        <CategoryPageStyled.FilterSection showFilter={showFilter}>
-          <FilterSection onClose={toggleFilterCall} />
-        </CategoryPageStyled.FilterSection>
+        {
+          props.category.label !== 'Featured' &&
+            <CategoryPageStyled.FilterSection showFilter={showFilter}>
+              <FilterSection onClose={toggleFilterCall} />
+            </CategoryPageStyled.FilterSection>
+        }
         <CategoryPageStyled.ListingWrapper>
           <StarListing
             dataList={props.trendingStars.data}

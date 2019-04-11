@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import HeaderSection from '../../../../../../components/Header/styled';
+import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
+
   return (
     <FilterStyled>
       <FilterStyled.Header>
@@ -27,12 +30,40 @@ const FilterSection = (props) => {
           </HeaderSection.HeaderRight>
         </HeaderSection.HeaderDiv>
       </FilterStyled.Header>
+      <FilterStyled.Heading mobileOnly>
+        Filter
+      </FilterStyled.Heading>
+      <FilterStyled.Heading>
+        Select your { props.category.label } category
+      </FilterStyled.Heading>
+      <FilterStyled.SubCategoryList>
+        <FilterStyled.SubCategoryItem selected>ALL</FilterStyled.SubCategoryItem>
+        {
+          props.category.subCategories.map(subCategory => (
+            <FilterStyled.SubCategoryItem
+              key={subCategory.id}
+            >
+              {subCategory.title}
+            </FilterStyled.SubCategoryItem>
+          ))
+        }
+      </FilterStyled.SubCategoryList>
     </FilterStyled>
   );
 };
 
 FilterSection.propTypes = {
   onClose: PropTypes.func.isRequired,
+  category: PropTypes.object.isRequired,
+  updateSelectedSubCategory: PropTypes.func.isRequired,
 };
 
-export default FilterSection;
+const mapStateToProps = state => ({
+  category: state.filters.category,
+});
+
+const mapDispatchToProps = dispatch => ({
+  updateSelectedSubCategory: selectedList => dispatch(updateSelectedSubCategory(selectedList)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilterSection);

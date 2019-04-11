@@ -6,17 +6,17 @@ import CategoryStyled from './styled';
 
 const CategorySection = (props) => {
   const professionsList = props.professionsList.professions;
-  const updateMainCategory = (title, value) => () => {
+  const updateMainCategory = (title, value, subCategories) => () => {
     if (props.showCategories) {
       props.closeCategories();
     }
-    props.updateCategory(title, value);
+    props.updateCategory(title, value, subCategories);
   }
   return (
     <CategoryStyled>
       <CategoryStyled.Item
-        onClick={updateMainCategory('featured', '', [])}
-        selected={props.category.label === 'featured'}
+        onClick={updateMainCategory('Featured', '', [])}
+        selected={props.category.label === 'Featured'}
       >
         Featured
       </CategoryStyled.Item>

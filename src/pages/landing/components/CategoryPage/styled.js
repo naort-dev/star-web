@@ -8,6 +8,9 @@ const CategoryPageStyled = styled.div`
     margin-top: 260px;
     height: auto;
   }
+  @media(min-width: 1280px) {
+    margin-top: 151px;
+  }
 `;
 
 CategoryPageStyled.CategoryName = styled.span`
@@ -33,6 +36,9 @@ CategoryPageStyled.AvatarWrapper = styled.div`
   &.featured {
     display: none;
   }
+  &.secondary {
+    display: ${props => (props.disableMobile ? 'none' : 'block')};
+  }
   @media(min-width: 832px) {
     &.featured {
       display: block;
@@ -40,7 +46,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
       left: 33px;
       top: calc(100% - 310px);
       padding: 0 10px;
-      background: #fff;
+      background: ${props => props.theme.white};
     }
     &.secondary {
       display: ${props => (props.disableIpad ? 'none' : 'block')};
@@ -49,6 +55,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
   @media(min-width: 1280px) {
     &.secondary {
       display: block;
+      padding-right: 61px;
     }
   }
 `;
@@ -60,7 +67,7 @@ CategoryPageStyled.FilterSection = styled.div`
   left: 0;
   right: 0;
   z-index: 11;
-  background: #fff;
+  background: transparent;
   display: ${props => (props.showFilter ? 'block' : 'none')};
   @media(min-width: 832px) {
     position: static;
@@ -77,6 +84,9 @@ CategoryPageStyled.Heading = styled.span`
   color: ${props => props.theme.twilight};
   @media(min-width: 832px) {
     font-size: 56px;
+  }
+  @media(min-width: 1280px) {
+    margin-top: 37px;
   }
 `;
 
@@ -108,16 +118,18 @@ CategoryPageStyled.FeaturedSection = styled.div`
   }
   @media(min-width: 832px) {
     max-width: 832px;
-    margin-bottom: 112px;
+    margin-bottom: 137px;
     justify-content: flex-end;
     padding: 58px 42px;
     &:after {
       left: 198px;
       font-size: 23px;
+      background: ${props => props.theme.white};
     }
   }
   @media(min-width: 1280px) {
     max-width: 1280px;
+    padding-right: 0;
   }
 `;
 
@@ -135,6 +147,9 @@ CategoryPageStyled.Content = styled.div`
   height: calc(100% - 40px);
   padding: 12px 16px;
   overflow: auto;
+  @media(min-width: 832px) {
+    background: ${props => props.theme.white};
+  }
 `;
 
 CategoryPageStyled.FeaturedWrapper = styled.div`
