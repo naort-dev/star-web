@@ -1,20 +1,26 @@
+/************************************ React Files ************************************/
 import React from 'react';
 import { connect } from 'react-redux';
+/************************************ Components *************************************/
 import validator from 'validator';
 import ActionLoader from '../ActionLoader';
-
 import Checkbox from '@material-ui/core/Checkbox';
 import { TextInput } from '../TextField';
-import { LoginContainer, FooterSection } from './styled';
+import { TermsAndConditions } from './components/TermsAndConditions'
+import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
+/************************************   Actions  *************************************/
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
-import { TermsAndConditions } from './components/TermsAndConditions'
-
-import { ROLES } from '../../constants/usertype';
+/********************************  Helper functions  *********************************/
 import { formatSignUpByUserType } from './helper';
-import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
+/***********************************  Constants  *************************************/
+import { ROLES } from '../../constants/usertype';
+import { ROLE_FAN, ROLE_STAR } from './constants'
+/************************************  Styles  ***************************************/
+import { LoginContainer } from './styled';
+import { debug } from 'util';
 
-class SignUp extends React.Component {
+class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -69,28 +75,52 @@ class SignUp extends React.Component {
 
   onRegister = async (e) => {
     e.preventDefault();
-    if (
-      this.checkTermsAndConditionsRequired() &&
-      this.checkFirstRequired() &
-      this.checkLastRequired() &
-      this.checkEmail() &
-      this.checkNickNameRequired()
-    ) {
-      this.props.registerUser(
-        this.state.firstName.value,
-        this.state.lastName.value,
-        this.state.email.value,
-        this.state.nickName.value,
-        this.state.role,
-      )
-        .then((response) => {
-          if (response != undefined) {
-            if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
-              this.props.changeStep(this.props.currentStep + 1);
+    if (this.props.signupRole === ROLE_FAN) {
+      if (
+        this.checkFirstRequired() &
+        this.checkLastRequired() &
+        this.checkEmail() &
+        this.checkPassword()
+      ) {
+        this.props.registerUser(
+          this.state.firstName.value,
+          this.state.lastName.value,
+          this.state.email.value,
+          this.state.password.value,
+          this.state.role,
+        )
+          .then((response) => {
+            if (response != undefined) {
+              if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
+                this.props.changeStep(this.props.currentStep + 1);
+              }
             }
-          }
-        });
+          });
+      }
+    } else {
+      if (
+        this.checkFirstRequired() &
+        this.checkLastRequired() &
+        this.checkEmail() &
+        this.checkNickNameRequired()
+      ) {
+        this.props.registerUser(
+          this.state.firstName.value,
+          this.state.lastName.value,
+          this.state.email.value,
+          this.state.nickName.value,
+          this.state.role,
+        )
+          .then((response) => {
+            if (response != undefined) {
+              if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
+                this.props.changeStep(this.props.currentStep + 1);
+              }
+            }
+          });
+      }
     }
+
   };
 
   saveFormEntries = (event, type) => {
@@ -178,6 +208,28 @@ class SignUp extends React.Component {
     });
     return true;
   }
+  checkPassword = () => {
+    const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
+
+    if (validator.isEmpty(this.state.password.value)) {
+      this.setState({
+        password: { ...this.state.password, message: 'Enter a  password' },
+      });
+      return false;
+    }
+    if (!pattern.test(this.state.password.value)) {
+      this.setState({ password: { ...this.state.password, message: 'Enter a valid password with at least one symbol' } });
+      return false;
+    }
+    if (this.state.confirmPassword.value !== this.state.password.value) {
+      this.setState({ password: { ...this.state.password, message: 'The passwords entered do not match!' } });
+      return false;
+    }
+    this.setState({
+      password: { ...this.state.password, message: '', isValid: true },
+    });
+  }
+
   checkTermsAndConditionsRequired = () => {
     const termsAndConditionsEmpty = !(this.state.termsAndConditions.value)
     if (termsAndConditionsEmpty) {
@@ -277,9 +329,9 @@ class SignUp extends React.Component {
                   <LoginContainer.WrapsInput>
                     <TextInput
                       placeholder={signUp.item_3_placeholder_1}
-                      type={this.props.signupRole === 'fan' ? 'password' : 'text'}
+                      type={this.props.signupRole === ROLE_FAN ? 'password' : 'text'}
                       name={signUp.key_3_1}
-                      fullWidth={this.props.signupRole === 'star'? true: false}
+                      fullWidth={this.props.signupRole === ROLE_STAR ? true : false}
                       value={this.state[signUp.key_3_1].value}
                       onChange={(event) => this.saveFormEntries(event, signUp.key_3_1)}
                     />
@@ -287,18 +339,15 @@ class SignUp extends React.Component {
                       {this.state[signUp.key_3_1].message}
                     </LoginContainer.ErrorMsg>
                   </LoginContainer.WrapsInput>
-                  {this.props.signupRole === 'fan' ?
+                  {this.props.signupRole === ROLE_FAN ?
                     <LoginContainer.WrapsInput>
                       <TextInput
                         placeholder={signUp.item_3_placeholder_2}
-                        type={this.props.signupRole === 'fan' ? 'password' : 'text'}
+                        type={this.props.signupRole === ROLE_FAN ? 'password' : 'text'}
                         name={signUp.key_3_2}
                         value={this.state[signUp.key_3_2].value}
                         onChange={(event) => this.saveFormEntries(event, signUp.key_3_2)}
                       />
-                      <LoginContainer.ErrorMsg>
-                        {this.state[signUp.key_3_2].message}
-                      </LoginContainer.ErrorMsg>
                     </LoginContainer.WrapsInput>
                     : null}
                 </LoginContainer.InputWrapper>
@@ -311,7 +360,7 @@ class SignUp extends React.Component {
                     <LoginContainer.EmptyDiv />
                   }
                 </LoginContainer.WrapsInput>
-                {this.props.signupRole === 'fan' ? null :
+                {this.props.signupRole === ROLE_FAN ? null :
                   <div>
                     <LoginContainer.PrivacyContent>
                       <Checkbox
@@ -358,4 +407,4 @@ const mapProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
 });
 
-export default connect(mapStateToProps, mapProps)(SignUp);
+export default connect(mapStateToProps, mapProps)(SignUpForm);

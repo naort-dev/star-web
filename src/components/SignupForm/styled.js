@@ -123,6 +123,7 @@ LoginContainer.Heading = styled.div`
 `;
 
 LoginContainer.ContinueButton = styled.button`
+  cursor: pointer;
   background-color: #2f839d;
   font-family: Gilroy-Extrabold;
   font-size: 18px;

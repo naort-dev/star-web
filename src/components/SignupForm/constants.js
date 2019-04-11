@@ -24,3 +24,6 @@ export const SIGN_UP = {
   FAN_BUTTON_LABEL: 'Sign Up',
   STAR_BUTTON_LABEL: 'Continue',
 };
+
+export const ROLE_FAN = 'fan'
+export const ROLE_STAR = 'star'
