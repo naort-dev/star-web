@@ -92,7 +92,7 @@ class DesktopHome extends React.Component {
   static getDerivedStateFromProps = (nextProps, prevState) => {
     let { trendingList } = prevState;
     const trendingStars = nextProps.trendingStars.data;
-    if (document.body.getBoundingClientRect().width >= 1280) {
+    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
       trendingList = trendingStars.slice(0, trendingStars.length);
     } else {
       trendingList = trendingStars.slice(0, trendingStars.length - 1);
@@ -106,7 +106,7 @@ class DesktopHome extends React.Component {
 
   setTrendingData = () => {
     const trendingStars = this.props.trendingStars.data;
-    if (document.body.getBoundingClientRect().width >= 1280) {
+    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
       this.setState({ trendingList: trendingStars.slice(0, trendingStars.length) });
     } else {
       this.setState({ trendingList: trendingStars.slice(0, trendingStars.length - 1) });
@@ -120,7 +120,7 @@ class DesktopHome extends React.Component {
 
   handleCategoryChange = (category) => {
     this.props.closeLandingFlow();
-    this.props.updateCategory(category.title, category.id);
+    this.props.updateCategory(category.title, category.id, category.child);
   }
 
   render() {
@@ -303,7 +303,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchTrendingStars: () => dispatch(fetchTrendingStars()),
-  updateCategory: (label, value) => dispatch(updateCategory(label, value)),
+  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));

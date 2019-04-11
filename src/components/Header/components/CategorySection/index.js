@@ -7,12 +7,15 @@ import CategoryStyled from './styled';
 const CategorySection = (props) => {
   const professionsList = props.professionsList.professions;
   const updateMainCategory = (title, value) => () => {
+    if (props.showCategories) {
+      props.closeCategories();
+    }
     props.updateCategory(title, value);
   }
   return (
     <CategoryStyled>
       <CategoryStyled.Item
-        onClick={updateMainCategory('featured', '')}
+        onClick={updateMainCategory('featured', '', [])}
         selected={props.category.label === 'featured'}
       >
         Featured
@@ -22,7 +25,7 @@ const CategorySection = (props) => {
           return (
             <CategoryStyled.Item
               key={profession.id}
-              onClick={updateMainCategory(profession.title, profession.id)}
+              onClick={updateMainCategory(profession.title, profession.id, profession.child)}
               selected={props.category.label === profession.title}
             >
               {profession.title}
@@ -38,6 +41,8 @@ CategorySection.propTypes = {
   professionsList: PropTypes.object.isRequired,
   category: PropTypes.object.isRequired,
   updateCategory: PropTypes.func.isRequired,
+  showCategories: PropTypes.bool.isRequired,
+  closeCategories: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -46,7 +51,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateCategory: (label, value) => dispatch(updateCategory(label, value)),
+  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategorySection);

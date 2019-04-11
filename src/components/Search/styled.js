@@ -81,7 +81,6 @@ SearchSection.noDataText = styled.span`
 `;
 SearchSection.SuggestionListItem = styled.li`
   width: 100%;
-  padding: 0 16px;
   margin-top: 12px;
   cursor: pointer;
   font-size: 18px;
@@ -93,7 +92,7 @@ SearchSection.SuggestionListItem = styled.li`
   &:first-child{
     margin-top:0;
   }
-  @media(min-width: 1025px) {
+  @media(min-width: 834px) {
     padding: 0 30px;
   }
 `;
@@ -117,8 +116,11 @@ SearchSection.StarHeading = styled.p`
 `;
 
 SearchSection.CategoryList = styled.div`
-  padding: 5px 0 5px 30px;
+  padding: 5px 0 5px 0;
   color: #333;
+  @media(min-width: 834px) {
+    padding: 5px 0 5px 30px;
+  }
 `;
 
 SearchSection.CategoryItem = styled.span`
