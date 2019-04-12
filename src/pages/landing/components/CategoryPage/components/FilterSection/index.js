@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,32 @@ import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
+
+  const [selectedSubCat, updateselectedSub] = useState(props.category.selected);
+
+  useEffect(() => {
+    updateselectedSub(props.category.selected);
+  });
+
+  const updateSubCategory = catId => () => {
+    let selectedList = [...selectedSubCat];
+    if (selectedList.find(cat => cat === catId)) {
+      selectedList = selectedList.filter(cat => cat !== catId);
+      updateselectedSub(selectedList);
+    } else {
+      selectedList = [...selectedList, catId];
+      updateselectedSub(selectedList);
+    }
+    props.updateSelectedSubCategory(selectedList);
+  };
+
+  const toggleSelectAll = () => {
+    if (props.category.subCategories.length !== selectedSubCat.length) {
+      props.updateSelectedSubCategory(props.category.subCategories.map(cat => cat.id));
+    } else {
+      props.updateSelectedSubCategory([]);
+    }
+  };
 
   return (
     <FilterStyled>
@@ -34,20 +60,28 @@ const FilterSection = (props) => {
         Filter
       </FilterStyled.Heading>
       <FilterStyled.Heading>
-        Select your { props.category.label } category
+        Select your { props.category.label.toLowerCase() } category
       </FilterStyled.Heading>
-      <FilterStyled.SubCategoryList>
-        <FilterStyled.SubCategoryItem selected>ALL</FilterStyled.SubCategoryItem>
-        {
-          props.category.subCategories.map(subCategory => (
-            <FilterStyled.SubCategoryItem
-              key={subCategory.id}
-            >
-              {subCategory.title}
-            </FilterStyled.SubCategoryItem>
-          ))
-        }
-      </FilterStyled.SubCategoryList>
+      <FilterStyled.Content>
+        <FilterStyled.SubCategoryList>
+          <FilterStyled.SubCategoryItem
+            onClick={toggleSelectAll}
+          >
+            { props.category.subCategories.length === selectedSubCat.length ? 'Unselect All' : 'ALL' }
+          </FilterStyled.SubCategoryItem>
+          {
+            props.category.subCategories.map(subCategory => (
+              <FilterStyled.SubCategoryItem
+                key={subCategory.id}
+                selected={selectedSubCat.indexOf(subCategory.id) > -1}
+                onClick={updateSubCategory(subCategory.id)}
+              >
+                {subCategory.title}
+              </FilterStyled.SubCategoryItem>
+            ))
+          }
+        </FilterStyled.SubCategoryList>
+      </FilterStyled.Content>
     </FilterStyled>
   );
 };

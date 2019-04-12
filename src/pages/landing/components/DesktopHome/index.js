@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookSquare,
@@ -98,6 +99,12 @@ class DesktopHome extends React.Component {
       trendingList = trendingStars.slice(0, trendingStars.length - 1);
     }
     return { trendingList };
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.category.label !== this.props.category.label) {
+      this.props.closeLandingFlow();
+    }
   }
 
   componentWillUnmount() {
@@ -295,10 +302,26 @@ class DesktopHome extends React.Component {
   }
 }
 
+DesktopHome.defaultProps = {
+  theme: {},
+};
+
+DesktopHome.propTypes = {
+  professionsList: PropTypes.object.isRequired,
+  featuredStars: PropTypes.object.isRequired,
+  trendingStars: PropTypes.object.isRequired,
+  category: PropTypes.object.isRequired,
+  closeLandingFlow: PropTypes.func.isRequired,
+  fetchTrendingStars: PropTypes.func.isRequired,
+  updateCategory: PropTypes.func.isRequired,
+  theme: PropTypes.object,
+}
+
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   featuredStars: state.featuredStars,
   trendingStars: state.trendingStars,
+  category: state.filters.category,
 });
 
 const mapDispatchToProps = dispatch => ({

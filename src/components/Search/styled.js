@@ -43,7 +43,7 @@ SearchSection.SuggestionListWrapper = styled.div`
   width: 100%;
   background-color: #FFFFFF;
   z-index: 1;
-  height: calc(100vh - 126px);
+  height: calc(100vh - 108px);
   @media(min-width: 832px) {
     box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
@@ -131,8 +131,9 @@ SearchSection.CategoryItem = styled.span`
   margin-right: 7px;
   font-size: 14px;
   font-family: Gilroy-Medium;
-  a {
+  span {
     color: ${props => props.theme.greyishBrown};
+    cursor: pointer;
     padding: 8px 15px;
     display: block;
     width: 100%;
