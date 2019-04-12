@@ -13,7 +13,6 @@ import { twitterLogin } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
-import SignUpForm from '../SignupForm';
 
 class SignupMethod extends React.Component {
   constructor(props) {
@@ -374,17 +373,12 @@ class SignupMethod extends React.Component {
     return true;
   };
 
-  render() {    
+  render() {        
     return (
       <SignUpMethod.SocialMediaSignup>
         {
         this.state.loading &&
           <ActionLoader />
-      }
-        {
-          <SignUpMethod.BackButton
-            onClick={() => this.props.changeStep(this.props.currentStep - 1)}
-          />
       }
         <SignUpMethod.Container>
           <SignUpMethod.Heading>How do you want to create your account?</SignUpMethod.Heading>

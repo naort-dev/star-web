@@ -13,21 +13,6 @@ const LoginContainer = styled.div`
   }
 `;
 
-LoginContainer.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
@@ -513,33 +498,32 @@ LoginContainer.ButtonWrapper = styled.div`
   margin-top:5%;
 `;
 LoginContainer.SignupLine = styled.div`
-    display: block;
-    font-family: 'Avenir-Light';
-    color:#b3acac;
-    font-size: 12px;
-    margin: 0;
-    margin: 20px 20px;
-    margin-top: 0;
-    order: 1;
-    span {
-      display: inline-block;
-    }
-    &::before, &::after {
-      content: '';
-      display: inline-block;
-      height: 1px;
-      background-color: #e8e7e7;
-      vertical-align: middle;
-      width: 50px;
-      width: calc(50% - 69px);
-    }
-    &::before {
-      margin-right: 10px;
-    }
-    &::after {
-      margin-left: 10px;
-    }
-  
+  display: block;
+  font-family: 'Avenir-Light';
+  color:#b3acac;
+  font-size: 12px;
+  margin: 0;
+  margin: 20px 20px;
+  margin-top: 0;
+  order: 1;
+  span {
+    display: inline-block;
+  }
+  &::before, &::after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    background-color: #e8e7e7;
+    vertical-align: middle;
+    width: 50px;
+    width: calc(50% - 69px);
+  }
+  &::before {
+    margin-right: 10px;
+  }
+  &::after {
+    margin-left: 10px;
+  }  
 `;
 
 export { LoginContainer, HeaderSection, FooterSection };

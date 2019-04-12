@@ -15,17 +15,25 @@ const UploadContainer = styled.div`
 
 UploadContainer.BackButton = styled.span`
   position: absolute;
-  top: 2px;
   left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
+  color: #707070;
   border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
+  padding: 0 30px;
   cursor: pointer;
   outline: none;
+  font-size: 28px;
+`;
+
+UploadContainer.CloseButton = styled.span`
+  position: absolute;
+  right: 49.5px;
+  z-index: 2;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  cursor:pointer;
+  color: #707070;
+  font-size: 30px;
 `;
 
 UploadContainer.wrapper = styled.div`
@@ -60,21 +68,6 @@ UploadContainer.Heading = styled.div`
   @media(min-width:1920px){
     font-size: 27px;
   }
-`;
-
-UploadContainer.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
 `;
 
 UploadContainer.CategoriesWrapper = styled.div``;
@@ -126,6 +119,8 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
+  text-align: center;
+  margin-right: 10px;
 `;
 
 ImageUpload.ProfileInputContainer = styled.span`
