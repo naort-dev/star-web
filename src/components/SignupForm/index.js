@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 /************************************ Components *************************************/
 import validator from 'validator';
 import ActionLoader from '../ActionLoader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import Checkbox from '@material-ui/core/Checkbox';
 import { TextInput } from '../TextField';
 import { TermsAndConditions } from './components/TermsAndConditions'
@@ -11,6 +13,7 @@ import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
 /************************************   Actions  *************************************/
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
+import DotsContainer from '../../components/Dots';
 /********************************  Helper functions  *********************************/
 import { formatSignUpByUserType } from './helper';
 /***********************************  Constants  *************************************/
@@ -258,14 +261,16 @@ class SignUpForm extends React.Component {
             this.state.loading &&
             <ActionLoader />
           }
-          {
-            <LoginContainer.BackButton
-              onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
-          }
           <LoginContainer.Container>
             <LoginContainer.Heading>
               {signUp.title}
             </LoginContainer.Heading>
+            { this.props.signupRole === 'star' &&
+              <DotsContainer
+                dotsCount={3}
+                selectedDot={1}
+              />
+            }
             <LoginContainer.InputFieldsWrapper>
               <LoginContainer.InputContainer>
                 {
@@ -390,9 +395,6 @@ class SignUpForm extends React.Component {
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
           </LoginContainer.Container>
-          {/* <LoginContainer.Container visible={this.props.currentStep === 2}>
-            <SignUpImageUpload />
-          </LoginContainer.Container> */}
         </LoginContainer.SocialMediaSignup>
     );
   }

@@ -13,21 +13,6 @@ const SignUpMethod = styled.div`
   }
 `;
 
-SignUpMethod.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 SignUpMethod.SocialMediaSignup = styled.div`
   text-align:center;
   height: 100%;
@@ -47,7 +32,7 @@ SignUpMethod.Heading = styled.div`
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
-  padding: 20px 0;
+  padding: 40px 0 20px;
   @media(min-width:768px){
     font-size: 24px;
   }
