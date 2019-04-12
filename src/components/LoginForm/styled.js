@@ -21,6 +21,19 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.CloseButton = styled.span`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  cursor:pointer;
+  color: #707070;
+  font-size: 30px;
+`;
+
 
 LoginContainer.actionText = styled.span`
   cursor: pointer;
