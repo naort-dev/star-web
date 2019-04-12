@@ -89,8 +89,11 @@ export const QuestionContainer = styled.section`
   }
   .note {
     color: #999;
+    font-family: Gilroy;
+    font-size: 16px;
     ${media.mobileScreen} {
       color: #fff;
+      font-size: 14px;
       padding-top: 20px;
     }
   }
