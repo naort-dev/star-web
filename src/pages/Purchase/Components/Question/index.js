@@ -129,8 +129,8 @@ const Question = (props) => {
           <br />
           You can:
           <br />
-          <br /> Record with our App Use our iOS or Android app to book the
-          star.
+          <br /> Record with our App
+          <br /> Use our iOS or Android app to book the star.
         </p>
       )}
     </Layout>
