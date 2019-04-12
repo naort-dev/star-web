@@ -120,7 +120,9 @@ class Purchase extends Component {
           </Header>
           <Content>
             <Scrollbars>
-              <ModalSwitcher dataModal={dataModal.category}>
+              <ModalSwitcher
+                dataModal={dataModal.category ? dataModal.category : []}
+              >
                 {this.getBodyComponent()}
               </ModalSwitcher>
             </Scrollbars>

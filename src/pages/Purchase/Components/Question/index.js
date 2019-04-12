@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import { Layout, VideoContainer, QuestionContainer, ShowHide } from './styled';
 import QuestionBuilder from '../../../../components/QuestionBuilder';
 import Button from '../../../../components/PrimaryButton';
@@ -29,16 +30,6 @@ const Question = (props) => {
   const [buttonLabel, changeButtonLabel] = useState('Record');
   const [error, errorHandler] = useState(false);
 
-  const buttonClickHandler = () => {
-    if (buttonLabel === 'Record') {
-      mediaHandler('Stop', false);
-    } else if (buttonLabel === 'Stop') {
-      mediaHandler('Continue to Payment', true);
-    } else if (buttonLabel === 'Continue to Payment') {
-      // uploadVideo();
-    }
-  };
-
   const mediaHandler = (btnLabel) => {
     props.recordTrigger();
     props.playPauseMedia();
@@ -47,7 +38,17 @@ const Question = (props) => {
     errorHandler(false);
   };
 
-  const uploadVideo = () => {
+  const buttonClickHandler = () => {
+    if (buttonLabel === 'Record') {
+      mediaHandler('Stop', false);
+    } else if (buttonLabel === 'Stop') {
+      mediaHandler('Continue to Payment', true);
+    } else if (buttonLabel === 'Continue to Payment') {
+      // uploadVideoRecorded();
+    }
+  };
+
+  const uploadVideoRecorded = () => {
     let uploadVideo = null;
     uploadVideo = new File([props.videoFile], 'askVideo.mp4');
     getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
@@ -134,6 +135,17 @@ const Question = (props) => {
       )}
     </Layout>
   );
+};
+
+Question.propTypes = {
+  updateMediaStore: PropTypes.func.isRequired,
+  playPauseMedia: PropTypes.func.isRequired,
+  recordTrigger: PropTypes.func.isRequired,
+  videoFile: PropTypes.object,
+};
+
+Question.defaultProps = {
+  videoFile: {},
 };
 
 function mapStateToProps(state) {

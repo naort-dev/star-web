@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FlexBoxSB } from '../../../../styles/CommonStyled';
 import {
   Icon,
@@ -39,6 +40,10 @@ const CategoryList = ({ dataModal, getCategory }) => {
       })}
     </Layout>
   );
+};
+
+CategoryList.propTypes = {
+  getCategory: PropTypes.func.isRequired,
 };
 
 export default CategoryList;

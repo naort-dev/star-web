@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { checkMediaRecorderSupport } from '../../utils/checkOS';
 import { Progress } from './styled';
 import { PlayButton } from '../../styles/CommonStyled';
@@ -99,7 +100,9 @@ class VideoRecorder extends Component {
     if (this.timerID != null) {
       clearTimeout(this.timerID);
     }
-    this.mediaRecorder.stop();
+    if (this.mediaRecorder) {
+      this.mediaRecorder.stop();
+    }
     this.closeStream();
     this.superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
     this.videoSrc = window.URL.createObjectURL(this.superBuffer);
@@ -122,10 +125,12 @@ class VideoRecorder extends Component {
 
   closeStream = () => {
     const stream = document.getElementById('video-player_tag').srcObject;
-    const tracks = stream.getTracks();
-    tracks.forEach((track) => {
-      track.stop();
-    });
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach((track) => {
+        track.stop();
+      });
+    }
     document.getElementById('video-player_tag').srcObject = null;
   };
 
@@ -164,9 +169,7 @@ class VideoRecorder extends Component {
           id="video-player_tag"
           onEnded={this.checkVideoOver}
           onClick={this.videoClick}
-        >
-          <track kind="captions" />
-        </video>
+        />
         {this.state.progress && <Progress />}
 
         {this.state.mediaControls && (
@@ -183,6 +186,23 @@ class VideoRecorder extends Component {
     );
   }
 }
+
+VideoRecorder.propTypes = {
+  shouldRecord: PropTypes.bool.isRequired,
+  duration: PropTypes.number.isRequired,
+  errorHandler: PropTypes.func,
+  updateMediaStore: PropTypes.func.isRequired,
+  stopRecordHandler: PropTypes.func,
+  playPauseMediaAction: PropTypes.func.isRequired,
+  retryRecordHandler: PropTypes.func.isRequired,
+  recordTrigger: PropTypes.func.isRequired,
+  playPauseMedia: PropTypes.bool.isRequired,
+};
+
+VideoRecorder.defaultProps = {
+  errorHandler: () => {},
+  stopRecordHandler: () => {},
+};
 
 function mapStateToProps(state) {
   return {
