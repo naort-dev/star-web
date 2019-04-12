@@ -60,6 +60,7 @@ class SignupFlow extends React.Component {
     if (this.state.selectedType === 'fan') {
       return (<SignUpForm
         {...this.props}
+        registerUser={this.props.registerUser}
         changeStep={this.changeStep}
         currentStep={this.state.currentStep}
         signupRole={this.state.selectedType}
@@ -71,6 +72,7 @@ class SignupFlow extends React.Component {
       switch (this.state.currentStep) {
         case 1: return (<SignUpForm
           {...this.props}
+          registerUser={this.props.registerUser}
           changeStep={this.changeStep}
           currentStep={this.state.currentStep}
           signupRole={this.state.selectedType}
@@ -95,6 +97,7 @@ class SignupFlow extends React.Component {
       switch (this.state.currentStep) {
         case 1: return (<SignUpForm
           {...this.props}
+          registerUser={this.props.registerUser}
           currentStep={this.state.currentStep}
           closeSignupFlow={this.closeSignUp}
           changeStep={this.changeStep}

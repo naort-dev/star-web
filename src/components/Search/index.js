@@ -185,7 +185,7 @@ class Search extends React.Component {
                             </span>
                             <SearchSection.SuggestionListName>
                               <SearchSection.SuggestionDetails>
-                                { item.professions }
+                                { starProfessionsFormater(JSON.parse(item.professions.replace(/'/g, '"')), 'search') }
                               </SearchSection.SuggestionDetails>
                               {fullName}
                             </SearchSection.SuggestionListName>
@@ -209,7 +209,7 @@ class Search extends React.Component {
 
   render() {
     return (
-      <SearchSection innerRef={(node) => { this.searchRef = node; }} hide={!this.state.searchActive}>
+      <SearchSection innerRef={(node) => { this.searchRef = node; }}>
         <SearchSection.InputWrapper alternate={this.props.alternate}>
           <FontAwesomeIcon icon={faSearch} />
           <SearchSection.Input

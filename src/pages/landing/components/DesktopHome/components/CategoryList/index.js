@@ -1,6 +1,8 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStarExclamation, faMusic, faMagic, faFutbol, faPodcast, faBug, faFilm, faGlobe, faTv } from '@fortawesome/pro-light-svg-icons';
+import { updateCategory } from '../../../../actions/updateFilters';
 import { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryDescription, CategoryContent } from './styled';
 
 const CategoryList = (props) => {
@@ -91,4 +93,8 @@ const CategoryList = (props) => {
   );
 };
 
-export default CategoryList;
+const mapDispatchToProps = dispatch => ({
+  updateCategory: (label, value) => () => dispatch(updateCategory(label, value)),
+});
+
+export default connect(null, mapDispatchToProps)(CategoryList);

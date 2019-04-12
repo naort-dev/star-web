@@ -19,6 +19,7 @@ import StarListing from '../../../../components/StarListing';
 import Search from '../../../../components/Search';
 
 import { fetchTrendingStars } from '../../actions/getTrendingStars';
+import { updateCategory } from '../../actions/updateFilters';
 
 import DesktopStyled from './styled';
 
@@ -91,7 +92,7 @@ class DesktopHome extends React.Component {
   static getDerivedStateFromProps = (nextProps, prevState) => {
     let { trendingList } = prevState;
     const trendingStars = nextProps.trendingStars.data;
-    if (document.body.getBoundingClientRect().width >= 1280) {
+    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
       trendingList = trendingStars.slice(0, trendingStars.length);
     } else {
       trendingList = trendingStars.slice(0, trendingStars.length - 1);
@@ -105,7 +106,7 @@ class DesktopHome extends React.Component {
 
   setTrendingData = () => {
     const trendingStars = this.props.trendingStars.data;
-    if (document.body.getBoundingClientRect().width >= 1280) {
+    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
       this.setState({ trendingList: trendingStars.slice(0, trendingStars.length) });
     } else {
       this.setState({ trendingList: trendingStars.slice(0, trendingStars.length - 1) });
@@ -115,6 +116,11 @@ class DesktopHome extends React.Component {
   getAvatarContent = (index) => {
     const featuredData = this.props.featuredStars.data;
     return featuredData[index - 1];
+  }
+
+  handleCategoryChange = (category) => {
+    this.props.closeLandingFlow();
+    this.props.updateCategory(category.title, category.id, category.child);
   }
 
   render() {
@@ -141,6 +147,7 @@ class DesktopHome extends React.Component {
                     options={[{ title: 'Featured', id: 0 }, ...props.professionsList.professions]}
                     labelKey="title"
                     valueKey="id"
+                    onChange={this.handleCategoryChange}
                     placeHolder="Select a category to browse"
                   />
                 </DesktopStyled.FilterSection>
@@ -296,6 +303,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   fetchTrendingStars: () => dispatch(fetchTrendingStars()),
+  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));

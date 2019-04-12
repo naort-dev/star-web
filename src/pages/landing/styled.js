@@ -2,15 +2,14 @@ import styled from 'styled-components';
 
 const LandingStyled = styled.div`
   margin-top: 0;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     margin-top: 0;
     height: auto;
   }
 `;
 
 LandingStyled.Container = styled.div`
-  display: none;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     display: block;
   }
 `;

@@ -31,7 +31,7 @@ DesktopStyled.Heading = styled.span`
 `;
 
 DesktopStyled.MainSearch = styled.div`
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     height: 50px;
   }
 `;
@@ -87,7 +87,7 @@ DesktopStyled.Description = styled.span`
 
 DesktopStyled.ShareIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     margin: 0;
     text-align: center;
     display: flex;
@@ -135,7 +135,7 @@ DesktopStyled.Avatar = styled.div`
   font-family: Gilroy-Medium;
   font-size: 18px;
   line-height: 1.17;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     width: 140px;
     height: 140px;
     margin: 10px;
@@ -150,7 +150,7 @@ DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
   font-family: Gilroy-Medium;
   font-size: 30px;
   line-height: 1.07;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     width: 299px;
     height: 299px;
   }
@@ -163,7 +163,7 @@ DesktopStyled.SecondaryAvatar = DesktopStyled.Avatar.extend`
   font-family: Gilroy-Medium;
   font-size: 30px;
   line-height: 1.07;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     width: 300px;
     height: 300px;
   }
@@ -173,7 +173,7 @@ DesktopStyled.FlowWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   padding: 0 30px;
-  @media (min-width: 834px) {
+  @media (min-width: 832px) {
     width: 818px;
   }
   @media (min-width: 1280px) {
@@ -191,7 +191,7 @@ DesktopStyled.BookProcessContent = styled.div`
 DesktopStyled.StarSection = DesktopStyled.BookProcessContent.extend`
   position: absolute;
   right: 30px;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     left: 99px;
     padding-top: 45px;
     #second-column {
@@ -214,7 +214,7 @@ DesktopStyled.StarSection = DesktopStyled.BookProcessContent.extend`
 DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
   display: flex;
   align-items: center;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     left: 34px;
     top: 664px;
     right: 25px;
@@ -283,7 +283,7 @@ DesktopStyled.ProcessSection = DesktopStyled.BookProcessContent.extend`
 `;
 
 DesktopStyled.RespondSection = DesktopStyled.BookProcessContent.extend`
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     right: 30px;
     bottom: 45px;
     left: 14px;
@@ -323,7 +323,7 @@ DesktopStyled.ReceiveContent = styled.div`
   ${DesktopStyled.ShareIconWrapper} {
     margin-top: 15px;
   }
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     padding-left: 46px;
     ${DesktopStyled.ColumnDivider} {
       padding-left: 46px;
@@ -371,7 +371,7 @@ DesktopStyled.CategorySection = styled.section`
   ${DesktopStyled.SubTitle} {
     font-family: Gilroy-Light;
   }
-  @media (min-width: 834px) {
+  @media (min-width: 832px) {
     width: 100%;
   }
   @media (min-width: 1280px) {
@@ -381,7 +381,7 @@ DesktopStyled.CategorySection = styled.section`
 `;
 
 DesktopStyled.CategorySearch = styled.div`
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     width: 520px;
     height: 39px;
   }

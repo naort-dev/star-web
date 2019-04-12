@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TextField from '@material-ui/core/TextField';
+import TextField from '../../../TextField';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
@@ -60,7 +60,7 @@ class SignUpImageUpload extends React.Component {
         />
 
         <UploadContainer.CategoriesWrapper>
-          <TextField
+          <TextInput
             placeholder="Categorize yourself. This helps fans find you. (up to 3)"
             type="text"
             name="categoriesList"

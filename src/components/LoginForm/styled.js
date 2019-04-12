@@ -441,6 +441,14 @@ HeaderSection.RightDiv = styled.button`
 LoginContainer.WrapsInput = styled.div`
   width:100%;
   height:60px;
+  input {
+    font-family: Gilroy;
+    font-size: 18px;
+    line-height: 1.14;
+    text-align: center;
+    color: #615195;
+    text-align: center;
+  }
   @media(min-width:768px){
     width:100%;
   }

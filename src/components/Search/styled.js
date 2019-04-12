@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 
 const SearchSection = styled.div`
-  position:absolute;
-  display: ${props => (props.hide ? 'none' : 'block')};
-  left: 0;
-  right: 0;
-  top: 0;
+  display: block;
   height: 50px;
   background: #fff;
   font-family: Gilroy;
-  @media(min-width : 834px){
+  @media(min-width : 832px){
     position: relative;
     display: inline-block;
     display: flex;
@@ -40,20 +36,22 @@ SearchSection.AutoSuggest = styled.div`
 `;
 SearchSection.SuggestionListWrapper = styled.div`
   font-family: Gilroy;
-  position: fixed;
-  top: 60px;
+  position: absolute;
+  top: 100%;
   left: 0;
   right: 0;
-  bottom: 0;
+  width: 100%;
   background-color: #FFFFFF;
-  box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   z-index: 1;
-  @media(min-width: 834px) {
+  height: calc(100vh - 126px);
+  @media(min-width: 832px) {
     box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
     top: 50px;
     left: 0;
     right: 0;
+    height: auto;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
     height: 300px;
     bottom: initial;
     box-shadow: none;
@@ -83,7 +81,6 @@ SearchSection.noDataText = styled.span`
 `;
 SearchSection.SuggestionListItem = styled.li`
   width: 100%;
-  padding: 0 16px;
   margin-top: 12px;
   cursor: pointer;
   font-size: 18px;
@@ -95,7 +92,7 @@ SearchSection.SuggestionListItem = styled.li`
   &:first-child{
     margin-top:0;
   }
-  @media(min-width: 1025px) {
+  @media(min-width: 832px) {
     padding: 0 30px;
   }
 `;
@@ -111,14 +108,19 @@ SearchSection.StarHeading = styled.p`
   font-size: 13px;
   font-family: Gilroy-Semibold;
   text-transform: uppercase;
-  padding-left: 30px;
   margin-top: 10px;
   font-weight: 600;
+  @media(min-width: 832px) {
+    padding-left: 30px;
+  }
 `;
 
 SearchSection.CategoryList = styled.div`
-  padding: 5px 0 5px 30px;
+  padding: 5px 0 5px 0;
   color: #333;
+  @media(min-width: 832px) {
+    padding: 5px 0 5px 30px;
+  }
 `;
 
 SearchSection.CategoryItem = styled.span`
@@ -194,7 +196,7 @@ SearchSection.Input = styled.input`
   border-radius: 5px;
   color: ${props => props.theme.twilight};
   background: transparent;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     font-size: 20px;
   }
 `;

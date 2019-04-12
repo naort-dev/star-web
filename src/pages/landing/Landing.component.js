@@ -3,6 +3,7 @@ import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
 import MobileHome from './components/MobileHome';
+import CategoryPage from './components/CategoryPage';
 import Sidebar from '../../components/Sidebar';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
@@ -129,7 +130,7 @@ export default class Landing extends React.Component {
   }
 
   handleResize = () => {
-    if (document.body.getBoundingClientRect().width >= 834) {
+    if (document.body.getBoundingClientRect().width >= 832 || window.innderWidth >= 832) {
       this.setState({ desktopLanding: true });
     } else {
       this.setState({ desktopLanding: false });
@@ -185,24 +186,25 @@ export default class Landing extends React.Component {
     const { desktopLanding, showLanding } = this.state;
     return (
       <LandingStyled>
-        <Header
-          notFixed
-          disableLogo
-          disableSearch
-        />
         <LandingStyled.Container>
           {
-            showLanding &&
+            showLanding ?
               <React.Fragment>
                 {
                   desktopLanding ?
                     <React.Fragment>
-                      <DesktopHome />
+                      <Header
+                        notFixed
+                        disableLogo
+                        disableSearch
+                      />
+                      <DesktopHome closeLandingFlow={this.closeLandingFlow} />
                       <Footer />
                     </React.Fragment>
                   : <MobileHome closeLandingFlow={this.closeLandingFlow} />
                 }
               </React.Fragment>
+            : <CategoryPage />
           }
         </LandingStyled.Container>
       </LandingStyled>

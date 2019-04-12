@@ -12,8 +12,8 @@ const AvatarStyled = styled.div`
 `;
 
 AvatarStyled.Avatar = styled.span`
-  width: 80px;
-  height: 80px;
+  width: 140px;
+  height: 140px;
   position: absolute;
   border-radius: 50%;
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
