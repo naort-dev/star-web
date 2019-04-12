@@ -209,7 +209,7 @@ LoginContainer.Label = styled.div`
   font-size: 12px;
   line-height: 2.08;
   text-align: center;
-  color: #555555;
+  color: ${props => (props.error ? '#990000' : '#555555')}; 
   padding-top: 25px;
   width:100%;
   @media(min-width:768px){
