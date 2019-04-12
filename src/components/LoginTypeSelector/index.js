@@ -71,7 +71,7 @@ export class LoginTypeSelector extends React.Component  {
                     </div>
                   </li>
 
-                  {/*
+
                   <li className="list">
                     <div>
                       <input
@@ -92,7 +92,7 @@ export class LoginTypeSelector extends React.Component  {
                       <div className="check" />
                     </div>
                   </li>
-                  */}
+                
 
                 </ul>
               </div>
