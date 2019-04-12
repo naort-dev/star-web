@@ -77,6 +77,9 @@ class VideoRecorder extends Component {
         } catch (e) {
           this.setState({ error: true });
         }
+      })
+      .catch((error) => {
+        this.setState({ progress: false });
       });
   };
 
