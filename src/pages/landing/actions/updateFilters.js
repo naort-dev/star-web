@@ -10,10 +10,11 @@ export const UPDATEFILTER = {
   updateSelectedVideoDate: 'update/update_video_date',
 };
 
-export const updateCategory = (label, value) => ({
+export const updateCategory = (label, value, subCategories) => ({
   type: UPDATEFILTER.updateCategory,
   label,
   value,
+  subCategories,
 });
 
 export const updateSearchParam = value => ({
@@ -32,10 +33,9 @@ export const updateSort = value => ({
   value,
 });
 
-export const updateSelectedSubCategory = (selectedList, category) => ({
+export const updateSelectedSubCategory = selectedList => ({
   type: UPDATEFILTER.updateSelectedSubCategory,
   selectedList,
-  category,
 });
 
 export const updateSelectedVideoType = value => ({

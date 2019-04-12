@@ -8,7 +8,7 @@ import SearchSection from './styled';
 import Loader from '../Loader';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
-import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
+import { updateSearchParam, updateSelectedSubCategory, updateCategory } from '../../pages/landing/actions/updateFilters';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater } from '../../utils/dataToStringFormatter';
 
@@ -141,6 +141,18 @@ class Search extends React.Component {
     }
   }
 
+  categoryClick = profession => () => {
+    const { professions } = this.props.professionsList;
+    if (profession.parent_id) {
+      const parentProfession = professions.find(item => item.id === profession.parent_id);
+      this.props.updateCategory(parentProfession.title, profession.parent_id, parentProfession.child);
+      this.props.updateSelectedSubCategory([profession.id]);
+    } else {
+      const parentProfession = professions.find(item => item.id === profession.id);
+      this.props.updateCategory(parentProfession.title, profession.parent_id, parentProfession.child);
+    }
+  }
+
   renderSuggestionsList = () => {
     const { suggestions } = this.props.suggestionsList;
     if (suggestions && (suggestions.professions.length || suggestions.stars.length)) {
@@ -153,8 +165,8 @@ class Search extends React.Component {
                 <SearchSection.CategoryList>
                   {
                     suggestions.professions.map(profession => (
-                      <SearchSection.CategoryItem key={profession.id}>
-                        <Link to={`/${profession.id}`}>{profession.title}</Link>
+                      <SearchSection.CategoryItem onClick={this.categoryClick(profession)} key={profession.id}>
+                        <span>{profession.title}</span>
                       </SearchSection.CategoryItem>
                     ))
                   }
@@ -185,7 +197,7 @@ class Search extends React.Component {
                             </span>
                             <SearchSection.SuggestionListName>
                               <SearchSection.SuggestionDetails>
-                                { item.professions }
+                                { starProfessionsFormater(JSON.parse(item.professions.replace(/'/g, '"')), 'search') }
                               </SearchSection.SuggestionDetails>
                               {fullName}
                             </SearchSection.SuggestionListName>
@@ -246,6 +258,7 @@ class Search extends React.Component {
 
 const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
+  professionsList: state.professionsList,
   isLoggedIn: state.session.isLoggedIn,
   filters: state.filters,
   userValue: state.userDetails,
@@ -254,6 +267,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   toggleRefer: state => dispatch(toggleRefer(state)),
+  updateSelectedSubCategory: selectedList => dispatch(updateSelectedSubCategory(selectedList)),
+  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),

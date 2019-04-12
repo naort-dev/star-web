@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
@@ -58,6 +60,7 @@ class SignupFlow extends React.Component {
     if (this.state.selectedType === 'fan') {
       return (<SignUpForm
         {...this.props}
+        registerUser={this.props.registerUser}
         changeStep={this.changeStep}
         currentStep={this.state.currentStep}
         signupRole={this.state.selectedType}
@@ -69,6 +72,7 @@ class SignupFlow extends React.Component {
       switch (this.state.currentStep) {
         case 1: return (<SignUpForm
           {...this.props}
+          registerUser={this.props.registerUser}
           changeStep={this.changeStep}
           currentStep={this.state.currentStep}
           signupRole={this.state.selectedType}
@@ -79,6 +83,8 @@ class SignupFlow extends React.Component {
           {...this.props}
           changeStep={this.changeStep}
           currentStep={this.state.currentStep}
+          signupRole={this.state.selectedType}
+          closeSignupFlow={this.closeSignUp}
         />);
         case 3: return (<StarRegistration
           currentStep={this.state.currentStep}
@@ -91,6 +97,7 @@ class SignupFlow extends React.Component {
       switch (this.state.currentStep) {
         case 1: return (<SignUpForm
           {...this.props}
+          registerUser={this.props.registerUser}
           currentStep={this.state.currentStep}
           closeSignupFlow={this.closeSignUp}
           changeStep={this.changeStep}
@@ -111,16 +118,25 @@ class SignupFlow extends React.Component {
     return null;
   }
 
-  render() {
+  render() {    
     return (
       <div>
         <RequestFlowPopup
           dotsCount={0}
           closePopUp={this.closeSignUp}
-          modalView={this.state.currentStep > 1 && !this.state.enableClose}
+          modalView={this.state.currentStep > 3 && !this.state.enableClose}
           smallPopup
         >
           <LoginContainer>
+            {this.state.currentStep > 0 &&
+            <LoginContainer.BackButton onClick={() => this.changeStep(this.state.currentStep - 1)}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </LoginContainer.BackButton> }
+            <LoginContainer.CloseButton
+              onClick={this.closeSignUp}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </LoginContainer.CloseButton>
             <LoginContainer.LeftSection>
               {
                 !this.state.selectedType ?
@@ -128,6 +144,8 @@ class SignupFlow extends React.Component {
                     {...this.props}
                     isSignUp
                     changeSignUpRole={this.changeSignUpRole}
+                    changeStep={this.changeStep}
+                    currentStep={this.state.currentStep}
                   />
                 :
                   <LoginContainer.SignupFlow currentStep={this.state.currentStep}>

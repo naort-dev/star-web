@@ -154,14 +154,14 @@ export default class ProfileUpload extends React.Component {
                   />
                 </ImageUpload.CropWrapper>
               }
-              <ImageUpload.ControlWrapper>
+              {/* <ImageUpload.ControlWrapper>
                 <ImageUpload.ControlButton
                   disabled={!this.state.finalImage}
                   onClick={this.onComplete}
                 >
                   Continue
                 </ImageUpload.ControlButton>
-              </ImageUpload.ControlWrapper>
+              </ImageUpload.ControlWrapper> */}
             </React.Fragment>
         }
       </ImageUpload.DetailsWrapper>

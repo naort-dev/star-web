@@ -13,21 +13,6 @@ const SignUpMethod = styled.div`
   }
 `;
 
-SignUpMethod.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 SignUpMethod.SocialMediaSignup = styled.div`
   text-align:center;
   height: 100%;
@@ -35,27 +20,25 @@ SignUpMethod.SocialMediaSignup = styled.div`
 
 SignUpMethod.Container = styled.div`
   @media(min-width: 768px) {
-    padding: 0 0;
+    padding: 30px 0 0;
   }
   @media(min-width: 1025px) {
-    padding: 0 10px;
+    padding: 50px 10px 0;
   }
 `;
 SignUpMethod.Heading = styled.div`
   font-size: 20px;
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
   padding: 20px 0;
+  &.or-section {
+    padding-bottom: 0;
+    margin-bottom: -7px;
+  }
   @media(min-width:768px){
     font-size: 24px;
-  }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
   }
 `;
 
@@ -68,7 +51,7 @@ SignUpMethod.Button = styled.button`
   font-size:100%;
   font-family:inherit;
   border:0;
-  padding:20px;
+  padding:20px 17px;
   outline:none;
   background-color:white;
   cursor:pointer;
@@ -81,7 +64,7 @@ SignUpMethod.Button = styled.button`
 
 SignUpMethod.Icon = styled.div`
   color: #2f839d;
-  font-size: 40px;
+  font-size: 55px;
 `;
 
 SignUpMethod.SocialMediaIcon = styled.div`
@@ -89,7 +72,7 @@ SignUpMethod.SocialMediaIcon = styled.div`
 `;
 
 SignUpMethod.SocialMediaLabel = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 14px;
   line-height: 1.43;
   text-align: center;

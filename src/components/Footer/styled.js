@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const FooterStyled = styled.footer`
   padding: 20px 0;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     display: flex;
     padding: 0 30px;
     height: 90px;
@@ -21,7 +21,7 @@ const Column = styled.div`
 const List = styled.ul`
   padding: 20px 0;
   line-height: 30px;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     margin-left: 20px;
     display: flex;
     align-items: center;
@@ -40,7 +40,7 @@ const ListItem = styled.li`
     line-height: 1.07;
     display: block;
   }
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     padding-right: 30px;
     font-size: 12px;
   }
@@ -48,7 +48,7 @@ const ListItem = styled.li`
 
 const shareIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     margin: 0;
     text-align: center;
     display: flex;
@@ -74,7 +74,7 @@ const shareIcon = styled.img`
 
 const StoreIconWrapper = styled.div`
   margin: 0 40px;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     margin: 0;
     text-align: center;
     display: flex;

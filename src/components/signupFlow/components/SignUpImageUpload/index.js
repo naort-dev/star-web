@@ -5,6 +5,7 @@ import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
 import ProfileUpload from './components/profileUpload';
+import DotsContainer from '../../../../components/Dots';
 
 class SignUpImageUpload extends React.Component {
 
@@ -48,8 +49,11 @@ class SignUpImageUpload extends React.Component {
   render() {
     return (
       <UploadContainer.Container>
-        <UploadContainer.BackButton onClick={() => this.props.changeStep(this.props.currentStep - 1)} />
         <UploadContainer.Heading>Give your fans what they want</UploadContainer.Heading>
+        <DotsContainer
+          dotsCount={3}
+          selectedDot={2}
+        />
         <ProfileUpload
           starMode
           onComplete={this.setProfileImage}
