@@ -90,7 +90,7 @@ const Question = (props) => {
               errorHandler={errorHandlerCallback}
             />
           </VideoContainer>
-          <QuestionContainer isShow={showHideFlg}>
+          <QuestionContainer isShow={showHideFlg || error}>
             {!error && (
               <React.Fragment>
                 <h1>What you should say?</h1>
@@ -123,15 +123,17 @@ const Question = (props) => {
       )}
 
       {(!checkMediaRecorderSupport() || error) && (
-        <p className="note">
-          Your system does not have video recording capability, but you will
-          need to record a video to ask a question to the Star. <br />
-          <br />
-          You can:
-          <br />
-          <br /> Record with our App
-          <br /> Use our iOS or Android app to book the star.
-        </p>
+        <QuestionContainer isShow error>
+          <p className="note">
+            Your system does not have video recording capability, but you will
+            need to record a video to ask a question to the Star. <br />
+            <br />
+            You can:
+            <br />
+            <br /> Record with our App
+            <br /> Use our iOS or Android app to book the star.
+          </p>
+        </QuestionContainer>
       )}
     </Layout>
   );

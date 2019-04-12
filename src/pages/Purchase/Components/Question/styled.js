@@ -66,7 +66,7 @@ export const VideoContainer = styled.section`
 `;
 
 export const QuestionContainer = styled.section`
-  padding-left: 40px;
+  padding-left: ${(props) => (props.error ? '20px' : '40px')};
   padding-top: 10px;
   display: block;
   ${media.mobileScreen} {
