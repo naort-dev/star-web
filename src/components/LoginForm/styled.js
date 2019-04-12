@@ -466,7 +466,6 @@ LoginContainer.WrapsInput = styled.div`
     width:100%;
   }
   @media(min-width:1025px){
-    width:352px;
     height:32px;
   }
 

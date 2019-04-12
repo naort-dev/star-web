@@ -77,6 +77,7 @@ class MobileHome extends React.Component {
     return (
       <RequestFlowPopup
         modalView
+        disableClose
       >
         <MobileStyled className={currentStep === 5?"grey-background":""}>
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
