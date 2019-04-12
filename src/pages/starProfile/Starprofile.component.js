@@ -111,6 +111,7 @@ export default class Starprofile extends React.Component {
   }
 
   componentWillUnmount() {
+    this.props.resetCelebDetails();
     window.removeEventListener('resize', this.onResize);
   }
 
@@ -407,6 +408,13 @@ export default class Starprofile extends React.Component {
                         </span>
                       </StarProfileStyled.DescriptionWrapper>
                       { this.state.showReadMore ? <p className="readMore" onClick={() => { this.toggleDescription(!this.state.readMoreFlag); }}>{!this.state.readMoreFlag ? 'read more' : 'read less'}</p> : ''}
+                      {
+                        !isEmpty(this.props.celebrityDetails.charity) &&
+                          <React.Fragment>
+                            <StarProfileStyled.CharityHeading>Charity</StarProfileStyled.CharityHeading>
+                            <StarProfileStyled.CharityDetails>{ this.props.celebrityDetails.charity }</StarProfileStyled.CharityDetails>
+                          </React.Fragment>
+                      }
                     </div>
 
                     <div className="socialMediaIcons">

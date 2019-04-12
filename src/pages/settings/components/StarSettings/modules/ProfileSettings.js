@@ -44,6 +44,7 @@ export default class ProfileSettings extends React.Component {
       industrySelection: false,
       socialMedia: { facebook, twitter, youtube, instagram },
       bio: props.celebDetails.description ? props.celebDetails.description : '',
+      charity: props.celebDetails.charity ? props.celebDetails.charity : '',
       stageName: props.userDetails.nick_name ? props.userDetails.nick_name : '',
       bookingPrice: props.celebDetails.rate ? numberToCommaFormatter(props.celebDetails.rate) : '',
       iosPrice: props.celebDetails.in_app_price ? props.celebDetails.in_app_price : null,
@@ -192,6 +193,7 @@ export default class ProfileSettings extends React.Component {
         profession: professions,
         rate: commaToNumberFormatter(this.state.bookingPrice),
         in_app_price: this.state.iosPrice,
+        charity: this.state.charity,
         weekly_limits: commaToNumberFormatter(this.state.bookingLimit),
         availability: true,
       };
@@ -346,6 +348,19 @@ export default class ProfileSettings extends React.Component {
                   ? 'Please enter a valid event title'
                   : null}
               </SettingsStyled.ErrorMsg>
+            </SettingsStyled.WrapsInput>
+          </SettingsStyled.InputWrapper>
+          <SettingsStyled.InputWrapper>
+            <SettingsStyled.Label>Charity</SettingsStyled.Label>
+            <SettingsStyled.WrapsInput>
+              <SettingsStyled.InputArea
+                small
+                placeholder="Optional"
+                value={this.state.charity}
+                onChange={(event) => {
+                  this.handleFieldChange('charity', event.target.value);
+                }}
+              />
             </SettingsStyled.WrapsInput>
           </SettingsStyled.InputWrapper>
           <SettingsStyled.InputWrapper>

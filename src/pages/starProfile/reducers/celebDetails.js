@@ -45,11 +45,7 @@ export default (state = { ...initalState }, action) => {
       };
 
     case CELEB_DETAILS.reset:
-      return {
-        ...state,
-        celebrityDetails: {},
-        userDetails: {},
-      };
+      return initalState;
 
     default:
       return state;

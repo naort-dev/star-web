@@ -8,7 +8,7 @@ export const CELEB_DETAILS = {
   success: 'fetch_success/celeb_details',
   failed: 'fetch_failed/celeb_details',
   reset: 'reset/celeb_details',
-  update: 'reset/celeb_details',
+  update: 'update/celeb_details',
 };
 
 export const celebDetailsFetchStart = () => ({
@@ -67,7 +67,7 @@ export const fetchCelebDetails = id => (dispatch, getState) => {
   }
   dispatch(celebDetailsFetchStart());
   return fetch.get(API_URL, options).then((resp) => {
-    if (resp.data && resp.data.success) {
+    if (resp.data && resp.data.success && resp.data.data.user && resp.data.data.celebrity_details) {
       dispatch(celebDetailstFetchEnd());
       dispatch(celebDetailstFetchSuccess(resp.data.data));
     } else {
