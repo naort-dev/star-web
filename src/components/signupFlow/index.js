@@ -10,7 +10,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
-import { LoginContainer, HeaderSection } from './styled';
+import { LoginContainer } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
