@@ -13,7 +13,6 @@ import { twitterLogin } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { ROLES } from '../../constants/usertype';
-import SignUpForm from '../SignupForm';
 
 class SignupMethod extends React.Component {
   constructor(props) {
@@ -255,9 +254,7 @@ class SignupMethod extends React.Component {
   }
 
   onEmailLogin = () => {
-    this.setState({
-      emailClick: true,
-    });
+    this.props.changeStep(this.props.currentStep + 1)
   }
 
   onTwitterLogin = () => {
@@ -376,65 +373,51 @@ class SignupMethod extends React.Component {
     return true;
   };
 
-  render() {
+  render() {        
     return (
-      this.state.emailClick ?
-        <SignUpForm
-          {...this.props}
-          changeStep={this.props.changeStep}
-          currentStep={this.props.currentStep}
-          signupRole={this.props.signupRole}
-          data={this.props.data}
-          closeSignupFlow={this.props.closeSignupFlow}
-        /> :
-        <SignUpMethod.SocialMediaSignup>
-          {
-          this.state.loading &&
-            <ActionLoader />
-        }
-          {
-            <SignUpMethod.BackButton
-              onClick={() => this.props.changeStep(this.props.currentStep - 1)}
-            />
-        }
-          <SignUpMethod.Container>
-            <SignUpMethod.Heading>How do you want to create your account?</SignUpMethod.Heading>
-            <SignUpMethod.ButtonDiv>
-              <SignUpMethod.Button onClick={this.OnFBlogin}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faFacebookF} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Facebook</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-              <SignUpMethod.Button onClick={this.onTwitterLogin}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faTwitter} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Twitter</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-              <SignUpMethod.Button onClick={this.onInstagramLogin}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Instagram</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-              <SignUpMethod.Button onClick={this.onGmail}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.GoogleWrapper id="g-sign-in" />
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-            </SignUpMethod.ButtonDiv>
-            <SignUpMethod.Heading className="or-section">or</SignUpMethod.Heading>
-            <SignUpMethod.Button onClick={this.onEmailLogin}>
+      <SignUpMethod.SocialMediaSignup>
+        {
+        this.state.loading &&
+          <ActionLoader />
+      }
+        <SignUpMethod.Container>
+          <SignUpMethod.Heading>How do you want to create your account?</SignUpMethod.Heading>
+          <SignUpMethod.ButtonDiv>
+            <SignUpMethod.Button onClick={this.OnFBlogin}>
               <SignUpMethod.SocialMediaIcon>
-                <SignUpMethod.Icon><FontAwesomeIcon icon={faEnvelope} /></SignUpMethod.Icon>
-                <SignUpMethod.SocialMediaLabel>Sign up by email</SignUpMethod.SocialMediaLabel>
+                <SignUpMethod.Icon><FontAwesomeIcon icon={faFacebookF} /></SignUpMethod.Icon>
+                <SignUpMethod.SocialMediaLabel>Facebook</SignUpMethod.SocialMediaLabel>
               </SignUpMethod.SocialMediaIcon>
             </SignUpMethod.Button>
-          </SignUpMethod.Container>
-        </SignUpMethod.SocialMediaSignup>
+            <SignUpMethod.Button onClick={this.onTwitterLogin}>
+              <SignUpMethod.SocialMediaIcon>
+                <SignUpMethod.Icon><FontAwesomeIcon icon={faTwitter} /></SignUpMethod.Icon>
+                <SignUpMethod.SocialMediaLabel>Twitter</SignUpMethod.SocialMediaLabel>
+              </SignUpMethod.SocialMediaIcon>
+            </SignUpMethod.Button>
+            <SignUpMethod.Button onClick={this.onInstagramLogin}>
+              <SignUpMethod.SocialMediaIcon>
+                <SignUpMethod.Icon><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
+                <SignUpMethod.SocialMediaLabel>Instagram</SignUpMethod.SocialMediaLabel>
+              </SignUpMethod.SocialMediaIcon>
+            </SignUpMethod.Button>
+            <SignUpMethod.Button onClick={this.onGmail}>
+              <SignUpMethod.SocialMediaIcon>
+                <SignUpMethod.GoogleWrapper id="g-sign-in" />
+                <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
+                <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
+              </SignUpMethod.SocialMediaIcon>
+            </SignUpMethod.Button>
+          </SignUpMethod.ButtonDiv>
+          <SignUpMethod.Heading className="or-section">or</SignUpMethod.Heading>
+          <SignUpMethod.Button onClick={this.onEmailLogin}>
+            <SignUpMethod.SocialMediaIcon>
+              <SignUpMethod.Icon><FontAwesomeIcon icon={faEnvelope} /></SignUpMethod.Icon>
+              <SignUpMethod.SocialMediaLabel>Sign up by email</SignUpMethod.SocialMediaLabel>
+            </SignUpMethod.SocialMediaIcon>
+          </SignUpMethod.Button>
+        </SignUpMethod.Container>
+      </SignUpMethod.SocialMediaSignup>
     );
   }
 }

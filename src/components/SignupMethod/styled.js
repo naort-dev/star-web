@@ -13,22 +13,6 @@ const SignUpMethod = styled.div`
   }
 `;
 
-SignUpMethod.BackButton = styled.span`
-  display: none;
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 SignUpMethod.SocialMediaSignup = styled.div`
   text-align:center;
   height: 100%;

@@ -10,6 +10,30 @@ const LoginContainer = styled.div`
     }
 `;
 
+LoginContainer.BackButton = styled.span`
+  position: absolute;
+  left: 5px;
+  color: #707070;
+  border: none;
+  padding: 0 30px;
+  cursor: pointer;
+  outline: none;
+  font-size: 28px;
+`;
+
+LoginContainer.CloseButton = styled.span`
+  position: absolute;
+  right: 49.5px;
+  z-index: 2;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  cursor:pointer;
+  color: #707070;
+  font-size: 30px;
+`;
+
+
 LoginContainer.Wrapper = styled.div`
   display: ${props => (props.visible ? 'block' : 'none')};
 `;

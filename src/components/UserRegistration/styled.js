@@ -46,6 +46,24 @@ GroupStyled.VideoRecorderWrapper = GroupStyled.DetailsWrapper.extend`
   }
 `;
 
+GroupStyled.CropWrapper = styled.div``;
+
+GroupStyled.Heading = styled.div`
+  text-align: center;
+  color: #ff6c58;
+  font-size: 24px;
+  font-family: 'Gilroy-Medium';
+  @media(min-width:768px){
+    font-size:25px;
+  }
+  @media(min-width: 1025px){
+    font-size: 25px;
+  }
+  @media(min-width:1920px){
+    font-size: 27px;
+  }
+`;
+
 GroupStyled.HeadingWrapper = styled.div`
   text-align: center;
   margin-bottom: 30px;
@@ -628,12 +646,12 @@ GroupStyled.SecondaryCoverImage = GroupStyled.CoverImage.extend`
 `;
 
 GroupStyled.ProfileImageWrapper = GroupStyled.CoverImage.extend`
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   position: relative;
-  border: ${props => (props.imageUrl ? 'none' : '2px dashed #FF6C58')};
+  border: none;
   border-radius: 50%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#fff')};
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4')};
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
@@ -662,9 +680,10 @@ GroupStyled.ProfileInputWrapper = styled.span`
 `;
 
 GroupStyled.UploadText = styled.span`
-  color: #FF6C58;
+  color: #555;
   font-family: 'Avenir-Light';
   font-size: 14px;
+  max-width: 110px;
 `;
 
 GroupStyled.ProfileInputButton = styled.div`

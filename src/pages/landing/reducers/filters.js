@@ -2,8 +2,10 @@ import { UPDATEFILTER } from '../actions/updateFilters';
 
 const initalState = {
   category: {
-    label: 'featured',
+    label: 'Featured',
     value: '',
+    subCategories: [],
+    selected: [],
   },
   searchParam: '',
   lowPrice: '',
@@ -21,6 +23,8 @@ export default (state = { ...initalState }, action) => {
         category: {
           label: action.label,
           value: action.value,
+          subCategories: action.subCategories,
+          selected: [],
         },
       };
 
@@ -46,7 +50,10 @@ export default (state = { ...initalState }, action) => {
     case UPDATEFILTER.updateSelectedSubCategory:
       return {
         ...state,
-        [action.category]: action.selectedList,
+        category: {
+          ...state.category,
+          selected: action.selectedList,
+        },
       };
 
     case UPDATEFILTER.updateSelectedVideoType:

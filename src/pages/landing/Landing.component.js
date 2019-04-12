@@ -130,7 +130,7 @@ export default class Landing extends React.Component {
   }
 
   handleResize = () => {
-    if (document.body.getBoundingClientRect().width >= 834) {
+    if (document.body.getBoundingClientRect().width >= 832 || window.innderWidth >= 832) {
       this.setState({ desktopLanding: true });
     } else {
       this.setState({ desktopLanding: false });

@@ -3,11 +3,13 @@ import styled from 'styled-components';
 const CategoryStyled = styled.ul`
   padding: 10px 0;
   padding-top: 41px;
-  @media(min-width: 834px) {
+  overflow: auto;
+  height: 100%;
+  @media(min-width: 832px) {
     display: flex;
     flex-wrap: wrap;
     padding-top: 0;
-    max-width: 834px;
+    max-width: 832px;
     margin: 0 auto;
     justify-content: center;
   }
@@ -28,7 +30,7 @@ CategoryStyled.Item = styled.li`
     border-left: ${props => `5px solid ${props.theme.flatBlue}`};
     color: ${props => props.theme.flatBlue};
   }
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     font-family: ${props => (props.selected ? 'Gilroy-Heavy' : 'Gilroy-Medium')};
     font-size: ${props => (props.selected ? '20px' : '18px')};
     line-height: 38px;
