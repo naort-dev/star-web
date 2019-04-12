@@ -1,8 +1,9 @@
 import { fetch } from '../services/fetch';
 
-export default function getAWSCredentials(url, auth_token, file) {
+export default function getAWSCredentials(url, file) {
   return fetch(url)
     .then(async (response) => {
+      debugger
       let filename = response.data.data.fields.key.split('/');
       filename = filename[2];
       const formData = new FormData();
