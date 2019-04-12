@@ -24,17 +24,17 @@ class VideoRecorder extends Component {
     this.fetchStream();
   }
 
-  componentWillReceiveProps(newProps) {
+  componentDidUpdate(prevProps) {
     if (checkMediaRecorderSupport()) {
       if (
-        this.props.shouldRecord !== newProps.shouldRecord &&
-        newProps.shouldRecord
+        this.props.shouldRecord !== prevProps.shouldRecord &&
+        this.props.shouldRecord
       ) {
         this.recordMedia();
         this.setState({ progress: true, mediaControls: false });
       } else if (
-        this.props.shouldRecord !== newProps.shouldRecord &&
-        !newProps.shouldRecord &&
+        this.props.shouldRecord !== prevProps.shouldRecord &&
+        !this.props.shouldRecord &&
         !this.isStoped
       ) {
         this.stopRecording();
@@ -53,7 +53,7 @@ class VideoRecorder extends Component {
     this.superBuffer = null;
     this.videoSrc = null;
     this.recordedBlobs = [];
-    const videoElem = document.getElementById('video-player_tag');
+    const videoElem = this.video;
     videoElem.srcObject = null;
     videoElem.src = null;
     navigator.mediaDevices
@@ -110,7 +110,7 @@ class VideoRecorder extends Component {
       videoSrc: this.videoSrc,
       superBuffer: this.superBuffer,
     });
-    const videoElem = document.getElementById('video-player_tag');
+    const videoElem = this.video;
     videoElem.src = this.videoSrc;
     videoElem.load();
     this.isStoped = true;
@@ -124,14 +124,14 @@ class VideoRecorder extends Component {
   };
 
   closeStream = () => {
-    const stream = document.getElementById('video-player_tag').srcObject;
+    const stream = this.video.srcObject;
     if (stream) {
       const tracks = stream.getTracks();
       tracks.forEach((track) => {
         track.stop();
       });
     }
-    document.getElementById('video-player_tag').srcObject = null;
+    this.video.srcObject = null;
   };
 
   checkVideoOver = () => {
@@ -141,14 +141,14 @@ class VideoRecorder extends Component {
 
   videoClick = () => {
     this.setState({ mediaControls: true });
-    document.getElementById('video-player_tag').pause();
+    this.video.pause();
     this.props.playPauseMediaAction();
   };
 
   playPauseClick = (event) => {
     event.stopPropagation();
     this.props.playPauseMediaAction();
-    document.getElementById('video-player_tag').play();
+    this.video.play();
     this.setState({ mediaControls: false });
   };
 
@@ -165,6 +165,9 @@ class VideoRecorder extends Component {
     return (
       <React.Fragment>
         <video
+          ref={(video) => {
+            this.video = video;
+          }}
           autoPlay={this.props.playPauseMedia}
           id="video-player_tag"
           onEnded={this.checkVideoOver}
