@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   Layout,
   ScriptContainer,
@@ -14,7 +15,6 @@ import { FlexCenter } from '../../../../styles/CommonStyled';
 class ScriptBuilder extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 1 };
     this.starDataSet1 = [
       {
         size: '28px',
@@ -63,7 +63,7 @@ class ScriptBuilder extends Component {
     ];
   }
 
-  handleCheck = value => {};
+  handleCheck = () => {};
   render() {
     return (
       <Layout>
@@ -105,4 +105,11 @@ class ScriptBuilder extends Component {
   }
 }
 
+ScriptBuilder.propTypes = {
+  submitClick: PropTypes.func,
+};
+
+ScriptBuilder.defaultProps = {
+  submitClick: () => {},
+};
 export default ScriptBuilder;
