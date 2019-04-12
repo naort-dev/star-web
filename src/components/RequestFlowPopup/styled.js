@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Dialog from '@material-ui/core/Dialog';
 
 const PopupStyled = styled.div`
   display: ${props => (props.visible ? 'flex' : 'none')};
@@ -20,6 +21,15 @@ const PopupStyled = styled.div`
     background-color: rgba(0,0,0,.6);
   }
 `;
+
+PopupStyled.Dialog = styled(Dialog)`
+  .paper-root {
+    max-width: 100%;
+    @media(min-width: 832px) {
+      max-height: calc(100% - 30px); 
+    }
+  }
+`
 
 PopupStyled.Container = styled.div`
   display: flex;
@@ -69,16 +79,14 @@ PopupStyled.SliderDots = styled.span`
 
 PopupStyled.CloseButton = styled.span`
   position: absolute;
-  top: 28.5px;
-  right: 49.5px;
+  right: 50px;
   z-index: 2;
   display: inline-block;
-  width: 28px;
-  height: 28px;
-  cursor:pointer;
-  background: ${props => (props.closeIconColor === 'white' ? "url('assets/images/icon-close-white.svg') no-repeat" : "url('assets/images/close-icon-orange.svg') no-repeat")};
-  background-size: cover;
-  background-position: center center;
+  cursor: pointer;
+  color: #707070;
+  font-size: 45px;
+  line-height: 20px;
+  top: 40px;
 `;
 
 export default PopupStyled;

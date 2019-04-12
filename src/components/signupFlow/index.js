@@ -132,11 +132,11 @@ class SignupFlow extends React.Component {
             <LoginContainer.BackButton onClick={() => this.changeStep(this.state.currentStep - 1)}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </LoginContainer.BackButton> }
-            <LoginContainer.CloseButton
+            {/* <LoginContainer.CloseButton
               onClick={this.closeSignUp}
             >
               <FontAwesomeIcon icon={faTimes} />
-            </LoginContainer.CloseButton>
+            </LoginContainer.CloseButton> */}
             <LoginContainer.LeftSection>
               {
                 !this.state.selectedType ?
