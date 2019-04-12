@@ -11,6 +11,7 @@ import Button from '../PrimaryButton';
 class VideoRecorder extends Component {
   constructor(props) {
     super(props);
+    this.mounted = true;
     this.mediaRecorder = '';
     this.timerID = null;
     this.recordedBlobs = [];
@@ -41,6 +42,11 @@ class VideoRecorder extends Component {
       }
     }
   }
+  componentWillUnmount() {
+    if (this.props.shouldRecord) this.props.recordTrigger();
+    if (this.props.playPauseMedia) this.props.playPauseMediaAction();
+    this.closeStream();
+  }
 
   fetchStream = () => {
     if (checkMediaRecorderSupport()) {
@@ -62,7 +68,9 @@ class VideoRecorder extends Component {
         audio: true,
       })
       .then((stream) => {
-        this.setState({ progress: false });
+        if (this.mounted) {
+          this.setState({ progress: false });
+        }
         videoElem.srcObject = stream;
         const options = {
           mimeType: 'video/webm;codecs=vp8',
@@ -76,17 +84,23 @@ class VideoRecorder extends Component {
           this.mediaRecorder.ondataavailable = this.handleDataAvailable;
           this.mediaRecorder.start(100);
           this.timerID = setTimeout(() => {
-            this.stopRecording();
-            this.storeUpdate();
+            if (this.mounted) {
+              this.stopRecording();
+              this.storeUpdate();
+            }
           }, this.props.duration);
         } catch (e) {
-          this.setState({ error: true });
-          if (this.props.errorHandler) this.props.errorHandler();
+          if (this.mounted) {
+            this.setState({ error: true });
+            if (this.props.errorHandler) this.props.errorHandler();
+          }
         }
       })
       .catch((error) => {
-        this.setState({ progress: false });
-        if (this.props.errorHandler) this.props.errorHandler();
+        if (this.mounted) {
+          this.setState({ progress: false });
+          if (this.props.errorHandler) this.props.errorHandler();
+        }
       });
   };
 
