@@ -1,18 +1,20 @@
 import styled from 'styled-components';
 
 const FilterStyled = styled.div`
-  padding: 12px 16px;
+  padding: 12px 0;
   padding-top: 0;
+  background: #fff;
   @media(min-width: 832px) {
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
+    background: transparent;
   }
 `;
 
 FilterStyled.Header = styled.div`
-  padding: 12px 0;
+  padding: 12px 16px;
   @media(min-width: 832px) {
     display: none;
   }
@@ -24,13 +26,25 @@ FilterStyled.CloseButton = styled.span`
 `;
 
 FilterStyled.Heading = styled.span`
+  padding: 0 16px;
   font-family: Gilroy-Bold;
   font-size: 20px;
   color: ${props => props.theme.flatBlue};
   display: ${props => (props.mobileOnly ? 'block' : 'none')};
-  text-transform: uppercase;
+  text-transform:  ${props => (props.mobileOnly ? 'uppercase' : 'none')};;
   @media(min-width: 832px) {
     display: ${props => (props.mobileOnly ? 'none' : 'block')};
+    font-size: 30px;
+    font-family: Gilroy-Medium;
+  }
+`;
+
+FilterStyled.Content = styled.div`
+  padding: 0 16px;
+  height: calc(100vh - 100px);
+  overflow: auto;
+  @media(min-width: 832px) {
+    height: auto;
   }
 `;
 
