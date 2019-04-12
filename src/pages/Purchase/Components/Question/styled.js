@@ -30,6 +30,16 @@ export const Layout = styled.section`
     height: 100%;
     object-fit: cover;
   }
+  .note {
+    color: #999;
+    font-family: Gilroy;
+    font-size: 16px;
+    ${media.mobileScreen} {
+      color: #fff;
+      font-size: 14px;
+      padding-top: 20px;
+    }
+  }
 `;
 
 export const VideoContainer = styled.section`
@@ -85,16 +95,6 @@ export const QuestionContainer = styled.section`
     padding: 0;
     ${media.mobileScreen} {
       display: none;
-    }
-  }
-  .note {
-    color: #999;
-    font-family: Gilroy;
-    font-size: 16px;
-    ${media.mobileScreen} {
-      color: #fff;
-      font-size: 14px;
-      padding-top: 20px;
     }
   }
 `;
