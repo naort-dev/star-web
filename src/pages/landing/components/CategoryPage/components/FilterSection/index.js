@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import HeaderSection from '../../../../../../components/Header/styled';
+import RangeSlider from '../../../../../../components/RangeSlider';
+import Picker from '../../../../../../components/Picker';
 import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
 import FilterStyled from './styled';
 
@@ -81,6 +83,15 @@ const FilterSection = (props) => {
             ))
           }
         </FilterStyled.SubCategoryList>
+        <FilterStyled.SecondaryFilter>
+          <FilterStyled.FilterHeading>Sort by</FilterStyled.FilterHeading>
+          <Picker />
+          {/* <RangeSlider /> */}
+        </FilterStyled.SecondaryFilter>
+        <FilterStyled.SecondaryFilter>
+          <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
+          {/* <RangeSlider /> */}
+        </FilterStyled.SecondaryFilter>
       </FilterStyled.Content>
     </FilterStyled>
   );

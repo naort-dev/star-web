@@ -33,6 +33,7 @@ CategoryPageStyled.Filter = styled.span`
 `;
 
 CategoryPageStyled.AvatarWrapper = styled.div`
+  z-index: 3;
   &.featured {
     display: none;
   }
@@ -67,7 +68,7 @@ CategoryPageStyled.FilterSection = styled.div`
   left: 0;
   right: 0;
   z-index: 11;
-  background: transparent;
+  background: #fff;
   display: ${props => (props.showFilter ? 'block' : 'none')};
   @media(min-width: 832px) {
     position: static;
@@ -77,6 +78,15 @@ CategoryPageStyled.FilterSection = styled.div`
     max-width: 1280px;
     margin: 0 auto;
   }
+`;
+
+CategoryPageStyled.StarWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
 `;
 
 CategoryPageStyled.Heading = styled.span`
@@ -106,6 +116,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
   max-width: 375px;
   margin: 0 auto;
   margin-top: 24px;
+  z-index: 1;
   &:after {
     content: ${props => `'${props.title}'`};
     position: absolute;
@@ -136,6 +147,8 @@ CategoryPageStyled.FeaturedSection = styled.div`
     padding-right: 0;
   }
 `;
+
+
 
 CategoryPageStyled.Toolbar = styled.div`
   display: flex;

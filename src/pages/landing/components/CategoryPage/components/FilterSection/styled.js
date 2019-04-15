@@ -45,6 +45,7 @@ FilterStyled.Content = styled.div`
   overflow: auto;
   @media(min-width: 832px) {
     height: auto;
+    overflow: initial;
   }
 `;
 
@@ -73,6 +74,20 @@ FilterStyled.SubCategoryItem = styled.li`
   @media(min-width: 832px) {
     font-size: 16px;
   }
+`;
+
+FilterStyled.SecondaryFilter = styled.div`
+  padding-top: 10px;
+  margin-top: 20px;
+  border-top: ${props => `1px solid ${props.theme.brownGrey}`};
+`;
+
+
+FilterStyled.FilterHeading = styled.span`
+  font-family: Gilroy-Semibold;
+  color: ${props => props.theme.greyishBrown};
+  font-size: 14px;
+  display: block;
 `;
 
 export default FilterStyled;

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/pro-light-svg-icons';
+import StarDrawer from '../../../../components/StarDrawer';
 import Header from '../../../../components/Header';
 import FilterSection from './components/FilterSection';
 import StarListing from '../../../../components/StarListing';
@@ -28,8 +30,27 @@ const CategoryPage = (props) => {
     nick_name: 'Bill Gates',
     show_nick_name: true,
     user_id: 'billgates',
-  }
+  };
 
+  const starData = [{
+    size: '130px',
+    horizontal: '30%',
+    vertical: '50px',
+    rotation: '15deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '60px',
+    horizontal: '70%',
+    vertical: '30px',
+    rotation: '-15deg',
+    color: props.theme.paleSkyBlue,
+  }, {
+    size: '78px',
+    horizontal: '85%',
+    vertical: '75%',
+    rotation: '15deg',
+    color: props.theme.paleSkyBlue,
+  }];
   const [showFilter, toggleFilter] = useState(false);
 
   const toggleFilterCall = () => {
@@ -55,6 +76,9 @@ const CategoryPage = (props) => {
         <CategoryPageStyled.FeaturedWrapper>
           <CategoryPageStyled.Heading>Create A Winning Moment With A Sports Star!</CategoryPageStyled.Heading>
           <CategoryPageStyled.FeaturedSection title={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
+            <CategoryPageStyled.StarWrapper>
+              <StarDrawer starData={starData} />
+            </CategoryPageStyled.StarWrapper>
             <CategoryPageStyled.AvatarWrapper className="featured" >
               <StarAvatar star={star} type="featured" />
             </CategoryPageStyled.AvatarWrapper>
@@ -98,5 +122,5 @@ const mapStateToProps = state => ({
   trendingStars: state.trendingStars,
 });
 
-export default connect(mapStateToProps)(CategoryPage);
+export default withTheme(connect(mapStateToProps)(CategoryPage));
 
