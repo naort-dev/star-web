@@ -2,27 +2,26 @@ import styled from 'styled-components';
 
 const RangeStyled = styled.div`
   display: flex;
-  .input-range {
-    height: 20px;
-    width: 150px;
-    display: inline-block;
-    .input-range__track {
+  width: 200px;
+  align-items: center;
+  .rc-slider {
+    height: 27px;
+    .rc-slider-rail, .rc-slider-track {
       height: 20px;
-      border-radius: 10px;
-      background: ${props => props.theme.veryLightPinkTwo};
-      &.input-range__track--active" {
-        background: ${props => props.theme.flatBlue};
-      }
-      .input-range__slider-container {
-        .input-range__slider {
-          background: #fff;
-          top: initial;
-          bottom: 2px;
-        }
-      }
     }
-    .input-range__label {
-      display: none;
+    .rc-slider-handle {
+      top: 12px;
+    }
+  }
+  @media(min-width: 832px) {
+    .rc-slider {
+      height: 23px;
+      .rc-slider-rail, .rc-slider-track {
+        height: 12px;
+      }
+      .rc-slider-handle {
+        top: 9px;
+      }
     }
   }
 `;
@@ -30,9 +29,8 @@ const RangeStyled = styled.div`
 RangeStyled.Label = styled.span`
   font-family: Avenir-Heavy;
   font-size: 14px;
-  margin-right: ${props => props.left && '23px'};
-  margin-left: ${props => !props.left && '23px'};
-  margin-top: 10px;
+  padding-right: ${props => props.left && '23px'};
+  padding-left: ${props => !props.left && '23px'};
 `;
 
 export default RangeStyled;

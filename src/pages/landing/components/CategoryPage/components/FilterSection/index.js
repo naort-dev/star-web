@@ -13,6 +13,21 @@ import FilterStyled from './styled';
 const FilterSection = (props) => {
 
   const [selectedSubCat, updateselectedSub] = useState(props.category.selected);
+  const [selectedSort, updateSort] = useState({ label: 'Popularity', value: 'popularity' });
+
+  const sortList = [{
+    label: 'Popularity',
+    value: 'popularity',
+  }, {
+    label: 'Alphabetically (A-Z)',
+    value: 'alpha',
+  }, {
+    label: 'Price (lowest to highest)',
+    value: 'lowToHigh',
+  }, {
+    label: 'Price (highest to lowest)',
+    value: 'highToLow',
+  }];
 
   useEffect(() => {
     updateselectedSub(props.category.selected);
@@ -83,15 +98,16 @@ const FilterSection = (props) => {
             ))
           }
         </FilterStyled.SubCategoryList>
-        <FilterStyled.SecondaryFilter>
-          <FilterStyled.FilterHeading>Sort by</FilterStyled.FilterHeading>
-          <Picker />
-          {/* <RangeSlider /> */}
-        </FilterStyled.SecondaryFilter>
-        <FilterStyled.SecondaryFilter>
-          <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
-          {/* <RangeSlider /> */}
-        </FilterStyled.SecondaryFilter>
+        <FilterStyled.SecondaryFilterWrapper>
+          <FilterStyled.SecondaryFilter>
+            <FilterStyled.SortHeading>Sort by</FilterStyled.SortHeading>
+            <Picker list={sortList} onSelect={updateSort} selected={selectedSort} />
+          </FilterStyled.SecondaryFilter>
+          <FilterStyled.SecondaryFilter>
+            <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
+            <RangeSlider />
+          </FilterStyled.SecondaryFilter>
+        </FilterStyled.SecondaryFilterWrapper>
       </FilterStyled.Content>
     </FilterStyled>
   );

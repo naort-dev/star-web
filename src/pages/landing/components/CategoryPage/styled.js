@@ -71,6 +71,7 @@ CategoryPageStyled.FilterSection = styled.div`
   background: #fff;
   display: ${props => (props.showFilter ? 'block' : 'none')};
   @media(min-width: 832px) {
+    background: transparent;
     position: static;
     display: block;
   }
@@ -87,6 +88,10 @@ CategoryPageStyled.StarWrapper = styled.div`
   left: 0;
   bottom: 0;
   z-index: 2;
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+  }
 `;
 
 CategoryPageStyled.Heading = styled.span`
