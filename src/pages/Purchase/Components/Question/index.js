@@ -29,6 +29,7 @@ const Question = (props) => {
   const [showHideFlg, showHideScript] = useState(false);
   const [buttonLabel, changeButtonLabel] = useState('Record');
   const [error, errorHandler] = useState(false);
+  const [isStop, stopHandler] = useState(false);
 
   const mediaHandler = (btnLabel) => {
     props.recordTrigger();
@@ -41,8 +42,10 @@ const Question = (props) => {
   const buttonClickHandler = () => {
     if (buttonLabel === 'Record') {
       mediaHandler('Stop', false);
+      stopHandler(false);
     } else if (buttonLabel === 'Stop') {
       mediaHandler('Continue to Payment', true);
+      stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
       // uploadVideoRecorded();
     }
@@ -88,6 +91,7 @@ const Question = (props) => {
               retryRecordHandler={retryRecordHandler}
               recordTrigger={props.recordTrigger}
               errorHandler={errorHandlerCallback}
+              forceStop={isStop}
             />
           </VideoContainer>
           <QuestionContainer isShow={showHideFlg || error}>
