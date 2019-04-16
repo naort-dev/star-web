@@ -5,6 +5,7 @@ class Modal extends Component {
   render() {
     return (
       <DialogStyled
+        disableBackdropClick={true}
         open={this.props.open}
         onClose={this.props.onClose}
         classes={{ paper: 'body', paperScrollPaper: 'paperScroll' }}
