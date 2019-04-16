@@ -101,27 +101,28 @@ class SignUpForm extends React.Component {
           });
       }
     } else {
-      if (
-        this.checkFirstRequired() &
-        this.checkLastRequired() &
-        this.checkEmail() &
-        this.checkNickNameRequired()
-      ) {
-        this.props.registerUser(
-          this.state.firstName.value,
-          this.state.lastName.value,
-          this.state.email.value,
-          this.state.nickName.value,
-          this.state.role,
-        )
-          .then((response) => {
-            if (response != undefined) {
-              if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
-                this.props.changeStep(this.props.currentStep + 1);
-              }
-            }
-          });
-      }
+      this.props.changeStep(this.props.currentStep + 1);
+      // if (
+      //   this.checkFirstRequired() &
+      //   this.checkLastRequired() &
+      //   this.checkEmail() &
+      //   this.checkNickNameRequired()
+      // ) {
+      //   this.props.registerUser(
+      //     this.state.firstName.value,
+      //     this.state.lastName.value,
+      //     this.state.email.value,
+      //     this.state.nickName.value,
+      //     this.state.role,
+      //   )
+      //     .then((response) => {
+      //       if (response != undefined) {
+      //         if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
+      //           this.props.changeStep(this.props.currentStep + 1);
+      //         }
+      //       }
+      //     });
+      // }
     }
 
   };

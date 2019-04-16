@@ -1,5 +1,7 @@
 import React from 'react';
 import EXIF from 'exif-js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { awsImageUpload } from '../../../../../services/awsImageUpload';
 import { imageSizes } from '../../../../../constants/imageSizes';
 import ImageCropper from '../../../../ImageCropper';
@@ -48,6 +50,7 @@ export default class ProfileUpload extends React.Component {
     const exif = await this.getExif(file);
     this.currentExif = exif;
     reader.onload = () => {
+      this.props.onComplete(true, reader.result, extension, false, exif);
       this.setState({ cropMode: true, cropImage: reader.result, extension, imageLoading: false });
     };
     if (file) {
@@ -127,7 +130,9 @@ export default class ProfileUpload extends React.Component {
                 >
                   <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
                   <ImageUpload.ProfileInputContainer>
-                    <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage} />
+                    <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage}>
+                      <FontAwesomeIcon icon={faUpload} />
+                    </ImageUpload.ProfileInputWrapper>
                     {!this.state.finalImage ? <ImageUpload.UploadText>Upload profile picture</ImageUpload.UploadText> : null}
                   </ImageUpload.ProfileInputContainer>
                 </ImageUpload.ProfileImageWrapper>
@@ -136,12 +141,14 @@ export default class ProfileUpload extends React.Component {
                 >
                   <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
                   <ImageUpload.ProfileInputContainer>
-                    <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage} />
+                    <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage}>
+                      <FontAwesomeIcon icon={faCamera} />
+                    </ImageUpload.ProfileInputWrapper>
                     {!this.state.finalImage ? <ImageUpload.UploadText>Take a profile picture</ImageUpload.UploadText> : null}
                   </ImageUpload.ProfileInputContainer>
                 </ImageUpload.ProfileImageWrapper>
               </ImageUpload.ProfileInputButton>
-              {
+              {/* {
                 this.state.cropMode && this.state.cropImage &&
                 <ImageUpload.CropWrapper>
                   <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
@@ -153,7 +160,7 @@ export default class ProfileUpload extends React.Component {
                     cropImage={this.state.cropImage}
                   />
                 </ImageUpload.CropWrapper>
-              }
+              } */}
               {/* <ImageUpload.ControlWrapper>
                 <ImageUpload.ControlButton
                   disabled={!this.state.finalImage}
