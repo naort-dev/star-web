@@ -6,7 +6,7 @@ export const CheckboxWrapper = styled.label`
   padding-left: 35px;
   margin-bottom: 12px;
   cursor: pointer;
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 16px;
   padding-top: 5px;
   color: #797979;

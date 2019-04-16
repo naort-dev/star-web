@@ -11,11 +11,15 @@ const StarAvatar = ({ star, type }) => {
   const [profileImage, setProfileImage] = useState(null);
 
   useEffect(() => {
-    const profileImg = new Image();
-    profileImg.onload = () => {
-      setProfileImage(profileImg.src);
-    };
-    profileImg.src = star.avatar_photo && star.avatar_photo.thumbnail_url;
+    if (star.avatar_photo && star.avatar_photo.thumbnail_url) {
+      const profileImg = new Image();
+      profileImg.onload = () => {
+        setProfileImage(profileImg.src);
+      };
+      profileImg.src = star.avatar_photo && star.avatar_photo.thumbnail_url;
+    } else {
+      setProfileImage('');
+    }
   });
 
   const getWrapperComponent = () => {
@@ -43,12 +47,12 @@ const StarAvatar = ({ star, type }) => {
           { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
         <AvatarContainer.StarDescription>
-          <AvatarContainer.Name>
+          <AvatarContainer.Name title={getStarName(star.nick_name, star.first_name, star.last_name)}>
             {
               getStarName(star.nick_name, star.first_name, star.last_name)
             }
           </AvatarContainer.Name>
-          <AvatarContainer.Price>{numberToDollarFormatter(star.celebrity_user && star.celebrity_user.rate)}</AvatarContainer.Price>
+          <AvatarContainer.Price>{numberToDollarFormatter(star.celebrity_user ? star.celebrity_user.rate : 0)}</AvatarContainer.Price>
         </AvatarContainer.StarDescription>
       </AvatarContainer.Content>
     </AvatarContainer>

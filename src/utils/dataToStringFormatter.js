@@ -28,9 +28,9 @@ export const starProfessionsDotFormater = (list) => {
   }
 };
 
-export const getStarName = (nickName, firstName, lastName) => {
+export const getStarName = (nickName = '', firstName = '', lastName = '') => {
   return nickName && nickName !== '' ? nickName : `${firstName} ${lastName}`;
-}
+};
 
 export const videoTitleGenerator = (requestType, occasion) => {
   if (requestType === 3) { // Q&A video

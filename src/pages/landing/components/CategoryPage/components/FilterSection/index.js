@@ -5,12 +5,30 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import HeaderSection from '../../../../../../components/Header/styled';
+import RangeSlider from '../../../../../../components/RangeSlider';
+import PrimaryButton from '../../../../../../components/PrimaryButton';
+import Picker from '../../../../../../components/Picker';
 import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
 
   const [selectedSubCat, updateselectedSub] = useState(props.category.selected);
+  const [selectedSort, updateSort] = useState({ label: 'Popularity', value: 'popularity' });
+
+  const sortList = [{
+    label: 'Popularity',
+    value: 'popularity',
+  }, {
+    label: 'Alphabetically (A-Z)',
+    value: 'alpha',
+  }, {
+    label: 'Price (lowest to highest)',
+    value: 'lowToHigh',
+  }, {
+    label: 'Price (highest to lowest)',
+    value: 'highToLow',
+  }];
 
   useEffect(() => {
     updateselectedSub(props.category.selected);
@@ -81,6 +99,19 @@ const FilterSection = (props) => {
             ))
           }
         </FilterStyled.SubCategoryList>
+        <FilterStyled.SecondaryFilterWrapper>
+          <FilterStyled.SecondaryFilter>
+            <FilterStyled.SortHeading>Sort by</FilterStyled.SortHeading>
+            <Picker list={sortList} onSelect={updateSort} selected={selectedSort} />
+          </FilterStyled.SecondaryFilter>
+          <FilterStyled.SecondaryFilter>
+            <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
+            <RangeSlider />
+          </FilterStyled.SecondaryFilter>
+          <FilterStyled.ApplyButton>
+            <PrimaryButton className="controlButton">Apply</PrimaryButton>
+          </FilterStyled.ApplyButton>
+        </FilterStyled.SecondaryFilterWrapper>
       </FilterStyled.Content>
     </FilterStyled>
   );

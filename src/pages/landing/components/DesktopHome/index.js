@@ -121,7 +121,7 @@ class DesktopHome extends React.Component {
   }
 
   getAvatarContent = (index) => {
-    const featuredData = this.props.featuredStars.data;
+    const featuredData = this.props.featuredStars.homeFeatured.data;
     return featuredData[index - 1];
   }
 
@@ -136,7 +136,9 @@ class DesktopHome extends React.Component {
       <DesktopStyled>
         <DesktopStyled.Logo className="test" src="assets/images/logo_starsona.svg" />
         <DesktopStyled.Heading>
-        Personalized Videos From The Stars
+          {
+            this.props.featuredStars.homeFeatured.title
+          }
         </DesktopStyled.Heading>
         <DesktopStyled.FlowWrapper>
           <DesktopStyled.StarSection>
