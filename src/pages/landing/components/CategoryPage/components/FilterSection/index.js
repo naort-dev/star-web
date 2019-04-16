@@ -6,6 +6,7 @@ import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import HeaderSection from '../../../../../../components/Header/styled';
 import RangeSlider from '../../../../../../components/RangeSlider';
+import PrimaryButton from '../../../../../../components/PrimaryButton';
 import Picker from '../../../../../../components/Picker';
 import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
 import FilterStyled from './styled';
@@ -107,6 +108,9 @@ const FilterSection = (props) => {
             <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
             <RangeSlider />
           </FilterStyled.SecondaryFilter>
+          <FilterStyled.ApplyButton>
+            <PrimaryButton className="controlButton">Apply</PrimaryButton>
+          </FilterStyled.ApplyButton>
         </FilterStyled.SecondaryFilterWrapper>
       </FilterStyled.Content>
     </FilterStyled>

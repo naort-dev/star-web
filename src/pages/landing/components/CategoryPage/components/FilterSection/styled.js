@@ -76,6 +76,17 @@ FilterStyled.SubCategoryItem = styled.li`
   }
 `;
 
+FilterStyled.ApplyButton = styled.span`
+  .controlButton {
+    width: 233px;
+  }
+  text-align: center;
+  margin: 20px 0;
+  @media(min-width: 832px) {
+    display: none;
+  }
+`;
+
 FilterStyled.SecondaryFilterWrapper = styled.div`
   padding-top: 10px;
   margin: 0 40px;

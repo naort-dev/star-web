@@ -101,8 +101,10 @@ CategoryPageStyled.Heading = styled.span`
   font-size: 26px;
   text-align: center;
   color: ${props => props.theme.twilight};
+  min-height: 32px;
   @media(min-width: 832px) {
     font-size: 56px;
+    min-height: 70px;
   }
   @media(min-width: 1280px) {
     margin-top: 37px;
@@ -123,7 +125,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
   margin-top: 24px;
   z-index: 1;
   &:after {
-    content: ${props => `'${props.title}'`};
+    content: ${props => `'${props.heading}'`};
     position: absolute;
     text-transform: uppercase;
     top: -7px;
