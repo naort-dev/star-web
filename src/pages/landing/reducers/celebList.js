@@ -12,7 +12,6 @@ const initalState = {
 };
 
 export default (state = { ...initalState }, action) => {
-  let cachedData;
   switch (action.type) {
     case CELEB_LIST.start:
       return {

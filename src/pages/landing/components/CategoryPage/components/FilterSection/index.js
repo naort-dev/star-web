@@ -9,11 +9,12 @@ import RangeSlider from '../../../../../../components/RangeSlider';
 import PrimaryButton from '../../../../../../components/PrimaryButton';
 import Picker from '../../../../../../components/Picker';
 import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
+import { fetchCelebrityList } from '../../../../actions/getCelebList';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
 
-  const [selectedSubCat, updateselectedSub] = useState(props.category.selected);
+  const [selectedSubCat, updateSelectedSub] = useState(props.category.selected);
   const [selectedSort, updateSort] = useState({ label: 'Popularity', value: 'popularity' });
 
   const sortList = [{
@@ -31,26 +32,41 @@ const FilterSection = (props) => {
   }];
 
   useEffect(() => {
-    updateselectedSub(props.category.selected);
-  });
+    props.fetchCelebrityList(0, true);
+  }, []);
+
+  useEffect(() => {
+    updateSelectedSub(props.category.selected);
+    props.fetchCelebrityList(0, true);
+  }, [props.category.selected.length]);
 
   const updateSubCategory = catId => () => {
     let selectedList = [...selectedSubCat];
     if (selectedList.find(cat => cat === catId)) {
       selectedList = selectedList.filter(cat => cat !== catId);
-      updateselectedSub(selectedList);
+      updateSelectedSub(selectedList);
     } else {
       selectedList = [...selectedList, catId];
-      updateselectedSub(selectedList);
+      updateSelectedSub(selectedList);
     }
-    props.updateSelectedSubCategory(selectedList);
+    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+      props.updateSelectedSubCategory(selectedList);
+    }
+  };
+
+  const applyFilters = () => {
+    props.updateSelectedSubCategory(selectedSubCat);
+    props.onClose();
   };
 
   const toggleSelectAll = () => {
     if (props.category.subCategories.length !== selectedSubCat.length) {
-      props.updateSelectedSubCategory(props.category.subCategories.map(cat => cat.id));
+      const selectedList = props.category.subCategories.map(cat => cat.id);
+      props.updateSelectedSubCategory(selectedList);
+      updateSelectedSub(selectedList);
     } else {
       props.updateSelectedSubCategory([]);
+      updateSelectedSub([]);
     }
   };
 
@@ -106,10 +122,10 @@ const FilterSection = (props) => {
           </FilterStyled.SecondaryFilter>
           <FilterStyled.SecondaryFilter>
             <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
-            <RangeSlider />
+            <RangeSlider min={0} max={500} />
           </FilterStyled.SecondaryFilter>
           <FilterStyled.ApplyButton>
-            <PrimaryButton className="controlButton">Apply</PrimaryButton>
+            <PrimaryButton className="controlButton" onClick={applyFilters}>Apply</PrimaryButton>
           </FilterStyled.ApplyButton>
         </FilterStyled.SecondaryFilterWrapper>
       </FilterStyled.Content>
@@ -128,6 +144,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchCelebrityList: (offset, refresh, selectedCategory) => dispatch(fetchCelebrityList(offset, refresh, selectedCategory)),
   updateSelectedSubCategory: selectedList => dispatch(updateSelectedSubCategory(selectedList)),
 });
 

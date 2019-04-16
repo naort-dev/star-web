@@ -135,8 +135,8 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
   if (category.label === 'featured')  {
     API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
   } else {
-    const subCategoryList = filters[category.value];
-    const professsion = subCategoryList && Object.keys(subCategoryList).length ? Object.keys(subCategoryList).toString() : category.value;
+    const subCategoryList = filters.category.selected;
+    const professsion = subCategoryList && subCategoryList.length ? subCategoryList.toString() : category.value;
     if (selectedCategory === 'Group') {
       API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&group_type=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
     } else {

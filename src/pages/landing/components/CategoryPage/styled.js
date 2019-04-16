@@ -69,7 +69,7 @@ CategoryPageStyled.FilterSection = styled.div`
   right: 0;
   z-index: 11;
   background: #fff;
-  display: ${props => (props.showFilter ? 'block' : 'none')};
+  display: block;
   @media(min-width: 832px) {
     background: transparent;
     position: static;
@@ -182,6 +182,7 @@ CategoryPageStyled.FeaturedWrapper = styled.div`
 
 CategoryPageStyled.ListingWrapper = styled.div`
   max-width: 1280px;
+  height: 300px;
   margin: 0 auto;
 `;
 

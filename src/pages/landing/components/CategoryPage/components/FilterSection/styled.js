@@ -104,9 +104,7 @@ FilterStyled.SecondaryFilter = styled.div`
   @media(min-width: 832px) {
     display: flex;
     align-items: center;
-    &:last-child {
-      margin-left: 33px;
-    }
+    margin-right: 33px;
   }
 `;
 

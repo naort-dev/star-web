@@ -3,7 +3,7 @@ import { UPDATEFILTER } from '../actions/updateFilters';
 const initalState = {
   category: {
     label: 'Featured',
-    value: '',
+    value: 0,
     subCategories: [],
     selected: [],
   },

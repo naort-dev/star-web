@@ -10,9 +10,11 @@ import FilterSection from './components/FilterSection';
 import StarListing from '../../../../components/StarListing';
 import StarAvatar from '../../../../components/StarAvatar';
 import { fetchFeaturedStars } from '../../actions/getFeaturedStars';
+import { fetchCelebrityList } from '../../actions/getCelebList';
 import CategoryPageStyled from './styled';
 
 const CategoryPage = (props) => {
+  // eslint-disable-next-line react/prop-types
   const { paleSkyBlue } = props.theme;
   const starData = [{
     size: '130px',
@@ -39,10 +41,28 @@ const CategoryPage = (props) => {
     toggleFilter(!showFilter);
   };
 
+  const onWindowResize = () => {
+    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+      toggleFilter(true);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', onWindowResize);
+    onWindowResize();
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('resize', onWindowResize);
+    };
+  }, []);
+
   useEffect(() => {
     if (!props.featuredStars[props.category.label]) {
       props.fetchFeaturedStars(props.category);
     }
+    props.fetchCelebrityList(0, true);
   }, [props.category.label]);
 
   const title = props.featuredStars[props.category.label] ? props.featuredStars[props.category.label].title : '';
@@ -97,17 +117,17 @@ const CategoryPage = (props) => {
           </CategoryPageStyled.FeaturedSection>
         </CategoryPageStyled.FeaturedWrapper>
         {
-          props.category.label !== 'Featured' &&
-            <CategoryPageStyled.FilterSection showFilter={showFilter}>
+          props.category.label !== 'Featured' && showFilter &&
+            <CategoryPageStyled.FilterSection>
               <FilterSection onClose={toggleFilterCall} />
             </CategoryPageStyled.FilterSection>
         }
         <CategoryPageStyled.ListingWrapper>
           <StarListing
-            dataList={props.trendingStars.data}
-            loading={props.trendingStars.loading}
-            noScroll
-            totalCount={props.trendingStars.length}
+            dataList={props.celebList.data}
+            loading={props.celebList.loading}
+            fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}
+            totalCount={props.celebList.count}
             limit={10}
           />
         </CategoryPageStyled.ListingWrapper>
@@ -118,19 +138,20 @@ const CategoryPage = (props) => {
 
 CategoryPage.propTypes = {
   category: PropTypes.object.isRequired,
-  trendingStars: PropTypes.object.isRequired,
   featuredStars: PropTypes.object.isRequired,
   fetchFeaturedStars: PropTypes.func.isRequired,
+  celebList: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   category: state.filters.category,
-  trendingStars: state.trendingStars,
+  celebList: state.celebList,
   featuredStars: state.featuredStars,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchFeaturedStars: profession => dispatch(fetchFeaturedStars(profession)),
+  fetchCelebrityList: (offset, refresh, selectedCategory) => dispatch(fetchCelebrityList(offset, refresh, selectedCategory)),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(CategoryPage));

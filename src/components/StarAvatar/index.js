@@ -22,6 +22,12 @@ const StarAvatar = ({ star, type }) => {
     }
   });
 
+  useEffect(() => {
+    return (() => {
+
+    });
+  });
+
   const getWrapperComponent = () => {
     if (type === 'featured') {
       return AvatarContainer.BigAvatar;
