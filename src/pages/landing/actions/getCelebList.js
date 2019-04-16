@@ -140,7 +140,7 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     if (selectedCategory === 'Group') {
       API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&group_type=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
     } else {
-      API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
+      API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&profession=${professsion === 0 ? '' : professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
     }
   }
   return fetch.get(API_URL, options).then((resp) => {
