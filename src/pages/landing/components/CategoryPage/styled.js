@@ -6,10 +6,11 @@ const CategoryPageStyled = styled.div`
   overflow: hidden;
   @media(min-width: 832px) {
     margin-top: 260px;
-    height: auto;
+    height: calc(100vh - 260px);
   }
   @media(min-width: 1280px) {
     margin-top: 151px;
+    height: calc(100vh - 151px);
   }
 `;
 
@@ -155,8 +156,6 @@ CategoryPageStyled.FeaturedSection = styled.div`
   }
 `;
 
-
-
 CategoryPageStyled.Toolbar = styled.div`
   display: flex;
   justify-content: space-between;
@@ -172,6 +171,7 @@ CategoryPageStyled.Content = styled.div`
   padding: 12px 16px;
   overflow: auto;
   @media(min-width: 832px) {
+    height: 100%;
     background: ${props => props.theme.white};
   }
 `;
