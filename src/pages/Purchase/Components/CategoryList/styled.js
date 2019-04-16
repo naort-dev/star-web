@@ -40,12 +40,12 @@ export const ContentWrapper = styled.section`
 `;
 
 export const HeaderText = styled.h3`
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Medium;
   font-size: 20px;
   color: #2f839d;
 `;
 export const Paragraph = styled.p`
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 14px;
   color: #999999;
   line-height: 1.29;

@@ -28,7 +28,7 @@ SignUpMethod.Container = styled.div`
 `;
 SignUpMethod.Heading = styled.div`
   font-size: 20px;
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
@@ -72,7 +72,7 @@ SignUpMethod.SocialMediaIcon = styled.div`
 `;
 
 SignUpMethod.SocialMediaLabel = styled.div`
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 14px;
   line-height: 1.43;
   text-align: center;

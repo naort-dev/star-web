@@ -79,7 +79,7 @@ class MobileHome extends React.Component {
         modalView
         disableClose
       >
-        <MobileStyled className={currentStep === 5?"grey-background":""}>
+        <MobileStyled className={currentStep === 5 ? 'grey-background' : ''}>
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
           {
             currentStep === 1 &&
@@ -91,7 +91,7 @@ class MobileHome extends React.Component {
             currentStep === 2 &&
               <React.Fragment>
                 <MobileStyled.SubHeader>Select from our selection of stars</MobileStyled.SubHeader>
-                <AvatarSection stars={featuredStars.data} />
+                <AvatarSection stars={featuredStars.homeFeatured.data} />
                 <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
               </React.Fragment>
           }
