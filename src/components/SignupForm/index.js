@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 /************************************ Components *************************************/
 import validator from 'validator';
 import ActionLoader from '../ActionLoader';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import Checkbox from '@material-ui/core/Checkbox';
 import { TextInput } from '../TextField';
 import { TermsAndConditions } from './components/TermsAndConditions'
@@ -56,19 +54,14 @@ class SignUpForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      if (this.props.signupRole === "fan") {
-        this.props.toggleSignup(false);
-      }
-      if (this.props.signupRole === "fan") {
-        const followData = this.props.followCelebData;
-        if (followData.celebId) {
-          this.props.followCelebrity(
-            this.props.followCelebData.celebId,
-            this.props.followCelebData.celebProfessions,
-            this.props.followCelebData.follow,
-            true
-          );
-        }
+      const followData = this.props.followCelebData;
+      if (followData.celebId) {
+        this.props.followCelebrity(
+          this.props.followCelebData.celebId,
+          this.props.followCelebData.celebProfessions,
+          this.props.followCelebData.follow,
+          true
+        );
       }
     }
     if (this.props.loading !== nextProps.loading) {
@@ -94,35 +87,34 @@ class SignUpForm extends React.Component {
         )
           .then((response) => {
             if (response != undefined) {
-              if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
                 this.props.changeStep(this.props.currentStep + 1);
-              }
             }
           });
       }
-    } else {
-      this.props.changeStep(this.props.currentStep + 1);
-      // if (
-      //   this.checkFirstRequired() &
-      //   this.checkLastRequired() &
-      //   this.checkEmail() &
-      //   this.checkNickNameRequired()
-      // ) {
-      //   this.props.registerUser(
-      //     this.state.firstName.value,
-      //     this.state.lastName.value,
-      //     this.state.email.value,
-      //     this.state.nickName.value,
-      //     this.state.role,
-      //   )
-      //     .then((response) => {
-      //       if (response != undefined) {
-      //         if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
-      //           this.props.changeStep(this.props.currentStep + 1);
-      //         }
-      //       }
-      //     });
-      // }
+    } 
+    else {
+      if (
+        this.checkFirstRequired() &
+        this.checkLastRequired() &
+        this.checkEmail() &
+        this.checkNickNameRequired()
+      ) {
+        this.props.changeStep(this.props.currentStep + 1);
+        // this.props.registerUser(
+        //   this.state.firstName.value,
+        //   this.state.lastName.value,
+        //   this.state.email.value,
+        //   this.state.nickName.value,
+        //   this.state.role,
+        // )
+        //   .then((response) => {
+        //     if (response != undefined) {
+        //       if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
+        //         this.props.changeStep(this.props.currentStep + 1);
+        //       }
+        //     }
+        //   });
+      }
     }
 
   };
@@ -212,6 +204,7 @@ class SignUpForm extends React.Component {
     });
     return true;
   }
+
   checkPassword = () => {
     const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
 
@@ -232,7 +225,9 @@ class SignUpForm extends React.Component {
     this.setState({
       password: { ...this.state.password, message: '', isValid: true },
     });
-  }
+    return true;
+  };
+
 
   checkTermsAndConditionsRequired = () => {
     const termsAndConditionsEmpty = !(this.state.termsAndConditions.value)
@@ -266,7 +261,7 @@ class SignUpForm extends React.Component {
             <LoginContainer.Heading>
               {signUp.title}
             </LoginContainer.Heading>
-            { this.props.signupRole === 'star' &&
+            {this.props.signupRole === 'star' &&
               <DotsContainer
                 dotsCount={3}
                 selectedDot={1}
@@ -280,25 +275,29 @@ class SignUpForm extends React.Component {
                     :
                     <div>
                       <LoginContainer.Label error={this.state.firstName.message}>
-                        {(this.state.firstName.message || this.state.lastName.message) ? 
-                        'Enter valid full name': signUp.item_1}
+                        {(this.state.firstName.message || this.state.lastName.message) ?
+                          'Enter valid full name' : signUp.item_1}
                       </LoginContainer.Label>
                       <LoginContainer.InputWrapper>
                         <LoginContainer.WrapsInput>
                           <TextInput
+                            error={this.state.firstName.message}
                             placeholder={signUp.item_1_placeholder_1}
                             type="text"
                             name="firstName"
                             value={this.state.firstName.value}
+                            onBlur={this.checkFirstRequired}
                             onChange={(event) => this.saveFormEntries(event, "firstName")}
                           />
                         </LoginContainer.WrapsInput>
                         <LoginContainer.WrapsInput>
                           <TextInput
+                            error={this.state.lastName.message}
                             placeholder={signUp.item_1_placeholder_2}
                             type="text"
                             name="lastName"
                             value={this.state.lastName.value}
+                            onBlur={this.checkLastRequired}
                             onChange={(event) => this.saveFormEntries(event, "lastName")}
                           />
                         </LoginContainer.WrapsInput>
@@ -306,37 +305,42 @@ class SignUpForm extends React.Component {
                     </div>
                 }
                 <LoginContainer.Label error={this.state[signUp.key_2].message}>
-                  {this.state[signUp.key_2].message? this.state[signUp.key_2].message: signUp.item_2}
+                  {this.state[signUp.key_2].message ? this.state[signUp.key_2].message : signUp.item_2}
                 </LoginContainer.Label>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
                     <TextInput
+                      error={this.state[signUp.key_2].message}
                       placeholder={signUp.item_2_placeholder}
                       type="text"
                       name={signUp.key_2}
                       fullWidth={true}
                       value={this.state[signUp.key_2].value}
+                      onBlur={this[signUp.func_name_2]}
                       onChange={(event) => this.saveFormEntries(event, signUp.key_2)}
                     />
                   </LoginContainer.WrapsInput>
                 </LoginContainer.InputWrapper>
                 <LoginContainer.Label error={this.state[signUp.key_3_1].message}>
-                  {this.state[signUp.key_3_1].message? this.state[signUp.key_3_1].message: signUp.item_3}
+                  {this.state[signUp.key_3_1].message ? this.state[signUp.key_3_1].message : signUp.item_3}
                 </LoginContainer.Label>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
                     <TextInput
+                      error={this.state[signUp.key_3_1].message}
                       placeholder={signUp.item_3_placeholder_1}
                       type={this.props.signupRole === ROLE_FAN ? 'password' : 'text'}
                       name={signUp.key_3_1}
                       fullWidth={this.props.signupRole === ROLE_STAR ? true : false}
                       value={this.state[signUp.key_3_1].value}
+                      onBlur={this[signUp.func_name_3]}
                       onChange={(event) => this.saveFormEntries(event, signUp.key_3_1)}
                     />
                   </LoginContainer.WrapsInput>
                   {this.props.signupRole === ROLE_FAN ?
                     <LoginContainer.WrapsInput>
                       <TextInput
+                      error={this.state[signUp.key_3_1].message}
                         placeholder={signUp.item_3_placeholder_2}
                         type={this.props.signupRole === ROLE_FAN ? 'password' : 'text'}
                         name={signUp.key_3_2}
@@ -347,13 +351,13 @@ class SignUpForm extends React.Component {
                     : null}
                 </LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>
-                  {this.props.statusCode === undefined ?
+                  {/* {this.props.statusCode === undefined ?
                     <LoginContainer.ErrorMsg>
                       {this.props.error}
                     </LoginContainer.ErrorMsg>
                     :
                     <LoginContainer.EmptyDiv />
-                  }
+                  } */}
                 </LoginContainer.WrapsInput>
                 {this.props.signupRole === ROLE_FAN ? null :
                   <div>
