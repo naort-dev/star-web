@@ -1,7 +1,10 @@
 import { FEATURED_STARS } from '../actions/getFeaturedStars';
 
 const initalState = {
-  data: [],
+  homeFeatured: {
+    title: '',
+    data: [],
+  },
   loading: false,
   error: null,
 };
@@ -12,6 +15,7 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: true,
+        token: action.token,
       };
 
     case FEATURED_STARS.end:
@@ -24,7 +28,20 @@ export default (state = { ...initalState }, action) => {
       return {
         ...state,
         loading: false,
-        data: action.list,
+        homeFeatured: {
+          title: action.title,
+          data: action.list,
+        },
+      };
+
+    case FEATURED_STARS.successCategory:
+      return {
+        ...state,
+        loading: false,
+        [action.profession.label]: {
+          title: action.title,
+          data: action.list,
+        },
       };
 
     case FEATURED_STARS.failed:

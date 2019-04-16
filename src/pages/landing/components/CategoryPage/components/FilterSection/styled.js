@@ -45,6 +45,7 @@ FilterStyled.Content = styled.div`
   overflow: auto;
   @media(min-width: 832px) {
     height: auto;
+    overflow: initial;
   }
 `;
 
@@ -73,6 +74,57 @@ FilterStyled.SubCategoryItem = styled.li`
   @media(min-width: 832px) {
     font-size: 16px;
   }
+`;
+
+FilterStyled.ApplyButton = styled.span`
+  .controlButton {
+    width: 233px;
+  }
+  text-align: center;
+  margin: 20px 0;
+  @media(min-width: 832px) {
+    display: none;
+  }
+`;
+
+FilterStyled.SecondaryFilterWrapper = styled.div`
+  padding-top: 10px;
+  margin: 0 40px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  border-top: ${props => `1px solid ${props.theme.brownGrey}`};
+  @media(min-width: 832px) {
+    flex-direction: row;
+  }
+`;
+
+FilterStyled.SecondaryFilter = styled.div`
+  margin-top: 10px;
+  @media(min-width: 832px) {
+    display: flex;
+    align-items: center;
+    &:last-child {
+      margin-left: 33px;
+    }
+  }
+`;
+
+
+FilterStyled.FilterHeading = styled.span`
+  font-family: Gilroy-Bold;
+  color: ${props => props.theme.greyishBrown};
+  font-size: 14px;
+  display: block;
+  margin-right: 10px;
+  @media(min-width: 832px) {
+    display: inline-block;
+    margin-right: 20px;
+  }
+`;
+
+FilterStyled.SortHeading = FilterStyled.FilterHeading.extend`
+  display: inline-block;
 `;
 
 export default FilterStyled;
