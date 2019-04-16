@@ -182,7 +182,7 @@ CategoryPageStyled.FeaturedWrapper = styled.div`
 
 CategoryPageStyled.ListingWrapper = styled.div`
   max-width: 1280px;
-  height: 300px;
+  height: 500px;
   margin: 0 auto;
 `;
 

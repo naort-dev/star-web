@@ -8,27 +8,27 @@ import HeaderSection from '../../../../../../components/Header/styled';
 import RangeSlider from '../../../../../../components/RangeSlider';
 import PrimaryButton from '../../../../../../components/PrimaryButton';
 import Picker from '../../../../../../components/Picker';
-import { updateSelectedSubCategory } from '../../../../actions/updateFilters';
+import { updateSelectedSubCategory, updateSort } from '../../../../actions/updateFilters';
 import { fetchCelebrityList } from '../../../../actions/getCelebList';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
 
   const [selectedSubCat, updateSelectedSub] = useState(props.category.selected);
-  const [selectedSort, updateSort] = useState({ label: 'Popularity', value: 'popularity' });
+  const [selectedSort, updateSortState] = useState({ label: 'Popularity', value: 'popularity' });
 
   const sortList = [{
     label: 'Popularity',
-    value: 'popularity',
+    value: 'featured',
   }, {
     label: 'Alphabetically (A-Z)',
-    value: 'alpha',
+    value: 'az',
   }, {
     label: 'Price (lowest to highest)',
-    value: 'lowToHigh',
+    value: 'lfp',
   }, {
     label: 'Price (highest to lowest)',
-    value: 'highToLow',
+    value: 'hpf',
   }];
 
   useEffect(() => {
@@ -52,6 +52,11 @@ const FilterSection = (props) => {
     if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
       props.updateSelectedSubCategory(selectedList);
     }
+  };
+
+  const updateSelectedSort = (sortValue) => {
+    updateSortState(sortValue);
+    props.updateSort(sortValue.value);
   };
 
   const applyFilters = () => {
@@ -118,7 +123,7 @@ const FilterSection = (props) => {
         <FilterStyled.SecondaryFilterWrapper>
           <FilterStyled.SecondaryFilter>
             <FilterStyled.SortHeading>Sort by</FilterStyled.SortHeading>
-            <Picker list={sortList} onSelect={updateSort} selected={selectedSort} />
+            <Picker list={sortList} onSelect={updateSelectedSort} selected={selectedSort} />
           </FilterStyled.SecondaryFilter>
           <FilterStyled.SecondaryFilter>
             <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
@@ -137,6 +142,7 @@ FilterSection.propTypes = {
   onClose: PropTypes.func.isRequired,
   category: PropTypes.object.isRequired,
   updateSelectedSubCategory: PropTypes.func.isRequired,
+  updateSort: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -146,6 +152,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchCelebrityList: (offset, refresh, selectedCategory) => dispatch(fetchCelebrityList(offset, refresh, selectedCategory)),
   updateSelectedSubCategory: selectedList => dispatch(updateSelectedSubCategory(selectedList)),
+  updateSort: value => dispatch(updateSort(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(FilterSection);
