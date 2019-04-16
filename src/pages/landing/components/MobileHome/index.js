@@ -83,7 +83,9 @@ class MobileHome extends React.Component {
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
           {
             currentStep === 1 &&
-              <ActionChooser toggleSignup={this.loginOrSignup('signup')} toggleLogin={this.loginOrSignup('login')} goToNextStep={this.goToNextStep} />
+              <ActionChooser toggleSignup={this.loginOrSignup('signup')} 
+              toggleLogin={this.loginOrSignup('login')} 
+              goToNextStep={this.goToNextStep} />
           }
           {
             currentStep === 2 &&
