@@ -7,6 +7,14 @@ export const UserCardWrapper = styled.section`
     display: flex;
     flex-direction: column;
   }
+  .selectCard {
+    font-family: Gilroy-Regular;
+    font-size: 18px;
+    color: #999;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+  }
 `;
 export const TopSection = styled.section`
   background-color: #f5f5f5;
@@ -22,11 +30,13 @@ export const TopSection = styled.section`
     font-size: 16px;
     color: #969696;
     width: 100%;
+    padding-top: 6px;
   }
   .edit {
     font-family: Gilroy-Semibold;
     font-size: 14px;
     color: #2f839d;
+    cursor: pointer;
   }
   .profileIcon {
     width: 60px;
@@ -46,6 +56,7 @@ export const TopSection = styled.section`
 `;
 export const BottomSection = styled.section`
   padding: 20px;
+  margin-bottom: 33px;
   background-color: #efefef;
   .labelHead {
     font-family: Gilroy-Regular;
@@ -62,5 +73,18 @@ export const BottomSection = styled.section`
     font-family: Gilroy-MediumItalic;
     font-size: 12px;
     color: #555555;
+    padding-top: 20px;
+    text-align: center;
+    width: 188px;
+    margin: 0 auto;
+  }
+  .cardType {
+    line-height: 20px;
+    font-family: Gilroy-Regular;
+    font-size: 16px;
+    color: #414141;
+  }
+  .alignPad {
+    padding-left: 15px;
   }
 `;
