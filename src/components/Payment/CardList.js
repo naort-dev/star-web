@@ -6,7 +6,7 @@ const CardList = () => {
     <Ul>
       <Li icon="default-icon">
         <span className="brand">Use</span>
-        <span>**** **** **** 4242</span>
+        <span className="cardNo">**** **** **** 4242</span>
       </Li>
     </Ul>
   );

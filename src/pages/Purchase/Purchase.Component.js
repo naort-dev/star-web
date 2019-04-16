@@ -104,24 +104,31 @@ class Purchase extends Component {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
-          <Header step={this.state.stepCount}>
+          <Header step={this.state.stepCount} className="headerGlobal">
             <FlexBoxSBC>
               <FontAwesomeIcon
                 icon={faAngleLeft}
                 className="arrow"
                 onClick={this.backArrowHandler}
               />
-              <ProfileIcon>
-                <StarDrawer starData={this.starData} />
-                <Image>
-                  <img src="../assets/images/profile.png" alt="profile_icon" />
-                </Image>
-              </ProfileIcon>
+              {this.state.stepCount !== 4 ? (
+                <ProfileIcon>
+                  <StarDrawer starData={this.starData} />
+                  <Image>
+                    <img
+                      src="../assets/images/profile.png"
+                      alt="profile_icon"
+                    />
+                  </Image>
+                </ProfileIcon>
+              ) : (
+                <span className="customHead">Payment Details</span>
+              )}
               <FontAwesomeIcon icon={faTimes} />
             </FlexBoxSBC>
             <HeaderText>What kind of video message do you want?</HeaderText>
           </Header>
-          <Content>
+          <Content className="contentPadding">
             <Scrollbars>
               <ModalSwitcher
                 dataModal={dataModal.category ? dataModal.category : []}

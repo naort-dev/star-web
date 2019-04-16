@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { media } from '../../styles/mediaQueries';
 
 export const UserCardWrapper = styled.section`
   border-radius: 10px;
@@ -8,12 +7,26 @@ export const UserCardWrapper = styled.section`
     flex-direction: column;
   }
   .selectCard {
-    font-family: Gilroy-Regular;
     font-size: 18px;
     color: #999;
+    font-family: Gilroy-Regular;
+    letter-spacing: 1.1px;
+  }
+  .newCard {
+    font-size: 16px;
+    color: #2f839d;
+    padding-top: 16px;
+    cursor: pointer;
+  }
+  .centerAlign {
     width: 100%;
     display: inline-block;
     text-align: center;
+    font-family: Gilroy-Regular;
+  }
+  .button {
+    margin-bottom: 40px;
+    margin-top: 40px;
   }
 `;
 export const TopSection = styled.section`

@@ -41,7 +41,7 @@ export const Header = styled.section`
     cursor: pointer;
   }
   .arrow {
-    visibility: ${props => props.step === 1 && 'hidden'};
+    visibility: ${(props) => props.step === 1 && 'hidden'};
   }
   :after {
     content: '';
@@ -54,6 +54,11 @@ export const Header = styled.section`
     border-left: solid 20px transparent;
     border-right: solid 20px transparent;
     transform: translateX(-50%);
+  }
+  .customHead {
+    font-family: Gilroy-Regular;
+    font-size: 24px;
+    color: #ff6c58;
   }
 `;
 

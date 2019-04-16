@@ -5,7 +5,14 @@ import {
   CardExpiryElement,
   CardCVCElement,
 } from 'react-stripe-elements';
-import PaymentStyled from './styled';
+import {
+  CardElement,
+  CardIcon,
+  Error,
+  Wrapper,
+  CardElementSmall,
+  FlexBox,
+} from './Checkout.styles';
 
 class checkout extends React.Component {
   constructor(props) {
@@ -14,16 +21,16 @@ class checkout extends React.Component {
       cardNumberError: '',
       cardExpiryError: '',
       cvvError: '',
-      // zipCodeError: '',
       cardTypeImage: null,
     };
     this.styles = {
       base: {
-        fontSize: '13px',
-        color: '#333333',
-        fontFamily: '"Avenir-Regular"',
+        fontSize: '18px',
+        color: '#aaaaaa',
+        textAlign: 'center',
+        fontFamily: '"Gilroy-Regular"',
         '::placeholder': {
-          color: '#333333',
+          color: '#aaaaaa',
         },
       },
       invalid: {
@@ -47,11 +54,7 @@ class checkout extends React.Component {
   };
   returnErrorMsg = (element) => {
     if (this.state[element] !== '') {
-      return (
-        <PaymentStyled.ErrorElement>
-          {this.state[element]}
-        </PaymentStyled.ErrorElement>
-      );
+      return <Error>{this.state[element]}</Error>;
     }
     return null;
   };
@@ -62,37 +65,38 @@ class checkout extends React.Component {
 
   render() {
     return (
-      <PaymentStyled onSubmit={this.handleSubmit}>
-        <PaymentStyled.CardElementWrapper>
-          <PaymentStyled.CardInputWrapper>
-            <PaymentStyled.CardTypeIcon cardImage={this.state.cardTypeImage} />
+      <form onSubmit={this.handleSubmit}>
+        <CardElement>
+          <Wrapper>
+            <CardIcon cardImage={this.state.cardTypeImage} />
             <CardNumberElement
               onChange={(event) => this.setErrorMsg(event, 'cardNumberError')}
               style={this.styles}
               placeholder="1234 1234 1234 1234"
             />
-          </PaymentStyled.CardInputWrapper>
+          </Wrapper>
           {this.returnErrorMsg('cardNumberError')}
-        </PaymentStyled.CardElementWrapper>
-        <PaymentStyled.OtherDetailsWrapper>
-          <PaymentStyled.CardElementWrapper>
+        </CardElement>
+
+        <FlexBox>
+          <CardElementSmall>
             <CardExpiryElement
               onChange={(event) => this.setErrorMsg(event, 'cardExpiryError')}
               style={this.styles}
               placeholder="MM/YY"
             />
             {this.returnErrorMsg('cardExpiryError')}
-          </PaymentStyled.CardElementWrapper>
-          <PaymentStyled.CardElementWrapper>
+          </CardElementSmall>
+          <CardElementSmall>
             <CardCVCElement
               onChange={(event) => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
               placeholder="CCV Code"
             />
             {this.returnErrorMsg('cvvError')}
-          </PaymentStyled.CardElementWrapper>
-        </PaymentStyled.OtherDetailsWrapper>
-      </PaymentStyled>
+          </CardElementSmall>
+        </FlexBox>
+      </form>
     );
   }
 }

@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Elements } from 'react-stripe-elements';
 import { UserCardWrapper, TopSection, BottomSection } from './UserCard.styles';
-import { FlexBoxSB } from '../../styles/CommonStyled';
+import { FlexCenter, FlexBoxSB } from '../../styles/CommonStyled';
 import CardList from './CardList';
+import Button from '../PrimaryButton';
+import Checkout from './checkout';
 
 const UserCard = () => {
+  const [isNewCard, cardSelection] = useState(false);
   return (
     <UserCardWrapper>
       <TopSection>
@@ -19,7 +23,9 @@ const UserCard = () => {
             <span className="nameSpan">Paul George</span>
             <span className="bookingType">Video Shoutout</span>
           </span>
-          <span className="edit">EDIT</span>
+          <span className="edit" onClick={() => cardSelection(false)}>
+            EDIT
+          </span>
         </FlexBoxSB>
       </TopSection>
       <BottomSection>
@@ -35,10 +41,31 @@ const UserCard = () => {
         </p>
       </BottomSection>
 
-      <React.Fragment>
-        <span className="selectCard">Select Card</span>
-        <CardList />
-      </React.Fragment>
+      {isNewCard ? (
+        <Elements>
+          <Checkout />
+        </Elements>
+      ) : (
+        <React.Fragment>
+          <span className="selectCard centerAlign">Select Card</span>
+          <CardList />
+          <span
+            className="newCard centerAlign"
+            onClick={() => cardSelection(true)}
+          >
+            Pay Using New Card
+          </span>
+        </React.Fragment>
+      )}
+      <FlexCenter>
+        <Button className="button">Pay $50.00</Button>
+      </FlexCenter>
+      <FlexCenter>
+        <img
+          alt="stripe logo"
+          src="../../assets/images/powered_by_stripe.svg"
+        />
+      </FlexCenter>
     </UserCardWrapper>
   );
 };
