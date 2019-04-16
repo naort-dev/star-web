@@ -10,6 +10,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
+import { FanRegistrationSuccess } from './components/FanRegistrationSuccess'
 import { LoginContainer } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
@@ -58,16 +59,22 @@ class SignupFlow extends React.Component {
 
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
-      return (<SignUpForm
-        {...this.props}
-        registerUser={this.props.registerUser}
-        changeStep={this.changeStep}
-        currentStep={this.state.currentStep}
-        signupRole={this.state.selectedType}
-        data={this.state.socialData}
-        closeSignupFlow={this.closeSignUp}
-      />
-      );
+      switch (this.state.currentStep) {
+        case 1: return (<SignUpForm
+          {...this.props}
+          registerUser={this.props.registerUser}
+          changeStep={this.changeStep}
+          currentStep={this.state.currentStep}
+          signupRole={this.state.selectedType}
+          data={this.state.socialData}
+          closeSignupFlow={this.closeSignUp}
+        />
+        );
+        case 2: return (
+          <FanRegistrationSuccess closeSignupFlow={this.closeSignUp} />
+        );
+        default: return null;
+      }
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
         case 1: return (<SignUpForm
@@ -91,6 +98,7 @@ class SignupFlow extends React.Component {
           changeStep={this.changeStep}
           closeSignupFlow={this.closeSignUp}
         />);
+        
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
@@ -118,7 +126,7 @@ class SignupFlow extends React.Component {
     return null;
   }
 
-  render() {    
+  render() {
     return (
       <div>
         <RequestFlowPopup
@@ -129,14 +137,11 @@ class SignupFlow extends React.Component {
         >
           <LoginContainer>
             {this.state.currentStep > 0 &&
-            <LoginContainer.BackButton onClick={() => this.changeStep(this.state.currentStep - 1)}>
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </LoginContainer.BackButton> }
-            {/* <LoginContainer.CloseButton
-              onClick={this.closeSignUp}
-            >
-              <FontAwesomeIcon icon={faTimes} />
-            </LoginContainer.CloseButton> */}
+            !(this.state.currentStep==2 &&
+            this.state.selectedType==='fan') &&
+              <LoginContainer.BackButton onClick={() => this.changeStep(this.state.currentStep - 1)}>
+                <FontAwesomeIcon icon={faChevronLeft} />
+              </LoginContainer.BackButton>}
             <LoginContainer.LeftSection>
               {
                 !this.state.selectedType ?
@@ -147,7 +152,7 @@ class SignupFlow extends React.Component {
                     changeStep={this.changeStep}
                     currentStep={this.state.currentStep}
                   />
-                :
+                  :
                   <LoginContainer.SignupFlow currentStep={this.state.currentStep}>
                     {
                       this.state.currentStep === 0 ?
@@ -159,7 +164,7 @@ class SignupFlow extends React.Component {
                           data={this.state.socialData}
                           closeSignupFlow={this.closeSignUp}
                         />
-                      : this.renderSteps()
+                        : this.renderSteps()
                     }
                   </LoginContainer.SignupFlow>
               }
