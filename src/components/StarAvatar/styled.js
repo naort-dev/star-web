@@ -95,7 +95,7 @@ AvatarContainer.StarDescription = styled.div`
 `;
 
 AvatarContainer.Category = styled.span`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 10px;
   display: block;
   white-space: nowrap;
@@ -125,7 +125,7 @@ AvatarContainer.Name = styled.span`
   @media(min-width: 832px) {
     line-height: 1.41;
     font-size: 17px;
-    font-family: Gilroy-Bold;
+    font-family: Gilroy-Medium;
     width: calc(100% - 50px);
     text-align: left;
   }
@@ -134,7 +134,7 @@ AvatarContainer.Name = styled.span`
 AvatarContainer.Price = styled.span`
   display: inline-block;
   width: 100%;
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 12px;
   line-height: 1.41;
   vertical-align: top;
@@ -151,7 +151,7 @@ AvatarContainer.Price = styled.span`
 AvatarContainer.Content = styled.article`
   border-top: ${props => `1px solid ${props.theme.white}`};
   padding-top: 0.2px;
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   display: flex;
   max-width: 200px;
   align-items: flex-end;

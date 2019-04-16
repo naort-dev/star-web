@@ -4,7 +4,7 @@ injectGlobal`
   html, body {
     width: 100%;
     padding: 0;
-    font-family: 'Gilroy-Regular';
+    font-family: 'Gilroy-Light';
     color: #333333;
     margin: 0;
   }
