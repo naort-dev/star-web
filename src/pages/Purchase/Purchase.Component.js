@@ -18,13 +18,14 @@ import { dataModal } from './DataModals/formModals';
 import FormContainer from './Components/FormContainer';
 import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
+import Payment from '../../components/Payment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 1, category: '' };
+    this.state = { open: true, stepCount: 4, category: '' };
     this.starData = [
       {
         size: '28px',
@@ -69,7 +70,9 @@ class Purchase extends Component {
           </FormContainer>
         );
       }
-    } else if (this.state.stepCount === 3) {
+    } else if (this.state.stepCount === 4) {
+      return <Payment />;
+    } else if (this.state.stepCount === 5) {
       return <ScriptBuilder />;
     }
   };
