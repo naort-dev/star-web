@@ -179,7 +179,7 @@ TypeSelectorWrapper.OptionWrapper = styled.div`
   }
 `;
 TypeSelectorWrapper.HeaderText = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 20px;
   line-height: 1.25;
   letter-spacing: normal;
@@ -249,7 +249,7 @@ TypeSelectorWrapper.Image = styled.span`
 `;
 TypeSelectorWrapper.Label = styled.span`
   display: block;
-  font-family: Gilroy-Extrabold;
+  font-family: Gilroy-Bold;
   font-size: 36px;
   line-height: 1.64;
   letter-spacing: normal;
@@ -263,7 +263,7 @@ TypeSelectorWrapper.Label = styled.span`
 `;
 TypeSelectorWrapper.Description = styled.span`
   display: block;
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 14px;
   line-height: 1.5;
   letter-spacing: normal;
