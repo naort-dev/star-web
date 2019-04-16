@@ -25,7 +25,7 @@ import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 4, category: '' };
+    this.state = { open: true, stepCount: 1, category: '' };
     this.starData = [
       {
         size: '28px',
@@ -52,6 +52,7 @@ class Purchase extends Component {
   }
 
   getBodyComponent = () => {
+    debugger
     if (this.state.stepCount === 1) {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
@@ -61,6 +62,7 @@ class Purchase extends Component {
             recordTrigger={this.props.recordTrigger}
             updateMediaStore={this.props.updateMediaStore}
             playPauseMedia={this.props.playPauseMedia}
+            continueCallback={this.continuePayment}
           />
         );
       } else {
@@ -70,9 +72,9 @@ class Purchase extends Component {
           </FormContainer>
         );
       }
-    } else if (this.state.stepCount === 4) {
+    } else if (this.state.stepCount === 3) {
       return <Payment />;
-    } else if (this.state.stepCount === 5) {
+    } else if (this.state.stepCount === 4) {
       return <ScriptBuilder />;
     }
   };
@@ -100,6 +102,12 @@ class Purchase extends Component {
     });
   };
 
+  continuePayment = () => {
+    this.setState({
+      stepCount: 3,
+    });
+  };
+
   render() {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
@@ -111,7 +119,7 @@ class Purchase extends Component {
                 className="arrow"
                 onClick={this.backArrowHandler}
               />
-              {this.state.stepCount !== 4 ? (
+              {this.state.stepCount !== 3 ? (
                 <ProfileIcon>
                   <StarDrawer starData={this.starData} />
                   <Image>
@@ -128,7 +136,7 @@ class Purchase extends Component {
             </FlexBoxSBC>
             <HeaderText>What kind of video message do you want?</HeaderText>
           </Header>
-          <Content className="contentPadding">
+          <Content className="contentPadding" step={this.state.stepCount}>
             <Scrollbars>
               <ModalSwitcher
                 dataModal={dataModal.category ? dataModal.category : []}

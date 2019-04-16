@@ -48,6 +48,7 @@ const Question = (props) => {
       stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
       // uploadVideoRecorded();
+      props.continueCallback();
     }
   };
 
@@ -148,6 +149,7 @@ Question.propTypes = {
   playPauseMedia: PropTypes.func.isRequired,
   recordTrigger: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
+  continueCallback: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {

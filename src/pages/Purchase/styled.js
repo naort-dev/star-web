@@ -26,18 +26,17 @@ export const DialogStyled = styled(Dialog)`
 `;
 
 export const Header = styled.section`
-  height: 160px;
+  height: ${(props) => (props.step === 3 ? '120px' : '160px')};
   ${media.mobileScreen} {
-    height: 178px;
-  }
-  height: 157px;
-  background: #ff6c58;
-  padding: 12px 40px 0;
+    height: ${(props) => (props.step === 3 ? '120px' : '178px')};
+  }               
+  background: ${(props) => (props.step === 3 ? '#fff;' : '#ff6c58;')};
+  padding: ${(props) => (props.step === 3 ? '48px 40px 0;' : '12px 40px 0;')};
   position: relative;
 
   .svg-inline--fa {
     font-size: 50px;
-    color: #fff;
+    color: ${(props) => (props.step === 3 ? '#707070' : '#fff')};
     cursor: pointer;
   }
   .arrow {
@@ -45,6 +44,7 @@ export const Header = styled.section`
   }
   :after {
     content: '';
+    display: ${(props) => (props.step === 3 ? 'none' : 'block')};
     position: absolute;
     top: 100%;
     left: 50%;
@@ -64,11 +64,13 @@ export const Header = styled.section`
 
 export const Content = styled.section`
   position: relative;
-  padding-top: 30px;
-  height: calc(100% - 157px);
+  padding-top: ${(props) => (props.step === 3 ? '0' : '30px')};
+  height: ${(props) =>
+    props.step === 3 ? 'calc(100% - 100px)' : ' calc(100% - 157px)'};
   ${media.mobileScreen} {
-    padding-top: 70px;
-    height: calc(100% - 200px);
+    padding-top: ${(props) => (props.step === 3 ? '0' : '70px')};
+    height: ${(props) =>
+      props.step === 3 ? 'calc(100% - 100px)' : ' calc(100% - 200px)'};
   }
 `;
 
