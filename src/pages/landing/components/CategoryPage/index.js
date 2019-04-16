@@ -13,24 +13,25 @@ import { fetchFeaturedStars } from '../../actions/getFeaturedStars';
 import CategoryPageStyled from './styled';
 
 const CategoryPage = (props) => {
+  const { paleSkyBlue } = props.theme;
   const starData = [{
     size: '130px',
     horizontal: '30%',
     vertical: '50px',
     rotation: '15deg',
-    color: props.theme.paleSkyBlue,
+    color: paleSkyBlue,
   }, {
     size: '60px',
     horizontal: '70%',
     vertical: '30px',
     rotation: '-15deg',
-    color: props.theme.paleSkyBlue,
+    color: paleSkyBlue,
   }, {
     size: '78px',
     horizontal: '85%',
     vertical: '75%',
     rotation: '15deg',
-    color: props.theme.paleSkyBlue,
+    color: paleSkyBlue,
   }];
   const [showFilter, toggleFilter] = useState(false);
 
