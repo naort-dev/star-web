@@ -19,6 +19,8 @@ UploadContainer.CropperContainer = styled.div`
   position: absolute;
   right: 0;
   left: 0;
+  background-color: #fff;
+  z-index: 3;
 `;
 
 UploadContainer.BackButton = styled.span`
@@ -34,14 +36,14 @@ UploadContainer.BackButton = styled.span`
 
 UploadContainer.CloseButton = styled.span`
   position: absolute;
-  right: 49.5px;
+  right: 50px;
   z-index: 2;
   display: inline-block;
-  width: 28px;
-  height: 28px;
-  cursor:pointer;
+  cursor: pointer;
   color: #707070;
-  font-size: 30px;
+  font-size: 45px;
+  line-height: 20px;
+  top: 40px;
 `;
 
 UploadContainer.wrapper = styled.div`
