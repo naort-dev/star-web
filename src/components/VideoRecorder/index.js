@@ -36,7 +36,8 @@ class VideoRecorder extends Component {
       } else if (
         this.props.shouldRecord !== prevProps.shouldRecord &&
         !this.props.shouldRecord &&
-        !this.isStoped
+        !this.isStoped &&
+        this.props.forceStop
       ) {
         this.stopRecording();
       }
@@ -154,9 +155,11 @@ class VideoRecorder extends Component {
   };
 
   videoClick = () => {
-    this.setState({ mediaControls: true });
-    this.video.pause();
-    this.props.playPauseMediaAction();
+    if (!this.props.shouldRecord) {
+      this.setState({ mediaControls: true });
+      this.video.pause();
+      this.props.playPauseMediaAction();
+    }
   };
 
   playPauseClick = (event) => {
@@ -186,7 +189,10 @@ class VideoRecorder extends Component {
           id="video-player_tag"
           onEnded={this.checkVideoOver}
           onClick={this.videoClick}
-        />
+          muted={this.props.shouldRecord}
+        >
+          <track kind="captions" />
+        </video>
         {this.state.progress && <Progress />}
 
         {this.state.mediaControls && (
@@ -214,6 +220,7 @@ VideoRecorder.propTypes = {
   retryRecordHandler: PropTypes.func.isRequired,
   recordTrigger: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.bool.isRequired,
+  forceStop: PropTypes.bool.isRequired,
 };
 
 VideoRecorder.defaultProps = {
