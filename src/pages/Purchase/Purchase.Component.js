@@ -54,8 +54,14 @@ class Purchase extends Component {
     if (this.state.stepCount === 1) {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
-      if (this.state.category === 'question') {
-        return <Question />;
+      if (this.state.category === '3') {
+        return (
+          <Question
+            recordTrigger={this.props.recordTrigger}
+            updateMediaStore={this.props.updateMediaStore}
+            playPauseMedia={this.props.playPauseMedia}
+          />
+        );
       } else {
         return (
           <FormContainer submitClick={this.submitClick}>
@@ -114,7 +120,9 @@ class Purchase extends Component {
           </Header>
           <Content>
             <Scrollbars>
-              <ModalSwitcher dataModal={dataModal.category}>
+              <ModalSwitcher
+                dataModal={dataModal.category ? dataModal.category : []}
+              >
                 {this.getBodyComponent()}
               </ModalSwitcher>
             </Scrollbars>

@@ -21,6 +21,19 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.CloseButton = styled.span`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  cursor:pointer;
+  color: #707070;
+  font-size: 30px;
+`;
+
 
 LoginContainer.actionText = styled.span`
   cursor: pointer;
@@ -88,7 +101,7 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  font-family: 'Gilroy-Medium';
+  font-family: 'Gilroy';
   font-size: 24px;
   text-align: center;
   color: #ff6c58;
@@ -315,7 +328,7 @@ text-align: center;
 text-decoration: none;
 display: inline-block;
 font-size:18px;
-font-family: 'Gilroy-Extrabold';
+font-family: 'Gilroy-Bold';
 outline:none;
 cursor: pointer;
 border-radius:30px;
@@ -337,7 +350,7 @@ LoginContainer.ForgotButtonWrapper = styled.div`
 `;
 LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;
-  font-family:  'Gilroy-Medium';
+  font-family:  'Gilroy';
   font-size:14px;
 `;
 LoginContainer.ButtonWrapper = styled.div`
@@ -453,7 +466,6 @@ LoginContainer.WrapsInput = styled.div`
     width:100%;
   }
   @media(min-width:1025px){
-    width:352px;
     height:32px;
   }
 

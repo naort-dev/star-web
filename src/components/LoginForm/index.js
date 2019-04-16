@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import validator from "validator";
 import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
@@ -390,6 +391,7 @@ export default class LoginForm extends React.Component {
   ShowPassword = () => {
     this.setState({ showPassword: !this.state.showPassword });
   };
+
   render() {
     const { email, password } = this.state;
     return (
@@ -399,7 +401,9 @@ export default class LoginForm extends React.Component {
             <ActionLoader />
         }
         <SignUpMethod.SocialMediaSignup>
+
           <SignUpMethod.Container>
+
             <SignUpMethod.Heading>
             How do you want to log in?
             </SignUpMethod.Heading>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookSquare,
@@ -100,6 +101,12 @@ class DesktopHome extends React.Component {
     return { trendingList };
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.category.label !== this.props.category.label) {
+      this.props.closeLandingFlow();
+    }
+  }
+
   componentWillUnmount() {
     window.removeEventListener('resize', this.setTrendingData);
   }
@@ -114,7 +121,7 @@ class DesktopHome extends React.Component {
   }
 
   getAvatarContent = (index) => {
-    const featuredData = this.props.featuredStars.data;
+    const featuredData = this.props.featuredStars.homeFeatured.data;
     return featuredData[index - 1];
   }
 
@@ -129,7 +136,9 @@ class DesktopHome extends React.Component {
       <DesktopStyled>
         <DesktopStyled.Logo className="test" src="assets/images/logo_starsona.svg" />
         <DesktopStyled.Heading>
-        Personalized Videos From The Stars
+          {
+            this.props.featuredStars.homeFeatured.title
+          }
         </DesktopStyled.Heading>
         <DesktopStyled.FlowWrapper>
           <DesktopStyled.StarSection>
@@ -295,10 +304,26 @@ class DesktopHome extends React.Component {
   }
 }
 
+DesktopHome.defaultProps = {
+  theme: {},
+};
+
+DesktopHome.propTypes = {
+  professionsList: PropTypes.object.isRequired,
+  featuredStars: PropTypes.object.isRequired,
+  trendingStars: PropTypes.object.isRequired,
+  category: PropTypes.object.isRequired,
+  closeLandingFlow: PropTypes.func.isRequired,
+  fetchTrendingStars: PropTypes.func.isRequired,
+  updateCategory: PropTypes.func.isRequired,
+  theme: PropTypes.object,
+}
+
 const mapStateToProps = state => ({
   professionsList: state.professionsList,
   featuredStars: state.featuredStars,
   trendingStars: state.trendingStars,
+  category: state.filters.category,
 });
 
 const mapDispatchToProps = dispatch => ({

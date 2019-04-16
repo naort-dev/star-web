@@ -94,6 +94,7 @@ const StoreIcon = styled.img`
   display: inline-block;
 `;
 FooterStyled.Anchor = styled.a`
+  font-family: Gilroy;
   &:visited{
     color:#333333;
   }

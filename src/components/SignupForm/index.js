@@ -222,7 +222,7 @@ class SignUpForm extends React.Component {
       return false;
     }
     if (!pattern.test(this.state.password.value)) {
-      this.setState({ password: { ...this.state.password, message: 'Enter a valid password with at least one symbol' } });
+      this.setState({ password: { ...this.state.password, message: 'Enter a valid 8 character password with at least one symbol' } });
       return false;
     }
     if (this.state.confirmPassword.value !== this.state.password.value) {
@@ -279,8 +279,9 @@ class SignUpForm extends React.Component {
                     <LoginContainer.EmptyDiv />
                     :
                     <div>
-                      <LoginContainer.Label>
-                        {signUp.item_1}
+                      <LoginContainer.Label error={this.state.firstName.message}>
+                        {(this.state.firstName.message || this.state.lastName.message) ? 
+                        'Enter valid full name': signUp.item_1}
                       </LoginContainer.Label>
                       <LoginContainer.InputWrapper>
                         <LoginContainer.WrapsInput>
@@ -291,9 +292,6 @@ class SignUpForm extends React.Component {
                             value={this.state.firstName.value}
                             onChange={(event) => this.saveFormEntries(event, "firstName")}
                           />
-                          <LoginContainer.ErrorMsg>
-                            {this.state.firstName.message}
-                          </LoginContainer.ErrorMsg>
                         </LoginContainer.WrapsInput>
                         <LoginContainer.WrapsInput>
                           <TextInput
@@ -303,15 +301,12 @@ class SignUpForm extends React.Component {
                             value={this.state.lastName.value}
                             onChange={(event) => this.saveFormEntries(event, "lastName")}
                           />
-                          <LoginContainer.ErrorMsg>
-                            {this.state.lastName.message}
-                          </LoginContainer.ErrorMsg>
                         </LoginContainer.WrapsInput>
                       </LoginContainer.InputWrapper>
                     </div>
                 }
-                <LoginContainer.Label>
-                  {signUp.item_2}
+                <LoginContainer.Label error={this.state[signUp.key_2].message}>
+                  {this.state[signUp.key_2].message? this.state[signUp.key_2].message: signUp.item_2}
                 </LoginContainer.Label>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
@@ -323,13 +318,10 @@ class SignUpForm extends React.Component {
                       value={this.state[signUp.key_2].value}
                       onChange={(event) => this.saveFormEntries(event, signUp.key_2)}
                     />
-                    <LoginContainer.ErrorMsg>
-                      {this.state[signUp.key_2].message}
-                    </LoginContainer.ErrorMsg>
                   </LoginContainer.WrapsInput>
                 </LoginContainer.InputWrapper>
-                <LoginContainer.Label>
-                  {signUp.item_3}
+                <LoginContainer.Label error={this.state[signUp.key_3_1].message}>
+                  {this.state[signUp.key_3_1].message? this.state[signUp.key_3_1].message: signUp.item_3}
                 </LoginContainer.Label>
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
@@ -341,9 +333,6 @@ class SignUpForm extends React.Component {
                       value={this.state[signUp.key_3_1].value}
                       onChange={(event) => this.saveFormEntries(event, signUp.key_3_1)}
                     />
-                    <LoginContainer.ErrorMsg>
-                      {this.state[signUp.key_3_1].message}
-                    </LoginContainer.ErrorMsg>
                   </LoginContainer.WrapsInput>
                   {this.props.signupRole === ROLE_FAN ?
                     <LoginContainer.WrapsInput>

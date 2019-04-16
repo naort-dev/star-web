@@ -10,7 +10,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
-import { LoginContainer, HeaderSection } from './styled';
+import { LoginContainer } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/actions/storeSocialMedia';
@@ -132,11 +132,11 @@ class SignupFlow extends React.Component {
             <LoginContainer.BackButton onClick={() => this.changeStep(this.state.currentStep - 1)}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </LoginContainer.BackButton> }
-            <LoginContainer.CloseButton
+            {/* <LoginContainer.CloseButton
               onClick={this.closeSignUp}
             >
               <FontAwesomeIcon icon={faTimes} />
-            </LoginContainer.CloseButton>
+            </LoginContainer.CloseButton> */}
             <LoginContainer.LeftSection>
               {
                 !this.state.selectedType ?

@@ -301,7 +301,7 @@ HeaderSection.AuthButton = styled.button`
   border-radius: 5px;
   border: ${props => `solid 1px ${props.theme.flatBlue}`};
   background-color: ${props => (!props.notFixed ? '#fff' : props.theme.flatBlue)};
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   outline:none;
   font-size: 16px;
   cursor: pointer;

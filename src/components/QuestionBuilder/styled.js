@@ -12,7 +12,7 @@ export const QuestionWrapper = styled.section`
 `;
 
 export const QuestionTag = styled.span`
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Medium;
   font-size: 14px;
   line-height: 1.57;
   color: #7c7c7c;

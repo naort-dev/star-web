@@ -1,5 +1,7 @@
 import React from 'react';
 import { times, random } from 'lodash';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import PopupStyled from './styled';
@@ -46,9 +48,10 @@ export default class RequestFlowPopup extends React.Component {
 
   renderPopup = () => {
     return (
-      <Dialog
+      <PopupStyled.Dialog
         fullScreen={this.state.fullScreen}
         open
+        classes={{paper: 'paper-root'}}
         onClose={this.props.closePopUp}
         aria-labelledby="responsive-dialog-title"
       >
@@ -77,8 +80,14 @@ export default class RequestFlowPopup extends React.Component {
           <PopupStyled.SmallContent>
             {this.props.children}
           </PopupStyled.SmallContent>
+          {
+            !this.props.disableClose &&
+              <PopupStyled.CloseButton onClick={this.props.closePopUp}>
+                <FontAwesomeIcon icon={faTimes} />
+              </PopupStyled.CloseButton>
+          }
         </PopupStyled.SmallContainer>
-      </Dialog>
+      </PopupStyled.Dialog>
     );
   }
 

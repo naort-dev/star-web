@@ -14,11 +14,30 @@ export const Layout = styled.section`
     position: absolute;
     top: 450px;
     padding-bottom: 60px;
-    button {
-      width: 242px;
-    }
     ${media.mobileScreen} {
       display: block;
+    }
+    .button {
+      padding: 20px 0;
+    }
+  }
+  .button {
+    width: 242px;
+  }
+  video {
+    width: 269px;
+    border-radius: 23px;
+    height: 100%;
+    object-fit: cover;
+  }
+  .note {
+    color: #999;
+    font-family: Gilroy-Light;
+    font-size: 16px;
+    ${media.mobileScreen} {
+      color: #fff;
+      font-size: 14px;
+      padding-top: 20px;
     }
   }
 `;
@@ -29,57 +48,57 @@ export const VideoContainer = styled.section`
   border-radius: 23px;
   background-color: #e3e3e3;
   margin-bottom: 60px;
+  position: relative;
+  .playButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .retry {
+    background: #fff;
+    width: 224px;
+    color: #2f839d;
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+  }
 `;
 
 export const QuestionContainer = styled.section`
-  padding-left: 40px;
+  padding-left: ${(props) => (props.error ? '20px' : '40px')};
   padding-top: 10px;
   display: block;
   ${media.mobileScreen} {
     position: absolute;
-    display: ${props => (props.isShow ? 'block' : 'none')};
+    display: ${(props) => (props.isShow ? 'block' : 'none')};
     padding-left: 24px;
-    top: 170px;
-    background: transparent;
+    height: 250px;
+    top: 165px;
+    border-radius: 23px;
+    background: rgba(0, 0, 0, 0.47);
     left: 50%;
     width: 269px;
     transform: translateX(-50%);
   }
   h1 {
-    font-family: Gilroy-Bold;
+    font-family: Gilroy;
     font-size: 18px;
     color: #46829a;
     ${media.mobileScreen} {
       display: none;
     }
   }
-  button {
+  .button {
     margin-top: 40px;
-    width: 224px;
     height: 60px;
+    padding: 0;
     ${media.mobileScreen} {
       display: none;
     }
   }
 `;
 
-export const QuestionWrapper = styled.section`
-  display: flex;
-  max-width: 220px;
-  padding-top: 20px;
-  svg {
-    margin-top: 2px;
-    color: #ff6c58;
-  }
-`;
-
-export const QuestionTag = styled.span`
-  font-family: Gilroy-Bold;
-  font-size: 14px;
-  line-height: 1.57;
-  color: #7c7c7c;
-  padding-left: 15px;
-`;
 export const ShowHide = styled.span`
   display: none;
   position: absolute;
@@ -91,22 +110,38 @@ export const ShowHide = styled.span`
   border-radius: 20px;
   background: #fff;
   color: #2f839d;
-  font-family: Gilroy-Extrabold;
+  font-family: Gilroy-Bold;
+  cursor: pointer;
   ${media.mobileScreen} {
     display: block;
   }
   :after,
   :before {
     position: relative;
-    top: ${props => (props.isShow ? '-3px' : '3px')};
+    top: ${(props) => (props.isShow ? '-3px' : '3px')};
     content: '';
     display: inline-block;
     width: 10px;
     height: 10px;
     border-right: 1px solid #2f839d;
     border-top: 1px solid #2f839d;
-    transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
+    transform: ${(props) =>
+      props.isShow ? 'rotate(135deg)' : 'rotate(315deg)'};
     margin-right: 28px;
     margin-left: 28px;
+  }
+`;
+
+export const PlayButton = styled.section`
+  display: flex;
+  justify-content: center;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: #fff;
+  align-items: center;
+  svg {
+    font-size: 44px;
+    color: red;
   }
 `;

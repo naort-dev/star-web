@@ -92,7 +92,7 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   color: #ff6c58;
   font-size: 20px;
   @media(min-width:768px){
@@ -110,7 +110,7 @@ LoginContainer.Heading = styled.div`
 LoginContainer.ContinueButton = styled.button`
   cursor: pointer;
   background-color: #2f839d;
-  font-family: Gilroy-Extrabold;
+  font-family: Gilroy-Bold;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
@@ -205,11 +205,11 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 12px;
   line-height: 2.08;
   text-align: center;
-  color: #555555;
+  color: ${props => (props.error ? '#990000' : '#555555')}; 
   padding-top: 25px;
   width:100%;
   @media(min-width:768px){
@@ -289,7 +289,7 @@ LoginContainer.InputWrapper = styled.div`
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 14px;
   line-height: 1.57;
   text-align: left;
@@ -429,7 +429,7 @@ FooterSection.Button = styled.input`
 LoginContainer.WrapsInput = styled.div`
   width:100%;
   input {
-    font-family: Gilroy;
+    font-family: Gilroy-Light;
     font-size: 18px;
     line-height: 1.14;
     text-align: center;
