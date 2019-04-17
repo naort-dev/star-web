@@ -16,6 +16,7 @@ export const Li = styled.li`
   margin: 0 auto;
   position: relative;
   cursor: pointer;
+  margin-bottom: 16px;
   .brand:after {
     content: '';
     position: absolute;

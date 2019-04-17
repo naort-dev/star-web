@@ -52,7 +52,6 @@ class Purchase extends Component {
   }
 
   getBodyComponent = () => {
-    debugger
     if (this.state.stepCount === 1) {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
@@ -63,6 +62,7 @@ class Purchase extends Component {
             updateMediaStore={this.props.updateMediaStore}
             playPauseMedia={this.props.playPauseMedia}
             continueCallback={this.continuePayment}
+            loaderAction={this.props.loaderAction}
           />
         );
       } else {

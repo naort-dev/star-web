@@ -1,15 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Layout } from './styled';
 import UserCard from './UserCard';
 
-class Payment extends Component {
-  render() {
-    return (
-      <Layout>
-        <UserCard />
-      </Layout>
-    );
-  }
-}
+const Payment = () => {
+  return (
+    <Layout>
+      <UserCard />
+    </Layout>
+  );
+};
 
 export default Payment;

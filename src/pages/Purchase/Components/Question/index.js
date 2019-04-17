@@ -47,24 +47,31 @@ const Question = (props) => {
       mediaHandler('Continue to Payment', true);
       stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
-      // uploadVideoRecorded();
-      props.continueCallback();
+      uploadVideoRecorded();
     }
   };
 
   const uploadVideoRecorded = () => {
     let uploadVideo = null;
     uploadVideo = new File([props.videoFile], 'askVideo.mp4');
+    props.loaderAction(true);
     getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
       .then((response) => {
         if (response && response.filename) {
           axios
             .post(response.url, response.formData)
-            .then((response) => {})
-            .catch((error) => {});
+            .then((response) => {
+              props.continueCallback();
+              props.loaderAction(false);
+            })
+            .catch((error) => {
+              props.loaderAction(false);
+            });
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        props.loaderAction(false);
+      });
   };
 
   const stopRecordHandler = () => {

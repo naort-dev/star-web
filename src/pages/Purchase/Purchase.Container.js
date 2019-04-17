@@ -4,6 +4,7 @@ import {
   recordTrigger,
   updateMediaStore,
   playPauseMedia,
+  loaderAction,
 } from '../../store/shared/actions/commonActions';
 
 function mapDispatchToProps(dispatch) {
@@ -16,6 +17,9 @@ function mapDispatchToProps(dispatch) {
     },
     playPauseMedia: () => {
       dispatch(playPauseMedia());
+    },
+    loaderAction: (value) => {
+      dispatch(loaderAction(value));
     },
   };
 }

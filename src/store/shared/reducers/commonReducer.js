@@ -2,16 +2,18 @@ import {
   TRIGGER_RECORDING,
   UPDATE_RECORDMEDIA,
   PLAY_PAUSE_MEDIA,
+  LOADER_COMMON,
 } from '../actions/commonActions';
 
 const initalState = {
   shouldRecord: false,
-  videoSRC: null,
+  videoSrc: null,
   file: null,
   playPauseMedia: false,
+  loader: false,
 };
 
-const PurchaseReducer = (state = { ...initalState }, action) => {
+const commonReducer = (state = { ...initalState }, action) => {
   switch (action.type) {
     case TRIGGER_RECORDING:
       return {
@@ -22,7 +24,7 @@ const PurchaseReducer = (state = { ...initalState }, action) => {
     case UPDATE_RECORDMEDIA:
       return {
         ...state,
-        videoSRC: action.payload.videoSrc,
+        videoSrc: action.payload.videoSrc,
         file: action.payload.superBuffer,
       };
 
@@ -32,8 +34,14 @@ const PurchaseReducer = (state = { ...initalState }, action) => {
         playPauseMedia: !state.playPauseMedia,
       };
 
+    case LOADER_COMMON:
+      return {
+        ...state,
+        loader: action.value,
+      };
+
     default:
       return state;
   }
 };
-export default PurchaseReducer;
+export default commonReducer;

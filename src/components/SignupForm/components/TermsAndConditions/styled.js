@@ -51,7 +51,7 @@ TermsConditionsWrapper.Button = styled.button`
 `;
 
 TermsConditionsWrapper.Description = styled.p`
-font-family: Gilroy-Regular;
+font-family: Gilroy;
 font-size: 16px;
 line-height: 1.63;
 text-align: left;

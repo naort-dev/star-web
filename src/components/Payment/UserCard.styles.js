@@ -1,7 +1,7 @@
 import styled from 'styled-components';
+import { media } from '../../styles/mediaQueries';
 
-export const UserCardWrapper = styled.section`
-  border-radius: 10px;
+export const Layout = styled.section`
   .colDir {
     display: flex;
     flex-direction: column;
@@ -9,26 +9,33 @@ export const UserCardWrapper = styled.section`
   .selectCard {
     font-size: 18px;
     color: #999;
-    font-family: Gilroy-Regular;
+    font-family: Gilroy;
     letter-spacing: 1.1px;
   }
   .newCard {
     font-size: 16px;
     color: #2f839d;
-    padding-top: 16px;
     cursor: pointer;
   }
   .centerAlign {
     width: 100%;
     display: inline-block;
     text-align: center;
-    font-family: Gilroy-Regular;
+    font-family: Gilroy;
   }
   .button {
     margin-bottom: 40px;
     margin-top: 40px;
+    height: 60px;
   }
 `;
+
+export const UserCardWrapper = styled.section`
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 33px;
+`;
+
 export const TopSection = styled.section`
   background-color: #f5f5f5;
   padding: 20px;
@@ -39,11 +46,11 @@ export const TopSection = styled.section`
     width: 100%;
   }
   .bookingType {
-    font-family: Gilroy-Regular;
+    font-family: Gilroy;
     font-size: 16px;
     color: #969696;
     width: 100%;
-    padding-top: 6px;
+    padding-top: 4px;
   }
   .edit {
     font-family: Gilroy-Semibold;
@@ -65,14 +72,17 @@ export const TopSection = styled.section`
   }
   .alignTop {
     padding-top: 3px;
+    padding-left: 10px;
   }
 `;
 export const BottomSection = styled.section`
   padding: 20px;
-  margin-bottom: 33px;
   background-color: #efefef;
+  ${media.webView} {
+    padding: 20px 20px 5px;
+  }
   .labelHead {
-    font-family: Gilroy-Regular;
+    font-family: Gilroy;
     font-size: 12px;
     color: #969696;
     width: 100%;
@@ -90,10 +100,15 @@ export const BottomSection = styled.section`
     text-align: center;
     width: 188px;
     margin: 0 auto;
+    ${media.webView} {
+      width: 100%;
+      padding-top: 5px;
+      padding-left: 10px;
+    }
   }
   .cardType {
     line-height: 20px;
-    font-family: Gilroy-Regular;
+    font-family: Gilroy;
     font-size: 16px;
     color: #414141;
   }

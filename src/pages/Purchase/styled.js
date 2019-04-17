@@ -56,7 +56,7 @@ export const Header = styled.section`
     transform: translateX(-50%);
   }
   .customHead {
-    font-family: Gilroy-Regular;
+    font-family: Gilroy;
     font-size: 24px;
     color: #ff6c58;
   }
