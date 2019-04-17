@@ -1,6 +1,8 @@
 import React from 'react';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
 import Popup from '../Popup';
 import CropperStyled from './styled';
 
@@ -138,29 +140,29 @@ export default class ImageCropper extends React.Component {
 
   render() {
     return (
-      // <Popup
-      //   modalView
-      //   disableBackground
-      //   closePopUp={() => this.props.closeCropper()}
-      // >
-        <CropperStyled innerRef={(node) => {this.cropperWrapper = node}}>
-          {
-            this.state.cropImage &&
-              <Cropper
-                src={this.state.cropImage}
-                crop={this.state.cropValues}
-                keepSelection
-                onImageLoaded={this.setCropImage}
-                onChange={this.onCropChange}
-              />
-          }
-          <CropperStyled.ButtonWrapper>
-            <CropperStyled.CropperButton onClick={this.handleCrop}>Take picture</CropperStyled.CropperButton>
-            <CropperStyled.CropperButton onClick={this.handleCrop}>I like it, continue</CropperStyled.CropperButton>
-            <CropperStyled.CropperCancel onClick={this.props.closeCropper}>Upload picture</CropperStyled.CropperCancel>
-          </CropperStyled.ButtonWrapper>
-        </CropperStyled>
-      // </Popup>
-    )
+      <CropperStyled innerRef={(node) => { this.cropperWrapper = node; }}>
+        {
+          this.state.cropImage &&
+            <Cropper
+              src={this.state.cropImage}
+              crop={this.state.cropValues}
+              keepSelection
+              onImageLoaded={this.setCropImage}
+              onChange={this.onCropChange}
+            />
+        }
+        <CropperStyled.ButtonWrapper>
+          <CropperStyled.CropperLightButton onClick={this.handleCrop}>
+            <FontAwesomeIcon icon={faCamera} />
+            Take picture
+          </CropperStyled.CropperLightButton>
+          <CropperStyled.CropperButton onClick={this.handleCrop}>I like it, continue</CropperStyled.CropperButton>
+          <CropperStyled.CropperLightButton onClick={this.props.closeCropper}>
+            <FontAwesomeIcon icon={faUpload} />
+            Upload picture
+          </CropperStyled.CropperLightButton>
+        </CropperStyled.ButtonWrapper>
+      </CropperStyled>
+    );
   }
 }
