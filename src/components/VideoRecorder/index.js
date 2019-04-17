@@ -23,7 +23,7 @@ class VideoRecorder extends Component {
 
   componentDidMount() {
     this.fetchStream();
-    if (this.props.videoSrc !== '') {
+    if (this.props.videoSrc) {
       this.initialLoad();
     }
   }
@@ -46,7 +46,7 @@ class VideoRecorder extends Component {
       }
     }
     if (
-      this.props.videoSrc !== '' &&
+      this.props.videoSrc &&
       this.props.videoSrc !== prevProps.videoSrc
     ) {
       this.initialLoad();

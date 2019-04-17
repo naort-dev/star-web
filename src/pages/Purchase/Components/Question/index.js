@@ -27,7 +27,7 @@ const Question = (props) => {
     },
   ];
   const [showHideFlg, showHideScript] = useState(false);
-  const [buttonLabel, changeButtonLabel] = useState('Record');
+  const [buttonLabel, changeButtonLabel] = useState(props.videoSrc ? 'Continue to Payment' : 'Record');
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
 
@@ -157,15 +157,18 @@ Question.propTypes = {
   recordTrigger: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
   continueCallback: PropTypes.func.isRequired,
+  videoSrc: PropTypes.string,
 };
 
 Question.defaultProps = {
   videoFile: {},
+  videoSrc: '',
 };
 
 function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
+    videoSrc: state.commonReducer.videoSrc,
   };
 }
 export default connect(
