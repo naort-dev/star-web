@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import TextField from '../../../TextField';
+import {TextInput} from '../../../TextField'
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';

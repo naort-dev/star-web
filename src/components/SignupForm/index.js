@@ -19,7 +19,6 @@ import { ROLES } from '../../constants/usertype';
 import { ROLE_FAN, ROLE_STAR } from './constants'
 /************************************  Styles  ***************************************/
 import { LoginContainer } from './styled';
-import { debug } from 'util';
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -71,18 +70,18 @@ class SignUpForm extends React.Component {
 
   onRegister = async (e) => {
     e.preventDefault();
-    if (this.props.signupRole === ROLE_FAN) {
       if (
         this.checkFirstRequired() &
         this.checkLastRequired() &
         this.checkEmail() &
-        this.checkPassword()
+        this.props.signupRole === ROLE_FAN? this.checkPassword(): this.checkNickNameRequired() 
       ) {
         this.props.registerUser(
           this.state.firstName.value,
           this.state.lastName.value,
           this.state.email.value,
           this.state.password.value,
+          this.state.nickName.value,
           this.state.role,
         )
           .then((response) => {
@@ -92,32 +91,6 @@ class SignUpForm extends React.Component {
           });
       }
     } 
-    else {
-      if (
-        this.checkFirstRequired() &
-        this.checkLastRequired() &
-        this.checkEmail() &
-        this.checkNickNameRequired()
-      ) {
-        this.props.changeStep(this.props.currentStep + 1);
-        // this.props.registerUser(
-        //   this.state.firstName.value,
-        //   this.state.lastName.value,
-        //   this.state.email.value,
-        //   this.state.nickName.value,
-        //   this.state.role,
-        // )
-        //   .then((response) => {
-        //     if (response != undefined) {
-        //       if (this.props.signupRole === "star" || this.props.signupRole === 'group') {
-        //         this.props.changeStep(this.props.currentStep + 1);
-        //       }
-        //     }
-        //   });
-      }
-    }
-
-  };
 
   saveFormEntries = (event, type) => {
     this.setState({
@@ -351,13 +324,13 @@ class SignUpForm extends React.Component {
                     : null}
                 </LoginContainer.InputWrapper>
                 <LoginContainer.WrapsInput>
-                  {/* {this.props.statusCode === undefined ?
+                  {this.props.statusCode === undefined ?
                     <LoginContainer.ErrorMsg>
                       {this.props.error}
                     </LoginContainer.ErrorMsg>
                     :
                     <LoginContainer.EmptyDiv />
-                  } */}
+                  }
                 </LoginContainer.WrapsInput>
                 {this.props.signupRole === ROLE_FAN ? null :
                   <div>
