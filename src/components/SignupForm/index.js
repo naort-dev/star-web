@@ -81,7 +81,7 @@ class SignUpForm extends React.Component {
         this.checkEmail() &
         (this.props.signupRole === ROLE_FAN ?
           this.checkPassword() :
-          this.checkNickNameRequired())
+          this.checkTermsAndConditionsRequired())
     ) {
       this.props.registerUser(
         this.state.firstName.value,
@@ -112,7 +112,7 @@ class SignUpForm extends React.Component {
         ...this.state.termsAndConditions,
         value: event.target.checked
       }
-    });
+    })
   }
   agreeTermsConditions = () => {
     this.setState({
@@ -121,7 +121,7 @@ class SignUpForm extends React.Component {
         ...this.state.termsAndConditions,
         value: true
       }
-    })
+    }, () => this.checkTermsAndConditionsRequired())
   }
   checkEmail = () => {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
@@ -178,22 +178,6 @@ class SignUpForm extends React.Component {
     }
     this.setState({
       lastName: { ...this.state.lastName,
-        message: '',
-        isValid: true },
-    });
-    return true;
-  }
-  checkNickNameRequired = () => {
-    const nickNameEmpty = validator.isEmpty(this.state.nickName.value);
-    if (nickNameEmpty) {
-      const nickNameMsg = 'Enter a stage name';
-      this.setState({
-        nickName: { ...this.state.nickName,
-          message: nickNameMsg } });
-      return false;
-    }
-    this.setState({
-      nickName: { ...this.state.nickName,
         message: '',
         isValid: true },
     });
@@ -377,7 +361,7 @@ class SignUpForm extends React.Component {
                 {this.props.signupRole === ROLE_FAN ? null :
                   <div>
                     <LoginContainer.PrivacyContent>
-                      <Checkbox
+                        <Checkbox
                         checked={this.state.termsAndConditions.value}
                         onChange={this.toggleTermsAndConditions('termsAndConditions')}
                         value="termsAndConditions"
