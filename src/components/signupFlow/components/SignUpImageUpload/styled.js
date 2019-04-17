@@ -13,19 +13,37 @@ const UploadContainer = styled.div`
   }
 `;
 
+UploadContainer.Wrapper = styled.div``;
+
+UploadContainer.CropperContainer = styled.div`
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 3;
+`;
+
 UploadContainer.BackButton = styled.span`
   position: absolute;
-  top: 2px;
   left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
+  color: #707070;
   border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
+  padding: 0 30px;
   cursor: pointer;
   outline: none;
+  font-size: 28px;
+`;
+
+UploadContainer.CloseButton = styled.span`
+  position: absolute;
+  right: 50px;
+  z-index: 2;
+  display: inline-block;
+  cursor: pointer;
+  color: #707070;
+  font-size: 45px;
+  line-height: 20px;
+  top: 40px;
 `;
 
 UploadContainer.wrapper = styled.div`
@@ -62,21 +80,6 @@ UploadContainer.Heading = styled.div`
   }
 `;
 
-UploadContainer.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 UploadContainer.CategoriesWrapper = styled.div``;
 
 const ImageUpload = styled.div`
@@ -88,6 +91,30 @@ ImageUpload.ContentWrapper = styled.div`
   height: 100%;
   display: ${props => (props.hide ? 'none' : 'block')}
 `;
+
+ImageUpload.BackButton = styled.span`
+  position: absolute;
+  left: 5px;
+  color: #707070;
+  border: none;
+  padding: 0 30px;
+  cursor: pointer;
+  outline: none;
+  font-size: 28px;
+`;
+
+ImageUpload.CloseButton = styled.span`
+  position: absolute;
+  right: 49.5px;
+  z-index: 2;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  cursor:pointer;
+  color: #707070;
+  font-size: 30px;
+`;
+
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
@@ -117,8 +144,8 @@ ImageUpload.CoverImage = styled.div`
 `;
 
 ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
-  width: 150px;
-  height: 150px;
+  width: 144px;
+  height: 144px;
   position: relative;
   border: none;
   border-radius: 50%;
@@ -126,6 +153,8 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
+  text-align: center;
+  margin-right: 10px;
 `;
 
 ImageUpload.ProfileInputContainer = styled.span`
@@ -141,13 +170,13 @@ ImageUpload.ProfileInputContainer = styled.span`
   pointer-events: none;
 `;
 
-ImageUpload.ProfileInputWrapper = styled.span`
-  background: ${props => !props.noImage && "url('assets/images/image-upload.png') no-repeat"};
+ImageUpload.ProfileInputWrapper = styled.div`
   width: 35px;
   height: 35px;
   display: block;
   margin: 0 auto;
-  background-size: contain;
+  color: #2f839d;
+  font-size: 28px;
 `;
 
 ImageUpload.UploadInput = styled.input`

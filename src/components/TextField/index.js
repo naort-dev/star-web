@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 export const TextInput = props => (
   <TextField
+    error ={props.error}
     placeholder={props.placeholder}
     type={props.type}
     name={props.name}
@@ -16,6 +17,7 @@ export const TextInput = props => (
 );
 
 TextInput.propTypes = {
+  error: PropTypes.string,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
@@ -28,13 +30,14 @@ TextInput.propTypes = {
 };
 
 TextInput.defaultProps = {
+  error: '',
   placeholder: '',
   type: '',
   name: '',
   value: '',
-  fullWidth: '',
+  fullWidth: false,
   id: '',
-  required: '',
+  required: false,
   onBlur: () => { },
   onChange: () => { }
 };

@@ -25,7 +25,7 @@ export default class Landing extends React.Component {
     if (this.props.isSignup && !this.props.isLoggedIn) {
       this.props.toggleSignup(true);
     }
-    if (!this.props.featuredStars.data.length) {
+    if (!this.props.featuredStars.homeFeatured.data.length) {
       this.props.fetchFeaturedStars();
     }
     if (this.props.location.pathname === '/' || this.props.isSignup) {
@@ -130,7 +130,7 @@ export default class Landing extends React.Component {
   }
 
   handleResize = () => {
-    if (document.body.getBoundingClientRect().width >= 834) {
+    if (document.body.getBoundingClientRect().width >= 832 || window.innderWidth >= 832) {
       this.setState({ desktopLanding: true });
     } else {
       this.setState({ desktopLanding: false });
@@ -163,12 +163,6 @@ export default class Landing extends React.Component {
     this.props.updateSelectedSubCategory(selectedList, this.props.filters.category.value);
     this.props.fetchCelebrityList(0, true, 'Stars');
   }
-  activateMenu = () => {
-    this.setState({ menuActive: !this.state.menuActive });
-  }
-  searchFilter = (searchText) => {
-    this.props.updateSearchParam(searchText);
-  }
   toggleFilterSection = () => {
     const filterState = this.state.filterSelected;
     this.setState({ filterSelected: !this.state.filterSelected });
@@ -178,9 +172,6 @@ export default class Landing extends React.Component {
   }
   fetchCelebrityList = category => (offset, refresh) => {
     this.props.fetchCelebrityList(offset, refresh, category);
-  }
-  fetchVideosList = (offset, refresh) => {
-    this.props.fetchVideosList(offset, refresh);
   }
   render() {
     const { desktopLanding, showLanding } = this.state;

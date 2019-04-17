@@ -13,21 +13,6 @@ const LoginContainer = styled.div`
   }
 `;
 
-LoginContainer.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
@@ -107,7 +92,7 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   color: #ff6c58;
   font-size: 20px;
   @media(min-width:768px){
@@ -123,8 +108,9 @@ LoginContainer.Heading = styled.div`
 `;
 
 LoginContainer.ContinueButton = styled.button`
+  cursor: pointer;
   background-color: #2f839d;
-  font-family: Gilroy-Extrabold;
+  font-family: Gilroy-Bold;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
@@ -219,20 +205,21 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 12px;
   line-height: 2.08;
   text-align: center;
-  color: #555555;
-  padding-top: 25px
+  color: ${props => (props.error ? '#990000' : '#555555')}; 
+  padding-top: 25px;
+  width:100%;
   @media(min-width:768px){
-    width:55%;
+
     align-items:center;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
+
     line-height: 30px;
   }
   @media(min-width:1920px){
@@ -302,7 +289,7 @@ LoginContainer.InputWrapper = styled.div`
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 14px;
   line-height: 1.57;
   text-align: left;
@@ -442,7 +429,7 @@ FooterSection.Button = styled.input`
 LoginContainer.WrapsInput = styled.div`
   width:100%;
   input {
-    font-family: Gilroy;
+    font-family: Gilroy-Light;
     font-size: 18px;
     line-height: 1.14;
     text-align: center;
@@ -513,33 +500,32 @@ LoginContainer.ButtonWrapper = styled.div`
   margin-top:5%;
 `;
 LoginContainer.SignupLine = styled.div`
-    display: block;
-    font-family: 'Avenir-Light';
-    color:#b3acac;
-    font-size: 12px;
-    margin: 0;
-    margin: 20px 20px;
-    margin-top: 0;
-    order: 1;
-    span {
-      display: inline-block;
-    }
-    &::before, &::after {
-      content: '';
-      display: inline-block;
-      height: 1px;
-      background-color: #e8e7e7;
-      vertical-align: middle;
-      width: 50px;
-      width: calc(50% - 69px);
-    }
-    &::before {
-      margin-right: 10px;
-    }
-    &::after {
-      margin-left: 10px;
-    }
-  
+  display: block;
+  font-family: 'Avenir-Light';
+  color:#b3acac;
+  font-size: 12px;
+  margin: 0;
+  margin: 20px 20px;
+  margin-top: 0;
+  order: 1;
+  span {
+    display: inline-block;
+  }
+  &::before, &::after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    background-color: #e8e7e7;
+    vertical-align: middle;
+    width: 50px;
+    width: calc(50% - 69px);
+  }
+  &::before {
+    margin-right: 10px;
+  }
+  &::after {
+    margin-left: 10px;
+  }  
 `;
 
 export { LoginContainer, HeaderSection, FooterSection };

@@ -66,7 +66,12 @@ class LoginFlow extends React.Component {
                       null
                     }
                     {this.state.selectedView === 'login' ?
-                      <LoginForm {...this.props} onLoginComplete={() => this.props.toggleLogin(false)} changeView={this.changeView} data={this.state.socialData} saveData={this.saveData} />
+                      <LoginForm {...this.props}
+                      onLoginComplete={() => this.props.toggleLogin(false)}
+                      changeView={this.changeView}
+                      data={this.state.socialData}
+                      saveData={this.saveData}
+                      closeLogin={() => this.props.toggleLogin(false)}/>
                       :
                       null
                     }

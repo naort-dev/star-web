@@ -8,7 +8,7 @@ export const DialogStyled = styled(Dialog)`
     width: 700px;
     height: 700px;
     max-width: 100%;
-    font-family: Gilroy;
+    font-family: Gilroy-Light;
     ${media.mobileScreen} {
       position: absolute;
       top: 0;

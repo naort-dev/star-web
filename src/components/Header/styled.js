@@ -9,7 +9,7 @@ const HeaderSection = styled.header`
   height: 60px;
   z-index: 10;
   padding: ${props => !props.notFixed && '12px 16px'};
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     height: ${props => (!props.notFixed ? 'auto' : '95px')}
     padding: 0;
   }
@@ -22,14 +22,14 @@ HeaderSection.HeaderDiv = styled.div`
   align-items: center;
   height: 100%;  
   flex-wrap: wrap;
-  @media (min-width: 834px) {
+  @media (min-width: 832px) {
     padding: ${props => (props.notFixed ? '32px 30px 25px' : '30px 36px')};
   }
 `;
 HeaderSection.HeaderRight = styled.div`
   display: inline-block;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     visibility: visible;
   }
   @media(min-width: 1280px) {
@@ -38,7 +38,7 @@ HeaderSection.HeaderRight = styled.div`
 `;
 HeaderSection.HeaderLeft = styled.div`
   display: inline-block;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     width: 50%;
   }
   @media(min-width: 1280px) {
@@ -52,14 +52,14 @@ HeaderSection.SearchWrapper = styled.div`
   position: fixed;
   left: 0;
   right: 0;
-  top: 70px;
+  top: 60px;
   padding: 12px 16px;
   padding-top: 0;
   display: block;
   width: 100%;
   max-width: 590px;
   margin: 0 auto;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     height: 50px;
     position: static;
     margin-top: 15px;
@@ -75,7 +75,7 @@ HeaderSection.BackIcon = styled.span`
   font-size: 20px;
   width: 20px;
   color: ${props => props.theme.flatBlue};
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     display: none;
   }
 `;
@@ -88,7 +88,7 @@ HeaderSection.CategoryWrapper = styled.div`
   left: 0;
   right: 0;
   background: #fff;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     display: block;
     position: static;
   }
@@ -104,7 +104,7 @@ HeaderSection.MenuButton = styled.span`
   cursor: pointer;
   width: 20px;
   color: ${props => props.theme.flatBlue};
-  @media(min-width: 834px){
+  @media(min-width: 832px){
     display:none;
   }
 `;
@@ -112,7 +112,7 @@ HeaderSection.MenuButton = styled.span`
 HeaderSection.SignInButtonMobile = styled.span`
   font-size: 27.5px;
   color: ${props => props.theme.flatBlue};
-  @media(min-width: 834px){
+  @media(min-width: 832px){
    display: none;
   }
 `;
@@ -301,7 +301,7 @@ HeaderSection.AuthButton = styled.button`
   border-radius: 5px;
   border: ${props => `solid 1px ${props.theme.flatBlue}`};
   background-color: ${props => (!props.notFixed ? '#fff' : props.theme.flatBlue)};
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   outline:none;
   font-size: 16px;
   cursor: pointer;
@@ -311,7 +311,7 @@ HeaderSection.AuthButton = styled.button`
   text-align: left;
   color: ${props => (!props.notFixed ? props.theme.flatBlue : '#ffffff')};;
   margin-left: 18px;
-  @media(max-width: 833px){
+  @media(max-width: 831px){
     display:none;
   }
 `;

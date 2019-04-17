@@ -85,8 +85,8 @@ export const withScroll = (WrappedComponent) => {
     }
 
     renderList = () => {
-      if (this.props.loading) {
-        return <Loader />
+      if (this.props.noScroll && this.props.loading) {
+        return <Loader />;
       } else if (this.props.noScroll) {
         return <WrappedComponent {...this.props} />;
       } else if (this.props.scrollTarget) {

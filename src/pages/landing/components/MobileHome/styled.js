@@ -42,14 +42,14 @@ MobileStyled.SubHeader = styled.span`
 `;
 
 MobileStyled.Title = styled.span`
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Medium;
   font-size: 20px;
   line-height: 18px;
   color: ${props => props.theme.twilight};
 `;
 
 MobileStyled.Description = styled.p`
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 17px;
   line-height: 32px;
   text-align: center;

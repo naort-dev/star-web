@@ -11,7 +11,7 @@ export const dataModal = {
       header: 'Announcement',
       text:
         'Have Viv Richards invite everyone to your next party, the big game, your wedding, life update, etc. Then send it out!',
-      icon: '../../assets/images/annoucement.svg',
+      icon: '../../assets/images/announcement.svg',
       type: 2,
     },
     {
