@@ -8,7 +8,9 @@ import {
   loaderAction,
 } from '../../store/shared/actions/commonActions';
 
-const mapStateToProps = state => ({
+import { setVideoUploadedFlag } from './actions/purchaseActions';
+
+const mapStateToProps = (state) => ({
   OccasionDetails: state.occasionList.data,
 });
 
@@ -26,7 +28,12 @@ function mapDispatchToProps(dispatch) {
     loaderAction: (value) => {
       dispatch(loaderAction(value));
     },
-    fetchOccasionlist: id => dispatch(fetchOccasionlist(id)),
+    fetchOccasionlist: (id) => {
+      dispatch(fetchOccasionlist(id));
+    },
+    setVideoUploadedFlag: (value) => {
+      dispatch(setVideoUploadedFlag(value));
+    },
   };
 }
 export default connect(

@@ -64,11 +64,15 @@ class Purchase extends Component {
             playPauseMedia={this.props.playPauseMedia}
             continueCallback={this.continuePayment}
             loaderAction={this.props.loaderAction}
+            setVideoUploadedFlag={this.props.setVideoUploadedFlag}
           />
         );
       } else {
         return (
-          <FormContainer detailList={this.props.OccasionDetails} submitClick={this.submitClick}>
+          <FormContainer
+            detailList={this.props.OccasionDetails}
+            submitClick={this.submitClick}
+          >
             <FormContent />
           </FormContainer>
         );

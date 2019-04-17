@@ -1,8 +1,10 @@
 import { OCCASION_LIST } from '../actions/purchaseActions';
+import { AskQuestion } from '../actions/purchaseActions';
 
 const initalState = {
   data: [],
   loading: false,
+  videoUploaded: false,
 };
 
 export default (state = initalState, action) => {
@@ -32,6 +34,11 @@ export default (state = initalState, action) => {
       return {
         ...state,
         data: [],
+      };
+    case AskQuestion.videoUploaded:
+      return {
+        ...state,
+        videoUploaded: action.value,
       };
 
     default:

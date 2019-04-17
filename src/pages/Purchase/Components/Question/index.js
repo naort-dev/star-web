@@ -27,7 +27,9 @@ const Question = (props) => {
     },
   ];
   const [showHideFlg, showHideScript] = useState(false);
-  const [buttonLabel, changeButtonLabel] = useState(props.videoSrc ? 'Continue to Payment' : 'Record');
+  const [buttonLabel, changeButtonLabel] = useState(
+    props.videoSrc ? 'Continue to Payment' : 'Record',
+  );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
 
@@ -37,6 +39,7 @@ const Question = (props) => {
     changeButtonLabel(btnLabel);
     showHideScript(false);
     errorHandler(false);
+    props.setVideoUploadedFlag(false);
   };
 
   const buttonClickHandler = () => {
@@ -47,7 +50,11 @@ const Question = (props) => {
       mediaHandler('Continue to Payment', true);
       stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
-      uploadVideoRecorded();
+      if (props.videoUploaded) {
+        props.continueCallback();
+      } else {
+        uploadVideoRecorded();
+      }
     }
   };
 
@@ -62,6 +69,7 @@ const Question = (props) => {
             .post(response.url, response.formData)
             .then((response) => {
               props.continueCallback();
+              props.setVideoUploadedFlag(true);
               props.loaderAction(false);
             })
             .catch((error) => {
@@ -169,6 +177,7 @@ function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
     videoSrc: state.commonReducer.videoSrc,
+    videoUploaded: state.occasionList.videoUploaded,
   };
 }
 export default connect(
