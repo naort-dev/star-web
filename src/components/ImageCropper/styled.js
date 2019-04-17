@@ -14,6 +14,19 @@ const CropperStyled = styled.div`
     height: auto;
     max-height: 100%;
   }
+  .ReactCrop {
+    width: 100%;
+    min-height: 498px;
+    // max-height: 70vh;
+    // overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ReactCrop__image {
+      max-height: fit-content !important;
+    }
+  }
 `;
 
 CropperStyled.ButtonWrapper = styled.div`

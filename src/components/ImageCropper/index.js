@@ -72,8 +72,8 @@ export default class ImageCropper extends React.Component {
     const image = new Image();
     image.onload = function () {
       let imageRatio = image.width/image.height;
-      const height = image.height > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : image.height;
-      const width = height*imageRatio;
+      const height = image.height;
+      const width = image.width;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;

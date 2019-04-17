@@ -82,6 +82,37 @@ UploadContainer.Heading = styled.div`
 
 UploadContainer.CategoriesWrapper = styled.div``;
 
+UploadContainer.ButtonWrapper = styled.div`
+  margin-top:5%;
+`;
+
+UploadContainer.ContinueButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Bold;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  width: 300px;
+  height: 60px;
+  outline: none;
+`;
+
+UploadContainer.BrowseCategories = styled.div`
+  font-size: 14px;
+  text-align: center;
+  font-family: Gilroy;
+`;
+
+UploadContainer.BrowseCategoriesLink = styled.span`
+  color: #46829a;
+  font-family: Gilroy-Medium;
+`;
+
 const ImageUpload = styled.div`
   height: 100%;
   overflow: auto;
