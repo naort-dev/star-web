@@ -152,15 +152,16 @@ export default class ImageCropper extends React.Component {
             />
         }
         <CropperStyled.ButtonWrapper>
-          <CropperStyled.CropperLightButton onClick={this.handleCrop}>
+          {/* <CropperStyled.CropperLightButton>
             <FontAwesomeIcon icon={faCamera} />
             Take picture
-          </CropperStyled.CropperLightButton>
+          </CropperStyled.CropperLightButton> */}
           <CropperStyled.CropperButton onClick={this.handleCrop}>I like it, continue</CropperStyled.CropperButton>
-          <CropperStyled.CropperLightButton onClick={this.props.closeCropper}>
+          {/* <CropperStyled.CropperLightButton>
+            <CropperStyled.UploadInput accept=".png, .jpeg, .jpg" id="profile" type="file" />
             <FontAwesomeIcon icon={faUpload} />
             Upload picture
-          </CropperStyled.CropperLightButton>
+          </CropperStyled.CropperLightButton> */}
         </CropperStyled.ButtonWrapper>
       </CropperStyled>
     );

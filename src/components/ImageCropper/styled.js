@@ -44,14 +44,12 @@ CropperStyled.CropperLightButton = styled.button`
   color: #2f839d;
   padding: 15px;
   box-sizing: border-box;
+  border: none;
   border-radius: 30px;
   min-width: 170px;
   height: 60px;
   outline: none;
-  &:hover {
-    background-color: #2f839d;
-    color: #ededed;
-  }
+  position: relative;
 `;
 CropperStyled.CropperButton = styled.button`
   cursor: pointer;
@@ -67,10 +65,17 @@ CropperStyled.CropperButton = styled.button`
   min-width: 250px;
   height: 60px;
   outline: none;
-  &:hover {
-    background-color: #ededed;
-    color: #2f839d;
-  }
+  border: none;
+`;
+
+CropperStyled.UploadInput = styled.input`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  width: 100%;
 `;
 
 CropperStyled.CropperCancel = styled.span`

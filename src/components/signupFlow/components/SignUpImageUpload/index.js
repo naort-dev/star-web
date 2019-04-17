@@ -69,7 +69,9 @@ class SignUpImageUpload extends React.Component {
         {
           !this.state.cropper ?
             <UploadContainer.Wrapper>
-              <UploadContainer.Heading>Give your fans what they want</UploadContainer.Heading>
+              <UploadContainer.Heading>
+                { this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
+              </UploadContainer.Heading>
               <DotsContainer
                 dotsCount={3}
                 selectedDot={2}
@@ -77,6 +79,7 @@ class SignUpImageUpload extends React.Component {
               <ProfileUpload
                 starMode
                 onComplete={this.setProfileImage}
+                image={this.state.finalImage}
               />
 
               <UploadContainer.CategoriesWrapper>

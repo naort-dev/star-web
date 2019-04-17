@@ -155,11 +155,20 @@ ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
 `;
 
 ImageUpload.ProfileInputButton = styled.div`
-  display: flex;
+  display: ${props => (props.image ? 'none' : 'flex')};
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
   padding-bottom: 18px;
+`;
+
+ImageUpload.UploadedImage = styled.div`
+  display: ${props => (!props.image ? 'none' : 'flex')};
+  height: calc(100% - 150px);
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 18px;
+  flex-direction: column;
 `;
 
 ImageUpload.CoverImage = styled.div`
@@ -286,6 +295,42 @@ ImageUpload.ControlButton = styled.button`
     color: #676767;
     border-color: #b6b6b6;
   }
+`;
+
+ImageUpload.UploadInput = styled.input`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  width: 100%;
+`;
+
+ImageUpload.CropperLightButton = styled.button`
+  cursor: pointer;
+  background-color: #ededed;
+  font-family: Gilroy-Medium;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: #2f839d;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border: none;
+  min-width: 160px;
+  height: 40px;
+  outline: none;
+  margin-right: 10px;
+  position: relative;
+  &:hover {
+    background-color: #2f839d;
+    color: #ededed;
+  }
+`;
+
+ImageUpload.ButtonWrapper = styled.div`
+  margin-top: 20px;
 `;
 
 export { UploadContainer, ImageUpload };
