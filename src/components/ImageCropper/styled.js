@@ -33,6 +33,7 @@ CropperStyled.ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
+  transform: translateY(-50%);
 `;
 CropperStyled.CropperLightButton = styled.button`
   cursor: pointer;
@@ -48,6 +49,7 @@ CropperStyled.CropperLightButton = styled.button`
   min-width: 170px;
   height: 60px;
   outline: none;
+  border: 0px;
   &:hover {
     background-color: #2f839d;
     color: #ededed;
@@ -67,6 +69,8 @@ CropperStyled.CropperButton = styled.button`
   min-width: 250px;
   height: 60px;
   outline: none;
+  margin: 0 17px;
+  border: 0px;
   &:hover {
     background-color: #ededed;
     color: #2f839d;

@@ -15,6 +15,7 @@ export const TextInput = props => (
     required={props.required}
     onBlur={props.onBlur}
     label={props.label} 
+    classes={{root:"MuiFormControl"}}
   />
 );
 
