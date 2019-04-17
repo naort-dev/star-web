@@ -80,10 +80,37 @@ UploadContainer.Heading = styled.div`
   }
 `;
 
-UploadContainer.CategoriesWrapper = styled.div``;
+UploadContainer.CategoriesWrapper = styled.div`
+  max-width: 440px;
+  margin: 0 auto;
+
+  .MuiFormControl {
+    width: 100%;
+    margin-bottom: 12px;
+
+    > div {
+      &:before {
+        border-bottom: 2px solid #aaa;
+      }
+      &:after {
+        border-bottom: 0;
+      }
+    }
+    input {
+      padding-bottom: 14px;
+    }
+    label {
+      font-size: 18px;
+      color: #b7b7b7;
+      font-family: Gilroy;
+    }
+  }
+`;
 
 UploadContainer.ButtonWrapper = styled.div`
   margin-top:5%;
+  text-align: center;
+  margin-bottom: 75px;
 `;
 
 UploadContainer.ContinueButton = styled.button`
@@ -150,7 +177,7 @@ ImageUpload.CloseButton = styled.span`
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 30px 60px;
+    padding: 57px 60px 30px;
   }
 `;
 
@@ -194,7 +221,12 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-size: cover;
   cursor: pointer;
   text-align: center;
-  margin-right: 10px;
+  margin-right: 11px;
+
+  &:last-child {
+    margin-left: 11px;
+    margin-right: 0;
+  }
 `;
 
 ImageUpload.ProfileInputContainer = styled.span`
@@ -214,9 +246,20 @@ ImageUpload.ProfileInputWrapper = styled.div`
   width: 35px;
   height: 35px;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 6px;
   color: #2f839d;
   font-size: 28px;
+  
+  &:first-child {
+    svg {
+      font-size: 29px;
+    }
+  }
+  &:last-child {
+    svg {
+      font-size: 33px;
+    }
+  }
 `;
 
 ImageUpload.UploadInput = styled.input`
@@ -227,7 +270,7 @@ ImageUpload.UploadInput = styled.input`
 
 ImageUpload.UploadText = styled.span`
   color: #555;
-  font-family: 'Avenir-Light';
+  font-family: 'Gilroy';
   font-size: 14px;
   max-width: 110px;
 `;
@@ -244,6 +287,7 @@ ImageUpload.Heading = styled.div`
   }
   @media(min-width: 1025px){
     font-size: 25px;
+    margin-bottom: 26px;
   }
   @media(min-width:1920px){
     font-size: 27px;
@@ -279,7 +323,7 @@ ImageUpload.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Avenir-Bold;
+  font-family: Gilroy-Semibold;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
