@@ -441,6 +441,7 @@ export default class LoginForm extends React.Component {
                 <LoginContainer.InputWrapper>
                   <LoginContainer.WrapsInput>
                     <TextInput
+                      error ={!!email.message}
                       fullWidth={true}
                       type="email"
                       name="email"
@@ -461,6 +462,7 @@ export default class LoginForm extends React.Component {
                       <LoginContainer.WrapsInput>
                         <LoginContainer.PasswordWrapper>
                           <TextInput
+                          error = {!!password.message}
                             fullWidth={true}
                             type={this.state.showPassword ? "text" : "password"}
                             name="password"
@@ -477,16 +479,15 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                   )}
-                {
-                  this.props.statusCode !== '410' && 
-                  this.props.statusCode !== '310' && 
-                  this.props.error &&
-                    <LoginContainer.WrapsInput>
+                  <LoginContainer.WrapsInput>
+                    { this.props.statusCode !== '410' &&
+                    this.props.statusCode !== '310' &&
+                    this.props.error &&
                       <LoginContainer.ErrorMsg>
                         {this.props.error}
                       </LoginContainer.ErrorMsg>
-                    </LoginContainer.WrapsInput>
-                }
+                    }
+                  </LoginContainer.WrapsInput>
                   <LoginContainer.SignIn
                     type="submit"
                     value="Log in"
