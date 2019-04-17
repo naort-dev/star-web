@@ -9,7 +9,7 @@ class Api {
   static getGroupTypes = 'v1/user/group_types/';
   static getVideosList = 'v1/request/featured_videos/';
   static login = 'v1/user/login/';
-  static register = 'v1/user/register/'
+  static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
   static socialMediaLogin = 'v1/user/socialsignup/';
   static authGetCelebDetails = 'v1/user/user_details/';

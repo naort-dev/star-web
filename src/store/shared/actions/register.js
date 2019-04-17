@@ -1,5 +1,6 @@
 
 import Api from '../../../lib/api';
+import {ROLES} from '../../../constants/usertype'
 import { fetch } from '../../../services/fetch';
 import { userDetailsFetchSuccess } from '../actions/getUserDetails';
 
@@ -41,19 +42,28 @@ export const registerUser = (
   UserLastName,
   UserEmail,
   UserPassword,
+  UserNickName,
   UserRole,
   referral,
 ) => (dispatch, getState) => {
   dispatch(registerFetchStart());
-  return fetch.post(Api.register, {
+  let header = {
     first_name: UserFirstName,
     last_name: UserLastName,
     email: UserEmail,
-    password: UserPassword,
     role: UserRole,
     referral_code: referral,
-
-  }).then((resp) => {
+  }
+  if(UserRole===ROLES.star) {
+    header = {...header,
+      nick_name: UserNickName
+    }
+  } else {
+    header = {...header,
+      password: UserPassword
+    }
+  }
+  return fetch.post(Api.register, header).then((resp) => {
     if (resp.data && resp.data.success) {
       const obj = {
         ...resp.data.data,

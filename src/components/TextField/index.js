@@ -19,7 +19,7 @@ export const TextInput = props => (
 );
 
 TextInput.propTypes = {
-  error: PropTypes.string,
+  error: PropTypes.bool,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
@@ -32,7 +32,7 @@ TextInput.propTypes = {
 };
 
 TextInput.defaultProps = {
-  error: '',
+  error: false,
   placeholder: '',
   type: '',
   name: '',
