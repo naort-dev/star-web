@@ -55,7 +55,7 @@ class Purchase extends Component {
     if (this.state.stepCount === 1) {
       return <CategoryList getCategory={this.getCategory} />;
     } else if (this.state.stepCount === 2) {
-      if (this.state.category === '3') {
+      if (this.state.category === 3) {
         return (
           <Question
             recordTrigger={this.props.recordTrigger}

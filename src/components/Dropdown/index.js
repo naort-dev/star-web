@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import PropTypes from 'prop-types';
 
 import DropdownStyled from './styled';
 
