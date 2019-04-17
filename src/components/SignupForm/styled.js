@@ -298,6 +298,7 @@ LoginContainer.PrivacyContent = styled.div`
     color: #2f839d;
     cursor: pointer;
     text-decoration: none;
+    padding-left: 5px;
   }
   @media(min-width:768px){
     text-align:center;
