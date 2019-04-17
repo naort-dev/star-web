@@ -16,7 +16,7 @@ const Cards = [
   { id: '2342', number: '**** **** **** 5555' },
 ];
 
-const UserCard = () => {
+const UserCard = (props) => {
   const [isNewCard, cardSelection] = useState(false);
   return (
     <Layout>
@@ -72,7 +72,9 @@ const UserCard = () => {
         </React.Fragment>
       )}
       <FlexCenter>
-        <Button className="button">Pay $50.00</Button>
+        <Button className="button" onClick={props.paymentSuccessCallBack}>
+          Pay $50.00
+        </Button>
       </FlexCenter>
       <FlexCenter>
         <img

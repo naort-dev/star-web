@@ -20,6 +20,7 @@ import FormContainer from './Components/FormContainer';
 import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import Payment from '../../components/Payment';
+import SuccessScreen from './Components/SuccessScreen';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 
@@ -78,8 +79,10 @@ class Purchase extends Component {
         );
       }
     } else if (this.state.stepCount === 3) {
-      return <Payment />;
+      return <Payment paymentSuccessCallBack={this.paymentSuccess} />;
     } else if (this.state.stepCount === 4) {
+      return <SuccessScreen />;
+    } else if (this.state.stepCount === 5) {
       return <ScriptBuilder />;
     }
   };
@@ -89,7 +92,6 @@ class Purchase extends Component {
       stepCount: 2,
       category: type,
     });
-    console.log(this.state.category);
     if (this.state.category !== 3) {
       this.props.fetchOccasionlist(type);
     }
@@ -109,6 +111,11 @@ class Purchase extends Component {
     this.setState({
       stepCount: this.state.stepCount + 1,
     });
+  };
+
+  paymentSuccess = () => {
+    debugger
+    this.submitClick();
   };
 
   continuePayment = () => {
