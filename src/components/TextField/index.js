@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 
 export const TextInput = props => (
   <TextField
-    error ={props.error}
+    error={props.error}
     placeholder={props.placeholder}
     type={props.type}
     name={props.name}
@@ -13,7 +13,10 @@ export const TextInput = props => (
     onChange={props.onChange}
     id={props.id}
     required={props.required}
-    onBlur={props.onBlur} />
+    onBlur={props.onBlur}
+    label={props.label} 
+    classes={{root:"MuiFormControl"}}
+  />
 );
 
 TextInput.propTypes = {
@@ -26,7 +29,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func,
   id: PropTypes.string,
   required: PropTypes.bool,
-  onBlur: PropTypes.func
+  onBlur: PropTypes.func,
 };
 
 TextInput.defaultProps = {

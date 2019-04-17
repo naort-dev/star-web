@@ -48,7 +48,6 @@ class SignUpImageUpload extends React.Component {
     this.setState({ cropImage: null, cropper: false });
   }
 
-
   goToStep = (type) => {
     const { verificationDisable } = this.state;
     if (type === 'prev') {
@@ -70,7 +69,9 @@ class SignUpImageUpload extends React.Component {
         {
           !this.state.cropper ?
             <UploadContainer.Wrapper>
-              <UploadContainer.Heading>Give your fans what they want</UploadContainer.Heading>
+              <UploadContainer.Heading>
+                { this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
+              </UploadContainer.Heading>
               <DotsContainer
                 dotsCount={3}
                 selectedDot={2}
@@ -78,16 +79,27 @@ class SignUpImageUpload extends React.Component {
               <ProfileUpload
                 starMode
                 onComplete={this.setProfileImage}
+                image={this.state.finalImage}
               />
 
               <UploadContainer.CategoriesWrapper>
                 <TextInput
-                  placeholder="Categorize yourself. This helps fans find you. (up to 3)"
                   type="text"
                   name="categoriesList"
                   value=""
+                  label="Categorize yourself. This helps fans find you. (up to 3)"
                 />
+                <UploadContainer.BrowseCategories>
+                  Not finding one? <UploadContainer.BrowseCategoriesLink>Browse categories</UploadContainer.BrowseCategoriesLink>
+                </UploadContainer.BrowseCategories>
               </UploadContainer.CategoriesWrapper>
+              <UploadContainer.ButtonWrapper>
+                <UploadContainer.ContinueButton
+                  type="submit"
+                >
+                  Continue
+                </UploadContainer.ContinueButton>
+              </UploadContainer.ButtonWrapper>
             </UploadContainer.Wrapper>
           :
             <UploadContainer.CropperContainer>
