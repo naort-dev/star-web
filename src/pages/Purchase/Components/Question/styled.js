@@ -32,7 +32,7 @@ export const Layout = styled.section`
   }
   .note {
     color: #999;
-    font-family: Gilroy;
+    font-family: Gilroy-Light;
     font-size: 16px;
     ${media.mobileScreen} {
       color: #fff;
@@ -82,7 +82,7 @@ export const QuestionContainer = styled.section`
     transform: translateX(-50%);
   }
   h1 {
-    font-family: Gilroy-Bold;
+    font-family: Gilroy;
     font-size: 18px;
     color: #46829a;
     ${media.mobileScreen} {
@@ -110,7 +110,7 @@ export const ShowHide = styled.span`
   border-radius: 20px;
   background: #fff;
   color: #2f839d;
-  font-family: Gilroy-Extrabold;
+  font-family: Gilroy-Bold;
   cursor: pointer;
   ${media.mobileScreen} {
     display: block;

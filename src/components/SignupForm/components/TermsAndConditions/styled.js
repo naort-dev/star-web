@@ -13,7 +13,7 @@ TermsConditionsWrapper.ComponentWrapper = styled.div`
 `;
 
 TermsConditionsWrapper.HeaderText = styled.div`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy;
   font-size: 20px;
   line-height: 1.25;
   letter-spacing: normal;
@@ -40,7 +40,7 @@ TermsConditionsWrapper.Button = styled.button`
   width: 300px;
   height: 60px;
   background-color: #2f839d;
-  font-family: Gilroy-Extrabold;
+  font-family: Gilroy-Bold;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
@@ -51,7 +51,7 @@ TermsConditionsWrapper.Button = styled.button`
 `;
 
 TermsConditionsWrapper.Description = styled.p`
-font-family: Gilroy;
+font-family: Gilroy-Light;
 font-size: 16px;
 line-height: 1.63;
 text-align: left;

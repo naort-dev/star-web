@@ -15,7 +15,7 @@ const CategorySection = (props) => {
   return (
     <CategoryStyled>
       <CategoryStyled.Item
-        onClick={updateMainCategory('Featured', '', [])}
+        onClick={updateMainCategory('Featured', 0, [])}
         selected={props.category.label === 'Featured'}
       >
         Featured

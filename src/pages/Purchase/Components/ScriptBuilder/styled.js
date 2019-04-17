@@ -74,7 +74,7 @@ export const TextAreaWrapper = styled.section`
     resize: none;
     padding: 15px;
     max-width: 425px;
-    font-family: Gilroy;
+    font-family: Gilroy-Light;
     :focus {
       outline: none;
     }
