@@ -14,33 +14,78 @@ const CropperStyled = styled.div`
     height: auto;
     max-height: 100%;
   }
+  .ReactCrop {
+    width: 100%;
+    min-height: 498px;
+    // max-height: 70vh;
+    // overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .ReactCrop__image {
+      max-height: fit-content !important;
+    }
+  }
 `;
 
 CropperStyled.ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  flex-direction: column;
+  flex-direction: row;
+  transform: translateY(-50%);
+`;
+CropperStyled.CropperLightButton = styled.button`
+  cursor: pointer;
+  background-color: #ededed;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #2f839d;
+  padding: 15px;
+  box-sizing: border-box;
+  border: none;
+  border-radius: 30px;
+  min-width: 170px;
+  height: 60px;
+  outline: none;
+  position: relative;
+  &:hover {
+    background-color: #2f839d;
+    color: #ededed;
+  }
+`;
+CropperStyled.CropperButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  min-width: 250px;
+  height: 60px;
+  outline: none;
+  border: none;
+  margin: 0 17px;
+  &:hover {
+    background-color: #ededed;
+    color: #2f839d;
+  }
 `;
 
-CropperStyled.CropperButton = styled.div`
-  background-color: #FF6C58;
-  color: rgb(255,255,255);
-  text-align: center;
-  display: inline-block;
-  font-size: 14px;
-  font-family: Avenir-Bold;
+CropperStyled.UploadInput = styled.input`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
   cursor: pointer;
-  padding: 7px 30px;
-  text-decoration: none;
-  outline: none;
-  border-radius: 5px;
-  border: 2px solid #FF6C58;
-  border-image: initial;
-  margin-right: 20px;
-  margin-top: 10px;
-  &:hover {
-    background-color: #FF3B21;
-  }
+  width: 100%;
 `;
 
 CropperStyled.CropperCancel = styled.span`

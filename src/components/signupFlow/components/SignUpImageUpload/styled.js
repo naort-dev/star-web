@@ -80,7 +80,65 @@ UploadContainer.Heading = styled.div`
   }
 `;
 
-UploadContainer.CategoriesWrapper = styled.div``;
+UploadContainer.CategoriesWrapper = styled.div`
+  max-width: 440px;
+  margin: 0 auto;
+
+  .MuiFormControl {
+    width: 100%;
+    margin-bottom: 12px;
+
+    > div {
+      &:before {
+        border-bottom: 2px solid #aaa;
+      }
+      &:after {
+        border-bottom: 0;
+      }
+    }
+    input {
+      padding-bottom: 14px;
+    }
+    label {
+      font-size: 18px;
+      color: #b7b7b7;
+      font-family: Gilroy;
+    }
+  }
+`;
+
+UploadContainer.ButtonWrapper = styled.div`
+  margin-top:5%;
+  text-align: center;
+  margin-bottom: 75px;
+`;
+
+UploadContainer.ContinueButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Bold;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  width: 300px;
+  height: 60px;
+  outline: none;
+`;
+
+UploadContainer.BrowseCategories = styled.div`
+  font-size: 14px;
+  text-align: center;
+  font-family: Gilroy;
+`;
+
+UploadContainer.BrowseCategoriesLink = styled.span`
+  color: #46829a;
+  font-family: Gilroy-Medium;
+`;
 
 const ImageUpload = styled.div`
   height: 100%;
@@ -119,16 +177,25 @@ ImageUpload.CloseButton = styled.span`
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 30px 60px;
+    padding: 57px 60px 30px;
   }
 `;
 
 ImageUpload.ProfileInputButton = styled.div`
-  display: flex;
+  display: ${props => (props.image ? 'none' : 'flex')};
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
   padding-bottom: 18px;
+`;
+
+ImageUpload.UploadedImage = styled.div`
+  display: ${props => (!props.image ? 'none' : 'flex')};
+  height: calc(100% - 150px);
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 18px;
+  flex-direction: column;
 `;
 
 ImageUpload.CoverImage = styled.div`
@@ -154,7 +221,12 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-size: cover;
   cursor: pointer;
   text-align: center;
-  margin-right: 10px;
+  margin-right: 11px;
+
+  &:last-child {
+    margin-left: 11px;
+    margin-right: 0;
+  }
 `;
 
 ImageUpload.ProfileInputContainer = styled.span`
@@ -174,9 +246,20 @@ ImageUpload.ProfileInputWrapper = styled.div`
   width: 35px;
   height: 35px;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 6px;
   color: #2f839d;
   font-size: 28px;
+  
+  &:first-child {
+    svg {
+      font-size: 29px;
+    }
+  }
+  &:last-child {
+    svg {
+      font-size: 33px;
+    }
+  }
 `;
 
 ImageUpload.UploadInput = styled.input`
@@ -187,7 +270,7 @@ ImageUpload.UploadInput = styled.input`
 
 ImageUpload.UploadText = styled.span`
   color: #555;
-  font-family: 'Avenir-Light';
+  font-family: 'Gilroy';
   font-size: 14px;
   max-width: 110px;
 `;
@@ -204,6 +287,7 @@ ImageUpload.Heading = styled.div`
   }
   @media(min-width: 1025px){
     font-size: 25px;
+    margin-bottom: 26px;
   }
   @media(min-width:1920px){
     font-size: 27px;
@@ -239,7 +323,7 @@ ImageUpload.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Avenir-Bold;
+  font-family: Gilroy-Semibold;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
@@ -255,6 +339,42 @@ ImageUpload.ControlButton = styled.button`
     color: #676767;
     border-color: #b6b6b6;
   }
+`;
+
+ImageUpload.UploadInput = styled.input`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  width: 100%;
+`;
+
+ImageUpload.CropperLightButton = styled.button`
+  cursor: pointer;
+  background-color: #ededed;
+  font-family: Gilroy-Medium;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: #2f839d;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border: none;
+  min-width: 160px;
+  height: 40px;
+  outline: none;
+  margin-right: 10px;
+  position: relative;
+  &:hover {
+    background-color: #2f839d;
+    color: #ededed;
+  }
+`;
+
+ImageUpload.ButtonWrapper = styled.div`
+  margin-top: 20px;
 `;
 
 export { UploadContainer, ImageUpload };

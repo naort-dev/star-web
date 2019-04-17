@@ -35,6 +35,23 @@ export default class ProfileUpload extends React.Component {
     }
   }
 
+  async onUploadFileChange() {
+    this.setState({ imageError: false })
+    const file = document.getElementById('profileUpload').files[0];
+    const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
+    if (!allowedExtensions.exec(document.getElementById('profileUpload').value)) {
+      this.setState({ imageError: { extensionError: true } });
+    } else if (file) {
+      const correctResolution = await this.checkResolution(file);
+      if (correctResolution) {
+        this.setState({ imageLoading: true });
+        await this.getImageData(file);
+      } else {
+        this.setState({ imageError: { sizeError: true }, imageLoading: false });
+      }
+    }
+  }
+
   onComplete = () => {
     this.setState({ imageLoading: true });
     awsImageUpload(this.state.finalFile, this.state.extension)
@@ -116,7 +133,7 @@ export default class ProfileUpload extends React.Component {
     this.setState({ cropImage: null, cropMode: false })
   }
 
-  render() {
+  render() {    
     return (
       <ImageUpload.DetailsWrapper>
         {
@@ -124,7 +141,7 @@ export default class ProfileUpload extends React.Component {
             <Loader />
             :
             <React.Fragment>
-              <ImageUpload.ProfileInputButton>
+              <ImageUpload.ProfileInputButton image={this.props.image}>
                 <ImageUpload.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
                 >
@@ -148,27 +165,23 @@ export default class ProfileUpload extends React.Component {
                   </ImageUpload.ProfileInputContainer>
                 </ImageUpload.ProfileImageWrapper>
               </ImageUpload.ProfileInputButton>
-              {/* {
-                this.state.cropMode && this.state.cropImage &&
-                <ImageUpload.CropWrapper>
-                  <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
-                  <ImageCropper
-                    exifData={this.currentExif}
-                    aspectRatio={imageSizes.profile}
-                    afterCrop={this.getCroppedImage}
-                    closeCropper={() => this.closeCropper()}
-                    cropImage={this.state.cropImage}
-                  />
-                </ImageUpload.CropWrapper>
-              } */}
-              {/* <ImageUpload.ControlWrapper>
-                <ImageUpload.ControlButton
-                  disabled={!this.state.finalImage}
-                  onClick={this.onComplete}
+              <ImageUpload.UploadedImage image={this.props.image}>
+                <ImageUpload.ProfileImageWrapper
+                  imageUrl={this.props.image}
                 >
-                  Continue
-                </ImageUpload.ControlButton>
-              </ImageUpload.ControlWrapper> */}
+                </ImageUpload.ProfileImageWrapper>
+                <ImageUpload.ButtonWrapper>
+                  <ImageUpload.CropperLightButton>
+                    <FontAwesomeIcon icon={faCamera} />
+                    Take picture
+                  </ImageUpload.CropperLightButton>
+                  <ImageUpload.CropperLightButton>
+                    <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profileUpload" onChange={() => this.onUploadFileChange()} type="file" />
+                    <FontAwesomeIcon icon={faUpload} />
+                    Upload picture
+                  </ImageUpload.CropperLightButton>
+                </ImageUpload.ButtonWrapper>
+              </ImageUpload.UploadedImage>
             </React.Fragment>
         }
       </ImageUpload.DetailsWrapper>
