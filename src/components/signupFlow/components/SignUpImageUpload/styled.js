@@ -371,6 +371,9 @@ ImageUpload.CropperLightButton = styled.button`
     background-color: #2f839d;
     color: #ededed;
   }
+  & > svg {
+    margin-right: 5px;
+  }
 `;
 
 ImageUpload.ButtonWrapper = styled.div`
