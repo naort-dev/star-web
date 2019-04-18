@@ -7,13 +7,19 @@ const RangeStyled = styled.div`
   .rc-slider {
     height: 27px;
     .rc-slider-rail, .rc-slider-track {
+      background: ${props => props.theme.veryLightPinkTwo}
       height: 20px;
+    }
+    .rc-slider-track-1 {
+      background: ${props => props.theme.flatBlue};
     }
     .rc-slider-handle {
       top: 12px;
+      border: none;
     }
   }
   @media(min-width: 832px) {
+    width: 300px;
     .rc-slider {
       height: 23px;
       .rc-slider-rail, .rc-slider-track {

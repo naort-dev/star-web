@@ -8,7 +8,6 @@ import HeaderSection from './styled';
 import CategorySection from './components/CategorySection';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
-import { updateSearchParam } from '../../pages/landing/actions/updateFilters';
 import { logOutUser } from '../../store/shared/actions/login';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import Search from '../Search';
@@ -36,13 +35,7 @@ class Header extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const categoryChange = this.props.filters.category.label !== nextProps.filters.category.label;
-    if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
-      this.props.updateSearchParam('');
-      this.setState({ searchText: '' });
-    }
-
-    if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatar_photo) {
+    if (nextProps.userValue.settings_userDetails.avatarPhoto !== this.props.userValue.settings_userDetails.avatarPhoto) {
       const profilePhoto = nextProps.userValue.settings_userDetails.avatarPhoto;
       this.setProfileImage(profilePhoto);
       this.setState({ profilePhoto: null });
@@ -187,7 +180,6 @@ class Header extends React.Component {
 const mapStateToProps = state => ({
   suggestionsList: state.suggestionsList,
   isLoggedIn: state.session.isLoggedIn,
-  filters: state.filters,
   userValue: state.userDetails,
 });
 
@@ -197,7 +189,6 @@ const mapDispatchToProps = dispatch => ({
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
   logOut: () => dispatch(logOutUser()),
-  updateSearchParam: searchParam => dispatch(updateSearchParam(searchParam)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
 });

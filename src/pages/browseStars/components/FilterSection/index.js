@@ -5,12 +5,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import { sortList, Price } from './constants';
-import HeaderSection from '../../../../../../components/Header/styled';
-import RangeSlider from '../../../../../../components/RangeSlider';
-import PrimaryButton from '../../../../../../components/PrimaryButton';
-import Picker from '../../../../../../components/Picker';
-import { updateSelectedSubCategory, updateSort, updatePriceRange } from '../../../../actions/updateFilters';
-import { fetchCelebrityList } from '../../../../actions/getCelebList';
+import HeaderSection from '../../../../components/Header/styled';
+import RangeSlider from '../../../../components/RangeSlider';
+import PrimaryButton from '../../../../components/PrimaryButton';
+import Picker from '../../../../components/Picker';
+import { updateSelectedSubCategory, updateSort, updatePriceRange } from '../../../landing/actions/updateFilters';
+import { fetchCelebrityList } from '../../../landing/actions/getCelebList';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
@@ -30,8 +30,11 @@ const FilterSection = (props) => {
 
   useEffect(() => {
     updateSelectedSub(props.category.selected);
-    props.fetchCelebrityList(0, true);
   }, [props.category.selected.length]);
+
+  useEffect(() => {
+    props.fetchCelebrityList(0, true);
+  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice]);
 
   const updateSubCategory = catId => () => {
     let selectedList = [...selectedSubCat];
