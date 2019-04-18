@@ -11,10 +11,13 @@ class FormContainer extends Component {
     //     switchTemplate(item.type);
     //   }
     // });
-  }
+  };
   render() {
     const { children, detailList, ...rest } = { ...this.props };
-    const optionsList = detailList.map(item => ({ label: item.title, key: item.id }));
+    const optionsList = detailList.map((item) => ({
+      label: item.title,
+      key: item.id,
+    }));
     return (
       <Layout>
         <FlexCenter>
@@ -24,14 +27,14 @@ class FormContainer extends Component {
             valueKey="key"
             placeHolder="What is the occasion?"
             className="custom"
-            handleChange={occasion => this.onSelectOccasion(occasion)}
+            handleChange={(occasion) => this.onSelectOccasion(occasion)}
           />
         </FlexCenter>
         {React.cloneElement(children, {
           ...rest,
         })}
         <FlexCenter>
-          <Button onClick={this.props.submitClick}>Continue</Button>
+          <Button>Continue</Button>
         </FlexCenter>
       </Layout>
     );

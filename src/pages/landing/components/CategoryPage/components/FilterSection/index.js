@@ -4,32 +4,25 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
+import { sortList, Price } from './constants';
 import HeaderSection from '../../../../../../components/Header/styled';
 import RangeSlider from '../../../../../../components/RangeSlider';
 import PrimaryButton from '../../../../../../components/PrimaryButton';
 import Picker from '../../../../../../components/Picker';
-import { updateSelectedSubCategory, updateSort } from '../../../../actions/updateFilters';
+import { updateSelectedSubCategory, updateSort, updatePriceRange } from '../../../../actions/updateFilters';
 import { fetchCelebrityList } from '../../../../actions/getCelebList';
 import FilterStyled from './styled';
 
 const FilterSection = (props) => {
 
-  const [selectedSubCat, updateSelectedSub] = useState(props.category.selected);
-  const [selectedSort, updateSortState] = useState({ label: 'Popularity', value: 'popularity' });
+  const getSortState = () => {
+    const selectedSort = sortList.find(sortItem => sortItem.value === props.sortValue);
+    return selectedSort;
+  };
 
-  const sortList = [{
-    label: 'Popularity',
-    value: 'featured',
-  }, {
-    label: 'Alphabetically (A-Z)',
-    value: 'az',
-  }, {
-    label: 'Price (lowest to highest)',
-    value: 'lfp',
-  }, {
-    label: 'Price (highest to lowest)',
-    value: 'hpf',
-  }];
+  const [selectedSubCat, updateSelectedSub] = useState(props.category.selected);
+  const [selectedSort, updateSortState] = useState(getSortState());
+  const [priceRange, updateSelectedPriceRange] = useState({ low: props.lowPrice, high: props.highPrice });
 
   useEffect(() => {
     props.fetchCelebrityList(0, true);
@@ -56,11 +49,22 @@ const FilterSection = (props) => {
 
   const updateSelectedSort = (sortValue) => {
     updateSortState(sortValue);
-    props.updateSort(sortValue.value);
+    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+      props.updateSort(sortValue.value);
+    }
+  };
+
+  const onSliderChange = (value) => {
+    updateSelectedPriceRange({ low: value[0], high: value[1] });
+    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+      props.updatePriceRange(value[0], value[1]);
+    }
   };
 
   const applyFilters = () => {
     props.updateSelectedSubCategory(selectedSubCat);
+    props.updateSort(selectedSort.value);
+    props.updatePriceRange(priceRange.low, priceRange.high);
     props.onClose();
   };
 
@@ -127,7 +131,12 @@ const FilterSection = (props) => {
           </FilterStyled.SecondaryFilter>
           <FilterStyled.SecondaryFilter>
             <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
-            <RangeSlider min={0} max={500} />
+            <RangeSlider
+              min={Price.min}
+              max={Price.max}
+              range={priceRange}
+              onAfterChange={onSliderChange}
+            />
           </FilterStyled.SecondaryFilter>
           <FilterStyled.ApplyButton>
             <PrimaryButton className="controlButton" onClick={applyFilters}>Apply</PrimaryButton>
@@ -143,15 +152,24 @@ FilterSection.propTypes = {
   category: PropTypes.object.isRequired,
   updateSelectedSubCategory: PropTypes.func.isRequired,
   updateSort: PropTypes.func.isRequired,
+  lowPrice: PropTypes.number.isRequired,
+  highPrice: PropTypes.number.isRequired,
+  updatePriceRange: PropTypes.func.isRequired,
+  fetchCelebrityList: PropTypes.func.isRequired,
+  sortValue: PropTypes.string.isRequired,
 };
 
 const mapStateToProps = state => ({
   category: state.filters.category,
+  lowPrice: state.filters.lowPrice,
+  highPrice: state.filters.highPrice,
+  sortValue: state.filters.sortValue,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchCelebrityList: (offset, refresh, selectedCategory) => dispatch(fetchCelebrityList(offset, refresh, selectedCategory)),
   updateSelectedSubCategory: selectedList => dispatch(updateSelectedSubCategory(selectedList)),
+  updatePriceRange: (low, high) => dispatch(updatePriceRange(low, high)),
   updateSort: value => dispatch(updateSort(value)),
 });
 

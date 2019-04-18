@@ -239,6 +239,13 @@ injectGlobal`
     font-size:18px;
   }
 }
+.rc-slider-tooltip-placement-top .rc-slider-tooltip-arrow {
+  border-top-color: black !important;
+}
+.rc-slider-tooltip-inner {
+  background-color: black !important;
+  padding: 6px !important;
+}
 
 `
 ;

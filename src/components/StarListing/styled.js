@@ -4,6 +4,7 @@ const ListingStyled = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
   max-width: 834px;
@@ -39,6 +40,14 @@ ListingStyled.Content = styled.li`
       justify-content: center;
     }
   }
+`;
+
+ListingStyled.NoDataText = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-family: Gilroy-Medium;
 `;
 
 export default ListingStyled;

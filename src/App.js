@@ -15,6 +15,7 @@ import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
+import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Purchase } from './pages/Purchase/Purchase.Loadable';
@@ -33,6 +34,7 @@ import {
   updateUserRole,
 } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
+import Loader from './components/Loader';
 
 class App extends React.Component {
   constructor(props) {
@@ -93,7 +95,7 @@ class App extends React.Component {
     }
   }
 
-  routeToOutside = url => () => {
+  routeToOutside = (url) => () => {
     window.location = url;
     return null;
   };
@@ -103,6 +105,7 @@ class App extends React.Component {
     const showRoutes = !showLoading;
     return (
       <div>
+        {this.props.loader && <Loader />}
         <div id="content-wrapper">
           <Modals />
           <Helmet
@@ -143,10 +146,11 @@ class App extends React.Component {
                   'https://about.starsona.com/faq',
                 )}
               />
+              <Route exact path="/browse-stars" component={BrowseStars} />
               <Route
                 exact
                 path="/signup"
-                render={props => <Landing {...props} isSignup />}
+                render={(props) => <Landing {...props} isSignup />}
               />
               <Route path="/resetpassword" component={Login} />
               <Route path="/instalogin" component={InstaLogin} />
@@ -219,24 +223,26 @@ App.propTypes = {
   configLoading: PropTypes.bool.isRequired,
   userDataLoaded: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  loader: PropTypes.bool.isRequired,
 };
 
-const mapState = state => ({
+const mapState = (state) => ({
   configLoading: state.config.loading,
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
+  loader: state.commonReducer.loader,
 });
 
-const mapProps = dispatch => ({
+const mapProps = (dispatch) => ({
   getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
-  updateLoginStatus: sessionDetails =>
+  updateLoginStatus: (sessionDetails) =>
     dispatch(updateLoginStatus(sessionDetails)),
   updateUserRole: (isStar, role) => dispatch(updateUserRole(isStar, role)),
-  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  fetchUserDetails: (id) => dispatch(fetchUserDetails(id)),
   logOut: () => dispatch(logOut()),
 });
 

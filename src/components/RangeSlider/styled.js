@@ -2,18 +2,24 @@ import styled from 'styled-components';
 
 const RangeStyled = styled.div`
   display: flex;
-  width: 200px;
+  width: 100%;
   align-items: center;
   .rc-slider {
     height: 27px;
     .rc-slider-rail, .rc-slider-track {
+      background: ${props => props.theme.veryLightPinkTwo}
       height: 20px;
+    }
+    .rc-slider-track-1 {
+      background: ${props => props.theme.flatBlue};
     }
     .rc-slider-handle {
       top: 12px;
+      border: ${props => `1px solid ${props.theme.flatBlue}`};
     }
   }
   @media(min-width: 832px) {
+    width: 300px;
     .rc-slider {
       height: 23px;
       .rc-slider-rail, .rc-slider-track {

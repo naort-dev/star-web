@@ -60,7 +60,7 @@ export const VideoContainer = styled.section`
     width: 224px;
     color: #2f839d;
     position: absolute;
-    left: 20px;
+    left: 22px;
     bottom: 20px;
   }
 `;

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
+import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import PrimaryButton from '../../../../components/PrimaryButton';
@@ -50,6 +51,7 @@ class MobileHome extends React.Component {
     if (!landingVisited) {
       this.setState({ currentStep: currentStep + 1 });
     } else {
+      this.props.history.push('/browse-stars');
       this.closeLandingFlow();
     }
   }
@@ -83,9 +85,11 @@ class MobileHome extends React.Component {
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
           {
             currentStep === 1 &&
-              <ActionChooser toggleSignup={this.loginOrSignup('signup')} 
-              toggleLogin={this.loginOrSignup('login')} 
-              goToNextStep={this.goToNextStep} />
+              <ActionChooser
+                toggleSignup={this.loginOrSignup('signup')}
+                toggleLogin={this.loginOrSignup('login')}
+                goToNextStep={this.goToNextStep}
+              />
           }
           {
             currentStep === 2 &&
@@ -190,6 +194,7 @@ MobileHome.propTypes = {
   toggleSignup: PropTypes.func.isRequired,
   closeLandingFlow: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-export default withTheme(connect(mapStateToProps, mapDispatchToProps)(MobileHome));
+export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileHome)));
