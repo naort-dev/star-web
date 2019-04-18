@@ -80,7 +80,6 @@ class checkout extends React.Component {
               onChange={(event) => this.setErrorMsg(event, 'cardNumberError')}
               style={this.styles}
               placeholder="1234 1234 1234 1234"
-              value="4545646546546"
             />
           </Wrapper>
           {this.returnErrorMsg('cardNumberError')}

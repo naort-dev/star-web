@@ -59,6 +59,7 @@ const Question = (props) => {
   };
 
   const readyToPayment = (responce) => {
+    props.loaderAction(false);
     props.continueCallback();
   };
 
@@ -83,7 +84,6 @@ const Question = (props) => {
             .then((response) => {
               props.starsonaRequest(payload, true, readyToPayment);
               props.setVideoUploadedFlag(true);
-              props.loaderAction(false);
             })
             .catch((error) => {
               props.loaderAction(false);
