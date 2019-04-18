@@ -265,6 +265,10 @@ GroupStyled.Label = styled.div`
       letter-spacing: 2px;
       cursor: text;
     }
+    input:focus::-webkit-input-placeholder { color:transparent; }
+    input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+    input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+    input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
     .react-phone-number-input {
       display: inline-block;
       .react-phone-number-input__row {
@@ -973,6 +977,10 @@ GroupStyled.AddRepForm = styled.div`
       outline: none;
       font-family: 'Avenir-Regular';
     }
+    input:focus::-webkit-input-placeholder { color:transparent; }
+    input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+    input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+    input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
     .errorElement {
       color: red;
       margin-top: 2px;
