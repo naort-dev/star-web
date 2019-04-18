@@ -13,12 +13,16 @@ import {
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 
 const CategoryList = ({ dataModal, getCategory }) => {
+  const handleGetCategory = (type) => (e) => {
+    getCategory && getCategory(type);
+  };
+
   return (
     <Layout>
       {dataModal.map((item, index) => {
         return (
           <ContentWrapper
-            onClick={() => getCategory(item.type)}
+            onClick={handleGetCategory(item.type)}
             key={item.type}
           >
             <FlexBoxSB key={item.header}>
