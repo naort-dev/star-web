@@ -28,9 +28,7 @@ const Payment = (props) => {
     }
   };
 
-  const paymentSuccess = () => {
-    debugger;
-  };
+  const paymentSuccess = () => {};
 
   const handleBooking = (res) => {
     props.createCharge(
