@@ -19,6 +19,7 @@ const RangeStyled = styled.div`
     }
   }
   @media(min-width: 832px) {
+    width: 300px;
     .rc-slider {
       height: 23px;
       .rc-slider-rail, .rc-slider-track {
