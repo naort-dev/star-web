@@ -1,18 +1,34 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import Slider from 'rc-slider';
+import Tooltip from 'rc-tooltip';
 import 'rc-slider/assets/index.css';
+import 'rc-tooltip/assets/bootstrap.css';
 import RangeStyled from './styled';
 
 const { createSliderWithTooltip } = Slider;
 const Range = createSliderWithTooltip(Slider.Range);
+const { Handle } = Slider;
+
+const handle = (props) => {
+  const { value, dragging, index, ...restProps } = props;
+  return (
+    <Tooltip
+      prefixCls="rc-slider-tooltip"
+      overlay={value}
+      visible={dragging}
+      placement="top"
+      key={index}
+    >
+      <Handle value={value} {...restProps} />
+    </Tooltip>
+  );
+};
 
 const RangeSlider = (props) => {
 
   const renderToolTip = (value) => {
-    return (
-      <RangeStyled.ToolTip>${value}</RangeStyled.ToolTip>
-    );
+    return `$${value}`;
   };
 
   return (
@@ -22,6 +38,7 @@ const RangeSlider = (props) => {
         min={props.min}
         max={props.max}
         allowCross={false}
+        handle={handle}
         onAfterChange={props.onAfterChange}
         defaultValue={[props.range.low, props.range.high]}
         tipFormatter={renderToolTip}

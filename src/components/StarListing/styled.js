@@ -41,4 +41,12 @@ ListingStyled.Content = styled.li`
   }
 `;
 
+ListingStyled.NoDataText = styled.li`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-family: Gilroy-Medium;
+`;
+
 export default ListingStyled;

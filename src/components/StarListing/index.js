@@ -14,6 +14,11 @@ const StarListing = (props) => {
           </ListingStyled.Content>
         ))
       }
+      {
+        !props.dataList.length ?
+          <ListingStyled.NoDataText>No records found</ListingStyled.NoDataText>
+        : null
+      }
     </ListingStyled>
   );
 };

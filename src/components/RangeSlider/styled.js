@@ -38,11 +38,4 @@ RangeStyled.Label = styled.span`
   padding-left: ${props => !props.left && '23px'};
 `;
 
-RangeStyled.ToolTip = styled.span`
-  display: block;
-  padding: 12px;
-  background: #000;
-  color: #fff;
-`;
-
 export default RangeStyled;
