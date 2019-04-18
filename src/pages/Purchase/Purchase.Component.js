@@ -80,7 +80,6 @@ class Purchase extends Component {
       stepCount: 2,
       category: type,
     });
-    console.log(this.state.category);
     if (this.state.category !== 3) {
       this.props.fetchOccasionlist(type);
     }
