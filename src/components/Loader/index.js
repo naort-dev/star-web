@@ -2,7 +2,7 @@ import React from 'react';
 import LoaderWrapper from './styled';
 
 const Loader = props => (
-  <LoaderWrapper>
+  <LoaderWrapper className={props.class}>
     <LoaderWrapper.inner>
       <svg
         version="1.1"

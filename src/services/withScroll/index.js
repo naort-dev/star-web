@@ -16,6 +16,12 @@ export const withScroll = (WrappedComponent) => {
       align-items: center;
       justify-content: center;
     `)}
+    .loader {
+      position: static;
+      z-index: initial;
+      background: transparent;
+      opacity: initial;
+    }
   `;
 
   const NoDataText = styled.span`
@@ -77,7 +83,7 @@ export const withScroll = (WrappedComponent) => {
           refreshFunction={this.refresh}
           scrollThreshold={0.5}
           hasMore={this.state.hasMore}
-          loader={this.props.dataList.length ? <Loader /> : <NoDataText>{this.props.noDataText}</NoDataText>}
+          loader={this.props.dataList.length ? <Loader class="loader" /> : <NoDataText>{this.props.noDataText}</NoDataText>}
         >
           <WrappedComponent {...this.props} />
         </InfiniteScroll>
@@ -86,7 +92,7 @@ export const withScroll = (WrappedComponent) => {
 
     renderList = () => {
       if (this.props.noScroll && this.props.loading) {
-        return <Loader />;
+        return <Loader class="loader" />;
       } else if (this.props.noScroll) {
         return <WrappedComponent {...this.props} />;
       } else if (this.props.scrollTarget) {
@@ -108,7 +114,7 @@ export const withScroll = (WrappedComponent) => {
         <ListStyled loading={this.props.loading}>
           {
             !this.props.dataList.length && this.props.loading ?
-              <Loader />
+              <Loader class="loader" />
             :
               this.renderList()
           }
