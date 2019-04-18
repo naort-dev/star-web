@@ -3,7 +3,6 @@ import Header from '../../components/Header';
 import { Footer } from '../../components/Footer';
 import DesktopHome from './components/DesktopHome';
 import MobileHome from './components/MobileHome';
-import CategoryPage from './components/CategoryPage';
 import Sidebar from '../../components/Sidebar';
 import FilterSection from '../../components/filterSection';
 import LandingStyled from './styled';
@@ -16,7 +15,6 @@ export default class Landing extends React.Component {
       filterSelected: false,
       subCategoryList: [],
       groupClick: true,
-      showLanding: true,
       desktopLanding: true,
     };
   }
@@ -178,25 +176,21 @@ export default class Landing extends React.Component {
     return (
       <LandingStyled>
         <LandingStyled.Container>
-          {
-            showLanding ?
-              <React.Fragment>
-                {
-                  desktopLanding ?
-                    <React.Fragment>
-                      <Header
-                        notFixed
-                        disableLogo
-                        disableSearch
-                      />
-                      <DesktopHome closeLandingFlow={this.closeLandingFlow} />
-                      <Footer />
-                    </React.Fragment>
-                  : <MobileHome closeLandingFlow={this.closeLandingFlow} />
-                }
-              </React.Fragment>
-            : <CategoryPage />
-          }
+          <React.Fragment>
+            {
+              desktopLanding ?
+                <React.Fragment>
+                  <Header
+                    notFixed
+                    disableLogo
+                    disableSearch
+                  />
+                  <DesktopHome closeLandingFlow={this.closeLandingFlow} />
+                  <Footer />
+                </React.Fragment>
+              : <MobileHome closeLandingFlow={this.closeLandingFlow} />
+            }
+          </React.Fragment>
         </LandingStyled.Container>
       </LandingStyled>
     );

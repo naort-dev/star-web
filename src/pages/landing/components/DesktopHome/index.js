@@ -102,12 +102,6 @@ class DesktopHome extends React.Component {
     return { trendingList };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.category.label !== this.props.category.label) {
-      this.props.closeLandingFlow();
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.setTrendingData);
   }
@@ -129,6 +123,7 @@ class DesktopHome extends React.Component {
   handleCategoryChange = (category) => {
     this.props.closeLandingFlow();
     this.props.updateCategory(category.title, category.id, category.child);
+    this.props.history.push('/browse-stars');
   }
 
   render() {
@@ -318,6 +313,7 @@ DesktopHome.propTypes = {
   fetchTrendingStars: PropTypes.func.isRequired,
   updateCategory: PropTypes.func.isRequired,
   theme: PropTypes.object,
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
