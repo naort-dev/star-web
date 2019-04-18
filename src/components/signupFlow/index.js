@@ -10,7 +10,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
-import { FanRegistrationSuccess } from './components/FanRegistrationSuccess'
+import FanRegistrationSuccess from './components/FanRegistrationSuccess'
 import { LoginContainer } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
