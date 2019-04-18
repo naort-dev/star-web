@@ -10,12 +10,13 @@ const Range = createSliderWithTooltip(Slider.Range);
 const RangeSlider = (props) => {
   return (
     <RangeStyled>
-      <RangeStyled.Label left>$0</RangeStyled.Label>
+      <RangeStyled.Label left>${props.min}</RangeStyled.Label>
       <Range
         min={props.min}
         max={props.max}
         allowCross={false}
-        defaultValue={[props.min, props.max]}
+        onAfterChange={props.onAfterChange}
+        defaultValue={[props.range.low, props.range.high]}
         tipFormatter={value => `$${value}`}
       />
       <RangeStyled.Label>${props.max}+</RangeStyled.Label>
@@ -26,6 +27,8 @@ const RangeSlider = (props) => {
 RangeSlider.propTypes = {
   min: PropTypes.number.isRequired,
   max: PropTypes.number.isRequired,
+  range: PropTypes.object.isRequired,
+  onAfterChange: PropTypes.func.isRequired,
 };
 
 export default RangeSlider;

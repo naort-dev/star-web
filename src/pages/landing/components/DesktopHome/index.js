@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -331,4 +332,4 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
-export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));
+export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(DesktopHome)));
