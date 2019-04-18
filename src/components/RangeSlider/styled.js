@@ -6,11 +6,12 @@ const RangeStyled = styled.div`
   align-items: center;
   .rc-slider {
     height: 27px;
+    .rc-slider-rail, .rc-slider-track {
+      background: ${props => props.theme.veryLightPinkTwo}
+      height: 20px;
+    }
     .rc-slider-track-1 {
       background: ${props => props.theme.flatBlue};
-    }
-    .rc-slider-rail, .rc-slider-track {
-      height: 20px;
     }
     .rc-slider-handle {
       top: 12px;
@@ -35,6 +36,13 @@ RangeStyled.Label = styled.span`
   font-size: 14px;
   padding-right: ${props => props.left && '23px'};
   padding-left: ${props => !props.left && '23px'};
+`;
+
+RangeStyled.ToolTip = styled.span`
+  display: block;
+  padding: 12px;
+  background: #000;
+  color: #fff;
 `;
 
 export default RangeStyled;
