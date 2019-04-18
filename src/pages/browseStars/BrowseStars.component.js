@@ -51,6 +51,10 @@ const BrowseStars = (props) => {
   }, []);
 
   useEffect(() => {
+    props.fetchCelebrityList(0, true);
+  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice]);
+
+  useEffect(() => {
     return () => {
       window.removeEventListener('resize', onWindowResize);
     };
@@ -139,6 +143,10 @@ BrowseStars.propTypes = {
   featuredStars: PropTypes.object.isRequired,
   fetchFeaturedStars: PropTypes.func.isRequired,
   celebList: PropTypes.object.isRequired,
+  lowPrice: PropTypes.number.isRequired,
+  highPrice: PropTypes.number.isRequired,
+  fetchCelebrityList: PropTypes.func.isRequired,
+  sortValue: PropTypes.string.isRequired,
 };
 
 export default withTheme(BrowseStars);

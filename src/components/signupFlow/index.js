@@ -10,7 +10,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
-import { RegistrationSuccess } from './components/RegistrationSuccess'
+import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
@@ -72,7 +72,7 @@ class SignupFlow extends React.Component {
         />
         );
         case 2: return (
-          <RegistrationSuccess 
+          <RegistrationSuccess
             closeSignupFlow={this.closeSignUp} 
             description={FAN_REG_SUCCESS.DESCRIPTION}
             highlight_text={FAN_REG_SUCCESS.HIGHLIGHT_TEXT}

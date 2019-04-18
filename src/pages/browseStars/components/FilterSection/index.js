@@ -32,10 +32,6 @@ const FilterSection = (props) => {
     updateSelectedSub(props.category.selected);
   }, [props.category.selected.length]);
 
-  useEffect(() => {
-    props.fetchCelebrityList(0, true);
-  }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice]);
-
   const updateSubCategory = catId => () => {
     let selectedList = [...selectedSubCat];
     if (selectedList.find(cat => cat === catId)) {

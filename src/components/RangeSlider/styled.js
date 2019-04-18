@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const RangeStyled = styled.div`
   display: flex;
-  width: 200px;
+  width: 100%;
   align-items: center;
   .rc-slider {
     height: 27px;
@@ -15,7 +15,7 @@ const RangeStyled = styled.div`
     }
     .rc-slider-handle {
       top: 12px;
-      border: none;
+      border: ${props => `1px solid ${props.theme.flatBlue}`};
     }
   }
   @media(min-width: 832px) {

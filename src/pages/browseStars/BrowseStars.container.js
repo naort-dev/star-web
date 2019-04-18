@@ -7,6 +7,9 @@ const mapStateToProps = state => ({
   category: state.filters.category,
   celebList: state.celebList,
   featuredStars: state.featuredStars,
+  lowPrice: state.filters.lowPrice,
+  highPrice: state.filters.highPrice,
+  sortValue: state.filters.sortValue,
 });
 
 const mapDispatchToProps = dispatch => ({
