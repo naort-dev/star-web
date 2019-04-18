@@ -389,6 +389,19 @@ ImageUpload.VideoElement = styled.video`
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
+  background: #000;
+  .videoError {
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-family: Gilroy-Medium;
+    padding: 0 40px;
+    text-align: center;
+    line-height: 35px;
+  }
 `;
 
 ImageUpload.PhotoButtonWrapper = styled.div`
