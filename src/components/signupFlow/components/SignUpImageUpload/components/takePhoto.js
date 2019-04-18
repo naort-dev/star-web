@@ -10,6 +10,7 @@ export default class TakePhoto extends React.Component {
     super(props);
     this.state = {
       recording: false,
+      videoError: false,
     };
     this.constraints = {
       video: true,
@@ -34,22 +35,17 @@ export default class TakePhoto extends React.Component {
       return navigator.mediaDevices.getUserMedia(this.constraints)
         .then((stream) => {
           this.videoRef.current.srcObject = stream;
-          this.setState({ stream });
+          this.setState({
+            stream,
+            videoError: false, 
+          });
           return stream;
         }).catch((e) => {
+          this.setState({
+            videoError: true,
+          });
         });
     }
-  }
-
-  handleDataAvailable = (event) => {
-    if (event.data && event.data.size > 0) {
-      this.recordedBlobs.push(event.data);
-    }
-  }
-
-  detectCameraMedia = async () => {
-    const stream = await this.getVideoStream();
-    this.setState({ recording: true });
   }
 
   getExif = (file) => {
@@ -78,9 +74,19 @@ export default class TakePhoto extends React.Component {
           default:
             resolve(9);
         }
-      })
+      });
+    });
+  }
 
-    })
+  handleDataAvailable = (event) => {
+    if (event.data && event.data.size > 0) {
+      this.recordedBlobs.push(event.data);
+    }
+  }
+
+  detectCameraMedia = async () => {
+    const stream = await this.getVideoStream();
+    this.setState({ recording: true });
   }
 
   takeScreenshot = () => {
@@ -102,11 +108,18 @@ export default class TakePhoto extends React.Component {
       <ImageUpload.TakePhotoWrapper>
         <React.Fragment>
           <ImageUpload.TakePhoto takePhoto={this.props.takePicture}>
-            <ImageUpload.VideoElement autoPlay innerRef={this.videoRef} muted />
+            {
+              this.state.videoError ?
+                <div className="videoError">Please use supported browsers to use the web camera.</div>
+              : <ImageUpload.VideoElement autoPlay innerRef={this.videoRef} muted />
+            }
           </ImageUpload.TakePhoto>
-          <ImageUpload.PhotoButtonWrapper>
-            <ImageUpload.CropperButton onClick={this.takeScreenshot}>Capture photo</ImageUpload.CropperButton>
-          </ImageUpload.PhotoButtonWrapper>
+          {
+            !this.state.videoError &&
+            <ImageUpload.PhotoButtonWrapper>
+              <ImageUpload.CropperButton onClick={this.takeScreenshot}>Capture photo</ImageUpload.CropperButton>
+            </ImageUpload.PhotoButtonWrapper>
+          }
         </React.Fragment>
       </ImageUpload.TakePhotoWrapper>
     );
