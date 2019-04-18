@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -101,12 +102,6 @@ class DesktopHome extends React.Component {
     return { trendingList };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.category.label !== this.props.category.label) {
-      this.props.closeLandingFlow();
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.setTrendingData);
   }
@@ -128,6 +123,7 @@ class DesktopHome extends React.Component {
   handleCategoryChange = (category) => {
     this.props.closeLandingFlow();
     this.props.updateCategory(category.title, category.id, category.child);
+    this.props.history.push('/browse-stars');
   }
 
   render() {
@@ -317,6 +313,7 @@ DesktopHome.propTypes = {
   fetchTrendingStars: PropTypes.func.isRequired,
   updateCategory: PropTypes.func.isRequired,
   theme: PropTypes.object,
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -331,4 +328,4 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
-export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));
+export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(DesktopHome)));

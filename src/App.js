@@ -15,6 +15,7 @@ import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
+import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Purchase } from './pages/Purchase/Purchase.Loadable';
@@ -145,6 +146,7 @@ class App extends React.Component {
                   'https://about.starsona.com/faq',
                 )}
               />
+              <Route exact path="/browse-stars" component={BrowseStars} />
               <Route
                 exact
                 path="/signup"

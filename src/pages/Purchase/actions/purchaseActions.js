@@ -44,8 +44,14 @@ export const fetchOccasionlist = (id) => (dispatch) => {
     })
     .catch((exception) => {
       dispatch(occasionlistFetchEnd());
-      dispatch(occasionlistFetchFailed(exception));
-    });
+      dispatch(occasionlistFetchSuccess(resp.data.data));
+    } else {
+      dispatch(occasionlistFetchEnd());
+    }
+  }).catch((exception) => {
+    dispatch(occasionlistFetchEnd());
+    dispatch(occasionlistFetchFailed(exception));
+  });
 };
 
 export const setVideoUploadedFlag = (value) => ({

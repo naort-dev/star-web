@@ -181,7 +181,7 @@ AvatarContainer.Content = styled.article`
       }
       ${AvatarContainer.Name} {
         font-size: 47px;
-        line-height: 1;
+        line-height: 67px;
       }
       ${AvatarContainer.Price} {
         font-family: Gilroy-Semibold;
