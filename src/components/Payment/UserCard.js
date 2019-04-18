@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Elements } from 'react-stripe-elements';
 import {
   UserCardWrapper,
@@ -11,13 +11,18 @@ import CardList from './CardList';
 import Button from '../PrimaryButton';
 import Checkout from './checkout';
 
-const Cards = [
-  { id: '2342', number: '**** **** **** 4422' },
-  { id: '2342', number: '**** **** **** 5555' },
-];
-
 const UserCard = (props) => {
   const [isNewCard, cardSelection] = useState(false);
+
+  useEffect(() => {
+    cardSelection(props.isNewCard);
+  }, [props.isNewCard]);
+
+  const newPay = (value) => (e) => {
+    cardSelection(value);
+    props.contentSwitchCallback(value);
+  };
+
   return (
     <Layout>
       <UserCardWrapper>
@@ -36,9 +41,11 @@ const UserCard = (props) => {
                 <span className="bookingType">Video Shoutout</span>
               </span>
             </FlexBoxSB>
-            <span className="edit" onClick={() => cardSelection(false)}>
-              EDIT
-            </span>
+            {!isNewCard && (
+              <span className="edit" onClick={newPay(true)}>
+                EDIT
+              </span>
+            )}
           </FlexBoxSB>
         </TopSection>
         <BottomSection>
@@ -55,27 +62,23 @@ const UserCard = (props) => {
         </BottomSection>
       </UserCardWrapper>
 
-      {isNewCard || Cards.length === 0 ? (
+      {isNewCard || props.CardList.length === 0 ? (
         <Elements>
-          <Checkout />
+          <Checkout handleBooking={props.handleBooking} />
         </Elements>
       ) : (
         <React.Fragment>
           <span className="selectCard centerAlign">Select Card</span>
-          <CardList CardList={Cards} />
-          <span
-            className="newCard centerAlign"
-            onClick={() => cardSelection(true)}
-          >
+          <CardList CardList={props.CardList} />
+          <span className="newCard centerAlign" onClick={newPay(true)}>
             Pay Using New Card
           </span>
+
+          <FlexCenter>
+            <Button className="button">Pay $50.00</Button>
+          </FlexCenter>
         </React.Fragment>
       )}
-      <FlexCenter>
-        <Button className="button" onClick={props.paymentSuccessCallBack}>
-          Pay $50.00
-        </Button>
-      </FlexCenter>
       <FlexCenter>
         <img
           alt="stripe logo"

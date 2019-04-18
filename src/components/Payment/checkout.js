@@ -13,6 +13,8 @@ import {
   CardElementSmall,
   FlexBox,
 } from './Checkout.styles';
+import { FlexCenter } from '../../styles/CommonStyled';
+import Button from '../PrimaryButton';
 
 class checkout extends React.Component {
   constructor(props) {
@@ -38,9 +40,7 @@ class checkout extends React.Component {
       },
     };
   }
-  // componentWillMount() {
-  //   this.props.setStripe(this.props.stripe);
-  // }
+
   setErrorMsg = (event, element) => {
     let { cardTypeImage } = this.state;
     if (event.elementType === 'cardNumber') {
@@ -60,7 +60,14 @@ class checkout extends React.Component {
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.handleBooking();
+    if (this.props.stripe) {
+      this.props.stripe
+        .createToken()
+        .then((res) => {
+          this.props.handleBooking(res);
+        })
+        .catch();
+    }
   };
 
   render() {
@@ -96,6 +103,9 @@ class checkout extends React.Component {
             {this.returnErrorMsg('cvvError')}
           </CardElementSmall>
         </FlexBox>
+        <FlexCenter>
+          <Button className="button">Pay $50.00</Button>
+        </FlexCenter>
       </form>
     );
   }

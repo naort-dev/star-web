@@ -7,8 +7,11 @@ import {
   playPauseMedia,
   loaderAction,
 } from '../../store/shared/actions/commonActions';
-
 import { setVideoUploadedFlag } from './actions/purchaseActions';
+import {
+  starsonaRequest,
+  createCharge,
+} from '../../store/shared/actions/processPayments';
 
 const mapStateToProps = (state) => ({
   OccasionDetails: state.occasionList.data,
@@ -34,9 +37,15 @@ function mapDispatchToProps(dispatch) {
     setVideoUploadedFlag: (value) => {
       dispatch(setVideoUploadedFlag(value));
     },
+    starsonaRequest: (bookingData, publicStatus, callback) => {
+      dispatch(starsonaRequest(bookingData, publicStatus, callback));
+    },
+    createCharge: (starsonaId, amount, tokenId) => {
+      dispatch(createCharge(starsonaId, amount, tokenId));
+    },
   };
 }
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Purchase);

@@ -6,7 +6,7 @@ const CardList = ({ CardList }) => {
     <Ul>
       {CardList.map((card) => {
         return (
-          <Li icon="default-icon">
+          <Li icon="default-icon" key={card.number}>
             <span className="brand">Use</span>
             <span className="cardNo">{card.number}</span>
           </Li>

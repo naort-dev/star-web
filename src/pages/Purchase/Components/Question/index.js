@@ -58,6 +58,10 @@ const Question = (props) => {
     }
   };
 
+  const readyToPayment = (responce) => {
+    props.continueCallback();
+  };
+
   const uploadVideoRecorded = () => {
     let uploadVideo = null;
     uploadVideo = new File([props.videoFile], 'askVideo.mp4');
@@ -65,10 +69,19 @@ const Question = (props) => {
     getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
       .then((response) => {
         if (response && response.filename) {
+          const payload = {
+            starDetail: {
+              id: 'qaQWMldn',
+            },
+            question: '',
+            date: '',
+            type: 3,
+            fileName: response.filename,
+          };
           axios
             .post(response.url, response.formData)
             .then((response) => {
-              props.continueCallback();
+              props.starsonaRequest(payload, true, readyToPayment);
               props.setVideoUploadedFlag(true);
               props.loaderAction(false);
             })
