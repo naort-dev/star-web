@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const FanRegSuccessWrapper = styled.div`
+const RegSuccessWrapper = styled.div`
   text-align: center;
   height: calc(100% - 98px);
   @media(min-width: 1025px) {
@@ -8,17 +8,17 @@ const FanRegSuccessWrapper = styled.div`
   }
 `;
 
-FanRegSuccessWrapper.ComponentWrapper = styled.div`
+RegSuccessWrapper.ComponentWrapper = styled.div`
   height: 100%;
 `;
 
-FanRegSuccessWrapper.OptionWrapper = styled.div`
+RegSuccessWrapper.OptionWrapper = styled.div`
   padding-bottom: 28px;
   @media(min-width:768px){
     padding: 10px 29px;
   }
 `;
-FanRegSuccessWrapper.HeaderText = styled.div`
+RegSuccessWrapper.HeaderText = styled.div`
   padding-top: 30px;
   font-family: Gilroy;
   font-size: 24px;
@@ -26,11 +26,11 @@ FanRegSuccessWrapper.HeaderText = styled.div`
   text-align: center;
   color: #ff6c58;
 `;
-FanRegSuccessWrapper.ButtonWrapper = styled.div`
+RegSuccessWrapper.ButtonWrapper = styled.div`
   text-align:center;
   margin-top: 50px;
 `;
-FanRegSuccessWrapper.Button = styled.button`
+RegSuccessWrapper.Button = styled.button`
 width: 250px;
 height: 60px;
 border-radius: 60px;
@@ -56,10 +56,10 @@ color: #ffffff;
     margin-bottom:20px;
   }
 `;
-FanRegSuccessWrapper.Type = styled.div`
+RegSuccessWrapper.Type = styled.div`
   padding-bottom: 20px;
 `;
-FanRegSuccessWrapper.Image = styled.div`
+RegSuccessWrapper.Image = styled.div`
   display: block;
   background-color: #d3e7ef;
   background: ${props => props.imageUrl && `url(${props.imageUrl})`};
@@ -68,7 +68,7 @@ FanRegSuccessWrapper.Image = styled.div`
   background-size: contain;
   height: 192.8px;
 `;
-FanRegSuccessWrapper.Label = styled.div`
+RegSuccessWrapper.Label = styled.div`
   font-family: Gilroy;
   font-size: 34px;
   font-weight: 500;
@@ -77,7 +77,7 @@ FanRegSuccessWrapper.Label = styled.div`
   color:  #ff6c58;
   padding-top: 10px;
 `;
-FanRegSuccessWrapper.Description = styled.div`
+RegSuccessWrapper.Description = styled.div`
   padding-top: 15px;
   font-family: Gilroy-Light;
   font-size: 18px;
@@ -89,4 +89,4 @@ FanRegSuccessWrapper.Description = styled.div`
 `;
 
 
-export default FanRegSuccessWrapper;
+export default RegSuccessWrapper;
