@@ -27,7 +27,9 @@ const Question = (props) => {
     },
   ];
   const [showHideFlg, showHideScript] = useState(false);
-  const [buttonLabel, changeButtonLabel] = useState('Record');
+  const [buttonLabel, changeButtonLabel] = useState(
+    props.videoSrc ? 'Continue to Payment' : 'Record',
+  );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
 
@@ -37,6 +39,7 @@ const Question = (props) => {
     changeButtonLabel(btnLabel);
     showHideScript(false);
     errorHandler(false);
+    props.setVideoUploadedFlag(false);
   };
 
   const buttonClickHandler = () => {
@@ -47,23 +50,49 @@ const Question = (props) => {
       mediaHandler('Continue to Payment', true);
       stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
-      // uploadVideoRecorded();
+      if (props.videoUploaded) {
+        props.continueCallback();
+      } else {
+        uploadVideoRecorded();
+      }
     }
+  };
+
+  const readyToPayment = (responce) => {
+    props.loaderAction(false);
+    props.continueCallback();
   };
 
   const uploadVideoRecorded = () => {
     let uploadVideo = null;
     uploadVideo = new File([props.videoFile], 'askVideo.mp4');
+    props.loaderAction(true);
     getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
       .then((response) => {
         if (response && response.filename) {
+          const payload = {
+            starDetail: {
+              id: 'qaQWMldn',
+            },
+            question: '',
+            date: '',
+            type: 3,
+            fileName: response.filename,
+          };
           axios
             .post(response.url, response.formData)
-            .then((response) => {})
-            .catch((error) => {});
+            .then((response) => {
+              props.starsonaRequest(payload, true, readyToPayment);
+              props.setVideoUploadedFlag(true);
+            })
+            .catch((error) => {
+              props.loaderAction(false);
+            });
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        props.loaderAction(false);
+      });
   };
 
   const stopRecordHandler = () => {
@@ -148,15 +177,20 @@ Question.propTypes = {
   playPauseMedia: PropTypes.func.isRequired,
   recordTrigger: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
+  continueCallback: PropTypes.func.isRequired,
+  videoSrc: PropTypes.string,
 };
 
 Question.defaultProps = {
   videoFile: {},
+  videoSrc: '',
 };
 
 function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
+    videoSrc: state.commonReducer.videoSrc,
+    videoUploaded: state.occasionList.videoUploaded,
   };
 }
 export default connect(

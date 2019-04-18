@@ -33,7 +33,7 @@ class StripeCheckout extends React.Component {
     };
   }
   componentWillMount() {
-    this.getEphemeralKey();
+    //this.getEphemeralKey();
     if (Object.keys(this.props.sourceList).length) {
       this.setState({ cardSelection: true });
     }

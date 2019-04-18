@@ -5,7 +5,16 @@ import {
   CardExpiryElement,
   CardCVCElement,
 } from 'react-stripe-elements';
-import PaymentStyled from './styled';
+import {
+  CardElement,
+  CardIcon,
+  Error,
+  Wrapper,
+  CardElementSmall,
+  FlexBox,
+} from './Checkout.styles';
+import { FlexCenter } from '../../styles/CommonStyled';
+import Button from '../PrimaryButton';
 
 class checkout extends React.Component {
   constructor(props) {
@@ -14,16 +23,16 @@ class checkout extends React.Component {
       cardNumberError: '',
       cardExpiryError: '',
       cvvError: '',
-      // zipCodeError: '',
       cardTypeImage: null,
     };
     this.styles = {
       base: {
-        fontSize: '13px',
-        color: '#333333',
-        fontFamily: '"Avenir-Regular"',
+        fontSize: '18px',
+        color: '#aaaaaa',
+        textAlign: 'center',
+        fontFamily: '"Gilroy"',
         '::placeholder': {
-          color: '#333333',
+          color: '#aaaaaa',
         },
       },
       invalid: {
@@ -31,9 +40,7 @@ class checkout extends React.Component {
       },
     };
   }
-  // componentWillMount() {
-  //   this.props.setStripe(this.props.stripe);
-  // }
+
   setErrorMsg = (event, element) => {
     let { cardTypeImage } = this.state;
     if (event.elementType === 'cardNumber') {
@@ -47,52 +54,59 @@ class checkout extends React.Component {
   };
   returnErrorMsg = (element) => {
     if (this.state[element] !== '') {
-      return (
-        <PaymentStyled.ErrorElement>
-          {this.state[element]}
-        </PaymentStyled.ErrorElement>
-      );
+      return <Error>{this.state[element]}</Error>;
     }
     return null;
   };
   handleSubmit = (event) => {
     event.preventDefault();
-    this.props.handleBooking();
+    if (this.props.stripe) {
+      this.props.stripe
+        .createToken()
+        .then((res) => {
+          this.props.handleBooking(res);
+        })
+        .catch();
+    }
   };
 
   render() {
     return (
-      <PaymentStyled onSubmit={this.handleSubmit}>
-        <PaymentStyled.CardElementWrapper>
-          <PaymentStyled.CardInputWrapper>
-            <PaymentStyled.CardTypeIcon cardImage={this.state.cardTypeImage} />
+      <form onSubmit={this.handleSubmit}>
+        <CardElement>
+          <Wrapper>
+            <CardIcon cardImage={this.state.cardTypeImage} />
             <CardNumberElement
               onChange={(event) => this.setErrorMsg(event, 'cardNumberError')}
               style={this.styles}
               placeholder="1234 1234 1234 1234"
             />
-          </PaymentStyled.CardInputWrapper>
+          </Wrapper>
           {this.returnErrorMsg('cardNumberError')}
-        </PaymentStyled.CardElementWrapper>
-        <PaymentStyled.OtherDetailsWrapper>
-          <PaymentStyled.CardElementWrapper>
+        </CardElement>
+
+        <FlexBox>
+          <CardElementSmall>
             <CardExpiryElement
               onChange={(event) => this.setErrorMsg(event, 'cardExpiryError')}
               style={this.styles}
               placeholder="MM/YY"
             />
             {this.returnErrorMsg('cardExpiryError')}
-          </PaymentStyled.CardElementWrapper>
-          <PaymentStyled.CardElementWrapper>
+          </CardElementSmall>
+          <CardElementSmall>
             <CardCVCElement
               onChange={(event) => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
               placeholder="CCV Code"
             />
             {this.returnErrorMsg('cvvError')}
-          </PaymentStyled.CardElementWrapper>
-        </PaymentStyled.OtherDetailsWrapper>
-      </PaymentStyled>
+          </CardElementSmall>
+        </FlexBox>
+        <FlexCenter>
+          <Button className="button">Pay $50.00</Button>
+        </FlexCenter>
+      </form>
     );
   }
 }
