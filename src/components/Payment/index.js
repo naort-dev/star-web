@@ -28,9 +28,12 @@ const Payment = (props) => {
     }
   };
 
-  const paymentSuccess = () => {};
+  const paymentSuccess = () => {
+    props.paymentSuccessCallBack();
+  };
 
   const handleBooking = (res) => {
+    debugger
     props.createCharge(
       props.request.id,
       150,
@@ -60,6 +63,7 @@ const Payment = (props) => {
             contentSwitchCallback={contentSwitchCallback}
             isNewCard={isNewCard}
             handleBooking={handleBooking}
+            paymentSuccessCallBack={props.paymentSuccessCallBack}
           />
         </Layout>
       </Scrollbars>

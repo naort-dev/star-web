@@ -30,7 +30,7 @@ class checkout extends React.Component {
         fontSize: '18px',
         color: '#aaaaaa',
         textAlign: 'center',
-        fontFamily: '"Gilroy"',
+        fontFamily: 'Gilroy',
         '::placeholder': {
           color: '#aaaaaa',
         },

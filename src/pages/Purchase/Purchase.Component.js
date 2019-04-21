@@ -10,13 +10,13 @@ import FormContainer from './Components/FormContainer';
 // import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import Payment from '../../components/Payment';
-// import SuccessScreen from './Components/SuccessScreen';
+import SuccessScreen from './Components/SuccessScreen';
 import Header from './Components/Header';
 
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 1, category: 0 };
+    this.state = { open: true, stepCount: 4, category: 0 };
     this.starData = [
       {
         size: '28px',
@@ -89,14 +89,18 @@ class Purchase extends Component {
   };
 
   getFinalStep = () => {
-    return (
-      <Payment
-        paymentSuccessCallBack={this.paymentSuccess}
-        backArrowHandler={this.backArrowHandler}
-        closeHandler={this.closeHandler}
-        createCharge={this.props.createCharge}
-      />
-    );
+    if (this.state.stepCount === 3) {
+      return (
+        <Payment
+          paymentSuccessCallBack={this.paymentSuccess}
+          backArrowHandler={this.backArrowHandler}
+          closeHandler={this.closeHandler}
+          createCharge={this.props.createCharge}
+        />
+      );
+    } else if (this.state.stepCount === 4) {
+      return <SuccessScreen />;
+    }
   };
 
   handleClose = () => {
@@ -116,6 +120,7 @@ class Purchase extends Component {
   };
 
   paymentSuccess = () => {
+    debugger
     this.submitClick();
   };
 

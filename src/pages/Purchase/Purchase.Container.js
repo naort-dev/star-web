@@ -40,8 +40,8 @@ function mapDispatchToProps(dispatch) {
     starsonaRequest: (bookingData, publicStatus, callback) => {
       dispatch(starsonaRequest(bookingData, publicStatus, callback));
     },
-    createCharge: (starsonaId, amount, tokenId) => {
-      dispatch(createCharge(starsonaId, amount, tokenId));
+    createCharge: (starsonaId, amount, tokenId, callBack) => {
+      dispatch(createCharge(starsonaId, amount, tokenId, callBack));
     },
   };
 }

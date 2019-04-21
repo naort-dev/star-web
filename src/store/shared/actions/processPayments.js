@@ -168,7 +168,9 @@ export const modifySourceList = (source, customer, action, callback) => (
     });
 };
 
-export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
+export const createCharge = (starsonaId, amount, tokenId, callBack) => (
+  dispatch,
+) => {
   dispatch(paymentFetchStart());
   return fetch
     .post(Api.createCharge, {
@@ -180,11 +182,13 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
       if (resp.data && resp.data.success) {
         dispatch(paymentFetchEnd());
         dispatch(setPaymentStatus(resp.data.success));
+        if (callBack) callBack();
       } else {
         dispatch(paymentFetchEnd());
       }
     })
     .catch((exception) => {
+      if (callBack) callBack();
       dispatch(paymentFetchEnd());
       dispatch(paymentFetchFailed(exception.response.data.error));
     });
