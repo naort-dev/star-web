@@ -2,6 +2,10 @@ import styled from 'styled-components';
 
 export const Ul = styled.ul`
   padding-top: 10px;
+  .selected {
+    border: 2px solid green;
+    color: green;
+  }
 `;
 
 export const Li = styled.li`

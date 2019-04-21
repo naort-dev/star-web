@@ -13,6 +13,7 @@ import Checkout from './checkout';
 
 const UserCard = (props) => {
   const [isNewCard, cardSelection] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     cardSelection(props.isNewCard);
@@ -21,6 +22,14 @@ const UserCard = (props) => {
   const newPay = (value) => (e) => {
     cardSelection(value);
     props.contentSwitchCallback(value);
+  };
+
+  const getCardSelected = (card) => {
+    setSelectedCard(card);
+  };
+
+  const payWithExistingCrd = () => {
+    props.handleBooking({ token: { card: { id: '4242424242424242' } } });
   };
 
   return (
@@ -69,13 +78,18 @@ const UserCard = (props) => {
       ) : (
         <React.Fragment>
           <span className="selectCard centerAlign">Select Card</span>
-          <CardList CardList={props.CardList} />
+          <CardList
+            CardList={props.CardList}
+            getCardSelected={getCardSelected}
+          />
           <span className="newCard centerAlign" onClick={newPay(true)}>
             Pay Using New Card
           </span>
 
           <FlexCenter>
-            <Button className="button">Pay $50.00</Button>
+            <Button className="button" onClick={payWithExistingCrd}>
+              Pay $50.00
+            </Button>
           </FlexCenter>
         </React.Fragment>
       )}
