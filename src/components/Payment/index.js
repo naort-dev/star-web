@@ -36,7 +36,7 @@ const Payment = (props) => {
   const handleBooking = (res) => {
     props.createCharge(
       props.request.id,
-      props.celebDetails.celebrityDetails.rate,
+      '150.00',
       res.token.card.id,
       paymentSuccess,
     );
