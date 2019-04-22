@@ -34,10 +34,11 @@ const Payment = (props) => {
   };
 
   const handleBooking = (res) => {
+    debugger
     props.createCharge(
       props.request.id,
       '150.00',
-      res.token.card.id,
+      res.token.id,
       paymentSuccess,
     );
   };
