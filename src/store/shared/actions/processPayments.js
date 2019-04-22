@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { loaderAction } from './commonActions';
 
 export const PAYMENTS = {
   start: 'payments/REQUEST',
@@ -109,23 +110,18 @@ export const sourceListFetchFailed = (error) => ({
 });
 
 export const fetchSourceList = () => (dispatch, getState) => {
-  const { authentication_token: authToken } = getState().session.auth_token;
-  dispatch(sourceListFetchStart());
-  return fetch(Api.getSourceList, {
-    headers: {
-      Authorization: `token ${authToken}`,
-    },
-  })
+  dispatch(loaderAction(true));
+  return fetch(Api.getSourceList, {})
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(sourceListFetchEnd());
         dispatch(sourceListFetchSuccess(resp.data.data.cards));
+        dispatch(loaderAction(false));
       } else {
-        dispatch(sourceListFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(sourceListFetchFailed(exception.response.data.error));
     });
 };
@@ -171,7 +167,7 @@ export const modifySourceList = (source, customer, action, callback) => (
 export const createCharge = (starsonaId, amount, tokenId, callBack) => (
   dispatch,
 ) => {
-  dispatch(paymentFetchStart());
+  dispatch(loaderAction(true));
   return fetch
     .post(Api.createCharge, {
       starsona: starsonaId,
@@ -180,16 +176,15 @@ export const createCharge = (starsonaId, amount, tokenId, callBack) => (
     })
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(paymentFetchEnd());
         dispatch(setPaymentStatus(resp.data.success));
+        dispatch(loaderAction(false));
         if (callBack) callBack();
       } else {
-        dispatch(paymentFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      if (callBack) callBack();
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(paymentFetchFailed(exception.response.data.error));
     });
 };

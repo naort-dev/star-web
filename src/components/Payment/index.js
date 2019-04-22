@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
@@ -7,23 +8,23 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 
 const Payment = (props) => {
-  const CardList = [
-    { id: '2342', number: '**** **** **** 4422' },
-    { id: '2342', number: '**** **** **** 5555' },
-  ];
-
   const [isNewCard, cardSelection] = useState(false);
+
+  useEffect(() => {
+    props.fetchSourceList();
+    props.fetchCelebDetails('starlord-8');
+  }, []);
 
   const contentSwitchCallback = (value) => {
     cardSelection(value);
   };
 
   const backArrowClick = () => {
-    if (CardList.length === 0) {
+    if (Object.keys(props.sourceList).length === 0) {
       props.backArrowHandler();
     } else if (isNewCard) {
       cardSelection(false);
-    } else if (!isNewCard && CardList.length > 0) {
+    } else if (!isNewCard && Object.keys(props.sourceList).length > 0) {
       props.backArrowHandler();
     }
   };
@@ -33,10 +34,9 @@ const Payment = (props) => {
   };
 
   const handleBooking = (res) => {
-    debugger
     props.createCharge(
       props.request.id,
-      150,
+      props.celebDetails.celebrityDetails.rate,
       res.token.card.id,
       paymentSuccess,
     );
@@ -56,22 +56,43 @@ const Payment = (props) => {
         </FlexBoxSBC>
       </SubHeader>
       <Scrollbars className="customScroll">
-        <Layout>
-          <UserCard
-            {...props}
-            CardList={CardList}
-            contentSwitchCallback={contentSwitchCallback}
-            isNewCard={isNewCard}
-            handleBooking={handleBooking}
-            paymentSuccessCallBack={props.paymentSuccessCallBack}
-          />
-        </Layout>
+        {Object.keys(props.celebDetails).length > 0 && (
+          <Layout>
+            {Object.keys(props.celebDetails.celebrityDetails).length > 0 &&
+              Object.keys(props.celebDetails.userDetails).length > 0 && (
+                <UserCard
+                  {...props}
+                  CardList={props.sourceList}
+                  contentSwitchCallback={contentSwitchCallback}
+                  isNewCard={isNewCard}
+                  handleBooking={handleBooking}
+                  paymentSuccessCallBack={props.paymentSuccessCallBack}
+                  celebDetails={props.celebDetails}
+                />
+              )}
+          </Layout>
+        )}
       </Scrollbars>
     </React.Fragment>
   );
 };
+
+Payment.propTypes = {
+  backArrowHandler: PropTypes.func.isRequired,
+  paymentSuccessCallBack: PropTypes.func.isRequired,
+  request: PropTypes.object.isRequired,
+  closeHandler: PropTypes.func.isRequired,
+  sourceList: PropTypes.object.isRequired,
+  createCharge: PropTypes.func.isRequired,
+  fetchSourceList: PropTypes.func.isRequired,
+  fetchCelebDetails: PropTypes.func.isRequired,
+};
+Payment.defaultProps = {};
+
 const mapStateToProps = (state) => ({
   request: state.paymentDetails.requestDetails,
+  sourceList: state.paymentDetails.sourceList,
+  celebDetails: state.celebDetails,
 });
 
 export default connect(

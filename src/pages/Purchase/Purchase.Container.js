@@ -1,17 +1,21 @@
 import { connect } from 'react-redux';
 import Purchase from './Purchase.Component';
-import { fetchOccasionlist } from './actions/purchaseActions';
 import {
   recordTrigger,
   updateMediaStore,
   playPauseMedia,
   loaderAction,
 } from '../../store/shared/actions/commonActions';
-import { setVideoUploadedFlag } from './actions/purchaseActions';
+import {
+  setVideoUploadedFlag,
+  fetchOccasionlist,
+} from './actions/purchaseActions';
 import {
   starsonaRequest,
   createCharge,
+  fetchSourceList,
 } from '../../store/shared/actions/processPayments';
+import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = (state) => ({
   OccasionDetails: state.occasionList.data,
@@ -42,6 +46,12 @@ function mapDispatchToProps(dispatch) {
     },
     createCharge: (starsonaId, amount, tokenId, callBack) => {
       dispatch(createCharge(starsonaId, amount, tokenId, callBack));
+    },
+    fetchSourceList: () => {
+      dispatch(fetchSourceList());
+    },
+    fetchCelebDetails: (id) => {
+      dispatch(fetchCelebDetails(id));
     },
   };
 }

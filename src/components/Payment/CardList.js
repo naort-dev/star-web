@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Ul, Li } from './CardList.styles';
 
-const CardList = ({ CardList, getCardSelected }) => {
+const CardList = ({ Cards, getCardSelected }) => {
   const [selected, getSelected] = useState('');
   const cardSelected = (card) => {
     getSelected(card);
@@ -10,21 +11,31 @@ const CardList = ({ CardList, getCardSelected }) => {
 
   return (
     <Ul>
-      {CardList.map((card) => {
+      {Object.keys(Cards).map((cardIndex) => {
         return (
           <Li
             icon="default-icon"
-            className={selected.number === card.number && 'selected'}
-            key={card.number}
-            onClick={() => cardSelected(card)}
+            className={
+              selected.last4 === Cards[cardIndex].last4 && 'selected'
+            }
+            key={Cards[cardIndex].last4 + cardIndex}
+            onClick={() => cardSelected(Cards[cardIndex])}
           >
             <span className="brand">Use</span>
-            <span className="cardNo">{card.number}</span>
+            <span className="cardNo">
+              **** **** **** {Cards[cardIndex].last4}
+            </span>
           </Li>
         );
       })}
     </Ul>
   );
 };
+
+CardList.propTypes = {
+  getCardSelected: PropTypes.func.isRequired,
+  Cards: PropTypes.object.isRequired,
+};
+CardList.defaultProps = {};
 
 export default CardList;

@@ -104,7 +104,7 @@ class checkout extends React.Component {
           </CardElementSmall>
         </FlexBox>
         <FlexCenter>
-          <Button className="button">Pay $50.00</Button>
+          <Button className="button">Pay ${this.props.rate}</Button>
         </FlexCenter>
       </form>
     );

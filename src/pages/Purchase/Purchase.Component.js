@@ -76,6 +76,7 @@ class Purchase extends Component {
     // } else if (this.state.stepCount === 5) {
     //   return <ScriptBuilder />;
     // }
+    return <div />;
   };
 
   getCategory = (type) => {
@@ -96,11 +97,14 @@ class Purchase extends Component {
           backArrowHandler={this.backArrowHandler}
           closeHandler={this.closeHandler}
           createCharge={this.props.createCharge}
+          fetchSourceList={this.props.fetchSourceList}
+          fetchCelebDetails={this.props.fetchCelebDetails}
         />
       );
     } else if (this.state.stepCount === 4) {
       return <SuccessScreen />;
     }
+    return <div />;
   };
 
   handleClose = () => {
@@ -120,7 +124,6 @@ class Purchase extends Component {
   };
 
   paymentSuccess = () => {
-    debugger
     this.submitClick();
   };
 
@@ -172,6 +175,9 @@ Purchase.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
+  createCharge: PropTypes.func.isRequired,
+  fetchSourceList: PropTypes.func.isRequired,
+  fetchCelebDetails: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
