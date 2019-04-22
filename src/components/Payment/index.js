@@ -34,7 +34,6 @@ const Payment = (props) => {
   };
 
   const handleBooking = (res) => {
-    debugger
     props.createCharge(
       props.request.id,
       '150.00',
