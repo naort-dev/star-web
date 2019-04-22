@@ -30,7 +30,7 @@ const UserCard = (props) => {
   };
 
   const payWithExistingCrd = () => {
-    props.handleBooking({ token: { id: selectedCard.id } });
+    props.handleBooking({ source: { id: selectedCard.id } });
   };
 
   return (
@@ -90,6 +90,8 @@ const UserCard = (props) => {
           <Checkout
             handleBooking={props.handleBooking}
             rate={props.celebDetails.celebrityDetails.rate}
+            loaderAction={props.loaderAction}
+            modifySourceList={props.modifySourceList}
           />
         </Elements>
       ) : (

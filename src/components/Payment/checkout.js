@@ -15,6 +15,7 @@ import {
 } from './Checkout.styles';
 import { FlexCenter } from '../../styles/CommonStyled';
 import Button from '../PrimaryButton';
+import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
 class checkout extends React.Component {
   constructor(props) {
@@ -58,15 +59,47 @@ class checkout extends React.Component {
     }
     return null;
   };
+
+  sourceUpdated = (source) => () => {
+    this.props.handleBooking(source);
+  };
+
+  getEphemeralKey = (source) => {
+    fetchEphemeralKey()
+      .then((resp) => {
+        if (resp.success) {
+          const customerId =
+            resp.data.ephemeralKey.associated_objects &&
+            resp.data.ephemeralKey.associated_objects[0]
+              ? resp.data.ephemeralKey.associated_objects[0].id
+              : null;
+          this.props.modifySourceList(
+            source.source.id,
+            customerId,
+            true,
+            this.sourceUpdated(source),
+          );
+        }
+      })
+      .catch((error) => {
+        this.props.loaderAction(false);
+      });
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.props.stripe) {
+      this.props.loaderAction(true);
       this.props.stripe
-        .createToken()
-        .then((res) => {
-          this.props.handleBooking(res);
+        .createSource({
+          type: 'card',
         })
-        .catch();
+        .then((res) => {
+          this.getEphemeralKey(res);
+        })
+        .catch(() => {
+          this.props.loaderAction(false);
+        });
     }
   };
 

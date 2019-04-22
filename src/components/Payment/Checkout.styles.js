@@ -29,6 +29,7 @@ export const CardIcon = styled.span`
         : 'url(assets/images/card-icons/default-icon.svg)'}
     no-repeat;
   display: inline-block;
+  background-size: contain;
 `;
 
 export const Error = styled.span`

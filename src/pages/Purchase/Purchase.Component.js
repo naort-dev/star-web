@@ -99,6 +99,8 @@ class Purchase extends Component {
           createCharge={this.props.createCharge}
           fetchSourceList={this.props.fetchSourceList}
           fetchCelebDetails={this.props.fetchCelebDetails}
+          modifySourceList={this.props.modifySourceList}
+          loaderAction={this.props.loaderAction}
         />
       );
     } else if (this.state.stepCount === 4) {
@@ -178,6 +180,7 @@ Purchase.propTypes = {
   createCharge: PropTypes.func.isRequired,
   fetchSourceList: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
+  modifySourceList: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

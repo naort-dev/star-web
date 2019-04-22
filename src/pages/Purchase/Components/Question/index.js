@@ -75,7 +75,7 @@ const Question = (props) => {
         if (response && response.filename) {
           const payload = {
             starDetail: {
-              id: 'qaQWMldn',
+              id: 'MYervpeO',
             },
             question: '',
             date: '',

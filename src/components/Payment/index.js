@@ -33,18 +33,12 @@ const Payment = (props) => {
     props.paymentSuccessCallBack();
   };
 
-  const handleBooking = (res) => {
-    // props.createCharge(
-    //   props.request.id,
-    //   props.celebDetails.celebrityDetails.rate,
-    //   res.token.id,
-    //   paymentSuccess,
-    // );
-
+  const handleBooking = (source) => {
     props.createCharge(
-      'wdLgzjbj',
-      '10.00',
-      'src_1DttbOECTOB5aCAKPTVhJ7gU',
+      props.request.id,
+      //props.celebDetails.celebrityDetails.rate,
+      '1.00',
+      source.source.id,
       paymentSuccess,
     );
   };
@@ -75,6 +69,7 @@ const Payment = (props) => {
                   handleBooking={handleBooking}
                   paymentSuccessCallBack={props.paymentSuccessCallBack}
                   celebDetails={props.celebDetails}
+                  loaderAction={props.loaderAction}
                 />
               )}
           </Layout>

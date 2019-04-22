@@ -14,6 +14,7 @@ import {
   starsonaRequest,
   createCharge,
   fetchSourceList,
+  modifySourceList,
 } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
@@ -53,6 +54,8 @@ function mapDispatchToProps(dispatch) {
     fetchCelebDetails: (id) => {
       dispatch(fetchCelebDetails(id));
     },
+    modifySourceList: (source, customer, action, callBack) =>
+      dispatch(modifySourceList(source, customer, action, callBack)),
   };
 }
 export default connect(
