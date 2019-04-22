@@ -45,10 +45,7 @@ class VideoRecorder extends Component {
         this.stopRecording();
       }
     }
-    if (
-      this.props.videoSrc &&
-      this.props.videoSrc !== prevProps.videoSrc
-    ) {
+    if (this.props.videoSrc && this.props.videoSrc !== prevProps.videoSrc) {
       this.initialLoad();
     }
   }
@@ -89,6 +86,9 @@ class VideoRecorder extends Component {
       .then((stream) => {
         if (this.mounted) {
           this.setState({ progress: false });
+        }
+        if (this.props.startStreamingCallback) {
+          this.props.startStreamingCallback();
         }
         videoElem.srcObject = stream;
         const options = {
@@ -239,12 +239,14 @@ VideoRecorder.propTypes = {
   playPauseMedia: PropTypes.bool.isRequired,
   forceStop: PropTypes.bool.isRequired,
   videoSrc: PropTypes.string,
+  startStreamingCallback: PropTypes.func,
 };
 
 VideoRecorder.defaultProps = {
   errorHandler: () => {},
   stopRecordHandler: () => {},
   videoSrc: '',
+  startStreamingCallback: () => {},
 };
 
 function mapStateToProps(state) {

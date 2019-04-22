@@ -23,7 +23,7 @@ export default (state = { ...initalState }, action) => {
         loading: true,
         error: null,
       };
-    
+
     case PAYMENTS.requestPostStart:
       return {
         ...state,
@@ -91,7 +91,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         error: null,
         requestError: null,
-      }
+      };
     default:
       return state;
   }

@@ -42,9 +42,12 @@ const Question = (props) => {
     props.setVideoUploadedFlag(false);
   };
 
+  const startStreaming = () => {
+    changeButtonLabel('Stop');
+  };
   const buttonClickHandler = () => {
     if (buttonLabel === 'Record') {
-      mediaHandler('Stop', false);
+      mediaHandler('Record', false);
       stopHandler(false);
     } else if (buttonLabel === 'Stop') {
       mediaHandler('Continue to Payment', true);
@@ -72,7 +75,7 @@ const Question = (props) => {
         if (response && response.filename) {
           const payload = {
             starDetail: {
-              id: 'qaQWMldn',
+              id: 'MYervpeO',
             },
             question: '',
             date: '',
@@ -100,7 +103,6 @@ const Question = (props) => {
   };
 
   const retryRecordHandler = () => {
-    changeButtonLabel('Stop');
     showHideScript(false);
   };
   const errorHandlerCallback = () => {
@@ -121,6 +123,7 @@ const Question = (props) => {
               recordTrigger={props.recordTrigger}
               errorHandler={errorHandlerCallback}
               forceStop={isStop}
+              startStreamingCallback={startStreaming}
             />
           </VideoContainer>
           <QuestionContainer isShow={showHideFlg || error}>

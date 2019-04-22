@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
-
 import { library } from '@fortawesome/fontawesome-svg-core';
 
 // import { protectRoute } from './services/protectRoute';
@@ -19,6 +18,7 @@ import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Purchase } from './pages/Purchase/Purchase.Loadable';
+import { Progress, Loading } from './styles/CommonStyled';
 // import { Favourites } from './pages/favourites';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
@@ -105,7 +105,11 @@ class App extends React.Component {
     const showRoutes = !showLoading;
     return (
       <div>
-        {this.props.loader && <Loader />}
+        {this.props.loader && (
+          <Loading>
+            <Progress />
+          </Loading>
+        )}
         <div id="content-wrapper">
           <Modals />
           <Helmet
