@@ -132,6 +132,7 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     };
   }
   let API_URL;
+  console.log(offset);
   if (category.label === 'featured')  {
     API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
   } else {

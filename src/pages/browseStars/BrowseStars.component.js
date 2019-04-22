@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -34,19 +34,47 @@ const BrowseStars = (props) => {
     color: paleSkyBlue,
   }];
   const [showFilter, toggleFilter] = useState(false);
+  const [fixedContent, toggleContentPos] = useState(false);
+  const [scrollPos, updateScrollPos] = useState(0);
+  const [listHeight, updateListHeight] = useState(null);
+  const contentRef = useRef(null);
+  const mainRef = useRef(null);
+  const filterRef = useRef(null);
 
   const toggleFilterCall = () => {
     toggleFilter(!showFilter);
+  };
+
+  const getListHeight = () => {
+    if (filterRef && filterRef.current) {
+      updateListHeight(`calc(100% - ${filterRef.current.clientHeight}px)`);
+    } else {
+      return updateListHeight(null);
+    }
   };
 
   const onWindowResize = () => {
     if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
       toggleFilter(true);
     }
+    getListHeight();
+  };
+
+  const onContentScroll = (event) => {
+    const currentScroll = contentRef.current.scrollTop + contentRef.current.clientHeight;
+    if (currentScroll > mainRef.current.scrollTop && !fixedContent) {
+      toggleContentPos(true);
+      getListHeight();
+    } else if (contentRef.current.scrollTop === 0 && fixedContent) {
+      getListHeight();
+      toggleContentPos(false);
+    }
+    updateScrollPos(currentScroll);
   };
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize);
+    contentRef.current.addEventListener('scroll', onContentScroll);
     onWindowResize();
   }, []);
 
@@ -57,6 +85,7 @@ const BrowseStars = (props) => {
   useEffect(() => {
     return () => {
       window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener('scroll', onContentScroll);
     };
   }, []);
 
@@ -65,6 +94,9 @@ const BrowseStars = (props) => {
       props.fetchFeaturedStars(props.category);
     }
     props.fetchCelebrityList(0, true);
+    toggleContentPos(false);
+    getListHeight();
+    contentRef.current.scrollTop = 0;
   }, [props.category.label]);
 
   const title = props.featuredStars[props.category.label] ? props.featuredStars[props.category.label].title : '';
@@ -81,7 +113,6 @@ const BrowseStars = (props) => {
     }
     return ({});
   };
-
   return (
     <CategoryPageStyled>
       <Header />
@@ -97,8 +128,8 @@ const BrowseStars = (props) => {
             </CategoryPageStyled.Filter>
         }
       </CategoryPageStyled.Toolbar>
-      <CategoryPageStyled.Content>
-        <CategoryPageStyled.FeaturedWrapper>
+      <CategoryPageStyled.Content innerRef={contentRef}>
+        <CategoryPageStyled.FeaturedWrapper fixedContent={fixedContent}>
           <CategoryPageStyled.Heading>{title}</CategoryPageStyled.Heading>
           <CategoryPageStyled.FeaturedSection heading={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
             <CategoryPageStyled.StarWrapper>
@@ -118,21 +149,24 @@ const BrowseStars = (props) => {
             </CategoryPageStyled.AvatarWrapper>
           </CategoryPageStyled.FeaturedSection>
         </CategoryPageStyled.FeaturedWrapper>
-        {
-          props.category.label !== 'Featured' && showFilter &&
-            <CategoryPageStyled.FilterSection>
-              <FilterSection onClose={toggleFilterCall} />
-            </CategoryPageStyled.FilterSection>
-        }
-        <CategoryPageStyled.ListingWrapper>
-          <StarListing
-            dataList={props.celebList.data}
-            loading={props.celebList.loading}
-            fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}
-            totalCount={props.celebList.count}
-            limit={10}
-          />
-        </CategoryPageStyled.ListingWrapper>
+        <CategoryPageStyled.MainContent fixedContent={fixedContent} innerRef={mainRef}>
+          {
+            props.category.label !== 'Featured' && showFilter &&
+              <CategoryPageStyled.FilterSection innerRef={filterRef}>
+                <FilterSection onClose={toggleFilterCall} />
+              </CategoryPageStyled.FilterSection>
+          }
+          <CategoryPageStyled.ListingWrapper height={listHeight}>
+            <StarListing
+              dataList={props.celebList.data}
+              loading={props.celebList.loading}
+              offset={props.celebList.offset}
+              fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}
+              totalCount={props.celebList.count}
+              limit={props.celebList.limit}
+            />
+          </CategoryPageStyled.ListingWrapper>
+        </CategoryPageStyled.MainContent>
       </CategoryPageStyled.Content>
     </CategoryPageStyled>
   );

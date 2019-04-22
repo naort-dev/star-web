@@ -68,6 +68,7 @@ class MobileHome extends React.Component {
   closeLandingFlow = () => {
     const { landingVisited } = this.state;
     if (!landingVisited && localStorage) {
+      this.props.history.push('/browse-stars');
       localStorage.setItem('landingVisited', true);
     }
     this.props.closeLandingFlow();
