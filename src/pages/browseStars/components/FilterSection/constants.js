@@ -6,7 +6,7 @@ export const sortList = [{
   value: 'az',
 }, {
   label: 'Price (lowest to highest)',
-  value: 'lfp',
+  value: 'lpf',
 }, {
   label: 'Price (highest to lowest)',
   value: 'hpf',

@@ -4,7 +4,6 @@ const ListingStyled = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   width: 100%;
   height: 100%;
   max-width: 834px;
