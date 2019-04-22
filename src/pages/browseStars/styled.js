@@ -170,6 +170,7 @@ CategoryPageStyled.Content = styled.div`
   height: calc(100% - 40px);
   padding: 12px 16px;
   overflow: auto;
+  position: relative;
   @media(min-width: 832px) {
     height: 100%;
     background: ${props => props.theme.white};
@@ -180,9 +181,16 @@ CategoryPageStyled.FeaturedWrapper = styled.div`
 
 `;
 
+CategoryPageStyled.MainContent = styled.div`
+  ${props => props.fixedContent && `
+    height: 100%;
+  `}
+`;
+
 CategoryPageStyled.ListingWrapper = styled.div`
   max-width: 1280px;
-  height: 500px;
+  height: ${props => (props.height ? props.height : '500px')};
+  overflow: hidden;
   margin: 0 auto;
 `;
 

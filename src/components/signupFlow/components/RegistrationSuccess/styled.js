@@ -43,18 +43,21 @@ font-family: Gilroy-Bold;
 font-size: 18px;
 line-height: 1.5;
 text-align: center;
+span {
+  padding-left: 11px;
+}
 color: #ffffff;
-  outline:none;
-  cursor: pointer;
-  &:hover {
-    background-color: #ffffff;
-    color: ${props => (props.primary ? '#2f839d' : '#ff6c58')}; 
-    border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')}; 
-  }
-  @media(max-width: 832px){
-    width:100%;
-    margin-bottom:20px;
-  }
+outline:none;
+cursor: pointer;
+&:hover {
+  background-color: #ffffff;
+  color: ${props => (props.primary ? '#2f839d' : '#ff6c58')}; 
+  border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')}; 
+}
+@media(max-width: 832px){
+  width:100%;
+  margin-bottom:20px;
+}
 `;
 RegSuccessWrapper.Type = styled.div`
   padding-bottom: 20px;

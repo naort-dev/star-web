@@ -7,6 +7,7 @@ import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer, ImageUpload } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
 import ProfileUpload from './components/profileUpload';
+import TakePhoto from './components/takePhoto';
 import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
@@ -20,6 +21,8 @@ class SignUpImageUpload extends React.Component {
     finalImage: null,
     finalFile: null,
     cropImage: null,
+    categoriesValue: '',
+    takePicture: false,
   }
 
   componentWillMount() {
@@ -28,10 +31,11 @@ class SignUpImageUpload extends React.Component {
   onBack = () => {
     this.setState({
       cropper: false,
+      takePicture: false,
     });
   }
 
-  setProfileImage = (flag1, imageResult, extension, flag2, exif) => {
+  setProfileImage = (imageResult, exif, extension) => {    
     this.setState({
       cropper: true,
       currentExif: exif,
@@ -45,7 +49,7 @@ class SignUpImageUpload extends React.Component {
   }
 
   closeCropper = () => {
-    this.setState({ cropImage: null, cropper: false });
+    this.setState({ cropImage: null, cropper: false, takePicture: false, });
   }
 
   goToStep = (type) => {
@@ -63,64 +67,102 @@ class SignUpImageUpload extends React.Component {
     }
   }
 
+  getCategories = (e) => {
+    this.setState({
+      categoriesValue: e.target.value,
+    });
+  }
+
+  setTakePicture = () => {
+    this.setState({ takePicture: true });
+  }
+
+  renderContent = () => {
+    const { cropper, takePicture } = this.state;
+    if (cropper) {
+      return (
+        <UploadContainer.CropperContainer>
+          <ImageUpload.CropWrapper>
+            <ImageUpload.BackButton onClick={this.onBack}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </ImageUpload.BackButton>
+            <ImageUpload.CloseButton onClick={this.props.closeSignupFlow}>
+              <FontAwesomeIcon icon={faTimes} />
+            </ImageUpload.CloseButton>
+            <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+            <ImageCropper
+              exifData={this.state.currentExif}
+              aspectRatio={imageSizes.profile}
+              afterCrop={this.getCroppedImage}
+              closeCropper={() => this.closeCropper()}
+              cropImage={this.state.cropImage}
+            />
+          </ImageUpload.CropWrapper>
+        </UploadContainer.CropperContainer>
+      );
+    } else if (takePicture) {
+      return (
+        <UploadContainer.CropperContainer>
+          <ImageUpload.CropWrapper>
+            <ImageUpload.BackButton onClick={this.onBack}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </ImageUpload.BackButton>
+            <ImageUpload.CloseButton onClick={this.props.closeSignupFlow}>
+              <FontAwesomeIcon icon={faTimes} />
+            </ImageUpload.CloseButton>
+            <ImageUpload.Heading>Take your photo</ImageUpload.Heading>
+            <TakePhoto
+              takePicture={takePicture}
+              onPictureCapture={this.setProfileImage}
+            />
+          </ImageUpload.CropWrapper>
+        </UploadContainer.CropperContainer>
+      );
+    }
+    return (
+      <UploadContainer.Wrapper>
+        <UploadContainer.Heading>
+          {this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
+        </UploadContainer.Heading>
+        <DotsContainer
+          dotsCount={3}
+          selectedDot={2}
+        />
+        <ProfileUpload
+          starMode
+          onTakePicture={this.setTakePicture}
+          onComplete={this.setProfileImage}
+          image={this.state.finalImage}
+        />
+
+        <UploadContainer.CategoriesWrapper>
+          <TextInput
+            type="text"
+            name="categoriesList"
+            label="Categorize yourself. This helps fans find you. (up to 3)"
+            value={this.state.categoriesValue}
+            onChange={(event) => this.getCategories(event)}
+          />
+          <UploadContainer.BrowseCategories>
+            Not finding one? <UploadContainer.BrowseCategoriesLink>Browse categories</UploadContainer.BrowseCategoriesLink>
+          </UploadContainer.BrowseCategories>
+        </UploadContainer.CategoriesWrapper>
+        <UploadContainer.ButtonWrapper>
+          <UploadContainer.ContinueButton
+            type="submit"
+          >
+            Continue
+          </UploadContainer.ContinueButton>
+        </UploadContainer.ButtonWrapper>
+      </UploadContainer.Wrapper>
+    );
+  }
+
   render() {
     return (
       <UploadContainer.Container>
-        {
-          !this.state.cropper ?
-            <UploadContainer.Wrapper>
-              <UploadContainer.Heading>
-                { this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
-              </UploadContainer.Heading>
-              <DotsContainer
-                dotsCount={3}
-                selectedDot={2}
-              />
-              <ProfileUpload
-                starMode
-                onComplete={this.setProfileImage}
-                image={this.state.finalImage}
-              />
+        { this.renderContent() }
 
-              <UploadContainer.CategoriesWrapper>
-                <TextInput
-                  type="text"
-                  name="categoriesList"
-                  value=""
-                  label="Categorize yourself. This helps fans find you. (up to 3)"
-                />
-                <UploadContainer.BrowseCategories>
-                  Not finding one? <UploadContainer.BrowseCategoriesLink>Browse categories</UploadContainer.BrowseCategoriesLink>
-                </UploadContainer.BrowseCategories>
-              </UploadContainer.CategoriesWrapper>
-              <UploadContainer.ButtonWrapper>
-                <UploadContainer.ContinueButton
-                  type="submit"
-                >
-                  Continue
-                </UploadContainer.ContinueButton>
-              </UploadContainer.ButtonWrapper>
-            </UploadContainer.Wrapper>
-          :
-            <UploadContainer.CropperContainer>
-              <ImageUpload.CropWrapper>
-                <ImageUpload.BackButton onClick={this.onBack}>
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                </ImageUpload.BackButton>
-                <ImageUpload.CloseButton onClick={this.props.closeSignupFlow}>
-                  <FontAwesomeIcon icon={faTimes} />
-                </ImageUpload.CloseButton>
-                <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
-                <ImageCropper
-                  exifData={this.state.currentExif}
-                  aspectRatio={imageSizes.profile}
-                  afterCrop={this.getCroppedImage}
-                  closeCropper={() => this.closeCropper()}
-                  cropImage={this.state.cropImage}
-                />
-              </ImageUpload.CropWrapper>
-            </UploadContainer.CropperContainer>
-        }
       </UploadContainer.Container>
     );
   }

@@ -13,7 +13,8 @@ const UploadContainer = styled.div`
   }
 `;
 
-UploadContainer.Wrapper = styled.div``;
+UploadContainer.Wrapper = styled.div`
+`;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
@@ -44,15 +45,6 @@ UploadContainer.CloseButton = styled.span`
   font-size: 45px;
   line-height: 20px;
   top: 40px;
-`;
-
-UploadContainer.wrapper = styled.div`
-  height:100%;
-  @media(min-width:1025px){
-    height: 100vh;
-    overflow:auto;
-    background-color:white;
-  }
 `;
 
 UploadContainer.Container = styled.div`
@@ -103,6 +95,9 @@ UploadContainer.CategoriesWrapper = styled.div`
       font-size: 18px;
       color: #b7b7b7;
       font-family: Gilroy;
+    }
+    label[data-shrink="true"] {
+      color: #555;
     }
   }
 `;
@@ -180,9 +175,15 @@ ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
     padding: 57px 60px 30px;
   }
 `;
+ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
+  padding: 30px 10px;
+  @media(min-width: 768px) {
+    padding: 0;
+  }
+`;
 
 ImageUpload.ProfileInputButton = styled.div`
-  display: ${props => (props.image ? 'none' : 'flex')};
+  display: ${props => (props.image || props.takePhoto ? 'none' : 'flex')};
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
@@ -378,6 +379,56 @@ ImageUpload.CropperLightButton = styled.button`
 
 ImageUpload.ButtonWrapper = styled.div`
   margin-top: 20px;
+`;
+
+ImageUpload.VideoElement = styled.video`
+    width: 100%;
+    height: 500px;
+    background: black;
+    margin: 10px 0;
+`;
+ImageUpload.TakePhoto = styled.div`
+  display: ${props => (props.takePhoto ? 'block' : 'none')};
+  background: #000;
+  .videoError {
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-family: Gilroy-Medium;
+    padding: 0 40px;
+    text-align: center;
+    line-height: 35px;
+  }
+`;
+
+ImageUpload.PhotoButtonWrapper = styled.div`
+  transform: translateY(-50%);
+  text-align: center;
+`;
+
+ImageUpload.CropperButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  min-width: 250px;
+  height: 60px;
+  outline: none;
+  border: none;
+  margin: 0 17px;
+  &:hover {
+    background-color: #ededed;
+    color: #2f839d;
+  }
 `;
 
 export { UploadContainer, ImageUpload };
