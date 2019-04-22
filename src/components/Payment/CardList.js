@@ -4,8 +4,8 @@ import { Ul, Li } from './CardList.styles';
 
 const CardList = ({ Cards, getCardSelected }) => {
   const [selected, getSelected] = useState('');
-  const cardSelected = (card) => {
-    getSelected(card);
+  const cardSelected = (card, cardIndex) => {
+    getSelected(cardIndex);
     getCardSelected(card);
   };
 
@@ -15,11 +15,9 @@ const CardList = ({ Cards, getCardSelected }) => {
         return (
           <Li
             icon="default-icon"
-            className={
-              selected.last4 === Cards[cardIndex].last4 && 'selected'
-            }
+            className={selected === cardIndex && 'selected'}
             key={Cards[cardIndex].last4 + cardIndex}
-            onClick={() => cardSelected(Cards[cardIndex])}
+            onClick={() => cardSelected(Cards[cardIndex], cardIndex)}
           >
             <span className="brand">Use</span>
             <span className="cardNo">

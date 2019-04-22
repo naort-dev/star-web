@@ -34,10 +34,17 @@ const Payment = (props) => {
   };
 
   const handleBooking = (res) => {
+    // props.createCharge(
+    //   props.request.id,
+    //   props.celebDetails.celebrityDetails.rate,
+    //   res.token.id,
+    //   paymentSuccess,
+    // );
+
     props.createCharge(
-      props.request.id,
-      '150.00',
-      res.token.id,
+      'wdLgzjbj',
+      '10.00',
+      'src_1DttbOECTOB5aCAKPTVhJ7gU',
       paymentSuccess,
     );
   };
