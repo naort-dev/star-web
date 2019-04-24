@@ -10,7 +10,7 @@ const initalState = {
   searchParam: '',
   lowPrice: 0,
   highPrice: 500,
-  sortValue: 'featured',
+  sortValue: 'popularity',
   selectedVideoType: '',
   selectedVideoDate: '',
 };
