@@ -14,6 +14,20 @@ export const starProfessionsFormater = (list, type) => {
   }
 };
 
+export const pipeSeparator = (list, key) => {
+  let string = '';
+  if (list) {
+    list.forEach((listItem, index) => {
+      if (index === list.length - 1) {
+        string += `${listItem[key]}`;
+      } else {
+        string += `${listItem[key]}\xa0|\xa0`;
+      }
+    });
+    return string;
+  }
+};
+
 export const starProfessionsDotFormater = (list) => {
   let string = '';
   if (list) {

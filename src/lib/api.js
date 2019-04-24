@@ -1,9 +1,9 @@
 class Api {
   static getConfig = 'v1/config/';
   static getFeaturedStars = 'v2/user/celebrity_display/';
-  static getCelebList = 'v1/user/fan/celebrity_list/get_list/';
+  static getCelebList = 'v2/user/fan/celebrity_list/get_list/';
   static getTrendingStars = 'v2/user/trending_stars/';
-  static authGetCelebList = 'v1/user/fan/celebrity_list/';
+  static authGetCelebList = 'v2/user/fan/celebrity_list/';
   static getProfessionsList = 'v1/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';

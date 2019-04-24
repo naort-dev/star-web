@@ -132,12 +132,11 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     };
   }
   let API_URL;
-  console.log(offset);
   if (category.label === 'featured')  {
-    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
+    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=popularity`;
   } else {
     const subCategoryList = filters.category.selected;
-    const professsion = subCategoryList && subCategoryList.length ? subCategoryList.toString() : category.value;
+    const professsion = subCategoryList && subCategoryList.length ? subCategoryList.map(cat => cat.id).toString() : category.value;
     if (selectedCategory === 'Group') {
       API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&group_type=${professsion}&name=${searchParam}&urate=${highPrice}&lrate=${lowPrice}&sort=${sortValue}`;
     } else {
