@@ -1,16 +1,14 @@
 import styled from 'styled-components';
 
 const CategoryPageStyled = styled.div`
-  margin-top: 120px;
-  height: calc(100vh - 120px);
-  overflow: hidden;
+  margin-top: 170px;
+  height: calc(100vh - 170px);
   @media(min-width: 832px) {
     margin-top: 260px;
-    height: calc(100vh - 260px);
+    height: auto;
   }
   @media(min-width: 1280px) {
     margin-top: 151px;
-    height: calc(100vh - 151px);
   }
 `;
 
@@ -74,6 +72,12 @@ CategoryPageStyled.FilterSection = styled.div`
   @media(min-width: 832px) {
     background: transparent;
     position: static;
+    ${props => props.fixedContent && `
+      position: fixed;
+      top: ${props.headerRef && props.headerRef.current ? `${props.headerRef.current.clientHeight}px` : '138px'};
+      bottom: initial;
+      background: ${props.theme.white};
+    `}
     display: block;
   }
   @media(min-width: 1280px) {
@@ -161,18 +165,23 @@ CategoryPageStyled.Toolbar = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 12px 16px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 2;
+  top: ${props => `${props.headerRef && props.headerRef.current && props.headerRef.current.clientHeight}px`};
   @media(min-width: 832px) {
     display: none;
   }
 `;
 
 CategoryPageStyled.Content = styled.div`
-  height: calc(100% - 40px);
+  height: 100%;
   padding: 12px 16px;
-  overflow: auto;
   position: relative;
   @media(min-width: 832px) {
-    height: 100%;
+    overflow: initial;
     background: ${props => props.theme.white};
   }
 `;
@@ -182,15 +191,15 @@ CategoryPageStyled.FeaturedWrapper = styled.div`
 `;
 
 CategoryPageStyled.MainContent = styled.div`
-  ${props => props.fixedContent && `
-    height: 100%;
-  `}
+  @media(min-width: 832px) {
+    ${props => props.fixedContent && props.padding && `
+      padding-top: ${props.padding}px;
+    `}
+  }
 `;
 
 CategoryPageStyled.ListingWrapper = styled.div`
   max-width: 1280px;
-  height: ${props => (props.height ? props.height : '500px')};
-  overflow: hidden;
   margin: 0 auto;
 `;
 
