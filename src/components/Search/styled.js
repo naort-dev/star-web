@@ -110,6 +110,7 @@ SearchSection.StarHeading = styled.p`
   text-transform: uppercase;
   margin-top: 10px;
   font-weight: 600;
+  text-align: left;
   @media(min-width: 832px) {
     padding-left: 30px;
   }
@@ -147,6 +148,7 @@ SearchSection.SuggestionDetails = styled.p`
   color: ${props => props.theme.greyishBrown};
   line-height: 19px;
   font-weight: normal;
+  text-align: left;
   @media(min-width: 768px) {
     font-size: 14px;
   }
