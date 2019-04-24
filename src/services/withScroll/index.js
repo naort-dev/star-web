@@ -99,13 +99,7 @@ export const withScroll = (WrappedComponent) => {
         return this.infiniteScrollList(this.props.scrollTarget)
       }
       return (
-        // <Scrollbars
-        //   renderView={props => <div {...props} className="view" id="scrollable-target" />}
-        // >
-        //   {
-            this.infiniteScrollList('scrollable-target')
-        //   }
-        // </Scrollbars>
+        this.infiniteScrollList(null)
       );
     }
 
