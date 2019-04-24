@@ -197,10 +197,10 @@ SearchSection.Input = styled.input`
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  color: ${props => props.theme.twilight};
   background: transparent;
+  color: #999999;
   @media(min-width: 832px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 SearchSection.SignIn = styled.button`
