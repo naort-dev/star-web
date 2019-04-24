@@ -108,6 +108,7 @@ const BrowseStars = (props) => {
       return ({
         nick_name: finalStarData && finalStarData.name,
         celebrity_user: { rate: finalStarData && finalStarData.rate },
+        celebrity_profession: finalStarData.professions.map(profession => ({ title: profession })),
         ...finalStarData,
       });
     }
