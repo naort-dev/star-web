@@ -10,7 +10,7 @@ import {
 import { FlexCenter, FlexBoxSB } from '../../styles/CommonStyled';
 import CardList from './CardList';
 import Button from '../PrimaryButton';
-import Checkout from './checkout';
+import Checkout from './Checkout';
 
 const UserCard = (props) => {
   const [isNewCard, cardSelection] = useState(false);
@@ -20,7 +20,7 @@ const UserCard = (props) => {
     cardSelection(props.isNewCard);
   }, [props.isNewCard]);
 
-  const newPay = (value) => (e) => {
+  const newPay = value => () => {
     cardSelection(value);
     props.contentSwitchCallback(value);
   };
@@ -54,9 +54,11 @@ const UserCard = (props) => {
                 />
               </span>
               <span className="colDir alignTop">
-                <span className="nameSpan">{`${
-                  props.celebDetails.userDetails.first_name
-                } ${props.celebDetails.userDetails.last_name}`}</span>
+                <span className="nameSpan">
+                  {`${props.celebDetails.userDetails.first_name} ${
+                    props.celebDetails.userDetails.last_name
+                  }`}
+                </span>
                 <span className="bookingType">Video Shoutout</span>
               </span>
             </FlexBoxSB>
@@ -140,6 +142,10 @@ UserCard.propTypes = {
   contentSwitchCallback: PropTypes.func.isRequired,
   handleBooking: PropTypes.func.isRequired,
   CardList: PropTypes.object.isRequired,
+  celebDetails: PropTypes.object.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  modifySourceList: PropTypes.func.isRequired,
+  updateCustomerId: PropTypes.func.isRequired,
 };
 UserCard.defaultProps = {
   isNewCard: false,

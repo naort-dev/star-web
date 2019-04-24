@@ -11,7 +11,7 @@
     "env": true
   },
   "extends": "airbnb",
-  "plugin": ["prettier"],
+
   "rules": {
     "linebreak-style": "off",
     "import/prefer-default-export": "off",

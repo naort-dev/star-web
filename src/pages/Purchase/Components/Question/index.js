@@ -45,21 +45,6 @@ const Question = (props) => {
   const startStreaming = () => {
     changeButtonLabel('Stop');
   };
-  const buttonClickHandler = () => {
-    if (buttonLabel === 'Record') {
-      mediaHandler('Record', false);
-      stopHandler(false);
-    } else if (buttonLabel === 'Stop') {
-      mediaHandler('Continue to Payment', true);
-      stopHandler(true);
-    } else if (buttonLabel === 'Continue to Payment') {
-      if (props.videoUploaded) {
-        props.continueCallback();
-      } else {
-        uploadVideoRecorded();
-      }
-    }
-  };
 
   const readyToPayment = (responce) => {
     props.loaderAction(false);
@@ -98,6 +83,21 @@ const Question = (props) => {
       });
   };
 
+  const buttonClickHandler = () => {
+    if (buttonLabel === 'Record') {
+      mediaHandler('Record', false);
+      stopHandler(false);
+    } else if (buttonLabel === 'Stop') {
+      mediaHandler('Continue to Payment', true);
+      stopHandler(true);
+    } else if (buttonLabel === 'Continue to Payment') {
+      if (props.videoUploaded) {
+        props.continueCallback();
+      } else {
+        uploadVideoRecorded();
+      }
+    }
+  };
   const stopRecordHandler = () => {
     mediaHandler('Continue to Payment', true);
   };
@@ -182,11 +182,15 @@ Question.propTypes = {
   videoFile: PropTypes.object,
   continueCallback: PropTypes.func.isRequired,
   videoSrc: PropTypes.string,
+  videoUploaded: PropTypes.bool,
+  loaderAction: PropTypes.func.isRequired,
+  setVideoUploadedFlag: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
   videoFile: {},
   videoSrc: '',
+  videoUploaded: false,
 };
 
 function mapStateToProps(state) {

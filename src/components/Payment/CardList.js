@@ -17,15 +17,6 @@ const CardList = (props) => {
     props.deleteCard(sourceId, customerId, false);
   };
 
-  const removeCard = (card, event) => {
-    event.stopPropagation();
-    if (props.customerId !== null) {
-      deleteCardAction(card.id, props.customerId);
-    } else {
-      getEphemeralKey(card.id);
-    }
-  };
-
   const getEphemeralKey = (sourceId) => {
     props.loaderAction(true);
     fetchEphemeralKey()
@@ -43,6 +34,15 @@ const CardList = (props) => {
       .catch((error) => {
         props.loaderAction(false);
       });
+  };
+
+  const removeCard = (card, event) => {
+    event.stopPropagation();
+    if (props.customerId !== null) {
+      deleteCardAction(card.id, props.customerId);
+    } else {
+      getEphemeralKey(card.id);
+    }
   };
 
   return (
@@ -74,8 +74,14 @@ const CardList = (props) => {
 CardList.propTypes = {
   getCardSelected: PropTypes.func.isRequired,
   Cards: PropTypes.object.isRequired,
+  deleteCard: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  updateCustomerId: PropTypes.func.isRequired,
+  customerId: PropTypes.string,
 };
-CardList.defaultProps = {};
+CardList.defaultProps = {
+  customerId: null,
+};
 
 export default connect(
   (state) => ({
@@ -83,3 +89,5 @@ export default connect(
   }),
   null,
 )(CardList);
+
+// "plugin": ["prettier"],

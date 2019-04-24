@@ -16,7 +16,7 @@ import Header from './Components/Header';
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 3, category: 0 };
+    this.state = { open: true, stepCount: 1, category: 0 };
     this.starData = [
       {
         size: '28px',
@@ -171,7 +171,7 @@ class Purchase extends Component {
 
 Purchase.propTypes = {
   fetchOccasionlist: PropTypes.func,
-  OccasionDetails: PropTypes.object,
+  OccasionDetails: PropTypes.array,
   recordTrigger: PropTypes.func.isRequired,
   updateMediaStore: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.func.isRequired,
@@ -186,7 +186,7 @@ Purchase.propTypes = {
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
-  OccasionDetails: {},
+  OccasionDetails: [],
 };
 
 export default Purchase;

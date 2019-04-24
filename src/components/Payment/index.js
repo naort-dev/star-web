@@ -93,8 +93,11 @@ Payment.propTypes = {
   modifySourceList: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   updateCustomerId: PropTypes.func.isRequired,
+  celebDetails: PropTypes.object,
 };
-Payment.defaultProps = {};
+Payment.defaultProps = {
+  celebDetails: {},
+};
 
 const mapStateToProps = (state) => ({
   request: state.paymentDetails.requestDetails,

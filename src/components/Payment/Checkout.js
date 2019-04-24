@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   injectStripe,
   CardNumberElement,
@@ -18,7 +19,7 @@ import { FlexCenter } from '../../styles/CommonStyled';
 import Button from '../PrimaryButton';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
-class checkout extends React.Component {
+class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -155,11 +156,26 @@ class checkout extends React.Component {
   }
 }
 
+Checkout.propTypes = {
+  updateCustomerId: PropTypes.func.isRequired,
+  handleBooking: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  modifySourceList: PropTypes.func.isRequired,
+  createSource: PropTypes.func,
+  customerId: PropTypes.string,
+  stripe: PropTypes.object.isRequired,
+  rate: PropTypes.string.isRequired,
+};
+Checkout.defaultProps = {
+  customerId: null,
+  createSource: () => {},
+};
+
 export default injectStripe(
   connect(
     (state) => ({
       customerId: state.commonReducer.customerId,
     }),
     null,
-  )(checkout),
+  )(Checkout),
 );
