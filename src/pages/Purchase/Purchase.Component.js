@@ -16,7 +16,7 @@ import Header from './Components/Header';
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 1, category: 0 };
+    this.state = { open: true, stepCount: 3, category: 0 };
     this.starData = [
       {
         size: '28px',
@@ -101,6 +101,7 @@ class Purchase extends Component {
           fetchCelebDetails={this.props.fetchCelebDetails}
           modifySourceList={this.props.modifySourceList}
           loaderAction={this.props.loaderAction}
+          updateCustomerId={this.props.updateCustomerId}
         />
       );
     } else if (this.state.stepCount === 4) {
@@ -181,6 +182,7 @@ Purchase.propTypes = {
   fetchSourceList: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
   modifySourceList: PropTypes.func.isRequired,
+  updateCustomerId: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

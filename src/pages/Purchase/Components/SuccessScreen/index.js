@@ -14,10 +14,11 @@ const SuccessScreen = (props) => {
         onClick={props.closeHandler}
         className="closeBtn"
       />
-      <FlexCenter>
-        <span className="successImg" />
-      </FlexCenter>
+
       <Scrollbars className="successScroll">
+        <FlexCenter>
+          <span className="successImg" />
+        </FlexCenter>
         <Content>
           <h2 className="highFive">High Five!</h2>
           <h1 className="orderSuccess">Your order is complete!</h1>

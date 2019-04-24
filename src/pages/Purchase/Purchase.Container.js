@@ -5,6 +5,7 @@ import {
   updateMediaStore,
   playPauseMedia,
   loaderAction,
+  updateCustomerId,
 } from '../../store/shared/actions/commonActions';
 import {
   setVideoUploadedFlag,
@@ -54,8 +55,12 @@ function mapDispatchToProps(dispatch) {
     fetchCelebDetails: (id) => {
       dispatch(fetchCelebDetails(id));
     },
-    modifySourceList: (source, customer, action, callBack) =>
-      dispatch(modifySourceList(source, customer, action, callBack)),
+    modifySourceList: (source, customer, action, callBack) => {
+      dispatch(modifySourceList(source, customer, action, callBack));
+    },
+    updateCustomerId: (value) => {
+      dispatch(updateCustomerId(value));
+    },
   };
 }
 export default connect(

@@ -70,6 +70,8 @@ const Payment = (props) => {
                   paymentSuccessCallBack={props.paymentSuccessCallBack}
                   celebDetails={props.celebDetails}
                   loaderAction={props.loaderAction}
+                  modifySourceList={props.modifySourceList}
+                  updateCustomerId={props.updateCustomerId}
                 />
               )}
           </Layout>
@@ -88,6 +90,9 @@ Payment.propTypes = {
   createCharge: PropTypes.func.isRequired,
   fetchSourceList: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
+  modifySourceList: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  updateCustomerId: PropTypes.func.isRequired,
 };
 Payment.defaultProps = {};
 

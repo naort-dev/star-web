@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {
   injectStripe,
   CardNumberElement,
@@ -53,6 +54,7 @@ class checkout extends React.Component {
     const errorMsg = event.error ? event.error.message : '';
     this.setState({ [element]: errorMsg, cardTypeImage });
   };
+
   returnErrorMsg = (element) => {
     if (this.state[element] !== '') {
       return <Error>{this.state[element]}</Error>;
@@ -73,17 +75,22 @@ class checkout extends React.Component {
             resp.data.ephemeralKey.associated_objects[0]
               ? resp.data.ephemeralKey.associated_objects[0].id
               : null;
-          this.props.modifySourceList(
-            source.source.id,
-            customerId,
-            true,
-            this.sourceUpdated(source),
-          );
+          this.props.updateCustomerId(customerId);
+          this.addCardToList(source, customerId);
         }
       })
       .catch((error) => {
         this.props.loaderAction(false);
       });
+  };
+
+  addCardToList = (source, customerId) => {
+    this.props.modifySourceList(
+      source.source.id,
+      customerId,
+      true,
+      this.sourceUpdated(source),
+    );
   };
 
   handleSubmit = (event) => {
@@ -95,7 +102,11 @@ class checkout extends React.Component {
           type: 'card',
         })
         .then((res) => {
-          this.getEphemeralKey(res);
+          if (this.props.customerId !== null) {
+            this.addCardToList(res, this.props.customerId);
+          } else {
+            this.getEphemeralKey(res);
+          }
         })
         .catch(() => {
           this.props.loaderAction(false);
@@ -144,4 +155,11 @@ class checkout extends React.Component {
   }
 }
 
-export default injectStripe(checkout);
+export default injectStripe(
+  connect(
+    (state) => ({
+      customerId: state.commonReducer.customerId,
+    }),
+    null,
+  )(checkout),
+);

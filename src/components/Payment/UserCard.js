@@ -32,6 +32,13 @@ const UserCard = (props) => {
   const payWithExistingCrd = () => {
     props.handleBooking({ source: { id: selectedCard.id } });
   };
+  const getThumbnail = () => {
+    if (props.celebDetails.userDetails.avatar_photo) {
+      return props.celebDetails.userDetails.avatar_photo.thumbnail_url;
+    } else {
+      return '../assets/images/profile.png';
+    }
+  };
 
   return (
     <Layout>
@@ -41,7 +48,7 @@ const UserCard = (props) => {
             <FlexBoxSB>
               <span className="profileIcon">
                 <img
-                  src="../assets/images/profile.png"
+                  src={getThumbnail()}
                   alt="profile_icon"
                   className="image"
                 />
@@ -92,6 +99,7 @@ const UserCard = (props) => {
             rate={props.celebDetails.celebrityDetails.rate}
             loaderAction={props.loaderAction}
             modifySourceList={props.modifySourceList}
+            updateCustomerId={props.updateCustomerId}
           />
         </Elements>
       ) : (
@@ -101,6 +109,9 @@ const UserCard = (props) => {
             <CardList
               Cards={props.CardList}
               getCardSelected={getCardSelected}
+              deleteCard={props.modifySourceList}
+              updateCustomerId={props.updateCustomerId}
+              loaderAction={props.loaderAction}
             />
           )}
           <span className="newCard centerAlign" onClick={newPay(true)}>
