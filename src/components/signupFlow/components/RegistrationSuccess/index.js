@@ -1,27 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { withRouter } from 'react-router-dom';
-import { updateCategory } from '../../../../pages/landing/actions/updateFilters';
 import RegSuccessWrapper from './styled';
 
 const RegistrationSuccess = (props) => {
-  const goToBrowseStars = () => {
-    props.updateCategory('Featured', 0, []);
-    if (props.location.pathname !== '/browse-stars') {
-      props.history.push('/browse-stars');
-    }
-    props.closeSignupFlow();
-  };
-
-  const gotToHome = () => {
-    if (props.location.pathname !== '/') {
-      props.history.push('/');
-    }
-    props.closeSignupFlow();
-  };
-
   return (
     <RegSuccessWrapper>
       <RegSuccessWrapper.ComponentWrapper>
@@ -36,19 +18,23 @@ const RegistrationSuccess = (props) => {
             <RegSuccessWrapper.Label>
               {props.message}
             </RegSuccessWrapper.Label>
+            {props.highlight_text ?
+                <RegSuccessWrapper.HighLight>
+                  {props.highlight_text}
+                </RegSuccessWrapper.HighLight> : null}
             <RegSuccessWrapper.Description>
               {props.description}
             </RegSuccessWrapper.Description>
           </RegSuccessWrapper.Type>
         </RegSuccessWrapper.OptionWrapper>
         <RegSuccessWrapper.ButtonWrapper>
-          <RegSuccessWrapper.Button primary onClick={goToBrowseStars}>
+          <RegSuccessWrapper.Button primary onClick={props.primaryButtonClick}>
             {props.primary_button}
           </RegSuccessWrapper.Button>
-          <RegSuccessWrapper.Button onClick={gotToHome}>
+          <RegSuccessWrapper.SecondaryButton secondary={props.secondary} onClick={props.secondaryButtonClick}>
             {props.icon ? <FontAwesomeIcon icon={props.icon} /> : null}
             <span>{props.secondary_button}</span>
-          </RegSuccessWrapper.Button>
+          </RegSuccessWrapper.SecondaryButton>
         </RegSuccessWrapper.ButtonWrapper>
       </RegSuccessWrapper.ComponentWrapper>
     </RegSuccessWrapper>
@@ -59,34 +45,29 @@ RegistrationSuccess.propTypes = {
   description: PropTypes.string,
   closeSignupFlow: PropTypes.func,
   highlight_text: PropTypes.string,
-  icon: PropTypes.string,
+  icon: PropTypes.object,
   image_url: PropTypes.string,
   message: PropTypes.string,
   primary_button: PropTypes.string,
   primaryButtonClick: PropTypes.func,
+  secondary: PropTypes.bool,
   secondary_button: PropTypes.string,
   secondaryButtonClick: PropTypes.func,
-  title: PropTypes.string,
-  history: PropTypes.object.isRequired,
-  updateCategory: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
+  title: PropTypes.string
 };
 RegistrationSuccess.defaultProps = {
   description: '',
   highlight_text: '',
-  icon: '',
+  icon: {},
   image_url: '',
   message: '',
   primary_button: '',
   primaryButtonClick: () => { },
+  secondary: true,
   secondary_button: '',
   secondaryButtonClick: () => { },
   title: '',
   closeSignupFlow: () => { },
 };
 
-const mapDispatchToProps = dispatch => ({
-  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
-});
-
-export default withRouter(connect(null, mapDispatchToProps)(RegistrationSuccess));
+export default RegistrationSuccess;

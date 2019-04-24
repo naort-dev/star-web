@@ -18,6 +18,7 @@ import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/act
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
 import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
+import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import { FAN_REG_SUCCESS } from './constants'
 
 class SignupFlow extends React.Component {
@@ -57,7 +58,20 @@ class SignupFlow extends React.Component {
       this.props.history.push('user/star-supporters');
     }
   }
+   goToBrowseStars = () => {
+    this.props.updateCategory('Featured', 0, []);
+    if (this.props.location.pathname !== '/browse-stars') {
+      this.props.history.push('/browse-stars');
+    }
+    this.closeSignUp();
+  };
 
+   gotToHome = () => {
+    if (this.props.location.pathname !== '/') {
+      this.props.history.push('/');
+    }
+    this.closeSignUp();
+  };
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
       switch (this.state.currentStep) {
@@ -75,12 +89,13 @@ class SignupFlow extends React.Component {
           <RegistrationSuccess
             closeSignupFlow={this.closeSignUp} 
             description={FAN_REG_SUCCESS.DESCRIPTION}
-            highlight_text={FAN_REG_SUCCESS.HIGHLIGHT_TEXT}
             icon={FAN_REG_SUCCESS.ICON}
             image_url={FAN_REG_SUCCESS.IMAGE_URL}
             message={FAN_REG_SUCCESS.MESSAGE}
             primary_button={FAN_REG_SUCCESS.PRIMARY_BUTTON}
+            primaryButtonClick={this.goToBrowseStars}
             secondary_button={FAN_REG_SUCCESS.SECONDARY_BUTTON}
+            secondaryButtonClick={this.gotToHome}
             title={FAN_REG_SUCCESS.TITLE}/>
         );
         default: return null;
@@ -208,6 +223,7 @@ const mapDispatchToProps = dispatch => ({
   toggleSignup: state => dispatch(toggleSignup(state)),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
+  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
 
