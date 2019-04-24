@@ -1,6 +1,6 @@
 export const sortList = [{
   label: 'Popularity',
-  value: 'featured',
+  value: 'popularity',
 }, {
   label: 'Alphabetically (A-Z)',
   value: 'az',

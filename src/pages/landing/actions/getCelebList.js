@@ -132,9 +132,8 @@ export const fetchCelebrityList = (offset, refresh, selectedCategory) => (dispat
     };
   }
   let API_URL;
-  console.log(offset);
   if (category.label === 'featured')  {
-    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=featured`;
+    API_URL = `${API_BASE}?limit=${limit}&offset=${offset}&name=${searchParam}&sort=popularity`;
   } else {
     const subCategoryList = filters.category.selected;
     const professsion = subCategoryList && subCategoryList.length ? subCategoryList.toString() : category.value;
