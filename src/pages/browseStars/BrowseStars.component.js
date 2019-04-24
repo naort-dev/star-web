@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import FilterSection from './components/FilterSection';
 import StarListing from '../../components/StarListing';
 import StarAvatar from '../../components/StarAvatar';
+import { pipeSeparator } from '../../utils/dataToStringFormatter';
 import CategoryPageStyled from './styled';
 
 const BrowseStars = (props) => {
@@ -118,7 +119,14 @@ const BrowseStars = (props) => {
         forwardRef={headerRef}
       />
       <CategoryPageStyled.Toolbar headerRef={headerRef}>
-        <CategoryPageStyled.CategoryName>{props.category.label}</CategoryPageStyled.CategoryName>
+        <CategoryPageStyled.CategoryName>
+          {props.category.label}
+          <CategoryPageStyled.FilterList>
+            {
+              pipeSeparator(props.category.selected, 'title')
+            }
+          </CategoryPageStyled.FilterList>
+        </CategoryPageStyled.CategoryName>
         {
           props.category.label !== 'Featured' &&
             <CategoryPageStyled.Filter

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const CategoryPageStyled = styled.div`
-  margin-top: 170px;
-  height: calc(100vh - 170px);
+  margin-top: 185px;
+  height: calc(100vh - 185px);
   @media(min-width: 832px) {
     margin-top: 260px;
     height: auto;
@@ -15,9 +15,21 @@ const CategoryPageStyled = styled.div`
 CategoryPageStyled.CategoryName = styled.span`
   font-family: Gilroy-Bold;
   font-size: 20px;
-  line-height: 38px;
+  line-height: 21px;
+  width: calc(100% - 42px);
   color: ${props => props.theme.flatBlue};
   text-transform: uppercase;
+`;
+
+CategoryPageStyled.FilterList = styled.span`
+  display: block;
+  width: 100%;
+  font-family: Gilroy-Light;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${props => props.theme.greyishBrown};
 `;
 
 CategoryPageStyled.Filter = styled.span`
