@@ -151,6 +151,7 @@ class Search extends React.Component {
       const parentProfession = professions.find(item => item.id === profession.id);
       this.props.updateCategory(parentProfession.title, parentProfession.id, parentProfession.child);
     }
+    this.deactivateSearch();
     if (this.props.location.pathName !== '/browse-stars') {
       this.props.history.push('./browse-stars');
     }

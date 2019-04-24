@@ -30,7 +30,7 @@ const FilterSection = (props) => {
 
   useEffect(() => {
     updateSelectedSub(props.category.selected);
-  }, [props.category.selected.length]);
+  }, [props.category.selected]);
 
   const updateSubCategory = subCategory => () => {
     let selectedList = [...selectedSubCat];
