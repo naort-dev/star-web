@@ -77,7 +77,7 @@ class Header extends React.Component {
     const { props } = this;
     const { showCategories } = this.state;
     return (
-      <HeaderSection notFixed={props.notFixed}>
+      <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed}>
         <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
           {
             !showCategories &&

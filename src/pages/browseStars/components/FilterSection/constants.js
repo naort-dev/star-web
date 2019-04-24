@@ -11,8 +11,3 @@ export const sortList = [{
   label: 'Price (highest to lowest)',
   value: 'hpf',
 }];
-
-export const Price = {
-  min: 0,
-  max: 500,
-};
