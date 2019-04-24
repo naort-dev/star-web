@@ -39,6 +39,7 @@ import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
 import groupTypesListing from './shared/reducers/groupTypeListing';
 import commonReducer from './shared/reducers/commonReducer';
+import subCategoryList from './shared/reducers/subCategoryLists';
 
 const appReducer = combineReducers({
   config,
@@ -79,6 +80,7 @@ const appReducer = combineReducers({
   groupSupporters,
   groupTypesListing,
   commonReducer,
+  subCategoryList,
 });
 
 const rootReducer = (state, action) => {

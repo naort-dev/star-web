@@ -133,7 +133,96 @@ UploadContainer.BrowseCategories = styled.div`
 UploadContainer.BrowseCategoriesLink = styled.span`
   color: #46829a;
   font-family: Gilroy-Medium;
+  cursor: pointer;
 `;
+
+UploadContainer.AutoSuggest = styled.div`
+  height: 100%;
+  @media(min-width: 1025px) {
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
+  }
+`;
+UploadContainer.SuggestionListWrapper = styled.div`
+  font-family: Gilroy-light;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  z-index: 1;
+  height: calc(100vh - 108px);
+  @media(min-width: 832px) {
+    box-shadow: 0px 6px 6px 0px #cccccc;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    height: auto;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+    height: 300px;
+    bottom: initial;
+    box-shadow: none;
+  }
+  @media(min-width: 1025px) {
+    width: auto;
+    top: 47px;
+    right: 0;
+    height: 320px;
+    box-shadow: 0px 6px 6px 0px #cccccc;
+  }
+`;
+
+UploadContainer.BrowseCategoryWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 3;
+  max-height: 620px;
+  height: 100%;
+`;
+
+UploadContainer.BrowseCategoryContainer = styled.div`
+  display: flex;
+  padding: 20px 40px 20px 70px;
+  align-items: flex-start;
+`;
+
+UploadContainer.ItemWrapper = styled.ul`
+  min-width: 227px;
+`;
+
+UploadContainer.SubItemWrapper = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  .subCategoryHeading {
+    font-family: Gilroy-Medium;
+    font-size: 16px;
+  }
+  li {
+    padding: 6px 13px;
+    border-radius: 15px;
+    border: 1px solid #2f839d;
+    background-color: #fff;
+    color: #555555;
+    display: flex;
+    font-family: Gilroy-medium;
+    font-size: 14px;
+    align-items: center;
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+`;
+UploadContainer.Item = styled.li`
+  font-size: 20px;
+  font-family: Gilroy;
+  cursor: pointer;
+  color: #999;
+  padding: 10px 0;
+`;
+
 
 const ImageUpload = styled.div`
   height: 100%;
