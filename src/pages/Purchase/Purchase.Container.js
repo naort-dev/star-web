@@ -1,17 +1,22 @@
 import { connect } from 'react-redux';
 import Purchase from './Purchase.Component';
-import { fetchOccasionlist } from './actions/purchaseActions';
 import {
   recordTrigger,
   updateMediaStore,
   playPauseMedia,
   loaderAction,
 } from '../../store/shared/actions/commonActions';
-import { setVideoUploadedFlag } from './actions/purchaseActions';
+import {
+  setVideoUploadedFlag,
+  fetchOccasionlist,
+} from './actions/purchaseActions';
 import {
   starsonaRequest,
   createCharge,
+  fetchSourceList,
+  modifySourceList,
 } from '../../store/shared/actions/processPayments';
+import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = (state) => ({
   OccasionDetails: state.occasionList.data,
@@ -40,9 +45,17 @@ function mapDispatchToProps(dispatch) {
     starsonaRequest: (bookingData, publicStatus, callback) => {
       dispatch(starsonaRequest(bookingData, publicStatus, callback));
     },
-    createCharge: (starsonaId, amount, tokenId) => {
-      dispatch(createCharge(starsonaId, amount, tokenId));
+    createCharge: (starsonaId, amount, tokenId, callBack) => {
+      dispatch(createCharge(starsonaId, amount, tokenId, callBack));
     },
+    fetchSourceList: () => {
+      dispatch(fetchSourceList());
+    },
+    fetchCelebDetails: (id) => {
+      dispatch(fetchCelebDetails(id));
+    },
+    modifySourceList: (source, customer, action, callBack) =>
+      dispatch(modifySourceList(source, customer, action, callBack)),
   };
 }
 export default connect(

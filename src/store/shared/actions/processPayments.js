@@ -1,6 +1,7 @@
 import moment from 'moment';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { loaderAction } from './commonActions';
 
 export const PAYMENTS = {
   start: 'payments/REQUEST',
@@ -108,35 +109,28 @@ export const sourceListFetchFailed = (error) => ({
   error,
 });
 
-export const fetchSourceList = () => (dispatch, getState) => {
-  const { authentication_token: authToken } = getState().session.auth_token;
-  dispatch(sourceListFetchStart());
-  return fetch(Api.getSourceList, {
-    headers: {
-      Authorization: `token ${authToken}`,
-    },
-  })
+export const fetchSourceList = (loader, callBack) => (dispatch, getState) => {
+  dispatch(loaderAction(true));
+  return fetch(Api.getSourceList, {})
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(sourceListFetchEnd());
         dispatch(sourceListFetchSuccess(resp.data.data.cards));
+        if (loader !== 'no') dispatch(loaderAction(false));
+        if (callBack) callBack();
       } else {
-        dispatch(sourceListFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(sourceListFetchFailed(exception.response.data.error));
     });
 };
 
-export const modifySourceList = (source, customer, action, callback) => (
+export const modifySourceList = (source, customer, action, callBack) => (
   dispatch,
-  getState,
 ) => {
-  const { authentication_token: authToken } = getState().session.auth_token;
-  const { sourceList } = getState().paymentDetails;
-  dispatch(sourceListFetchStart());
+  dispatch(loaderAction(true));
   return fetch
     .post(
       Api.modifySourceList,
@@ -145,31 +139,25 @@ export const modifySourceList = (source, customer, action, callback) => (
         source,
         action,
       },
-      {
-        headers: {
-          Authorization: `token ${authToken}`,
-        },
-      },
+      {},
     )
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(sourceListFetchEnd());
-        dispatch(fetchSourceList(resp.data.data.cards));
-        if (callback) {
-          callback();
-        }
+        dispatch(fetchSourceList('no', callBack));
       } else {
-        dispatch(sourceListFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(sourceListFetchFailed(exception.response.data.error));
     });
 };
 
-export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
-  dispatch(paymentFetchStart());
+export const createCharge = (starsonaId, amount, tokenId, callBack) => (
+  dispatch,
+) => {
+  dispatch(loaderAction(true));
   return fetch
     .post(Api.createCharge, {
       starsona: starsonaId,
@@ -178,14 +166,15 @@ export const createCharge = (starsonaId, amount, tokenId) => (dispatch) => {
     })
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(paymentFetchEnd());
         dispatch(setPaymentStatus(resp.data.success));
+        dispatch(loaderAction(false));
+        if (callBack) callBack();
       } else {
-        dispatch(paymentFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(paymentFetchFailed(exception.response.data.error));
     });
 };
@@ -225,10 +214,12 @@ const starsonaVideo = (filename, requestId, duration, dispatch, callback) => {
         if (callback) {
           callback(requestId);
         }
+      } else {
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(requestPostFailed(exception.response.data.error));
     });
 };
@@ -298,11 +289,11 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (
         }
         dispatch(paymentFetchSuccess(resp.data.data['stargramz_response']));
       } else {
-        dispatch(paymentFetchEnd());
+        dispatch(loaderAction(false));
       }
     })
     .catch((exception) => {
-      dispatch(paymentFetchEnd());
+      dispatch(loaderAction(false));
       dispatch(requestPostFailed(exception.response.data.error));
     });
 };

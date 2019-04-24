@@ -115,4 +115,7 @@ export const BottomSection = styled.section`
   .alignPad {
     padding-left: 15px;
   }
+  .center {
+    justify-content: center;
+  }
 `;

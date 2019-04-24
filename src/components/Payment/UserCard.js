@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Elements } from 'react-stripe-elements';
 import {
   UserCardWrapper,
@@ -13,6 +14,7 @@ import Checkout from './checkout';
 
 const UserCard = (props) => {
   const [isNewCard, cardSelection] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   useEffect(() => {
     cardSelection(props.isNewCard);
@@ -21,6 +23,14 @@ const UserCard = (props) => {
   const newPay = (value) => (e) => {
     cardSelection(value);
     props.contentSwitchCallback(value);
+  };
+
+  const getCardSelected = (card) => {
+    setSelectedCard(card);
+  };
+
+  const payWithExistingCrd = () => {
+    props.handleBooking({ source: { id: selectedCard.id } });
   };
 
   return (
@@ -37,45 +47,70 @@ const UserCard = (props) => {
                 />
               </span>
               <span className="colDir alignTop">
-                <span className="nameSpan">Paul George</span>
+                <span className="nameSpan">{`${
+                  props.celebDetails.userDetails.first_name
+                } ${props.celebDetails.userDetails.last_name}`}</span>
                 <span className="bookingType">Video Shoutout</span>
               </span>
             </FlexBoxSB>
-            {!isNewCard && (
+            {/* {!isNewCard && (
               <span className="edit" onClick={newPay(true)}>
                 EDIT
               </span>
-            )}
+            )} */}
           </FlexBoxSB>
         </TopSection>
         <BottomSection>
-          <FlexBoxSB>
-            <span className="colDir alignPad">
-              <span className="labelHead">All proceeds go to:</span>
-              <span className="cardType">The United Way</span>
+          <FlexBoxSB
+            className={
+              props.celebDetails.celebrityDetails.charity === '' && 'center'
+            }
+          >
+            {props.celebDetails.celebrityDetails.charity !== '' && (
+              <span className="colDir alignPad">
+                <span className="labelHead">All proceeds go to:</span>
+                <span className="cardType">
+                  {props.celebDetails.celebrityDetails.charity}
+                </span>
+              </span>
+            )}
+            <span className="amount">
+              {props.celebDetails.celebrityDetails.rate}
             </span>
-            <span className="amount">$50.00</span>
           </FlexBoxSB>
-          <p className="note">
-            Your card will be charged when the video has been delivered.
-          </p>
+          {props.celebDetails.celebrityDetails.charity !== '' && (
+            <p className="note">
+              Your card will be charged when the video has been delivered.
+            </p>
+          )}
         </BottomSection>
       </UserCardWrapper>
-
-      {isNewCard || props.CardList.length === 0 ? (
+      {isNewCard || Object.keys(props.CardList).length === 0 ? (
         <Elements>
-          <Checkout handleBooking={props.handleBooking} />
+          <Checkout
+            handleBooking={props.handleBooking}
+            rate={props.celebDetails.celebrityDetails.rate}
+            loaderAction={props.loaderAction}
+            modifySourceList={props.modifySourceList}
+          />
         </Elements>
       ) : (
         <React.Fragment>
           <span className="selectCard centerAlign">Select Card</span>
-          <CardList CardList={props.CardList} />
+          {Object.keys(props.CardList).length > 0 && (
+            <CardList
+              Cards={props.CardList}
+              getCardSelected={getCardSelected}
+            />
+          )}
           <span className="newCard centerAlign" onClick={newPay(true)}>
             Pay Using New Card
           </span>
 
           <FlexCenter>
-            <Button className="button">Pay $50.00</Button>
+            <Button className="button" onClick={payWithExistingCrd}>
+              Pay ${props.celebDetails.celebrityDetails.rate}
+            </Button>
           </FlexCenter>
         </React.Fragment>
       )}
@@ -87,6 +122,16 @@ const UserCard = (props) => {
       </FlexCenter>
     </Layout>
   );
+};
+
+UserCard.propTypes = {
+  isNewCard: PropTypes.bool,
+  contentSwitchCallback: PropTypes.func.isRequired,
+  handleBooking: PropTypes.func.isRequired,
+  CardList: PropTypes.object.isRequired,
+};
+UserCard.defaultProps = {
+  isNewCard: false,
 };
 
 export default UserCard;
