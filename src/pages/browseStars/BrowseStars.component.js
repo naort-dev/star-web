@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import FilterSection from './components/FilterSection';
 import StarListing from '../../components/StarListing';
 import StarAvatar from '../../components/StarAvatar';
+import { pipeSeparator } from '../../utils/dataToStringFormatter';
 import CategoryPageStyled from './styled';
 
 const BrowseStars = (props) => {
@@ -35,11 +36,11 @@ const BrowseStars = (props) => {
   }];
   const [showFilter, toggleFilter] = useState(false);
   const [fixedContent, toggleContentPos] = useState(false);
-  const [scrollPos, updateScrollPos] = useState(0);
   const [listHeight, updateListHeight] = useState(null);
   const contentRef = useRef(null);
   const mainRef = useRef(null);
   const filterRef = useRef(null);
+  const headerRef = useRef(null);
 
   const toggleFilterCall = () => {
     toggleFilter(!showFilter);
@@ -47,7 +48,7 @@ const BrowseStars = (props) => {
 
   const getListHeight = () => {
     if (filterRef && filterRef.current) {
-      updateListHeight(`calc(100% - ${filterRef.current.clientHeight}px)`);
+      updateListHeight(filterRef.current.clientHeight);
     } else {
       return updateListHeight(null);
     }
@@ -60,21 +61,21 @@ const BrowseStars = (props) => {
     getListHeight();
   };
 
-  const onContentScroll = (event) => {
-    const currentScroll = contentRef.current.scrollTop + contentRef.current.clientHeight;
-    if (currentScroll > mainRef.current.scrollTop && !fixedContent) {
+  const onWindowScroll = () => {
+    const bounding = mainRef.current.getBoundingClientRect();
+    if (bounding.top - headerRef.current.clientHeight <= 0 && !fixedContent) {
       toggleContentPos(true);
       getListHeight();
-    } else if (contentRef.current.scrollTop === 0 && fixedContent) {
+    } else {
       getListHeight();
       toggleContentPos(false);
     }
-    updateScrollPos(currentScroll);
   };
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize);
-    contentRef.current.addEventListener('scroll', onContentScroll);
+    window.addEventListener('scroll', onWindowScroll);
+    document.documentElement.scrollTop = 0;
     onWindowResize();
   }, []);
 
@@ -85,7 +86,7 @@ const BrowseStars = (props) => {
   useEffect(() => {
     return () => {
       window.removeEventListener('resize', onWindowResize);
-      window.removeEventListener('scroll', onContentScroll);
+      window.removeEventListener('scroll', onWindowScroll);
     };
   }, []);
 
@@ -96,7 +97,6 @@ const BrowseStars = (props) => {
     props.fetchCelebrityList(0, true);
     toggleContentPos(false);
     getListHeight();
-    contentRef.current.scrollTop = 0;
   }, [props.category.label]);
 
   const title = props.featuredStars[props.category.label] ? props.featuredStars[props.category.label].title : '';
@@ -115,9 +115,18 @@ const BrowseStars = (props) => {
   };
   return (
     <CategoryPageStyled>
-      <Header />
-      <CategoryPageStyled.Toolbar>
-        <CategoryPageStyled.CategoryName>{props.category.label}</CategoryPageStyled.CategoryName>
+      <Header
+        forwardRef={headerRef}
+      />
+      <CategoryPageStyled.Toolbar headerRef={headerRef}>
+        <CategoryPageStyled.CategoryName>
+          {props.category.label}
+          <CategoryPageStyled.FilterList>
+            {
+              pipeSeparator(props.category.selected, 'title')
+            }
+          </CategoryPageStyled.FilterList>
+        </CategoryPageStyled.CategoryName>
         {
           props.category.label !== 'Featured' &&
             <CategoryPageStyled.Filter
@@ -129,7 +138,7 @@ const BrowseStars = (props) => {
         }
       </CategoryPageStyled.Toolbar>
       <CategoryPageStyled.Content innerRef={contentRef}>
-        <CategoryPageStyled.FeaturedWrapper fixedContent={fixedContent}>
+        <CategoryPageStyled.FeaturedWrapper>
           <CategoryPageStyled.Heading>{title}</CategoryPageStyled.Heading>
           <CategoryPageStyled.FeaturedSection heading={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
             <CategoryPageStyled.StarWrapper>
@@ -149,14 +158,14 @@ const BrowseStars = (props) => {
             </CategoryPageStyled.AvatarWrapper>
           </CategoryPageStyled.FeaturedSection>
         </CategoryPageStyled.FeaturedWrapper>
-        <CategoryPageStyled.MainContent fixedContent={fixedContent} innerRef={mainRef}>
+        <CategoryPageStyled.MainContent fixedContent={fixedContent} padding={listHeight} innerRef={mainRef}>
           {
             props.category.label !== 'Featured' && showFilter &&
-              <CategoryPageStyled.FilterSection innerRef={filterRef}>
+              <CategoryPageStyled.FilterSection headerRef={headerRef} fixedContent={fixedContent} innerRef={filterRef}>
                 <FilterSection onClose={toggleFilterCall} />
               </CategoryPageStyled.FilterSection>
           }
-          <CategoryPageStyled.ListingWrapper height={listHeight}>
+          <CategoryPageStyled.ListingWrapper>
             <StarListing
               dataList={props.celebList.data}
               loading={props.celebList.loading}
