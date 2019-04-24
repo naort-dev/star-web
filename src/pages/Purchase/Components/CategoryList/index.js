@@ -14,7 +14,7 @@ import {
 
 const CategoryList = ({ dataModal, getCategory }) => {
   const handleGetCategory = type => () => {
-    getCategory && getCategory(type);
+    if (getCategory) getCategory(type);
   };
 
   return (

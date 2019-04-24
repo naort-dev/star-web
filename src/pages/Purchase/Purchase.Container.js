@@ -19,7 +19,7 @@ import {
 } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   OccasionDetails: state.occasionList.data,
 });
 
@@ -34,32 +34,20 @@ function mapDispatchToProps(dispatch) {
     playPauseMedia: () => {
       dispatch(playPauseMedia());
     },
-    loaderAction: (value) => {
+    loaderAction: value => {
       dispatch(loaderAction(value));
     },
-    fetchOccasionlist: (id) => {
+    fetchOccasionlist: id => {
       dispatch(fetchOccasionlist(id));
     },
-    setVideoUploadedFlag: (value) => {
+    setVideoUploadedFlag: value => {
       dispatch(setVideoUploadedFlag(value));
     },
     starsonaRequest: (bookingData, publicStatus, callback) => {
       dispatch(starsonaRequest(bookingData, publicStatus, callback));
     },
-    createCharge: (starsonaId, amount, tokenId, callBack) => {
-      dispatch(createCharge(starsonaId, amount, tokenId, callBack));
-    },
-    fetchSourceList: () => {
-      dispatch(fetchSourceList());
-    },
-    fetchCelebDetails: (id) => {
+    fetchCelebDetails: id => {
       dispatch(fetchCelebDetails(id));
-    },
-    modifySourceList: (source, customer, action, callBack) => {
-      dispatch(modifySourceList(source, customer, action, callBack));
-    },
-    updateCustomerId: (value) => {
-      dispatch(updateCustomerId(value));
     },
   };
 }

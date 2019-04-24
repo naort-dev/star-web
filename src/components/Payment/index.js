@@ -6,8 +6,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
+import {
+  createCharge,
+  fetchSourceList,
+  modifySourceList,
+} from '../../store/shared/actions/processPayments';
+import { updateCustomerId } from '../../store/shared/actions/commonActions';
 
-const Payment = (props) => {
+const Payment = props => {
   const [isNewCard, cardSelection] = useState(false);
 
   useEffect(() => {
@@ -15,7 +21,7 @@ const Payment = (props) => {
     props.fetchCelebDetails('starlord-8');
   }, []);
 
-  const contentSwitchCallback = (value) => {
+  const contentSwitchCallback = value => {
     cardSelection(value);
   };
 
@@ -33,7 +39,7 @@ const Payment = (props) => {
     props.paymentSuccessCallBack();
   };
 
-  const handleBooking = (source) => {
+  const handleBooking = source => {
     props.createCharge(
       props.request.id,
       //props.celebDetails.celebrityDetails.rate,
@@ -99,13 +105,30 @@ Payment.defaultProps = {
   celebDetails: {},
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   request: state.paymentDetails.requestDetails,
   sourceList: state.paymentDetails.sourceList,
   celebDetails: state.celebDetails,
 });
 
+function mapDispatchToProps(dispatch) {
+  return {
+    createCharge: (starsonaId, amount, tokenId, callBack) => {
+      dispatch(createCharge(starsonaId, amount, tokenId, callBack));
+    },
+    fetchSourceList: () => {
+      dispatch(fetchSourceList());
+    },
+    modifySourceList: (source, customer, action, callBack) => {
+      dispatch(modifySourceList(source, customer, action, callBack));
+    },
+    updateCustomerId: value => {
+      dispatch(updateCustomerId(value));
+    },
+  };
+}
+
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(Payment);

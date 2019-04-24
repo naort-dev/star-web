@@ -6,7 +6,7 @@ import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { Ul, Li } from './CardList.styles';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
-const CardList = (props) => {
+const CardList = props => {
   const [selected, getSelected] = useState('');
   const cardSelected = (card, cardIndex) => {
     getSelected(cardIndex);
@@ -17,10 +17,10 @@ const CardList = (props) => {
     props.deleteCard(sourceId, customerId, false);
   };
 
-  const getEphemeralKey = (sourceId) => {
+  const getEphemeralKey = sourceId => {
     props.loaderAction(true);
     fetchEphemeralKey()
-      .then((resp) => {
+      .then(resp => {
         if (resp.success) {
           const customerId =
             resp.data.ephemeralKey.associated_objects &&
@@ -31,7 +31,7 @@ const CardList = (props) => {
           deleteCardAction(sourceId, customerId);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         props.loaderAction(false);
       });
   };
@@ -47,7 +47,7 @@ const CardList = (props) => {
 
   return (
     <Ul>
-      {Object.keys(props.Cards).map((cardIndex) => {
+      {Object.keys(props.Cards).map(cardIndex => {
         return (
           <Li
             icon="default-icon"
@@ -61,7 +61,7 @@ const CardList = (props) => {
             </span>
             <FontAwesomeIcon
               icon={faTimes}
-              onClick={(event) => removeCard(props.Cards[cardIndex], event)}
+              onClick={event => removeCard(props.Cards[cardIndex], event)}
               className="closeBtn"
             />
           </Li>
@@ -84,10 +84,8 @@ CardList.defaultProps = {
 };
 
 export default connect(
-  (state) => ({
+  state => ({
     customerId: state.commonReducer.customerId,
   }),
   null,
 )(CardList);
-
-// "plugin": ["prettier"],

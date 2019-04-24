@@ -11,7 +11,7 @@ import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
 import getAWSCredentials from '../../../../utils/AWSUpload';
 import { locations } from '../../../../constants/locations';
 
-const Question = (props) => {
+const Question = props => {
   const questions = [
     {
       key: 'que1',
@@ -33,7 +33,7 @@ const Question = (props) => {
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
 
-  const mediaHandler = (btnLabel) => {
+  const mediaHandler = btnLabel => {
     props.recordTrigger();
     props.playPauseMedia();
     changeButtonLabel(btnLabel);
@@ -46,7 +46,7 @@ const Question = (props) => {
     changeButtonLabel('Stop');
   };
 
-  const readyToPayment = (responce) => {
+  const readyToPayment = () => {
     props.loaderAction(false);
     props.continueCallback();
   };
@@ -56,7 +56,7 @@ const Question = (props) => {
     uploadVideo = new File([props.videoFile], 'askVideo.mp4');
     props.loaderAction(true);
     getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
-      .then((response) => {
+      .then(response => {
         if (response && response.filename) {
           const payload = {
             starDetail: {
@@ -69,16 +69,16 @@ const Question = (props) => {
           };
           axios
             .post(response.url, response.formData)
-            .then((response) => {
+            .then(() => {
               props.starsonaRequest(payload, true, readyToPayment);
               props.setVideoUploadedFlag(true);
             })
-            .catch((error) => {
+            .catch(() => {
               props.loaderAction(false);
             });
         }
       })
-      .catch((error) => {
+      .catch(() => {
         props.loaderAction(false);
       });
   };
@@ -185,6 +185,7 @@ Question.propTypes = {
   videoUploaded: PropTypes.bool,
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
+  starsonaRequest: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {

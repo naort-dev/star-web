@@ -11,7 +11,7 @@ import {
   Image,
 } from './styled';
 
-const Header = (props) => {
+const Header = props => {
   const starData = [
     {
       size: '28px',

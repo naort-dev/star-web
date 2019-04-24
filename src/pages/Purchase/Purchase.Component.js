@@ -101,12 +101,8 @@ class Purchase extends Component {
           paymentSuccessCallBack={this.paymentSuccess}
           backArrowHandler={this.backArrowHandler}
           closeHandler={this.closeHandler}
-          createCharge={this.props.createCharge}
-          fetchSourceList={this.props.fetchSourceList}
           fetchCelebDetails={this.props.fetchCelebDetails}
-          modifySourceList={this.props.modifySourceList}
           loaderAction={this.props.loaderAction}
-          updateCustomerId={this.props.updateCustomerId}
         />
       );
     } else if (this.state.stepCount === 4) {
@@ -179,11 +175,7 @@ Purchase.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
-  createCharge: PropTypes.func.isRequired,
-  fetchSourceList: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
-  modifySourceList: PropTypes.func.isRequired,
-  updateCustomerId: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

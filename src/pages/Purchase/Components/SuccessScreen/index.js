@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
@@ -6,7 +7,7 @@ import { Layout, Content } from './styled';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import Button from '../../../../components/PrimaryButton';
 
-const SuccessScreen = (props) => {
+const SuccessScreen = props => {
   return (
     <Layout>
       <FontAwesomeIcon
@@ -33,6 +34,10 @@ const SuccessScreen = (props) => {
       </Scrollbars>
     </Layout>
   );
+};
+
+SuccessScreen.propTypes = {
+  closeHandler: PropTypes.func.isRequired,
 };
 
 export default SuccessScreen;

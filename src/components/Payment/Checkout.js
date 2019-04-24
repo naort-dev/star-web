@@ -56,20 +56,9 @@ class Checkout extends React.Component {
     this.setState({ [element]: errorMsg, cardTypeImage });
   };
 
-  returnErrorMsg = (element) => {
-    if (this.state[element] !== '') {
-      return <Error>{this.state[element]}</Error>;
-    }
-    return null;
-  };
-
-  sourceUpdated = (source) => () => {
-    this.props.handleBooking(source);
-  };
-
-  getEphemeralKey = (source) => {
+  getEphemeralKey = source => {
     fetchEphemeralKey()
-      .then((resp) => {
+      .then(resp => {
         if (resp.success) {
           const customerId =
             resp.data.ephemeralKey.associated_objects &&
@@ -80,9 +69,20 @@ class Checkout extends React.Component {
           this.addCardToList(source, customerId);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         this.props.loaderAction(false);
       });
+  };
+
+  returnErrorMsg = element => {
+    if (this.state[element] !== '') {
+      return <Error>{this.state[element]}</Error>;
+    }
+    return null;
+  };
+
+  sourceUpdated = source => () => {
+    this.props.handleBooking(source);
   };
 
   addCardToList = (source, customerId) => {
@@ -94,7 +94,7 @@ class Checkout extends React.Component {
     );
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = event => {
     event.preventDefault();
     if (this.props.stripe) {
       this.props.loaderAction(true);
@@ -102,7 +102,7 @@ class Checkout extends React.Component {
         .createSource({
           type: 'card',
         })
-        .then((res) => {
+        .then(res => {
           if (this.props.customerId !== null) {
             this.addCardToList(res, this.props.customerId);
           } else {
@@ -122,7 +122,7 @@ class Checkout extends React.Component {
           <Wrapper>
             <CardIcon cardImage={this.state.cardTypeImage} />
             <CardNumberElement
-              onChange={(event) => this.setErrorMsg(event, 'cardNumberError')}
+              onChange={event => this.setErrorMsg(event, 'cardNumberError')}
               style={this.styles}
               placeholder="1234 1234 1234 1234"
             />
@@ -133,7 +133,7 @@ class Checkout extends React.Component {
         <FlexBox>
           <CardElementSmall>
             <CardExpiryElement
-              onChange={(event) => this.setErrorMsg(event, 'cardExpiryError')}
+              onChange={event => this.setErrorMsg(event, 'cardExpiryError')}
               style={this.styles}
               placeholder="MM/YY"
             />
@@ -141,7 +141,7 @@ class Checkout extends React.Component {
           </CardElementSmall>
           <CardElementSmall>
             <CardCVCElement
-              onChange={(event) => this.setErrorMsg(event, 'cvvError')}
+              onChange={event => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
               placeholder="CCV Code"
             />
@@ -173,7 +173,7 @@ Checkout.defaultProps = {
 
 export default injectStripe(
   connect(
-    (state) => ({
+    state => ({
       customerId: state.commonReducer.customerId,
     }),
     null,
