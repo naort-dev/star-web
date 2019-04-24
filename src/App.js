@@ -95,7 +95,7 @@ class App extends React.Component {
     }
   }
 
-  routeToOutside = (url) => () => {
+  routeToOutside = url => () => {
     window.location = url;
     return null;
   };
@@ -154,7 +154,7 @@ class App extends React.Component {
               <Route
                 exact
                 path="/signup"
-                render={(props) => <Landing {...props} isSignup />}
+                render={props => <Landing {...props} isSignup />}
               />
               <Route path="/resetpassword" component={Login} />
               <Route path="/instalogin" component={InstaLogin} />
