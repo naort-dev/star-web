@@ -6,6 +6,7 @@ import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
+import { BackArrow, CloseButton } from '../../styles/CommonStyled';
 
 const Payment = (props) => {
   const [isNewCard, cardSelection] = useState(false);
@@ -47,13 +48,9 @@ const Payment = (props) => {
     <React.Fragment>
       <SubHeader>
         <FlexBoxSBC>
-          <FontAwesomeIcon
-            icon={faAngleLeft}
-            className="arrow"
-            onClick={backArrowClick}
-          />
+          <BackArrow onClick={backArrowClick} />
           <Heading>Payment Details</Heading>
-          <FontAwesomeIcon icon={faTimes} onClick={props.closeHandler} />
+          <CloseButton onClick={props.closeHandler} />
         </FlexBoxSBC>
       </SubHeader>
       <Scrollbars className="customScroll">

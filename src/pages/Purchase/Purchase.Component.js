@@ -16,7 +16,7 @@ import Header from './Components/Header';
 class Purchase extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true, stepCount: 1, category: 0 };
+    this.state = { open: true, stepCount: 4, category: 0 };
     this.starData = [
       {
         size: '28px',

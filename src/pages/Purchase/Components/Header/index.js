@@ -10,6 +10,7 @@ import {
 } from './styled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
+import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
 const Header = (props) => {
   const starData = [
@@ -44,6 +45,8 @@ const Header = (props) => {
           className="arrow"
           onClick={props.backArrowHandler}
         />
+
+        {/* <BackArrow onClick={props.backArrowHandler} /> */}
         <ProfileIcon>
           <StarDrawer starData={starData} />
           <Image>
@@ -51,6 +54,7 @@ const Header = (props) => {
           </Image>
         </ProfileIcon>
         <FontAwesomeIcon icon={faTimes} onClick={props.closeHandler} />
+        {/* <CloseButton onClick={props.closeHandler} /> */}
       </FlexBoxSBC>
       <HeaderText>{props.headerText}</HeaderText>
     </HeaderDiv>
