@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
-import { sortList, Price } from './constants';
+import { sortList } from './constants';
 import HeaderSection from '../../../../components/Header/styled';
 import RangeSlider from '../../../../components/RangeSlider';
 import PrimaryButton from '../../../../components/PrimaryButton';
@@ -30,15 +30,15 @@ const FilterSection = (props) => {
 
   useEffect(() => {
     updateSelectedSub(props.category.selected);
-  }, [props.category.selected.length]);
+  }, [props.category.selected]);
 
-  const updateSubCategory = catId => () => {
+  const updateSubCategory = subCategory => () => {
     let selectedList = [...selectedSubCat];
-    if (selectedList.find(cat => cat === catId)) {
-      selectedList = selectedList.filter(cat => cat !== catId);
+    if (selectedList.find(cat => cat.id === subCategory.id)) {
+      selectedList = selectedList.filter(cat => cat.id !== subCategory.id);
       updateSelectedSub(selectedList);
     } else {
-      selectedList = [...selectedList, catId];
+      selectedList = [...selectedList, subCategory];
       updateSelectedSub(selectedList);
     }
     if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
@@ -69,7 +69,7 @@ const FilterSection = (props) => {
 
   const toggleSelectAll = () => {
     if (props.category.subCategories.length !== selectedSubCat.length) {
-      const selectedList = props.category.subCategories.map(cat => cat.id);
+      const selectedList = props.category.subCategories;
       props.updateSelectedSubCategory(selectedList);
       updateSelectedSub(selectedList);
     } else {
@@ -115,8 +115,8 @@ const FilterSection = (props) => {
             props.category.subCategories.map(subCategory => (
               <FilterStyled.SubCategoryItem
                 key={subCategory.id}
-                selected={selectedSubCat.indexOf(subCategory.id) > -1}
-                onClick={updateSubCategory(subCategory.id)}
+                selected={selectedSubCat.find(cat => cat.id === subCategory.id)}
+                onClick={updateSubCategory(subCategory)}
               >
                 {subCategory.title}
               </FilterStyled.SubCategoryItem>
@@ -131,8 +131,8 @@ const FilterSection = (props) => {
           <FilterStyled.SecondaryFilter>
             <FilterStyled.FilterHeading>Price</FilterStyled.FilterHeading>
             <RangeSlider
-              min={Price.min}
-              max={Price.max}
+              min={parseInt(props.config.min_rate)}
+              max={parseInt(props.config.max_rate)}
               range={priceRange}
               onAfterChange={onSliderChange}
             />
@@ -156,6 +156,7 @@ FilterSection.propTypes = {
   updatePriceRange: PropTypes.func.isRequired,
   fetchCelebrityList: PropTypes.func.isRequired,
   sortValue: PropTypes.string.isRequired,
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -163,6 +164,7 @@ const mapStateToProps = state => ({
   lowPrice: state.filters.lowPrice,
   highPrice: state.filters.highPrice,
   sortValue: state.filters.sortValue,
+  config: state.config.data,
 });
 
 const mapDispatchToProps = dispatch => ({

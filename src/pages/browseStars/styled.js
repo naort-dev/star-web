@@ -1,25 +1,35 @@
 import styled from 'styled-components';
 
 const CategoryPageStyled = styled.div`
-  margin-top: 120px;
-  height: calc(100vh - 120px);
-  overflow: hidden;
+  margin-top: 185px;
+  height: calc(100vh - 185px);
   @media(min-width: 832px) {
     margin-top: 260px;
-    height: calc(100vh - 260px);
+    height: auto;
   }
   @media(min-width: 1280px) {
     margin-top: 151px;
-    height: calc(100vh - 151px);
   }
 `;
 
 CategoryPageStyled.CategoryName = styled.span`
   font-family: Gilroy-Bold;
   font-size: 20px;
-  line-height: 38px;
+  line-height: 21px;
+  width: calc(100% - 42px);
   color: ${props => props.theme.flatBlue};
   text-transform: uppercase;
+`;
+
+CategoryPageStyled.FilterList = styled.span`
+  display: block;
+  width: 100%;
+  font-family: Gilroy-Light;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: ${props => props.theme.greyishBrown};
 `;
 
 CategoryPageStyled.Filter = styled.span`
@@ -74,6 +84,12 @@ CategoryPageStyled.FilterSection = styled.div`
   @media(min-width: 832px) {
     background: transparent;
     position: static;
+    ${props => props.fixedContent && `
+      position: fixed;
+      top: ${props.headerRef && props.headerRef.current ? `${props.headerRef.current.clientHeight}px` : '138px'};
+      bottom: initial;
+      background: ${props.theme.white};
+    `}
     display: block;
   }
   @media(min-width: 1280px) {
@@ -161,17 +177,23 @@ CategoryPageStyled.Toolbar = styled.div`
   justify-content: space-between;
   align-items: flex-start;
   padding: 12px 16px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 2;
+  top: ${props => `${props.headerRef && props.headerRef.current && props.headerRef.current.clientHeight}px`};
   @media(min-width: 832px) {
     display: none;
   }
 `;
 
 CategoryPageStyled.Content = styled.div`
-  height: calc(100% - 40px);
+  height: 100%;
   padding: 12px 16px;
-  overflow: auto;
+  position: relative;
   @media(min-width: 832px) {
-    height: 100%;
+    overflow: initial;
     background: ${props => props.theme.white};
   }
 `;
@@ -180,9 +202,16 @@ CategoryPageStyled.FeaturedWrapper = styled.div`
 
 `;
 
+CategoryPageStyled.MainContent = styled.div`
+  @media(min-width: 832px) {
+    ${props => props.fixedContent && props.padding && `
+      padding-top: ${props.padding}px;
+    `}
+  }
+`;
+
 CategoryPageStyled.ListingWrapper = styled.div`
   max-width: 1280px;
-  height: 500px;
   margin: 0 auto;
 `;
 

@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,7 @@ import Header from '../../components/Header';
 import FilterSection from './components/FilterSection';
 import StarListing from '../../components/StarListing';
 import StarAvatar from '../../components/StarAvatar';
+import { pipeSeparator } from '../../utils/dataToStringFormatter';
 import CategoryPageStyled from './styled';
 
 const BrowseStars = (props) => {
@@ -34,19 +35,47 @@ const BrowseStars = (props) => {
     color: paleSkyBlue,
   }];
   const [showFilter, toggleFilter] = useState(false);
+  const [fixedContent, toggleContentPos] = useState(false);
+  const [listHeight, updateListHeight] = useState(null);
+  const contentRef = useRef(null);
+  const mainRef = useRef(null);
+  const filterRef = useRef(null);
+  const headerRef = useRef(null);
 
   const toggleFilterCall = () => {
     toggleFilter(!showFilter);
+  };
+
+  const getListHeight = () => {
+    if (filterRef && filterRef.current) {
+      updateListHeight(filterRef.current.clientHeight);
+    } else {
+      return updateListHeight(null);
+    }
   };
 
   const onWindowResize = () => {
     if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
       toggleFilter(true);
     }
+    getListHeight();
+  };
+
+  const onWindowScroll = () => {
+    const bounding = mainRef.current.getBoundingClientRect();
+    if (bounding.top - headerRef.current.clientHeight <= 0 && !fixedContent) {
+      toggleContentPos(true);
+      getListHeight();
+    } else {
+      getListHeight();
+      toggleContentPos(false);
+    }
   };
 
   useEffect(() => {
     window.addEventListener('resize', onWindowResize);
+    window.addEventListener('scroll', onWindowScroll);
+    document.documentElement.scrollTop = 0;
     onWindowResize();
   }, []);
 
@@ -57,6 +86,7 @@ const BrowseStars = (props) => {
   useEffect(() => {
     return () => {
       window.removeEventListener('resize', onWindowResize);
+      window.removeEventListener('scroll', onWindowScroll);
     };
   }, []);
 
@@ -65,6 +95,8 @@ const BrowseStars = (props) => {
       props.fetchFeaturedStars(props.category);
     }
     props.fetchCelebrityList(0, true);
+    toggleContentPos(false);
+    getListHeight();
   }, [props.category.label]);
 
   const title = props.featuredStars[props.category.label] ? props.featuredStars[props.category.label].title : '';
@@ -76,17 +108,26 @@ const BrowseStars = (props) => {
       return ({
         nick_name: finalStarData && finalStarData.name,
         celebrity_user: { rate: finalStarData && finalStarData.rate },
+        celebrity_profession: finalStarData.professions.map(profession => ({ title: profession })),
         ...finalStarData,
       });
     }
     return ({});
   };
-
   return (
     <CategoryPageStyled>
-      <Header />
-      <CategoryPageStyled.Toolbar>
-        <CategoryPageStyled.CategoryName>{props.category.label}</CategoryPageStyled.CategoryName>
+      <Header
+        forwardRef={headerRef}
+      />
+      <CategoryPageStyled.Toolbar headerRef={headerRef}>
+        <CategoryPageStyled.CategoryName>
+          {props.category.label}
+          <CategoryPageStyled.FilterList>
+            {
+              pipeSeparator(props.category.selected, 'title')
+            }
+          </CategoryPageStyled.FilterList>
+        </CategoryPageStyled.CategoryName>
         {
           props.category.label !== 'Featured' &&
             <CategoryPageStyled.Filter
@@ -97,7 +138,7 @@ const BrowseStars = (props) => {
             </CategoryPageStyled.Filter>
         }
       </CategoryPageStyled.Toolbar>
-      <CategoryPageStyled.Content>
+      <CategoryPageStyled.Content innerRef={contentRef}>
         <CategoryPageStyled.FeaturedWrapper>
           <CategoryPageStyled.Heading>{title}</CategoryPageStyled.Heading>
           <CategoryPageStyled.FeaturedSection heading={`Featured ${props.category.label !== 'Featured' ? props.category.label : ''} stars`}>
@@ -118,21 +159,24 @@ const BrowseStars = (props) => {
             </CategoryPageStyled.AvatarWrapper>
           </CategoryPageStyled.FeaturedSection>
         </CategoryPageStyled.FeaturedWrapper>
-        {
-          props.category.label !== 'Featured' && showFilter &&
-            <CategoryPageStyled.FilterSection>
-              <FilterSection onClose={toggleFilterCall} />
-            </CategoryPageStyled.FilterSection>
-        }
-        <CategoryPageStyled.ListingWrapper>
-          <StarListing
-            dataList={props.celebList.data}
-            loading={props.celebList.loading}
-            fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}
-            totalCount={props.celebList.count}
-            limit={10}
-          />
-        </CategoryPageStyled.ListingWrapper>
+        <CategoryPageStyled.MainContent fixedContent={fixedContent} padding={listHeight} innerRef={mainRef}>
+          {
+            props.category.label !== 'Featured' && showFilter &&
+              <CategoryPageStyled.FilterSection headerRef={headerRef} fixedContent={fixedContent} innerRef={filterRef}>
+                <FilterSection onClose={toggleFilterCall} />
+              </CategoryPageStyled.FilterSection>
+          }
+          <CategoryPageStyled.ListingWrapper>
+            <StarListing
+              dataList={props.celebList.data}
+              loading={props.celebList.loading}
+              offset={props.celebList.offset}
+              fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}
+              totalCount={props.celebList.count}
+              limit={props.celebList.limit}
+            />
+          </CategoryPageStyled.ListingWrapper>
+        </CategoryPageStyled.MainContent>
       </CategoryPageStyled.Content>
     </CategoryPageStyled>
   );

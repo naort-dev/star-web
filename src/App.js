@@ -18,6 +18,7 @@ import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Purchase } from './pages/Purchase/Purchase.Loadable';
+import { Progress, Loading } from './styles/CommonStyled';
 // import { Favourites } from './pages/favourites';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
@@ -106,7 +107,11 @@ class App extends React.Component {
     const showRoutes = !showLoading;
     return (
       <div>
-        {this.props.loader && <Loader />}
+        {this.props.loader && (
+          <Loading>
+            <Progress />
+          </Loading>
+        )}
         <div id="content-wrapper">
           <Modals />
           <Helmet
