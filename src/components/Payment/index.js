@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
-import UserCard from './UserCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
+import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
+import UserCard from './UserCard';
 
 const Payment = (props) => {
   const [isNewCard, cardSelection] = useState(false);

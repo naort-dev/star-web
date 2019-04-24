@@ -44,7 +44,12 @@ class Purchase extends Component {
 
   getBodyComponent = () => {
     if (this.state.stepCount === 1) {
-      return <CategoryList getCategory={this.getCategory} />;
+      return (
+        <CategoryList
+          getCategory={this.getCategory}
+          dataModal={dataModal.category ? dataModal.category : []}
+        />
+      );
     } else if (this.state.stepCount === 2) {
       if (this.state.category === 3) {
         return (
@@ -152,11 +157,7 @@ class Purchase extends Component {
               />
               <Content className="contentPadding" step={this.state.stepCount}>
                 <Scrollbars>
-                  <ModalSwitcher
-                    dataModal={dataModal.category ? dataModal.category : []}
-                  >
-                    {this.getBodyComponent()}
-                  </ModalSwitcher>
+                  <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
                 </Scrollbars>
               </Content>
             </React.Fragment>

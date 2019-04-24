@@ -116,7 +116,11 @@ const UserCard = (props) => {
               loaderAction={props.loaderAction}
             />
           )}
-          <span className="newCard centerAlign" onClick={newPay(true)}>
+          <span
+            className="newCard centerAlign"
+            onClick={newPay(true)}
+            role="presentation"
+          >
             Pay Using New Card
           </span>
 

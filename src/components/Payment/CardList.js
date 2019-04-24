@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Ul, Li } from './CardList.styles';
-import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
+import { Ul, Li } from './CardList.styles';
+import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
 const CardList = (props) => {
   const [selected, getSelected] = useState('');

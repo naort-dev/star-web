@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 import StarDrawer from '../../../../components/StarDrawer';
 import {
   HeaderDiv,
@@ -8,8 +10,6 @@ import {
   ProfileIcon,
   Image,
 } from './styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 
 const Header = (props) => {
   const starData = [
@@ -57,6 +57,15 @@ const Header = (props) => {
   );
 };
 
-Header.propTypes = {};
+Header.propTypes = {
+  arrowVisible: PropTypes.bool,
+  backArrowHandler: PropTypes.func.isRequired,
+  closeHandler: PropTypes.func.isRequired,
+  headerText: PropTypes.string,
+};
+Header.defaultProps = {
+  arrowVisible: false,
+  headerText: '',
+};
 
 export default Header;

@@ -1,10 +1,10 @@
 import React from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { Layout, Content } from './styled';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import Button from '../../../../components/PrimaryButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
 
 const SuccessScreen = (props) => {
   return (
