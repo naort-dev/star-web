@@ -11,7 +11,7 @@ import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
 import getAWSCredentials from '../../../../utils/AWSUpload';
 import { locations } from '../../../../constants/locations';
 
-const Question = (props) => {
+const Question = props => {
   const questions = [
     {
       key: 'que1',
@@ -33,7 +33,7 @@ const Question = (props) => {
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
 
-  const mediaHandler = (btnLabel) => {
+  const mediaHandler = btnLabel => {
     props.recordTrigger();
     props.playPauseMedia();
     changeButtonLabel(btnLabel);
@@ -45,6 +45,44 @@ const Question = (props) => {
   const startStreaming = () => {
     changeButtonLabel('Stop');
   };
+
+  const readyToPayment = () => {
+    props.loaderAction(false);
+    props.continueCallback();
+  };
+
+  const uploadVideoRecorded = () => {
+    let uploadVideo = null;
+    uploadVideo = new File([props.videoFile], 'askVideo.mp4');
+    props.loaderAction(true);
+    getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
+      .then(response => {
+        if (response && response.filename) {
+          const payload = {
+            starDetail: {
+              id: 'MYervpeO',
+            },
+            question: '',
+            date: '',
+            type: 3,
+            fileName: response.filename,
+          };
+          axios
+            .post(response.url, response.formData)
+            .then(() => {
+              props.starsonaRequest(payload, true, readyToPayment);
+              props.setVideoUploadedFlag(true);
+            })
+            .catch(() => {
+              props.loaderAction(false);
+            });
+        }
+      })
+      .catch(() => {
+        props.loaderAction(false);
+      });
+  };
+
   const buttonClickHandler = () => {
     if (buttonLabel === 'Record') {
       mediaHandler('Record', false);
@@ -60,44 +98,6 @@ const Question = (props) => {
       }
     }
   };
-
-  const readyToPayment = (responce) => {
-    props.loaderAction(false);
-    props.continueCallback();
-  };
-
-  const uploadVideoRecorded = () => {
-    let uploadVideo = null;
-    uploadVideo = new File([props.videoFile], 'askVideo.mp4');
-    props.loaderAction(true);
-    getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
-      .then((response) => {
-        if (response && response.filename) {
-          const payload = {
-            starDetail: {
-              id: 'MYervpeO',
-            },
-            question: '',
-            date: '',
-            type: 3,
-            fileName: response.filename,
-          };
-          axios
-            .post(response.url, response.formData)
-            .then((response) => {
-              props.starsonaRequest(payload, true, readyToPayment);
-              props.setVideoUploadedFlag(true);
-            })
-            .catch((error) => {
-              props.loaderAction(false);
-            });
-        }
-      })
-      .catch((error) => {
-        props.loaderAction(false);
-      });
-  };
-
   const stopRecordHandler = () => {
     mediaHandler('Continue to Payment', true);
   };
@@ -182,11 +182,16 @@ Question.propTypes = {
   videoFile: PropTypes.object,
   continueCallback: PropTypes.func.isRequired,
   videoSrc: PropTypes.string,
+  videoUploaded: PropTypes.bool,
+  loaderAction: PropTypes.func.isRequired,
+  setVideoUploadedFlag: PropTypes.func.isRequired,
+  starsonaRequest: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
   videoFile: {},
   videoSrc: '',
+  videoUploaded: false,
 };
 
 function mapStateToProps(state) {
