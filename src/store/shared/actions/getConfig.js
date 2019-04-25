@@ -1,6 +1,7 @@
 
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { updatePriceRange } from '../../../pages/landing/actions/updateFilters';
 
 export const CONFIG = {
   start: 'fetch_start/config',
@@ -46,6 +47,7 @@ export const getConfig = () => (dispatch) => {
       dispatch(configFetchEnd());
       const configData = processConfig(resp.data.data.config);
       dispatch(configFetchSuccess(configData));
+      dispatch(updatePriceRange(parseInt(configData.min_rate, 0), parseInt(configData.max_rate, 0)));
     } else {
       dispatch(configFetchEnd());
     }
