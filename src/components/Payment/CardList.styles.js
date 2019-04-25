@@ -9,9 +9,9 @@ export const Ul = styled.ul`
 `;
 
 export const Li = styled.li`
-  max-width: 300px;
+  max-width: 315px;
   width: 100%;
-  padding: 21px 35px;
+  padding: 21px 50px 21px 35px;
   border: 1px solid #2f839d;
   border-radius: 30px;
   font-family: Gilroy-Bold;
@@ -34,5 +34,10 @@ export const Li = styled.li`
     padding-left: 10px;
     margin-left: 10px;
     background: url('../../assets/images/card-icons/default-icon.svg') no-repeat;
+  }
+  .closeBtn {
+    position: absolute;
+    right: 17px;
+    color: red !important;
   }
 `;

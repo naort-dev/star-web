@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
-const Header = (props) => {
+const Header = props => {
   const starData = [
     {
       size: '28px',
@@ -61,6 +61,15 @@ const Header = (props) => {
   );
 };
 
-Header.propTypes = {};
+Header.propTypes = {
+  arrowVisible: PropTypes.bool,
+  backArrowHandler: PropTypes.func.isRequired,
+  closeHandler: PropTypes.func.isRequired,
+  headerText: PropTypes.string,
+};
+Header.defaultProps = {
+  arrowVisible: false,
+  headerText: '',
+};
 
 export default Header;

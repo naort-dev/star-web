@@ -3,6 +3,7 @@ import {
   UPDATE_RECORDMEDIA,
   PLAY_PAUSE_MEDIA,
   LOADER_COMMON,
+  UPDATE_CUSTOMER_ID,
 } from '../actions/commonActions';
 
 const initalState = {
@@ -11,6 +12,7 @@ const initalState = {
   file: null,
   playPauseMedia: false,
   loader: false,
+  customerId: null,
 };
 
 const commonReducer = (state = { ...initalState }, action) => {
@@ -38,6 +40,12 @@ const commonReducer = (state = { ...initalState }, action) => {
       return {
         ...state,
         loader: action.value,
+      };
+
+    case UPDATE_CUSTOMER_ID:
+      return {
+        ...state,
+        customerId: action.value,
       };
 
     default:

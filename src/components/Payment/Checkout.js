@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import {
   injectStripe,
   CardNumberElement,
@@ -17,7 +19,7 @@ import { FlexCenter } from '../../styles/CommonStyled';
 import Button from '../PrimaryButton';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
-class checkout extends React.Component {
+class Checkout extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -53,40 +55,46 @@ class checkout extends React.Component {
     const errorMsg = event.error ? event.error.message : '';
     this.setState({ [element]: errorMsg, cardTypeImage });
   };
-  returnErrorMsg = (element) => {
-    if (this.state[element] !== '') {
-      return <Error>{this.state[element]}</Error>;
-    }
-    return null;
-  };
 
-  sourceUpdated = (source) => () => {
-    this.props.handleBooking(source);
-  };
-
-  getEphemeralKey = (source) => {
+  getEphemeralKey = source => {
     fetchEphemeralKey()
-      .then((resp) => {
+      .then(resp => {
         if (resp.success) {
           const customerId =
             resp.data.ephemeralKey.associated_objects &&
             resp.data.ephemeralKey.associated_objects[0]
               ? resp.data.ephemeralKey.associated_objects[0].id
               : null;
-          this.props.modifySourceList(
-            source.source.id,
-            customerId,
-            true,
-            this.sourceUpdated(source),
-          );
+          this.props.updateCustomerId(customerId);
+          this.addCardToList(source, customerId);
         }
       })
-      .catch((error) => {
+      .catch(() => {
         this.props.loaderAction(false);
       });
   };
 
-  handleSubmit = (event) => {
+  returnErrorMsg = element => {
+    if (this.state[element] !== '') {
+      return <Error>{this.state[element]}</Error>;
+    }
+    return null;
+  };
+
+  sourceUpdated = source => () => {
+    this.props.handleBooking(source);
+  };
+
+  addCardToList = (source, customerId) => {
+    this.props.modifySourceList(
+      source.source.id,
+      customerId,
+      true,
+      this.sourceUpdated(source),
+    );
+  };
+
+  handleSubmit = event => {
     event.preventDefault();
     if (this.props.stripe) {
       this.props.loaderAction(true);
@@ -94,8 +102,12 @@ class checkout extends React.Component {
         .createSource({
           type: 'card',
         })
-        .then((res) => {
-          this.getEphemeralKey(res);
+        .then(res => {
+          if (this.props.customerId !== null) {
+            this.addCardToList(res, this.props.customerId);
+          } else {
+            this.getEphemeralKey(res);
+          }
         })
         .catch(() => {
           this.props.loaderAction(false);
@@ -110,7 +122,7 @@ class checkout extends React.Component {
           <Wrapper>
             <CardIcon cardImage={this.state.cardTypeImage} />
             <CardNumberElement
-              onChange={(event) => this.setErrorMsg(event, 'cardNumberError')}
+              onChange={event => this.setErrorMsg(event, 'cardNumberError')}
               style={this.styles}
               placeholder="1234 1234 1234 1234"
             />
@@ -121,7 +133,7 @@ class checkout extends React.Component {
         <FlexBox>
           <CardElementSmall>
             <CardExpiryElement
-              onChange={(event) => this.setErrorMsg(event, 'cardExpiryError')}
+              onChange={event => this.setErrorMsg(event, 'cardExpiryError')}
               style={this.styles}
               placeholder="MM/YY"
             />
@@ -129,7 +141,7 @@ class checkout extends React.Component {
           </CardElementSmall>
           <CardElementSmall>
             <CardCVCElement
-              onChange={(event) => this.setErrorMsg(event, 'cvvError')}
+              onChange={event => this.setErrorMsg(event, 'cvvError')}
               style={this.styles}
               placeholder="CCV Code"
             />
@@ -144,4 +156,26 @@ class checkout extends React.Component {
   }
 }
 
-export default injectStripe(checkout);
+Checkout.propTypes = {
+  updateCustomerId: PropTypes.func.isRequired,
+  handleBooking: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  modifySourceList: PropTypes.func.isRequired,
+  createSource: PropTypes.func,
+  customerId: PropTypes.string,
+  stripe: PropTypes.object.isRequired,
+  rate: PropTypes.string.isRequired,
+};
+Checkout.defaultProps = {
+  customerId: null,
+  createSource: () => {},
+};
+
+export default injectStripe(
+  connect(
+    state => ({
+      customerId: state.commonReducer.customerId,
+    }),
+    null,
+  )(Checkout),
+);

@@ -1,13 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { Layout, Content } from './styled';
-import { FlexCenter } from '../../../../styles/CommonStyled';
 import Button from '../../../../components/PrimaryButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
-import { CloseButton } from '../../../../styles/CommonStyled';
+import { FlexCenter, CloseButton } from '../../../../styles/CommonStyled';
 
-const SuccessScreen = (props) => {
+const SuccessScreen = props => {
   return (
     <Layout>
       <CloseButton onClick={props.closeHandler} className="closeBtn" />
@@ -15,6 +13,9 @@ const SuccessScreen = (props) => {
         <span className="successImg" />
       </FlexCenter>
       <Scrollbars className="successScroll">
+        <FlexCenter>
+          <span className="successImg" />
+        </FlexCenter>
         <Content>
           <h2 className="highFive">High Five!</h2>
           <h1 className="orderSuccess">Your order is complete!</h1>
@@ -29,6 +30,10 @@ const SuccessScreen = (props) => {
       </Scrollbars>
     </Layout>
   );
+};
+
+SuccessScreen.propTypes = {
+  closeHandler: PropTypes.func.isRequired,
 };
 
 export default SuccessScreen;
