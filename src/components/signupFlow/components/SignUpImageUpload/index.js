@@ -88,6 +88,17 @@ class SignUpImageUpload extends React.Component {
     });
   }
 
+  getSelectedCategoryList = (profession) => {
+    let { selectedProfessions } = this.state;
+    if (selectedProfessions.find(cat => cat.id === profession.id)) {
+      selectedProfessions = selectedProfessions.filter(cat => cat.id !== profession.id);
+      this.setState({ selectedProfessions });
+    } else if (selectedProfessions.length < 3) {
+      selectedProfessions = [...selectedProfessions, profession];
+      this.setState({ selectedProfessions });
+    }
+  }
+
   showSuggestions = () => {
     if (this.state.searchText.trim('').length >= 3) {
       this.setState({ showSuggestions: true });
@@ -157,16 +168,6 @@ class SignUpImageUpload extends React.Component {
     );
   }
 
-  getSelectedCategoryList = (profession) => {
-    const { selectedProfessions } = this.state;
-    if (selectedProfessions.length < 3) {
-      this.setState({
-        selectedProfessions: [...this.state.selectedProfessions, profession],
-      });
-    }
-    console.log(this.state.selectedProfessions, 'outside');
-  }
-
   showSubCategoryList = () => {
     const { subCategoriesArray } = this.state;
     return (
@@ -180,8 +181,8 @@ class SignUpImageUpload extends React.Component {
             return (
               <UploadContainer.Item
                 key={profession.id}
-                onClick={() => this.getSelectedCategoryList(profession.id)}
-                selected={selectedSubCat.indexOf(subCategory.id) > -1}
+                onClick={() => this.getSelectedCategoryList(profession)}
+                selected={this.state.selectedProfessions.find(cat => cat.id === profession.id)}
               >
                 {profession.title}
               </UploadContainer.Item>

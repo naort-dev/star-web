@@ -204,8 +204,6 @@ UploadContainer.SubItemWrapper = styled.ul`
     padding: 6px 13px;
     border-radius: 15px;
     border: 1px solid #2f839d;
-    background-color: #fff;
-    color: #555555;
     display: flex;
     font-family: Gilroy-medium;
     font-size: 14px;
@@ -221,6 +219,8 @@ UploadContainer.Item = styled.li`
   cursor: pointer;
   color: #999;
   padding: 10px 0;
+  background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
+  color: ${props => (props.selected ? '#fff' : props.theme.greyishBrown)};
 `;
 
 
