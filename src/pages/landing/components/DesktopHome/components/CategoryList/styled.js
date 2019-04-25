@@ -16,7 +16,7 @@ const CategoryListItem = styled.li`
 
 
 const CategoryName = styled.span`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-Bold;
   font-size: 18px;
   color: ${props => props.theme.flatBlue};
 `;
