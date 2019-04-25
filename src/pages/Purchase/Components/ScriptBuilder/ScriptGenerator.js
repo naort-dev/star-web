@@ -8,7 +8,12 @@ export const ScriptGenerator = ({
   selfElse,
 }) => {
   if (category === 'shout-out') {
-      
   } else if (category === 'announce') {
   }
+};
+
+const forSomeone = () => {
+
+
+    
 };
