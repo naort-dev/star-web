@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 import { FlexBoxSB } from '../../../../styles/CommonStyled';
 import {
   Icon,
@@ -10,11 +11,10 @@ import {
   ContentWrapper,
   Layout,
 } from './styled';
-import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 
 const CategoryList = ({ dataModal, getCategory }) => {
-  const handleGetCategory = (type) => (e) => {
-    getCategory && getCategory(type);
+  const handleGetCategory = type => () => {
+    if (getCategory) getCategory(type);
   };
 
   return (
@@ -48,6 +48,7 @@ const CategoryList = ({ dataModal, getCategory }) => {
 
 CategoryList.propTypes = {
   getCategory: PropTypes.func.isRequired,
+  dataModal: PropTypes.array.isRequired,
 };
 
 export default CategoryList;

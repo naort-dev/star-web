@@ -34,7 +34,7 @@ const ListItem = styled.li`
   cursor: pointer;
   text-align: left;
   a, a:visited {
-    color: #42a3c1;
+    color: rgb(47, 131, 157);
     font-size: 14px;
     font-weight: 900;
     line-height: 1.07;

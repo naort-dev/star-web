@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from '../../../../styles/mediaQueries';
-import { FlexCenter } from '../../../../styles/CommonStyled';
 
 export const Layout = styled.section`
   height: 100%;
@@ -9,8 +8,11 @@ export const Layout = styled.section`
   .closeBtn {
     position: absolute;
     right: 40px;
-    top: 40px;
+    top: 34px;
     font-size: 50px;
+    ${media.webView} {
+      top: 49px;
+    }
   }
   .successImg {
     background: url(assets/images/art_highfive.svg) no-repeat;
@@ -18,15 +20,19 @@ export const Layout = styled.section`
     background-size: contain;
     width: 196px;
     height: 202px;
-    margin-top: 92px;
     ${media.webView} {
       width: 260px;
       height: 267px;
-      margin-top: 39px;
     }
   }
   .successScroll {
-    height: calc(100% - 291px) !important;
+    margin-top: 87px;
+    height: calc(100% - 87px) !important;
+    display: inline-block;
+    ${media.webView} {
+      margin-top: 39px;
+      height: calc(100% - 39px) !important;
+    }
   }
 `;
 export const Content = styled.section`

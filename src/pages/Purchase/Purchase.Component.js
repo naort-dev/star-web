@@ -44,7 +44,12 @@ class Purchase extends Component {
 
   getBodyComponent = () => {
     if (this.state.stepCount === 1) {
-      return <CategoryList getCategory={this.getCategory} />;
+      return (
+        <CategoryList
+          getCategory={this.getCategory}
+          dataModal={dataModal.category ? dataModal.category : []}
+        />
+      );
     } else if (this.state.stepCount === 2) {
       if (this.state.category === 3) {
         return (
@@ -96,10 +101,7 @@ class Purchase extends Component {
           paymentSuccessCallBack={this.paymentSuccess}
           backArrowHandler={this.backArrowHandler}
           closeHandler={this.closeHandler}
-          createCharge={this.props.createCharge}
-          fetchSourceList={this.props.fetchSourceList}
           fetchCelebDetails={this.props.fetchCelebDetails}
-          modifySourceList={this.props.modifySourceList}
           loaderAction={this.props.loaderAction}
         />
       );
@@ -151,11 +153,7 @@ class Purchase extends Component {
               />
               <Content className="contentPadding" step={this.state.stepCount}>
                 <Scrollbars>
-                  <ModalSwitcher
-                    dataModal={dataModal.category ? dataModal.category : []}
-                  >
-                    {this.getBodyComponent()}
-                  </ModalSwitcher>
+                  <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
                 </Scrollbars>
               </Content>
             </React.Fragment>
@@ -170,21 +168,18 @@ class Purchase extends Component {
 
 Purchase.propTypes = {
   fetchOccasionlist: PropTypes.func,
-  OccasionDetails: PropTypes.object,
+  OccasionDetails: PropTypes.array,
   recordTrigger: PropTypes.func.isRequired,
   updateMediaStore: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
-  createCharge: PropTypes.func.isRequired,
-  fetchSourceList: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
-  modifySourceList: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
-  OccasionDetails: {},
+  OccasionDetails: [],
 };
 
 export default Purchase;
