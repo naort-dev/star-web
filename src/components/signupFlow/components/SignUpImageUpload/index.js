@@ -13,7 +13,6 @@ import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
 
 class SignUpImageUpload extends React.Component {
-
   state = {
     currentExif: null,
     verificationDisable: false,
@@ -23,36 +22,35 @@ class SignUpImageUpload extends React.Component {
     cropImage: null,
     categoriesValue: '',
     takePicture: false,
-  }
+  };
 
-  componentWillMount() {
-  }
+  componentWillMount() {}
 
   onBack = () => {
     this.setState({
       cropper: false,
       takePicture: false,
     });
-  }
+  };
 
-  setProfileImage = (imageResult, exif, extension) => {    
+  setProfileImage = (imageResult, exif, extension) => {
     this.setState({
       cropper: true,
       currentExif: exif,
       cropImage: imageResult,
     });
     // this.goToStep('next');
-  }
+  };
 
   getCroppedImage = (file, image) => {
     this.setState({ finalImage: image, finalFile: file });
-  }
+  };
 
   closeCropper = () => {
-    this.setState({ cropImage: null, cropper: false, takePicture: false, });
-  }
+    this.setState({ cropImage: null, cropper: false, takePicture: false });
+  };
 
-  goToStep = (type) => {
+  goToStep = type => {
     const { verificationDisable } = this.state;
     if (type === 'prev') {
       if (verificationDisable && this.props.currentStep === 8) {
@@ -65,17 +63,20 @@ class SignUpImageUpload extends React.Component {
     } else {
       this.props.changeStep(this.props.currentStep + 1);
     }
-  }
+  };
 
-  getCategories = (e) => {
+  getCategories = e => {
     this.setState({
       categoriesValue: e.target.value,
     });
-  }
+  };
 
   setTakePicture = () => {
     this.setState({ takePicture: true });
-  }
+  };
+  continueClickHandler = () => {
+    this.props.continueClickCallback();
+  };
 
   renderContent = () => {
     const { cropper, takePicture } = this.state;
@@ -122,12 +123,11 @@ class SignUpImageUpload extends React.Component {
     return (
       <UploadContainer.Wrapper>
         <UploadContainer.Heading>
-          {this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
+          {this.state.finalImage
+            ? 'You look great. Now select a category.'
+            : 'Give your fans what they want'}
         </UploadContainer.Heading>
-        <DotsContainer
-          dotsCount={3}
-          selectedDot={2}
-        />
+        <DotsContainer dotsCount={3} selectedDot={2} />
         <ProfileUpload
           starMode
           onTakePicture={this.setTakePicture}
@@ -141,28 +141,31 @@ class SignUpImageUpload extends React.Component {
             name="categoriesList"
             label="Categorize yourself. This helps fans find you. (up to 3)"
             value={this.state.categoriesValue}
-            onChange={(event) => this.getCategories(event)}
+            onChange={event => this.getCategories(event)}
           />
           <UploadContainer.BrowseCategories>
-            Not finding one? <UploadContainer.BrowseCategoriesLink>Browse categories</UploadContainer.BrowseCategoriesLink>
+            Not finding one?{' '}
+            <UploadContainer.BrowseCategoriesLink>
+              Browse categories
+            </UploadContainer.BrowseCategoriesLink>
           </UploadContainer.BrowseCategories>
         </UploadContainer.CategoriesWrapper>
         <UploadContainer.ButtonWrapper>
           <UploadContainer.ContinueButton
             type="submit"
+            onClick={this.continueClickHandler}
           >
             Continue
           </UploadContainer.ContinueButton>
         </UploadContainer.ButtonWrapper>
       </UploadContainer.Wrapper>
     );
-  }
+  };
 
   render() {
     return (
       <UploadContainer.Container>
-        { this.renderContent() }
-
+        {this.renderContent()}
       </UploadContainer.Container>
     );
   }
@@ -173,8 +176,12 @@ const mapStateToProps = state => ({
 });
 
 const mapProps = dispatch => ({
-  updateLoginStatus: sessionDetails => dispatch(updateLoginStatus(sessionDetails)),
+  updateLoginStatus: sessionDetails =>
+    dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
 });
 
-export default connect(mapStateToProps, mapProps)(SignUpImageUpload);
+export default connect(
+  mapStateToProps,
+  mapProps,
+)(SignUpImageUpload);

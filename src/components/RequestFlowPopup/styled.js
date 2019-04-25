@@ -25,12 +25,13 @@ const PopupStyled = styled.div`
 PopupStyled.Dialog = styled(Dialog)`
   .paper-root {
     max-width: 100%;
-    @media(min-width: 832px) {
-      max-height: calc(100% - 30px); 
+    overflow: hidden;
+    @media (min-width: 832px) {
+      max-height: calc(100% - 30px);
       border-radius: 20px;
     }
   }
-`
+`;
 
 PopupStyled.Container = styled.div`
   display: flex;
@@ -39,7 +40,7 @@ PopupStyled.Container = styled.div`
   -webkit-overflow-scrolling: touch;
   justify-content: center;
   height: 100%;
-  @media(min-width: 834px) {
+  @media (min-width: 834px) {
     border-radius: 6px;
   }
 `;
@@ -76,7 +77,6 @@ PopupStyled.SliderDots = styled.span`
   margin-right: 5px;
   cursor: pointer;
 `;
-
 
 PopupStyled.CloseButton = styled.span`
   position: absolute;

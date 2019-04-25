@@ -2,10 +2,10 @@ import { TOGGLE_MODALS } from '../actions/toggleModals';
 
 const initialState = {
   loginModal: false,
-  signUpModal: false,
+  signUpModal: true,
   referModal: false,
   requestFlow: false,
-  signUpDetails: null,
+  signUpDetails: {},
   requestFlowDetails: null,
   requestPopup: false,
   popUp: false,
