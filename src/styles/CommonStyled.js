@@ -45,8 +45,10 @@ export const Loading = styled.section`
 `;
 
 export const BackArrow = styled.span`
-  background: ${(props) =>
-    props.white ? '' : `url('../assets/images/previcon.svg') no-repeat`};
+  background: ${props =>
+    props.white
+      ? `url('../assets/images/previcon-white.svg') no-repeat`
+      : `url('../assets/images/previcon.svg') no-repeat`};
   content: '';
   width: 10px;
   height: 20px;
@@ -59,8 +61,10 @@ export const BackArrow = styled.span`
 `;
 
 export const CloseButton = styled.span`
-  background: ${(props) =>
-    props.white ? '' : `url('../assets/images/closeicon.svg') no-repeat`};
+  background: ${props =>
+    props.white
+      ? `url('../assets/images/closeicon-white.svg') no-repeat`
+      : `url('../assets/images/closeicon.svg') no-repeat`};
   content: '';
   width: 20px;
   height: 20px;
