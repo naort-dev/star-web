@@ -128,6 +128,7 @@ UploadContainer.BrowseCategories = styled.div`
   font-size: 14px;
   text-align: center;
   font-family: Gilroy;
+  margin-top: 10px;
 `;
 
 UploadContainer.BrowseCategoriesLink = styled.span`

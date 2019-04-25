@@ -13,7 +13,26 @@ import { fetchSuggestionList } from '../../../../store/shared/actions/getSuggest
 import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
+import MultiSelect from '../../../MultiSelect';
 
+function MultiValue(props) {
+  return (
+    <Chip
+    tabIndex={-1}
+    label={props.children}
+    onDelete={props.removeProps.onClick}
+    // deleteIcon={<CancelIcon {...props.removeProps} />}
+    />
+  );
+}
+const components = {
+  MultiValue,
+};
+
+function deleteCategory(props) {
+  console.log(props);
+
+}
 class SignUpImageUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -36,6 +55,7 @@ class SignUpImageUpload extends React.Component {
   }
   componentWillMount() {
   }
+
 
   onBack = () => {
     this.setState({
@@ -83,6 +103,10 @@ class SignUpImageUpload extends React.Component {
   getSubCategoryList = (id) => {
     let { professions } = this.props.professionsList;
     professions = professions.filter(profession => profession.id === id);
+    professions[0].child.map(function (obj) {
+      obj.label = obj.title;
+      obj.value = obj.id;
+    });
     this.setState({
       subCategoriesArray: professions[0].child,
     });
@@ -197,8 +221,11 @@ class SignUpImageUpload extends React.Component {
 
   }
 
+  handleMultiSelect = (list) => {
+    this.setState({ selectedProfessions: list })
+  }
   renderContent = () => {
-    const { cropper, takePicture } = this.state;
+    const { cropper, takePicture, selectedProfessions } = this.state;
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
@@ -276,14 +303,13 @@ class SignUpImageUpload extends React.Component {
         />
 
         <UploadContainer.CategoriesWrapper>
-          <TextInput
-            type="text"
-            name="categoriesList"
-            label="Categorize yourself. This helps fans find you. (up to 3)"
-            value={this.state.categoriesValue}
-            onChange={this.getCategories}
-            onClick={this.showSuggestions}
-            onKeyUp={this.handleSearchSubmit}
+          <MultiSelect
+            value={this.state.selectedProfessions}
+            options={selectedProfessions}
+            placeholder=""
+            components={components}
+            onChange={this.handleMultiSelect}
+            label='Categorize yourself. This helps fans find you. (up to 3)'
           />
           <UploadContainer.BrowseCategories>
             Not finding one? <UploadContainer.BrowseCategoriesLink onClick={this.browserCategory}>Browse categories</UploadContainer.BrowseCategoriesLink>
