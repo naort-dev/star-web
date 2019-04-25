@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
+import { toggleQuickView } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater, getStarName } from '../../utils/dataToStringFormatter';
 import AvatarContainer from './styled';
 
-const StarAvatar = ({ star, type }) => {
+const StarAvatar = ({ star, type, ...props }) => {
 
   const [profileImage, setProfileImage] = useState(null);
 
@@ -41,7 +43,7 @@ const StarAvatar = ({ star, type }) => {
 
   return (
     <AvatarContainer className={type}>
-      <WrapperComponent imageUrl={profileImage}>
+      <WrapperComponent imageUrl={profileImage} onClick={props.toggleQuickView(true, star.user_id)}>
         <AvatarContainer.ControlWrapper>
           <AvatarContainer.ControlButton>
             <FontAwesomeIcon icon={faPlay} />
@@ -73,6 +75,11 @@ StarAvatar.defaultProps = {
 StarAvatar.propTypes = {
   star: PropTypes.object,
   type: PropTypes.string,
+  toggleQuickView: PropTypes.func.isRequired,
 };
 
-export default StarAvatar;
+const mapDispatchToProps = dispatch => ({
+  toggleQuickView: (state, modalData) => () => dispatch(toggleQuickView(state, modalData)),
+});
+
+export default connect(null, mapDispatchToProps)(StarAvatar);

@@ -1,0 +1,135 @@
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+const QuickViewStyled = styled.div`
+  display: flex;
+  padding-top: 19px;
+`;
+
+QuickViewStyled.VideoContainer = styled.div`
+  width: 300.5px;
+  height: 484.5px;
+  z-index: 2;
+`;
+
+QuickViewStyled.Content = styled.div`
+  padding: 30px 25px 0;
+  width: calc(100% - 300.5px);
+`;
+
+QuickViewStyled.Categories = styled.span`
+  font-family: Gilroy-Light;
+  font-size: 24px;
+  color: ${props => props.theme.twilight};
+`;
+
+QuickViewStyled.StarName = styled.span`
+  font-family: Gilroy-Regular;
+  font-size: 74px;
+  display: block;
+  color: ${props => props.theme.twilight};
+`;
+
+QuickViewStyled.Row = styled.div`
+  margin-top: 25px;
+`;
+
+QuickViewStyled.Avatar = styled.span`
+  border: none;
+  border-radius: 50%;
+  display: block;
+  width: 80px;
+  height: 80px;
+  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
+  background-position: center center;
+  background-size: cover;
+  position: relative;
+  @media(min-width: 832px) {
+    width: 80px;
+    height: 80px;
+  }
+`;
+
+QuickViewStyled.HeartIcon = QuickViewStyled.Row.extend`
+  font-size: 30px;
+  color: ${props => props.theme.flatBlue};
+  display: block;
+  svg {
+    cursor: pointer;
+  }
+`.withComponent('span');
+
+QuickViewStyled.MiniDescription = QuickViewStyled.Row.extend`
+  font-family: Gilroy-Regular;
+  font-size: 19px;
+  color: ${props => props.theme.flatBlue};
+  display: inline-block;
+`.withComponent(Link);
+
+QuickViewStyled.SubHeader = QuickViewStyled.Row.extend`
+  font-family: Gilroy-Light;
+  font-size: 16px;
+  color: ${props => props.theme.GreyishBrown};
+  display: block;
+`.withComponent('span');
+
+QuickViewStyled.SubDescription = styled.span`
+  font-family: Gilroy-Light;
+  font-size: 24px;
+  margin-top: 10px;
+  display: block;
+  color: ${props => props.theme.orangePink};
+`;
+
+QuickViewStyled.Description = styled.span`
+  font-size: 30px;
+  font-family: Gilroy-Light;
+  padding-left: 19.3px;
+  strong {
+    font-family: Gilroy-medium;
+  }
+`;
+
+QuickViewStyled.StarWrapper = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
+`;
+
+QuickViewStyled.ActionBar = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 14px 31px;
+  height: 111px;
+  z-index: 2;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: ${props => props.theme.orangePink};
+`;
+
+QuickViewStyled.ActionContent = styled.div`
+  display: flex;
+  max-width: calc(100% - 155px);
+  align-items: center;
+`;
+
+QuickViewStyled.ActionSection = styled.div`
+  display: flex;
+  .action-button {
+    width: auto;
+    background-color: #fff;
+    border-color: #fff;
+    color: ${props => props.theme.flatBlue};
+  }
+`;
+
+export default QuickViewStyled;

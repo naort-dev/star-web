@@ -69,6 +69,10 @@
     src: url("/assets/fonts/Gilroy/Gilroy-Regular.otf") format("opentype");
 }
 @font-face {
+    font-family: 'Gilroy-Regular';
+    src: url("/assets/fonts/Gilroy/Gilroy-Regular.otf") format("opentype");
+}
+@font-face {
     font-family: 'Gilroy-MediumItalic';
     src: url("/assets/fonts/Gilroy/Gilroy-MediumItalic.otf") format("opentype");
 }
