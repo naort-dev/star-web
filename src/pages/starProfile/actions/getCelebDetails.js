@@ -56,6 +56,7 @@ export const fetchCelebDetails = id => (dispatch, getState) => {
   } else {
     API_URL = Api.getCelebDetails(id);
   }
+  dispatch(celebDetailsFetchStart());
   // dispatch(loaderAction(true));
   return fetch
     .get(API_URL, {})

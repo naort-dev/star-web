@@ -43,7 +43,7 @@ const StarAvatar = ({ star, type, ...props }) => {
 
   return (
     <AvatarContainer className={type}>
-      <WrapperComponent imageUrl={profileImage} onClick={props.toggleQuickView(true, star.id)}>
+      <WrapperComponent imageUrl={profileImage} onClick={props.toggleQuickView(true, star.user_id)}>
         <AvatarContainer.ControlWrapper>
           <AvatarContainer.ControlButton>
             <FontAwesomeIcon icon={faPlay} />

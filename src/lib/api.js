@@ -12,8 +12,8 @@ class Api {
   static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
   static socialMediaLogin = 'v1/user/socialsignup/';
-  static authGetCelebDetails = 'v1/user/user_details/';
-  static getCelebDetails = id => `v1/user/user_details/${id}/get_details/`;
+  static authGetCelebDetails = 'v2/user/user_details/';
+  static getCelebDetails = id => `v2/user/user_details/${id}/get_details/`;
   static getUserFavourites = 'v1/user/fan/favourite_stars/';
   static getUserVideos = 'v1/request/request_list/';
   static getRequestDetails = 'v1/request/stargramz/';
