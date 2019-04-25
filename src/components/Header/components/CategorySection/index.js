@@ -17,8 +17,9 @@ const CategorySection = (props) => {
       <CategoryStyled.Item
         onClick={updateMainCategory('Featured', 0, [])}
         selected={props.category.label === 'Featured'}
+        data-value="Featured"
       >
-        Featured
+        <span class="category-label">Featured</span>
       </CategoryStyled.Item>
       {
         professionsList.map((profession) => {
@@ -27,8 +28,9 @@ const CategorySection = (props) => {
               key={profession.id}
               onClick={updateMainCategory(profession.title, profession.id, profession.child)}
               selected={props.category.label === profession.title}
+              data-value={profession.title}
             >
-              {profession.title}
+              <span class="category-label">{profession.title}</span>
             </CategoryStyled.Item>
           );
         })

@@ -74,6 +74,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
 
 CategoryPageStyled.FilterSection = styled.div`
   position: fixed;
+  padding-top: 20px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -124,7 +125,7 @@ CategoryPageStyled.Heading = styled.span`
     min-height: 70px;
   }
   @media(min-width: 1280px) {
-    margin-top: 37px;
+    margin-top: 33px;
   }
 `;
 
@@ -158,8 +159,9 @@ CategoryPageStyled.FeaturedSection = styled.div`
   @media(min-width: 832px) {
     max-width: 832px;
     margin-bottom: 137px;
+    margin-top: 37px;
     justify-content: flex-end;
-    padding: 58px 42px;
+    padding: 36px 42px 38px;
     &:after {
       left: 198px;
       font-size: 23px;
