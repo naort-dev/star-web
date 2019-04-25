@@ -109,14 +109,17 @@ export const sourceListFetchFailed = (error) => ({
   error,
 });
 
-export const fetchSourceList = (loader, callBack) => (dispatch, getState) => {
+export const fetchSourceList = callBack => (dispatch, getState) => {
   dispatch(loaderAction(true));
   return fetch(Api.getSourceList, {})
     .then((resp) => {
       if (resp.data && resp.data.success) {
         dispatch(sourceListFetchSuccess(resp.data.data.cards));
-        if (loader !== 'no') dispatch(loaderAction(false));
-        if (callBack) callBack();
+        if (callBack) {
+          callBack();
+        } else {
+          dispatch(loaderAction(false));
+        }
       } else {
         dispatch(loaderAction(false));
       }
@@ -143,7 +146,7 @@ export const modifySourceList = (source, customer, action, callBack) => (
     )
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(fetchSourceList('no', callBack));
+        dispatch(fetchSourceList(callBack));
       } else {
         dispatch(loaderAction(false));
       }
