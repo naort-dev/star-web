@@ -21,6 +21,9 @@ QuickViewStyled.Categories = styled.span`
   font-family: Gilroy-Light;
   font-size: 24px;
   color: ${props => props.theme.twilight};
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 
 QuickViewStyled.StarName = styled.span`
