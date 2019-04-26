@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/pro-light-svg-icons';
+import { faHeart, faChevronRight } from '@fortawesome/pro-light-svg-icons';
 import isEmpty from 'lodash/isEmpty';
 import fitty from 'fitty';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { fetchStarDetails } from '../../pages/starProfile/actions';
 import { toggleQuickView } from '../../store/shared/actions/toggleModals';
+import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
 import StarDrawer from '../StarDrawer';
@@ -41,6 +42,10 @@ const QuickViewModal = (props) => {
   const [showVideo, toggleVideoView] = useState(false);
   // const [video, updateVideoTag] = useState(document.createElement("video"));
 
+  const onModalMounted = () => {
+    autoFitText();
+  }
+
   useEffect(() => {
     const { userDetails, celebDetails } = props;
     const isPresentCelebDetails = !isEmpty(userDetails) && !isEmpty(celebDetails);
@@ -57,14 +62,6 @@ const QuickViewModal = (props) => {
 
   useEffect(() => {
     if (props.celebDetails.profile_video) {
-      // console.log(props.celebDetails)
-      // video.src= props.celebDetails.profile_video;
-      // video.onloadeddata = () => {
-      //   toggleVideoView(true);
-      // }
-      // video.onerror = () => {
-      //   toggleVideoView(false);
-      // }
       toggleVideoView(true);
     } else {
       toggleVideoView(false);
@@ -86,6 +83,7 @@ const QuickViewModal = (props) => {
     <RequestFlowPopup
       dotsCount={0}
       selectedDot={0}
+      onMounted={onModalMounted}
       closePopUp={props.toggleQuickView(false)}
       smallPopup
     >
@@ -116,9 +114,9 @@ const QuickViewModal = (props) => {
             </QuickViewStyled.StarName>
           </div>
           <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
-          <QuickViewStyled.SubDescription>2 Days</QuickViewStyled.SubDescription>
-          <QuickViewStyled.HeartIcon>
-            <FontAwesomeIcon icon={faHeart} />
+          <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
+          <QuickViewStyled.HeartIcon onClick={props.followCelebrity(props.userDetails.user_id, !props.userDetails.isFollow)}>
+            <FontAwesomeIcon icon={props.userDetails.is_follow ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>
           <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to="/browse-stars">Read full profile</QuickViewStyled.MiniDescription>
         </QuickViewStyled.Content>
@@ -137,6 +135,11 @@ const QuickViewModal = (props) => {
           </QuickViewStyled.Description>
         </QuickViewStyled.ActionContent>
         <QuickViewStyled.ActionSection>
+            <QuickViewStyled.ArrowWrapper>
+              <FontAwesomeIcon icon={faChevronRight} />
+              <FontAwesomeIcon icon={faChevronRight} />
+              <FontAwesomeIcon icon={faChevronRight} />
+            </QuickViewStyled.ArrowWrapper>
             <PrimaryButton className='action-button'>Book Now</PrimaryButton>
         </QuickViewStyled.ActionSection>
       </QuickViewStyled.ActionBar>
@@ -148,6 +151,7 @@ QuickViewModal.propTypes = {
   toggleQuickView: PropTypes.func.isRequired,
   quickViewModal: PropTypes.object.isRequired,
   fetchStarDetails: PropTypes.func.isRequired,
+  followCelebrity: PropTypes.func.isRequired,
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
@@ -162,6 +166,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   toggleQuickView: state => () => dispatch(toggleQuickView(state)),
   fetchStarDetails: id => dispatch(fetchStarDetails(id)),
+  followCelebrity: (id, isFollow) => () => dispatch(followCelebrity(id, isFollow)),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(QuickViewModal));

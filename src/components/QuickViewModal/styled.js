@@ -120,12 +120,27 @@ QuickViewStyled.ActionBar = styled.div`
 
 QuickViewStyled.ActionContent = styled.div`
   display: flex;
-  max-width: calc(100% - 155px);
+  max-width: calc(100% - 256px);
   align-items: center;
+`;
+
+QuickViewStyled.ArrowWrapper = styled.div`
+  padding-right: 9.9px;
+  svg {
+    font-size: 40px;
+    color: #fff;
+    &:nth-child(1) {
+      opacity: 0.15;
+    }
+    &:nth-child(2) {
+      opacity: 0.37;
+    }
+  }
 `;
 
 QuickViewStyled.ActionSection = styled.div`
   display: flex;
+  align-items: center;
   .action-button {
     width: auto;
     background-color: #fff;
