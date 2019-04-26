@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStarExclamation, faMusic, faMagic, faFutbol, faPodcast, faBug, faFilm, faGlobe, faTv } from '@fortawesome/pro-light-svg-icons';
+import { faStarExclamation } from '@fortawesome/pro-light-svg-icons';
+import { categoryIcons } from './constants';
 import { updateCategory } from '../../../../actions/updateFilters';
 import { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryDescription, CategoryContent } from './styled';
 
@@ -17,7 +19,20 @@ const CategoryList = (props) => {
           <CategoryDescription>Stars creating a buzz.</CategoryDescription>
         </CategoryContent>
       </CategoryListItem>
-      <CategoryListItem>
+      {
+        props.professionsList.professions.map(profession => (
+          <CategoryListItem key={profession.id}>
+            <CategoryIcon>
+              <FontAwesomeIcon icon={categoryIcons[profession.id]} />
+            </CategoryIcon>
+            <CategoryContent>
+              <CategoryName>{profession.title}</CategoryName>
+              <CategoryDescription>{profession.description}</CategoryDescription>
+            </CategoryContent>
+          </CategoryListItem>
+        ))
+      }
+      {/* <CategoryListItem>
         <CategoryIcon>
           <FontAwesomeIcon icon={faMusic} />
         </CategoryIcon>
@@ -88,13 +103,21 @@ const CategoryList = (props) => {
           <CategoryName>IMITATORS</CategoryName>
           <CategoryDescription>Tupac is alive here.</CategoryDescription>
         </CategoryContent>
-      </CategoryListItem>
+      </CategoryListItem> */}
     </CategoryListWrapper>
   );
 };
+
+CategoryList.propTypes = {
+  professionsList: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = state => ({
+  professionsList: state.professionsList,
+})
 
 const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value) => () => dispatch(updateCategory(label, value)),
 });
 
-export default connect(null, mapDispatchToProps)(CategoryList);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);

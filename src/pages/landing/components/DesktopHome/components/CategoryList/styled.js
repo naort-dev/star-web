@@ -18,6 +18,7 @@ const CategoryListItem = styled.li`
 const CategoryName = styled.span`
   font-family: Gilroy-Bold;
   font-size: 18px;
+  text-transform: uppercase;
   color: ${props => props.theme.flatBlue};
 `;
 

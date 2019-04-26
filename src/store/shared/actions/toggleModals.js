@@ -1,12 +1,12 @@
 export const TOGGLE_MODALS = {
-  toggleLogin: 'toggleLogin/TOGGLEMODAL',
-  toggleSignup: 'toggleSignup/TOGGLEMODAL',
-  toggleRefer: 'toggleRefer/TOGGLEREFER',
-  setRequestFlow: 'setRequestFlow/TOGGLEMODAL',
-  toggleRequestFlow: 'toggleRequestFlow/TOGGLEMODAL',
-  resetRequestFlow: 'resetRequestFlow/TOGGLEMODAL',
-  toggleRequestPopup: 'toggleRequestPopup/TOGGLEMODAL',
-  togglePopup: 'togglePopup/TOGGLEMODAL',
+  toggleLogin: 'toggleLogin/TOGGLE_MODAL',
+  toggleSignup: 'toggleSignup/TOGGLE_MODAL',
+  toggleQuickView: 'toggleRefer/TOGGLE_QUICK_VIEW',
+  setRequestFlow: 'setRequestFlow/TOGGLE_MODAL',
+  toggleRequestFlow: 'toggleRequestFlow/TOGGLE_MODAL',
+  resetRequestFlow: 'resetRequestFlow/TOGGLE_MODAL',
+  toggleRequestPopup: 'toggleRequestPopup/TOGGLE_MODAL',
+  togglePopup: 'togglePopup/TOGGLE_MODAL',
 };
 
 export const toggleLogin = state => ({
@@ -22,9 +22,10 @@ export const toggleSignup = (state, signUpType, step, enableClose) => ({
   enableClose,
 });
 
-export const toggleRefer = state => ({
-  type: TOGGLE_MODALS.toggleRefer,
+export const toggleQuickView = (state, modalData) => ({
+  type: TOGGLE_MODALS.toggleQuickView,
   state,
+  modalData,
 });
 
 export const toggleRequestFlow = state => ({

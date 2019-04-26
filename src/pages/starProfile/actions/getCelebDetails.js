@@ -47,7 +47,7 @@ export const updateCelebDetailsFollow = (follow) => (dispatch, getState) => {
   const { is_follow: isFollow } = userDetails;
 };
 
-export const fetchCelebDetails = (id) => (dispatch, getState) => {
+export const fetchCelebDetails = id => (dispatch, getState) => {
   if (!id) return null;
   const { isLoggedIn } = getState().session;
   let API_URL;
@@ -56,7 +56,8 @@ export const fetchCelebDetails = (id) => (dispatch, getState) => {
   } else {
     API_URL = Api.getCelebDetails(id);
   }
-  dispatch(loaderAction(true));
+  dispatch(celebDetailsFetchStart());
+  // dispatch(loaderAction(true));
   return fetch
     .get(API_URL, {})
     .then((resp) => {
