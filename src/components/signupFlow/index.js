@@ -19,7 +19,9 @@ import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
 import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
-import { FAN_REG_SUCCESS } from './constants'
+import SetPrice from './components/SetPrice'
+import { FAN_REG_SUCCESS,
+  SET_PRICE } from './constants'
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -102,7 +104,7 @@ class SignupFlow extends React.Component {
       }
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 1: return (<SignUpForm
+        case 4: return (<SignUpForm
           {...this.props}
           registerUser={this.props.registerUser}
           changeStep={this.changeStep}
@@ -123,7 +125,20 @@ class SignupFlow extends React.Component {
           changeStep={this.changeStep}
           closeSignupFlow={this.closeSignUp}
         />);
-
+        case 1: return (<SetPrice
+          action={SET_PRICE.ACTION}
+          confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
+          confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
+          confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
+          description={SET_PRICE.DESCRIPTION}
+          image_url={SET_PRICE.IMAGE_URL}
+          message={SET_PRICE.MESSAGE}
+          primary_button={SET_PRICE.PRIMARY_BUTTON}
+          primaryButtonClick={this.goToBrowseStars}
+          title={SET_PRICE.TITLE}
+          help_text={SET_PRICE.HELP_TEXT}
+          link={SET_PRICE.LINK}
+        />)
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {

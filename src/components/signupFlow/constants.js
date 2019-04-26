@@ -20,6 +20,18 @@ export const STAR_REG_SUCCESS = {
   SECONDARY_BUTTON:'Go to Your Dashboard'
 };
 
+export const SET_PRICE = {
+  CONFIRM_PRIMARY_BUTTON: 'Yes, I’m worth it!',
+  CONFIRMATION_TITLE: 'Are you sure?',
+  CONFIRMATION_DESCRIPTION: 'Pick a price that is worth it to you, and still within the range of your fans.',
+  IMAGE_URL:'assets/images/art_price.svg',
+  HELP_TEXT: 'Converted Apple Price: $19.99. In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).',
+  DESCRIPTION: "How much would you like to charge for each video?",
+  TITLE: 'Set your price',
+  LINK: 'Have a referral code?',
+  PRIMARY_BUTTON:'Continue',
+  ACTION: 'One Last Thing!'
+};
 
 
 
