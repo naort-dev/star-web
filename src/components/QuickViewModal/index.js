@@ -5,7 +5,7 @@ import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
-import fetchStarDetails from '../../pages/starProfile/actions';
+import { fetchStarDetails } from '../../pages/starProfile/actions';
 import { toggleQuickView } from '../../store/shared/actions/toggleModals';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
