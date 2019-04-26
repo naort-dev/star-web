@@ -4,7 +4,7 @@ class Api {
   static getCelebList = 'v2/user/fan/celebrity_list/get_list/';
   static getTrendingStars = 'v2/user/trending_stars/';
   static authGetCelebList = 'v2/user/fan/celebrity_list/';
-  static getProfessionsList = 'v1/user/filtered_professions/';
+  static getProfessionsList = 'v2/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
   static getVideosList = 'v1/request/featured_videos/';
@@ -68,6 +68,7 @@ class Api {
   static twitterLogin = 'v1/user/twitter_integration/';
   static twitterOauth = 'v1/user/twitter_login';
   static validatePromo = 'v1/user/referral_validate/';
+  static getSubCategoryList = 'v2/user/professions/?parent=false';
 }
 
 export default Api;

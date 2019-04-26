@@ -52,6 +52,7 @@ export default class RequestFlowPopup extends React.Component {
         fullScreen={this.state.fullScreen}
         open
         classes={{paper: 'paper-root'}}
+        onRendered={this.props.onMounted && this.props.onMounted}
         onClose={this.props.closePopUp}
         aria-labelledby="responsive-dialog-title"
       >

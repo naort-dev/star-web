@@ -169,6 +169,7 @@ SearchSection.SuggestionListName = styled.span`
   color: #68b5cd;
   font-family: Gilroy-Medium;
   font-size: 17px;
+  text-align: left;
 `;
 
 SearchSection.InputWrapper = styled.div`

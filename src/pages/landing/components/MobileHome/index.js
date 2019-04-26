@@ -142,7 +142,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>The star delivers</MobileStyled.SubHeader>
                 <MobileStyled.Description>The video is delivered right to your device for you to keep forever.</MobileStyled.Description>
                 <MobileStyled.VideoWrapper>
-                  <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
+                  <VideoRender videoSrc="assets/Footboys.mp4" variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
                   <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
@@ -155,7 +155,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>Watch & share</MobileStyled.SubHeader>
                 <MobileStyled.Description>Your video is yours to download, send to a friend, share on social, and keep forever! It’s the new digital autograph.</MobileStyled.Description>
                 <MobileStyled.VideoWrapper className="small-video">
-                  <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
+                  <VideoRender videoSrc="assets/Footboys.mp4" variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
                   <PrimaryButton className="common-button" onClick={this.closeLandingFlow}>View Featured Stars</PrimaryButton>

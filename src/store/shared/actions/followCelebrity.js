@@ -27,16 +27,11 @@ export const resetFavouritesQueue = () => ({
   type: FOLLOW_CELEBRITY.resetFollowQueue,
 });
 
-export const followCelebrity = (celebrityId, celebProfessions, follow, cancelUpdate) => (dispatch, getState) => {
-  const { auth_token } = getState().session;
+export const followCelebrity = (celebrityId, follow, cancelUpdate) => (dispatch, getState) => {
   return fetch.post(Api.followCelebrity, {
     celebrity: celebrityId,
     follow,
-  }, {
-    headers: {
-      'Authorization': `token ${auth_token.authentication_token}`,
-    },
-  }).then((resp) => {
+  }).then(() => {
     if (!cancelUpdate) {
       if (Object.keys(getState().celebDetails).length) {
         const obj = {
@@ -49,8 +44,8 @@ export const followCelebrity = (celebrityId, celebProfessions, follow, cancelUpd
         dispatch(celebDetailstFetchFollowUpdate(obj));
         // dispatch(updateCelebDetailsFollow(follow));
       }
-      dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
-      dispatch(updateFavouriteList(celebrityId, follow));
+      // dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
+      // dispatch(updateFavouriteList(celebrityId, follow));
     }
   }).catch((exception) => {
     dispatch(followCelebrityFailed(exception));
