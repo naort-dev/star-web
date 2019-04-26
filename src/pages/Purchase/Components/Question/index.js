@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -10,6 +10,7 @@ import VideoRecorder from '../../../../components/VideoRecorder';
 import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
 import getAWSCredentials from '../../../../utils/AWSUpload';
 import { locations } from '../../../../constants/locations';
+import { recorder } from '../../../../constants/videoRecorder';
 
 const Question = props => {
   const questions = [
@@ -32,6 +33,12 @@ const Question = props => {
   );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      props.setVideoUploadedFlag(false);
+    };
+  });
 
   const mediaHandler = btnLabel => {
     props.recordTrigger();
@@ -116,7 +123,7 @@ const Question = props => {
           <VideoContainer>
             <VideoRecorder
               updateMediaStore={props.updateMediaStore}
-              duration={10000}
+              duration={recorder.askTimeOut}
               stopRecordHandler={stopRecordHandler}
               playPauseMediaAction={props.playPauseMedia}
               retryRecordHandler={retryRecordHandler}
@@ -198,7 +205,7 @@ function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
     videoSrc: state.commonReducer.videoSrc,
-    videoUploaded: state.occasionList.videoUploaded,
+    videoUploaded: state.commonReducer.videoUploaded,
   };
 }
 export default connect(

@@ -14,14 +14,20 @@ import Button from '../../../../components/PrimaryButton';
 import { FlexCenter, FlexBoxSB } from '../../../../styles/CommonStyled';
 import VideoRecorder from '../../../../components/VideoRecorder';
 import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
-import getAWSCredentials from '../../../../utils/AWSUpload';
-import { locations } from '../../../../constants/locations';
 import { questionsVideo } from './dataModals';
+import {
+  recordTrigger,
+  updateMediaStore,
+  playPauseMedia,
+  loaderAction,
+  setVideoUploadedFlag,
+} from '../../../../store/shared/actions/commonActions';
+import { recorder } from '../../../../constants/videoRecorder';
 
 const Video = props => {
   const [showHideFlg, showHideScript] = useState(false);
   const [buttonLabel, changeButtonLabel] = useState(
-    props.videoSrc ? 'Continue' : 'Start Recording',
+    props.videoSrc ? 'Save & Continue' : 'Start Recording',
   );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
@@ -39,60 +45,23 @@ const Video = props => {
     changeButtonLabel('Stop');
   };
 
-  const readyToPayment = () => {
-    props.loaderAction(false);
-    props.continueCallback();
-  };
-
-  const uploadVideoRecorded = () => {
-    let uploadVideo = null;
-    uploadVideo = new File([props.videoFile], 'askVideo.mp4');
-    props.loaderAction(true);
-    getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
-      .then(response => {
-        if (response && response.filename) {
-          const payload = {
-            starDetail: {
-              id: 'MYervpeO',
-            },
-            question: '',
-            date: '',
-            type: 3,
-            fileName: response.filename,
-          };
-          axios
-            .post(response.url, response.formData)
-            .then(() => {
-              props.starsonaRequest(payload, true, readyToPayment);
-              props.setVideoUploadedFlag(true);
-            })
-            .catch(() => {
-              props.loaderAction(false);
-            });
-        }
-      })
-      .catch(() => {
-        props.loaderAction(false);
-      });
-  };
-
   const buttonClickHandler = () => {
     if (buttonLabel === 'Start Recording') {
       mediaHandler('Start Recording', false);
       stopHandler(false);
     } else if (buttonLabel === 'Stop') {
-      mediaHandler('Continue', true);
+      mediaHandler('Save & Continue', true);
       stopHandler(true);
-    } else if (buttonLabel === 'Continue') {
+    } else if (buttonLabel === 'Save & Continue') {
       if (props.videoUploaded) {
-        props.continueCallback();
+        // props.continueCallback();
       } else {
-        uploadVideoRecorded();
+        // action on continue
       }
     }
   };
   const stopRecordHandler = () => {
-    mediaHandler('Continue', true);
+    mediaHandler('Save & Continue', true);
   };
 
   const retryRecordHandler = () => {
@@ -107,9 +76,9 @@ const Video = props => {
       {checkMediaRecorderSupport() && (
         <FlexBoxSB>
           <VideoContainer>
-            {/* <VideoRecorder
+            <VideoRecorder
               updateMediaStore={props.updateMediaStore}
-              duration={10000}
+              duration={recorder.signUpTimeOut}
               stopRecordHandler={stopRecordHandler}
               playPauseMediaAction={props.playPauseMedia}
               retryRecordHandler={retryRecordHandler}
@@ -117,7 +86,7 @@ const Video = props => {
               errorHandler={errorHandlerCallback}
               forceStop={isStop}
               startStreamingCallback={startStreaming}
-            /> */}
+            />
           </VideoContainer>
           <QuestionContainer isShow={showHideFlg || error}>
             {!error && (
@@ -135,7 +104,13 @@ const Video = props => {
                 </FlexCenter>
               </React.Fragment>
             )}
-            <span className="skip">Skip</span>
+            <span
+              className="skip"
+              onClick={props.skipCallback}
+              role="presentation"
+            >
+              Skip
+            </span>
           </QuestionContainer>
           {!error && (
             <FlexCenter className="mobileBtn">
@@ -144,7 +119,13 @@ const Video = props => {
               </Button>
             </FlexCenter>
           )}
-          <span className="skip skipMob">Skip</span>
+          <span
+            className="skip skipMob"
+            onClick={props.skipCallback}
+            role="presentation"
+          >
+            Skip
+          </span>
           {buttonLabel === 'Start Recording' && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
@@ -173,9 +154,23 @@ const Video = props => {
   );
 };
 
-Video.propTypes = {};
+Video.propTypes = {
+  updateMediaStore: PropTypes.func.isRequired,
+  playPauseMedia: PropTypes.func.isRequired,
+  recordTrigger: PropTypes.func.isRequired,
+  //   continueCallback: PropTypes.func.isRequired,
+  skipCallback: PropTypes.func,
+  videoSrc: PropTypes.string,
+  videoUploaded: PropTypes.bool,
+  setVideoUploadedFlag: PropTypes.func,
+};
 
-Video.defaultProps = {};
+Video.defaultProps = {
+  videoSrc: '',
+  videoUploaded: false,
+  skipCallback: () => {},
+  setVideoUploadedFlag: () => {},
+};
 
 function mapStateToProps(state) {
   return {
@@ -184,7 +179,26 @@ function mapStateToProps(state) {
     videoUploaded: state.occasionList.videoUploaded,
   };
 }
+function mapDispatchToProps(dispatch) {
+  return {
+    recordTrigger: () => {
+      dispatch(recordTrigger());
+    },
+    updateMediaStore: (videoSrc, superBuffer) => {
+      dispatch(updateMediaStore(videoSrc, superBuffer));
+    },
+    playPauseMedia: () => {
+      dispatch(playPauseMedia());
+    },
+    loaderAction: value => {
+      dispatch(loaderAction(value));
+    },
+    setVideoUploadedFlag: value => {
+      dispatch(setVideoUploadedFlag(value));
+    },
+  };
+}
 export default connect(
   mapStateToProps,
-  null,
+  mapDispatchToProps,
 )(Video);

@@ -33,9 +33,12 @@ const WelcomeVideo = props => {
       <Wrapper>
         <Scrollbars className="scrollbar">
           {compSwitch ? (
-            <Video />
+            <Video skipCallback={props.skipCallback} />
           ) : (
-            <About continueCallback={continueCallback} />
+            <About
+              continueCallback={continueCallback}
+              skipCallback={props.skipCallback}
+            />
           )}
         </Scrollbars>
       </Wrapper>
@@ -45,6 +48,7 @@ const WelcomeVideo = props => {
 
 WelcomeVideo.propTypes = {
   onBack: PropTypes.func.isRequired,
+  skipCallback: PropTypes.func.isRequired,
 };
 
 WelcomeVideo.defaultProps = {};

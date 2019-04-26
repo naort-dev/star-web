@@ -28,12 +28,6 @@ export const Layout = styled.section`
       margin-left: 0;
     }
   }
-  video {
-    width: 269px;
-    border-radius: 23px;
-    height: 100%;
-    object-fit: cover;
-  }
   .note {
     font-family: Gilroy-Light;
     color: #fff;
@@ -87,6 +81,12 @@ export const VideoContainer = styled.section`
     position: absolute;
     left: 22px;
     bottom: 20px;
+  }
+  .videoElm {
+    width: 288px;
+    border-radius: 23px;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 

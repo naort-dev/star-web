@@ -4,6 +4,7 @@ import {
   PLAY_PAUSE_MEDIA,
   LOADER_COMMON,
   UPDATE_CUSTOMER_ID,
+  SET_VIDEO_UPLOADED_FLG,
 } from '../actions/commonActions';
 
 const initalState = {
@@ -13,6 +14,7 @@ const initalState = {
   playPauseMedia: false,
   loader: false,
   customerId: null,
+  videoUploaded: false,
 };
 
 const commonReducer = (state = { ...initalState }, action) => {
@@ -46,6 +48,11 @@ const commonReducer = (state = { ...initalState }, action) => {
       return {
         ...state,
         customerId: action.value,
+      };
+    case SET_VIDEO_UPLOADED_FLG:
+      return {
+        ...state,
+        videoUploaded: action.value,
       };
 
     default:

@@ -3,6 +3,7 @@ export const UPDATE_RECORDMEDIA = 'UPDATE_RECORDMEDIA';
 export const PLAY_PAUSE_MEDIA = 'PLAY_PAUSE_MEDIA';
 export const LOADER_COMMON = 'LOADER_COMMON';
 export const UPDATE_CUSTOMER_ID = 'UPDATE_CUSTOMER_ID';
+export const SET_VIDEO_UPLOADED_FLG = 'SET_VIDEO_UPLOADED_FLG';
 
 export const recordTrigger = () => ({
   type: TRIGGER_RECORDING,
@@ -24,5 +25,10 @@ export const loaderAction = value => ({
 
 export const updateCustomerId = value => ({
   type: UPDATE_CUSTOMER_ID,
+  value,
+});
+
+export const setVideoUploadedFlag = value => ({
+  type: SET_VIDEO_UPLOADED_FLG,
   value,
 });

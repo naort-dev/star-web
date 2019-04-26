@@ -146,6 +146,8 @@ class SignupFlow extends React.Component {
               }}
             />
           );
+        case 4:
+          return <div />;
 
         default:
           return null;
