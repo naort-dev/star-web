@@ -8,7 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
-import { fetchProfessionsList, fetchAllProfessions } from './store/shared/actions/getProfessions';
+import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
 import { fetchSubCategoryList } from './store/shared/actions/getSubCategoryLists';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
@@ -50,6 +50,7 @@ class App extends React.Component {
   componentWillMount() {
     this.props.fetchProfessionsList();
     this.props.fetchAllProfessions();
+    this.props.fetchAllSubCategories();
     // this.props.fetchSubCategoryList();
     this.props.getConfig();
     this.props.fetchGroupTypes();
@@ -243,7 +244,7 @@ const mapProps = dispatch => ({
   getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
   fetchAllProfessions: () => dispatch(fetchAllProfessions()),
-  fetchSubCategoryList: () => dispatch(fetchSubCategoryList()),
+  fetchAllSubCategories: () => dispatch(fetchAllSubCategories()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
   updateLoginStatus: sessionDetails =>
