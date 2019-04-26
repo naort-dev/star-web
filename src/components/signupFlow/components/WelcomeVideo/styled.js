@@ -31,7 +31,7 @@ export const Heading = styled.div`
 
 export const Wrapper = styled.section`
   width: 100%;
-  height: calc(100% - 136px) !important;
+  height: calc(100% - 146px) !important;
   ${media.webView} {
     height: calc(100% - 80px) !important;
   }

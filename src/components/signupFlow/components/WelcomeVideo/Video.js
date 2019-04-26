@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-import { Layout, VideoContainer, QuestionContainer, ShowHide } from './Video.styles';
+import {
+  Layout,
+  VideoContainer,
+  QuestionContainer,
+  ShowHide,
+  TimeSpan,
+} from './Video.styles';
 import QuestionBuilder from '../../../../components/QuestionBuilder';
 import Button from '../../../../components/PrimaryButton';
 import { FlexCenter, FlexBoxSB } from '../../../../styles/CommonStyled';
@@ -116,6 +122,10 @@ const Video = props => {
           <QuestionContainer isShow={showHideFlg || error}>
             {!error && (
               <React.Fragment>
+                <TimeSpan>
+                  <span className="text">Maximum Time</span>
+                  <span className="time">01:00</span>
+                </TimeSpan>
                 <h1>What you should say?</h1>
                 <QuestionBuilder questionsList={questionsVideo()} />
                 <FlexCenter>
@@ -125,6 +135,7 @@ const Video = props => {
                 </FlexCenter>
               </React.Fragment>
             )}
+            <span className="skip">Skip</span>
           </QuestionContainer>
           {!error && (
             <FlexCenter className="mobileBtn">
@@ -133,8 +144,8 @@ const Video = props => {
               </Button>
             </FlexCenter>
           )}
-
-          {buttonLabel === 'Record' && (
+          <span className="skip skipMob">Skip</span>
+          {buttonLabel === 'Start Recording' && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
