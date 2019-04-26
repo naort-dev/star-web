@@ -22,6 +22,8 @@ const MultiSelect = props => {
   }
 
   const Control = (prop) => {
+    const textFieldProps = {...prop.selectProps.textFieldProps}
+    delete textFieldProps.InputLabelProps;
     return (
       <TextField
         fullWidth
@@ -38,7 +40,7 @@ const MultiSelect = props => {
             ...prop.innerProps,
           },
         }}
-        {...prop.selectProps.textFieldProps}
+        {...textFieldProps}
       />
     );
   }

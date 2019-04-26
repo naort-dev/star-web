@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
+import { BackArrow, CloseButton } from '../../styles/CommonStyled';
 import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
 import {
@@ -53,13 +52,9 @@ const Payment = props => {
     <React.Fragment>
       <SubHeader>
         <FlexBoxSBC>
-          <FontAwesomeIcon
-            icon={faAngleLeft}
-            className="arrow"
-            onClick={backArrowClick}
-          />
+          <BackArrow onClick={backArrowClick} />
           <Heading>Payment Details</Heading>
-          <FontAwesomeIcon icon={faTimes} onClick={props.closeHandler} />
+          <CloseButton onClick={props.closeHandler} />
         </FlexBoxSBC>
       </SubHeader>
       <Scrollbars className="customScroll">

@@ -139,25 +139,29 @@ class SignUpImageUpload extends React.Component {
   showSubCategoryList = () => {
     const { subCategoriesArray } = this.state;
     return (
-      <UploadContainer.SubItemWrapper>
-        <div className="subCategoryHeading">
-          Choose the category that describes what you do best:
-          <span>{`(${3 - this.state.selectedProfessions.length} remaining)`}</span>
+      <React.Fragment>
+        <div class="right-section">
+          <div className="subCategoryHeading">
+            Choose the category that describes what you do best:
+            <span>{`(${3 - this.state.selectedProfessions.length} remaining)`}</span>
+          </div>
+          <UploadContainer.SubItemWrapper>
+            {
+              subCategoriesArray.map((profession) => {
+                return (
+                  <UploadContainer.Item
+                    key={profession.id}
+                    onClick={() => this.getSelectedCategoryList(profession)}
+                    selected={this.state.selectedProfessions.find(cat => cat.id === profession.id)}
+                  >
+                    {profession.title}
+                  </UploadContainer.Item>
+                );
+              })
+            }
+          </UploadContainer.SubItemWrapper>
         </div>
-        {
-          subCategoriesArray.map((profession) => {
-            return (
-              <UploadContainer.Item
-                key={profession.id}
-                onClick={() => this.getSelectedCategoryList(profession)}
-                selected={this.state.selectedProfessions.find(cat => cat.id === profession.id)}
-              >
-                {profession.title}
-              </UploadContainer.Item>
-            );
-          })
-        }
-      </UploadContainer.SubItemWrapper>
+      </React.Fragment>
     );
   }
 
@@ -165,6 +169,9 @@ class SignUpImageUpload extends React.Component {
     if (list.length < 4) {
       this.setState({ selectedProfessions: list })
     }
+  }
+  handleFocusSelect = () => {
+    debugger
   }
   renderContent = () => {
     const { cropper, takePicture, selectedProfessions } = this.state;
@@ -235,39 +242,46 @@ class SignUpImageUpload extends React.Component {
             </UploadContainer.BrowseCategoryContainer>
           </UploadContainer.BrowseCategoryWrapper>
         }
-        <UploadContainer.Heading>
-          {this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
-        </UploadContainer.Heading>
-        <DotsContainer
-          dotsCount={3}
-          selectedDot={2}
-        />
-        <ProfileUpload
-          starMode
-          onTakePicture={this.setTakePicture}
-          onComplete={this.setProfileImage}
-          image={this.state.finalImage}
-        />
+        {
+          !this.state.showBrowseCategory &&
+            <React.Fragment>
+              <UploadContainer.Heading>
+                {this.state.finalImage ? 'You look great. Now select a category.' : 'Give your fans what they want'}
+              </UploadContainer.Heading>
+              <DotsContainer
+                dotsCount={3}
+                selectedDot={2}
+              />
+              <ProfileUpload
+                starMode
+                onTakePicture={this.setTakePicture}
+                onComplete={this.setProfileImage}
+                image={this.state.finalImage}
+              />
 
-        <UploadContainer.CategoriesWrapper>
-          <MultiSelect
-            value={this.state.selectedProfessions}
-            options={subcategories}
-            placeholder=""
-            onChange={this.handleMultiSelect}
-            label='Categorize yourself. This helps fans find you. (up to 3)'
-          />
-          <UploadContainer.BrowseCategories>
-            Not finding one? <UploadContainer.BrowseCategoriesLink onClick={this.browserCategory}>Browse categories</UploadContainer.BrowseCategoriesLink>
-          </UploadContainer.BrowseCategories>
-        </UploadContainer.CategoriesWrapper>
-        <UploadContainer.ButtonWrapper>
-          <UploadContainer.ContinueButton
-            type="submit"
-          >
-            Continue
-          </UploadContainer.ContinueButton>
-        </UploadContainer.ButtonWrapper>
+              <UploadContainer.CategoriesWrapper>
+                <MultiSelect
+                  value={this.state.selectedProfessions}
+                  options={subcategories}
+                  placeholder=""
+                  onChange={this.handleMultiSelect}
+                  onFocus={this.handleFocusSelect}
+                  label='Categorize yourself. This helps fans find you. (up to 3)'
+                  labelClass='praveen'
+                />
+                <UploadContainer.BrowseCategories>
+                  Not finding one? <UploadContainer.BrowseCategoriesLink onClick={this.browserCategory}>Browse categories</UploadContainer.BrowseCategoriesLink>
+                </UploadContainer.BrowseCategories>
+              </UploadContainer.CategoriesWrapper>
+              <UploadContainer.ButtonWrapper>
+                <UploadContainer.ContinueButton
+                  type="submit"
+                >
+                  Continue
+                </UploadContainer.ContinueButton>
+              </UploadContainer.ButtonWrapper>
+            </React.Fragment>
+        }
       </UploadContainer.Wrapper>
     );
   }
