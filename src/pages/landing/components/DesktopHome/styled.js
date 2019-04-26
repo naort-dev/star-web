@@ -61,7 +61,7 @@ DesktopStyled.SubHeader = styled.span`
 `;
 
 DesktopStyled.Title = styled.span`
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Semibold;
   font-size: 20px;
   line-height: 0.9;
   text-align: left;
