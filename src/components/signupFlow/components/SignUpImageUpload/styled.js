@@ -76,6 +76,9 @@ UploadContainer.CategoriesWrapper = styled.div`
   max-width: 440px;
   margin: 0 auto;
 
+  .praveen {
+    //display: none;
+  }
   .MuiFormControl {
     width: 100%;
     margin-bottom: 12px;

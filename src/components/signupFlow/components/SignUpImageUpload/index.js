@@ -166,6 +166,9 @@ class SignUpImageUpload extends React.Component {
       this.setState({ selectedProfessions: list })
     }
   }
+  handleFocusSelect = () => {
+    debugger
+  }
   renderContent = () => {
     const { cropper, takePicture, selectedProfessions } = this.state;
     const { subcategories } = this.props.professionsList;
@@ -255,7 +258,9 @@ class SignUpImageUpload extends React.Component {
             options={subcategories}
             placeholder=""
             onChange={this.handleMultiSelect}
+            onFocus={this.handleFocusSelect}
             label='Categorize yourself. This helps fans find you. (up to 3)'
+            labelClass='praveen'
           />
           <UploadContainer.BrowseCategories>
             Not finding one? <UploadContainer.BrowseCategoriesLink onClick={this.browserCategory}>Browse categories</UploadContainer.BrowseCategoriesLink>
