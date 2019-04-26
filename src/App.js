@@ -5,11 +5,11 @@ import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
-
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
-import { fetchProfessionsList } from './store/shared/actions/getProfessions';
+import { fetchProfessionsList, fetchAllProfessions } from './store/shared/actions/getProfessions';
+import { fetchSubCategoryList } from './store/shared/actions/getSubCategoryLists';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
@@ -49,6 +49,8 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    this.props.fetchAllProfessions();
+    // this.props.fetchSubCategoryList();
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
@@ -95,7 +97,7 @@ class App extends React.Component {
     }
   }
 
-  routeToOutside = (url) => () => {
+  routeToOutside = url => () => {
     window.location = url;
     return null;
   };
@@ -136,7 +138,6 @@ class App extends React.Component {
                 component={this.routeToOutside(
                   'https://about.starsona.com/terms-service',
                 )}
-                s
               />
               <Route
                 path="/contact"
@@ -154,7 +155,7 @@ class App extends React.Component {
               <Route
                 exact
                 path="/signup"
-                render={(props) => <Landing {...props} isSignup />}
+                render={props => <Landing {...props} isSignup />}
               />
               <Route path="/resetpassword" component={Login} />
               <Route path="/instalogin" component={InstaLogin} />
@@ -230,7 +231,7 @@ App.propTypes = {
   loader: PropTypes.bool.isRequired,
 };
 
-const mapState = (state) => ({
+const mapState = state => ({
   configLoading: state.config.loading,
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
@@ -238,15 +239,17 @@ const mapState = (state) => ({
   loader: state.commonReducer.loader,
 });
 
-const mapProps = (dispatch) => ({
+const mapProps = dispatch => ({
   getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
+  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
+  fetchSubCategoryList: () => dispatch(fetchSubCategoryList()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
-  updateLoginStatus: (sessionDetails) =>
+  updateLoginStatus: sessionDetails =>
     dispatch(updateLoginStatus(sessionDetails)),
   updateUserRole: (isStar, role) => dispatch(updateUserRole(isStar, role)),
-  fetchUserDetails: (id) => dispatch(fetchUserDetails(id)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   logOut: () => dispatch(logOut()),
 });
 

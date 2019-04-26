@@ -59,10 +59,10 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
   if (checkPrerender()) {
     return null;
   }
-  const { limit } = getState().celebVideos;
+  const { limit } = getState().starDetails.celebVideos;
   const request = requestType ? requestType: '';
-  if (typeof getState().celebVideos.token !== typeof undefined) {
-    getState().celebVideos.token.cancel('Operation canceled due to new request.');
+  if (typeof getState().starDetails.celebVideos.token !== typeof undefined) {
+    getState().starDetails.celebVideos.token.cancel('Operation canceled due to new request.');
   }
   const source = CancelToken.source();
   if (offset === 0) {
@@ -74,7 +74,7 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
-      let list = getState().celebVideos.data;
+      let list = getState().starDetails.celebVideos.data;
       const { count } = resp.data.data;
       if (refresh) {
         list = resp.data.data.featured_videos;
