@@ -68,6 +68,7 @@ class Api {
   static twitterLogin = 'v1/user/twitter_integration/';
   static twitterOauth = 'v1/user/twitter_login';
   static validatePromo = 'v1/user/referral_validate/';
+  static getSubCategoryList = 'v2/user/professions/?parent=false';
 }
 
 export default Api;

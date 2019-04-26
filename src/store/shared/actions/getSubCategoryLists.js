@@ -33,11 +33,9 @@ export const subCategoryListFetchFailed = error => ({
 export const fetchSubCategoryList = () => (dispatch) => {
   dispatch(subCategoryListFetchStart());
   return fetch.get(Api.getProfessionsList).then((resp) => {
-    debugger;
     if (resp.data && resp.data.success) {
-      renderAllSubCategory()
-      // dispatch(subCategoryListFetchEnd());
-      // dispatch(subCategoryListFetchSuccess(resp.data.data));
+      dispatch(subCategoryListFetchEnd());
+      dispatch(subCategoryListFetchSuccess(resp.data.data));
     } else {
       dispatch(subCategoryListFetchEnd());
     }
