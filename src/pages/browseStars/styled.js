@@ -147,6 +147,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     position: absolute;
     text-transform: uppercase;
     top: -7px;
+    line-height: 21px;
     text-align: center;
     left: 50%;
     font-family: Gilroy-Bold;
