@@ -18,15 +18,15 @@ const RangeSlider = (props) => {
   return (
     <RangeStyled>
       <RangeStyled.Label left>${sliderValues[0]}</RangeStyled.Label>
-      <Range
-        min={props.min}
-        max={props.max}
-        allowCross={false}
-        onChange={onSliderChange}
-        value={sliderValues}
-        onAfterChange={props.onAfterChange}
-        defaultValue={[props.range.low, props.range.high]}
-      />
+        <Range
+          min={props.min}
+          max={props.max}
+          allowCross={false}
+          onChange={onSliderChange}
+          value={sliderValues}
+          onAfterChange={props.onAfterChange}
+          defaultValue={[props.range.low, props.range.high]}
+        />
       <RangeStyled.Label>${sliderValues[1]}{sliderValues[1] >= props.max ? '+' : '' }</RangeStyled.Label>
     </RangeStyled>
   );
