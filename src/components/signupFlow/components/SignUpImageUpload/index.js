@@ -15,24 +15,6 @@ import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
 import MultiSelect from '../../../MultiSelect';
 
-function MultiValue(props) {
-  return (
-    <Chip
-    tabIndex={-1}
-    label={props.children}
-    onDelete={props.removeProps.onClick}
-    // deleteIcon={<CancelIcon {...props.removeProps} />}
-    />
-  );
-}
-const components = {
-  MultiValue,
-};
-
-function deleteCategory(props) {
-  console.log(props);
-
-}
 class SignUpImageUpload extends React.Component {
   constructor(props) {
     super(props);
@@ -43,9 +25,7 @@ class SignUpImageUpload extends React.Component {
       finalImage: null,
       finalFile: null,
       cropImage: null,
-      categoriesValue: '',
       takePicture: false,
-      showSuggestions: false,
       showBrowseCategory: false,
       subCategoriesArray: [],
       selectedProfessions: [],
@@ -55,7 +35,6 @@ class SignUpImageUpload extends React.Component {
   }
   componentWillMount() {
   }
-
 
   onBack = () => {
     this.setState({
@@ -76,24 +55,6 @@ class SignUpImageUpload extends React.Component {
 
   getCroppedImage = (file, image) => {
     this.setState({ finalImage: image, finalFile: file });
-  }
-
-  getCategories = (e) => {
-    this.setState({
-      categoriesValue: e.target.value,
-    });
-    if (e.target.value.trim('').length >= 3) {
-      this.setState({ showSuggestions: true });
-      if (this.suggestionsFetchDelay) {
-        clearTimeout(this.suggestionsFetchDelay);
-      }
-      this.suggestionsFetchDelay = setTimeout(() => {
-        this.props.fetchSuggestionList(this.state.categoriesValue.trim(''));
-      }, 500);
-    } else {
-      this.setState({ showSuggestions: false });
-      this.cursorPos = -1;
-    }
   }
 
   setTakePicture = () => {
@@ -121,23 +82,6 @@ class SignUpImageUpload extends React.Component {
       selectedProfessions = [...selectedProfessions, profession];
       this.setState({ selectedProfessions });
     }
-  }
-
-  showSuggestions = () => {
-    if (this.state.searchText.trim('').length >= 3) {
-      this.setState({ showSuggestions: true });
-    }
-  }
-
-  handleSearchSubmit = (e) => {
-    if (e.keyCode === 13) {
-      this.props.updateSearchParam(e.target.value.trim(''));
-      if (this.props.history.location.pathname != '/') {
-        this.props.history.push('/');
-      }
-      this.setState({ searchText: e.target.value.trim(''), searchActive: false, showSuggestions: false });
-    }
-    this.setListFocus(e);
   }
 
   goToStep = (type) => {
@@ -217,15 +161,18 @@ class SignUpImageUpload extends React.Component {
     );
   }
 
-  renderSuggestionsList = () => {
-
-  }
-
   handleMultiSelect = (list) => {
-    this.setState({ selectedProfessions: list })
+    if (list.length < 4) {
+      this.setState({ selectedProfessions: list })
+    }
   }
   renderContent = () => {
     const { cropper, takePicture, selectedProfessions } = this.state;
+    const { subcategories } = this.props.professionsList;
+    subcategories.map(function (obj) {
+      obj.label = obj.title;
+      obj.value = obj.id;
+    });    
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
@@ -305,24 +252,14 @@ class SignUpImageUpload extends React.Component {
         <UploadContainer.CategoriesWrapper>
           <MultiSelect
             value={this.state.selectedProfessions}
-            options={selectedProfessions}
+            options={subcategories}
             placeholder=""
-            components={components}
             onChange={this.handleMultiSelect}
             label='Categorize yourself. This helps fans find you. (up to 3)'
           />
           <UploadContainer.BrowseCategories>
             Not finding one? <UploadContainer.BrowseCategoriesLink onClick={this.browserCategory}>Browse categories</UploadContainer.BrowseCategoriesLink>
           </UploadContainer.BrowseCategories>
-          {this.state.showSuggestions &&
-            <UploadContainer.SuggestionListWrapper>
-              <UploadContainer.AutoSuggest>
-                {
-                  this.renderSuggestionsList()
-                }
-              </UploadContainer.AutoSuggest>
-            </UploadContainer.SuggestionListWrapper>
-          }
         </UploadContainer.CategoriesWrapper>
         <UploadContainer.ButtonWrapper>
           <UploadContainer.ContinueButton
