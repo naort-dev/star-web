@@ -21,7 +21,7 @@ const CategoryList = (props) => {
       </CategoryListItem>
       {
         props.professionsList.professions.map(profession => (
-          <CategoryListItem>
+          <CategoryListItem key={profession.id}>
             <CategoryIcon>
               <FontAwesomeIcon icon={categoryIcons[profession.id]} />
             </CategoryIcon>
