@@ -10,16 +10,19 @@ QuickViewStyled.VideoContainer = styled.div`
   width: 300.5px;
   height: 484.5px;
   z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 QuickViewStyled.Content = styled.div`
   padding: 30px 25px 0;
+  padding-right: 0;
   width: calc(100% - 300.5px);
 `;
 
 QuickViewStyled.Categories = styled.span`
   font-family: Gilroy-Light;
-  font-size: 24px;
   color: ${props => props.theme.twilight};
   text-overflow: ellipsis;
   overflow: hidden;
@@ -28,8 +31,8 @@ QuickViewStyled.Categories = styled.span`
 
 QuickViewStyled.StarName = styled.span`
   font-family: Gilroy-Regular;
-  font-size: 74px;
   display: block;
+  width: 100%;
   color: ${props => props.theme.twilight};
 `;
 
@@ -41,17 +44,13 @@ QuickViewStyled.Avatar = styled.span`
   border: none;
   border-radius: 50%;
   display: block;
-  width: 80px;
-  height: 80px;
+  width: ${props => (props.size ? `${props.size}px` : '80px')};
+  height: ${props => (props.size ? `${props.size}px` : '80px')};
   box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
-  @media(min-width: 832px) {
-    width: 80px;
-    height: 80px;
-  }
 `;
 
 QuickViewStyled.HeartIcon = QuickViewStyled.Row.extend`

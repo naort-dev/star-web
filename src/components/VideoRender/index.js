@@ -45,7 +45,7 @@ export default class VideoRender extends React.Component {
         >
           <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
             <VideoPlayer
-              primarySrc={props.videoSrc ? props.videoSrc : 'assets/Footboys.mp4'}
+              primarySrc={props.videoSrc}
             />
           </VideoRenderDiv.Content>
         </VideoRenderDiv.Container>

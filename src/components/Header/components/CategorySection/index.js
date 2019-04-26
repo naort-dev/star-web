@@ -19,7 +19,7 @@ const CategorySection = (props) => {
         selected={props.category.label === 'Featured'}
         data-value="Featured"
       >
-        <span class="category-label">Featured</span>
+        <span className="category-label">Featured</span>
       </CategoryStyled.Item>
       {
         professionsList.map((profession) => {
@@ -30,7 +30,7 @@ const CategorySection = (props) => {
               selected={props.category.label === profession.title}
               data-value={profession.title}
             >
-              <span class="category-label">{profession.title}</span>
+              <span className="category-label">{profession.title}</span>
             </CategoryStyled.Item>
           );
         })

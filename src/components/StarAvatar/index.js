@@ -30,6 +30,12 @@ const StarAvatar = ({ star, type, ...props }) => {
     });
   });
 
+  const toggleQuickView = () => {
+    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+      props.toggleQuickView(true, star.user_id);
+    }
+  }
+
   const getWrapperComponent = () => {
     if (type === 'featured') {
       return AvatarContainer.BigAvatar;
@@ -43,7 +49,7 @@ const StarAvatar = ({ star, type, ...props }) => {
 
   return (
     <AvatarContainer className={type}>
-      <WrapperComponent imageUrl={profileImage} onClick={props.toggleQuickView(true, star.user_id)}>
+      <WrapperComponent imageUrl={profileImage} onClick={toggleQuickView}>
         <AvatarContainer.ControlWrapper>
           <AvatarContainer.ControlButton>
             <FontAwesomeIcon icon={faPlay} />
@@ -79,7 +85,7 @@ StarAvatar.propTypes = {
 };
 
 const mapDispatchToProps = dispatch => ({
-  toggleQuickView: (state, modalData) => () => dispatch(toggleQuickView(state, modalData)),
+  toggleQuickView: (state, modalData) => dispatch(toggleQuickView(state, modalData)),
 });
 
 export default connect(null, mapDispatchToProps)(StarAvatar);
