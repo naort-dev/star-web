@@ -8,7 +8,7 @@ import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { fetchStarDetails } from '../../pages/starProfile/actions';
-import { toggleQuickView } from '../../store/shared/actions/toggleModals';
+import { toggleQuickView, toggleLogin } from '../../store/shared/actions/toggleModals';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
@@ -68,6 +68,15 @@ const QuickViewModal = (props) => {
     }
   }, [props.celebDetails.profile_video]);
 
+  const followCelebrityAction = () => {
+    if (props.isLoggedIn) {
+      props.followCelebrity(props.userDetails.user_id, !props.userDetails.isFollow)
+    } else {
+      props.toggleQuickView(false)();
+      props.toggleLogin(true);
+    }
+  }
+
   const getShortName = () => {
     const { userDetails } = props;
     let shortName = '';
@@ -115,7 +124,7 @@ const QuickViewModal = (props) => {
           </div>
           <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
           <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
-          <QuickViewStyled.HeartIcon onClick={props.followCelebrity(props.userDetails.user_id, !props.userDetails.isFollow)}>
+          <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
             <FontAwesomeIcon icon={props.userDetails.is_follow ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>
           <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to="/browse-stars">Read full profile</QuickViewStyled.MiniDescription>
@@ -149,8 +158,10 @@ const QuickViewModal = (props) => {
 
 QuickViewModal.propTypes = {
   toggleQuickView: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
   quickViewModal: PropTypes.object.isRequired,
   fetchStarDetails: PropTypes.func.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
   followCelebrity: PropTypes.func.isRequired,
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
@@ -159,14 +170,16 @@ QuickViewModal.propTypes = {
 
 const mapStateToProps = state => ({
   quickViewModal: state.modals.quickViewModal,
+  isLoggedIn: state.session.isLoggedIn,
   celebDetails: state.starDetails.celebDetails.celebrityDetails,
   userDetails: state.starDetails.celebDetails.userDetails,
 });
 
 const mapDispatchToProps = dispatch => ({
   toggleQuickView: state => () => dispatch(toggleQuickView(state)),
+  toggleLogin: state => dispatch(toggleLogin(state)),
   fetchStarDetails: id => dispatch(fetchStarDetails(id)),
-  followCelebrity: (id, isFollow) => () => dispatch(followCelebrity(id, isFollow)),
+  followCelebrity: (id, isFollow) => dispatch(followCelebrity(id, isFollow)),
 });
 
 export default withTheme(connect(mapStateToProps, mapDispatchToProps)(QuickViewModal));
