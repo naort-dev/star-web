@@ -1,11 +1,8 @@
 import React from 'react';
+import { Container } from './Skip.styles';
 
 const Skip = () => {
-    return (
-        <div>
-            d
-        </div>
-    );
+  return <Container>d</Container>;
 };
 
 export default Skip;
