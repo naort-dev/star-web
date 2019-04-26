@@ -26,6 +26,7 @@ import {
 import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { FAN_REG_SUCCESS } from './constants';
 import WelcomeVideo from './components/WelcomeVideo';
+import Skip from './components/WelcomeVideo/Skip';
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -42,6 +43,12 @@ class SignupFlow extends React.Component {
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
+  onBack = () => {
+    this.setState(state => ({
+      currentStep: state.currentStep - 1,
+    }));
+  };
+
   getBioDetails = bioDetails => {
     this.setState({ bioDetails });
   };
@@ -139,15 +146,16 @@ class SignupFlow extends React.Component {
         case 3:
           return (
             <WelcomeVideo
-              onBack={() => {
+              onBack={this.onBack}
+              skipCallback={() => {
                 this.setState(state => ({
-                  currentStep: state.currentStep - 1,
+                  currentStep: state.currentStep + 1,
                 }));
               }}
             />
           );
         case 4:
-          return <div />;
+          return <Skip onBack={this.onBack} />;
 
         default:
           return null;
@@ -190,7 +198,7 @@ class SignupFlow extends React.Component {
         <RequestFlowPopup
           dotsCount={0}
           closePopUp={this.closeSignUp}
-          modalView={this.state.currentStep > 3 && !this.state.enableClose}
+          // modalView={this.state.currentStep > 3 && !this.state.enableClose}
           smallPopup
         >
           <LoginContainer>

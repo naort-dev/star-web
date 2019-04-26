@@ -10,11 +10,6 @@ export const Layout = styled.section`
   background: #fff;
   .leftArrow {
     left: 30px;
-    color: #707070;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    font-size: 28px;
     position: absolute;
   }
 `;
