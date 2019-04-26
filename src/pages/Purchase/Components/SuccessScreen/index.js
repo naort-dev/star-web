@@ -1,21 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { Layout, Content } from './styled';
-import { FlexCenter } from '../../../../styles/CommonStyled';
 import Button from '../../../../components/PrimaryButton';
+import { FlexCenter, CloseButton } from '../../../../styles/CommonStyled';
 
 const SuccessScreen = props => {
   return (
     <Layout>
-      <FontAwesomeIcon
-        icon={faTimes}
-        onClick={props.closeHandler}
-        className="closeBtn"
-      />
-
+      <CloseButton onClick={props.closeHandler} className="closeBtn" />
+      <FlexCenter>
+        <span className="successImg" />
+      </FlexCenter>
       <Scrollbars className="successScroll">
         <FlexCenter>
           <span className="successImg" />
