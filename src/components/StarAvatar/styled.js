@@ -125,7 +125,7 @@ AvatarContainer.Name = styled.span`
   @media(min-width: 832px) {
     line-height: 1.41;
     font-size: 17px;
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-Bold;
     width: calc(100% - 50px);
     text-align: left;
   }
