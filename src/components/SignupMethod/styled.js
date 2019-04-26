@@ -35,7 +35,7 @@ SignUpMethod.Heading = styled.div`
   padding: 20px 0;
   &.or-section {
     padding-bottom: 0;
-    margin-bottom: -7px;
+    margin-bottom: 13px;
   }
   @media(min-width:768px){
     font-size: 24px;

@@ -61,13 +61,14 @@ export const TopSection = styled.section`
   .profileIcon {
     width: 60px;
     height: 60px;
-    border-radius: 150px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     .image {
       max-width: 100%;
       max-height: 100%;
+      border-radius: 50%;
     }
   }
   .alignTop {

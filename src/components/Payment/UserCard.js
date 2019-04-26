@@ -10,7 +10,7 @@ import {
 import { FlexCenter, FlexBoxSB } from '../../styles/CommonStyled';
 import CardList from './CardList';
 import Button from '../PrimaryButton';
-import Checkout from './checkout';
+import Checkout from './Checkout';
 
 const UserCard = (props) => {
   const [isNewCard, cardSelection] = useState(false);
@@ -20,7 +20,7 @@ const UserCard = (props) => {
     cardSelection(props.isNewCard);
   }, [props.isNewCard]);
 
-  const newPay = (value) => (e) => {
+  const newPay = value => () => {
     cardSelection(value);
     props.contentSwitchCallback(value);
   };
@@ -32,6 +32,13 @@ const UserCard = (props) => {
   const payWithExistingCrd = () => {
     props.handleBooking({ source: { id: selectedCard.id } });
   };
+  const getThumbnail = () => {
+    if (props.celebDetails.userDetails.avatar_photo) {
+      return props.celebDetails.userDetails.avatar_photo.thumbnail_url;
+    } else {
+      return '../assets/images/profile.png';
+    }
+  };
 
   return (
     <Layout>
@@ -41,15 +48,17 @@ const UserCard = (props) => {
             <FlexBoxSB>
               <span className="profileIcon">
                 <img
-                  src="../assets/images/profile.png"
+                  src={getThumbnail()}
                   alt="profile_icon"
                   className="image"
                 />
               </span>
               <span className="colDir alignTop">
-                <span className="nameSpan">{`${
-                  props.celebDetails.userDetails.first_name
-                } ${props.celebDetails.userDetails.last_name}`}</span>
+                <span className="nameSpan">
+                  {`${props.celebDetails.userDetails.first_name} ${
+                    props.celebDetails.userDetails.last_name
+                  }`}
+                </span>
                 <span className="bookingType">Video Shoutout</span>
               </span>
             </FlexBoxSB>
@@ -92,6 +101,7 @@ const UserCard = (props) => {
             rate={props.celebDetails.celebrityDetails.rate}
             loaderAction={props.loaderAction}
             modifySourceList={props.modifySourceList}
+            updateCustomerId={props.updateCustomerId}
           />
         </Elements>
       ) : (
@@ -101,9 +111,16 @@ const UserCard = (props) => {
             <CardList
               Cards={props.CardList}
               getCardSelected={getCardSelected}
+              deleteCard={props.modifySourceList}
+              updateCustomerId={props.updateCustomerId}
+              loaderAction={props.loaderAction}
             />
           )}
-          <span className="newCard centerAlign" onClick={newPay(true)}>
+          <span
+            className="newCard centerAlign"
+            onClick={newPay(true)}
+            role="presentation"
+          >
             Pay Using New Card
           </span>
 
@@ -129,6 +146,10 @@ UserCard.propTypes = {
   contentSwitchCallback: PropTypes.func.isRequired,
   handleBooking: PropTypes.func.isRequired,
   CardList: PropTypes.object.isRequired,
+  celebDetails: PropTypes.object.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  modifySourceList: PropTypes.func.isRequired,
+  updateCustomerId: PropTypes.func.isRequired,
 };
 UserCard.defaultProps = {
   isNewCard: false,
