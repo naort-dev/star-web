@@ -140,7 +140,7 @@ class SignUpImageUpload extends React.Component {
     const { subCategoriesArray } = this.state;
     return (
       <React.Fragment>
-        <div class="right-section">
+        <div className="right-section">
           <div className="subCategoryHeading">
             Choose the category that describes what you do best:
             <span>{`(${3 - this.state.selectedProfessions.length} remaining)`}</span>
@@ -267,7 +267,6 @@ class SignUpImageUpload extends React.Component {
                   onChange={this.handleMultiSelect}
                   onFocus={this.handleFocusSelect}
                   label='Categorize yourself. This helps fans find you. (up to 3)'
-                  labelClass='praveen'
                 />
                 <UploadContainer.BrowseCategories>
                   Not finding one? <UploadContainer.BrowseCategoriesLink onClick={this.browserCategory}>Browse categories</UploadContainer.BrowseCategoriesLink>
