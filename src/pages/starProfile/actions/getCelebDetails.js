@@ -8,7 +8,7 @@ export const CELEB_DETAILS = {
   success: 'fetch_success/celeb_details',
   failed: 'fetch_failed/celeb_details',
   reset: 'reset/celeb_details',
-  update: 'reset/celeb_details',
+  update: 'update/celeb_details',
 };
 
 export const celebDetailsFetchStart = () => ({

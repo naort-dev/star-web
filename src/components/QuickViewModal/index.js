@@ -76,7 +76,7 @@ const QuickViewModal = (props) => {
   const followCelebrityAction = () => {
     if (props.isLoggedIn) {
       toggleFollowStatus(!followStatus);
-      props.followCelebrity(props.userDetails.id, !props.userDetails.isFollow)
+      props.followCelebrity(props.userDetails.id, !followStatus)
     } else {
       props.toggleQuickView(false)();
       props.toggleLogin(true);
