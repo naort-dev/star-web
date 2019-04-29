@@ -5,6 +5,7 @@ import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/pro-light-svg-icons';
 import StarDrawer from '../../components/StarDrawer';
+import { Footer } from '../../components/Footer';
 import Header from '../../components/Header';
 import FilterSection from './components/FilterSection';
 import StarListing from '../../components/StarListing';
@@ -180,6 +181,9 @@ const BrowseStars = (props) => {
           </CategoryPageStyled.ListingWrapper>
         </CategoryPageStyled.MainContent>
       </CategoryPageStyled.Content>
+      <CategoryPageStyled.Footer>
+        <Footer />
+      </CategoryPageStyled.Footer>
     </CategoryPageStyled>
   );
 };
