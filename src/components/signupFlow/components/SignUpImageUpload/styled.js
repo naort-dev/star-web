@@ -195,6 +195,12 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
+    height: 430px;
+    width: 100%;
+
+    .browse-category-list {
+      max-height: 332px;
+    }
   }
   .subCategoryHeading {
     font-family: Gilroy-Medium;
@@ -216,8 +222,6 @@ UploadContainer.ItemWrapper = styled.ul`
 UploadContainer.SubItemWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  max-height: 332px;
-  overflow: auto;
   li {
     padding: 6px 13px;
     border-radius: 15px;
