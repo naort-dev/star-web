@@ -158,10 +158,10 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.RowDivider>
                     <DesktopStyled.Avatar className="left-spacing-none">
-                      <AvatarContent data={this.getAvatarContent(3)} />
+                      <AvatarContent data={this.getAvatarContent(3)}/>
                     </DesktopStyled.Avatar>
                     <DesktopStyled.Avatar className="left-spacing-none">
-                      <AvatarContent data={this.getAvatarContent(4)} />
+                      <AvatarContent data={this.getAvatarContent(4)}/>
                     </DesktopStyled.Avatar>
                   </DesktopStyled.RowDivider>
                   <DesktopStyled.SecondaryAvatar>

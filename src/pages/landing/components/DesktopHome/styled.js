@@ -144,6 +144,15 @@ DesktopStyled.Avatar = styled.div`
       margin-left: 0;
     }
   }
+  .avatar-wrap {
+    transition: transform 1s;
+    transform-style: preserve-3d;
+  }
+  &:hover {
+    .avatar-wrap {
+      transform: rotateY(180deg);
+    }
+  }
 `;
 
 DesktopStyled.BigAvatar = DesktopStyled.Avatar.extend`
