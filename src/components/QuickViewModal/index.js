@@ -41,7 +41,6 @@ const QuickViewModal = (props) => {
 
   const [showVideo, toggleVideoView] = useState(false);
   const [followStatus, toggleFollowStatus] = useState(props.userDetails.is_follow ? props.userDetails.is_follow : false);
-  // const [video, updateVideoTag] = useState(document.createElement("video"));
 
   const onModalMounted = () => {
     autoFitText();
@@ -73,6 +72,10 @@ const QuickViewModal = (props) => {
     toggleFollowStatus(props.userDetails.is_follow);
   }, [props.userDetails.is_follow]);
 
+  const onVideoError = () => {
+    toggleVideoView(false);
+  }
+  
   const followCelebrityAction = () => {
     if (props.isLoggedIn) {
       toggleFollowStatus(!followStatus);
@@ -109,6 +112,7 @@ const QuickViewModal = (props) => {
                 variableWidth
                 variableHeight
                 noBorder
+                onVideoError={onVideoError}
                 videoSrc={props.celebDetails.profile_video}
                 cover="assets/images/default-cover.jpg"
               />
