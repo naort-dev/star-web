@@ -235,7 +235,13 @@ UploadContainer.Item = styled.li`
   cursor: pointer;
   padding: 0 0 28px;
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
-  color: ${props => (props.selected ? '#2f839d' : '#999')};
+  color: ${props => (props.selected ? '#fff' : '#999')};
+
+  &.categoryItem {
+    background-color: #fff;
+    color: ${props => (props.selected ? props.theme.flatBlue : '#999')};
+    font-family:  ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
+  }
 `;
 
 

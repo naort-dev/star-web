@@ -29,6 +29,7 @@ class SignUpImageUpload extends React.Component {
       showBrowseCategory: false,
       subCategoriesArray: [],
       selectedProfessions: [],
+      selectedCategory: [],
     };
     this.cursorPos = -1;
     this.suggestionsFetchDelay = undefined;
@@ -70,6 +71,7 @@ class SignUpImageUpload extends React.Component {
     });
     this.setState({
       subCategoriesArray: professions[0].child,
+      selectedCategory: professions,
     });
   }
 
@@ -126,6 +128,8 @@ class SignUpImageUpload extends React.Component {
               <UploadContainer.Item
                 key={profession.id}
                 onClick={() => this.getSubCategoryList(profession.id)}
+                selected={this.state.selectedCategory.find(cat => cat.id === profession.id)}
+                className="categoryItem"
               >
                 {profession.title}
               </UploadContainer.Item>
