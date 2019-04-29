@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { fetchStarDetails } from '../../pages/starProfile/actions';
 import { toggleQuickView, toggleLogin } from '../../store/shared/actions/toggleModals';
-import { followCelebrity } from '../../store/shared/actions/followCelebrity';
+import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
 import StarDrawer from '../StarDrawer';
@@ -78,7 +78,7 @@ const QuickViewModal = (props) => {
       toggleFollowStatus(!followStatus);
       props.followCelebrity(props.userDetails.id, !followStatus)
     } else {
-      props.toggleQuickView(false)();
+      props.updateFavouritesQueue(props.userDetails.id, !followStatus);
       props.toggleLogin(true);
     }
   }
@@ -168,6 +168,7 @@ QuickViewModal.propTypes = {
   fetchStarDetails: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   followCelebrity: PropTypes.func.isRequired,
+  updateFavouritesQueue: PropTypes.func.isRequired,
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
@@ -184,6 +185,7 @@ const mapDispatchToProps = dispatch => ({
   toggleQuickView: state => () => dispatch(toggleQuickView(state)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   fetchStarDetails: id => dispatch(fetchStarDetails(id)),
+  updateFavouritesQueue: (id, follow) => dispatch(updateFavouritesQueue(id, follow)),
   followCelebrity: (id, isFollow) => dispatch(followCelebrity(id, isFollow)),
 });
 

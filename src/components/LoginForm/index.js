@@ -82,16 +82,14 @@ export default class LoginForm extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      this.props.onLoginComplete();
       const followData = this.props.followCelebData;
       if (followData.celebId) {
         this.props.followCelebrity(
           this.props.followCelebData.celebId,
-          this.props.followCelebData.celebProfessions,
           this.props.followCelebData.follow,
-          true
-        );
+        )
       }
+      this.props.onLoginComplete();
     }
     if (JSON.stringify(this.props.data) !== JSON.stringify(nextProps.data)) {
       this.setState({

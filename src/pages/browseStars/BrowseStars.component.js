@@ -97,7 +97,7 @@ const BrowseStars = (props) => {
     props.fetchCelebrityList(0, true);
     toggleContentPos(false);
     getListHeight();
-  }, [props.category.label]);
+  }, [props.category.label, props.isLoggedIn]);
 
   const title = props.featuredStars[props.category.label] ? props.featuredStars[props.category.label].title : '';
 
@@ -193,6 +193,7 @@ BrowseStars.propTypes = {
   highPrice: PropTypes.number.isRequired,
   fetchCelebrityList: PropTypes.func.isRequired,
   sortValue: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default withTheme(BrowseStars);
