@@ -8,6 +8,9 @@ const CategoryListItem = styled.li`
   align-items: center;
   cursor: pointer;
   text-align: left;
+  a {
+    display: flex;
+  }
   @media(min-width: 1280px) {
     padding-top: 41px;
     padding-left: 10px;

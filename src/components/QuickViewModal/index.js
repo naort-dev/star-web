@@ -40,6 +40,7 @@ const QuickViewModal = (props) => {
   }
 
   const [showVideo, toggleVideoView] = useState(false);
+  const [followStatus, toggleFollowStatus] = useState(props.userDetails.is_follow ? props.userDetails.is_follow : false);
   // const [video, updateVideoTag] = useState(document.createElement("video"));
 
   const onModalMounted = () => {
@@ -68,9 +69,14 @@ const QuickViewModal = (props) => {
     }
   }, [props.celebDetails.profile_video]);
 
+  useEffect(() => {
+    toggleFollowStatus(props.userDetails.is_follow);
+  }, [props.userDetails.is_follow]);
+
   const followCelebrityAction = () => {
     if (props.isLoggedIn) {
-      props.followCelebrity(props.userDetails.user_id, !props.userDetails.isFollow)
+      toggleFollowStatus(!followStatus);
+      props.followCelebrity(props.userDetails.id, !followStatus)
     } else {
       props.toggleQuickView(false)();
       props.toggleLogin(true);
@@ -87,7 +93,6 @@ const QuickViewModal = (props) => {
     }
     return shortName;
   }
-
   return (
     <RequestFlowPopup
       dotsCount={0}
@@ -125,7 +130,7 @@ const QuickViewModal = (props) => {
           <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
           <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
           <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
-            <FontAwesomeIcon icon={props.userDetails.is_follow ? faHeartSolid : faHeart} />
+            <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>
           <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to="/browse-stars">Read full profile</QuickViewStyled.MiniDescription>
         </QuickViewStyled.Content>

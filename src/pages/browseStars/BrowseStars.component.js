@@ -169,6 +169,7 @@ const BrowseStars = (props) => {
           }
           <CategoryPageStyled.ListingWrapper>
             <StarListing
+              customLoader
               dataList={props.celebList.data}
               loading={props.celebList.loading}
               offset={props.celebList.offset}
