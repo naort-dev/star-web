@@ -57,6 +57,7 @@ class Header extends React.Component {
 
   logoutUser = () => {
     this.setState({ profileDropdown: false });
+    this.props.history.push('/');
     this.props.logOut();
   }
 
