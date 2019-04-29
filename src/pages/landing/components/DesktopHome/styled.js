@@ -147,6 +147,7 @@ DesktopStyled.Avatar = styled.div`
   .avatar-wrap {
     transition: transform 1s;
     transform-style: preserve-3d;
+    border-radius: 50%;
   }
   &:hover {
     .avatar-wrap {
