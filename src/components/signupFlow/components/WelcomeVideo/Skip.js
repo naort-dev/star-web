@@ -15,10 +15,12 @@ const Skip = props => {
           video is key in helping fans book you for paid videos.
         </p>
         <FlexCenter className="colAlign">
-          <Button className="button">
+          <Button className="button" onClick={() => props.onBack()}>
             You talked me into it, let me fix my hair
           </Button>
-          <Button className="button whiteBtn">Skip for now but I will be back!</Button>
+          <Button className="button whiteBtn">
+            Skip for now but I will be back!
+          </Button>
         </FlexCenter>
       </FlexCenter>
     </Container>

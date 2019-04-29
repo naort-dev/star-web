@@ -1,11 +1,4 @@
-import {
-  TRIGGER_RECORDING,
-  UPDATE_RECORDMEDIA,
-  PLAY_PAUSE_MEDIA,
-  LOADER_COMMON,
-  UPDATE_CUSTOMER_ID,
-  SET_VIDEO_UPLOADED_FLG,
-} from '../actions/commonActions';
+import { Actions } from '../actions/commonActions';
 
 const initalState = {
   shouldRecord: false,
@@ -15,44 +8,54 @@ const initalState = {
   loader: false,
   customerId: null,
   videoUploaded: false,
+  toastObj: {
+    value: true,
+    message: 'This is a success message!',
+    variant: 'success',
+  },
 };
 
 const commonReducer = (state = { ...initalState }, action) => {
   switch (action.type) {
-    case TRIGGER_RECORDING:
+    case Actions.TRIGGER_RECORDING:
       return {
         ...state,
         shouldRecord: !state.shouldRecord,
       };
 
-    case UPDATE_RECORDMEDIA:
+    case Actions.UPDATE_RECORDMEDIA:
       return {
         ...state,
         videoSrc: action.payload.videoSrc,
         file: action.payload.superBuffer,
       };
 
-    case PLAY_PAUSE_MEDIA:
+    case Actions.PLAY_PAUSE_MEDIA:
       return {
         ...state,
         playPauseMedia: !state.playPauseMedia,
       };
 
-    case LOADER_COMMON:
+    case Actions.LOADER_COMMON:
       return {
         ...state,
         loader: action.value,
       };
 
-    case UPDATE_CUSTOMER_ID:
+    case Actions.UPDATE_CUSTOMER_ID:
       return {
         ...state,
         customerId: action.value,
       };
-    case SET_VIDEO_UPLOADED_FLG:
+    case Actions.SET_VIDEO_UPLOADED_FLG:
       return {
         ...state,
         videoUploaded: action.value,
+      };
+    case Actions.SET_TOAST:
+      return {
+        ...state,
+        toastObj: action.toastObj,
       };
 
     default:

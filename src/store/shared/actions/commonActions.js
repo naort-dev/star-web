@@ -4,31 +4,45 @@ export const PLAY_PAUSE_MEDIA = 'PLAY_PAUSE_MEDIA';
 export const LOADER_COMMON = 'LOADER_COMMON';
 export const UPDATE_CUSTOMER_ID = 'UPDATE_CUSTOMER_ID';
 export const SET_VIDEO_UPLOADED_FLG = 'SET_VIDEO_UPLOADED_FLG';
+export const Actions = {
+  TRIGGER_RECORDING: 'TRIGGER_RECORDING',
+  UPDATE_RECORDMEDIA: 'UPDATE_RECORDMEDIA',
+  PLAY_PAUSE_MEDIA: 'PLAY_PAUSE_MEDIA',
+  LOADER_COMMON: 'LOADER_COMMON',
+  UPDATE_CUSTOMER_ID: 'UPDATE_CUSTOMER_ID',
+  SET_VIDEO_UPLOADED_FLG: 'SET_VIDEO_UPLOADED_FLG',
+  SET_TOAST: 'SET_TOAST',
+};
 
 export const recordTrigger = () => ({
-  type: TRIGGER_RECORDING,
+  type: Actions.TRIGGER_RECORDING,
 });
 
 export const updateMediaStore = payload => ({
-  type: UPDATE_RECORDMEDIA,
+  type: Actions.UPDATE_RECORDMEDIA,
   payload,
 });
 
 export const playPauseMedia = () => ({
-  type: PLAY_PAUSE_MEDIA,
+  type: Actions.PLAY_PAUSE_MEDIA,
 });
 
 export const loaderAction = value => ({
-  type: LOADER_COMMON,
+  type: Actions.LOADER_COMMON,
   value,
 });
 
 export const updateCustomerId = value => ({
-  type: UPDATE_CUSTOMER_ID,
+  type: Actions.UPDATE_CUSTOMER_ID,
   value,
 });
 
 export const setVideoUploadedFlag = value => ({
-  type: SET_VIDEO_UPLOADED_FLG,
+  type: Actions.SET_VIDEO_UPLOADED_FLG,
   value,
+});
+
+export const updateToast = toastObj => ({
+  type: Actions.SET_TOAST,
+  toastObj,
 });

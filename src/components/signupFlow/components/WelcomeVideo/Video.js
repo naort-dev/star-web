@@ -8,10 +8,11 @@ import {
   QuestionContainer,
   ShowHide,
   TimeSpan,
+  FlexBox,
 } from './Video.styles';
 import QuestionBuilder from '../../../../components/QuestionBuilder';
 import Button from '../../../../components/PrimaryButton';
-import { FlexCenter, FlexBoxSB } from '../../../../styles/CommonStyled';
+import { FlexCenter } from '../../../../styles/CommonStyled';
 import VideoRecorder from '../../../../components/VideoRecorder';
 import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
 import { questionsVideo } from './dataModals';
@@ -19,7 +20,6 @@ import {
   recordTrigger,
   updateMediaStore,
   playPauseMedia,
-  loaderAction,
   setVideoUploadedFlag,
 } from '../../../../store/shared/actions/commonActions';
 import { recorder } from '../../../../constants/videoRecorder';
@@ -54,9 +54,10 @@ const Video = props => {
       stopHandler(true);
     } else if (buttonLabel === 'Save & Continue') {
       if (props.videoUploaded) {
-        // props.continueCallback();
+        // handle logic if video already uploaded
       } else {
-        // action on continue
+        // action on continue to upload video
+        props.uploadVideo(props.videoFile);
       }
     }
   };
@@ -74,7 +75,7 @@ const Video = props => {
   return (
     <Layout>
       {checkMediaRecorderSupport() && (
-        <FlexBoxSB>
+        <FlexBox>
           <VideoContainer>
             <VideoRecorder
               updateMediaStore={props.updateMediaStore}
@@ -134,7 +135,7 @@ const Video = props => {
               Show Script
             </ShowHide>
           )}
-        </FlexBoxSB>
+        </FlexBox>
       )}
 
       {(!checkMediaRecorderSupport() || error) && (
@@ -158,11 +159,12 @@ Video.propTypes = {
   updateMediaStore: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.func.isRequired,
   recordTrigger: PropTypes.func.isRequired,
-  //   continueCallback: PropTypes.func.isRequired,
   skipCallback: PropTypes.func,
   videoSrc: PropTypes.string,
   videoUploaded: PropTypes.bool,
   setVideoUploadedFlag: PropTypes.func,
+  uploadVideo: PropTypes.func,
+  videoFile: PropTypes.object,
 };
 
 Video.defaultProps = {
@@ -170,6 +172,8 @@ Video.defaultProps = {
   videoUploaded: false,
   skipCallback: () => {},
   setVideoUploadedFlag: () => {},
+  uploadVideo: () => {},
+  videoFile: {},
 };
 
 function mapStateToProps(state) {
@@ -189,12 +193,6 @@ function mapDispatchToProps(dispatch) {
     },
     playPauseMedia: () => {
       dispatch(playPauseMedia());
-    },
-    loaderAction: value => {
-      dispatch(loaderAction(value));
-    },
-    setVideoUploadedFlag: value => {
-      dispatch(setVideoUploadedFlag(value));
     },
   };
 }

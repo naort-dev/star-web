@@ -33,7 +33,7 @@ export const Progress = styled(CircularProgress)`
 `;
 
 export const Loading = styled.section`
-  position: absolute;
+  position: fixed;
   justify-content: center;
   display: flex;
   z-index: 99999999;
@@ -42,6 +42,8 @@ export const Loading = styled.section`
   background: #bdbcbc;
   opacity: 0.5;
   min-height: 100%;
+  top: 0;
+  left: 0;
 `;
 
 export const BackArrow = styled.span`

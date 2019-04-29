@@ -172,7 +172,7 @@ class VideoRecorder extends Component {
   };
 
   videoClick = () => {
-    if (!this.props.shouldRecord && this.props.videoSrc !== '') {
+    if (!this.props.shouldRecord && this.props.videoSrc !== null) {
       this.setState({ mediaControls: true });
       this.video.pause();
       this.props.playPauseMediaAction();

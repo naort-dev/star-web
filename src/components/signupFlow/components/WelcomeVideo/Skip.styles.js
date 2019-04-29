@@ -3,6 +3,7 @@ import { media } from '../../../../styles/mediaQueries';
 import { Layout, Heading } from './styled';
 
 export const Container = styled(Layout)`
+  display: flex;
   .colAlign {
     flex-direction: column;
     align-items: center;
@@ -12,7 +13,6 @@ export const Container = styled(Layout)`
     position: absolute;
   }
   .content {
-    padding-top: 120px;
     max-width: 470px;
     margin: 0 auto;
   }

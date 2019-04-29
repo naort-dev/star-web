@@ -23,7 +23,6 @@ export const Layout = styled.section`
   }
   .button {
     width: 242px;
-    margin-left: 23px;
     ${media.webView} {
       margin-left: 0;
     }
@@ -79,8 +78,9 @@ export const VideoContainer = styled.section`
     width: 224px;
     color: #2f839d;
     position: absolute;
-    left: 22px;
+    left: 50%;
     bottom: 20px;
+    transform: translateX(-50%);
   }
   .videoElm {
     width: 288px;
@@ -91,7 +91,7 @@ export const VideoContainer = styled.section`
 `;
 
 export const QuestionContainer = styled.section`
-  padding-left: ${props => (props.error ? '20px' : '50px')};
+  padding-left: ${props => (props.error ? '20px' : '33px')};
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
@@ -133,7 +133,6 @@ export const ShowHide = styled.span`
   background: #fff;
   color: #2f839d;
   font-family: Gilroy-Bold;
-  margin-left: 32px;
   cursor: pointer;
   display: block;
   ${media.webView} {
@@ -184,5 +183,13 @@ export const TimeSpan = styled.span`
   }
   .time {
     font-size: 21px;
+  }
+`;
+
+export const FlexBox = styled.section`
+  display: flex;
+  justify-content: center;
+  ${media.webView} {
+    justify-content: space-between;
   }
 `;
