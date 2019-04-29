@@ -216,6 +216,8 @@ UploadContainer.ItemWrapper = styled.ul`
 UploadContainer.SubItemWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  max-height: 332px;
+  overflow: auto;
   li {
     padding: 6px 13px;
     border-radius: 15px;
