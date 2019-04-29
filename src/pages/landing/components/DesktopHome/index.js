@@ -121,7 +121,6 @@ class DesktopHome extends React.Component {
   }
 
   handleCategoryChange = (category) => {
-    this.props.closeLandingFlow();
     this.props.updateCategory(category.title, category.id, category.child);
     this.props.history.push('/browse-stars');
   }
@@ -287,6 +286,7 @@ class DesktopHome extends React.Component {
               Or choose from one of our trending stars!
             </DesktopStyled.SubTitle>
             <StarListing
+              customLoader
               dataList={this.state.trendingList}
               loading={this.props.trendingStars.loading}
               noScroll
@@ -309,7 +309,6 @@ DesktopHome.propTypes = {
   featuredStars: PropTypes.object.isRequired,
   trendingStars: PropTypes.object.isRequired,
   category: PropTypes.object.isRequired,
-  closeLandingFlow: PropTypes.func.isRequired,
   fetchTrendingStars: PropTypes.func.isRequired,
   updateCategory: PropTypes.func.isRequired,
   theme: PropTypes.object,

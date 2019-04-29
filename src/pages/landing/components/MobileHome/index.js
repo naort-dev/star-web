@@ -52,7 +52,6 @@ class MobileHome extends React.Component {
       this.setState({ currentStep: currentStep + 1 });
     } else {
       this.props.history.push('/browse-stars');
-      this.closeLandingFlow();
     }
   }
 
@@ -62,7 +61,7 @@ class MobileHome extends React.Component {
     } else {
       this.props.toggleLogin(true);
     }
-    this.closeLandingFlow();
+    this.goToNextStep();
   }
 
   closeLandingFlow = () => {
@@ -71,7 +70,6 @@ class MobileHome extends React.Component {
       this.props.history.push('/browse-stars');
       localStorage.setItem('landingVisited', true);
     }
-    this.props.closeLandingFlow();
   }
 
   render() {
@@ -193,7 +191,6 @@ MobileHome.propTypes = {
   featuredStars: PropTypes.object.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   toggleSignup: PropTypes.func.isRequired,
-  closeLandingFlow: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
 };

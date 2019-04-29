@@ -49,4 +49,18 @@ ListingStyled.NoDataText = styled.li`
   font-family: Gilroy-Medium;
 `;
 
+ListingStyled.LoadingIcon = styled.span`
+  width: 100px;
+  height: 100px;
+  display: block;
+  background: url('assets/images/starloader_mobile.png') no-repeat;
+  background-size: contain;
+  @media(min-width: 832px) {
+    background: url('assets/images/starloader_web.png') no-repeat;
+    background-size: contain;
+    width: 200px;
+    height: 200px;
+  }
+`;
+
 export default ListingStyled;

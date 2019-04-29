@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStarExclamation } from '@fortawesome/pro-light-svg-icons';
@@ -8,27 +9,36 @@ import { updateCategory } from '../../../../actions/updateFilters';
 import { CategoryListWrapper, CategoryListItem, CategoryIcon, CategoryName, CategoryDescription, CategoryContent } from './styled';
 
 const CategoryList = (props) => {
+
+  const updateMainCategory = (title, value, subCategories) => () => {
+    props.updateCategory(title, value, subCategories);
+  }
+
   return (
     <CategoryListWrapper>
       <CategoryListItem>
-        <CategoryIcon>
-          <FontAwesomeIcon icon={faStarExclamation} />
-        </CategoryIcon>
-        <CategoryContent>
-          <CategoryName>FEATURED</CategoryName>
-          <CategoryDescription>Stars creating a buzz.</CategoryDescription>
-        </CategoryContent>
+        <Link to="/browse-stars" onClick={updateMainCategory('Featured', 0, [])}>
+          <CategoryIcon>
+            <FontAwesomeIcon icon={faStarExclamation} />
+          </CategoryIcon>
+          <CategoryContent>
+            <CategoryName>FEATURED</CategoryName>
+            <CategoryDescription>Stars creating a buzz.</CategoryDescription>
+          </CategoryContent>
+        </Link>
       </CategoryListItem>
       {
         props.professionsList.professions.map(profession => (
-          <CategoryListItem key={profession.id}>
-            <CategoryIcon>
-              <FontAwesomeIcon icon={categoryIcons[profession.id]} />
-            </CategoryIcon>
-            <CategoryContent>
-              <CategoryName>{profession.title}</CategoryName>
-              <CategoryDescription>{profession.description}</CategoryDescription>
-            </CategoryContent>
+          <CategoryListItem key={profession.id} onClick={updateMainCategory(profession.title, profession.id, profession.child)}>
+            <Link to="/browse-stars">
+              <CategoryIcon>
+                <FontAwesomeIcon icon={categoryIcons[profession.id]} />
+              </CategoryIcon>
+              <CategoryContent>
+                <CategoryName>{profession.title}</CategoryName>
+                <CategoryDescription>{profession.description}</CategoryDescription>
+              </CategoryContent>
+            </Link>
           </CategoryListItem>
         ))
       }
@@ -110,6 +120,7 @@ const CategoryList = (props) => {
 
 CategoryList.propTypes = {
   professionsList: PropTypes.object.isRequired,
+  updateCategory: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -117,7 +128,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  updateCategory: (label, value) => () => dispatch(updateCategory(label, value)),
+  updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(CategoryList);
