@@ -8,6 +8,9 @@ const CategoryListItem = styled.li`
   align-items: center;
   cursor: pointer;
   text-align: left;
+  a {
+    display: flex;
+  }
   @media(min-width: 1280px) {
     padding-top: 41px;
     padding-left: 10px;
@@ -18,6 +21,7 @@ const CategoryListItem = styled.li`
 const CategoryName = styled.span`
   font-family: Gilroy-Bold;
   font-size: 18px;
+  text-transform: uppercase;
   color: ${props => props.theme.flatBlue};
 `;
 

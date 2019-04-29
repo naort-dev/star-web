@@ -5,11 +5,11 @@ import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
 import { library } from '@fortawesome/fontawesome-svg-core';
-
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
-import { fetchProfessionsList } from './store/shared/actions/getProfessions';
+import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
+import { fetchSubCategoryList } from './store/shared/actions/getSubCategoryLists';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
@@ -50,6 +50,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    this.props.fetchAllProfessions();
+    this.props.fetchAllSubCategories();
+    // this.props.fetchSubCategoryList();
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
@@ -80,6 +83,7 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
+      this.props.fetchAllProfessions();
     }
     if (
       !nextProps.configLoading &&
@@ -139,7 +143,6 @@ class App extends React.Component {
                 component={this.routeToOutside(
                   'https://about.starsona.com/terms-service',
                 )}
-                s
               />
               <Route
                 path="/contact"
@@ -244,6 +247,8 @@ const mapState = state => ({
 const mapProps = dispatch => ({
   getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
+  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
+  fetchAllSubCategories: () => dispatch(fetchAllSubCategories()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
   updateLoginStatus: sessionDetails =>

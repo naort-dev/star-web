@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { numberToDollarFormatter } from '../../utils/dataformatter';
+import { toggleQuickView } from '../../store/shared/actions/toggleModals';
 import { starProfessionsFormater, getStarName } from '../../utils/dataToStringFormatter';
 import AvatarContainer from './styled';
 
-const StarAvatar = ({ star, type }) => {
+const StarAvatar = ({ star, type, ...props }) => {
 
   const [profileImage, setProfileImage] = useState(null);
+  let isMounted = true;
 
   useEffect(() => {
     if (star.avatar_photo && star.avatar_photo.thumbnail_url) {
       const profileImg = new Image();
       profileImg.onload = () => {
-        setProfileImage(profileImg.src);
+        if (isMounted) {
+          setProfileImage(profileImg.src);
+        }
       };
       profileImg.src = star.avatar_photo && star.avatar_photo.thumbnail_url;
     } else {
@@ -24,9 +29,15 @@ const StarAvatar = ({ star, type }) => {
 
   useEffect(() => {
     return (() => {
-
+      isMounted = false
     });
   });
+
+  const toggleQuickViewModal = () => {
+    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+      props.toggleQuickView(true, star.user_id);
+    }
+  }
 
   const getWrapperComponent = () => {
     if (type === 'featured') {
@@ -41,7 +52,7 @@ const StarAvatar = ({ star, type }) => {
 
   return (
     <AvatarContainer className={type}>
-      <WrapperComponent imageUrl={profileImage}>
+      <WrapperComponent imageUrl={profileImage} onClick={toggleQuickViewModal}>
         <AvatarContainer.ControlWrapper>
           <AvatarContainer.ControlButton>
             <FontAwesomeIcon icon={faPlay} />
@@ -73,6 +84,11 @@ StarAvatar.defaultProps = {
 StarAvatar.propTypes = {
   star: PropTypes.object,
   type: PropTypes.string,
+  toggleQuickView: PropTypes.func.isRequired,
 };
 
-export default StarAvatar;
+const mapDispatchToProps = dispatch => ({
+  toggleQuickView: (state, modalData) => dispatch(toggleQuickView(state, modalData)),
+});
+
+export default connect(null, mapDispatchToProps)(StarAvatar);

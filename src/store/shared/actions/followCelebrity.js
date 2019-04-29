@@ -1,4 +1,5 @@
 
+import isEmpty from 'lodash/isEmpty';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { updateCelebrityFollow } from '../../../pages/landing/actions/getCelebList';
@@ -16,10 +17,9 @@ export const followCelebrityFailed = error => ({
   error,
 });
 
-export const updateFavouritesQueue = (celebId, celebProfessions, follow) => ({
+export const updateFavouritesQueue = (celebId, follow) => ({
   type: FOLLOW_CELEBRITY.setFollowQueue,
   celebId,
-  celebProfessions,
   follow,
 });
 
@@ -27,30 +27,26 @@ export const resetFavouritesQueue = () => ({
   type: FOLLOW_CELEBRITY.resetFollowQueue,
 });
 
-export const followCelebrity = (celebrityId, celebProfessions, follow, cancelUpdate) => (dispatch, getState) => {
-  const { auth_token } = getState().session;
+export const followCelebrity = (celebrityId, follow, cancelUpdate) => (dispatch, getState) => {
   return fetch.post(Api.followCelebrity, {
     celebrity: celebrityId,
     follow,
-  }, {
-    headers: {
-      'Authorization': `token ${auth_token.authentication_token}`,
-    },
-  }).then((resp) => {
+  }).then(() => {
     if (!cancelUpdate) {
-      if (Object.keys(getState().celebDetails).length) {
+      const { celebDetails } = getState().starDetails;
+      if (!isEmpty(celebDetails.celebrityDetails)) {
         const obj = {
-          ...getState().celebDetails,
+          ...celebDetails,
           userDetails: {
-            ...getState().celebDetails.userDetails,
+            ...celebDetails.userDetails,
             is_follow: follow,
           },
         };
         dispatch(celebDetailstFetchFollowUpdate(obj));
         // dispatch(updateCelebDetailsFollow(follow));
       }
-      dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
-      dispatch(updateFavouriteList(celebrityId, follow));
+      // dispatch(updateCelebrityFollow(celebrityId, celebProfessions, follow));
+      // dispatch(updateFavouriteList(celebrityId, follow));
     }
   }).catch((exception) => {
     dispatch(followCelebrityFailed(exception));
