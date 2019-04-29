@@ -218,4 +218,11 @@ CategoryPageStyled.ListingWrapper = styled.div`
   margin: 0 auto;
 `;
 
+CategoryPageStyled.Footer = styled.div`
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+  }
+`;
+
 export default CategoryPageStyled;
