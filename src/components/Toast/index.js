@@ -83,7 +83,7 @@ const Toast = props => {
   );
 };
 
-Toast.prototype = {
+Toast.propTypes = {
   updateToast: PropTypes.func.isRequired,
   toastObj: PropTypes.object.isRequired,
 };
