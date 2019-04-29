@@ -4,6 +4,9 @@ const MultiSelectStyled = styled.div`
   .select__dropdown-indicator {
     display: none;
   }
+  .select__value-container {
+    //border-bottom: 1px solid #aaa;
+  }
   .select__value-container > div[role='button'] {
     border: 1px solid #2f839d;
     background: #fff;

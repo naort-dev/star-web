@@ -76,6 +76,9 @@ UploadContainer.CategoriesWrapper = styled.div`
   max-width: 440px;
   margin: 0 auto;
 
+  .praveen {
+    //display: none;
+  }
   .MuiFormControl {
     width: 100%;
     margin-bottom: 12px;
@@ -103,7 +106,7 @@ UploadContainer.CategoriesWrapper = styled.div`
 `;
 
 UploadContainer.ButtonWrapper = styled.div`
-  margin-top:5%;
+  margin-top: 62px;
   text-align: center;
   margin-bottom: 75px;
 `;
@@ -186,8 +189,24 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
 
 UploadContainer.BrowseCategoryContainer = styled.div`
   display: flex;
-  padding: 20px 40px 20px 70px;
+  padding: 50px 40px 20px 70px;
   align-items: flex-start;
+
+  .right-section {
+    display: flex;
+    flex-direction: column;
+  }
+  .subCategoryHeading {
+    font-family: Gilroy-Medium;
+    font-size: 19px;
+    line-height: 23px;
+    margin-bottom: 10px;
+    max-width: 270px;
+    span {
+      font-size: 16px;
+      display: block;
+    }
+  }
 `;
 
 UploadContainer.ItemWrapper = styled.ul`
@@ -197,10 +216,6 @@ UploadContainer.ItemWrapper = styled.ul`
 UploadContainer.SubItemWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  .subCategoryHeading {
-    font-family: Gilroy-Medium;
-    font-size: 16px;
-  }
   li {
     padding: 6px 13px;
     border-radius: 15px;
@@ -214,14 +229,13 @@ UploadContainer.SubItemWrapper = styled.ul`
     cursor: pointer;
   }
 `;
-UploadContainer.Item = styled.li`
-  font-size: 20px;
+UploadContainer.Item = styled.li`  
+  font-size: 22px;
   font-family: Gilroy;
   cursor: pointer;
-  color: #999;
-  padding: 10px 0;
+  padding: 0 0 28px;
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
-  color: ${props => (props.selected ? '#fff' : props.theme.greyishBrown)};
+  color: ${props => (props.selected ? '#2f839d' : '#999')};
 `;
 
 
@@ -262,7 +276,7 @@ ImageUpload.CloseButton = styled.span`
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 57px 60px 30px;
+    padding: 57px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
