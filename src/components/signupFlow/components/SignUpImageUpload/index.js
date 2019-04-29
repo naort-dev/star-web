@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
@@ -148,6 +149,7 @@ class SignUpImageUpload extends React.Component {
             Choose the category that describes what you do best:
             <span>{`(${3 - this.state.selectedProfessions.length} remaining)`}</span>
           </div>
+          <Scrollbars className="browse-category-list"> 
           <UploadContainer.SubItemWrapper>
             {
               subCategoriesArray.map((profession) => {
@@ -163,6 +165,7 @@ class SignUpImageUpload extends React.Component {
               })
             }
           </UploadContainer.SubItemWrapper>
+          </Scrollbars>
         </div>
       </React.Fragment>
     );
