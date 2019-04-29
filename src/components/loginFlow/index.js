@@ -102,7 +102,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
-  followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
+  followCelebrity: (celebId, follow) => dispatch(followCelebrity(celebId, follow)),
   resetSessionError: () => dispatch(resetSessionError()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),

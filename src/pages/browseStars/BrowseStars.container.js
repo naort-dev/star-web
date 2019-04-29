@@ -10,6 +10,7 @@ const mapStateToProps = state => ({
   lowPrice: state.filters.lowPrice,
   highPrice: state.filters.highPrice,
   sortValue: state.filters.sortValue,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({

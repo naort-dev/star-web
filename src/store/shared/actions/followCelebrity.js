@@ -17,10 +17,9 @@ export const followCelebrityFailed = error => ({
   error,
 });
 
-export const updateFavouritesQueue = (celebId, celebProfessions, follow) => ({
+export const updateFavouritesQueue = (celebId, follow) => ({
   type: FOLLOW_CELEBRITY.setFollowQueue,
   celebId,
-  celebProfessions,
   follow,
 });
 

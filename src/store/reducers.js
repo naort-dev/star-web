@@ -88,6 +88,7 @@ const rootReducer = (state, action) => {
     newState.config = state.config;
     newState.groupTypes = state.groupTypes;
     newState.groupTypesListing = state.groupTypesListing;
+    newState.professionsList = state.professionsList;
   }
 
   return appReducer(newState, action);

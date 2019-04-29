@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
-import { TextInput } from '../../../TextField';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer, ImageUpload } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
