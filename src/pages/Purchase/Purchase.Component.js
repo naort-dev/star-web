@@ -144,7 +144,6 @@ class Purchase extends Component {
   closeHandler = () => {};
 
   render() {
-    console.log('render class');
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
