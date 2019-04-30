@@ -79,6 +79,11 @@ UploadContainer.CategoriesWrapper = styled.div`
   .praveen {
     //display: none;
   }
+  .select__clear-indicator {
+    svg {
+      cursor: pointer;
+    }
+  }
   .MuiFormControl {
     width: 100%;
     margin-bottom: 12px;
@@ -195,12 +200,9 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: 430px;
+    height: 410px;
     width: 100%;
 
-    .browse-category-list {
-      max-height: 332px;
-    }
   }
   .subCategoryHeading {
     font-family: Gilroy-Medium;
@@ -222,6 +224,8 @@ UploadContainer.ItemWrapper = styled.ul`
 UploadContainer.SubItemWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
+  overflow-y:auto;
+  overflow-x: visible;
   li {
     padding: 6px 13px;
     border-radius: 15px;
