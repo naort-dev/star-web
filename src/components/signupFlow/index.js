@@ -39,13 +39,15 @@ class SignupFlow extends React.Component {
       enableClose: props.signUpDetails.enableClose
         ? props.signUpDetails.enableClose
         : false,
+      switched: false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
-  onBack = () => {
+  onBack = flag => {
     this.setState(state => ({
       currentStep: state.currentStep - 1,
+      switched: flag ? flag : false,
     }));
   };
 
@@ -135,27 +137,21 @@ class SignupFlow extends React.Component {
               continueClickCallback={this.continueClickHandler}
             />
           );
-        // case 3:
-        //   return (
-        //     <StarRegistration
-        //       currentStep={this.state.currentStep}
-        //       changeStep={this.changeStep}
-        //       closeSignupFlow={this.closeSignUp}
-        //     />
-        //   );
         case 3:
           return (
             <WelcomeVideo
               onBack={this.onBack}
-              skipCallback={() => {
+              switched={this.state.switched}
+              skipCallback={flag => {
                 this.setState(state => ({
                   currentStep: state.currentStep + 1,
+                  switched: flag,
                 }));
               }}
             />
           );
         case 4:
-          return <Skip onBack={this.onBack} />;
+          return <Skip onBack={this.onBack} switched={this.state.switched} />;
 
         default:
           return null;

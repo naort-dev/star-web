@@ -15,6 +15,20 @@ export const Layout = styled.div`
   }
   #client-snackbar {
     display: flex;
-    align-items: center;
+    align-items: initial;
+  }
+  .toast-bar {
+    top: 10px;
+  }
+  .closeBtn {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .message {
+    padding-left: 5px;
+  }
+  .icon {
+    font-size: 22px;
   }
 `;

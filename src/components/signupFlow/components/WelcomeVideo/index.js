@@ -16,7 +16,9 @@ import {
 } from '../../../../store/shared/actions/commonActions';
 
 const WelcomeVideo = props => {
-  const [compSwitch, compSwitchHandler] = useState(true);
+  const [compSwitch, compSwitchHandler] = useState(
+    props.switched ? props.switched : false,
+  );
   const continueCallback = () => {
     compSwitchHandler(true);
   };
@@ -25,7 +27,7 @@ const WelcomeVideo = props => {
     if (compSwitch) {
       compSwitchHandler(false);
     } else {
-      props.onBack();
+      props.onBack(false);
     }
   };
 
@@ -87,9 +89,12 @@ WelcomeVideo.propTypes = {
   skipCallback: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
+  switched: PropTypes.bool,
 };
 
-WelcomeVideo.defaultProps = {};
+WelcomeVideo.defaultProps = {
+  switched: false,
+};
 
 function mapDispatchToProps(dispatch) {
   return {

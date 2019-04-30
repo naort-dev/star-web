@@ -7,7 +7,10 @@ import Button from '../../../../components/PrimaryButton';
 const Skip = props => {
   return (
     <Container>
-      <BackArrow onClick={() => props.onBack()} className="leftArrow" />
+      <BackArrow
+        onClick={() => props.onBack(props.switched)}
+        className="leftArrow"
+      />
       <FlexCenter className="colAlign content">
         <Head className="heading">Are you sure you want to skip?</Head>
         <p className="note">
@@ -15,7 +18,7 @@ const Skip = props => {
           video is key in helping fans book you for paid videos.
         </p>
         <FlexCenter className="colAlign">
-          <Button className="button" onClick={() => props.onBack()}>
+          <Button className="button" onClick={() => props.onBack(true)}>
             You talked me into it, let me fix my hair
           </Button>
           <Button className="button whiteBtn">
@@ -29,8 +32,11 @@ const Skip = props => {
 
 Skip.propTypes = {
   onBack: PropTypes.func.isRequired,
+  switched: PropTypes.bool,
 };
 
-Skip.defaultProps = {};
+Skip.defaultProps = {
+  switched: false,
+};
 
 export default Skip;

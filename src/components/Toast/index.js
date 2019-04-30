@@ -27,8 +27,8 @@ function CustomToast(props) {
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar">
-          <Icon />
-          {props.message}
+          <Icon classes={{ root: 'icon' }} />
+          <span className="message">{props.message}</span>
         </span>
       }
       action={[
@@ -37,8 +37,9 @@ function CustomToast(props) {
           aria-label="Close"
           color="inherit"
           onClick={props.onClose}
+          className="closeBtn"
         >
-          <CloseIcon />
+          <CloseIcon classes={{ root: 'icon' }} />
         </IconButton>,
       ]}
     />
@@ -68,8 +69,9 @@ const Toast = props => {
       <Snackbar
         anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
         open={props.toastObj.value}
-        autoHideDuration={6000}
+        autoHideDuration={1000000}
         onClose={handleClose}
+        className="toast-bar"
       >
         {props.toastObj.value ? (
           <CustomToast

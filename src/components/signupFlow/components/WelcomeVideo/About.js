@@ -25,7 +25,13 @@ const About = props => {
             Continue
           </Button>
         </FlexCenter>
-        <span className="skip">Skip</span>
+        <span
+          className="skip"
+          onClick={() => props.skipCallback(false)}
+          role="presentation"
+        >
+          Skip
+        </span>
       </React.Fragment>
     </Layout>
   );
@@ -33,6 +39,7 @@ const About = props => {
 
 About.propTypes = {
   continueCallback: PropTypes.func.isRequired,
+  skipCallback: PropTypes.func.isRequired,
 };
 
 About.defaultProps = {};

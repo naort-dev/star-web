@@ -107,7 +107,7 @@ const Video = props => {
             )}
             <span
               className="skip"
-              onClick={props.skipCallback}
+              onClick={() => props.skipCallback(true)}
               role="presentation"
             >
               Skip
