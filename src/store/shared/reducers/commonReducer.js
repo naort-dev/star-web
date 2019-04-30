@@ -9,9 +9,9 @@ const initalState = {
   customerId: null,
   videoUploaded: false,
   toastObj: {
-    value: true,
-    message: 'df',
-    variant: 'error',
+    value: false,
+    message: '',
+    variant: '',
   },
 };
 

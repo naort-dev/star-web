@@ -2,34 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle } from '@fortawesome/pro-regular-svg-icons';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import ErrorIcon from '@material-ui/icons/Error';
-import InfoIcon from '@material-ui/icons/Info';
+import {
+  faCheckCircle,
+  faExclamationCircle,
+  faInfoCircle,
+  faExclamationTriangle,
+  faTimes,
+} from '@fortawesome/pro-regular-svg-icons';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Snackbar from '@material-ui/core/Snackbar';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
-import WarningIcon from '@material-ui/icons/Warning';
 import { Layout } from './styled';
 import { updateToast } from '../../store/shared/actions/commonActions';
 
 const variantIcon = {
-  success: CheckCircleIcon,
-  warning: WarningIcon,
-  error: ErrorIcon,
-  info: InfoIcon,
+  success: faCheckCircle,
+  warning: faExclamationTriangle,
+  error: faExclamationCircle,
+  info: faInfoCircle,
 };
 
 function CustomToast(props) {
-  const Icon = variantIcon[props.variant];
   return (
     <SnackbarContent
       className={props.variant}
       aria-describedby="client-snackbar"
       message={
         <span id="client-snackbar">
-          <Icon classes={{ root: 'icon' }} />
+          <FontAwesomeIcon icon={variantIcon[props.variant]} className="icon" />
           <span className="message">{props.message}</span>
         </span>
       }
@@ -41,7 +42,7 @@ function CustomToast(props) {
           onClick={props.onClose}
           className="closeBtn"
         >
-          <CloseIcon classes={{ root: 'icon' }} />
+          <FontAwesomeIcon icon={faTimes} className="icon" />
         </IconButton>,
       ]}
     />
@@ -69,9 +70,9 @@ const Toast = props => {
   return (
     <Layout>
       <Snackbar
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         open={props.toastObj.value}
-        autoHideDuration={1000000}
+        autoHideDuration={6000}
         onClose={handleClose}
         className="toast-bar"
       >

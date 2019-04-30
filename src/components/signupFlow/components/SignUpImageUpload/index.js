@@ -179,7 +179,6 @@ class SignUpImageUpload extends React.Component {
     }
   };
   handleFocusSelect = () => {
-    debugger;
   };
   renderContent = () => {
     const { cropper, takePicture, selectedProfessions } = this.state;
