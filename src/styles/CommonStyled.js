@@ -55,11 +55,13 @@ export const BackArrow = styled.span`
   width: 10px;
   height: 20px;
   background-size: contain;
+  position: absolute;
+  left: 30px;
+  top: 30px;
   cursor: pointer;
   ${media.webView} {
     width: 14px;
     height: 28px;
-    position: absolute;
     left: 50px;
     top: 50px;
   }
@@ -73,12 +75,14 @@ export const CloseButton = styled.span`
   content: '';
   width: 20px;
   height: 20px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
   background-size: contain;
   cursor: pointer;
   ${media.webView} {
     width: 28px;
     height: 28px;
-    position: absolute;
     right: 50px;
     top: 50px;
   }

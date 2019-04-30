@@ -104,7 +104,7 @@ Payment.defaultProps = {
 const mapStateToProps = state => ({
   request: state.paymentDetails.requestDetails,
   sourceList: state.paymentDetails.sourceList,
-  celebDetails: state.celebDetails,
+  celebDetails: state.starDetails.celebDetails,
 });
 
 function mapDispatchToProps(dispatch) {
