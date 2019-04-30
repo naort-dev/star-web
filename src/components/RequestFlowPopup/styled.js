@@ -25,7 +25,6 @@ const PopupStyled = styled.div`
 PopupStyled.Dialog = styled(Dialog)`
   .paper-root {
     max-width: 100%;
-    overflow: hidden;
     @media (min-width: 832px) {
       max-height: calc(100% - 30px);
       border-radius: 20px;
