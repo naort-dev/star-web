@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { BackArrow, CloseButton } from '../../styles/CommonStyled';
-import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
+import { Layout, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
 import {
   createCharge,
@@ -11,6 +11,7 @@ import {
   modifySourceList,
 } from '../../store/shared/actions/processPayments';
 import { updateCustomerId } from '../../store/shared/actions/commonActions';
+import { FlexCenter } from '../../styles/CommonStyled';
 
 const Payment = props => {
   const [isNewCard, cardSelection] = useState(false);
@@ -51,11 +52,11 @@ const Payment = props => {
   return (
     <React.Fragment>
       <SubHeader>
-        <FlexBoxSBC>
+        <FlexCenter>
           <BackArrow onClick={backArrowClick} />
           <Heading>Payment Details</Heading>
           <CloseButton onClick={props.closeHandler} />
-        </FlexBoxSBC>
+        </FlexCenter>
       </SubHeader>
       <Scrollbars className="customScroll">
         {Object.keys(props.celebDetails).length > 0 && (

@@ -1,8 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer, ImageUpload } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
@@ -14,26 +12,20 @@ import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
 import MultiSelect from '../../../MultiSelect';
+import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
 class SignUpImageUpload extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      currentExif: null,
-      verificationDisable: false,
-      cropper: false,
-      finalImage: null,
-      finalFile: null,
-      cropImage: null,
-      takePicture: false,
-      showBrowseCategory: false,
-      subCategoriesArray: [],
-      selectedProfessions: [],
-      selectedCategory: [],
-    };
-    this.cursorPos = -1;
-    this.suggestionsFetchDelay = undefined;
-  }
+  state = {
+    currentExif: null,
+    verificationDisable: false,
+    cropper: false,
+    finalImage: null,
+    finalFile: null,
+    cropImage: null,
+    categoriesValue: '',
+    takePicture: false,
+  };
+
   componentWillMount() {}
 
   onBack = () => {
@@ -178,8 +170,7 @@ class SignUpImageUpload extends React.Component {
       this.setState({ selectedProfessions: list });
     }
   };
-  handleFocusSelect = () => {
-  };
+  handleFocusSelect = () => {};
   renderContent = () => {
     const { cropper, takePicture, selectedProfessions } = this.state;
     const { subcategories } = this.props.professionsList;
@@ -191,12 +182,8 @@ class SignUpImageUpload extends React.Component {
       return (
         <UploadContainer.CropperContainer>
           <ImageUpload.CropWrapper>
-            <ImageUpload.BackButton onClick={this.onBack}>
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </ImageUpload.BackButton>
-            <ImageUpload.CloseButton onClick={this.props.closeSignupFlow}>
-              <FontAwesomeIcon icon={faTimes} />
-            </ImageUpload.CloseButton>
+            <BackArrow onClick={this.onBack} />
+            <CloseButton onClick={this.props.closeSignupFlow} />
             <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
             <ImageCropper
               exifData={this.state.currentExif}
@@ -212,12 +199,8 @@ class SignUpImageUpload extends React.Component {
       return (
         <UploadContainer.CropperContainer>
           <ImageUpload.CropWrapper>
-            <ImageUpload.BackButton onClick={this.onBack}>
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </ImageUpload.BackButton>
-            <ImageUpload.CloseButton onClick={this.props.closeSignupFlow}>
-              <FontAwesomeIcon icon={faTimes} />
-            </ImageUpload.CloseButton>
+            <BackArrow onClick={this.onBack} />
+            <CloseButton onClick={this.props.closeSignupFlow} />
             <ImageUpload.Heading>Take your photo</ImageUpload.Heading>
             <TakePhoto
               takePicture={takePicture}
@@ -231,12 +214,8 @@ class SignUpImageUpload extends React.Component {
       <UploadContainer.Wrapper>
         {this.state.showBrowseCategory && (
           <UploadContainer.BrowseCategoryWrapper>
-            <ImageUpload.BackButton onClick={this.onBack}>
-              <FontAwesomeIcon icon={faChevronLeft} />
-            </ImageUpload.BackButton>
-            <ImageUpload.CloseButton onClick={this.props.closeSignupFlow}>
-              <FontAwesomeIcon icon={faTimes} />
-            </ImageUpload.CloseButton>
+            <BackArrow onClick={this.onBack} />
+            <CloseButton onClick={this.props.closeSignupFlow} />
             <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
             <UploadContainer.BrowseCategoryContainer>
               {this.browserCategoryList()}

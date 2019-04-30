@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from '../../../../styles/mediaQueries';
-import { FlexBoxSB } from '../../../../styles/CommonStyled';
 
 export const HeaderDiv = styled.section`
   height: 160px;
@@ -10,12 +9,7 @@ export const HeaderDiv = styled.section`
   background: #ff6c58;
   padding: 12px 40px 0;
   position: relative;
-
-  .svg-inline--fa {
-    font-size: 50px;
-    color: #fff;
-    cursor: pointer;
-  }
+  
   .arrow {
     visibility: ${(props) => !props.arrow && 'hidden'};
   }
@@ -37,10 +31,6 @@ export const HeaderDiv = styled.section`
     font-size: 24px;
     color: #ff6c58;
   }
-`;
-
-export const FlexBoxSBC = styled(FlexBoxSB)`
-  align-items: center;
 `;
 
 export const HeaderText = styled.section`

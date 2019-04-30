@@ -1,8 +1,6 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faChevronLeft } from '@fortawesome/pro-light-svg-icons';
 import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
@@ -12,7 +10,7 @@ import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
-import { GroupRegistration, StarRegistration } from '../UserRegistration';
+import { GroupRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import {
   setSocialMediaData,
@@ -23,10 +21,10 @@ import {
   toggleLogin,
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
-import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { FAN_REG_SUCCESS } from './constants';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
+import { BackArrow } from '../../styles/CommonStyled';
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -39,7 +37,6 @@ class SignupFlow extends React.Component {
       enableClose: props.signUpDetails.enableClose
         ? props.signUpDetails.enableClose
         : false,
-      switched: false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -202,11 +199,10 @@ class SignupFlow extends React.Component {
               !(
                 this.state.currentStep == 2 && this.state.selectedType === 'fan'
               ) && (
-                <LoginContainer.BackButton
+                <BackArrow
+                  className="backArrow"
                   onClick={() => this.changeStep(this.state.currentStep - 1)}
-                >
-                  <FontAwesomeIcon icon={faChevronLeft} />
-                </LoginContainer.BackButton>
+                />
               )}
             <LoginContainer.LeftSection>
               {!this.state.selectedType ? (

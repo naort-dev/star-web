@@ -10,6 +10,7 @@ export const Layout = styled.section`
   background: #fff;
   .leftArrow {
     left: 30px;
+    top: 10px;
     position: absolute;
   }
 `;
