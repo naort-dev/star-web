@@ -146,6 +146,7 @@ SearchSection.SuggestionDetails = styled.p`
   font-size: 13px;
   font-family: Gilroy;
   color: ${props => props.theme.greyishBrown};
+  word-break: break-word;
   line-height: 19px;
   font-weight: normal;
   text-align: left;

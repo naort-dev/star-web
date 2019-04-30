@@ -46,6 +46,12 @@ const QuickViewModal = (props) => {
     autoFitText();
   }
 
+  const handleWindowResize = () => {
+    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+      props.toggleQuickView(false)();
+    }
+  }
+
   useEffect(() => {
     const { userDetails, celebDetails } = props;
     const isPresentCelebDetails = !isEmpty(userDetails) && !isEmpty(celebDetails);
@@ -54,6 +60,7 @@ const QuickViewModal = (props) => {
       props.fetchStarDetails(props.quickViewModal.data);
     }
     autoFitText();
+    window.addEventListener('resize', handleWindowResize);
   }, []);
 
   useEffect(() => {
@@ -71,6 +78,12 @@ const QuickViewModal = (props) => {
   useEffect(() => {
     toggleFollowStatus(props.userDetails.is_follow);
   }, [props.userDetails.is_follow]);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    }
+  }, [])
 
   const onVideoError = () => {
     toggleVideoView(false);
@@ -136,30 +149,42 @@ const QuickViewModal = (props) => {
           <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
             <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>
-          <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to="/browse-stars">Read full profile</QuickViewStyled.MiniDescription>
+          <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to={`/${props.userDetails.user_id}`}>Read full profile</QuickViewStyled.MiniDescription>
         </QuickViewStyled.Content>
       </QuickViewStyled>
       <QuickViewStyled.StarWrapper>
         <StarDrawer starData={starData} />
       </QuickViewStyled.StarWrapper>
-      <QuickViewStyled.ActionBar>
-        <QuickViewStyled.ActionContent>
+      <QuickViewStyled.ActionBar available={props.celebDetails.availability}>
+        <QuickViewStyled.ActionContent available={props.celebDetails.availability}>
           <span>
             <QuickViewStyled.Avatar size={80} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
           </span>
           <QuickViewStyled.Description>
-            Book a shoutout 
-            from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+            {
+              props.celebDetails.availability ? 
+                <React.Fragment>
+                  Book a shoutout 
+                  from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+                </React.Fragment>
+              :
+                <React.Fragment>
+                  <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
+                </React.Fragment>
+            }
           </QuickViewStyled.Description>
         </QuickViewStyled.ActionContent>
-        <QuickViewStyled.ActionSection>
-            <QuickViewStyled.ArrowWrapper>
-              <FontAwesomeIcon icon={faChevronRight} />
-              <FontAwesomeIcon icon={faChevronRight} />
-              <FontAwesomeIcon icon={faChevronRight} />
-            </QuickViewStyled.ArrowWrapper>
-            <PrimaryButton className='action-button'>Book Now</PrimaryButton>
-        </QuickViewStyled.ActionSection>
+        {
+          props.celebDetails.availability &&
+            <QuickViewStyled.ActionSection>
+              <QuickViewStyled.ArrowWrapper>
+                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight} />
+              </QuickViewStyled.ArrowWrapper>
+              <PrimaryButton className='action-button'>Book Now</PrimaryButton>
+            </QuickViewStyled.ActionSection>
+        }
       </QuickViewStyled.ActionBar>
     </RequestFlowPopup>
   );

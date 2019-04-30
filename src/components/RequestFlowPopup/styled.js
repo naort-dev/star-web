@@ -28,6 +28,8 @@ PopupStyled.Dialog = styled(Dialog)`
     @media(min-width: 832px) {
       max-height: calc(100% - 30px); 
       border-radius: 20px;
+      height: auto;
+      width: auto;
     }
   }
 `
@@ -39,7 +41,7 @@ PopupStyled.Container = styled.div`
   -webkit-overflow-scrolling: touch;
   justify-content: center;
   height: 100%;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     border-radius: 6px;
   }
 `;
@@ -48,7 +50,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   padding: ${props => (props.modalView ? '0' : '40px 30px')};
   width: 100%;
   background-color: #fff;
-  @media(min-width: 834px) {
+  @media(min-width: 832px) {
     width: 700px;
     height: 700px;
   }

@@ -1,23 +1,25 @@
 import { connect } from 'react-redux';
 
-import Starprofile from './Starprofile.component';
+import StarProfile from './Starprofile.component';
 import { fetchCelebDetails, resetCelebDetails } from './actions/getCelebDetails';
+import { fetchStarDetails, resetStarDetails } from './actions';
 import { fetchCelebVideosList } from './actions/getCelebVideos';
 import { toggleLogin, toggleRequestFlow, setRequestFlow } from '../../store/shared/actions/toggleModals';
 import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 
 const mapStateToProps = state => ({
-  celebrityDetails: state.celebDetails.celebrityDetails,
-  userDetails: state.celebDetails.userDetails,
-  detailsLoading: state.celebDetails.loading,
-  detailsError: state.celebDetails.error,
+  celebDetails: state.starDetails.celebDetails.celebrityDetails,
+  userDetails: state.starDetails.celebDetails.userDetails,
+  detailsLoading: state.starDetails.celebDetails.loading,
+  detailsError: state.starDetails.celebDetails.error,
   videosList: state.celebVideos,
   requestFlowDetails: state.modals.requestFlowDetails,
   isLoggedIn: state.session.isLoggedIn,
   professionsList: state.professionsList,
 });
-
 const mapDispatchToProps = dispatch => ({
+  fetchStarDetails: id => dispatch(fetchStarDetails(id)),
+  resetStarDetails: () => dispatch(resetStarDetails()),
   fetchCelebDetails: id => dispatch(fetchCelebDetails(id)),
   resetCelebDetails: () => dispatch(resetCelebDetails()),
   toggleLogin: state => dispatch(toggleLogin(state)),
@@ -28,4 +30,4 @@ const mapDispatchToProps = dispatch => ({
   updateFavouritesQueue: (celebId, celebProfessions, follow) => dispatch(updateFavouritesQueue(celebId, celebProfessions, follow)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Starprofile);
+export default connect(mapStateToProps, mapDispatchToProps)(StarProfile);

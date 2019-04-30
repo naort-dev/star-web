@@ -66,6 +66,9 @@ class Header extends React.Component {
     if (showCategories) {
       this.toggleCategories();
     }
+    if (this.props.onBackClick) {
+      this.props.onBackClick();
+    }
   }
 
   toggleCategories = () => {
@@ -79,18 +82,20 @@ class Header extends React.Component {
     return (
       <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed}>
         <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
-          {
-            !showCategories &&
-              <HeaderSection.MenuButton onClick={this.toggleCategories} >
-                <FontAwesomeIcon icon={faBars} />
-              </HeaderSection.MenuButton>
-          }
-          {
-            showCategories &&
-              <HeaderSection.BackIcon>
-                <FontAwesomeIcon icon={faChevronLeft} onClick={this.handleBackClick} />
-              </HeaderSection.BackIcon>
-          }
+          <HeaderSection.MobileIconWrapper>
+            {
+              (showCategories || this.props.showBack) &&
+                <HeaderSection.BackIcon>
+                  <FontAwesomeIcon icon={faChevronLeft} onClick={this.handleBackClick} />
+                </HeaderSection.BackIcon>
+            }
+            {
+              !showCategories &&
+                <HeaderSection.MenuButton onClick={this.toggleCategories} >
+                  <FontAwesomeIcon icon={faBars} />
+                </HeaderSection.MenuButton>
+            }
+          </HeaderSection.MobileIconWrapper>
           {
             !props.disableLogo &&
               <HeaderSection.HeaderLeft hide={this.state.searchActive}>

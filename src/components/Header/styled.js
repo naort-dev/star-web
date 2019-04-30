@@ -76,6 +76,7 @@ HeaderSection.BackIcon = styled.span`
   font-size: 20px;
   width: 20px;
   color: ${props => props.theme.flatBlue};
+  padding-right: 10px;
   @media(min-width: 832px) {
     display: none;
   }
@@ -92,6 +93,12 @@ HeaderSection.CategoryWrapper = styled.div`
   @media(min-width: 832px) {
     display: block;
     position: static;
+  }
+`;
+
+HeaderSection.MobileIconWrapper = styled.div`
+  @media(min-width: 832px) {
+    display: none;
   }
 `;
 
