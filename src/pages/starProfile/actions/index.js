@@ -10,7 +10,7 @@ const fetchStarDetails = id => (dispatch) => {
 
 const resetStarDetails = () => (dispatch) => {
     dispatch(resetCelebDetails());
-    dispathc(resetCelebGroups());
+    dispatch(resetCelebGroups());
 }
 
 export { fetchStarDetails, resetStarDetails };

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { fetchStarDetails } from '../../pages/starProfile/actions';
 import { toggleQuickView, toggleLogin } from '../../store/shared/actions/toggleModals';
-import { followCelebrity } from '../../store/shared/actions/followCelebrity';
+import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
 import StarDrawer from '../StarDrawer';
@@ -40,7 +40,7 @@ const QuickViewModal = (props) => {
   }
 
   const [showVideo, toggleVideoView] = useState(false);
-  // const [video, updateVideoTag] = useState(document.createElement("video"));
+  const [followStatus, toggleFollowStatus] = useState(props.userDetails.is_follow ? props.userDetails.is_follow : false);
 
   const onModalMounted = () => {
     autoFitText();
@@ -68,11 +68,20 @@ const QuickViewModal = (props) => {
     }
   }, [props.celebDetails.profile_video]);
 
+  useEffect(() => {
+    toggleFollowStatus(props.userDetails.is_follow);
+  }, [props.userDetails.is_follow]);
+
+  const onVideoError = () => {
+    toggleVideoView(false);
+  }
+  
   const followCelebrityAction = () => {
     if (props.isLoggedIn) {
-      props.followCelebrity(props.userDetails.user_id, !props.userDetails.isFollow)
+      toggleFollowStatus(!followStatus);
+      props.followCelebrity(props.userDetails.id, !followStatus)
     } else {
-      props.toggleQuickView(false)();
+      props.updateFavouritesQueue(props.userDetails.id, !followStatus);
       props.toggleLogin(true);
     }
   }
@@ -87,7 +96,6 @@ const QuickViewModal = (props) => {
     }
     return shortName;
   }
-
   return (
     <RequestFlowPopup
       dotsCount={0}
@@ -104,6 +112,7 @@ const QuickViewModal = (props) => {
                 variableWidth
                 variableHeight
                 noBorder
+                onVideoError={onVideoError}
                 videoSrc={props.celebDetails.profile_video}
                 cover="assets/images/default-cover.jpg"
               />
@@ -125,7 +134,7 @@ const QuickViewModal = (props) => {
           <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
           <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
           <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
-            <FontAwesomeIcon icon={props.userDetails.is_follow ? faHeartSolid : faHeart} />
+            <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>
           <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to="/browse-stars">Read full profile</QuickViewStyled.MiniDescription>
         </QuickViewStyled.Content>
@@ -163,6 +172,7 @@ QuickViewModal.propTypes = {
   fetchStarDetails: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   followCelebrity: PropTypes.func.isRequired,
+  updateFavouritesQueue: PropTypes.func.isRequired,
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
@@ -179,6 +189,7 @@ const mapDispatchToProps = dispatch => ({
   toggleQuickView: state => () => dispatch(toggleQuickView(state)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   fetchStarDetails: id => dispatch(fetchStarDetails(id)),
+  updateFavouritesQueue: (id, follow) => dispatch(updateFavouritesQueue(id, follow)),
   followCelebrity: (id, isFollow) => dispatch(followCelebrity(id, isFollow)),
 });
 

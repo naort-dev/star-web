@@ -82,6 +82,7 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
+      this.props.fetchAllProfessions();
     }
     if (
       !nextProps.configLoading &&

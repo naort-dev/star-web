@@ -1,4 +1,5 @@
 
+import isEmpty from 'lodash/isEmpty';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { updateCelebrityFollow } from '../../../pages/landing/actions/getCelebList';
@@ -16,10 +17,9 @@ export const followCelebrityFailed = error => ({
   error,
 });
 
-export const updateFavouritesQueue = (celebId, celebProfessions, follow) => ({
+export const updateFavouritesQueue = (celebId, follow) => ({
   type: FOLLOW_CELEBRITY.setFollowQueue,
   celebId,
-  celebProfessions,
   follow,
 });
 
@@ -33,11 +33,12 @@ export const followCelebrity = (celebrityId, follow, cancelUpdate) => (dispatch,
     follow,
   }).then(() => {
     if (!cancelUpdate) {
-      if (Object.keys(getState().celebDetails).length) {
+      const { celebDetails } = getState().starDetails;
+      if (!isEmpty(celebDetails.celebrityDetails)) {
         const obj = {
-          ...getState().celebDetails,
+          ...celebDetails,
           userDetails: {
-            ...getState().celebDetails.userDetails,
+            ...celebDetails.userDetails,
             is_follow: follow,
           },
         };

@@ -11,12 +11,15 @@ import AvatarContainer from './styled';
 const StarAvatar = ({ star, type, ...props }) => {
 
   const [profileImage, setProfileImage] = useState(null);
+  let isMounted = true;
 
   useEffect(() => {
     if (star.avatar_photo && star.avatar_photo.thumbnail_url) {
       const profileImg = new Image();
       profileImg.onload = () => {
-        setProfileImage(profileImg.src);
+        if (isMounted) {
+          setProfileImage(profileImg.src);
+        }
       };
       profileImg.src = star.avatar_photo && star.avatar_photo.thumbnail_url;
     } else {
@@ -26,11 +29,11 @@ const StarAvatar = ({ star, type, ...props }) => {
 
   useEffect(() => {
     return (() => {
-
+      isMounted = false
     });
   });
 
-  const toggleQuickView = () => {
+  const toggleQuickViewModal = () => {
     if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
       props.toggleQuickView(true, star.user_id);
     }
@@ -49,7 +52,7 @@ const StarAvatar = ({ star, type, ...props }) => {
 
   return (
     <AvatarContainer className={type}>
-      <WrapperComponent imageUrl={profileImage} onClick={toggleQuickView}>
+      <WrapperComponent imageUrl={profileImage} onClick={toggleQuickViewModal}>
         <AvatarContainer.ControlWrapper>
           <AvatarContainer.ControlButton>
             <FontAwesomeIcon icon={faPlay} />

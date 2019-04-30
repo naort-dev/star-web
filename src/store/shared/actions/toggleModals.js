@@ -1,7 +1,7 @@
 export const TOGGLE_MODALS = {
   toggleLogin: 'toggleLogin/TOGGLE_MODAL',
   toggleSignup: 'toggleSignup/TOGGLE_MODAL',
-  toggleQuickView: 'toggleRefer/TOGGLE_QUICK_VIEW',
+  toggleQuickView: 'toggleQuickView/TOGGLE_QUICK_VIEW',
   setRequestFlow: 'setRequestFlow/TOGGLE_MODAL',
   toggleRequestFlow: 'toggleRequestFlow/TOGGLE_MODAL',
   resetRequestFlow: 'resetRequestFlow/TOGGLE_MODAL',

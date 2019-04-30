@@ -79,7 +79,7 @@ export default class SetPrice extends React.Component {
 
   onSubmit = () => {
     if (this.checkPriceRequired()) {
-      if (this.state.price.value < 500 && this.state.confirmPrice) {
+      if (parseInt(this.state.price.value) < 500 && this.state.confirmPrice) {
         this.props.primaryButtonClick()
       } else {
         this.setState({
