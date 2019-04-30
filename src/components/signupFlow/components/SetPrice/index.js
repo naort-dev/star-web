@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { TextInput } from '../../../TextField'
 import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode'
-
+import {convertedApplePrice} from '../../constants'
 export default class SetPrice extends React.Component {
   constructor(props) {
     super(props);
@@ -79,11 +79,16 @@ export default class SetPrice extends React.Component {
 
   onSubmit = () => {
     if (this.checkPriceRequired()) {
-      this.setState({
-        confirmPrice: true
-      })
+      if (this.state.price.value < 500 && this.state.confirmPrice) {
+        this.props.primaryButtonClick()
+      } else {
+        this.setState({
+          confirmPrice: true
+        })
+      }
     }
   }
+
   onSubmitReferralCode = () => {
     if (this.checkReferralCodeRequired()) {
       this.setState({
@@ -91,11 +96,13 @@ export default class SetPrice extends React.Component {
       })
     }
   }
+
   onRefer = () => {
     this.setState({
       isReferred: true
     })
   }
+  
   render() {
     const { props } = this;
     const { isReferred, confirmPrice } = this.state
@@ -137,7 +144,7 @@ export default class SetPrice extends React.Component {
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-                {props.help_text}
+                {convertedApplePrice(this.state.price.value,this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
                 {this.state.referralCode.value ?
@@ -148,7 +155,7 @@ export default class SetPrice extends React.Component {
           }
           <SetPriceWrapper.ButtonWrapper>
             <SetPriceWrapper.Button primary onClick={this.onSubmit}>
-              {confirmPrice? props.confirmPrimaryButton: props.primary_button}
+              {confirmPrice ? props.confirmPrimaryButton : props.primary_button}
             </SetPriceWrapper.Button>
           </SetPriceWrapper.ButtonWrapper>
         </SetPriceWrapper.ComponentWrapper>
@@ -168,7 +175,7 @@ SetPrice.propTypes = {
   link: PropTypes.string,
   primary_button: PropTypes.string,
   primaryButtonClick: PropTypes.func,
-  title: PropTypes.string
+  title: PropTypes.string,
 };
 SetPrice.defaultProps = {
   action: '',

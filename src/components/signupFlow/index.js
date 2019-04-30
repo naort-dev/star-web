@@ -131,12 +131,12 @@ class SignupFlow extends React.Component {
           confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
           confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
           description={SET_PRICE.DESCRIPTION}
+          inAppPriceList={this.props.inAppPriceList}
           image_url={SET_PRICE.IMAGE_URL}
           message={SET_PRICE.MESSAGE}
           primary_button={SET_PRICE.PRIMARY_BUTTON}
           primaryButtonClick={this.goToBrowseStars}
           title={SET_PRICE.TITLE}
-          help_text={SET_PRICE.HELP_TEXT}
           link={SET_PRICE.LINK}
         />)
         default: return null;
@@ -225,6 +225,7 @@ const mapStateToProps = state => ({
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
+  inAppPriceList: state.config.data.in_app_pricing,
 });
 
 const mapDispatchToProps = dispatch => ({
