@@ -59,6 +59,9 @@ export const BackArrow = styled.span`
   ${media.webView} {
     width: 14px;
     height: 28px;
+    position: absolute;
+    left: 50px;
+    top: 50px;
   }
 `;
 
@@ -75,5 +78,8 @@ export const CloseButton = styled.span`
   ${media.webView} {
     width: 28px;
     height: 28px;
+    position: absolute;
+    right: 50px;
+    top: 50px;
   }
 `;
