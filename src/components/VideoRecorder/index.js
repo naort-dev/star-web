@@ -23,6 +23,9 @@ class VideoRecorder extends Component {
 
   componentDidMount() {
     this.fetchStream();
+    if (this.props.videoSrc) {
+      this.initialLoad();
+    }
   }
 
   componentDidUpdate(prevProps) {
@@ -42,12 +45,24 @@ class VideoRecorder extends Component {
         this.stopRecording();
       }
     }
+    if (this.props.videoSrc && this.props.videoSrc !== prevProps.videoSrc) {
+      this.initialLoad();
+    }
   }
+
   componentWillUnmount() {
     if (this.props.shouldRecord) this.props.recordTrigger();
     if (this.props.playPauseMedia) this.props.playPauseMediaAction();
     this.closeStream();
   }
+
+  initialLoad = () => {
+    this.videoSrc = this.props.videoSrc;
+    this.setState({ mediaControls: true });
+    const videoElem = this.video;
+    videoElem.src = this.videoSrc;
+    videoElem.load();
+  };
 
   fetchStream = () => {
     if (checkMediaRecorderSupport()) {
@@ -72,6 +87,9 @@ class VideoRecorder extends Component {
         if (this.mounted) {
           this.setState({ progress: false });
         }
+        if (this.props.startStreamingCallback) {
+          this.props.startStreamingCallback();
+        }
         videoElem.srcObject = stream;
         const options = {
           mimeType: 'video/webm;codecs=vp8',
@@ -92,12 +110,11 @@ class VideoRecorder extends Component {
           }, this.props.duration);
         } catch (e) {
           if (this.mounted) {
-            this.setState({ error: true });
             if (this.props.errorHandler) this.props.errorHandler();
           }
         }
       })
-      .catch((error) => {
+      .catch(() => {
         if (this.mounted) {
           this.setState({ progress: false });
           if (this.props.errorHandler) this.props.errorHandler();
@@ -221,17 +238,22 @@ VideoRecorder.propTypes = {
   recordTrigger: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.bool.isRequired,
   forceStop: PropTypes.bool.isRequired,
+  videoSrc: PropTypes.string,
+  startStreamingCallback: PropTypes.func,
 };
 
 VideoRecorder.defaultProps = {
   errorHandler: () => {},
   stopRecordHandler: () => {},
+  videoSrc: '',
+  startStreamingCallback: () => {},
 };
 
 function mapStateToProps(state) {
   return {
     shouldRecord: state.commonReducer.shouldRecord,
     playPauseMedia: state.commonReducer.playPauseMedia,
+    videoSrc: state.commonReducer.videoSrc,
   };
 }
 

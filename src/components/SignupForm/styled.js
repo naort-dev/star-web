@@ -298,6 +298,7 @@ LoginContainer.PrivacyContent = styled.div`
     color: #2f839d;
     cursor: pointer;
     text-decoration: none;
+    padding-left: 5px;
   }
   @media(min-width:768px){
     text-align:center;
@@ -436,6 +437,10 @@ LoginContainer.WrapsInput = styled.div`
     color: #615195;
     text-align: center;
   }
+  input:focus::-webkit-input-placeholder { color:transparent; }
+  input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+  input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+  input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:768px){
     width:100%;
   }

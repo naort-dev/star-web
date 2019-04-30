@@ -8,9 +8,9 @@ const initalState = {
     selected: [],
   },
   searchParam: '',
-  lowPrice: '',
-  highPrice: '',
-  sortValue: 'featured',
+  lowPrice: 0,
+  highPrice: 500,
+  sortValue: 'popularity',
   selectedVideoType: '',
   selectedVideoDate: '',
 };

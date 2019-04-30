@@ -12,6 +12,8 @@ export default (state = { ...initalState }, action) => {
     case CELEB_DETAILS.start:
       return {
         ...state,
+        celebrityDetails: {},
+        userDetails: {},
         loading: true,
       };
 

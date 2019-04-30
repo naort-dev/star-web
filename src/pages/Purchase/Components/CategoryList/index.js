@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
-
 import { FlexBoxSB } from '../../../../styles/CommonStyled';
 import {
   Icon,
@@ -14,12 +13,16 @@ import {
 } from './styled';
 
 const CategoryList = ({ dataModal, getCategory }) => {
+  const handleGetCategory = type => () => {
+    if (getCategory) getCategory(type);
+  };
+
   return (
     <Layout>
       {dataModal.map((item, index) => {
         return (
           <ContentWrapper
-            onClick={() => getCategory(item.type)}
+            onClick={handleGetCategory(item.type)}
             key={item.type}
           >
             <FlexBoxSB key={item.header}>
@@ -44,8 +47,8 @@ const CategoryList = ({ dataModal, getCategory }) => {
 };
 
 CategoryList.propTypes = {
-  getCategory: PropTypes.func,
-  dataModal: PropTypes.array,
+  getCategory: PropTypes.func.isRequired,
+  dataModal: PropTypes.array.isRequired,
 };
 
 export default CategoryList;

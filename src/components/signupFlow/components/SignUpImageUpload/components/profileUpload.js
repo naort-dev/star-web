@@ -7,15 +7,36 @@ import { imageSizes } from '../../../../../constants/imageSizes';
 import ImageCropper from '../../../../ImageCropper';
 import Loader from '../../../../Loader';
 import { ImageUpload } from '../styled';
+import { detectUserMedia } from '../../../../../utils/detectCamera';
 
 export default class ProfileUpload extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      cropImage: null,
+      cropMode: false,
+      imageLoading: false,
+      finalImage: null,
+      finalFile: null,
+      stream: null,
+      recording: false,
+      screenShot: null,
+    };
+    this.constraints = {
+      video: true,
+      audio: true,
+    };
+    this.recordedBlobs = [];
+    this.videoRef = React.createRef();
+    this.options = {
+      mimeType: 'video/webm;codecs=vp8',
+      audioBitsPerSecond: 128000,
+      videoBitsPerSecond: 128000,
+      bitsPerSecond: 128000,
+    };
+  }
 
-  state = {
-    cropImage: null,
-    cropMode: false,
-    imageLoading: false,
-    finalImage: null,
-    finalFile: null,
+  componentWillMount() {
   }
 
   async onFileChange() {
@@ -23,6 +44,23 @@ export default class ProfileUpload extends React.Component {
     const file = document.getElementById('profile').files[0];
     const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
     if (!allowedExtensions.exec(document.getElementById('profile').value)) {
+      this.setState({ imageError: { extensionError: true } });
+    } else if (file) {
+      const correctResolution = await this.checkResolution(file);
+      if (correctResolution) {
+        this.setState({ imageLoading: true });
+        await this.getImageData(file);
+      } else {
+        this.setState({ imageError: { sizeError: true }, imageLoading: false });
+      }
+    }
+  }
+
+  async onUploadFileChange() {
+    this.setState({ imageError: false })
+    const file = document.getElementById('profileUpload').files[0];
+    const allowedExtensions = /((\.jpeg)|(\.jpg)|(\.png))$/i;
+    if (!allowedExtensions.exec(document.getElementById('profileUpload').value)) {
       this.setState({ imageError: { extensionError: true } });
     } else if (file) {
       const correctResolution = await this.checkResolution(file);
@@ -50,7 +88,7 @@ export default class ProfileUpload extends React.Component {
     const exif = await this.getExif(file);
     this.currentExif = exif;
     reader.onload = () => {
-      this.props.onComplete(true, reader.result, extension, false, exif);
+      this.props.onComplete(reader.result, exif, extension);
       this.setState({ cropMode: true, cropImage: reader.result, extension, imageLoading: false });
     };
     if (file) {
@@ -93,6 +131,29 @@ export default class ProfileUpload extends React.Component {
     })
   }
 
+  getVideoStream = () => {
+    if (detectUserMedia()) {
+      return navigator.mediaDevices.getUserMedia(this.constraints)
+        .then((stream) => {
+          this.videoRef.current.srcObject = stream;
+          this.setState({ stream });
+          return stream;
+        }).catch((e) => {
+        });
+    }
+  }
+
+  handleDataAvailable = (event) => {
+    if (event.data && event.data.size > 0) {
+      this.recordedBlobs.push(event.data);
+    }
+  }
+
+  detectCameraMedia = async () => {
+    const stream = await this.getVideoStream();
+    this.setState({ recording: true });
+  }
+
   checkResolution(file) {
     let correctResolution = false;
     const img = new Image();
@@ -116,7 +177,7 @@ export default class ProfileUpload extends React.Component {
     this.setState({ cropImage: null, cropMode: false })
   }
 
-  render() {
+  render() {    
     return (
       <ImageUpload.DetailsWrapper>
         {
@@ -124,7 +185,7 @@ export default class ProfileUpload extends React.Component {
             <Loader />
             :
             <React.Fragment>
-              <ImageUpload.ProfileInputButton>
+              <ImageUpload.ProfileInputButton image={this.props.image} takePhoto={this.state.recording}>
                 <ImageUpload.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
                 >
@@ -138,8 +199,8 @@ export default class ProfileUpload extends React.Component {
                 </ImageUpload.ProfileImageWrapper>
                 <ImageUpload.ProfileImageWrapper
                   imageUrl={this.state.finalImage}
+                  onClick={this.props.onTakePicture}
                 >
-                  <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
                   <ImageUpload.ProfileInputContainer>
                     <ImageUpload.ProfileInputWrapper noImage={this.state.finalImage}>
                       <FontAwesomeIcon icon={faCamera} />
@@ -148,27 +209,26 @@ export default class ProfileUpload extends React.Component {
                   </ImageUpload.ProfileInputContainer>
                 </ImageUpload.ProfileImageWrapper>
               </ImageUpload.ProfileInputButton>
-              {/* {
-                this.state.cropMode && this.state.cropImage &&
-                <ImageUpload.CropWrapper>
-                  <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
-                  <ImageCropper
-                    exifData={this.currentExif}
-                    aspectRatio={imageSizes.profile}
-                    afterCrop={this.getCroppedImage}
-                    closeCropper={() => this.closeCropper()}
-                    cropImage={this.state.cropImage}
-                  />
-                </ImageUpload.CropWrapper>
-              } */}
-              {/* <ImageUpload.ControlWrapper>
-                <ImageUpload.ControlButton
-                  disabled={!this.state.finalImage}
-                  onClick={this.onComplete}
+              <ImageUpload.UploadedImage image={this.props.image}>
+                <ImageUpload.ProfileImageWrapper
+                  imageUrl={this.props.image}
                 >
-                  Continue
-                </ImageUpload.ControlButton>
-              </ImageUpload.ControlWrapper> */}
+                </ImageUpload.ProfileImageWrapper>
+                <ImageUpload.ButtonWrapper>
+                  <ImageUpload.CropperLightButton onClick={this.props.onTakePicture}>
+                    <FontAwesomeIcon icon={faCamera} />
+                    Take picture
+                  </ImageUpload.CropperLightButton>
+                  <ImageUpload.CropperLightButton>
+                    <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profileUpload" onChange={() => this.onUploadFileChange()} type="file" />
+                    <FontAwesomeIcon icon={faUpload} />
+                    Upload picture
+                  </ImageUpload.CropperLightButton>
+                </ImageUpload.ButtonWrapper>
+              </ImageUpload.UploadedImage>
+              <ImageUpload.TakePhoto takePhoto={this.state.recording}>
+                <ImageUpload.VideoElement autoPlay innerRef={this.videoRef} muted />
+              </ImageUpload.TakePhoto>
             </React.Fragment>
         }
       </ImageUpload.DetailsWrapper>

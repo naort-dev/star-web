@@ -1,19 +1,19 @@
 class Api {
   static getConfig = 'v1/config/';
   static getFeaturedStars = 'v2/user/celebrity_display/';
-  static getCelebList = 'v1/user/fan/celebrity_list/get_list/';
+  static getCelebList = 'v2/user/fan/celebrity_list/get_list/';
   static getTrendingStars = 'v2/user/trending_stars/';
-  static authGetCelebList = 'v1/user/fan/celebrity_list/';
-  static getProfessionsList = 'v1/user/filtered_professions/';
+  static authGetCelebList = 'v2/user/fan/celebrity_list/';
+  static getProfessionsList = 'v2/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
   static getVideosList = 'v1/request/featured_videos/';
   static login = 'v1/user/login/';
-  static register = 'v1/user/register/'
+  static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
   static socialMediaLogin = 'v1/user/socialsignup/';
-  static authGetCelebDetails = 'v1/user/user_details/';
-  static getCelebDetails = id => `v1/user/user_details/${id}/get_details/`;
+  static authGetCelebDetails = 'v2/user/user_details/';
+  static getCelebDetails = id => `v2/user/user_details/${id}/get_details/`;
   static getUserFavourites = 'v1/user/fan/favourite_stars/';
   static getUserVideos = 'v1/request/request_list/';
   static getRequestDetails = 'v1/request/stargramz/';
@@ -68,6 +68,7 @@ class Api {
   static twitterLogin = 'v1/user/twitter_integration/';
   static twitterOauth = 'v1/user/twitter_login';
   static validatePromo = 'v1/user/referral_validate/';
+  static getSubCategoryList = 'v2/user/professions/?parent=false';
 }
 
 export default Api;

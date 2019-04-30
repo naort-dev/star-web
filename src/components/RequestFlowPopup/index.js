@@ -5,6 +5,7 @@ import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import Slide from '@material-ui/core/Slide';
 import Dialog from '@material-ui/core/Dialog';
 import PopupStyled from './styled';
+import { BackArrow, CloseButton } from '../../styles/CommonStyled';
 
 export default class RequestFlowPopup extends React.Component {
   constructor(props) {
@@ -29,22 +30,23 @@ export default class RequestFlowPopup extends React.Component {
     const { fullScreen } = this.state;
     if (fullScreen && document.body.getBoundingClientRect().width >= 834) {
       this.setState({ fullScreen: false });
-    } else if (!fullScreen && document.body.getBoundingClientRect().width < 834) {
+    } else if (
+      !fullScreen &&
+      document.body.getBoundingClientRect().width < 834
+    ) {
       this.setState({ fullScreen: true });
     }
-  }
+  };
 
   renderSliderDots = () => {
     const DotsArray = times(this.props.dotsCount, random.bind(0, 100));
     const selectedDot = this.props.selectedDot ? this.props.selectedDot - 1 : 0;
-    return (
-      DotsArray.map((item, index) => {
-        return (
-          <PopupStyled.SliderDots selected={selectedDot===index} key={index} />
-        );
-      })
-    );
-  }
+    return DotsArray.map((item, index) => {
+      return (
+        <PopupStyled.SliderDots selected={selectedDot === index} key={index} />
+      );
+    });
+  };
 
   renderPopup = () => {
     return (
@@ -52,6 +54,7 @@ export default class RequestFlowPopup extends React.Component {
         fullScreen={this.state.fullScreen}
         open
         classes={{paper: 'paper-root'}}
+        onRendered={this.props.onMounted && this.props.onMounted}
         onClose={this.props.closePopUp}
         aria-labelledby="responsive-dialog-title"
       >
@@ -59,16 +62,13 @@ export default class RequestFlowPopup extends React.Component {
           modalView={this.props.modalView}
           largePopup={this.props.largePopup}
           autoWidth={this.props.autoWidth}
-          innerRef={node => this.popupContent = node}
+          innerRef={(node) => (this.popupContent = node)}
         >
-          {
-            !this.props.modalView &&
+          {!this.props.modalView && (
             <PopupStyled.SliderDotsWrapper>
-              {
-                this.renderSliderDots()
-              }
+              {this.renderSliderDots()}
             </PopupStyled.SliderDotsWrapper>
-          }
+          )}
           {/* {
             !this.props.modalView &&
               <PopupStyled.CloseButton
@@ -80,16 +80,17 @@ export default class RequestFlowPopup extends React.Component {
           <PopupStyled.SmallContent>
             {this.props.children}
           </PopupStyled.SmallContent>
-          {
-            !this.props.disableClose &&
-              <PopupStyled.CloseButton onClick={this.props.closePopUp}>
-                <FontAwesomeIcon icon={faTimes} />
-              </PopupStyled.CloseButton>
-          }
+          {!this.props.disableClose && (
+            // <PopupStyled.CloseButton onClick={this.props.closePopUp}>
+            //   <FontAwesomeIcon icon={faTimes} />
+            // </PopupStyled.CloseButton>
+
+            <CloseButton onClick={this.props.closePopUp} />
+          )}
         </PopupStyled.SmallContainer>
       </PopupStyled.Dialog>
     );
-  }
+  };
 
   render() {
     return this.renderPopup();

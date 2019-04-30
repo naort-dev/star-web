@@ -10,7 +10,7 @@ import RequestFlowPopup from '../RequestFlowPopup';
 import SignUpForm from '../SignupForm';
 import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
-import { FanRegistrationSuccess } from './components/FanRegistrationSuccess'
+import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
 import { GroupRegistration, StarRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
@@ -18,6 +18,7 @@ import { setSocialMediaData, resetSocialMediaData } from '../../store/shared/act
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { toggleLogin, toggleSignup } from '../../store/shared/actions/toggleModals';
 import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
+import { FAN_REG_SUCCESS } from './constants'
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -71,7 +72,16 @@ class SignupFlow extends React.Component {
         />
         );
         case 2: return (
-          <FanRegistrationSuccess closeSignupFlow={this.closeSignUp} />
+          <RegistrationSuccess
+            closeSignupFlow={this.closeSignUp} 
+            description={FAN_REG_SUCCESS.DESCRIPTION}
+            highlight_text={FAN_REG_SUCCESS.HIGHLIGHT_TEXT}
+            icon={FAN_REG_SUCCESS.ICON}
+            image_url={FAN_REG_SUCCESS.IMAGE_URL}
+            message={FAN_REG_SUCCESS.MESSAGE}
+            primary_button={FAN_REG_SUCCESS.PRIMARY_BUTTON}
+            secondary_button={FAN_REG_SUCCESS.SECONDARY_BUTTON}
+            title={FAN_REG_SUCCESS.TITLE}/>
         );
         default: return null;
       }
@@ -98,7 +108,7 @@ class SignupFlow extends React.Component {
           changeStep={this.changeStep}
           closeSignupFlow={this.closeSignUp}
         />);
-        
+
         default: return null;
       }
     } else if (this.state.selectedType === 'group') {
@@ -137,8 +147,8 @@ class SignupFlow extends React.Component {
         >
           <LoginContainer>
             {this.state.currentStep > 0 &&
-            !(this.state.currentStep==2 &&
-            this.state.selectedType==='fan') &&
+              !(this.state.currentStep == 2 &&
+                this.state.selectedType === 'fan') &&
               <LoginContainer.BackButton onClick={() => this.changeStep(this.state.currentStep - 1)}>
                 <FontAwesomeIcon icon={faChevronLeft} />
               </LoginContainer.BackButton>}

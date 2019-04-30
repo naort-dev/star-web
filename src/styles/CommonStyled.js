@@ -1,4 +1,6 @@
 import styled from 'styled-components';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { media } from './mediaQueries';
 
 export const FlexBoxSB = styled.section`
   display: flex;
@@ -11,7 +13,6 @@ export const FlexCenter = styled.section`
   justify-content: center;
 `;
 
-
 export const PlayButton = styled.section`
   display: flex;
   justify-content: center;
@@ -23,5 +24,54 @@ export const PlayButton = styled.section`
   svg {
     font-size: 44px;
     color: red;
+  }
+`;
+export const Progress = styled(CircularProgress)`
+  position: fixed;
+  left: calc(50% - 20px);
+  top: calc(50% - 20px);
+`;
+
+export const Loading = styled.section`
+  position: absolute;
+  justify-content: center;
+  display: flex;
+  z-index: 99999999;
+  width: 100%;
+  flex-direction: column;
+  background: #bdbcbc;
+  opacity: 0.5;
+  min-height: 100%;
+`;
+
+export const BackArrow = styled.span`
+  background: ${props =>
+    props.white
+      ? `url('../assets/images/previcon-white.svg') no-repeat`
+      : `url('../assets/images/previcon.svg') no-repeat`};
+  content: '';
+  width: 10px;
+  height: 20px;
+  background-size: contain;
+  cursor: pointer;
+  ${media.webView} {
+    width: 14px;
+    height: 28px;
+  }
+`;
+
+export const CloseButton = styled.span`
+  background: ${props =>
+    props.white
+      ? `url('../assets/images/closeicon-white.svg') no-repeat`
+      : `url('../assets/images/closeicon.svg') no-repeat`};
+  content: '';
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  cursor: pointer;
+  ${media.webView} {
+    width: 28px;
+    height: 28px;
   }
 `;

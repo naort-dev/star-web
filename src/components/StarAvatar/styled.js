@@ -26,11 +26,15 @@ const AvatarContainer = styled.section`
 `;
 
 AvatarContainer.ControlWrapper = styled.span`
-  position: absolute;
-  bottom: 7.5px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+    position: absolute;
+    bottom: 7.5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
 `;
 
 AvatarContainer.ControlButton = styled.span`
@@ -125,7 +129,7 @@ AvatarContainer.Name = styled.span`
   @media(min-width: 832px) {
     line-height: 1.41;
     font-size: 17px;
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-Bold;
     width: calc(100% - 50px);
     text-align: left;
   }
@@ -181,7 +185,7 @@ AvatarContainer.Content = styled.article`
       }
       ${AvatarContainer.Name} {
         font-size: 47px;
-        line-height: 1;
+        line-height: 67px;
       }
       ${AvatarContainer.Price} {
         font-family: Gilroy-Semibold;

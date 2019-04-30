@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -101,12 +102,6 @@ class DesktopHome extends React.Component {
     return { trendingList };
   }
 
-  componentDidUpdate(prevProps) {
-    if (prevProps.category.label !== this.props.category.label) {
-      this.props.closeLandingFlow();
-    }
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.setTrendingData);
   }
@@ -126,8 +121,8 @@ class DesktopHome extends React.Component {
   }
 
   handleCategoryChange = (category) => {
-    this.props.closeLandingFlow();
     this.props.updateCategory(category.title, category.id, category.child);
+    this.props.history.push('/browse-stars');
   }
 
   render() {
@@ -163,10 +158,10 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.RowDivider>
                     <DesktopStyled.Avatar className="left-spacing-none">
-                      <AvatarContent data={this.getAvatarContent(3)} />
+                      <AvatarContent data={this.getAvatarContent(3)}/>
                     </DesktopStyled.Avatar>
                     <DesktopStyled.Avatar className="left-spacing-none">
-                      <AvatarContent data={this.getAvatarContent(4)} />
+                      <AvatarContent data={this.getAvatarContent(4)}/>
                     </DesktopStyled.Avatar>
                   </DesktopStyled.RowDivider>
                   <DesktopStyled.SecondaryAvatar>
@@ -239,7 +234,7 @@ class DesktopHome extends React.Component {
             </DesktopStyled.ColumnDivider>
           </DesktopStyled.ProcessSection>
           <DesktopStyled.RespondSection>
-            <VideoRender cover="assets/images/default-cover.jpg" />
+            <VideoRender videoSrc="assets/Footboys.mp4" cover="assets/images/default-cover.jpg" />
             <DesktopStyled.ColumnDivider>
               <DesktopStyled.SubHeader>
                 The star delivers
@@ -257,7 +252,7 @@ class DesktopHome extends React.Component {
         <DesktopStyled.ReceiveSection>
           <DesktopStyled.FlowWrapper>
             <DesktopStyled.ReceiveContent>
-              <VideoRender cover="assets/images/default-cover.jpg" />
+              <VideoRender videoSrc="assets/Footboys.mp4" cover="assets/images/default-cover.jpg" />
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.SubHeader>
                   Watch & Share!
@@ -291,6 +286,7 @@ class DesktopHome extends React.Component {
               Or choose from one of our trending stars!
             </DesktopStyled.SubTitle>
             <StarListing
+              customLoader
               dataList={this.state.trendingList}
               loading={this.props.trendingStars.loading}
               noScroll
@@ -313,10 +309,10 @@ DesktopHome.propTypes = {
   featuredStars: PropTypes.object.isRequired,
   trendingStars: PropTypes.object.isRequired,
   category: PropTypes.object.isRequired,
-  closeLandingFlow: PropTypes.func.isRequired,
   fetchTrendingStars: PropTypes.func.isRequired,
   updateCategory: PropTypes.func.isRequired,
   theme: PropTypes.object,
+  history: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -331,4 +327,4 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
-export default withTheme(connect(mapStateToProps, mapDispatchToProps)(DesktopHome));
+export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(DesktopHome)));

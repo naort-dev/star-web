@@ -110,6 +110,7 @@ SearchSection.StarHeading = styled.p`
   text-transform: uppercase;
   margin-top: 10px;
   font-weight: 600;
+  text-align: left;
   @media(min-width: 832px) {
     padding-left: 30px;
   }
@@ -147,6 +148,7 @@ SearchSection.SuggestionDetails = styled.p`
   color: ${props => props.theme.greyishBrown};
   line-height: 19px;
   font-weight: normal;
+  text-align: left;
   @media(min-width: 768px) {
     font-size: 14px;
   }
@@ -167,6 +169,7 @@ SearchSection.SuggestionListName = styled.span`
   color: #68b5cd;
   font-family: Gilroy-Medium;
   font-size: 17px;
+  text-align: left;
 `;
 
 SearchSection.InputWrapper = styled.div`
@@ -195,10 +198,10 @@ SearchSection.Input = styled.input`
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  color: ${props => props.theme.twilight};
   background: transparent;
+  color: #999999;
   @media(min-width: 832px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 SearchSection.SignIn = styled.button`

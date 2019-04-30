@@ -6,8 +6,9 @@ const DotsStyled = styled.div`
 
 DotsStyled.SliderDots = styled.span`
   display: inline-block;
-  width: 10px;
-  height: 10px;
+  margin-top: 15px;
+  width: 12.5px;
+  height: 12.5px;
   border: 1px solid #ff6c58;
   background: ${props => (props.selected ? '#ff6c58' : 'transparent')};
   border-radius: 50%;

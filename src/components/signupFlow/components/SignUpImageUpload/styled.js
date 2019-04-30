@@ -13,7 +13,8 @@ const UploadContainer = styled.div`
   }
 `;
 
-UploadContainer.Wrapper = styled.div``;
+UploadContainer.Wrapper = styled.div`
+`;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
@@ -46,15 +47,6 @@ UploadContainer.CloseButton = styled.span`
   top: 40px;
 `;
 
-UploadContainer.wrapper = styled.div`
-  height:100%;
-  @media(min-width:1025px){
-    height: 100vh;
-    overflow:auto;
-    background-color:white;
-  }
-`;
-
 UploadContainer.Container = styled.div`
   @media(min-width: 768px) {
     padding: 0 0;
@@ -80,7 +72,184 @@ UploadContainer.Heading = styled.div`
   }
 `;
 
-UploadContainer.CategoriesWrapper = styled.div``;
+UploadContainer.CategoriesWrapper = styled.div`
+  max-width: 440px;
+  margin: 0 auto;
+
+  .praveen {
+    //display: none;
+  }
+  .MuiFormControl {
+    width: 100%;
+    margin-bottom: 12px;
+
+    > div {
+      &:before {
+        border-bottom: 2px solid #aaa;
+      }
+      &:after {
+        border-bottom: 0;
+      }
+    }
+    input {
+      padding-bottom: 14px;
+    }
+    label {
+      font-size: 18px;
+      color: #b7b7b7;
+      font-family: Gilroy;
+    }
+    label[data-shrink="true"] {
+      color: #555;
+    }
+  }
+`;
+
+UploadContainer.ButtonWrapper = styled.div`
+  margin-top: 62px;
+  text-align: center;
+  margin-bottom: 75px;
+`;
+
+UploadContainer.ContinueButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Bold;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  width: 300px;
+  height: 60px;
+  outline: none;
+`;
+
+UploadContainer.BrowseCategories = styled.div`
+  font-size: 14px;
+  text-align: center;
+  font-family: Gilroy;
+  margin-top: 10px;
+`;
+
+UploadContainer.BrowseCategoriesLink = styled.span`
+  color: #46829a;
+  font-family: Gilroy-Medium;
+  cursor: pointer;
+`;
+
+UploadContainer.AutoSuggest = styled.div`
+  height: 100%;
+  @media(min-width: 1025px) {
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
+  }
+`;
+UploadContainer.SuggestionListWrapper = styled.div`
+  font-family: Gilroy-light;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #FFFFFF;
+  z-index: 1;
+  height: calc(100vh - 108px);
+  @media(min-width: 832px) {
+    box-shadow: 0px 6px 6px 0px #cccccc;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    height: auto;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+    height: 300px;
+    bottom: initial;
+    box-shadow: none;
+  }
+  @media(min-width: 1025px) {
+    width: auto;
+    top: 47px;
+    right: 0;
+    height: 320px;
+    box-shadow: 0px 6px 6px 0px #cccccc;
+  }
+`;
+
+UploadContainer.BrowseCategoryWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 3;
+  max-height: 620px;
+  height: 100%;
+`;
+
+UploadContainer.BrowseCategoryContainer = styled.div`
+  display: flex;
+  padding: 50px 40px 20px 70px;
+  align-items: flex-start;
+
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    height: 430px;
+    width: 100%;
+
+    .browse-category-list {
+      max-height: 332px;
+    }
+  }
+  .subCategoryHeading {
+    font-family: Gilroy-Medium;
+    font-size: 19px;
+    line-height: 23px;
+    margin-bottom: 10px;
+    max-width: 270px;
+    span {
+      font-size: 16px;
+      display: block;
+    }
+  }
+`;
+
+UploadContainer.ItemWrapper = styled.ul`
+  min-width: 227px;
+`;
+
+UploadContainer.SubItemWrapper = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  li {
+    padding: 6px 13px;
+    border-radius: 15px;
+    border: 1px solid #2f839d;
+    display: flex;
+    font-family: Gilroy-medium;
+    font-size: 14px;
+    align-items: center;
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+`;
+UploadContainer.Item = styled.li`  
+  font-size: 22px;
+  font-family: Gilroy;
+  cursor: pointer;
+  padding: 0 0 28px;
+  background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
+  color: ${props => (props.selected ? '#fff' : '#999')};
+
+  &.categoryItem {
+    background-color: #fff;
+    color: ${props => (props.selected ? props.theme.flatBlue : '#999')};
+    font-family:  ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
+  }
+`;
+
 
 const ImageUpload = styled.div`
   height: 100%;
@@ -119,16 +288,31 @@ ImageUpload.CloseButton = styled.span`
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 30px 60px;
+    padding: 57px 60px 55px;
+  }
+`;
+ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
+  padding: 30px 10px;
+  @media(min-width: 768px) {
+    padding: 0;
   }
 `;
 
 ImageUpload.ProfileInputButton = styled.div`
-  display: flex;
+  display: ${props => (props.image || props.takePhoto ? 'none' : 'flex')};
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
   padding-bottom: 18px;
+`;
+
+ImageUpload.UploadedImage = styled.div`
+  display: ${props => (!props.image ? 'none' : 'flex')};
+  height: calc(100% - 150px);
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 18px;
+  flex-direction: column;
 `;
 
 ImageUpload.CoverImage = styled.div`
@@ -154,7 +338,12 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-size: cover;
   cursor: pointer;
   text-align: center;
-  margin-right: 10px;
+  margin-right: 11px;
+
+  &:last-child {
+    margin-left: 11px;
+    margin-right: 0;
+  }
 `;
 
 ImageUpload.ProfileInputContainer = styled.span`
@@ -174,9 +363,20 @@ ImageUpload.ProfileInputWrapper = styled.div`
   width: 35px;
   height: 35px;
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 6px;
   color: #2f839d;
   font-size: 28px;
+  
+  &:first-child {
+    svg {
+      font-size: 29px;
+    }
+  }
+  &:last-child {
+    svg {
+      font-size: 33px;
+    }
+  }
 `;
 
 ImageUpload.UploadInput = styled.input`
@@ -187,7 +387,7 @@ ImageUpload.UploadInput = styled.input`
 
 ImageUpload.UploadText = styled.span`
   color: #555;
-  font-family: 'Avenir-Light';
+  font-family: 'Gilroy';
   font-size: 14px;
   max-width: 110px;
 `;
@@ -204,6 +404,7 @@ ImageUpload.Heading = styled.div`
   }
   @media(min-width: 1025px){
     font-size: 25px;
+    margin-bottom: 26px;
   }
   @media(min-width:1920px){
     font-size: 27px;
@@ -239,7 +440,7 @@ ImageUpload.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Avenir-Bold;
+  font-family: Gilroy-Semibold;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
@@ -254,6 +455,95 @@ ImageUpload.ControlButton = styled.button`
     background-color: #b6b6b6;
     color: #676767;
     border-color: #b6b6b6;
+  }
+`;
+
+ImageUpload.UploadInput = styled.input`
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  cursor: pointer;
+  width: 100%;
+`;
+
+ImageUpload.CropperLightButton = styled.button`
+  cursor: pointer;
+  background-color: #ededed;
+  font-family: Gilroy-Medium;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+  color: #2f839d;
+  box-sizing: border-box;
+  border-radius: 30px;
+  border: none;
+  min-width: 160px;
+  height: 40px;
+  outline: none;
+  margin-right: 10px;
+  position: relative;
+  &:hover {
+    background-color: #2f839d;
+    color: #ededed;
+  }
+  & > svg {
+    margin-right: 5px;
+  }
+`;
+
+ImageUpload.ButtonWrapper = styled.div`
+  margin-top: 20px;
+`;
+
+ImageUpload.VideoElement = styled.video`
+    width: 100%;
+    height: 500px;
+    background: black;
+    margin: 10px 0;
+`;
+ImageUpload.TakePhoto = styled.div`
+  display: ${props => (props.takePhoto ? 'block' : 'none')};
+  background: #000;
+  .videoError {
+    min-height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    font-size: 18px;
+    font-family: Gilroy-Medium;
+    padding: 0 40px;
+    text-align: center;
+    line-height: 35px;
+  }
+`;
+
+ImageUpload.PhotoButtonWrapper = styled.div`
+  transform: translateY(-50%);
+  text-align: center;
+`;
+
+ImageUpload.CropperButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  min-width: 250px;
+  height: 60px;
+  outline: none;
+  border: none;
+  margin: 0 17px;
+  &:hover {
+    background-color: #ededed;
+    color: #2f839d;
   }
 `;
 

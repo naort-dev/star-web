@@ -14,11 +14,13 @@ export const TextInput = props => (
     id={props.id}
     required={props.required}
     onBlur={props.onBlur}
+    label={props.label} 
+    classes={{root:"MuiFormControl"}}
   />
 );
 
 TextInput.propTypes = {
-  error: PropTypes.string,
+  error: PropTypes.bool,
   placeholder: PropTypes.string,
   type: PropTypes.string,
   name: PropTypes.string,
@@ -31,7 +33,7 @@ TextInput.propTypes = {
 };
 
 TextInput.defaultProps = {
-  error: '',
+  error: false,
   placeholder: '',
   type: '',
   name: '',

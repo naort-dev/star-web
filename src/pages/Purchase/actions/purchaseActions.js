@@ -8,6 +8,9 @@ export const OCCASION_LIST = {
   failed: 'fetch_failed/occasion_list',
   reset: 'reset/occasion_list',
 };
+export const AskQuestion = {
+  videoUploaded: 'SET_VIDEO_UPLOADED_FLG',
+};
 export const occasionlistFetchStart = () => ({
   type: OCCASION_LIST.start,
 });
@@ -15,13 +18,12 @@ export const occasionlistFetchEnd = () => ({
   type: OCCASION_LIST.end,
 });
 export const occasionlistFetchSuccess = (details) => {
-  return (
-    {
-      type: OCCASION_LIST.success,
-      details,
-    });
+  return {
+    type: OCCASION_LIST.success,
+    details,
+  };
 };
-export const occasionlistFetchFailed = error => ({
+export const occasionlistFetchFailed = (error) => ({
   type: OCCASION_LIST.failed,
   error,
 });
@@ -42,3 +44,8 @@ export const fetchOccasionlist = id => (dispatch) => {
     dispatch(occasionlistFetchFailed(exception));
   });
 };
+
+export const setVideoUploadedFlag = (value) => ({
+  type: AskQuestion.videoUploaded,
+  value,
+});

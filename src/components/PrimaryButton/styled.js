@@ -19,6 +19,7 @@ const ButtonStyled = styled.button`
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   width: 242px;
   outline: none;
+  cursor: pointer;
   :hover, :focus {
     box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
   }

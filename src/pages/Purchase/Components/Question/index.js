@@ -11,7 +11,7 @@ import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
 import getAWSCredentials from '../../../../utils/AWSUpload';
 import { locations } from '../../../../constants/locations';
 
-const Question = (props) => {
+const Question = props => {
   const questions = [
     {
       key: 'que1',
@@ -27,51 +27,82 @@ const Question = (props) => {
     },
   ];
   const [showHideFlg, showHideScript] = useState(false);
-  const [buttonLabel, changeButtonLabel] = useState('Record');
+  const [buttonLabel, changeButtonLabel] = useState(
+    props.videoSrc ? 'Continue to Payment' : 'Record',
+  );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
 
-  const mediaHandler = (btnLabel) => {
+  const mediaHandler = btnLabel => {
     props.recordTrigger();
     props.playPauseMedia();
     changeButtonLabel(btnLabel);
     showHideScript(false);
     errorHandler(false);
+    props.setVideoUploadedFlag(false);
   };
 
-  const buttonClickHandler = () => {
-    if (buttonLabel === 'Record') {
-      mediaHandler('Stop', false);
-      stopHandler(false);
-    } else if (buttonLabel === 'Stop') {
-      mediaHandler('Continue to Payment', true);
-      stopHandler(true);
-    } else if (buttonLabel === 'Continue to Payment') {
-      // uploadVideoRecorded();
-    }
+  const startStreaming = () => {
+    changeButtonLabel('Stop');
+  };
+
+  const readyToPayment = () => {
+    props.loaderAction(false);
+    props.continueCallback();
   };
 
   const uploadVideoRecorded = () => {
     let uploadVideo = null;
     uploadVideo = new File([props.videoFile], 'askVideo.mp4');
+    props.loaderAction(true);
     getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
-      .then((response) => {
+      .then(response => {
         if (response && response.filename) {
+          const payload = {
+            starDetail: {
+              id: 'MYervpeO',
+            },
+            question: '',
+            date: '',
+            type: 3,
+            fileName: response.filename,
+          };
           axios
             .post(response.url, response.formData)
-            .then((response) => {})
-            .catch((error) => {});
+            .then(() => {
+              props.starsonaRequest(payload, true, readyToPayment);
+              props.setVideoUploadedFlag(true);
+            })
+            .catch(() => {
+              props.loaderAction(false);
+            });
         }
       })
-      .catch((error) => {});
+      .catch(() => {
+        props.loaderAction(false);
+      });
   };
 
+  const buttonClickHandler = () => {
+    if (buttonLabel === 'Record') {
+      mediaHandler('Record', false);
+      stopHandler(false);
+    } else if (buttonLabel === 'Stop') {
+      mediaHandler('Continue to Payment', true);
+      stopHandler(true);
+    } else if (buttonLabel === 'Continue to Payment') {
+      if (props.videoUploaded) {
+        props.continueCallback();
+      } else {
+        uploadVideoRecorded();
+      }
+    }
+  };
   const stopRecordHandler = () => {
     mediaHandler('Continue to Payment', true);
   };
 
   const retryRecordHandler = () => {
-    changeButtonLabel('Stop');
     showHideScript(false);
   };
   const errorHandlerCallback = () => {
@@ -92,6 +123,7 @@ const Question = (props) => {
               recordTrigger={props.recordTrigger}
               errorHandler={errorHandlerCallback}
               forceStop={isStop}
+              startStreamingCallback={startStreaming}
             />
           </VideoContainer>
           <QuestionContainer isShow={showHideFlg || error}>
@@ -148,15 +180,25 @@ Question.propTypes = {
   playPauseMedia: PropTypes.func.isRequired,
   recordTrigger: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
+  continueCallback: PropTypes.func.isRequired,
+  videoSrc: PropTypes.string,
+  videoUploaded: PropTypes.bool,
+  loaderAction: PropTypes.func.isRequired,
+  setVideoUploadedFlag: PropTypes.func.isRequired,
+  starsonaRequest: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
   videoFile: {},
+  videoSrc: '',
+  videoUploaded: false,
 };
 
 function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
+    videoSrc: state.commonReducer.videoSrc,
+    videoUploaded: state.occasionList.videoUploaded,
   };
 }
 export default connect(

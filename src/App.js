@@ -4,20 +4,22 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
-
 import { library } from '@fortawesome/fontawesome-svg-core';
-
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
-import { fetchProfessionsList } from './store/shared/actions/getProfessions';
+import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
+import { fetchSubCategoryList } from './store/shared/actions/getSubCategoryLists';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
+import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
 import { Purchase } from './pages/Purchase';
+// import { Purchase } from './pages/Purchase/Purchase.Loadable';
+import { Progress, Loading } from './styles/CommonStyled';
 // import { Favourites } from './pages/favourites';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
@@ -33,6 +35,7 @@ import {
   updateUserRole,
 } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
+import Loader from './components/Loader';
 
 class App extends React.Component {
   constructor(props) {
@@ -47,6 +50,9 @@ class App extends React.Component {
 
   componentWillMount() {
     this.props.fetchProfessionsList();
+    this.props.fetchAllProfessions();
+    this.props.fetchAllSubCategories();
+    // this.props.fetchSubCategoryList();
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
@@ -77,6 +83,7 @@ class App extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
+      this.props.fetchAllProfessions();
     }
     if (
       !nextProps.configLoading &&
@@ -103,6 +110,11 @@ class App extends React.Component {
     const showRoutes = !showLoading;
     return (
       <div>
+        {this.props.loader && (
+          <Loading>
+            <Progress />
+          </Loading>
+        )}
         <div id="content-wrapper">
           <Modals />
           <Helmet
@@ -129,7 +141,6 @@ class App extends React.Component {
                 component={this.routeToOutside(
                   'https://about.starsona.com/terms-service',
                 )}
-                s
               />
               <Route
                 path="/contact"
@@ -143,6 +154,7 @@ class App extends React.Component {
                   'https://about.starsona.com/faq',
                 )}
               />
+              <Route exact path="/browse-stars" component={BrowseStars} />
               <Route
                 exact
                 path="/signup"
@@ -219,6 +231,7 @@ App.propTypes = {
   configLoading: PropTypes.bool.isRequired,
   userDataLoaded: PropTypes.bool.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
+  loader: PropTypes.bool.isRequired,
 };
 
 const mapState = state => ({
@@ -226,11 +239,14 @@ const mapState = state => ({
   configData: state.config.data,
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
+  loader: state.commonReducer.loader,
 });
 
 const mapProps = dispatch => ({
   getConfig: () => dispatch(getConfig()),
   fetchProfessionsList: () => dispatch(fetchProfessionsList()),
+  fetchAllProfessions: () => dispatch(fetchAllProfessions()),
+  fetchAllSubCategories: () => dispatch(fetchAllSubCategories()),
   fetchGroupTypes: () => dispatch(fetchGroupTypes()),
   fetchGroupTypesListing: () => dispatch(fetchGroupTypesListing()),
   updateLoginStatus: sessionDetails =>

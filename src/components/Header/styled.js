@@ -6,7 +6,7 @@ const HeaderSection = styled.header`
   left: 0;
   right: 0;
   background: white;
-  height: 60px;
+  height: 126px;
   z-index: 10;
   padding: ${props => !props.notFixed && '12px 16px'};
   @media(min-width: 832px) {
@@ -20,9 +20,10 @@ HeaderSection.HeaderDiv = styled.div`
   padding: ${props => (props.notFixed ? '3px 16px' : '0')};
   justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
   align-items: center;
-  height: 100%;  
+  height: 50px;  
   flex-wrap: wrap;
   @media (min-width: 832px) {
+    height: 100%;
     padding: ${props => (props.notFixed ? '32px 30px 25px' : '30px 36px')};
   }
 `;

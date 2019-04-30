@@ -19,7 +19,6 @@ export const responseOnFailed = (error) => {
   if (error.response) {
     const status = error.response.headers.status || error.response.status;
     customError.status = status;
-
     if (status === 401) {
       clearSessionDetails();
       window.location.pathname = '/';

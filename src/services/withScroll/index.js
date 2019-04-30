@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { Scrollbars } from 'react-custom-scrollbars';
 import styled from 'styled-components';
 import Loader from '../../components/Loader';
 
@@ -11,11 +10,18 @@ export const withScroll = (WrappedComponent) => {
     width: 100%;
     height: 100%;
     min-height: 300px;
-    ${props => props.loading && (`
+    position: relative;
+    ${props => props.loading && !props.customLoader && (`
       display: flex;
       align-items: center;
       justify-content: center;
     `)}
+    .loader {
+      position: static;
+      z-index: initial;
+      background: transparent;
+      opacity: initial;
+    }
   `;
 
   const NoDataText = styled.span`
@@ -77,38 +83,37 @@ export const withScroll = (WrappedComponent) => {
           refreshFunction={this.refresh}
           scrollThreshold={0.5}
           hasMore={this.state.hasMore}
-          loader={this.props.dataList.length ? <Loader /> : <NoDataText>{this.props.noDataText}</NoDataText>}
+          loader={this.props.dataList.length ? this.renderLoader() : <NoDataText>{this.props.noDataText}</NoDataText>}
         >
           <WrappedComponent {...this.props} />
         </InfiniteScroll>
       );
     }
 
+    renderLoader = () => {
+      if (!this.props.customLoader) {
+        return <Loader class="loader" />
+      }
+      return null
+    }
+
     renderList = () => {
-      if (this.props.noScroll && this.props.loading) {
-        return <Loader />;
-      } else if (this.props.noScroll) {
+      if (this.props.noScroll) {
         return <WrappedComponent {...this.props} />;
       } else if (this.props.scrollTarget) {
         return this.infiniteScrollList(this.props.scrollTarget)
       }
       return (
-        <Scrollbars
-          renderView={props => <div {...props} className="view" id="scrollable-target" />}
-        >
-          {
-            this.infiniteScrollList('scrollable-target')
-          }
-        </Scrollbars>
+        this.infiniteScrollList(null)
       );
     }
 
     render() {
       return (
-        <ListStyled loading={this.props.loading}>
+        <ListStyled loading={this.props.loading} customLoader={this.props.customLoader}>
           {
-            !this.props.dataList.length && this.props.loading ?
-              <Loader />
+            !this.props.dataList.length && this.props.loading && !this.props.customLoader ?
+              this.renderLoader()
             :
               this.renderList()
           }
