@@ -17,7 +17,7 @@ import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
-import { Purchase } from './pages/Purchase/Purchase.Loadable';
+import { Purchase } from './pages/Purchase';
 // import { Favourites } from './pages/favourites';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';

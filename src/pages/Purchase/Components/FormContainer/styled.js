@@ -17,7 +17,10 @@ export const Layout = styled.section`
       text-align: center;
     }
   }
-  button {
+  .continue-button {
     height: 60px;
   }
+`;
+Layout.EventStep2 = styled.div`
+
 `;

@@ -65,7 +65,7 @@ class Purchase extends Component {
         );
       } else {
         return (
-          <FormContainer detailList={this.props.OccasionDetails} submitClick={this.submitClick}>
+          <FormContainer bookingData={this.props.bookingData? this.props.bookingData : {}} saveAudioRecording={(target, audio)=> this.props.saveAudioRecording(target, audio)} resetRecording={(target)=> this.props.resetRecording(target)} audioRecorder={this.props.audioRecorder} detailList={this.props.OccasionDetails ? this.props.OccasionDetails : []} submitClick={this.submitClick}>
             <FormContent />
           </FormContainer>
         );
@@ -76,12 +76,13 @@ class Purchase extends Component {
   };
 
   getCategory = (type) => {
+    console.log('entered getCategory');
     this.setState({
       stepCount: 2,
       category: type,
     });
-    console.log(this.state.category);
     if (this.state.category !== 3) {
+      console.log(this.state.category);
       this.props.fetchOccasionlist(type);
     }
   };
@@ -102,6 +103,7 @@ class Purchase extends Component {
     });
   };
   render() {
+    console.log('render class');
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>

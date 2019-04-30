@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 const Templates = styled.div`
+  height: calc(100% - 150px);
   @media(min-width:768px){
     padding: 0px 0px;
   
@@ -17,6 +18,19 @@ Templates.InputWrapper = styled.div`
     margin-top: 5px;
     align-items: flex-start;
   }
+`;
+Templates.Myself = styled.div`
+width: 155px;
+height: 20px;
+font-family: Gilroy Regular;
+font-size: 14px;
+font-weight: 500;
+font-style: normal;
+font-stretch: normal;
+line-height: 1.79;
+letter-spacing: normal;
+text-align: center;
+color: #2f829c;
 `;
 Templates.Label = styled.div`
   color:#333333;

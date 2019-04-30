@@ -1,13 +1,19 @@
 import styled, {keyframes} from 'styled-components';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AudioRecorderDiv = styled.div`
 width: 100%;
 height: 100%;
 display: flex;
-align-items: flex-end;
+align-items: flex-start;
 justify-content: center;
 flex-direction: column;
-margin-top:3%;
+`;
+AudioRecorderDiv.Icon = styled(FontAwesomeIcon)`
+  flex: 1;
+  font-size: 20px;
+  color: #2f839d;
+  // padding-top: 20px;
 `;
 
 const ripple = keyframes`
@@ -15,8 +21,6 @@ const ripple = keyframes`
   75% {transform:scale(1.75); opacity:1;}
   100% {transform:scale(2); opacity:0;}
 `;
-
-
 
 AudioRecorderDiv.RippleButton = styled.button`
 width: 22px;
@@ -28,7 +32,7 @@ color: white;
 border-radius: 50%
 border: 1px solid #ef6a58;
 cursor: pointer;
-background-image: url('../../assets/images/mic.svg');
+/*background-image: url('../../assets/images/mic.svg');*/
 background-size: 12px;
 background-repeat: no-repeat;
 background-position: center;
@@ -54,25 +58,37 @@ order:1
 }
 `;
 
-AudioRecorderDiv.Button = styled.button`
-width: 22px;
-height: 22px;
-background-color: white ;
-margin-right: 5px;
-text-align: center;
-color: white;
-border-radius: 50%
-border: 1px solid #ef6a58;
-cursor: pointer;
-background-image: url('../../assets/images/mic.svg');
-background-size: 12px;
-background-repeat: no-repeat;
-background-position: center;
-position: relative;
+AudioRecorderDiv.Button = styled.div`
+// width: 22px;
+// height: 22px;
+// background-color: white ;
+// margin-right: 5px;
+// text-align: center;
+// color: white;
+// border-radius: 50%
+// border: 1px solid #ef6a58;
+// cursor: pointer;
+// background-size: 12px;
+// background-repeat: no-repeat;
+// background-position: center;
+// position: relative;
 order: 1;
 `;
 
-
+AudioRecorderDiv.Rerecord = styled.div`
+  width: 100px;
+  height: 20px;
+  font-family: Gilroy-Semibold;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.79;
+  letter-spacing: normal;
+  text-align: center;
+  color: #2f829c;
+  order: 1;
+`;
 
 AudioRecorderDiv.TextButton = styled.button`
 min-width: 60px;
@@ -119,21 +135,33 @@ AudioRecorderDiv.UploadInput = styled.input`
 
   `;
 
-AudioRecorderDiv.CloseButton = styled.button`
-width: 22px;
-height: 22px;
-background-color: white ;
-margin-right: 5px;
-text-align: center;
-color: white;
-border-radius: 50%
-border: 1px solid #ef6a58;
-cursor: pointer;
-background-image: url('../../assets/images/delete.svg');
-background-size: 10px;
-background-repeat: no-repeat;
-background-position: center;
-order: 2;
+AudioRecorderDiv.CloseButton = styled.div`
+// width: 22px;
+// height: 22px;
+// background-color: white ;
+// margin-right: 5px;
+// text-align: center;
+// color: white;
+// border-radius: 50%
+// border: 1px solid #ef6a58;
+// cursor: pointer;
+// background-image: url('../../assets/images/delete.svg');
+// background-size: 10px;
+// background-repeat: no-repeat;
+// background-position: center;
+// order: 2;
+width: 100px;
+  height: 20px;
+  font-family: Gilroy-Semibold;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.79;
+  letter-spacing: normal;
+  text-align: center;
+  color: #2f829c;
+  order: 2;
 `;
 
 AudioRecorderDiv.Audio = styled.audio`
@@ -150,38 +178,61 @@ AudioRecorderDiv.ControlWrapper = styled.div`
  flex-direction: row;
 `;
 
-AudioRecorderDiv.PlayButton = styled.button`
-width: 22px;
-height: 22px;
-background-color: white ;
-margin-right: 5px;
-text-align: center;
-color: white;
-border-radius: 50%
-border: 1px solid #ef6a58;
-cursor: pointer;
-background-image: url('../../assets/images/play.svg');
-background-size: 12px;
-background-repeat: no-repeat;
-background-position: center;
-order: 0;
+AudioRecorderDiv.PlayButton = styled.div`
+// width: 22px;
+// height: 22px;
+// background-color: white ;
+// margin-right: 5px;
+// text-align: center;
+// color: white;
+// border-radius: 50%
+// border: 1px solid #ef6a58;
+// cursor: pointer;
+// // background-image: url('../../assets/images/play.svg');
+// background-size: 12px;
+// background-repeat: no-repeat;
+// background-position: center;
+// order: 0;
+width: 100px;
+  height: 20px;
+  font-family: Gilroy-Semibold;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.79;
+  letter-spacing: normal;
+  text-align: center;
+  color: #2f829c;
+  order: 0;
 `;
 
-AudioRecorderDiv.PauseButton = styled.button`
-width: 22px;
-height: 22px;
-background-color: white ;
-margin-right: 5px;
-text-align: center;
-color: white;
-border-radius: 50%
-border: 1px solid #ef6a58;
-cursor: pointer;
-background-image: url('../../assets/images/pause.svg');
-background-size: 8px;
-background-repeat: no-repeat;
-background-position: center;
-order: 0;
+AudioRecorderDiv.PauseButton = styled.div`
+// width: 22px;
+// height: 22px;
+// background-color: white ;
+// margin-right: 5px;
+// text-align: center;
+// color: white;
+// border-radius: 50%
+// border: 1px solid #ef6a58;
+// cursor: pointer;
+// background-image: url('../../assets/images/pause.svg');
+// background-size: 8px;
+// background-repeat: no-repeat;
+// background-position: center;
+// order: 0;
+width: 100px;
+  height: 20px;
+  font-family: Gilroy-Semibold;
+  font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.79;
+  letter-spacing: normal;
+  text-align: center;
+  color: #2f829c;
 `;
 
 export { AudioRecorderDiv };

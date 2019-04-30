@@ -6,9 +6,23 @@ import {
   updateMediaStore,
   playPauseMedia,
 } from '../../store/shared/actions/commonActions';
+import {
+  showRecorder,
+  resetRecording,
+  startAudioRecording,
+  saveAudioRecording,
+  deviceCheck,
+  stopAudioRecording,
+  showFallback,
+  saveAudioFile,
+  closeRecorder,
+  clearAll
+} from '../../store/shared/actions/audioRecorder';
 
 const mapStateToProps = state => ({
   OccasionDetails: state.occasionList.data,
+  bookingData: state.bookingData,
+  audioRecorder: state.audioRecorder,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -23,9 +37,12 @@ function mapDispatchToProps(dispatch) {
       dispatch(playPauseMedia());
     },
     fetchOccasionlist: id => dispatch(fetchOccasionlist(id)),
+    saveAudioRecording: (target, audio) => dispatch(saveAudioRecording(target, audio)),
+    resetRecording: target => dispatch(resetRecording(target)),
+
   };
 }
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 )(Purchase);
