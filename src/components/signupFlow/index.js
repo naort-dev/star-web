@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
@@ -10,7 +10,7 @@ import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
-import { GroupRegistration, StarRegistration } from '../UserRegistration';
+import { GroupRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import {
   setSocialMediaData,
@@ -21,8 +21,9 @@ import {
   toggleLogin,
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
-import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { FAN_REG_SUCCESS } from './constants';
+import WelcomeVideo from './components/WelcomeVideo';
+import Skip from './components/WelcomeVideo/Skip';
 import { BackArrow } from '../../styles/CommonStyled';
 
 class SignupFlow extends React.Component {
@@ -40,6 +41,13 @@ class SignupFlow extends React.Component {
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
+  onBack = flag => {
+    this.setState(state => ({
+      currentStep: state.currentStep - 1,
+      switched: flag ? flag : false,
+    }));
+  };
+
   getBioDetails = bioDetails => {
     this.setState({ bioDetails });
   };
@@ -64,6 +72,9 @@ class SignupFlow extends React.Component {
     if (this.state.selectedType === 'group' && this.state.currentStep === 5) {
       this.props.history.push('user/star-supporters');
     }
+  };
+  continueClickHandler = () => {
+    this.setState(state => ({ currentStep: state.currentStep + 1 }));
   };
 
   renderSteps = () => {
@@ -120,16 +131,24 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}
+              continueClickCallback={this.continueClickHandler}
             />
           );
         case 3:
           return (
-            <StarRegistration
-              currentStep={this.state.currentStep}
-              changeStep={this.changeStep}
-              closeSignupFlow={this.closeSignUp}
+            <WelcomeVideo
+              onBack={this.onBack}
+              switched={this.state.switched}
+              skipCallback={flag => {
+                this.setState(state => ({
+                  currentStep: state.currentStep + 1,
+                  switched: flag,
+                }));
+              }}
             />
           );
+        case 4:
+          return <Skip onBack={this.onBack} switched={this.state.switched} />;
 
         default:
           return null;
@@ -172,7 +191,7 @@ class SignupFlow extends React.Component {
         <RequestFlowPopup
           dotsCount={0}
           closePopUp={this.closeSignUp}
-          modalView={this.state.currentStep > 3 && !this.state.enableClose}
+          // modalView={this.state.currentStep > 3 && !this.state.enableClose}
           smallPopup
         >
           <LoginContainer>
@@ -181,6 +200,7 @@ class SignupFlow extends React.Component {
                 this.state.currentStep == 2 && this.state.selectedType === 'fan'
               ) && (
                 <BackArrow
+                  className="backArrow"
                   onClick={() => this.changeStep(this.state.currentStep - 1)}
                 />
               )}

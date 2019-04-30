@@ -5,18 +5,10 @@ import {
   updateMediaStore,
   playPauseMedia,
   loaderAction,
-  updateCustomerId,
-} from '../../store/shared/actions/commonActions';
-import {
   setVideoUploadedFlag,
-  fetchOccasionlist,
-} from './actions/purchaseActions';
-import {
-  starsonaRequest,
-  createCharge,
-  fetchSourceList,
-  modifySourceList,
-} from '../../store/shared/actions/processPayments';
+} from '../../store/shared/actions/commonActions';
+import { fetchOccasionlist } from './actions/purchaseActions';
+import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({

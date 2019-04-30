@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from '../../styles/mediaQueries';
-import { FlexBoxSB } from '../../styles/CommonStyled';
 
 export const Layout = styled.section`
   max-width: 320px;
@@ -29,7 +28,3 @@ export const Heading = styled.span`
   color: #ff6c58;
 `;
 
-
-export const FlexBoxSBC = styled(FlexBoxSB)`
-  align-items: center;
-`;
