@@ -50,7 +50,7 @@ export default class RequestFlowPopup extends React.Component {
       <PopupStyled.Dialog
         fullScreen={this.state.fullScreen}
         open
-        classes={{paper: 'paper-root'}}
+        classes={{ paper: 'paper-root' }}
         onRendered={this.props.onMounted && this.props.onMounted}
         onClose={this.props.closePopUp}
         aria-labelledby="responsive-dialog-title"
@@ -75,7 +75,7 @@ export default class RequestFlowPopup extends React.Component {
               />
           } */}
           <PopupStyled.SmallContent>
-            <Scrollbars>{this.props.children}</Scrollbars>
+            {this.props.children}
           </PopupStyled.SmallContent>
           {!this.props.disableClose && (
             <CloseButton onClick={this.props.closePopUp} />

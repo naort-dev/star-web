@@ -8,9 +8,6 @@ const LoginContainer = styled.div`
   @media (min-width: 1025px) {
     flex-direction: row;
   }
-  .backArrow {
-    top: 10px;
-  }
 `;
 
 LoginContainer.BackButton = styled.span`

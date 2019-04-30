@@ -9,7 +9,6 @@ export const Container = styled(Layout)`
     align-items: center;
   }
   .leftArrow {
-    left: 30px;
     position: absolute;
   }
   .content {

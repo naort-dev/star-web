@@ -9,8 +9,6 @@ export const Layout = styled.section`
   left: 0;
   background: #fff;
   .leftArrow {
-    left: 30px;
-    top: 10px;
     position: absolute;
   }
 `;
@@ -21,14 +19,11 @@ export const Heading = styled.div`
   font-family: 'Gilroy-Medium';
   padding-top: 72px;
   ${media.webView} {
-    padding-top: 16px;
+    padding-top: 68px;
   }
 `;
 
 export const Wrapper = styled.section`
   width: 100%;
   height: calc(100% - 146px) !important;
-  ${media.webView} {
-    height: calc(100% - 80px) !important;
-  }
 `;

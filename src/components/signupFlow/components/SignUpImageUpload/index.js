@@ -24,6 +24,9 @@ class SignUpImageUpload extends React.Component {
     cropImage: null,
     categoriesValue: '',
     takePicture: false,
+    selectedCategory: [],
+    selectedProfessions: [],
+    subCategoriesArray: [],
   };
 
   componentWillMount() {}
