@@ -16,6 +16,7 @@ import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/eventAnnouncement/reducers/occasionList';
 import myVideosList from '../pages/requests/reducers/myVideosList';
 import groupSupporters from '../pages/starSupporters/reducers';
+import groupListing from '../pages/groupListing/reducers';
 import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import redirectReferrer from '../store/shared/reducers/redirect';
@@ -79,6 +80,7 @@ const appReducer = combineReducers({
   groupDetails,
   memberList,
   groupSupporters,
+  groupListing,
   groupTypesListing,
 });
 
