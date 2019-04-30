@@ -61,7 +61,7 @@ DesktopStyled.SubHeader = styled.span`
 `;
 
 DesktopStyled.Title = styled.span`
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Semibold;
   font-size: 20px;
   line-height: 0.9;
   text-align: left;
@@ -142,6 +142,16 @@ DesktopStyled.Avatar = styled.div`
 
     &.left-spacing-none {
       margin-left: 0;
+    }
+  }
+  .avatar-wrap {
+    transition: transform 1s;
+    transform-style: preserve-3d;
+    border-radius: 50%;
+  }
+  &:hover {
+    .avatar-wrap {
+      transform: rotateY(180deg);
     }
   }
 `;

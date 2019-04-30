@@ -5,11 +5,6 @@ const AvatarStyled = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  transition: transform 1s;
-  transform-style: preserve-3d;
-  &:hover {
-    transform: rotateY(180deg);
-  }
 `;
 
 AvatarStyled.AvatarFace = styled.div`

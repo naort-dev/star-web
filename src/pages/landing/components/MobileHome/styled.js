@@ -42,7 +42,7 @@ MobileStyled.SubHeader = styled.span`
 `;
 
 MobileStyled.Title = styled.span`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-Semibold;
   font-size: 20px;
   line-height: 18px;
   color: ${props => props.theme.twilight};

@@ -1,15 +1,17 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { TextInput } from '../../../TextField';
+import { Scrollbars } from 'react-custom-scrollbars';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { UploadContainer, ImageUpload } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
+import { updateCategory } from '../../../../pages/landing/actions/updateFilters';
 import ProfileUpload from './components/profileUpload';
 import TakePhoto from './components/takePhoto';
+import { fetchSuggestionList } from '../../../../store/shared/actions/getSuggestionsList';
 import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
-
+import MultiSelect from '../../../MultiSelect';
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
 class SignUpImageUpload extends React.Component {
@@ -30,6 +32,7 @@ class SignUpImageUpload extends React.Component {
     this.setState({
       cropper: false,
       takePicture: false,
+      showBrowseCategory: false,
     });
   };
 
@@ -46,8 +49,34 @@ class SignUpImageUpload extends React.Component {
     this.setState({ finalImage: image, finalFile: file });
   };
 
-  closeCropper = () => {
-    this.setState({ cropImage: null, cropper: false, takePicture: false });
+  setTakePicture = () => {
+    this.setState({ takePicture: true });
+  };
+
+  getSubCategoryList = id => {
+    let { professions } = this.props.professionsList;
+    professions = professions.filter(profession => profession.id === id);
+    professions[0].child.map(function(obj) {
+      obj.label = obj.title;
+      obj.value = obj.id;
+    });
+    this.setState({
+      subCategoriesArray: professions[0].child,
+      selectedCategory: professions,
+    });
+  };
+
+  getSelectedCategoryList = profession => {
+    let { selectedProfessions } = this.state;
+    if (selectedProfessions.find(cat => cat.id === profession.id)) {
+      selectedProfessions = selectedProfessions.filter(
+        cat => cat.id !== profession.id,
+      );
+      this.setState({ selectedProfessions });
+    } else if (selectedProfessions.length < 3) {
+      selectedProfessions = [...selectedProfessions, profession];
+      this.setState({ selectedProfessions });
+    }
   };
 
   goToStep = type => {
@@ -65,18 +94,92 @@ class SignUpImageUpload extends React.Component {
     }
   };
 
-  getCategories = e => {
+  closeCropper = () => {
     this.setState({
-      categoriesValue: e.target.value,
+      cropImage: null,
+      cropper: false,
+      takePicture: false,
+      showBrowseCategory: false,
     });
   };
 
-  setTakePicture = () => {
-    this.setState({ takePicture: true });
+  browserCategory = () => {
+    this.setState({ showBrowseCategory: true });
   };
 
+  updateMainCategory = (title, value, subCategories) => () => {
+    this.props.updateCategory(title, value, subCategories);
+  };
+
+  browserCategoryList = () => {
+    const professionsList = this.props.professionsList.allProfessions;
+    return (
+      <UploadContainer.ItemWrapper>
+        {professionsList.map(profession => {
+          return (
+            <UploadContainer.Item
+              key={profession.id}
+              onClick={() => this.getSubCategoryList(profession.id)}
+              selected={this.state.selectedCategory.find(
+                cat => cat.id === profession.id,
+              )}
+              className="categoryItem"
+            >
+              {profession.title}
+            </UploadContainer.Item>
+          );
+        })}
+      </UploadContainer.ItemWrapper>
+    );
+  };
+
+  showSubCategoryList = () => {
+    const { subCategoriesArray } = this.state;
+    return (
+      <React.Fragment>
+        <div className="right-section">
+          <div className="subCategoryHeading">
+            Choose the category that describes what you do best:
+            <span>{`(${3 -
+              this.state.selectedProfessions.length} remaining)`}</span>
+          </div>
+          <Scrollbars className="browse-category-list">
+            <UploadContainer.SubItemWrapper>
+              {subCategoriesArray.map(profession => {
+                return (
+                  <UploadContainer.Item
+                    key={profession.id}
+                    onClick={() => this.getSelectedCategoryList(profession)}
+                    selected={this.state.selectedProfessions.find(
+                      cat => cat.id === profession.id,
+                    )}
+                  >
+                    {profession.title}
+                  </UploadContainer.Item>
+                );
+              })}
+            </UploadContainer.SubItemWrapper>
+          </Scrollbars>
+        </div>
+      </React.Fragment>
+    );
+  };
+
+  handleMultiSelect = list => {
+    if (list.length < 4) {
+      this.setState({ selectedProfessions: list });
+    }
+  };
+  handleFocusSelect = () => {
+    debugger;
+  };
   renderContent = () => {
-    const { cropper, takePicture } = this.state;
+    const { cropper, takePicture, selectedProfessions } = this.state;
+    const { subcategories } = this.props.professionsList;
+    subcategories.map(function(obj) {
+      obj.label = obj.title;
+      obj.value = obj.id;
+    });
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
@@ -111,39 +214,57 @@ class SignUpImageUpload extends React.Component {
     }
     return (
       <UploadContainer.Wrapper>
-        <UploadContainer.Heading>
-          {this.state.finalImage
-            ? 'You look great. Now select a category.'
-            : 'Give your fans what they want'}
-        </UploadContainer.Heading>
-        <DotsContainer dotsCount={3} selectedDot={2} />
-        <ProfileUpload
-          starMode
-          onTakePicture={this.setTakePicture}
-          onComplete={this.setProfileImage}
-          image={this.state.finalImage}
-        />
+        {this.state.showBrowseCategory && (
+          <UploadContainer.BrowseCategoryWrapper>
+            <BackArrow onClick={this.onBack} />
+            <CloseButton onClick={this.props.closeSignupFlow} />
+            <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
+            <UploadContainer.BrowseCategoryContainer>
+              {this.browserCategoryList()}
+              {this.showSubCategoryList()}
+            </UploadContainer.BrowseCategoryContainer>
+          </UploadContainer.BrowseCategoryWrapper>
+        )}
+        {!this.state.showBrowseCategory && (
+          <React.Fragment>
+            <UploadContainer.Heading>
+              {this.state.finalImage
+                ? 'You look great. Now select a category.'
+                : 'Give your fans what they want'}
+            </UploadContainer.Heading>
+            <DotsContainer dotsCount={3} selectedDot={2} />
+            <ProfileUpload
+              starMode
+              onTakePicture={this.setTakePicture}
+              onComplete={this.setProfileImage}
+              image={this.state.finalImage}
+            />
 
-        <UploadContainer.CategoriesWrapper>
-          <TextInput
-            type="text"
-            name="categoriesList"
-            label="Categorize yourself. This helps fans find you. (up to 3)"
-            value={this.state.categoriesValue}
-            onChange={event => this.getCategories(event)}
-          />
-          <UploadContainer.BrowseCategories>
-            Not finding one?{' '}
-            <UploadContainer.BrowseCategoriesLink>
-              Browse categories
-            </UploadContainer.BrowseCategoriesLink>
-          </UploadContainer.BrowseCategories>
-        </UploadContainer.CategoriesWrapper>
-        <UploadContainer.ButtonWrapper>
-          <UploadContainer.ContinueButton type="submit">
-            Continue
-          </UploadContainer.ContinueButton>
-        </UploadContainer.ButtonWrapper>
+            <UploadContainer.CategoriesWrapper>
+              <MultiSelect
+                value={this.state.selectedProfessions}
+                options={subcategories}
+                placeholder=""
+                onChange={this.handleMultiSelect}
+                onFocus={this.handleFocusSelect}
+                label="Categorize yourself. This helps fans find you. (up to 3)"
+              />
+              <UploadContainer.BrowseCategories>
+                Not finding one?{' '}
+                <UploadContainer.BrowseCategoriesLink
+                  onClick={this.browserCategory}
+                >
+                  Browse categories
+                </UploadContainer.BrowseCategoriesLink>
+              </UploadContainer.BrowseCategories>
+            </UploadContainer.CategoriesWrapper>
+            <UploadContainer.ButtonWrapper>
+              <UploadContainer.ContinueButton type="submit">
+                Continue
+              </UploadContainer.ContinueButton>
+            </UploadContainer.ButtonWrapper>
+          </React.Fragment>
+        )}
       </UploadContainer.Wrapper>
     );
   };
@@ -159,12 +280,17 @@ class SignUpImageUpload extends React.Component {
 
 const mapStateToProps = state => ({
   loading: state.session.loading,
+  professionsList: state.professionsList,
 });
 
 const mapProps = dispatch => ({
   updateLoginStatus: sessionDetails =>
     dispatch(updateLoginStatus(sessionDetails)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  fetchSuggestionList: searchParam =>
+    dispatch(fetchSuggestionList(searchParam)),
+  updateCategory: (label, value, subCategories) =>
+    dispatch(updateCategory(label, value, subCategories)),
 });
 
 export default connect(

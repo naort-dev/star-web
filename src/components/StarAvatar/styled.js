@@ -26,11 +26,15 @@ const AvatarContainer = styled.section`
 `;
 
 AvatarContainer.ControlWrapper = styled.span`
-  position: absolute;
-  bottom: 7.5px;
-  left: 0;
-  right: 0;
-  text-align: center;
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+    position: absolute;
+    bottom: 7.5px;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
 `;
 
 AvatarContainer.ControlButton = styled.span`
