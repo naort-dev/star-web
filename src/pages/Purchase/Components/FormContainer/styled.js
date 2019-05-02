@@ -22,5 +22,6 @@ export const Layout = styled.section`
   }
 `;
 Layout.EventStep2 = styled.div`
-
+  padding-top: 40px;
+  min-height: 240px;
 `;

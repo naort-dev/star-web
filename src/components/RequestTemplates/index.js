@@ -4,9 +4,9 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
-import Input from '@material-ui/core/Input';
+import FormControl from '@material-ui/core/FormControl';
 
-import { Templates } from './styled';
+import { Templates, FlexBox } from './styled';
 import {
   getMobileOperatingSystem,
   checkMediaRecorderSupport,
@@ -79,7 +79,7 @@ function RequestTemplates(
   const renderTemplates = () => {
     const relations = bookingData.relationship;
     const optionItems = relations.map(relation => (
-      <MenuItem value={relations.id} key={relation.id}>
+      <MenuItem value={relation.id} key={relation.id}>
         {relation.title}
       </MenuItem>
     ));
@@ -90,7 +90,7 @@ function RequestTemplates(
       case 2:
         if (!isMobile) {
           const page1 = (
-            <div>
+            <FlexBox>
               <Templates.InputWrapper>
                 <TextInput
                   placeholder="Who is this video for ?"
@@ -180,25 +180,31 @@ function RequestTemplates(
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <Templates.WrapsInput>
-                    <InputLabel htmlFor="age-helper">Relationship</InputLabel>
-                    <Select
-                      value={bookingData.relationshipValue}
-                      onChange={event =>
-                        bookingData.handleInputChange(
-                          event.target.value,
-                          'relationshipValue',
-                        )
-                      }
-                      input={<Input name="rel" id="reln-helper" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {optionItems}
-                      <MenuItem value="otherRelation" key="otherRelation">
-                        Other
-                      </MenuItem>
-                    </Select>
+                    <FormControl className={{ root: 'select-material' }}>
+                      <InputLabel htmlFor="reln-helper">
+                        Relationship
+                      </InputLabel>
+                      <Select
+                        value={bookingData.relationshipValue}
+                        onChange={event =>
+                          bookingData.handleInputChange(
+                            event.target.value,
+                            'relationshipValue',
+                          )
+                        }
+                        inputProps={{
+                          id: 'reln-helper',
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {optionItems}
+                        <MenuItem value="otherRelation" key="otherRelation">
+                          Other
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Templates.WrapsInput>
                 </Templates.InputWrapper>
               ) : null}
@@ -219,12 +225,12 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
           pageDetails.push(page1);
         } else {
           const page1 = (
-            <div>
+            <FlexBox>
               <Templates.InputWrapper>
                 <TextInput
                   placeholder="Who is this video for ?"
@@ -277,7 +283,7 @@ function RequestTemplates(
                     placeholder={`What is this ${bookingData.eventname} for`}
                     value={bookingData.specification}
                     onChange={event =>
-                      this.props.handleChange(
+                      bookingData.handleInputChange(
                         event.target.value,
                         'specification',
                       )
@@ -285,32 +291,42 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               )}
-            </div>
+            </FlexBox>
           );
           const page2 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <Templates.WrapsInput>
-                    <InputLabel htmlFor="age-helper">Relationship</InputLabel>
-                    <Select
-                      value={bookingData.relationshipValue}
-                      onChange={event =>
-                        bookingData.handleInputChange(
-                          event.target.value,
-                          'relationshipValue',
-                        )
-                      }
-                      input={<Input name="rel" id="reln-helper" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {optionItems}
-                      <MenuItem value="otherRelation" key="otherRelation">
-                        Other
-                      </MenuItem>
-                    </Select>
+                    <FormControl className={{ root: 'select-material' }}>
+                      <InputLabel
+                        htmlFor="reln-helper"
+                        className="select-label"
+                      >
+                        Relationship
+                      </InputLabel>
+                      <Select
+                        value={bookingData.relationshipValue}
+                        onChange={event =>
+                          bookingData.handleInputChange(
+                            event.target.value,
+                            'relationshipValue',
+                          )
+                        }
+                        className="select-material"
+                        inputProps={{
+                          id: 'reln-helper',
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {optionItems}
+                        <MenuItem value="otherRelation" key="otherRelation">
+                          Other
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Templates.WrapsInput>
                 </Templates.InputWrapper>
               ) : null}
@@ -320,7 +336,7 @@ function RequestTemplates(
                     placeholder={`What is this ${bookingData.eventname} for`}
                     value={bookingData.specification}
                     onChange={event =>
-                      this.props.handleChange(
+                      bookingData.handleInputChange(
                         event.target.value,
                         'specification',
                       )
@@ -328,7 +344,7 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
           pageDetails.push(page1);
           pageDetails.push(page2);
@@ -337,7 +353,7 @@ function RequestTemplates(
       case 3:
         if (!isMobile) {
           const page1 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <TextInput
@@ -429,25 +445,34 @@ function RequestTemplates(
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <Templates.WrapsInput>
-                    <InputLabel htmlFor="age-helper">Relationship</InputLabel>
-                    <Select
-                      value={bookingData.relationshipValue}
-                      onChange={event =>
-                        bookingData.handleInputChange(
-                          event.target.value,
-                          'relationshipValue',
-                        )
-                      }
-                      input={<Input name="rel" id="reln-helper" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {optionItems}
-                      <MenuItem value="otherRelation" key="otherRelation">
-                        Other
-                      </MenuItem>
-                    </Select>
+                    <FormControl className="select-material">
+                      <InputLabel
+                        htmlFor="reln-helper"
+                        className="select-label"
+                      >
+                        Relationship
+                      </InputLabel>
+                      <Select
+                        value={bookingData.relationshipValue}
+                        onChange={event =>
+                          bookingData.handleInputChange(
+                            event.target.value,
+                            'relationshipValue',
+                          )
+                        }
+                        inputProps={{
+                          id: 'reln-helper',
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {optionItems}
+                        <MenuItem value="otherRelation" key="otherRelation">
+                          Other
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Templates.WrapsInput>
                 </Templates.InputWrapper>
               ) : null}
@@ -468,12 +493,12 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
           pageDetails.push(page1);
         } else {
           const page1 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <TextInput
@@ -558,32 +583,41 @@ function RequestTemplates(
                   ) : null}
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
           const page2 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <Templates.WrapsInput>
-                    <InputLabel htmlFor="age-helper">Relationship</InputLabel>
-                    <Select
-                      value={bookingData.relationshipValue}
-                      onChange={event =>
-                        bookingData.handleInputChange(
-                          event.target.value,
-                          'relationshipValue',
-                        )
-                      }
-                      input={<Input name="rel" id="reln-helper" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {optionItems}
-                      <MenuItem value="otherRelation" key="otherRelation">
-                        Other
-                      </MenuItem>
-                    </Select>
+                    <FormControl className="select-material">
+                      <InputLabel
+                        htmlFor="reln-helper"
+                        className="select-label"
+                      >
+                        Relationship
+                      </InputLabel>
+                      <Select
+                        value={bookingData.relationshipValue}
+                        onChange={event =>
+                          bookingData.handleInputChange(
+                            event.target.value,
+                            'relationshipValue',
+                          )
+                        }
+                        inputProps={{
+                          id: 'reln-helper',
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {optionItems}
+                        <MenuItem value="otherRelation" key="otherRelation">
+                          Other
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Templates.WrapsInput>
                 </Templates.InputWrapper>
               ) : null}
@@ -593,7 +627,7 @@ function RequestTemplates(
                     placeholder="What specifically for"
                     value={bookingData.specification}
                     onChange={event =>
-                      this.props.handleChange(
+                      bookingData.handleInputChange(
                         event.target.value,
                         'specification',
                       )
@@ -601,7 +635,7 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
           pageDetails.push(page1);
           pageDetails.push(page2);
@@ -611,7 +645,7 @@ function RequestTemplates(
       case 4:
         if (!isMobile) {
           const page1 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <TextInput
@@ -717,25 +751,34 @@ function RequestTemplates(
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <Templates.WrapsInput>
-                    <InputLabel htmlFor="age-helper">Relationship</InputLabel>
-                    <Select
-                      value={bookingData.relationshipValue}
-                      onChange={event =>
-                        bookingData.handleInputChange(
-                          event.target.value,
-                          'relationshipValue',
-                        )
-                      }
-                      input={<Input name="rel" id="reln-helper" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {optionItems}
-                      <MenuItem value="otherRelation" key="otherRelation">
-                        Other
-                      </MenuItem>
-                    </Select>
+                    <FormControl className="select-material">
+                      <InputLabel
+                        htmlFor="reln-helper"
+                        className="select-label"
+                      >
+                        Relationship
+                      </InputLabel>
+                      <Select
+                        value={bookingData.relationshipValue}
+                        onChange={event =>
+                          bookingData.handleInputChange(
+                            event.target.value,
+                            'relationshipValue',
+                          )
+                        }
+                        inputProps={{
+                          id: 'reln-helper',
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {optionItems}
+                        <MenuItem value="otherRelation" key="otherRelation">
+                          Other
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Templates.WrapsInput>
                 </Templates.InputWrapper>
               ) : null}
@@ -756,7 +799,7 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
           pageDetails.push(page1);
           if (bookingData.user === 'someoneElse') {
@@ -779,7 +822,7 @@ function RequestTemplates(
           }
         } else {
           const page1 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <TextInput
@@ -882,32 +925,41 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               )}
-            </div>
+            </FlexBox>
           );
           const page2 = (
-            <div>
+            <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <Templates.InputWrapper>
                   <Templates.WrapsInput>
-                    <InputLabel htmlFor="age-helper">Relationship</InputLabel>
-                    <Select
-                      value={bookingData.relationshipValue}
-                      onChange={event =>
-                        bookingData.handleInputChange(
-                          event.target.value,
-                          'relationshipValue',
-                        )
-                      }
-                      input={<Input name="rel" id="reln-helper" />}
-                    >
-                      <MenuItem value="">
-                        <em>None</em>
-                      </MenuItem>
-                      {optionItems}
-                      <MenuItem value="otherRelation" key="otherRelation">
-                        Other
-                      </MenuItem>
-                    </Select>
+                    <FormControl className="select-material">
+                      <InputLabel
+                        htmlFor="reln-helper"
+                        className="select-label"
+                      >
+                        Relationship
+                      </InputLabel>
+                      <Select
+                        value={bookingData.relationshipValue}
+                        onChange={event =>
+                          bookingData.handleInputChange(
+                            event.target.value,
+                            'relationshipValue',
+                          )
+                        }
+                        inputProps={{
+                          id: 'reln-helper',
+                        }}
+                      >
+                        <MenuItem value="">
+                          <em>None</em>
+                        </MenuItem>
+                        {optionItems}
+                        <MenuItem value="otherRelation" key="otherRelation">
+                          Other
+                        </MenuItem>
+                      </Select>
+                    </FormControl>
                   </Templates.WrapsInput>
                 </Templates.InputWrapper>
               ) : null}
@@ -928,7 +980,7 @@ function RequestTemplates(
                   />
                 </Templates.InputWrapper>
               ) : null}
-            </div>
+            </FlexBox>
           );
 
           pageDetails.push(page1);
@@ -956,7 +1008,7 @@ function RequestTemplates(
 
       // return (
       //   <div>
-      //     {this.state.user === '2' ?
+      //     {bookingData.user === '2' ?
       //       <Templates.InputWrapper>
       //         <Templates.Label>Who is the Starsona video for?</Templates.Label>
       //         <Templates.InputWrapperContainer>
@@ -986,7 +1038,7 @@ function RequestTemplates(
       //       :
       //       null
       //     }
-      //     {this.state.user === '2' ?
+      //     {bookingData.user === '2' ?
       //       <Templates.InputWrapper>
       //         <Templates.Label>Who is the Starsona video from?</Templates.Label>
       //         <Templates.InputWrapperContainer>
@@ -1016,7 +1068,7 @@ function RequestTemplates(
       //       :
       //       null
       //     }
-      //     {this.state.user === '2' ?
+      //     {bookingData.user === '2' ?
       //       <Templates.InputWrapper>
       //         <Templates.RelationshipLabelWrapper>
       //           <Templates.RelationLabel>Relationship</Templates.RelationLabel>
@@ -1096,7 +1148,7 @@ function RequestTemplates(
       case 5:
         return (
           <div>
-            {this.state.user === '2' ? (
+            {bookingData.user === '2' ? (
               <Templates.InputWrapper>
                 <Templates.Label>
                   Who is the Starsona video for?
@@ -1107,13 +1159,16 @@ function RequestTemplates(
                       placeholder="Enter name"
                       type="text"
                       name="hostName"
-                      value={this.props.hostName}
+                      value={bookingData.hostName}
                       onChange={event =>
-                        this.props.handleChange(event.target.value, 'hostName')
+                        bookingData.handleInputChange(
+                          event.target.value,
+                          'hostName',
+                        )
                       }
-                      onBlur={this.props.checkRequiredHostName}
+                      onBlur={bookingData.checkRequiredHostName}
                     />
-                    {this.props.whoIsfor ? (
+                    {bookingData.whoIsfor ? (
                       <Templates.ErrorMsg>
                         Please enter a valid name
                       </Templates.ErrorMsg>
@@ -1124,13 +1179,13 @@ function RequestTemplates(
                   (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
                     !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
                     <Templates.WrapsAudioInput>
-                      <AudioRecorder key="for" target="for" {...this.props} />
+                      <AudioRecorder key="for" target="for" />
                     </Templates.WrapsAudioInput>
                   ) : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
             ) : null}
-            {this.state.user === '2' ? (
+            {bookingData.user === '2' ? (
               <Templates.InputWrapper>
                 <Templates.Label>
                   Who is the Starsona video from?
@@ -1141,14 +1196,17 @@ function RequestTemplates(
                       placeholder="Enter name"
                       type="text"
                       name="userName"
-                      value={this.props.userName}
+                      value={bookingData.userName}
                       onChange={event =>
-                        this.props.handleChange(event.target.value, 'userName')
+                        bookingData.handleInputChange(
+                          event.target.value,
+                          'userName',
+                        )
                       }
-                      onBlur={this.props.checkRequiredUserName}
+                      onBlur={bookingData.checkRequiredHostName}
                     />
 
-                    {this.props.whoIsfrom ? (
+                    {bookingData.whoIsfrom ? (
                       <Templates.ErrorMsg>
                         Please enter a valid name
                       </Templates.ErrorMsg>
@@ -1159,29 +1217,29 @@ function RequestTemplates(
                   (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
                     !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
                     <Templates.WrapsAudioInput>
-                      <AudioRecorder key="from" target="from" {...this.props} />
+                      <AudioRecorder key="from" target="from" />
                     </Templates.WrapsAudioInput>
                   ) : null}
                 </Templates.InputWrapperContainer>
               </Templates.InputWrapper>
             ) : null}
-            {this.state.user === '2' ? (
+            {bookingData.user === '2' ? (
               <Templates.InputWrapper>
                 <Templates.RelationshipLabelWrapper>
                   <Templates.RelationLabel>
                     Relationship
                   </Templates.RelationLabel>{' '}
-                  {this.props.userName && this.props.hostName && (
-                    <Templates.DetailedRelation>{`(${this.props.userName} is ${
-                      this.props.hostName
+                  {bookingData.userName && bookingData.hostName && (
+                    <Templates.DetailedRelation>{`(${bookingData.userName} is ${
+                      bookingData.hostName
                     }'s)`}</Templates.DetailedRelation>
                   )}
                 </Templates.RelationshipLabelWrapper>
                 <Templates.WrapsInput>
                   <Templates.Select
-                    value={this.props.relationshipValue}
+                    value={bookingData.relationshipValue}
                     onChange={event =>
-                      this.props.handleChange(
+                      bookingData.handleInputChange(
                         event.target.value,
                         'relationshipValue',
                       )
@@ -1198,7 +1256,7 @@ function RequestTemplates(
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
             ) : null}
-            {this.props.relationshipValue === 'otherRelation' ? (
+            {bookingData.relationshipValue === 'otherRelation' ? (
               <Templates.InputWrapper>
                 <Templates.Label>Other relationship</Templates.Label>
                 <Templates.WrapsInput>
@@ -1206,10 +1264,10 @@ function RequestTemplates(
                     placeholder="Enter relationship"
                     type="text"
                     name="otherRelationship"
-                    value={this.props.otherRelationValue}
-                    onBlur={this.props.otherRelationship}
+                    value={bookingData.otherRelationValue}
+                    onBlur={bookingData.otherRelationship}
                     onChange={event =>
-                      this.props.handleChange(
+                      bookingData.handleInputChange(
                         event.target.value,
                         'otherRelationValue',
                       )
@@ -1218,7 +1276,7 @@ function RequestTemplates(
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
             ) : null}
-            {this.props.selectedOccasion == 5 ? (
+            {bookingData.selectedOccasion == 5 ? (
               <Templates.InputWrapper>
                 <Templates.Label>
                   When is the occasion? (optional)
@@ -1229,8 +1287,8 @@ function RequestTemplates(
                     withPortal
                     customInput={<Templates.Input />}
                     popperPlacement="bottom"
-                    selected={this.props.date}
-                    onChange={this.handleChange}
+                    selected={bookingData.date}
+                    onChange={bookingData.handleInputChange}
                     placeholderText="Enter date"
                   />
                 </Templates.WrapsInput>
@@ -1244,8 +1302,8 @@ function RequestTemplates(
                     withPortal
                     customInput={<Templates.Input />}
                     popperPlacement="bottom"
-                    selected={this.props.date}
-                    onChange={this.handleChange}
+                    selected={bookingData.date}
+                    onChange={bookingData.handleInputChange}
                   />
                 </Templates.WrapsInput>
               </Templates.InputWrapper>
@@ -1253,7 +1311,8 @@ function RequestTemplates(
 
             <Templates.InputWrapper>
               <Templates.Label>
-                Any important info for {this.props.starName} to know? (optional)
+                Any important info for {bookingData.starName} to know?
+                (optional)
               </Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
@@ -1261,9 +1320,12 @@ function RequestTemplates(
                   type="text"
                   name="important"
                   onChange={event =>
-                    this.props.handleChange(event.target.value, 'importantinfo')
+                    bookingData.handleInputChange(
+                      event.target.value,
+                      'importantinfo',
+                    )
                   }
-                  value={this.props.importantinfo}
+                  value={bookingData.importantinfo}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>
@@ -1279,16 +1341,16 @@ function RequestTemplates(
                   placeholder="Enter the Event Name"
                   type="text"
                   name="EventName"
-                  value={this.props.eventdetailName}
+                  value={bookingData.eventdetailName}
                   onChange={event =>
-                    this.props.handleChange(
+                    bookingData.handleInputChange(
                       event.target.value,
                       'eventdetailName',
                     )
                   }
-                  onBlur={this.props.checkRequiredTitle}
+                  onBlur={bookingData.checkRequiredTitle}
                 />
-                {this.props.eventTitle ? (
+                {bookingData.eventTitle ? (
                   <Templates.ErrorMsg>
                     Please enter a valid event title
                   </Templates.ErrorMsg>
@@ -1302,13 +1364,16 @@ function RequestTemplates(
                   placeholder="Enter Name"
                   type="text"
                   name="userName"
-                  value={this.props.userName}
-                  onBlur={this.props.checkRequiredUserName}
+                  value={bookingData.userName}
+                  onBlur={bookingData.checkRequiredHostName}
                   onChange={event =>
-                    this.props.handleChange(event.target.value, 'userName')
+                    bookingData.handleInputChange(
+                      event.target.value,
+                      'userName',
+                    )
                   }
                 />
-                {this.props.whoIsfrom ? (
+                {bookingData.whoIsfrom ? (
                   <Templates.ErrorMsg>
                     Please enter a valid name
                   </Templates.ErrorMsg>
@@ -1323,11 +1388,11 @@ function RequestTemplates(
                   withPortal
                   customInput={<Templates.Input />}
                   popperPlacement="bottom"
-                  selected={this.props.date}
-                  onChange={this.handleChange}
-                  onBlur={this.props.checkRequiredDate}
+                  selected={bookingData.date}
+                  onChange={bookingData.handleInputChange}
+                  onBlur={bookingData.checkRequiredHostName}
                 />
-                {this.props.eventDate ? (
+                {bookingData.eventDate ? (
                   <Templates.ErrorMsg>
                     Please enter a valid date
                   </Templates.ErrorMsg>
@@ -1336,16 +1401,20 @@ function RequestTemplates(
             </Templates.InputWrapper>
             <Templates.InputWrapper>
               <Templates.Label>
-                Any important info for {this.props.starName} to know? (optional)
+                Any important info for {bookingData.starName} to know?
+                (optional)
               </Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
                   placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
                   type="text"
                   name="important"
-                  value={this.props.importantinfo}
+                  value={bookingData.importantinfo}
                   onChange={event =>
-                    this.props.handleChange(event.target.value, 'importantinfo')
+                    bookingData.handleInputChange(
+                      event.target.value,
+                      'importantinfo',
+                    )
                   }
                 />
               </Templates.WrapsInput>
@@ -1362,13 +1431,16 @@ function RequestTemplates(
                   placeholder="Enter guest name"
                   type="text"
                   name="hostName"
-                  value={this.props.hostName}
+                  value={bookingData.hostName}
                   onChange={event =>
-                    this.props.handleChange(event.target.value, 'hostName')
+                    bookingData.handleInputChange(
+                      event.target.value,
+                      'hostName',
+                    )
                   }
-                  onBlur={this.props.checkRequiredHostName}
+                  onBlur={bookingData.checkRequiredHostName}
                 />
-                {this.props.whoIsfor ? (
+                {bookingData.whoIsfor ? (
                   <Templates.ErrorMsg>
                     Please enter guest of honor
                   </Templates.ErrorMsg>
@@ -1381,14 +1453,17 @@ function RequestTemplates(
                 <Templates.Input
                   placeholder="Enter name"
                   type="text"
-                  value={this.props.userName}
+                  value={bookingData.userName}
                   name="userName"
                   onChange={event =>
-                    this.props.handleChange(event.target.value, 'userName')
+                    bookingData.handleInputChange(
+                      event.target.value,
+                      'userName',
+                    )
                   }
-                  onBlur={this.props.checkRequiredUserName}
+                  onBlur={bookingData.checkRequiredHostName}
                 />
-                {this.props.whoIsfrom ? (
+                {bookingData.whoIsfrom ? (
                   <Templates.ErrorMsg>
                     Please enter a valid name
                   </Templates.ErrorMsg>
@@ -1403,11 +1478,11 @@ function RequestTemplates(
                   withPortal
                   customInput={<Templates.Input />}
                   popperPlacement="bottom"
-                  selected={this.props.date}
-                  onChange={this.handleChange}
-                  onBlur={this.props.checkRequiredDate}
+                  selected={bookingData.date}
+                  onChange={bookingData.handleInputChange}
+                  onBlur={bookingData.checkRequiredHostName}
                 />
-                {this.props.eventDate ? (
+                {bookingData.eventDate ? (
                   <Templates.ErrorMsg>
                     Please enter a valid date
                   </Templates.ErrorMsg>
@@ -1416,7 +1491,8 @@ function RequestTemplates(
             </Templates.InputWrapper>
             <Templates.InputWrapper>
               <Templates.Label>
-                Any important info for {this.props.starName} to know? (optional)
+                Any important info for {bookingData.starName} to know?
+                (optional)
               </Templates.Label>
               <Templates.WrapsInput>
                 <Templates.InputArea
@@ -1424,9 +1500,12 @@ function RequestTemplates(
                   type="text"
                   name="important"
                   onChange={event =>
-                    this.props.handleChange(event.target.value, 'importantinfo')
+                    bookingData.handleInputChange(
+                      event.target.value,
+                      'importantinfo',
+                    )
                   }
-                  value={this.props.importantinfo}
+                  value={bookingData.importantinfo}
                 />
               </Templates.WrapsInput>
             </Templates.InputWrapper>

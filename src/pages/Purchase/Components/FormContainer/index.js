@@ -67,7 +67,6 @@ function FormContainer(props) {
       date,
       eventdetailName
     */
-
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
@@ -94,7 +93,7 @@ function FormContainer(props) {
     userName: props.bookingData.userName
       ? props.bookingData.userName
       : FormData.userName,
-    relationshipValue: 0,
+    relationshipValue: FormData.relationshipValue,
     specification: props.bookingData.specification
       ? props.bookingData.specification
       : FormData.specification,
