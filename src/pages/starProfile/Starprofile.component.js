@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 // import { isEmpty } from 'lodash';
 // import { Redirect } from 'react-router-dom';
@@ -20,12 +20,22 @@ import Header from '../../components/Header';
 
 const StarProfile = (props) => {
   
+  const [profVideo, toggleProfVideo] = useState(false);
+
   const getUserId = () => {
     return props.match.params.id;
   }
 
   const onBackClick = () => {
-    props.history.goBack();
+    if (profVideo && (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832)) {
+      toggleProfVideo(false);
+    } else {
+      props.history.goBack();
+    }
+  }
+
+  const toggleProfileVideo = state => {
+    toggleProfVideo(state);
   }
 
   useEffect(() => {
@@ -46,6 +56,8 @@ const StarProfile = (props) => {
         celebDetails={props.celebDetails}
       />
       <DetailSection
+        showProfileVideo={profVideo}
+        toggleProfileVideo={toggleProfileVideo}
         userDetails={props.userDetails}
         celebDetails={props.celebDetails}
       />
@@ -58,7 +70,6 @@ const StarProfile = (props) => {
         />
         : null
     } */}
-    asdasdasdasd
     {/* <Helmet
       title={fullName}
       meta={[...setMetaTags(

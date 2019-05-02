@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StarProfileStyled = styled.div`
   margin-top: 125px;
-  height: calc(100vh - 125px);
+  padding-bottom: 72px;
   @media(min-width: 832px) {
     margin-top: 260px;
     height: auto;
@@ -22,6 +22,7 @@ StarProfileStyled.Avatar = styled.span`
   border: none;
   border-radius: 50%;
   display: block;
+  cursor: pointer;
   width: ${props => (props.size ? `${props.size}px` : '80px')};
   height: ${props => (props.size ? `${props.size}px` : '80px')};
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
