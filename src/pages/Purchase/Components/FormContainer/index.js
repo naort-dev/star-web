@@ -25,7 +25,10 @@ function FormContainer(props) {
     whatIsThisFor: false,
     whoIsfor: false,
   });
-  const optionsList = detailList.map(item => ({ label: item.title, key: item.id }));
+  const optionsList = detailList.map(item => ({
+    label: item.title,
+    key: item.id,
+  }));
   const [pageCount, setpageCount] = useState(0);
   const [isDisabled, setisDisabled] = useState(true);
   const updateUserToMyself = () => {
@@ -35,22 +38,22 @@ function FormContainer(props) {
       enableAudioRecorder: true,
     });
   };
-  const checkRequiredHostName = (hostName) => {
+  const checkRequiredHostName = hostName => {
     if (hostName !== '') {
       setFormData({
         ...FormData,
         whoIsfor: true,
       });
-      setisDisabled(!(FormData.whoIsfor));
+      setisDisabled(!FormData.whoIsfor);
     }
   };
-  const checkRequiredWhatIsThisFor = (whatIsThisFor) => {
+  const checkRequiredWhatIsThisFor = whatIsThisFor => {
     if (whatIsThisFor !== '') {
       setFormData({
         ...FormData,
         whatIsThisFor: true,
       });
-      setisDisabled(!(FormData.whoIsfor));
+      setisDisabled(!FormData.whoIsfor);
     }
   };
   const handleInputChange = (data, type) => {
@@ -64,7 +67,7 @@ function FormContainer(props) {
       date,
       eventdetailName
     */
-   
+
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
@@ -72,8 +75,12 @@ function FormContainer(props) {
     });
   };
   const bookingData = {
-    selectedValue: props.bookingData.selectedValue ? props.bookingData.selectedValue : '0', // for default state (choose one)
-    templateType: props.bookingData.occasionType ? props.bookingData.occasionType : '',
+    selectedValue: props.bookingData.selectedValue
+      ? props.bookingData.selectedValue
+      : '0', // for default state (choose one)
+    templateType: props.bookingData.occasionType
+      ? props.bookingData.occasionType
+      : '',
     relationship: FormData.relationship,
     user: FormData.user,
     enableAudioRecorder: FormData.enableAudioRecorder,
@@ -81,13 +88,23 @@ function FormContainer(props) {
     checkRequiredHostName,
     checkRequiredWhatIsThisFor,
     eventName: props.bookingData.eventName ? props.bookingData.eventName : '',
-    hostName: props.bookingData.hostName ? props.bookingData.hostName : FormData.hostName,
-    userName: props.bookingData.userName ? props.bookingData.userName : FormData.userName,
+    hostName: props.bookingData.hostName
+      ? props.bookingData.hostName
+      : FormData.hostName,
+    userName: props.bookingData.userName
+      ? props.bookingData.userName
+      : FormData.userName,
     relationshipValue: 0,
-    specification: props.bookingData.specification ? props.bookingData.specification : FormData.specification,
-    importantinfo: props.bookingData.importantinfo ? props.bookingData.importantinfo : '',
+    specification: props.bookingData.specification
+      ? props.bookingData.specification
+      : FormData.specification,
+    importantinfo: props.bookingData.importantinfo
+      ? props.bookingData.importantinfo
+      : '',
     date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
-    eventdetailName: props.bookingData.eventdetailName ? props.bookingData.eventdetailName : '',
+    eventdetailName: props.bookingData.eventdetailName
+      ? props.bookingData.eventdetailName
+      : '',
     updateUserToMyself,
     whoIsfor: false,
     whatIsThisFor: false,
@@ -95,10 +112,16 @@ function FormContainer(props) {
     eventTitle: false,
     eventDate: false,
   };
-  const PageDetailsArray = RequestTemplates(FormData.templateType, bookingData, props.audioRecorder, props.saveAudioRecording, props.resetRecording);
-  const onSelectOccasion = (occasion) => {
+  const PageDetailsArray = RequestTemplates(
+    FormData.templateType,
+    bookingData,
+    props.audioRecorder,
+    props.saveAudioRecording,
+    props.resetRecording,
+  );
+  const onSelectOccasion = occasion => {
     let type;
-    const result = props.detailList.filter((item) => {
+    const result = props.detailList.filter(item => {
       if (item.id === occasion.key) {
         type = item.type;
         return item;
@@ -114,7 +137,7 @@ function FormContainer(props) {
     setpageCount(pageCount + 1);
     if (pageCount === PageDetailsArray.length) {
       props.submitClick();
-    }    
+    }
   };
   // const checkRequiredHostName = () => {
   //   let whoIsforValue;
@@ -159,10 +182,17 @@ function FormContainer(props) {
         />
       </FlexCenter>
       <Layout.EventStep2>
-        { PageDetailsArray.length > 0 ? PageDetailsArray[pageCount] : null }
+        {PageDetailsArray.length > 0 ? PageDetailsArray[pageCount] : null}
       </Layout.EventStep2>
       <FlexCenter>
-        <Button className="continue-button" onClick={() => nextButtonClick()} disabled={isDisabled} isDisabled={isDisabled}>Continue</Button>
+        <Button
+          className="continue-button"
+          onClick={() => nextButtonClick()}
+          disabled={isDisabled}
+          isDisabled={isDisabled}
+        >
+          Continue
+        </Button>
       </FlexCenter>
     </Layout>
   );
