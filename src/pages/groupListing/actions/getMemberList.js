@@ -32,6 +32,17 @@ export const memberListFetchFailed = error => ({
   error,
 });
 
+const parseData = (list) => {
+  const newList = list.map((item) => {
+    const newItem = {...item};
+    newItem.celebrity_user = {
+      rate: item.rate,
+    };
+    return newItem;
+  });
+  return newList;
+}
+
 export const fetchMemberList = (groupID, offset, refresh) => (dispatch, getState) => {
   const { limit } = getState().groupListing.memberList;
   dispatch(memberListFetchStart(refresh));
@@ -50,7 +61,7 @@ export const fetchMemberList = (groupID, offset, refresh) => (dispatch, getState
         } else {
           list = [...list, ...resp.data.data.group_list];
         }
-        dispatch(memberListFetchSuccess(list, newOffset, count));
+        dispatch(memberListFetchSuccess(parseData(list), newOffset, count));
       } else {
         dispatch(memberListFetchEnd());
       }
