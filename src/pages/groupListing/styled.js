@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 export const PageWrapper = styled.div`
   width: 100%;
+  background: rgb(246, 246, 246);
 `
 
 export const PageContainer= styled.div`
@@ -24,13 +25,12 @@ export const PageContainer= styled.div`
 `
 
 export const CoverBoxWrapper = styled.ul`
-  padding-top: 30px;
   display: flex;
   flex-wrap: wrap;
   width: 100%;
   height: 100%;
   max-width: 100%;
-  padding: 30px 0px 0px;
+  padding: 0 0px 0px;
   list-style-type: none;
   margin: 0px;
   border-top:1px solid #707271;
@@ -191,15 +191,16 @@ export const StyledTitlePricingBox = styled(TitlePricingBox)`
 `
 
 export const InfoHeader = styled.div`
-  max-width:650px;
-  margin:auto;
+  max-width:664px;
+  margin: 0 auto;
   text-align:center;
   position: relative;
   z-index: 2;
+  padding-top: 40px;
 
   img {
     max-width: 315px;
-    margin-bottom:20px;
+    margin-bottom: 16px;
   }
  
 `
@@ -232,7 +233,7 @@ export const StyledCardInfo = styled(CardInfo)`
     letter-spacing: normal;
     text-align: center;
     color: #2f839d  ;
-    margin: 20px 0;
+    margin: 10px 0 20px;
   }
 `
 
