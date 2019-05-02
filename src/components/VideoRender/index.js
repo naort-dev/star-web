@@ -1,5 +1,8 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { requestTypeTitle } from '../../constants/requestTypes';
+import VideoPlayer from '../VideoPlayer';
 import VideoRenderDiv from './styled';
 
 export default class VideoRender extends React.Component {
@@ -31,49 +34,22 @@ export default class VideoRender extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
-  getTitle = () => {
-    const { bookingType, occasion } = this.props;
-    let bookingTitle = '';
-    if (bookingType === 3) { // Q&A video
-      bookingTitle =`Q&A ${requestTypeTitle[bookingType]}`;
-    } else {
-      bookingTitle = `${occasion} ${requestTypeTitle[bookingType]}`;
-    }
-    if (bookingTitle.length > this.charLimit) {
-      bookingTitle = bookingTitle.substring(0, this.charLimit) + '...';
-    }
-    return bookingTitle;
-  }
-  renderVideoDetails = (text) => {
-    let splicedText = text;
-    if (text.length > this.charLimit) {
-      splicedText = text.substring(0, this.charLimit) + '...';
-    }
-    return splicedText;
-  }
   render() {
     const { props } = this;
-    this.getTitle();
     return (
-      <VideoRenderDiv onClick={() => this.props.enableVideoPopup()}>
-        <VideoRenderDiv.ImageSection
-          height={props.imageHeight}
-          imageUrl={this.state.coverImage}
+      <VideoRenderDiv variableWidth={props.variableWidth} variableHeight={props.variableHeight} onClick={props.enableVideoPopup}>
+        <VideoRenderDiv.Container
+          noBorder={props.noBorder}
+          variableWidth={props.variableWidth}
+          variableHeight={props.variableHeight}
         >
-          <VideoRenderDiv.ProfileImageWrapper>
-            <VideoRenderDiv.ProfileImage
-              imageUrl={this.state.profileImage}
+          <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
+            <VideoPlayer
+              onError={this.props.onVideoError}
+              primarySrc={props.videoSrc}
             />
-          </VideoRenderDiv.ProfileImageWrapper>
-        </VideoRenderDiv.ImageSection>
-        <VideoRenderDiv.ProfileContent>
-          <VideoRenderDiv.Span>
-            <VideoRenderDiv.StarName>
-              {props.starName}
-            </VideoRenderDiv.StarName>
-            <VideoRenderDiv.StarDetails>{this.getTitle()}</VideoRenderDiv.StarDetails>
-          </VideoRenderDiv.Span>
-        </VideoRenderDiv.ProfileContent>
+          </VideoRenderDiv.Content>
+        </VideoRenderDiv.Container>
       </VideoRenderDiv>
     );
   }

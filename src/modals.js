@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoginFlow from './components/loginFlow';
-import ReferStar from './components/ReferStar';
+import QuickViewModal from './components/QuickViewModal';
 import SignupFlow from './components/signupFlow';
 import { Requestvideo } from './pages/requestvideo';
 
@@ -13,8 +13,8 @@ const Modals = (props) => {
     return <SignupFlow />;
   } else if (props.requestFlow) {
     return <Requestvideo />;
-  } else if (props.referModal) {
-    return <ReferStar />;
+  } else if (props.quickViewModal.active) {
+    return <QuickViewModal />;
   }
   return null;
 };
@@ -23,7 +23,7 @@ Modals.propTypes = {
   loginModal: PropTypes.bool.isRequired,
   signUpModal: PropTypes.bool.isRequired,
   requestFlow: PropTypes.bool.isRequired,
-  referModal: PropTypes.bool.isRequired,
+  quickViewModal: PropTypes.object.isRequired,
 };
 
 
@@ -31,7 +31,7 @@ const mapState = state => ({
   loginModal: state.modals.loginModal,
   signUpModal: state.modals.signUpModal,
   requestFlow: state.modals.requestFlow,
-  referModal: state.modals.referModal,
+  quickViewModal: state.modals.quickViewModal,
 });
 
 export default connect(mapState)(Modals);

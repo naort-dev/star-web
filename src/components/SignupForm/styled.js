@@ -13,21 +13,6 @@ const LoginContainer = styled.div`
   }
 `;
 
-LoginContainer.BackButton = styled.span`
-  position: absolute;
-  top: 2px;
-  left: 5px;
-  background-image: url(assets/images/icon_back_40a.svg);
-  background-repeat: no-repeat;
-  background-position: center;
-  border: none;
-  padding: 15px;
-  background-size: 26px;
-  background-color: white;
-  cursor: pointer;
-  outline: none;
-`;
-
 LoginContainer.wrapper = styled.div`
   height:100%;
   @media(min-width:1025px){
@@ -98,6 +83,7 @@ LoginContainer.SocialMediaSignup = styled.div`
   }
 `;
 LoginContainer.Container = styled.div`
+  display: block;
   @media(min-width: 768px) {
     padding: 0 0;
   }
@@ -106,12 +92,11 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  text-align: center;
-  color: #676767;
+  font-family: Gilroy;
+  color: #ff6c58;
   font-size: 20px;
-  font-family: 'Avenir-Bold';
   @media(min-width:768px){
-    font-size:25px;
+    font-size: 24px;
   }
   @media(min-width: 1025px){
     font-size: 25px;
@@ -120,6 +105,22 @@ LoginContainer.Heading = styled.div`
     font-size: 27px;
   }
   
+`;
+
+LoginContainer.ContinueButton = styled.button`
+  cursor: pointer;
+  background-color: #2f839d;
+  font-family: Gilroy-Bold;
+  font-size: 18px;
+  line-height: 1.5;
+  text-align: center;
+  color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 30px;
+  width: 300px;
+  height: 60px;
+  outline: none;
 `;
 
 LoginContainer.ButtonIcon = styled.img`  
@@ -204,18 +205,21 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  color:#333333;
-  font-family: 'Avenir-Bold';
-  font-size:16px;
-  text-align:left;
+  font-family: Gilroy;
+  font-size: 12px;
+  line-height: 2.08;
+  text-align: center;
+  color: ${props => (props.error ? '#990000' : '#555555')}; 
+  padding-top: 25px;
+  width:100%;
   @media(min-width:768px){
-    width:55%;
+
     align-items:center;
     padding-bottom:0px;
   }
   @media(min-width:1025px){
     font-size:13px;
-    width:69%;
+
     line-height: 30px;
   }
   @media(min-width:1920px){
@@ -285,16 +289,16 @@ LoginContainer.InputWrapper = styled.div`
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
-  text-align:left;
-  font-family: 'Avenir-Regular';
-  font-size:12px;
-  padding: 17px 23px;
-  line-height: 18px;
-  color: #707070;
+  font-family: Gilroy;
+  font-size: 14px;
+  line-height: 1.57;
+  text-align: left;
+  color: #555555;
   ${LoginContainer.Anchor} {
-    color: #707070;
-    margin: 0 5px;
-    text-decoration: underline;
+    color: #2f839d;
+    cursor: pointer;
+    text-decoration: none;
+    padding-left: 5px;
   }
   @media(min-width:768px){
     text-align:center;
@@ -425,6 +429,18 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  input {
+    font-family: Gilroy-Light;
+    font-size: 18px;
+    line-height: 1.14;
+    text-align: center;
+    color: #615195;
+    text-align: center;
+  }
+  input:focus::-webkit-input-placeholder { color:transparent; }
+  input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+  input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+  input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:768px){
     width:100%;
   }
@@ -489,33 +505,32 @@ LoginContainer.ButtonWrapper = styled.div`
   margin-top:5%;
 `;
 LoginContainer.SignupLine = styled.div`
-    display: block;
-    font-family: 'Avenir-Light';
-    color:#b3acac;
-    font-size: 12px;
-    margin: 0;
-    margin: 20px 20px;
-    margin-top: 0;
-    order: 1;
-    span {
-      display: inline-block;
-    }
-    &::before, &::after {
-      content: '';
-      display: inline-block;
-      height: 1px;
-      background-color: #e8e7e7;
-      vertical-align: middle;
-      width: 50px;
-      width: calc(50% - 69px);
-    }
-    &::before {
-      margin-right: 10px;
-    }
-    &::after {
-      margin-left: 10px;
-    }
-  
+  display: block;
+  font-family: 'Avenir-Light';
+  color:#b3acac;
+  font-size: 12px;
+  margin: 0;
+  margin: 20px 20px;
+  margin-top: 0;
+  order: 1;
+  span {
+    display: inline-block;
+  }
+  &::before, &::after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    background-color: #e8e7e7;
+    vertical-align: middle;
+    width: 50px;
+    width: calc(50% - 69px);
+  }
+  &::before {
+    margin-right: 10px;
+  }
+  &::after {
+    margin-left: 10px;
+  }  
 `;
 
 export { LoginContainer, HeaderSection, FooterSection };

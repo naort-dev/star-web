@@ -1,12 +1,27 @@
 import { requestTypes, requestTypeTitle } from '../constants/requestTypes';
-export const starProfessionsFormater = (list) => {
+
+export const starProfessionsFormater = (list, type) => {
   let string = '';
   if (list) {
-    list.forEach((professions, index) => {
+    list.forEach((profession, index) => {
       if (index === list.length - 1) {
-        string += `${professions.title}`;
+        string += `${type === 'search' ? profession : profession.title}`;
       } else {
-        string += `${professions.title}\xa0|\xa0`;
+        string += `${type === 'search' ? profession : profession.title}\xa0|\xa0`;
+      }
+    });
+    return string;
+  }
+};
+
+export const pipeSeparator = (list, key) => {
+  let string = '';
+  if (list) {
+    list.forEach((listItem, index) => {
+      if (index === list.length - 1) {
+        string += `${listItem[key]}`;
+      } else {
+        string += `${listItem[key]}\xa0|\xa0`;
       }
     });
     return string;
@@ -25,6 +40,10 @@ export const starProfessionsDotFormater = (list) => {
     });
     return string;
   }
+};
+
+export const getStarName = (nickName = '', firstName = '', lastName = '') => {
+  return nickName && nickName !== '' ? nickName : `${firstName} ${lastName}`;
 };
 
 export const videoTitleGenerator = (requestType, occasion) => {

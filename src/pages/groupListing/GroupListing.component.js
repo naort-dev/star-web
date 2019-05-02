@@ -1,7 +1,7 @@
 import React from 'react';
 import { PageWrapper, PageContainer, CoverBoxWrapper, BoxListing, BoxListingCover, TopCoverBox, StyledPlayButton, BottomCoverBox, SecondaryHeading, StyledTitlePricingBox, InfoHeader, StyledCardInfo, CoverWrap, LoaderWrapper } from './styled';
-import Header from '../../components/HeaderWithNav';
-import ScrollList from '../../components/ScrollList';
+import Header from '../../components/Header';
+// import ScrollList from '../../components/ScrollList';
 import Loader from '../../components/Loader';
 
 export default class GroupListing extends React.Component {
@@ -49,11 +49,7 @@ export default class GroupListing extends React.Component {
     let group_website = (groupDetails.group_details&&groupDetails.group_details.website)?groupDetails.group_details.website:'';
     return (
       <PageWrapper>
-        <Header
-          menuActive={this.state.menuActive}
-          enableMenu={this.activateMenu}
-          history={this.props.history}
-        />
+        <Header />
 
         <PageContainer>
           <CoverWrap>
@@ -69,7 +65,7 @@ export default class GroupListing extends React.Component {
             </LoaderWrapper>
             :            
             <CoverBoxWrapper>
-              <ScrollList
+              {/* <ScrollList
                 dataList={membersList}
                 scrollTarget="column-layout-scrollable-target"
                 renderFunction={this.renderMembers}
@@ -79,7 +75,7 @@ export default class GroupListing extends React.Component {
                 loading={membersLoading}
                 noDataText="No members"
                 fetchData={(offset, refresh) => this.fetchList(this.groupID, offset, refresh)}
-              />
+              /> */}
             </CoverBoxWrapper>
           }
           

@@ -1,3 +1,5 @@
+import { clearSessionDetails } from '../../utils/clearSessionDetails';
+
 export function onRequest(config) {
   const customConfig = config;
   const token = JSON.parse(localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')).user.authentication_token;
@@ -17,9 +19,8 @@ export const responseOnFailed = (error) => {
   if (error.response) {
     const status = error.response.headers.status || error.response.status;
     customError.status = status;
-
     if (status === 401) {
-      localStorage.clear();
+      clearSessionDetails();
       window.location.pathname = '/';
     }
   }

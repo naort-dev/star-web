@@ -1,6 +1,6 @@
-
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
+import { loaderAction } from '../../../store/shared/actions/commonActions';
 
 export const CELEB_DETAILS = {
   start: 'fetch_start/celeb_details',
@@ -20,62 +20,57 @@ export const celebDetailstFetchEnd = () => ({
 });
 
 export const celebDetailstFetchSuccess = (details) => {
-  return (
-    {
-      type: CELEB_DETAILS.success,
-      details,
-    });
+  return {
+    type: CELEB_DETAILS.success,
+    details,
+  };
 };
 
-export const celebDetailstFetchFailed = error => ({
+export const celebDetailstFetchFailed = (error) => ({
   type: CELEB_DETAILS.failed,
   error,
 });
 
 export const celebDetailstFetchFollowUpdate = (details) => {
-  return (
-    {
-      type: CELEB_DETAILS.update,
-      details,
-    });
+  return {
+    type: CELEB_DETAILS.update,
+    details,
+  };
 };
 
 export const resetCelebDetails = () => ({
   type: CELEB_DETAILS.reset,
 });
 
-export const updateCelebDetailsFollow = follow => (dispatch, getState) => {
+export const updateCelebDetailsFollow = (follow) => (dispatch, getState) => {
   const { userDetails } = getState().celebDetails;
   const { is_follow: isFollow } = userDetails;
 };
 
 export const fetchCelebDetails = id => (dispatch, getState) => {
   if (!id) return null;
-  const { isLoggedIn, auth_token } = getState().session;
+  const { isLoggedIn } = getState().session;
   let API_URL;
-  let options;
   if (isLoggedIn) {
     API_URL = `${Api.authGetCelebDetails}${id}/`;
-    options = {
-      headers: {
-        'Authorization': `token ${auth_token.authentication_token}`,
-      },
-    };
   } else {
     API_URL = Api.getCelebDetails(id);
-    options = {};
   }
   dispatch(celebDetailsFetchStart());
-  return fetch.get(API_URL, options).then((resp) => {
-    if (resp.data && resp.data.success && resp.data.data.user && resp.data.data.celebrity_details) {
-      dispatch(celebDetailstFetchEnd());
-      dispatch(celebDetailstFetchSuccess(resp.data.data));
-    } else {
-      dispatch(celebDetailstFetchEnd());
-      dispatch(celebDetailstFetchFailed('404'));
-    }
-  }).catch((exception) => {
-    dispatch(celebDetailstFetchEnd());
-    dispatch(celebDetailstFetchFailed(exception.response.data));
-  });
+  // dispatch(loaderAction(true));
+  return fetch
+    .get(API_URL, {})
+    .then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(celebDetailstFetchSuccess(resp.data.data));
+        dispatch(loaderAction(false));
+      } else {
+        dispatch(loaderAction(false));
+        dispatch(celebDetailstFetchFailed('404'));
+      }
+    })
+    .catch((exception) => {
+      dispatch(loaderAction(false));
+      dispatch(celebDetailstFetchFailed(exception.response.data));
+    });
 };

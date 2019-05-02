@@ -8,7 +8,8 @@ import { StripeProvider } from 'react-stripe-elements';
 import { BrowserRouter as Router } from 'react-router-dom';
 import configureStore from './store/configureStore';
 import App from './App';
-import './globalStyles';
+import './styles/globalStyles';
+import { colorThemes } from './styles/colorThemes';
 
 import DevTools from './store/DevTools';
 
@@ -17,7 +18,7 @@ const DevToolsWrapper = () => (process.env.NODE_ENV === 'development' ? <DevTool
 
 render(
   <Provider store={store}>
-    <ThemeProvider theme={{}}>
+    <ThemeProvider theme={colorThemes}>
       <StripeProvider apiKey={env('STRIPE_PUBLISH_KEY')}>
         <Router>
           <div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
 import Popup from '../Popup';
 import CropperStyled from './styled';
 
@@ -72,8 +74,8 @@ export default class ImageCropper extends React.Component {
     const image = new Image();
     image.onload = function () {
       let imageRatio = image.width/image.height;
-      const height = image.height > this.cropperWrapper.parentNode.clientHeight ? this.cropperWrapper.parentNode.clientHeight : image.height;
-      const width = height*imageRatio;
+      const height = image.height;
+      const width = image.width;
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = width;
@@ -138,28 +140,21 @@ export default class ImageCropper extends React.Component {
 
   render() {
     return (
-      <Popup
-        modalView
-        disableBackground
-        closePopUp={() => this.props.closeCropper()}
-      >
-        <CropperStyled innerRef={(node) => {this.cropperWrapper = node}}>
-          {
-            this.state.cropImage &&
-              <Cropper
-                src={this.state.cropImage}
-                crop={this.state.cropValues}
-                keepSelection
-                onImageLoaded={this.setCropImage}
-                onChange={this.onCropChange}
-              />
-          }
-          <CropperStyled.ButtonWrapper>
-            <CropperStyled.CropperButton onClick={this.handleCrop}>Select</CropperStyled.CropperButton>
-            <CropperStyled.CropperCancel onClick={this.props.closeCropper}>Cancel</CropperStyled.CropperCancel>
-          </CropperStyled.ButtonWrapper>
-        </CropperStyled>
-      </Popup>
-    )
+      <CropperStyled innerRef={(node) => { this.cropperWrapper = node; }}>
+        {
+          this.state.cropImage &&
+            <Cropper
+              src={this.state.cropImage}
+              crop={this.state.cropValues}
+              keepSelection
+              onImageLoaded={this.setCropImage}
+              onChange={this.onCropChange}
+            />
+        }
+        <CropperStyled.ButtonWrapper>
+          <CropperStyled.CropperButton onClick={this.handleCrop}>I like it, continue</CropperStyled.CropperButton>
+        </CropperStyled.ButtonWrapper>
+      </CropperStyled>
+    );
   }
 }

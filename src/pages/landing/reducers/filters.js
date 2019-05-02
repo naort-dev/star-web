@@ -2,15 +2,15 @@ import { UPDATEFILTER } from '../actions/updateFilters';
 
 const initalState = {
   category: {
-    label: 'featured',
-    value: '',
-    selectedCategory: 'Stars',
+    label: 'Featured',
+    value: 0,
+    subCategories: [],
+    selected: [],
   },
-  selectedTab: 'Stars',
   searchParam: '',
-  lowPrice: '',
-  highPrice: '',
-  sortValue: 'featured',
+  lowPrice: 0,
+  highPrice: 500,
+  sortValue: 'popularity',
   selectedVideoType: '',
   selectedVideoDate: '',
 };
@@ -23,14 +23,9 @@ export default (state = { ...initalState }, action) => {
         category: {
           label: action.label,
           value: action.value,
-          selectedCategory: action.category,
+          subCategories: action.subCategories,
+          selected: [],
         },
-      };
-
-    case UPDATEFILTER.switchTab:
-      return {
-        ...state,
-        selectedTab: action.label,
       };
 
     case UPDATEFILTER.updateSearchParam:
@@ -55,7 +50,10 @@ export default (state = { ...initalState }, action) => {
     case UPDATEFILTER.updateSelectedSubCategory:
       return {
         ...state,
-        [action.category]: action.selectedList,
+        category: {
+          ...state.category,
+          selected: action.selectedList,
+        },
       };
 
     case UPDATEFILTER.updateSelectedVideoType:

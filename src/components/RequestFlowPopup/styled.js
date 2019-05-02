@@ -1,13 +1,5 @@
-import styled, {keyframes} from 'styled-components';
-
-const popupEnter = keyframes`
-  0% {
-    top: 100%;
-  }
-  100% {
-    top: 0;
-  }
-`;
+import styled from 'styled-components';
+import Dialog from '@material-ui/core/Dialog';
 
 const PopupStyled = styled.div`
   display: ${props => (props.visible ? 'flex' : 'none')};
@@ -30,35 +22,35 @@ const PopupStyled = styled.div`
   }
 `;
 
+PopupStyled.Dialog = styled(Dialog)`
+  .paper-root {
+    max-width: 100%;
+    @media (min-width: 832px) {
+      max-height: calc(100% - 30px);
+      border-radius: 20px;
+    }
+  }
+`;
+
 PopupStyled.Container = styled.div`
   display: flex;
   max-width: 100%;
   position: relative;
-  justify-content: center;
-  animation: ${popupEnter} 0.2s ease-out;
-  height: 100%;
   -webkit-overflow-scrolling: touch;
-  @media(min-width: 768px) {
-    overflow: initial;
+  justify-content: center;
+  height: 100%;
+  @media (min-width: 834px) {
     border-radius: 6px;
-    margin: auto;
-    height: auto;
-    justify-content: center;
-    align-items: center;
   }
 `;
 
 PopupStyled.SmallContainer = PopupStyled.Container.extend`
-  padding: ${props => (props.modalView ? '0' : '31px 7px 20px')};
+  padding: ${props => (props.modalView ? '0' : '40px 30px')};
   width: 100%;
   background-color: #fff;
-  @media(min-width: 768px) {
-    width: ${props => !props.autoWidth && '75%'};
-    min-width: 200px;
-    max-width: ${props => (props.largePopup ? '900px' : '600px')};
-  }
-  @media(min-width: 1025px) {
-    width: ${props => !props.autoWidth && '50%'};
+  @media(min-width: 834px) {
+    width: 700px;
+    height: 700px;
   }
 `;
 
@@ -85,19 +77,16 @@ PopupStyled.SliderDots = styled.span`
   cursor: pointer;
 `;
 
-
 PopupStyled.CloseButton = styled.span`
   position: absolute;
-  top: ${props => (props.smallPopup ? '10px' : '16px')};
-  right: ${props => (props.smallPopup ? '7px' : '18px')};
+  right: 50px;
   z-index: 2;
   display: inline-block;
-  width: 17px;
-  height: 17px;
-  cursor:pointer;
-  background: ${props => (props.closeIconColor === 'white' ? "url('assets/images/icon-close-white.svg') no-repeat" : "url('assets/images/close-icon-orange.svg') no-repeat")};
-  background-size: cover;
-  background-position: center center;
+  cursor: pointer;
+  color: #707070;
+  font-size: 45px;
+  line-height: 20px;
+  top: 40px;
 `;
 
 export default PopupStyled;

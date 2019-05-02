@@ -21,6 +21,19 @@ LoginContainer.wrapper = styled.div`
   }
   
 `;
+LoginContainer.CloseButton = styled.span`
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 2;
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  cursor:pointer;
+  color: #707070;
+  font-size: 30px;
+`;
+
 
 LoginContainer.actionText = styled.span`
   cursor: pointer;
@@ -88,14 +101,10 @@ LoginContainer.Container = styled.div`
   }
 `;
 LoginContainer.Heading = styled.div`
-  font-family: 'Avenir-Bold';
-  font-size: 25px;
+  font-family: 'Gilroy';
+  font-size: 24px;
   text-align: center;
-  color: #FF6C58;
-  @media(min-width:1920px){
-    font-size:32px;
-  }
-  
+  color: #ff6c58;
 `;
 LoginContainer.SocialMediaMessage = styled.div`
   font-family: 'Avenir-Medium';
@@ -263,9 +272,6 @@ LoginContainer.InputWrapper = styled.div`
   @media(min-width: 1025px) {
     margin-top: 30px;
   }
-  @media(min-width: 1920px) {
-    margin-top: 50px;
-  }
 `;
 LoginContainer.PrivacyContent = styled.div`
   text-align:left;
@@ -313,40 +319,42 @@ LoginContainer.FooterRight = styled.div`
   text-align:right;
 `;
 LoginContainer.SignIn = styled.input`
-background-color:#FF6C58 ; 
-color: #fff;
+background-color:#fff ; 
+color: #2f839d;
 padding: 12px 30px;
+margin-top: 42.5px;
 width:100%;
 text-align: center;
 text-decoration: none;
 display: inline-block;
-font-size:14px;
-font-family: 'Avenir-Bold';
+font-size:18px;
+font-family: 'Gilroy-Bold';
 outline:none;
 cursor: pointer;
-border-radius:5px;
-border: 2px solid #FF6C58;
+border-radius:30px;
+border: 2px solid #2f839d;
 -webkit-appearance: none;
+
 &:hover {
-  background-color: #FF3B21;
+  background-color: #2f839d;
+  border: 2px solid #fff;
+  color:#fff;
 }
 @media(min-width:1920px){
   font-size:20px;
 }
-  
 `;
 LoginContainer.ForgotButtonWrapper = styled.div`
-  text-align:left;
-  margin-top: 24px;
+  text-align: center;
+  margin-top: 10px;
 `;
 LoginContainer.ForgotButtonSpan = styled.span`
   color: #007FAA;
-  font-family: 'Avenir-Regular';
-  font-size:12px;
-  margin-top:0.5%;
+  font-family:  'Gilroy';
+  font-size:14px;
 `;
 LoginContainer.ButtonWrapper = styled.div`
-  margin-top:3%;
+  margin-top:20px;
 `;
 LoginContainer.CoverImage = styled.div`
   display:none;
@@ -446,11 +454,22 @@ HeaderSection.RightDiv = styled.button`
 LoginContainer.WrapsInput = styled.div`
   width:100%;
   height:60px;
+  input {
+    font-family: Gilroy;
+    font-size: 18px;
+    line-height: 1.14;
+    text-align: center;
+    color: #615195;
+    text-align: center;
+  }
+  input:focus::-webkit-input-placeholder { color:transparent; }
+input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
+input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:768px){
     width:100%;
   }
   @media(min-width:1025px){
-    width:352px;
     height:32px;
   }
 

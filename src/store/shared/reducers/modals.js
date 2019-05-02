@@ -3,7 +3,10 @@ import { TOGGLE_MODALS } from '../actions/toggleModals';
 const initialState = {
   loginModal: false,
   signUpModal: false,
-  referModal: false,
+  quickViewModal: {
+    active: false,
+    data: null,
+  },
   requestFlow: false,
   signUpDetails: null,
   requestFlowDetails: null,
@@ -34,12 +37,14 @@ export default (state = { ...initialState }, action) => {
         },
       };
 
-    case TOGGLE_MODALS.toggleRefer:
+    case TOGGLE_MODALS.toggleQuickView:
       return {
         ...state,
-        referModal: action.state,
-        loginModal: false,
-        signUpModal: false,
+        quickViewModal: {
+          ...state.quickViewModal,
+          active: action.state,
+          data: action.modalData,
+        },
       };
 
     case TOGGLE_MODALS.toggleRequestFlow:

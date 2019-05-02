@@ -13,7 +13,7 @@ export const locations = {
   myVideos: "/user/myVideos",
   unauthorized: "/unauthorized",
   notFound: "/not-found",
-  getAwsVideoCredentials: "user/signed_url/?extension=mp4&key=authentication_videos&file_type=video",
-  askAwsVideoCredentials: "user/signed_url/?extension=mp4&key=stargram_videos&file_type=video",
+  getAwsVideoCredentials: "v1/user/signed_url/?extension=mp4&key=authentication_videos&file_type=video",
+  askAwsVideoCredentials: "v1/user/signed_url/?extension=mp4&key=stargram_videos&file_type=video",
   bannerVideo: 'https://s3.amazonaws.com/starsona/videos/Public+Videos/banner-video.mp4',
 };
