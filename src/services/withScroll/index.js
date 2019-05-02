@@ -83,7 +83,7 @@ export const withScroll = (WrappedComponent) => {
           refreshFunction={this.refresh}
           scrollThreshold={0.5}
           hasMore={this.state.hasMore}
-          loader={this.props.dataList.length ? this.renderLoader() : <NoDataText>{this.props.noDataText}</NoDataText>}
+          loader={this.props.dataList.length ? this.renderLoader() : this.renderNoDataText()}
         >
           <WrappedComponent {...this.props} />
         </InfiniteScroll>
@@ -95,6 +95,13 @@ export const withScroll = (WrappedComponent) => {
         return <Loader class="loader" />
       }
       return null
+    }
+
+    renderNoDataText = () => {
+      if (!this.props.loading) {
+        return <NoDataText>{this.props.noDataText}</NoDataText>
+      }
+      return null;
     }
 
     renderList = () => {

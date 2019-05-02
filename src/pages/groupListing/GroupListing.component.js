@@ -59,37 +59,18 @@ export default class GroupListing extends React.Component {
               <StyledCardInfo Infotext={group_description} InfoHeading={group_website} />
             </InfoHeader>
           </CoverWrap>
-          {
-            (!membersList.length && membersLoading) ? 
-            <LoaderWrapper>
-              <Loader />
-            </LoaderWrapper>
-            :            
-            <CoverBoxWrapper>
-              <StarListing
-                customLoader
-                dataList={membersList}
-                loading={membersLoading}
-                offset={membersOffset}
-                noDataText="No members"
-                fetchData={(offset, refresh) => this.fetchList(this.groupID, offset, refresh)}
-                totalCount={membersCount}
-                limit={membersLimit}
-              />
-              {/* <ScrollList
-                dataList={membersList}
-                scrollTarget="column-layout-scrollable-target"
-                renderFunction={this.renderMembers}
-                limit={membersLimit}
-                totalCount={membersCount}
-                offset={membersOffset}
-                loading={membersLoading}
-                noDataText="No members"
-                fetchData={(offset, refresh) => this.fetchList(this.groupID, offset, refresh)}
-              /> */}
-            </CoverBoxWrapper>
-          }
-          
+          <CoverBoxWrapper>
+            <StarListing
+              customLoader
+              dataList={membersList}
+              loading={membersLoading}
+              offset={membersOffset}
+              noDataText="No members"
+              fetchData={(offset, refresh) => this.fetchList(this.groupID, offset, refresh)}
+              totalCount={membersCount}
+              limit={membersLimit}
+            />
+          </CoverBoxWrapper>          
         </PageContainer>
       </PageWrapper>
     );
