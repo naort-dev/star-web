@@ -37,6 +37,7 @@ ActionStyled.Description = styled.span`
 ActionStyled.ActionContent = styled.div`
   display: flex;
   max-width: 100%;
+  width: 100%;
   align-items: center;
 `;
 

@@ -65,8 +65,7 @@ class Header extends React.Component {
     const { showCategories } = this.state;
     if (showCategories) {
       this.toggleCategories();
-    }
-    if (this.props.onBackClick) {
+    } else if (this.props.onBackClick) {
       this.props.onBackClick();
     }
   }

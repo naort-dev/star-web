@@ -15,6 +15,7 @@ import StarProfileStyled from './styled';
 // import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
 // import ShareView from '../../components/ShareView';
 import CallToAction from './components/CallToAcion';
+import DetailSection from './components/DetailSection';
 import Header from '../../components/Header';
 
 const StarProfile = (props) => {
@@ -41,6 +42,10 @@ const StarProfile = (props) => {
         showBack
       />
       <CallToAction
+        userDetails={props.userDetails}
+        celebDetails={props.celebDetails}
+      />
+      <DetailSection
         userDetails={props.userDetails}
         celebDetails={props.celebDetails}
       />

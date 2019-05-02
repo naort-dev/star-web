@@ -125,6 +125,7 @@ const QuickViewModal = (props) => {
                 variableWidth
                 variableHeight
                 noBorder
+                autoPlay
                 onVideoError={onVideoError}
                 videoSrc={props.celebDetails.profile_video}
                 cover="assets/images/default-cover.jpg"

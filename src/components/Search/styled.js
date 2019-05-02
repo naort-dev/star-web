@@ -36,8 +36,8 @@ SearchSection.AutoSuggest = styled.div`
 `;
 SearchSection.SuggestionListWrapper = styled.div`
   font-family: Gilroy-light;
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: ${props => `${props.topOffset}px`};
   left: 0;
   right: 0;
   width: 100%;
@@ -65,7 +65,10 @@ SearchSection.SuggestionListWrapper = styled.div`
   }
 `;
 SearchSection.SuggestionList = styled.ul`
-  padding: 16px 0;
+  padding: 16px;
+  @media(min-width: 832px) {
+    padding: 16px 0;
+  }
 `;
 SearchSection.noDataWrapper = styled.div`
   display: table;
