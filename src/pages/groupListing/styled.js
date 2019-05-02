@@ -10,17 +10,19 @@ export const PageContainer= styled.div`
   width: 100%;
   max-width: 1280px;
   margin: 0px auto;
-  margin-top: 170px;
+  margin-top: 143px;
   section {
     width:100%;
   }
-  @media (max-width: 1280px) {
+  @media (max-width: 1279px) {
     max-width: 80%;
+    margin-top: 259px;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 831px) {
     max-width: 100%;
     padding: 0 10px;
+    margin-top: 126px;
   }
 `
 
@@ -208,7 +210,7 @@ export const InfoHeader = styled.div`
 export const CardInfo = ({ className, Infotext, InfoHeading  }) => (
   <div className={className}>
     <p>{Infotext}</p>
-    <h2>{InfoHeading}</h2>
+    <a className="head-link" href={InfoHeading} target="_blank">{InfoHeading}</a>
   </div>
 )
 
@@ -224,7 +226,7 @@ export const StyledCardInfo = styled(CardInfo)`
     color:#555;
   }
 
-  h2{
+  .head-link {
     font-size: 30px;
     font-weight: bold;
     font-style: normal;
@@ -234,6 +236,8 @@ export const StyledCardInfo = styled(CardInfo)`
     text-align: center;
     color: #2f839d  ;
     margin: 10px 0 20px;
+    text-decoration: none;
+    display: inline-block;
   }
 `
 

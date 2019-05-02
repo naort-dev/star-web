@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const FooterStyled = styled.footer`
   padding: 20px 0;
+  background: #fff;
+  display: none;
   @media(min-width: 832px) {
     display: flex;
     padding: 0 30px;

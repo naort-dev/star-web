@@ -3,6 +3,7 @@ import { PageWrapper, PageContainer, CoverBoxWrapper, BoxListing, BoxListingCove
 import Header from '../../components/Header';
 import StarListing from '../../components/StarListing';
 // import ScrollList from '../../components/ScrollList';
+import { Footer } from '../../components/Footer';
 import Loader from '../../components/Loader';
 
 export default class GroupListing extends React.Component {
@@ -45,7 +46,7 @@ export default class GroupListing extends React.Component {
     const {
       membersList, membersLimit, membersCount, membersOffset, membersLoading, groupDetails
     } = this.props;
-    let group_image = (groupDetails.avatar_photo&&groupDetails.avatar_photo.image_url)?groupDetails.avatar_photo.image_url:'../../assets/images/broadcast@3x.png';
+    let group_image = (groupDetails.avatar_photo&&groupDetails.avatar_photo.image_url)?groupDetails.avatar_photo.image_url:'assets/images/default-cover.jpg';
     let group_description = (groupDetails.group_details&&groupDetails.group_details.description)?groupDetails.group_details.description:'';
     let group_website = (groupDetails.group_details&&groupDetails.group_details.website)?groupDetails.group_details.website:'';
     return (
@@ -72,6 +73,7 @@ export default class GroupListing extends React.Component {
             />
           </CoverBoxWrapper>          
         </PageContainer>
+        <Footer />
       </PageWrapper>
     );
   }
