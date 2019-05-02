@@ -8,9 +8,8 @@ import {
   ProfileIcon,
   Image,
 } from './styled';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
+import { FlexCenter } from '../../../../styles/CommonStyled';
 
 const Header = props => {
   const starData = [
@@ -39,23 +38,16 @@ const Header = props => {
 
   return (
     <HeaderDiv className="headerGlobal" arrow={props.arrowVisible}>
-      <FlexBoxSBC>
-        <FontAwesomeIcon
-          icon={faAngleLeft}
-          className="arrow"
-          onClick={props.backArrowHandler}
-        />
-
-        {/* <BackArrow onClick={props.backArrowHandler} /> */}
+      <FlexCenter>
+        <BackArrow className="arrow" onClick={props.backArrowHandler} white />
         <ProfileIcon>
           <StarDrawer starData={starData} />
           <Image>
             <img src="../assets/images/profile.png" alt="profile_icon" />
           </Image>
         </ProfileIcon>
-        <FontAwesomeIcon icon={faTimes} onClick={props.closeHandler} />
-        {/* <CloseButton onClick={props.closeHandler} /> */}
-      </FlexBoxSBC>
+        <CloseButton onClick={props.closeHandler} white />
+      </FlexCenter>
       <HeaderText>{props.headerText}</HeaderText>
     </HeaderDiv>
   );

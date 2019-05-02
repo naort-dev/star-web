@@ -7,9 +7,9 @@ const QuestionBuilder = ({ questionsList }) => {
   return (
     <React.Fragment>
       {questionsList.map(question => (
-        <QuestionWrapper key={question.key}>
+        <QuestionWrapper key={question.key} className="questionWrapper">
           <FontAwesomeIcon icon={faCheck} />{' '}
-          <QuestionTag>{question.question}</QuestionTag>
+          <QuestionTag className="question">{question.question}</QuestionTag>
         </QuestionWrapper>
       ))}
     </React.Fragment>

@@ -33,7 +33,7 @@ export const Progress = styled(CircularProgress)`
 `;
 
 export const Loading = styled.section`
-  position: absolute;
+  position: fixed;
   justify-content: center;
   display: flex;
   z-index: 99999999;
@@ -42,6 +42,8 @@ export const Loading = styled.section`
   background: #bdbcbc;
   opacity: 0.5;
   min-height: 100%;
+  top: 0;
+  left: 0;
 `;
 
 export const BackArrow = styled.span`
@@ -53,10 +55,15 @@ export const BackArrow = styled.span`
   width: 10px;
   height: 20px;
   background-size: contain;
+  position: absolute;
+  left: 30px;
+  top: 30px;
   cursor: pointer;
   ${media.webView} {
     width: 14px;
     height: 28px;
+    left: 50px;
+    top: 50px;
   }
 `;
 
@@ -68,10 +75,15 @@ export const CloseButton = styled.span`
   content: '';
   width: 20px;
   height: 20px;
+  position: absolute;
+  right: 30px;
+  top: 30px;
   background-size: contain;
   cursor: pointer;
   ${media.webView} {
     width: 28px;
     height: 28px;
+    right: 50px;
+    top: 50px;
   }
 `;

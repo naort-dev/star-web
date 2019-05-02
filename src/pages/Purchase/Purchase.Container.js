@@ -5,30 +5,14 @@ import {
   updateMediaStore,
   playPauseMedia,
   loaderAction,
-  updateCustomerId,
 } from '../../store/shared/actions/commonActions';
 import {
-  showRecorder,
   resetRecording,
-  startAudioRecording,
   saveAudioRecording,
-  deviceCheck,
-  stopAudioRecording,
-  showFallback,
-  saveAudioFile,
-  closeRecorder,
-  clearAll
 } from '../../store/shared/actions/audioRecorder';
-import {
-  setVideoUploadedFlag,
-  fetchOccasionlist,
-} from './actions/purchaseActions';
-import {
-  starsonaRequest,
-  createCharge,
-  fetchSourceList,
-  modifySourceList,
-} from '../../store/shared/actions/processPayments';
+import { setVideoUploadedFlag } from '../../store/shared/actions/commonActions';
+import { fetchOccasionlist } from './actions/purchaseActions';
+import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
