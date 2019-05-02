@@ -1,11 +1,8 @@
 import React from 'react';
 import { times, random } from 'lodash';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
-import Slide from '@material-ui/core/Slide';
-import Dialog from '@material-ui/core/Dialog';
+import { Scrollbars } from 'react-custom-scrollbars';
 import PopupStyled from './styled';
-import { BackArrow, CloseButton } from '../../styles/CommonStyled';
+import { CloseButton } from '../../styles/CommonStyled';
 
 export default class RequestFlowPopup extends React.Component {
   constructor(props) {
@@ -53,16 +50,16 @@ export default class RequestFlowPopup extends React.Component {
       <PopupStyled.Dialog
         fullScreen={this.state.fullScreen}
         open
-        classes={{paper: 'paper-root'}}
+        classes={{ paper: 'paper-root' }}
         onRendered={this.props.onMounted && this.props.onMounted}
         onClose={this.props.closePopUp}
         aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer
-          modalView={this.props.modalView}
+          // modalView={this.props.modalView}
           largePopup={this.props.largePopup}
           autoWidth={this.props.autoWidth}
-          innerRef={(node) => (this.popupContent = node)}
+          innerRef={node => (this.popupContent = node)}
         >
           {!this.props.modalView && (
             <PopupStyled.SliderDotsWrapper>
@@ -81,10 +78,6 @@ export default class RequestFlowPopup extends React.Component {
             {this.props.children}
           </PopupStyled.SmallContent>
           {!this.props.disableClose && (
-            // <PopupStyled.CloseButton onClick={this.props.closePopUp}>
-            //   <FontAwesomeIcon icon={faTimes} />
-            // </PopupStyled.CloseButton>
-
             <CloseButton onClick={this.props.closePopUp} />
           )}
         </PopupStyled.SmallContainer>

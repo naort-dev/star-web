@@ -5,8 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 import { MultiSelectStyled } from './styled';
 
-
-const MultiValue = (prop) => {
+const MultiValue = prop => {
   return (
     <Chip
       tabIndex={-1}
@@ -14,16 +13,16 @@ const MultiValue = (prop) => {
       onDelete={prop.removeProps.onClick}
     />
   );
-}
+};
 
 const inputComponent = ({ inputRef, ...props }) => {
   return <div ref={inputRef} {...props} />;
-}
+};
 
-const Control = (prop) => {
-  const textFieldProps = { ...prop.selectProps.textFieldProps }
+const Control = prop => {
+  const textFieldProps = { ...prop.selectProps.textFieldProps };
   // if (!props.value.length) {
-    // delete textFieldProps.InputLabelProps;
+  // delete textFieldProps.InputLabelProps;
   // }
   return (
     <TextField
@@ -44,9 +43,9 @@ const Control = (prop) => {
       {...textFieldProps}
     />
   );
-}
+};
 
-const Option = (prop) => {
+const Option = prop => {
   return (
     <MenuItem
       buttonRef={prop.innerRef}
@@ -69,11 +68,9 @@ const Option = (prop) => {
       {prop.children}
     </MenuItem>
   );
-}
-
+};
 
 const MultiSelect = props => {
-
   const [inputValue, updateInput] = useState('');
 
   const updateInputValue = event => {
@@ -82,12 +79,12 @@ const MultiSelect = props => {
     } else {
       updateInput('');
     }
-  }
+  };
 
   const components = {
     Control,
     MultiValue,
-    Option
+    Option,
   };
   return (
     <MultiSelectStyled>
@@ -105,11 +102,12 @@ const MultiSelect = props => {
         textFieldProps={{
           label: props.label,
           onChange: updateInputValue,
-          InputLabelProps: !props.value.length ? {} : { shrink: true },
+          InputLabelProps:
+            props.value && props.value.length ? { shrink: true } : {},
         }}
       />
     </MultiSelectStyled>
-  )
-}
+  );
+};
 
 export default MultiSelect;

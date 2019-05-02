@@ -25,14 +25,14 @@ const PopupStyled = styled.div`
 PopupStyled.Dialog = styled(Dialog)`
   .paper-root {
     max-width: 100%;
-    @media(min-width: 832px) {
-      max-height: calc(100% - 30px); 
+    @media (min-width: 832px) {
+      max-height: calc(100% - 30px);
       border-radius: 20px;
       height: auto;
       width: auto;
     }
   }
-`
+`;
 
 PopupStyled.Container = styled.div`
   display: flex;
@@ -78,7 +78,6 @@ PopupStyled.SliderDots = styled.span`
   margin-right: 5px;
   cursor: pointer;
 `;
-
 
 PopupStyled.CloseButton = styled.span`
   position: absolute;

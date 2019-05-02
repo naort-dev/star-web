@@ -33,6 +33,7 @@ import {
 } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
 import Loader from './components/Loader';
+import Toast from './components/Toast';
 
 class App extends React.Component {
   constructor(props) {
@@ -111,6 +112,8 @@ class App extends React.Component {
             <Progress />
           </Loading>
         )}
+
+        <Toast />
         <div id="content-wrapper">
           <Modals />
           <Helmet
