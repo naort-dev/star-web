@@ -210,7 +210,7 @@ export const InfoHeader = styled.div`
 export const CardInfo = ({ className, Infotext, InfoHeading  }) => (
   <div className={className}>
     <p>{Infotext}</p>
-    <a className="head-link" href={InfoHeading} target="_blank">{InfoHeading}</a>
+    <h2 className="head-link">{InfoHeading}</h2>
   </div>
 )
 
