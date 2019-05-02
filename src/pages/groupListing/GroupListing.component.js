@@ -1,6 +1,7 @@
 import React from 'react';
 import { PageWrapper, PageContainer, CoverBoxWrapper, BoxListing, BoxListingCover, TopCoverBox, StyledPlayButton, BottomCoverBox, SecondaryHeading, StyledTitlePricingBox, InfoHeader, StyledCardInfo, CoverWrap, LoaderWrapper } from './styled';
 import Header from '../../components/Header';
+import StarListing from '../../components/StarListing';
 // import ScrollList from '../../components/ScrollList';
 import Loader from '../../components/Loader';
 
@@ -65,6 +66,16 @@ export default class GroupListing extends React.Component {
             </LoaderWrapper>
             :            
             <CoverBoxWrapper>
+              <StarListing
+                customLoader
+                dataList={membersList}
+                loading={membersLoading}
+                offset={membersOffset}
+                noDataText="No members"
+                fetchData={(offset, refresh) => this.fetchList(this.groupID, offset, refresh)}
+                totalCount={membersCount}
+                limit={membersLimit}
+              />
               {/* <ScrollList
                 dataList={membersList}
                 scrollTarget="column-layout-scrollable-target"
