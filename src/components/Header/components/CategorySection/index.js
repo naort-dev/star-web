@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateCategory } from '../../../../pages/landing/actions/updateFilters';
@@ -20,7 +20,7 @@ const CategorySection = (props) => {
         selected={props.category.label === 'Featured' && props.location.pathname === '/browse-stars'}
         data-value="Featured"
       >
-        <span className="category-label">Featured</span>
+        <Link to='/browse-stars' className="category-label">Featured</Link>
       </CategoryStyled.Item>
       {
         professionsList.map((profession) => {
@@ -31,7 +31,7 @@ const CategorySection = (props) => {
               selected={props.category.label === profession.title && props.location.pathname === '/browse-stars'}
               data-value={profession.title}
             >
-              <span className="category-label">{profession.title}</span>
+              <Link to='/browse-stars' className="category-label">{profession.title}</Link>
             </CategoryStyled.Item>
           );
         })
