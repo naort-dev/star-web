@@ -14,7 +14,7 @@ import StarProfileStyled from './styled';
 // import { setMetaTags } from '../../utils/setMetaTags';
 // import { starProfessionsDotFormater } from '../../utils/dataToStringFormatter';
 // import ShareView from '../../components/ShareView';
-import CallToAction from './components/CallToAcion';
+import CallToAction from './components/CallToAction';
 import DetailSection from './components/DetailSection';
 import Header from '../../components/Header';
 
