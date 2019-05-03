@@ -8,7 +8,7 @@ import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { fetchStarDetails } from '../../pages/starProfile/actions';
-import { toggleQuickView, toggleLogin } from '../../store/shared/actions/toggleModals';
+import { toggleQuickView, toggleLogin, toggleRequestFlow } from '../../store/shared/actions/toggleModals';
 import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
@@ -46,6 +46,17 @@ const QuickViewModal = (props) => {
     autoFitText();
   }
 
+  const handleWindowResize = () => {
+    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+      props.toggleQuickView(false)();
+    }
+  }
+
+  const onBookAction = () => {
+    props.toggleQuickView(false)();
+    props.toggleRequestFlow(true);
+  }
+
   useEffect(() => {
     const { userDetails, celebDetails } = props;
     const isPresentCelebDetails = !isEmpty(userDetails) && !isEmpty(celebDetails);
@@ -54,6 +65,7 @@ const QuickViewModal = (props) => {
       props.fetchStarDetails(props.quickViewModal.data);
     }
     autoFitText();
+    window.addEventListener('resize', handleWindowResize);
   }, []);
 
   useEffect(() => {
@@ -71,6 +83,12 @@ const QuickViewModal = (props) => {
   useEffect(() => {
     toggleFollowStatus(props.userDetails.is_follow);
   }, [props.userDetails.is_follow]);
+
+  useEffect(() => {
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    }
+  }, [])
 
   const onVideoError = () => {
     toggleVideoView(false);
@@ -112,6 +130,7 @@ const QuickViewModal = (props) => {
                 variableWidth
                 variableHeight
                 noBorder
+                autoPlay
                 onVideoError={onVideoError}
                 videoSrc={props.celebDetails.profile_video}
                 cover="assets/images/default-cover.jpg"
@@ -131,35 +150,52 @@ const QuickViewModal = (props) => {
               { getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name) }
             </QuickViewStyled.StarName>
           </div>
-          <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
-          <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
+          {
+            props.celebDetails.average_response_time !== '' &&
+              <React.Fragment>
+                <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
+                <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
+              </React.Fragment>
+          }
           <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
             <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>
-          <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to="/browse-stars">Read full profile</QuickViewStyled.MiniDescription>
+          <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to={`/${props.userDetails.user_id}`}>Read full profile</QuickViewStyled.MiniDescription>
         </QuickViewStyled.Content>
       </QuickViewStyled>
       <QuickViewStyled.StarWrapper>
         <StarDrawer starData={starData} />
       </QuickViewStyled.StarWrapper>
-      <QuickViewStyled.ActionBar>
-        <QuickViewStyled.ActionContent>
+      <QuickViewStyled.ActionBar available={props.celebDetails.availability}>
+        <QuickViewStyled.ActionContent available={props.celebDetails.availability}>
           <span>
             <QuickViewStyled.Avatar size={80} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
           </span>
           <QuickViewStyled.Description>
-            Book a shoutout 
-            from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+            {
+              props.celebDetails.availability ? 
+                <React.Fragment>
+                  Book a shoutout 
+                  from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+                </React.Fragment>
+              :
+                <React.Fragment>
+                  <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
+                </React.Fragment>
+            }
           </QuickViewStyled.Description>
         </QuickViewStyled.ActionContent>
-        <QuickViewStyled.ActionSection>
-            <QuickViewStyled.ArrowWrapper>
-              <FontAwesomeIcon icon={faChevronRight} />
-              <FontAwesomeIcon icon={faChevronRight} />
-              <FontAwesomeIcon icon={faChevronRight} />
-            </QuickViewStyled.ArrowWrapper>
-            <PrimaryButton className='action-button'>Book Now</PrimaryButton>
-        </QuickViewStyled.ActionSection>
+        {
+          props.celebDetails.availability &&
+            <QuickViewStyled.ActionSection>
+              <QuickViewStyled.ArrowWrapper>
+                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight} />
+                <FontAwesomeIcon icon={faChevronRight} />
+              </QuickViewStyled.ArrowWrapper>
+              <PrimaryButton className='action-button' onClick={onBookAction}>Book Now</PrimaryButton>
+            </QuickViewStyled.ActionSection>
+        }
       </QuickViewStyled.ActionBar>
     </RequestFlowPopup>
   );
@@ -172,6 +208,7 @@ QuickViewModal.propTypes = {
   fetchStarDetails: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   followCelebrity: PropTypes.func.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
   updateFavouritesQueue: PropTypes.func.isRequired,
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
@@ -189,6 +226,7 @@ const mapDispatchToProps = dispatch => ({
   toggleQuickView: state => () => dispatch(toggleQuickView(state)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   fetchStarDetails: id => dispatch(fetchStarDetails(id)),
+  toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
   updateFavouritesQueue: (id, follow) => dispatch(updateFavouritesQueue(id, follow)),
   followCelebrity: (id, isFollow) => dispatch(followCelebrity(id, isFollow)),
 });

@@ -68,7 +68,6 @@ export const fetchAllProfessions = () => (dispatch) => {
   return fetch.get(Api.getAllProfessions).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(professionsListtFetchEnd());
-      console.log(resp.data.data)
       dispatch(professionsAllFetchSuccess(resp.data.data));
     } else {
       dispatch(professionsListtFetchEnd());

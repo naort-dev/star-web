@@ -137,7 +137,9 @@ class Purchase extends Component {
     });
   };
 
-  closeHandler = () => {};
+  closeHandler = () => {
+    this.props.toggleRequestFlow(false);
+  };
 
   render() {
     return (
@@ -148,6 +150,7 @@ class Purchase extends Component {
               <Header
                 backArrowHandler={this.backArrowHandler}
                 closeHandler={this.closeHandler}
+                starImage={this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.thumbnail_url}
                 headerText="What kind of video message do you want?"
                 arrowVisible={this.state.stepCount !== 1}
               />
@@ -169,12 +172,14 @@ class Purchase extends Component {
 Purchase.propTypes = {
   fetchOccasionlist: PropTypes.func,
   OccasionDetails: PropTypes.array,
+  userDetails: PropTypes.object.isRequired,
   recordTrigger: PropTypes.func.isRequired,
   updateMediaStore: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {

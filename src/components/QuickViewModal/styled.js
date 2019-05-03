@@ -115,12 +115,12 @@ QuickViewStyled.ActionBar = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: ${props => props.theme.orangePink};
+  background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
 `;
 
 QuickViewStyled.ActionContent = styled.div`
   display: flex;
-  max-width: calc(100% - 256px);
+  max-width: ${props => (props.available ? 'calc(100% - 256px)' : '100%')};
   align-items: center;
 `;
 
