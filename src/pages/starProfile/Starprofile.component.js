@@ -61,6 +61,7 @@ const StarProfile = (props) => {
           showBack
         />
         <CallToAction
+          toggleRequestFlow={props.toggleRequestFlow}
           userDetails={props.userDetails}
           celebDetails={props.celebDetails}
         />

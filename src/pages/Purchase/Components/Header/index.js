@@ -1,15 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import StarDrawer from '../../../../components/StarDrawer';
 import {
   HeaderDiv,
-  FlexBoxSBC,
   HeaderText,
   ProfileIcon,
   Image,
 } from './styled';
-import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
-import { FlexCenter } from '../../../../styles/CommonStyled';
+import { BackArrow, CloseButton, FlexCenter } from '../../../../styles/CommonStyled';
 
 const Header = props => {
   const starData = [
@@ -43,7 +42,7 @@ const Header = props => {
         <ProfileIcon>
           <StarDrawer starData={starData} />
           <Image>
-            <img src="../assets/images/profile.png" alt="profile_icon" />
+            <img src={props.starImage ? props.starImage : 'assets/images/profile.png'} alt="profile_icon" />
           </Image>
         </ProfileIcon>
         <CloseButton onClick={props.closeHandler} white />
@@ -58,10 +57,12 @@ Header.propTypes = {
   backArrowHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
   headerText: PropTypes.string,
+  starImage: PropTypes.string,
 };
 Header.defaultProps = {
   arrowVisible: false,
   headerText: '',
+  starImage: '',
 };
 
 export default Header;

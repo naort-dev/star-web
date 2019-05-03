@@ -27,6 +27,10 @@ const CallToAction = (props) => {
     })
   }
 
+  const toggleRequestFlow = () => {
+    props.toggleRequestFlow(true);
+  }
+
   useEffect(() => {
     autoFitText();
   }, [])
@@ -65,7 +69,7 @@ const CallToAction = (props) => {
             <FontAwesomeIcon icon={faChevronRight} />
             <FontAwesomeIcon icon={faChevronRight} />
           </ActionStyled.ArrowWrapper>
-          <PrimaryButton className='action-button'>Book Now</PrimaryButton>
+          <PrimaryButton className='action-button' onClick={toggleRequestFlow}>Book Now</PrimaryButton>
         </ActionStyled.ActionSection>
     }
   </ActionStyled>

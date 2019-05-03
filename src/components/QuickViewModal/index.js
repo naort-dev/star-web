@@ -8,7 +8,7 @@ import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
 import { withTheme } from 'styled-components';
 import { fetchStarDetails } from '../../pages/starProfile/actions';
-import { toggleQuickView, toggleLogin } from '../../store/shared/actions/toggleModals';
+import { toggleQuickView, toggleLogin, toggleRequestFlow } from '../../store/shared/actions/toggleModals';
 import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
@@ -50,6 +50,11 @@ const QuickViewModal = (props) => {
     if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
       props.toggleQuickView(false)();
     }
+  }
+
+  const onBookAction = () => {
+    props.toggleQuickView(false)();
+    props.toggleRequestFlow(true);
   }
 
   useEffect(() => {
@@ -188,7 +193,7 @@ const QuickViewModal = (props) => {
                 <FontAwesomeIcon icon={faChevronRight} />
                 <FontAwesomeIcon icon={faChevronRight} />
               </QuickViewStyled.ArrowWrapper>
-              <PrimaryButton className='action-button'>Book Now</PrimaryButton>
+              <PrimaryButton className='action-button' onClick={onBookAction}>Book Now</PrimaryButton>
             </QuickViewStyled.ActionSection>
         }
       </QuickViewStyled.ActionBar>
@@ -203,6 +208,7 @@ QuickViewModal.propTypes = {
   fetchStarDetails: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   followCelebrity: PropTypes.func.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
   updateFavouritesQueue: PropTypes.func.isRequired,
   celebDetails: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
@@ -220,6 +226,7 @@ const mapDispatchToProps = dispatch => ({
   toggleQuickView: state => () => dispatch(toggleQuickView(state)),
   toggleLogin: state => dispatch(toggleLogin(state)),
   fetchStarDetails: id => dispatch(fetchStarDetails(id)),
+  toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
   updateFavouritesQueue: (id, follow) => dispatch(updateFavouritesQueue(id, follow)),
   followCelebrity: (id, isFollow) => dispatch(followCelebrity(id, isFollow)),
 });

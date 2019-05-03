@@ -30,6 +30,8 @@ HeaderSection.HeaderDiv = styled.div`
 HeaderSection.HeaderRight = styled.div`
   display: inline-block;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  position: relative;
+  z-index: 1;
   @media(min-width: 832px) {
     visibility: visible;
   }
@@ -147,7 +149,6 @@ HeaderSection.ProfileDropdown = styled.ul`
   right: 0;
   padding: 10px;
   top: 100%;
-  width: 200px;
   background: #fff;
   border-radius: 13px;
   box-shadow: 0px 4px 8px 0px #cccccc;

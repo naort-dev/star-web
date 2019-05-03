@@ -5,6 +5,7 @@ import LoginFlow from './components/loginFlow';
 import QuickViewModal from './components/QuickViewModal';
 import SignupFlow from './components/signupFlow';
 import { Requestvideo } from './pages/requestvideo';
+import Purchase from './pages/Purchase/Purchase.Container';
 
 const Modals = (props) => {
   if (props.loginModal) {
@@ -12,7 +13,7 @@ const Modals = (props) => {
   } else if (props.signUpModal) {
     return <SignupFlow />;
   } else if (props.requestFlow) {
-    return <Requestvideo />;
+    return <Purchase />;
   } else if (props.quickViewModal.active) {
     return <QuickViewModal />;
   }

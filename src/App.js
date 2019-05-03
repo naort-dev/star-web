@@ -15,7 +15,6 @@ import { ComponentLoading } from './components/ComponentLoading';
 import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
-import { Purchase } from './pages/Purchase/Purchase.Loadable';
 import { Progress, Loading } from './styles/CommonStyled';
 import { StarProfile } from './pages/starProfile';
 // import { Requests } from './pages/requests';
@@ -218,7 +217,6 @@ class App extends React.Component {
               <Route exact path="/" component={Landing} />
               <Route exact path="/:id" component={StarProfile} />
               {/* <Route exact path="/group-profile/:id" component={Landing} /> */}
-              <Route path="/purchase" component={Purchase} />
               <Route component={Page404} />
             </Switch>
           )}
