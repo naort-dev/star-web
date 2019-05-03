@@ -288,6 +288,7 @@ class DesktopHome extends React.Component {
             <StarListing
               customLoader
               dataList={this.state.trendingList}
+              noDataText='No records found'
               loading={this.props.trendingStars.loading}
               noScroll
               totalCount={this.state.trendingList.length}

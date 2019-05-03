@@ -13,10 +13,6 @@ Parameters:
     Type: String
     Description: Git branch
 
-  GithubToken:
-    Type: String
-    Description: Github OAuth token
-
   CodebuildDockerImage:
     Type: String
     Description: Base image for codebuild - Docker
@@ -59,20 +55,18 @@ Resources:
           Name: Source
           Actions:
             -
-              Name: github
+              Name: bitbucket
               ActionTypeId:
                 Category: Source
-                Owner: ThirdParty
+                Owner: AWS
                 Version: 1
-                Provider: GitHub
+                Provider: S3
               OutputArtifacts:
                 - Name: source
               Configuration:
-                Owner: Starsona
-                Repo: web
+                S3Bucket: bitbucket-us-east-1-219080120354
+                S3ObjectKey: !Join ['', ['web/', !Ref 'GitBranch', '.zip']]
                 PollForSourceChanges: false
-                Branch: !Ref 'GitBranch'
-                OAuthToken: !Ref 'GithubToken'
               RunOrder: 1
         -
           Name: Build
@@ -125,6 +119,27 @@ Resources:
               Configuration:
                 NotificationArn: arn:aws:sns:us-east-1:376169159073:ProductionDeploymentApproval
                 CustomData: Approve hotfix deployment.
+              RunOrder: 1
+        -
+          Name: Demo
+          Actions:
+            -
+              Name: app
+              InputArtifacts:
+                - Name: source
+                - Name: build
+              ActionTypeId:
+                Category: Deploy
+                Owner: AWS
+                Version: 1
+                Provider: CloudFormation
+              Configuration:
+                ActionMode: CREATE_UPDATE
+                RoleArn: arn:aws:iam::376169159073:role/AWS-CodePipeline-Service
+                Capabilities: CAPABILITY_IAM
+                StackName: demo-web-app
+                TemplateConfiguration: build::demo-web.json
+                TemplatePath: source::aws/cloudformation/web.yml
               RunOrder: 1
         -
           Name: Production

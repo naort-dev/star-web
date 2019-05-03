@@ -19,12 +19,12 @@ HeaderSection.HeaderDiv = styled.div`
   display:flex;
   padding: ${props => (props.notFixed ? '3px 16px' : '0')};
   justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
-  align-items: center;
+  align-items: flex-start;
   height: 50px;  
   flex-wrap: wrap;
   @media (min-width: 832px) {
     height: 100%;
-    padding: ${props => (props.notFixed ? '32px 30px 25px' : '30px 36px')};
+    padding: ${props => (props.notFixed ? '32px 30px 25px' : '25px 36px')};
   }
 `;
 HeaderSection.HeaderRight = styled.div`
@@ -68,7 +68,7 @@ HeaderSection.SearchWrapper = styled.div`
   @media(min-width: 1280px) {
     order: 2;
     padding: 0;
-    margin-top: 0;
+    margin-top: 14px;
   }
 `;
 
@@ -98,6 +98,10 @@ HeaderSection.CategoryWrapper = styled.div`
 HeaderSection.ImgLogo = styled.img`
   width:  154px;
   height: 40px;
+  @media(min-width: 1280px){
+    width:  284px;
+    height: auto;
+  }
 `;
 
 HeaderSection.MenuButton = styled.span`
