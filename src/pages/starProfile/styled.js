@@ -5,7 +5,9 @@ const StarProfileStyled = styled.div`
   padding-bottom: 72px;
   @media(min-width: 832px) {
     margin-top: 260px;
+    padding-bottom: 115px;
     height: auto;
+    background: ${props => props.theme.white};
   }
   @media(min-width: 1280px) {
     margin-top: 151px;
@@ -23,8 +25,8 @@ StarProfileStyled.Avatar = styled.span`
   border-radius: 50%;
   display: block;
   cursor: pointer;
-  width: ${props => (props.size ? `${props.size}px` : '80px')};
-  height: ${props => (props.size ? `${props.size}px` : '80px')};
+  width: 200px;
+  height: 200px;
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
@@ -47,6 +49,13 @@ StarProfileStyled.Avatar = styled.span`
       align-items: center;
       font-size: 21.9px;
       color: ${props => props.theme.orangePink};
+    }
+  }
+  @media(min-width: 832px) {
+    width: 303px;
+    height: 303px;
+    .avatar-play-control {
+      display: none;
     }
   }
 `;

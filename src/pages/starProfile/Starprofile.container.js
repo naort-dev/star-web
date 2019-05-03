@@ -26,8 +26,8 @@ const mapDispatchToProps = dispatch => ({
   fetchCelebVideosList: (offset, refresh, id, requestType) => dispatch(fetchCelebVideosList(offset, refresh, id, requestType)),
   toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
-  followCelebrity: (celebId, celebProfessions, follow) => dispatch(followCelebrity(celebId, celebProfessions, follow)),
-  updateFavouritesQueue: (celebId, celebProfessions, follow) => dispatch(updateFavouritesQueue(celebId, celebProfessions, follow)),
+  followCelebrity: (celebId, follow) => dispatch(followCelebrity(celebId, follow)),
+  updateFavouritesQueue: (celebId, follow) => dispatch(updateFavouritesQueue(celebId, follow)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StarProfile);

@@ -45,6 +45,10 @@ const StarProfile = (props) => {
     }
   }, [])
 
+  useEffect(() => {
+    props.fetchStarDetails(getUserId());
+  }, [props.isLoggedIn])
+
   return (
     <StarProfileStyled>
       <Header
@@ -57,6 +61,11 @@ const StarProfile = (props) => {
       />
       <DetailSection
         showProfileVideo={profVideo}
+        onBackClick={onBackClick}
+        isLoggedIn={props.isLoggedIn}
+        followCelebrity={props.followCelebrity}
+        toggleLogin={props.toggleLogin}
+        updateFavouritesQueue={props.updateFavouritesQueue}
         toggleProfileVideo={toggleProfileVideo}
         userDetails={props.userDetails}
         celebDetails={props.celebDetails}
@@ -96,6 +105,10 @@ StarProfile.propTypes = {
   celebDetails: PropTypes.object.isRequired,
   fetchStarDetails: PropTypes.func.isRequired,
   resetStarDetails: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  followCelebrity: PropTypes.func.isRequired,
+  updateFavouritesQueue: PropTypes.func.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
 }
 
 export default StarProfile;
