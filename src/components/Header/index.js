@@ -65,6 +65,8 @@ class Header extends React.Component {
     const { showCategories } = this.state;
     if (showCategories) {
       this.toggleCategories();
+    } else if (this.props.onBackClick) {
+      this.props.onBackClick();
     }
   }
 
@@ -79,18 +81,20 @@ class Header extends React.Component {
     return (
       <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed}>
         <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
-          {
-            !showCategories &&
-              <HeaderSection.MenuButton onClick={this.toggleCategories} >
-                <FontAwesomeIcon icon={faBars} />
-              </HeaderSection.MenuButton>
-          }
-          {
-            showCategories &&
-              <HeaderSection.BackIcon>
-                <FontAwesomeIcon icon={faChevronLeft} onClick={this.handleBackClick} />
-              </HeaderSection.BackIcon>
-          }
+          <HeaderSection.MobileIconWrapper>
+            {
+              (showCategories || this.props.showBack) &&
+                <HeaderSection.BackIcon>
+                  <FontAwesomeIcon icon={faChevronLeft} onClick={this.handleBackClick} />
+                </HeaderSection.BackIcon>
+            }
+            {
+              !showCategories &&
+                <HeaderSection.MenuButton onClick={this.toggleCategories} >
+                  <FontAwesomeIcon icon={faBars} />
+                </HeaderSection.MenuButton>
+            }
+          </HeaderSection.MobileIconWrapper>
           {
             !props.disableLogo &&
               <HeaderSection.HeaderLeft hide={this.state.searchActive}>
@@ -113,7 +117,7 @@ class Header extends React.Component {
                   {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
-                        <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
+                        {/* <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
                             Favorite stars
@@ -140,7 +144,7 @@ class Header extends React.Component {
                             Settings
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
+                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem> */}
                         <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }

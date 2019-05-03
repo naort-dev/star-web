@@ -234,7 +234,7 @@ class DesktopHome extends React.Component {
             </DesktopStyled.ColumnDivider>
           </DesktopStyled.ProcessSection>
           <DesktopStyled.RespondSection>
-            <VideoRender videoSrc="assets/Footboys.mp4" cover="assets/images/default-cover.jpg" />
+            <VideoRender autoPlay videoSrc="assets/Footboys.mp4" cover="assets/images/default-cover.jpg" />
             <DesktopStyled.ColumnDivider>
               <DesktopStyled.SubHeader>
                 The star delivers
@@ -252,7 +252,7 @@ class DesktopHome extends React.Component {
         <DesktopStyled.ReceiveSection>
           <DesktopStyled.FlowWrapper>
             <DesktopStyled.ReceiveContent>
-              <VideoRender videoSrc="assets/Footboys.mp4" cover="assets/images/default-cover.jpg" />
+              <VideoRender autoPlay videoSrc="assets/Footboys.mp4" cover="assets/images/default-cover.jpg" />
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.SubHeader>
                   Watch & Share!

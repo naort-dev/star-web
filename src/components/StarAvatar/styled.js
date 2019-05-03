@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const AvatarContainer = styled.section`
   cursor: pointer;
@@ -152,7 +153,7 @@ AvatarContainer.Price = styled.span`
 `;
 
 
-AvatarContainer.Content = styled.article`
+AvatarContainer.Content = styled(Link)`
   border-top: ${props => `1px solid ${props.theme.white}`};
   padding-top: 0.2px;
   font-family: Gilroy-Light;

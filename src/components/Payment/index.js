@@ -18,7 +18,6 @@ const Payment = props => {
 
   useEffect(() => {
     props.fetchSourceList();
-    props.fetchCelebDetails('starlord-8');
   }, []);
 
   const contentSwitchCallback = value => {
@@ -42,8 +41,7 @@ const Payment = props => {
   const handleBooking = source => {
     props.createCharge(
       props.request.id,
-      //props.celebDetails.celebrityDetails.rate,
-      '1.00',
+      props.celebDetails.celebrityDetails.rate,
       source.source.id,
       paymentSuccess,
     );
