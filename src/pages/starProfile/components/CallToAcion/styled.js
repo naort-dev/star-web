@@ -48,8 +48,16 @@ ActionStyled.DescriptionWrapper = styled.div`
 ActionStyled.Description = styled.span`
   font-family: Gilroy-Light;
   line-height: 24px;
+  .long-description {
+    display: none;
+  }
   strong {
     font-family: Gilroy-medium;
+  }
+  @media(min-width: 1280px) {
+    .long-description {
+      display: inline;
+    }
   }
 `;
 

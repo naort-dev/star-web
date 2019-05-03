@@ -19,7 +19,7 @@ const DetailSection = (props) => {
   const starData = [{
     size: '60px',
     horizontal: '7%',
-    vertical: '5%%',
+    vertical: '5%',
     rotation: '15deg',
     color: paleSkyBlue,
   }, {

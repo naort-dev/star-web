@@ -46,7 +46,8 @@ const CallToAction = (props) => {
           {
             props.celebDetails.availability ? 
               <React.Fragment>
-                Book <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+                Book <span className="long-description">a shoutout from </span>
+                <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
               </React.Fragment>
             :
               <React.Fragment>
