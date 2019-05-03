@@ -30,11 +30,11 @@ const StarListing = (props) => {
           </ListingStyled.Content>
         ))
       }
-      {
+      {/* {
         !props.dataList.length && !props.loading ?
           <ListingStyled.NoDataText>No records found</ListingStyled.NoDataText>
         : null
-      }
+      } */}
       {
         props.loading &&
           renderLoader()

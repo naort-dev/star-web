@@ -35,7 +35,7 @@ const StarAvatar = ({ star, type, ...props }) => {
   });
 
   const toggleQuickViewModal = () => {
-    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+    if ((document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) && star.celebrity_user && star.celebrity_user.rate) {
       props.toggleQuickView(true, star.user_id);
     } else {
       props.history.push(`/${star.user_id}`)
@@ -72,7 +72,11 @@ const StarAvatar = ({ star, type, ...props }) => {
               getStarName(star.nick_name, star.first_name, star.last_name)
             }
           </AvatarContainer.Name>
-          <AvatarContainer.Price>{numberToDollarFormatter(star.celebrity_user ? star.celebrity_user.rate : 0)}</AvatarContainer.Price>
+          {
+            star.celebrity_user && star.celebrity_user.rate ?
+              <AvatarContainer.Price>{numberToDollarFormatter(star.celebrity_user ? star.celebrity_user.rate : 0)}</AvatarContainer.Price>
+            : null
+          }
         </AvatarContainer.StarDescription>
       </AvatarContainer.Content>
     </AvatarContainer>

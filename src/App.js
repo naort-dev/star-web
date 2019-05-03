@@ -25,6 +25,7 @@ import { Unauthorized } from './pages/unauthorized';
 // import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
+import { GroupListing } from './pages/groupListing';
 // import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import {
@@ -162,6 +163,7 @@ class App extends React.Component {
               <Route path="/resetpassword" component={Login} />
               <Route path="/instalogin" component={InstaLogin} />
               <Route path="/twitter-login" component={TwitterLogin} />
+              <Route exact path="/group-listing/:id" component={GroupListing} />
               <Route exact path="/video/:id" component={Landing} />
 
               {/* logged in areas */}
