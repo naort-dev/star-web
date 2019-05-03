@@ -9,6 +9,9 @@ const DetailStyled = styled.div`
     padding: 0 17px;
     padding-top: 30.5px;
   }
+  @media(min-width: 1280px) {
+    justify-content: space-between;
+  }
 `;
 
 DetailStyled.StarName = styled.span`
@@ -60,17 +63,32 @@ DetailStyled.ProfileVideo = styled.div`
 DetailStyled.BackButton = styled.div`
   display: none;
   @media(min-width: 832px) {
-    display: flex;
-    padding-bottom: 10px;
-    color: #42a3c1;
-    font-size: 24px;
-    font-family: Gilroy-Light;
-    .back-icon {
-      display: inline-block;
-      padding-right: 10.8px;
-      font-size: 28px;
+    display: block;
+    width: 100%;
+    .back-content {
+      display: flex;
+      cursor: pointer;
+      padding-bottom: 10px;
+      color: #42a3c1;
+      font-size: 24px;
+      font-family: Gilroy-Light;
+      .back-icon {
+        display: inline-block;
+        padding-right: 10.8px;
+        font-size: 28px;
+      }
     }
   }
+`;
+
+DetailStyled.StarWrapper = styled.span`
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  pointer-events: none;
 `;
 
 DetailStyled.ProfileContent = styled.div`
@@ -84,6 +102,9 @@ DetailStyled.ProfileContent = styled.div`
     flex-direction: row;
     align-items: flex-start;
   }
+  @media(min-width: 1280px) {
+    width: calc(100% - 430px);
+  }
 `;
 
 DetailStyled.StarAvatarWrapper = styled.div`
@@ -91,7 +112,9 @@ DetailStyled.StarAvatarWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
   .favorite-icon {
+    cursor: pointer;
     color: ${props => props.theme.flatBlue};
     font-size: 30px;
     padding-top: 20px;
@@ -102,6 +125,7 @@ DetailStyled.StarDetailsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 2;
   @media(min-width: 832px) {
     align-items: flex-start;
     padding-left: 40px;
@@ -122,6 +146,12 @@ DetailStyled.ProfileVideoSection = styled.div`
     ${DetailStyled.StarName} {
       display: none;
     }
+  }
+  @media(min-width: 1280px) {
+    display: inline-block;
+    width: auto;
+    padding-top: 0;
+    padding-right: 40px;
   }
 `;
 

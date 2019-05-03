@@ -13,6 +13,7 @@ const ActionStyled = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 3;
   background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
   @media(min-width: 375px) {
     padding: 10px 31px;

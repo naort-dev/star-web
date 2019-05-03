@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { withTheme } from 'styled-components';
 import { faPlay, faHeart as faHeartSolid, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
 import { pipeSeparator, getStarName } from '../../../../utils/dataToStringFormatter';
 import VideoRender from '../../../../components/VideoRender';
+import StarDrawer from '../../../../components/StarDrawer';
 import StarRating from '../../../../components/StarRating';
 import StarProfileStyled from '../../styled';
 import DetailStyled from './styled';
@@ -12,6 +14,21 @@ import DetailStyled from './styled';
 const DetailSection = (props) => {
 
   const [followStatus, toggleFollowStatus] = useState(props.userDetails.is_follow ? props.userDetails.is_follow : false);
+
+  const { paleSkyBlue, lightOrange } = props.theme;
+  const starData = [{
+    size: '60px',
+    horizontal: '7%',
+    vertical: '5%%',
+    rotation: '15deg',
+    color: paleSkyBlue,
+  }, {
+    size: '150px',
+    horizontal: '60%',
+    vertical: '24%',
+    rotation: '15deg',
+    color: lightOrange,
+  }];
 
   const toggleProfileVideo = () => {
     if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
@@ -46,13 +63,18 @@ const DetailSection = (props) => {
 
   return (
     <DetailStyled>
-      <DetailStyled.BackButton onClick={props.onBackClick}>
-        <span className="back-icon">
-          <FontAwesomeIcon icon={faChevronLeft} />
+      <DetailStyled.BackButton>
+        <span className="back-content" onClick={props.onBackClick}>
+          <span className="back-icon">
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </span>
+          Back
         </span>
-        Back
       </DetailStyled.BackButton>
       <DetailStyled.ProfileContent visible={!props.showProfileVideo}>
+        <DetailStyled.StarWrapper>
+          <StarDrawer starData={starData} />
+        </DetailStyled.StarWrapper>
         <DetailStyled.StarAvatarWrapper>
           <StarProfileStyled.Avatar
             imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}
@@ -86,10 +108,13 @@ const DetailSection = (props) => {
                 rating={props.celebDetails.rating}
               />
             </div>
-            <div className='response-section'>
-              <span className="details-header">Avg Response Time</span>
-              <span className="response-item">{props.celebDetails.average_response_time}</span>
-            </div>
+            {
+              props.celebDetails.average_response_time !== '' &&
+                <div className='response-section'>
+                  <span className="details-header">Avg Response Time</span>
+                  <span className="response-item">{props.celebDetails.average_response_time}</span>
+                </div>
+            }
           </DetailStyled.StarDetails>
           <DetailStyled.Description>
             { props.celebDetails.description }
@@ -122,6 +147,7 @@ DetailSection.propTypes = {
   celebDetails: PropTypes.object.isRequired,
   toggleProfileVideo: PropTypes.func.isRequired,
   showProfileVideo: PropTypes.bool.isRequired,
+  theme: PropTypes.object.isRequired,
   onBackClick: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   followCelebrity: PropTypes.func.isRequired,
@@ -129,4 +155,4 @@ DetailSection.propTypes = {
   toggleLogin: PropTypes.func.isRequired,
 }
 
-export default DetailSection;
+export default withTheme(DetailSection);

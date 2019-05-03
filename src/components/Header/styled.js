@@ -97,6 +97,7 @@ HeaderSection.CategoryWrapper = styled.div`
 `;
 
 HeaderSection.MobileIconWrapper = styled.div`
+  padding-top: 10px;
   @media(min-width: 832px) {
     display: none;
   }

@@ -14,6 +14,11 @@ const StarProfileStyled = styled.div`
   }
 `;
 
+StarProfileStyled.Container = styled.div`
+  max-width: 1280px;
+  margin: 0 auto;
+`;
+
 StarProfileStyled.StarName = styled.span`
   font-family: Gilroy-Regular;
   font-size: 33px;
@@ -54,6 +59,7 @@ StarProfileStyled.Avatar = styled.span`
   @media(min-width: 832px) {
     width: 303px;
     height: 303px;
+    cursor: auto;
     .avatar-play-control {
       display: none;
     }

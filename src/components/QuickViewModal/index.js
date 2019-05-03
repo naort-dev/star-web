@@ -145,8 +145,13 @@ const QuickViewModal = (props) => {
               { getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name) }
             </QuickViewStyled.StarName>
           </div>
-          <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
-          <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
+          {
+            props.celebDetails.average_response_time !== '' &&
+              <React.Fragment>
+                <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
+                <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
+              </React.Fragment>
+          }
           <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
             <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
           </QuickViewStyled.HeartIcon>

@@ -49,51 +49,57 @@ const StarProfile = (props) => {
     props.fetchStarDetails(getUserId());
   }, [props.isLoggedIn])
 
+  useEffect(() => {
+    props.fetchStarDetails(getUserId());
+  }, [props.match.params.id])
+
   return (
     <StarProfileStyled>
-      <Header
-        onBackClick={onBackClick}
-        showBack
-      />
-      <CallToAction
-        userDetails={props.userDetails}
-        celebDetails={props.celebDetails}
-      />
-      <DetailSection
-        showProfileVideo={profVideo}
-        onBackClick={onBackClick}
-        isLoggedIn={props.isLoggedIn}
-        followCelebrity={props.followCelebrity}
-        toggleLogin={props.toggleLogin}
-        updateFavouritesQueue={props.updateFavouritesQueue}
-        toggleProfileVideo={toggleProfileVideo}
-        userDetails={props.userDetails}
-        celebDetails={props.celebDetails}
-      />
-    {/* {
-      this.state.showAppBanner && Object.keys(props.userDetails).length && Object.keys(props.celebrityDetails).length ?
-        <AppBanner
-          androidUrl={`profile/${props.match.params.id.toLowerCase()}`}
-          iosUrl={`profile/?profile_id=${props.match.params.id.toLowerCase()}`}
-          hideAppBanner={() => this.setState({ showAppBanner: false })}
+      <StarProfileStyled.Container>
+        <Header
+          onBackClick={onBackClick}
+          showBack
         />
-        : null
-    } */}
-    {/* <Helmet
-      title={fullName}
-      meta={[...setMetaTags(
-        fullName,
-        props.userDetails.avatar_photo ? props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
-        `Get your personalized video from ${fullName}`,
-      ),
-      { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
-      { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://profile/?profile_id=${props.match.params.id.toLowerCase()}` },
-      { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
-      { property: 'al:android:package', content: env('ANDROID_APP_ID') },
-      { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://profile/${props.match.params.id.toLowerCase()}` },
-      { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
-      ]}
-    /> */}
+        <CallToAction
+          userDetails={props.userDetails}
+          celebDetails={props.celebDetails}
+        />
+        <DetailSection
+          showProfileVideo={profVideo}
+          onBackClick={onBackClick}
+          isLoggedIn={props.isLoggedIn}
+          followCelebrity={props.followCelebrity}
+          toggleLogin={props.toggleLogin}
+          updateFavouritesQueue={props.updateFavouritesQueue}
+          toggleProfileVideo={toggleProfileVideo}
+          userDetails={props.userDetails}
+          celebDetails={props.celebDetails}
+        />
+      {/* {
+        this.state.showAppBanner && Object.keys(props.userDetails).length && Object.keys(props.celebrityDetails).length ?
+          <AppBanner
+            androidUrl={`profile/${props.match.params.id.toLowerCase()}`}
+            iosUrl={`profile/?profile_id=${props.match.params.id.toLowerCase()}`}
+            hideAppBanner={() => this.setState({ showAppBanner: false })}
+          />
+          : null
+      } */}
+      {/* <Helmet
+        title={fullName}
+        meta={[...setMetaTags(
+          fullName,
+          props.userDetails.avatar_photo ? props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
+          `Get your personalized video from ${fullName}`,
+        ),
+        { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+        { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://profile/?profile_id=${props.match.params.id.toLowerCase()}` },
+        { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+        { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+        { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://profile/${props.match.params.id.toLowerCase()}` },
+        { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
+        ]}
+      /> */}
+      </StarProfileStyled.Container>
   </StarProfileStyled>
   )
 }
