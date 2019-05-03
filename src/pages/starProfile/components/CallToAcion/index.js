@@ -27,6 +27,12 @@ const CallToAction = (props) => {
     })
   }
 
+  const toggleRequestFlowMobile = () => {
+    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+      props.toggleRequestFlow(true);
+    }
+  }
+
   const toggleRequestFlow = () => {
     props.toggleRequestFlow(true);
   }
@@ -40,7 +46,7 @@ const CallToAction = (props) => {
   })
 
   return (
-    <ActionStyled available={props.celebDetails.availability}>
+    <ActionStyled onClick={toggleRequestFlowMobile} available={props.celebDetails.availability}>
     <ActionStyled.ActionContent available={props.celebDetails.availability}>
       <ActionStyled.AvatarWrapper>
         <StarProfileStyled.Avatar imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
@@ -79,6 +85,7 @@ const CallToAction = (props) => {
 CallToAction.propTypes = {
   userDetails: PropTypes.object.isRequired,
   celebDetails: PropTypes.object.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
 }
 
 export default CallToAction;
