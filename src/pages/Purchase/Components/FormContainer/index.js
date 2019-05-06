@@ -26,6 +26,7 @@ function FormContainer(props) {
     whoIsfor: false,
     eventName: '',
     forWhat: '',
+    eventTitleNM: '',
   });
   const optionsList = detailList.map(item => ({
     label: item.title,
@@ -69,7 +70,6 @@ function FormContainer(props) {
       date,
       eventdetailName
     */
-    debugger;
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
@@ -112,6 +112,9 @@ function FormContainer(props) {
     forWhat: props.bookingData.forWhat
       ? props.bookingData.forWhat
       : FormData.forWhat,
+    eventTitleNM: props.bookingData.eventTitleNM
+      ? props.bookingData.eventTitleNM
+      : FormData.eventTitleNM,
     updateUserToMyself,
     whoIsfor: false,
     whatIsThisFor: false,

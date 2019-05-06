@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@material-ui/core/Select';
@@ -151,13 +152,35 @@ function RequestTemplates(
     };
   };
 
+  const getVideoFor = state => {
+    return getTextInput(
+      getFiledProps('Who is this video for?', true, true, state),
+    );
+  };
+  const getVideoFrom = state => {
+    return getTextInput(
+      getFiledProps('Who is this video from?', true, false, state),
+    );
+  };
+  const getSpecification = (placeholder, state) => {
+    return getTextInput(getFiledProps(placeholder, false, false, state));
+  };
+
+  const getRelationship = () => {
+    return getSelect(
+      'Relationship',
+      bookingData.relationshipValue,
+      bookingData.handleInputChange,
+    );
+  };
+  const getDate = () => {
+    return getDatePicker(
+      'Date',
+      bookingData.date,
+      bookingData.handleInputChange,
+    );
+  };
   const renderTemplates = () => {
-    const relations = bookingData.relationship;
-    const optionItems = relations.map(relation => (
-      <MenuItem value={relation.id} key={relation.id}>
-        {relation.title}
-      </MenuItem>
-    ));
     const pageDetails = [];
     switch (templateType) {
       case 1:
@@ -166,38 +189,94 @@ function RequestTemplates(
             <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <React.Fragment>
-                  {getTextInput(
-                    getFiledProps(
-                      'Who is this video for?',
-                      true,
-                      true,
-                      'hostName',
-                    ),
-                  )}
-                  {getTextInput(
-                    getFiledProps(
-                      'Who is this video from?',
-                      true,
-                      false,
-                      'userName',
-                    ),
-                  )}
-                  {getSelect(
-                    'Relationship',
-                    bookingData.relationshipValue,
-                    bookingData.handleInputChange,
-                  )}
-                  {getDatePicker(
-                    'Date',
-                    bookingData.date,
-                    bookingData.handleInputChange,
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getDate()}
+                </React.Fragment>
+              ) : (
+                getDate()
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+            </FlexBox>
+          );
+          const page2 = <FlexBox>{(getRelationship(), getDate())}</FlexBox>;
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        } else {
+          const page1 = <FlexBox>{getDate()}</FlexBox>;
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 2:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {bookingData.user === 'someoneElse' ? (
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getSpecification(
+                    "Who's the guest of honor?",
+                    'specification',
                   )}
                 </React.Fragment>
               ) : (
-                getDatePicker(
-                  'Date',
-                  bookingData.date,
-                  bookingData.handleInputChange,
+                getSpecification("Who's the guest of honor?", 'specification')
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {
+                (getRelationship(),
+                getSpecification("Who's the guest of honor?", 'specification'))
+              }
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getSpecification("Who's the guest of honor?", 'specification')}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 3:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {bookingData.user === 'someoneElse' ? (
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getSpecification(
+                    `What is this ${bookingData.eventName} for`,
+                    'specification',
+                  )}
+                </React.Fragment>
+              ) : (
+                getSpecification(
+                  `What is this ${bookingData.eventName} for`,
+                  'specification',
                 )
               )}
             </FlexBox>
@@ -206,38 +285,16 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {
-                (getTextInput(
-                  getFiledProps(
-                    'Who is this video for?',
-                    true,
-                    true,
-                    'hostName',
-                  ),
-                ),
-                getTextInput(
-                  getFiledProps(
-                    'Who is this video from?',
-                    true,
-                    false,
-                    'userName',
-                  ),
-                ))
-              }
+              {(getVideoFor('hostName'), getVideoFrom('userName'))}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
               {
-                (getSelect(
-                  'Relationship',
-                  bookingData.relationshipValue,
-                  bookingData.handleInputChange,
-                ),
-                getDatePicker(
-                  'Date',
-                  bookingData.date,
-                  bookingData.handleInputChange,
+                (getRelationship(),
+                getSpecification(
+                  `What is this ${bookingData.eventName} for`,
+                  'specification',
                 ))
               }
             </FlexBox>
@@ -247,601 +304,24 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
-              {getDatePicker(
-                'Date',
-                bookingData.date,
-                bookingData.handleInputChange,
+              {getSpecification(
+                `What is this ${bookingData.eventName} for`,
+                'specification',
               )}
             </FlexBox>
           );
           pageDetails.push(page1);
         }
-
         return pageDetails;
-
-      case 2:
-        if (!isMobile) {
-          const page1 = (
-            <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video for ?"
-                    value={videoForValue()}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'hostName',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredHostName(event.target.value)
-                    }
-                  />
-                  {bookingData.enableAudioRecorder &&
-                  !getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="What specifically for"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video from?"
-                    value={bookingData.userName}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'userName',
-                      )
-                    }
-                  />
-                  {!getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <Templates.WrapsInput>
-                    <FormControl className="select-material">
-                      <InputLabel
-                        htmlFor="reln-helper"
-                        className="select-label"
-                      >
-                        Relationship
-                      </InputLabel>
-                      <Select
-                        value={bookingData.relationshipValue}
-                        onChange={event =>
-                          bookingData.handleInputChange(
-                            event.target.value,
-                            'relationshipValue',
-                          )
-                        }
-                        inputProps={{
-                          id: 'reln-helper',
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {optionItems}
-                        <MenuItem value="otherRelation" key="otherRelation">
-                          Other
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="What specifically for"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              ) : null}
-            </FlexBox>
-          );
-          pageDetails.push(page1);
-        } else {
-          const page1 = (
-            <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video for ?"
-                    value={videoForValue()}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'hostName',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredHostName(event.target.value)
-                    }
-                  />
-                  {bookingData.enableAudioRecorder &&
-                  !getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="What specifically for"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video from?"
-                    value={bookingData.userName}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'userName',
-                      )
-                    }
-                  />
-                  {!getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : null}
-                </Templates.InputWrapper>
-              ) : null}
-            </FlexBox>
-          );
-          const page2 = (
-            <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <Templates.WrapsInput>
-                    <FormControl className="select-material">
-                      <InputLabel
-                        htmlFor="reln-helper"
-                        className="select-label"
-                      >
-                        Relationship
-                      </InputLabel>
-                      <Select
-                        value={bookingData.relationshipValue}
-                        onChange={event =>
-                          bookingData.handleInputChange(
-                            event.target.value,
-                            'relationshipValue',
-                          )
-                        }
-                        inputProps={{
-                          id: 'reln-helper',
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {optionItems}
-                        <MenuItem value="otherRelation" key="otherRelation">
-                          Other
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="What specifically for"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                  />
-                </Templates.InputWrapper>
-              ) : null}
-            </FlexBox>
-          );
-          pageDetails.push(page1);
-          pageDetails.push(page2);
-        }
-        return pageDetails;
-
-      case 3:
-        if (!isMobile) {
-          const page1 = (
-            <FlexBox>
-              <Templates.InputWrapper>
-                <TextInput
-                  placeholder="Who is this video for ?"
-                  value={videoForValue()}
-                  onChange={event =>
-                    bookingData.handleInputChange(
-                      event.target.value,
-                      'hostName',
-                    )
-                  }
-                  onBlur={event =>
-                    bookingData.checkRequiredHostName(event.target.value)
-                  }
-                />
-                {bookingData.enableAudioRecorder &&
-                !getMobileOperatingSystem() &&
-                checkMediaRecorderSupport() &&
-                (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                  !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                  <Templates.WrapsAudioInput>
-                    <AudioRecorder
-                      key="for"
-                      target="for"
-                      audioRecorder={audioRecorder}
-                      saveAudioRecording={(target, audio) =>
-                        saveAudioRecording(target, audio)
-                      }
-                      resetRecording={target => resetRecording(target)}
-                    />
-                  </Templates.WrapsAudioInput>
-                ) : (
-                  <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                    This video is for me!
-                  </Templates.Myself>
-                )}
-              </Templates.InputWrapper>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video from?"
-                    value={bookingData.userName}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'userName',
-                      )
-                    }
-                  />
-                  {!getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder={`What is this ${bookingData.eventname} for`}
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <Templates.WrapsInput>
-                    <FormControl className="select-material">
-                      <InputLabel htmlFor="reln-helper">
-                        Relationship
-                      </InputLabel>
-                      <Select
-                        value={bookingData.relationshipValue}
-                        onChange={event =>
-                          bookingData.handleInputChange(
-                            event.target.value,
-                            'relationshipValue',
-                          )
-                        }
-                        inputProps={{
-                          id: 'reln-helper',
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {optionItems}
-                        <MenuItem value="otherRelation" key="otherRelation">
-                          Other
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder={`What is this ${bookingData.eventName} for`}
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              ) : null}
-            </FlexBox>
-          );
-          pageDetails.push(page1);
-        } else {
-          const page1 = (
-            <FlexBox>
-              <Templates.InputWrapper>
-                <TextInput
-                  placeholder="Who is this video for ?"
-                  value={() => videoForValue}
-                  onChange={event =>
-                    bookingData.handleInputChange(
-                      event.target.value,
-                      'hostName',
-                    )
-                  }
-                />
-                {bookingData.enableAudioRecorder ? null : (
-                  <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                    This video is for me!
-                  </Templates.Myself>
-                )}
-              </Templates.InputWrapper>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video from?"
-                    value={bookingData.userName}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'userName',
-                      )
-                    }
-                  />
-                  {!getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : null}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder={`What is this ${bookingData.eventname} for`}
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-            </FlexBox>
-          );
-          const page2 = (
-            <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <Templates.WrapsInput>
-                    <FormControl className="select-material">
-                      <InputLabel
-                        htmlFor="reln-helper"
-                        className="select-label"
-                      >
-                        Relationship
-                      </InputLabel>
-                      <Select
-                        value={bookingData.relationshipValue}
-                        onChange={event =>
-                          bookingData.handleInputChange(
-                            event.target.value,
-                            'relationshipValue',
-                          )
-                        }
-                        className="select-material"
-                        inputProps={{
-                          id: 'reln-helper',
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {optionItems}
-                        <MenuItem value="otherRelation" key="otherRelation">
-                          Other
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder={`What is this ${bookingData.eventname} for`}
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                  />
-                </Templates.InputWrapper>
-              ) : null}
-            </FlexBox>
-          );
-          pageDetails.push(page1);
-          pageDetails.push(page2);
-        }
-        return pageDetails;
-
       case 4:
         if (!isMobile) {
           const page1 = (
             <FlexBox>
               {bookingData.user === 'someoneElse' ? (
                 <React.Fragment>
-                  {getTextInput(
-                    getFiledProps(
-                      'Who is this video for?',
-                      true,
-                      true,
-                      'hostName',
-                    ),
-                  )}
-                  {getTextInput(
-                    getFiledProps(
-                      'Who is this video from?',
-                      true,
-                      false,
-                      'userName',
-                    ),
-                  )}
-                  {getSelect(
-                    'Relationship',
-                    bookingData.relationshipValue,
-                    bookingData.handleInputChange,
-                  )}
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
                   {getTextInput(
                     getFiledProps('For what', false, false, 'forWhat'),
                   )}
@@ -855,34 +335,13 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {
-                (getTextInput(
-                  getFiledProps(
-                    'Who is this video for?',
-                    true,
-                    true,
-                    'hostName',
-                  ),
-                ),
-                getTextInput(
-                  getFiledProps(
-                    'Who is this video from?',
-                    true,
-                    false,
-                    'userName',
-                  ),
-                ))
-              }
+              {(getVideoFor('hostName'), getVideoFrom('userName'))}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
               {
-                (getSelect(
-                  'Relationship',
-                  bookingData.relationshipValue,
-                  bookingData.handleInputChange,
-                ),
+                (getRelationship(),
                 getTextInput(
                   getFiledProps('For what', false, false, 'forWhat'),
                 ))
@@ -900,375 +359,201 @@ function RequestTemplates(
           pageDetails.push(page1);
         }
         return pageDetails;
-
       case 5:
         if (!isMobile) {
-          const page1 = (
-            <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video for ?"
-                    value={videoForValue()}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'hostName',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredHostName(event.target.value)
-                    }
-                  />
-                  {bookingData.enableAudioRecorder &&
-                  !getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="From Where"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video from?"
-                    value={bookingData.userName}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'userName',
-                      )
-                    }
-                  />
-                  {!getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder=""
-                    type="date"
-                    value={bookingData.date}
-                    onChange={event =>
-                      bookingData.handleInputChange(event.target.value, 'date')
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <Templates.WrapsInput>
-                    <FormControl className="select-material">
-                      <InputLabel
-                        htmlFor="reln-helper"
-                        className="select-label"
-                      >
-                        Relationship
-                      </InputLabel>
-                      <Select
-                        value={bookingData.relationshipValue}
-                        onChange={event =>
-                          bookingData.handleInputChange(
-                            event.target.value,
-                            'relationshipValue',
-                          )
-                        }
-                        inputProps={{
-                          id: 'reln-helper',
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {optionItems}
-                        <MenuItem value="otherRelation" key="otherRelation">
-                          Other
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="From Where"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              ) : null}
-            </FlexBox>
-          );
-          pageDetails.push(page1);
           if (bookingData.user === 'someoneElse') {
-            const page2 = (
-              <Templates.InputWrapper>
-                <TextInput
-                  placeholder=""
-                  type="date"
-                  value={bookingData.date}
-                  onChange={event =>
-                    bookingData.handleInputChange(event.target.value, 'date')
-                  }
-                  onBlur={event =>
-                    bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                  }
-                />
-              </Templates.InputWrapper>
+            const page1 = (
+              <FlexBox>
+                {getVideoFor('hostName')}
+                {getVideoFrom('userName')}
+                {getRelationship()}
+                {getTextInput(
+                  getFiledProps('From where', false, false, 'specification'),
+                )}
+              </FlexBox>
             );
+            const page2 = <FlexBox>{getDate()}</FlexBox>;
+            pageDetails.push(page1);
             pageDetails.push(page2);
+          } else {
+            const page1 = (
+              <FlexBox>
+                {
+                  (getTextInput(
+                    getFiledProps('From where', false, false, 'specification'),
+                  ),
+                  getDate())
+                }
+              </FlexBox>
+            );
+            pageDetails.push(page1);
           }
-        } else {
+        } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video for ?"
-                    value={videoForValue()}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'hostName',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredHostName(event.target.value)
-                    }
-                  />
-                  {bookingData.enableAudioRecorder &&
-                  !getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="From Where"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="Who is this video from?"
-                    value={bookingData.userName}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'userName',
-                      )
-                    }
-                  />
-                  {!getMobileOperatingSystem() &&
-                  checkMediaRecorderSupport() &&
-                  (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-                    !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder
-                        key="for"
-                        target="for"
-                        audioRecorder={audioRecorder}
-                        saveAudioRecording={(target, audio) =>
-                          saveAudioRecording(target, audio)
-                        }
-                        resetRecording={target => resetRecording(target)}
-                      />
-                    </Templates.WrapsAudioInput>
-                  ) : (
-                    <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                      This video is for me!
-                    </Templates.Myself>
-                  )}
-                </Templates.InputWrapper>
-              ) : (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder=""
-                    type="date"
-                    value={bookingData.date}
-                    onChange={event =>
-                      bookingData.handleInputChange(event.target.value, 'date')
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              )}
+              {(getVideoFor('hostName'), getVideoFrom('userName'))}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <Templates.WrapsInput>
-                    <FormControl className="select-material">
-                      <InputLabel
-                        htmlFor="reln-helper"
-                        className="select-label"
-                      >
-                        Relationship
-                      </InputLabel>
-                      <Select
-                        value={bookingData.relationshipValue}
-                        onChange={event =>
-                          bookingData.handleInputChange(
-                            event.target.value,
-                            'relationshipValue',
-                          )
-                        }
-                        inputProps={{
-                          id: 'reln-helper',
-                        }}
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
-                        </MenuItem>
-                        {optionItems}
-                        <MenuItem value="otherRelation" key="otherRelation">
-                          Other
-                        </MenuItem>
-                      </Select>
-                    </FormControl>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-              ) : null}
-              {bookingData.user === 'someoneElse' ? (
-                <Templates.InputWrapper>
-                  <TextInput
-                    placeholder="From Where"
-                    value={bookingData.specification}
-                    onChange={event =>
-                      bookingData.handleInputChange(
-                        event.target.value,
-                        'specification',
-                      )
-                    }
-                    onBlur={event =>
-                      bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                    }
-                  />
-                </Templates.InputWrapper>
-              ) : null}
+              {
+                (getRelationship(),
+                getTextInput(
+                  getFiledProps('From where', false, false, 'specification'),
+                ))
+              }
             </FlexBox>
           );
-
+          const page3 = <FlexBox>{getDate()}</FlexBox>;
           pageDetails.push(page1);
           pageDetails.push(page2);
-          if (bookingData.user === 'someoneElse') {
-            const page3 = (
-              <Templates.InputWrapper>
-                <TextInput
-                  placeholder=""
-                  type="date"
-                  value={bookingData.date}
-                  onChange={event =>
-                    bookingData.handleInputChange(event.target.value, 'date')
-                  }
-                  onBlur={event =>
-                    bookingData.checkRequiredWhatIsThisFor(event.target.value)
-                  }
-                />
-              </Templates.InputWrapper>
-            );
-            pageDetails.push(page3);
-          }
+          pageDetails.push(page3);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {
+                (getTextInput(
+                  getFiledProps('From where', false, false, 'specification'),
+                ),
+                getDate())
+              }
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 6:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {getTextInput(
+                getFiledProps(
+                  'Title of the event?',
+                  false,
+                  false,
+                  'eventTitleNM',
+                ),
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                bookingData.handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {
+                (getTextInput(
+                  getFiledProps(
+                    'Title of the event?',
+                    false,
+                    false,
+                    'eventTitleNM',
+                  ),
+                ),
+                getTextInput(
+                  getFiledProps(
+                    "Who's hosting the event?",
+                    false,
+                    false,
+                    'hostName',
+                  ),
+                ))
+              }
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                bookingData.handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        }
+        return pageDetails;
+      case 7:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {getTextInput(
+                getFiledProps(
+                  "Who's the guest of honor?",
+                  false,
+                  false,
+                  'specification',
+                ),
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                bookingData.handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {
+                (getTextInput(
+                  getFiledProps(
+                    "Who's the guest of honor?",
+                    false,
+                    false,
+                    'specification',
+                  ),
+                ),
+                getTextInput(
+                  getFiledProps(
+                    "Who's hosting the event?",
+                    false,
+                    false,
+                    'hostName',
+                  ),
+                ))
+              }
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                bookingData.handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
         }
         return pageDetails;
       default:
         return [];
     }
   };
-
   return renderTemplates();
 }
 
