@@ -159,7 +159,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
   }
   @media(min-width: 832px) {
     max-width: 832px;
-    margin-bottom: 137px;
+    margin-bottom: 115px;
     margin-top: 37px;
     justify-content: flex-end;
     padding: 36px 42px 38px;

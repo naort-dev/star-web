@@ -70,7 +70,7 @@ HeaderSection.SearchWrapper = styled.div`
   @media(min-width: 1280px) {
     order: 2;
     padding: 0;
-    margin-top: 14px;
+    margin-top: 0;
   }
 `;
 
@@ -109,7 +109,7 @@ HeaderSection.ImgLogo = styled.img`
   width:  154px;
   height: 40px;
   @media(min-width: 1280px){
-    width:  284px;
+    width:  251px;
     height: auto;
   }
 `;
