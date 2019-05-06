@@ -16,7 +16,7 @@ PickerStyled.Arrow = styled.span`
 `;
 
 PickerStyled.ListWrapper = styled.ul`
-  padding: 10px 0;
+  padding: 0;
   cursor: pointer;
 `;
 
