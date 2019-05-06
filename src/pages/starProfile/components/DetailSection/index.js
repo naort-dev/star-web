@@ -31,7 +31,7 @@ const DetailSection = (props) => {
   }];
 
   const toggleProfileVideo = () => {
-    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+    if ((document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) && props.celebDetails.profile_video) {
       props.toggleProfileVideo(!props.showProfileVideo);
     }
   }
@@ -80,11 +80,14 @@ const DetailSection = (props) => {
             imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}
             onClick={toggleProfileVideo}
           >
-            <span className="avatar-play-control">
-              <span className="avatar-play">
-                <FontAwesomeIcon icon={faPlay} />
-              </span>
-            </span>
+            {
+              props.celebDetails.profile_video &&
+                <span className="avatar-play-control">
+                  <span className="avatar-play">
+                    <FontAwesomeIcon icon={faPlay} />
+                  </span>
+                </span>
+            }
           </StarProfileStyled.Avatar>
           <span className="favorite-icon" onClick={followCelebrityAction}>
             <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
@@ -121,23 +124,26 @@ const DetailSection = (props) => {
           </DetailStyled.Description>
         </DetailStyled.StarDetailsWrapper>
       </DetailStyled.ProfileContent>
-      <DetailStyled.ProfileVideoSection visible={props.showProfileVideo}>
-        <DetailStyled.StarName>
-          {
-            getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name)
-          }            
-        </DetailStyled.StarName>
-        <DetailStyled.ProfileVideo>
-          <VideoRender
-            variableWidth
-            variableHeight
-            customText={`Watch ${getShortName()}’s Welcome Message`}
-            noBorder={document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832}
-            videoSrc={props.celebDetails.profile_video}
-            cover="assets/images/default-cover.jpg"
-          />
-        </DetailStyled.ProfileVideo>
-      </DetailStyled.ProfileVideoSection>
+      {
+        props.celebDetails.profile_video &&
+          <DetailStyled.ProfileVideoSection visible={props.showProfileVideo}>
+            <DetailStyled.StarName>
+              {
+                getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name)
+              }            
+            </DetailStyled.StarName>
+            <DetailStyled.ProfileVideo>
+              <VideoRender
+                variableWidth
+                variableHeight
+                customText={`Watch ${getShortName()}’s Welcome Message`}
+                noBorder={document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832}
+                videoSrc={props.celebDetails.profile_video}
+                cover="assets/images/default-cover.jpg"
+              />
+            </DetailStyled.ProfileVideo>
+          </DetailStyled.ProfileVideoSection>
+      }
     </DetailStyled>
   )
 }

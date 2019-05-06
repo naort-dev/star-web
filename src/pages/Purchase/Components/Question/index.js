@@ -67,7 +67,7 @@ const Question = props => {
         if (response && response.filename) {
           const payload = {
             starDetail: {
-              id: 'MYervpeO',
+              id: props.userDetails.id,
             },
             question: '',
             date: '',
@@ -193,6 +193,7 @@ Question.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
+  userDetails: PropTypes.object.isRequired,
 };
 
 Question.defaultProps = {
@@ -206,6 +207,7 @@ function mapStateToProps(state) {
     videoFile: state.commonReducer.file,
     videoSrc: state.commonReducer.videoSrc,
     videoUploaded: state.commonReducer.videoUploaded,
+    userDetails: state.starDetails.celebDetails.userDetails,
   };
 }
 export default connect(

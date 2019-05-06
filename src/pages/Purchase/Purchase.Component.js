@@ -106,7 +106,7 @@ class Purchase extends Component {
         />
       );
     } else if (this.state.stepCount === 4) {
-      return <SuccessScreen />;
+      return <SuccessScreen closeHandler={this.closeHandler} />;
     }
     return <div />;
   };
