@@ -49,18 +49,18 @@ export default class Dropdown extends React.Component {
     this.setState({ showDropList: state });
   };
 
-  checkWindowClick = (e) => {
+  checkWindowClick = e => {
     if (this.selectRef.current && !this.selectRef.current.contains(e.target)) {
       this.toggleDropDown(false)();
     }
   };
 
-  findActualOption = (option) => {
+  findActualOption = option => {
     const { options, labelKey } = this.props;
     return options.find(optionItem => optionItem[labelKey] === option.label);
-  }
+  };
 
-  selectOption = option => (event) => {
+  selectOption = option => event => {
     if (event.nativeEvent.type === 'click') {
       this.setState({ selected: option });
       this.props.onChange(this.findActualOption(option));
@@ -72,7 +72,7 @@ export default class Dropdown extends React.Component {
     }
   };
 
-  handleListKeyUp = (event) => {
+  handleListKeyUp = event => {
     const { showDropList } = this.state;
     const { cursorPos } = this;
     const { options } = this.props;
@@ -93,7 +93,7 @@ export default class Dropdown extends React.Component {
     const { showDropList, list, selected } = this.state;
     const { placeHolder } = this.props;
     return (
-      <DropdownStyled>
+      <DropdownStyled className="cus-drop">
         <DropdownStyled.Select
           onClick={this.toggleDropDown(!showDropList)}
           tabIndex="0"

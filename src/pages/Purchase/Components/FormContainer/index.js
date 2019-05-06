@@ -11,7 +11,7 @@ import { Layout } from './styled';
 function FormContainer(props) {
   const { children, detailList } = { ...props };
   const [FormData, setFormData] = useState({
-    templateType: 1,
+    templateType: null,
     relationship: [],
     user: 'someoneElse',
     enableAudioRecorder: false,
@@ -24,6 +24,8 @@ function FormContainer(props) {
     eventdetailName: '',
     whatIsThisFor: false,
     whoIsfor: false,
+    eventName: '',
+    forWhat: '',
   });
   const optionsList = detailList.map(item => ({
     label: item.title,
@@ -67,6 +69,7 @@ function FormContainer(props) {
       date,
       eventdetailName
     */
+    debugger;
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
@@ -86,7 +89,9 @@ function FormContainer(props) {
     handleInputChange,
     checkRequiredHostName,
     checkRequiredWhatIsThisFor,
-    eventName: props.bookingData.eventName ? props.bookingData.eventName : '',
+    eventName: props.bookingData.eventName
+      ? props.bookingData.eventName
+      : FormData.eventName,
     hostName: props.bookingData.hostName
       ? props.bookingData.hostName
       : FormData.hostName,
@@ -104,6 +109,9 @@ function FormContainer(props) {
     eventdetailName: props.bookingData.eventdetailName
       ? props.bookingData.eventdetailName
       : '',
+    forWhat: props.bookingData.forWhat
+      ? props.bookingData.forWhat
+      : FormData.forWhat,
     updateUserToMyself,
     whoIsfor: false,
     whatIsThisFor: false,
@@ -130,6 +138,7 @@ function FormContainer(props) {
       ...FormData,
       templateType: type,
       relationship: result ? result[0].relationships : [],
+      eventName: result ? result[0].title : '',
     });
   };
   const nextButtonClick = () => {

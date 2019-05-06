@@ -12,6 +12,7 @@ Templates.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 10px;
+  width: 100%;
   @media (min-width: 768px) {
     margin-top: 5px;
     align-items: flex-start;
@@ -395,6 +396,4 @@ export { Templates };
 export const FlexBox = styled.section`
   display: flex;
   flex-wrap: wrap;
-  width: 423px;
-  margin: 0 auto;
 `;
