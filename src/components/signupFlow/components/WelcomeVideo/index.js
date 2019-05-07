@@ -37,15 +37,11 @@ const WelcomeVideo = props => {
     getAWSCredentials(locations.getAwsVideoCredentials, video)
       .then(response => {
         if (response && response.filename) {
-          const payload = {
-            starDetail: {
-              id: 'MYervpeO',
-            },
-            fileName: response.filename,
-          };
+          props.setProfileVideo(response.filename);
           axios
             .post(response.url, response.formData)
             .then(() => {
+              props.changeStep(props.currentStep + 2);
               props.loaderAction(false);
               props.setVideoUploadedFlag(true);
             })
@@ -68,6 +64,8 @@ const WelcomeVideo = props => {
           {compSwitch ? (
             <Video
               skipCallback={props.skipCallback}
+              changeStep={props.changeStep}
+              currentStep={props.currentStep}
               uploadVideo={uploadVideo}
               loaderAction={props.loaderAction}
               setVideoUploadedFlag={props.setVideoUploadedFlag}
@@ -88,12 +86,14 @@ WelcomeVideo.propTypes = {
   onBack: PropTypes.func.isRequired,
   skipCallback: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
+  setProfileVideo: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   switched: PropTypes.bool,
 };
 
 WelcomeVideo.defaultProps = {
   switched: false,
+  // setProfileVideo: () =>{ },
 };
 
 function mapDispatchToProps(dispatch) {
