@@ -1,5 +1,6 @@
+import axios from 'axios';
 import Api from '../../../lib/api';
-import { fetch } from '../../../services/fetch';
+import { fetch, CancelToken } from '../../../services/fetch';
 
 export const NON_MEMBER_LIST = {
   start: 'fetch_start/NON_MEMBER_LIST',
@@ -10,22 +11,24 @@ export const NON_MEMBER_LIST = {
   reset: 'RESET/NON_MEMBER_LIST',
 };
 
-export const memberListFetchStart = refresh => ({
+export const memberListFetchStart = (refresh, token) => ({
   type: NON_MEMBER_LIST.start,
   refresh,
+  token,
 });
 
 export const memberListFetchEnd = () => ({
   type: NON_MEMBER_LIST.end,
 });
 
-export const memberListFetchSuccess = (list, offset, count) => {
+export const memberListFetchSuccess = (list, offset, count, searchText) => {
   return (
     {
       type: NON_MEMBER_LIST.success,
       list,
       offset,
       count,
+      searchText,
     });
 };
 
@@ -49,14 +52,28 @@ export const removeNonMember = userId => (dispatch, getState) => {
 };
 
 
-export const fetchNonMemberList = (offset, refresh, isStar) => (dispatch, getState) => {
-  const { limit } = getState().groupSupporters.nonMemberList;
-  dispatch(memberListFetchStart(refresh));
+export const fetchNonMemberList = (offset, refresh, isStar, customSearchText) => (dispatch, getState) => {
+  const { limit, searchText } = getState().groupSupporters.nonMemberList;
+  if (typeof getState().groupSupporters.nonMemberList.token !== typeof undefined) {
+    getState().groupSupporters.nonMemberList.token.cancel('Operation canceled due to new request.');
+  }
+  const source = CancelToken.source();
+  dispatch(memberListFetchStart(refresh, source));
   let apiURL = `${Api.getGroupMembers}?limit=${limit}&offset=${offset}`;
+  let newSearchText;
+  if (refresh) {
+    newSearchText = customSearchText;
+  } else {
+    newSearchText = searchText;
+  }
   if (isStar) {
     apiURL = `${apiURL}&celebrity=true`;
+  } else if (newSearchText) {
+    apiURL = `${Api.getGroupMembers}?limit=${limit}&offset=${offset}&name=${newSearchText}`;
   }
-  return fetch.get(apiURL)
+  return fetch.get(apiURL, {
+    cancelToken: source.token,
+  })
     .then((resp) => {
       if (resp.data && resp.data.success) {
         dispatch(memberListFetchEnd());
@@ -69,11 +86,14 @@ export const fetchNonMemberList = (offset, refresh, isStar) => (dispatch, getSta
         } else {
           list = [...list, ...resp.data.data.group_follow_members.group_user];
         }
-        dispatch(memberListFetchSuccess(list, newOffset, count));
+        dispatch(memberListFetchSuccess(list, newOffset, count, newSearchText));
       } else {
         dispatch(memberListFetchEnd());
       }
     }).catch((exception) => {
+      if (axios.isCancel(exception)) {
+        dispatch(memberListFetchFailed());
+      }
       dispatch(memberListFetchFailed(exception));
     });
 };

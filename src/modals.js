@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import LoginFlow from './components/loginFlow';
 import ReferStar from './components/ReferStar';
-import SignupFlow from './components/signupFlow';
+import SignupFlow from './components/signupFlowCopy';
 import { Requestvideo } from './pages/requestvideo';
 
 const Modals = (props) => {
