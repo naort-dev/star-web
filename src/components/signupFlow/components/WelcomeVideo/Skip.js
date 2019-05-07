@@ -21,7 +21,7 @@ const Skip = props => {
           <Button className="button" onClick={() => props.onBack(true)}>
             You talked me into it, let me fix my hair
           </Button>
-          <Button className="button whiteBtn">
+          <Button className="button whiteBtn" onClick={() => props.changeStep(props.currentStep + 1)}>
             Skip for now but I will be back!
           </Button>
         </FlexCenter>

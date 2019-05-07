@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { iosPriceFinder } from '../../../../utils/dataformatter'
 import { TextInput } from '../../../TextField'
 import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode'
@@ -78,9 +79,14 @@ export default class SetPrice extends React.Component {
   };
 
   onSubmit = () => {
+    const priceDetails = {
+      rate: this.state.price.value,
+      in_app_price: iosPriceFinder(this.state.price.value, this.props.inAppPriceList),
+      referral_code: this.state.referralCode.value,
+    }
     if (this.checkPriceRequired()) {
       if (parseInt(this.state.price.value) < 500 && this.state.confirmPrice) {
-        this.props.primaryButtonClick()
+        this.props.primaryButtonClick(priceDetails)
       } else {
         this.setState({
           confirmPrice: true
