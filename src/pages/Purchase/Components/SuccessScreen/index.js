@@ -9,9 +9,6 @@ const SuccessScreen = props => {
   return (
     <Layout>
       <CloseButton onClick={props.closeHandler} className="closeBtn" />
-      <FlexCenter>
-        <span className="successImg" />
-      </FlexCenter>
       <Scrollbars className="successScroll">
         <FlexCenter>
           <span className="successImg" />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { registerUser } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
@@ -10,7 +10,7 @@ import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
-import { GroupRegistration, StarRegistration } from '../UserRegistration';
+import { GroupRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import {
   setSocialMediaData,
@@ -24,9 +24,14 @@ import {
 import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
-import { FAN_REG_SUCCESS,
-  SET_PRICE } from './constants'
-  import { BackArrow } from '../../styles/CommonStyled';
+import {
+  FAN_REG_SUCCESS,
+  SET_PRICE
+} from './constants'
+import { BackArrow } from '../../styles/CommonStyled';
+import WelcomeVideo from './components/WelcomeVideo';
+import Skip from './components/WelcomeVideo/Skip';
+import { celebritySignupProfile } from '../../services/userRegistration'
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -39,10 +44,18 @@ class SignupFlow extends React.Component {
       enableClose: props.signUpDetails.enableClose
         ? props.signUpDetails.enableClose
         : false,
+      profession: [],
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
+  onBack = flag => {
+    this.setState(state => ({
+      currentStep: state.currentStep - 1,
+      switched: flag ? flag : false,
+    }));
+  };
+
   getBioDetails = bioDetails => {
     this.setState({ bioDetails });
   };
@@ -68,15 +81,48 @@ class SignupFlow extends React.Component {
       this.props.history.push('user/star-supporters');
     }
   }
-   goToBrowseStars = () => {
+
+  setProfileVideo = (fileName) => {
+    this.setState({ profile_video: fileName });
+  }
+
+  submitCelebrityDetails(priceDetails) {
+    const celebrityProfileData = {
+      ...priceDetails,
+      weekly_limits: 5,
+      profession: this.state.profession,
+      availability: true,
+      profile_video: this.state.profile_video,
+      description: 'Hi',
+    }
+    
+    celebritySignupProfile(celebrityProfileData)
+              .then((success) => {
+                this.setState({ loader: false });
+                if (success) {
+                  this.goToBrowseStars();
+                }
+              })
+              .catch(() => {
+                this.setState({ loader: false });
+              });
+  }
+
+  goToBrowseStars = () => {
     this.props.updateCategory('Featured', 0, []);
     if (this.props.location.pathname !== '/browse-stars') {
       this.props.history.push('/browse-stars');
     }
     this.closeSignUp();
   };
+  continueClickHandler = (professions) => {
+    this.setState(state => ({
+      currentStep: state.currentStep + 1,
+      profession: professions.map(profession => profession.id)
+    }));
+  };
 
-   gotToHome = () => {
+  gotToHome = () => {
     if (this.props.location.pathname !== '/') {
       this.props.history.push('/');
     }
@@ -99,24 +145,24 @@ class SignupFlow extends React.Component {
           );
         case 2:
           return (
-          <RegistrationSuccess
-            closeSignupFlow={this.closeSignUp} 
-            description={FAN_REG_SUCCESS.DESCRIPTION}
-            icon={FAN_REG_SUCCESS.ICON}
-            image_url={FAN_REG_SUCCESS.IMAGE_URL}
-            message={FAN_REG_SUCCESS.MESSAGE}
-            primary_button={FAN_REG_SUCCESS.PRIMARY_BUTTON}
-            primaryButtonClick={this.goToBrowseStars}
-            secondary_button={FAN_REG_SUCCESS.SECONDARY_BUTTON}
-            secondaryButtonClick={this.gotToHome}
-            title={FAN_REG_SUCCESS.TITLE}/>
-        );
+            <RegistrationSuccess
+              closeSignupFlow={this.closeSignUp}
+              description={FAN_REG_SUCCESS.DESCRIPTION}
+              icon={FAN_REG_SUCCESS.ICON}
+              image_url={FAN_REG_SUCCESS.IMAGE_URL}
+              message={FAN_REG_SUCCESS.MESSAGE}
+              primary_button={FAN_REG_SUCCESS.PRIMARY_BUTTON}
+              primaryButtonClick={this.goToBrowseStars}
+              secondary_button={FAN_REG_SUCCESS.SECONDARY_BUTTON}
+              secondaryButtonClick={this.gotToHome}
+              title={FAN_REG_SUCCESS.TITLE} />
+          );
         default:
           return null;
       }
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 4:
+        case 1:
           return (
             <SignUpForm
               {...this.props}
@@ -128,7 +174,7 @@ class SignupFlow extends React.Component {
               closeSignupFlow={this.closeSignUp}
             />
           );
-        case 2:
+        case 2:                                             
           return (
             <SignUpImageUpload
               {...this.props}
@@ -136,31 +182,49 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}
+              continueClickCallback={this.continueClickHandler}
             />
           );
         case 3:
           return (
-            <StarRegistration
-              currentStep={this.state.currentStep}
+            <WelcomeVideo
+              onBack={this.onBack}
               changeStep={this.changeStep}
-              closeSignupFlow={this.closeSignUp}
+              currentStep={this.state.currentStep}
+              switched={this.state.switched}
+              setProfileVideo={this.setProfileVideo}
+              skipCallback={flag => {
+                this.setState(state => ({
+                  currentStep: state.currentStep + 1,
+                  switched: flag,
+                }));
+              }}
             />
           );
-        case 1: 
-        return (<SetPrice
-          action={SET_PRICE.ACTION}
-          confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
-          confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
-          confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
-          description={SET_PRICE.DESCRIPTION}
-          inAppPriceList={this.props.inAppPriceList}
-          image_url={SET_PRICE.IMAGE_URL}
-          message={SET_PRICE.MESSAGE}
-          primary_button={SET_PRICE.PRIMARY_BUTTON}
-          primaryButtonClick={this.goToBrowseStars}
-          title={SET_PRICE.TITLE}
-          link={SET_PRICE.LINK}
-        />);
+
+        case 4:
+          return <Skip
+            onBack={this.onBack}
+            changeStep={this.changeStep}
+            currentStep={this.state.currentStep}
+            switched={this.state.switched} />;
+
+        case 5:
+          return (<SetPrice
+            action={SET_PRICE.ACTION}
+            confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
+            confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
+            confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
+            description={SET_PRICE.DESCRIPTION}
+            inAppPriceList={this.props.inAppPriceList}
+            image_url={SET_PRICE.IMAGE_URL}
+            message={SET_PRICE.MESSAGE}
+            primary_button={SET_PRICE.PRIMARY_BUTTON}
+            primaryButtonClick={(priceDetails) => this.submitCelebrityDetails(priceDetails)}
+            title={SET_PRICE.TITLE}
+            link={SET_PRICE.LINK}
+          />);
+
         default:
           return null;
       }
@@ -202,7 +266,7 @@ class SignupFlow extends React.Component {
         <RequestFlowPopup
           dotsCount={0}
           closePopUp={this.closeSignUp}
-          modalView={this.state.currentStep > 3 && !this.state.enableClose}
+          // modalView={this.state.currentStep > 3 && !this.state.enableClose}
           smallPopup
         >
           <LoginContainer>
@@ -211,7 +275,8 @@ class SignupFlow extends React.Component {
                 this.state.currentStep == 2 && this.state.selectedType === 'fan'
               ) && (
                 <BackArrow
-                  onClick={() => this.changeStep(this.state.currentStep - 1)}
+                  className="backArrow"
+                  onClick={() => this.changeStep(this.state.currentStep === 5 ? this.state.currentStep - 2 : this.state.currentStep - 1)}
                 />
               )}
             <LoginContainer.LeftSection>
@@ -224,21 +289,21 @@ class SignupFlow extends React.Component {
                   currentStep={this.state.currentStep}
                 />
               ) : (
-                <LoginContainer.SignupFlow currentStep={this.state.currentStep}>
-                  {this.state.currentStep === 0 ? (
-                    <SignupMethod
-                      {...this.props}
-                      changeStep={this.changeStep}
-                      currentStep={this.state.currentStep}
-                      signupRole={this.state.selectedType}
-                      data={this.state.socialData}
-                      closeSignupFlow={this.closeSignUp}
-                    />
-                  ) : (
-                    this.renderSteps()
-                  )}
-                </LoginContainer.SignupFlow>
-              )}
+                  <LoginContainer.SignupFlow currentStep={this.state.currentStep}>
+                    {this.state.currentStep === 0 ? (
+                      <SignupMethod
+                        {...this.props}
+                        changeStep={this.changeStep}
+                        currentStep={this.state.currentStep}
+                        signupRole={this.state.selectedType}
+                        data={this.state.socialData}
+                        closeSignupFlow={this.closeSignUp}
+                      />
+                    ) : (
+                        this.renderSteps()
+                      )}
+                  </LoginContainer.SignupFlow>
+                )}
             </LoginContainer.LeftSection>
           </LoginContainer>
         </RequestFlowPopup>

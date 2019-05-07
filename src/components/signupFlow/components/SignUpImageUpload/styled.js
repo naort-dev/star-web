@@ -7,14 +7,13 @@ const UploadContainer = styled.div`
   flex-direction: column;
   height: 100%;
   padding-bottom: 56px;
-  @media(min-width: 1025px){
+  @media (min-width: 1025px) {
     flex-direction: row;
     padding-bottom: 0;
   }
 `;
 
-UploadContainer.Wrapper = styled.div`
-`;
+UploadContainer.Wrapper = styled.div``;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
@@ -48,10 +47,10 @@ UploadContainer.CloseButton = styled.span`
 `;
 
 UploadContainer.Container = styled.div`
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     padding: 0 0;
   }
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     padding: 0 20px;
   }
 `;
@@ -61,13 +60,14 @@ UploadContainer.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
-  @media(min-width:768px){
-    font-size:25px;
-  }
-  @media(min-width: 1025px){
+  padding-top: 68px;
+  @media (min-width: 768px) {
     font-size: 25px;
   }
-  @media(min-width:1920px){
+  @media (min-width: 1025px) {
+    font-size: 25px;
+  }
+  @media (min-width: 1920px) {
     font-size: 27px;
   }
 `;
@@ -104,7 +104,7 @@ UploadContainer.CategoriesWrapper = styled.div`
       color: #b7b7b7;
       font-family: Gilroy;
     }
-    label[data-shrink="true"] {
+    label[data-shrink='true'] {
       color: #555;
     }
   }
@@ -147,7 +147,7 @@ UploadContainer.BrowseCategoriesLink = styled.span`
 
 UploadContainer.AutoSuggest = styled.div`
   height: 100%;
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
   }
 `;
@@ -158,10 +158,10 @@ UploadContainer.SuggestionListWrapper = styled.div`
   left: 0;
   right: 0;
   width: 100%;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   z-index: 1;
   height: calc(100vh - 108px);
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     box-shadow: 0px 6px 6px 0px #cccccc;
     position: absolute;
     top: 50px;
@@ -173,7 +173,7 @@ UploadContainer.SuggestionListWrapper = styled.div`
     bottom: initial;
     box-shadow: none;
   }
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     width: auto;
     top: 47px;
     right: 0;
@@ -190,6 +190,7 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   z-index: 3;
   max-height: 620px;
   height: 100%;
+  top: 0;
 `;
 
 UploadContainer.BrowseCategoryContainer = styled.div`
@@ -202,7 +203,6 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     flex-direction: column;
     height: 410px;
     width: 100%;
-
   }
   .subCategoryHeading {
     font-family: Gilroy-Medium;
@@ -224,7 +224,7 @@ UploadContainer.ItemWrapper = styled.ul`
 UploadContainer.SubItemWrapper = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  overflow-y:auto;
+  overflow-y: auto;
   overflow-x: visible;
   li {
     padding: 6px 13px;
@@ -239,21 +239,21 @@ UploadContainer.SubItemWrapper = styled.ul`
     cursor: pointer;
   }
 `;
-UploadContainer.Item = styled.li`  
+UploadContainer.Item = styled.li`
   font-size: 22px;
   font-family: Gilroy;
   cursor: pointer;
   padding: 0 0 28px;
-  background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
+  background-color: ${props =>
+    props.selected ? props.theme.flatBlue : '#fff'};
   color: ${props => (props.selected ? '#fff' : '#999')};
 
   &.categoryItem {
     background-color: #fff;
     color: ${props => (props.selected ? props.theme.flatBlue : '#999')};
-    font-family:  ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
+    font-family: ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
   }
 `;
-
 
 const ImageUpload = styled.div`
   height: 100%;
@@ -262,7 +262,7 @@ const ImageUpload = styled.div`
 `;
 ImageUpload.ContentWrapper = styled.div`
   height: 100%;
-  display: ${props => (props.hide ? 'none' : 'block')}
+  display: ${props => (props.hide ? 'none' : 'block')};
 `;
 
 ImageUpload.BackButton = styled.span`
@@ -283,11 +283,10 @@ ImageUpload.CloseButton = styled.span`
   display: inline-block;
   width: 28px;
   height: 28px;
-  cursor:pointer;
+  cursor: pointer;
   color: #707070;
   font-size: 30px;
 `;
-
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
@@ -326,7 +325,8 @@ ImageUpload.CoverImage = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
+  background: ${props =>
+    props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3'};
   background-repeat: no-repeat;
   background-size: cover;
 `;
@@ -337,7 +337,8 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   position: relative;
   border: none;
   border-radius: 50%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4')};
+  background: ${props =>
+    props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4'};
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
@@ -370,7 +371,7 @@ ImageUpload.ProfileInputWrapper = styled.div`
   margin: 0 auto 6px;
   color: #2f839d;
   font-size: 28px;
-  
+
   &:first-child {
     svg {
       font-size: 29px;
@@ -403,14 +404,14 @@ ImageUpload.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
-  @media(min-width:768px){
-    font-size:25px;
+  @media (min-width: 768px) {
+    font-size: 25px;
   }
-  @media(min-width: 1025px){
+  @media (min-width: 1025px) {
     font-size: 25px;
     margin-bottom: 26px;
   }
-  @media(min-width:1920px){
+  @media (min-width: 1920px) {
     font-size: 27px;
   }
 `;
@@ -421,7 +422,7 @@ ImageUpload.ControlWrapper = styled.div`
   display: flex;
   padding: 13px 12px;
   justify-content: ${props => (props.multiple ? 'space-between' : 'flex-end')};
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     box-shadow: none;
     padding: 26px 0;
     border-top: ${props => (props.multiple ? 'none' : '1px solid #EBEBEB')};
@@ -439,8 +440,8 @@ ImageUpload.ControlWrapper = styled.div`
 `;
 
 ImageUpload.ControlButton = styled.button`
-  background-color: #FF6C58;
-  color: rgb(255,255,255);
+  background-color: #ff6c58;
+  color: rgb(255, 255, 255);
   text-align: center;
   display: inline-block;
   font-size: 14px;
@@ -450,10 +451,11 @@ ImageUpload.ControlButton = styled.button`
   text-decoration: none;
   outline: none;
   border-radius: 5px;
-  border: 2px solid #FF6C58;
+  border: 2px solid #ff6c58;
   border-image: initial;
-  &:hover, &:focus {
-    background-color: #FF3B21;
+  &:hover,
+  &:focus {
+    background-color: #ff3b21;
   }
   &:disabled {
     background-color: #b6b6b6;
@@ -502,10 +504,10 @@ ImageUpload.ButtonWrapper = styled.div`
 `;
 
 ImageUpload.VideoElement = styled.video`
-    width: 100%;
-    height: 500px;
-    background: black;
-    margin: 10px 0;
+  width: 100%;
+  height: 500px;
+  background: black;
+  margin: 10px 0;
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};

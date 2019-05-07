@@ -24,7 +24,7 @@ export const Layout = styled.section`
   .button {
     width: 242px;
   }
-  video {
+  .videoElm {
     width: 269px;
     border-radius: 23px;
     height: 100%;

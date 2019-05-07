@@ -9,6 +9,7 @@ import {
   Image,
 } from './styled';
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
+import { FlexCenter } from '../../../../styles/CommonStyled';
 
 const Header = props => {
   const starData = [
@@ -37,7 +38,7 @@ const Header = props => {
 
   return (
     <HeaderDiv className="headerGlobal" arrow={props.arrowVisible}>
-      <FlexBoxSBC>
+      <FlexCenter>
         <BackArrow className="arrow" onClick={props.backArrowHandler} white />
         <ProfileIcon>
           <StarDrawer starData={starData} />
@@ -46,7 +47,7 @@ const Header = props => {
           </Image>
         </ProfileIcon>
         <CloseButton onClick={props.closeHandler} white />
-      </FlexBoxSBC>
+      </FlexCenter>
       <HeaderText>{props.headerText}</HeaderText>
     </HeaderDiv>
   );

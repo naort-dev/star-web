@@ -24,6 +24,9 @@ class SignUpImageUpload extends React.Component {
     cropImage: null,
     categoriesValue: '',
     takePicture: false,
+    selectedCategory: [],
+    selectedProfessions: [],
+    subCategoriesArray: [],
   };
 
   componentWillMount() {}
@@ -170,9 +173,7 @@ class SignUpImageUpload extends React.Component {
       this.setState({ selectedProfessions: list });
     }
   };
-  handleFocusSelect = () => {
-    debugger;
-  };
+  handleFocusSelect = () => {};
   renderContent = () => {
     const { cropper, takePicture, selectedProfessions } = this.state;
     const { subcategories } = this.props.professionsList;
@@ -259,7 +260,10 @@ class SignUpImageUpload extends React.Component {
               </UploadContainer.BrowseCategories>
             </UploadContainer.CategoriesWrapper>
             <UploadContainer.ButtonWrapper>
-              <UploadContainer.ContinueButton type="submit">
+              <UploadContainer.ContinueButton
+                type="submit"
+                onClick={this.props.continueClickCallback}
+              >
                 Continue
               </UploadContainer.ContinueButton>
             </UploadContainer.ButtonWrapper>

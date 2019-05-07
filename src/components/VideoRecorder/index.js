@@ -83,7 +83,7 @@ class VideoRecorder extends Component {
         video: true,
         audio: true,
       })
-      .then((stream) => {
+      .then(stream => {
         if (this.mounted) {
           this.setState({ progress: false });
         }
@@ -122,7 +122,7 @@ class VideoRecorder extends Component {
       });
   };
 
-  handleDataAvailable = (event) => {
+  handleDataAvailable = event => {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
     }
@@ -159,7 +159,7 @@ class VideoRecorder extends Component {
     const stream = this.video.srcObject;
     if (stream) {
       const tracks = stream.getTracks();
-      tracks.forEach((track) => {
+      tracks.forEach(track => {
         track.stop();
       });
     }
@@ -172,14 +172,14 @@ class VideoRecorder extends Component {
   };
 
   videoClick = () => {
-    if (!this.props.shouldRecord) {
+    if (!this.props.shouldRecord && this.props.videoSrc !== null) {
       this.setState({ mediaControls: true });
       this.video.pause();
       this.props.playPauseMediaAction();
     }
   };
 
-  playPauseClick = (event) => {
+  playPauseClick = event => {
     event.stopPropagation();
     this.props.playPauseMediaAction();
     this.video.play();
@@ -199,7 +199,7 @@ class VideoRecorder extends Component {
     return (
       <React.Fragment>
         <video
-          ref={(video) => {
+          ref={video => {
             this.video = video;
           }}
           autoPlay={this.props.playPauseMedia}
@@ -207,6 +207,7 @@ class VideoRecorder extends Component {
           onEnded={this.checkVideoOver}
           onClick={this.videoClick}
           muted={this.props.shouldRecord}
+          className="videoElm"
         >
           <track kind="captions" />
         </video>

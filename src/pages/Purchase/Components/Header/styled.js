@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { media } from '../../../../styles/mediaQueries';
-import { FlexBoxSB } from '../../../../styles/CommonStyled';
 
 export const HeaderDiv = styled.section`
   height: 160px;
@@ -32,10 +31,6 @@ export const HeaderDiv = styled.section`
     font-size: 24px;
     color: #ff6c58;
   }
-`;
-
-export const FlexBoxSBC = styled(FlexBoxSB)`
-  align-items: center;
 `;
 
 export const HeaderText = styled.section`
