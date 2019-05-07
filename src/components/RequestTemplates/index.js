@@ -130,14 +130,7 @@ function RequestTemplates(
       </Templates.InputWrapper>
     );
   };
-  const getFiledProps = (
-    placeholder,
-    audioFlg,
-    valFun,
-    state,
-    forSelf,
-    tobeValidate,
-  ) => {
+  const getFiledProps = (placeholder, audioFlg, valFun, state, forSelf) => {
     return {
       placeholder,
       audioFlg,
@@ -145,13 +138,12 @@ function RequestTemplates(
       value: valFun ? videoForValue() : bookingData[state],
       state,
       forSelf,
-      tobeValidate,
     };
   };
 
   const getVideoFor = state => {
     return getTextInput(
-      getFiledProps('Who is this video for?', true, true, state, true, true),
+      getFiledProps('Who is this video for?', true, true, state, true),
     );
   };
   const getVideoFrom = state => {
@@ -449,7 +441,7 @@ function RequestTemplates(
                   'Title of the event?',
                   false,
                   false,
-                  'eventTitleNM',
+                  'specification',
                 ),
               )}
               {getTextInput(
@@ -476,7 +468,7 @@ function RequestTemplates(
                   'Title of the event?',
                   false,
                   false,
-                  'eventTitleNM',
+                  'specification',
                 ),
               )}
               {getTextInput(

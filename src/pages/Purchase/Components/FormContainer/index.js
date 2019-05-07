@@ -20,11 +20,7 @@ function FormContainer(props) {
     relationshipValue: '',
     specification: '',
     date: moment(),
-    whatIsThisFor: false,
-    whoIsfor: false,
     eventName: '',
-    forWhat: '',
-    eventTitleNM: '',
     validSelf: false,
   });
   const optionsList = detailList.map(item => ({
@@ -40,8 +36,13 @@ function FormContainer(props) {
   }, [FormData.validSelf]);
 
   useEffect(() => {
-    // eslint-disable-next-line
-    if (FormData.user === 'Myself') validateOnMyself();
+    if (
+      FormData.user === 'Myself' ||
+      (FormData.user === 'someoneElse' && !isMobile)
+    ) {
+      // eslint-disable-next-line
+      validateOnMyself();
+    }
   }, [FormData.hostName, FormData.specification]);
 
   const validateOnMyself = () => {
@@ -68,14 +69,12 @@ function FormContainer(props) {
     });
   };
 
-  const handleInputChange = (data, type, isValidate) => {
+  const handleInputChange = (data, type) => {
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
       [type]: data,
     });
-    // eslint-disable-next-line
-    if (isValidate) validateForm(data, type);
   };
 
   const bookingData = {
@@ -102,12 +101,7 @@ function FormContainer(props) {
     date: props.bookingData.date
       ? moment(props.bookingData.date)
       : FormData.date,
-    eventTitleNM: props.bookingData.eventTitleNM
-      ? props.bookingData.eventTitleNM
-      : FormData.eventTitleNM,
     updateUserToMyself,
-    whoIsfor: false,
-    whatIsThisFor: false,
   };
 
   const validateFields = fileds => {
@@ -136,6 +130,9 @@ function FormContainer(props) {
       templateType: type,
       relationship: result ? result[0].relationships : [],
       eventName: result ? result[0].title : '',
+      specification: '',
+      userName: '',
+      date: moment(),
     });
   };
   const nextButtonClick = () => {
