@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-
 import Dropdown from '../../../../components/Dropdown';
 import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import RequestTemplates from '../../../../components/RequestTemplates';
 import { Layout } from './styled';
+import { getMobileOperatingSystem } from '../../../../utils/checkOS';
 
 function FormContainer(props) {
   const { detailList } = { ...props };
@@ -25,31 +25,63 @@ function FormContainer(props) {
     eventName: '',
     forWhat: '',
     eventTitleNM: '',
+    validSelf: false,
   });
   const optionsList = detailList.map(item => ({
     label: item.title,
     key: item.id,
   }));
-  const [isDisabled, setisDisabled] = useState(false);
+  const isMobile = getMobileOperatingSystem();
+  const [isDisabled, buttonDisabled] = useState(true);
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    validateOnMyself();
+  }, [FormData.validSelf]);
+
+  useEffect(() => {
+    // eslint-disable-next-line
+    if (FormData.user === 'Myself') validateOnMyself();
+  }, [FormData.hostName, FormData.specification]);
+
+  const validateOnMyself = () => {
+    const { hostName, specification, templateType } = {
+      // eslint-disable-next-line
+      ...bookingData,
+    };
+    if (templateType === 1 || templateType === 2) {
+      // eslint-disable-next-line
+      validateFields([hostName !== '']);
+    } else if (templateType === 3 || templateType === 4 || templateType === 5) {
+      // eslint-disable-next-line
+      validateFields([hostName !== '', specification !== '']);
+    }
+  };
+
   const updateUserToMyself = () => {
     setFormData({
       ...FormData,
       user: 'Myself',
       enableAudioRecorder: true,
       hostName: 'BBB',
+      validSelf: true,
     });
   };
-  const handleInputChange = (data, type) => {
+
+  const handleInputChange = (data, type, isValidate) => {
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
       [type]: data,
     });
+    // eslint-disable-next-line
+    if (isValidate) validateForm(data, type);
   };
+
   const bookingData = {
     templateType: props.bookingData.occasionType
       ? props.bookingData.occasionType
-      : '',
+      : FormData.templateType,
     relationship: FormData.relationship,
     user: FormData.user,
     enableAudioRecorder: FormData.enableAudioRecorder,
@@ -70,9 +102,6 @@ function FormContainer(props) {
     date: props.bookingData.date
       ? moment(props.bookingData.date)
       : FormData.date,
-    forWhat: props.bookingData.forWhat
-      ? props.bookingData.forWhat
-      : FormData.forWhat,
     eventTitleNM: props.bookingData.eventTitleNM
       ? props.bookingData.eventTitleNM
       : FormData.eventTitleNM,
@@ -80,6 +109,12 @@ function FormContainer(props) {
     whoIsfor: false,
     whatIsThisFor: false,
   };
+
+  const validateFields = fileds => {
+    const isVaild = fileds.every(condition => condition);
+    buttonDisabled(!isVaild);
+  };
+
   const PageDetailsArray = RequestTemplates(
     FormData.templateType,
     bookingData,
@@ -87,6 +122,7 @@ function FormContainer(props) {
     props.saveAudioRecording,
     props.resetRecording,
   );
+
   const onSelectOccasion = occasion => {
     let type;
     const result = props.detailList.filter(item => {
@@ -127,7 +163,6 @@ function FormContainer(props) {
         <Button
           className="continue-button"
           onClick={() => nextButtonClick()}
-          disabled={isDisabled}
           isDisabled={isDisabled}
         >
           Continue

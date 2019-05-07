@@ -37,17 +37,16 @@ function RequestTemplates(
     value,
     audioFlg,
     onChange,
-    onBlur,
     state,
     forSelf,
+    tobeValidate,
   }) => {
     return (
       <Templates.InputWrapper>
         <TextInput
           placeholder={placeholder}
           value={value}
-          onChange={event => onChange(event.target.value, state)}
-          onBlur={event => onBlur(event.target.value)}
+          onChange={event => onChange(event.target.value, state, tobeValidate)}
         />
         {bookingData.user === 'someoneElse' && forSelf && value === '' && (
           <Templates.Myself onClick={bookingData.updateUserToMyself}>
@@ -131,21 +130,28 @@ function RequestTemplates(
       </Templates.InputWrapper>
     );
   };
-  const getFiledProps = (placeholder, audioFlg, valFun, state, forSelf) => {
+  const getFiledProps = (
+    placeholder,
+    audioFlg,
+    valFun,
+    state,
+    forSelf,
+    tobeValidate,
+  ) => {
     return {
       placeholder,
       audioFlg,
       onChange: bookingData.handleInputChange,
-      onBlur: () => {},
       value: valFun ? videoForValue() : bookingData[state],
       state,
       forSelf,
+      tobeValidate,
     };
   };
 
   const getVideoFor = state => {
     return getTextInput(
-      getFiledProps('Who is this video for?', true, true, state, true),
+      getFiledProps('Who is this video for?', true, true, state, true, true),
     );
   };
   const getVideoFrom = state => {
@@ -333,14 +339,14 @@ function RequestTemplates(
                   {getVideoFrom('userName')}
                   {getRelationship()}
                   {getTextInput(
-                    getFiledProps('For what', false, false, 'forWhat'),
+                    getFiledProps('For what', false, false, 'specification'),
                   )}
                 </React.Fragment>
               ) : (
                 <React.Fragment>
                   {getVideoFor('hostName')}
                   {getTextInput(
-                    getFiledProps('For what', false, false, 'forWhat'),
+                    getFiledProps('For what', false, false, 'specification'),
                   )}
                 </React.Fragment>
               )}
@@ -356,7 +362,9 @@ function RequestTemplates(
           const page2 = (
             <FlexBox>
               {getRelationship()}
-              {getTextInput(getFiledProps('For what', false, false, 'forWhat'))}
+              {getTextInput(
+                getFiledProps('For what', false, false, 'specification'),
+              )}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -365,7 +373,9 @@ function RequestTemplates(
           const page1 = (
             <FlexBox>
               {getVideoFor('hostName')}
-              {getTextInput(getFiledProps('For what', false, false, 'forWhat'))}
+              {getTextInput(
+                getFiledProps('For what', false, false, 'specification'),
+              )}
             </FlexBox>
           );
           pageDetails.push(page1);
