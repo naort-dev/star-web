@@ -6,12 +6,10 @@ import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
-
 import { Templates, FlexBox } from './styled';
 import {
   getMobileOperatingSystem,
   checkMediaRecorderSupport,
-  checkDevice,
 } from '../../utils/checkOS';
 import AudioRecorder from '../AudioRecorder';
 import { TextInput } from '../../components/TextField';
@@ -23,14 +21,6 @@ function RequestTemplates(
   saveAudioRecording,
   resetRecording,
 ) {
-  const [templateData, setTemplateData] = useState({
-    type: templateType,
-    relationship: bookingData.relationship,
-    user: bookingData.user,
-    eventname: bookingData.eventName,
-    startDate: null,
-  });
-
   const isMobile = getMobileOperatingSystem();
   const videoForValue = () => {
     let value = '';
@@ -49,6 +39,7 @@ function RequestTemplates(
     onChange,
     onBlur,
     state,
+    forSelf,
   }) => {
     return (
       <Templates.InputWrapper>
@@ -58,12 +49,18 @@ function RequestTemplates(
           onChange={event => onChange(event.target.value, state)}
           onBlur={event => onBlur(event.target.value)}
         />
-        {audioFlg && (
-          <React.Fragment>
-            {!getMobileOperatingSystem() &&
+        {bookingData.user === 'someoneElse' && forSelf && value === '' && (
+          <Templates.Myself onClick={bookingData.updateUserToMyself}>
+            This video is for me!
+          </Templates.Myself>
+        )}
+        <React.Fragment>
+          {audioFlg &&
+            value !== '' &&
+            !getMobileOperatingSystem() &&
             checkMediaRecorderSupport() &&
             (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
-              !window.navigator.userAgent.indexOf('Trident/') > -1) ? (
+              !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
                 <AudioRecorder
                   key="for"
@@ -74,18 +71,13 @@ function RequestTemplates(
                   }
                   resetRecording={target => resetRecording(target)}
                 />
+                <span className="recText">Pronounce Name</span>
               </Templates.WrapsAudioInput>
-            ) : (
-              <Templates.Myself onClick={bookingData.updateUserToMyself}>
-                This video is for me!
-              </Templates.Myself>
             )}
-          </React.Fragment>
-        )}
+        </React.Fragment>
       </Templates.InputWrapper>
     );
   };
-
   const getSelect = (placeholder, value, onChange) => {
     const optionItems =
       bookingData.relationship &&
@@ -121,7 +113,6 @@ function RequestTemplates(
       </Templates.InputWrapper>
     );
   };
-
   const getDatePicker = (placeholder, date, onChange) => {
     return (
       <Templates.InputWrapper>
@@ -133,33 +124,33 @@ function RequestTemplates(
             customInput={<Templates.Input />}
             popperPlacement="bottom"
             selected={date}
-            onChange={onChange}
+            onChange={dt => onChange(dt, 'date')}
             placeholderText="Enter date"
           />
         </Templates.WrapsInput>
       </Templates.InputWrapper>
     );
   };
-
-  const getFiledProps = (placeholder, audioFlg, valFun, state) => {
+  const getFiledProps = (placeholder, audioFlg, valFun, state, forSelf) => {
     return {
       placeholder,
       audioFlg,
       onChange: bookingData.handleInputChange,
-      onBlur: bookingData.checkRequiredHostName,
+      onBlur: () => {},
       value: valFun ? videoForValue() : bookingData[state],
       state,
+      forSelf,
     };
   };
 
   const getVideoFor = state => {
     return getTextInput(
-      getFiledProps('Who is this video for?', true, true, state),
+      getFiledProps('Who is this video for?', true, true, state, true),
     );
   };
   const getVideoFrom = state => {
     return getTextInput(
-      getFiledProps('Who is this video from?', true, false, state),
+      getFiledProps('Who is this video from?', true, false, state, false),
     );
   };
   const getSpecification = (placeholder, state) => {
@@ -195,7 +186,10 @@ function RequestTemplates(
                   {getDate()}
                 </React.Fragment>
               ) : (
-                getDate()
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getDate()}
+                </React.Fragment>
               )}
             </FlexBox>
           );
@@ -203,14 +197,23 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
             </FlexBox>
           );
-          const page2 = <FlexBox>{(getRelationship(), getDate())}</FlexBox>;
+          const page2 = (
+            <FlexBox>
+              {getRelationship()} {getDate()}
+            </FlexBox>
+          );
           pageDetails.push(page1);
           pageDetails.push(page2);
         } else {
-          const page1 = <FlexBox>{getDate()}</FlexBox>;
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')}
+              {getDate()}
+            </FlexBox>
+          );
           pageDetails.push(page1);
         }
         return pageDetails;
@@ -229,7 +232,13 @@ function RequestTemplates(
                   )}
                 </React.Fragment>
               ) : (
-                getSpecification("Who's the guest of honor?", 'specification')
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getSpecification(
+                    "Who's the guest of honor?",
+                    'specification',
+                  )}
+                </React.Fragment>
               )}
             </FlexBox>
           );
@@ -237,15 +246,13 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
-              {
-                (getRelationship(),
-                getSpecification("Who's the guest of honor?", 'specification'))
-              }
+              {getRelationship()}
+              {getSpecification("Who's the guest of honor?", 'specification')}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -253,6 +260,7 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
+              {getVideoFor('hostName')}
               {getSpecification("Who's the guest of honor?", 'specification')}
             </FlexBox>
           );
@@ -274,10 +282,13 @@ function RequestTemplates(
                   )}
                 </React.Fragment>
               ) : (
-                getSpecification(
-                  `What is this ${bookingData.eventName} for`,
-                  'specification',
-                )
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getSpecification(
+                    `What is this ${bookingData.eventName} for`,
+                    'specification',
+                  )}
+                </React.Fragment>
               )}
             </FlexBox>
           );
@@ -285,18 +296,16 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
-              {
-                (getRelationship(),
-                getSpecification(
-                  `What is this ${bookingData.eventName} for`,
-                  'specification',
-                ))
-              }
+              {getRelationship()}
+              {getSpecification(
+                `What is this ${bookingData.eventName} for`,
+                'specification',
+              )}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -304,6 +313,7 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
+              {getVideoFor('hostName')}
               {getSpecification(
                 `What is this ${bookingData.eventName} for`,
                 'specification',
@@ -327,7 +337,12 @@ function RequestTemplates(
                   )}
                 </React.Fragment>
               ) : (
-                getTextInput(getFiledProps('For what', false, false, 'forWhat'))
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getTextInput(
+                    getFiledProps('For what', false, false, 'forWhat'),
+                  )}
+                </React.Fragment>
               )}
             </FlexBox>
           );
@@ -335,17 +350,13 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
-              {
-                (getRelationship(),
-                getTextInput(
-                  getFiledProps('For what', false, false, 'forWhat'),
-                ))
-              }
+              {getRelationship()}
+              {getTextInput(getFiledProps('For what', false, false, 'forWhat'))}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -353,6 +364,7 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
+              {getVideoFor('hostName')}
               {getTextInput(getFiledProps('For what', false, false, 'forWhat'))}
             </FlexBox>
           );
@@ -378,12 +390,11 @@ function RequestTemplates(
           } else {
             const page1 = (
               <FlexBox>
-                {
-                  (getTextInput(
-                    getFiledProps('From where', false, false, 'specification'),
-                  ),
-                  getDate())
-                }
+                {getVideoFor('hostName')}
+                {getTextInput(
+                  getFiledProps('From where', false, false, 'specification'),
+                )}
+                {getDate()}
               </FlexBox>
             );
             pageDetails.push(page1);
@@ -391,17 +402,15 @@ function RequestTemplates(
         } else if (bookingData.user === 'someoneElse') {
           const page1 = (
             <FlexBox>
-              {(getVideoFor('hostName'), getVideoFrom('userName'))}
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
             </FlexBox>
           );
           const page2 = (
             <FlexBox>
-              {
-                (getRelationship(),
-                getTextInput(
-                  getFiledProps('From where', false, false, 'specification'),
-                ))
-              }
+              {getRelationship()}
+              {getTextInput(
+                getFiledProps('From where', false, false, 'specification'),
+              )}
             </FlexBox>
           );
           const page3 = <FlexBox>{getDate()}</FlexBox>;
@@ -411,12 +420,11 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
-              {
-                (getTextInput(
-                  getFiledProps('From where', false, false, 'specification'),
-                ),
-                getDate())
-              }
+              {getVideoFor('hostName')}
+              {getTextInput(
+                getFiledProps('From where', false, false, 'specification'),
+              )}
+              {getDate()}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -453,24 +461,22 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
-              {
-                (getTextInput(
-                  getFiledProps(
-                    'Title of the event?',
-                    false,
-                    false,
-                    'eventTitleNM',
-                  ),
+              {getTextInput(
+                getFiledProps(
+                  'Title of the event?',
+                  false,
+                  false,
+                  'eventTitleNM',
                 ),
-                getTextInput(
-                  getFiledProps(
-                    "Who's hosting the event?",
-                    false,
-                    false,
-                    'hostName',
-                  ),
-                ))
-              }
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
             </FlexBox>
           );
           const page2 = (
@@ -517,24 +523,22 @@ function RequestTemplates(
         } else {
           const page1 = (
             <FlexBox>
-              {
-                (getTextInput(
-                  getFiledProps(
-                    "Who's the guest of honor?",
-                    false,
-                    false,
-                    'specification',
-                  ),
+              {getTextInput(
+                getFiledProps(
+                  "Who's the guest of honor?",
+                  false,
+                  false,
+                  'specification',
                 ),
-                getTextInput(
-                  getFiledProps(
-                    "Who's hosting the event?",
-                    false,
-                    false,
-                    'hostName',
-                  ),
-                ))
-              }
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
             </FlexBox>
           );
           const page2 = (
@@ -556,5 +560,4 @@ function RequestTemplates(
   };
   return renderTemplates();
 }
-
 export default RequestTemplates;

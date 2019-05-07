@@ -354,17 +354,12 @@ Templates.ActionsContainer = styled.div`
 
 Templates.WrapsAudioInput = styled.div`
   width: 100%;
-  @media (min-width: 768px) {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
-    flex-direction: row;
-  }
-  @media (min-width: 1025px) {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-end;
+  display: flex;
+  color: #2f839d;
+  align-items: center;
+  padding-top: 9px;
+  .recText {
+    padding-left: 8px;
   }
 `;
 

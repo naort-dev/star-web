@@ -154,7 +154,7 @@ const Question = props => {
             </FlexCenter>
           )}
 
-          {buttonLabel === 'Record' && (
+          {buttonLabel === 'Record' && !error && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}

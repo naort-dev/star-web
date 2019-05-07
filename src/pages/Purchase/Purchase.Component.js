@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
-import { Content, ModalContainer, FormContent } from './styled';
+import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
 import ModalSwitcher from './ModalSwitcher';
@@ -42,6 +43,13 @@ class Purchase extends Component {
     ];
   }
 
+  componentDidMount() {
+    this.props.pageCountHandler(0);
+  }
+  componentWillUnmount() {
+    this.props.pageCountHandler(0);
+  }
+
   getBodyComponent = () => {
     if (this.state.stepCount === 1) {
       return (
@@ -67,28 +75,25 @@ class Purchase extends Component {
         return (
           <FormContainer
             audioRecorder={this.props.audioRecorder}
-            resetRecording={(target)=> this.props.resetRecording(target)}
-            saveAudioRecording={(target, audio)=> this.props.saveAudioRecording(target, audio)}
-            bookingData={this.props.bookingData? this.props.bookingData : {}}
-            detailList={this.props.OccasionDetails ? this.props.OccasionDetails : []}
+            resetRecording={target => this.props.resetRecording(target)}
+            saveAudioRecording={(target, audio) =>
+              this.props.saveAudioRecording(target, audio)
+            }
+            bookingData={this.props.bookingData ? this.props.bookingData : {}}
+            detailList={
+              this.props.OccasionDetails ? this.props.OccasionDetails : []
+            }
             submitClick={this.submitClick}
-          >
-            <FormContent />
-          </FormContainer>
+            pageCountHandler={this.props.pageCountHandler}
+            pageCount={this.props.pageCount}
+          />
         );
       }
     }
-    // else if (this.state.stepCount === 3) {
-    //   return <Payment paymentSuccessCallBack={this.paymentSuccess} />;
-    // } else if (this.state.stepCount === 4) {
-    //   return <SuccessScreen />;
-    // } else if (this.state.stepCount === 5) {
-    //   return <ScriptBuilder />;
-    // }
     return <div />;
   };
 
-  getCategory = (type) => {
+  getCategory = type => {
     this.setState({
       stepCount: 2,
       category: type,
@@ -120,9 +125,13 @@ class Purchase extends Component {
   };
 
   backArrowHandler = () => {
-    this.setState({
-      stepCount: this.state.stepCount - 1,
-    });
+    if (this.props.pageCount === 0) {
+      this.setState({
+        stepCount: this.state.stepCount - 1,
+      });
+    } else {
+      this.props.pageCountHandler(this.props.pageCount - 1);
+    }
   };
 
   submitClick = () => {
@@ -180,10 +189,21 @@ Purchase.propTypes = {
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
+  pageCountHandler: PropTypes.func.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  audioRecorder: PropTypes.object.isRequired,
+  saveAudioRecording: PropTypes.func.isRequired,
+  resetRecording: PropTypes.func.isRequired,
+  bookingData: PropTypes.object.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
   OccasionDetails: [],
 };
 
-export default Purchase;
+export default connect(
+  state => ({
+    pageCount: state.occasionList.pageCount,
+  }),
+  null,
+)(Purchase);

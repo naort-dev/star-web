@@ -11,7 +11,7 @@ import {
   saveAudioRecording,
 } from '../../store/shared/actions/audioRecorder';
 import { setVideoUploadedFlag } from '../../store/shared/actions/commonActions';
-import { fetchOccasionlist } from './actions/purchaseActions';
+import { fetchOccasionlist, pageCountHandler } from './actions/purchaseActions';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
@@ -52,6 +52,9 @@ function mapDispatchToProps(dispatch) {
     },
     fetchCelebDetails: id => {
       dispatch(fetchCelebDetails(id));
+    },
+    pageCountHandler: value => {
+      dispatch(pageCountHandler(value));
     },
   };
 }

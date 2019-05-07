@@ -9,7 +9,7 @@ import RequestTemplates from '../../../../components/RequestTemplates';
 import { Layout } from './styled';
 
 function FormContainer(props) {
-  const { children, detailList } = { ...props };
+  const { detailList } = { ...props };
   const [FormData, setFormData] = useState({
     templateType: null,
     relationship: [],
@@ -19,9 +19,7 @@ function FormContainer(props) {
     userName: '',
     relationshipValue: '',
     specification: '',
-    importantinfo: '',
     date: moment(),
-    eventdetailName: '',
     whatIsThisFor: false,
     whoIsfor: false,
     eventName: '',
@@ -32,44 +30,16 @@ function FormContainer(props) {
     label: item.title,
     key: item.id,
   }));
-  const [pageCount, setpageCount] = useState(0);
-  const [isDisabled, setisDisabled] = useState(true);
+  const [isDisabled, setisDisabled] = useState(false);
   const updateUserToMyself = () => {
     setFormData({
       ...FormData,
       user: 'Myself',
       enableAudioRecorder: true,
+      hostName: 'BBB',
     });
   };
-  const checkRequiredHostName = hostName => {
-    if (hostName !== '') {
-      setFormData({
-        ...FormData,
-        whoIsfor: true,
-      });
-      setisDisabled(!FormData.whoIsfor);
-    }
-  };
-  const checkRequiredWhatIsThisFor = whatIsThisFor => {
-    if (whatIsThisFor !== '') {
-      setFormData({
-        ...FormData,
-        whatIsThisFor: true,
-      });
-      setisDisabled(!FormData.whoIsfor);
-    }
-  };
   const handleInputChange = (data, type) => {
-    /*
-      expected types:
-      hostName,
-      userName,
-      relationshipValue,
-      specification,
-      importantinfo,
-      date,
-      eventdetailName
-    */
     setFormData({
       ...FormData,
       enableAudioRecorder: true,
@@ -77,9 +47,6 @@ function FormContainer(props) {
     });
   };
   const bookingData = {
-    selectedValue: props.bookingData.selectedValue
-      ? props.bookingData.selectedValue
-      : '0', // for default state (choose one)
     templateType: props.bookingData.occasionType
       ? props.bookingData.occasionType
       : '',
@@ -87,8 +54,6 @@ function FormContainer(props) {
     user: FormData.user,
     enableAudioRecorder: FormData.enableAudioRecorder,
     handleInputChange,
-    checkRequiredHostName,
-    checkRequiredWhatIsThisFor,
     eventName: props.bookingData.eventName
       ? props.bookingData.eventName
       : FormData.eventName,
@@ -102,13 +67,9 @@ function FormContainer(props) {
     specification: props.bookingData.specification
       ? props.bookingData.specification
       : FormData.specification,
-    importantinfo: props.bookingData.importantinfo
-      ? props.bookingData.importantinfo
-      : '',
-    date: props.bookingData.date ? moment(props.bookingData.date) : moment(),
-    eventdetailName: props.bookingData.eventdetailName
-      ? props.bookingData.eventdetailName
-      : '',
+    date: props.bookingData.date
+      ? moment(props.bookingData.date)
+      : FormData.date,
     forWhat: props.bookingData.forWhat
       ? props.bookingData.forWhat
       : FormData.forWhat,
@@ -118,9 +79,6 @@ function FormContainer(props) {
     updateUserToMyself,
     whoIsfor: false,
     whatIsThisFor: false,
-    whoIsfrom: false,
-    eventTitle: false,
-    eventDate: false,
   };
   const PageDetailsArray = RequestTemplates(
     FormData.templateType,
@@ -145,41 +103,11 @@ function FormContainer(props) {
     });
   };
   const nextButtonClick = () => {
-    setpageCount(pageCount + 1);
-    if (pageCount === PageDetailsArray.length) {
+    props.pageCountHandler(props.pageCount + 1);
+    if (props.pageCount === PageDetailsArray.length) {
       props.submitClick();
     }
   };
-  // const checkRequiredHostName = () => {
-  //   let whoIsforValue;
-  //   if (templateType === 7) {
-  //     whoIsforValue = this.bookingData.hostName === '' ? true : false;
-  //   } else {
-  //     whoIsforValue = false;
-  //   }
-  //   this.bookingData.whoIsfor = whoIsforValue;
-  //   return whoIsforValue;
-  // };
-  // const checkRequiredUserName = () => {
-  //   const whoIsfromValue = this.bookingData.userName === '' ? true : false;
-  //   this.bookingData.whoIsfrom = whoIsfromValue;
-  //   return whoIsfromValue;
-  // };
-  // const checkRequiredTitle = () => {
-  //   let eventTitleValue;
-  //   if (this.state.templateType === 6) {
-  //     eventTitleValue = this.state.eventdetailName === '' ? true : false;
-  //   } else {
-  //     eventTitleValue = false;
-  //   }
-  //   this.setState({ eventTitle: eventTitleValue });
-  //   return eventTitleValue;
-  // };
-  // const checkRequiredDate = () => {
-  //   const dateValue = this.state.date === '' ? true : false;
-  //   this.setState({ eventDate: dateValue });
-  //   return dateValue;
-  // };
   return (
     <Layout>
       <FlexCenter>
@@ -193,7 +121,7 @@ function FormContainer(props) {
         />
       </FlexCenter>
       <Layout.EventStep2>
-        {PageDetailsArray.length > 0 ? PageDetailsArray[pageCount] : null}
+        {PageDetailsArray.length > 0 ? PageDetailsArray[props.pageCount] : null}
       </Layout.EventStep2>
       <FlexCenter>
         <Button
@@ -210,11 +138,14 @@ function FormContainer(props) {
 }
 
 FormContainer.propTypes = {
-  getCategory: PropTypes.func,
-  saveAudioRecording: PropTypes.func,
-  resetRecording: PropTypes.func,
-  bookingData: PropTypes.object,
-  audioRecorder: PropTypes.object,
+  pageCount: PropTypes.number.isRequired,
+  pageCountHandler: PropTypes.func.isRequired,
+  bookingData: PropTypes.object.isRequired,
+  audioRecorder: PropTypes.object.isRequired,
+  saveAudioRecording: PropTypes.func.isRequired,
+  resetRecording: PropTypes.func.isRequired,
+  detailList: PropTypes.array.isRequired,
+  submitClick: PropTypes.func.isRequired,
 };
 
 export default FormContainer;

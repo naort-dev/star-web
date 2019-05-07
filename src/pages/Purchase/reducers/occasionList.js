@@ -5,6 +5,7 @@ const initalState = {
   data: [],
   loading: false,
   videoUploaded: false,
+  pageCount: 0,
 };
 
 export default (state = initalState, action) => {
@@ -39,6 +40,12 @@ export default (state = initalState, action) => {
       return {
         ...state,
         videoUploaded: action.value,
+      };
+
+    case OCCASION_LIST.pageCount:
+      return {
+        ...state,
+        pageCount: action.value,
       };
 
     default:

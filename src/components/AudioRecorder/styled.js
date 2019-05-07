@@ -2,12 +2,11 @@ import styled, {keyframes} from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const AudioRecorderDiv = styled.div`
-width: 100%;
 height: 100%;
-display: flex;
+/* display: flex;
 align-items: flex-start;
 justify-content: center;
-flex-direction: column;
+flex-direction: column; */
 `;
 AudioRecorderDiv.Icon = styled(FontAwesomeIcon)`
   flex: 1;
@@ -86,7 +85,6 @@ AudioRecorderDiv.Rerecord = styled.div`
   line-height: 1.79;
   letter-spacing: normal;
   text-align: center;
-  color: #2f829c;
   order: 1;
 `;
 
