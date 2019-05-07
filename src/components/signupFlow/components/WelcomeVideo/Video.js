@@ -55,6 +55,7 @@ const Video = props => {
     } else if (buttonLabel === 'Save & Continue') {
       if (props.videoUploaded) {
         // handle logic if video already uploaded
+        props.changeStep(props.currentStep + 2);
       } else {
         // action on continue to upload video
         props.uploadVideo(props.videoFile);

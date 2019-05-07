@@ -181,7 +181,6 @@ class SignUpForm extends React.Component {
 
   checkPassword = () => {
     const pattern = /^(?=.*?[0-9])(?=.*?[^\w\s]).{8,}$/; // Accepts values with min 8 characters, atleast one number and atleast one symbol
-
     if (validator.isEmpty(this.state.password.value)) {
       this.setState({
         password: { ...this.state.password, message: 'Enter a  password' },
