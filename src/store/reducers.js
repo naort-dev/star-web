@@ -39,7 +39,7 @@ import commentsList from '../store/shared/reducers/commentsList';
 import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
 import groupTypesListing from './shared/reducers/groupTypeListing';
-
+import groupListing from '../pages/groupListingNew/reducers';
 
 const appReducer = combineReducers({
   config,
@@ -49,6 +49,7 @@ const appReducer = combineReducers({
   groupTypes,
   filters,
   videosList,
+  groupListing,
   suggestionsList,
   celebDetails,
   celebVideos,

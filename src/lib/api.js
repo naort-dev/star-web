@@ -66,6 +66,8 @@ class Api {
   static twitterLogin = 'user/twitter_integration/';
   static twitterOauth = 'user/twitter_login';
   static validatePromo = 'user/referral_validate/';
+  static getGroupDetails = groupID => `user/user_details/${groupID}/get_details`;
+  static getGroupMemberList = groupID => `user/group_list/?account=${groupID}`;
 }
 
 export default Api;
