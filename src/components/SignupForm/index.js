@@ -369,7 +369,7 @@ class SignUpForm extends React.Component {
               {this.props.signupRole === ROLE_FAN ? null : (
                 <div>
                   <LoginContainer.PrivacyContent>
-                    <Checkbox
+                    <Checkbox className="check-wrap"
                       checked={this.state.termsAndConditions.value}
                       onChange={this.toggleTermsAndConditions(
                         'termsAndConditions',

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import TextFieldStyled from './styled';
 
 export const TextInput = props => (
-  <TextField
+  <TextFieldStyled
     error={props.error}
     placeholder={props.placeholder}
     type={props.type}
@@ -16,6 +16,11 @@ export const TextInput = props => (
     onBlur={props.onBlur}
     label={props.label} 
     classes={{root:"MuiFormControl"}}
+    InputProps={{
+      classes: {
+        error:'error-field',
+      },
+    }}
   />
 );
 

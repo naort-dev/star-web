@@ -59,7 +59,7 @@ UploadContainer.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
+  font-family: 'Gilroy';
   padding-top: 68px;
   @media (min-width: 768px) {
     font-size: 25px;
@@ -119,7 +119,7 @@ UploadContainer.ButtonWrapper = styled.div`
 UploadContainer.ContinueButton = styled.button`
   cursor: pointer;
   background-color: #2f839d;
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Medium;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
@@ -445,7 +445,7 @@ ImageUpload.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Gilroy-Semibold;
+  font-family: Gilroy-Medium;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
