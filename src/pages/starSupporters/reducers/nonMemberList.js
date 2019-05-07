@@ -6,6 +6,7 @@ const initalState = {
   offset: -1,
   count: 0,
   limit: 15,
+  searchText: undefined,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -15,6 +16,7 @@ export default (state = { ...initalState }, action) => {
         ...state,
         loading: true,
         data: action.refresh ? [] : state.data,
+        token: action.token,
       };
 
     case NON_MEMBER_LIST.end:
@@ -30,6 +32,7 @@ export default (state = { ...initalState }, action) => {
         offset: action.offset,
         data: action.list,
         count: action.count,
+        searchText: action.searchText,
       };
 
     case NON_MEMBER_LIST.failed:

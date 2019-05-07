@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchMemberList: (offset, refresh, isStar, type) => dispatch(fetchMemberList(offset, refresh, isStar, type)),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
-  fetchNonMemberList: (offset, refresh, isStar) => dispatch(fetchNonMemberList(offset, refresh, isStar)),
+  fetchNonMemberList: (offset, refresh, isStar, searchText) => dispatch(fetchNonMemberList(offset, refresh, isStar, searchText)),
   removeMember: userId => dispatch(removeMember(userId)),
   removeNonMember: userId => dispatch(removeNonMember(userId)),
 });
