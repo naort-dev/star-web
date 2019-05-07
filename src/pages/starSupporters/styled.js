@@ -78,7 +78,7 @@ SupportStyled.ClearButton = styled.span`
 
 SupportStyled.InputWrapper = styled.div`
   width: 100%;
-  height: 100%;
+  height: 50px;
   position: relative;
   &::before {
     content: '';
