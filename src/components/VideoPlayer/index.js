@@ -81,8 +81,10 @@ export default class VideoPlayer extends React.Component {
   pauseAllVideos = () => {
     const videoElements = Array.prototype.slice.call(document.getElementsByTagName('video'));
     videoElements.forEach((video) => {
-      video.pause();
-      video.currentTime = 0;
+      if (!video.paused) {
+        video.pause();
+        video.currentTime = 0;
+      }
     });
   }
 

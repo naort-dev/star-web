@@ -7,7 +7,7 @@ class Api {
   static getProfessionsList = 'v2/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
-  static getVideosList = 'v1/request/featured_videos/';
+  static getVideosList = 'v2/request/featured_videos/';
   static login = 'v1/user/login/';
   static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';

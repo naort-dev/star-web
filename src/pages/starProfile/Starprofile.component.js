@@ -16,6 +16,7 @@ import StarProfileStyled from './styled';
 // import ShareView from '../../components/ShareView';
 import CallToAction from './components/CallToAction';
 import DetailSection from './components/DetailSection';
+import ListingSection from './components/ListingSection';
 import Header from '../../components/Header';
 
 const StarProfile = (props) => {
@@ -43,15 +44,7 @@ const StarProfile = (props) => {
     return () => {
       props.resetStarDetails();
     }
-  }, [])
-
-  useEffect(() => {
-    props.fetchStarDetails(getUserId());
-  }, [props.isLoggedIn])
-
-  useEffect(() => {
-    props.fetchStarDetails(getUserId());
-  }, [props.match.params.id])
+  }, [props.isLoggedIn, props.match.params.id])
 
   return (
     <StarProfileStyled>
@@ -75,6 +68,11 @@ const StarProfile = (props) => {
           toggleProfileVideo={toggleProfileVideo}
           userDetails={props.userDetails}
           celebDetails={props.celebDetails}
+        />
+        <ListingSection
+          userDetails={props.userDetails}
+          fetchCelebVideosList={props.fetchCelebVideosList}
+          videosList={props.videosList}
         />
       {/* {
         this.state.showAppBanner && Object.keys(props.userDetails).length && Object.keys(props.celebrityDetails).length ?
@@ -114,8 +112,11 @@ StarProfile.propTypes = {
   resetStarDetails: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   followCelebrity: PropTypes.func.isRequired,
+  fetchCelebVideosList: PropTypes.func.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
   updateFavouritesQueue: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
+  videosList: PropTypes.object.isRequired,
 }
 
 export default StarProfile;
