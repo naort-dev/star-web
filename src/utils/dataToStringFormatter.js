@@ -45,3 +45,7 @@ export const shareTitleGenerator = (bookingType, fullName) => {
   }
   return title;
 }
+
+export const getStarName = (nickName = '', firstName = '', lastName = '') => {
+  return nickName && nickName !== '' ? nickName : `${firstName} ${lastName}`;
+};

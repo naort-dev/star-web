@@ -28,6 +28,7 @@ import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
 import { Earnings } from './pages/earnings';
+import { GroupListing } from './pages/groupListingNew';
 import Modals from './modals';
 import { fetchUserDetails, updateUserRole } from './store/shared/actions/getUserDetails';
 import { getConfig } from './store/shared/actions/getConfig';
@@ -119,6 +120,7 @@ class App extends React.Component {
                 <Route path="/resetpassword" component={Login} />
                 <Route path="/instalogin" component={InstaLogin} />
                 <Route path="/twitter-login" component={TwitterLogin} />
+                <Route exact path="/group-listing/:id" component={GroupListing} />
                 <Route exact path="/video/:id" component={Landing} />
 
                 {/* logged in areas */}
