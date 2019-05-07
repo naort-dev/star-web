@@ -59,7 +59,9 @@ FilterStyled.SubCategoryList = styled.ul`
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 6px 13px;
+  padding: 0 13px;
+  height: 30px;
+  line-height: 30px;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
