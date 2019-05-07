@@ -55,6 +55,7 @@
     "video-react": "^0.11.2"
   },
   "devDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.8.1",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.2.2",
