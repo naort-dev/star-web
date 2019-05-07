@@ -63,12 +63,14 @@ class Api {
   static celebRepresentative = 'v1/user/celebrity_representative/';
   static getReactions = 'v1/request/reactions/';
   static getGroupsList = 'v1/user/group_account/';
-  static groupTypeListing = 'v1/user/active_group_types/'
+  static groupTypeListing = 'v1/user/active_group_types/';
   static createGroupNotification = 'v1/notification/new_group_notification/';
   static twitterLogin = 'v1/user/twitter_integration/';
   static twitterOauth = 'v1/user/twitter_login';
   static validatePromo = 'v1/user/referral_validate/';
   static getSubCategoryList = 'v2/user/professions/?parent=false';
+  static getGroupDetails = groupID => `v1/user/user_details/${groupID}/get_details`;
+  static getGroupMemberList = groupID => `v1/user/group_list/?account=${groupID}`;
 }
 
 export default Api;

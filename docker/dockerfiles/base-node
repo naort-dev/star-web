@@ -1,7 +1,12 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 RUN apt-get update &&\
-    apt-get install -y curl &&\
+    apt-get install -y curl gnupg2 &&\
     apt-get clean all
 
-RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
 RUN apt-get install -y nodejs zopfli
+COPY package.json /starsona/
+COPY package-lock.json /starsona/
+WORKDIR /starsona
+RUN npm install --no-color
+

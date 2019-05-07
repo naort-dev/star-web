@@ -196,7 +196,7 @@ class VideoShare extends React.Component {
                 <React.Fragment>
                   <VideoShareStyled.VideoPlayer>
                     <VideoShareStyled.StarLink mobile>
-                      <Link to={`/${props.selectedVideo.celebrity_id}`}>
+                      <Link to={`/${props.selectedVideo.celebrity_vanity}`}>
                         <VideoShareStyled.VideoRequestImage
                           imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
                         />
@@ -221,7 +221,7 @@ class VideoShare extends React.Component {
                     <VideoShareStyled.VideoContent>
                       <VideoShareStyled.VideoRequester>
                         <VideoShareStyled.StarLink>
-                          <Link to={`/${props.selectedVideo.celebrity_id}`}>
+                          <Link to={`/${props.selectedVideo.celebrity_vanity}`}>
                             <VideoShareStyled.VideoRequestImage
                               imageUrl={props.selectedVideo.avatar_photo && props.selectedVideo.avatar_photo.thumbnail_url}
                             />

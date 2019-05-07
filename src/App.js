@@ -4,12 +4,10 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
-import { library } from '@fortawesome/fontawesome-svg-core';
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
-import { fetchSubCategoryList } from './store/shared/actions/getSubCategoryLists';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
@@ -17,9 +15,8 @@ import { ComponentLoading } from './components/ComponentLoading';
 import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
 import { Login } from './pages/login';
-import { Purchase } from './pages/Purchase/Purchase.Loadable';
 import { Progress, Loading } from './styles/CommonStyled';
-// import { Favourites } from './pages/favourites';
+import { StarProfile } from './pages/starProfile';
 // import { Requests } from './pages/requests';
 import { Page404 } from './pages/page404';
 import { Unauthorized } from './pages/unauthorized';
@@ -27,6 +24,7 @@ import { Unauthorized } from './pages/unauthorized';
 // import { Settings } from './pages/settings';
 import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
+import { GroupListing } from './pages/groupListing';
 // import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import {
@@ -52,7 +50,6 @@ class App extends React.Component {
     this.props.fetchProfessionsList();
     this.props.fetchAllProfessions();
     this.props.fetchAllSubCategories();
-    // this.props.fetchSubCategoryList();
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
@@ -165,6 +162,7 @@ class App extends React.Component {
               <Route path="/resetpassword" component={Login} />
               <Route path="/instalogin" component={InstaLogin} />
               <Route path="/twitter-login" component={TwitterLogin} />
+              <Route exact path="/group-listing/:id" component={GroupListing} />
               <Route exact path="/video/:id" component={Landing} />
 
               {/* logged in areas */}
@@ -217,9 +215,8 @@ class App extends React.Component {
               <Route path="/unauthorized" component={Unauthorized} />
               <Route path="/not-found" component={Page404} />
               <Route exact path="/" component={Landing} />
-              {/* <Route exact path="/:id" component={Landing} />
-                <Route exact path="/group-profile/:id" component={Landing} /> */}
-              <Route path="/purchase" component={Purchase} />
+              <Route exact path="/:id" component={StarProfile} />
+              {/* <Route exact path="/group-profile/:id" component={Landing} /> */}
               <Route component={Page404} />
             </Switch>
           )}

@@ -71,7 +71,8 @@ export default class VideoPlayer extends React.Component {
     const visible = CheckInViewport(videoElement);
     if (
       visible &&
-      player.paused
+      player.paused &&
+      this.props.autoPlay
     ) {
       this.toggleVideoPlay();
     }

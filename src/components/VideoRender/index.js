@@ -45,6 +45,7 @@ export default class VideoRender extends React.Component {
         >
           <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
             <VideoPlayer
+              autoPlay={this.props.autoPlay}
               onError={this.props.onVideoError}
               primarySrc={props.videoSrc}
             />

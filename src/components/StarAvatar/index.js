@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
@@ -34,8 +35,10 @@ const StarAvatar = ({ star, type, ...props }) => {
   });
 
   const toggleQuickViewModal = () => {
-    if (document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) {
+    if ((document.body.getBoundingClientRect().width >= 832 || window.innerWidth >= 832) && star.celebrity_user && star.celebrity_user.rate) {
       props.toggleQuickView(true, star.user_id);
+    } else {
+      props.history.push(`/${star.user_id}`)
     }
   }
 
@@ -59,7 +62,7 @@ const StarAvatar = ({ star, type, ...props }) => {
           </AvatarContainer.ControlButton>
         </AvatarContainer.ControlWrapper>
       </WrapperComponent>
-      <AvatarContainer.Content className={type}>
+      <AvatarContainer.Content className={type} to={`${star.user_id}`}>
         <AvatarContainer.Category title={star.celebrity_profession && starProfessionsFormater(star.celebrity_profession)}>
           { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
@@ -69,7 +72,11 @@ const StarAvatar = ({ star, type, ...props }) => {
               getStarName(star.nick_name, star.first_name, star.last_name)
             }
           </AvatarContainer.Name>
-          <AvatarContainer.Price>{numberToDollarFormatter(star.celebrity_user ? star.celebrity_user.rate : 0)}</AvatarContainer.Price>
+          {
+            star.celebrity_user && star.celebrity_user.rate ?
+              <AvatarContainer.Price>{numberToDollarFormatter(star.celebrity_user ? star.celebrity_user.rate : 0)}</AvatarContainer.Price>
+            : null
+          }
         </AvatarContainer.StarDescription>
       </AvatarContainer.Content>
     </AvatarContainer>
@@ -85,10 +92,11 @@ StarAvatar.propTypes = {
   star: PropTypes.object,
   type: PropTypes.string,
   toggleQuickView: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapDispatchToProps = dispatch => ({
   toggleQuickView: (state, modalData) => dispatch(toggleQuickView(state, modalData)),
 });
 
-export default connect(null, mapDispatchToProps)(StarAvatar);
+export default withRouter(connect(null, mapDispatchToProps)(StarAvatar));
