@@ -181,6 +181,8 @@ DetailStyled.StarDetails = styled.div`
   }
   @media(min-width: 832px) {
     order: 4;
+    width: 100%;
+    justify-content: space-between;
     .details-header {
       font-size: 16px;
     }
