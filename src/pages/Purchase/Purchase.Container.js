@@ -6,9 +6,13 @@ import {
   playPauseMedia,
   loaderAction,
   setVideoUploadedFlag,
+  updateToast,
 } from '../../store/shared/actions/commonActions';
 import { fetchOccasionlist } from './actions/purchaseActions';
-import { toggleRequestFlow } from '../../store/shared/actions/toggleModals';
+import {
+  toggleRequestFlow,
+  toggleLogin,
+} from '../../store/shared/actions/toggleModals';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
@@ -23,8 +27,8 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (videoSrc, superBuffer) => {
-      dispatch(updateMediaStore(videoSrc, superBuffer));
+    updateMediaStore: (payload) => {
+      dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {
       dispatch(playPauseMedia());
@@ -47,6 +51,8 @@ function mapDispatchToProps(dispatch) {
     fetchCelebDetails: id => {
       dispatch(fetchCelebDetails(id));
     },
+    toggleLogin: state => dispatch(toggleLogin(state)),
+    updateToast: toastObj => dispatch(updateToast(toastObj)),
   };
 }
 export default connect(

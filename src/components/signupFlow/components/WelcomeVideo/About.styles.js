@@ -21,7 +21,9 @@ export const Layout = styled.section`
     font-size: 14px;
     text-align: center;
     color: #7c7c7c;
-    padding-top: 18px;
+    padding-top: 8px;
+    max-width: 430px;
+    margin: 0 auto;
   }
   .questionWrapper {
     max-width: 239px;
@@ -49,15 +51,16 @@ export const QuesWrapper = styled.section`
   padding: 21px 29px;
   margin-bottom: 20px;
   ${media.webView} {
-    margin-top: 23px;
+    margin-top: 16px;
     margin-bottom: 27px;
   }
   .question {
     color: #7c7c7c;
   }
   .queHead {
-    text-align: center;
+    text-align: left;
     color: #46829a;
     font-size: 18px;
+    font-family: Gilroy-Semibold;
   }
 `;

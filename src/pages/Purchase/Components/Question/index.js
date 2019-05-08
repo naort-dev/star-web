@@ -24,7 +24,7 @@ const Question = props => {
     },
     {
       key: 'que3',
-      question: 'Ask the question you want Paul to answer',
+      question: `Ask the question you want ${props.starNM} to answer`,
     },
   ];
   const [showHideFlg, showHideScript] = useState(false);
@@ -81,11 +81,21 @@ const Question = props => {
               props.setVideoUploadedFlag(true);
             })
             .catch(() => {
+              props.updateToast({
+                value: true,
+                message: 'Failed to upload video',
+                variant: 'error',
+              });
               props.loaderAction(false);
             });
         }
       })
-      .catch(() => {
+      .catch(err => {
+        props.updateToast({
+          value: true,
+          message: err.message,
+          variant: 'error',
+        });
         props.loaderAction(false);
       });
   };
@@ -154,7 +164,7 @@ const Question = props => {
             </FlexCenter>
           )}
 
-          {buttonLabel === 'Record' && (
+          {buttonLabel === 'Record' && !error && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
@@ -194,6 +204,8 @@ Question.propTypes = {
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
   userDetails: PropTypes.object.isRequired,
+  starNM: PropTypes.string.isRequired,
+  updateToast: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {

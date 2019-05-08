@@ -42,6 +42,15 @@ export default class GroupListing extends React.Component {
     this.props.fetchMemberList(groupID, offset, refresh);
   }
 
+  onLinkClick = webUrl => () => {
+    let newWebUrl = webUrl;
+    const urlTest = /^((https|http):\/\/)(www.)?[a-z0-9]+\.[a-z]+(\/[a-zA-Z0-9#]+\/?)*$/;
+    if (!urlTest.test(webUrl)) {
+      newWebUrl = `http://${webUrl}`;
+    }
+    window.open(newWebUrl, '_blank');
+  }
+
   render() {
     const {
       membersList, membersLimit, membersCount, membersOffset, membersLoading, groupDetails
@@ -57,7 +66,7 @@ export default class GroupListing extends React.Component {
           <CoverWrap>
             <InfoHeader>
               <img src={group_image} />
-              <StyledCardInfo Infotext={group_description} InfoHeading={group_website} />
+              <StyledCardInfo Infotext={group_description} InfoHeading={group_website} onLinkClick={this.onLinkClick(group_website)} />
             </InfoHeader>
           </CoverWrap>
           <CoverBoxWrapper>
