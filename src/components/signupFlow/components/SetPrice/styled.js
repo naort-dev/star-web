@@ -99,7 +99,7 @@ SetPriceWrapper.Image = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 192.8px;
+  height: 236px;
 `;
 SetPriceWrapper.Label = styled.div`
   font-family: Gilroy;

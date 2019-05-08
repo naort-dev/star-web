@@ -32,12 +32,11 @@ QuickViewStyled.Categories = styled.span`
 QuickViewStyled.StarName = styled.span`
   font-family: Gilroy-Regular;
   display: block;
-  width: 100%;
   color: ${props => props.theme.twilight};
 `;
 
 QuickViewStyled.Row = styled.div`
-  margin-top: 25px;
+  margin-top: 19px;
 `;
 
 QuickViewStyled.Avatar = styled.span`
@@ -79,7 +78,7 @@ QuickViewStyled.SubHeader = QuickViewStyled.Row.extend`
 QuickViewStyled.SubDescription = styled.span`
   font-family: Gilroy-Light;
   font-size: 24px;
-  margin-top: 10px;
+  margin-top: 7px;
   display: block;
   color: ${props => props.theme.orangePink};
 `;

@@ -19,7 +19,7 @@ export const Heading = styled.div`
   font-family: 'Gilroy-Medium';
   padding-top: 72px;
   ${media.webView} {
-    padding-top: 68px;
+    padding-top: 38px;
   }
 `;
 
