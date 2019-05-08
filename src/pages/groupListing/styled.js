@@ -207,10 +207,10 @@ export const InfoHeader = styled.div`
  
 `
 
-export const CardInfo = ({ className, Infotext, InfoHeading  }) => (
+export const CardInfo = ({ className, Infotext, InfoHeading, onLinkClick  }) => (
   <div className={className}>
     <p>{Infotext}</p>
-    <h2 className="head-link">{InfoHeading}</h2>
+    <h2 className="head-link" onClick={onLinkClick}>{InfoHeading}</h2>
   </div>
 )
 
@@ -231,6 +231,7 @@ export const StyledCardInfo = styled(CardInfo)`
     font-weight: bold;
     font-style: normal;
     font-stretch: normal;
+    cursor: pointer;
     line-height: 0.93;
     letter-spacing: normal;
     text-align: center;
