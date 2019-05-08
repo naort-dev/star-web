@@ -78,6 +78,12 @@ export default class ProfileUpload extends React.Component {
     awsImageUpload(this.state.finalFile, this.state.extension)
       .then((resp) => {
         this.setState({ imageLoading: false });
+        const fileName = {
+          "images": [resp],
+          "avatar_photo": resp,
+          "featured_image": "",
+        }
+        this.props.updateProfilePhoto(fileName);
         this.props.onComplete(resp, this.state.finalImage);
       });
   }

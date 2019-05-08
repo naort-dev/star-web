@@ -32,6 +32,8 @@ import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { celebritySignupProfile } from '../../services/userRegistration'
+import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+
 
 class SignupFlow extends React.Component {
   constructor(props) {
@@ -45,6 +47,7 @@ class SignupFlow extends React.Component {
         ? props.signUpDetails.enableClose
         : false,
       profession: [],
+      profile_video: 'sample.mp4',
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -100,7 +103,7 @@ class SignupFlow extends React.Component {
               .then((success) => {
                 this.setState({ loader: false });
                 if (success) {
-                  this.goToBrowseStars();
+                  this.changeStep(this.state.currentStep + 1)
                 }
               })
               .catch(() => {
@@ -115,11 +118,14 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
-  continueClickHandler = (professions) => {
+  continueClickHandler = (professions, fileImage, cropImage) => {
+    if(professions.length > 0 && (fileImage || cropImage)) {
     this.setState(state => ({
       currentStep: state.currentStep + 1,
       profession: professions.map(profession => profession.id)
     }));
+  } else {
+  }
   };
 
   gotToHome = () => {
@@ -183,6 +189,7 @@ class SignupFlow extends React.Component {
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}
               continueClickCallback={this.continueClickHandler}
+              updateProfilePhoto={this.props.updateProfilePhoto}
             />
           );
         case 3:
@@ -224,6 +231,20 @@ class SignupFlow extends React.Component {
             title={SET_PRICE.TITLE}
             link={SET_PRICE.LINK}
           />);
+          case 6:
+            return (
+              <RegistrationSuccess
+                closeSignupFlow={this.closeSignUp}
+                description={FAN_REG_SUCCESS.DESCRIPTION}
+                icon={FAN_REG_SUCCESS.ICON}
+                image_url={FAN_REG_SUCCESS.IMAGE_URL}
+                message={FAN_REG_SUCCESS.MESSAGE}
+                primary_button={FAN_REG_SUCCESS.PRIMARY_BUTTON}
+                primaryButtonClick={this.goToBrowseStars}
+                secondary_button={FAN_REG_SUCCESS.SECONDARY_BUTTON}
+                secondaryButtonClick={this.gotToHome}
+                title={FAN_REG_SUCCESS.TITLE} />
+            );
 
         default:
           return null;
@@ -338,6 +359,8 @@ const mapDispatchToProps = dispatch => ({
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
+  updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
+  setProfilePhoto: () => dispatch(resetProfilePhoto()),
 });
 
 export default withRouter(
