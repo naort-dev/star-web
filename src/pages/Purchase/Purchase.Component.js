@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 import { Content, ModalContainer, FormContent } from './styled';
@@ -61,6 +62,13 @@ class Purchase extends Component {
             loaderAction={this.props.loaderAction}
             setVideoUploadedFlag={this.props.setVideoUploadedFlag}
             starsonaRequest={this.props.starsonaRequest}
+            starNM={
+              this.props.userDetails.nick_name !== '' &&
+              this.props.userDetails.nick_name
+                ? this.props.userDetails.nick_name
+                : this.props.userDetails.first_name
+            }
+            updateToast={this.props.updateToast}
           />
         );
       } else if (this.state.category !== 3) {
@@ -84,14 +92,16 @@ class Purchase extends Component {
     return <div />;
   };
 
-  getCategory = (type) => {
+  getCategory = type => {
+    if (type !== 3) {
+      this.props.fetchOccasionlist(type);
+    } else if (type === 3 && !this.props.isLoggedIn) {
+      this.props.toggleLogin(true);
+    }
     this.setState({
       stepCount: 2,
       category: type,
     });
-    if (this.state.category !== 3) {
-      this.props.fetchOccasionlist(type);
-    }
   };
 
   getFinalStep = () => {
@@ -139,6 +149,11 @@ class Purchase extends Component {
 
   closeHandler = () => {
     this.props.toggleRequestFlow(false);
+    this.props.setVideoUploadedFlag(false);
+    this.props.updateMediaStore({
+      videoSrc: null,
+      superBuffer: null,
+    });
   };
 
   render() {
@@ -150,7 +165,10 @@ class Purchase extends Component {
               <Header
                 backArrowHandler={this.backArrowHandler}
                 closeHandler={this.closeHandler}
-                starImage={this.props.userDetails.avatar_photo && this.props.userDetails.avatar_photo.thumbnail_url}
+                starImage={
+                  this.props.userDetails.avatar_photo &&
+                  this.props.userDetails.avatar_photo.thumbnail_url
+                }
                 headerText="What kind of video message do you want?"
                 arrowVisible={this.state.stepCount !== 1}
               />
@@ -181,10 +199,16 @@ Purchase.propTypes = {
   starsonaRequest: PropTypes.func.isRequired,
   toggleRequestFlow: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  updateToast: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
   OccasionDetails: [],
 };
 
-export default Purchase;
+export default connect(
+  state => ({ isLoggedIn: state.session.isLoggedIn }),
+  null,
+)(Purchase);
