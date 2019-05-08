@@ -28,7 +28,7 @@ RegSuccessWrapper.HeaderText = styled.div`
 `;
 RegSuccessWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  margin-top: 50px;
+  margin-top: 2px;
 `;
 RegSuccessWrapper.Button = styled.button`
 width: 250px;
@@ -39,7 +39,7 @@ border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
 border-width: 2px;
 border-style: solid;
 margin: 0 10px;
-font-family: Gilroy-Bold;
+font-family: Gilroy-Semibold;
 font-size: 18px;
 line-height: 1.5;
 text-align: center;
@@ -79,7 +79,8 @@ RegSuccessWrapper.Image = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
-  height: 236px;
+  height: 274px;
+  margin-bottom: 0;
 `;
 RegSuccessWrapper.Label = styled.div`
   font-family: Gilroy;
@@ -88,7 +89,7 @@ RegSuccessWrapper.Label = styled.div`
   line-height: 0.88;
   text-align: center;
   color:  #ff6c58;
-  padding-top: 10px;
+  padding-top: 12px;
 `;
 RegSuccessWrapper.Description = styled.div`
   padding-top: 15px;
