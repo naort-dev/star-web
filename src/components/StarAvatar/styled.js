@@ -105,7 +105,6 @@ AvatarContainer.Category = styled.span`
   font-size: 10px;
   display: block;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   text-align: inherit;
   margin-bottom: 3px;
@@ -124,7 +123,6 @@ AvatarContainer.Name = styled.span`
   text-align: inherit;
   color: ${props => props.theme.flatBlue};
   width: 100%;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
