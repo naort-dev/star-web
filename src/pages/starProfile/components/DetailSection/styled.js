@@ -38,16 +38,38 @@ DetailStyled.Categories = styled.span`
   }
 `;
 
+DetailStyled.DescriptionWrapper = styled.span`
+  @media(min-width: 832px) {
+    order: 3;
+  }
+`;
+
 DetailStyled.Description = styled.span`
   font-family: Gilroy-Light;
   font-size: 14px;
   padding-top: 20px;
   line-height: 19px;
+  height: ${props => (props.showMore ? 'auto' : '97px')};
+  overflow: hidden;
+  display: inline-block;
+  .description-content {
+    display: inline-block;
+  }
   color: ${props => props.theme.greyishBrown};
+  &.more-button {
+    padding: 0;
+    height: auto;
+    cursor: pointer;
+    font-family: Gilroy-Medium;
+    color: ${props => props.theme.flatBlue}
+  }
   @media(min-width: 832px) {
     font-size: 16px;
     line-height: 26px;
-    order: 3;
+    height: ${props => (props.showMore ? 'auto' : '122px')};
+    &.more-button {
+      height: auto;
+    }
   }
 `;
 

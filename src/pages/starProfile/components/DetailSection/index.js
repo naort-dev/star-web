@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withTheme } from 'styled-components';
@@ -14,6 +14,9 @@ import DetailStyled from './styled';
 const DetailSection = (props) => {
 
   const [followStatus, toggleFollowStatus] = useState(props.userDetails.is_follow ? props.userDetails.is_follow : false);
+  const [showMore, toggleShowMore] = useState(false);
+  const descpContentRef = useRef(null);
+  const descpWrappRef = useRef(null);
 
   const { paleSkyBlue, lightOrange } = props.theme;
   const starData = [{
@@ -54,6 +57,13 @@ const DetailSection = (props) => {
     } else {
       props.updateFavouritesQueue(props.userDetails.id, !followStatus);
       props.toggleLogin(true);
+    }
+  }
+
+  const showMoreClick = () => {
+    console.log(descpContentRef.current.clientHeight, descpWrappRef.current.clientHeight)
+    if (descpContentRef.current.clientHeight > descpWrappRef.current.clientHeight) {
+      toggleShowMore(true)
     }
   }
 
@@ -119,9 +129,18 @@ const DetailSection = (props) => {
                 </div>
             }
           </DetailStyled.StarDetails>
-          <DetailStyled.Description>
-            { props.celebDetails.description }
-          </DetailStyled.Description>
+          <DetailStyled.DescriptionWrapper>
+            <DetailStyled.Description showMore={showMore} innerRef={descpWrappRef}>
+              <span className='description-content' ref={descpContentRef}>
+                { props.celebDetails.description }
+              </span>
+            </DetailStyled.Description>
+            {
+              props.celebDetails.description && !showMore ?
+                <DetailStyled.Description onClick={showMoreClick} className="more-button">MORE</DetailStyled.Description>
+              : null
+            }
+          </DetailStyled.DescriptionWrapper>
         </DetailStyled.StarDetailsWrapper>
       </DetailStyled.ProfileContent>
       {
