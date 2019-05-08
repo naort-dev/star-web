@@ -552,5 +552,9 @@ ImageUpload.CropperButton = styled.button`
     color: #2f839d;
   }
 `;
+const ErrorMessage= styled.div`
+  color: red;
+  text-align: center;
+`;
 
-export { UploadContainer, ImageUpload };
+export { UploadContainer, ImageUpload, ErrorMessage };
