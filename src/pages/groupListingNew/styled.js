@@ -199,7 +199,7 @@ export const InfoHeader = styled.div`
   position: relative;
   z-index: 2;
   padding-top: 40px;
-
+  font-family: Gilroy-Light;
   img {
     max-width: 315px;
     margin-bottom: 16px;
