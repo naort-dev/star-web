@@ -42,6 +42,9 @@ function FormContainer(props) {
     ) {
       // eslint-disable-next-line
       validateOnMyself();
+    } else if (FormData.user === 'someoneElse' && isMobile) {
+      // eslint-disable-next-line
+      validateOnSomeoneElseMobile();
     }
   }, [FormData.hostName, FormData.specification]);
 
@@ -53,7 +56,27 @@ function FormContainer(props) {
     if (templateType === 1 || templateType === 2) {
       // eslint-disable-next-line
       validateFields([hostName !== '']);
-    } else if (templateType === 3 || templateType === 4 || templateType === 5) {
+    } else if (
+      templateType === 3 ||
+      templateType === 4 ||
+      templateType === 5 ||
+      templateType === 6 ||
+      templateType === 7
+    ) {
+      // eslint-disable-next-line
+      validateFields([hostName !== '', specification !== '']);
+    }
+  };
+
+  const validateOnSomeoneElseMobile = () => {
+    const { hostName, specification, templateType } = {
+      // eslint-disable-next-line
+      ...bookingData,
+    };
+    if (templateType === 1 || templateType === 2) {
+      // eslint-disable-next-line
+      validateFields([hostName !== '']);
+    } else if (templateType === 6 || templateType === 7) {
       // eslint-disable-next-line
       validateFields([hostName !== '', specification !== '']);
     }
