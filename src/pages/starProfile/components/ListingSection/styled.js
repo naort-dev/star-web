@@ -32,12 +32,15 @@ ListingStyled.VideoItemWrapper = styled.div`
 
 `;
 
-ListingStyled.CommentsWrapper = styled.div`
+ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   display: ${props => (props.visible ? 'block' : 'none')};
   padding: 0 15px;
   .comment-item {
     padding-bottom: 10px;
     display: block;
+  }
+  @media(min-width: 832px) {
+    width: 312px;
   }
 `;
 
@@ -56,6 +59,9 @@ ListingStyled.ContentItem = styled.li`
     span {
       cursor: pointer;
     }
+  }
+  @media(min-width: 1280px) {
+    padding-right: 32px;
   }
 `;
 

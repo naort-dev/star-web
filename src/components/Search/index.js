@@ -254,7 +254,7 @@ class Search extends React.Component {
             value={this.state.searchText}
             onClick={this.showSuggestions}
             onChange={this.handleSearchChange}
-            onKeyUp={this.handleSearchSubmit}
+            // onKeyUp={this.handleSearchSubmit}
           />
           {
             this.state.searchText.length >= 3 ?
