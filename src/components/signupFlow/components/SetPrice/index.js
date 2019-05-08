@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { iosPriceFinder } from '../../../../utils/dataformatter'
+import { iosPriceFinder, numberToCommaFormatter, commaToNumberFormatter } from '../../../../utils/dataformatter'
 import { TextInput } from '../../../TextField'
 import SetPriceWrapper from './styled';
-import { ReferralCode } from '../ReferralCode'
-import {convertedApplePrice} from '../../constants'
+import { ReferralCode } from '../ReferralCode';
+import {convertedApplePrice} from '../../constants';
+import { validatePromo } from '../../../../services';
 export default class SetPrice extends React.Component {
   constructor(props) {
     super(props);
@@ -16,76 +17,17 @@ export default class SetPrice extends React.Component {
     };
   }
 
-  saveFormEntries = (event, type) => {
-    this.setState({
-      [type]: {
-        ...this.state[type],
-        value: event.target.value,
-      },
-    });
-  };
-
-  checkPriceRequired = () => {
-    const pattern = /^[0-9]*$/;
-    const priceEmpty = !this.state.price.value
-    if (priceEmpty) {
-      const priceMsg = "Price can't be blank";
-      this.setState({
-        price: {
-          ...this.state.price,
-          message: priceMsg
-        }
-      });
-      return false;
-    }
-    if (!pattern.test(this.state.price.value)) {
-      this.setState({
-        price: {
-          ...this.state.price,
-          message: 'Price must be a number'
-        }
-      });
-      return false;
-    }
-    this.setState({
-      price: {
-        ...this.state.price,
-        message: '',
-        isValid: true
-      },
-    });
-    return true;
-  };
-  checkReferralCodeRequired = () => {
-    const priceEmpty = !this.state.referralCode.value
-    if (priceEmpty) {
-      const referralCodeMsg = "Referral code can't be blank";
-      this.setState({
-        referralCode: {
-          ...this.state.referralCode,
-          message: referralCodeMsg
-        }
-      });
-      return false;
-    }
-    this.setState({
-      referralCode: {
-        ...this.state.referralCode,
-        message: '',
-        isValid: true
-      },
-    });
-    return true;
-  };
-
   onSubmit = () => {
+    const priceValue = commaToNumberFormatter(this.state.price.value);
     const priceDetails = {
-      rate: this.state.price.value,
-      in_app_price: iosPriceFinder(this.state.price.value, this.props.inAppPriceList),
+      rate: priceValue,
+      in_app_price: iosPriceFinder(priceValue, this.props.inAppPriceList),
       referral_code: this.state.referralCode.value,
     }
     if (this.checkPriceRequired()) {
-      if (parseInt(this.state.price.value) < 500 && this.state.confirmPrice) {
+      if (parseInt(priceValue) < 500 ) {
+        this.props.primaryButtonClick(priceDetails)
+      } else if(this.state.confirmPrice) {
         this.props.primaryButtonClick(priceDetails)
       } else {
         this.setState({
@@ -109,6 +51,88 @@ export default class SetPrice extends React.Component {
     })
   }
   
+  checkReferralCodeRequired = () => {
+    const priceEmpty = !this.state.referralCode.value
+    if (priceEmpty) {
+      const referralCodeMsg = "Referral code can't be blank";
+      this.setState({
+        referralCode: {
+          ...this.state.referralCode,
+          message: referralCodeMsg
+        }
+      });
+      return false;
+    }
+    
+    validatePromo(this.state.referralCode.value)
+              .then((success) => {
+                this.setState({ loader: false });
+                if (success) {
+                  this.setState({
+                    referralCode: {
+                      ...this.state.referralCode,
+                      message: '',
+                      isValid: true
+                    },
+                  });
+                }
+              })
+              .catch(() => {
+                const referralCodeMsg = "Please enter a valid referral code";
+                this.setState({
+                  referralCode: {
+                    ...this.state.referralCode,
+                    message: referralCodeMsg
+                  }
+                });
+                return false;
+              });
+   
+    return true;
+  };
+
+  checkPriceRequired = () => {
+    // const pattern = /^[0-9]*$/;
+    const pattern = /^[0-9]\d*(,\d+)?$/;
+    const priceEmpty = !this.state.price.value
+    if (priceEmpty) {
+      const priceMsg = "Price can't be blank";
+      this.setState({
+        price: {
+          ...this.state.price,
+          message: priceMsg
+        }
+      });
+      return false;
+    }
+    if (!pattern.test(commaToNumberFormatter(this.state.price.value))) {
+      this.setState({
+        price: {
+          ...this.state.price,
+          message: 'Price must be a number'
+        }
+      });
+      return false;
+    }
+    this.setState({
+      price: {
+        ...this.state.price,
+        message: '',
+        isValid: true
+      },
+    });
+    return true;
+  };
+
+  saveFormEntries = (event, type) => {
+    this.setState({
+      [type]: {
+        ...this.state[type],
+        value: type === 'price' && event.target.value ? numberToCommaFormatter(commaToNumberFormatter(event.target.value)) : event.target.value,
+      },
+    });
+  };
+
   render() {
     const { props } = this;
     const { isReferred, confirmPrice } = this.state
@@ -140,7 +164,7 @@ export default class SetPrice extends React.Component {
             <TextInput
               error={!!this.state.price.message}
               placeholder={'Price'}
-              type="number"
+              type="text"
               name="price"
               value={this.state.price.value}
               onBlur={this.checkPriceRequired}
@@ -150,7 +174,7 @@ export default class SetPrice extends React.Component {
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-                {convertedApplePrice(this.state.price.value,this.props.inAppPriceList)}
+                {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
                 {this.state.referralCode.value ?
