@@ -26,6 +26,7 @@ export const Container = styled(Layout)`
   }
   .heading {
     font-size: 34px;
+    font-family: Gilroy;
   }
   .button {
     font-size: 18px;
