@@ -10,7 +10,7 @@ export const Layout = styled.section`
     right: 40px;
     top: 34px;
     font-size: 50px;
-    z-index: 1000001;
+    z-index: 1;
     ${media.webView} {
       top: 49px;
     }
