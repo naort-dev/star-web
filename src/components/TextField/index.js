@@ -14,8 +14,13 @@ export const TextInput = props => (
     id={props.id}
     required={props.required}
     onBlur={props.onBlur}
-    label={props.label} 
-    classes={{root:"MuiFormControl"}}
+    label={props.label}
+    classes={{
+      root: 'MuiFormControl',
+    }}
+    InputProps={{ classes: { input: 'input-field' } }}
+    InputLabelProps={{ classes: { root: 'float-label' } }}
+    onClick={props.onClick}
   />
 );
 
@@ -30,6 +35,8 @@ TextInput.propTypes = {
   id: PropTypes.string,
   required: PropTypes.bool,
   onBlur: PropTypes.func,
+  onClick: PropTypes.func,
+  label: PropTypes.string,
 };
 
 TextInput.defaultProps = {
@@ -41,6 +48,8 @@ TextInput.defaultProps = {
   fullWidth: false,
   id: '',
   required: false,
-  onBlur: () => { },
-  onChange: () => { }
+  onBlur: () => {},
+  onChange: () => {},
+  onClick: () => {},
+  label: '',
 };

@@ -19,7 +19,7 @@ function FormContainer(props) {
     userName: '',
     relationshipValue: '',
     specification: '',
-    date: moment(),
+    date: null,
     eventName: '',
     validSelf: false,
   });
@@ -29,6 +29,8 @@ function FormContainer(props) {
   }));
   const isMobile = getMobileOperatingSystem();
   const [isDisabled, buttonDisabled] = useState(true);
+  const [stepOne, validateStepOne] = useState(true);
+  const [stepTwo, validateStepTwo] = useState(true);
 
   useEffect(() => {
     // eslint-disable-next-line
@@ -79,6 +81,12 @@ function FormContainer(props) {
     } else if (templateType === 6 || templateType === 7) {
       // eslint-disable-next-line
       validateFields([hostName !== '', specification !== '']);
+    } else if (templateType === 3 || templateType === 4 || templateType === 5) {
+      if (props.pageCount === 0) {
+        validateStepOne(![hostName !== ''].every(condition => condition));
+      } else if (props.pageCount === 1) {
+        validateStepTwo(![specification !== ''].every(condition => condition));
+      }
     }
   };
 
@@ -127,9 +135,9 @@ function FormContainer(props) {
     updateUserToMyself,
   };
 
-  const validateFields = fileds => {
-    const isVaild = fileds.every(condition => condition);
-    buttonDisabled(!isVaild);
+  const validateFields = fields => {
+    const isValid = fields.every(condition => condition);
+    buttonDisabled(!isValid);
   };
 
   const PageDetailsArray = RequestTemplates(
@@ -144,7 +152,7 @@ function FormContainer(props) {
     let type;
     const result = props.detailList.filter(item => {
       if (item.id === occasion.key) {
-        type = item.type;
+        type = item.template_type;
         return item;
       }
     });
@@ -155,13 +163,27 @@ function FormContainer(props) {
       eventName: result ? result[0].title : '',
       specification: '',
       userName: '',
-      date: moment(),
+      date: null,
     });
   };
   const nextButtonClick = () => {
     props.pageCountHandler(props.pageCount + 1);
     if (props.pageCount === PageDetailsArray.length) {
       props.submitClick();
+    }
+  };
+
+  const checkButtonDisabled = () => {
+    if (FormData.user === 'someoneElse' && isMobile) {
+      if (props.pageCount === 0) {
+        return stepOne;
+      } else if (props.pageCount === 1) {
+        return stepTwo;
+      } else {
+        return false;
+      }
+    } else {
+      return isDisabled;
     }
   };
   return (
@@ -183,7 +205,8 @@ function FormContainer(props) {
         <Button
           className="continue-button"
           onClick={() => nextButtonClick()}
-          isDisabled={isDisabled}
+          disabled={checkButtonDisabled()}
+          isDisabled={checkButtonDisabled()}
         >
           Continue
         </Button>

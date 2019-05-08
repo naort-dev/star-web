@@ -22,20 +22,39 @@ Templates.InputWrapper = styled.div`
   }
   .select-material {
     width: 100%;
+    text-align: center;
+  }
+  .input-field {
+    color: #615195;
+    font-size: 22px;
+    font-family: Gilroy-Medium;
+    text-align: center;
+    padding: 6px 0 3px;
+  }
+  .float-label {
+    width: 100%;
+    text-align: center;
+    color: #aaa;
+    font-size: 18px;
+    font-family: Gilroy;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .float-label[data-shrink='true'] {
+    transform: translate(0, 1.5px) scale(0.7);
+    -webkit-transform-origin: 0 0;
+    width: 142.857143%;
   }
 `;
 Templates.Myself = styled.div`
-  width: 155px;
+  width: 100%;
   height: 20px;
-  font-family: Gilroy Regular;
+  font-family: Gilroy;
   font-size: 14px;
-  font-weight: 500;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.79;
-  letter-spacing: normal;
   text-align: center;
   color: #2f829c;
+  padding-top: 6px;
 `;
 Templates.Label = styled.div`
   color: #333333;
@@ -357,9 +376,12 @@ Templates.WrapsAudioInput = styled.div`
   display: flex;
   color: #2f839d;
   align-items: center;
-  padding-top: 9px;
+  justify-content: center;
+  padding-top: 19px;
   .recText {
     padding-left: 8px;
+    font-family: Gilroy;
+    font-size: 14px;
   }
 `;
 

@@ -44,7 +44,7 @@ function RequestTemplates(
     return (
       <Templates.InputWrapper>
         <TextInput
-          placeholder={placeholder}
+          label={placeholder}
           value={value}
           onChange={event => onChange(event.target.value, state, tobeValidate)}
         />
@@ -61,15 +61,15 @@ function RequestTemplates(
             (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
-                <AudioRecorder
-                  key="for"
-                  target="for"
-                  audioRecorder={audioRecorder}
-                  saveAudioRecording={(target, audio) =>
-                    saveAudioRecording(target, audio)
-                  }
-                  resetRecording={target => resetRecording(target)}
-                />
+                  <AudioRecorder
+                    key="for"
+                    target="for"
+                    audioRecorder={audioRecorder}
+                    saveAudioRecording={(target, audio) =>
+                      saveAudioRecording(target, audio)
+                    }
+                    resetRecording={target => resetRecording(target)}
+                  />
                 <span className="recText">Pronounce Name</span>
               </Templates.WrapsAudioInput>
             )}
@@ -89,7 +89,9 @@ function RequestTemplates(
       <Templates.InputWrapper>
         <Templates.WrapsInput>
           <FormControl className="select-material">
-            <InputLabel htmlFor="reln-helper">{placeholder}</InputLabel>
+            <InputLabel htmlFor="reln-helper" classes={{ root: 'float-label' }}>
+              {placeholder}
+            </InputLabel>
             <Select
               value={value}
               onChange={event =>
@@ -98,6 +100,7 @@ function RequestTemplates(
               inputProps={{
                 id: 'reln-helper',
               }}
+              classes={{ select: 'input-field' }}
             >
               <MenuItem value="">
                 <em>None</em>
@@ -112,15 +115,15 @@ function RequestTemplates(
       </Templates.InputWrapper>
     );
   };
+
   const getDatePicker = (placeholder, date, onChange) => {
     return (
       <Templates.InputWrapper>
-        <Templates.Label>{placeholder}</Templates.Label>
         <Templates.WrapsInput>
           <DatePicker
             dateFormat="LL"
             withPortal
-            customInput={<Templates.Input />}
+            customInput={<TextInput label={placeholder} />}
             popperPlacement="bottom"
             selected={date}
             onChange={dt => onChange(dt, 'date')}
