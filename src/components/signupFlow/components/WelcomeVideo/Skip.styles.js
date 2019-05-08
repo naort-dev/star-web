@@ -20,8 +20,8 @@ export const Container = styled(Layout)`
     font-size: 18px;
     font-family: Gilroy;
     color: #555555;
-    padding-top: 26px;
-    padding-bottom: 56px;
+    padding-top: 20px;
+    padding-bottom: 48px;
     text-align: center;
   }
   .heading {
@@ -29,13 +29,14 @@ export const Container = styled(Layout)`
   }
   .button {
     font-size: 18px;
-    padding: 10px 50px;
+    padding: 7px 55px;
+    font-family: Gilroy-Medium;
   }
   .whiteBtn {
-    margin-top: 10px;
+    margin-top: 16px;
     color: #2f839d;
     background: #fff;
-    padding: 10px 80px;
+    padding: 7px 80px;
   }
 `;
 

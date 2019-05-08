@@ -80,6 +80,7 @@ AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
     width: 300px;
     height: 300px;
     order: 2;
+    margin-top: -22px;
   }
 `;
 
@@ -130,7 +131,6 @@ AvatarContainer.Name = styled.span`
   @media(min-width: 832px) {
     line-height: 1.41;
     font-size: 17px;
-    font-family: Gilroy-Bold;
     width: calc(100% - 50px);
     text-align: left;
   }
@@ -193,6 +193,7 @@ AvatarContainer.Content = styled(Link)`
         font-size: 18px;
         display: block;
         width: 100%;
+        margin-top: -6px;
       }
     }
     &.secondary {

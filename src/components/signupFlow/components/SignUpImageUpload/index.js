@@ -262,7 +262,7 @@ class SignUpImageUpload extends React.Component {
             <UploadContainer.ButtonWrapper>
               <UploadContainer.ContinueButton
                 type="submit"
-                onClick={this.props.continueClickCallback}
+                onClick={() => this.props.continueClickCallback(this.state.selectedProfessions)}
               >
                 Continue
               </UploadContainer.ContinueButton>
