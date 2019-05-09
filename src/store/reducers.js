@@ -3,6 +3,8 @@ import { LOGIN } from './shared/actions/login';
 
 import config from './shared/reducers/config';
 import session from './shared/reducers/session';
+import featuredStars from '../pages/landingNew/reducers/featuredStars';
+import trendingStars from '../pages/landingNew/reducers/trendingStars';
 import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
 import celebDetails from '../pages/starProfile/reducers/celebDetails';
@@ -44,6 +46,8 @@ import groupListing from '../pages/groupListingNew/reducers';
 const appReducer = combineReducers({
   config,
   session,
+  featuredStars,
+  trendingStars,
   celebList,
   professionsList,
   groupTypes,

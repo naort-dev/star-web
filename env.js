@@ -1,7 +1,7 @@
 /* eslint-disable */
 (function (window) {
   const config = {
-  API_URL: 'https://app.staging.starsona.com/api/v1/',
+  API_URL: 'https://app.staging.starsona.com/api/',
   SERVER_URL: 'https://app.staging.starsona.com/',
   BRANCH_IO_KEY: 'key_test_jns5cyvoqDZSrm9kudg6Aikpxzmkoeqs',
   STRIPE_PUBLISH_KEY: 'pk_test_RBSzULFNLChp2ACqsYRkMJPV',

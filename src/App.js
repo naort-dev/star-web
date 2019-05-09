@@ -17,7 +17,7 @@ import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
 import { ComponentLoading } from './components/ComponentLoading';
-import { Landing } from './pages/landing';
+import { Landing } from './pages/landingNew';
 import { Login } from './pages/login';
 import { Favourites } from './pages/favourites';
 import { Requests } from './pages/requests';
@@ -122,6 +122,7 @@ class App extends React.Component {
                 <Route path="/twitter-login" component={TwitterLogin} />
                 <Route exact path="/group-listing/:id" component={GroupListing} />
                 <Route exact path="/video/:id" component={Landing} />
+                <Route exact path="/browse-stars" component={Landing} />
 
                 {/* logged in areas */}
 

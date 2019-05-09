@@ -15,8 +15,8 @@ class Sidebar extends React.Component {
 
   selectCategory = (label, id, category) => {
     if (label === 'featured') this.setState({ showSubCategory: false });
-    if (this.props.history && this.props.history.location.pathname !== '/') {
-      this.props.history.push('/');
+    if (this.props.history && this.props.history.location.pathname !== '/browse-stars') {
+      this.props.history.push('/browse-stars');
     }
     if (this.props.selectedCategory === id && category === 'Stars') {
       this.setState({ showSubCategory: !this.state.showSubCategory});
