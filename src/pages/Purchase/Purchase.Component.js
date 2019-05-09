@@ -48,6 +48,21 @@ class Purchase extends Component {
   }
   componentWillUnmount() {
     this.props.pageCountHandler(0);
+    this.props.updateBookingData({
+      templateType: null,
+      relationship: [],
+      user: 'someoneElse',
+      enableAudioRecorder: false,
+      hostName: '',
+      userName: '',
+      relationshipValue: '',
+      specification: '',
+      date: null,
+      eventName: '',
+      validSelf: false,
+      occasion: {},
+    });
+    this.props.clearAll();
   }
 
   getBodyComponent = () => {
@@ -144,6 +159,10 @@ class Purchase extends Component {
       this.setState({
         stepCount: this.state.stepCount - 1,
       });
+    } else if (this.props.pageCount !== 0 && this.state.stepCount !== 2) {
+      this.setState({
+        stepCount: this.state.stepCount - 1,
+      });
     } else {
       this.props.pageCountHandler(this.props.pageCount - 1);
     }
@@ -218,6 +237,7 @@ Purchase.propTypes = {
   toggleLogin: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   updateToast: PropTypes.func.isRequired,
+  clearAll: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

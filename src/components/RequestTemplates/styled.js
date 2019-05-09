@@ -16,9 +16,8 @@ Templates.InputWrapper = styled.div`
   @media (min-width: 768px) {
     margin-top: 5px;
     align-items: flex-start;
-    width: ${props => (props.fullWidth ? '100%' : '50%')};
+    width: ${props => (props.fullWidth ? '100%' : '48%')};
     padding-bottom: 30px;
-    padding-right: 18px;
   }
   .select-material {
     width: 100%;
@@ -253,11 +252,10 @@ Templates.NoVideoButton = styled.button`
 `;
 
 Templates.UploadWrapper = styled.div`
-    position: relative;
-    overflow: hidden;
-    display: inline-block;
-    cursor: pointer;
-  }
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+  cursor: pointer;
 `;
 
 Templates.UploadInput = styled.input`
@@ -405,4 +403,5 @@ export { Templates };
 export const FlexBox = styled.section`
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 `;

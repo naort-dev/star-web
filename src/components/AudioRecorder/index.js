@@ -101,23 +101,30 @@ export default class AudioRecorder extends React.Component {
               this.props.audioRecorder.recorded[target].recordedUrl) ? (
               <React.Fragment>
                 {!this.state.play || this.audio.ended ? (
-                  <AudioRecorderDiv.PlayButton
-                    onClick={() => this.playRecording(target)}
-                  >
-                    Play Back
-                  </AudioRecorderDiv.PlayButton>
+                  <React.Fragment>
+                    <AudioRecorderDiv.PlayButton
+                      onClick={() => this.playRecording(target)}
+                    >
+                      Play Back
+                    </AudioRecorderDiv.PlayButton>
+                    |
+                  </React.Fragment>
                 ) : (
-                  <AudioRecorderDiv.PauseButton
-                    onClick={() => this.pauseRecording()}
-                  >
-                    Record
-                  </AudioRecorderDiv.PauseButton>
+                  <React.Fragment>
+                    <AudioRecorderDiv.PauseButton
+                      onClick={() => this.pauseRecording()}
+                    >
+                      Stop
+                    </AudioRecorderDiv.PauseButton>
+                    |
+                  </React.Fragment>
                 )}
                 <AudioRecorderDiv.Rerecord
                   onClick={() => this.reRecording(target)}
                 >
                   Record
-                </AudioRecorderDiv.Rerecord>
+                </AudioRecorderDiv.Rerecord>{' '}
+                |
                 <AudioRecorderDiv.CloseButton
                   onClick={() => this.deleteRecording(target)}
                 >
@@ -142,6 +149,15 @@ export default class AudioRecorder extends React.Component {
 
   render() {
     const target = this.user;
-    return <AudioRecorderDiv>{this.renderAudio(target)}</AudioRecorderDiv>;
+    return (
+      <AudioRecorderDiv
+        recorded={
+          this.props.audioRecorder.recorded[target] &&
+          this.props.audioRecorder.recorded[target].recordedUrl
+        }
+      >
+        {this.renderAudio(target)}
+      </AudioRecorderDiv>
+    );
   }
 }

@@ -11,6 +11,7 @@ import {
 import {
   resetRecording,
   saveAudioRecording,
+  clearAll,
 } from '../../store/shared/actions/audioRecorder';
 import {
   fetchOccasionlist,
@@ -74,6 +75,9 @@ function mapDispatchToProps(dispatch) {
     },
     toggleLogin: state => dispatch(toggleLogin(state)),
     updateToast: toastObj => dispatch(updateToast(toastObj)),
+    clearAll: () => {
+      dispatch(clearAll());
+    },
   };
 }
 export default connect(

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 const AudioRecorderDiv = styled.div`
   height: 100%;
   position: relative;
+  width: ${props => props.recorded && '100%'};
 `;
 AudioRecorderDiv.Icon = styled(FontAwesomeIcon)`
   flex: 1;
@@ -16,17 +17,9 @@ AudioRecorderDiv.Button = styled.div`
 `;
 
 AudioRecorderDiv.Rerecord = styled.div`
-  width: 100px;
   height: 20px;
   font-family: Gilroy-Semibold;
   font-size: 14px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.79;
-  letter-spacing: normal;
-  text-align: center;
-  order: 1;
 `;
 
 AudioRecorderDiv.TextButton = styled.button`
@@ -73,18 +66,9 @@ AudioRecorderDiv.UploadInput = styled.input`
 `;
 
 AudioRecorderDiv.CloseButton = styled.div`
-  width: 100px;
   height: 20px;
   font-family: Gilroy-Semibold;
   font-size: 14px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.79;
-  letter-spacing: normal;
-  text-align: center;
-  color: #2f829c;
-  order: 2;
 `;
 
 AudioRecorderDiv.Audio = styled.audio`
@@ -96,37 +80,20 @@ AudioRecorderDiv.Audio = styled.audio`
 
 AudioRecorderDiv.ControlWrapper = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
+  justify-content: space-between;
 `;
 
 AudioRecorderDiv.PlayButton = styled.div`
-  width: 100px;
   height: 20px;
   font-family: Gilroy-Semibold;
   font-size: 14px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.79;
-  letter-spacing: normal;
-  text-align: center;
   color: #2f829c;
-  order: 0;
 `;
 
 AudioRecorderDiv.PauseButton = styled.div`
-  width: 100px;
   height: 20px;
   font-family: Gilroy-Semibold;
   font-size: 14px;
-  font-weight: 600;
-  font-style: normal;
-  font-stretch: normal;
-  line-height: 1.79;
-  letter-spacing: normal;
-  text-align: center;
   color: #2f829c;
 `;
 

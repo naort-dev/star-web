@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Select from '@material-ui/core/Select';
@@ -21,8 +20,8 @@ function RequestTemplates(
   saveAudioRecording,
   resetRecording,
   handleInputChange,
-  updateUserToMyself
-
+  updateUserToMyself,
+  audioObj,
 ) {
   const isMobile = getMobileOperatingSystem();
   const videoForValue = () => {
@@ -45,12 +44,14 @@ function RequestTemplates(
     tobeValidate,
     fullWidth,
   }) => {
+    const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
       <Templates.InputWrapper fullWidth={fullWidth}>
         <TextInput
           label={placeholder}
           value={value}
           onChange={event => onChange(event.target.value, state, tobeValidate)}
+          InputProps={{ classes: { input: 'input-field' } }}
         />
         {bookingData.user === 'someoneElse' && forSelf && value === '' && (
           <Templates.Myself onClick={updateUserToMyself}>
@@ -66,15 +67,17 @@ function RequestTemplates(
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
                 <AudioRecorder
-                  key="for"
-                  target="for"
+                  key={targetNM}
+                  target={targetNM}
                   audioRecorder={audioRecorder}
                   saveAudioRecording={(target, audio) =>
                     saveAudioRecording(target, audio)
                   }
                   resetRecording={target => resetRecording(target)}
                 />
-                <span className="recText">Pronounce Name</span>
+                {!(audioObj[targetNM] && audioObj[targetNM].recordedUrl) && (
+                  <span className="recText">Pronounce Name</span>
+                )}
               </Templates.WrapsAudioInput>
             )}
         </React.Fragment>
@@ -105,9 +108,6 @@ function RequestTemplates(
             }}
             classes={{ select: 'input-field' }}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
             {optionItems}
             <MenuItem value="otherRelation" key="otherRelation">
               Other
@@ -125,7 +125,13 @@ function RequestTemplates(
           <DatePicker
             dateFormat="LL"
             withPortal
-            customInput={<TextInput label={placeholder} />}
+            customInput={
+              <TextInput
+                label={placeholder}
+                InputProps={{ classes: { input: 'input-field' } }}
+              />
+            }
+            customInputRef="dt"
             popperPlacement="bottom"
             selected={date}
             onChange={dt => onChange(dt, 'date')}

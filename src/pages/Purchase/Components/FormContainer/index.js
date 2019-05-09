@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import Dropdown from '../../../../components/Dropdown';
 import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
@@ -20,72 +19,6 @@ function FormContainer(props) {
   const [isDisabled, buttonDisabled] = useState(true);
   const [stepOne, validateStepOne] = useState(true);
   const [stepTwo, validateStepTwo] = useState(true);
-  
-  useEffect(() => {
-    // eslint-disable-next-line
-    validateOnMyself();
-  }, [FormData.validSelf]);
-
-  const validationTypeCheck = () => {
-    if (
-      FormData.user === 'Myself' ||
-      (FormData.user === 'someoneElse' && !isMobile)
-    ) {
-      // eslint-disable-next-line
-      validateOnMyself();
-    } else if (FormData.user === 'someoneElse' && isMobile) {
-      // eslint-disable-next-line
-      validateOnSomeoneElseMobile();
-    }
-  };
-
-  useEffect(() => {
-    validationTypeCheck();
-  }, [FormData.hostName, FormData.specification, FormData.templateType]);
-
-  const validateOnMyself = () => {
-    const { hostName, specification, templateType } = {
-      // eslint-disable-next-line
-      ...bookingData,
-    };
-    if (templateType === 1 || templateType === 2) {
-      // eslint-disable-next-line
-      validateFields([hostName !== '']);
-    } else if (
-      templateType === 3 ||
-      templateType === 4 ||
-      templateType === 5 ||
-      templateType === 6 ||
-      templateType === 7
-    ) {
-      // eslint-disable-next-line
-      validateFields([hostName !== '', specification !== '']);
-    }
-  };
-
-  const validateOnSomeoneElseMobile = () => {
-    const { hostName, specification, templateType } = {
-      // eslint-disable-next-line
-      ...bookingData,
-    };
-    if (templateType === 1 || templateType === 2) {
-      // eslint-disable-next-line
-      validateStepOne(![hostName !== ''].every(condition => condition));
-      validateStepTwo(false);
-    } else if (templateType === 6 || templateType === 7) {
-      // eslint-disable-next-line
-      validateStepOne(
-        ![hostName !== '', specification !== ''].every(condition => condition),
-      );
-      validateStepTwo(false);
-    } else if (templateType === 3 || templateType === 4 || templateType === 5) {
-      if (props.pageCount === 0) {
-        validateStepOne(![hostName !== ''].every(condition => condition));
-      } else if (props.pageCount === 1) {
-        validateStepTwo(![specification !== ''].every(condition => condition));
-      }
-    }
-  };
 
   const updateUserToMyself = () => {
     setFormData({
@@ -103,6 +36,11 @@ function FormContainer(props) {
       enableAudioRecorder: true,
       [type]: data,
     });
+    if (type === 'hostName') {
+      props.resetRecording('for');
+    } else if (type === 'userName') {
+      props.resetRecording('from');
+    }
   };
 
   const validateFields = fields => {
@@ -119,6 +57,7 @@ function FormContainer(props) {
     props.resetRecording,
     handleInputChange,
     updateUserToMyself,
+    props.audio,
   );
 
   const onSelectOccasion = occasion => {
@@ -160,6 +99,64 @@ function FormContainer(props) {
     }
     return isDisabled;
   };
+
+  const validateOnMyself = () => {
+    const { hostName, specification, templateType } = {
+      ...bookingData,
+    };
+    if (templateType === 1 || templateType === 2) {
+      validateFields([hostName !== '']);
+    } else if (
+      templateType === 3 ||
+      templateType === 4 ||
+      templateType === 5 ||
+      templateType === 6 ||
+      templateType === 7
+    ) {
+      validateFields([hostName !== '', specification !== '']);
+    }
+  };
+
+  const validateOnSomeoneElseMobile = () => {
+    const { hostName, specification, templateType } = {
+      ...bookingData,
+    };
+    if (templateType === 1 || templateType === 2) {
+      validateStepOne(![hostName !== ''].every(condition => condition));
+      validateStepTwo(false);
+    } else if (templateType === 6 || templateType === 7) {
+      validateStepOne(
+        ![hostName !== '', specification !== ''].every(condition => condition),
+      );
+      validateStepTwo(false);
+    } else if (templateType === 3 || templateType === 4 || templateType === 5) {
+      if (props.pageCount === 0) {
+        validateStepOne(![hostName !== ''].every(condition => condition));
+      } else if (props.pageCount === 1) {
+        validateStepTwo(![specification !== ''].every(condition => condition));
+      }
+    }
+  };
+
+  const validationTypeCheck = () => {
+    if (
+      FormData.user === 'Myself' ||
+      (FormData.user === 'someoneElse' && !isMobile)
+    ) {
+      validateOnMyself();
+    } else if (FormData.user === 'someoneElse' && isMobile) {
+      validateOnSomeoneElseMobile();
+    }
+  };
+
+  useEffect(() => {
+    validateOnMyself();
+  }, [FormData.validSelf]);
+
+  useEffect(() => {
+    validationTypeCheck();
+  }, [FormData.hostName, FormData.specification, FormData.templateType]);
+
   return (
     <Layout>
       <FlexCenter>
@@ -200,6 +197,7 @@ FormContainer.propTypes = {
   detailList: PropTypes.array.isRequired,
   submitClick: PropTypes.func.isRequired,
   updateBookingData: PropTypes.func.isRequired,
+  audio: PropTypes.object.isRequired,
 };
 
 export default connect(
@@ -208,6 +206,7 @@ export default connect(
       ? state.occasionList.bookingData
       : {},
     user_name: state.userDetails.settings_userDetails.stageName,
+    audio: state.audioRecorder.recorded,
   }),
   null,
 )(FormContainer);
