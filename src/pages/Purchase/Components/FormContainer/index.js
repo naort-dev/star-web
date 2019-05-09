@@ -37,7 +37,7 @@ function FormContainer(props) {
     validateOnMyself();
   }, [FormData.validSelf]);
 
-  useEffect(() => {
+  const validationTypeCheck = () => {
     if (
       FormData.user === 'Myself' ||
       (FormData.user === 'someoneElse' && !isMobile)
@@ -48,7 +48,11 @@ function FormContainer(props) {
       // eslint-disable-next-line
       validateOnSomeoneElseMobile();
     }
-  }, [FormData.hostName, FormData.specification]);
+  };
+
+  useEffect(() => {
+    validationTypeCheck();
+  }, [FormData.hostName, FormData.specification, FormData.templateType]);
 
   const validateOnMyself = () => {
     const { hostName, specification, templateType } = {
@@ -77,7 +81,8 @@ function FormContainer(props) {
     };
     if (templateType === 1 || templateType === 2) {
       // eslint-disable-next-line
-      validateFields([hostName !== '']);
+      validateStepOne(![hostName !== ''].every(condition => condition));
+      validateStepTwo(false);
     } else if (templateType === 6 || templateType === 7) {
       // eslint-disable-next-line
       validateFields([hostName !== '', specification !== '']);

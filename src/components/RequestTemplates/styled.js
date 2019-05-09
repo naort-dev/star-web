@@ -107,9 +107,11 @@ Templates.WrapsInput = styled.div`
     justify-content: flex-end;
     align-items: flex-start;
   }
-  .select-label {
-    /* position: absolute;
-    top: 8px; */
+  .react-datepicker__input-container {
+    width: 100%;
+    .MuiFormControl {
+      width: 100%;
+    }
   }
 `;
 
