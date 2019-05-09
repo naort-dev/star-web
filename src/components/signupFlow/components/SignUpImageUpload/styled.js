@@ -191,6 +191,9 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   max-height: 620px;
   height: 100%;
   top: 0;
+  ${UploadContainer.Heading} {
+    padding-top: 52px;
+  }
 `;
 
 UploadContainer.BrowseCategoryContainer = styled.div`
