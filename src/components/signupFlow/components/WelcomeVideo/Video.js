@@ -31,6 +31,7 @@ const Video = props => {
   );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
+  const [recordingTime, setRecordingTime] = useState('01:00');
 
   const mediaHandler = btnLabel => {
     props.recordTrigger();
@@ -50,6 +51,7 @@ const Video = props => {
       mediaHandler('Start Recording', false);
       stopHandler(false);
     } else if (buttonLabel === 'Stop') {
+      setRecordingTime('01:00');
       mediaHandler('Save & Continue', true);
       stopHandler(true);
     } else if (buttonLabel === 'Save & Continue') {
@@ -73,6 +75,28 @@ const Video = props => {
     errorHandler(true);
   };
 
+  const renderTimeHeader = () => {
+    if (props.recordState) {
+      return 'Remaining Time';
+    } else if (props.videoSrc) {
+      return 'Welcome Video Length';
+    }
+    return 'Maximum Time'
+  }
+
+  const renderTime = () => {
+    if (props.recordState) {
+      return recordingTime;
+    } else if (props.videoSrc) {
+      return props.recordedTime;
+    }
+    return '01:00'
+  }
+
+  const getRecordTime = (recordingTime) => {
+    setRecordingTime(recordingTime);
+  }
+
   return (
     <Layout>
       {checkMediaRecorderSupport() && (
@@ -87,6 +111,7 @@ const Video = props => {
               recordTrigger={props.recordTrigger}
               errorHandler={errorHandlerCallback}
               forceStop={isStop}
+              getRecordTime={getRecordTime}
               startStreamingCallback={startStreaming}
             />
           </VideoContainer>
@@ -94,8 +119,16 @@ const Video = props => {
             {!error && (
               <React.Fragment>
                 <TimeSpan>
-                  <span className="text">Maximum Time</span>
-                  <span className="time">01:00</span>
+                  <span className="text">
+                    {
+                      renderTimeHeader()
+                    }
+                  </span>
+                  <span className="time">
+                    {
+                      renderTime()
+                    }
+                  </span>
                 </TimeSpan>
                 <h1>What you should say?</h1>
                 <QuestionBuilder questionsList={questionsVideo()} />
@@ -170,6 +203,7 @@ Video.propTypes = {
 
 Video.defaultProps = {
   videoSrc: '',
+  recordedTime: '',
   videoUploaded: false,
   skipCallback: () => {},
   setVideoUploadedFlag: () => {},
@@ -180,7 +214,9 @@ Video.defaultProps = {
 function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
+    recordedTime: state.commonReducer.recordedTime,
     videoSrc: state.commonReducer.videoSrc,
+    recordState: state.commonReducer.shouldRecord,
     videoUploaded: state.occasionList.videoUploaded,
   };
 }
@@ -189,8 +225,8 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (videoSrc, superBuffer) => {
-      dispatch(updateMediaStore(videoSrc, superBuffer));
+    updateMediaStore: (payload) => {
+      dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {
       dispatch(playPauseMedia());
