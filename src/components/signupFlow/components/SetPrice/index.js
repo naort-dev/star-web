@@ -95,8 +95,7 @@ export default class SetPrice extends React.Component {
   };
 
   checkPriceRequired = () => {
-    // const pattern = /^[0-9]*$/;
-    const pattern = /^[0-9]\d*(,\d+)?$/;
+    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/;
     const priceEmpty = !this.state.price.value
     if (priceEmpty) {
       const priceMsg = "Price can't be blank";
@@ -108,7 +107,7 @@ export default class SetPrice extends React.Component {
       });
       return false;
     }
-    if (!pattern.test(commaToNumberFormatter(this.state.price.value))) {
+    if (pattern.test(commaToNumberFormatter(this.state.price.value))) {
       this.setState({
         price: {
           ...this.state.price,
@@ -128,12 +127,23 @@ export default class SetPrice extends React.Component {
   };
 
   saveFormEntries = (event, type) => {
+    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
+    if(type==='price' && event.target.value) {
+      this.setState({
+        [type]: {
+          ...this.state[type],
+          value: pattern.test(commaToNumberFormatter(event.target.value)) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value)) : this.state.price.value,
+        },
+      });
+     console.log(pattern.test(commaToNumberFormatter(this.state.price.value)));
+    } else {
     this.setState({
       [type]: {
         ...this.state[type],
-        value: type === 'price' && event.target.value ? numberToCommaFormatter(commaToNumberFormatter(event.target.value)) : event.target.value,
+        value: event.target.value,
       },
     });
+  }
   };
 
   render() {
@@ -180,7 +190,7 @@ export default class SetPrice extends React.Component {
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-              Converted Apple Price:<b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.
+              Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
