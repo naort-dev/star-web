@@ -28,7 +28,7 @@ export default class Landing extends React.Component {
     if (this.props.isSignup && !this.props.isLoggedIn) {
       this.props.toggleSignup(true);
     }
-    if (this.props.location.pathname === '/' || this.props.isSignup) {
+    if (this.props.location.pathname === '/browse-stars' || this.props.isSignup) {
       switch (this.props.filters.selectedTab) {
         case 'Stars':
           if (!this.props.celebList.data.length ||
@@ -65,7 +65,7 @@ export default class Landing extends React.Component {
     const selectedVideoTypeChange = this.props.filters.selectedVideoType !== nextProps.filters.selectedVideoType;
     const selectedVideoDateChange = this.props.filters.selectedVideoDate !== nextProps.filters.selectedVideoDate;
     const tabChange = this.props.filters.selectedTab !== nextProps.filters.selectedTab;
-    const locationChange = this.props.location.pathname !== nextProps.location.pathname && nextProps.location.pathname === '/';
+    const locationChange = this.props.location.pathname !== nextProps.location.pathname && nextProps.location.pathname === '/browse-stars';
     if (searchParamChange || lowPriceChange || highPriceChange || sortValueChange || selectedVideoTypeChange || selectedVideoDateChange || locationChange ) {
       if (nextProps.filters.selectedTab === 'Videos') {
         if (searchParamChange) {
@@ -245,7 +245,7 @@ export default class Landing extends React.Component {
           <Switch>
             <Route
               exact
-              path="/(signUp|)/"
+              path="/(signUp|browse-stars)/"
               render={() => (
                 <LandingStyled.mainSection menuActive={this.state.menuActive}>
                   <div>
