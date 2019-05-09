@@ -76,8 +76,10 @@ UploadContainer.CategoriesWrapper = styled.div`
   max-width: 440px;
   margin: 0 auto;
 
-  .praveen {
-    //display: none;
+  .select__value-container {
+    @media (max-width: 767px) {
+      padding: 9px 8px;
+    }
   }
   .select__clear-indicator {
     svg {
@@ -191,12 +193,22 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   max-height: 620px;
   height: 100%;
   top: 0;
+  ${UploadContainer.Heading} {
+    padding-top: 27px;
+    @media(min-width: 768px) {
+      padding-top: 52px;
+    }
+  }
 `;
 
 UploadContainer.BrowseCategoryContainer = styled.div`
   display: flex;
   padding: 50px 40px 20px 70px;
   align-items: flex-start;
+  flex-direction: column;
+  @media(min-width: 768px) {
+    flex-direction: row;
+  }
 
   .right-section {
     display: flex;
@@ -500,6 +512,7 @@ ImageUpload.CropperLightButton = styled.button`
 
 ImageUpload.ButtonWrapper = styled.div`
   margin-top: 20px;
+  display: flex;
 `;
 
 ImageUpload.VideoElement = styled.video`
