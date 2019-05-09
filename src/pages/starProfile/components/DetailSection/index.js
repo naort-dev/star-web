@@ -61,11 +61,16 @@ const DetailSection = (props) => {
   }
 
   const showMoreClick = () => {
-    console.log(descpContentRef.current.clientHeight, descpWrappRef.current.clientHeight)
-    if (descpContentRef.current.clientHeight > descpWrappRef.current.clientHeight) {
-      toggleShowMore(true)
-    }
+    toggleShowMore(true)
   }
+
+  useEffect(() => {
+    if (props.celebDetails.description && props.celebDetails.description !== '' && descpContentRef.current.clientHeight <= descpWrappRef.current.clientHeight) {
+      toggleShowMore(true)
+    } else {
+      toggleShowMore(false)
+    }
+  }, [props.celebDetails.description]);
 
   useEffect(() => {
     toggleFollowStatus(props.userDetails.is_follow);
