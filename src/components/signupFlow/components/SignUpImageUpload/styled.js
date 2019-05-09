@@ -60,7 +60,7 @@ UploadContainer.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 68px;
+  padding-top: 24px;
   @media (min-width: 768px) {
     font-size: 25px;
   }
@@ -111,9 +111,9 @@ UploadContainer.CategoriesWrapper = styled.div`
 `;
 
 UploadContainer.ButtonWrapper = styled.div`
-  margin-top: 62px;
+  margin-top: 56px;
   text-align: center;
-  margin-bottom: 75px;
+  margin-bottom: 10px;
 `;
 
 UploadContainer.ContinueButton = styled.button`
@@ -343,10 +343,9 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-size: cover;
   cursor: pointer;
   text-align: center;
-  margin-right: 11px;
 
   &:last-child {
-    margin-left: 11px;
+    margin-left: 22px;
     margin-right: 0;
   }
 `;

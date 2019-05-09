@@ -5,6 +5,7 @@ const AvatarStyled = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+  cursor: pointer;
 `;
 
 AvatarStyled.AvatarFace = styled.div`

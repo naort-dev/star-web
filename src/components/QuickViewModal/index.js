@@ -14,6 +14,7 @@ import { pipeSeparator, getStarName } from '../../utils/dataToStringFormatter';
 import RequestFlowPopup from '../RequestFlowPopup';
 import StarDrawer from '../StarDrawer';
 import PrimaryButton from '../PrimaryButton';
+import Loader from '../Loader';
 import VideoRender from '../VideoRender';
 import QuickViewStyled from './styled';
 
@@ -122,81 +123,88 @@ const QuickViewModal = (props) => {
       closePopUp={props.toggleQuickView(false)}
       smallPopup
     >
-      <QuickViewStyled>
-        <QuickViewStyled.VideoContainer>
-          {
-            showVideo ?
-              <VideoRender
-                variableWidth
-                variableHeight
-                noBorder
-                autoPlay
-                onVideoError={onVideoError}
-                videoSrc={props.celebDetails.profile_video}
-                cover="assets/images/default-cover.jpg"
-              />
-            : <QuickViewStyled.Avatar size={200} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
+      {
+        props.detailsLoading ?
+          <Loader />
+        :
+        <React.Fragment>
+          <QuickViewStyled>
+            <QuickViewStyled.VideoContainer>
+              {
+                showVideo ?
+                  <VideoRender
+                    variableWidth
+                    variableHeight
+                    noBorder
+                    autoPlay
+                    onVideoError={onVideoError}
+                    videoSrc={props.celebDetails.profile_video}
+                    cover="assets/images/default-cover.jpg"
+                  />
+                : <QuickViewStyled.Avatar size={200} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
 
-          }
-        </QuickViewStyled.VideoContainer>
-        <QuickViewStyled.Content>
-          <div>
-            <QuickViewStyled.Categories id="star-categories">
-              { pipeSeparator(props.celebDetails.profession_details, 'title') }
-            </QuickViewStyled.Categories>
-          </div>
-          <div>
-            <QuickViewStyled.StarName id="star-name">
-              { getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name) }
-            </QuickViewStyled.StarName>
-          </div>
-          {
-            props.celebDetails.average_response_time !== '' &&
-              <React.Fragment>
-                <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
-                <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
-              </React.Fragment>
-          }
-          <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
-            <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
-          </QuickViewStyled.HeartIcon>
-          <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to={`/${props.userDetails.user_id}`}>Read full profile</QuickViewStyled.MiniDescription>
-        </QuickViewStyled.Content>
-      </QuickViewStyled>
-      <QuickViewStyled.StarWrapper>
-        <StarDrawer starData={starData} />
-      </QuickViewStyled.StarWrapper>
-      <QuickViewStyled.ActionBar available={props.celebDetails.availability}>
-        <QuickViewStyled.ActionContent available={props.celebDetails.availability}>
-          <span>
-            <QuickViewStyled.Avatar size={80} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
-          </span>
-          <QuickViewStyled.Description>
+              }
+            </QuickViewStyled.VideoContainer>
+            <QuickViewStyled.Content>
+              <div>
+                <QuickViewStyled.Categories id="star-categories">
+                  { pipeSeparator(props.celebDetails.profession_details, 'title') }
+                </QuickViewStyled.Categories>
+              </div>
+              <div>
+                <QuickViewStyled.StarName id="star-name">
+                  { getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name) }
+                </QuickViewStyled.StarName>
+              </div>
+              {
+                props.celebDetails.average_response_time !== '' &&
+                  <React.Fragment>
+                    <QuickViewStyled.SubHeader>Average Response Time</QuickViewStyled.SubHeader>
+                    <QuickViewStyled.SubDescription>{props.celebDetails.average_response_time}</QuickViewStyled.SubDescription>
+                  </React.Fragment>
+              }
+              <QuickViewStyled.HeartIcon onClick={followCelebrityAction}>
+                <FontAwesomeIcon icon={followStatus ? faHeartSolid : faHeart} />
+              </QuickViewStyled.HeartIcon>
+              <QuickViewStyled.MiniDescription onClick={props.toggleQuickView(false)} to={`/${props.userDetails.user_id}`}>Read full profile</QuickViewStyled.MiniDescription>
+            </QuickViewStyled.Content>
+          </QuickViewStyled>
+          <QuickViewStyled.StarWrapper>
+            <StarDrawer starData={starData} />
+          </QuickViewStyled.StarWrapper>
+          <QuickViewStyled.ActionBar available={props.celebDetails.availability}>
+            <QuickViewStyled.ActionContent available={props.celebDetails.availability}>
+              <span>
+                <QuickViewStyled.Avatar size={80} imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}/>
+              </span>
+              <QuickViewStyled.Description>
+                {
+                  props.celebDetails.availability ? 
+                    <React.Fragment>
+                      Book a shoutout 
+                      from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+                    </React.Fragment>
+                  :
+                    <React.Fragment>
+                      <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
+                    </React.Fragment>
+                }
+              </QuickViewStyled.Description>
+            </QuickViewStyled.ActionContent>
             {
-              props.celebDetails.availability ? 
-                <React.Fragment>
-                  Book a shoutout 
-                  from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
-                </React.Fragment>
-              :
-                <React.Fragment>
-                  <strong>{getShortName()}</strong> is temporarily unavailable. Come back later.
-                </React.Fragment>
+              props.celebDetails.availability &&
+                <QuickViewStyled.ActionSection>
+                  <QuickViewStyled.ArrowWrapper>
+                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronRight} />
+                    <FontAwesomeIcon icon={faChevronRight} />
+                  </QuickViewStyled.ArrowWrapper>
+                  <PrimaryButton className='action-button' onClick={onBookAction}>Book Now</PrimaryButton>
+                </QuickViewStyled.ActionSection>
             }
-          </QuickViewStyled.Description>
-        </QuickViewStyled.ActionContent>
-        {
-          props.celebDetails.availability &&
-            <QuickViewStyled.ActionSection>
-              <QuickViewStyled.ArrowWrapper>
-                <FontAwesomeIcon icon={faChevronRight} />
-                <FontAwesomeIcon icon={faChevronRight} />
-                <FontAwesomeIcon icon={faChevronRight} />
-              </QuickViewStyled.ArrowWrapper>
-              <PrimaryButton className='action-button' onClick={onBookAction}>Book Now</PrimaryButton>
-            </QuickViewStyled.ActionSection>
-        }
-      </QuickViewStyled.ActionBar>
+          </QuickViewStyled.ActionBar>
+        </React.Fragment>
+      }
     </RequestFlowPopup>
   );
 };
@@ -218,6 +226,7 @@ QuickViewModal.propTypes = {
 const mapStateToProps = state => ({
   quickViewModal: state.modals.quickViewModal,
   isLoggedIn: state.session.isLoggedIn,
+  detailsLoading: state.starDetails.celebDetails.loading,
   celebDetails: state.starDetails.celebDetails.celebrityDetails,
   userDetails: state.starDetails.celebDetails.userDetails,
 });

@@ -125,6 +125,10 @@ class DesktopHome extends React.Component {
     this.props.history.push('/browse-stars');
   }
 
+  onStarClick = (celebId) => {
+    this.props.history.push(`/${celebId}`);
+  }
+
   render() {
     const { props } = this;
     return (
@@ -158,40 +162,40 @@ class DesktopHome extends React.Component {
                 <DesktopStyled.ColumnDivider>
                   <DesktopStyled.RowDivider>
                     <DesktopStyled.Avatar className="left-spacing-none">
-                      <AvatarContent data={this.getAvatarContent(3)}/>
+                      <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(3)}/>
                     </DesktopStyled.Avatar>
                     <DesktopStyled.Avatar className="left-spacing-none">
-                      <AvatarContent data={this.getAvatarContent(4)}/>
+                      <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(4)}/>
                     </DesktopStyled.Avatar>
                   </DesktopStyled.RowDivider>
                   <DesktopStyled.SecondaryAvatar>
-                    <AvatarContent data={this.getAvatarContent(2)} />
+                    <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(2)} />
                   </DesktopStyled.SecondaryAvatar>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.Divider>
               <DesktopStyled.SecondaryDivider id="second-column">
                 <DesktopStyled.BigAvatar>
-                  <AvatarContent data={this.getAvatarContent(1)} />
+                  <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(1)} />
                 </DesktopStyled.BigAvatar>
                 <DesktopStyled.ColumnDivider className="second-bottom-section">
                   <DesktopStyled.Avatar>
-                    <AvatarContent data={this.getAvatarContent(5)} />
+                    <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(5)} />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    <AvatarContent data={this.getAvatarContent(6)} />
+                    <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(6)} />
                   </DesktopStyled.Avatar>
                 </DesktopStyled.ColumnDivider>
               </DesktopStyled.SecondaryDivider>
               <DesktopStyled.SecondaryDivider id="third-column">
                 <DesktopStyled.RowDivider>
                   <DesktopStyled.Avatar>
-                    <AvatarContent data={this.getAvatarContent(7)} />
+                    <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(7)} />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    <AvatarContent data={this.getAvatarContent(8)} />
+                    <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(8)} />
                   </DesktopStyled.Avatar>
                   <DesktopStyled.Avatar>
-                    <AvatarContent data={this.getAvatarContent(9)} />
+                    <AvatarContent onStarClick={this.onStarClick} data={this.getAvatarContent(9)} />
                   </DesktopStyled.Avatar>
                 </DesktopStyled.RowDivider>
               </DesktopStyled.SecondaryDivider>
