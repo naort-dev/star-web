@@ -16,7 +16,7 @@ export default class Dropdown extends React.Component {
     this.state = {
       showDropList: false,
       list,
-      selected: null,
+      selected: this.props.selected,
     };
     this.cursorPos = -1;
     this.optionList = React.createRef();

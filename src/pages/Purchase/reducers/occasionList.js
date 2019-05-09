@@ -6,6 +6,20 @@ const initalState = {
   loading: false,
   videoUploaded: false,
   pageCount: 0,
+  bookingData: {
+    templateType: null,
+    relationship: [],
+    user: 'someoneElse',
+    enableAudioRecorder: false,
+    hostName: '',
+    userName: '',
+    relationshipValue: '',
+    specification: '',
+    date: null,
+    eventName: '',
+    validSelf: false,
+    occasion: {},
+  },
 };
 
 export default (state = initalState, action) => {
@@ -46,6 +60,11 @@ export default (state = initalState, action) => {
       return {
         ...state,
         pageCount: action.value,
+      };
+    case OCCASION_LIST.bookingData:
+      return {
+        ...state,
+        bookingData: action.data,
       };
 
     default:

@@ -16,7 +16,7 @@ Templates.InputWrapper = styled.div`
   @media (min-width: 768px) {
     margin-top: 5px;
     align-items: flex-start;
-    width: 50%;
+    width: ${props => (props.fullWidth ? '100%' : '50%')};
     padding-bottom: 30px;
     padding-right: 18px;
   }
@@ -43,8 +43,20 @@ Templates.InputWrapper = styled.div`
   }
   .float-label[data-shrink='true'] {
     transform: translate(0, 1.5px) scale(0.7);
-    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
     width: 142.857143%;
+  }
+  .react-datepicker__input-container {
+    width: 100%;
+  }
+  .MuiFormControl {
+    width: 100%;
+  }
+  .datepickerWrapper {
+    width: 100%;
+  }
+  .datepickerWrapper > div {
+    width: 100%;
   }
 `;
 Templates.Myself = styled.div`
@@ -90,28 +102,6 @@ Templates.RelationLabel = styled.div`
   }
   @media (min-width: 1920px) {
     font-size: 16px;
-  }
-`;
-Templates.WrapsInput = styled.div`
-  width: 100%;
-  position: relative;
-  @media (min-width: 768px) {
-    width: 100%;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-    flex-direction: column;
-  }
-  @media (min-width: 1025px) {
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
-  }
-  .react-datepicker__input-container {
-    width: 100%;
-    .MuiFormControl {
-      width: 100%;
-    }
   }
 `;
 

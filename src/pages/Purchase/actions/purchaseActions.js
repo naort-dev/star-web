@@ -8,6 +8,7 @@ export const OCCASION_LIST = {
   failed: 'fetch_failed/occasion_list',
   reset: 'reset/occasion_list',
   pageCount: 'pagecount_handler',
+  bookingData: 'update_booking_data',
 };
 export const AskQuestion = {
   videoUploaded: 'SET_VIDEO_UPLOADED_FLG',
@@ -57,4 +58,9 @@ export const setVideoUploadedFlag = value => ({
 export const pageCountHandler = value => ({
   type: OCCASION_LIST.pageCount,
   value,
+});
+
+export const updateBookingData = data => ({
+  type: OCCASION_LIST.bookingData,
+  data,
 });

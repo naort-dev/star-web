@@ -79,13 +79,13 @@ class Purchase extends Component {
           saveAudioRecording={(target, audio) =>
             this.props.saveAudioRecording(target, audio)
           }
-          bookingData={this.props.bookingData ? this.props.bookingData : {}}
           detailList={
             this.props.OccasionDetails ? this.props.OccasionDetails : []
           }
           submitClick={this.submitClick}
           pageCountHandler={this.props.pageCountHandler}
           pageCount={this.props.pageCount}
+          updateBookingData={this.props.updateBookingData}
         />
       );
     } else if (this.state.stepCount === 3) {
@@ -196,7 +196,7 @@ Purchase.propTypes = {
   audioRecorder: PropTypes.object.isRequired,
   saveAudioRecording: PropTypes.func.isRequired,
   resetRecording: PropTypes.func.isRequired,
-  bookingData: PropTypes.object.isRequired,
+  updateBookingData: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import Dropdown from '../../../../components/Dropdown';
@@ -10,19 +11,7 @@ import { getMobileOperatingSystem } from '../../../../utils/checkOS';
 
 function FormContainer(props) {
   const { detailList } = { ...props };
-  const [FormData, setFormData] = useState({
-    templateType: null,
-    relationship: [],
-    user: 'someoneElse',
-    enableAudioRecorder: false,
-    hostName: '',
-    userName: '',
-    relationshipValue: '',
-    specification: '',
-    date: null,
-    eventName: '',
-    validSelf: false,
-  });
+  const [FormData, setFormData] = useState(props.bookingData);
   const optionsList = detailList.map(item => ({
     label: item.title,
     key: item.id,
@@ -31,7 +20,7 @@ function FormContainer(props) {
   const [isDisabled, buttonDisabled] = useState(true);
   const [stepOne, validateStepOne] = useState(true);
   const [stepTwo, validateStepTwo] = useState(true);
-
+  
   useEffect(() => {
     // eslint-disable-next-line
     validateOnMyself();
@@ -85,7 +74,10 @@ function FormContainer(props) {
       validateStepTwo(false);
     } else if (templateType === 6 || templateType === 7) {
       // eslint-disable-next-line
-      validateFields([hostName !== '', specification !== '']);
+      validateStepOne(
+        ![hostName !== '', specification !== ''].every(condition => condition),
+      );
+      validateStepTwo(false);
     } else if (templateType === 3 || templateType === 4 || templateType === 5) {
       if (props.pageCount === 0) {
         validateStepOne(![hostName !== ''].every(condition => condition));
@@ -100,7 +92,7 @@ function FormContainer(props) {
       ...FormData,
       user: 'Myself',
       enableAudioRecorder: true,
-      hostName: 'BBB',
+      hostName: props.user_name ? props.user_name : 'YOU',
       validSelf: true,
     });
   };
@@ -113,44 +105,20 @@ function FormContainer(props) {
     });
   };
 
-  const bookingData = {
-    templateType: props.bookingData.occasionType
-      ? props.bookingData.occasionType
-      : FormData.templateType,
-    relationship: FormData.relationship,
-    user: FormData.user,
-    enableAudioRecorder: FormData.enableAudioRecorder,
-    handleInputChange,
-    eventName: props.bookingData.eventName
-      ? props.bookingData.eventName
-      : FormData.eventName,
-    hostName: props.bookingData.hostName
-      ? props.bookingData.hostName
-      : FormData.hostName,
-    userName: props.bookingData.userName
-      ? props.bookingData.userName
-      : FormData.userName,
-    relationshipValue: FormData.relationshipValue,
-    specification: props.bookingData.specification
-      ? props.bookingData.specification
-      : FormData.specification,
-    date: props.bookingData.date
-      ? moment(props.bookingData.date)
-      : FormData.date,
-    updateUserToMyself,
-  };
-
   const validateFields = fields => {
     const isValid = fields.every(condition => condition);
     buttonDisabled(!isValid);
   };
 
+  const bookingData = FormData;
   const PageDetailsArray = RequestTemplates(
     FormData.templateType,
     bookingData,
     props.audioRecorder,
     props.saveAudioRecording,
     props.resetRecording,
+    handleInputChange,
+    updateUserToMyself,
   );
 
   const onSelectOccasion = occasion => {
@@ -169,6 +137,7 @@ function FormContainer(props) {
       specification: '',
       userName: '',
       date: null,
+      occasion,
     });
   };
   const nextButtonClick = () => {
@@ -177,6 +146,7 @@ function FormContainer(props) {
     } else {
       props.pageCountHandler(props.pageCount + 1);
     }
+    props.updateBookingData(FormData);
   };
 
   const checkButtonDisabled = () => {
@@ -195,6 +165,7 @@ function FormContainer(props) {
       <FlexCenter>
         <Dropdown
           options={optionsList}
+          selected={bookingData.occasion}
           labelKey="label"
           valueKey="key"
           placeHolder="What is the occasion?"
@@ -228,6 +199,15 @@ FormContainer.propTypes = {
   resetRecording: PropTypes.func.isRequired,
   detailList: PropTypes.array.isRequired,
   submitClick: PropTypes.func.isRequired,
+  updateBookingData: PropTypes.func.isRequired,
 };
 
-export default FormContainer;
+export default connect(
+  state => ({
+    bookingData: state.occasionList.bookingData
+      ? state.occasionList.bookingData
+      : {},
+    user_name: state.userDetails.settings_userDetails.stageName,
+  }),
+  null,
+)(FormContainer);

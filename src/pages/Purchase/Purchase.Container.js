@@ -5,19 +5,22 @@ import {
   updateMediaStore,
   playPauseMedia,
   loaderAction,
+  setVideoUploadedFlag,
 } from '../../store/shared/actions/commonActions';
 import {
   resetRecording,
   saveAudioRecording,
 } from '../../store/shared/actions/audioRecorder';
-import { setVideoUploadedFlag } from '../../store/shared/actions/commonActions';
-import { fetchOccasionlist, pageCountHandler } from './actions/purchaseActions';
+import {
+  fetchOccasionlist,
+  pageCountHandler,
+  updateBookingData,
+} from './actions/purchaseActions';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
   OccasionDetails: state.occasionList.data,
-  bookingData: state.bookingData,
   audioRecorder: state.audioRecorder,
 });
 
@@ -55,6 +58,9 @@ function mapDispatchToProps(dispatch) {
     },
     pageCountHandler: value => {
       dispatch(pageCountHandler(value));
+    },
+    updateBookingData: data => {
+      dispatch(updateBookingData(data));
     },
   };
 }

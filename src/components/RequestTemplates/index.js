@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -20,6 +20,9 @@ function RequestTemplates(
   audioRecorder,
   saveAudioRecording,
   resetRecording,
+  handleInputChange,
+  updateUserToMyself
+
 ) {
   const isMobile = getMobileOperatingSystem();
   const videoForValue = () => {
@@ -40,16 +43,17 @@ function RequestTemplates(
     state,
     forSelf,
     tobeValidate,
+    fullWidth,
   }) => {
     return (
-      <Templates.InputWrapper>
+      <Templates.InputWrapper fullWidth={fullWidth}>
         <TextInput
           label={placeholder}
           value={value}
           onChange={event => onChange(event.target.value, state, tobeValidate)}
         />
         {bookingData.user === 'someoneElse' && forSelf && value === '' && (
-          <Templates.Myself onClick={bookingData.updateUserToMyself}>
+          <Templates.Myself onClick={updateUserToMyself}>
             This video is for me!
           </Templates.Myself>
         )}
@@ -61,15 +65,15 @@ function RequestTemplates(
             (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
-                  <AudioRecorder
-                    key="for"
-                    target="for"
-                    audioRecorder={audioRecorder}
-                    saveAudioRecording={(target, audio) =>
-                      saveAudioRecording(target, audio)
-                    }
-                    resetRecording={target => resetRecording(target)}
-                  />
+                <AudioRecorder
+                  key="for"
+                  target="for"
+                  audioRecorder={audioRecorder}
+                  saveAudioRecording={(target, audio) =>
+                    saveAudioRecording(target, audio)
+                  }
+                  resetRecording={target => resetRecording(target)}
+                />
                 <span className="recText">Pronounce Name</span>
               </Templates.WrapsAudioInput>
             )}
@@ -77,7 +81,7 @@ function RequestTemplates(
       </Templates.InputWrapper>
     );
   };
-  const getSelect = (placeholder, value, onChange) => {
+  const getSelect = (placeholder, value, onChange, fullWidth) => {
     const optionItems =
       bookingData.relationship &&
       bookingData.relationship.map(relation => (
@@ -86,40 +90,38 @@ function RequestTemplates(
         </MenuItem>
       ));
     return (
-      <Templates.InputWrapper>
-        <Templates.WrapsInput>
-          <FormControl className="select-material">
-            <InputLabel htmlFor="reln-helper" classes={{ root: 'float-label' }}>
-              {placeholder}
-            </InputLabel>
-            <Select
-              value={value}
-              onChange={event =>
-                onChange(event.target.value, 'relationshipValue')
-              }
-              inputProps={{
-                id: 'reln-helper',
-              }}
-              classes={{ select: 'input-field' }}
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {optionItems}
-              <MenuItem value="otherRelation" key="otherRelation">
-                Other
-              </MenuItem>
-            </Select>
-          </FormControl>
-        </Templates.WrapsInput>
+      <Templates.InputWrapper fullWidth={fullWidth}>
+        <FormControl className="select-material">
+          <InputLabel htmlFor="reln-helper" classes={{ root: 'float-label' }}>
+            {placeholder}
+          </InputLabel>
+          <Select
+            value={value}
+            onChange={event =>
+              onChange(event.target.value, 'relationshipValue')
+            }
+            inputProps={{
+              id: 'reln-helper',
+            }}
+            classes={{ select: 'input-field' }}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {optionItems}
+            <MenuItem value="otherRelation" key="otherRelation">
+              Other
+            </MenuItem>
+          </Select>
+        </FormControl>
       </Templates.InputWrapper>
     );
   };
 
-  const getDatePicker = (placeholder, date, onChange) => {
+  const getDatePicker = (placeholder, date, onChange, fullWidth) => {
     return (
-      <Templates.InputWrapper>
-        <Templates.WrapsInput>
+      <Templates.InputWrapper fullWidth={fullWidth}>
+        <div className="datepickerWrapper">
           <DatePicker
             dateFormat="LL"
             withPortal
@@ -129,47 +131,71 @@ function RequestTemplates(
             onChange={dt => onChange(dt, 'date')}
             placeholderText="Enter date"
           />
-        </Templates.WrapsInput>
+        </div>
       </Templates.InputWrapper>
     );
   };
-  const getFiledProps = (placeholder, audioFlg, valFun, state, forSelf) => {
+  const getFiledProps = (
+    placeholder,
+    audioFlg,
+    valFun,
+    state,
+    forSelf,
+    fullWidth,
+  ) => {
     return {
       placeholder,
       audioFlg,
-      onChange: bookingData.handleInputChange,
+      onChange: handleInputChange,
       value: valFun ? videoForValue() : bookingData[state],
       state,
       forSelf,
+      fullWidth,
     };
   };
-
-  const getVideoFor = state => {
+  const getVideoFor = (state, fullWidth) => {
     return getTextInput(
-      getFiledProps('Who is this video for?', true, true, state, true),
+      getFiledProps(
+        'Who is this video for?',
+        true,
+        true,
+        state,
+        true,
+        fullWidth,
+      ),
     );
   };
-  const getVideoFrom = state => {
+  const getVideoFrom = (state, fullWidth) => {
     return getTextInput(
-      getFiledProps('Who is this video from?', true, false, state, false),
+      getFiledProps(
+        'Who is this video from?',
+        true,
+        false,
+        state,
+        false,
+        fullWidth,
+      ),
     );
   };
-  const getSpecification = (placeholder, state) => {
-    return getTextInput(getFiledProps(placeholder, false, false, state));
+  const getSpecification = (placeholder, state, fullWidth) => {
+    return getTextInput(
+      getFiledProps(placeholder, false, false, state, fullWidth),
+    );
   };
-
-  const getRelationship = () => {
+  const getRelationship = fullWidth => {
     return getSelect(
       'Relationship',
       bookingData.relationshipValue,
-      bookingData.handleInputChange,
+      handleInputChange,
+      fullWidth,
     );
   };
-  const getDate = () => {
+  const getDate = fullWidth => {
     return getDatePicker(
       'Date',
       bookingData.date,
-      bookingData.handleInputChange,
+      handleInputChange,
+      fullWidth,
     );
   };
   const renderTemplates = () => {
@@ -188,8 +214,8 @@ function RequestTemplates(
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getVideoFor('hostName')}
-                  {getDate()}
+                  {getVideoFor('hostName', true)}
+                  {getDate(true)}
                 </React.Fragment>
               )}
             </FlexBox>
@@ -234,10 +260,11 @@ function RequestTemplates(
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getVideoFor('hostName')}
+                  {getVideoFor('hostName', true)}
                   {getSpecification(
                     "Who's the guest of honor?",
                     'specification',
+                    true,
                   )}
                 </React.Fragment>
               )}
@@ -284,10 +311,11 @@ function RequestTemplates(
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getVideoFor('hostName')}
+                  {getVideoFor('hostName', true)}
                   {getSpecification(
                     `What is this ${bookingData.eventName} for`,
                     'specification',
+                    true,
                   )}
                 </React.Fragment>
               )}
@@ -339,9 +367,15 @@ function RequestTemplates(
                 </React.Fragment>
               ) : (
                 <React.Fragment>
-                  {getVideoFor('hostName')}
+                  {getVideoFor('hostName', true)}
                   {getTextInput(
-                    getFiledProps('For what', false, false, 'specification'),
+                    getFiledProps(
+                      'For what',
+                      false,
+                      false,
+                      'specification',
+                      true,
+                    ),
                   )}
                 </React.Fragment>
               )}
@@ -389,7 +423,7 @@ function RequestTemplates(
                 )}
               </FlexBox>
             );
-            const page2 = <FlexBox>{getDate()}</FlexBox>;
+            const page2 = <FlexBox>{getDate(true)}</FlexBox>;
             pageDetails.push(page1);
             pageDetails.push(page2);
           } else {
@@ -399,7 +433,7 @@ function RequestTemplates(
                 {getTextInput(
                   getFiledProps('From where', false, false, 'specification'),
                 )}
-                {getDate()}
+                {getDate(true)}
               </FlexBox>
             );
             pageDetails.push(page1);
@@ -441,10 +475,12 @@ function RequestTemplates(
             <FlexBox>
               {getTextInput(
                 getFiledProps(
-                  'Title of the event?',
+                  'Name of the event',
                   false,
                   false,
                   'specification',
+                  false,
+                  true,
                 ),
               )}
               {getTextInput(
@@ -458,7 +494,7 @@ function RequestTemplates(
               {getDatePicker(
                 'When is the event?',
                 bookingData.date,
-                bookingData.handleInputChange,
+                handleInputChange,
               )}
             </FlexBox>
           );
@@ -468,10 +504,12 @@ function RequestTemplates(
             <FlexBox>
               {getTextInput(
                 getFiledProps(
-                  'Title of the event?',
+                  'Name of the event',
                   false,
                   false,
                   'specification',
+                  false,
+                  true,
                 ),
               )}
               {getTextInput(
@@ -489,7 +527,7 @@ function RequestTemplates(
               {getDatePicker(
                 'When is the event?',
                 bookingData.date,
-                bookingData.handleInputChange,
+                handleInputChange,
               )}
             </FlexBox>
           );
@@ -507,6 +545,8 @@ function RequestTemplates(
                   false,
                   false,
                   'specification',
+                  false,
+                  true,
                 ),
               )}
               {getTextInput(
@@ -520,7 +560,7 @@ function RequestTemplates(
               {getDatePicker(
                 'When is the event?',
                 bookingData.date,
-                bookingData.handleInputChange,
+                handleInputChange,
               )}
             </FlexBox>
           );
@@ -551,7 +591,7 @@ function RequestTemplates(
               {getDatePicker(
                 'When is the event?',
                 bookingData.date,
-                bookingData.handleInputChange,
+                handleInputChange,
               )}
             </FlexBox>
           );
