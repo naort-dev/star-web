@@ -107,7 +107,7 @@ export default class SetPrice extends React.Component {
       });
       return false;
     }
-    if (pattern.test(commaToNumberFormatter(this.state.price.value))) {
+    if (!pattern.test(commaToNumberFormatter(this.state.price.value))) {
       this.setState({
         price: {
           ...this.state.price,

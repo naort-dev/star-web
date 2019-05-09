@@ -26,6 +26,7 @@ import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
   FAN_REG_SUCCESS,
+  STAR_REG_SUCCESS,
   SET_PRICE
 } from './constants'
 import { BackArrow } from '../../styles/CommonStyled';
@@ -235,13 +236,14 @@ class SignupFlow extends React.Component {
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
-                description={FAN_REG_SUCCESS.DESCRIPTION}
+                description={STAR_REG_SUCCESS.DESCRIPTION}
                 icon={FAN_REG_SUCCESS.ICON}
                 image_url={FAN_REG_SUCCESS.IMAGE_URL}
                 message={FAN_REG_SUCCESS.MESSAGE}
-                primary_button={FAN_REG_SUCCESS.PRIMARY_BUTTON}
+                highlight_text={STAR_REG_SUCCESS.HIGHLIGHT_TEXT}
+                primary_button={STAR_REG_SUCCESS.PRIMARY_BUTTON}
                 primaryButtonClick={this.goToBrowseStars}
-                secondary_button={FAN_REG_SUCCESS.SECONDARY_BUTTON}
+                secondary_button={STAR_REG_SUCCESS.SECONDARY_BUTTON}
                 secondaryButtonClick={this.gotToHome}
                 title={FAN_REG_SUCCESS.TITLE} />
             );
