@@ -50,6 +50,7 @@ export default class RequestFlowPopup extends React.Component {
       <PopupStyled.Dialog
         fullScreen={this.state.fullScreen}
         open
+        disableBackdropClick={this.props.modalView}
         classes={{ paper: 'paper-root' }}
         onRendered={this.props.onMounted && this.props.onMounted}
         onClose={this.props.closePopUp}
@@ -61,11 +62,11 @@ export default class RequestFlowPopup extends React.Component {
           autoWidth={this.props.autoWidth}
           innerRef={node => (this.popupContent = node)}
         >
-          {!this.props.modalView && (
+          {/* {!this.props.modalView && (
             <PopupStyled.SliderDotsWrapper>
               {this.renderSliderDots()}
             </PopupStyled.SliderDotsWrapper>
-          )}
+          )} */}
           {/* {
             !this.props.modalView &&
               <PopupStyled.CloseButton

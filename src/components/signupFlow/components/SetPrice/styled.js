@@ -76,6 +76,15 @@ SetPriceWrapper.WrapsInput = styled.div`
     width: 400px;
 
   }
+  .adornment {
+    position: relative;
+    left: 42%;
+    p {
+    color: rgb(129, 116, 170);
+    font-family: Gilroy;
+    font-size: 24px;
+    }
+  }
   input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
   input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */

@@ -275,6 +275,11 @@ class SignUpForm extends React.Component {
                         onChange={event =>
                           this.saveFormEntries(event, 'firstName')
                         }
+                        InputProps={{
+                            classes: {
+                              error:'error-field',
+                            },
+                          }}
                       />
                     </LoginContainer.WrapsInput>
                     <LoginContainer.WrapsInput>
@@ -288,6 +293,11 @@ class SignUpForm extends React.Component {
                         onChange={event =>
                           this.saveFormEntries(event, 'lastName')
                         }
+                        InputProps={{
+                          classes: {
+                            error:'error-field',
+                          },
+                        }}
                       />
                     </LoginContainer.WrapsInput>
                   </LoginContainer.InputWrapper>
@@ -311,6 +321,11 @@ class SignUpForm extends React.Component {
                     onChange={event =>
                       this.saveFormEntries(event, signUp.key_2)
                     }
+                    InputProps={{
+                      classes: {
+                        error:'error-field',
+                      },
+                    }}
                   />
                 </LoginContainer.WrapsInput>
               </LoginContainer.InputWrapper>
@@ -338,6 +353,11 @@ class SignUpForm extends React.Component {
                     onChange={event =>
                       this.saveFormEntries(event, signUp.key_3_1)
                     }
+                    InputProps={{
+                      classes: {
+                        error:'error-field',
+                      },
+                    }}
                   />
                 </LoginContainer.WrapsInput>
                 {this.props.signupRole === ROLE_FAN ? (
@@ -353,6 +373,11 @@ class SignUpForm extends React.Component {
                       onChange={event =>
                         this.saveFormEntries(event, signUp.key_3_2)
                       }
+                      InputProps={{
+                        classes: {
+                          error:'error-field',
+                        },
+                      }}
                     />
                   </LoginContainer.WrapsInput>
                 ) : null}

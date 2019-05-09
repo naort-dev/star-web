@@ -36,7 +36,7 @@ export const SET_PRICE = {
 
 export const convertedApplePrice = (actualPrice, inAppPriceList) => {
   const price = iosPriceFinder(actualPrice, inAppPriceList),
-    priceText = `Converted Apple Price: $${price}. In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).`
+    priceText = `In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).`
   return priceText
 }
 
