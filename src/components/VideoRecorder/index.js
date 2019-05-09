@@ -18,7 +18,19 @@ class VideoRecorder extends Component {
     this.superBuffer = null;
     this.videoSrc = null;
     this.isStoped = false;
-    this.state = { progress: false, mediaControls: false };
+    this.recordingDate = null;
+    this.state = {
+      progress: false,
+      mediaControls: false,
+      remainingTime: {
+        minutes: 0,
+        seconds: 0,
+      },
+      recordedTime: {
+        minutes: 0,
+        seconds: 0,
+      }
+    };
   }
 
   componentDidMount() {
@@ -42,6 +54,10 @@ class VideoRecorder extends Component {
         !this.isStoped &&
         this.props.forceStop
       ) {
+        this.setState({ recordingTime: {
+          minutes: 0,
+          seconds: 0,
+        }})
         this.stopRecording();
       }
     }
@@ -124,11 +140,36 @@ class VideoRecorder extends Component {
 
   handleDataAvailable = event => {
     if (event.data && event.data.size > 0) {
+      let { remainingTime, recordedTime } = this.state;
+      const finalTime = this.recordingDate.getTime() + this.props.duration;
+      const recordingTime = this.recordingDate.getTime();
+      const currentTime = new Date().getTime();
+      const remainingSeconds = parseInt((finalTime - currentTime) / 1000) % 60;
+      const remainingMinutes = parseInt((finalTime - currentTime) / (1000* 60)) % 60;
+      const recordedSeconds = parseInt((currentTime - recordingTime) / 1000) % 60;
+      const recordedMinutes = parseInt((currentTime - recordingTime) / (1000* 60)) % 60;
+      remainingTime = {
+        ...remainingTime,
+        minutes: remainingMinutes,
+        seconds: remainingSeconds,
+      };
+      recordedTime = {
+        ...recordedTime,
+        minutes: recordedMinutes,
+        seconds: recordedSeconds,
+      }
+      this.setState({ remainingTime, recordedTime });
+      const remainingTimeString = `${remainingTime.minutes > 9 ? remainingTime.minutes : `0${remainingTime.minutes}`} : ${remainingTime.seconds > 9 ? remainingTime.seconds : `0${remainingTime.seconds}`}`;
+      // const recordedTimeString = `${recordedTime.minutes > 9 ? recordedTime.minutes : `0${recordedTime.minutes}`} : ${recordedTime.seconds > 9 ? recordedTime.seconds : `0${recordedTime.seconds}`}`;
+      if (this.props.getRecordTime) {
+        this.props.getRecordTime(remainingTimeString)
+      }
       this.recordedBlobs.push(event.data);
     }
   };
 
   stopRecording = () => {
+    let { recordedTime } = this.state;
     if (this.timerID != null) {
       clearTimeout(this.timerID);
     }
@@ -138,9 +179,11 @@ class VideoRecorder extends Component {
     this.closeStream();
     this.superBuffer = new Blob(this.recordedBlobs, { type: 'video/webm' });
     this.videoSrc = window.URL.createObjectURL(this.superBuffer);
+    const recordedTimeString = `${recordedTime.minutes > 9 ? recordedTime.minutes : `0${recordedTime.minutes}`} : ${recordedTime.seconds > 9 ? recordedTime.seconds : `0${recordedTime.seconds}`}`;
     this.props.updateMediaStore({
       videoSrc: this.videoSrc,
       superBuffer: this.superBuffer,
+      recordedTime: recordedTimeString,
     });
     const videoElem = this.video;
     videoElem.src = this.videoSrc;
@@ -241,12 +284,14 @@ VideoRecorder.propTypes = {
   forceStop: PropTypes.bool.isRequired,
   videoSrc: PropTypes.string,
   startStreamingCallback: PropTypes.func,
+  getRecordTime: PropTypes.func,
 };
 
 VideoRecorder.defaultProps = {
   errorHandler: () => {},
   stopRecordHandler: () => {},
   videoSrc: '',
+  getRecordTime: () => {},
   startStreamingCallback: () => {},
 };
 
