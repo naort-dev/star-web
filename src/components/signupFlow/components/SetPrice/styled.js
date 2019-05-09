@@ -6,6 +6,9 @@ const SetPriceWrapper = styled.div`
   @media(min-width: 1025px) {
     height: calc(100% - 55px);
   }
+  * {
+    max-width: 100%;
+  }
 `;
 
 SetPriceWrapper.ComponentWrapper = styled.div`
@@ -120,6 +123,7 @@ SetPriceWrapper.Label = styled.div`
   color: #999999;
   width: 400px;
   margin: 0 auto;
+  max-width: 100%;
 
   b {
     font-family: Gilroy-Semibold;
