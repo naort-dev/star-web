@@ -465,6 +465,11 @@ LoginContainer.WrapsInput = styled.div`
     font-size: 22px;
     padding-bottom: 3px;
   }
+  .error-field {
+    &:after {
+      border-bottom-color: #980100 !important;
+    }
+  }
 
 `;
 LoginContainer.GoogleWrapper = styled.div`
