@@ -74,15 +74,16 @@ SetPriceWrapper.WrapsInput = styled.div`
     text-align: center;
     color: #8174aa;
     width: 400px;
-
+    padding: 8px 0 0;
   }
   .adornment {
     position: relative;
-    left: 42%;
+    left: 38%;
     p {
     color: rgb(129, 116, 170);
     font-family: Gilroy;
     font-size: 24px;
+    margin-top: 8px;
     }
   }
   input:focus::-webkit-input-placeholder { color:transparent; }
@@ -119,6 +120,10 @@ SetPriceWrapper.Label = styled.div`
   color: #999999;
   width: 400px;
   margin: 0 auto;
+
+  b {
+    font-family: Gilroy-Semibold;
+  }
 `;
 SetPriceWrapper.Description = styled.div`
   font-family: Gilroy;
