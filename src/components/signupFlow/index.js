@@ -168,7 +168,7 @@ class SignupFlow extends React.Component {
       }
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 5:
+        case 1:
           return (
             <SignUpForm
               {...this.props}
@@ -216,7 +216,7 @@ class SignupFlow extends React.Component {
             currentStep={this.state.currentStep}
             switched={this.state.switched} />;
 
-        case 1:
+        case 5:
           return (<SetPrice
             action={SET_PRICE.ACTION}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
