@@ -183,6 +183,7 @@ DesktopStyled.FlowWrapper = styled.div`
   margin: 0 auto;
   position: relative;
   padding: 0 30px;
+  z-index: 1;
   @media (min-width: 832px) {
     width: 818px;
   }

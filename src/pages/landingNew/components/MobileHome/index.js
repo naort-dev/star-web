@@ -6,7 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import PrimaryButton from '../../../../components/PrimaryButton';
-import VideoRender from '../../../../components/VideoRender';
+import VideoRender from '../../../../components/VideoRenderNew';
 import RequestFlowPopup from '../../../../components/RequestFlowPopup';
 import StarDrawer from '../../../../components/StarDrawer';
 import AvatarSection from './components/AvatarSection';
