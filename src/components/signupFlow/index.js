@@ -295,7 +295,7 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
-                this.state.currentStep === 2
+                this.state.currentStep === 2 || this.state.currentStep === 6
               ) && (
                 <BackArrow
                   className="backArrow"
