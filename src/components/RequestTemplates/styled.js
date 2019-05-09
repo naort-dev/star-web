@@ -377,7 +377,7 @@ Templates.WrapsAudioInput = styled.div`
   color: #2f839d;
   align-items: center;
   justify-content: center;
-  padding-top: 19px;
+  padding-top: 12px;
   .recText {
     padding-left: 8px;
     font-family: Gilroy;

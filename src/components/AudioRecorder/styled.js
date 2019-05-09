@@ -99,7 +99,6 @@ AudioRecorderDiv.ControlWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex-direction: row;
-  
 `;
 
 AudioRecorderDiv.PlayButton = styled.div`
@@ -137,7 +136,9 @@ export const Ripple = styled.div`
   height: 20px;
   width: 20px;
   border-radius: 50%;
-  position: relative;
+  position: absolute;
+  top: 8px;
+  left: 6px;
   -webkit-transition: height 0.25s ease, width 0.25s ease;
   transition: height 0.25s ease, width 0.25s ease;
   -webkit-transform: translate(-50%, -50%);

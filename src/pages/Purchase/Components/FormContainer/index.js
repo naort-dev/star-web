@@ -167,9 +167,10 @@ function FormContainer(props) {
     });
   };
   const nextButtonClick = () => {
-    props.pageCountHandler(props.pageCount + 1);
-    if (props.pageCount === PageDetailsArray.length) {
+    if (props.pageCount === PageDetailsArray.length - 1) {
       props.submitClick();
+    } else {
+      props.pageCountHandler(props.pageCount + 1);
     }
   };
 
@@ -179,12 +180,10 @@ function FormContainer(props) {
         return stepOne;
       } else if (props.pageCount === 1) {
         return stepTwo;
-      } else {
-        return false;
       }
-    } else {
-      return isDisabled;
+      return false;
     }
+    return isDisabled;
   };
   return (
     <Layout>

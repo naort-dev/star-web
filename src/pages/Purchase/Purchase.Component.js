@@ -8,7 +8,7 @@ import CategoryList from './Components/CategoryList';
 import ModalSwitcher from './ModalSwitcher';
 import { dataModal } from './DataModals/formModals';
 import FormContainer from './Components/FormContainer';
-// import ScriptBuilder from './Components/ScriptBuilder';
+import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import Payment from '../../components/Payment';
 import SuccessScreen from './Components/SuccessScreen';
@@ -71,26 +71,49 @@ class Purchase extends Component {
             starsonaRequest={this.props.starsonaRequest}
           />
         );
-      } else if (this.state.category !== 3) {
-        return (
-          <FormContainer
-            audioRecorder={this.props.audioRecorder}
-            resetRecording={target => this.props.resetRecording(target)}
-            saveAudioRecording={(target, audio) =>
-              this.props.saveAudioRecording(target, audio)
-            }
-            bookingData={this.props.bookingData ? this.props.bookingData : {}}
-            detailList={
-              this.props.OccasionDetails ? this.props.OccasionDetails : []
-            }
-            submitClick={this.submitClick}
-            pageCountHandler={this.props.pageCountHandler}
-            pageCount={this.props.pageCount}
-          />
-        );
       }
+      return (
+        <FormContainer
+          audioRecorder={this.props.audioRecorder}
+          resetRecording={target => this.props.resetRecording(target)}
+          saveAudioRecording={(target, audio) =>
+            this.props.saveAudioRecording(target, audio)
+          }
+          bookingData={this.props.bookingData ? this.props.bookingData : {}}
+          detailList={
+            this.props.OccasionDetails ? this.props.OccasionDetails : []
+          }
+          submitClick={this.submitClick}
+          pageCountHandler={this.props.pageCountHandler}
+          pageCount={this.props.pageCount}
+        />
+      );
+    } else if (this.state.stepCount === 3) {
+      if (this.state.category === 3) {
+        this.getPaymentScreen();
+      }
+      return <ScriptBuilder />;
+    } else if (this.state.stepCount === 4) {
+      if (this.state.category === 3) {
+        return <SuccessScreen />;
+      }
+      this.getPaymentScreen();
+    } else if (this.state.stepCount === 5) {
+      return <SuccessScreen />;
     }
     return <div />;
+  };
+
+  getPaymentScreen = () => {
+    return (
+      <Payment
+        paymentSuccessCallBack={this.paymentSuccess}
+        backArrowHandler={this.backArrowHandler}
+        closeHandler={this.closeHandler}
+        fetchCelebDetails={this.props.fetchCelebDetails}
+        loaderAction={this.props.loaderAction}
+      />
+    );
   };
 
   getCategory = type => {
@@ -101,23 +124,6 @@ class Purchase extends Component {
     if (this.state.category !== 3) {
       this.props.fetchOccasionlist(type);
     }
-  };
-
-  getFinalStep = () => {
-    if (this.state.stepCount === 3) {
-      return (
-        <Payment
-          paymentSuccessCallBack={this.paymentSuccess}
-          backArrowHandler={this.backArrowHandler}
-          closeHandler={this.closeHandler}
-          fetchCelebDetails={this.props.fetchCelebDetails}
-          loaderAction={this.props.loaderAction}
-        />
-      );
-    } else if (this.state.stepCount === 4) {
-      return <SuccessScreen />;
-    }
-    return <div />;
   };
 
   handleClose = () => {
@@ -156,23 +162,19 @@ class Purchase extends Component {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
-          {this.state.stepCount < 3 ? (
-            <React.Fragment>
-              <Header
-                backArrowHandler={this.backArrowHandler}
-                closeHandler={this.closeHandler}
-                headerText="What kind of video message do you want?"
-                arrowVisible={this.state.stepCount !== 1}
-              />
-              <Content className="contentPadding" step={this.state.stepCount}>
-                <Scrollbars>
-                  <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
-                </Scrollbars>
-              </Content>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>{this.getFinalStep()}</React.Fragment>
-          )}
+          <React.Fragment>
+            <Header
+              backArrowHandler={this.backArrowHandler}
+              closeHandler={this.closeHandler}
+              headerText="What kind of video message do you want?"
+              arrowVisible={this.state.stepCount !== 1}
+            />
+            <Content className="contentPadding" step={this.state.stepCount}>
+              <Scrollbars>
+                <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
+              </Scrollbars>
+            </Content>
+          </React.Fragment>
         </ModalContainer>
       </Modal>
     );

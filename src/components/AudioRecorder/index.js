@@ -70,9 +70,9 @@ export default class AudioRecorder extends React.Component {
     });
   }
 
-  handleRecorder() {
+  handleRecorder = () => {
     this.state.start ? this.stopRecording() : this.startRecording();
-  }
+  };
 
   reRecording(target) {
     this.deleteRecording(target);
@@ -81,19 +81,18 @@ export default class AudioRecorder extends React.Component {
     if (checkMediaRecorderSupport()) {
       return (
         <React.Fragment>
+          {this.state.start && <Ripple onClick={this.handleRecorder} />}
           {this.state.active && this.ReactMic && (
-            <Ripple>
-              <div style={{ display: 'none' }}>
-                <this.ReactMic
-                  record={this.state.start}
-                  onStop={this.saveRecording}
-                  className="dfsdfsd"
-                  strokeColor="white"
-                  backgroundColor="#2e819b"
-                  save={this.state.stop && this.state.status == 'completed'}
-                />
-              </div>
-            </Ripple>
+            <div style={{ display: 'none' }}>
+              <this.ReactMic
+                record={this.state.start}
+                onStop={this.saveRecording}
+                className="dfsdfsd"
+                strokeColor="white"
+                backgroundColor="#2e819b"
+                save={this.state.stop && this.state.status === 'completed'}
+              />
+            </div>
           )}
           <AudioRecorderDiv.ControlWrapper>
             {(this.props.audioRecorder.recorded[target] &&
@@ -105,22 +104,19 @@ export default class AudioRecorder extends React.Component {
                   <AudioRecorderDiv.PlayButton
                     onClick={() => this.playRecording(target)}
                   >
-                    {' '}
                     Play Back
                   </AudioRecorderDiv.PlayButton>
                 ) : (
                   <AudioRecorderDiv.PauseButton
                     onClick={() => this.pauseRecording()}
                   >
-                    {' '}
-                    Record{' '}
+                    Record
                   </AudioRecorderDiv.PauseButton>
                 )}
                 <AudioRecorderDiv.Rerecord
                   onClick={() => this.reRecording(target)}
                 >
-                  {' '}
-                  Record{' '}
+                  Record
                 </AudioRecorderDiv.Rerecord>
                 <AudioRecorderDiv.CloseButton
                   onClick={() => this.deleteRecording(target)}
@@ -130,7 +126,7 @@ export default class AudioRecorder extends React.Component {
               </React.Fragment>
             ) : (
               <AudioRecorderDiv.Button
-                onClick={() => this.handleRecorder()}
+                onClick={this.handleRecorder}
                 type="button"
               >
                 <AudioRecorderDiv.Icon icon={faMicrophone} />
