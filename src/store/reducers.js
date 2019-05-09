@@ -94,6 +94,8 @@ const rootReducer = (state, action) => {
     newState.config = state.config;
     newState.groupTypes = state.groupTypes;
     newState.groupTypesListing = state.groupTypesListing;
+    newState.featuredStars = state.featuredStars;
+    newState.trendingStars = state.trendingStars;
   }
 
   return appReducer(newState, action);
