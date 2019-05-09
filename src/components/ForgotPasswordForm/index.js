@@ -68,7 +68,7 @@ export default class ForgotPassword extends React.Component {
                     alt=""
                   />
                   <ForgotPasswordWrap.MailContent>
-                    A password reset link has been sent to your email address.Please tap the link
+                    A password reset link has been sent to your email address. Please tap the link
                       in that message to reset your password.
                   </ForgotPasswordWrap.MailContent>
                 </ForgotPasswordWrap.Message>

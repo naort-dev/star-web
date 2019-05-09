@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const FooterStyled = styled.footer`
   padding: 20px 0;
+  background: #fff;
+  display: none;
   @media(min-width: 832px) {
     display: flex;
     padding: 0 30px;
@@ -94,7 +96,7 @@ const StoreIcon = styled.img`
   display: inline-block;
 `;
 FooterStyled.Anchor = styled.a`
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   &:visited{
     color:#333333;
   }

@@ -59,8 +59,8 @@ UploadContainer.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
-  padding-top: 68px;
+  font-family: 'Gilroy';
+  padding-top: 24px;
   @media (min-width: 768px) {
     font-size: 25px;
   }
@@ -111,15 +111,15 @@ UploadContainer.CategoriesWrapper = styled.div`
 `;
 
 UploadContainer.ButtonWrapper = styled.div`
-  margin-top: 62px;
+  margin-top: 45px;
   text-align: center;
-  margin-bottom: 75px;
+  margin-bottom: 10px;
 `;
 
 UploadContainer.ContinueButton = styled.button`
   cursor: pointer;
   background-color: #2f839d;
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Medium;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
@@ -291,7 +291,7 @@ ImageUpload.CloseButton = styled.span`
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 57px 60px 55px;
+    padding: 35px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
@@ -343,10 +343,9 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   background-size: cover;
   cursor: pointer;
   text-align: center;
-  margin-right: 11px;
 
   &:last-child {
-    margin-left: 11px;
+    margin-left: 22px;
     margin-right: 0;
   }
 `;
@@ -445,7 +444,7 @@ ImageUpload.ControlButton = styled.button`
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Gilroy-Semibold;
+  font-family: Gilroy-Medium;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
@@ -552,5 +551,9 @@ ImageUpload.CropperButton = styled.button`
     color: #2f839d;
   }
 `;
+const ErrorMessage= styled.div`
+  color: red;
+  text-align: center;
+`;
 
-export { UploadContainer, ImageUpload };
+export { UploadContainer, ImageUpload, ErrorMessage };

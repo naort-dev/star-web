@@ -17,6 +17,7 @@ import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/Purchase/reducers/occasionList';
 import myVideosList from '../pages/requests/reducers/myVideosList';
 import groupSupporters from '../pages/starSupporters/reducers';
+import groupListing from '../pages/groupListing/reducers';
 import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import otherRelation from '../store/shared/reducers/other';
@@ -76,6 +77,7 @@ const appReducer = combineReducers({
   groupDetails,
   memberList,
   groupSupporters,
+  groupListing,
   groupTypesListing,
   commonReducer,
   subCategoryList,
@@ -89,6 +91,8 @@ const rootReducer = (state, action) => {
     newState.groupTypes = state.groupTypes;
     newState.groupTypesListing = state.groupTypesListing;
     newState.professionsList = state.professionsList;
+    newState.featuredStars = state.featuredStars;
+    newState.trendingStars = state.trendingStars;
   }
 
   return appReducer(newState, action);

@@ -45,6 +45,7 @@
     "react-share": "^2.2.0",
     "react-smartbanner": "^5.0.6",
     "react-stripe-elements": "^2.0.0",
+    "react-svg": "^9.0.2",
     "redux": "^3.7.2",
     "redux-devtools": "^3.4.1",
     "redux-devtools-dock-monitor": "^1.1.3",

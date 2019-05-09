@@ -34,7 +34,7 @@ const Picker = (props) => {
         </PickerStyled.Arrow>
       </PickerStyled.Selected>
       <Popover
-        id="simple-popper"
+        id="picker-popper"
         open={showList}
         anchorEl={anchorEl && anchorEl.current}
         onClose={handleClose}

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const AvatarContainer = styled.section`
   cursor: pointer;
@@ -79,6 +80,7 @@ AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
     width: 300px;
     height: 300px;
     order: 2;
+    margin-top: -22px;
   }
 `;
 
@@ -103,7 +105,6 @@ AvatarContainer.Category = styled.span`
   font-size: 10px;
   display: block;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
   text-align: inherit;
   margin-bottom: 3px;
@@ -122,14 +123,12 @@ AvatarContainer.Name = styled.span`
   text-align: inherit;
   color: ${props => props.theme.flatBlue};
   width: 100%;
-  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   width: 100%;
   @media(min-width: 832px) {
     line-height: 1.41;
     font-size: 17px;
-    font-family: Gilroy-Bold;
     width: calc(100% - 50px);
     text-align: left;
   }
@@ -152,7 +151,7 @@ AvatarContainer.Price = styled.span`
 `;
 
 
-AvatarContainer.Content = styled.article`
+AvatarContainer.Content = styled(Link)`
   border-top: ${props => `1px solid ${props.theme.white}`};
   padding-top: 0.2px;
   font-family: Gilroy-Light;
@@ -192,6 +191,7 @@ AvatarContainer.Content = styled.article`
         font-size: 18px;
         display: block;
         width: 100%;
+        margin-top: -6px;
       }
     }
     &.secondary {

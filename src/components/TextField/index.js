@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import TextFieldStyled from './styled';
 
 export const TextInput = props => (
-  <TextField
+  <TextFieldStyled
     error={props.error}
     placeholder={props.placeholder}
     type={props.type}
@@ -15,12 +15,10 @@ export const TextInput = props => (
     required={props.required}
     onBlur={props.onBlur}
     label={props.label}
-    classes={{
-      root: 'MuiFormControl',
-    }}
-    InputProps={{ classes: { input: 'input-field' } }}
+    classes={{ root: 'MuiFormControl' }}
     InputLabelProps={{ classes: { root: 'float-label' } }}
     onClick={props.onClick}
+    InputProps={props.InputProps}
   />
 );
 
@@ -35,6 +33,7 @@ TextInput.propTypes = {
   id: PropTypes.string,
   required: PropTypes.bool,
   onBlur: PropTypes.func,
+  InputProps: PropTypes.object,
   onClick: PropTypes.func,
   label: PropTypes.string,
 };
@@ -48,6 +47,7 @@ TextInput.defaultProps = {
   fullWidth: false,
   id: '',
   required: false,
+  InputProps: {},
   onBlur: () => {},
   onChange: () => {},
   onClick: () => {},

@@ -172,6 +172,7 @@ const BrowseStars = (props) => {
             <StarListing
               customLoader
               dataList={props.celebList.data}
+              noDataText='No records found'
               loading={props.celebList.loading}
               offset={props.celebList.offset}
               fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}

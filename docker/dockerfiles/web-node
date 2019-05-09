@@ -5,6 +5,5 @@ FROM ${REGISTRY}base-node${BASE_IMAGE_TAG}
 COPY . /starsona
 RUN rm -rf /starsona/docker
 WORKDIR /starsona
-RUN npm install --no-color
 RUN npm run build --no-color
 RUN find dist -type f -regextype posix-extended -iregex '.*\.(css|csv|html?|js|svg|txt|xml|map|ttf)' ! -name 'env.js' -exec zopfli '{}' \;

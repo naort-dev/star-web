@@ -48,6 +48,7 @@ export default class StarRating extends React.Component {
           <RatingStyled.Rating
             big={this.props.big}
             key={index}
+            className={this.props.ratingClass}
             selected={selected}
             {...actions(index)}
           >

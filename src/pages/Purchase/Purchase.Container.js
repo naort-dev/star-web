@@ -6,6 +6,7 @@ import {
   playPauseMedia,
   loaderAction,
   setVideoUploadedFlag,
+  updateToast,
 } from '../../store/shared/actions/commonActions';
 import {
   resetRecording,
@@ -16,12 +17,18 @@ import {
   pageCountHandler,
   updateBookingData,
 } from './actions/purchaseActions';
+import {
+  toggleRequestFlow,
+  toggleLogin,
+} from '../../store/shared/actions/toggleModals';
 import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
   OccasionDetails: state.occasionList.data,
   audioRecorder: state.audioRecorder,
+  celebDetails: state.starDetails.celebDetails.celebrityDetails,
+  userDetails: state.starDetails.celebDetails.userDetails,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -29,8 +36,8 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (videoSrc, superBuffer) => {
-      dispatch(updateMediaStore(videoSrc, superBuffer));
+    updateMediaStore: payload => {
+      dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {
       dispatch(playPauseMedia());
@@ -50,6 +57,9 @@ function mapDispatchToProps(dispatch) {
     setVideoUploadedFlag: value => {
       dispatch(setVideoUploadedFlag(value));
     },
+    toggleRequestFlow: state => {
+      dispatch(toggleRequestFlow(state));
+    },
     starsonaRequest: (bookingData, publicStatus, callback) => {
       dispatch(starsonaRequest(bookingData, publicStatus, callback));
     },
@@ -62,6 +72,8 @@ function mapDispatchToProps(dispatch) {
     updateBookingData: data => {
       dispatch(updateBookingData(data));
     },
+    toggleLogin: state => dispatch(toggleLogin(state)),
+    updateToast: toastObj => dispatch(updateToast(toastObj)),
   };
 }
 export default connect(

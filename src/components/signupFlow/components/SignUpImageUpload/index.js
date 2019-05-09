@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
-import { UploadContainer, ImageUpload } from './styled';
+import { UploadContainer, ImageUpload, ErrorMessage } from './styled';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
 import { updateCategory } from '../../../../pages/landing/actions/updateFilters';
 import ProfileUpload from './components/profileUpload';
@@ -12,6 +12,7 @@ import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
 import MultiSelect from '../../../MultiSelect';
+import { awsImageUpload } from '../../../../services/awsImageUpload'
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
 class SignUpImageUpload extends React.Component {
@@ -22,7 +23,7 @@ class SignUpImageUpload extends React.Component {
     finalImage: null,
     finalFile: null,
     cropImage: null,
-    categoriesValue: '',
+    extension: null,
     takePicture: false,
     selectedCategory: [],
     selectedProfessions: [],
@@ -44,12 +45,24 @@ class SignUpImageUpload extends React.Component {
       cropper: true,
       currentExif: exif,
       cropImage: imageResult,
+      extension,
     });
     // this.goToStep('next');
   };
 
   getCroppedImage = (file, image) => {
     this.setState({ finalImage: image, finalFile: file });
+    awsImageUpload(file, this.state.extension)
+    .then((resp) => {
+      const fileName = {
+        "images": [resp],
+        "avatar_photo": resp,
+        "featured_image": "",
+      }
+      this.props.updateProfilePhoto(fileName);
+    })
+    .catch(() => {
+    });
   };
 
   setTakePicture = () => {
@@ -239,8 +252,11 @@ class SignUpImageUpload extends React.Component {
               onTakePicture={this.setTakePicture}
               onComplete={this.setProfileImage}
               image={this.state.finalImage}
+              updateProfilePhoto={this.props.updateProfilePhoto}
             />
-
+            {!(this.state.selectedProfessions && (this.state.finalImage || this.state.cropImage)) &&(
+              <ErrorMessage>Please add a profile image and choose at least one category</ErrorMessage>
+            )}
             <UploadContainer.CategoriesWrapper>
               <MultiSelect
                 value={this.state.selectedProfessions}
@@ -262,7 +278,7 @@ class SignUpImageUpload extends React.Component {
             <UploadContainer.ButtonWrapper>
               <UploadContainer.ContinueButton
                 type="submit"
-                onClick={this.props.continueClickCallback}
+                onClick={() => this.props.continueClickCallback(this.state.selectedProfessions, this.state.finalImage, this.state.cropImage)}
               >
                 Continue
               </UploadContainer.ContinueButton>

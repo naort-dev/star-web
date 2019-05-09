@@ -69,6 +69,13 @@ class Purchase extends Component {
             loaderAction={this.props.loaderAction}
             setVideoUploadedFlag={this.props.setVideoUploadedFlag}
             starsonaRequest={this.props.starsonaRequest}
+            starNM={
+              this.props.userDetails.nick_name !== '' &&
+              this.props.userDetails.nick_name
+                ? this.props.userDetails.nick_name
+                : this.props.userDetails.first_name
+            }
+            updateToast={this.props.updateToast}
           />
         );
       }
@@ -117,13 +124,15 @@ class Purchase extends Component {
   };
 
   getCategory = type => {
+    if (type !== 3) {
+      this.props.fetchOccasionlist(type);
+    } else if (type === 3 && !this.props.isLoggedIn) {
+      this.props.toggleLogin(true);
+    }
     this.setState({
       stepCount: 2,
       category: type,
     });
-    if (this.state.category !== 3) {
-      this.props.fetchOccasionlist(type);
-    }
   };
 
   handleClose = () => {
@@ -156,7 +165,14 @@ class Purchase extends Component {
     });
   };
 
-  closeHandler = () => {};
+  closeHandler = () => {
+    this.props.toggleRequestFlow(false);
+    this.props.setVideoUploadedFlag(false);
+    this.props.updateMediaStore({
+      videoSrc: null,
+      superBuffer: null,
+    });
+  };
 
   render() {
     return (
@@ -184,12 +200,14 @@ class Purchase extends Component {
 Purchase.propTypes = {
   fetchOccasionlist: PropTypes.func,
   OccasionDetails: PropTypes.array,
+  userDetails: PropTypes.object.isRequired,
   recordTrigger: PropTypes.func.isRequired,
   updateMediaStore: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
+  toggleRequestFlow: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
   pageCountHandler: PropTypes.func.isRequired,
   pageCount: PropTypes.number.isRequired,
@@ -197,6 +215,9 @@ Purchase.propTypes = {
   saveAudioRecording: PropTypes.func.isRequired,
   resetRecording: PropTypes.func.isRequired,
   updateBookingData: PropTypes.func.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  updateToast: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
@@ -206,6 +227,7 @@ Purchase.defaultProps = {
 export default connect(
   state => ({
     pageCount: state.occasionList.pageCount,
+    isLoggedIn: state.session.isLoggedIn,
   }),
   null,
 )(Purchase);
