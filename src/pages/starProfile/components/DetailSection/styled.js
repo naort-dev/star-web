@@ -88,7 +88,6 @@ DetailStyled.BackButton = styled.div`
     display: block;
     width: 100%;
     .back-content {
-      display: flex;
       cursor: pointer;
       padding-bottom: 10px;
       color: #42a3c1;
