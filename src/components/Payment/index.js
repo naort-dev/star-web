@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { BackArrow, CloseButton } from '../../styles/CommonStyled';
+import { BackArrow, CloseButton, FlexCenter } from '../../styles/CommonStyled';
 import { Layout, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
 import {
@@ -11,13 +11,12 @@ import {
   modifySourceList,
 } from '../../store/shared/actions/processPayments';
 import { updateCustomerId } from '../../store/shared/actions/commonActions';
-import { FlexCenter } from '../../styles/CommonStyled';
 
 const Payment = props => {
   const [isNewCard, cardSelection] = useState(false);
-
   useEffect(() => {
-    props.fetchSourceList();
+    if (props.sourceList && Object.keys(props.sourceList).length === 0)
+      props.fetchSourceList();
   }, []);
 
   const contentSwitchCallback = value => {
@@ -84,7 +83,7 @@ const Payment = props => {
 Payment.propTypes = {
   backArrowHandler: PropTypes.func.isRequired,
   paymentSuccessCallBack: PropTypes.func.isRequired,
-  request: PropTypes.object.isRequired,
+  request: PropTypes.object,
   closeHandler: PropTypes.func.isRequired,
   sourceList: PropTypes.object.isRequired,
   createCharge: PropTypes.func.isRequired,
@@ -97,6 +96,7 @@ Payment.propTypes = {
 };
 Payment.defaultProps = {
   celebDetails: {},
+  request: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

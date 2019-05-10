@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import StarDrawer from 'components/StarDrawer';
+import Checkbox from 'components/Checkbox';
+import Button from 'components/PrimaryButton';
+import { FlexCenter } from 'styles/CommonStyled';
 import {
   Layout,
   ScriptContainer,
@@ -7,10 +12,6 @@ import {
   FlexBoxCenter,
   TextAreaWrapper,
 } from './styled';
-import StarDrawer from '../../../../components/StarDrawer';
-import Checkbox from '../../../../components/Checkbox';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter } from '../../../../styles/CommonStyled';
 
 class ScriptBuilder extends Component {
   constructor(props) {
@@ -63,7 +64,38 @@ class ScriptBuilder extends Component {
     ];
   }
 
-  handleCheck = () => {};
+  handleCheck = checked => {
+    this.props.videoPrivateCheck(checked);
+  };
+
+  readyToPayment = () => {
+    this.props.scriptSubmit();
+  };
+
+  submitClick = () => {
+    if (this.props.isLoggedIn) {
+      this.props.submitClick();
+    } else {
+      const payload = {
+        celebrity: 106,
+        occasion: this.props.bookingData.occasion.key,
+        public_request: this.props.checked,
+        from_audio_file: null,
+        to_audio_file: null,
+        request_details: {
+          stargramto: this.props.bookingData.hostName,
+          stargramfrom: this.props.bookingData.userName,
+          relationship: this.props.bookingData.relationshipValue,
+          date: this.props.bookingData.date,
+        },
+      };
+      this.props.starsonaRequest(
+        payload,
+        this.props.checked,
+        this.readyToPayment,
+      );
+    }
+  };
   render() {
     return (
       <Layout>
@@ -94,11 +126,17 @@ class ScriptBuilder extends Component {
           <Checkbox
             placeholder=" Make my video private"
             onChange={this.handleCheck}
-            checked={false}
+            checked={this.props.checked}
           />
         </FlexBoxCenter>
         <FlexCenter>
-          <Button onClick={this.props.submitClick}>Continue</Button>
+          <Button
+            onClick={this.submitClick}
+            disabled={!this.props.checked}
+            isDisabled={!this.props.checked}
+          >
+            Continue
+          </Button>
         </FlexCenter>
       </Layout>
     );
@@ -107,9 +145,27 @@ class ScriptBuilder extends Component {
 
 ScriptBuilder.propTypes = {
   submitClick: PropTypes.func,
+  videoPrivateCheck: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
+  scriptSubmit: PropTypes.func.isRequired,
+  starsonaRequest: PropTypes.func.isRequired,
+  audio: PropTypes.object.isRequired,
+  bookingData: PropTypes.object.isRequired,
 };
 
 ScriptBuilder.defaultProps = {
   submitClick: () => {},
 };
-export default ScriptBuilder;
+
+export default connect(
+  state => ({
+    pageCount: state.occasionList.pageCount,
+    isLoggedIn: state.session.isLoggedIn,
+    bookingData: state.occasionList.bookingData
+      ? state.occasionList.bookingData
+      : {},
+    audio: state.audioRecorder.recorded,
+  }),
+  null,
+)(ScriptBuilder);

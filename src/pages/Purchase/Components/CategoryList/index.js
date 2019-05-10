@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
-import { FlexBoxSB } from '../../../../styles/CommonStyled';
+import { FlexBoxSB } from 'styles/CommonStyled';
 import {
   Icon,
   HeaderText,
