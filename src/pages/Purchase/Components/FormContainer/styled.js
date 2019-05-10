@@ -3,12 +3,13 @@ import { media } from '../../../../styles/mediaQueries';
 
 export const Layout = styled.section`
   height: 100%;
+  max-width: 318px;
+  margin: 0 auto;
+  ${media.webView} {
+    max-width: 423px;
+  }
   .custom {
-    width: 422px;
     border-radius: 5px;
-    ${media.mobileScreen} {
-      width: 300px;
-    }
     ul {
       min-height: 50px;
       max-height: 260px;
@@ -17,7 +18,14 @@ export const Layout = styled.section`
       text-align: center;
     }
   }
-  button {
+  .continue-button {
     height: 60px;
   }
+  .cus-drop {
+    width: 100%;
+  }
+`;
+Layout.EventStep2 = styled.div`
+  padding-top: 40px;
+  min-height: 240px;
 `;

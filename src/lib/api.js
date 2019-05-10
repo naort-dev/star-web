@@ -7,7 +7,7 @@ class Api {
   static getProfessionsList = 'v2/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
-  static getVideosList = 'v1/request/featured_videos/';
+  static getVideosList = 'v2/request/featured_videos/';
   static login = 'v1/user/login/';
   static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
@@ -18,7 +18,7 @@ class Api {
   static getUserVideos = 'v1/request/request_list/';
   static getRequestDetails = 'v1/request/stargramz/';
   static followCelebrity = 'v1/user/fan/celebrity_follow/';
-  static getOccasionList = 'v1/request/occasion_list/';
+  static getOccasionList = 'v2/request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
   static setVideoView = 'v1/request/readvideo/';
   static otherRelation = 'v1/request/other_relation/';
@@ -62,6 +62,7 @@ class Api {
   static validateOtpCode = 'v1/user/verify_mobile/';
   static celebRepresentative = 'v1/user/celebrity_representative/';
   static getReactions = 'v1/request/reactions/';
+  static getStarReaction = 'v2/request/reactions_full_listing/';
   static getGroupsList = 'v1/user/group_account/';
   static groupTypeListing = 'v1/user/active_group_types/';
   static createGroupNotification = 'v1/notification/new_group_notification/';

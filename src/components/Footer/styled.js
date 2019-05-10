@@ -92,7 +92,7 @@ const StoreIcon = styled.img`
   cursor: pointer;
   width: 117px;
   height: 40px;
-  margin: 10px 0;
+  margin: 10px;
   display: inline-block;
 `;
 FooterStyled.Anchor = styled.a`

@@ -8,7 +8,16 @@ import {
   setVideoUploadedFlag,
   updateToast,
 } from '../../store/shared/actions/commonActions';
-import { fetchOccasionlist } from './actions/purchaseActions';
+import {
+  resetRecording,
+  saveAudioRecording,
+  clearAll,
+} from '../../store/shared/actions/audioRecorder';
+import {
+  fetchOccasionlist,
+  pageCountHandler,
+  updateBookingData,
+} from './actions/purchaseActions';
 import {
   toggleRequestFlow,
   toggleLogin,
@@ -18,6 +27,7 @@ import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
   OccasionDetails: state.occasionList.data,
+  audioRecorder: state.audioRecorder,
   celebDetails: state.starDetails.celebDetails.celebrityDetails,
   userDetails: state.starDetails.celebDetails.userDetails,
 });
@@ -27,7 +37,7 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (payload) => {
+    updateMediaStore: payload => {
       dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {
@@ -38,6 +48,12 @@ function mapDispatchToProps(dispatch) {
     },
     fetchOccasionlist: id => {
       dispatch(fetchOccasionlist(id));
+    },
+    saveAudioRecording: (target, audio) => {
+      dispatch(saveAudioRecording(target, audio));
+    },
+    resetRecording: target => {
+      dispatch(resetRecording(target));
     },
     setVideoUploadedFlag: value => {
       dispatch(setVideoUploadedFlag(value));
@@ -51,8 +67,17 @@ function mapDispatchToProps(dispatch) {
     fetchCelebDetails: id => {
       dispatch(fetchCelebDetails(id));
     },
+    pageCountHandler: value => {
+      dispatch(pageCountHandler(value));
+    },
+    updateBookingData: data => {
+      dispatch(updateBookingData(data));
+    },
     toggleLogin: state => dispatch(toggleLogin(state)),
     updateToast: toastObj => dispatch(updateToast(toastObj)),
+    clearAll: () => {
+      dispatch(clearAll());
+    },
   };
 }
 export default connect(

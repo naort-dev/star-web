@@ -1,780 +1,614 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { Templates } from './styled';
-import { getMobileOperatingSystem, checkMediaRecorderSupport, checkDevice } from '../../utils/checkOS';
+import Select from '@material-ui/core/Select';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import { Templates, FlexBox } from './styled';
+import {
+  getMobileOperatingSystem,
+  checkMediaRecorderSupport,
+} from '../../utils/checkOS';
 import AudioRecorder from '../AudioRecorder';
+import { TextInput } from '../../components/TextField';
 
-
-class RequestTemplates extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      type: props.type,
-      relationship: props.relationship,
-      user: props.user,
-      eventname: props.eventName,
-      startDate: null,
-    };
-    this.handleChange = this.handleChange.bind(this);
-  }
-  componentDidMount() {
-    const datePicker = document.getElementsByClassName("react-datepicker__input-container")[0];
-    if (datePicker && datePicker.childNodes && datePicker.childNodes[0]) {
-      datePicker.childNodes[0].setAttribute("readOnly",true);
+function RequestTemplates(
+  templateType,
+  bookingData,
+  audioRecorder,
+  saveAudioRecording,
+  resetRecording,
+  handleInputChange,
+  updateUserToMyself,
+  audioObj,
+) {
+  const isMobile = getMobileOperatingSystem();
+  const videoForValue = () => {
+    let value = '';
+    if (bookingData.hostName) {
+      value = bookingData.hostName;
+    } else {
+      value = bookingData.user === 'someoneElse' ? '' : 'YOU';
     }
-  }
-  handleChange(date) {    
-    this.setState({
-      startDate: date,
-    });
-    this.props.handleChange(date, 'date');
-  }
+    return value;
+  };
 
-  audioRecorder(displayText) {
-    if (!getMobileOperatingSystem() && checkMediaRecorderSupport()) {
-      this.props.deviceCheck("checking")
-      return checkDevice()
-        .then(
-          () => {
-            this.props.showRecorder(displayText),
-              this.props.deviceCheck("checked")
-          },
-          () => {
-            this.props.showFallback(displayText),
-              this.props.deviceCheck("checked")
-          }
-        );
-    }
-
-    else {
-      this.props.showRecorder(displayText)
-    }
-
-  }
-
-  fileHandler(target) {
-    const file = document.getElementById(target).files[0];
-    const reader = new FileReader();
-    const fileURL = URL.createObjectURL(file);
-    document.getElementById('recorded-audio').src = fileURL;
-    this.props.saveAudioFile({ [`${target}`]: file });
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  }
-
-  renderTemplates = () => {
-    const relations = this.state.relationship;
-    const optionItems = relations.map((relations) =>
-      <option value={relations.id} key={relations.id}>{relations.title}</option>
-    );
-    switch (this.state.type) {
-      case 1:
-        return null;
-      case 2:
-        return (
-          <div>
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for?</Templates.Label>
-
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="hostName"
-                      value={this.props.hostName}
-                      onBlur={this.props.checkRequiredHostName}
-                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                    />
-                    {this.props.whoIsfor ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-
-                  </Templates.WrapsInput>
-                  {
-                    !getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                    <Templates.WrapsAudioInput>
-                      <AudioRecorder key="for" target="for"  {...this.props}/>
-                    </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-
-
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="userName"
-                      value={this.props.userName}
-                      onBlur={this.props.checkRequiredUserName}
-                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                    />
-                    {this.props.whoIsfrom ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                      <Templates.WrapsAudioInput>
-                        <AudioRecorder key="from" target="from" {...this.props} />
-                    </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.RelationshipLabelWrapper>
-                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
-                  {' '}
-                  {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
-                </Templates.RelationshipLabelWrapper>
-                <Templates.WrapsInput>
-                  <Templates.Select
-                    value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
-                  >
-                    <option value="0" key="0">Choose one</option>
-                    {optionItems}
-                    <option value="otherRelation" key="otherRelation">Other</option>
-                  </Templates.Select>
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.props.relationshipValue === 'otherRelation' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Other relationship</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Please enter relationship"
-                    type="text"
-                    name="otherRelationship"
-                    value={this.props.otherRelationValue}
-                    onBlur={this.props.otherRelationship}
-                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
-                  />
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            <Templates.InputWrapper>
-              <Templates.Label>What is this {this.state.eventname} for?</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="What specifically for"
-                  type="text"
-                  name="specification"
-                  value={this.props.specification}
-                  onChange={event => this.props.handleChange(event.target.value, 'specification')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.InputArea
-                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
-                  type="text"
-                  name="important"
-                  value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-          </div>
-        );
-      case 3:
-        return (
-          <div>
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="hostName"
-                      value={this.props.hostName}
-                      onBlur={this.props.checkRequiredHostName}
-                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                    />
-
-                    {this.props.whoIsfor ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                    <Templates.WrapsAudioInput>
-                     <AudioRecorder key="for" target="for" {...this.props}/>
-                    </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="userName"
-                      value={this.props.userName}
-                      onBlur={this.props.checkRequiredUserName}
-                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                    />
-
-                    {this.props.whoIsfrom ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                     <Templates.WrapsAudioInput>
-                     <AudioRecorder key= "from" target="from" {...this.props} />
-                 </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.RelationshipLabelWrapper>
-                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
-                  {' '}
-                  {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
-                </Templates.RelationshipLabelWrapper>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Select
-                      value={this.props.relationshipValue}
-                      onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
-                    >
-                      <option value="0" key="0">Choose one</option>
-                      {optionItems}
-                      <option value="otherRelation" key="otherRelation">Other</option>
-                    </Templates.Select>
-                  </Templates.WrapsInput>
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.props.relationshipValue === 'otherRelation' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Other relationship</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter relationship"
-                    type="text"
-                    name="otherRelationship"
-                    value={this.props.otherRelationValue}
-                    onBlur={this.props.otherRelationship}
-                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
-                  />
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            <Templates.InputWrapper>
-              <Templates.Label>Who is the Starsona video honoring?</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="What specifically for"
-                  type="text"
-                  name="specification"
-                  value={this.props.specification}
-                  onChange={event => this.props.handleChange(event.target.value, 'specification')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.InputArea
-                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
-                  type="text"
-                  name="important"
-                  value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-
-          </div>
-        );
-      case 4:
-        return (
-          <div>
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="hostName"
-                      value={this.props.hostName}
-                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                      onBlur={this.props.checkRequiredHostName}
-                    />
-
-                    {this.props.whoIsfor ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                     <Templates.WrapsAudioInput>
-                     <AudioRecorder key="for" target="for" {...this.props} />
-                 </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      value={this.props.userName}
-                      name="userName"
-                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                      onBlur={this.props.checkRequiredUserName}
-                    />
-
-                    {this.props.whoIsfrom ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                    <Templates.WrapsAudioInput>
-                    <AudioRecorder key="from" target="from" {...this.props} />
-                </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.RelationshipLabelWrapper>
-                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
-                  {' '}
-                  {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
-                </Templates.RelationshipLabelWrapper>
-                <Templates.WrapsInput>
-                  <Templates.Select
-                    value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
-                  >
-                    <option value="0" key="0">Choose one</option>
-                    {optionItems}
-                    <option value="otherRelation" key="otherRelation">Other</option>
-                  </Templates.Select>
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.props.relationshipValue === 'otherRelation' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Other relationship</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter relationship"
-                    type="text"
-                    name="otherRelationship"
-                    value={this.props.otherRelationValue}
-                    onBlur={this.props.otherRelationship}
-                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
-                  />
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            <Templates.InputWrapper>
-              <Templates.Label>What's the occasion?</Templates.Label>
-              <Templates.WrapsInput>
-                <DatePicker
-                  dateFormat="LL"
-                  withPortal
-                  customInput={<Templates.Input />}
-                  popperPlacement="bottom"
-                  selected={this.props.date}
-                  onChange={this.handleChange}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>{this.state.eventname} from</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="From Where"
-                  type="text"
-                  name="specification"
-                  value={this.props.specification}
-                  onChange={event => this.props.handleChange(event.target.value, 'specification')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.InputArea
-                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
-                  type="text"
-                  name="important"
-                  value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-          </div>
-        );
-      case 5:
-        return (
-
-          <div>
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video for?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="hostName"
-                      value={this.props.hostName}
-                      onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                      onBlur={this.props.checkRequiredHostName}
-                    />
-                    {this.props.whoIsfor ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                    <Templates.WrapsAudioInput>
-                    <AudioRecorder key="for" target="for" {...this.props} />
-                    </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Who is the Starsona video from?</Templates.Label>
-                <Templates.InputWrapperContainer>
-                  <Templates.WrapsInput>
-                    <Templates.Input
-                      placeholder="Enter name"
-                      type="text"
-                      name="userName"
-                      value={this.props.userName}
-                      onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                      onBlur={this.props.checkRequiredUserName}
-                    />
-
-                    {this.props.whoIsfrom ?
-                      <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                      :
-                      null
-                    }
-                  </Templates.WrapsInput>
-                  {!getMobileOperatingSystem() && checkMediaRecorderSupport() && (!window.navigator.userAgent.indexOf("MSIE ") > -1 && !window.navigator.userAgent.indexOf("Trident/") > -1) ?
-                     <Templates.WrapsAudioInput>
-                     <AudioRecorder key="from" target="from" {...this.props} />
-                 </Templates.WrapsAudioInput>
-                    : null}
-                </Templates.InputWrapperContainer>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.state.user === '2' ?
-              <Templates.InputWrapper>
-                <Templates.RelationshipLabelWrapper>
-                  <Templates.RelationLabel>Relationship</Templates.RelationLabel>
-                  {' '}
-                  {this.props.userName && this.props.hostName && <Templates.DetailedRelation>{`(${this.props.userName} is ${this.props.hostName}'s)`}</Templates.DetailedRelation>}
-                </Templates.RelationshipLabelWrapper>
-                <Templates.WrapsInput>
-                  <Templates.Select
-                    value={this.props.relationshipValue}
-                    onChange={event => this.props.handleChange(event.target.value, 'relationshipValue')}
-                  >
-                    <option value="0" key="0">Choose one</option>
-                    {optionItems}
-                    <option value="otherRelation" key="otherRelation">Other</option>
-                  </Templates.Select>
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {this.props.relationshipValue === 'otherRelation' ?
-              <Templates.InputWrapper>
-                <Templates.Label>Other relationship</Templates.Label>
-                <Templates.WrapsInput>
-                  <Templates.Input
-                    placeholder="Enter relationship"
-                    type="text"
-                    name="otherRelationship"
-                    value={this.props.otherRelationValue}
-                    onBlur={this.props.otherRelationship}
-                    onChange={event => this.props.handleChange(event.target.value, 'otherRelationValue')}
-                  />
-                </Templates.WrapsInput>
-              </Templates.InputWrapper>
-              :
-              null
-            }
-            {
-              this.props.selectedOccasion == 5 ?
-                <Templates.InputWrapper>
-                  <Templates.Label>When is the occasion? (optional)</Templates.Label>
-                  <Templates.WrapsInput>
-                    <DatePicker
-                      dateFormat="LL"
-                      withPortal
-                      customInput={<Templates.Input />}
-                      popperPlacement="bottom"
-                      selected={this.props.date}
-                      onChange={this.handleChange}
-                      placeholderText="Enter date"
-                    />
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper> :
-                <Templates.InputWrapper>
-                  <Templates.Label>When is the occasion?</Templates.Label>
-                  <Templates.WrapsInput>
-                    <DatePicker
-                      dateFormat="LL"
-                      withPortal
-                      customInput={<Templates.Input />}
-                      popperPlacement="bottom"
-                      selected={this.props.date}
-                      onChange={this.handleChange}
-                    />
-                  </Templates.WrapsInput>
-                </Templates.InputWrapper>
-            }
-            
-            <Templates.InputWrapper>
-              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.InputArea
-                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
-                  type="text"
-                  name="important"
-                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
-                  value={this.props.importantinfo}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-          </div>
-        );
-      case 6:
-        return (
-          <div>
-            <Templates.InputWrapper>
-              <Templates.Label>Title of the event</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="Enter the Event Name"
-                  type="text"
-                  name="EventName"
-                  value={this.props.eventdetailName}
-                  onChange={event => this.props.handleChange(event.target.value, 'eventdetailName')}
-                  onBlur={this.props.checkRequiredTitle}
-                />
-                {this.props.eventTitle ?
-                  <Templates.ErrorMsg>Please enter a valid event title</Templates.ErrorMsg>
-                  :
-                  null
-                }
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Who's hosting the event?</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="Enter Name"
-                  type="text"
-                  name="userName"
-                  value={this.props.userName}
-                  onBlur={this.props.checkRequiredUserName}
-                  onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                />
-                {this.props.whoIsfrom ?
-                  <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                  :
-                  null
-                }
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>When is the event?</Templates.Label>
-              <Templates.WrapsInput>
-                <DatePicker
-                  dateFormat="LL"
-                  withPortal
-                  customInput={<Templates.Input />}
-                  popperPlacement="bottom"
-                  selected={this.props.date}
-                  onChange={this.handleChange}
-                  onBlur={this.props.checkRequiredDate}
-                />
-                {this.props.eventDate ?
-                  <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
-                  :
-                  null
-                }
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.InputArea
-                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
-                  type="text"
-                  name="important"
-                  value={this.props.importantinfo}
-                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-          </div>
-        );
-      case 7:
-        return (
-          <div>
-            <Templates.InputWrapper>
-              <Templates.Label>Who's the guest of honor?</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="Enter guest name"
-                  type="text"
-                  name="hostName"
-                  value={this.props.hostName}
-                  onChange={event => this.props.handleChange(event.target.value, 'hostName')}
-                  onBlur={this.props.checkRequiredHostName}
-                />
-                {this.props.whoIsfor ?
-                  <Templates.ErrorMsg>Please enter guest of honor</Templates.ErrorMsg>
-                  :
-                  null
-                }
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Who's hosting the event?</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.Input
-                  placeholder="Enter name"
-                  type="text"
-                  value={this.props.userName}
-                  name="userName"
-                  onChange={event => this.props.handleChange(event.target.value, 'userName')}
-                  onBlur={this.props.checkRequiredUserName}
-                />
-                {this.props.whoIsfrom ?
-                  <Templates.ErrorMsg>Please enter a valid name</Templates.ErrorMsg>
-                  :
-                  null
-                }
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>When is the event?</Templates.Label>
-              <Templates.WrapsInput>
-                <DatePicker
-                  dateFormat="LL"
-                  withPortal
-                  customInput={<Templates.Input />}
-                  popperPlacement="bottom"
-                  selected={this.props.date}
-                  onChange={this.handleChange}
-                  onBlur={this.props.checkRequiredDate}
-                />
-                {this.props.eventDate ?
-                  <Templates.ErrorMsg>Please enter a valid date</Templates.ErrorMsg>
-                  :
-                  null
-                }
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-            <Templates.InputWrapper>
-              <Templates.Label>Any important info for {this.props.starName} to know? (optional)</Templates.Label>
-              <Templates.WrapsInput>
-                <Templates.InputArea
-                  placeholder="Nickname?&#10;Funny quirk?&#10;Why you're such a big fan?&#10;Favorite movie/song/etc.that the star did?"
-                  type="text"
-                  name="important"
-                  onChange={event => this.props.handleChange(event.target.value, 'importantinfo')}
-                  value={this.props.importantinfo}
-                />
-              </Templates.WrapsInput>
-            </Templates.InputWrapper>
-          </div>
-        );
-      default:
-        return null;
-    }
-  }
-
-  render() {
+  const getTextInput = ({
+    placeholder,
+    value,
+    audioFlg,
+    onChange,
+    state,
+    forSelf,
+    tobeValidate,
+    fullWidth,
+  }) => {
+    const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
-      <Templates>
-        {this.renderTemplates()}
-      </Templates>
+      <Templates.InputWrapper fullWidth={fullWidth}>
+        <TextInput
+          label={placeholder}
+          value={value}
+          onChange={event => onChange(event.target.value, state, tobeValidate)}
+          InputProps={{ classes: { input: 'input-field' } }}
+        />
+        {bookingData.user === 'someoneElse' && forSelf && value === '' && (
+          <Templates.Myself onClick={updateUserToMyself}>
+            This video is for me!
+          </Templates.Myself>
+        )}
+        <React.Fragment>
+          {audioFlg &&
+            value !== '' &&
+            !getMobileOperatingSystem() &&
+            checkMediaRecorderSupport() &&
+            (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
+              !window.navigator.userAgent.indexOf('Trident/') > -1) && (
+              <Templates.WrapsAudioInput>
+                <AudioRecorder
+                  key={targetNM}
+                  target={targetNM}
+                  audioRecorder={audioRecorder}
+                  saveAudioRecording={(target, audio) =>
+                    saveAudioRecording(target, audio)
+                  }
+                  resetRecording={target => resetRecording(target)}
+                />
+                {!(audioObj[targetNM] && audioObj[targetNM].recordedUrl) && (
+                  <span className="recText">Pronounce Name</span>
+                )}
+              </Templates.WrapsAudioInput>
+            )}
+        </React.Fragment>
+      </Templates.InputWrapper>
     );
-  }
-}
+  };
+  const getSelect = (placeholder, value, onChange, fullWidth) => {
+    const optionItems =
+      bookingData.relationship &&
+      bookingData.relationship.map(relation => (
+        <MenuItem value={relation.id} key={relation.id}>
+          {relation.title}
+        </MenuItem>
+      ));
+    return (
+      <Templates.InputWrapper fullWidth={fullWidth}>
+        <FormControl className="select-material">
+          <InputLabel htmlFor="reln-helper" classes={{ root: 'float-label' }}>
+            {placeholder}
+          </InputLabel>
+          <Select
+            value={value}
+            onChange={event =>
+              onChange(event.target.value, 'relationshipValue')
+            }
+            inputProps={{
+              id: 'reln-helper',
+            }}
+            classes={{ select: 'input-field' }}
+          >
+            {optionItems}
+            <MenuItem value="otherRelation" key="otherRelation">
+              Other
+            </MenuItem>
+          </Select>
+        </FormControl>
+      </Templates.InputWrapper>
+    );
+  };
 
+  const getDatePicker = (placeholder, date, onChange, fullWidth) => {
+    return (
+      <Templates.InputWrapper fullWidth={fullWidth}>
+        <div className="datepickerWrapper">
+          <DatePicker
+            dateFormat="LL"
+            withPortal
+            customInput={
+              <TextInput
+                label={placeholder}
+                InputProps={{ classes: { input: 'input-field' } }}
+              />
+            }
+            customInputRef="dt"
+            popperPlacement="bottom"
+            selected={date}
+            onChange={dt => onChange(dt, 'date')}
+            placeholderText="Enter date"
+          />
+        </div>
+      </Templates.InputWrapper>
+    );
+  };
+  const getFiledProps = (
+    placeholder,
+    audioFlg,
+    valFun,
+    state,
+    forSelf,
+    fullWidth,
+  ) => {
+    return {
+      placeholder,
+      audioFlg,
+      onChange: handleInputChange,
+      value: valFun ? videoForValue() : bookingData[state],
+      state,
+      forSelf,
+      fullWidth,
+    };
+  };
+  const getVideoFor = (state, fullWidth) => {
+    return getTextInput(
+      getFiledProps(
+        'Who is this video for?',
+        true,
+        true,
+        state,
+        true,
+        fullWidth,
+      ),
+    );
+  };
+  const getVideoFrom = (state, fullWidth) => {
+    return getTextInput(
+      getFiledProps(
+        'Who is this video from?',
+        true,
+        false,
+        state,
+        false,
+        fullWidth,
+      ),
+    );
+  };
+  const getSpecification = (placeholder, state, fullWidth) => {
+    return getTextInput(
+      getFiledProps(placeholder, false, false, state, fullWidth),
+    );
+  };
+  const getRelationship = fullWidth => {
+    return getSelect(
+      'Relationship',
+      bookingData.relationshipValue,
+      handleInputChange,
+      fullWidth,
+    );
+  };
+  const getDate = fullWidth => {
+    return getDatePicker(
+      'Date',
+      bookingData.date,
+      handleInputChange,
+      fullWidth,
+    );
+  };
+  const renderTemplates = () => {
+    const pageDetails = [];
+    switch (templateType) {
+      case 1:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {bookingData.user === 'someoneElse' ? (
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getDate()}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {getVideoFor('hostName', true)}
+                  {getDate(true)}
+                </React.Fragment>
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getRelationship()} {getDate()}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')}
+              {getDate()}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 2:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {bookingData.user === 'someoneElse' ? (
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getSpecification(
+                    "Who's the guest of honor?",
+                    'specification',
+                  )}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {getVideoFor('hostName', true)}
+                  {getSpecification(
+                    "Who's the guest of honor?",
+                    'specification',
+                    true,
+                  )}
+                </React.Fragment>
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getRelationship()}
+              {getSpecification("Who's the guest of honor?", 'specification')}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')}
+              {getSpecification("Who's the guest of honor?", 'specification')}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 3:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {bookingData.user === 'someoneElse' ? (
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getSpecification(
+                    `What is this ${bookingData.eventName} for`,
+                    'specification',
+                  )}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {getVideoFor('hostName', true)}
+                  {getSpecification(
+                    `What is this ${bookingData.eventName} for`,
+                    'specification',
+                    true,
+                  )}
+                </React.Fragment>
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getRelationship()}
+              {getSpecification(
+                `What is this ${bookingData.eventName} for`,
+                'specification',
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')}
+              {getSpecification(
+                `What is this ${bookingData.eventName} for`,
+                'specification',
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 4:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {bookingData.user === 'someoneElse' ? (
+                <React.Fragment>
+                  {getVideoFor('hostName')}
+                  {getVideoFrom('userName')}
+                  {getRelationship()}
+                  {getTextInput(
+                    getFiledProps('For what', false, false, 'specification'),
+                  )}
+                </React.Fragment>
+              ) : (
+                <React.Fragment>
+                  {getVideoFor('hostName', true)}
+                  {getTextInput(
+                    getFiledProps(
+                      'For what',
+                      false,
+                      false,
+                      'specification',
+                      true,
+                    ),
+                  )}
+                </React.Fragment>
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getRelationship()}
+              {getTextInput(
+                getFiledProps('For what', false, false, 'specification'),
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')}
+              {getTextInput(
+                getFiledProps('For what', false, false, 'specification'),
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 5:
+        if (!isMobile) {
+          if (bookingData.user === 'someoneElse') {
+            const page1 = (
+              <FlexBox>
+                {getVideoFor('hostName')}
+                {getVideoFrom('userName')}
+                {getRelationship()}
+                {getTextInput(
+                  getFiledProps('From where', false, false, 'specification'),
+                )}
+              </FlexBox>
+            );
+            const page2 = <FlexBox>{getDate(true)}</FlexBox>;
+            pageDetails.push(page1);
+            pageDetails.push(page2);
+          } else {
+            const page1 = (
+              <FlexBox>
+                {getVideoFor('hostName')}
+                {getTextInput(
+                  getFiledProps('From where', false, false, 'specification'),
+                )}
+                {getDate(true)}
+              </FlexBox>
+            );
+            pageDetails.push(page1);
+          }
+        } else if (bookingData.user === 'someoneElse') {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')} {getVideoFrom('userName')}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getRelationship()}
+              {getTextInput(
+                getFiledProps('From where', false, false, 'specification'),
+              )}
+            </FlexBox>
+          );
+          const page3 = <FlexBox>{getDate()}</FlexBox>;
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+          pageDetails.push(page3);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getVideoFor('hostName')}
+              {getTextInput(
+                getFiledProps('From where', false, false, 'specification'),
+              )}
+              {getDate()}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        }
+        return pageDetails;
+      case 6:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {getTextInput(
+                getFiledProps(
+                  'Name of the event',
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  true,
+                ),
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getTextInput(
+                getFiledProps(
+                  'Name of the event',
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  true,
+                ),
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        }
+        return pageDetails;
+      case 7:
+        if (!isMobile) {
+          const page1 = (
+            <FlexBox>
+              {getTextInput(
+                getFiledProps(
+                  "Who's the guest of honor?",
+                  false,
+                  false,
+                  'specification',
+                  false,
+                  true,
+                ),
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+        } else {
+          const page1 = (
+            <FlexBox>
+              {getTextInput(
+                getFiledProps(
+                  "Who's the guest of honor?",
+                  false,
+                  false,
+                  'specification',
+                ),
+              )}
+              {getTextInput(
+                getFiledProps(
+                  "Who's hosting the event?",
+                  false,
+                  false,
+                  'hostName',
+                ),
+              )}
+            </FlexBox>
+          );
+          const page2 = (
+            <FlexBox>
+              {getDatePicker(
+                'When is the event?',
+                bookingData.date,
+                handleInputChange,
+              )}
+            </FlexBox>
+          );
+          pageDetails.push(page1);
+          pageDetails.push(page2);
+        }
+        return pageDetails;
+      default:
+        return [];
+    }
+  };
+  return renderTemplates();
+}
 export default RequestTemplates;

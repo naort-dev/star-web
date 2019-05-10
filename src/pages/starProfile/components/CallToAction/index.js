@@ -28,7 +28,7 @@ const CallToAction = (props) => {
   }
 
   const toggleRequestFlowMobile = () => {
-    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+    if ((document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) && props.celebDetails.availability) {
       props.toggleRequestFlow(true);
     }
   }
