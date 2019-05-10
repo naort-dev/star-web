@@ -17,7 +17,7 @@ const CategoryList = (props) => {
   return (
     <CategoryListWrapper>
       <CategoryListItem>
-        <Link to="/browse-stars" onClick={updateMainCategory('Featured', 0, [])}>
+        <Link to="/browse-stars" onClick={updateMainCategory('Featured', '', [])}>
           <CategoryIcon>
             <FontAwesomeIcon icon={faStarExclamation} />
           </CategoryIcon>
