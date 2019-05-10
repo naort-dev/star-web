@@ -122,7 +122,7 @@ const ListingSection = (props) => {
       </ListingStyled.ContentSection>
       <ListingStyled.ContentSection>
         <ListingStyled.ContentHeader>
-          Latest reactions...
+          Latest responses...
         </ListingStyled.ContentHeader>
         <ListingStyled.Content>
           {
