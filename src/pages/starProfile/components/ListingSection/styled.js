@@ -39,7 +39,7 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   display: ${props => (props.visible ? 'flex' : 'none')};
   padding: 0 15px;
   font-family: Gilroy-MediumItalic;
-  font-size: 19px;
+  font-size: 12px;
   color: ${props => props.theme.brownGrey};
   flex-direction: column;
   justify-content: space-evenly;
@@ -49,6 +49,7 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   }
   @media(min-width: 832px) {
     width: 312px;
+    font-size: 19px;
   }
 `;
 
