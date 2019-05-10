@@ -69,7 +69,7 @@ export default class SetPrice extends React.Component {
       return false;
     }
     
-    validatePromo(this.state.referralCode.value)
+   return validatePromo(this.state.referralCode.value)
               .then((success) => {
                 this.setState({ loader: false });
                 if (success) {
@@ -164,7 +164,6 @@ export default class SetPrice extends React.Component {
       { isReferred ? <ReferralCode
       error={this.state.referralCode.message}
       value={this.state.referralCode.value}
-      onBlur={this.checkReferralCodeRequired}
       onChange={(event) => this.saveFormEntries(event, "referralCode")}
       onPrimaryButtonClick={this.onSubmitReferralCode}
     /> :
