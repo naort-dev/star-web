@@ -101,58 +101,66 @@ const ListingSection = (props) => {
   }
   return (
     <ListingStyled>
-      <ListingStyled.ContentSection>
-        <ListingStyled.ContentHeader>
-          Latest videos...
-        </ListingStyled.ContentHeader>
-        <ListingStyled.Content>
-          {
-            videosList.map((video, index) => {
-              return renderVideoSection(video, index)
-            })
-          }
-          {
-            props.videosList.count > videosList.length ?
-              <ListingStyled.ContentItem className="show-more">
-                <span onClick={showMore('videos')}>Show More</span>
-              </ListingStyled.ContentItem>
-            : null
-          }
-        </ListingStyled.Content>
-      </ListingStyled.ContentSection>
-      <ListingStyled.ContentSection>
-        <ListingStyled.ContentHeader>
-          Latest responses...
-        </ListingStyled.ContentHeader>
-        <ListingStyled.Content>
-          {
-            props.reactionsList.data.map((reaction) => {
-              return (
-                <ListingStyled.ContentItem key={reaction.reaction_id}>
-                  <ListingStyled.VideoItemWrapper>
-                    <ListingStyled.VideoItem>
-                      <VideoRender
-                        variableWidth
-                        variableHeight
-                        noBorder
-                        videoSrc={reaction.reaction_file_url}
-                        cover={reaction.reaction_thumbnail_url}
-                      />
-                    </ListingStyled.VideoItem>
-                  </ListingStyled.VideoItemWrapper>
-                </ListingStyled.ContentItem>
-              )
-            })
-          }
-          {
-            props.reactionsList.count > props.reactionsList.data.length ?
-              <ListingStyled.ContentItem className="show-more">
-                <span onClick={showMore('reactions')}>Show More</span>
-              </ListingStyled.ContentItem>
-            : null
-          }
-        </ListingStyled.Content>
-      </ListingStyled.ContentSection>
+      {
+        videosList.length ?
+          <ListingStyled.ContentSection>
+            <ListingStyled.ContentHeader>
+              Latest videos...
+            </ListingStyled.ContentHeader>
+            <ListingStyled.Content>
+              {
+                videosList.map((video, index) => {
+                  return renderVideoSection(video, index)
+                })
+              }
+              {
+                props.videosList.count > videosList.length ?
+                  <ListingStyled.ContentItem className="show-more">
+                    <span onClick={showMore('videos')}>Show More</span>
+                  </ListingStyled.ContentItem>
+                : null
+              }
+            </ListingStyled.Content>
+          </ListingStyled.ContentSection>
+        : null
+      }
+      {
+        props.reactionsList.data.length ?
+          <ListingStyled.ContentSection>
+            <ListingStyled.ContentHeader>
+              Latest responses...
+            </ListingStyled.ContentHeader>
+            <ListingStyled.Content>
+              {
+                props.reactionsList.data.map((reaction) => {
+                  return (
+                    <ListingStyled.ContentItem key={reaction.reaction_id}>
+                      <ListingStyled.VideoItemWrapper>
+                        <ListingStyled.VideoItem>
+                          <VideoRender
+                            variableWidth
+                            variableHeight
+                            noBorder
+                            videoSrc={reaction.reaction_file_url}
+                            cover={reaction.reaction_thumbnail_url}
+                          />
+                        </ListingStyled.VideoItem>
+                      </ListingStyled.VideoItemWrapper>
+                    </ListingStyled.ContentItem>
+                  )
+                })
+              }
+              {
+                props.reactionsList.count > props.reactionsList.data.length ?
+                  <ListingStyled.ContentItem className="show-more">
+                    <span onClick={showMore('reactions')}>Show More</span>
+                  </ListingStyled.ContentItem>
+                : null
+              }
+            </ListingStyled.Content>
+          </ListingStyled.ContentSection>
+        : null
+      }
     </ListingStyled>
   )
 }
