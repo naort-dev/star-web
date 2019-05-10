@@ -77,7 +77,6 @@ class MobileHome extends React.Component {
     const { featuredStars, isLoggedIn } = this.props;
     return (
       <RequestFlowPopup
-        modalView
         disableClose
       >
         <MobileStyled className={currentStep === 5 ? 'grey-background' : ''}>

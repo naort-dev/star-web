@@ -75,6 +75,8 @@ export default class VideoPlayer extends React.Component {
       this.props.autoPlay
     ) {
       this.toggleVideoPlay();
+    } else if (!visible) {
+      this.player.pause();
     }
   }
 
