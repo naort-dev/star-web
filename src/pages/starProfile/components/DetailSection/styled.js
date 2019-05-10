@@ -98,6 +98,11 @@ DetailStyled.BackButton = styled.div`
         padding-right: 10.8px;
         font-size: 28px;
       }
+      .back-title {
+        vertical-align: top;
+        padding-top: 1px;
+        display: inline-block;
+      }
     }
   }
 `;

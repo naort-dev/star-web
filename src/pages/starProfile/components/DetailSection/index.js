@@ -83,7 +83,9 @@ const DetailSection = (props) => {
           <span className="back-icon">
             <FontAwesomeIcon icon={faChevronLeft} />
           </span>
-          Back
+          <span className="back-title">
+            Back
+          </span>
         </span>
       </DetailStyled.BackButton>
       <DetailStyled.ProfileContent visible={!props.showProfileVideo}>
