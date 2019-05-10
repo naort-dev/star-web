@@ -8,15 +8,17 @@ import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode';
 import {convertedApplePrice} from '../../constants';
 import { validatePromo } from '../../../../services';
+import { BackArrow } from '../../../../styles/CommonStyled';
 
 export default class SetPrice extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      isReferred: false,
+      isReferred: props.switched ? props.switched : false,
       confirmPrice: false,
       referralCode: { value: '', isValid: false, message: '' },
       price: { value: '', isValid: false, message: '' },
+      // compSwitch: props.switched ? props.switched : false,
     };
   }
 
@@ -79,19 +81,20 @@ export default class SetPrice extends React.Component {
                     },
                   });
                 }
+                return true;
               })
               .catch(() => {
                 const referralCodeMsg = "Please enter a valid referral code";
                 this.setState({
                   referralCode: {
                     ...this.state.referralCode,
-                    message: referralCodeMsg
+                    message: referralCodeMsg,
+                    isValid: false
                   }
                 });
                 return false;
               });
    
-    return true;
   };
 
   checkPriceRequired = () => {
@@ -135,7 +138,6 @@ export default class SetPrice extends React.Component {
           value: pattern.test(commaToNumberFormatter(event.target.value)) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value)) : this.state.price.value,
         },
       });
-     console.log(pattern.test(commaToNumberFormatter(this.state.price.value)));
     } else {
     this.setState({
       [type]: {
@@ -145,11 +147,21 @@ export default class SetPrice extends React.Component {
     });
   }
   };
+  backArrowClick = () => {
+    if (this.state.isReferred) {
+      this.setState({isReferred: false});
+    } else {
+      this.props.onBack(false);
+    }
+  };
 
   render() {
     const { props } = this;
     const { isReferred, confirmPrice } = this.state
-    return (isReferred ? <ReferralCode
+    return (
+      <React.Fragment>
+      <BackArrow className="leftArrow" onClick={this.backArrowClick} />
+      { isReferred ? <ReferralCode
       error={this.state.referralCode.message}
       value={this.state.referralCode.value}
       onBlur={this.checkReferralCodeRequired}
@@ -194,7 +206,7 @@ export default class SetPrice extends React.Component {
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
-                {this.state.referralCode.value ?
+                {this.state.referralCode.value && this.state.referralCode.isValid ?
                   `Referral Code: ${this.state.referralCode.value}` :
                   props.link}
               </SetPriceWrapper.HighLight>
@@ -207,6 +219,8 @@ export default class SetPrice extends React.Component {
           </SetPriceWrapper.ButtonWrapper>
         </SetPriceWrapper.ComponentWrapper>
       </SetPriceWrapper>
+        }
+        </React.Fragment>
     );
   }
 }
@@ -223,6 +237,7 @@ SetPrice.propTypes = {
   primary_button: PropTypes.string,
   primaryButtonClick: PropTypes.func,
   title: PropTypes.string,
+  switched: PropTypes.bool,
 };
 SetPrice.defaultProps = {
   action: '',
@@ -235,5 +250,6 @@ SetPrice.defaultProps = {
   link: '',
   primary_button: '',
   primaryButtonClick: () => { },
-  title: ''
+  title: '',
+  switched: false,
 };

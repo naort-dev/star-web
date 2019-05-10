@@ -212,9 +212,9 @@ class Search extends React.Component {
                       <SearchSection.SuggestionListItem
                         tabIndex="0"
                         key={item.user_id}
-                        onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
+                        onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.vanity_id}`)}
                       >
-                        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
+                        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.vanity_id}`}>
                           <SearchSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                             <span>
                               <SearchSection.SuggestionListImage imageUrl={item.image_url} />
@@ -254,7 +254,7 @@ class Search extends React.Component {
             value={this.state.searchText}
             onClick={this.showSuggestions}
             onChange={this.handleSearchChange}
-            onKeyUp={this.handleSearchSubmit}
+            // onKeyUp={this.handleSearchSubmit}
           />
           {
             this.state.searchText.length >= 3 ?

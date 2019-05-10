@@ -34,6 +34,19 @@ export default class VideoRender extends React.Component {
   componentWillUnmount() {
     this.mounted = false;
   }
+
+  renderCustomText = () => {
+    if (this.props.customText) {
+      return (
+        <VideoRenderDiv.CustomText>
+          {
+            this.props.customText
+          }
+        </VideoRenderDiv.CustomText>
+      )
+    }
+  }
+
   render() {
     const { props } = this;
     return (
@@ -45,6 +58,7 @@ export default class VideoRender extends React.Component {
         >
           <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
             <VideoPlayer
+              renderCustomText={this.renderCustomText}
               autoPlay={this.props.autoPlay}
               onError={this.props.onVideoError}
               primarySrc={props.videoSrc}

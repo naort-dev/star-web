@@ -21,6 +21,20 @@ VideoRenderDiv.Container = styled.div`
   }
 `;
 
+VideoRenderDiv.CustomText = styled.span`
+  display: none;
+  @media(min-width: 832px) {
+    font-family: Gilroy-Regular;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    width: 100%;
+    margin-top: 14.7px;
+    line-height: 26px;
+    text-align: center;
+  }
+`;
+
 VideoRenderDiv.Content = styled.div`
   border-radius: 20px;
   width: 100%;

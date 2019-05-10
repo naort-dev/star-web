@@ -7,7 +7,7 @@ class Api {
   static getProfessionsList = 'v2/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
-  static getVideosList = 'v1/request/featured_videos/';
+  static getVideosList = 'v2/request/featured_videos/';
   static login = 'v1/user/login/';
   static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
@@ -62,6 +62,7 @@ class Api {
   static validateOtpCode = 'v1/user/verify_mobile/';
   static celebRepresentative = 'v1/user/celebrity_representative/';
   static getReactions = 'v1/request/reactions/';
+  static getStarReaction = 'v2/request/reactions_full_listing/';
   static getGroupsList = 'v1/user/group_account/';
   static groupTypeListing = 'v1/user/active_group_types/';
   static createGroupNotification = 'v1/notification/new_group_notification/';

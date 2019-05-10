@@ -49,6 +49,7 @@ class SignupFlow extends React.Component {
         : false,
       profession: [],
       profile_video: 'sample.mp4',
+      disableClose: false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -57,6 +58,13 @@ class SignupFlow extends React.Component {
     this.setState(state => ({
       currentStep: state.currentStep - 1,
       switched: flag ? flag : false,
+    }));
+  };
+  onSetPriceBack = flag => {
+    this.setState(state => ({
+      currentStep: flag? state.currentStep - 1 : state.currentStep - 2,
+      switchedSetPrice: flag, 
+      switched: true,
     }));
   };
 
@@ -85,7 +93,21 @@ class SignupFlow extends React.Component {
       this.props.history.push('user/star-supporters');
     }
   }
+  closeSignUpForm =(isTermsAndCondition) => {
+    if(isTermsAndCondition) {
+      // this.onBack(isTermsAndCondition);
+      this.setState({
+        switched: false,
+        disableClose: false
+      });
+    } else {
+      this.closeSignUp();
+    }
 
+  }
+  disableClose = (flag) => {
+    this.setState({disableClose: flag});
+  }
   setProfileVideo = (fileName) => {
     this.setState({ profile_video: fileName });
   }
@@ -178,7 +200,10 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
-              closeSignupFlow={this.closeSignUp}
+              closeSignupFlow={this.closeSignUpForm}
+              onBack={this.onBack}
+              switched={this.state.switched}
+              disableClose={this.disableClose}
             />
           );
         case 2:                                             
@@ -219,6 +244,10 @@ class SignupFlow extends React.Component {
 
         case 5:
           return (<SetPrice
+            onBack={this.onSetPriceBack}
+            changeStep={this.changeStep}
+            currentStep={this.state.currentStep}
+            switched={this.state.switchedSetPrice}
             action={SET_PRICE.ACTION}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
             confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
@@ -291,11 +320,12 @@ class SignupFlow extends React.Component {
           closePopUp={this.closeSignUp}
           modalView
           smallPopup
+          disableClose={this.state.disableClose}
         >
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
-                this.state.currentStep === 2 || this.state.currentStep === 6
+                this.state.currentStep === 2 || this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 6
               ) && (
                 <BackArrow
                   className="backArrow"

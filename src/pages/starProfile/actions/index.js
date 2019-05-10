@@ -1,10 +1,10 @@
 import { fetchCelebDetails, resetCelebDetails } from './getCelebDetails';
-import { fetchCelebVideosList } from './getCelebVideos';
+// import { fetchCelebVideosList } from './getCelebVideos';
 import { fetchCelebGroups, resetCelebGroups } from './getCelebGroups';
 
 const fetchStarDetails = id => (dispatch) => {
     dispatch(fetchCelebDetails(id));
-    dispatch(fetchCelebVideosList(0, true, id));
+    // dispatch(fetchCelebVideosList(id, 0, true));
     dispatch(fetchCelebGroups(id, 0, true));
 };
 

@@ -38,16 +38,38 @@ DetailStyled.Categories = styled.span`
   }
 `;
 
+DetailStyled.DescriptionWrapper = styled.span`
+  @media(min-width: 832px) {
+    order: 3;
+  }
+`;
+
 DetailStyled.Description = styled.span`
   font-family: Gilroy-Light;
   font-size: 14px;
   padding-top: 20px;
   line-height: 19px;
+  height: ${props => (props.showMore ? 'auto' : '97px')};
+  overflow: hidden;
+  display: inline-block;
+  .description-content {
+    display: inline-block;
+  }
   color: ${props => props.theme.greyishBrown};
+  &.more-button {
+    padding: 0;
+    height: auto;
+    cursor: pointer;
+    font-family: Gilroy-Medium;
+    color: ${props => props.theme.flatBlue}
+  }
   @media(min-width: 832px) {
     font-size: 16px;
     line-height: 26px;
-    order: 3;
+    height: ${props => (props.showMore ? 'auto' : '122px')};
+    &.more-button {
+      height: auto;
+    }
   }
 `;
 
@@ -66,7 +88,6 @@ DetailStyled.BackButton = styled.div`
     display: block;
     width: 100%;
     .back-content {
-      display: flex;
       cursor: pointer;
       padding-bottom: 10px;
       color: #42a3c1;
@@ -76,6 +97,11 @@ DetailStyled.BackButton = styled.div`
         display: inline-block;
         padding-right: 10.8px;
         font-size: 28px;
+      }
+      .back-title {
+        vertical-align: top;
+        padding-top: 1px;
+        display: inline-block;
       }
     }
   }
@@ -181,6 +207,8 @@ DetailStyled.StarDetails = styled.div`
   }
   @media(min-width: 832px) {
     order: 4;
+    width: 100%;
+    justify-content: space-between;
     .details-header {
       font-size: 16px;
     }
