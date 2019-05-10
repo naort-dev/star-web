@@ -23,10 +23,10 @@ const MobileStyled = styled.div`
 `;
 
 MobileStyled.Logo = styled.img`
-  width: 141px;
+  width: 142px;
   margin-bottom: 10px;
   @media(min-width: 375px) {
-    width: 196px;
+    width: 197px;
   }
 `;
 
