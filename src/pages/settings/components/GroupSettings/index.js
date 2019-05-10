@@ -159,7 +159,7 @@ class StarSettings extends React.Component {
                 heading="Invite your community"
                 description=""
                 referralCode={this.props.userDetails.promo_code}
-                shareUrl={`${window.location.origin}/group-profile/${this.props.userDetails.user_id}`}
+                shareUrl={`${window.location.origin}/group-listing/${this.props.userDetails.user_id}`}
               />
             </SettingsStyled.ContentWrapper>
           </Scrollbars>

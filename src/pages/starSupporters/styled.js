@@ -65,6 +65,66 @@ SupportStyled.RightSection = styled.div`
   }
 `;
 
+SupportStyled.ClearButton = styled.span`
+  cursor: pointer;
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 12px;
+  background-image: url( 'assets/images/close-icon.svg' );
+  background-repeat: no-repeat;
+  background-position: center;
+`;
+
+SupportStyled.InputWrapper = styled.div`
+  width: 100%;
+  height: 50px;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    background-image: url( 'assets/images/icon_search_40a.png' );
+    background-repeat:no-repeat;
+    background-position: center;
+    left: 15px;
+    top: 20%;
+    width: 35px;
+    height: 35px;
+  }
+  @media(min-width: 768px) {
+    width: 319px;
+    height: 32px;
+    background-color: #F8F8F8;
+    margin: 0 auto;
+    &::before {
+      width: 20px;
+      height: 23px;  
+    }
+  }
+`;
+SupportStyled.Input = styled.input`
+  padding-left: 64px;
+  width: calc(100% - 28px);
+  outline:none;
+  height: 100%;
+  font-family: 'Avenir-Light';
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  @media(min-width: 768px) {
+    text-indent: 24px;
+  } 
+  @media(min-width : 1025px){
+    text-indent: 0;
+    text-align: center;
+    font-size: 18px;
+  }
+  @media(min-width: 1920px) {
+    font-size: 20px;
+  }
+`;
+
 SupportStyled.BigHeading = styled.span`
   font-size: 20px;
   display: block;
