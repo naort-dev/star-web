@@ -4,6 +4,7 @@ const initalState = {
   shouldRecord: false,
   videoSrc: null,
   file: null,
+  recordedTime: '00:00',
   playPauseMedia: false,
   loader: false,
   customerId: null,
@@ -28,6 +29,7 @@ const commonReducer = (state = { ...initalState }, action) => {
         ...state,
         videoSrc: action.payload.videoSrc,
         file: action.payload.superBuffer,
+        recordedTime: action.payload.recordedTime,
       };
 
     case Actions.PLAY_PAUSE_MEDIA:
