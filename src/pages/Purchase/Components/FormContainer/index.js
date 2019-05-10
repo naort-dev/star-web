@@ -78,6 +78,7 @@ function FormContainer(props) {
       date: null,
       occasion,
     });
+    props.pageCountHandler(0);
   };
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
@@ -155,7 +156,12 @@ function FormContainer(props) {
 
   useEffect(() => {
     validationTypeCheck();
-  }, [FormData.hostName, FormData.specification, FormData.templateType]);
+  }, [
+    FormData.hostName,
+    FormData.specification,
+    FormData.templateType,
+    props.pageCount,
+  ]);
 
   return (
     <Layout>
