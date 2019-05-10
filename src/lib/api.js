@@ -5,7 +5,7 @@ class Api {
   static getTrendingStars = 'v2/user/trending_stars/';
   static authGetCelebList = 'v1/user/fan/celebrity_list/';
   static getProfessionsList = 'v2/user/filtered_professions/';
-  static getAllProfessions = 'user/professions/';
+  static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
   static getVideosList = 'v1/request/featured_videos/';
   static login = 'v1/user/login/';

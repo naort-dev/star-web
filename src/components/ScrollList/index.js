@@ -256,7 +256,7 @@ export default class ScrollList extends React.Component {
                   <Scrollbars
                     renderView={props => <div {...props} className="view" id="scrollable-target" />}
                   >
-                    {
+                    {/* {
                       this.props.banner &&
                         <ListStyled.Banner
                           onClick={() => this.setState({ bannerVideo: true })}
@@ -270,7 +270,7 @@ export default class ScrollList extends React.Component {
                             src="assets/images/play-button.png"
                           />
                         </ListStyled.Banner>
-                    }
+                    } */}
                     {
                       this.props.searchText ?
                         <ListStyled.SearchContainer>

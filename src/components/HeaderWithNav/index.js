@@ -27,7 +27,8 @@ class Header extends React.Component {
     this.mounted = true;
   }
 
-  componentWillMount() { 
+  componentWillMount() {
+    window.addEventListener('mousedown', this.removeSuggestions.bind(this));
     if (this.props.isLoggedIn) {
       const profilePhoto = this.props.userValue.settings_userDetails.avatarPhoto;
       this.setProfileImage(profilePhoto);
@@ -43,6 +44,7 @@ class Header extends React.Component {
   }
 
   componentWillUnmount() {
+    window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
     this.mounted = false;
   }
 
@@ -59,6 +61,12 @@ class Header extends React.Component {
     this.setState({ profileDropdown: false });
     this.props.history.push('/');
     this.props.logOut();
+  }
+
+  removeSuggestions = (e) => {
+    if (this.profileDropDown && !this.profileButton.contains(e.target) && !this.profileDropDown.contains(e.target)) {
+      this.setState({ profileDropdown: false });
+    }
   }
 
   handleBackClick = () => {
@@ -111,13 +119,14 @@ class Header extends React.Component {
               this.props.isLoggedIn ?
                 <React.Fragment>
                   <HeaderSection.ProfileButton
+                    innerRef={(node) => { this.profileButton = node; }}
                     profileUrl={this.state.profilePhoto}
                     onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
                   />
                   {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
-                        {/* <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
+                        <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
                             Favorite stars
@@ -144,7 +153,7 @@ class Header extends React.Component {
                             Settings
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem> */}
+                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
                   }
