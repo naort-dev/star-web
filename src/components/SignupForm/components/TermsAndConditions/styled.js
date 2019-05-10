@@ -51,13 +51,22 @@ TermsConditionsWrapper.Button = styled.button`
 `;
 
 TermsConditionsWrapper.Description = styled.p`
-font-family: Gilroy-Light;
-font-size: 16px;
-line-height: 1.63;
-text-align: left;
-color: #555555;
-padding-bottom: 10px;
-}
+  font-family: Gilroy-Light;
+  font-size: 16px;
+  line-height: 1.63;
+  text-align: left;
+  color: #555555;
+  padding-left: 39px;
+  padding-right: 30px;
+  padding-bottom: 10px;
+  @media(min-width:833px) {
+    padding-left: 132px;
+    padding-right: 98px;
+    padding-bottom: 10px;
+  }
+`;
+TermsConditionsWrapper.Content = `
+
 `;
 
 export default TermsConditionsWrapper;

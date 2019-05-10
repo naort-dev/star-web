@@ -74,7 +74,7 @@ class MobileHome extends React.Component {
 
   render() {
     const { currentStep } = this.state;
-    const { featuredStars } = this.props;
+    const { featuredStars, isLoggedIn } = this.props;
     return (
       <RequestFlowPopup
         modalView
@@ -87,6 +87,7 @@ class MobileHome extends React.Component {
               <ActionChooser
                 toggleSignup={this.loginOrSignup('signup')}
                 toggleLogin={this.loginOrSignup('login')}
+                isLoggedIn={isLoggedIn}
                 goToNextStep={this.goToNextStep}
               />
           }
@@ -140,7 +141,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>The star delivers</MobileStyled.SubHeader>
                 <MobileStyled.Description>The video is delivered right to your device for you to keep forever.</MobileStyled.Description>
                 <MobileStyled.VideoWrapper>
-                  <VideoRender autoPlay videoSrc="assets/Footboys.mp4" variableHeight cover="assets/images/default-cover.jpg" />
+                  <VideoRender autoPlay videoSrc="assets/videos/landing-star-video.mp4" variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
                   <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
@@ -153,7 +154,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>Watch & share</MobileStyled.SubHeader>
                 <MobileStyled.Description>Your video is yours to download, send to a friend, share on social, and keep forever! It’s the new digital autograph.</MobileStyled.Description>
                 <MobileStyled.VideoWrapper className="small-video">
-                  <VideoRender autoPlay videoSrc="assets/Footboys.mp4" variableHeight cover="assets/images/default-cover.jpg" />
+                  <VideoRender autoPlay videoSrc="assets/videos/landing-fan-video.MOV" variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
                   <PrimaryButton className="common-button" onClick={this.closeLandingFlow}>View Featured Stars</PrimaryButton>
@@ -180,6 +181,7 @@ class MobileHome extends React.Component {
 
 const mapStateToProps = state => ({
   featuredStars: state.featuredStars,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -193,6 +195,7 @@ MobileHome.propTypes = {
   toggleSignup: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileHome)));

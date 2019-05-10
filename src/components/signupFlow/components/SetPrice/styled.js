@@ -6,6 +6,9 @@ const SetPriceWrapper = styled.div`
   @media(min-width: 1025px) {
     height: calc(100% - 55px);
   }
+  * {
+    max-width: 100%;
+  }
 `;
 
 SetPriceWrapper.ComponentWrapper = styled.div`
@@ -74,7 +77,17 @@ SetPriceWrapper.WrapsInput = styled.div`
     text-align: center;
     color: #8174aa;
     width: 400px;
-
+    padding: 8px 0 0;
+  }
+  .adornment {
+    position: relative;
+    left: 38%;
+    p {
+    color: rgb(129, 116, 170);
+    font-family: Gilroy;
+    font-size: 24px;
+    margin-top: 8px;
+    }
   }
   input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
@@ -110,6 +123,11 @@ SetPriceWrapper.Label = styled.div`
   color: #999999;
   width: 400px;
   margin: 0 auto;
+  max-width: 100%;
+
+  b {
+    font-family: Gilroy-Semibold;
+  }
 `;
 SetPriceWrapper.Description = styled.div`
   font-family: Gilroy;

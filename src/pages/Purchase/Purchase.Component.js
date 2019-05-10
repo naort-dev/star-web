@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
-import { Content, ModalContainer, FormContent } from './styled';
+import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
 import ModalSwitcher from './ModalSwitcher';
 import { dataModal } from './DataModals/formModals';
 import FormContainer from './Components/FormContainer';
-// import ScriptBuilder from './Components/ScriptBuilder';
+import ScriptBuilder from './Components/ScriptBuilder';
 import Question from './Components/Question';
 import Payment from '../../components/Payment';
 import SuccessScreen from './Components/SuccessScreen';
@@ -43,6 +43,28 @@ class Purchase extends Component {
     ];
   }
 
+  componentDidMount() {
+    this.props.pageCountHandler(0);
+  }
+  componentWillUnmount() {
+    this.props.pageCountHandler(0);
+    this.props.updateBookingData({
+      templateType: null,
+      relationship: [],
+      user: 'someoneElse',
+      enableAudioRecorder: false,
+      hostName: '',
+      userName: '',
+      relationshipValue: '',
+      specification: '',
+      date: null,
+      eventName: '',
+      validSelf: false,
+      occasion: {},
+    });
+    this.props.clearAll();
+  }
+
   getBodyComponent = () => {
     if (this.state.stepCount === 1) {
       return (
@@ -71,25 +93,49 @@ class Purchase extends Component {
             updateToast={this.props.updateToast}
           />
         );
-      } else if (this.state.category !== 3) {
-        return (
-          <FormContainer
-            detailList={this.props.OccasionDetails}
-            submitClick={this.submitClick}
-          >
-            <FormContent />
-          </FormContainer>
-        );
       }
+      return (
+        <FormContainer
+          audioRecorder={this.props.audioRecorder}
+          resetRecording={target => this.props.resetRecording(target)}
+          saveAudioRecording={(target, audio) =>
+            this.props.saveAudioRecording(target, audio)
+          }
+          detailList={
+            this.props.OccasionDetails ? this.props.OccasionDetails : []
+          }
+          submitClick={this.submitClick}
+          pageCountHandler={this.props.pageCountHandler}
+          pageCount={this.props.pageCount}
+          updateBookingData={this.props.updateBookingData}
+        />
+      );
+    } else if (this.state.stepCount === 3) {
+      if (this.state.category === 3) {
+        this.getPaymentScreen();
+      }
+      return <ScriptBuilder />;
+    } else if (this.state.stepCount === 4) {
+      if (this.state.category === 3) {
+        return <SuccessScreen />;
+      }
+      this.getPaymentScreen();
+    } else if (this.state.stepCount === 5) {
+      return <SuccessScreen />;
     }
-    // else if (this.state.stepCount === 3) {
-    //   return <Payment paymentSuccessCallBack={this.paymentSuccess} />;
-    // } else if (this.state.stepCount === 4) {
-    //   return <SuccessScreen />;
-    // } else if (this.state.stepCount === 5) {
-    //   return <ScriptBuilder />;
-    // }
     return <div />;
+  };
+
+  getPaymentScreen = () => {
+    return (
+      <Payment
+        paymentSuccessCallBack={this.paymentSuccess}
+        backArrowHandler={this.backArrowHandler}
+        closeHandler={this.closeHandler}
+        fetchCelebDetails={this.props.fetchCelebDetails}
+        loaderAction={this.props.loaderAction}
+      />
+    );
   };
 
   getCategory = type => {
@@ -104,31 +150,22 @@ class Purchase extends Component {
     });
   };
 
-  getFinalStep = () => {
-    if (this.state.stepCount === 3) {
-      return (
-        <Payment
-          paymentSuccessCallBack={this.paymentSuccess}
-          backArrowHandler={this.backArrowHandler}
-          closeHandler={this.closeHandler}
-          fetchCelebDetails={this.props.fetchCelebDetails}
-          loaderAction={this.props.loaderAction}
-        />
-      );
-    } else if (this.state.stepCount === 4) {
-      return <SuccessScreen closeHandler={this.closeHandler} />;
-    }
-    return <div />;
-  };
-
   handleClose = () => {
     this.setState({ open: false });
   };
 
   backArrowHandler = () => {
-    this.setState({
-      stepCount: this.state.stepCount - 1,
-    });
+    if (this.props.pageCount === 0) {
+      this.setState({
+        stepCount: this.state.stepCount - 1,
+      });
+    } else if (this.props.pageCount !== 0 && this.state.stepCount !== 2) {
+      this.setState({
+        stepCount: this.state.stepCount - 1,
+      });
+    } else {
+      this.props.pageCountHandler(this.props.pageCount - 1);
+    }
   };
 
   submitClick = () => {
@@ -160,27 +197,19 @@ class Purchase extends Component {
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
-          {this.state.stepCount < 3 ? (
-            <React.Fragment>
-              <Header
-                backArrowHandler={this.backArrowHandler}
-                closeHandler={this.closeHandler}
-                starImage={
-                  this.props.userDetails.avatar_photo &&
-                  this.props.userDetails.avatar_photo.thumbnail_url
-                }
-                headerText="What kind of video message do you want?"
-                arrowVisible={this.state.stepCount !== 1}
-              />
-              <Content className="contentPadding" step={this.state.stepCount}>
-                <Scrollbars>
-                  <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
-                </Scrollbars>
-              </Content>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>{this.getFinalStep()}</React.Fragment>
-          )}
+          <React.Fragment>
+            <Header
+              backArrowHandler={this.backArrowHandler}
+              closeHandler={this.closeHandler}
+              headerText="What kind of video message do you want?"
+              arrowVisible={this.state.stepCount !== 1}
+            />
+            <Content className="contentPadding" step={this.state.stepCount}>
+              <Scrollbars>
+                <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
+              </Scrollbars>
+            </Content>
+          </React.Fragment>
         </ModalContainer>
       </Modal>
     );
@@ -199,9 +228,16 @@ Purchase.propTypes = {
   starsonaRequest: PropTypes.func.isRequired,
   toggleRequestFlow: PropTypes.func.isRequired,
   fetchCelebDetails: PropTypes.func.isRequired,
+  pageCountHandler: PropTypes.func.isRequired,
+  pageCount: PropTypes.number.isRequired,
+  audioRecorder: PropTypes.object.isRequired,
+  saveAudioRecording: PropTypes.func.isRequired,
+  resetRecording: PropTypes.func.isRequired,
+  updateBookingData: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
   updateToast: PropTypes.func.isRequired,
+  clearAll: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
@@ -209,6 +245,9 @@ Purchase.defaultProps = {
 };
 
 export default connect(
-  state => ({ isLoggedIn: state.session.isLoggedIn }),
+  state => ({
+    pageCount: state.occasionList.pageCount,
+    isLoggedIn: state.session.isLoggedIn,
+  }),
   null,
 )(Purchase);

@@ -30,6 +30,9 @@ export default class TakePhoto extends React.Component {
     this.detectCameraMedia();
   }
 
+  componentWillUnmount() {
+    this.closeStream();
+  }
   getVideoStream = () => {
     if (detectUserMedia()) {
       return navigator.mediaDevices.getUserMedia(this.constraints)
@@ -89,6 +92,17 @@ export default class TakePhoto extends React.Component {
     this.setState({ recording: true });
   }
 
+  closeStream = () => {
+    const { stream } = this.state;
+    if (stream) {
+      const tracks = stream.getTracks();
+      tracks.forEach(track => {
+        track.stop();
+      });
+    }
+    this.setState({ stream: null });
+  }
+
   takeScreenshot = () => {
     const canvas = document.createElement('canvas');
     const video = this.videoRef.current;
@@ -99,6 +113,7 @@ export default class TakePhoto extends React.Component {
     canvas.toBlob(async (file) => {
       const exif = await this.getExif(file);
       const extension = file.type.split('/')[1];
+      this.closeStream();
       this.props.onPictureCapture(base64Image, exif, extension);
     }, 'image/jpeg');
   }

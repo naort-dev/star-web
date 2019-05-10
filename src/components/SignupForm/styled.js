@@ -184,7 +184,7 @@ LoginContainer.Line = styled.hr`
   }
 `;
 LoginContainer.InputFieldsWrapper = styled.form`
-  padding: 0px 25px;
+  
   @media(min-width:768px){
     padding: 0px 0px;
   }
@@ -435,6 +435,9 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  > div {
+    width: 100%;
+  }
   input {
     font-family: Gilroy;
     font-size: 18px;
@@ -443,27 +446,33 @@ LoginContainer.WrapsInput = styled.div`
     color: #615195;
     text-align: center;
   }
-  &:first-child {
-    padding-right: 10px;
-  }
-  &:last-child {
-    padding-left: 10px;
-  }
-  &:only-child {
-    padding-left: 0;
-    padding-right: 0;
-  }
   input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
   input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
   input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:768px){
     width:100%;
+
+    &:first-child {
+      padding-right: 10px;
+    }
+    &:last-child {
+      padding-left: 10px;
+    }
+    &:only-child {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
   @media(min-width:1025){
     width:352px;
     font-size: 22px;
     padding-bottom: 3px;
+  }
+  .error-field {
+    &:after {
+      border-bottom-color: #980100 !important;
+    }
   }
 
 `;

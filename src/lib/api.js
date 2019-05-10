@@ -18,7 +18,7 @@ class Api {
   static getUserVideos = 'v1/request/request_list/';
   static getRequestDetails = 'v1/request/stargramz/';
   static followCelebrity = 'v1/user/fan/celebrity_follow/';
-  static getOccasionList = 'v1/request/occasion_list/';
+  static getOccasionList = 'v2/request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
   static setVideoView = 'v1/request/readvideo/';
   static otherRelation = 'v1/request/other_relation/';
