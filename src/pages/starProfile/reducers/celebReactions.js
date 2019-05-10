@@ -1,4 +1,4 @@
-import { CELEB_VIDEOS_LIST } from '../actions/getCelebVideos';
+import { CELEB_REACTIONS_LIST } from '../actions/getCelebReactions';
 
 const initalState = {
   data: [],
@@ -10,7 +10,7 @@ const initalState = {
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
-    case CELEB_VIDEOS_LIST.start:
+    case CELEB_REACTIONS_LIST.start:
       return {
         ...state,
         loading: true,
@@ -18,20 +18,20 @@ export default (state = { ...initalState }, action) => {
         token: action.token,
       };
 
-    case CELEB_VIDEOS_LIST.end:
+    case CELEB_REACTIONS_LIST.end:
       return {
         ...state,
         loading: false,
       };
     
-    case CELEB_VIDEOS_LIST.celebLoading:
+    case CELEB_REACTIONS_LIST.celebLoading:
       return {
         ...state,
         loading: true,
         data: action.refresh ? [] : state.data,
       };
 
-    case CELEB_VIDEOS_LIST.success:
+    case CELEB_REACTIONS_LIST.success:
       return {
         ...state,
         loading: false,
@@ -41,27 +41,10 @@ export default (state = { ...initalState }, action) => {
         limit: action.newLimit,
       };
 
-    case CELEB_VIDEOS_LIST.failed:
+    case CELEB_REACTIONS_LIST.failed:
       return {
         ...state,
         error: action.error,
-      };
-
-    case CELEB_VIDEOS_LIST.swapCacheStart:
-      return {
-        ...state,
-        data: action.refresh ? [] : state.data,
-      };
-
-    case CELEB_VIDEOS_LIST.swapCacheEnd:
-      const cachedData = state[action.key];
-      return {
-        ...state,
-        data: cachedData.data,
-        offset: cachedData.offset,
-        count: cachedData.count,
-        currentCategory: action.key,
-        loading: false,
       };
 
     default:

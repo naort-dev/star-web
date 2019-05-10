@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import PrimaryButton from '../../../../components/PrimaryButton';
 import VideoRender from '../../../../components/VideoRender';
-import RequestFlowPopup from '../../../../components/RequestFlowPopup';
+import Modal from '../../../../components/Modal/Modal';
 import StarDrawer from '../../../../components/StarDrawer';
 import AvatarSection from './components/AvatarSection';
 import ActionChooser from './components/ActionChooser';
@@ -76,9 +76,8 @@ class MobileHome extends React.Component {
     const { currentStep } = this.state;
     const { featuredStars, isLoggedIn } = this.props;
     return (
-      <RequestFlowPopup
-        modalView
-        disableClose
+      <Modal
+        open
       >
         <MobileStyled className={currentStep === 5 ? 'grey-background' : ''}>
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
@@ -174,7 +173,7 @@ class MobileHome extends React.Component {
               </MobileStyled.CloseButtonWrapper>
           }
         </MobileStyled>
-      </RequestFlowPopup>
+      </Modal>
     );
   }
 }

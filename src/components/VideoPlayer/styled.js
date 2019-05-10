@@ -28,7 +28,7 @@ VideoRenderDiv.ControlIcon = styled.span`
 
 VideoRenderDiv.ControlIconWrapper = styled.div`
   position: absolute;
-  bottom: 42px;
+  bottom: 14px;
   left: 0;
   right: 0;
 `;

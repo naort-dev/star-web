@@ -1,7 +1,7 @@
 
+import axios from 'axios';
 import Api from '../../../lib/api';
 import { fetch, CancelToken } from '../../../services/fetch';
-import axios from 'axios';
 import { checkPrerender } from '../../../utils/checkOS';
 
 
@@ -25,13 +25,14 @@ export const celebVideosListFetchEnd = () => ({
   type: CELEB_VIDEOS_LIST.end,
 });
 
-export const celebVideosListFetchSuccess = (list, offset, count) => {
+export const celebVideosListFetchSuccess = (list, offset, count, newLimit) => {
   return (
     {
       type: CELEB_VIDEOS_LIST.success,
       list,
       offset,
       count,
+      newLimit,
     });
 };
 
@@ -55,7 +56,7 @@ export const celebVideosListFetchLoading = refresh => ({
   refresh,
 });
 
-export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispatch, getState) => {
+export const fetchCelebVideosList = (id, offset, refresh, customLimit, requestType) => (dispatch, getState) => {
   if (checkPrerender()) {
     return null;
   }
@@ -70,7 +71,8 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
   } else {
     dispatch(celebVideosListFetchLoading());
   }
-  return fetch.get(`${Api.getVideosList}?limit=${limit}&offset=${offset}&request_type=${request}&user_id=${id}`, {
+  const newLimit = customLimit || limit;
+  return fetch.get(`${Api.getVideosList}?limit=${newLimit}&offset=${offset}&request_type=${request}&user_id=${id}`, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {
@@ -81,7 +83,7 @@ export const fetchCelebVideosList = (offset, refresh, id, requestType) => (dispa
       } else {
         list = [...list, ...resp.data.data.featured_videos];
       }
-      dispatch(celebVideosListFetchSuccess(list, offset, count));
+      dispatch(celebVideosListFetchSuccess(list, offset, count, newLimit));
       dispatch(celebVideosListFetchEnd());
     } else {
       dispatch(celebVideosListFetchEnd());
