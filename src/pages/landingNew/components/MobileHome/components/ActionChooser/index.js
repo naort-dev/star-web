@@ -9,12 +9,17 @@ const ActionChooser = props => (
     <ButtonWrapper>
       <PrimaryButton className="button" onClick={props.goToNextStep}>Browse Stars</PrimaryButton>
     </ButtonWrapper>
-    <ButtonWrapper>
-      <PrimaryButton className="button" onClick={props.toggleLogin}>Log In</PrimaryButton>
-    </ButtonWrapper>
-    <ButtonWrapper>
-      <PrimaryButton className="button" onClick={props.toggleSignup}>Sign Up</PrimaryButton>
-    </ButtonWrapper>
+    {
+      !props.isLoggedIn &&
+        <React.Fragment>
+          <ButtonWrapper>
+            <PrimaryButton className="button" onClick={props.toggleLogin}>Log In</PrimaryButton>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <PrimaryButton className="button" onClick={props.toggleSignup}>Sign Up</PrimaryButton>
+          </ButtonWrapper>
+        </React.Fragment>
+    }
   </React.Fragment>
 );
 

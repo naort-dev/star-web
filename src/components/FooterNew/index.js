@@ -3,9 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookSquare,
   faTwitterSquare,
-  faWhatsappSquare,
+  faInstagram,
+  faYoutube
 } from '@fortawesome/free-brands-svg-icons';
-import { faEnvelopeSquare } from '@fortawesome/pro-regular-svg-icons';
 import { FooterStyled } from './styled';
 
 export const Footer = props => (
@@ -19,10 +19,10 @@ export const Footer = props => (
           <FontAwesomeIcon icon={faTwitterSquare} />
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/getstarsona/">
-          <FontAwesomeIcon icon={faWhatsappSquare} />
+          <FontAwesomeIcon icon={faInstagram} />
         </a>
         <a target="_blank" rel="noopener noreferrer" href="https://www.youtube.com/channel/UCmmN9QPqAGE18yWENxsw7jQ">
-          <FontAwesomeIcon icon={faEnvelopeSquare} />
+          <FontAwesomeIcon icon={faYoutube} />
         </a>
       </FooterStyled.shareIconWrapper>
       <FooterStyled.list>
@@ -52,9 +52,9 @@ export const Footer = props => (
       <a target="_blank" rel="noopener noreferrer" href="https://play.google.com/store/apps/details?id=com.starsona.app">
         <FooterStyled.StoreIcon alt="playsore icon" src="assets/images/playstore-download.svg" />
       </a>
-      {/* <a target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
+      <a target="_blank" rel="noopener noreferrer" href="https://itunes.apple.com/us/app/starsona/id1294478616?ls=1&mt=8">
         <FooterStyled.StoreIcon alt="playsore icon" src="assets/images/appstore-download.svg" />
-      </a> */}
+      </a>
     </FooterStyled.StoreIconWrapper>
   </FooterStyled>
 );
