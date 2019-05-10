@@ -17,6 +17,7 @@ import {
   fetchOccasionlist,
   pageCountHandler,
   updateBookingData,
+  updateFormBuilderProps,
 } from './actions/purchaseActions';
 import {
   toggleRequestFlow,
@@ -77,6 +78,9 @@ function mapDispatchToProps(dispatch) {
     updateToast: toastObj => dispatch(updateToast(toastObj)),
     clearAll: () => {
       dispatch(clearAll());
+    },
+    updateFormBuilderProps: data => {
+      dispatch(updateFormBuilderProps(data));
     },
   };
 }

@@ -1,14 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import StarDrawer from '../../../../components/StarDrawer';
-import {
-  HeaderDiv,
-  HeaderText,
-  ProfileIcon,
-  Image,
-} from './styled';
-import { BackArrow, CloseButton, FlexCenter } from '../../../../styles/CommonStyled';
+import StarDrawer from 'components/StarDrawer';
+import { BackArrow, CloseButton, FlexCenter } from 'styles/CommonStyled';
+import { HeaderDiv, HeaderText, ProfileIcon, Image } from './styled';
 
 const Header = props => {
   const starData = [
@@ -42,7 +36,10 @@ const Header = props => {
         <ProfileIcon>
           <StarDrawer starData={starData} />
           <Image>
-            <img src={props.starImage ? props.starImage : 'assets/images/profile.png'} alt="profile_icon" />
+            <img
+              src={props.starImage || 'assets/images/profile.png'}
+              alt="profile_icon"
+            />
           </Image>
         </ProfileIcon>
         <CloseButton onClick={props.closeHandler} white />

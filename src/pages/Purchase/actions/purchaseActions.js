@@ -9,6 +9,7 @@ export const OCCASION_LIST = {
   reset: 'reset/occasion_list',
   pageCount: 'pagecount_handler',
   bookingData: 'update_booking_data',
+  formBuilderProps: 'form_builder_props',
 };
 export const AskQuestion = {
   videoUploaded: 'SET_VIDEO_UPLOADED_FLG',
@@ -64,3 +65,11 @@ export const updateBookingData = data => ({
   type: OCCASION_LIST.bookingData,
   data,
 });
+
+export const updateFormBuilderProps = data => ({
+  type: OCCASION_LIST.formBuilderProps,
+  data,
+});
+
+
+

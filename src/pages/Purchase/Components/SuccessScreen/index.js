@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
+import Button from 'components/PrimaryButton';
+import { FlexCenter, CloseButton } from 'styles/CommonStyled';
 import { Layout, Content } from './styled';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter, CloseButton } from '../../../../styles/CommonStyled';
 
 const SuccessScreen = props => {
 

@@ -1,5 +1,4 @@
-import { OCCASION_LIST } from '../actions/purchaseActions';
-import { AskQuestion } from '../actions/purchaseActions';
+import { OCCASION_LIST, AskQuestion } from '../actions/purchaseActions';
 
 const initalState = {
   data: [],
@@ -19,6 +18,12 @@ const initalState = {
     eventName: '',
     validSelf: false,
     occasion: {},
+  },
+  formProps: {
+    stepCount: 1,
+    category: 0,
+    termsCheck: false,
+    privateVideo: false,
   },
 };
 
@@ -66,7 +71,11 @@ export default (state = initalState, action) => {
         ...state,
         bookingData: action.data,
       };
-
+    case OCCASION_LIST.formBuilderProps:
+      return {
+        ...state,
+        formProps: action.data,
+      };
     default:
       return state;
   }

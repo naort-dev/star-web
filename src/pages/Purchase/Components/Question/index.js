@@ -2,15 +2,16 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import QuestionBuilder from 'components/QuestionBuilder';
+import Button from 'components/PrimaryButton';
+import { FlexCenter } from 'styles/CommonStyled';
+import VideoRecorder from 'components/VideoRecorder';
+import { checkMediaRecorderSupport } from 'utils/checkOS';
+import getAWSCredentials from 'utils/AWSUpload';
+import { locations } from 'constants/locations';
+import { recorder } from 'constants/videoRecorder';
+
 import { Layout, VideoContainer, QuestionContainer, ShowHide } from './styled';
-import QuestionBuilder from '../../../../components/QuestionBuilder';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import VideoRecorder from '../../../../components/VideoRecorder';
-import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
-import getAWSCredentials from '../../../../utils/AWSUpload';
-import { locations } from '../../../../constants/locations';
-import { recorder } from '../../../../constants/videoRecorder';
 
 const Question = props => {
   const questions = [

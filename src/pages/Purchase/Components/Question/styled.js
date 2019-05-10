@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from '../../../../styles/mediaQueries';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   height: 100%;

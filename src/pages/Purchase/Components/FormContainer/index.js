@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import Dropdown from '../../../../components/Dropdown';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import RequestTemplates from '../../../../components/RequestTemplates';
+import PropTypes, { string } from 'prop-types';
+import Dropdown from 'components/Dropdown';
+import Button from 'components/PrimaryButton';
+import { FlexCenter } from 'styles/CommonStyled';
+import RequestTemplates from 'components/RequestTemplates';
+import { getMobileOperatingSystem } from 'utils/checkOS';
 import { Layout } from './styled';
-import { getMobileOperatingSystem } from '../../../../utils/checkOS';
 
 function FormContainer(props) {
   const { detailList } = { ...props };
@@ -67,12 +67,13 @@ function FormContainer(props) {
         type = item.template_type;
         return item;
       }
+      return {};
     });
     setFormData({
       ...FormData,
       templateType: type,
-      relationship: result ? result[0].relationships : [],
-      eventName: result ? result[0].title : '',
+      relationship: result.length ? result[0].relationships : [],
+      eventName: result.length ? result[0].title : '',
       specification: '',
       userName: '',
       date: null,
@@ -205,6 +206,7 @@ FormContainer.propTypes = {
   updateBookingData: PropTypes.func.isRequired,
   audio: PropTypes.object.isRequired,
 };
+FormContainer.defaultProps = {};
 
 export default connect(
   state => ({
