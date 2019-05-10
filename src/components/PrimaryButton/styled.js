@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 
+const disabledStyles = (isDisabled) => {
+  if (isDisabled) {
+    return `
+      opacity: 0.3;
+    `;
+  }
+};
+
 const ButtonStyled = styled.button`
+  ${props => disabledStyles(props.isDisabled)};
   background-color: ${props => props.theme.flatBlue};
   font-family: Gilroy-SemiBold;
   font-size: 18px;

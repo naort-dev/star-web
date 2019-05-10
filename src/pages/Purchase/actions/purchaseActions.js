@@ -7,6 +7,8 @@ export const OCCASION_LIST = {
   success: 'fetch_success/occasion_list',
   failed: 'fetch_failed/occasion_list',
   reset: 'reset/occasion_list',
+  pageCount: 'pagecount_handler',
+  bookingData: 'update_booking_data',
 };
 export const AskQuestion = {
   videoUploaded: 'SET_VIDEO_UPLOADED_FLG',
@@ -17,24 +19,24 @@ export const occasionlistFetchStart = () => ({
 export const occasionlistFetchEnd = () => ({
   type: OCCASION_LIST.end,
 });
-export const occasionlistFetchSuccess = (details) => {
+export const occasionlistFetchSuccess = details => {
   return {
     type: OCCASION_LIST.success,
     details,
   };
 };
-export const occasionlistFetchFailed = (error) => ({
+export const occasionlistFetchFailed = error => ({
   type: OCCASION_LIST.failed,
   error,
 });
 export const resetOccasionlist = () => ({
   type: OCCASION_LIST.reset,
 });
-export const fetchOccasionlist = (id) => (dispatch) => {
+export const fetchOccasionlist = id => dispatch => {
   dispatch(occasionlistFetchStart());
   return fetch
     .get(`${Api.getOccasionList}?type=${id}`)
-    .then((resp) => {
+    .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(occasionlistFetchEnd());
         dispatch(occasionlistFetchSuccess(resp.data.data));
@@ -42,13 +44,23 @@ export const fetchOccasionlist = (id) => (dispatch) => {
         dispatch(occasionlistFetchEnd());
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(occasionlistFetchEnd());
       dispatch(occasionlistFetchFailed(exception));
     });
 };
 
-export const setVideoUploadedFlag = (value) => ({
+export const setVideoUploadedFlag = value => ({
   type: AskQuestion.videoUploaded,
   value,
+});
+
+export const pageCountHandler = value => ({
+  type: OCCASION_LIST.pageCount,
+  value,
+});
+
+export const updateBookingData = data => ({
+  type: OCCASION_LIST.bookingData,
+  data,
 });
