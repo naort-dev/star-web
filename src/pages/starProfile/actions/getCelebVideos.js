@@ -1,7 +1,7 @@
 
+import axios from 'axios';
 import Api from '../../../lib/api';
 import { fetch, CancelToken } from '../../../services/fetch';
-import axios from 'axios';
 import { checkPrerender } from '../../../utils/checkOS';
 
 

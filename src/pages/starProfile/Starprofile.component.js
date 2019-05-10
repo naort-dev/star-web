@@ -72,6 +72,8 @@ const StarProfile = (props) => {
         <ListingSection
           userDetails={props.userDetails}
           fetchCelebVideosList={props.fetchCelebVideosList}
+          fetchCelebReactionsList={props.fetchCelebReactionsList}
+          reactionsList={props.reactionsList}
           videosList={props.videosList}
         />
       {/* {
@@ -113,10 +115,12 @@ StarProfile.propTypes = {
   isLoggedIn: PropTypes.bool.isRequired,
   followCelebrity: PropTypes.func.isRequired,
   fetchCelebVideosList: PropTypes.func.isRequired,
+  fetchCelebReactionsList: PropTypes.func.isRequired,
   toggleRequestFlow: PropTypes.func.isRequired,
   updateFavouritesQueue: PropTypes.func.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   videosList: PropTypes.object.isRequired,
+  reactionsList: PropTypes.object.isRequired,
 }
 
 export default StarProfile;

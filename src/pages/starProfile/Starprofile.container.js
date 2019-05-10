@@ -4,6 +4,7 @@ import StarProfile from './Starprofile.component';
 import { fetchCelebDetails, resetCelebDetails } from './actions/getCelebDetails';
 import { fetchStarDetails, resetStarDetails } from './actions';
 import { fetchCelebVideosList } from './actions/getCelebVideos';
+import { fetchCelebReactionsList } from './actions/getCelebReactions';
 import { toggleLogin, toggleRequestFlow, setRequestFlow } from '../../store/shared/actions/toggleModals';
 import { followCelebrity, updateFavouritesQueue } from '../../store/shared/actions/followCelebrity';
 
@@ -13,6 +14,7 @@ const mapStateToProps = state => ({
   detailsLoading: state.starDetails.celebDetails.loading,
   detailsError: state.starDetails.celebDetails.error,
   videosList: state.starDetails.celebVideos,
+  reactionsList: state.starDetails.celebReactions,
   requestFlowDetails: state.modals.requestFlowDetails,
   isLoggedIn: state.session.isLoggedIn,
   professionsList: state.professionsList,
@@ -24,6 +26,7 @@ const mapDispatchToProps = dispatch => ({
   resetCelebDetails: () => dispatch(resetCelebDetails()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   fetchCelebVideosList: (id, offset, refresh, customLimit, requestType) => dispatch(fetchCelebVideosList(id, offset, refresh, customLimit, requestType)),
+  fetchCelebReactionsList: (id, offset, refresh, customLimit) => dispatch(fetchCelebReactionsList(id, offset, refresh, customLimit)),
   toggleRequestFlow: state => dispatch(toggleRequestFlow(state)),
   setRequestFlow: (celebId, requestType, step) => dispatch(setRequestFlow(celebId, requestType, step)),
   followCelebrity: (celebId, follow) => dispatch(followCelebrity(celebId, follow)),
