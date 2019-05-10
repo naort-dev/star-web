@@ -13,9 +13,9 @@ const VideoRenderDiv = styled.div`
 `;
 
 VideoRenderDiv.ControlIcon = styled.span`
-  width: 72px;
-  height: 72px;
-  font-size: 30px;
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
   border-radius: 50%;
   display: flex;
   justify-content: center;
@@ -24,6 +24,11 @@ VideoRenderDiv.ControlIcon = styled.span`
   margin: 0 auto;
   cursor: pointer;
   color: ${props => props.theme.orangePink};
+  @media(min-width: 832px) {
+    width: 72px;
+    height: 72px;
+    font-size: 30px;
+  }
 `;
 
 VideoRenderDiv.ControlIconWrapper = styled.div`

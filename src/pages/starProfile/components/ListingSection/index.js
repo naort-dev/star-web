@@ -89,7 +89,7 @@ const ListingSection = (props) => {
     <ListingStyled>
       <ListingStyled.ContentSection>
         <ListingStyled.ContentHeader>
-          Latest videos
+          Latest videos...
         </ListingStyled.ContentHeader>
         <ListingStyled.Content>
           {
@@ -104,7 +104,7 @@ const ListingSection = (props) => {
       </ListingStyled.ContentSection>
       <ListingStyled.ContentSection>
         <ListingStyled.ContentHeader>
-          Latest reactions
+          Latest reactions...
         </ListingStyled.ContentHeader>
         <ListingStyled.Content>
           sadasdasd

@@ -8,9 +8,12 @@ const ListingStyled = styled.div`
 `;
 
 ListingStyled.ContentHeader = styled.div`
-  font-family: Gilroy-Light;
+  font-family: Gilroy-Regular;
   font-size: 16px;
   color: ${props => props.theme.twilight};
+  @media(min-width: 832px) {
+    font-size: 24px;
+  }
 `;
 
 ListingStyled.Content = styled.ul`
@@ -33,8 +36,13 @@ ListingStyled.VideoItemWrapper = styled.div`
 `;
 
 ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
-  display: ${props => (props.visible ? 'block' : 'none')};
+  display: ${props => (props.visible ? 'flex' : 'none')};
   padding: 0 15px;
+  font-family: Gilroy-MediumItalic;
+  font-size: 19px;
+  color: ${props => props.theme.brownGrey};
+  flex-direction: column;
+  justify-content: space-evenly;
   .comment-item {
     padding-bottom: 10px;
     display: block;

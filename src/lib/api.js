@@ -62,6 +62,7 @@ class Api {
   static validateOtpCode = 'v1/user/verify_mobile/';
   static celebRepresentative = 'v1/user/celebrity_representative/';
   static getReactions = 'v1/request/reactions/';
+  static getStarReaction = 'v2/request/reactions_full_listing/';
   static getGroupsList = 'v1/user/group_account/';
   static groupTypeListing = 'v1/user/active_group_types/';
   static createGroupNotification = 'v1/notification/new_group_notification/';
