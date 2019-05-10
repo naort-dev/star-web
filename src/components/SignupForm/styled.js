@@ -106,8 +106,17 @@ LoginContainer.Heading = styled.div`
   }
   
 `;
+const disabledStyles = (isDisabled) => {
+  if (isDisabled) {
+    return `
+      opacity: 0.3;
+    `;
+  }
+};
+
 
 LoginContainer.ContinueButton = styled.button`
+${props => disabledStyles(props.isDisabled)};
   cursor: pointer;
   background-color: #2f839d;
   font-family: Gilroy-Bold;

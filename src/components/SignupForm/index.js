@@ -19,6 +19,7 @@ import { ROLES } from '../../constants/usertype';
 import { ROLE_FAN, ROLE_STAR } from './constants';
 /************************************  Styles  ***************************************/
 import { LoginContainer } from './styled';
+import { BackArrow, CloseButton } from '../../styles/CommonStyled';
 
 class SignUpForm extends React.Component {
   constructor(props) {
@@ -30,10 +31,10 @@ class SignUpForm extends React.Component {
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
       email: { value: '', isValid: false, message: '' },
-      termsAndConditions: { value: true, isValid: false, message: '' },
+      termsAndConditions: { value: false, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
-      acceptTerms: false,
+      acceptTerms: props.switched ? props.switched :false,
     };
   }
   componentWillMount() {
@@ -69,6 +70,11 @@ class SignUpForm extends React.Component {
     if (this.props.loading !== nextProps.loading) {
       this.setState({
         loading: nextProps.loading,
+      });
+    }
+    if(this.props.switched !== nextProps.switched) {
+      this.setState({
+        acceptTerms: nextProps.switched, 
       });
     }
   }
@@ -125,6 +131,7 @@ class SignUpForm extends React.Component {
       },
       () => this.checkTermsAndConditionsRequired(),
     );
+    this.props.disableClose(false);
   };
   checkEmail = () => {
     const emailRegex = /\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/; // Regex to check if email is valid
@@ -238,11 +245,27 @@ class SignUpForm extends React.Component {
     this.setState({
       acceptTerms: true,
     });
+    this.props.disableClose(true);
   };
+
+  backArrowClick = () => {
+    if (this.state.acceptTerms) {
+      this.setState({acceptTerms: false});
+    } else {
+      this.props.onBack(false);
+    }
+  };
+  closeSignUpForm = () => {
+    this.props.closeSignupFlow(this.state.acceptTerms)
+  }
 
   render() {
     const signUp = formatSignUpByUserType(this.props.signupRole);
-    return this.state.acceptTerms ? (
+    return (
+      <React.Fragment>
+      <BackArrow className="leftArrow" onClick={this.backArrowClick} />
+      <CloseButton className="close" onClick={this.closeSignUpForm} />
+      { this.state.acceptTerms ? (
       <TermsAndConditions agreeTermsConditions={this.agreeTermsConditions} />
     ) : (
       <LoginContainer.SocialMediaSignup>
@@ -416,6 +439,7 @@ class SignUpForm extends React.Component {
                 <LoginContainer.ContinueButton
                   type="submit"
                   onClick={this.onRegister}
+                  isDisabled={!this.state.termsAndConditions.value}
                 >
                   {signUp.button_label}
                 </LoginContainer.ContinueButton>
@@ -424,9 +448,14 @@ class SignUpForm extends React.Component {
           </LoginContainer.InputFieldsWrapper>
         </LoginContainer.Container>
       </LoginContainer.SocialMediaSignup>
+    )
+      }
+      </ React.Fragment>
     );
   }
 }
+
+  
 
 const mapStateToProps = state => ({
   loading: state.session.loading,
