@@ -64,12 +64,19 @@ class ScriptBuilder extends Component {
     ];
   }
 
-  handleCheck = checked => {
-    this.props.videoPrivateCheck(checked);
+  getAudioFile = key => {
+    if (this.props.audio[key] !== null) {
+      return new File([this.props.audio[key].recordedBlob]);
+    }
+    return null;
   };
 
   readyToPayment = () => {
     this.props.scriptSubmit();
+  };
+
+  handleCheck = checked => {
+    this.props.videoPrivateCheck(checked);
   };
 
   submitClick = () => {
@@ -80,8 +87,8 @@ class ScriptBuilder extends Component {
         celebrity: 106,
         occasion: this.props.bookingData.occasion.key,
         public_request: this.props.checked,
-        from_audio_file: null,
-        to_audio_file: null,
+        from_audio_file: this.getAudioFile('from'),
+        to_audio_file: this.getAudioFile('for'),
         request_details: {
           stargramto: this.props.bookingData.hostName,
           stargramfrom: this.props.bookingData.userName,
@@ -115,7 +122,14 @@ class ScriptBuilder extends Component {
           <p>
             Review this suggested script for the star. It will help them get the
             details right. The star will still add their own style and
-            personalized spin. You can <span className="bluetext">go back</span>{' '}
+            personalized spin. You can{' '}
+            <span
+              className="bluetext"
+              onClick={this.props.goBack}
+              role="presentation"
+            >
+              go back
+            </span>{' '}
             to edit it.
           </p>
         </FlexBoxCenter>
@@ -130,13 +144,7 @@ class ScriptBuilder extends Component {
           />
         </FlexBoxCenter>
         <FlexCenter>
-          <Button
-            onClick={this.submitClick}
-            disabled={!this.props.checked}
-            isDisabled={!this.props.checked}
-          >
-            Continue
-          </Button>
+          <Button onClick={this.submitClick}>Continue</Button>
         </FlexCenter>
       </Layout>
     );
@@ -152,6 +160,7 @@ ScriptBuilder.propTypes = {
   starsonaRequest: PropTypes.func.isRequired,
   audio: PropTypes.object.isRequired,
   bookingData: PropTypes.object.isRequired,
+  goBack: PropTypes.func.isRequired,
 };
 
 ScriptBuilder.defaultProps = {

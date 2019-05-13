@@ -75,9 +75,6 @@ function RequestTemplates(
                   }
                   resetRecording={target => resetRecording(target)}
                 />
-                {!(audioObj[targetNM] && audioObj[targetNM].recordedUrl) && (
-                  <span className="recText">Pronounce Name</span>
-                )}
               </Templates.WrapsAudioInput>
             )}
         </React.Fragment>
@@ -88,7 +85,7 @@ function RequestTemplates(
     const optionItems =
       bookingData.relationship &&
       bookingData.relationship.map(relation => (
-        <MenuItem value={relation.id} key={relation.id}>
+        <MenuItem value={relation} key={relation.id}>
           {relation.title}
         </MenuItem>
       ));
@@ -109,7 +106,7 @@ function RequestTemplates(
             classes={{ select: 'input-field' }}
           >
             {optionItems}
-            <MenuItem value="otherRelation" key="otherRelation">
+            <MenuItem value="otherRelation" key="otherRelation" name="other">
               Other
             </MenuItem>
           </Select>
@@ -123,7 +120,7 @@ function RequestTemplates(
       <Templates.InputWrapper fullWidth={fullWidth}>
         <div className="datepickerWrapper">
           <DatePicker
-            dateFormat="LL"
+            dateFormat="MMMM DD"
             withPortal
             customInput={
               <TextInput

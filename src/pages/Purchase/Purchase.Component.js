@@ -126,6 +126,7 @@ class Purchase extends Component {
       scriptSubmit={this.scriptSubmit}
       submitClick={this.submitClick}
       starsonaRequest={this.props.starsonaRequest}
+      goBack={this.backArrowHandler}
     />
   );
 

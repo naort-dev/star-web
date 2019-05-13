@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
@@ -73,13 +73,18 @@ function FormContainer(props) {
       ...FormData,
       templateType: type,
       relationship: result.length ? result[0].relationships : [],
-      eventName: result.length ? result[0].title : '',
+      eventName: '',
       specification: '',
+      hostName: '',
       userName: '',
       date: null,
       occasion,
+      relationshipValue: '',
+      validSelf: false,
+      user: 'someoneElse',
     });
     props.pageCountHandler(0);
+    props.updateBookingData(FormData);
   };
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {

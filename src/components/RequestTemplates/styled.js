@@ -66,6 +66,7 @@ Templates.Myself = styled.div`
   text-align: center;
   color: #2f829c;
   padding-top: 6px;
+  cursor: pointer;
 `;
 Templates.Label = styled.div`
   color: #333333;
@@ -372,6 +373,7 @@ Templates.WrapsAudioInput = styled.div`
     padding-left: 8px;
     font-family: Gilroy;
     font-size: 14px;
+    cursor: pointer;
   }
 `;
 

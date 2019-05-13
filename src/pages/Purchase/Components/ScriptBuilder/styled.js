@@ -15,6 +15,7 @@ export const Layout = styled.section`
     .bluetext {
       color: #2f839d;
       font-weight: 700;
+      cursor: pointer;
     }
   }
   button {

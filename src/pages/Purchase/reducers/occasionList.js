@@ -12,7 +12,7 @@ const initalState = {
     enableAudioRecorder: false,
     hostName: '',
     userName: '',
-    relationshipValue: '',
+    relationshipValue: null,
     specification: '',
     date: null,
     eventName: '',
