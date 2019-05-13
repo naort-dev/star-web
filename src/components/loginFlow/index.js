@@ -52,14 +52,14 @@ class LoginFlow extends React.Component {
 
                 <LoginContainer>
                   <LoginContainer.LeftSection>
-                    <HeaderSection>
+                    {/* <HeaderSection>
                       <Link to="/" onClick={() => this.props.toggleLogin(false)}>
                         <HeaderSection.LogoImage
                           src="assets/images/logo_starsona.png"
                           alt=""
                         />
                       </Link>
-                    </HeaderSection>
+                    </HeaderSection> */}
                     {this.state.selectedView === 'forgotpassword' ?
                       <ForgotPassword {...this.props} />
                       :
