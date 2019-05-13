@@ -230,8 +230,8 @@ class SignUpImageUpload extends React.Component {
       <UploadContainer.Wrapper>
         {this.state.showBrowseCategory && (
           <UploadContainer.BrowseCategoryWrapper>
-            <BackArrow className='action-buttons' onClick={this.onBack} />
-            <CloseButton className='action-buttons' onClick={this.onBack} />
+            <BackArrow onClick={this.onBack} />
+            <CloseButton onClick={this.onBack} />
             <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
             <UploadContainer.BrowseCategoryContainer>
               {this.browserCategoryList()}
