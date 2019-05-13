@@ -18,6 +18,7 @@ import {
   pageCountHandler,
   updateBookingData,
   updateFormBuilderProps,
+  headerUpdate,
 } from './actions/purchaseActions';
 import {
   toggleRequestFlow,
@@ -81,6 +82,9 @@ function mapDispatchToProps(dispatch) {
     },
     updateFormBuilderProps: data => {
       dispatch(updateFormBuilderProps(data));
+    },
+    headerUpdate: header => {
+      dispatch(headerUpdate(header));
     },
   };
 }

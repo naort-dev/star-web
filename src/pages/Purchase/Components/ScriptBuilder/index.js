@@ -64,6 +64,9 @@ class ScriptBuilder extends Component {
     ];
   }
 
+  componentDidMount() {
+    this.props.headerUpdate('Ok…how does this suggested script sound?');
+  }
   getAudioFile = key => {
     if (this.props.audio[key] !== null) {
       return new File(
@@ -75,6 +78,7 @@ class ScriptBuilder extends Component {
   };
 
   readyToPayment = () => {
+    this.props.loaderAction(false);
     this.props.submitClick();
   };
 
@@ -100,6 +104,7 @@ class ScriptBuilder extends Component {
         stargramfrom: this.props.bookingData.userName,
         date: this.props.bookingData.date,
       };
+      this.props.loaderAction(true);
       this.props.starsonaRequest(
         payload,
         this.props.checked,
@@ -167,6 +172,8 @@ ScriptBuilder.propTypes = {
   goBack: PropTypes.func.isRequired,
   userDetails: PropTypes.object.isRequired,
   category: PropTypes.number.isRequired,
+  headerUpdate: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
 };
 
 ScriptBuilder.defaultProps = {

@@ -40,8 +40,8 @@ function RequestTemplates(
     onChange,
     state,
     forSelf,
-    tobeValidate,
     fullWidth,
+    maxLength,
   }) => {
     const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
@@ -49,8 +49,11 @@ function RequestTemplates(
         <TextInput
           label={placeholder}
           value={value}
-          onChange={event => onChange(event.target.value, state, tobeValidate)}
-          InputProps={{ classes: { input: 'input-field' } }}
+          onChange={event => onChange(event.target.value, state)}
+          InputProps={{
+            classes: { input: 'input-field' },
+            maxLength,
+          }}
         />
         {bookingData.user === 'someoneElse' && forSelf && value === '' && (
           <Templates.Myself onClick={updateUserToMyself}>
@@ -143,6 +146,7 @@ function RequestTemplates(
     state,
     forSelf,
     fullWidth,
+    maxLength,
   ) => {
     return {
       placeholder,
@@ -152,6 +156,7 @@ function RequestTemplates(
       state,
       forSelf,
       fullWidth,
+      maxLength,
     };
   };
   const getVideoFor = (state, fullWidth) => {
@@ -482,6 +487,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
+                  5,
                 ),
               )}
               {getTextInput(
@@ -511,6 +517,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
+                  '52',
                 ),
               )}
               {getTextInput(

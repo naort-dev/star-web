@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
+import { getStarName } from 'utils/dataToStringFormatter';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
@@ -56,10 +57,22 @@ class Purchase extends Component {
 
   getBodyComponent = () => {
     if (this.state.stepCount === 1) {
+      let list = [];
+      let starNM = '';
+      if (list.length === 0) {
+        // eslint-disable-next-line camelcase
+        const { nick_name, first_name, last_name } = this.props.userDetails;
+        starNM = getStarName(nick_name, first_name, last_name);
+        list = dataModal(starNM).category;
+      }
       return (
         <CategoryList
           getCategory={this.getCategory}
-          dataModal={dataModal.category ? dataModal.category : []}
+          dataModal={list}
+          headerUpdate={this.props.headerUpdate}
+          starNM={starNM}
+          isLoggedIn={this.props.isLoggedIn}
+          toggleLogin={this.props.toggleLogin}
         />
       );
     } else if (this.state.stepCount === 2) {
@@ -80,6 +93,7 @@ class Purchase extends Component {
                 : this.props.userDetails.first_name
             }
             updateToast={this.props.updateToast}
+            headerUpdate={this.props.headerUpdate}
           />
         );
       }
@@ -106,6 +120,7 @@ class Purchase extends Component {
             submitClick={this.submitClick}
             termsCheck={this.termsCheck}
             checked={this.state.termsCheck}
+            headerUpdate={this.props.headerUpdate}
           />
         );
       } else if (this.state.category === 1) {
@@ -129,8 +144,19 @@ class Purchase extends Component {
       goBack={this.backArrowHandler}
       userDetails={this.props.userDetails}
       category={this.state.category}
+      loaderAction={this.props.loaderAction}
+      headerUpdate={this.props.headerUpdate}
     />
   );
+
+  getType = () => {
+    if (this.state.category === 1) {
+      return 'Video Shoutout';
+    } else if (this.state.category === 2) {
+      return 'Announcement';
+    }
+    return 'Ask a Question';
+  };
 
   getPaymentScreen = () => (
     <Payment
@@ -139,6 +165,9 @@ class Purchase extends Component {
       closeHandler={this.closeHandler}
       fetchCelebDetails={this.props.fetchCelebDetails}
       loaderAction={this.props.loaderAction}
+      celebDetails={this.props.celebDetails}
+      userDetails={this.props.userDetails}
+      type={this.getType()}
     />
   );
 
@@ -201,8 +230,6 @@ class Purchase extends Component {
   getCategory = type => {
     if (type !== 3) {
       this.props.fetchOccasionlist(type);
-    } else if (type === 3 && !this.props.isLoggedIn) {
-      this.props.toggleLogin(true);
     }
     this.setState({
       stepCount: 2,
@@ -294,6 +321,7 @@ class Purchase extends Component {
       termsCheck: false,
       privateVideo: false,
     });
+    this.props.headerUpdate('');
   };
 
   render() {
@@ -301,7 +329,7 @@ class Purchase extends Component {
       <Modal open={this.state.open} onClose={this.handleClose}>
         <ModalContainer>
           {this.getBodyWithHeader()}
-          {this.getCustomStep()}
+          <Scrollbars>{this.getCustomStep()}</Scrollbars>
         </ModalContainer>
       </Modal>
     );
@@ -332,6 +360,8 @@ Purchase.propTypes = {
   clearAll: PropTypes.func.isRequired,
   updateFormBuilderProps: PropTypes.func.isRequired,
   formProps: PropTypes.object.isRequired,
+  celebDetails: PropTypes.object.isRequired,
+  headerUpdate: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},

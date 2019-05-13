@@ -25,6 +25,7 @@ const initalState = {
     termsCheck: false,
     privateVideo: false,
   },
+  header: '',
 };
 
 export default (state = initalState, action) => {
@@ -76,6 +77,12 @@ export default (state = initalState, action) => {
         ...state,
         formProps: action.data,
       };
+    case OCCASION_LIST.modalHeader:
+      return {
+        ...state,
+        header: action.header,
+      };
+
     default:
       return state;
   }
