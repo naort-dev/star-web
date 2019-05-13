@@ -109,7 +109,7 @@ export const sourceListFetchFailed = error => ({
   error,
 });
 
-export const fetchSourceList = callBack => (dispatch) => {
+export const fetchSourceList = callBack => dispatch => {
   dispatch(loaderAction(true));
   return fetch(Api.getSourceList, {})
     .then(resp => {
@@ -312,6 +312,7 @@ export const starsonaRequest = (
     method = 'put';
   }
   dispatch(requestPostStart());
+  dispatch(loaderAction(true));
   return fetch[method](ApiUrl, formData, {})
     .then(resp => {
       if (resp.data && resp.data.success) {

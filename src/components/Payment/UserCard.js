@@ -12,7 +12,7 @@ import CardList from './CardList';
 import Button from '../PrimaryButton';
 import Checkout from './Checkout';
 
-const UserCard = (props) => {
+const UserCard = props => {
   const [isNewCard, cardSelection] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
 
@@ -25,7 +25,7 @@ const UserCard = (props) => {
     props.contentSwitchCallback(value);
   };
 
-  const getCardSelected = (card) => {
+  const getCardSelected = card => {
     setSelectedCard(card);
   };
 
@@ -35,9 +35,8 @@ const UserCard = (props) => {
   const getThumbnail = () => {
     if (props.celebDetails.userDetails.avatar_photo) {
       return props.celebDetails.userDetails.avatar_photo.thumbnail_url;
-    } else {
-      return '../assets/images/profile.png';
     }
+    return '../assets/images/profile.png';
   };
 
   return (

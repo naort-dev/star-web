@@ -127,6 +127,8 @@ class Purchase extends Component {
       submitClick={this.submitClick}
       starsonaRequest={this.props.starsonaRequest}
       goBack={this.backArrowHandler}
+      userDetails={this.props.userDetails}
+      category={this.state.category}
     />
   );
 
@@ -162,6 +164,13 @@ class Purchase extends Component {
     return <React.Fragment />;
   };
 
+  getThumbnail = () => {
+    if (this.props.userDetails.avatar_photo) {
+      return this.props.userDetails.avatar_photo.thumbnail_url;
+    }
+    return '../assets/images/profile.png';
+  };
+
   getBodyWithHeader = () => {
     if (
       this.state.stepCount < 3 ||
@@ -176,6 +185,7 @@ class Purchase extends Component {
             closeHandler={this.closeHandler}
             headerText="What kind of video message do you want?"
             arrowVisible={this.state.stepCount !== 1}
+            starImage={this.getThumbnail()}
           />
           <Content className="contentPadding" step={this.state.stepCount}>
             <Scrollbars>
@@ -187,6 +197,7 @@ class Purchase extends Component {
     }
     return <React.Fragment />;
   };
+
   getCategory = type => {
     if (type !== 3) {
       this.props.fetchOccasionlist(type);
@@ -212,7 +223,6 @@ class Purchase extends Component {
       privateVideo: this.state.privateVideo,
     });
   };
-  I;
   termsCheck = value => {
     this.setState({ termsCheck: value });
   };

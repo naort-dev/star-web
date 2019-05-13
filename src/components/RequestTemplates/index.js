@@ -21,7 +21,6 @@ function RequestTemplates(
   resetRecording,
   handleInputChange,
   updateUserToMyself,
-  audioObj,
 ) {
   const isMobile = getMobileOperatingSystem();
   const videoForValue = () => {
@@ -132,7 +131,6 @@ function RequestTemplates(
             popperPlacement="bottom"
             selected={date}
             onChange={dt => onChange(dt, 'date')}
-            placeholderText="Enter date"
           />
         </div>
       </Templates.InputWrapper>

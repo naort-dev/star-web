@@ -66,13 +66,16 @@ class ScriptBuilder extends Component {
 
   getAudioFile = key => {
     if (this.props.audio[key] !== null) {
-      return new File([this.props.audio[key].recordedBlob]);
+      return new File(
+        [this.props.audio[key].recordedBlob],
+        'recorded-name.webm',
+      );
     }
     return null;
   };
 
   readyToPayment = () => {
-    this.props.scriptSubmit();
+    this.props.submitClick();
   };
 
   handleCheck = checked => {
@@ -80,21 +83,22 @@ class ScriptBuilder extends Component {
   };
 
   submitClick = () => {
-    if (this.props.isLoggedIn) {
-      this.props.submitClick();
+    if (!this.props.isLoggedIn) {
+      this.props.scriptSubmit();
     } else {
       const payload = {
-        celebrity: 106,
-        occasion: this.props.bookingData.occasion.key,
+        starDetail: {
+          id: this.props.userDetails.id,
+        },
+        selectedValue: this.props.bookingData.occasion.key,
         public_request: this.props.checked,
         from_audio_file: this.getAudioFile('from'),
         to_audio_file: this.getAudioFile('for'),
-        request_details: {
-          stargramto: this.props.bookingData.hostName,
-          stargramfrom: this.props.bookingData.userName,
-          relationship: this.props.bookingData.relationshipValue,
-          date: this.props.bookingData.date,
-        },
+        type: this.props.category,
+        requestRelationshipData: this.props.bookingData.relationshipValue,
+        stargramto: this.props.bookingData.hostName,
+        stargramfrom: this.props.bookingData.userName,
+        date: this.props.bookingData.date,
       };
       this.props.starsonaRequest(
         payload,
@@ -161,6 +165,8 @@ ScriptBuilder.propTypes = {
   audio: PropTypes.object.isRequired,
   bookingData: PropTypes.object.isRequired,
   goBack: PropTypes.func.isRequired,
+  userDetails: PropTypes.object.isRequired,
+  category: PropTypes.number.isRequired,
 };
 
 ScriptBuilder.defaultProps = {
