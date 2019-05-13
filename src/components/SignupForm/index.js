@@ -257,6 +257,7 @@ class SignUpForm extends React.Component {
   };
   closeSignUpForm = () => {
     this.props.closeSignupFlow(this.state.acceptTerms)
+    this.setState({acceptTerms: false});
   }
 
   render() {
