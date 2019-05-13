@@ -198,8 +198,8 @@ class SignUpImageUpload extends React.Component {
       return (
         <UploadContainer.CropperContainer>
           <ImageUpload.CropWrapper>
-            <BackArrow onClick={this.onBack} />
-            <CloseButton onClick={this.props.closeSignupFlow} />
+            <BackArrow className='action-buttons' onClick={this.onBack} />
+            <CloseButton className='action-buttons' onClick={this.onBack} />
             <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
             <ImageCropper
               exifData={this.state.currentExif}
@@ -215,8 +215,8 @@ class SignUpImageUpload extends React.Component {
       return (
         <UploadContainer.CropperContainer>
           <ImageUpload.CropWrapper>
-            <BackArrow onClick={this.onBack} />
-            <CloseButton onClick={this.props.closeSignupFlow} />
+            <BackArrow className='action-buttons' onClick={this.onBack} />
+            <CloseButton className='action-buttons' onClick={this.onBack} />
             <ImageUpload.Heading>Take your photo</ImageUpload.Heading>
             <TakePhoto
               takePicture={takePicture}
@@ -230,8 +230,8 @@ class SignUpImageUpload extends React.Component {
       <UploadContainer.Wrapper>
         {this.state.showBrowseCategory && (
           <UploadContainer.BrowseCategoryWrapper>
-            <BackArrow onClick={this.onBack} />
-            <CloseButton onClick={this.props.closeSignupFlow} />
+            <BackArrow className='action-buttons' onClick={this.onBack} />
+            <CloseButton className='action-buttons' onClick={this.onBack} />
             <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
             <UploadContainer.BrowseCategoryContainer>
               {this.browserCategoryList()}
