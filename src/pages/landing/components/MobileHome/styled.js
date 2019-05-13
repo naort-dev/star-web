@@ -6,7 +6,6 @@ const MobileStyled = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  min-height: 100%;
   position: relative;
   z-index: 1;
   padding: 60px 23px;
