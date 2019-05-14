@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const HeaderSection = styled.header`
-  position: ${props => (props.notFixed ? 'static' : 'fixed')};
+  position: ${props => (props.notFixed ? 'relative' : 'fixed')};
   top: 0;
   left: 0;
   right: 0;
