@@ -99,7 +99,7 @@ class SignUpForm extends React.Component {
           this.state.role,
         )
         .then(response => {
-          if (response != undefined) {
+          if (response !== undefined) {
             this.props.changeStep(this.props.currentStep + 1);
           }
         });

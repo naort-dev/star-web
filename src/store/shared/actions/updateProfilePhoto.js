@@ -11,6 +11,8 @@ export const UPDATE_PROFILE_PHOTO = {
   reset: 'reset/reset_update_profile_photo',
 };
 
+export const SET_PROFILE_PIC_TO_STATE = 'setProfilePicToState';
+
 export const updateProfilePhotoFetchStart = () => ({
   type: UPDATE_PROFILE_PHOTO.start,
 });
@@ -35,6 +37,10 @@ export const resetProfilePhoto = () => ({
   type: UPDATE_PROFILE_PHOTO.reset,
 });
 
+export const setProfilePicToState = (profilePic) => ({
+  type: SET_PROFILE_PIC_TO_STATE.reset,
+  payload: profilePic,
+});
 
 export const updateProfilePhoto = obj => (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
