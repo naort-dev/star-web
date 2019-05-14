@@ -69,22 +69,21 @@ function FormContainer(props) {
       }
       return {};
     });
-    setFormData({
-      ...FormData,
+    props.pageCountHandler(0);
+    props.updateBookingData({
       templateType: type,
-      relationship: result.length ? result[0].relationships : [],
-      eventName: '',
-      specification: '',
+      relationship: result.length ? result[0].relationships : [],,
+      user: 'someoneElse',
+      enableAudioRecorder: false,
       hostName: '',
       userName: '',
+      relationshipValue: null,
+      specification: '',
       date: null,
-      occasion,
-      relationshipValue: '',
+      eventName: '',
       validSelf: false,
-      user: 'someoneElse',
+      occasion: {},
     });
-    props.pageCountHandler(0);
-    props.updateBookingData(FormData);
   };
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
