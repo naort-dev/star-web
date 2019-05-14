@@ -15,7 +15,7 @@ Templates.InputWrapper = styled.div`
   width: 100%;
   @media (min-width: 768px) {
     margin-top: 5px;
-    align-items: flex-start;
+    align-items: inherit;
     width: ${props => (props.fullWidth ? '100%' : '48%')};
     padding-bottom: 30px;
   }
@@ -297,7 +297,7 @@ Templates.InputWrapperContainer = styled.div`
   flex-wrap: wrap;
   width: 100%;
   @media (min-width: 768px) {
-    align-items: flex-start;
+    align-items: inherit;
   }
   @media (min-width: 1025px) {
     align-items: flex-end;

@@ -15,6 +15,7 @@ import Payment from '../../components/Payment';
 import SuccessScreen from './Components/SuccessScreen';
 import Header from './Components/Header';
 import TermsAndCondition from './Components/TermsAndCondition';
+import CancelConfirm from './Components/CancelConfirm';
 
 class Purchase extends Component {
   constructor(props) {
@@ -25,6 +26,8 @@ class Purchase extends Component {
       category: this.props.formProps.category,
       termsCheck: this.props.formProps.termsCheck,
       privateVideo: this.props.formProps.privateVideo,
+      closeModal: false,
+      importantInfo: '',
     };
     this.starData = [
       {
@@ -146,6 +149,8 @@ class Purchase extends Component {
       category={this.state.category}
       loaderAction={this.props.loaderAction}
       headerUpdate={this.props.headerUpdate}
+      importantInfo={this.state.importantInfo}
+      infoChange={this.infoChange}
     />
   );
 
@@ -293,6 +298,9 @@ class Purchase extends Component {
   };
 
   closeHandler = () => {
+    this.setState({ closeModal: true });
+  };
+  clearStore = () => {
     this.props.toggleRequestFlow(false);
     this.props.setVideoUploadedFlag(false);
     this.props.updateMediaStore({
@@ -324,13 +332,32 @@ class Purchase extends Component {
     this.props.headerUpdate('');
   };
 
+  modalClose = () => {
+    this.setState({ closeModal: false });
+  };
+  
+  infoChange = value => {
+    this.setState({ importantInfo: value });
+  };
+
   render() {
+    // eslint-disable-next-line camelcase
+    const { nick_name, first_name } = this.props.userDetails;
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
-        <ModalContainer>
-          {this.getBodyWithHeader()}
-          <Scrollbars>{this.getCustomStep()}</Scrollbars>
-        </ModalContainer>
+        {!this.state.closeModal ? (
+          <ModalContainer>
+            {this.getBodyWithHeader()}
+            <Scrollbars>{this.getCustomStep()}</Scrollbars>
+          </ModalContainer>
+        ) : (
+          <CancelConfirm
+            modalClose={this.modalClose}
+            requestFLowClose={this.clearStore}
+            // eslint-disable-next-line camelcase
+            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+          />
+        )}
       </Modal>
     );
   }

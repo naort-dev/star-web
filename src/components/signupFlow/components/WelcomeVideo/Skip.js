@@ -18,7 +18,7 @@ const Skip = props => {
           video is key in helping fans book you for paid videos.
         </p>
         <FlexCenter className="colAlign">
-          <Button className="button" onClick={() => props.onBack(true)}>
+          <Button className="button whiteBtn" onClick={() => props.onBack(true)}>
             You talked me into it, let me fix my hair
           </Button>
           <Button className="button whiteBtn" onClick={() => props.changeStep(props.currentStep + 1)}>
