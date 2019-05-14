@@ -89,8 +89,8 @@ export default class VideoPlayer extends React.Component {
   toggleVideoPlay = () => {
     const { player } = this.player.getState();
     this.pauseAllVideos();
-    // console.log(player)
     if (player.paused) {
+      this.player.pause();
       this.player.play();
       console.log('started play');
     } else {
@@ -157,7 +157,7 @@ export default class VideoPlayer extends React.Component {
             poster={this.state.primary.thumbnail}
             src={this.state.primary.video}
             fluid
-            {...this.props}
+            // {...this.props}
           >
             <LoadingSpinner />
             <ControlBar autoHide={false} disabled={!props.controls} />
