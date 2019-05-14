@@ -93,7 +93,7 @@ class MobileHome extends React.Component {
           {
             currentStep === 2 &&
               <React.Fragment>
-                <MobileStyled.SubHeader>Select from our selection of stars</MobileStyled.SubHeader>
+                <MobileStyled.SubHeader>Choose from our selection of Stars</MobileStyled.SubHeader>
                 <AvatarSection stars={featuredStars.homeFeatured.data} />
                 <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
               </React.Fragment>

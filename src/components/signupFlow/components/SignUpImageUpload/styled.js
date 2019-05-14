@@ -47,6 +47,9 @@ UploadContainer.CloseButton = styled.span`
 `;
 
 UploadContainer.Container = styled.div`
+  .action-buttons {
+    top: 0px;
+  }
   @media (min-width: 768px) {
     padding: 0 0;
   }

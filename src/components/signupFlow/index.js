@@ -119,7 +119,7 @@ class SignupFlow extends React.Component {
       profession: this.state.profession,
       availability: true,
       profile_video: this.state.profile_video,
-      description: 'Hi',
+      description: '',
     }
     
     celebritySignupProfile(celebrityProfileData)
