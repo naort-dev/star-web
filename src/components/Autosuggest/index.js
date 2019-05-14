@@ -50,7 +50,7 @@ renderSuggestion.defaultProps = {
 const AutoComplete = props => {
   const [inputVal, setInputValue] = useState('');
   useEffect(() => {
-    if (props.value[props.labelKey]) {
+    if (props.value && props.value[props.labelKey]) {
       setInputValue(props.value[props.labelKey]);
     } else {
       setInputValue(props.value);
@@ -147,10 +147,7 @@ const AutoComplete = props => {
 
 AutoComplete.propTypes = {
   labelKey: PropTypes.string,
-  value: PropTypes.oneOfType([
-    PropTypes.string,
-    PropTypes.object
-  ]),
+  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string,
   list: PropTypes.array,
