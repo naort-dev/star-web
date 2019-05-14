@@ -90,7 +90,6 @@ export default class VideoPlayer extends React.Component {
 
   toggleVideoPlay = () => {
     const { player } = this.player.getState();
-    this.videoRef.current.focus();
     this.pauseAllVideos();
     if (player.paused) {
       this.player.pause();
