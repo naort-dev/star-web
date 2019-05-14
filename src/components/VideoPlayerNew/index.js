@@ -75,6 +75,8 @@ export default class VideoPlayer extends React.Component {
       this.props.autoPlay
     ) {
       this.toggleVideoPlay();
+    } else if (!visible) {
+      this.player.pause();
     }
   }
 
@@ -88,6 +90,7 @@ export default class VideoPlayer extends React.Component {
 
   toggleVideoPlay = () => {
     const { player } = this.player.getState();
+    this.videoRef.current.focus();
     this.pauseAllVideos();
     if (player.paused) {
       this.player.pause();
@@ -157,7 +160,7 @@ export default class VideoPlayer extends React.Component {
             poster={this.state.primary.thumbnail}
             src={this.state.primary.video}
             fluid
-            // {...this.props}
+            {...this.props}
           >
             <LoadingSpinner />
             <ControlBar autoHide={false} disabled={!props.controls} />
