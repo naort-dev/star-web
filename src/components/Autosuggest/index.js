@@ -78,18 +78,15 @@ const AutoComplete = props => {
   const getSuggestions = value => {
     const inputValue = deburr(value.trim()).toLowerCase();
     setInputValue(inputValue);
-    const cache = {};
     const inputLength = inputValue.length;
-    if (cache.key !== value) {
-      cache[value] = props.list.filter(suggestion => {
-        const keep = suggestion[props.labelKey]
-          .toLowerCase()
-          .includes(inputValue);
-        return keep;
-      });
-      cache.key = value;
-    }
-    return inputLength === 0 ? [] : cache[value];
+    return inputLength === 0
+      ? []
+      : props.list.filter(suggestion => {
+          const keep = suggestion[props.labelKey]
+            .toLowerCase()
+            .includes(inputValue);
+          return keep;
+        });
   };
 
   const handleOptionChange = item => {
