@@ -10,7 +10,7 @@ const SvgStyled = styled.svg`
     stroke-dasharray: 9;
   }
   @media(min-width: 1280px) {
-    height: 1550px;
+    height: 1542px;
   }
 `;
 
