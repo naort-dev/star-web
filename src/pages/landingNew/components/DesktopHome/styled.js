@@ -7,15 +7,15 @@ const DesktopStyled = styled.div`
 `;
 
 DesktopStyled.Logo = styled.img`
-  width: 451px;
+  width: 350px;
   display: block;
   margin: 0 auto;
 `;
 
 DesktopStyled.Heading = styled.span`
   padding: 0 30px;
-  font-family: Gilroy-Medium;
-  font-size: 80px;
+  font-family: Gilroy-Semibold;
+  font-size: 68px;
   line-height: 80px;
   text-align: center;
   color: ${props => props.theme.twilight};
@@ -23,8 +23,8 @@ DesktopStyled.Heading = styled.span`
   max-width: 800px;
   margin-bottom: 13px;
   @media(min-width: 1280px) {
-    font-size: 80px;
-    margin: 30px 0 8px;
+    font-size: 68px;
+    margin: 20px 0 8px;
     line-height: 80px;
     max-width: 100%;
   }
@@ -48,8 +48,8 @@ DesktopStyled.SearchDivider = styled.span`
 `;
 
 DesktopStyled.SubHeader = styled.span`
-  font-family: Gilroy-Bold;
-  font-size: 36px;
+  font-family: Gilroy-Semibold;
+  font-size: 30px;
   line-height: 1.19;
   text-align: left;
   color: ${props => props.theme.greyishBrown};
@@ -186,6 +186,7 @@ DesktopStyled.FlowWrapper = styled.div`
   z-index: 1;
   @media (min-width: 832px) {
     width: 818px;
+    font-size: 0;
   }
   @media (min-width: 1280px) {
     width: calc(1280px - 120px);
