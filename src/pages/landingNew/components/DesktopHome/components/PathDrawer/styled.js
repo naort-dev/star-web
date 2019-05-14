@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const SvgStyled = styled.svg`
   width:100%;
-  height: 1546px;
+  height: 1541px;
   .flow-path {
     stroke: ${props => props.theme.orangePink};
     fill: none;
