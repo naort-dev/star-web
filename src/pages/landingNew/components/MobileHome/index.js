@@ -48,6 +48,9 @@ class MobileHome extends React.Component {
 
   goToNextStep = () => {
     const { currentStep, landingVisited } = this.state;
+    if (document.getElementById('request-flow-popup')) {
+      document.getElementById('request-flow-popup').scrollTop = 0;
+    }
     if (!landingVisited) {
       this.setState({ currentStep: currentStep + 1 });
     } else {
