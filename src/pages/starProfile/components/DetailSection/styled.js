@@ -216,6 +216,7 @@ DetailStyled.StarDetails = styled.div`
       font-size: 19px;
     }
     .response-section {
+      padding-left: 0;
       .response-item {
         font-size: 24px;
         padding-top: 3px;

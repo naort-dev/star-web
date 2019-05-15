@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
@@ -86,10 +87,12 @@ const FilterSection = (props) => {
             <FontAwesomeIcon icon={faChevronLeft} />
           </HeaderSection.BackIcon>
           <HeaderSection.HeaderLeft>
-            <HeaderSection.ImgLogo
-              src="assets/images/logo_starsona.svg"
-              alt="logo"
-            />
+            <Link to='/'>
+              <HeaderSection.ImgLogo
+                src="assets/images/logo_starsona.svg"
+                alt="logo"
+              />            
+            </Link>
           </HeaderSection.HeaderLeft>
           <HeaderSection.HeaderRight visible>
             <FilterStyled.CloseButton onClick={props.onClose}>

@@ -25,12 +25,12 @@ class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: { value: '', isValid: false, message: '' },
-      lastName: { value: '', isValid: true, message: '' },
-      nickName: { value: '', isValid: true, message: '' },
+      firstName: { value: props.socialMediaStore.first_name? props.socialMediaStore.first_name : '', isValid: false, message: '' },
+      lastName: { value: props.socialMediaStore.last_name? props.socialMediaStore.last_name : '', isValid: true, message: '' },
+      nickName: { value: props.socialMediaStore.nick_name? props.socialMediaStore.nick_name: '', isValid: true, message: '' },
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
-      email: { value: '', isValid: false, message: '' },
+      email: { value: props.socialMediaStore.username? props.socialMediaStore.username: '', isValid: false, message: '' },
       termsAndConditions: { value: false, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
@@ -38,9 +38,6 @@ class SignUpForm extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.props.toggleSignup(false);
-    }
     const params =
       window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
