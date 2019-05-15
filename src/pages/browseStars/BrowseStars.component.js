@@ -64,9 +64,7 @@ const BrowseStars = (props) => {
 
   const onWindowScroll = () => {
     const bounding = mainRef.current.getBoundingClientRect();
-    // console.log(bounding.top, headerRef.current.clientHeight, 'scroll')
     if (bounding.top - headerRef.current.clientHeight <= 0 && !fixedContent) {
-      console.log(bounding.top, headerRef.current.clientHeight, fixedContent)
       toggleContentPos(true);
       getListHeight();
     } else if (bounding.top - headerRef.current.clientHeight > 0) {
