@@ -36,20 +36,30 @@ ListingStyled.VideoItemWrapper = styled.div`
 `;
 
 ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
-  display: ${props => (props.visible ? 'flex' : 'none')};
-  padding: 0 15px;
+  display: flex;
+  width: ${props => (props.visible ? 'inherit' : '0')};
+  overflow: hidden;
+  // opacity: ${props => (props.visible ? '1' : '0')};
+  transition: all 0.3s;
   font-family: Gilroy-MediumItalic;
   font-size: 12px;
   color: ${props => props.theme.brownGrey};
   flex-direction: column;
   justify-content: space-evenly;
+  .comments-inner {
+    padding: 0 15px;
+  }
   .comment-item {
     padding-bottom: 10px;
     display: block;
+    &.empty-comment {
+      white-space: nowrap;
+    }
   }
   @media(min-width: 832px) {
-    width: 312px;
     font-size: 19px;
+    width: ${props => (props.visible ? '312px' : '0')};
+    overflow: hidden;
   }
 `;
 
