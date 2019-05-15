@@ -64,18 +64,18 @@ const BrowseStars = (props) => {
 
   const onWindowScroll = () => {
     const bounding = mainRef.current.getBoundingClientRect();
+    // console.log(bounding.top, headerRef.current.clientHeight, 'scroll')
     if (bounding.top - headerRef.current.clientHeight <= 0 && !fixedContent) {
+      console.log(bounding.top, headerRef.current.clientHeight, fixedContent)
       toggleContentPos(true);
       getListHeight();
-    } else {
+    } else if (bounding.top - headerRef.current.clientHeight > 0) {
       getListHeight();
       toggleContentPos(false);
     }
   };
 
   useEffect(() => {
-    window.addEventListener('resize', onWindowResize);
-    window.addEventListener('scroll', onWindowScroll);
     document.documentElement.scrollTop = 0;
     onWindowResize();
   }, []);
@@ -85,11 +85,13 @@ const BrowseStars = (props) => {
   }, [props.category.selected.length, props.sortValue, props.lowPrice, props.highPrice]);
 
   useEffect(() => {
+    window.addEventListener('resize', onWindowResize);
+    window.addEventListener('scroll', onWindowScroll);
     return () => {
       window.removeEventListener('resize', onWindowResize);
       window.removeEventListener('scroll', onWindowScroll);
     };
-  }, []);
+  }, [fixedContent]);
 
   useEffect(() => {
     if (!props.featuredStars[props.category.label]) {

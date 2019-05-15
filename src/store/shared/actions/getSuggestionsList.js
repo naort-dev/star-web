@@ -62,7 +62,7 @@ export const fetchSuggestionList = searchParam => (dispatch, getState) => {
       },
     },
   };
-  return axios.get(`${configData.elastic_search_endpoint}_search?size=10000`, {
+  return axios.get(`${configData.elastic_search_endpoint}/_search?size=10000`, {
     params: {
       source: JSON.stringify(query),
       source_content_type: 'application/json',

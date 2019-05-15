@@ -197,7 +197,6 @@ DetailStyled.StarDetails = styled.div`
     }
   }
   .response-section {
-    padding-left: 26px;
     .response-item {
       font-family: Gilroy-Light;
       font-size: 18px;
