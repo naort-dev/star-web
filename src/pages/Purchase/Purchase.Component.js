@@ -185,15 +185,15 @@ class Purchase extends Component {
       if (this.state.category === 1) {
         return this.getPaymentScreen();
       } else if (this.state.category === 3) {
-        return <SuccessScreen />;
+        return <SuccessScreen closeHandler={this.clearStore} />;
       }
     } else if (this.state.stepCount === 5) {
       if (this.state.category === 1) {
-        return <SuccessScreen />;
+        return <SuccessScreen closeHandler={this.clearStore} />;
       }
       return this.getPaymentScreen();
     } else if (this.state.stepCount === 6) {
-      return <SuccessScreen />;
+      return <SuccessScreen closeHandler={this.clearStore} />;
     }
     return <React.Fragment />;
   };
@@ -335,7 +335,7 @@ class Purchase extends Component {
   modalClose = () => {
     this.setState({ closeModal: false });
   };
-  
+
   infoChange = value => {
     this.setState({ importantInfo: value });
   };
