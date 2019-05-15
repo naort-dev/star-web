@@ -3,14 +3,19 @@ import styled from 'styled-components';
 const StarProfileStyled = styled.div`
   margin-top: 125px;
   padding-bottom: 72px;
+  min-height: calc(100vh - 125px);
+  display: flex;
+  align-items: ${props => (props.centerAlign ? 'center': 'flex-start')};
   @media(min-width: 832px) {
-    margin-top: 260px;
+    margin-top: 244px;
     padding-bottom: 115px;
     height: auto;
+    min-height: calc(100vh - 244px);
     background: ${props => props.theme.white};
   }
   @media(min-width: 1280px) {
-    margin-top: 151px;
+    margin-top: 162px;
+    min-height: calc(100vh - 162px);
   }
 `;
 
@@ -90,6 +95,10 @@ StarProfileStyled.ProfileVideo = styled.div`
   @media(min-width: 832px) {
     display: block;
   }
+`;
+
+StarProfileStyled.ErrorWrapper = styled.span`
+
 `;
 
 export default StarProfileStyled;

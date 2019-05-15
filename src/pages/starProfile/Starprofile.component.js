@@ -39,6 +39,13 @@ const StarProfile = (props) => {
     toggleProfVideo(state);
   }
 
+  const showErrorMessage = () => {
+    if (props.detailsError.status === "400") {
+      return props.detailsError.message;
+    }
+    return null;
+  }
+
   useEffect(() => {
     props.fetchStarDetails(getUserId());
     return () => {
@@ -46,36 +53,51 @@ const StarProfile = (props) => {
     }
   }, [props.isLoggedIn, props.match.params.id])
 
+  useEffect(() => {
+    if (props.detailsError && props.detailsError.status !== "400") {
+      props.history.push('/not-found');
+    }
+  })
+
   return (
-    <StarProfileStyled>
+    <StarProfileStyled centerAlign={props.detailsError}>
       <StarProfileStyled.Container>
         <Header
           onBackClick={onBackClick}
           showBack
         />
-        <CallToAction
-          toggleRequestFlow={props.toggleRequestFlow}
-          userDetails={props.userDetails}
-          celebDetails={props.celebDetails}
-        />
-        <DetailSection
-          showProfileVideo={profVideo}
-          onBackClick={onBackClick}
-          isLoggedIn={props.isLoggedIn}
-          followCelebrity={props.followCelebrity}
-          toggleLogin={props.toggleLogin}
-          updateFavouritesQueue={props.updateFavouritesQueue}
-          toggleProfileVideo={toggleProfileVideo}
-          userDetails={props.userDetails}
-          celebDetails={props.celebDetails}
-        />
-        <ListingSection
-          userDetails={props.userDetails}
-          fetchCelebVideosList={props.fetchCelebVideosList}
-          fetchCelebReactionsList={props.fetchCelebReactionsList}
-          reactionsList={props.reactionsList}
-          videosList={props.videosList}
-        />
+        {
+          props.detailsError ?
+            <StarProfileStyled.ErrorWrapper>
+              {showErrorMessage()}
+            </StarProfileStyled.ErrorWrapper>
+          :
+            <React.Fragment>
+              <CallToAction
+                toggleRequestFlow={props.toggleRequestFlow}
+                userDetails={props.userDetails}
+                celebDetails={props.celebDetails}
+              />
+              <DetailSection
+                showProfileVideo={profVideo}
+                onBackClick={onBackClick}
+                isLoggedIn={props.isLoggedIn}
+                followCelebrity={props.followCelebrity}
+                toggleLogin={props.toggleLogin}
+                updateFavouritesQueue={props.updateFavouritesQueue}
+                toggleProfileVideo={toggleProfileVideo}
+                userDetails={props.userDetails}
+                celebDetails={props.celebDetails}
+              />
+              <ListingSection
+                userDetails={props.userDetails}
+                fetchCelebVideosList={props.fetchCelebVideosList}
+                fetchCelebReactionsList={props.fetchCelebReactionsList}
+                reactionsList={props.reactionsList}
+                videosList={props.videosList}
+              />
+            </React.Fragment>
+        }
       {/* {
         this.state.showAppBanner && Object.keys(props.userDetails).length && Object.keys(props.celebrityDetails).length ?
           <AppBanner
@@ -110,6 +132,7 @@ StarProfile.propTypes = {
   history: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   celebDetails: PropTypes.object.isRequired,
+  detailsError: PropTypes.object,
   fetchStarDetails: PropTypes.func.isRequired,
   resetStarDetails: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
@@ -121,6 +144,10 @@ StarProfile.propTypes = {
   toggleLogin: PropTypes.func.isRequired,
   videosList: PropTypes.object.isRequired,
   reactionsList: PropTypes.object.isRequired,
+}
+
+StarProfile.defaultProps = {
+  detailsError: null
 }
 
 export default StarProfile;
