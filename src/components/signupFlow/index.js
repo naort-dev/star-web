@@ -33,7 +33,7 @@ import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { celebritySignupProfile } from '../../services/userRegistration'
-import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 
 
 class SignupFlow extends React.Component {
@@ -216,6 +216,8 @@ class SignupFlow extends React.Component {
               closeSignupFlow={this.closeSignUp}
               continueClickCallback={this.continueClickHandler}
               updateProfilePhoto={this.props.updateProfilePhoto}
+              setProfilePicToState={this.props.setProfilePicToState}
+              profilePic={this.props.profilePic}
             />
           );
         case 3:
@@ -375,6 +377,7 @@ const mapStateToProps = state => ({
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
   inAppPriceList: state.config.data.in_app_pricing,
+  profilePic: state.photoUpload.profilePic,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -393,6 +396,7 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   setProfilePhoto: () => dispatch(resetProfilePhoto()),
+  setProfilePicToState: (obj) => dispatch(setProfilePicToState(obj)),
 });
 
 export default withRouter(

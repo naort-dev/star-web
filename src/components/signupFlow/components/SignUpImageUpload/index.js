@@ -20,7 +20,7 @@ class SignUpImageUpload extends React.Component {
     currentExif: null,
     verificationDisable: false,
     cropper: false,
-    finalImage: null,
+    finalImage: this.props.profilePic? this.props.profilePic : null,
     finalFile: null,
     cropImage: null,
     extension: null,
@@ -28,6 +28,7 @@ class SignUpImageUpload extends React.Component {
     selectedCategory: [],
     selectedProfessions: [],
     subCategoriesArray: [],
+    isContinue: false,
   };
 
   componentWillMount() {}
@@ -60,6 +61,8 @@ class SignUpImageUpload extends React.Component {
         "featured_image": "",
       }
       this.props.updateProfilePhoto(fileName);
+      const fileURL = URL.createObjectURL(file);
+      this.props.setProfilePicToState(fileURL);
     })
     .catch(() => {
     });
@@ -110,6 +113,10 @@ class SignUpImageUpload extends React.Component {
     }
   };
 
+  continueClickhandler = () => {
+    this.setState({isContinue: true});
+    this.props.continueClickCallback(this.state.selectedProfessions, this.state.finalImage, this.state.cropImage);
+  }
   closeCropper = () => {
     this.setState({
       cropImage: null,
@@ -254,7 +261,7 @@ class SignUpImageUpload extends React.Component {
               image={this.state.finalImage}
               updateProfilePhoto={this.props.updateProfilePhoto}
             />
-            {!(this.state.selectedProfessions && (this.state.finalImage || this.state.cropImage)) &&(
+            {!(this.state.selectedProfessions.length > 0 && (this.state.finalImage || this.state.cropImage)) && this.state.isContinue &&(
               <ErrorMessage>Please add a profile image and choose at least one category</ErrorMessage>
             )}
             <UploadContainer.CategoriesWrapper>
@@ -278,7 +285,7 @@ class SignUpImageUpload extends React.Component {
             <UploadContainer.ButtonWrapper>
               <UploadContainer.ContinueButton
                 type="submit"
-                onClick={() => this.props.continueClickCallback(this.state.selectedProfessions, this.state.finalImage, this.state.cropImage)}
+                onClick={this.continueClickhandler}
               >
                 Continue
               </UploadContainer.ContinueButton>
