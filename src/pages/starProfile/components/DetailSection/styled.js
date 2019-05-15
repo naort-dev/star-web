@@ -32,9 +32,11 @@ DetailStyled.Categories = styled.span`
   font-family: Gilroy-Light;
   font-size: 14px;
   color: ${props => props.theme.twilight};
+  text-align: center;
   @media(min-width: 832px) {
     order: 1;
     font-size: 24px;
+    text-align: left;
   }
 `;
 

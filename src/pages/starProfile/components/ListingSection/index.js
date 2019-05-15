@@ -11,18 +11,34 @@ const videoCountLimit = {
 }
 
 const reactionCountLimit = {
-  'mobile': 3,
+  'mobile': 2,
   'ipad': 3,
   'desktop': 5,
 }
 
 const ListingSection = (props) => {
 
+  const setInitialLimit = (type) => {
+    let newVideoLimit = 2;
+    let newReactionLimit = 3;
+    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
+      newVideoLimit = videoCountLimit.desktop;
+      newReactionLimit = reactionCountLimit.desktop;
+    } else if (document.body.getBoundingClientRect().width <= 832 || window.innerWidth <= 832) {
+      newVideoLimit = videoCountLimit.mobile;
+      newReactionLimit = reactionCountLimit.mobile;
+    }
+    if (type === 'video') {
+      return newVideoLimit;
+    }
+    return newReactionLimit;
+  }
+
   const [selectedVideo, updateSelectedVideo] = useState([0]);
   const [videosList, updateVideosList] = useState([]);
-  const [videoCount, updateVideoCount] = useState(2);
-  const [reactionCount, updateReactionCount] = useState(3);
-
+  const [videoCount, updateVideoCount] = useState(setInitialLimit('video'));
+  const [reactionCount, updateReactionCount] = useState(setInitialLimit('reaction'));
+   
   const handleWindowResize = () => {
     if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
       updateVideoCount(videoCountLimit.desktop);
