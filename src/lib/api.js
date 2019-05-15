@@ -4,21 +4,21 @@ class Api {
   static getCelebList = 'v2/user/fan/celebrity_list/get_list/';
   static getTrendingStars = 'v2/user/trending_stars/';
   static authGetCelebList = 'v2/user/fan/celebrity_list/';
-  static getProfessionsList = 'v1/user/filtered_professions/';
+  static getProfessionsList = 'v2/user/filtered_professions/';
   static getAllProfessions = 'v1/user/professions/';
   static getGroupTypes = 'v1/user/group_types/';
-  static getVideosList = 'v1/request/featured_videos/';
+  static getVideosList = 'v2/request/featured_videos/';
   static login = 'v1/user/login/';
   static register = 'v2/user/register/'
   static getSuggestionList = 'v1/user/fan/suggestion_list/';
   static socialMediaLogin = 'v1/user/socialsignup/';
-  static authGetCelebDetails = 'v1/user/user_details/';
-  static getCelebDetails = id => `v1/user/user_details/${id}/get_details/`;
+  static authGetCelebDetails = 'v2/user/user_details/';
+  static getCelebDetails = id => `v2/user/user_details/${id}/get_details/`;
   static getUserFavourites = 'v1/user/fan/favourite_stars/';
   static getUserVideos = 'v1/request/request_list/';
   static getRequestDetails = 'v1/request/stargramz/';
   static followCelebrity = 'v1/user/fan/celebrity_follow/';
-  static getOccasionList = 'v1/request/occasion_list/';
+  static getOccasionList = 'v2/request/occasion_list/';
   static downloadVideo = videoId => `${env('SERVER_URL')}download/${videoId}`;
   static setVideoView = 'v1/request/readvideo/';
   static otherRelation = 'v1/request/other_relation/';
@@ -37,7 +37,7 @@ class Api {
   static updateGroupAccount = 'v1/user/group_account/';
   static updateNotification = 'v1/user/notification_settings/';
   static updatePhoto = 'v1/user/profileimages/';
-  static celebrityProfile = 'v1/user/celebrity_profile/';
+  static celebrityProfile = 'v2/user/celebrity_profile/';
   static getImageCredentials = imageType => `v1/user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
   static getawsCredentials = (key, extension, fileType) => `v1/user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
   static changeRequestStatus = 'v1/request/change_request_status/';
@@ -62,12 +62,16 @@ class Api {
   static validateOtpCode = 'v1/user/verify_mobile/';
   static celebRepresentative = 'v1/user/celebrity_representative/';
   static getReactions = 'v1/request/reactions/';
+  static getStarReaction = 'v2/request/reactions_full_listing/';
   static getGroupsList = 'v1/user/group_account/';
-  static groupTypeListing = 'v1/user/active_group_types/'
+  static groupTypeListing = 'v1/user/active_group_types/';
   static createGroupNotification = 'v1/notification/new_group_notification/';
   static twitterLogin = 'v1/user/twitter_integration/';
   static twitterOauth = 'v1/user/twitter_login';
   static validatePromo = 'v1/user/referral_validate/';
+  static getSubCategoryList = 'v2/user/professions/?parent=false';
+  static getGroupDetails = groupID => `v1/user/user_details/${groupID}/get_details`;
+  static getGroupMemberList = groupID => `v1/user/group_list/?account=${groupID}`;
 }
 
 export default Api;

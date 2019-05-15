@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { updateCategory } from '../../../../pages/landing/actions/updateFilters';
@@ -16,9 +17,10 @@ const CategorySection = (props) => {
     <CategoryStyled>
       <CategoryStyled.Item
         onClick={updateMainCategory('Featured', 0, [])}
-        selected={props.category.label === 'Featured'}
+        selected={props.category.label === 'Featured' && props.location.pathname === '/browse-stars'}
+        data-value="Featured"
       >
-        Featured
+        <Link to='/browse-stars' className="category-label">Featured</Link>
       </CategoryStyled.Item>
       {
         professionsList.map((profession) => {
@@ -26,9 +28,10 @@ const CategorySection = (props) => {
             <CategoryStyled.Item
               key={profession.id}
               onClick={updateMainCategory(profession.title, profession.id, profession.child)}
-              selected={props.category.label === profession.title}
+              selected={props.category.label === profession.title && props.location.pathname === '/browse-stars'}
+              data-value={profession.title}
             >
-              {profession.title}
+              <Link to='/browse-stars' className="category-label">{profession.title}</Link>
             </CategoryStyled.Item>
           );
         })
@@ -43,6 +46,7 @@ CategorySection.propTypes = {
   updateCategory: PropTypes.func.isRequired,
   showCategories: PropTypes.bool.isRequired,
   closeCategories: PropTypes.func.isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -54,4 +58,4 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(CategorySection);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CategorySection));

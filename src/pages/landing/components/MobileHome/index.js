@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import PrimaryButton from '../../../../components/PrimaryButton';
 import VideoRender from '../../../../components/VideoRender';
-import RequestFlowPopup from '../../../../components/RequestFlowPopup';
+import Modal from '../../../../components/Modal/Modal';
 import StarDrawer from '../../../../components/StarDrawer';
 import AvatarSection from './components/AvatarSection';
 import ActionChooser from './components/ActionChooser';
@@ -52,7 +52,6 @@ class MobileHome extends React.Component {
       this.setState({ currentStep: currentStep + 1 });
     } else {
       this.props.history.push('/browse-stars');
-      this.closeLandingFlow();
     }
   }
 
@@ -62,7 +61,7 @@ class MobileHome extends React.Component {
     } else {
       this.props.toggleLogin(true);
     }
-    this.closeLandingFlow();
+    this.goToNextStep();
   }
 
   closeLandingFlow = () => {
@@ -71,16 +70,14 @@ class MobileHome extends React.Component {
       this.props.history.push('/browse-stars');
       localStorage.setItem('landingVisited', true);
     }
-    this.props.closeLandingFlow();
   }
 
   render() {
     const { currentStep } = this.state;
-    const { featuredStars } = this.props;
+    const { featuredStars, isLoggedIn } = this.props;
     return (
-      <RequestFlowPopup
-        modalView
-        disableClose
+      <Modal
+        open
       >
         <MobileStyled className={currentStep === 5 ? 'grey-background' : ''}>
           <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
@@ -89,13 +86,14 @@ class MobileHome extends React.Component {
               <ActionChooser
                 toggleSignup={this.loginOrSignup('signup')}
                 toggleLogin={this.loginOrSignup('login')}
+                isLoggedIn={isLoggedIn}
                 goToNextStep={this.goToNextStep}
               />
           }
           {
             currentStep === 2 &&
               <React.Fragment>
-                <MobileStyled.SubHeader>Select from our selection of stars</MobileStyled.SubHeader>
+                <MobileStyled.SubHeader>Choose from our selection of Stars</MobileStyled.SubHeader>
                 <AvatarSection stars={featuredStars.homeFeatured.data} />
                 <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
               </React.Fragment>
@@ -142,7 +140,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>The star delivers</MobileStyled.SubHeader>
                 <MobileStyled.Description>The video is delivered right to your device for you to keep forever.</MobileStyled.Description>
                 <MobileStyled.VideoWrapper>
-                  <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
+                  <VideoRender autoPlay videoSrc="assets/videos/landing-star-video.mp4" variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
                   <PrimaryButton className="common-button" onClick={this.goToNextStep}>Next</PrimaryButton>
@@ -155,7 +153,7 @@ class MobileHome extends React.Component {
                 <MobileStyled.SubHeader>Watch & share</MobileStyled.SubHeader>
                 <MobileStyled.Description>Your video is yours to download, send to a friend, share on social, and keep forever! It’s the new digital autograph.</MobileStyled.Description>
                 <MobileStyled.VideoWrapper className="small-video">
-                  <VideoRender variableHeight cover="assets/images/default-cover.jpg" />
+                  <VideoRender autoPlay videoSrc="assets/videos/landing-fan-video.MOV" variableHeight cover="assets/images/default-cover.jpg" />
                 </MobileStyled.VideoWrapper>
                 <MobileStyled.ButtonWrapper>
                   <PrimaryButton className="common-button" onClick={this.closeLandingFlow}>View Featured Stars</PrimaryButton>
@@ -175,13 +173,14 @@ class MobileHome extends React.Component {
               </MobileStyled.CloseButtonWrapper>
           }
         </MobileStyled>
-      </RequestFlowPopup>
+      </Modal>
     );
   }
 }
 
 const mapStateToProps = state => ({
   featuredStars: state.featuredStars,
+  isLoggedIn: state.session.isLoggedIn,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -193,9 +192,9 @@ MobileHome.propTypes = {
   featuredStars: PropTypes.object.isRequired,
   toggleLogin: PropTypes.func.isRequired,
   toggleSignup: PropTypes.func.isRequired,
-  closeLandingFlow: PropTypes.func.isRequired,
   theme: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default withTheme(withRouter(connect(mapStateToProps, mapDispatchToProps)(MobileHome)));

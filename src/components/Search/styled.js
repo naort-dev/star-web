@@ -36,8 +36,8 @@ SearchSection.AutoSuggest = styled.div`
 `;
 SearchSection.SuggestionListWrapper = styled.div`
   font-family: Gilroy-light;
-  position: absolute;
-  top: 100%;
+  position: fixed;
+  top: ${props => `${props.topOffset}px`};
   left: 0;
   right: 0;
   width: 100%;
@@ -65,7 +65,10 @@ SearchSection.SuggestionListWrapper = styled.div`
   }
 `;
 SearchSection.SuggestionList = styled.ul`
-  padding: 16px 0;
+  padding: 16px;
+  @media(min-width: 832px) {
+    padding: 16px 0;
+  }
 `;
 SearchSection.noDataWrapper = styled.div`
   display: table;
@@ -146,6 +149,7 @@ SearchSection.SuggestionDetails = styled.p`
   font-size: 13px;
   font-family: Gilroy;
   color: ${props => props.theme.greyishBrown};
+  word-break: break-word;
   line-height: 19px;
   font-weight: normal;
   text-align: left;
@@ -169,6 +173,7 @@ SearchSection.SuggestionListName = styled.span`
   color: #68b5cd;
   font-family: Gilroy-Medium;
   font-size: 17px;
+  text-align: left;
 `;
 
 SearchSection.InputWrapper = styled.div`
@@ -197,10 +202,10 @@ SearchSection.Input = styled.input`
   font-size: 16px;
   border: none;
   border-radius: 5px;
-  color: ${props => props.theme.twilight};
   background: transparent;
+  color: #999999;
   @media(min-width: 832px) {
-    font-size: 20px;
+    font-size: 18px;
   }
 `;
 SearchSection.SignIn = styled.button`

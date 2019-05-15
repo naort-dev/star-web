@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from '../../../../styles/mediaQueries';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   height: 100%;
@@ -10,6 +10,7 @@ export const Layout = styled.section`
     right: 40px;
     top: 34px;
     font-size: 50px;
+    z-index: 1;
     ${media.webView} {
       top: 49px;
     }

@@ -6,7 +6,6 @@ const MobileStyled = styled.div`
   justify-content: center;
   flex-direction: column;
   width: 100%;
-  min-height: 100%;
   position: relative;
   z-index: 1;
   padding: 60px 23px;
@@ -42,7 +41,7 @@ MobileStyled.SubHeader = styled.span`
 `;
 
 MobileStyled.Title = styled.span`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-Semibold;
   font-size: 20px;
   line-height: 18px;
   color: ${props => props.theme.twilight};

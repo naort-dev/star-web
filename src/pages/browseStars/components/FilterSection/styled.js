@@ -29,13 +29,13 @@ FilterStyled.Heading = styled.span`
   padding: 0 16px;
   font-family: Gilroy-Bold;
   font-size: 20px;
-  color: ${props => props.theme.flatBlue};
+  color: ${props => props.theme.twilight};
   display: ${props => (props.mobileOnly ? 'block' : 'none')};
   text-transform:  ${props => (props.mobileOnly ? 'uppercase' : 'none')};;
   @media(min-width: 832px) {
     display: ${props => (props.mobileOnly ? 'none' : 'block')};
     font-size: 30px;
-    font-family: Gilroy-Medium;
+    font-family: Gilroy;
   }
 `;
 
@@ -53,12 +53,15 @@ FilterStyled.SubCategoryList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 21px;
   padding: 0 40px;
+  margin-bottom: 13px;
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 6px 13px;
+  padding: 0 13px;
+  height: 30px;
+  line-height: 30px;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
@@ -68,7 +71,7 @@ FilterStyled.SubCategoryItem = styled.li`
   font-size: 14px;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-bottom: 15px;
   margin-right: 10px;
   cursor: pointer;
   @media(min-width: 832px) {
@@ -88,7 +91,6 @@ FilterStyled.ApplyButton = styled.span`
 `;
 
 FilterStyled.SecondaryFilterWrapper = styled.div`
-  padding-top: 10px;
   margin: 0 40px;
   margin-top: 20px;
   display: flex;

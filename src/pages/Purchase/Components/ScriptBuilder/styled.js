@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import { media } from '../../../../styles/mediaQueries';
+import { FlexCenter } from 'styles/CommonStyled';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   height: 100%;
@@ -15,6 +15,7 @@ export const Layout = styled.section`
     .bluetext {
       color: #2f839d;
       font-weight: 700;
+      cursor: pointer;
     }
   }
   button {

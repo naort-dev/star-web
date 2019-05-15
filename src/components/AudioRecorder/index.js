@@ -1,7 +1,8 @@
-import React from 'react'
+import React from 'react';
 // import { ReactMic } from 'react-mic';
-import { AudioRecorderDiv } from './styled';
-import { checkMediaRecorderSupport } from '../../utils/checkOS'
+import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
+import { AudioRecorderDiv, Ripple } from './styled';
+import { checkMediaRecorderSupport } from '../../utils/checkOS';
 
 export default class AudioRecorder extends React.Component {
   constructor(props) {
@@ -16,13 +17,16 @@ export default class AudioRecorder extends React.Component {
     this.audio = new Audio();
     this.user = props.target;
     this.onAudioEnded = this.onAudioEnded.bind(this);
-    this.saveRecording = this.saveRecording.bind(this)
+    this.saveRecording = this.saveRecording.bind(this);
   }
 
   componentWillMount() {
-    if (!window.navigator.userAgent.indexOf("MSIE ") > -1 || window.navigator.userAgent.indexOf("Trident/") > -1) {
+    if (
+      !window.navigator.userAgent.indexOf('MSIE ') > -1 ||
+      window.navigator.userAgent.indexOf('Trident/') > -1
+    ) {
       const { ReactMic } = require('react-mic');
-      this.ReactMic = ReactMic
+      this.ReactMic = ReactMic;
     }
   }
 
@@ -35,19 +39,19 @@ export default class AudioRecorder extends React.Component {
   }
 
   stopRecording = () => {
-    this.setState({ stop: true, start: false, status: 'completed' })
-  }
+    this.setState({ stop: true, start: false, status: 'completed' });
+  };
 
   startRecording = () => {
     this.setState({ start: true, stop: false, active: true });
-  }
+  };
 
   deleteRecording(target) {
     this.props.resetRecording(target);
   }
 
   playRecording(target) {
-    this.url = this.props.audioRecorder.recorded[target].recordedUrl
+    this.url = this.props.audioRecorder.recorded[target].recordedUrl;
     this.audio.src = this.url;
     this.audio.play();
     this.setState({ play: true });
@@ -60,58 +64,108 @@ export default class AudioRecorder extends React.Component {
 
   saveRecording(recordedBlob) {
     this.setState({ active: false });
-    this.props.saveAudioRecording(this.user, { recordedBlob: recordedBlob.blob, recordedUrl: recordedBlob.blobURL });
+    this.props.saveAudioRecording(this.user, {
+      recordedBlob: recordedBlob.blob,
+      recordedUrl: recordedBlob.blobURL,
+    });
   }
 
-  renderAudio = (target) => {
+  handleRecorder = () => {
+    this.state.start ? this.stopRecording() : this.startRecording();
+  };
+
+  reRecording(target) {
+    this.deleteRecording(target);
+  }
+  renderAudio = target => {
+    const audio = this.props.audioRecorder.recorded;
     if (checkMediaRecorderSupport()) {
       return (
         <React.Fragment>
-          {
-            this.state.active && this.ReactMic &&
+          {this.state.start && <Ripple onClick={this.handleRecorder} />}
+          {this.state.active && this.ReactMic && (
             <div style={{ display: 'none' }}>
               <this.ReactMic
                 record={this.state.start}
-                className="sound-wave"
                 onStop={this.saveRecording}
+                className="dfsdfsd"
                 strokeColor="white"
-                backgroundColor="#FF6C58"
-                save={this.state.stop && this.state.status == 'completed'}
+                backgroundColor="#2e819b"
+                save={this.state.stop && this.state.status === 'completed'}
               />
             </div>
-          }
+          )}
           <AudioRecorderDiv.ControlWrapper>
-            {this.state.start ?
-
-              <AudioRecorderDiv.RippleButton onClick={() => this.stopRecording()} type="button" />
-
-              :
-              <AudioRecorderDiv.Button onClick={() => this.startRecording()} type="button" />
-
-            }
-            {(this.props.audioRecorder.recorded[target] && this.props.audioRecorder.recorded[target].recordedBlob) || (this.props.audioRecorder.recorded[target] && this.props.audioRecorder.recorded[target].recordedUrl) ?
+            {(audio[target] && audio[target].recordedBlob) ||
+            (audio[target] && audio[target].recordedUrl) ? (
               <React.Fragment>
-                {!this.state.play || this.audio.ended ?
-                  <AudioRecorderDiv.PlayButton onClick={() => this.playRecording(target)} />
-                  :
-                  <AudioRecorderDiv.PauseButton onClick={() => this.pauseRecording()} />
-                }
-                <AudioRecorderDiv.CloseButton onClick={() => this.deleteRecording(target)} />
-              </React.Fragment> :
-              null}
-          </AudioRecorderDiv.ControlWrapper>
+                {!this.state.play || this.audio.ended ? (
+                  <React.Fragment>
+                    <AudioRecorderDiv.PlayButton
+                      onClick={() => this.playRecording(target)}
+                    >
+                      Play Back
+                    </AudioRecorderDiv.PlayButton>
+                    |
+                  </React.Fragment>
+                ) : (
+                  <React.Fragment>
+                    <AudioRecorderDiv.PauseButton
+                      onClick={() => this.pauseRecording()}
+                    >
+                      Stop
+                    </AudioRecorderDiv.PauseButton>
+                    |
+                  </React.Fragment>
+                )}
+                <AudioRecorderDiv.Rerecord
+                  onClick={() => this.reRecording(target)}
+                >
+                  Record
+                </AudioRecorderDiv.Rerecord>{' '}
+                |
+                <AudioRecorderDiv.CloseButton
+                  onClick={() => this.deleteRecording(target)}
+                >
+                  Delete
+                </AudioRecorderDiv.CloseButton>
+              </React.Fragment>
+            ) : (
+              <div
+                onClick={this.handleRecorder}
+                type="button"
+                role="presentation"
+              >
+                <AudioRecorderDiv.Icon icon={faMicrophone} />
+              </div>
+            )}
 
+            {!(audio[target] && audio[target].recordedUrl) && (
+              <span
+                className="recText"
+                onClick={this.handleRecorder}
+                role="presentation"
+              >
+                Pronounce Name
+              </span>
+            )}
+          </AudioRecorderDiv.ControlWrapper>
         </React.Fragment>
       );
     }
-     
+
     return null;
-  }
+  };
 
   render() {
     const target = this.user;
     return (
-      <AudioRecorderDiv>
+      <AudioRecorderDiv
+        recorded={
+          this.props.audioRecorder.recorded[target] &&
+          this.props.audioRecorder.recorded[target].recordedUrl
+        }
+      >
         {this.renderAudio(target)}
       </AudioRecorderDiv>
     );

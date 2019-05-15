@@ -7,8 +7,7 @@ import featuredStars from '../pages/landing/reducers/featuredStars';
 import trendingStars from '../pages/landing/reducers/trendingStars';
 import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
-import celebDetails from '../pages/starProfile/reducers/celebDetails';
-import celebVideos from '../pages/starProfile/reducers/celebVideos';
+import starDetails from '../pages/starProfile/reducers'
 import professionsList from './shared/reducers/professionsList';
 import groupTypes from './shared/reducers/groupTypes';
 import suggestionsList from './shared/reducers/suggestionsList';
@@ -18,6 +17,7 @@ import favouritesList from '../pages/favourites/reducers/favouritesList';
 import occasionList from '../pages/Purchase/reducers/occasionList';
 import myVideosList from '../pages/requests/reducers/myVideosList';
 import groupSupporters from '../pages/starSupporters/reducers';
+import groupListing from '../pages/groupListing/reducers';
 import earningsList from '../pages/earnings/reducers/earningsList';
 import bookingData from '../store/shared/reducers/bookings';
 import otherRelation from '../store/shared/reducers/other';
@@ -39,6 +39,7 @@ import groupDetails from '../pages/groupProfile/reducers/groupDetails';
 import memberList from '../pages/groupProfile/reducers/membersList';
 import groupTypesListing from './shared/reducers/groupTypeListing';
 import commonReducer from './shared/reducers/commonReducer';
+import subCategoryList from './shared/reducers/subCategoryLists';
 
 const appReducer = combineReducers({
   config,
@@ -51,8 +52,7 @@ const appReducer = combineReducers({
   filters,
   videosList,
   suggestionsList,
-  celebDetails,
-  celebVideos,
+  starDetails,
   favouritesList,
   followCelebrityStatus,
   occasionList,
@@ -77,8 +77,10 @@ const appReducer = combineReducers({
   groupDetails,
   memberList,
   groupSupporters,
+  groupListing,
   groupTypesListing,
   commonReducer,
+  subCategoryList,
 });
 
 const rootReducer = (state, action) => {
@@ -88,6 +90,9 @@ const rootReducer = (state, action) => {
     newState.config = state.config;
     newState.groupTypes = state.groupTypes;
     newState.groupTypesListing = state.groupTypesListing;
+    newState.professionsList = state.professionsList;
+    newState.featuredStars = state.featuredStars;
+    newState.trendingStars = state.trendingStars;
   }
 
   return appReducer(newState, action);

@@ -12,6 +12,7 @@ const colorThemes = {
   fadedOrange: '#ff953c',
   pale: '#ffead8',
   mango: '#ffb12a',
+  lightOrange: '#fff4eb',
 };
 
 export { colorThemes };

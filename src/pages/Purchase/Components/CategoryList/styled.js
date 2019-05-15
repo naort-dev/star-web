@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { media } from '../../../../styles/mediaQueries';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;

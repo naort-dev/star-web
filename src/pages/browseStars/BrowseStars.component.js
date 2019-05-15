@@ -5,6 +5,7 @@ import { withTheme } from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/pro-light-svg-icons';
 import StarDrawer from '../../components/StarDrawer';
+import { Footer } from '../../components/Footer';
 import Header from '../../components/Header';
 import FilterSection from './components/FilterSection';
 import StarListing from '../../components/StarListing';
@@ -97,7 +98,7 @@ const BrowseStars = (props) => {
     props.fetchCelebrityList(0, true);
     toggleContentPos(false);
     getListHeight();
-  }, [props.category.label]);
+  }, [props.category.label, props.isLoggedIn]);
 
   const title = props.featuredStars[props.category.label] ? props.featuredStars[props.category.label].title : '';
 
@@ -109,6 +110,7 @@ const BrowseStars = (props) => {
         nick_name: finalStarData && finalStarData.name,
         celebrity_user: { rate: finalStarData && finalStarData.rate },
         celebrity_profession: finalStarData.professions.map(profession => ({ title: profession })),
+        user_id : finalStarData.celebrity_id,
         ...finalStarData,
       });
     }
@@ -168,7 +170,9 @@ const BrowseStars = (props) => {
           }
           <CategoryPageStyled.ListingWrapper>
             <StarListing
+              customLoader
               dataList={props.celebList.data}
+              noDataText='No records found'
               loading={props.celebList.loading}
               offset={props.celebList.offset}
               fetchData={(offset, refresh) => props.fetchCelebrityList(offset, refresh)}
@@ -178,6 +182,9 @@ const BrowseStars = (props) => {
           </CategoryPageStyled.ListingWrapper>
         </CategoryPageStyled.MainContent>
       </CategoryPageStyled.Content>
+      <CategoryPageStyled.Footer>
+        <Footer />
+      </CategoryPageStyled.Footer>
     </CategoryPageStyled>
   );
 };
@@ -191,6 +198,7 @@ BrowseStars.propTypes = {
   highPrice: PropTypes.number.isRequired,
   fetchCelebrityList: PropTypes.func.isRequired,
   sortValue: PropTypes.string.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default withTheme(BrowseStars);

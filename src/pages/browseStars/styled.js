@@ -74,6 +74,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
 
 CategoryPageStyled.FilterSection = styled.div`
   position: fixed;
+  padding-top: 20px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -124,7 +125,7 @@ CategoryPageStyled.Heading = styled.span`
     min-height: 70px;
   }
   @media(min-width: 1280px) {
-    margin-top: 37px;
+    margin-top: 33px;
   }
 `;
 
@@ -146,6 +147,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     position: absolute;
     text-transform: uppercase;
     top: -7px;
+    line-height: 21px;
     text-align: center;
     left: 50%;
     font-family: Gilroy-Bold;
@@ -157,9 +159,10 @@ CategoryPageStyled.FeaturedSection = styled.div`
   }
   @media(min-width: 832px) {
     max-width: 832px;
-    margin-bottom: 137px;
+    margin-bottom: 115px;
+    margin-top: 37px;
     justify-content: flex-end;
-    padding: 58px 42px;
+    padding: 36px 42px 38px;
     &:after {
       left: 198px;
       font-size: 23px;
@@ -213,6 +216,13 @@ CategoryPageStyled.MainContent = styled.div`
 CategoryPageStyled.ListingWrapper = styled.div`
   max-width: 1280px;
   margin: 0 auto;
+`;
+
+CategoryPageStyled.Footer = styled.div`
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+  }
 `;
 
 export default CategoryPageStyled;

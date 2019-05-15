@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
-import { Layout, FlexBoxSBC, SubHeader, Heading } from './styled';
+import { BackArrow, CloseButton, FlexCenter } from '../../styles/CommonStyled';
+import { Layout, SubHeader, Heading } from './styled';
 import UserCard from './UserCard';
 import {
   createCharge,
@@ -15,10 +14,9 @@ import { updateCustomerId } from '../../store/shared/actions/commonActions';
 
 const Payment = props => {
   const [isNewCard, cardSelection] = useState(false);
-
   useEffect(() => {
-    props.fetchSourceList();
-    props.fetchCelebDetails('starlord-8');
+    if (props.sourceList && Object.keys(props.sourceList).length === 0)
+      props.fetchSourceList();
   }, []);
 
   const contentSwitchCallback = value => {
@@ -42,8 +40,7 @@ const Payment = props => {
   const handleBooking = source => {
     props.createCharge(
       props.request.id,
-      //props.celebDetails.celebrityDetails.rate,
-      '1.00',
+      props.celebDetails.rate,
       source.source.id,
       paymentSuccess,
     );
@@ -52,21 +49,17 @@ const Payment = props => {
   return (
     <React.Fragment>
       <SubHeader>
-        <FlexBoxSBC>
-          <FontAwesomeIcon
-            icon={faAngleLeft}
-            className="arrow"
-            onClick={backArrowClick}
-          />
+        <FlexCenter>
+          <BackArrow onClick={backArrowClick} />
           <Heading>Payment Details</Heading>
-          <FontAwesomeIcon icon={faTimes} onClick={props.closeHandler} />
-        </FlexBoxSBC>
+          <CloseButton onClick={props.closeHandler} />
+        </FlexCenter>
       </SubHeader>
       <Scrollbars className="customScroll">
         {Object.keys(props.celebDetails).length > 0 && (
           <Layout>
-            {Object.keys(props.celebDetails.celebrityDetails).length > 0 &&
-              Object.keys(props.celebDetails.userDetails).length > 0 && (
+            {Object.keys(props.celebDetails).length > 0 &&
+              Object.keys(props.userDetails).length > 0 && (
                 <UserCard
                   {...props}
                   CardList={props.sourceList}
@@ -75,9 +68,11 @@ const Payment = props => {
                   handleBooking={handleBooking}
                   paymentSuccessCallBack={props.paymentSuccessCallBack}
                   celebDetails={props.celebDetails}
+                  userDetails={props.userDetails}
                   loaderAction={props.loaderAction}
                   modifySourceList={props.modifySourceList}
                   updateCustomerId={props.updateCustomerId}
+                  type={props.type}
                 />
               )}
           </Layout>
@@ -90,7 +85,7 @@ const Payment = props => {
 Payment.propTypes = {
   backArrowHandler: PropTypes.func.isRequired,
   paymentSuccessCallBack: PropTypes.func.isRequired,
-  request: PropTypes.object.isRequired,
+  request: PropTypes.object,
   closeHandler: PropTypes.func.isRequired,
   sourceList: PropTypes.object.isRequired,
   createCharge: PropTypes.func.isRequired,
@@ -100,15 +95,18 @@ Payment.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   updateCustomerId: PropTypes.func.isRequired,
   celebDetails: PropTypes.object,
+  userDetails: PropTypes.object,
+  type: PropTypes.string.isRequired,
 };
 Payment.defaultProps = {
   celebDetails: {},
+  userDetails: {},
+  request: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   request: state.paymentDetails.requestDetails,
   sourceList: state.paymentDetails.sourceList,
-  celebDetails: state.celebDetails,
 });
 
 function mapDispatchToProps(dispatch) {

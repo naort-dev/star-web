@@ -10,7 +10,7 @@ const HeaderSection = styled.header`
   z-index: 10;
   padding: ${props => !props.notFixed && '12px 16px'};
   @media(min-width: 832px) {
-    height: ${props => (!props.notFixed ? 'auto' : '95px')}
+    height: ${props => (!props.notFixed ? 'auto' : '50px')}
     padding: 0;
   }
 `;
@@ -19,17 +19,19 @@ HeaderSection.HeaderDiv = styled.div`
   display:flex;
   padding: ${props => (props.notFixed ? '3px 16px' : '0')};
   justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
-  align-items: center;
+  align-items: flex-start;
   height: 50px;  
   flex-wrap: wrap;
   @media (min-width: 832px) {
     height: 100%;
-    padding: ${props => (props.notFixed ? '32px 30px 25px' : '30px 36px')};
+    padding: ${props => (props.notFixed ? '20px 30px 0px' : '25px 36px')};
   }
 `;
 HeaderSection.HeaderRight = styled.div`
   display: inline-block;
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
+  position: relative;
+  z-index: 1;
   @media(min-width: 832px) {
     visibility: visible;
   }
@@ -76,6 +78,7 @@ HeaderSection.BackIcon = styled.span`
   font-size: 20px;
   width: 20px;
   color: ${props => props.theme.flatBlue};
+  padding-right: 10px;
   @media(min-width: 832px) {
     display: none;
   }
@@ -95,9 +98,20 @@ HeaderSection.CategoryWrapper = styled.div`
   }
 `;
 
+HeaderSection.MobileIconWrapper = styled.div`
+  padding-top: 10px;
+  @media(min-width: 832px) {
+    display: none;
+  }
+`;
+
 HeaderSection.ImgLogo = styled.img`
   width:  154px;
   height: 40px;
+  @media(min-width: 1280px){
+    width:  251px;
+    height: auto;
+  }
 `;
 
 HeaderSection.MenuButton = styled.span`
@@ -135,7 +149,6 @@ HeaderSection.ProfileDropdown = styled.ul`
   right: 0;
   padding: 10px;
   top: 100%;
-  width: 200px;
   background: #fff;
   border-radius: 13px;
   box-shadow: 0px 4px 8px 0px #cccccc;

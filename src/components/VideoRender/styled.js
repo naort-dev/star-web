@@ -10,13 +10,28 @@ VideoRenderDiv.Container = styled.div`
   border-radius: 38px;
   box-shadow: 0 3px 56px 0 rgba(0, 0, 0, 0.16);
   background-color: #ffffff;
-  padding: 19px;
+  padding: ${props => !props.noBorder && '19px'};
   width: ${props => (props.variableWidth ? '100%' : '197px')};
   height: ${props => (props.variableHeight ? '100%' : '300px')};
   max-height: 417px;
   @media(min-width: 375px) {
     width: ${props => (props.variableWidth ? '100%' : '274px')};
-    height: ${props => (props.variableHeight ? '100%' : '417px')};;
+    height: ${props => (props.variableHeight ? '100%' : '417px')};
+    max-height: 600px;
+  }
+`;
+
+VideoRenderDiv.CustomText = styled.span`
+  display: none;
+  @media(min-width: 832px) {
+    font-family: Gilroy-Regular;
+    font-size: 18px;
+    color: #fff;
+    display: block;
+    width: 100%;
+    margin-top: 14.7px;
+    line-height: 26px;
+    text-align: center;
   }
 `;
 

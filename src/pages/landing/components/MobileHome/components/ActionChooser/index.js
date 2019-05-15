@@ -7,19 +7,25 @@ const ActionChooser = props => (
   <React.Fragment>
     <Heading>Personalized Videos From The Stars</Heading>
     <ButtonWrapper>
-      <PrimaryButton onClick={props.goToNextStep}>Browse Stars</PrimaryButton>
+      <PrimaryButton className="button" onClick={props.goToNextStep}>Browse Stars</PrimaryButton>
     </ButtonWrapper>
-    <ButtonWrapper>
-      <PrimaryButton onClick={props.toggleLogin}>Log In</PrimaryButton>
-    </ButtonWrapper>
-    <ButtonWrapper>
-      <PrimaryButton onClick={props.toggleSignup}>Sign Up</PrimaryButton>
-    </ButtonWrapper>
+    {
+      !props.isLoggedIn &&
+        <React.Fragment>
+          <ButtonWrapper>
+            <PrimaryButton className="button" onClick={props.toggleLogin}>Log In</PrimaryButton>
+          </ButtonWrapper>
+          <ButtonWrapper>
+            <PrimaryButton className="button" onClick={props.toggleSignup}>Sign Up</PrimaryButton>
+          </ButtonWrapper>
+        </React.Fragment>
+    }
   </React.Fragment>
 );
 
 ActionChooser.propTypes = {
   goToNextStep: PropTypes.func.isRequired,
+  isLoggedIn: PropTypes.bool.isRequired,
 };
 
 export default ActionChooser;

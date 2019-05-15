@@ -1,10 +1,31 @@
-import { OCCASION_LIST } from '../actions/purchaseActions';
-import { AskQuestion } from '../actions/purchaseActions';
+import { OCCASION_LIST, AskQuestion } from '../actions/purchaseActions';
 
 const initalState = {
   data: [],
   loading: false,
   videoUploaded: false,
+  pageCount: 0,
+  bookingData: {
+    templateType: null,
+    relationship: [],
+    user: 'someoneElse',
+    enableAudioRecorder: false,
+    hostName: '',
+    userName: '',
+    relationshipValue: '',
+    specification: '',
+    date: null,
+    eventName: '',
+    validSelf: false,
+    occasion: {},
+  },
+  formProps: {
+    stepCount: 1,
+    category: 0,
+    termsCheck: false,
+    privateVideo: false,
+  },
+  header: '',
 };
 
 export default (state = initalState, action) => {
@@ -39,6 +60,27 @@ export default (state = initalState, action) => {
       return {
         ...state,
         videoUploaded: action.value,
+      };
+
+    case OCCASION_LIST.pageCount:
+      return {
+        ...state,
+        pageCount: action.value,
+      };
+    case OCCASION_LIST.bookingData:
+      return {
+        ...state,
+        bookingData: action.data,
+      };
+    case OCCASION_LIST.formBuilderProps:
+      return {
+        ...state,
+        formProps: action.data,
+      };
+    case OCCASION_LIST.modalHeader:
+      return {
+        ...state,
+        header: action.header,
       };
 
     default:

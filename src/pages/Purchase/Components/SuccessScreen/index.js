@@ -1,21 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
 import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
+import Button from 'components/PrimaryButton';
+import { FlexCenter, CloseButton } from 'styles/CommonStyled';
 import { Layout, Content } from './styled';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import Button from '../../../../components/PrimaryButton';
 
 const SuccessScreen = props => {
+  const closeRequestFlow = () => {
+    props.history.push('/browse-stars');
+    props.closeHandler();
+  };
+
   return (
     <Layout>
-      <FontAwesomeIcon
-        icon={faTimes}
-        onClick={props.closeHandler}
-        className="closeBtn"
-      />
-
+      <CloseButton onClick={props.closeHandler} className="closeBtn" />
       <Scrollbars className="successScroll">
         <FlexCenter>
           <span className="successImg" />
@@ -29,7 +28,9 @@ const SuccessScreen = props => {
             is a surprise for someone else, record their reaction to share with
             us and the Star! We all love seeing fan reactions.
           </p>
-          <Button className="browseBtn">Browse Stars</Button>
+          <Button className="browseBtn" onClick={closeRequestFlow}>
+            Browse Stars
+          </Button>
         </Content>
       </Scrollbars>
     </Layout>
@@ -38,6 +39,7 @@ const SuccessScreen = props => {
 
 SuccessScreen.propTypes = {
   closeHandler: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-export default SuccessScreen;
+export default withRouter(SuccessScreen);

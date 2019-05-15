@@ -104,10 +104,25 @@ LoginContainer.Heading = styled.div`
   @media(min-width:1920px){
     font-size: 27px;
   }
+  @media(max-width:767px){
+    max-width: 144px;
+    font-size: 24px;
+    margin: 31px auto 13px;
+    line-height: 28px
+  }
   
 `;
+const disabledStyles = (isDisabled) => {
+  if (isDisabled) {
+    return `
+      opacity: 0.3;
+    `;
+  }
+};
+
 
 LoginContainer.ContinueButton = styled.button`
+${props => disabledStyles(props.isDisabled)};
   cursor: pointer;
   background-color: #2f839d;
   font-family: Gilroy-Bold;
@@ -184,7 +199,7 @@ LoginContainer.Line = styled.hr`
   }
 `;
 LoginContainer.InputFieldsWrapper = styled.form`
-  padding: 0px 25px;
+  
   @media(min-width:768px){
     padding: 0px 0px;
   }
@@ -205,7 +220,7 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  font-family: Gilroy;
+  font-family: Gilroy-Semibold;
   font-size: 12px;
   line-height: 2.08;
   text-align: center;
@@ -218,8 +233,8 @@ LoginContainer.Label = styled.div`
     padding-bottom:0px;
   }
   @media(min-width:1025px){
-    font-size:13px;
-
+    font-size:12px;
+    padding-top: 47px;
     line-height: 30px;
   }
   @media(min-width:1920px){
@@ -244,7 +259,6 @@ LoginContainer.SectionHeading = styled.div`
   }
 `;
 LoginContainer.Input = styled.input`
-  font-family: 'Avenir-Regular';
   color: #333333;
   font-size:16px;
   text-align:left;
@@ -282,10 +296,10 @@ LoginContainer.InputWrapper = styled.div`
     margin-top:5%;
   }
   @media(min-width: 1025px) {
-    margin-top: 23px;
+    margin-top: 5px;
   }
   @media(min-width: 1920px) {
-    margin-top: 50px;
+    margin-top: 30px;
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
@@ -294,14 +308,21 @@ LoginContainer.PrivacyContent = styled.div`
   line-height: 1.57;
   text-align: left;
   color: #555555;
+  text-align: left;
+  max-width: 343px;
+  margin: 15px auto 0;
   ${LoginContainer.Anchor} {
     color: #2f839d;
     cursor: pointer;
     text-decoration: none;
     padding-left: 5px;
   }
+  .check-wrap {
+    float: left;
+    margin-top: -12px;
+  }
   @media(min-width:768px){
-    text-align:center;
+    margin: 35px auto 0;
   }
 `;
 
@@ -429,8 +450,11 @@ FooterSection.Button = styled.input`
 `;
 LoginContainer.WrapsInput = styled.div`
   width:100%;
+  > div {
+    width: 100%;
+  }
   input {
-    font-family: Gilroy-Light;
+    font-family: Gilroy;
     font-size: 18px;
     line-height: 1.14;
     text-align: center;
@@ -443,9 +467,27 @@ LoginContainer.WrapsInput = styled.div`
   input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
   @media(min-width:768px){
     width:100%;
+
+    &:first-child {
+      padding-right: 10px;
+    }
+    &:last-child {
+      padding-left: 10px;
+    }
+    &:only-child {
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
   @media(min-width:1025){
     width:352px;
+    font-size: 22px;
+    padding-bottom: 3px;
+  }
+  .error-field {
+    &:after {
+      border-bottom-color: #980100 !important;
+    }
   }
 
 `;
@@ -499,6 +541,7 @@ LoginContainer.InputContainer = styled.div`
   @media(min-width:768px){
     width:90%;
     margin: 0 20px;
+    max-width: 400px;
   }
 `;
 LoginContainer.ButtonWrapper = styled.div`
@@ -506,7 +549,7 @@ LoginContainer.ButtonWrapper = styled.div`
 `;
 LoginContainer.SignupLine = styled.div`
   display: block;
-  font-family: 'Avenir-Light';
+  font-family: 'Gilroy-Light';
   color:#b3acac;
   font-size: 12px;
   margin: 0;

@@ -52,14 +52,14 @@ class LoginFlow extends React.Component {
 
                 <LoginContainer>
                   <LoginContainer.LeftSection>
-                    <HeaderSection>
+                    {/* <HeaderSection>
                       <Link to="/" onClick={() => this.props.toggleLogin(false)}>
                         <HeaderSection.LogoImage
                           src="assets/images/logo_starsona.png"
                           alt=""
                         />
                       </Link>
-                    </HeaderSection>
+                    </HeaderSection> */}
                     {this.state.selectedView === 'forgotpassword' ?
                       <ForgotPassword {...this.props} />
                       :
@@ -102,7 +102,7 @@ const mapDispatchToProps = dispatch => ({
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   setSocialMediaData: data => dispatch(setSocialMediaData(data)),
   resetSocialMediaData: () => dispatch(resetSocialMediaData()),
-  followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) => dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
+  followCelebrity: (celebId, follow) => dispatch(followCelebrity(celebId, follow)),
   resetSessionError: () => dispatch(resetSessionError()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),

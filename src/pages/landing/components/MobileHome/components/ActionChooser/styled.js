@@ -20,6 +20,11 @@ const Heading = styled.span`
 const ButtonWrapper = styled.span`
   display: block;
   margin: 10.5px 0;
+  .button {
+    padding: 18px 30px;
+    border-radius: 35px;
+    font-size: 18px;
+  }
 `;
 
 export { Heading, ButtonWrapper };

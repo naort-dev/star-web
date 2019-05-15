@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 const FooterStyled = styled.footer`
   padding: 20px 0;
+  background: #fff;
+  display: none;
   @media(min-width: 832px) {
     display: flex;
     padding: 0 30px;
@@ -34,7 +36,7 @@ const ListItem = styled.li`
   cursor: pointer;
   text-align: left;
   a, a:visited {
-    color: #42a3c1;
+    color: rgb(47, 131, 157);
     font-size: 14px;
     font-weight: 900;
     line-height: 1.07;
@@ -90,11 +92,11 @@ const StoreIcon = styled.img`
   cursor: pointer;
   width: 117px;
   height: 40px;
-  margin: 10px 0;
+  margin: 10px;
   display: inline-block;
 `;
 FooterStyled.Anchor = styled.a`
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   &:visited{
     color:#333333;
   }

@@ -25,8 +25,10 @@ class Search extends React.Component {
       profileDropdown: false,
       searchText,
       profilePhoto: null,
+      suggestionTopOffset: null,
     };
     this.cursorPos = -1;
+    this.searchInput = React.createRef();
     this.suggestionsFetchDelay = undefined;
     this.profileImage = new Image();
     this.mounted = true;
@@ -39,7 +41,9 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener('mousedown', this.removeSuggestions.bind(this));
+    window.addEventListener('mousedown', this.removeSuggestions);
+    window.addEventListener('resize', this.onWindowResize);
+    this.getTopOffset();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -60,8 +64,15 @@ class Search extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mousedown', this.removeSuggestions.bind(this));
+    window.removeEventListener('mousedown', this.removeSuggestions);
+    window.removeEventListener('resize', this.onWindowResize);
     this.mounted = false;
+  }
+
+  onWindowResize = () => {
+    if (document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) {
+      this.getTopOffset();
+    }
   }
 
   setListFocus = (e) => {
@@ -74,6 +85,15 @@ class Search extends React.Component {
     } else if (e.key === 'ArrowDown' && showSuggestions && cursorPos + 1 < suggestions.length) {
       this.suggestionList.childNodes[cursorPos + 1].focus();
       this.cursorPos = cursorPos + 1;
+    }
+  }
+
+  getTopOffset = () => {
+    if (this.searchInput.current) {
+      const bounding = this.searchInput.current.getBoundingClientRect();
+      this.setState({ suggestionTopOffset: bounding.bottom });
+    } else {
+      this.setState({ suggestionTopOffset: null });
     }
   }
 
@@ -192,9 +212,9 @@ class Search extends React.Component {
                       <SearchSection.SuggestionListItem
                         tabIndex="0"
                         key={item.user_id}
-                        onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`)}
+                        onKeyDown={this.handleSearchListClick(item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.vanity_id}`)}
                       >
-                        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.user_id}`}>
+                        <Link to={item.has_group_account ? `/group-profile/${item.user_id}` : `/${item.vanity_id}`}>
                           <SearchSection.SuggestionListContent onClick={this.handleSearchItemClick}>
                             <span>
                               <SearchSection.SuggestionListImage imageUrl={item.image_url} />
@@ -229,12 +249,12 @@ class Search extends React.Component {
         <SearchSection.InputWrapper alternate={this.props.alternate}>
           <FontAwesomeIcon icon={faSearch} />
           <SearchSection.Input
-            innerRef={(node) => { this.searchInput = node; }}
+            innerRef={this.searchInput}
             placeholder="Search for your favorite stars!"
             value={this.state.searchText}
             onClick={this.showSuggestions}
             onChange={this.handleSearchChange}
-            onKeyUp={this.handleSearchSubmit}
+            // onKeyUp={this.handleSearchSubmit}
           />
           {
             this.state.searchText.length >= 3 ?
@@ -242,7 +262,7 @@ class Search extends React.Component {
               : null
           }
           {this.state.showSuggestions &&
-            <SearchSection.SuggestionListWrapper>
+            <SearchSection.SuggestionListWrapper topOffset={this.state.suggestionTopOffset}>
               <SearchSection.AutoSuggest>
                 <Scrollbars>
                   {

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { media } from '../../../../styles/mediaQueries';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   height: 100%;
@@ -24,7 +24,7 @@ export const Layout = styled.section`
   .button {
     width: 242px;
   }
-  video {
+  .videoElm {
     width: 269px;
     border-radius: 23px;
     height: 100%;

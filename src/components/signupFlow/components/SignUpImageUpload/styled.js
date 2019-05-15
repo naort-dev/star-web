@@ -7,14 +7,13 @@ const UploadContainer = styled.div`
   flex-direction: column;
   height: 100%;
   padding-bottom: 56px;
-  @media(min-width: 1025px){
+  @media (min-width: 1025px) {
     flex-direction: row;
     padding-bottom: 0;
   }
 `;
 
-UploadContainer.Wrapper = styled.div`
-`;
+UploadContainer.Wrapper = styled.div``;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
@@ -48,10 +47,13 @@ UploadContainer.CloseButton = styled.span`
 `;
 
 UploadContainer.Container = styled.div`
-  @media(min-width: 768px) {
+  .action-buttons {
+    top: 0px;
+  }
+  @media (min-width: 768px) {
     padding: 0 0;
   }
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     padding: 0 20px;
   }
 `;
@@ -60,14 +62,15 @@ UploadContainer.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
-  @media(min-width:768px){
-    font-size:25px;
-  }
-  @media(min-width: 1025px){
+  font-family: 'Gilroy';
+  padding-top: 24px;
+  @media (min-width: 768px) {
     font-size: 25px;
   }
-  @media(min-width:1920px){
+  @media (min-width: 1025px) {
+    font-size: 25px;
+  }
+  @media (min-width: 1920px) {
     font-size: 27px;
   }
 `;
@@ -76,6 +79,16 @@ UploadContainer.CategoriesWrapper = styled.div`
   max-width: 440px;
   margin: 0 auto;
 
+  .select__value-container {
+    @media (max-width: 767px) {
+      padding: 9px 8px;
+    }
+  }
+  .select__clear-indicator {
+    svg {
+      cursor: pointer;
+    }
+  }
   .MuiFormControl {
     width: 100%;
     margin-bottom: 12px;
@@ -96,22 +109,22 @@ UploadContainer.CategoriesWrapper = styled.div`
       color: #b7b7b7;
       font-family: Gilroy;
     }
-    label[data-shrink="true"] {
+    label[data-shrink='true'] {
       color: #555;
     }
   }
 `;
 
 UploadContainer.ButtonWrapper = styled.div`
-  margin-top:5%;
+  margin-top: 45px;
   text-align: center;
-  margin-bottom: 75px;
+  margin-bottom: 10px;
 `;
 
 UploadContainer.ContinueButton = styled.button`
   cursor: pointer;
   background-color: #2f839d;
-  font-family: Gilroy-Bold;
+  font-family: Gilroy-Medium;
   font-size: 18px;
   line-height: 1.5;
   text-align: center;
@@ -128,11 +141,133 @@ UploadContainer.BrowseCategories = styled.div`
   font-size: 14px;
   text-align: center;
   font-family: Gilroy;
+  margin-top: 10px;
 `;
 
 UploadContainer.BrowseCategoriesLink = styled.span`
   color: #46829a;
   font-family: Gilroy-Medium;
+  cursor: pointer;
+`;
+
+UploadContainer.AutoSuggest = styled.div`
+  height: 100%;
+  @media (min-width: 1025px) {
+    box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.25);
+  }
+`;
+UploadContainer.SuggestionListWrapper = styled.div`
+  font-family: Gilroy-light;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #ffffff;
+  z-index: 1;
+  height: calc(100vh - 108px);
+  @media (min-width: 832px) {
+    box-shadow: 0px 6px 6px 0px #cccccc;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    right: 0;
+    height: auto;
+    box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
+    height: 300px;
+    bottom: initial;
+    box-shadow: none;
+  }
+  @media (min-width: 1025px) {
+    width: auto;
+    top: 47px;
+    right: 0;
+    height: 320px;
+    box-shadow: 0px 6px 6px 0px #cccccc;
+  }
+`;
+
+UploadContainer.BrowseCategoryWrapper = styled.div`
+  position: absolute;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 3;
+  max-height: 620px;
+  height: 100%;
+  top: 0;
+  ${UploadContainer.Heading} {
+    padding-top: 27px;
+    @media(min-width: 768px) {
+      padding-top: 52px;
+    }
+  }
+`;
+
+UploadContainer.BrowseCategoryContainer = styled.div`
+  display: flex;
+  padding: 50px 40px 20px 70px;
+  align-items: flex-start;
+  flex-direction: column;
+  @media(min-width: 768px) {
+    flex-direction: row;
+  }
+
+  .right-section {
+    display: flex;
+    flex-direction: column;
+    height: 410px;
+    width: 100%;
+  }
+  .subCategoryHeading {
+    font-family: Gilroy-Medium;
+    font-size: 19px;
+    line-height: 23px;
+    margin-bottom: 10px;
+    max-width: 270px;
+    span {
+      font-size: 16px;
+      display: block;
+    }
+  }
+`;
+
+UploadContainer.ItemWrapper = styled.ul`
+  min-width: 227px;
+`;
+
+UploadContainer.SubItemWrapper = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  overflow-y: auto;
+  overflow-x: visible;
+  li {
+    padding: 6px 13px;
+    border-radius: 15px;
+    border: 1px solid #2f839d;
+    display: flex;
+    font-family: Gilroy-medium;
+    font-size: 14px;
+    align-items: center;
+    margin-top: 10px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+`;
+UploadContainer.Item = styled.li`
+  font-size: 22px;
+  font-family: Gilroy;
+  cursor: pointer;
+  padding: 0 0 28px;
+  background-color: ${props =>
+    props.selected ? props.theme.flatBlue : '#fff'};
+  color: ${props => (props.selected ? '#fff' : '#999')};
+
+  &.categoryItem {
+    background-color: #fff;
+    color: ${props => (props.selected ? props.theme.flatBlue : '#999')};
+    font-family: ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
+  }
 `;
 
 const ImageUpload = styled.div`
@@ -142,7 +277,7 @@ const ImageUpload = styled.div`
 `;
 ImageUpload.ContentWrapper = styled.div`
   height: 100%;
-  display: ${props => (props.hide ? 'none' : 'block')}
+  display: ${props => (props.hide ? 'none' : 'block')};
 `;
 
 ImageUpload.BackButton = styled.span`
@@ -163,16 +298,15 @@ ImageUpload.CloseButton = styled.span`
   display: inline-block;
   width: 28px;
   height: 28px;
-  cursor:pointer;
+  cursor: pointer;
   color: #707070;
   font-size: 30px;
 `;
 
-
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: 30px 10px;
   @media(min-width: 768px) {
-    padding: 57px 60px 30px;
+    padding: 35px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
@@ -206,7 +340,8 @@ ImageUpload.CoverImage = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3')};
+  background: ${props =>
+    props.imageUrl ? `url(${props.imageUrl})` : '#d0d2d3'};
   background-repeat: no-repeat;
   background-size: cover;
 `;
@@ -217,15 +352,15 @@ ImageUpload.ProfileImageWrapper = ImageUpload.CoverImage.extend`
   position: relative;
   border: none;
   border-radius: 50%;
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4')};
+  background: ${props =>
+    props.imageUrl ? `url(${props.imageUrl})` : '#e4e4e4'};
   background-repeat: no-repeat;
   background-size: cover;
   cursor: pointer;
   text-align: center;
-  margin-right: 11px;
 
   &:last-child {
-    margin-left: 11px;
+    margin-left: 22px;
     margin-right: 0;
   }
 `;
@@ -250,7 +385,7 @@ ImageUpload.ProfileInputWrapper = styled.div`
   margin: 0 auto 6px;
   color: #2f839d;
   font-size: 28px;
-  
+
   &:first-child {
     svg {
       font-size: 29px;
@@ -283,14 +418,14 @@ ImageUpload.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
-  @media(min-width:768px){
-    font-size:25px;
+  @media (min-width: 768px) {
+    font-size: 25px;
   }
-  @media(min-width: 1025px){
+  @media (min-width: 1025px) {
     font-size: 25px;
     margin-bottom: 26px;
   }
-  @media(min-width:1920px){
+  @media (min-width: 1920px) {
     font-size: 27px;
   }
 `;
@@ -301,7 +436,7 @@ ImageUpload.ControlWrapper = styled.div`
   display: flex;
   padding: 13px 12px;
   justify-content: ${props => (props.multiple ? 'space-between' : 'flex-end')};
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     box-shadow: none;
     padding: 26px 0;
     border-top: ${props => (props.multiple ? 'none' : '1px solid #EBEBEB')};
@@ -319,21 +454,22 @@ ImageUpload.ControlWrapper = styled.div`
 `;
 
 ImageUpload.ControlButton = styled.button`
-  background-color: #FF6C58;
-  color: rgb(255,255,255);
+  background-color: #ff6c58;
+  color: rgb(255, 255, 255);
   text-align: center;
   display: inline-block;
   font-size: 14px;
-  font-family: Gilroy-Semibold;
+  font-family: Gilroy-Medium;
   cursor: pointer;
   padding: 10px 30px;
   text-decoration: none;
   outline: none;
   border-radius: 5px;
-  border: 2px solid #FF6C58;
+  border: 2px solid #ff6c58;
   border-image: initial;
-  &:hover, &:focus {
-    background-color: #FF3B21;
+  &:hover,
+  &:focus {
+    background-color: #ff3b21;
   }
   &:disabled {
     background-color: #b6b6b6;
@@ -379,13 +515,14 @@ ImageUpload.CropperLightButton = styled.button`
 
 ImageUpload.ButtonWrapper = styled.div`
   margin-top: 20px;
+  display: flex;
 `;
 
 ImageUpload.VideoElement = styled.video`
-    width: 100%;
-    height: 500px;
-    background: black;
-    margin: 10px 0;
+  width: 100%;
+  height: 500px;
+  background: black;
+  margin: 10px 0;
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
@@ -430,5 +567,9 @@ ImageUpload.CropperButton = styled.button`
     color: #2f839d;
   }
 `;
+const ErrorMessage= styled.div`
+  color: red;
+  text-align: center;
+`;
 
-export { UploadContainer, ImageUpload };
+export { UploadContainer, ImageUpload, ErrorMessage };

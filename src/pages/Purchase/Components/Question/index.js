@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import QuestionBuilder from 'components/QuestionBuilder';
+import Button from 'components/PrimaryButton';
+import { FlexCenter } from 'styles/CommonStyled';
+import VideoRecorder from 'components/VideoRecorder';
+import { checkMediaRecorderSupport } from 'utils/checkOS';
+import getAWSCredentials from 'utils/AWSUpload';
+import { locations } from 'constants/locations';
+import { recorder } from 'constants/videoRecorder';
+
 import { Layout, VideoContainer, QuestionContainer, ShowHide } from './styled';
-import QuestionBuilder from '../../../../components/QuestionBuilder';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import VideoRecorder from '../../../../components/VideoRecorder';
-import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
-import getAWSCredentials from '../../../../utils/AWSUpload';
-import { locations } from '../../../../constants/locations';
 
 const Question = props => {
   const questions = [
@@ -23,7 +25,7 @@ const Question = props => {
     },
     {
       key: 'que3',
-      question: 'Ask the question you want Paul to answer',
+      question: `Ask the question you want ${props.starNM} to answer`,
     },
   ];
   const [showHideFlg, showHideScript] = useState(false);
@@ -32,6 +34,12 @@ const Question = props => {
   );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      props.setVideoUploadedFlag(false);
+    };
+  });
 
   const mediaHandler = btnLabel => {
     props.recordTrigger();
@@ -60,7 +68,7 @@ const Question = props => {
         if (response && response.filename) {
           const payload = {
             starDetail: {
-              id: 'MYervpeO',
+              id: props.userDetails.id,
             },
             question: '',
             date: '',
@@ -74,11 +82,21 @@ const Question = props => {
               props.setVideoUploadedFlag(true);
             })
             .catch(() => {
+              props.updateToast({
+                value: true,
+                message: 'Failed to upload video',
+                variant: 'error',
+              });
               props.loaderAction(false);
             });
         }
       })
-      .catch(() => {
+      .catch(err => {
+        props.updateToast({
+          value: true,
+          message: err.message,
+          variant: 'error',
+        });
         props.loaderAction(false);
       });
   };
@@ -89,6 +107,7 @@ const Question = props => {
       stopHandler(false);
     } else if (buttonLabel === 'Stop') {
       mediaHandler('Continue to Payment', true);
+      props.headerUpdate('Check to make sure I’ve got everything right.');
       stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
       if (props.videoUploaded) {
@@ -100,6 +119,7 @@ const Question = props => {
   };
   const stopRecordHandler = () => {
     mediaHandler('Continue to Payment', true);
+    props.headerUpdate('Check to make sure I’ve got everything right.');
   };
 
   const retryRecordHandler = () => {
@@ -116,7 +136,7 @@ const Question = props => {
           <VideoContainer>
             <VideoRecorder
               updateMediaStore={props.updateMediaStore}
-              duration={10000}
+              duration={recorder.askTimeOut}
               stopRecordHandler={stopRecordHandler}
               playPauseMediaAction={props.playPauseMedia}
               retryRecordHandler={retryRecordHandler}
@@ -124,6 +144,8 @@ const Question = props => {
               errorHandler={errorHandlerCallback}
               forceStop={isStop}
               startStreamingCallback={startStreaming}
+              headerUpdate={props.headerUpdate}
+              starNM={props.starNM}
             />
           </VideoContainer>
           <QuestionContainer isShow={showHideFlg || error}>
@@ -147,7 +169,7 @@ const Question = props => {
             </FlexCenter>
           )}
 
-          {buttonLabel === 'Record' && (
+          {buttonLabel === 'Record' && !error && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
@@ -186,6 +208,10 @@ Question.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   starsonaRequest: PropTypes.func.isRequired,
+  userDetails: PropTypes.object.isRequired,
+  starNM: PropTypes.string.isRequired,
+  updateToast: PropTypes.func.isRequired,
+  headerUpdate: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
@@ -198,7 +224,8 @@ function mapStateToProps(state) {
   return {
     videoFile: state.commonReducer.file,
     videoSrc: state.commonReducer.videoSrc,
-    videoUploaded: state.occasionList.videoUploaded,
+    videoUploaded: state.commonReducer.videoUploaded,
+    userDetails: state.starDetails.celebDetails.userDetails,
   };
 }
 export default connect(

@@ -1,15 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes, faAngleLeft } from '@fortawesome/pro-light-svg-icons';
-import StarDrawer from '../../../../components/StarDrawer';
-import {
-  HeaderDiv,
-  FlexBoxSBC,
-  HeaderText,
-  ProfileIcon,
-  Image,
-} from './styled';
+import StarDrawer from 'components/StarDrawer';
+import { BackArrow, CloseButton, FlexCenter } from 'styles/CommonStyled';
+import { HeaderDiv, HeaderText, ProfileIcon, Image } from './styled';
 
 const Header = props => {
   const starData = [
@@ -35,24 +29,22 @@ const Header = props => {
       color: '#fff',
     },
   ];
-
   return (
     <HeaderDiv className="headerGlobal" arrow={props.arrowVisible}>
-      <FlexBoxSBC>
-        <FontAwesomeIcon
-          icon={faAngleLeft}
-          className="arrow"
-          onClick={props.backArrowHandler}
-        />
+      <FlexCenter>
+        <BackArrow className="arrow" onClick={props.backArrowHandler} white />
         <ProfileIcon>
           <StarDrawer starData={starData} />
           <Image>
-            <img src="../assets/images/profile.png" alt="profile_icon" />
+            <img
+              src={props.starImage || 'assets/images/profile.png'}
+              alt="profile_icon"
+            />
           </Image>
         </ProfileIcon>
-        <FontAwesomeIcon icon={faTimes} onClick={props.closeHandler} />
-      </FlexBoxSBC>
-      <HeaderText>{props.headerText}</HeaderText>
+        <CloseButton onClick={props.closeHandler} white />
+      </FlexCenter>
+      <HeaderText>{props.header}</HeaderText>
     </HeaderDiv>
   );
 };
@@ -61,11 +53,18 @@ Header.propTypes = {
   arrowVisible: PropTypes.bool,
   backArrowHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
-  headerText: PropTypes.string,
+  header: PropTypes.string,
+  starImage: PropTypes.string,
 };
 Header.defaultProps = {
   arrowVisible: false,
-  headerText: '',
+  header: '',
+  starImage: '',
 };
 
-export default Header;
+export default connect(
+  state => ({
+    header: state.occasionList.header,
+  }),
+  null,
+)(Header);

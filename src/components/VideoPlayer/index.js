@@ -71,17 +71,22 @@ export default class VideoPlayer extends React.Component {
     const visible = CheckInViewport(videoElement);
     if (
       visible &&
-      player.paused
+      player.paused &&
+      this.props.autoPlay
     ) {
       this.toggleVideoPlay();
+    } else if (!visible) {
+      this.player.pause();
     }
   }
 
   pauseAllVideos = () => {
     const videoElements = Array.prototype.slice.call(document.getElementsByTagName('video'));
     videoElements.forEach((video) => {
-      video.pause();
-      video.currentTime = 0;
+      if (!video.paused) {
+        video.pause();
+        video.currentTime = 0;
+      }
     });
   }
 
@@ -109,6 +114,9 @@ export default class VideoPlayer extends React.Component {
     }
     if (prevState.hasStarted !== state.hasStarted && state.hasStarted && this.props.onVideoStart) {
       this.props.onVideoStart();
+    }
+    if (state.error !== null && this.props.onError) {
+      this.props.onError();
     }
     this.setState({
       isPlaying: !state.paused,
@@ -160,6 +168,9 @@ export default class VideoPlayer extends React.Component {
             <VideoRenderDiv.ControlIcon>
               <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
             </VideoRenderDiv.ControlIcon>
+            {
+              this.props.renderCustomText()
+            }
           </VideoRenderDiv.ControlIconWrapper>
         </div>
       </VideoRenderDiv>

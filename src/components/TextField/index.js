@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import TextFieldStyled from './styled';
 
 export const TextInput = props => (
-  <TextField
+  <TextFieldStyled
     error={props.error}
     placeholder={props.placeholder}
     type={props.type}
@@ -14,8 +14,13 @@ export const TextInput = props => (
     id={props.id}
     required={props.required}
     onBlur={props.onBlur}
-    label={props.label} 
-    classes={{root:"MuiFormControl"}}
+    label={props.label}
+    classes={{ root: 'MuiFormControl' }}
+    InputLabelProps={props.InputLabelProps}
+    onClick={props.onClick}
+    InputProps={props.InputProps}
+    // eslint-disable-next-line
+    inputProps={props.nativeProps}
   />
 );
 
@@ -30,6 +35,11 @@ TextInput.propTypes = {
   id: PropTypes.string,
   required: PropTypes.bool,
   onBlur: PropTypes.func,
+  InputProps: PropTypes.object,
+  onClick: PropTypes.func,
+  label: PropTypes.string,
+  InputLabelProps: PropTypes.object,
+  nativeProps: PropTypes.object,
 };
 
 TextInput.defaultProps = {
@@ -41,6 +51,11 @@ TextInput.defaultProps = {
   fullWidth: false,
   id: '',
   required: false,
-  onBlur: () => { },
-  onChange: () => { }
+  InputProps: {},
+  onBlur: () => {},
+  onChange: () => {},
+  onClick: () => {},
+  label: '',
+  InputLabelProps: {},
+  nativeProps: {},
 };

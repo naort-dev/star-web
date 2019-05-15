@@ -51,6 +51,7 @@ const parseSearchResult = (results) => {
 };
 
 export const fetchSuggestionList = searchParam => (dispatch, getState) => {
+  const { data: configData } = getState().config;
   dispatch(suggestionListFetchStart(searchParam));
   const query = {
     query: {
@@ -61,7 +62,7 @@ export const fetchSuggestionList = searchParam => (dispatch, getState) => {
       },
     },
   };
-  return axios.get('https://search-staging-backend-app-3mhclsqtvzuvr6zxmyhmlcpb2q.us-east-1.es.amazonaws.com/_search?size=10000', {
+  return axios.get(`${configData.elastic_search_endpoint}_search?size=10000`, {
     params: {
       source: JSON.stringify(query),
       source_content_type: 'application/json',

@@ -5,22 +5,33 @@ import {
   updateMediaStore,
   playPauseMedia,
   loaderAction,
-  updateCustomerId,
+  setVideoUploadedFlag,
+  updateToast,
 } from '../../store/shared/actions/commonActions';
 import {
-  setVideoUploadedFlag,
+  resetRecording,
+  saveAudioRecording,
+  clearAll,
+} from '../../store/shared/actions/audioRecorder';
+import {
   fetchOccasionlist,
+  pageCountHandler,
+  updateBookingData,
+  updateFormBuilderProps,
+  headerUpdate,
 } from './actions/purchaseActions';
 import {
-  starsonaRequest,
-  createCharge,
-  fetchSourceList,
-  modifySourceList,
-} from '../../store/shared/actions/processPayments';
+  toggleRequestFlow,
+  toggleLogin,
+} from '../../store/shared/actions/toggleModals';
+import { starsonaRequest } from '../../store/shared/actions/processPayments';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 
 const mapStateToProps = state => ({
   OccasionDetails: state.occasionList.data,
+  audioRecorder: state.audioRecorder,
+  celebDetails: state.starDetails.celebDetails.celebrityDetails,
+  userDetails: state.starDetails.celebDetails.userDetails,
 });
 
 function mapDispatchToProps(dispatch) {
@@ -28,8 +39,8 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (videoSrc, superBuffer) => {
-      dispatch(updateMediaStore(videoSrc, superBuffer));
+    updateMediaStore: payload => {
+      dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {
       dispatch(playPauseMedia());
@@ -40,14 +51,40 @@ function mapDispatchToProps(dispatch) {
     fetchOccasionlist: id => {
       dispatch(fetchOccasionlist(id));
     },
+    saveAudioRecording: (target, audio) => {
+      dispatch(saveAudioRecording(target, audio));
+    },
+    resetRecording: target => {
+      dispatch(resetRecording(target));
+    },
     setVideoUploadedFlag: value => {
       dispatch(setVideoUploadedFlag(value));
+    },
+    toggleRequestFlow: state => {
+      dispatch(toggleRequestFlow(state));
     },
     starsonaRequest: (bookingData, publicStatus, callback) => {
       dispatch(starsonaRequest(bookingData, publicStatus, callback));
     },
     fetchCelebDetails: id => {
       dispatch(fetchCelebDetails(id));
+    },
+    pageCountHandler: value => {
+      dispatch(pageCountHandler(value));
+    },
+    updateBookingData: data => {
+      dispatch(updateBookingData(data));
+    },
+    toggleLogin: state => dispatch(toggleLogin(state)),
+    updateToast: toastObj => dispatch(updateToast(toastObj)),
+    clearAll: () => {
+      dispatch(clearAll());
+    },
+    updateFormBuilderProps: data => {
+      dispatch(updateFormBuilderProps(data));
+    },
+    headerUpdate: header => {
+      dispatch(headerUpdate(header));
     },
   };
 }

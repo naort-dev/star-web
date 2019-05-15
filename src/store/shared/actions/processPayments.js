@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
-import { loaderAction } from './commonActions';
+import { loaderAction, updateToast } from './commonActions';
 
 export const PAYMENTS = {
   start: 'payments/REQUEST',
@@ -36,19 +36,19 @@ export const paymentFetchEnd = () => ({
   type: PAYMENTS.end,
 });
 
-export const paymentFetchSuccess = (data) => {
+export const paymentFetchSuccess = data => {
   return {
     type: PAYMENTS.success,
     data,
   };
 };
 
-export const paymentFetchFailed = (error) => ({
+export const paymentFetchFailed = error => ({
   type: PAYMENTS.failed,
   error,
 });
 
-export const requestPostFailed = (error) => ({
+export const requestPostFailed = error => ({
   type: PAYMENTS.requestFailed,
   error,
 });
@@ -65,7 +65,7 @@ export const resetPaymentsError = () => ({
   type: PAYMENTS.resetError,
 });
 
-export const setPaymentStatus = (status) => {
+export const setPaymentStatus = status => {
   return {
     type: PAYMENTS.setPaymentStatus,
     status,
@@ -84,7 +84,7 @@ export const sourceListModifyEnd = () => ({
   type: PAYMENTS.modifySourceListEnd,
 });
 
-export const sourceListModifyFailed = (error) => ({
+export const sourceListModifyFailed = error => ({
   type: PAYMENTS.modifySourceListFailed,
   error,
 });
@@ -97,22 +97,22 @@ export const sourceListFetchEnd = () => ({
   type: PAYMENTS.sourceListEnd,
 });
 
-export const sourceListFetchSuccess = (data) => {
+export const sourceListFetchSuccess = data => {
   return {
     type: PAYMENTS.sourceListSuccess,
     data,
   };
 };
 
-export const sourceListFetchFailed = (error) => ({
+export const sourceListFetchFailed = error => ({
   type: PAYMENTS.sourceListFailed,
   error,
 });
 
-export const fetchSourceList = callBack => (dispatch, getState) => {
+export const fetchSourceList = callBack => dispatch => {
   dispatch(loaderAction(true));
   return fetch(Api.getSourceList, {})
-    .then((resp) => {
+    .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(sourceListFetchSuccess(resp.data.data.cards));
         if (callBack) {
@@ -124,15 +124,25 @@ export const fetchSourceList = callBack => (dispatch, getState) => {
         dispatch(loaderAction(false));
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(loaderAction(false));
       dispatch(sourceListFetchFailed(exception.response.data.error));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
     });
 };
 
-export const modifySourceList = (source, customer, action, callBack) => (
-  dispatch,
-) => {
+export const modifySourceList = (
+  source,
+  customer,
+  action,
+  callBack,
+) => dispatch => {
   dispatch(loaderAction(true));
   return fetch
     .post(
@@ -144,22 +154,32 @@ export const modifySourceList = (source, customer, action, callBack) => (
       },
       {},
     )
-    .then((resp) => {
+    .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(fetchSourceList(callBack));
       } else {
         dispatch(loaderAction(false));
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(loaderAction(false));
       dispatch(sourceListFetchFailed(exception.response.data.error));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
     });
 };
 
-export const createCharge = (starsonaId, amount, tokenId, callBack) => (
-  dispatch,
-) => {
+export const createCharge = (
+  starsonaId,
+  amount,
+  tokenId,
+  callBack,
+) => dispatch => {
   dispatch(loaderAction(true));
   return fetch
     .post(Api.createCharge, {
@@ -167,7 +187,7 @@ export const createCharge = (starsonaId, amount, tokenId, callBack) => (
       amount,
       source: tokenId,
     })
-    .then((resp) => {
+    .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(setPaymentStatus(resp.data.success));
         dispatch(loaderAction(false));
@@ -176,13 +196,20 @@ export const createCharge = (starsonaId, amount, tokenId, callBack) => (
         dispatch(loaderAction(false));
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(loaderAction(false));
       dispatch(paymentFetchFailed(exception.response.data.error));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
     });
 };
 
-export const tipPayment = (bookingId, amount, tokenId) => (dispatch) => {
+export const tipPayment = (bookingId, amount, tokenId) => dispatch => {
   dispatch(paymentFetchStart());
   return fetch
     .post(Api.tipPayment, {
@@ -190,7 +217,7 @@ export const tipPayment = (bookingId, amount, tokenId) => (dispatch) => {
       amount,
       source: tokenId,
     })
-    .then((resp) => {
+    .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(paymentFetchEnd());
         dispatch(setPaymentStatus(resp.data.success));
@@ -198,9 +225,16 @@ export const tipPayment = (bookingId, amount, tokenId) => (dispatch) => {
         dispatch(paymentFetchEnd());
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(paymentFetchEnd());
       dispatch(paymentFetchFailed(exception.response.data.error));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
     });
 };
 
@@ -211,7 +245,7 @@ const starsonaVideo = (filename, requestId, duration, dispatch, callback) => {
       stragramz_request: requestId,
       duration,
     })
-    .then((resp) => {
+    .then(resp => {
       if (resp.data && resp.data.success) {
         dispatch(paymentFetchEnd());
         if (callback) {
@@ -221,17 +255,24 @@ const starsonaVideo = (filename, requestId, duration, dispatch, callback) => {
         dispatch(loaderAction(false));
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(loaderAction(false));
       dispatch(requestPostFailed(exception.response.data.error));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
     });
 };
 
-export const starsonaRequest = (bookingData, publicStatus, callback) => (
-  dispatch,
-  getState,
-) => {
-  const { authentication_token: authToken } = getState().session.auth_token;
+export const starsonaRequest = (
+  bookingData,
+  publicStatus,
+  callback,
+) => dispatch => {
   const requestDetails = {
     stargramto: bookingData.hostName,
     stargramfrom: bookingData.userName,
@@ -271,12 +312,8 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (
     method = 'put';
   }
   dispatch(requestPostStart());
-  return fetch[method](ApiUrl, formData, {
-    headers: {
-      Authorization: `token ${authToken}`,
-    },
-  })
-    .then((resp) => {
+  return fetch[method](ApiUrl, formData, {})
+    .then(resp => {
       if (resp.data && resp.data.success) {
         if (bookingData.type === 3) {
           starsonaVideo(
@@ -295,8 +332,15 @@ export const starsonaRequest = (bookingData, publicStatus, callback) => (
         dispatch(loaderAction(false));
       }
     })
-    .catch((exception) => {
+    .catch(exception => {
       dispatch(loaderAction(false));
       dispatch(requestPostFailed(exception.response.data.error));
+      dispatch(
+        updateToast({
+          value: true,
+          message: exception.response.data.error.message,
+          variant: 'error',
+        }),
+      );
     });
 };
