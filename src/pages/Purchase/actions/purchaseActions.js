@@ -10,6 +10,7 @@ export const OCCASION_LIST = {
   pageCount: 'pagecount_handler',
   bookingData: 'update_booking_data',
   formBuilderProps: 'form_builder_props',
+  modalHeader: 'header_modal_dynamic',
 };
 export const AskQuestion = {
   videoUploaded: 'SET_VIDEO_UPLOADED_FLG',
@@ -71,5 +72,7 @@ export const updateFormBuilderProps = data => ({
   data,
 });
 
-
-
+export const headerUpdate = header => ({
+  type: OCCASION_LIST.modalHeader,
+  header,
+});

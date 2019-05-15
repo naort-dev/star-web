@@ -16,7 +16,7 @@ export const TextInput = props => (
     onBlur={props.onBlur}
     label={props.label}
     classes={{ root: 'MuiFormControl' }}
-    InputLabelProps={{ classes: { root: 'float-label' } }}
+    InputLabelProps={props.InputLabelProps}
     onClick={props.onClick}
     InputProps={props.InputProps}
   />
@@ -36,6 +36,7 @@ TextInput.propTypes = {
   InputProps: PropTypes.object,
   onClick: PropTypes.func,
   label: PropTypes.string,
+  InputLabelProps: PropTypes.object,
 };
 
 TextInput.defaultProps = {
@@ -52,4 +53,5 @@ TextInput.defaultProps = {
   onChange: () => {},
   onClick: () => {},
   label: '',
+  InputLabelProps: {},
 };

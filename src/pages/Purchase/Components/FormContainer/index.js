@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
@@ -69,15 +69,29 @@ function FormContainer(props) {
       }
       return {};
     });
+
+    const tempObj = {
+      user: 'someoneElse',
+      enableAudioRecorder: false,
+      hostName: '',
+      userName: '',
+      relationshipValue: '',
+      specification: '',
+      date: null,
+      eventName: '',
+      validSelf: false,
+      occasion: {},
+    };
     setFormData({
       ...FormData,
       templateType: type,
       relationship: result.length ? result[0].relationships : [],
-      eventName: result.length ? result[0].title : '',
-      specification: '',
-      userName: '',
-      date: null,
-      occasion,
+      ...tempObj,
+    });
+    props.updateBookingData({
+      templateType: type,
+      relationship: result.length ? result[0].relationships : [],
+      ...tempObj,
     });
     props.pageCountHandler(0);
   };

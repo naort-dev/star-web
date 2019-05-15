@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { faAngleRight } from '@fortawesome/pro-light-svg-icons';
 import { FlexBoxSB } from 'styles/CommonStyled';
@@ -12,10 +12,29 @@ import {
   Layout,
 } from './styled';
 
-const CategoryList = ({ dataModal, getCategory }) => {
+const CategoryList = ({
+  dataModal,
+  getCategory,
+  headerUpdate,
+  starNM,
+  isLoggedIn,
+}) => {
   const handleGetCategory = type => () => {
     if (getCategory) getCategory(type);
+    if (type === 1) {
+      headerUpdate('Tell me about this Personalized Shoutout');
+    } else if (type === 2) {
+      headerUpdate('Announcement');
+    } else if (type === 3) {
+      if (!isLoggedIn) {
+        this.props.toggleLogin(true);
+      }
+      headerUpdate(`Ask ${starNM} something! `);
+    }
   };
+  useEffect(() => {
+    headerUpdate('What kind of video message do you want?');
+  }, []);
 
   return (
     <Layout>
@@ -48,7 +67,15 @@ const CategoryList = ({ dataModal, getCategory }) => {
 
 CategoryList.propTypes = {
   getCategory: PropTypes.func.isRequired,
-  dataModal: PropTypes.array.isRequired,
+  dataModal: PropTypes.array,
+  headerUpdate: PropTypes.func.isRequired,
+  starNM: PropTypes.string,
+  isLoggedIn: PropTypes.bool.isRequired,
+};
+
+CategoryList.defaultProps = {
+  dataModal: [],
+  starNM: '',
 };
 
 export default CategoryList;

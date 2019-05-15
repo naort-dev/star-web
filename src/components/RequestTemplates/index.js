@@ -1,10 +1,7 @@
 import React from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
+import AutoComplete from 'components/Autosuggest';
 import { Templates, FlexBox } from './styled';
 import {
   getMobileOperatingSystem,
@@ -21,7 +18,6 @@ function RequestTemplates(
   resetRecording,
   handleInputChange,
   updateUserToMyself,
-  audioObj,
 ) {
   const isMobile = getMobileOperatingSystem();
   const videoForValue = () => {
@@ -41,8 +37,8 @@ function RequestTemplates(
     onChange,
     state,
     forSelf,
-    tobeValidate,
     fullWidth,
+    maxLength,
   }) => {
     const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
@@ -50,8 +46,12 @@ function RequestTemplates(
         <TextInput
           label={placeholder}
           value={value}
-          onChange={event => onChange(event.target.value, state, tobeValidate)}
-          InputProps={{ classes: { input: 'input-field' } }}
+          onChange={event => onChange(event.target.value, state)}
+          InputProps={{
+            classes: { input: 'input-field' },
+            maxLength,
+          }}
+          InputLabelProps={{ classes: { root: 'float-label' } }}
         />
         {bookingData.user === 'someoneElse' && forSelf && value === '' && (
           <Templates.Myself onClick={updateUserToMyself}>
@@ -75,9 +75,6 @@ function RequestTemplates(
                   }
                   resetRecording={target => resetRecording(target)}
                 />
-                {!(audioObj[targetNM] && audioObj[targetNM].recordedUrl) && (
-                  <span className="recText">Pronounce Name</span>
-                )}
               </Templates.WrapsAudioInput>
             )}
         </React.Fragment>
@@ -85,35 +82,17 @@ function RequestTemplates(
     );
   };
   const getSelect = (placeholder, value, onChange, fullWidth) => {
-    const optionItems =
-      bookingData.relationship &&
-      bookingData.relationship.map(relation => (
-        <MenuItem value={relation.id} key={relation.id}>
-          {relation.title}
-        </MenuItem>
-      ));
     return (
       <Templates.InputWrapper fullWidth={fullWidth}>
-        <FormControl className="select-material">
-          <InputLabel htmlFor="reln-helper" classes={{ root: 'float-label' }}>
-            {placeholder}
-          </InputLabel>
-          <Select
-            value={value}
-            onChange={event =>
-              onChange(event.target.value, 'relationshipValue')
-            }
-            inputProps={{
-              id: 'reln-helper',
-            }}
-            classes={{ select: 'input-field' }}
-          >
-            {optionItems}
-            <MenuItem value="otherRelation" key="otherRelation">
-              Other
-            </MenuItem>
-          </Select>
-        </FormControl>
+        <AutoComplete
+          placeholder={placeholder}
+          onChange={onChange}
+          list={bookingData.relationship}
+          labelKey="title"
+          valueKey="id"
+          type="relationshipValue"
+          value={value}
+        />
       </Templates.InputWrapper>
     );
   };
@@ -123,7 +102,7 @@ function RequestTemplates(
       <Templates.InputWrapper fullWidth={fullWidth}>
         <div className="datepickerWrapper">
           <DatePicker
-            dateFormat="LL"
+            dateFormat="MMMM DD"
             withPortal
             customInput={
               <TextInput
@@ -135,7 +114,6 @@ function RequestTemplates(
             popperPlacement="bottom"
             selected={date}
             onChange={dt => onChange(dt, 'date')}
-            placeholderText="Enter date"
           />
         </div>
       </Templates.InputWrapper>
@@ -148,6 +126,7 @@ function RequestTemplates(
     state,
     forSelf,
     fullWidth,
+    maxLength,
   ) => {
     return {
       placeholder,
@@ -157,6 +136,7 @@ function RequestTemplates(
       state,
       forSelf,
       fullWidth,
+      maxLength,
     };
   };
   const getVideoFor = (state, fullWidth) => {
@@ -487,6 +467,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
+                  5,
                 ),
               )}
               {getTextInput(
@@ -516,6 +497,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
+                  '52',
                 ),
               )}
               {getTextInput(

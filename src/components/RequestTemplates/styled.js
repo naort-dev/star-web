@@ -15,7 +15,7 @@ Templates.InputWrapper = styled.div`
   width: 100%;
   @media (min-width: 768px) {
     margin-top: 5px;
-    align-items: flex-start;
+    align-items: inherit;
     width: ${props => (props.fullWidth ? '100%' : '48%')};
     padding-bottom: 30px;
   }
@@ -66,6 +66,7 @@ Templates.Myself = styled.div`
   text-align: center;
   color: #2f829c;
   padding-top: 6px;
+  cursor: pointer;
 `;
 Templates.Label = styled.div`
   color: #333333;
@@ -296,7 +297,7 @@ Templates.InputWrapperContainer = styled.div`
   flex-wrap: wrap;
   width: 100%;
   @media (min-width: 768px) {
-    align-items: flex-start;
+    align-items: inherit;
   }
   @media (min-width: 1025px) {
     align-items: flex-end;
@@ -372,6 +373,7 @@ Templates.WrapsAudioInput = styled.div`
     padding-left: 8px;
     font-family: Gilroy;
     font-size: 14px;
+    cursor: pointer;
   }
 `;
 

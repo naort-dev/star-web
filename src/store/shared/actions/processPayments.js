@@ -109,7 +109,7 @@ export const sourceListFetchFailed = error => ({
   error,
 });
 
-export const fetchSourceList = callBack => (dispatch) => {
+export const fetchSourceList = callBack => dispatch => {
   dispatch(loaderAction(true));
   return fetch(Api.getSourceList, {})
     .then(resp => {

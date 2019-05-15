@@ -40,7 +40,7 @@ const Payment = props => {
   const handleBooking = source => {
     props.createCharge(
       props.request.id,
-      props.celebDetails.celebrityDetails.rate,
+      props.celebDetails.rate,
       source.source.id,
       paymentSuccess,
     );
@@ -58,8 +58,8 @@ const Payment = props => {
       <Scrollbars className="customScroll">
         {Object.keys(props.celebDetails).length > 0 && (
           <Layout>
-            {Object.keys(props.celebDetails.celebrityDetails).length > 0 &&
-              Object.keys(props.celebDetails.userDetails).length > 0 && (
+            {Object.keys(props.celebDetails).length > 0 &&
+              Object.keys(props.userDetails).length > 0 && (
                 <UserCard
                   {...props}
                   CardList={props.sourceList}
@@ -68,9 +68,11 @@ const Payment = props => {
                   handleBooking={handleBooking}
                   paymentSuccessCallBack={props.paymentSuccessCallBack}
                   celebDetails={props.celebDetails}
+                  userDetails={props.userDetails}
                   loaderAction={props.loaderAction}
                   modifySourceList={props.modifySourceList}
                   updateCustomerId={props.updateCustomerId}
+                  type={props.type}
                 />
               )}
           </Layout>
@@ -93,16 +95,18 @@ Payment.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   updateCustomerId: PropTypes.func.isRequired,
   celebDetails: PropTypes.object,
+  userDetails: PropTypes.object,
+  type: PropTypes.string.isRequired,
 };
 Payment.defaultProps = {
   celebDetails: {},
+  userDetails: {},
   request: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
   request: state.paymentDetails.requestDetails,
   sourceList: state.paymentDetails.sourceList,
-  celebDetails: state.starDetails.celebDetails,
 });
 
 function mapDispatchToProps(dispatch) {

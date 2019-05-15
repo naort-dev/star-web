@@ -107,6 +107,7 @@ const Question = props => {
       stopHandler(false);
     } else if (buttonLabel === 'Stop') {
       mediaHandler('Continue to Payment', true);
+      props.headerUpdate('Check to make sure I’ve got everything right.');
       stopHandler(true);
     } else if (buttonLabel === 'Continue to Payment') {
       if (props.videoUploaded) {
@@ -118,6 +119,7 @@ const Question = props => {
   };
   const stopRecordHandler = () => {
     mediaHandler('Continue to Payment', true);
+    props.headerUpdate('Check to make sure I’ve got everything right.');
   };
 
   const retryRecordHandler = () => {
@@ -142,6 +144,8 @@ const Question = props => {
               errorHandler={errorHandlerCallback}
               forceStop={isStop}
               startStreamingCallback={startStreaming}
+              headerUpdate={props.headerUpdate}
+              starNM={props.starNM}
             />
           </VideoContainer>
           <QuestionContainer isShow={showHideFlg || error}>
@@ -207,6 +211,7 @@ Question.propTypes = {
   userDetails: PropTypes.object.isRequired,
   starNM: PropTypes.string.isRequired,
   updateToast: PropTypes.func.isRequired,
+  headerUpdate: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {

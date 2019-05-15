@@ -78,6 +78,7 @@ export default class AudioRecorder extends React.Component {
     this.deleteRecording(target);
   }
   renderAudio = target => {
+    const audio = this.props.audioRecorder.recorded;
     if (checkMediaRecorderSupport()) {
       return (
         <React.Fragment>
@@ -95,10 +96,8 @@ export default class AudioRecorder extends React.Component {
             </div>
           )}
           <AudioRecorderDiv.ControlWrapper>
-            {(this.props.audioRecorder.recorded[target] &&
-              this.props.audioRecorder.recorded[target].recordedBlob) ||
-            (this.props.audioRecorder.recorded[target] &&
-              this.props.audioRecorder.recorded[target].recordedUrl) ? (
+            {(audio[target] && audio[target].recordedBlob) ||
+            (audio[target] && audio[target].recordedUrl) ? (
               <React.Fragment>
                 {!this.state.play || this.audio.ended ? (
                   <React.Fragment>
@@ -132,12 +131,23 @@ export default class AudioRecorder extends React.Component {
                 </AudioRecorderDiv.CloseButton>
               </React.Fragment>
             ) : (
-              <AudioRecorderDiv.Button
+              <div
                 onClick={this.handleRecorder}
                 type="button"
+                role="presentation"
               >
                 <AudioRecorderDiv.Icon icon={faMicrophone} />
-              </AudioRecorderDiv.Button>
+              </div>
+            )}
+
+            {!(audio[target] && audio[target].recordedUrl) && (
+              <span
+                className="recText"
+                onClick={this.handleRecorder}
+                role="presentation"
+              >
+                Pronounce Name
+              </span>
             )}
           </AudioRecorderDiv.ControlWrapper>
         </React.Fragment>
