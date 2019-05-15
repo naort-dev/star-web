@@ -49,9 +49,9 @@ function RequestTemplates(
           onChange={event => onChange(event.target.value, state)}
           InputProps={{
             classes: { input: 'input-field' },
-            maxLength,
           }}
           InputLabelProps={{ classes: { root: 'float-label' } }}
+          nativeProps={{ maxLength }}
         />
         {bookingData.user === 'someoneElse' && forSelf && value === '' && (
           <Templates.Myself onClick={updateUserToMyself}>
@@ -102,12 +102,13 @@ function RequestTemplates(
       <Templates.InputWrapper fullWidth={fullWidth}>
         <div className="datepickerWrapper">
           <DatePicker
-            dateFormat="MMMM DD"
+            dateFormat="MMMM Do"
             withPortal
             customInput={
               <TextInput
                 label={placeholder}
                 InputProps={{ classes: { input: 'input-field' } }}
+                InputLabelProps={{ classes: { root: 'float-label' } }}
               />
             }
             customInputRef="dt"
@@ -467,7 +468,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
-                  5,
+                  52,
                 ),
               )}
               {getTextInput(
@@ -497,7 +498,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
-                  '52',
+                  52,
                 ),
               )}
               {getTextInput(

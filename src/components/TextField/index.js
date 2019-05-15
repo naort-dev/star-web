@@ -19,6 +19,8 @@ export const TextInput = props => (
     InputLabelProps={props.InputLabelProps}
     onClick={props.onClick}
     InputProps={props.InputProps}
+    // eslint-disable-next-line
+    inputProps={props.nativeProps}
   />
 );
 
@@ -37,6 +39,7 @@ TextInput.propTypes = {
   onClick: PropTypes.func,
   label: PropTypes.string,
   InputLabelProps: PropTypes.object,
+  nativeProps: PropTypes.object,
 };
 
 TextInput.defaultProps = {
@@ -54,4 +57,5 @@ TextInput.defaultProps = {
   onClick: () => {},
   label: '',
   InputLabelProps: {},
+  nativeProps: {},
 };
