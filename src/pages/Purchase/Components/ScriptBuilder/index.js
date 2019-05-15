@@ -94,7 +94,7 @@ class ScriptBuilder extends Component {
         starDetail: {
           id: this.props.userDetails.id,
         },
-        selectedValue: this.props.bookingData.occasion.key,
+        selectedValue: this.props.bookingData.templateType,
         public_request: this.props.checked,
         from_audio_file: this.getAudioFile('from'),
         to_audio_file: this.getAudioFile('for'),
