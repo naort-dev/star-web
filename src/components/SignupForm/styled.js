@@ -104,6 +104,12 @@ LoginContainer.Heading = styled.div`
   @media(min-width:1920px){
     font-size: 27px;
   }
+  @media(max-width:767px){
+    max-width: 144px;
+    font-size: 24px;
+    margin: 31px auto 13px;
+    line-height: 28px
+  }
   
 `;
 const disabledStyles = (isDisabled) => {

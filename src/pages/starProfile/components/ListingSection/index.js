@@ -88,13 +88,15 @@ const ListingSection = (props) => {
           </ListingStyled.VideoItem>
         </ListingStyled.VideoItemWrapper>
         <ListingStyled.CommentsWrapper visible={selectedVideo.indexOf(index) >= 0}>
-          {
-            video.comments.length ?
-              video.comments.map((commentItem) => {
-                return <span className="comment-item">"{commentItem.comments}"</span>
-              })
-            : 'No comments yet'
-          }
+          <span className='comments-inner'>
+            {
+              video.comments.length ?
+                video.comments.map((commentItem, key) => {
+                  return <span key={key}className="comment-item">"{commentItem.comments}"</span>
+                })
+              : <span className="comment-item empty-comment">No comments yet</span>
+            }
+          </span>
         </ListingStyled.CommentsWrapper>
       </ListingStyled.ContentItem>
     )

@@ -50,6 +50,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   padding: ${props => (props.modalView ? '0' : '40px 30px')};
   width: 100%;
   background-color: #fff;
+  min-height: 673px;
   @media(min-width: 832px) {
     width: 700px;
     height: 700px;
@@ -58,6 +59,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
 
 PopupStyled.SmallContent = styled.div`
   width: 100%;
+  min-height: 630px;
 `;
 
 PopupStyled.SliderDotsWrapper = styled.div`

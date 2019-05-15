@@ -64,31 +64,48 @@ class ScriptBuilder extends Component {
     ];
   }
 
+  componentDidMount() {
+    this.props.headerUpdate('Ok…how does this suggested script sound?');
+  }
+  getAudioFile = key => {
+    if (this.props.audio[key] !== null) {
+      return new File(
+        [this.props.audio[key].recordedBlob],
+        'recorded-name.webm',
+      );
+    }
+    return null;
+  };
+
+  readyToPayment = () => {
+    this.props.loaderAction(false);
+    this.props.submitClick();
+  };
+
   handleCheck = checked => {
     this.props.videoPrivateCheck(checked);
   };
 
-  readyToPayment = () => {
-    this.props.scriptSubmit();
-  };
-
   submitClick = () => {
-    if (this.props.isLoggedIn) {
-      this.props.submitClick();
+    if (!this.props.isLoggedIn) {
+      this.props.scriptSubmit();
     } else {
       const payload = {
-        celebrity: 106,
-        occasion: this.props.bookingData.occasion.key,
-        public_request: this.props.checked,
-        from_audio_file: null,
-        to_audio_file: null,
-        request_details: {
-          stargramto: this.props.bookingData.hostName,
-          stargramfrom: this.props.bookingData.userName,
-          relationship: this.props.bookingData.relationshipValue,
-          date: this.props.bookingData.date,
+        starDetail: {
+          id: this.props.userDetails.id,
         },
+        selectedValue: this.props.bookingData.occasion.key,
+        public_request: this.props.checked,
+        from_audio_file: this.getAudioFile('from'),
+        to_audio_file: this.getAudioFile('for'),
+        type: this.props.category,
+        requestRelationshipData: this.props.bookingData.relationshipValue,
+        stargramto: this.props.bookingData.hostName,
+        stargramfrom: this.props.bookingData.userName,
+        date: this.props.bookingData.date,
+        importantinfo: this.props.importantInfo,
       };
+      this.props.loaderAction(true);
       this.props.starsonaRequest(
         payload,
         this.props.checked,
@@ -115,12 +132,23 @@ class ScriptBuilder extends Component {
           <p>
             Review this suggested script for the star. It will help them get the
             details right. The star will still add their own style and
-            personalized spin. You can <span className="bluetext">go back</span>{' '}
+            personalized spin. You can{' '}
+            <span
+              className="bluetext"
+              onClick={this.props.goBack}
+              role="presentation"
+            >
+              go back
+            </span>{' '}
             to edit it.
           </p>
         </FlexBoxCenter>
         <TextAreaWrapper>
-          <textarea placeholder="Add any additional information that might be helpful to the star as nice to haver. It could be a funny quirk, why you’re such a big fan, a favorite movie/song or play they did…." />
+          <textarea
+            value={this.props.importantInfo}
+            onChange={event => this.props.infoChange(event.target.value)}
+            placeholder="Add any additional information that might be helpful to the star as nice to haver. It could be a funny quirk, why you’re such a big fan, a favorite movie/song or play they did…."
+          />
         </TextAreaWrapper>
         <FlexBoxCenter>
           <Checkbox
@@ -130,13 +158,7 @@ class ScriptBuilder extends Component {
           />
         </FlexBoxCenter>
         <FlexCenter>
-          <Button
-            onClick={this.submitClick}
-            disabled={!this.props.checked}
-            isDisabled={!this.props.checked}
-          >
-            Continue
-          </Button>
+          <Button onClick={this.submitClick}>Continue</Button>
         </FlexCenter>
       </Layout>
     );
@@ -152,10 +174,18 @@ ScriptBuilder.propTypes = {
   starsonaRequest: PropTypes.func.isRequired,
   audio: PropTypes.object.isRequired,
   bookingData: PropTypes.object.isRequired,
+  goBack: PropTypes.func.isRequired,
+  userDetails: PropTypes.object.isRequired,
+  category: PropTypes.number.isRequired,
+  headerUpdate: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  importantInfo: PropTypes.string,
+  infoChange: PropTypes.func.isRequired,
 };
 
 ScriptBuilder.defaultProps = {
   submitClick: () => {},
+  importantInfo: '',
 };
 
 export default connect(

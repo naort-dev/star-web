@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
+import { getStarName } from 'utils/dataToStringFormatter';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
@@ -14,6 +15,7 @@ import Payment from '../../components/Payment';
 import SuccessScreen from './Components/SuccessScreen';
 import Header from './Components/Header';
 import TermsAndCondition from './Components/TermsAndCondition';
+import CancelConfirm from './Components/CancelConfirm';
 
 class Purchase extends Component {
   constructor(props) {
@@ -24,6 +26,8 @@ class Purchase extends Component {
       category: this.props.formProps.category,
       termsCheck: this.props.formProps.termsCheck,
       privateVideo: this.props.formProps.privateVideo,
+      closeModal: false,
+      importantInfo: '',
     };
     this.starData = [
       {
@@ -56,10 +60,22 @@ class Purchase extends Component {
 
   getBodyComponent = () => {
     if (this.state.stepCount === 1) {
+      let list = [];
+      let starNM = '';
+      if (list.length === 0) {
+        // eslint-disable-next-line camelcase
+        const { nick_name, first_name, last_name } = this.props.userDetails;
+        starNM = getStarName(nick_name, first_name, last_name);
+        list = dataModal(starNM).category;
+      }
       return (
         <CategoryList
           getCategory={this.getCategory}
-          dataModal={dataModal.category ? dataModal.category : []}
+          dataModal={list}
+          headerUpdate={this.props.headerUpdate}
+          starNM={starNM}
+          isLoggedIn={this.props.isLoggedIn}
+          toggleLogin={this.props.toggleLogin}
         />
       );
     } else if (this.state.stepCount === 2) {
@@ -80,6 +96,7 @@ class Purchase extends Component {
                 : this.props.userDetails.first_name
             }
             updateToast={this.props.updateToast}
+            headerUpdate={this.props.headerUpdate}
           />
         );
       }
@@ -106,6 +123,7 @@ class Purchase extends Component {
             submitClick={this.submitClick}
             termsCheck={this.termsCheck}
             checked={this.state.termsCheck}
+            headerUpdate={this.props.headerUpdate}
           />
         );
       } else if (this.state.category === 1) {
@@ -126,8 +144,24 @@ class Purchase extends Component {
       scriptSubmit={this.scriptSubmit}
       submitClick={this.submitClick}
       starsonaRequest={this.props.starsonaRequest}
+      goBack={this.backArrowHandler}
+      userDetails={this.props.userDetails}
+      category={this.state.category}
+      loaderAction={this.props.loaderAction}
+      headerUpdate={this.props.headerUpdate}
+      importantInfo={this.state.importantInfo}
+      infoChange={this.infoChange}
     />
   );
+
+  getType = () => {
+    if (this.state.category === 1) {
+      return 'Video Shoutout';
+    } else if (this.state.category === 2) {
+      return 'Announcement';
+    }
+    return 'Ask a Question';
+  };
 
   getPaymentScreen = () => (
     <Payment
@@ -136,6 +170,9 @@ class Purchase extends Component {
       closeHandler={this.closeHandler}
       fetchCelebDetails={this.props.fetchCelebDetails}
       loaderAction={this.props.loaderAction}
+      celebDetails={this.props.celebDetails}
+      userDetails={this.props.userDetails}
+      type={this.getType()}
     />
   );
 
@@ -161,6 +198,13 @@ class Purchase extends Component {
     return <React.Fragment />;
   };
 
+  getThumbnail = () => {
+    if (this.props.userDetails.avatar_photo) {
+      return this.props.userDetails.avatar_photo.thumbnail_url;
+    }
+    return '../assets/images/profile.png';
+  };
+
   getBodyWithHeader = () => {
     if (
       this.state.stepCount < 3 ||
@@ -175,6 +219,7 @@ class Purchase extends Component {
             closeHandler={this.closeHandler}
             headerText="What kind of video message do you want?"
             arrowVisible={this.state.stepCount !== 1}
+            starImage={this.getThumbnail()}
           />
           <Content className="contentPadding" step={this.state.stepCount}>
             <Scrollbars>
@@ -186,11 +231,10 @@ class Purchase extends Component {
     }
     return <React.Fragment />;
   };
+
   getCategory = type => {
     if (type !== 3) {
       this.props.fetchOccasionlist(type);
-    } else if (type === 3 && !this.props.isLoggedIn) {
-      this.props.toggleLogin(true);
     }
     this.setState({
       stepCount: 2,
@@ -211,7 +255,6 @@ class Purchase extends Component {
       privateVideo: this.state.privateVideo,
     });
   };
-  I;
   termsCheck = value => {
     this.setState({ termsCheck: value });
   };
@@ -255,6 +298,9 @@ class Purchase extends Component {
   };
 
   closeHandler = () => {
+    this.setState({ closeModal: true });
+  };
+  clearStore = () => {
     this.props.toggleRequestFlow(false);
     this.props.setVideoUploadedFlag(false);
     this.props.updateMediaStore({
@@ -283,15 +329,35 @@ class Purchase extends Component {
       termsCheck: false,
       privateVideo: false,
     });
+    this.props.headerUpdate('');
+  };
+
+  modalClose = () => {
+    this.setState({ closeModal: false });
+  };
+  
+  infoChange = value => {
+    this.setState({ importantInfo: value });
   };
 
   render() {
+    // eslint-disable-next-line camelcase
+    const { nick_name, first_name } = this.props.userDetails;
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
-        <ModalContainer>
-          {this.getBodyWithHeader()}
-          {this.getCustomStep()}
-        </ModalContainer>
+        {!this.state.closeModal ? (
+          <ModalContainer>
+            {this.getBodyWithHeader()}
+            <Scrollbars>{this.getCustomStep()}</Scrollbars>
+          </ModalContainer>
+        ) : (
+          <CancelConfirm
+            modalClose={this.modalClose}
+            requestFLowClose={this.clearStore}
+            // eslint-disable-next-line camelcase
+            starNM={nick_name !== '' && nick_name ? nick_name : first_name}
+          />
+        )}
       </Modal>
     );
   }
@@ -321,6 +387,8 @@ Purchase.propTypes = {
   clearAll: PropTypes.func.isRequired,
   updateFormBuilderProps: PropTypes.func.isRequired,
   formProps: PropTypes.object.isRequired,
+  celebDetails: PropTypes.object.isRequired,
+  headerUpdate: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
