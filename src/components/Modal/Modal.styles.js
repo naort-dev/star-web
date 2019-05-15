@@ -15,6 +15,7 @@ export const DialogStyled = styled(Dialog)`
       height: 100%;
       margin: 0;
       border-radius: 0;
+      display: block;
     }
   }
   .paperScroll {
