@@ -20,15 +20,6 @@ function RequestTemplates(
   updateUserToMyself,
 ) {
   const isMobile = getMobileOperatingSystem();
-  const videoForValue = () => {
-    let value = '';
-    if (bookingData.hostName) {
-      value = bookingData.hostName;
-    } else {
-      value = bookingData.user === 'someoneElse' ? '' : 'YOU';
-    }
-    return value;
-  };
 
   const getTextInput = ({
     placeholder,
@@ -61,7 +52,6 @@ function RequestTemplates(
         <React.Fragment>
           {audioFlg &&
             value !== '' &&
-            !getMobileOperatingSystem() &&
             checkMediaRecorderSupport() &&
             (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
@@ -133,7 +123,7 @@ function RequestTemplates(
       placeholder,
       audioFlg,
       onChange: handleInputChange,
-      value: valFun ? videoForValue() : bookingData[state],
+      value: valFun ? bookingData.hostName : bookingData[state],
       state,
       forSelf,
       fullWidth,
@@ -166,7 +156,7 @@ function RequestTemplates(
   };
   const getSpecification = (placeholder, state, fullWidth) => {
     return getTextInput(
-      getFiledProps(placeholder, false, false, state, fullWidth),
+      getFiledProps(placeholder, false, false, state, false, fullWidth),
     );
   };
   const getRelationship = fullWidth => {
@@ -216,7 +206,7 @@ function RequestTemplates(
           );
           const page2 = (
             <FlexBox>
-              {getRelationship()} {getDate()}
+              {getRelationship()} {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -225,7 +215,7 @@ function RequestTemplates(
           const page1 = (
             <FlexBox>
               {getVideoFor('hostName')}
-              {getDate()}
+              {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -439,7 +429,7 @@ function RequestTemplates(
               )}
             </FlexBox>
           );
-          const page3 = <FlexBox>{getDate()}</FlexBox>;
+          const page3 = <FlexBox>{getDate(true)}</FlexBox>;
           pageDetails.push(page1);
           pageDetails.push(page2);
           pageDetails.push(page3);
@@ -450,7 +440,7 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps('From where', false, false, 'specification'),
               )}
-              {getDate()}
+              {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
