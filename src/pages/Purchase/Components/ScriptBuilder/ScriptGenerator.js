@@ -1,6 +1,5 @@
 import { isEmpty } from 'lodash';
 import moment from 'moment';
-import { get } from 'https';
 
 const getFormattedDate = date => {
   return moment(date)
@@ -37,46 +36,61 @@ const dateFormatter = (date, occasion) => {
   return '';
 };
 
-const forSomeone = (
+const getScript = (
   forName,
   relationship,
   fromName,
   occasion,
   date,
   specification,
+  content1,
+  content2,
+  content3,
+  content4,
+  content5,
 ) => {
+  if (
+    isEmpty(relationship) &&
+    isEmpty(fromName) &&
+    isEmpty(date) &&
+    isEmpty(specification)
+  ) {
+    return `${content1} <span class="boldTxt">${forName},</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
+  }
+
   if (isEmpty(relationship) && isEmpty(fromName) && isEmpty(date)) {
-    return `Hey <span class="boldTxt">${forName},</span> I wanted me to wish you an amazing <span class="boldTxt">${occasion}</span>.`;
+    return `${content1} <span class="boldTxt">${forName},</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
   } else if (isEmpty(relationship) && isEmpty(fromName)) {
-    return `Hey <span class="boldTxt">${forName},</span> I wanted me to wish you an amazing 
+    return `${content1} <span class="boldTxt">${forName},</span> ${content3} 
     ${dateFormatter(date, occasion)}`;
   } else if (isEmpty(relationship) && isEmpty(date)) {
-    return `Hey <span class="boldTxt">${forName}, ${fromName}</span> wanted me to wish you an amazing <span class="boldTxt">${occasion}</span>.`;
+    return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
   } else if (isEmpty(fromName) && isEmpty(date)) {
-    return `Hey <span class="boldTxt">${forName},</span> your <span class="boldTxt">${relationship}</span> wanted me to wish you an amazing <span class="boldTxt">${occasion}</span>.`;
+    return `${content1} <span class="boldTxt">${forName},</span> ${content2} <span class="boldTxt">${relationship}</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
   } else if (isEmpty(fromName)) {
-    return `Hey <span class="boldTxt">${forName},</span> your <span class="boldTxt">${relationship}</span></span> wanted me to wish you an amazing ${dateFormatter(
+    return `${content1} <span class="boldTxt">${forName},</span> ${content2} <span class="boldTxt">${relationship}</span></span> ${content3} ${dateFormatter(
       date,
       occasion,
     )}`;
   } else if (isEmpty(relationship)) {
-    return `Hey <span class="boldTxt">${forName}, ${fromName}</span> wanted me to wish you an amazing ${dateFormatter(
+    return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} ${dateFormatter(
       date,
       occasion,
-    )}`;
+    )} ${content5}`;
   } else if (isEmpty(date)) {
-    return `Hey <span class="boldTxt">${forName},</span> your <span class="boldTxt">${relationship} ${fromName}</span> wanted me to wish you an amazing <span class="boldTxt">${occasion}</span>.`;
+    return `${content1} <span class="boldTxt">${forName},</span> ${content2} <span class="boldTxt">${relationship} ${fromName}</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
   }
-  return `Hey <span class="boldTxt">${forName},</span> your <span class="boldTxt">${relationship} ${fromName}</span> wanted me to wish you an amazing ${dateFormatter(
+  return `${content1} <span class="boldTxt">${forName},</span> ${content2} <span class="boldTxt">${relationship} ${fromName}</span> ${content3} ${dateFormatter(
     date,
     occasion,
-  )}`;
+  )} ${content5}`;
 };
 
-const getMainText = someOneElse => {
-  if (someOneElse) {
-    return 'wanted me to wish you an amazing';
+const getMainText = (someOneElse, selfElseText, selfText, fromName) => {
+  if (someOneElse && !isEmpty(fromName)) {
+    return selfElseText;
   }
+  return selfText;
 };
 
 export const ScriptGenerator = ({
@@ -90,8 +104,8 @@ export const ScriptGenerator = ({
   specification,
 }) => {
   let htmlElm = '<p class="script">';
-  if ([1, 2, 3, 4, 5].includes(templateType)) {
-    htmlElm += forSomeone(
+  if (templateType === 1) {
+    htmlElm += getScript(
       forName,
       relationship,
       fromName,
@@ -99,17 +113,37 @@ export const ScriptGenerator = ({
       date,
       specification,
       'Hey',
-      getMainText(someOneElse),
+      'your',
+      getMainText(
+        someOneElse,
+        'wanted me to wish you an amazing',
+        'I wanted to wish you an amazing',
+        fromName,
+      ),
+      'on',
+      '',
     );
-  } else if ([6, 7].includes(templateType)) {
-    htmlElm = forSomeone(
+  } else if (templateType === 2) {
+    htmlElm += getScript(
       forName,
       relationship,
       fromName,
       occasion,
       date,
       specification,
+      'Hey',
+      'your',
+      getMainText(
+        someOneElse,
+        'wanted me to wish you congratulations on',
+        'I wanted to wish you congratulations on',
+        fromName,
+      ),
+      'on',
+      '',
     );
+  } else if ([6, 7].includes(templateType)) {
+    //
   }
   htmlElm += '</p>';
   return htmlElm;

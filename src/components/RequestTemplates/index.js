@@ -23,7 +23,7 @@ function RequestTemplates(
   const isMobile = getMobileOperatingSystem();
 
   const checkDeviceSupport = async () => {
-    const supportAudio = await audioSupport();
+    const supportAudio = await audioSupport('audioinput');
     return supportAudio;
   };
   const [supportAudio, updateDeviceSupport] = useState(false);

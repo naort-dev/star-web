@@ -40,7 +40,7 @@ export const checkPrerender = () => {
   return false;
 };
 
-export const audioSupport = () => {
+export const audioSupport = type => {
   const onlyHas = [];
   return navigator.mediaDevices
     .enumerateDevices()
@@ -48,8 +48,14 @@ export const audioSupport = () => {
       let haveSupport = false;
       devices.forEach(device => {
         onlyHas.push(device.kind);
-        if (device.kind === 'audioinput') {
-          haveSupport = true;
+        if (type === 'audioinput') {
+          if (device.kind === type) {
+            haveSupport = true;
+          }
+        } else if (type === 'videoinput') {
+          if (device.kind === type && device.kind === 'audioinput') {
+            haveSupport = true;
+          }
         }
       });
       return haveSupport;
