@@ -269,6 +269,10 @@ class Purchase extends Component {
   };
 
   backArrowHandler = () => {
+    if (this.state.stepCount === 2) {
+      this.clearBookingData();
+      this.clearFormBuilderProps();
+    }
     if (this.props.pageCount === 0) {
       this.setState({
         stepCount: this.state.stepCount - 1,
@@ -302,14 +306,7 @@ class Purchase extends Component {
     this.setState({ closeModal: true });
   };
 
-  clearStore = () => {
-    this.props.toggleRequestFlow(false);
-    this.props.setVideoUploadedFlag(false);
-    this.props.updateMediaStore({
-      videoSrc: null,
-      superBuffer: null,
-    });
-    this.props.pageCountHandler(0);
+  clearBookingData = () => {
     this.props.updateBookingData({
       templateType: null,
       relationship: [],
@@ -324,13 +321,28 @@ class Purchase extends Component {
       validSelf: false,
       occasion: {},
     });
-    this.props.clearAll();
+  };
+
+  clearFormBuilderProps = () => {
     this.props.updateFormBuilderProps({
       stepCount: 1,
       category: 0,
       termsCheck: false,
       privateVideo: false,
     });
+  };
+
+  clearStore = () => {
+    this.props.toggleRequestFlow(false);
+    this.props.setVideoUploadedFlag(false);
+    this.props.updateMediaStore({
+      videoSrc: null,
+      superBuffer: null,
+    });
+    this.props.pageCountHandler(0);
+    this.clearBookingData();
+    this.props.clearAll();
+    this.clearFormBuilderProps();
     this.props.headerUpdate('');
   };
 
