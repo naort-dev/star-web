@@ -240,6 +240,15 @@ LoginContainer.Label = styled.div`
   @media(min-width:1920px){
     font-size:16px;
   }
+  @media(max-width:767px){
+    font-size: 14px;
+    margin-top: 6px;
+    margin-bottom: 7.5px;
+    &.optional-text {
+      margin-top: 6px;
+      margin-bottom: 7px;
+    }
+  }
 
 `;
 LoginContainer.SectionHeading = styled.div`
@@ -309,8 +318,10 @@ LoginContainer.PrivacyContent = styled.div`
   text-align: left;
   color: #555555;
   text-align: left;
-  max-width: 343px;
-  margin: 15px auto 0;
+  max-width: 240px;
+  position: relative;
+  padding-left: 38px;
+  margin: 12px auto 39px;
   ${LoginContainer.Anchor} {
     color: #2f839d;
     cursor: pointer;
@@ -318,8 +329,10 @@ LoginContainer.PrivacyContent = styled.div`
     padding-left: 5px;
   }
   .check-wrap {
-    float: left;
-    margin-top: -12px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0;
   }
   @media(min-width:768px){
     margin: 35px auto 0;
@@ -452,6 +465,14 @@ LoginContainer.WrapsInput = styled.div`
   width:100%;
   > div {
     width: 100%;
+    @media(max-width: 768px) {
+      &:first-child {
+        margin-bottom: 20px;
+        &.no-space {
+          margin-bottom: 0;
+        }
+      }
+    }
   }
   input {
     font-family: Gilroy;
@@ -461,6 +482,11 @@ LoginContainer.WrapsInput = styled.div`
     color: #615195;
     text-align: center;
   }
+  input::-webkit-input-placeholder { color:#aaaaaa; opacity: 1; }
+  input:-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 18- */
+  input::-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 19+ */
+  input:-ms-input-placeholder { color:#aaaaaa; opacity: 1; } /* oldIE ;) */
+  
   input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
   input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */

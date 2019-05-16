@@ -10,7 +10,7 @@ export const TermsAndConditions = props => (
       <TermsConditionsWrapper.HeaderText>
         {TERMS.TITLE}
       </TermsConditionsWrapper.HeaderText>
-      <Scrollbars style={{height: 400 ,marginTop: 25, marginBottom: 25}}>
+      <Scrollbars className="terms-wrapper" style={{height: 'calc(100vh - 290px)' ,marginTop: 19, marginBottom: 27}}>
       <TermsConditionsWrapper.Description>
 		<h4><strong>Basic Terms</strong></h4>
 <p>You must be at least 13 years old to use Starsona’s service (the “Service”).</p>

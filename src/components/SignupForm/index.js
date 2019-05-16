@@ -324,7 +324,7 @@ class SignUpForm extends React.Component {
                   </LoginContainer.InputWrapper>
                 </div>
               )}
-              <LoginContainer.Label error={!!this.state[signUp.key_2].message}>
+              <LoginContainer.Label className="optional-text" error={!!this.state[signUp.key_2].message}>
                 {this.state[signUp.key_2].message
                   ? this.state[signUp.key_2].message
                   : signUp.item_2}
@@ -403,7 +403,7 @@ class SignUpForm extends React.Component {
                   </LoginContainer.WrapsInput>
                 ) : null}
               </LoginContainer.InputWrapper>
-              <LoginContainer.WrapsInput>
+              <LoginContainer.WrapsInput classname="no-space">
                 {this.props.statusCode === undefined ? (
                   <LoginContainer.ErrorMsg>
                     {this.props.error}
