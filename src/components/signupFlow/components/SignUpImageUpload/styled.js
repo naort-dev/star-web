@@ -232,6 +232,25 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   }
 `;
 
+UploadContainer.DesktopView = styled.div`
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+  }
+`;
+
+UploadContainer.MobileView = styled.div`
+  display: block;
+  ${UploadContainer.BrowseCategoryContainer} {
+    padding: 10px 20px;
+    margin-top: 20px;
+    display: block;
+  }
+  @media(min-width: 832px) {
+    display: none;
+  }
+`;
+
 UploadContainer.ItemWrapper = styled.ul`
   min-width: 227px;
 `;

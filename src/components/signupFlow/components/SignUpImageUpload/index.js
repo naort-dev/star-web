@@ -12,6 +12,7 @@ import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
 import MultiSelect from '../../../MultiSelect';
+import NestedSelect from '../../../NestedSelect';
 import { awsImageUpload } from '../../../../services/awsImageUpload'
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
@@ -201,6 +202,21 @@ class SignUpImageUpload extends React.Component {
       obj.label = obj.title;
       obj.value = obj.id;
     });
+    let nestedProfessions = this.props.professionsList.allProfessions;
+    nestedProfessions = nestedProfessions.map((item) => {
+      const newOption = {};
+      newOption.label = item.title;
+      newOption.value = item.id;
+      if (item.child) {
+        newOption.options = item.child.map((childItem) => {
+          const childOption = {};
+          childOption.label = childItem.title;
+          childOption.value = childItem.id;
+          return childOption;
+        })
+      }
+      return newOption;
+    })
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
@@ -239,11 +255,31 @@ class SignUpImageUpload extends React.Component {
           <UploadContainer.BrowseCategoryWrapper>
             <BackArrow onClick={this.onBack} />
             <CloseButton onClick={this.onBack} />
-            <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
-            <UploadContainer.BrowseCategoryContainer>
-              {this.browserCategoryList()}
-              {this.showSubCategoryList()}
-            </UploadContainer.BrowseCategoryContainer>
+            <UploadContainer.DesktopView>
+              <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
+              <UploadContainer.BrowseCategoryContainer>
+                {this.browserCategoryList()}
+                {this.showSubCategoryList()}
+              </UploadContainer.BrowseCategoryContainer>
+            </UploadContainer.DesktopView>
+            <UploadContainer.MobileView>
+              <UploadContainer.Heading>
+              {this.state.finalImage
+                ? 'You look great. Now select a category.'
+                : 'Browse categories'}
+              </UploadContainer.Heading>
+              <DotsContainer dotsCount={3} selectedDot={2} />
+              <UploadContainer.BrowseCategoryContainer>
+                <NestedSelect
+                  value={this.state.selectedProfessions}
+                  options={nestedProfessions}
+                  placeholder=""
+                  onChange={this.handleMultiSelect}
+                  onFocus={this.handleFocusSelect}
+                  label="Categorize yourself. This helps fans find you. (up to 3)"
+                />
+              </UploadContainer.BrowseCategoryContainer>
+            </UploadContainer.MobileView>
           </UploadContainer.BrowseCategoryWrapper>
         )}
         {!this.state.showBrowseCategory && (

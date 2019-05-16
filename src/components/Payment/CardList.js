@@ -7,10 +7,10 @@ import { Ul, Li } from './CardList.styles';
 import fetchEphemeralKey from '../../services/generateEmphemeralKey';
 
 const CardList = props => {
-  const [selected, getSelected] = useState('');
+  const [selected, getSelected] = useState(props.selectedCardIndex);
   const cardSelected = (card, cardIndex) => {
     getSelected(cardIndex);
-    props.getCardSelected(card);
+    props.getCardSelected(card, cardIndex);
   };
 
   const deleteCardAction = (sourceId, customerId) => {
@@ -78,9 +78,11 @@ CardList.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   updateCustomerId: PropTypes.func.isRequired,
   customerId: PropTypes.string,
+  selectedCardIndex: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 };
 CardList.defaultProps = {
   customerId: null,
+  selectedCardIndex: null,
 };
 
 export default connect(
