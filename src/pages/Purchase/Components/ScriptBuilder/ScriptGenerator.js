@@ -73,11 +73,11 @@ const forSomeone = (
   )}`;
 };
 
-const getMainText=(someOneElse)=>{
-  if(someOneElse){
-    return "wanted me to wish you an amazing"
+const getMainText = someOneElse => {
+  if (someOneElse) {
+    return 'wanted me to wish you an amazing';
   }
-} 
+};
 
 export const ScriptGenerator = ({
   templateType,
@@ -98,8 +98,8 @@ export const ScriptGenerator = ({
       occasion,
       date,
       specification,
-      "Hey"
-      getMainText(someOneElse)
+      'Hey',
+      getMainText(someOneElse),
     );
   } else if ([6, 7].includes(templateType)) {
     htmlElm = forSomeone(

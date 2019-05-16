@@ -13,7 +13,11 @@ export const getMobileOperatingSystem = () => {
 };
 
 export const checkMediaRecorderSupport = () => {
-  if (window.navigator && (window.navigator.mediaDevices && window.navigator.mediaDevices.getUserMedia)) {
+  const { navigator } = window;
+  if (
+    navigator &&
+    (navigator.mediaDevices && navigator.mediaDevices.getUserMedia)
+  ) {
     if (window.MediaRecorder) {
       return true;
     }
@@ -22,8 +26,10 @@ export const checkMediaRecorderSupport = () => {
 };
 
 export const checkDevice = () => {
-  return window.navigator.mediaDevices.getUserMedia({ audio: true, video: true })
-    .then(() => true, () => false);
+  return window.navigator.mediaDevices
+    .getUserMedia({ audio: true, video: true })
+    .then(() => true)
+    .catch(() => false);
 };
 
 export const checkPrerender = () => {
@@ -32,4 +38,21 @@ export const checkPrerender = () => {
     return true;
   }
   return false;
+};
+
+export const audioSupport = () => {
+  const onlyHas = [];
+  return navigator.mediaDevices
+    .enumerateDevices()
+    .then(devices => {
+      let haveSupport = false;
+      devices.forEach(device => {
+        onlyHas.push(device.kind);
+        if (device.kind === 'audioinput') {
+          haveSupport = true;
+        }
+      });
+      return haveSupport;
+    })
+    .catch(() => false);
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import AutoComplete from 'components/Autosuggest';
@@ -6,6 +6,7 @@ import { Templates, FlexBox } from './styled';
 import {
   getMobileOperatingSystem,
   checkMediaRecorderSupport,
+  audioSupport,
 } from '../../utils/checkOS';
 import AudioRecorder from '../AudioRecorder';
 import { TextInput } from '../../components/TextField';
@@ -20,6 +21,18 @@ function RequestTemplates(
   updateUserToMyself,
 ) {
   const isMobile = getMobileOperatingSystem();
+
+  const checkDeviceSupport = async () => {
+    const supportAudio = await audioSupport();
+    return supportAudio;
+  };
+  const [supportAudio, updateDeviceSupport] = useState(false);
+
+  useEffect(() => {
+    checkDeviceSupport().then(result => {
+      updateDeviceSupport(result);
+    });
+  }, []);
 
   const getTextInput = ({
     placeholder,
@@ -53,6 +66,7 @@ function RequestTemplates(
           {audioFlg &&
             value !== '' &&
             checkMediaRecorderSupport() &&
+            supportAudio &&
             (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
