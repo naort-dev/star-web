@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import { times } from 'lodash';
 import VideoRender from '../../../../components/VideoRender';
 
 import ListingStyled from './styled';
@@ -43,19 +44,28 @@ const ListingSection = (props) => {
     if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
       updateVideoCount(videoCountLimit.desktop);
       updateReactionCount(reactionCountLimit.desktop);
+      let newVideoSelection = times(videosList.length / videoCountLimit.desktop, 0);
+      newVideoSelection = newVideoSelection.map((selected, index) => {
+        return index * videoCountLimit.desktop;
+      })
+      updateSelectedVideo(newVideoSelection);
     } else if (document.body.getBoundingClientRect().width <= 832 || window.innerWidth <= 832) {
       updateVideoCount(videoCountLimit.mobile);
       updateReactionCount(reactionCountLimit.mobile);
+      let newVideoSelection = times(videosList.length / videoCountLimit.mobile, 0);
+      newVideoSelection = newVideoSelection.map((selected, index) => {
+        return index * videoCountLimit.mobile;
+      })
+      updateSelectedVideo(newVideoSelection);
     }
   }
 
   useEffect(() => {
-    handleWindowResize();
     window.addEventListener('resize', handleWindowResize);
     return () => {
       window.removeEventListener('resize', handleWindowResize);
     }
-  }, [])
+  }, [videosList])
 
   useEffect(() => {
     updateVideosList(props.videosList.data);
