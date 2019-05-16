@@ -80,12 +80,12 @@ function FormContainer(props) {
       date: null,
       eventName: '',
       validSelf: false,
-      occasion: {},
     };
     setFormData({
       ...FormData,
       templateType: type,
       relationship: result.length ? result[0].relationships : [],
+      occasion,
       ...tempObj,
     });
     props.updateBookingData({
@@ -122,13 +122,7 @@ function FormContainer(props) {
     };
     if (templateType === 1 || templateType === 2) {
       validateFields([hostName !== '']);
-    } else if (
-      templateType === 3 ||
-      templateType === 4 ||
-      templateType === 5 ||
-      templateType === 6 ||
-      templateType === 7
-    ) {
+    } else if ([3, 4, 5, 6, 7].includes(templateType)) {
       validateFields([hostName !== '', specification !== '']);
     }
   };
