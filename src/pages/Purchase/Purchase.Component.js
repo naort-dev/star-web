@@ -255,7 +255,7 @@ class Purchase extends Component {
       privateVideo: this.state.privateVideo,
     });
   };
-  
+
   termsCheck = value => {
     this.setState({ termsCheck: value });
   };

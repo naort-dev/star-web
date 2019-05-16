@@ -63,7 +63,7 @@ export const audioVideoSupport = type => {
       })
       .catch(() => false);
   }
-  return new Promise(function(resolve, reject) {
+  return new Promise((resolve, reject) => {
     reject(Error(false));
   });
 };

@@ -15,6 +15,7 @@ import Checkout from './Checkout';
 const UserCard = props => {
   const [isNewCard, cardSelection] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
+  const [selectedCardIndex, setCardSelectedIndex] = useState(null);
 
   useEffect(() => {
     cardSelection(props.isNewCard);
@@ -25,8 +26,9 @@ const UserCard = props => {
     props.contentSwitchCallback(value);
   };
 
-  const getCardSelected = card => {
+  const getCardSelected = (card, cardIndex) => {
     setSelectedCard(card);
+    setCardSelectedIndex(cardIndex);
   };
 
   const payWithExistingCrd = () => {
@@ -69,22 +71,14 @@ const UserCard = props => {
           </FlexBoxSB>
         </TopSection>
         <BottomSection>
-          <FlexBoxSB
-            className={
-              props.celebDetails.charity === '' && 'center'
-            }
-          >
+          <FlexBoxSB className={props.celebDetails.charity === '' && 'center'}>
             {props.celebDetails.charity !== '' && (
               <span className="colDir alignPad">
                 <span className="labelHead">All proceeds go to:</span>
-                <span className="cardType">
-                  {props.celebDetails.charity}
-                </span>
+                <span className="cardType">{props.celebDetails.charity}</span>
               </span>
             )}
-            <span className="amount">
-              {props.celebDetails.rate}
-            </span>
+            <span className="amount">{props.celebDetails.rate}</span>
           </FlexBoxSB>
           {props.celebDetails.charity !== '' && (
             <p className="note">
@@ -113,6 +107,7 @@ const UserCard = props => {
               deleteCard={props.modifySourceList}
               updateCustomerId={props.updateCustomerId}
               loaderAction={props.loaderAction}
+              selectedCardIndex={selectedCardIndex}
             />
           )}
           <span
@@ -124,7 +119,12 @@ const UserCard = props => {
           </span>
 
           <FlexCenter>
-            <Button className="button" onClick={payWithExistingCrd}>
+            <Button
+              className="button"
+              onClick={payWithExistingCrd}
+              disabled={selectedCard === null}
+              isDisabled={selectedCard === null}
+            >
               Pay ${props.celebDetails.rate}
             </Button>
           </FlexCenter>
