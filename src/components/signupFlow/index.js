@@ -204,6 +204,7 @@ class SignupFlow extends React.Component {
               onBack={this.onBack}
               switched={this.state.switched}
               disableClose={this.disableClose}
+              socialMediaStore={this.props.socialMediaStore}
             />
           );
         case 2:                                             

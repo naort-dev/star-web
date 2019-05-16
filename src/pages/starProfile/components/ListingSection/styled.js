@@ -37,9 +37,8 @@ ListingStyled.VideoItemWrapper = styled.div`
 
 ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   display: flex;
-  width: ${props => (props.visible ? 'inherit' : '0')};
+  width: ${props => (props.visible ? '106px' : '0')};
   overflow: hidden;
-  // opacity: ${props => (props.visible ? '1' : '0')};
   transition: all 0.3s;
   font-family: Gilroy-MediumItalic;
   font-size: 12px;
