@@ -43,8 +43,8 @@ export default class SetPrice extends React.Component {
     }
   }
 
-  onSubmitReferralCode = () => {
-    if (this.checkReferralCodeRequired()) {
+  onSubmitReferralCode = async () => {
+    if (await this.checkReferralCodeRequired()) {
       this.setState({
         isReferred: false
       })
@@ -58,7 +58,7 @@ export default class SetPrice extends React.Component {
     this.props.disableClose(true);
   }
   
-  checkReferralCodeRequired = () => {
+  checkReferralCodeRequired = async () => {
     const priceEmpty = !this.state.referralCode.value
     if (priceEmpty) {
       const referralCodeMsg = "Referral code can't be blank";
@@ -71,31 +71,30 @@ export default class SetPrice extends React.Component {
       return false;
     }
     
-   validatePromo(this.state.referralCode.value)
-              .then((success) => {
-                this.setState({ loader: false });
-                if (success) {
-                  this.setState({
-                    referralCode: {
-                      ...this.state.referralCode,
-                      message: '',
-                      isValid: true
-                    },
-                  });
-                }
-                resolve(true);
-              })
-              .catch(() => {
-                const referralCodeMsg = "Please enter a valid referral code";
-                this.setState({
-                  referralCode: {
-                    ...this.state.referralCode,
-                    message: referralCodeMsg,
-                    isValid: false
-                  }
-                });
-                resolve(false);
-              });
+    try {
+      const promoResp = await validatePromo(this.state.referralCode.value);
+      this.setState({ loading: false });
+      if (promoResp.success) {
+        this.setState({
+          referralCode: {
+            ...this.state.referralCode,
+            message: '',
+            isValid: true
+          },
+        });
+      }
+      return promoResp.success;
+    } catch (exception) {
+        const referralCodeMsg = "Please enter a valid referral code";
+        this.setState({
+          referralCode: {
+            ...this.state.referralCode,
+            message: referralCodeMsg,
+            isValid: false
+          }
+        });
+        return false;
+    }
   };
 
   checkPriceRequired = () => {
