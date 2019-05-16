@@ -40,25 +40,30 @@ export const checkPrerender = () => {
   return false;
 };
 
-export const audioSupport = type => {
-  const onlyHas = [];
-  return navigator.mediaDevices
-    .enumerateDevices()
-    .then(devices => {
-      let haveSupport = false;
-      devices.forEach(device => {
-        onlyHas.push(device.kind);
-        if (type === 'audioinput') {
-          if (device.kind === type) {
-            haveSupport = true;
+export const audioVideoSupport = type => {
+  if (checkMediaRecorderSupport()) {
+    const onlyHas = [];
+    return navigator.mediaDevices
+      .enumerateDevices()
+      .then(devices => {
+        let haveSupport = false;
+        devices.forEach(device => {
+          onlyHas.push(device.kind);
+          if (type === 'audioinput') {
+            if (device.kind === type) {
+              haveSupport = true;
+            }
+          } else if (type === 'videoinput') {
+            if (device.kind === type && device.kind === 'audioinput') {
+              haveSupport = true;
+            }
           }
-        } else if (type === 'videoinput') {
-          if (device.kind === type && device.kind === 'audioinput') {
-            haveSupport = true;
-          }
-        }
-      });
-      return haveSupport;
-    })
-    .catch(() => false);
+        });
+        return haveSupport;
+      })
+      .catch(() => false);
+  }
+  return new Promise(function(resolve, reject) {
+    reject(Error(false));
+  });
 };

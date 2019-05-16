@@ -56,8 +56,13 @@ const getScript = (
     isEmpty(specification)
   ) {
     return `${content1} <span class="boldTxt">${forName},</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
+  } else if (
+    isEmpty(relationship) &&
+    isEmpty(fromName) &&
+    isEmpty(specification)
+  ) {
+    //
   }
-
   if (isEmpty(relationship) && isEmpty(fromName) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName},</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;
   } else if (isEmpty(relationship) && isEmpty(fromName)) {

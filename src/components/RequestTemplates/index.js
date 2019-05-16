@@ -6,7 +6,7 @@ import { Templates, FlexBox } from './styled';
 import {
   getMobileOperatingSystem,
   checkMediaRecorderSupport,
-  audioSupport,
+  audioVideoSupport,
 } from '../../utils/checkOS';
 import AudioRecorder from '../AudioRecorder';
 import { TextInput } from '../../components/TextField';
@@ -23,7 +23,7 @@ function RequestTemplates(
   const isMobile = getMobileOperatingSystem();
 
   const checkDeviceSupport = async () => {
-    const supportAudio = await audioSupport('audioinput');
+    const supportAudio = await audioVideoSupport('audioinput');
     return supportAudio;
   };
   const [supportAudio, updateDeviceSupport] = useState(false);
