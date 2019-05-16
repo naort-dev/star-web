@@ -80,7 +80,7 @@ class MobileHome extends React.Component {
         open
       >
         <MobileStyled className={currentStep === 5 ? 'grey-background' : ''}>
-          <MobileStyled.Logo src="assets/images/logo_starsona.svg" />
+          <MobileStyled.Logo src="assets/images/starsona_weblogo.svg" />
           {
             currentStep === 1 &&
               <ActionChooser

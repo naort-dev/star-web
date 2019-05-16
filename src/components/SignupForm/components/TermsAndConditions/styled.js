@@ -29,6 +29,11 @@ TermsConditionsWrapper.HeaderText = styled.div`
   @media(min-width:1920px){
     font-size: 27px;
   }
+  @media(max-width:767px){
+    padding: 30px 0 0;
+    max-width: 230px;
+    margin: 0 auto;
+  }
 `;
 
 TermsConditionsWrapper.ButtonWrapper = styled.div`
