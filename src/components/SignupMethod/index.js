@@ -45,9 +45,6 @@ class SignupMethod extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.props.toggleSignup(false);
-    }
     const params = window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
     if (finalParams) {
@@ -99,9 +96,6 @@ class SignupMethod extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      if (this.props.signupRole === 'fan') {
-        this.props.toggleSignup(false);
-      }
       if (this.props.signupRole === 'fan') {
         const followData = this.props.followCelebData;
         if (followData.celebId) {
@@ -183,7 +177,7 @@ class SignupMethod extends React.Component {
       });
     } else {
       const val = r;
-      if (!val.authentication_token) {
+      
         let firstName = val.first_name;
         let lastName = val.last_name;
         let nickName = val.nick_name || val.name;
@@ -203,11 +197,12 @@ class SignupMethod extends React.Component {
             tw_id: val.id,
           },
         });
-      } else {
-        skipSocialLogin = true;
-        this.props.updateLoginStatus(val);
-        this.props.fetchUserDetails(val.id);
-        this.props.closeSignupFlow();
+        if (val.authentication_token) {
+          skipSocialLogin = true;
+          this.props.setSocialMediaData(this.state.socialMedia);
+          this.props.updateLoginStatus(val);
+          this.props.fetchUserDetails(val.id);
+          this.props.changeStep(this.props.currentStep + 1);
       }
     }
     if (!skipSocialLogin) {

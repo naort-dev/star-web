@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 // import { Redirect } from 'react-router-dom';
 // import Helmet from 'react-helmet';
 // import AppBanner from '../../components/AppBanner';
-// import Loader from '../../components/Loader';
+import Loader from '../../components/Loader';
 // import Popup from '../../components/Popup';
 // import { getStarsonaVideo } from '../../services';
 // import { requestTypes } from '../../constants/requestTypes';
@@ -39,6 +39,13 @@ const StarProfile = (props) => {
     toggleProfVideo(state);
   }
 
+  const showErrorMessage = () => {
+    if (props.detailsError.status === "400") {
+      return props.detailsError.message;
+    }
+    return null;
+  }
+
   useEffect(() => {
     props.fetchStarDetails(getUserId());
     return () => {
@@ -46,61 +53,81 @@ const StarProfile = (props) => {
     }
   }, [props.isLoggedIn, props.match.params.id])
 
+  useEffect(() => {
+    if (props.detailsError && props.detailsError.status !== "400") {
+      props.history.push('/not-found');
+    }
+  })
+
   return (
-    <StarProfileStyled>
-      <StarProfileStyled.Container>
-        <Header
-          onBackClick={onBackClick}
-          showBack
-        />
-        <CallToAction
-          toggleRequestFlow={props.toggleRequestFlow}
-          userDetails={props.userDetails}
-          celebDetails={props.celebDetails}
-        />
-        <DetailSection
-          showProfileVideo={profVideo}
-          onBackClick={onBackClick}
-          isLoggedIn={props.isLoggedIn}
-          followCelebrity={props.followCelebrity}
-          toggleLogin={props.toggleLogin}
-          updateFavouritesQueue={props.updateFavouritesQueue}
-          toggleProfileVideo={toggleProfileVideo}
-          userDetails={props.userDetails}
-          celebDetails={props.celebDetails}
-        />
-        <ListingSection
-          userDetails={props.userDetails}
-          fetchCelebVideosList={props.fetchCelebVideosList}
-          fetchCelebReactionsList={props.fetchCelebReactionsList}
-          reactionsList={props.reactionsList}
-          videosList={props.videosList}
-        />
-      {/* {
-        this.state.showAppBanner && Object.keys(props.userDetails).length && Object.keys(props.celebrityDetails).length ?
-          <AppBanner
-            androidUrl={`profile/${props.match.params.id.toLowerCase()}`}
-            iosUrl={`profile/?profile_id=${props.match.params.id.toLowerCase()}`}
-            hideAppBanner={() => this.setState({ showAppBanner: false })}
-          />
-          : null
-      } */}
-      {/* <Helmet
-        title={fullName}
-        meta={[...setMetaTags(
-          fullName,
-          props.userDetails.avatar_photo ? props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
-          `Get your personalized video from ${fullName}`,
-        ),
-        { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
-        { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://profile/?profile_id=${props.match.params.id.toLowerCase()}` },
-        { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
-        { property: 'al:android:package', content: env('ANDROID_APP_ID') },
-        { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://profile/${props.match.params.id.toLowerCase()}` },
-        { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
-        ]}
-      /> */}
-      </StarProfileStyled.Container>
+    <StarProfileStyled centerAlign={props.detailsError || props.detailsLoading}>
+      {
+        props.detailsLoading ?
+          <Loader />
+        :
+          <StarProfileStyled.Container>
+            <Header
+              onBackClick={onBackClick}
+              showBack
+            />
+            {
+              props.detailsError ?
+                <StarProfileStyled.ErrorWrapper>
+                  {showErrorMessage()}
+                </StarProfileStyled.ErrorWrapper>
+              :
+                <React.Fragment>
+                  <CallToAction
+                    toggleRequestFlow={props.toggleRequestFlow}
+                    userDetails={props.userDetails}
+                    celebDetails={props.celebDetails}
+                  />
+                  <DetailSection
+                    showProfileVideo={profVideo}
+                    onBackClick={onBackClick}
+                    isLoggedIn={props.isLoggedIn}
+                    followCelebrity={props.followCelebrity}
+                    toggleLogin={props.toggleLogin}
+                    updateFavouritesQueue={props.updateFavouritesQueue}
+                    toggleProfileVideo={toggleProfileVideo}
+                    userDetails={props.userDetails}
+                    celebDetails={props.celebDetails}
+                  />
+                  <ListingSection
+                    userDetails={props.userDetails}
+                    fetchCelebVideosList={props.fetchCelebVideosList}
+                    fetchCelebReactionsList={props.fetchCelebReactionsList}
+                    reactionsList={props.reactionsList}
+                    videosList={props.videosList}
+                  />
+                </React.Fragment>
+            }
+          {/* {
+            this.state.showAppBanner && Object.keys(props.userDetails).length && Object.keys(props.celebrityDetails).length ?
+              <AppBanner
+                androidUrl={`profile/${props.match.params.id.toLowerCase()}`}
+                iosUrl={`profile/?profile_id=${props.match.params.id.toLowerCase()}`}
+                hideAppBanner={() => this.setState({ showAppBanner: false })}
+              />
+              : null
+          } */}
+          {/* <Helmet
+            title={fullName}
+            meta={[...setMetaTags(
+              fullName,
+              props.userDetails.avatar_photo ? props.userDetails.avatar_photo.thumbnail_url : '../../assets/images/profile.png',
+              `Get your personalized video from ${fullName}`,
+            ),
+            { property: 'al:ios:app_store_id', content: env('IOS_APP_ID') },
+            { property: 'al:ios:url', content: `${env('ANDROID_APP_ID')}://profile/?profile_id=${props.match.params.id.toLowerCase()}` },
+            { property: 'al:ios:app_name', content: env('IOS_APP_NAME') },
+            { property: 'al:android:package', content: env('ANDROID_APP_ID') },
+            { property: 'al:android:url', content: `${env('ANDROID_APP_ID')}://profile/${props.match.params.id.toLowerCase()}` },
+            { property: 'al:android:app_name', content: env('ANDROID_APP_NAME') },
+            ]}
+          /> */}
+          </StarProfileStyled.Container>
+      }
   </StarProfileStyled>
   )
 }
@@ -110,6 +137,8 @@ StarProfile.propTypes = {
   history: PropTypes.object.isRequired,
   userDetails: PropTypes.object.isRequired,
   celebDetails: PropTypes.object.isRequired,
+  detailsError: PropTypes.object,
+  detailsLoading: PropTypes.bool.isRequired,
   fetchStarDetails: PropTypes.func.isRequired,
   resetStarDetails: PropTypes.func.isRequired,
   isLoggedIn: PropTypes.bool.isRequired,
@@ -121,6 +150,10 @@ StarProfile.propTypes = {
   toggleLogin: PropTypes.func.isRequired,
   videosList: PropTypes.object.isRequired,
   reactionsList: PropTypes.object.isRequired,
+}
+
+StarProfile.defaultProps = {
+  detailsError: null
 }
 
 export default StarProfile;

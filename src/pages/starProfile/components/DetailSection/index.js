@@ -120,14 +120,17 @@ const DetailSection = (props) => {
             { pipeSeparator(props.celebDetails.profession_details, 'title') }
           </DetailStyled.Categories>
           <DetailStyled.StarDetails>
-            <div className='rating-section'>
-              <span className="details-header">Avg Rating: {props.celebDetails.rating}</span>
-              <StarRating
-                readOnly
-                ratingClass="star-item"
-                rating={props.celebDetails.rating}
-              />
-            </div>
+            {
+              props.celebDetails.rating !== '' &&
+                <div className='rating-section'>
+                  <span className="details-header">Avg Rating: {props.celebDetails.rating}</span>
+                  <StarRating
+                    readOnly
+                    ratingClass="star-item"
+                    rating={props.celebDetails.rating}
+                  />
+                </div>
+            }
             {
               props.celebDetails.average_response_time !== '' &&
                 <div className='response-section'>
