@@ -22,6 +22,7 @@ const StarProfileStyled = styled.div`
 StarProfileStyled.Container = styled.div`
   max-width: 1280px;
   margin: 0 auto;
+  width: 100%;
 `;
 
 StarProfileStyled.StarName = styled.span`
