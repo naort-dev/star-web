@@ -8,7 +8,8 @@ import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode';
 import {convertedApplePrice} from '../../constants';
 import { validatePromo } from '../../../../services';
-import { BackArrow } from '../../../../styles/CommonStyled';
+import { BackArrow, CloseButton} from '../../../../styles/CommonStyled';
+import { resolve } from 'url';
 
 export default class SetPrice extends React.Component {
   constructor(props) {
@@ -53,7 +54,8 @@ export default class SetPrice extends React.Component {
   onRefer = () => {
     this.setState({
       isReferred: true
-    })
+    });
+    this.props.disableClose(true);
   }
   
   checkReferralCodeRequired = () => {
@@ -69,7 +71,7 @@ export default class SetPrice extends React.Component {
       return false;
     }
     
-   return validatePromo(this.state.referralCode.value)
+   validatePromo(this.state.referralCode.value)
               .then((success) => {
                 this.setState({ loader: false });
                 if (success) {
@@ -81,7 +83,7 @@ export default class SetPrice extends React.Component {
                     },
                   });
                 }
-                return true;
+                resolve(true);
               })
               .catch(() => {
                 const referralCodeMsg = "Please enter a valid referral code";
@@ -92,9 +94,8 @@ export default class SetPrice extends React.Component {
                     isValid: false
                   }
                 });
-                return false;
+                resolve(false);
               });
-   
   };
 
   checkPriceRequired = () => {
@@ -155,12 +156,18 @@ export default class SetPrice extends React.Component {
     }
   };
 
+  closeSetPrice = () => {
+    this.props.closeSignupFlow(this.state.isReferred)
+    this.setState({isReferred: false});
+  }
+
   render() {
     const { props } = this;
     const { isReferred, confirmPrice } = this.state
     return (
       <React.Fragment>
       <BackArrow className="leftArrow" onClick={this.backArrowClick} />
+      <CloseButton className="close" onClick={this.closeSetPrice} />
       { isReferred ? <ReferralCode
       error={this.state.referralCode.message}
       value={this.state.referralCode.value}
