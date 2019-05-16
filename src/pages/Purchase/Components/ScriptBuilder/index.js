@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { isPlainObject } from 'lodash';
 import StarDrawer from 'components/StarDrawer';
 import Checkbox from 'components/Checkbox';
 import Button from 'components/PrimaryButton';
@@ -12,6 +13,7 @@ import {
   FlexBoxCenter,
   TextAreaWrapper,
 } from './styled';
+import { ScriptGenerator } from './ScriptGenerator';
 
 class ScriptBuilder extends Component {
   constructor(props) {
@@ -94,7 +96,7 @@ class ScriptBuilder extends Component {
         starDetail: {
           id: this.props.userDetails.id,
         },
-        selectedValue: this.props.bookingData.templateType,
+        selectedValue: this.props.bookingData.occasion.key,
         public_request: this.props.checked,
         from_audio_file: this.getAudioFile('from'),
         to_audio_file: this.getAudioFile('for'),
@@ -114,16 +116,38 @@ class ScriptBuilder extends Component {
     }
   };
   render() {
+    const {
+      user,
+      hostName,
+      userName,
+      relationshipValue,
+      occasion,
+      date,
+      specification,
+      templateType,
+    } = this.props.bookingData;
     return (
       <Layout>
         <ScriptContainer>
           <section className="startWrapper">
             <StarDrawer starData={this.starDataSet1} />
           </section>
-          <Script>
-            “Your husband, Jonas, wanted me to wish Sarah an amazing birthday
-            tomorrow!”
-          </Script>
+          <Script
+            dangerouslySetInnerHTML={{
+              __html: ScriptGenerator({
+                templateType,
+                forName: hostName,
+                fromName: userName,
+                relationship: isPlainObject(relationshipValue)
+                  ? relationshipValue.title
+                  : relationshipValue,
+                date,
+                occasion: occasion.label,
+                someOneElse: user !== 'Myself',
+                specification,
+              }),
+            }}
+          />
           <section className="startWrapper">
             <StarDrawer starData={this.starDataSet2} />
           </section>

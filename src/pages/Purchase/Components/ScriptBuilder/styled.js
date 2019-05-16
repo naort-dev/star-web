@@ -43,10 +43,17 @@ export const Script = styled.section`
   max-width: 425px;
   padding: 18px 50px;
   border-radius: 10px;
-  font-size: 23px;
-  line-height: 28px;
   margin-left: 20px;
   margin-right: 20px;
+  .script {
+    font-size: 23px;
+    line-height: 28px;
+    font-family: Gilroy;
+    .boldTxt {
+      font-family: Gilroy-Semibold;
+      color: #2f839d;
+    }
+  }
 `;
 
 export const FlexBoxCenter = styled(FlexCenter)`

@@ -255,6 +255,7 @@ class Purchase extends Component {
       privateVideo: this.state.privateVideo,
     });
   };
+
   termsCheck = value => {
     this.setState({ termsCheck: value });
   };
@@ -300,6 +301,7 @@ class Purchase extends Component {
   closeHandler = () => {
     this.setState({ closeModal: true });
   };
+
   clearStore = () => {
     this.props.toggleRequestFlow(false);
     this.props.setVideoUploadedFlag(false);
