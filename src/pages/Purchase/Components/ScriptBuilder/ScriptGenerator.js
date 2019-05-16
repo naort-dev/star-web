@@ -61,7 +61,8 @@ const getScript = (
     isEmpty(fromName) &&
     isEmpty(specification)
   ) {
-    //
+    return `${content1} <span class="boldTxt">${forName},</span> ${content3} 
+    ${dateFormatter(date, occasion)}`;
   }
   if (isEmpty(relationship) && isEmpty(fromName) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName},</span> ${content3} <span class="boldTxt">${occasion}</span> ${content5}.`;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import PropTypes from 'prop-types';
@@ -34,12 +34,6 @@ const Question = props => {
   );
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
-
-  useEffect(() => {
-    return () => {
-      props.setVideoUploadedFlag(false);
-    };
-  });
 
   const mediaHandler = btnLabel => {
     props.recordTrigger();

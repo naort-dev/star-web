@@ -27,6 +27,10 @@ class Checkout extends React.Component {
       cardExpiryError: '',
       cvvError: '',
       cardTypeImage: null,
+      cardNumber: true,
+      cardExpiry: true,
+      cardCCV: true,
+      formValid: true,
     };
     this.styles = {
       base: {
@@ -44,7 +48,7 @@ class Checkout extends React.Component {
     };
   }
 
-  setErrorMsg = (event, element) => {
+  setErrorMsg = (event, element, errorElm) => {
     let { cardTypeImage } = this.state;
     if (event.elementType === 'cardNumber') {
       cardTypeImage =
@@ -53,7 +57,10 @@ class Checkout extends React.Component {
           : null;
     }
     const errorMsg = event.error ? event.error.message : '';
-    this.setState({ [element]: errorMsg, cardTypeImage });
+    this.setState(
+      { [element]: errorMsg, cardTypeImage, [errorElm]: false },
+      this.checkFormValid,
+    );
   };
 
   getEphemeralKey = source => {
@@ -115,6 +122,21 @@ class Checkout extends React.Component {
     }
   };
 
+  checkFormValid = () => {
+    if (
+      this.state.cardNumberError === '' &&
+      this.state.cardExpiryError === '' &&
+      this.state.cvvError === '' &&
+      !this.state.cardCCV &&
+      !this.state.cardExpiry &&
+      !this.state.cardNumber
+    ) {
+      this.setState({ formValid: false });
+    } else {
+      this.setState({ formValid: true });
+    }
+  };
+
   render() {
     return (
       <form onSubmit={this.handleSubmit}>
@@ -122,7 +144,9 @@ class Checkout extends React.Component {
           <Wrapper>
             <CardIcon cardImage={this.state.cardTypeImage} />
             <CardNumberElement
-              onChange={event => this.setErrorMsg(event, 'cardNumberError')}
+              onChange={event =>
+                this.setErrorMsg(event, 'cardNumberError', 'cardNumber')
+              }
               style={this.styles}
               placeholder="1234 1234 1234 1234"
             />
@@ -133,7 +157,9 @@ class Checkout extends React.Component {
         <FlexBox>
           <CardElementSmall>
             <CardExpiryElement
-              onChange={event => this.setErrorMsg(event, 'cardExpiryError')}
+              onChange={event =>
+                this.setErrorMsg(event, 'cardExpiryError', 'cardExpiry')
+              }
               style={this.styles}
               placeholder="MM/YY"
             />
@@ -141,7 +167,7 @@ class Checkout extends React.Component {
           </CardElementSmall>
           <CardElementSmall>
             <CardCVCElement
-              onChange={event => this.setErrorMsg(event, 'cvvError')}
+              onChange={event => this.setErrorMsg(event, 'cvvError', 'cardCCV')}
               style={this.styles}
               placeholder="CCV Code"
             />
@@ -149,7 +175,13 @@ class Checkout extends React.Component {
           </CardElementSmall>
         </FlexBox>
         <FlexCenter>
-          <Button className="button">Pay ${this.props.rate}</Button>
+          <Button
+            className="button"
+            disabled={this.state.formValid}
+            isDisabled={this.state.formValid}
+          >
+            Pay ${this.props.rate}
+          </Button>
         </FlexCenter>
       </form>
     );
