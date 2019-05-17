@@ -5,6 +5,10 @@ import { BackArrow, FlexCenter } from '../../../../styles/CommonStyled';
 import Button from '../../../../components/PrimaryButton';
 
 const Skip = props => {
+  const skippedVideo = () => {
+    props.skipVideo();
+    props.changeStep(props.currentStep + 1);
+  }
   return (
     <Container>
       <BackArrow
@@ -21,7 +25,7 @@ const Skip = props => {
           <Button className="button whiteBtn" onClick={() => props.onBack(true)}>
             You talked me into it, let me fix my hair
           </Button>
-          <Button className="button whiteBtn" onClick={() => props.changeStep(props.currentStep + 1)}>
+          <Button className="button whiteBtn" onClick={skippedVideo}>
             Skip for now but I will be back!
           </Button>
         </FlexCenter>

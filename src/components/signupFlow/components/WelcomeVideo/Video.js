@@ -81,8 +81,8 @@ const Video = props => {
     } else if (props.videoSrc) {
       return 'Welcome Video Length';
     }
-    return 'Maximum Time'
-  }
+    return 'Maximum Time';
+  };
 
   const renderTime = () => {
     if (props.recordState) {
@@ -90,12 +90,12 @@ const Video = props => {
     } else if (props.videoSrc) {
       return props.recordedTime;
     }
-    return '01:00'
-  }
+    return '01:00';
+  };
 
-  const getRecordTime = (recordingTime) => {
+  const getRecordTime = recordingTime => {
     setRecordingTime(recordingTime);
-  }
+  };
 
   return (
     <Layout>
@@ -119,16 +119,8 @@ const Video = props => {
             {!error && (
               <React.Fragment>
                 <TimeSpan>
-                  <span className="text">
-                    {
-                      renderTimeHeader()
-                    }
-                  </span>
-                  <span className="time">
-                    {
-                      renderTime()
-                    }
-                  </span>
+                  <span className="text">{renderTimeHeader()}</span>
+                  <span className="time">{renderTime()}</span>
                 </TimeSpan>
                 <h1 className="heading">What you should say?</h1>
                 <QuestionBuilder questionsList={questionsAbout} />
@@ -225,7 +217,7 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (payload) => {
+    updateMediaStore: payload => {
       dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {

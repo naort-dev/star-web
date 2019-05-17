@@ -47,6 +47,7 @@ export const audioVideoSupport = type => {
       .enumerateDevices()
       .then(devices => {
         let haveSupport = false;
+        let haveAudioSupport = false;
         devices.forEach(device => {
           onlyHas.push(device.kind);
           if (type === 'audioinput') {
@@ -54,7 +55,10 @@ export const audioVideoSupport = type => {
               haveSupport = true;
             }
           } else if (type === 'videoinput') {
-            if (device.kind === type && device.kind === 'audioinput') {
+            if (device.kind === 'audioinput') {
+              haveAudioSupport = true;
+            }
+            if (device.kind === type && haveAudioSupport) {
               haveSupport = true;
             }
           }
