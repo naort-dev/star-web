@@ -54,6 +54,7 @@ const WelcomeVideo = props => {
         props.loaderAction(false);
       });
   };
+
   return (
     <Layout compSwitch={compSwitch}>
       <BackArrow className="leftArrow" onClick={backArrowClick} />
