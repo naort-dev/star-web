@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Layout, QuesWrapper } from './About.styles';
-import { questionsAbout } from './dataModals';
+import { questionsVideo } from './dataModals';
 import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import QuestionBuilder from '../../../../components/QuestionBuilder';
@@ -18,7 +18,7 @@ const About = props => {
       <React.Fragment>
         <QuesWrapper>
           <h1 className="queHead">What you should say...</h1>
-          <QuestionBuilder questionsList={questionsAbout} />
+          <QuestionBuilder questionsList={questionsVideo()} />
         </QuesWrapper>
         <FlexCenter>
           <Button className="button" onClick={props.continueCallback}>

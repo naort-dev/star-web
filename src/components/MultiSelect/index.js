@@ -10,6 +10,7 @@ const MultiValue = prop => {
     <Chip
       tabIndex={-1}
       label={prop.children}
+      classes={{ root: 'category-pill' }}
       onDelete={prop.removeProps.onClick}
     />
   );

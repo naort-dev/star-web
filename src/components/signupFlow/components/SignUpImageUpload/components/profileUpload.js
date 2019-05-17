@@ -185,7 +185,7 @@ export default class ProfileUpload extends React.Component {
 
   render() {    
     return (
-      <ImageUpload.DetailsWrapper>
+      <ImageUpload.DetailsWrapper imagePresent={this.props.image}>
         {
           this.state.imageLoading ?
             <Loader />

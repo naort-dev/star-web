@@ -94,21 +94,16 @@ LoginContainer.Container = styled.div`
 LoginContainer.Heading = styled.div`
   font-family: Gilroy;
   color: #ff6c58;
-  font-size: 20px;
-  @media(min-width:768px){
-    font-size: 24px;
+  font-size: 24px;
+  @media(min-width:832px){
+    padding-top: 19px;
   }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
-  }
-  @media(max-width:767px){
+  @media(max-width:831px){
     max-width: 144px;
     font-size: 24px;
     margin: 31px auto 13px;
     line-height: 28px
+    font-size: 20px;
   }
   
 `;
@@ -116,6 +111,7 @@ const disabledStyles = (isDisabled) => {
   if (isDisabled) {
     return `
       opacity: 0.3;
+      pointer-events: none;
     `;
   }
 };
@@ -136,6 +132,7 @@ ${props => disabledStyles(props.isDisabled)};
   width: 300px;
   height: 60px;
   outline: none;
+  margin-bottom: 10px;
 `;
 
 LoginContainer.ButtonIcon = styled.img`  
@@ -150,14 +147,8 @@ LoginContainer.SocialMediaMessage = styled.div`
   font-size: 14px;
   text-align: center;
   color: #7B797A;
-  @media(min-width:768px){
+  @media(min-width:832px){
     font-size: 18px;
-  }
-  @media(min-width:1025px){
-    font-size:14px;
-  }
-  @media(min-width:1920px){
-    font-size:18px;
   }
 `;
 LoginContainer.Button = styled.button`
@@ -200,7 +191,7 @@ LoginContainer.Line = styled.hr`
 `;
 LoginContainer.InputFieldsWrapper = styled.form`
   
-  @media(min-width:768px){
+  @media(min-width:832px){
     padding: 0px 0px;
   }
 `;
@@ -214,34 +205,28 @@ LoginContainer.ErrorMsg = styled.div`
   margin-top:4px;
   font-family: 'Avenir-light';
   text-align:left;
-  @media(min-width:768px){
+  @media(min-width:832px){
     
 
   }
 `;
 LoginContainer.Label = styled.div`
   font-family: Gilroy-Semibold;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 2.08;
   text-align: center;
   color: ${props => (props.error ? '#990000' : '#555555')}; 
   padding-top: 25px;
   width:100%;
-  @media(min-width:768px){
-
-    align-items:center;
-    padding-bottom:0px;
-  }
-  @media(min-width:1025px){
+  @media(min-width:832px){
     font-size:12px;
     padding-top: 47px;
     line-height: 30px;
+    align-items:center;
+    padding-bottom:0px;
+    padding-top: 48px;
   }
-  @media(min-width:1920px){
-    font-size:16px;
-  }
-  @media(max-width:767px){
-    font-size: 14px;
+  @media(max-width:831px){
     margin-top: 6px;
     margin-bottom: 7.5px;
     &.optional-text {
@@ -257,14 +242,8 @@ LoginContainer.SectionHeading = styled.div`
   text-align: center;
   color: #737373;
   margin-top:2%;
-  @media(min-width:768px){
+  @media(min-width:832px){
     font-size: 18px;
-  }
-  @media(min-width:1025px){
-    font-size:14px;
-  }
-  @media(min-width:1920px){
-    font-size:28px;
   }
 `;
 LoginContainer.Input = styled.input`
@@ -282,33 +261,18 @@ LoginContainer.Input = styled.input`
   &:focus {
     border-color: #FF6C58;
   }
-  @media(min-width:768px){
+  @media(min-width:832px){
     margin-top:0;
-    height:40px;
-  }
-  @media(min-width:1025px){
-    margin-top:0;
-    height:33px;
-    font-size:13px;
-  }
-  @media(min-width:1920px){
-    font-size:16px;
     height:40px;
   }
 `;
 LoginContainer.InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top:1%;
-  @media(min-width:768px){
+  margin-top:4px;
+  @media(min-width:832px){
     flex-direction: row;
-    margin-top:5%;
-  }
-  @media(min-width: 1025px) {
-    margin-top: 5px;
-  }
-  @media(min-width: 1920px) {
-    margin-top: 30px;
+    margin-top:4px;
   }
 `;
 LoginContainer.PrivacyContent = styled.div`
@@ -321,7 +285,12 @@ LoginContainer.PrivacyContent = styled.div`
   max-width: 240px;
   position: relative;
   padding-left: 38px;
-  margin: 12px auto 39px;
+  margin: -9px auto 39px;
+  @media(min-width: 832px) {
+    margin: 35px auto 0;
+    max-width: 341px;
+  }
+
   ${LoginContainer.Anchor} {
     color: #2f839d;
     cursor: pointer;
@@ -333,9 +302,6 @@ LoginContainer.PrivacyContent = styled.div`
     left: 0;
     top: 0;
     padding: 0;
-  }
-  @media(min-width:768px){
-    margin: 35px auto 0;
   }
 `;
 
@@ -377,8 +343,6 @@ HeaderSection.MiddleDiv = styled.div`
   @media(min-width:1920px){
     font-size:16px;
   }
-  
-
 `;
 HeaderSection.RightDiv = styled.button`
   background-color: #fff; 
@@ -393,11 +357,8 @@ HeaderSection.RightDiv = styled.button`
   cursor: pointer;
   outline:none;
   border: none;
-  @media(min-width:1025px){
+  @media(min-width:832px){
     font-size:20px
-  }
-  @media(min-width:1920px){
-    font-size:22px;
   }
 `;
 

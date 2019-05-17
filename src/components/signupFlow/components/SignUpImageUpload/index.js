@@ -284,9 +284,10 @@ class SignUpImageUpload extends React.Component {
         )}
         {!this.state.showBrowseCategory && (
           <React.Fragment>
-            <UploadContainer.Heading>
+            <UploadContainer.Heading className={this.state.finalImage ? 'select-category' : 'fans-want'}>
               {this.state.finalImage
-                ? 'You look great. Now select a category.'
+                ? `You look great.
+                  Now select a category.`
                 : 'Give your fans what they want'}
             </UploadContainer.Heading>
             <DotsContainer dotsCount={3} selectedDot={2} />
@@ -320,6 +321,7 @@ class SignUpImageUpload extends React.Component {
             </UploadContainer.CategoriesWrapper>
             <UploadContainer.ButtonWrapper>
               <UploadContainer.ContinueButton
+              className="common-button-nobr no-focus"
                 type="submit"
                 onClick={this.continueClickhandler}
               >

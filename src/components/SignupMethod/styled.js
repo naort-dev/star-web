@@ -19,52 +19,90 @@ SignUpMethod.SocialMediaSignup = styled.div`
 `;
 
 SignUpMethod.Container = styled.div`
-  @media(min-width: 768px) {
-    padding: 30px 0 0;
+  @media(min-width: 832px) {
+    position: relative;
+    padding: 0;
+    top: 50%;
+    transform: translateY(calc(-50% + -2px));
   }
   @media(min-width: 1025px) {
     padding: 50px 10px 0;
   }
 `;
 SignUpMethod.Heading = styled.div`
-  font-size: 20px;
-  font-family: Gilroy-Light;
-  line-height: 1.25;
+  line-height: 1.2;
+  font-size: 24px;
+  font-family: Gilroy;
+  line-height: 1.2;
   text-align: center;
   color: #ff6c58;
-  padding: 20px 0;
+  padding: 31px 0 43px;
+  max-width: 178px;
+  margin: 0 auto;
   &.or-section {
     padding-bottom: 0;
     margin-bottom: 13px;
+    @media(min-width:832px){
+      padding-top: 29px;
+    }
   }
-  @media(min-width:768px){
-    font-size: 24px;
+  @media(min-width: 831px) {
+    padding: 00 23px;
+    max-width: 100%;
   }
 `;
 
 SignUpMethod.ButtonDiv = styled.div`
     width:100%;
     display: inline-block;
+    @media(max-width: 831px) {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 220px;
+      margin: 0 auto;
+    }
 `;
 
 SignUpMethod.Button = styled.button`
   font-size:100%;
   font-family:inherit;
   border:0;
-  padding:20px 17px;
+  padding:20px 17px 5px;
   outline:none;
   background-color:white;
   cursor:pointer;
   box-sizing: border-box;
-  border: 2px solid #fff;
+  border: 1px solid #fff;
+  border-radius: 5px;
   &:hover { 
-    border: 2px solid #2f839d;
-    border-radius: 10px;
+    border: 1px solid #2f839d;
+  }
+  &.email-wrap {
+    margin-top: 7px;
+    @media(min-width: 831px) {
+      margin-top: 0;
+      padding-top: 3px;
+      .label {
+        margin-top: -6px;
+      }
+    }
+  }
+  // @media(max-width: 831px) {
+  //   padding: 80px 0 23px;
+  //   max-width: 100%;
+  // }
 `;
 
 SignUpMethod.Icon = styled.div`
   color: #2f839d;
-  font-size: 55px;
+  font-size: 59px;
+  &.insta {
+    font-size: 58px;
+  }
+  &.google {
+    font-size: 57px;
+  }
 `;
 
 SignUpMethod.SocialMediaIcon = styled.div`

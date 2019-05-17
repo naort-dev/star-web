@@ -9,9 +9,12 @@ export const Layout = styled.section`
     max-width: 570px;
   }
   margin: 0 auto;
+  @media (max-width: 831px) {
+    padding-top: 0;
+  }
   .mobileBtn {
     position: absolute;
-    top: 544px;
+    top: 547px;
     padding-bottom: 60px;
     display: block;
     ${media.webView} {
@@ -22,9 +25,17 @@ export const Layout = styled.section`
     }
   }
   .button {
-    width: 242px;
+    height: 60px;
+    padding: 0 20px !important;
+    width: 300px;
+    line-height: 60px;
+    border: 0;
+    font-size: 18px;
     ${media.webView} {
       margin-left: 0;
+    }
+    &:hover {
+      box-shadow: none;
     }
   }
   .note {
@@ -42,7 +53,8 @@ export const Layout = styled.section`
     width: 100%;
     text-align: center;
     padding-top: 12px;
-    color: #2f839d;
+    color: #615195;
+    font-size: 14px;
     cursor: pointer;
     font-family: Gilroy;
     ${media.webView} {
@@ -52,7 +64,7 @@ export const Layout = styled.section`
   .skipMob {
     display: block;
     position: absolute;
-    top: 620px;
+    top: ${props => (props.error ? '532px' : '620px')};
     left: 0;
     ${media.webView} {
       display: none;
@@ -65,8 +77,11 @@ export const VideoContainer = styled.section`
   height: 454px;
   border-radius: 23px;
   background-color: #555555;
-  margin-bottom: 60px;
   position: relative;
+  @media (max-width: 831px) {
+    width: 317px;
+    height: 514px;
+  }
   .playButton {
     position: absolute;
     top: 50%;
@@ -83,7 +98,7 @@ export const VideoContainer = styled.section`
     transform: translateX(-50%);
   }
   .videoElm {
-    width: 288px;
+    width: 100%;
     border-radius: 23px;
     height: 100%;
     object-fit: cover;
@@ -93,13 +108,17 @@ export const VideoContainer = styled.section`
 export const QuestionContainer = styled.section`
   padding-left: ${props => (props.error ? '20px' : '33px')};
   ${media.mobileScreen} {
+    padding-left: ${props => (props.error ? '20px' : '26px')};
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
-    top: 210px;
-    border-radius: 23px;
+    bottom: 0;
+    border-radius: 20px;
     background: rgba(0, 0, 0, 0.47);
-    width: 288px;
-    height: 300px;
+    width: 100%;
+    height: 289px;
+    padding-top: 27px;
+    margin-left: 0;
+    padding-right: ${props => (props.error ? '20px' : '0')};
   }
   h1 {
     font-family: Gilroy;
@@ -114,17 +133,24 @@ export const QuestionContainer = styled.section`
     display: none;
     ${media.webView} {
       display: block;
-      margin-top: 40px;
+      margin-top: 39px;
       height: 60px;
       padding: 0;
     }
+  }
+  .heading {
+    font-family: Gilroy-Medium;
+    margin-bottom: 23px;
+  }
+  .tick {
+    font-size: 19px;
   }
 `;
 
 export const ShowHide = styled.span`
   display: none;
   position: absolute;
-  top: 460px;
+  top: 467px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -133,6 +159,7 @@ export const ShowHide = styled.span`
   background: #fff;
   color: #2f839d;
   font-family: Gilroy-Bold;
+  font-size: 14px;
   cursor: pointer;
   display: block;
   ${media.webView} {
@@ -141,11 +168,11 @@ export const ShowHide = styled.span`
   :after,
   :before {
     position: relative;
-    top: ${props => (props.isShow ? '-3px' : '3px')};
+    top: ${props => (props.isShow ? '-3px' : '5px')};
     content: '';
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border-right: 1px solid #2f839d;
     border-top: 1px solid #2f839d;
     transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
@@ -173,13 +200,15 @@ export const TimeSpan = styled.span`
   flex-direction: column;
   font-family: Gilroy;
   color: #555555;
-  padding-bottom: 37px;
+  padding-bottom: 31px;
   display: none;
   ${media.webView} {
     display: flex;
   }
   .text {
     font-size: 16px;
+    line-height: .9;
+    margin-bottom: 4px;
   }
   .time {
     font-size: 21px;
@@ -189,6 +218,7 @@ export const TimeSpan = styled.span`
 export const FlexBox = styled.section`
   display: flex;
   justify-content: center;
+  position: relative;
   ${media.webView} {
     justify-content: space-between;
   }

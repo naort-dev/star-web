@@ -175,12 +175,15 @@ export default class SetPrice extends React.Component {
     /> :
       <SetPriceWrapper>
         <SetPriceWrapper.ComponentWrapper>
-          {this.state.referralCode.value ?
+        <SetPriceWrapper.Title>
+              {props.action}
+            </SetPriceWrapper.Title> 
+          {/* {this.state.referralCode.value ?
             <SetPriceWrapper.Title>
               {props.action}
             </SetPriceWrapper.Title> : null
-          }
-          <SetPriceWrapper.Image
+          } */}
+          <SetPriceWrapper.Image className="image-wrap"
             imageUrl={props.image_url}>
           </SetPriceWrapper.Image>
           <SetPriceWrapper.HeaderText>

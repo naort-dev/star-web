@@ -12,7 +12,7 @@ DotsStyled.SliderDots = styled.span`
   border: 1px solid #ff6c58;
   background: ${props => (props.selected ? '#ff6c58' : 'transparent')};
   border-radius: 50%;
-  margin-right: 5px;
+  margin-right: 10px;
   cursor: pointer;
 `;
 

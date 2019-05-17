@@ -15,15 +15,22 @@ export const Layout = styled.section`
     text-align: center;
     color: #7c7c7c;
     padding-top: 23px;
+    @media (max-width: 831px) {
+      padding-top: 15px;
+    }
   }
   .note {
     font-family: Gilroy;
     font-size: 14px;
     text-align: center;
     color: #7c7c7c;
-    padding-top: 8px;
+    padding-top: 9px;
     max-width: 430px;
     margin: 0 auto;
+    @media (max-width: 831px) {
+      max-width: 315px;
+      line-height: 19px;
+    }
   }
   .questionWrapper {
     max-width: 239px;
@@ -31,14 +38,23 @@ export const Layout = styled.section`
       max-width: 410px;
     }
   }
+  .button {
+    height: 60px;
+    padding: 0 20px;
+    width: 300px;
+    line-height: 60px;
+    border: 0;
+    font-size: 18px;
+  }
   .skip {
     display: inline-block;
     width: 100%;
     text-align: center;
     padding-top: 12px;
-    color: #2f839d;
+    color: #615195;
     cursor: pointer;
     font-family: Gilroy;
+    font-size: 14px;
   }
 `;
 
@@ -48,11 +64,15 @@ export const QuesWrapper = styled.section`
   background: #f8f8f8;
   overflow: hidden;
   margin-top: 43px;
-  padding: 21px 29px;
+  padding: 23px 29px 7px;
   margin-bottom: 20px;
   ${media.webView} {
-    margin-top: 16px;
-    margin-bottom: 27px;
+    margin-top: 19px;
+    margin-bottom: 26px;
+  }
+  @media (max-width: 831px) {
+    margin-top: 12px;
+    padding-bottom: 3px;
   }
   .question {
     color: #7c7c7c;
@@ -62,5 +82,10 @@ export const QuesWrapper = styled.section`
     color: #46829a;
     font-size: 18px;
     font-family: Gilroy-Semibold;
+    margin-bottom: 19px;
+    @media (max-width: 831px) {
+      text-align: center;
+      margin-bottom: 14px;
+    }
   }
 `;

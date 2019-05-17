@@ -392,23 +392,23 @@ class SignupMethod extends React.Component {
             </SignUpMethod.Button>
             <SignUpMethod.Button onClick={this.onInstagramLogin}>
               <SignUpMethod.SocialMediaIcon>
-                <SignUpMethod.Icon><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
+                <SignUpMethod.Icon className="insta"><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
                 <SignUpMethod.SocialMediaLabel>Instagram</SignUpMethod.SocialMediaLabel>
               </SignUpMethod.SocialMediaIcon>
             </SignUpMethod.Button>
             <SignUpMethod.Button onClick={this.onGmail}>
               <SignUpMethod.SocialMediaIcon>
                 <SignUpMethod.GoogleWrapper id="g-sign-in" />
-                <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
+                <SignUpMethod.Icon className="google"><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
                 <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
               </SignUpMethod.SocialMediaIcon>
             </SignUpMethod.Button>
           </SignUpMethod.ButtonDiv>
           <SignUpMethod.Heading className="or-section">or</SignUpMethod.Heading>
-          <SignUpMethod.Button onClick={this.onEmailLogin}>
+          <SignUpMethod.Button onClick={this.onEmailLogin} className="email-wrap">
             <SignUpMethod.SocialMediaIcon>
               <SignUpMethod.Icon><FontAwesomeIcon icon={faEnvelope} /></SignUpMethod.Icon>
-              <SignUpMethod.SocialMediaLabel>Sign up by email</SignUpMethod.SocialMediaLabel>
+              <SignUpMethod.SocialMediaLabel className="label">Email</SignUpMethod.SocialMediaLabel>
             </SignUpMethod.SocialMediaIcon>
           </SignUpMethod.Button>
         </SignUpMethod.Container>

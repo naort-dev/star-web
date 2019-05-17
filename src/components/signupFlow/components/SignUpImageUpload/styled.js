@@ -50,10 +50,7 @@ UploadContainer.Container = styled.div`
   .action-buttons {
     top: 0px;
   }
-  @media (min-width: 768px) {
-    padding: 0 0;
-  }
-  @media (min-width: 1025px) {
+  @media (min-width: 832px) {
     padding: 0 20px;
   }
 `;
@@ -64,14 +61,16 @@ UploadContainer.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 24px;
-  @media (min-width: 768px) {
-    font-size: 25px;
-  }
-  @media (min-width: 1025px) {
-    font-size: 25px;
-  }
-  @media (min-width: 1920px) {
-    font-size: 27px;
+  @media(max-width: 831px) {
+    padding-top: 31px;
+    margin: 0 auto 9px;
+    &.fans-want {
+      max-width: 190px;
+    }
+    &.select-category {
+      max-width: 260px;
+      white-space: pre-line;
+    }
   }
 `;
 
@@ -119,6 +118,9 @@ UploadContainer.ButtonWrapper = styled.div`
   margin-top: 45px;
   text-align: center;
   margin-bottom: 10px;
+  @media(max-width: 831px) {
+    margin-top: 101px;
+  }
 `;
 
 UploadContainer.ContinueButton = styled.button`
@@ -198,7 +200,7 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   top: 0;
   ${UploadContainer.Heading} {
     padding-top: 27px;
-    @media(min-width: 768px) {
+    @media(min-width: 832px) {
       padding-top: 52px;
     }
   }
@@ -323,14 +325,14 @@ ImageUpload.CloseButton = styled.span`
 `;
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
-  padding: 30px 10px;
-  @media(min-width: 768px) {
+  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 138px')};
+  @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
-  padding: 30px 10px;
-  @media(min-width: 768px) {
+  padding: 51px 10px 138px;
+  @media(min-width: 832px) {
     padding: 0;
   }
 `;
@@ -437,16 +439,6 @@ ImageUpload.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
-  @media (min-width: 768px) {
-    font-size: 25px;
-  }
-  @media (min-width: 1025px) {
-    font-size: 25px;
-    margin-bottom: 26px;
-  }
-  @media (min-width: 1920px) {
-    font-size: 27px;
-  }
 `;
 ImageUpload.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
@@ -533,8 +525,11 @@ ImageUpload.CropperLightButton = styled.button`
 `;
 
 ImageUpload.ButtonWrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
+  @media (min-width: 832px) {
+    margin-top: 20px;
+  }
 `;
 
 ImageUpload.VideoElement = styled.video`

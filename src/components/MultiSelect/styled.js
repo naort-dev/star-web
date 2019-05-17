@@ -5,7 +5,9 @@ const MultiSelectStyled = styled.div`
     display: none;
   }
   .select__value-container {
-    //border-bottom: 1px solid #aaa;
+    padding: 0px 0px 6px;
+    display: flex;
+    justify-content: center;
   }
   .select__value-container > div[role='button'] {
     border: 1px solid #2f839d;
@@ -14,6 +16,10 @@ const MultiSelectStyled = styled.div`
   }
   .select__indicator-separator {
     display: none;
+  }
+  .category-pill {
+    height: 26.7px;
+    margin: 1px 5px 10px 0;
   }
 `;
 
