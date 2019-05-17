@@ -1,9 +1,6 @@
 import React from 'react';
 import Cropper, { makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
-import Popup from '../Popup';
 import CropperStyled from './styled';
 
 export default class ImageCropper extends React.Component {
