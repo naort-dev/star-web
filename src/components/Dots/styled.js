@@ -7,13 +7,13 @@ const DotsStyled = styled.div`
 DotsStyled.SliderDots = styled.span`
   display: inline-block;
   margin-top: 15px;
-  width: 12.5px;
-  height: 12.5px;
-  border: 1px solid #ff6c58;
+  width: 12.6px;
+  height: 12.6px;
+  border: ${props => (props.selected ? '1px solid #ff6c58' : '1px solid #999999')};
   background: ${props => (props.selected ? '#ff6c58' : 'transparent')};
   border-radius: 50%;
-  margin-right: 10px;
-  cursor: pointer;
+  margin-right: 8px;
+  cursor: default;
 `;
 
 export default DotsStyled;

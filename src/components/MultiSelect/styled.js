@@ -27,6 +27,11 @@ const MultiSelectStyled = styled.div`
   .category-pill {
     height: 26.7px;
     margin: 1px 5px 10px 0;
+    padding: 0 12px;
+    span {
+      padding-left: 0;
+      padding-right: 19px;
+    }
   }
   .select__menu {
     border-radius: 25px;

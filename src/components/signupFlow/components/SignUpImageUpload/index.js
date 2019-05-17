@@ -265,7 +265,8 @@ class SignUpImageUpload extends React.Component {
             <UploadContainer.MobileView>
               <UploadContainer.Heading>
               {this.state.finalImage
-                ? 'You look great. Now select a category.'
+                ? <span>You look great.<br />
+                Now select a category.</span>
                 : 'Browse categories'}
               </UploadContainer.Heading>
               <DotsContainer dotsCount={3} selectedDot={2} />

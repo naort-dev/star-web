@@ -13,9 +13,8 @@ const MultiValue = prop => {
     <Chip
       tabIndex={-1}
       label={prop.children}
-      classes={{ root: 'category-pill' }}
       onDelete={prop.removeProps.onClick}
-      classes={{ deleteIcon: 'chip-delete-icon' }}
+      classes={{ deleteIcon: 'chip-delete-icon', root: 'category-pill' }}
       deleteIcon={<FontAwesomeIcon icon={faTimes} />}
     />
   );

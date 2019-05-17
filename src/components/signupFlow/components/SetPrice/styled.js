@@ -33,6 +33,7 @@ SetPriceWrapper.HeaderText = styled.div`
   padding-bottom: 10px;
   @media(max-width:831px){
     padding-bottom: 9px;
+    font-size: 28px;
   }
 `;
 SetPriceWrapper.Title = styled.div`
@@ -45,6 +46,7 @@ SetPriceWrapper.Title = styled.div`
   margin-bottom: -8px;
 
   @media(max-width:831px){
+    padding-top: 29px;
     margin-bottom: 61px;
   }
 
@@ -135,7 +137,7 @@ SetPriceWrapper.Image = styled.div`
   @media(max-width:831px){
     height: 170px;
     background-size: 264px auto;
-    margin-bottom: 10px;
+    margin-bottom: 11px;
     margin-top: 118px;
   }
 `;
@@ -180,6 +182,10 @@ SetPriceWrapper.HighLight = styled.span`
   padding-top: 40px;
   cursor: pointer;
   display: inline-block;
+  @media(max-width:831px) {
+    padding-top: 95px;
+    margin-bottom: 23px;
+  }
 `;
 
 export default SetPriceWrapper;
