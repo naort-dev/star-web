@@ -15,7 +15,7 @@ import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import VideoRecorder from '../../../../components/VideoRecorder';
 import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
-import { questionsVideo } from './dataModals';
+import { questionsAbout } from './dataModals';
 import {
   recordTrigger,
   updateMediaStore,
@@ -81,8 +81,8 @@ const Video = props => {
     } else if (props.videoSrc) {
       return 'Welcome Video Length';
     }
-    return 'Maximum Time'
-  }
+    return 'Maximum Time';
+  };
 
   const renderTime = () => {
     if (props.recordState) {
@@ -90,12 +90,12 @@ const Video = props => {
     } else if (props.videoSrc) {
       return props.recordedTime;
     }
-    return '01:00'
-  }
+    return '01:00';
+  };
 
-  const getRecordTime = (recordingTime) => {
+  const getRecordTime = recordingTime => {
     setRecordingTime(recordingTime);
-  }
+  };
 
   return (
     <Layout>
@@ -119,19 +119,11 @@ const Video = props => {
             {!error && (
               <React.Fragment>
                 <TimeSpan>
-                  <span className="text">
-                    {
-                      renderTimeHeader()
-                    }
-                  </span>
-                  <span className="time">
-                    {
-                      renderTime()
-                    }
-                  </span>
+                  <span className="text">{renderTimeHeader()}</span>
+                  <span className="time">{renderTime()}</span>
                 </TimeSpan>
                 <h1>What you should say?</h1>
-                <QuestionBuilder questionsList={questionsVideo()} />
+                <QuestionBuilder questionsList={questionsAbout} />
                 <FlexCenter>
                   <Button onClick={buttonClickHandler} className="button">
                     {buttonLabel}
@@ -161,7 +153,7 @@ const Video = props => {
           >
             Skip
           </span>
-          {buttonLabel === 'Start Recording' && (
+          {buttonLabel === 'Start Recording' && !error && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
@@ -225,7 +217,7 @@ function mapDispatchToProps(dispatch) {
     recordTrigger: () => {
       dispatch(recordTrigger());
     },
-    updateMediaStore: (payload) => {
+    updateMediaStore: payload => {
       dispatch(updateMediaStore(payload));
     },
     playPauseMedia: () => {

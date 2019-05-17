@@ -19,6 +19,7 @@ function RequestTemplates(
   resetRecording,
   handleInputChange,
   updateUserToMyself,
+  occasion,
 ) {
   const isMobile = getMobileOperatingSystem();
 
@@ -57,11 +58,14 @@ function RequestTemplates(
           InputLabelProps={{ classes: { root: 'float-label' } }}
           nativeProps={{ maxLength }}
         />
-        {bookingData.user === 'someoneElse' && forSelf && value === '' && (
-          <Templates.Myself onClick={updateUserToMyself}>
-            This video is for me!
-          </Templates.Myself>
-        )}
+        {bookingData.user === 'someoneElse' &&
+          forSelf &&
+          value === '' &&
+          (occasion !== 13 && occasion !== 37) && (
+            <Templates.Myself onClick={updateUserToMyself}>
+              This video is for me!
+            </Templates.Myself>
+          )}
         <React.Fragment>
           {audioFlg &&
             value !== '' &&
@@ -365,6 +369,7 @@ function RequestTemplates(
                       false,
                       false,
                       'specification',
+                      true,
                       true,
                     ),
                   )}

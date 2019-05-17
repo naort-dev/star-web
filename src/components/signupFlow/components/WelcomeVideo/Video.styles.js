@@ -100,6 +100,8 @@ export const QuestionContainer = styled.section`
     background: rgba(0, 0, 0, 0.47);
     width: 288px;
     height: 300px;
+    margin-left: 14px;
+    margin-left: ${props => (props.error ? '14px' : '0')};
   }
   h1 {
     font-family: Gilroy;

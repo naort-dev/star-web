@@ -11,6 +11,11 @@ export const Layout = styled.section`
   .leftArrow {
     position: absolute;
   }
+  .dots-container {
+    @media (max-width: 831px) {
+      display: ${props => (props.compSwitch ? 'none' : 'block')};
+    }
+  }
 `;
 export const Heading = styled.div`
   text-align: center;
