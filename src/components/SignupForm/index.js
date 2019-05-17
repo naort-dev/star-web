@@ -414,7 +414,7 @@ class SignUpForm extends React.Component {
               </LoginContainer.WrapsInput>
               {this.props.signupRole === ROLE_FAN ? null : (
                 <div>
-                  <LoginContainer.PrivacyContent>
+                  <LoginContainer.PrivacyContent className="privacy-check">
                     <Checkbox className="check-wrap"
                       checked={this.state.termsAndConditions.value}
                       onChange={this.toggleTermsAndConditions(
@@ -435,6 +435,7 @@ class SignUpForm extends React.Component {
               )}
               <LoginContainer.ButtonWrapper>
                 <LoginContainer.ContinueButton
+                  className="common-button-nobr no-focus"
                   type="submit"
                   onClick={this.onRegister}
                   isDisabled={!this.state.termsAndConditions.value}

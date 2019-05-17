@@ -15,7 +15,7 @@ import Button from '../../../../components/PrimaryButton';
 import { FlexCenter } from '../../../../styles/CommonStyled';
 import VideoRecorder from '../../../../components/VideoRecorder';
 import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
-import { questionsVideo } from './dataModals';
+import { questionsAbout } from './dataModals';
 import {
   recordTrigger,
   updateMediaStore,
@@ -115,7 +115,7 @@ const Video = props => {
               startStreamingCallback={startStreaming}
             />
           </VideoContainer>
-          <QuestionContainer isShow={showHideFlg || error}>
+          <QuestionContainer isShow={showHideFlg && !error}>
             {!error && (
               <React.Fragment>
                 <TimeSpan>
@@ -130,8 +130,8 @@ const Video = props => {
                     }
                   </span>
                 </TimeSpan>
-                <h1>What you should say?</h1>
-                <QuestionBuilder questionsList={questionsVideo()} />
+                <h1 className="heading">What you should say?</h1>
+                <QuestionBuilder questionsList={questionsAbout} />
                 <FlexCenter>
                   <Button onClick={buttonClickHandler} className="button">
                     {buttonLabel}
@@ -147,6 +147,20 @@ const Video = props => {
               Skip
             </span>
           </QuestionContainer>
+
+{(!checkMediaRecorderSupport() || error) && (
+  <QuestionContainer isShow error>
+    <p className="note">
+      Your system does not have video recording capability, but you will
+      need to record a video to ask a question to the Star. <br />
+      <br />
+      You can:
+      <br />
+      <br /> Record with our App
+      <br /> Use our iOS or Android app to book the star.
+    </p>
+  </QuestionContainer>
+)}
           {!error && (
             <FlexCenter className="mobileBtn">
               <Button onClick={buttonClickHandler} className="button">
@@ -161,29 +175,15 @@ const Video = props => {
           >
             Skip
           </span>
-          {buttonLabel === 'Start Recording' && (
+          {buttonLabel === 'Start Recording' && !error && (
             <ShowHide
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
             >
-              Show Script
+              {showHideFlg? "Hide Script": "Show Script"}
             </ShowHide>
           )}
         </FlexBox>
-      )}
-
-      {(!checkMediaRecorderSupport() || error) && (
-        <QuestionContainer isShow error>
-          <p className="note">
-            Your system does not have video recording capability, but you will
-            need to record a video to ask a question to the Star. <br />
-            <br />
-            You can:
-            <br />
-            <br /> Record with our App
-            <br /> Use our iOS or Android app to book the star.
-          </p>
-        </QuestionContainer>
       )}
     </Layout>
   );

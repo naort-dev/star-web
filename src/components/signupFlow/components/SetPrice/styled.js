@@ -13,11 +13,15 @@ const SetPriceWrapper = styled.div`
 
 SetPriceWrapper.ComponentWrapper = styled.div`
   height: 100%;
+  @media(max-width:831px){
+    max-width: 320px;
+    margin: 0 auto;
+  }
 `;
 
 SetPriceWrapper.OptionWrapper = styled.div`
   padding-bottom: 28px;
-  @media(min-width:768px){
+  @media(min-width:832px){
     padding: 10px 29px;
   }
 `;
@@ -27,13 +31,26 @@ SetPriceWrapper.HeaderText = styled.div`
   text-align: center;
   color: #ff6c58;
   padding-bottom: 10px;
+  @media(max-width:831px){
+    padding-bottom: 9px;
+  }
 `;
 SetPriceWrapper.Title = styled.div`
   font-family: Gilroy;
   font-size: 24px;
   line-height: 1.25;
   text-align: center;
+  padding-top: 12px;
   color: #ff6c58;
+  margin-bottom: -8px;
+
+  @media(max-width:831px){
+    margin-bottom: 61px;
+  }
+
+  &+ .image-wrap {
+    margin-top: 0;
+  }
 `;
 SetPriceWrapper.ButtonWrapper = styled.div`
   text-align:center;
@@ -93,10 +110,10 @@ SetPriceWrapper.WrapsInput = styled.div`
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
   input:focus::-moz-placeholder { color:transparent; } /* Firefox 19+ */
   input:focus:-ms-input-placeholder { color:transparent; } /* oldIE ;) */
-  @media(min-width:768px){
+  @media(min-width:832px){
     width:100%;
   }
-  @media(min-width:1025){
+  @media(min-width:1025px){
     width:700px;
   }
 
@@ -113,7 +130,14 @@ SetPriceWrapper.Image = styled.div`
   background-position: center;
   background-size: contain;
   height: 236px;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
+  margin-top: 34px;
+  @media(max-width:831px){
+    height: 170px;
+    background-size: 264px auto;
+    margin-bottom: 10px;
+    margin-top: 118px;
+  }
 `;
 SetPriceWrapper.Label = styled.div`
   font-family: Gilroy;
@@ -124,6 +148,9 @@ SetPriceWrapper.Label = styled.div`
   width: 400px;
   margin: 0 auto;
   max-width: 100%;
+  @media(max-width:831px) {
+    text-align: center;
+  }
 
   b {
     font-family: Gilroy-Semibold;
@@ -136,7 +163,11 @@ SetPriceWrapper.Description = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: ${props => props.error ? '#f44336': '#555555'};
-  margin-bottom: 14px;
+  margin-bottom: 13px;
+  @media(max-width:831px) {
+    max-width: 178px;
+    margin: 0 auto 25px;
+  }
 `;
 SetPriceWrapper.Block = styled.div ``;
 

@@ -42,7 +42,7 @@ export default class DotsContainer extends React.Component {
 
   renderPopup = () => {
     return (
-      <DotsStyled>
+      <DotsStyled className="dots-container">
         {
           this.renderSliderDots()
         }

@@ -164,7 +164,7 @@ TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
   text-align:center;
   padding: 7px 16px;
   background-color: #fff;
-  @media(min-width: 768px) {
+  @media(min-width: 832px) {
     padding: 13px;
   }
   @media(min-width:1025px){
@@ -174,26 +174,25 @@ TypeSelectorWrapper.PaymentControllerWrapper = styled.div`
 `;
 TypeSelectorWrapper.OptionWrapper = styled.div`
   padding-bottom: 28px;
-  @media(min-width:768px){
+  @media(min-width:832px){
     padding: 10px 29px;
   }
 `;
 TypeSelectorWrapper.HeaderText = styled.div`
-  font-family: Gilroy;
+  font-family: Gilroy-Light;
   font-size: 20px;
-  line-height: 1.25;
+  line-height: 1.4;
   letter-spacing: normal;
   text-align: center;
   color: #ff6c58;
-  padding: 20px 0 50px;
-  @media(min-width:768px){
+  padding: 43px 0 55px;
+  @media(min-width:832px){
     font-size: 24px;
+    padding: 45px 0 37px;
   }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
+  @media(max-width:831px){
+    max-width: 176px;
+    margin: 0 auto;
   }
 `;
 TypeSelectorWrapper.ButtonWrapper = styled.div`
@@ -233,10 +232,13 @@ TypeSelectorWrapper.Button = styled.button`
   }
 `;
 TypeSelectorWrapper.Type = styled.div`
-  padding-bottom: 20px;
+  padding-bottom: 49px;
   cursor: pointer;
   transition: all .2s ease-in-out;
-  &:hover { transform: scale(1.1);
+  &:hover { transform: scale(1.1);}
+  @media(min-width: 832px){
+    padding-bottom: 12px;
+  }
 `;
 TypeSelectorWrapper.Image = styled.span`
   display: block;
@@ -249,16 +251,17 @@ TypeSelectorWrapper.Image = styled.span`
 `;
 TypeSelectorWrapper.Label = styled.span`
   display: block;
-  font-family: Gilroy-Bold;
-  font-size: 36px;
-  line-height: 1.64;
+  font-family: Gilroy-Extrabold;
+  font-size: 50px;
+  line-height: .89;
+  padding-top: 12px;
   letter-spacing: normal;
   text-align: center;
   color: #2f839d;
-  @media(min-width: 768px){
+  @media(min-width: 832px){
     font-size: 50px;
     line-height: 45px;
-    margin-top: 8px;
+    padding-top: 9px;
   }
 `;
 TypeSelectorWrapper.Description = styled.span`
@@ -269,9 +272,11 @@ TypeSelectorWrapper.Description = styled.span`
   letter-spacing: normal;
   text-align: center;
   color: #999999;
-    @media(min-width: 768px){
-      margin: 0 auto;
-      width: 200px;
+  max-width: 225px;
+  margin: 0 auto;
+  @media(min-width: 768px){
+    margin: 0 auto;
+    width: 200px;
   }
 `;
 TypeSelectorWrapper.UL = styled.ul`

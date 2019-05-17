@@ -55,7 +55,7 @@ const WelcomeVideo = props => {
       });
   };
   return (
-    <Layout>
+    <Layout compSwitch={compSwitch}>
       <BackArrow className="leftArrow" onClick={backArrowClick} />
       <Heading>Welcome Video - Say Hello!</Heading>
       <DotsContainer dotsCount={3} selectedDot={3} />
