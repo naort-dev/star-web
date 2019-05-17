@@ -19,6 +19,7 @@ UploadContainer.CropperContainer = styled.div`
   position: absolute;
   right: 0;
   left: 0;
+  top: 27px;
   background-color: #fff;
   z-index: 3;
 `;
@@ -243,6 +244,10 @@ UploadContainer.DesktopView = styled.div`
 
 UploadContainer.MobileView = styled.div`
   display: block;
+  ${UploadContainer.Heading} {
+    padding-left: 47px;
+    padding-right: 47px;
+  }
   ${UploadContainer.BrowseCategoryContainer} {
     padding: 10px 20px;
     margin-top: 20px;
@@ -432,7 +437,11 @@ ImageUpload.UploadText = styled.span`
   max-width: 110px;
 `;
 
-ImageUpload.CropWrapper = styled.div``;
+ImageUpload.CropWrapper = styled.div`
+  &.cropper-Wrapper {
+    height: 631px;
+  }
+`;
 
 ImageUpload.Heading = styled.div`
   text-align: center;

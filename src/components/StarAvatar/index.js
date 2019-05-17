@@ -51,14 +51,14 @@ const StarAvatar = ({ star, type, ...props }) => {
   }
 
   useEffect(() => {
-    if (star.avatar_photo && star.avatar_photo.thumbnail_url) {
+    if ((star.avatar_photo && star.avatar_photo.thumbnail_url) || star.profileImage) {
       const profileImg = new Image();
       profileImg.onload = () => {
         if (isMounted) {
           setProfileImage(profileImg.src);
         }
       };
-      profileImg.src = star.avatar_photo && star.avatar_photo.thumbnail_url;
+      profileImg.src = star.profileImage || (star.avatar_photo && star.avatar_photo.thumbnail_url);
     } else {
       setProfileImage('');
     }

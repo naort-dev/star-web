@@ -5,6 +5,13 @@ const NestedSelectStyled = styled.div`
     text-align: center;
     font-family: Gilroy-Regular;
     font-size: 18px;
+    color: ${props => props.theme.brownGreyTwo};
+  }
+  .input-label-shrink {
+    right: 0;
+    text-align: center;
+    transform: none;
+    color: ${props => props.theme.brownGreyTwo} !important;
   }
   .select__menu {
     margin-top: 0;

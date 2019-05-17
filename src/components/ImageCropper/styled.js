@@ -5,27 +5,17 @@ const CropperStyled = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-height: 80%;
-  @media(min-width: 768px) {
-    width: 100%;
-  }
-  @media(min-width: 1025px) {
+  @media(min-width: 832px) {
     width: 100%;
     height: auto;
     max-height: 100%;
   }
   .ReactCrop {
     width: 100%;
-    min-height: 498px;
-    // max-height: 70vh;
-    // overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .ReactCrop__image {
-      max-height: fit-content !important;
-    }
+    max-height: 100%;
   }
 `;
 

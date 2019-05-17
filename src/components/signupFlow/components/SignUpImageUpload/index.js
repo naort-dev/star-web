@@ -220,10 +220,10 @@ class SignUpImageUpload extends React.Component {
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
-          <ImageUpload.CropWrapper>
-            <BackArrow className='action-buttons' onClick={this.onBack} />
-            <CloseButton className='action-buttons' onClick={this.onBack} />
-            <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+          <BackArrow className='action-buttons' onClick={this.onBack} />
+          <CloseButton className='action-buttons' onClick={this.onBack} />
+          <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+          <ImageUpload.CropWrapper className='cropper-Wrapper'>
             <ImageCropper
               exifData={this.state.currentExif}
               aspectRatio={imageSizes.profile}
