@@ -133,7 +133,7 @@ class DesktopHome extends React.Component {
     const { props } = this;
     return (
       <DesktopStyled>
-        <DesktopStyled.Logo className="test" src="assets/images/logo_starsona.svg" />
+        <DesktopStyled.Logo className="test" src="assets/images/starsona_weblogo.svg" />
         <DesktopStyled.Heading>
           {
             this.props.featuredStars.homeFeatured.title

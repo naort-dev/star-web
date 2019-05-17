@@ -115,14 +115,14 @@ const Video = props => {
               startStreamingCallback={startStreaming}
             />
           </VideoContainer>
-          <QuestionContainer isShow={showHideFlg || error}>
+          <QuestionContainer isShow={showHideFlg && !error}>
             {!error && (
               <React.Fragment>
                 <TimeSpan>
                   <span className="text">{renderTimeHeader()}</span>
                   <span className="time">{renderTime()}</span>
                 </TimeSpan>
-                <h1>What you should say?</h1>
+                <h1 className="heading">What you should say?</h1>
                 <QuestionBuilder questionsList={questionsAbout} />
                 <FlexCenter>
                   <Button onClick={buttonClickHandler} className="button">
@@ -139,6 +139,20 @@ const Video = props => {
               Skip
             </span>
           </QuestionContainer>
+
+{(!checkMediaRecorderSupport() || error) && (
+  <QuestionContainer isShow error>
+    <p className="note">
+      Your system does not have video recording capability, but you will
+      need to record a video to ask a question to the Star. <br />
+      <br />
+      You can:
+      <br />
+      <br /> Record with our App
+      <br /> Use our iOS or Android app to book the star.
+    </p>
+  </QuestionContainer>
+)}
           {!error && (
             <FlexCenter className="mobileBtn">
               <Button onClick={buttonClickHandler} className="button">
@@ -158,24 +172,10 @@ const Video = props => {
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
             >
-              Show Script
+              {showHideFlg? "Hide Script": "Show Script"}
             </ShowHide>
           )}
         </FlexBox>
-      )}
-
-      {(!checkMediaRecorderSupport() || error) && (
-        <QuestionContainer isShow error>
-          <p className="note">
-            Your system does not have video recording capability, but you will
-            need to record a video to ask a question to the Star. <br />
-            <br />
-            You can:
-            <br />
-            <br /> Record with our App
-            <br /> Use our iOS or Android app to book the star.
-          </p>
-        </QuestionContainer>
       )}
     </Layout>
   );

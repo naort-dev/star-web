@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { media } from '../../../../styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
@@ -21,10 +20,13 @@ export const Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
-  padding-top: 72px;
-  ${media.webView} {
-    padding-top: 38px;
+  font-family: 'Gilroy';
+  padding-top: 61px;
+  @media (max-width: 831px) {
+    padding-top: 71px;
+    max-width: 230px;
+    margin: 0 auto 10.2px;
+    line-height: 28px;
   }
 `;
 

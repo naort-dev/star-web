@@ -3,20 +3,14 @@ import Select from 'react-select';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
-import { Scrollbars } from 'react-custom-scrollbars';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimes } from '@fortawesome/pro-light-svg-icons';
-import { MultiSelectStyled } from './styled';
+import { NestedSelectStyled } from './styled';
 
 const MultiValue = prop => {
   return (
     <Chip
       tabIndex={-1}
       label={prop.children}
-      classes={{ root: 'category-pill' }}
       onDelete={prop.removeProps.onClick}
-      classes={{ deleteIcon: 'chip-delete-icon' }}
-      deleteIcon={<FontAwesomeIcon icon={faTimes} />}
     />
   );
 };
@@ -27,14 +21,12 @@ const inputComponent = ({ inputRef, ...props }) => {
 
 const Control = prop => {
   const textFieldProps = { ...prop.selectProps.textFieldProps };
-  // if (!props.value.length) {
-  // delete textFieldProps.InputLabelProps;
-  // }
   return (
     <TextField
       fullWidth
       InputProps={{
         inputComponent,
+        classes: { root: 'select-input' },
         inputProps: {
           style: {
             display: 'flex',
@@ -51,44 +43,37 @@ const Control = prop => {
   );
 };
 
-const MenuList = prop => {
+const handleGroupHeadClick = (id) => (event) => {
+  document.getElementById(id).click();
+  event.preventDefault();
+}
+
+const GroupHeading = (prop) => {
   return (
-    <Scrollbars
-      renderView={props => <div {...props} className="select__menu-list"/>}
-      autoHeight
-      autoHeightMax={prop.maxHeight}
-    >
-      {prop.children}
-    </Scrollbars>
+    <React.Fragment>
+      <label className='select__group-heading' htmlFor={prop.id.split('-heading')[0]} onClick={handleGroupHeadClick(prop.id.split('-heading')[0])}>{prop.children}</label>
+      <input id={prop.id.split('-heading')[0]} type='checkbox' defaultChecked />
+    </React.Fragment>
   )
 }
 
 const Option = prop => {
   return (
-    <MenuItem
-      buttonRef={prop.innerRef}
-      selected={prop.isFocused}
-      component="div"
-      style={{
-        fontWeight: prop.isSelected ? 500 : 400,
-        border: '1px solid #2f839d',
-        background: '#fff',
-        margin: '5px',
-        borderRadius: '15px',
-        display: 'inline-flex',
-        padding: '2px 13px',
-        fontFamily: 'Gilroy-medium',
-        fontSize: '14px',
-        cursor: 'pointer',
-      }}
-      {...prop.innerProps}
-    >
-      {prop.children}
-    </MenuItem>
+    <React.Fragment>
+      <MenuItem
+        buttonRef={prop.innerRef}
+        selected={prop.isFocused}
+        component="div"
+        classes={{root: 'select-option-item'}}
+        {...prop.innerProps}
+      >
+        {prop.children}
+      </MenuItem>
+    </React.Fragment>
   );
 };
 
-const MultiSelect = props => {
+const NestedSelect = props => {
   const [inputValue, updateInput] = useState('');
 
   const updateInputValue = event => {
@@ -103,15 +88,15 @@ const MultiSelect = props => {
     Control,
     MultiValue,
     Option,
-    MenuList,
+    GroupHeading,
   };
   return (
-    <MultiSelectStyled>
+    <NestedSelectStyled>
       <Select
         value={props.value}
         isMulti
         name="selectedProfessions"
-        options={inputValue !== '' ? props.options : []}
+        options={props.options}
         className="basic-multi-select"
         classNamePrefix="select"
         placeholder={props.placeholder}
@@ -123,10 +108,11 @@ const MultiSelect = props => {
           onChange: updateInputValue,
           InputLabelProps:
             props.value && props.value.length ? { shrink: true } : {},
+            classes: { root: 'input-label' },
         }}
       />
-    </MultiSelectStyled>
+    </NestedSelectStyled>
   );
 };
 
-export default MultiSelect;
+export default NestedSelect;

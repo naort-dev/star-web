@@ -21,9 +21,13 @@ const ButtonWrapper = styled.span`
   display: block;
   margin: 10.5px 0;
   .button {
+    border: 0;
     padding: 18px 30px;
     border-radius: 35px;
     font-size: 18px;
+    &:hover {
+      box-shadow: none;
+    }
   }
 `;
 

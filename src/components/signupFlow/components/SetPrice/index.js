@@ -8,7 +8,8 @@ import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode';
 import {convertedApplePrice} from '../../constants';
 import { validatePromo } from '../../../../services';
-import { BackArrow } from '../../../../styles/CommonStyled';
+import { BackArrow, CloseButton} from '../../../../styles/CommonStyled';
+import { resolve } from 'url';
 
 export default class SetPrice extends React.Component {
   constructor(props) {
@@ -42,8 +43,8 @@ export default class SetPrice extends React.Component {
     }
   }
 
-  onSubmitReferralCode = () => {
-    if (this.checkReferralCodeRequired()) {
+  onSubmitReferralCode = async () => {
+    if (await this.checkReferralCodeRequired()) {
       this.setState({
         isReferred: false
       })
@@ -53,10 +54,11 @@ export default class SetPrice extends React.Component {
   onRefer = () => {
     this.setState({
       isReferred: true
-    })
+    });
+    this.props.disableClose(true);
   }
   
-  checkReferralCodeRequired = () => {
+  checkReferralCodeRequired = async () => {
     const priceEmpty = !this.state.referralCode.value
     if (priceEmpty) {
       const referralCodeMsg = "Referral code can't be blank";
@@ -69,32 +71,30 @@ export default class SetPrice extends React.Component {
       return false;
     }
     
-   return validatePromo(this.state.referralCode.value)
-              .then((success) => {
-                this.setState({ loader: false });
-                if (success) {
-                  this.setState({
-                    referralCode: {
-                      ...this.state.referralCode,
-                      message: '',
-                      isValid: true
-                    },
-                  });
-                }
-                return true;
-              })
-              .catch(() => {
-                const referralCodeMsg = "Please enter a valid referral code";
-                this.setState({
-                  referralCode: {
-                    ...this.state.referralCode,
-                    message: referralCodeMsg,
-                    isValid: false
-                  }
-                });
-                return false;
-              });
-   
+    try {
+      const promoResp = await validatePromo(this.state.referralCode.value);
+      this.setState({ loading: false });
+      if (promoResp.success) {
+        this.setState({
+          referralCode: {
+            ...this.state.referralCode,
+            message: '',
+            isValid: true
+          },
+        });
+      }
+      return promoResp.success;
+    } catch (exception) {
+        const referralCodeMsg = "Please enter a valid referral code";
+        this.setState({
+          referralCode: {
+            ...this.state.referralCode,
+            message: referralCodeMsg,
+            isValid: false
+          }
+        });
+        return false;
+    }
   };
 
   checkPriceRequired = () => {
@@ -155,12 +155,18 @@ export default class SetPrice extends React.Component {
     }
   };
 
+  closeSetPrice = () => {
+    this.props.closeSignupFlow(this.state.isReferred)
+    this.setState({isReferred: false});
+  }
+
   render() {
     const { props } = this;
     const { isReferred, confirmPrice } = this.state
     return (
       <React.Fragment>
       <BackArrow className="leftArrow" onClick={this.backArrowClick} />
+      <CloseButton className="close" onClick={this.closeSetPrice} />
       { isReferred ? <ReferralCode
       error={this.state.referralCode.message}
       value={this.state.referralCode.value}
@@ -169,12 +175,15 @@ export default class SetPrice extends React.Component {
     /> :
       <SetPriceWrapper>
         <SetPriceWrapper.ComponentWrapper>
-          {this.state.referralCode.value ?
+        <SetPriceWrapper.Title>
+              {props.action}
+            </SetPriceWrapper.Title> 
+          {/* {this.state.referralCode.value ?
             <SetPriceWrapper.Title>
               {props.action}
             </SetPriceWrapper.Title> : null
-          }
-          <SetPriceWrapper.Image
+          } */}
+          <SetPriceWrapper.Image className="image-wrap"
             imageUrl={props.image_url}>
           </SetPriceWrapper.Image>
           <SetPriceWrapper.HeaderText>

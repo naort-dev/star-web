@@ -14,14 +14,14 @@ export const questionsAbout = [
   {
     key: 'que4',
     question:
-    'Send some love to you fans! Tell them how excited you are to connect with them',
+      'Send some love to you fans! Tell them how excited you are to connect with them',
   },
 ];
 
 export const questionsVideo = () => {
   const question = [...questionsAbout];
   question[4] = {
-    key: 'que4',
+    key: 'que5',
     question:
       'Remember, this is Starsona, and your videos never have to be perfect. Your fans will appreciate seeing you be YOU!',
   };

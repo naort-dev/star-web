@@ -103,8 +103,20 @@ class SignupFlow extends React.Component {
     } else {
       this.closeSignUp();
     }
-
   }
+
+  closeSetPrice =(isReferred) => {
+    if(isReferred) {
+      // this.onBack(isTermsAndCondition);
+      this.setState({
+        switchedSetPrice: false,
+        disableClose: false
+      });
+    } else {
+      this.closeSignUp();
+    }
+  }
+
   disableClose = (flag) => {
     this.setState({disableClose: flag});
   }
@@ -169,6 +181,10 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
+              onBack={this.onBack}
+              switched={this.state.switched}
+              disableClose={this.disableClose}
+              socialMediaStore={this.props.socialMediaStore}
               closeSignupFlow={this.closeSignUp}
             />
           );
@@ -207,7 +223,7 @@ class SignupFlow extends React.Component {
               socialMediaStore={this.props.socialMediaStore}
             />
           );
-        case 2:                                             
+        case 2:
           return (
             <SignUpImageUpload
               {...this.props}
@@ -251,6 +267,8 @@ class SignupFlow extends React.Component {
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
             switched={this.state.switchedSetPrice}
+            closeSignupFlow={this.closeSetPrice}
+            disableClose={this.disableClose}
             action={SET_PRICE.ACTION}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
             confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
