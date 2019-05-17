@@ -98,7 +98,7 @@ RegSuccessWrapper.Description = styled.div`
   line-height: 1.44;
   text-align: center;
   color: #555555;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 `;
 RegSuccessWrapper.HighLight = styled.div`

@@ -17,6 +17,17 @@ question:
 'Send some love to you fans! Tell them how excited you are to connect with them',
 },
 ];
+export const suggestions = [
+  {
+  heading: 'Record with our App',
+  description: `Use our iOS or Android app to record instructions and links will be provided in the email
+                 after you have completed your registration.`,
+  },
+  {
+  heading: 'Upload Recording',
+  description: 'You can also record your video and log back in another time and upload from your profile settings',
+  },
+  ];
 
 export const questionsVideo = () => {
 const question = [...questionsAbout];

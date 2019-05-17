@@ -50,6 +50,8 @@ class SignupFlow extends React.Component {
       profession: [],
       profile_video: 'sample.mp4',
       disableClose: false,
+      skipVideo: false,
+      audioVideoSupport:true,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -68,6 +70,17 @@ class SignupFlow extends React.Component {
     }));
   };
 
+  setAudioVideoSupport = support => {
+    this.setState({
+      audioVideoSupport: support,
+    });
+  }
+
+  setSkippedVideo = () => {
+    this.setState({
+      skipVideo: true,
+    });
+  }
   getBioDetails = bioDetails => {
     this.setState({ bioDetails });
   };
@@ -182,6 +195,7 @@ class SignupFlow extends React.Component {
               signupRole={this.state.selectedType}
               data={this.state.socialData}
               closeSignupFlow={this.closeSignUp}
+              socialMediaStore={this.props.socialMediaStore}
             />
           );
         case 2:
@@ -216,7 +230,6 @@ class SignupFlow extends React.Component {
               onBack={this.onBack}
               switched={this.state.switched}
               disableClose={this.disableClose}
-              socialMediaStore={this.props.socialMediaStore}
             />
           );
         case 2:                                             
@@ -241,6 +254,7 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               switched={this.state.switched}
               setProfileVideo={this.setProfileVideo}
+              audioVideoSupport={this.setAudioVideoSupport}
               skipCallback={flag => {
                 this.setState(state => ({
                   currentStep: state.currentStep + 1,
@@ -255,7 +269,8 @@ class SignupFlow extends React.Component {
             onBack={this.onBack}
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
-            switched={this.state.switched} />;
+            switched={this.state.switched}
+            skipVideo={this.setSkippedVideo} />;
 
         case 5:
           return (<SetPrice
@@ -282,11 +297,15 @@ class SignupFlow extends React.Component {
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
+                audioVideoSupport={this.state.audioVideoSupport}
+                skipVideo={this.state.skipVideo}
                 description={STAR_REG_SUCCESS.DESCRIPTION}
+                skipvideo_description= {STAR_REG_SUCCESS.SKIP_VIDEO_DESCRIPTION}
                 icon={FAN_REG_SUCCESS.ICON}
                 image_url={FAN_REG_SUCCESS.IMAGE_URL}
                 message={FAN_REG_SUCCESS.MESSAGE}
                 highlight_text={STAR_REG_SUCCESS.HIGHLIGHT_TEXT}
+                nodevice_description={STAR_REG_SUCCESS.NO_DEVICE_DESCRIPTION}
                 primary_button={STAR_REG_SUCCESS.PRIMARY_BUTTON}
                 primaryButtonClick={this.goToBrowseStars}
                 secondary_button={STAR_REG_SUCCESS.SECONDARY_BUTTON}
