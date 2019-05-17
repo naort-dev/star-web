@@ -181,6 +181,10 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
+              onBack={this.onBack}
+              switched={this.state.switched}
+              disableClose={this.disableClose}
+              socialMediaStore={this.props.socialMediaStore}
               closeSignupFlow={this.closeSignUp}
             />
           );

@@ -12,8 +12,13 @@ const NestedSelectStyled = styled.div`
       padding-top: 0;
     }
   }
-  .select-input {
-    padding: 10px 0;
+  .select__value-container {
+    justify-content: center;
+    font-size: 24px;
+    .select__input {
+      color: #615195;
+      padding: 10px 0;
+    }
   }
   .select__group {
     padding-bottom: 0;
