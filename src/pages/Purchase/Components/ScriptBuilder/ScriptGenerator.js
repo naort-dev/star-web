@@ -248,9 +248,9 @@ const getStep5Script = (
 };
 
 const getDateSpecificText = (date, responseTime, fromName) => {
-  let prefix = '';
+  let prefix = 'told me';
   if (!isEmpty(fromName)) {
-    prefix = 'told me';
+    prefix = 'I heard';
   }
   if (date) {
     const calcDate = getFormattedDate(moment().format('MM/DD/YYYY')).add(
