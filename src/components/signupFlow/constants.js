@@ -18,7 +18,9 @@ export const STAR_REG_SUCCESS = {
   DESCRIPTION: "You are all ready to start taking requests through your profile page. And don’t forget to share this with your fans so they know you’re available.",
   TITLE: 'High Five!',
   PRIMARY_BUTTON: 'See Your Profile',
-  SECONDARY_BUTTON: 'Go to Your Dashboard'
+  SECONDARY_BUTTON: 'Go to Your Dashboard',
+  NO_DEVICE_DESCRIPTION: 'We are so glad to have you as one of our stars, but come back soon to record your welcome video so you can start to receive bookings.',
+  SKIP_VIDEO_DESCRIPTION: 'We are so glad to have you as one of our stars. Remember, your profile won’t be live on Starsona until you complete your welcome video. Come back soon to complete it it, or go back and do it now. You can always re-do it later if you want to make it better.'
 };
 
 export const SET_PRICE = {
