@@ -203,7 +203,7 @@ class SignupFlow extends React.Component {
       }
     } else if (this.state.selectedType === 'star') {
       switch (this.state.currentStep) {
-        case 2:
+        case 1:
           return (
             <SignUpForm
               {...this.props}
@@ -219,7 +219,7 @@ class SignupFlow extends React.Component {
               socialMediaStore={this.props.socialMediaStore}
             />
           );
-        case 1:
+        case 2:
           return (
             <SignUpImageUpload
               {...this.props}
