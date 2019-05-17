@@ -200,8 +200,8 @@ class SignupMethod extends React.Component {
         if (val.authentication_token) {
           skipSocialLogin = true;
           this.props.setSocialMediaData(this.state.socialMedia);
-          this.props.updateLoginStatus(val);
-          this.props.fetchUserDetails(val.id);
+          // this.props.updateLoginStatus(val);
+          // this.props.fetchUserDetails(val.id);
           this.props.changeStep(this.props.currentStep + 1);
       }
     }
@@ -221,18 +221,19 @@ class SignupMethod extends React.Component {
         referral: this.state.referral,
       };
       this.props.setSocialMediaData(this.state.socialMedia);
-      this.props.socialMediaLogin(socialObject).then((response) => {
-        if (response.status === 200) {
-          if (response.data.data && response.data.data.user) {
-            if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
-            response.data.data.user.role_details.is_complete === false) {
-              this.props.changeStep(this.props.currentStep + 1);
-            } else {
-              this.props.closeSignupFlow();
-            }
-          }
-        }
-      });
+      this.props.changeStep(this.props.currentStep + 1);
+      // this.props.socialMediaLogin(socialObject).then((response) => {
+      //   if (response.status === 200) {
+      //     if (response.data.data && response.data.data.user) {
+      //       if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
+      //       response.data.data.user.role_details.is_complete === false) {
+      //         this.props.changeStep(this.props.currentStep + 1);
+      //       } else {
+      //         this.props.closeSignupFlow();
+      //       }
+      //     }
+      //   }
+      // });
     }
   };
 

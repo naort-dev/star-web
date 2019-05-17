@@ -8,7 +8,7 @@ const AvatarSection = ({ stars }) => {
     <AvatarStyled>
       {
         modifiedStars.map((star, index) => (
-          <AvatarStyled.Avatar key={star.id} index={index} totalCount={stars.length} className={`avatar-${index + 1}`} imageUrl={star.avatar_photo ? star.avatar_photo.thumbnail_url : null} />
+          <AvatarStyled.Avatar key={star.id} index={index} totalCount={stars.length} className={`avatar-${index + 1}`} imageUrl={star.avatar_photo ? star.avatar_photo.medium_thumbnail_url : null} />
         ))
       }
     </AvatarStyled>

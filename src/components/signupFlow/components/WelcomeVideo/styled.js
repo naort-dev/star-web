@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { media } from '../../../../styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
@@ -13,9 +12,9 @@ export const Layout = styled.section`
   }
   .dots-container {
     @media (max-width: 831px) {
-    display: ${props => (props.compSwitch ? 'none' : 'block')};
+      display: ${props => (props.compSwitch ? 'none' : 'block')};
     }
-    }
+  }
 `;
 export const Heading = styled.div`
   text-align: center;

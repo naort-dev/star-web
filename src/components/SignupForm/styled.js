@@ -284,6 +284,7 @@ LoginContainer.PrivacyContent = styled.div`
   text-align: left;
   max-width: 240px;
   position: relative;
+  display: flex;
   padding-left: 38px;
   margin: -9px auto 39px;
   @media(min-width: 832px) {

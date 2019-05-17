@@ -14,6 +14,13 @@ const MultiSelectStyled = styled.div`
     background: #fff;
     margin: 5px 5px 5px 0;
   }
+  .select__value-container {
+    justify-content: center;
+    font-size: 24px;
+    .select__input {
+      color: #615195;
+    }
+  }
   .select__indicator-separator {
     display: none;
   }
@@ -21,7 +28,32 @@ const MultiSelectStyled = styled.div`
     height: 26.7px;
     margin: 1px 5px 10px 0;
   }
+  .select__menu {
+    border-radius: 25px;
+    padding: 5px;
+    box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);
+    .select__menu-list {
+      border-radius: 25px;
+      padding: 8px 8.9px;
+    }
+    &:after {
+      position: absolute;
+      content: '';
+      top: -15px;
+      left: 47%;
+      width: 0;
+      height: 0;
+      border-left: 15px solid transparent;
+      border-right: 15px solid transparent;
+      border-bottom: 15px solid #fff;
+    }
+  }
+  .chip-delete-icon {
+    font-size: 16.9px;
+    color: ${props => props.theme.flatBlue};
+    &:hover {
+      color: ${props => props.theme.flatBlue};
+    }
 `;
-
 
 export { MultiSelectStyled };

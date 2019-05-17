@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 /************************************ Components *************************************/
 import validator from 'validator';
 import ActionLoader from '../ActionLoader';
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '../../components/Checkbox';
 import { TextInput } from '../TextField';
 import { TermsAndConditions } from './components/TermsAndConditions';
 import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
@@ -31,7 +31,7 @@ class SignUpForm extends React.Component {
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
       email: { value: props.socialMediaStore.username? props.socialMediaStore.username: '', isValid: false, message: '' },
-      termsAndConditions: { value: false, isValid: false, message: '' },
+      termsAndConditions: { value: this.props.signupRole === ROLE_FAN, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
       acceptTerms: props.switched ? props.switched :false,
@@ -109,11 +109,11 @@ class SignUpForm extends React.Component {
     });
   };
 
-  toggleTermsAndConditions = name => event => {
+  toggleTermsAndConditions = (checkValue) => {
     this.setState({
       termsAndConditions: {
         ...this.state.termsAndConditions,
-        value: event.target.checked,
+        value: checkValue,
       },
     });
   };
@@ -415,17 +415,16 @@ class SignUpForm extends React.Component {
               {this.props.signupRole === ROLE_FAN ? null : (
                 <div>
                   <LoginContainer.PrivacyContent className="privacy-check">
-                    <Checkbox className="check-wrap"
+                    <Checkbox
+                      onChange={this.toggleTermsAndConditions}
                       checked={this.state.termsAndConditions.value}
-                      onChange={this.toggleTermsAndConditions(
-                        'termsAndConditions',
-                      )}
-                      value="termsAndConditions"
                     />
-                    I have read and agree to
-                    <LoginContainer.Anchor onClick={this.agreeTerms}>
-                      Starsona’s Terms and Conditions and Privacy Policy
-                    </LoginContainer.Anchor>
+                    <span>
+                      I have read and agree to
+                      <LoginContainer.Anchor onClick={this.agreeTerms}>
+                        Starsona’s Terms and Conditions and Privacy Policy
+                      </LoginContainer.Anchor>
+                    </span>
                   </LoginContainer.PrivacyContent>
 
                   <LoginContainer.ErrorMsg>

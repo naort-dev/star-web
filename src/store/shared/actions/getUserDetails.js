@@ -74,21 +74,24 @@ export const fetchUserDetails = id => (dispatch, getState) => {
       },
     };
   }
-  dispatch(userDetailsFetchStart());
-  return fetch.get(API_URL, options).then((resp) => {
-    if (resp.data && resp.data.success) {
-      dispatch(userDetailsFetchEnd());
-      if (!userDataLoaded) {
-        dispatch(updateLoginStatus(resp.data.data.user));
+  if (API_URL) {
+    dispatch(userDetailsFetchStart());
+    return fetch.get(API_URL, options).then((resp) => {
+      if (resp.data && resp.data.success) {
+        dispatch(userDetailsFetchEnd());
+        if (!userDataLoaded) {
+          dispatch(updateLoginStatus(resp.data.data.user));
+        }
+        dispatch(userDetailsFetchSuccess(parseUserDetails(resp.data.data)));
+        dispatch(checkStripe());
+        return resp.data.data;
       }
-      dispatch(userDetailsFetchSuccess(parseUserDetails(resp.data.data)));
-      dispatch(checkStripe());
-      return resp.data.data;
-    }
-    dispatch(userDetailsFetchEnd());
-    dispatch(userDetailsFetchFailed('404'));
-  }).catch((exception) => {
-    dispatch(userDetailsFetchEnd());
-    dispatch(userDetailsFetchFailed(exception));
-  });
+      dispatch(userDetailsFetchEnd());
+      dispatch(userDetailsFetchFailed('404'));
+    }).catch((exception) => {
+      dispatch(userDetailsFetchEnd());
+      dispatch(userDetailsFetchFailed(exception));
+    });
+  }
+  return false;
 };

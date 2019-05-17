@@ -57,7 +57,7 @@ function FormContainer(props) {
     props.resetRecording,
     handleInputChange,
     updateUserToMyself,
-    props.audio,
+    FormData.occasion.key,
   );
 
   const onSelectOccasion = occasion => {
