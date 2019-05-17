@@ -85,7 +85,6 @@ const getScript = (
   templateType,
   occasionKey,
 ) => {
-  debugger;
   if (
     isEmpty(relationship) &&
     isEmpty(fromName) &&
@@ -137,7 +136,7 @@ const getScript = (
     return `${content1} <span class="boldTxt">${forName}, ${fromName}</span>${content3}${swapContent(
       specification,
       occasion,
-      templateType, 
+      templateType,
       content4,
       occasionKey,
     )} ${dateFormatter(date, '')}${content5}.`;
@@ -191,15 +190,88 @@ const getAnnouncementScript = (
   templateType,
 ) => {
   if (templateType === 6) {
-    return `Just wanted to invite you to  <span class="boldTxt">${forName}’s ${occasion}</span> ${dateFormatter(
+    return `Just wanted to invite you to  <span class="boldTxt">${forName}’s ${specification} ${occasion}</span>${dateFormatter(
       date,
       '',
     )}.`;
   }
-  return `<span class="boldTxt">${specification}’s</span>  having a <span class="boldTxt">${occasion}</span> ${dateFormatter(
+  return `<span class="boldTxt">${specification}’s</span>  having a <span class="boldTxt">${occasion}</span>${dateFormatter(
     date,
     '',
   )}. Hope you can make it!`;
+};
+
+const getStep5Script = (
+  forName,
+  relationship,
+  fromName,
+  occasion,
+  date,
+  specification,
+  content1,
+  content2,
+  content3,
+  content4,
+  content5,
+  templateType,
+  occasionKey,
+) => {
+  if (isEmpty(fromName) && isEmpty(relationship) && isEmpty(date)) {
+    return `${content1} <span class="boldTxt">${forName}, </span>${content3} 
+    ${dateFormatter(date, occasion)}. ${content5}`;
+  } else if (isEmpty(fromName) && isEmpty(relationship)) {
+    return `${content1} <span class="boldTxt">${forName}, </span> ${content3}
+    ${dateFormatter(date, occasion)}. ${content5}`;
+  } else if (isEmpty(fromName) && isEmpty(date)) {
+    return `${content1} <span class="boldTxt">${forName}, </span> ${content3}
+    <span class="boldTxt">${occasion}</span>. 
+    Your <span class="boldTxt">${relationship}</span> ${content5}`;
+  } else if (isEmpty(relationship) && isEmpty(date)) {
+    return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
+    ${dateFormatter(date, occasion)}. ${content5}`;
+  } else if (isEmpty(fromName)) {
+    return `${content1} <span class="boldTxt">${forName}, </span> ${content3} 
+    ${dateFormatter(date, occasion)}. 
+    Your <span class="boldTxt">${relationship}</span> ${content5}`;
+  } else if (isEmpty(relationship)) {
+    return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
+    ${dateFormatter(date, occasion)}. ${content5}`;
+  } else if (isEmpty(date)) {
+    return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
+    <span class="boldTxt">${occasion}</span>. 
+    Your <span class="boldTxt">${relationship}</span> ${content5}`;
+  }
+
+  return `${content1} <span class="boldTxt">${forName}, ${fromName}</span> ${content3} 
+  ${dateFormatter(date, occasion)}. 
+  Your <span class="boldTxt">${relationship}</span> ${content5}`;
+};
+
+const getDateSpecificText = (date, responseTime, fromName) => {
+  let prefix = '';
+  if (!isEmpty(fromName)) {
+    prefix = 'told me';
+  }
+  if (date) {
+    const calcDate = getFormattedDate(moment().format('MM/DD/YYYY')).add(
+      responseTime,
+      'days',
+    );
+    if (getFormattedDate(date) >= calcDate) {
+      return ` ${prefix} you have a `;
+    }
+    return ` ${prefix} you just had a `;
+  }
+  return ` ${prefix} you have a `;
+};
+
+const getLastContent = (someOneElse, relationship, fromName) => {
+  if ((!someOneElse || isEmpty(fromName)) && isEmpty(relationship)) {
+    return '';
+  } else if (isEmpty(relationship)) {
+    return 'I want to congratulate you.';
+  }
+  return 'and I want to congratulate you.';
 };
 
 export const ScriptGenerator = ({
@@ -212,6 +284,7 @@ export const ScriptGenerator = ({
   someOneElse,
   specification,
   occasionKey,
+  responseTime,
 }) => {
   let htmlElm = '<p class="script">';
   if (templateType === 1) {
@@ -289,7 +362,7 @@ export const ScriptGenerator = ({
   } else if (templateType === 3) {
     let text1 = ' wanted me to send you ';
     let text2 = ' I wanted me to send you ';
-    if (occasion === 'Proposal') {
+    if (occasionKey === 37) {
       text1 = ' wanted me to propose ';
       text2 = ' I wanted me to propose ';
     }
@@ -330,6 +403,29 @@ export const ScriptGenerator = ({
       ),
       '',
       '',
+      templateType,
+      occasionKey,
+    );
+  } else if (templateType === 5) {
+    let days = [0];
+    if (!isEmpty(responseTime)) {
+      days = responseTime.split(' ');
+    }
+    const text1 = getDateSpecificText(date, days[0], fromName);
+    const text2 = ' I want to congratulate you for your ';
+
+    htmlElm += getStep5Script(
+      forName,
+      relationship,
+      fromName,
+      occasion,
+      date,
+      `${specification}`,
+      'Hey',
+      'your',
+      getMainText(someOneElse, text1, text2, fromName, relationship),
+      '',
+      getLastContent(someOneElse, relationship, fromName),
       templateType,
       occasionKey,
     );

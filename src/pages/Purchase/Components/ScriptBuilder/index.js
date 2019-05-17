@@ -146,6 +146,7 @@ class ScriptBuilder extends Component {
                 someOneElse: user !== 'Myself',
                 specification,
                 occasionKey: occasion.key,
+                responseTime: this.props.responseTime,
               }),
             }}
           />
