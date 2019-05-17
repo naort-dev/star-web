@@ -48,6 +48,22 @@ const MultiSelectStyled = styled.div`
       border-bottom: 15px solid #fff;
     }
   }
+  .input-label {
+    color: ${props => props.theme.brownGreyTwo};
+    right: 0;
+    text-align: center;
+    font-family: Gilroy-Regular;
+    font-size: 14px;
+  }
+  .input-label-shrink {
+    right: 0;
+    text-align: center;
+    transform: none;
+    color: ${props => props.theme.brownGreyTwo} !important;
+  }
+  .input-focused {
+    margin-top: 32px;
+  }
   .chip-delete-icon {
     font-size: 16.9px;
     color: ${props => props.theme.flatBlue};

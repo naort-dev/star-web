@@ -106,9 +106,7 @@ const NestedSelect = props => {
         textFieldProps={{
           label: props.label,
           onChange: updateInputValue,
-          InputLabelProps:
-            props.value && props.value.length ? { shrink: true } : {},
-            classes: { root: 'input-label' },
+          InputLabelProps: props.value && props.value.length ? { shrink: true, classes: { shrink: 'input-label-shrink', root: 'input-label' } } : { classes: { shrink: 'input-label-shrink', root: 'input-label' }},
         }}
       />
     </NestedSelectStyled>
