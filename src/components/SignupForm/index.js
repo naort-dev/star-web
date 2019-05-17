@@ -31,7 +31,7 @@ class SignUpForm extends React.Component {
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
       email: { value: props.socialMediaStore.username? props.socialMediaStore.username: '', isValid: false, message: '' },
-      termsAndConditions: { value: false, isValid: false, message: '' },
+      termsAndConditions: { value: this.props.signupRole === ROLE_FAN, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
       acceptTerms: props.switched ? props.switched :false,
