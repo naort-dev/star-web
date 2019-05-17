@@ -111,6 +111,7 @@ const disabledStyles = (isDisabled) => {
   if (isDisabled) {
     return `
       opacity: 0.3;
+      pointer-events: none;
     `;
   }
 };
@@ -131,6 +132,7 @@ ${props => disabledStyles(props.isDisabled)};
   width: 300px;
   height: 60px;
   outline: none;
+  margin-bottom: 10px;
 `;
 
 LoginContainer.ButtonIcon = styled.img`  

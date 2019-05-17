@@ -64,7 +64,7 @@ export const Layout = styled.section`
   .skipMob {
     display: block;
     position: absolute;
-    top: 620px;
+    top: ${props => (props.error ? '532px' : '620px')};
     left: 0;
     ${media.webView} {
       display: none;
