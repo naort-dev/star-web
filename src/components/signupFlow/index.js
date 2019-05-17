@@ -219,7 +219,7 @@ class SignupFlow extends React.Component {
               socialMediaStore={this.props.socialMediaStore}
             />
           );
-        case 2:                                             
+        case 2:
           return (
             <SignUpImageUpload
               {...this.props}
