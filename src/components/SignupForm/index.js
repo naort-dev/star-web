@@ -345,6 +345,7 @@ class SignUpForm extends React.Component {
                     InputProps={{
                       classes: {
                         error:'error-field',
+                        input: 'input-label-stage-name'
                       },
                     }}
                   />
@@ -377,6 +378,7 @@ class SignUpForm extends React.Component {
                     InputProps={{
                       classes: {
                         error:'error-field',
+                        input: 'input-label-email'
                       },
                     }}
                   />

@@ -35,8 +35,7 @@ const RegistrationSuccess = (props) => {
           </RegSuccessWrapper.Button>
           {(props.audioVideoSupport && !props.skipVideo) ? (
           <RegSuccessWrapper.SecondaryButton secondary={props.secondary} onClick={props.secondaryButtonClick}>
-            {props.icon ? <FontAwesomeIcon icon={props.icon} /> : null}
-            <span>{props.secondary_button}</span>
+            {props.secondary_button}
           </RegSuccessWrapper.SecondaryButton> ) : ''
           }
         </RegSuccessWrapper.ButtonWrapper>

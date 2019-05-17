@@ -13,7 +13,13 @@ const UploadContainer = styled.div`
   }
 `;
 
-UploadContainer.Wrapper = styled.div``;
+UploadContainer.Wrapper = styled.div`
+  .basic-multi-select {
+    label {
+      
+    }
+  }
+`;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
@@ -80,7 +86,8 @@ UploadContainer.CategoriesWrapper = styled.div`
   margin: 0 auto;
 
   .select__value-container {
-    @media (max-width: 767px) {
+    padding: 7px 0px 10px !important;
+    @media (max-width: 831px) {
       padding: 9px 8px;
     }
   }
@@ -219,7 +226,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: 410px;
+    height: calc(100vh - 360px);
     width: 100%;
   }
   .subCategoryHeading {
@@ -244,14 +251,18 @@ UploadContainer.DesktopView = styled.div`
 
 UploadContainer.MobileView = styled.div`
   display: block;
-  ${UploadContainer.Heading} {
-    padding-left: 47px;
-    padding-right: 47px;
-  }
+  max-width: 317px;
+  margin: 0 auto;
   ${UploadContainer.BrowseCategoryContainer} {
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 10px;
     display: block;
+  }
+  ${UploadContainer.Heading} {
+    padding-top: 70px;
+    max-width: 253px;
+    white-space: pre-line;
+    margin: 0 auto 11px;
   }
   @media(min-width: 832px) {
     display: none;

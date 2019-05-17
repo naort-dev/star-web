@@ -101,9 +101,8 @@ LoginContainer.Heading = styled.div`
   @media(max-width:831px){
     max-width: 144px;
     font-size: 24px;
-    margin: 31px auto 13px;
+    margin: 31px auto 11px;
     line-height: 28px
-    font-size: 20px;
   }
   
 `;
@@ -211,7 +210,7 @@ LoginContainer.ErrorMsg = styled.div`
   }
 `;
 LoginContainer.Label = styled.div`
-  font-family: Gilroy-Semibold;
+  font-family: Gilroy-Medium;
   font-size: 14px;
   line-height: 2.08;
   text-align: center;
@@ -281,14 +280,14 @@ LoginContainer.PrivacyContent = styled.div`
   line-height: 1.57;
   text-align: left;
   color: #555555;
-  text-align: left;
-  max-width: 240px;
-  position: relative;
   display: flex;
+  text-align: left;
+  max-width: 300px;
+  position: relative;
   padding-left: 38px;
   margin: -9px auto 39px;
   @media(min-width: 832px) {
-    margin: 35px auto 0;
+    margin: 37px auto 0;
     max-width: 341px;
   }
 
@@ -303,6 +302,9 @@ LoginContainer.PrivacyContent = styled.div`
     left: 0;
     top: 0;
     padding: 0;
+  }
+  .checkmark {
+    top: 4px;
   }
 `;
 
@@ -443,6 +445,12 @@ LoginContainer.WrapsInput = styled.div`
     text-align: center;
     color: #615195;
     text-align: center;
+    &.input-label-stage-name {
+      font-size: 17px;
+    }
+    &.input-label-email {
+      font-size: 16px;
+    }
   }
   input::-webkit-input-placeholder { color:#aaaaaa; opacity: 1; }
   input:-moz-placeholder { color:#aaaaaa; opacity: 1; } /* Firefox 18- */
@@ -519,7 +527,9 @@ LoginContainer.ShowPassword = styled.span`
 `;
 LoginContainer.PasswordWrapper = styled.div`
   position:relative;
- 
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
 `;
 LoginContainer.InputContainer = styled.div`
   display: inline-block;

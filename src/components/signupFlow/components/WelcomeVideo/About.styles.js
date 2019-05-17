@@ -5,7 +5,6 @@ export const Layout = styled.section`
   width: 100%;
   max-width: 321px;
   margin: 0 auto;
-  padding-bottom: 30px;
   ${media.webView} {
     max-width: 480px;
   }
