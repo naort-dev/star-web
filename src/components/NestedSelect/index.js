@@ -3,6 +3,8 @@ import Select from 'react-select';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { NestedSelectStyled } from './styled';
 
 const MultiValue = prop => {
@@ -11,6 +13,8 @@ const MultiValue = prop => {
       tabIndex={-1}
       label={prop.children}
       onDelete={prop.removeProps.onClick}
+      classes={{ deleteIcon: 'chip-delete-icon' }}
+      deleteIcon={<FontAwesomeIcon icon={faTimes} />}
     />
   );
 };

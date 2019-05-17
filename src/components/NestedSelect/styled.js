@@ -22,6 +22,7 @@ const NestedSelectStyled = styled.div`
   .select__value-container {
     justify-content: center;
     font-size: 24px;
+    padding: 10px 0px 10px !important;
     .select__input {
       color: #615195;
       padding: 10px 0;
@@ -64,6 +65,13 @@ const NestedSelectStyled = styled.div`
   }
   .select__indicator-separator {
     display: none;
+  }
+  .chip-delete-icon {
+    font-size: 16.9px;
+    color: ${props => props.theme.flatBlue};
+    &:hover {
+      color: ${props => props.theme.flatBlue};
+    }
   }
 `;
 
