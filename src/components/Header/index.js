@@ -9,6 +9,7 @@ import CategorySection from './components/CategorySection';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { logOutUser } from '../../store/shared/actions/login';
+import { getStarName } from '../../utils/dataToStringFormatter';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import Search from '../Search';
 
@@ -77,6 +78,7 @@ class Header extends React.Component {
 
   render() {
     const { props } = this;
+    const userDetails = props.userValue.settings_userDetails;
     const { showCategories } = this.state;
     return (
       <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed}>
@@ -110,10 +112,22 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <React.Fragment>
-                  <HeaderSection.ProfileButton
-                    profileUrl={this.state.profilePhoto}
-                    onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
-                  />
+                  <HeaderSection.ProfileWrapper>
+                    {
+                      this.state.profilePhoto ?
+                        <HeaderSection.ProfileButton
+                          profileUrl={this.state.profilePhoto}
+                          onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
+                        />
+                      :
+                        <HeaderSection.SignInButtonMobile>
+                          <FontAwesomeIcon icon={faUserCircle} />
+                        </HeaderSection.SignInButtonMobile>
+                    }
+                    <HeaderSection.ProfileName>
+                      { userDetails && getStarName(userDetails.nick_name, userDetails.first_name, userDetails.last_name) }
+                    </HeaderSection.ProfileName>
+                  </HeaderSection.ProfileWrapper>
                   {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>

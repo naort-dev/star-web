@@ -131,6 +131,7 @@ HeaderSection.SignInButtonMobile = styled.span`
    display: none;
   }
 `;
+
 HeaderSection.ProfileButton = styled.button`
   display: ${props => (props.hide ? 'none' : 'inline-block')};
   background-image: ${props => (props.profileUrl ? `url(${props.profileUrl})` : 'url(assets/images/icon_profile_40a.png)')};
@@ -144,6 +145,26 @@ HeaderSection.ProfileButton = styled.button`
   background-color:white;
   cursor: pointer;
 `;
+
+
+HeaderSection.ProfileName = styled.span`
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+    margin-left: 18px;
+    font-family: Gilroy-Medium;
+    font-size: 16px;
+    margin-top: 7px;
+    color: ${props => props.theme.flatBlue};
+  }
+`;
+
+HeaderSection.ProfileWrapper = styled.span`
+  display: flex;
+  align-items: center;
+`;
+
+
 HeaderSection.ProfileDropdown = styled.ul`
   position: absolute;
   right: 0;
