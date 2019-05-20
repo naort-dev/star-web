@@ -210,7 +210,7 @@ export default class SetPrice extends React.Component {
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-              Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.
+              Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.&nbsp;
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
