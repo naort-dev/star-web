@@ -220,10 +220,10 @@ class SignUpImageUpload extends React.Component {
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
-          <ImageUpload.CropWrapper>
-            <BackArrow className='action-buttons' onClick={this.onBack} />
-            <CloseButton className='action-buttons' onClick={this.onBack} />
-            <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+          <BackArrow className='action-buttons' onClick={this.onBack} />
+          <CloseButton className='action-buttons' onClick={this.onBack} />
+          <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+          <ImageUpload.CropWrapper className='cropper-Wrapper'>
             <ImageCropper
               exifData={this.state.currentExif}
               aspectRatio={imageSizes.profile}
@@ -265,7 +265,8 @@ class SignUpImageUpload extends React.Component {
             <UploadContainer.MobileView>
               <UploadContainer.Heading>
               {this.state.finalImage
-                ? 'You look great. Now select a category.'
+                ? <span>You look great.<br />
+                Now select a category.</span>
                 : 'Browse categories'}
               </UploadContainer.Heading>
               <DotsContainer dotsCount={3} selectedDot={2} />

@@ -5,7 +5,6 @@ export const Layout = styled.section`
   width: 100%;
   max-width: 321px;
   margin: 0 auto;
-  padding-bottom: 30px;
   ${media.webView} {
     max-width: 480px;
   }
@@ -88,4 +87,15 @@ export const QuesWrapper = styled.section`
       margin-bottom: 14px;
     }
   }
+`;
+Layout.MainText = styled.p`
+max-width: 430px;
+margin-top: 5vh;
+font-family: Gilroy;
+//margin-bottom: 5vh;
+`;
+Layout.Suggestions = styled.section`
+  margin-top: 5vh;
+  margin-bottom: 6vh;
+  margin-left: 1vh;
 `;

@@ -15,13 +15,13 @@ RegSuccessWrapper.ComponentWrapper = styled.div`
 RegSuccessWrapper.OptionWrapper = styled.div`
   padding-bottom: 28px;
   @media(min-width:768px){
-    padding: 10px 29px;
+    padding: 0px 29px;
   }
 `;
 RegSuccessWrapper.HeaderText = styled.div`
-  padding-top: 30px;
+  padding-top: 27px;
   font-family: Gilroy;
-  font-size: 24px;
+  font-size: 23px;
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
@@ -70,7 +70,7 @@ border-color: ${props => (props.secondary ? '#2f839d' : '#ff6c58')};
 }
 `;
 RegSuccessWrapper.Type = styled.div`
-  padding-bottom: 20px;
+  padding-bottom: 32px;
 `;
 RegSuccessWrapper.Image = styled.div`
   display: block;
@@ -89,20 +89,20 @@ RegSuccessWrapper.Label = styled.div`
   line-height: 0.88;
   text-align: center;
   color:  #ff6c58;
-  padding-top: 12px;
+  padding-top: 10px;
 `;
 RegSuccessWrapper.Description = styled.div`
-  padding-top: 15px;
+  padding-top: 9px;
   font-family: Gilroy-Light;
   font-size: 18px;
-  line-height: 1.44;
+  line-height: 26px;
   text-align: center;
   color: #555555;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 `;
 RegSuccessWrapper.HighLight = styled.div`
-  padding-top: 15px;
+  padding-top: 13px;
   font-family: Gilroy-SemiBold;
   font-size: 18px;
   line-height: 1.44;

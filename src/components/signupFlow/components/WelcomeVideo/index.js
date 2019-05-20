@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -14,13 +14,32 @@ import {
   loaderAction,
   setVideoUploadedFlag,
 } from '../../../../store/shared/actions/commonActions';
+import { audioVideoSupport }from '../../../../utils/checkOS';
 
 const WelcomeVideo = props => {
   const [compSwitch, compSwitchHandler] = useState(
     props.switched ? props.switched : false,
   );
+  const [isDeviceSupported, setDeviceSupport] = useState(false);
+  useEffect(()=>{
+    checkforAudioVideoSupport();
+  },[]);
+  const checkforAudioVideoSupport = async () => {
+    const deviceSupport = await audioVideoSupport('videoinput') ;
+    if(deviceSupport){
+      setDeviceSupport(true);
+      props.audioVideoSupport(true);
+    } else {
+      props.audioVideoSupport(false);
+    }
+    
+  }
   const continueCallback = () => {
-    compSwitchHandler(true);
+    if(!isDeviceSupported) {
+      props.changeStep(props.currentStep + 2);
+    } else {
+      compSwitchHandler(true);
+    }
   };
 
   const backArrowClick = () => {
@@ -75,6 +94,7 @@ const WelcomeVideo = props => {
             <About
               continueCallback={continueCallback}
               skipCallback={props.skipCallback}
+              isDeviceSupported = {isDeviceSupported}
             />
           )}
         </Scrollbars>

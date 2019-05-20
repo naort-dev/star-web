@@ -13,12 +13,19 @@ const UploadContainer = styled.div`
   }
 `;
 
-UploadContainer.Wrapper = styled.div``;
+UploadContainer.Wrapper = styled.div`
+  .basic-multi-select {
+    label {
+      
+    }
+  }
+`;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
   right: 0;
   left: 0;
+  top: 27px;
   background-color: #fff;
   z-index: 3;
 `;
@@ -79,7 +86,8 @@ UploadContainer.CategoriesWrapper = styled.div`
   margin: 0 auto;
 
   .select__value-container {
-    @media (max-width: 767px) {
+    padding: 7px 0px 10px !important;
+    @media (max-width: 831px) {
       padding: 9px 8px;
     }
   }
@@ -218,7 +226,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: 410px;
+    height: calc(100vh - 360px);
     width: 100%;
   }
   .subCategoryHeading {
@@ -243,10 +251,18 @@ UploadContainer.DesktopView = styled.div`
 
 UploadContainer.MobileView = styled.div`
   display: block;
+  max-width: 317px;
+  margin: 0 auto;
   ${UploadContainer.BrowseCategoryContainer} {
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 10px;
     display: block;
+  }
+  ${UploadContainer.Heading} {
+    padding-top: 70px;
+    max-width: 253px;
+    white-space: pre-line;
+    margin: 0 auto 11px;
   }
   @media(min-width: 832px) {
     display: none;
@@ -432,7 +448,11 @@ ImageUpload.UploadText = styled.span`
   max-width: 110px;
 `;
 
-ImageUpload.CropWrapper = styled.div``;
+ImageUpload.CropWrapper = styled.div`
+  &.cropper-Wrapper {
+    height: 631px;
+  }
+`;
 
 ImageUpload.Heading = styled.div`
   text-align: center;

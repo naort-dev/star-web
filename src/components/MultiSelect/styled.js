@@ -27,6 +27,11 @@ const MultiSelectStyled = styled.div`
   .category-pill {
     height: 26.7px;
     margin: 1px 5px 10px 0;
+    padding: 0 12px;
+    span {
+      padding-left: 0;
+      padding-right: 19px;
+    }
   }
   .select__menu {
     border-radius: 25px;
@@ -47,6 +52,22 @@ const MultiSelectStyled = styled.div`
       border-right: 15px solid transparent;
       border-bottom: 15px solid #fff;
     }
+  }
+  .input-label {
+    color: ${props => props.theme.brownGreyTwo};
+    right: 0;
+    text-align: center;
+    font-family: Gilroy-Regular;
+    font-size: 14px;
+  }
+  .input-label-shrink {
+    right: 0;
+    text-align: center;
+    transform: none;
+    color: ${props => props.theme.brownGreyTwo} !important;
+  }
+  .input-focused {
+    margin-top: 32px;
   }
   .chip-delete-icon {
     font-size: 16.9px;

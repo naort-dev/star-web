@@ -13,9 +13,8 @@ const MultiValue = prop => {
     <Chip
       tabIndex={-1}
       label={prop.children}
-      classes={{ root: 'category-pill' }}
       onDelete={prop.removeProps.onClick}
-      classes={{ deleteIcon: 'chip-delete-icon' }}
+      classes={{ deleteIcon: 'chip-delete-icon', root: 'category-pill' }}
       deleteIcon={<FontAwesomeIcon icon={faTimes} />}
     />
   );
@@ -44,6 +43,9 @@ const Control = prop => {
           inputRef: prop.innerRef,
           children: prop.children,
           ...prop.innerProps,
+          classes: {
+            focused: 'input-form-control'
+          }
         },
       }}
       {...textFieldProps}
@@ -121,8 +123,7 @@ const MultiSelect = props => {
         textFieldProps={{
           label: props.label,
           onChange: updateInputValue,
-          InputLabelProps:
-            props.value && props.value.length ? { shrink: true } : {},
+          InputLabelProps: props.value && props.value.length ? { shrink: true, classes: { shrink: 'input-label-shrink', root: 'input-label' } } : { classes: { shrink: 'input-label-shrink', root: 'input-label' }},
         }}
       />
     </MultiSelectStyled>
