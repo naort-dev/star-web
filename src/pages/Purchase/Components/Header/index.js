@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import StarDrawer from 'components/StarDrawer';
 import { BackArrow, CloseButton, FlexCenter } from 'styles/CommonStyled';
@@ -28,7 +29,6 @@ const Header = props => {
       color: '#fff',
     },
   ];
-
   return (
     <HeaderDiv className="headerGlobal" arrow={props.arrowVisible}>
       <FlexCenter>
@@ -44,7 +44,7 @@ const Header = props => {
         </ProfileIcon>
         <CloseButton onClick={props.closeHandler} white />
       </FlexCenter>
-      <HeaderText>{props.headerText}</HeaderText>
+      <HeaderText>{props.header}</HeaderText>
     </HeaderDiv>
   );
 };
@@ -53,13 +53,18 @@ Header.propTypes = {
   arrowVisible: PropTypes.bool,
   backArrowHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
-  headerText: PropTypes.string,
+  header: PropTypes.string,
   starImage: PropTypes.string,
 };
 Header.defaultProps = {
   arrowVisible: false,
-  headerText: '',
+  header: '',
   starImage: '',
 };
 
-export default Header;
+export default connect(
+  state => ({
+    header: state.occasionList.header,
+  }),
+  null,
+)(Header);

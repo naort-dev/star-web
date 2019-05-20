@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import Select from '@material-ui/core/Select';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
+import AutoComplete from 'components/Autosuggest';
 import { Templates, FlexBox } from './styled';
 import {
   getMobileOperatingSystem,
   checkMediaRecorderSupport,
+  audioVideoSupport,
 } from '../../utils/checkOS';
 import AudioRecorder from '../AudioRecorder';
 import { TextInput } from '../../components/TextField';
@@ -21,18 +19,21 @@ function RequestTemplates(
   resetRecording,
   handleInputChange,
   updateUserToMyself,
-  audioObj,
+  occasion,
 ) {
   const isMobile = getMobileOperatingSystem();
-  const videoForValue = () => {
-    let value = '';
-    if (bookingData.hostName) {
-      value = bookingData.hostName;
-    } else {
-      value = bookingData.user === 'someoneElse' ? '' : 'YOU';
-    }
-    return value;
+
+  const checkDeviceSupport = async () => {
+    const supportAudio = await audioVideoSupport('audioinput');
+    return supportAudio;
   };
+  const [supportAudio, updateDeviceSupport] = useState(false);
+
+  useEffect(() => {
+    checkDeviceSupport().then(result => {
+      updateDeviceSupport(result);
+    });
+  }, []);
 
   const getTextInput = ({
     placeholder,
@@ -41,8 +42,8 @@ function RequestTemplates(
     onChange,
     state,
     forSelf,
-    tobeValidate,
     fullWidth,
+    maxLength,
   }) => {
     const targetNM = state === 'hostName' ? 'for' : 'from';
     return (
@@ -50,19 +51,26 @@ function RequestTemplates(
         <TextInput
           label={placeholder}
           value={value}
-          onChange={event => onChange(event.target.value, state, tobeValidate)}
-          InputProps={{ classes: { input: 'input-field' } }}
+          onChange={event => onChange(event.target.value, state)}
+          InputProps={{
+            classes: { input: 'input-field' },
+          }}
+          InputLabelProps={{ classes: { root: 'float-label' } }}
+          nativeProps={{ maxLength }}
         />
-        {bookingData.user === 'someoneElse' && forSelf && value === '' && (
-          <Templates.Myself onClick={updateUserToMyself}>
-            This video is for me!
-          </Templates.Myself>
-        )}
+        {bookingData.user === 'someoneElse' &&
+          forSelf &&
+          value === '' &&
+          (occasion !== 13 && occasion !== 37) && (
+            <Templates.Myself onClick={updateUserToMyself}>
+              This video is for me!
+            </Templates.Myself>
+          )}
         <React.Fragment>
           {audioFlg &&
             value !== '' &&
-            !getMobileOperatingSystem() &&
             checkMediaRecorderSupport() &&
+            supportAudio &&
             (!window.navigator.userAgent.indexOf('MSIE ') > -1 &&
               !window.navigator.userAgent.indexOf('Trident/') > -1) && (
               <Templates.WrapsAudioInput>
@@ -75,9 +83,6 @@ function RequestTemplates(
                   }
                   resetRecording={target => resetRecording(target)}
                 />
-                {!(audioObj[targetNM] && audioObj[targetNM].recordedUrl) && (
-                  <span className="recText">Pronounce Name</span>
-                )}
               </Templates.WrapsAudioInput>
             )}
         </React.Fragment>
@@ -85,35 +90,17 @@ function RequestTemplates(
     );
   };
   const getSelect = (placeholder, value, onChange, fullWidth) => {
-    const optionItems =
-      bookingData.relationship &&
-      bookingData.relationship.map(relation => (
-        <MenuItem value={relation.id} key={relation.id}>
-          {relation.title}
-        </MenuItem>
-      ));
     return (
       <Templates.InputWrapper fullWidth={fullWidth}>
-        <FormControl className="select-material">
-          <InputLabel htmlFor="reln-helper" classes={{ root: 'float-label' }}>
-            {placeholder}
-          </InputLabel>
-          <Select
-            value={value}
-            onChange={event =>
-              onChange(event.target.value, 'relationshipValue')
-            }
-            inputProps={{
-              id: 'reln-helper',
-            }}
-            classes={{ select: 'input-field' }}
-          >
-            {optionItems}
-            <MenuItem value="otherRelation" key="otherRelation">
-              Other
-            </MenuItem>
-          </Select>
-        </FormControl>
+        <AutoComplete
+          placeholder={placeholder}
+          onChange={onChange}
+          list={bookingData.relationship}
+          labelKey="title"
+          valueKey="id"
+          type="relationshipValue"
+          value={value}
+        />
       </Templates.InputWrapper>
     );
   };
@@ -123,19 +110,19 @@ function RequestTemplates(
       <Templates.InputWrapper fullWidth={fullWidth}>
         <div className="datepickerWrapper">
           <DatePicker
-            dateFormat="LL"
+            dateFormat="MMMM Do"
             withPortal
             customInput={
               <TextInput
                 label={placeholder}
                 InputProps={{ classes: { input: 'input-field' } }}
+                InputLabelProps={{ classes: { root: 'float-label' } }}
               />
             }
             customInputRef="dt"
             popperPlacement="bottom"
             selected={date}
             onChange={dt => onChange(dt, 'date')}
-            placeholderText="Enter date"
           />
         </div>
       </Templates.InputWrapper>
@@ -148,15 +135,17 @@ function RequestTemplates(
     state,
     forSelf,
     fullWidth,
+    maxLength,
   ) => {
     return {
       placeholder,
       audioFlg,
       onChange: handleInputChange,
-      value: valFun ? videoForValue() : bookingData[state],
+      value: valFun ? bookingData.hostName : bookingData[state],
       state,
       forSelf,
       fullWidth,
+      maxLength,
     };
   };
   const getVideoFor = (state, fullWidth) => {
@@ -185,7 +174,7 @@ function RequestTemplates(
   };
   const getSpecification = (placeholder, state, fullWidth) => {
     return getTextInput(
-      getFiledProps(placeholder, false, false, state, fullWidth),
+      getFiledProps(placeholder, false, false, state, false, fullWidth),
     );
   };
   const getRelationship = fullWidth => {
@@ -235,7 +224,7 @@ function RequestTemplates(
           );
           const page2 = (
             <FlexBox>
-              {getRelationship()} {getDate()}
+              {getRelationship()} {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -244,7 +233,7 @@ function RequestTemplates(
           const page1 = (
             <FlexBox>
               {getVideoFor('hostName')}
-              {getDate()}
+              {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -381,6 +370,7 @@ function RequestTemplates(
                       false,
                       'specification',
                       true,
+                      true,
                     ),
                   )}
                 </React.Fragment>
@@ -458,7 +448,7 @@ function RequestTemplates(
               )}
             </FlexBox>
           );
-          const page3 = <FlexBox>{getDate()}</FlexBox>;
+          const page3 = <FlexBox>{getDate(true)}</FlexBox>;
           pageDetails.push(page1);
           pageDetails.push(page2);
           pageDetails.push(page3);
@@ -469,7 +459,7 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps('From where', false, false, 'specification'),
               )}
-              {getDate()}
+              {getDate(true)}
             </FlexBox>
           );
           pageDetails.push(page1);
@@ -487,6 +477,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
+                  52,
                 ),
               )}
               {getTextInput(
@@ -516,6 +507,7 @@ function RequestTemplates(
                   'specification',
                   false,
                   true,
+                  52,
                 ),
               )}
               {getTextInput(

@@ -4,7 +4,7 @@ const initalState = {
   celebrityDetails: {},
   userDetails: {},
   loading: false,
-  error: '',
+  error: null,
 };
 
 export default (state = { ...initalState }, action) => {
@@ -15,6 +15,7 @@ export default (state = { ...initalState }, action) => {
         celebrityDetails: {},
         userDetails: {},
         loading: true,
+        error: null,
       };
 
     case CELEB_DETAILS.end:
@@ -29,6 +30,7 @@ export default (state = { ...initalState }, action) => {
         loading: false,
         celebrityDetails: action.details.celebrity_details,
         userDetails: action.details.user,
+        error: null,
       };
 
     case CELEB_DETAILS.update:

@@ -12,6 +12,7 @@ import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
 import ImageCropper from '../../../ImageCropper';
 import MultiSelect from '../../../MultiSelect';
+import NestedSelect from '../../../NestedSelect';
 import { awsImageUpload } from '../../../../services/awsImageUpload'
 import { BackArrow, CloseButton } from '../../../../styles/CommonStyled';
 
@@ -20,7 +21,7 @@ class SignUpImageUpload extends React.Component {
     currentExif: null,
     verificationDisable: false,
     cropper: false,
-    finalImage: null,
+    finalImage: this.props.profilePic? this.props.profilePic : null,
     finalFile: null,
     cropImage: null,
     extension: null,
@@ -28,6 +29,7 @@ class SignUpImageUpload extends React.Component {
     selectedCategory: [],
     selectedProfessions: [],
     subCategoriesArray: [],
+    isContinue: false,
   };
 
   componentWillMount() {}
@@ -60,6 +62,8 @@ class SignUpImageUpload extends React.Component {
         "featured_image": "",
       }
       this.props.updateProfilePhoto(fileName);
+      const fileURL = URL.createObjectURL(file);
+      this.props.setProfilePicToState(fileURL);
     })
     .catch(() => {
     });
@@ -110,6 +114,10 @@ class SignUpImageUpload extends React.Component {
     }
   };
 
+  continueClickhandler = () => {
+    this.setState({isContinue: true});
+    this.props.continueClickCallback(this.state.selectedProfessions, this.state.finalImage, this.state.cropImage);
+  }
   closeCropper = () => {
     this.setState({
       cropImage: null,
@@ -194,13 +202,28 @@ class SignUpImageUpload extends React.Component {
       obj.label = obj.title;
       obj.value = obj.id;
     });
+    let nestedProfessions = this.props.professionsList.allProfessions;
+    nestedProfessions = nestedProfessions.map((item) => {
+      const newOption = {};
+      newOption.label = item.title;
+      newOption.value = item.id;
+      if (item.child) {
+        newOption.options = item.child.map((childItem) => {
+          const childOption = {};
+          childOption.label = childItem.title;
+          childOption.value = childItem.id;
+          return childOption;
+        })
+      }
+      return newOption;
+    })
     if (cropper) {
       return (
         <UploadContainer.CropperContainer>
-          <ImageUpload.CropWrapper>
-            <BackArrow onClick={this.onBack} />
-            <CloseButton onClick={this.props.closeSignupFlow} />
-            <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+          <BackArrow className='action-buttons' onClick={this.onBack} />
+          <CloseButton className='action-buttons' onClick={this.onBack} />
+          <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
+          <ImageUpload.CropWrapper className='cropper-Wrapper'>
             <ImageCropper
               exifData={this.state.currentExif}
               aspectRatio={imageSizes.profile}
@@ -215,8 +238,8 @@ class SignUpImageUpload extends React.Component {
       return (
         <UploadContainer.CropperContainer>
           <ImageUpload.CropWrapper>
-            <BackArrow onClick={this.onBack} />
-            <CloseButton onClick={this.props.closeSignupFlow} />
+            <BackArrow className='action-buttons' onClick={this.onBack} />
+            <CloseButton className='action-buttons' onClick={this.onBack} />
             <ImageUpload.Heading>Take your photo</ImageUpload.Heading>
             <TakePhoto
               takePicture={takePicture}
@@ -231,19 +254,41 @@ class SignUpImageUpload extends React.Component {
         {this.state.showBrowseCategory && (
           <UploadContainer.BrowseCategoryWrapper>
             <BackArrow onClick={this.onBack} />
-            <CloseButton onClick={this.props.closeSignupFlow} />
-            <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
-            <UploadContainer.BrowseCategoryContainer>
-              {this.browserCategoryList()}
-              {this.showSubCategoryList()}
-            </UploadContainer.BrowseCategoryContainer>
+            <CloseButton onClick={this.onBack} />
+            <UploadContainer.DesktopView>
+              <UploadContainer.Heading>Browse categories</UploadContainer.Heading>
+              <UploadContainer.BrowseCategoryContainer>
+                {this.browserCategoryList()}
+                {this.showSubCategoryList()}
+              </UploadContainer.BrowseCategoryContainer>
+            </UploadContainer.DesktopView>
+            <UploadContainer.MobileView>
+              <UploadContainer.Heading>
+              {this.state.finalImage
+                ? <span>You look great.<br />
+                Now select a category.</span>
+                : 'Browse categories'}
+              </UploadContainer.Heading>
+              <DotsContainer dotsCount={3} selectedDot={2} />
+              <UploadContainer.BrowseCategoryContainer>
+                <NestedSelect
+                  value={this.state.selectedProfessions}
+                  options={nestedProfessions}
+                  placeholder=""
+                  onChange={this.handleMultiSelect}
+                  onFocus={this.handleFocusSelect}
+                  label="Categorize yourself. This helps fans find you. (up to 3)"
+                />
+              </UploadContainer.BrowseCategoryContainer>
+            </UploadContainer.MobileView>
           </UploadContainer.BrowseCategoryWrapper>
         )}
         {!this.state.showBrowseCategory && (
           <React.Fragment>
-            <UploadContainer.Heading>
+            <UploadContainer.Heading className={this.state.finalImage ? 'select-category' : 'fans-want'}>
               {this.state.finalImage
-                ? 'You look great. Now select a category.'
+                ? `You look great.
+                  Now select a category.`
                 : 'Give your fans what they want'}
             </UploadContainer.Heading>
             <DotsContainer dotsCount={3} selectedDot={2} />
@@ -254,7 +299,7 @@ class SignUpImageUpload extends React.Component {
               image={this.state.finalImage}
               updateProfilePhoto={this.props.updateProfilePhoto}
             />
-            {!(this.state.selectedProfessions && (this.state.finalImage || this.state.cropImage)) &&(
+            {!(this.state.selectedProfessions.length > 0 && (this.state.finalImage || this.state.cropImage)) && this.state.isContinue &&(
               <ErrorMessage>Please add a profile image and choose at least one category</ErrorMessage>
             )}
             <UploadContainer.CategoriesWrapper>
@@ -277,8 +322,9 @@ class SignUpImageUpload extends React.Component {
             </UploadContainer.CategoriesWrapper>
             <UploadContainer.ButtonWrapper>
               <UploadContainer.ContinueButton
+              className="common-button-nobr no-focus"
                 type="submit"
-                onClick={() => this.props.continueClickCallback(this.state.selectedProfessions, this.state.finalImage, this.state.cropImage)}
+                onClick={this.continueClickhandler}
               >
                 Continue
               </UploadContainer.ContinueButton>

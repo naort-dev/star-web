@@ -45,9 +45,6 @@ class SignupMethod extends React.Component {
     };
   }
   componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.props.toggleSignup(false);
-    }
     const params = window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
     if (finalParams) {
@@ -99,9 +96,6 @@ class SignupMethod extends React.Component {
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.isLoggedIn) {
-      if (this.props.signupRole === 'fan') {
-        this.props.toggleSignup(false);
-      }
       if (this.props.signupRole === 'fan') {
         const followData = this.props.followCelebData;
         if (followData.celebId) {
@@ -183,7 +177,7 @@ class SignupMethod extends React.Component {
       });
     } else {
       const val = r;
-      if (!val.authentication_token) {
+      
         let firstName = val.first_name;
         let lastName = val.last_name;
         let nickName = val.nick_name || val.name;
@@ -203,11 +197,12 @@ class SignupMethod extends React.Component {
             tw_id: val.id,
           },
         });
-      } else {
-        skipSocialLogin = true;
-        this.props.updateLoginStatus(val);
-        this.props.fetchUserDetails(val.id);
-        this.props.closeSignupFlow();
+        if (val.authentication_token) {
+          skipSocialLogin = true;
+          this.props.setSocialMediaData(this.state.socialMedia);
+          // this.props.updateLoginStatus(val);
+          // this.props.fetchUserDetails(val.id);
+          this.props.changeStep(this.props.currentStep + 1);
       }
     }
     if (!skipSocialLogin) {
@@ -226,18 +221,19 @@ class SignupMethod extends React.Component {
         referral: this.state.referral,
       };
       this.props.setSocialMediaData(this.state.socialMedia);
-      this.props.socialMediaLogin(socialObject).then((response) => {
-        if (response.status === 200) {
-          if (response.data.data && response.data.data.user) {
-            if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
-            response.data.data.user.role_details.is_complete === false) {
-              this.props.changeStep(this.props.currentStep + 1);
-            } else {
-              this.props.closeSignupFlow();
-            }
-          }
-        }
-      });
+      this.props.changeStep(this.props.currentStep + 1);
+      // this.props.socialMediaLogin(socialObject).then((response) => {
+      //   if (response.status === 200) {
+      //     if (response.data.data && response.data.data.user) {
+      //       if ((response.data.data.user.role_details.role_code === ROLES.star || response.data.data.user.role_details.role_code === ROLES.group) &&
+      //       response.data.data.user.role_details.is_complete === false) {
+      //         this.props.changeStep(this.props.currentStep + 1);
+      //       } else {
+      //         this.props.closeSignupFlow();
+      //       }
+      //     }
+      //   }
+      // });
     }
   };
 
@@ -397,23 +393,23 @@ class SignupMethod extends React.Component {
             </SignUpMethod.Button>
             <SignUpMethod.Button onClick={this.onInstagramLogin}>
               <SignUpMethod.SocialMediaIcon>
-                <SignUpMethod.Icon><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
+                <SignUpMethod.Icon className="insta"><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
                 <SignUpMethod.SocialMediaLabel>Instagram</SignUpMethod.SocialMediaLabel>
               </SignUpMethod.SocialMediaIcon>
             </SignUpMethod.Button>
             <SignUpMethod.Button onClick={this.onGmail}>
               <SignUpMethod.SocialMediaIcon>
                 <SignUpMethod.GoogleWrapper id="g-sign-in" />
-                <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
+                <SignUpMethod.Icon className="google"><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
                 <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
               </SignUpMethod.SocialMediaIcon>
             </SignUpMethod.Button>
           </SignUpMethod.ButtonDiv>
           <SignUpMethod.Heading className="or-section">or</SignUpMethod.Heading>
-          <SignUpMethod.Button onClick={this.onEmailLogin}>
+          <SignUpMethod.Button onClick={this.onEmailLogin} className="email-wrap">
             <SignUpMethod.SocialMediaIcon>
               <SignUpMethod.Icon><FontAwesomeIcon icon={faEnvelope} /></SignUpMethod.Icon>
-              <SignUpMethod.SocialMediaLabel>Sign up by email</SignUpMethod.SocialMediaLabel>
+              <SignUpMethod.SocialMediaLabel className="label">Email</SignUpMethod.SocialMediaLabel>
             </SignUpMethod.SocialMediaIcon>
           </SignUpMethod.Button>
         </SignUpMethod.Container>

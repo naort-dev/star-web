@@ -12,10 +12,6 @@ AudioRecorderDiv.Icon = styled(FontAwesomeIcon)`
   color: #2f839d;
 `;
 
-AudioRecorderDiv.Button = styled.div`
-  order: 1;
-`;
-
 AudioRecorderDiv.Rerecord = styled.div`
   height: 20px;
   font-family: Gilroy-Semibold;

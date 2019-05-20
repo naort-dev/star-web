@@ -15,18 +15,18 @@ export const celebDetailsFetchStart = () => ({
   type: CELEB_DETAILS.start,
 });
 
-export const celebDetailstFetchEnd = () => ({
+export const celebDetailsFetchEnd = () => ({
   type: CELEB_DETAILS.end,
 });
 
-export const celebDetailstFetchSuccess = (details) => {
+export const celebDetailsFetchSuccess = (details) => {
   return {
     type: CELEB_DETAILS.success,
     details,
   };
 };
 
-export const celebDetailstFetchFailed = (error) => ({
+export const celebDetailsFetchFailed = (error) => ({
   type: CELEB_DETAILS.failed,
   error,
 });
@@ -62,15 +62,15 @@ export const fetchCelebDetails = id => (dispatch, getState) => {
     .get(API_URL, {})
     .then((resp) => {
       if (resp.data && resp.data.success) {
-        dispatch(celebDetailstFetchSuccess(resp.data.data));
+        dispatch(celebDetailsFetchSuccess(resp.data.data));
         dispatch(loaderAction(false));
       } else {
         dispatch(loaderAction(false));
-        dispatch(celebDetailstFetchFailed('404'));
+        dispatch(celebDetailsFetchFailed(resp.data));
       }
     })
     .catch((exception) => {
       dispatch(loaderAction(false));
-      dispatch(celebDetailstFetchFailed(exception.response.data));
+      dispatch(celebDetailsFetchFailed({ ...exception.response.data.error, status: exception.response.data.status }));
     });
 };

@@ -3,6 +3,9 @@ import Select from 'react-select';
 import Chip from '@material-ui/core/Chip';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Scrollbars } from 'react-custom-scrollbars';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { MultiSelectStyled } from './styled';
 
 const MultiValue = prop => {
@@ -11,6 +14,8 @@ const MultiValue = prop => {
       tabIndex={-1}
       label={prop.children}
       onDelete={prop.removeProps.onClick}
+      classes={{ deleteIcon: 'chip-delete-icon', root: 'category-pill' }}
+      deleteIcon={<FontAwesomeIcon icon={faTimes} />}
     />
   );
 };
@@ -38,12 +43,27 @@ const Control = prop => {
           inputRef: prop.innerRef,
           children: prop.children,
           ...prop.innerProps,
+          classes: {
+            focused: 'input-form-control'
+          }
         },
       }}
       {...textFieldProps}
     />
   );
 };
+
+const MenuList = prop => {
+  return (
+    <Scrollbars
+      renderView={props => <div {...props} className="select__menu-list"/>}
+      autoHeight
+      autoHeightMax={prop.maxHeight}
+    >
+      {prop.children}
+    </Scrollbars>
+  )
+}
 
 const Option = prop => {
   return (
@@ -85,6 +105,7 @@ const MultiSelect = props => {
     Control,
     MultiValue,
     Option,
+    MenuList,
   };
   return (
     <MultiSelectStyled>
@@ -102,8 +123,7 @@ const MultiSelect = props => {
         textFieldProps={{
           label: props.label,
           onChange: updateInputValue,
-          InputLabelProps:
-            props.value && props.value.length ? { shrink: true } : {},
+          InputLabelProps: props.value && props.value.length ? { shrink: true, classes: { shrink: 'input-label-shrink', root: 'input-label' } } : { classes: { shrink: 'input-label-shrink', root: 'input-label' }},
         }}
       />
     </MultiSelectStyled>

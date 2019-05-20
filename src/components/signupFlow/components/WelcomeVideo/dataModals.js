@@ -14,16 +14,27 @@ export const questionsAbout = [
   {
     key: 'que4',
     question:
-      'Remember, this is Starsona, and your videos never have to be perfect. Your fans will appreciate seeing you be YOU!',
+      'Send some love to you fans! Tell them how excited you are to connect with them',
   },
 ];
+export const suggestions = [
+  {
+  heading: 'Record with our App',
+  description: `Use our iOS or Android app to record instructions and links will be provided in the email
+                 after you have completed your registration.`,
+  },
+  {
+  heading: 'Upload Recording',
+  description: 'You can also record your video and log back in another time and upload from your profile settings',
+  },
+  ];
 
 export const questionsVideo = () => {
   const question = [...questionsAbout];
-  question[3] = {
-    key: 'que4',
+  question[4] = {
+    key: 'que5',
     question:
-      'Send some love to you fans! Tell them how excited you are to connect with them',
+      'Remember, this is Starsona, and your videos never have to be perfect. Your fans will appreciate seeing you be YOU!',
   };
   return question;
 };

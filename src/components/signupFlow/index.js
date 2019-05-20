@@ -33,7 +33,7 @@ import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { celebritySignupProfile } from '../../services/userRegistration'
-import { updateProfilePhoto, resetProfilePhoto } from '../../store/shared/actions/updateProfilePhoto';
+import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 
 
 class SignupFlow extends React.Component {
@@ -50,6 +50,8 @@ class SignupFlow extends React.Component {
       profession: [],
       profile_video: 'sample.mp4',
       disableClose: false,
+      skipVideo: false,
+      audioVideoSupport:true,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -68,6 +70,17 @@ class SignupFlow extends React.Component {
     }));
   };
 
+  setAudioVideoSupport = support => {
+    this.setState({
+      audioVideoSupport: support,
+    });
+  }
+
+  setSkippedVideo = () => {
+    this.setState({
+      skipVideo: true,
+    });
+  }
   getBioDetails = bioDetails => {
     this.setState({ bioDetails });
   };
@@ -103,8 +116,20 @@ class SignupFlow extends React.Component {
     } else {
       this.closeSignUp();
     }
-
   }
+
+  closeSetPrice =(isReferred) => {
+    if(isReferred) {
+      // this.onBack(isTermsAndCondition);
+      this.setState({
+        switchedSetPrice: false,
+        disableClose: false
+      });
+    } else {
+      this.closeSignUp();
+    }
+  }
+
   disableClose = (flag) => {
     this.setState({disableClose: flag});
   }
@@ -119,7 +144,7 @@ class SignupFlow extends React.Component {
       profession: this.state.profession,
       availability: true,
       profile_video: this.state.profile_video,
-      description: 'Hi',
+      description: '',
     }
     
     celebritySignupProfile(celebrityProfileData)
@@ -169,7 +194,12 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
+              onBack={this.onBack}
+              switched={this.state.switched}
+              disableClose={this.disableClose}
+              socialMediaStore={this.props.socialMediaStore}
               closeSignupFlow={this.closeSignUp}
+              socialMediaStore={this.props.socialMediaStore}
             />
           );
         case 2:
@@ -206,7 +236,7 @@ class SignupFlow extends React.Component {
               disableClose={this.disableClose}
             />
           );
-        case 2:                                             
+        case 2:
           return (
             <SignUpImageUpload
               {...this.props}
@@ -216,6 +246,8 @@ class SignupFlow extends React.Component {
               closeSignupFlow={this.closeSignUp}
               continueClickCallback={this.continueClickHandler}
               updateProfilePhoto={this.props.updateProfilePhoto}
+              setProfilePicToState={this.props.setProfilePicToState}
+              profilePic={this.props.profilePic}
             />
           );
         case 3:
@@ -226,6 +258,7 @@ class SignupFlow extends React.Component {
               currentStep={this.state.currentStep}
               switched={this.state.switched}
               setProfileVideo={this.setProfileVideo}
+              audioVideoSupport={this.setAudioVideoSupport}
               skipCallback={flag => {
                 this.setState(state => ({
                   currentStep: state.currentStep + 1,
@@ -240,7 +273,8 @@ class SignupFlow extends React.Component {
             onBack={this.onBack}
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
-            switched={this.state.switched} />;
+            switched={this.state.switched}
+            skipVideo={this.setSkippedVideo} />;
 
         case 5:
           return (<SetPrice
@@ -248,6 +282,8 @@ class SignupFlow extends React.Component {
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
             switched={this.state.switchedSetPrice}
+            closeSignupFlow={this.closeSetPrice}
+            disableClose={this.disableClose}
             action={SET_PRICE.ACTION}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
             confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
@@ -265,11 +301,15 @@ class SignupFlow extends React.Component {
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
+                audioVideoSupport={this.state.audioVideoSupport}
+                skipVideo={this.state.skipVideo}
                 description={STAR_REG_SUCCESS.DESCRIPTION}
+                skipvideo_description= {STAR_REG_SUCCESS.SKIP_VIDEO_DESCRIPTION}
                 icon={FAN_REG_SUCCESS.ICON}
                 image_url={FAN_REG_SUCCESS.IMAGE_URL}
                 message={FAN_REG_SUCCESS.MESSAGE}
                 highlight_text={STAR_REG_SUCCESS.HIGHLIGHT_TEXT}
+                nodevice_description={STAR_REG_SUCCESS.NO_DEVICE_DESCRIPTION}
                 primary_button={STAR_REG_SUCCESS.PRIMARY_BUTTON}
                 primaryButtonClick={this.goToBrowseStars}
                 secondary_button={STAR_REG_SUCCESS.SECONDARY_BUTTON}
@@ -375,6 +415,7 @@ const mapStateToProps = state => ({
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
   inAppPriceList: state.config.data.in_app_pricing,
+  profilePic: state.photoUpload.profilePic,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -393,6 +434,7 @@ const mapDispatchToProps = dispatch => ({
   updateCategory: (label, value, subCategories) => dispatch(updateCategory(label, value, subCategories)),
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   setProfilePhoto: () => dispatch(resetProfilePhoto()),
+  setProfilePicToState: (obj) => dispatch(setProfilePicToState(obj)),
 });
 
 export default withRouter(

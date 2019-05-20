@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import PropTypes, { string } from 'prop-types';
+import PropTypes from 'prop-types';
 import Dropdown from 'components/Dropdown';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
@@ -57,7 +57,7 @@ function FormContainer(props) {
     props.resetRecording,
     handleInputChange,
     updateUserToMyself,
-    props.audio,
+    FormData.occasion.key,
   );
 
   const onSelectOccasion = occasion => {
@@ -69,15 +69,29 @@ function FormContainer(props) {
       }
       return {};
     });
+
+    const tempObj = {
+      user: 'someoneElse',
+      enableAudioRecorder: false,
+      hostName: '',
+      userName: '',
+      relationshipValue: '',
+      specification: '',
+      date: null,
+      eventName: '',
+      validSelf: false,
+    };
     setFormData({
       ...FormData,
       templateType: type,
       relationship: result.length ? result[0].relationships : [],
-      eventName: result.length ? result[0].title : '',
-      specification: '',
-      userName: '',
-      date: null,
       occasion,
+      ...tempObj,
+    });
+    props.updateBookingData({
+      templateType: type,
+      relationship: result.length ? result[0].relationships : [],
+      ...tempObj,
     });
     props.pageCountHandler(0);
   };
@@ -108,13 +122,7 @@ function FormContainer(props) {
     };
     if (templateType === 1 || templateType === 2) {
       validateFields([hostName !== '']);
-    } else if (
-      templateType === 3 ||
-      templateType === 4 ||
-      templateType === 5 ||
-      templateType === 6 ||
-      templateType === 7
-    ) {
+    } else if ([3, 4, 5, 6, 7].includes(templateType)) {
       validateFields([hostName !== '', specification !== '']);
     }
   };

@@ -247,5 +247,14 @@ injectGlobal`
   padding: 6px !important;
 }
 
+.common-button-nobr {
+  border: 0;
+}
+.no-focus {
+  &:focus {
+    outline: none;
+  }
+}
+
 `
 ;

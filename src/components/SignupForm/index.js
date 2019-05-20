@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 /************************************ Components *************************************/
 import validator from 'validator';
 import ActionLoader from '../ActionLoader';
-import Checkbox from '@material-ui/core/Checkbox';
+import Checkbox from '../../components/Checkbox';
 import { TextInput } from '../TextField';
 import { TermsAndConditions } from './components/TermsAndConditions';
 import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
@@ -25,22 +25,19 @@ class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: { value: '', isValid: false, message: '' },
-      lastName: { value: '', isValid: true, message: '' },
-      nickName: { value: '', isValid: true, message: '' },
+      firstName: { value: props.socialMediaStore.first_name? props.socialMediaStore.first_name : '', isValid: false, message: '' },
+      lastName: { value: props.socialMediaStore.last_name? props.socialMediaStore.last_name : '', isValid: true, message: '' },
+      nickName: { value: props.socialMediaStore.nick_name? props.socialMediaStore.nick_name: '', isValid: true, message: '' },
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
-      email: { value: '', isValid: false, message: '' },
-      termsAndConditions: { value: false, isValid: false, message: '' },
+      email: { value: props.socialMediaStore.username? props.socialMediaStore.username: '', isValid: false, message: '' },
+      termsAndConditions: { value: this.props.signupRole === ROLE_FAN, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
       acceptTerms: props.switched ? props.switched :false,
     };
   }
   componentWillMount() {
-    if (this.props.isLoggedIn) {
-      this.props.toggleSignup(false);
-    }
     const params =
       window.location.search && window.location.search.split('?')[1];
     const finalParams = params && params.split('&');
@@ -99,7 +96,7 @@ class SignUpForm extends React.Component {
           this.state.role,
         )
         .then(response => {
-          if (response != undefined) {
+          if (response !== undefined) {
             this.props.changeStep(this.props.currentStep + 1);
           }
         });
@@ -112,11 +109,11 @@ class SignUpForm extends React.Component {
     });
   };
 
-  toggleTermsAndConditions = name => event => {
+  toggleTermsAndConditions = (checkValue) => {
     this.setState({
       termsAndConditions: {
         ...this.state.termsAndConditions,
-        value: event.target.checked,
+        value: checkValue,
       },
     });
   };
@@ -327,7 +324,7 @@ class SignUpForm extends React.Component {
                   </LoginContainer.InputWrapper>
                 </div>
               )}
-              <LoginContainer.Label error={!!this.state[signUp.key_2].message}>
+              <LoginContainer.Label className="optional-text" error={!!this.state[signUp.key_2].message}>
                 {this.state[signUp.key_2].message
                   ? this.state[signUp.key_2].message
                   : signUp.item_2}
@@ -348,6 +345,7 @@ class SignUpForm extends React.Component {
                     InputProps={{
                       classes: {
                         error:'error-field',
+                        input: 'input-label-stage-name'
                       },
                     }}
                   />
@@ -380,6 +378,7 @@ class SignUpForm extends React.Component {
                     InputProps={{
                       classes: {
                         error:'error-field',
+                        input: 'input-label-email'
                       },
                     }}
                   />
@@ -406,7 +405,7 @@ class SignUpForm extends React.Component {
                   </LoginContainer.WrapsInput>
                 ) : null}
               </LoginContainer.InputWrapper>
-              <LoginContainer.WrapsInput>
+              <LoginContainer.WrapsInput classname="no-space">
                 {this.props.statusCode === undefined ? (
                   <LoginContainer.ErrorMsg>
                     {this.props.error}
@@ -417,18 +416,17 @@ class SignUpForm extends React.Component {
               </LoginContainer.WrapsInput>
               {this.props.signupRole === ROLE_FAN ? null : (
                 <div>
-                  <LoginContainer.PrivacyContent>
-                    <Checkbox className="check-wrap"
+                  <LoginContainer.PrivacyContent className="privacy-check">
+                    <Checkbox
+                      onChange={this.toggleTermsAndConditions}
                       checked={this.state.termsAndConditions.value}
-                      onChange={this.toggleTermsAndConditions(
-                        'termsAndConditions',
-                      )}
-                      value="termsAndConditions"
                     />
-                    I have read and agree to
-                    <LoginContainer.Anchor onClick={this.agreeTerms}>
-                      Starsona’s Terms and Conditions and Privacy Policy
-                    </LoginContainer.Anchor>
+                    <span>
+                      I have read and agree to
+                      <LoginContainer.Anchor onClick={this.agreeTerms}>
+                        Starsona’s Terms and Conditions and Privacy Policy
+                      </LoginContainer.Anchor>
+                    </span>
                   </LoginContainer.PrivacyContent>
 
                   <LoginContainer.ErrorMsg>
@@ -438,6 +436,7 @@ class SignUpForm extends React.Component {
               )}
               <LoginContainer.ButtonWrapper>
                 <LoginContainer.ContinueButton
+                  className="common-button-nobr no-focus"
                   type="submit"
                   onClick={this.onRegister}
                   isDisabled={!this.state.termsAndConditions.value}

@@ -19,12 +19,13 @@ export const featuredFetchEnd = () => ({
   type: FEATURED_STARS.end,
 });
 
-export const featuredFetchSuccess = (title, list) => {
+export const featuredFetchSuccess = (title, list, homePageVideos) => {
   return (
     {
       type: FEATURED_STARS.success,
       title,
       list,
+      homePageVideos,
     });
 };
 
@@ -59,7 +60,7 @@ export const fetchFeaturedStars = profession => (dispatch, getState) => {
       if (profession) {
         dispatch(featuredCategorySuccess(resp.data.data.display_title, resp.data.data.celebrity_display, profession));
       } else {
-        dispatch(featuredFetchSuccess(resp.data.data.display_title, resp.data.data.celebrity_display));
+        dispatch(featuredFetchSuccess(resp.data.data.display_title, resp.data.data.celebrity_display, resp.data.data.home_page_videos));
       }
     } else {
       dispatch(featuredFetchEnd());

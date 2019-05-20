@@ -7,10 +7,10 @@ const HeaderSection = styled.header`
   right: 0;
   background: white;
   height: 126px;
-  z-index: 10;
+  z-index: 12;
   padding: ${props => !props.notFixed && '12px 16px'};
   @media(min-width: 832px) {
-    height: ${props => (!props.notFixed ? 'auto' : '95px')}
+    height: ${props => (!props.notFixed ? 'auto' : '50px')}
     padding: 0;
   }
 `;
@@ -24,7 +24,7 @@ HeaderSection.HeaderDiv = styled.div`
   flex-wrap: wrap;
   @media (min-width: 832px) {
     height: 100%;
-    padding: ${props => (props.notFixed ? '32px 30px 25px' : '25px 36px')};
+    padding: ${props => (props.notFixed ? '20px 30px 0px' : '25px 36px')};
   }
 `;
 HeaderSection.HeaderRight = styled.div`

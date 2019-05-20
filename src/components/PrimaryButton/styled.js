@@ -4,6 +4,7 @@ const disabledStyles = (isDisabled) => {
   if (isDisabled) {
     return `
       opacity: 0.3;
+      pointer-events: none;
     `;
   }
 };

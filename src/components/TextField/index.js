@@ -16,9 +16,11 @@ export const TextInput = props => (
     onBlur={props.onBlur}
     label={props.label}
     classes={{ root: 'MuiFormControl' }}
-    InputLabelProps={{ classes: { root: 'float-label' } }}
+    InputLabelProps={props.InputLabelProps}
     onClick={props.onClick}
     InputProps={props.InputProps}
+    // eslint-disable-next-line
+    inputProps={props.nativeProps}
   />
 );
 
@@ -36,6 +38,8 @@ TextInput.propTypes = {
   InputProps: PropTypes.object,
   onClick: PropTypes.func,
   label: PropTypes.string,
+  InputLabelProps: PropTypes.object,
+  nativeProps: PropTypes.object,
 };
 
 TextInput.defaultProps = {
@@ -52,4 +56,6 @@ TextInput.defaultProps = {
   onChange: () => {},
   onClick: () => {},
   label: '',
+  InputLabelProps: {},
+  nativeProps: {},
 };

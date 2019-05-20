@@ -13,12 +13,19 @@ const UploadContainer = styled.div`
   }
 `;
 
-UploadContainer.Wrapper = styled.div``;
+UploadContainer.Wrapper = styled.div`
+  .basic-multi-select {
+    label {
+      
+    }
+  }
+`;
 
 UploadContainer.CropperContainer = styled.div`
   position: absolute;
   right: 0;
   left: 0;
+  top: 27px;
   background-color: #fff;
   z-index: 3;
 `;
@@ -47,10 +54,10 @@ UploadContainer.CloseButton = styled.span`
 `;
 
 UploadContainer.Container = styled.div`
-  @media (min-width: 768px) {
-    padding: 0 0;
+  .action-buttons {
+    top: 0px;
   }
-  @media (min-width: 1025px) {
+  @media (min-width: 832px) {
     padding: 0 20px;
   }
 `;
@@ -61,14 +68,16 @@ UploadContainer.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 24px;
-  @media (min-width: 768px) {
-    font-size: 25px;
-  }
-  @media (min-width: 1025px) {
-    font-size: 25px;
-  }
-  @media (min-width: 1920px) {
-    font-size: 27px;
+  @media(max-width: 831px) {
+    padding-top: 31px;
+    margin: 0 auto 9px;
+    &.fans-want {
+      max-width: 190px;
+    }
+    &.select-category {
+      max-width: 260px;
+      white-space: pre-line;
+    }
   }
 `;
 
@@ -77,7 +86,8 @@ UploadContainer.CategoriesWrapper = styled.div`
   margin: 0 auto;
 
   .select__value-container {
-    @media (max-width: 767px) {
+    padding: 7px 0px 10px !important;
+    @media (max-width: 831px) {
       padding: 9px 8px;
     }
   }
@@ -116,6 +126,9 @@ UploadContainer.ButtonWrapper = styled.div`
   margin-top: 45px;
   text-align: center;
   margin-bottom: 10px;
+  @media(max-width: 831px) {
+    margin-top: 101px;
+  }
 `;
 
 UploadContainer.ContinueButton = styled.button`
@@ -195,7 +208,7 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   top: 0;
   ${UploadContainer.Heading} {
     padding-top: 27px;
-    @media(min-width: 768px) {
+    @media(min-width: 832px) {
       padding-top: 52px;
     }
   }
@@ -213,7 +226,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: 410px;
+    height: calc(100vh - 360px);
     width: 100%;
   }
   .subCategoryHeading {
@@ -226,6 +239,33 @@ UploadContainer.BrowseCategoryContainer = styled.div`
       font-size: 16px;
       display: block;
     }
+  }
+`;
+
+UploadContainer.DesktopView = styled.div`
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+  }
+`;
+
+UploadContainer.MobileView = styled.div`
+  display: block;
+  max-width: 317px;
+  margin: 0 auto;
+  ${UploadContainer.BrowseCategoryContainer} {
+    padding: 10px 20px;
+    margin-top: 10px;
+    display: block;
+  }
+  ${UploadContainer.Heading} {
+    padding-top: 70px;
+    max-width: 253px;
+    white-space: pre-line;
+    margin: 0 auto 11px;
+  }
+  @media(min-width: 832px) {
+    display: none;
   }
 `;
 
@@ -301,14 +341,14 @@ ImageUpload.CloseButton = styled.span`
 `;
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
-  padding: 30px 10px;
-  @media(min-width: 768px) {
+  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 138px')};
+  @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
-  padding: 30px 10px;
-  @media(min-width: 768px) {
+  padding: 51px 10px 138px;
+  @media(min-width: 832px) {
     padding: 0;
   }
 `;
@@ -408,23 +448,17 @@ ImageUpload.UploadText = styled.span`
   max-width: 110px;
 `;
 
-ImageUpload.CropWrapper = styled.div``;
+ImageUpload.CropWrapper = styled.div`
+  &.cropper-Wrapper {
+    height: 631px;
+  }
+`;
 
 ImageUpload.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
-  @media (min-width: 768px) {
-    font-size: 25px;
-  }
-  @media (min-width: 1025px) {
-    font-size: 25px;
-    margin-bottom: 26px;
-  }
-  @media (min-width: 1920px) {
-    font-size: 27px;
-  }
 `;
 ImageUpload.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
@@ -511,8 +545,11 @@ ImageUpload.CropperLightButton = styled.button`
 `;
 
 ImageUpload.ButtonWrapper = styled.div`
-  margin-top: 20px;
+  margin-top: 16px;
   display: flex;
+  @media (min-width: 832px) {
+    margin-top: 20px;
+  }
 `;
 
 ImageUpload.VideoElement = styled.video`
