@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const ReferralCodeWrapper = styled.div`
   text-align: center;
   height: calc(100% - 98px);
-  @media(min-width: 1025px) {
+  @media(min-width: 1280px) {
     height: calc(100% - 55px);
   }
 `;
@@ -40,14 +40,13 @@ ReferralCodeWrapper.Description = styled.div`
 
 ReferralCodeWrapper.WrapsInput = styled.div`
   width:100%;
-
   padding-bottom: 10px;
   input {
     font-family: Gilroy;
     font-size: 18px;
     text-align: center;
     color: #8174aa;
-    width: 400px;
+    width: 265px;
   }
   input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
@@ -56,8 +55,10 @@ ReferralCodeWrapper.WrapsInput = styled.div`
   @media(min-width:768px){
     width:100%;
   }
-  @media(min-width:1025){
-    width:700px;
+  @media(min-width: 832px){
+    input {
+      width: 400px;
+    }
   }
 `;
 
