@@ -136,8 +136,8 @@ class ScriptBuilder extends Component {
             dangerouslySetInnerHTML={{
               __html: ScriptGenerator({
                 templateType,
-                forName: hostName,
-                fromName: userName,
+                forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
+                fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
                 relationship: isPlainObject(relationshipValue)
                   ? relationshipValue.title.toLowerCase()
                   : relationshipValue.toLowerCase(),

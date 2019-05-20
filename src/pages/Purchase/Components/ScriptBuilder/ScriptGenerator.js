@@ -28,7 +28,8 @@ const dateFormatter = (date, occasion) => {
     } else if (daysDiff === 7) {
       return `<span class="boldTxt">${occasion} coming up</span>`;
     } else if (daysDiff > 7 || daysDiff < -2) {
-      return `<span class="boldTxt">${occasion} on ${moment(date)
+      return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
+      ${moment(date)
         .format('MMMM Do')
         .toLowerCase()}</span>`;
     }
@@ -199,7 +200,11 @@ const getAnnouncementScript = (
       '',
     )}.`;
   }
-  return `<span class="boldTxt">${specification}’s</span>  having a <span class="boldTxt">${occasion}</span>${dateFormatter(
+
+  return `<span class="boldTxt">${specification.charAt(0).toUpperCase() +
+    specification.slice(
+      1,
+    )}</span> is hosting a <span class="boldTxt">${occasion}</span> for <span class="boldTxt">${forName}</span>${dateFormatter(
     date,
     '',
   )}. Hope you can make it!`;
