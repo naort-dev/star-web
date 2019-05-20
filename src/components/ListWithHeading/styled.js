@@ -21,9 +21,6 @@ export const ListTag = styled.div`
   line-height: 20px;
   color: #7c7c7c;
   padding-left: 15px;
-  ${media.mobileScreen} {
-    color: #ffffff;
-  }
 `;
 
 export const ListHeading = styled.div`
@@ -32,7 +29,4 @@ export const ListHeading = styled.div`
   line-height: 20px;
   color: #7c7c7c;
   padding-left: 15px;
-  ${media.mobileScreen} {
-    color: #ffffff;
-  }
 `;
