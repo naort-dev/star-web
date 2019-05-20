@@ -49,6 +49,9 @@ export default class TakePhoto extends React.Component {
           });
         });
     }
+    this.setState({
+      videoError: true,
+    });
   }
 
   getExif = (file) => {
@@ -126,7 +129,7 @@ export default class TakePhoto extends React.Component {
             {
               this.state.videoError ?
                 <div className="videoError">Please use supported browsers to use the web camera.</div>
-              : <ImageUpload.VideoElement autoPlay innerRef={this.videoRef} muted />
+              : <ImageUpload.VideoElement playsinline autoPlay innerRef={this.videoRef} muted />
             }
           </ImageUpload.TakePhoto>
           {
