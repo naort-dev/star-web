@@ -213,8 +213,6 @@ const getStep5Script = (
   content3,
   content4,
   content5,
-  templateType,
-  occasionKey,
 ) => {
   if (isEmpty(fromName) && isEmpty(relationship) && isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, </span>${content3} 
@@ -247,31 +245,44 @@ const getStep5Script = (
   Your <span class="boldTxt">${relationship}</span> ${content5}`;
 };
 
-const getDateSpecificText = (date, responseTime, fromName) => {
-  let prefix = 'told me';
-  if (!isEmpty(fromName)) {
-    prefix = 'I heard';
-  }
-  if (date) {
-    const calcDate = getFormattedDate(moment().format('MM/DD/YYYY')).add(
-      responseTime,
-      'days',
-    );
-    if (getFormattedDate(date) >= calcDate) {
-      return ` ${prefix} you have a `;
-    }
-    return ` ${prefix} you just had a `;
-  }
-  return ` ${prefix} you have a `;
+const responseDateCheck = (date, responseTime) => {
+  const calcDate = getFormattedDate(moment().format('MM/DD/YYYY')).add(
+    responseTime,
+    'days',
+  );
+  return getFormattedDate(date) >= calcDate;
 };
 
-const getLastContent = (someOneElse, relationship, fromName) => {
-  if ((!someOneElse || isEmpty(fromName)) && isEmpty(relationship)) {
-    return '';
-  } else if (isEmpty(relationship)) {
-    return 'I want to congratulate you.';
+const getDateSpecificText = (date, responseTime, fromName, someOneElse) => {
+  if (!someOneElse) {
+    return ' I want to congratulate you for your ';
+  } else if (!isEmpty(fromName)) {
+    if (responseDateCheck(date, responseTime)) return ' told me you have a ';
+    return ' told me you just had a ';
   }
-  return 'and I want to congratulate you.';
+  return ' I heard you just had a ';
+};
+
+const getLastContent = (
+  date,
+  responseTime,
+  fromName,
+  relationship,
+  someOneElse,
+) => {
+  if (!someOneElse) return '';
+  if (!isEmpty(relationship)) {
+    if (responseDateCheck(date, responseTime))
+      return 'and I want to congratulate you.';
+    return 'and I both wanted to congratulate you.';
+  }
+  if (responseDateCheck(date, responseTime)) {
+    const text = isEmpty(fromName)
+      ? ''
+      : `<span class="boldTxt">${fromName}</span> and `;
+    return `${text}I want to congratulate you.`;
+  }
+  return `I wanted to congratulate you.`;
 };
 
 export const ScriptGenerator = ({
@@ -411,9 +422,6 @@ export const ScriptGenerator = ({
     if (!isEmpty(responseTime)) {
       days = responseTime.split(' ');
     }
-    const text1 = getDateSpecificText(date, days[0], fromName);
-    const text2 = ' I want to congratulate you for your ';
-
     htmlElm += getStep5Script(
       forName,
       relationship,
@@ -423,11 +431,9 @@ export const ScriptGenerator = ({
       `${specification}`,
       'Hey',
       'your',
-      getMainText(someOneElse, text1, text2, fromName, relationship),
+      getDateSpecificText(date, days[0], fromName, someOneElse),
       '',
-      getLastContent(someOneElse, relationship, fromName),
-      templateType,
-      occasionKey,
+      getLastContent(date, days[0], fromName, relationship, someOneElse),
     );
   } else if (templateType === 6) {
     htmlElm += getAnnouncementScript(
