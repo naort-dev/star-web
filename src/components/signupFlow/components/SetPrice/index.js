@@ -192,7 +192,7 @@ export default class SetPrice extends React.Component {
           <SetPriceWrapper.Image className="image-wrap"
             imageUrl={props.image_url}>
           </SetPriceWrapper.Image>
-          <SetPriceWrapper.HeaderText>
+          <SetPriceWrapper.HeaderText confirmation={confirmPrice}>
             {confirmPrice ? props.confirmationTitle : props.title}
           </SetPriceWrapper.HeaderText>
           <SetPriceWrapper.Description error={this.state.price.message}>
@@ -224,7 +224,7 @@ export default class SetPrice extends React.Component {
               </SetPriceWrapper.HighLight>
             </SetPriceWrapper.Block>
           }
-          <SetPriceWrapper.ButtonWrapper>
+          <SetPriceWrapper.ButtonWrapper confirmation={confirmPrice}>
             <SetPriceWrapper.Button primary onClick={this.onSubmit}>
               {confirmPrice ? props.confirmPrimaryButton : props.primary_button}
             </SetPriceWrapper.Button>
