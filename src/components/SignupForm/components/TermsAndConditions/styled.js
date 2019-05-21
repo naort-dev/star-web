@@ -7,12 +7,12 @@ const TermsConditionsWrapper = styled.div`
     height: calc(100% - 55px);
   }
   .terms-wrapper {
-    height: calc(100vh - 293px) !important;
+    height: calc(100vh - 289px) !important;
     max-width: 470px;
     margin: 26px auto 25px;
 
     @media(min-width:832px){
-      height: calc(100vh - 390px) !important;
+      height: calc(100vh - 385px) !important;
       margin-bottom: 9px;
       margin-top: 4px;
     }
