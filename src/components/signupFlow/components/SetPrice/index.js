@@ -24,6 +24,7 @@ export default class SetPrice extends React.Component {
   }
 
   onSubmit = () => {
+    console.log('iosPriceFinder(priceValue, this.props.inAppPriceList)', iosPriceFinder(priceValue, this.props.inAppPriceList));
     const priceValue = commaToNumberFormatter(this.state.price.value);
     const priceDetails = {
       rate: priceValue,
@@ -34,6 +35,7 @@ export default class SetPrice extends React.Component {
       if (parseInt(priceValue) < 500 ) {
         this.props.primaryButtonClick(priceDetails)
       } else if(this.state.confirmPrice) {
+        console.log('this.state.confirmPrice', this.state.confirmPrice);
         this.props.primaryButtonClick(priceDetails)
       } else {
         this.setState({
@@ -98,7 +100,7 @@ export default class SetPrice extends React.Component {
   };
 
   checkPriceRequired = () => {
-    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/;
+    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
     const priceEmpty = !this.state.price.value
     if (priceEmpty) {
       const priceMsg = "Price can't be blank";
@@ -110,7 +112,10 @@ export default class SetPrice extends React.Component {
       });
       return false;
     }
+    console.log('commaToNumberFormatter(this.state.price.value)', commaToNumberFormatter(this.state.price.value));
+    console.log(this.state.price.value);
     if (!pattern.test(commaToNumberFormatter(this.state.price.value))) {
+      console.log(!pattern.test(commaToNumberFormatter(this.state.price.value)));
       this.setState({
         price: {
           ...this.state.price,
@@ -130,12 +135,9 @@ export default class SetPrice extends React.Component {
   };
 
   saveFormEntries = (event, type) => {
-    console.log(event.target.value);
-    console.log('substring', event.target.value.substr(1));
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
-    console.log(pattern.test(commaToNumberFormatter(event.target.value.substr(1))));
     const value = event.target.value.substr(1);
-    if(type==='price' && value) {
+    if(type==='price' && value !== ' ') {
       this.setState({
         [type]: {
           ...this.state[type],
@@ -146,7 +148,7 @@ export default class SetPrice extends React.Component {
     this.setState({
       [type]: {
         ...this.state[type],
-        value,
+        value: type === 'price' ? value : event.target.value
       },
     });
   }
@@ -203,15 +205,14 @@ export default class SetPrice extends React.Component {
               placeholder={'Price'}
               type="text"
               name="price"
-              value={`$${this.state.price.value}`}
-              onBlur={this.checkPriceRequired}
+              value={`${this.state.price.value !== ' ' ? '$':''} ${this.state.price.value}`}
               onChange={(event) => this.saveFormEntries(event, "price")}
             />
           </SetPriceWrapper.WrapsInput>
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-              { this.state.price.value && this.state.price.value < 10000 ?
+              { this.state.price.value && this.state.price.value > 0 && this.state.price.value < 10000 ?
                 (<React.Fragment>Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.</React.Fragment> )  : ''
               }
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
