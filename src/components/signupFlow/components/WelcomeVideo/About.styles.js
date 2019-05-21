@@ -44,6 +44,9 @@ export const Layout = styled.section`
     line-height: 60px;
     border: 0;
     font-size: 18px;
+    &:hover {
+      box-shadow: none;
+    }
   }
   .skip {
     display: inline-block;
@@ -80,7 +83,7 @@ export const QuesWrapper = styled.section`
     text-align: left;
     color: #46829a;
     font-size: 18px;
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy;
     margin-bottom: 19px;
     @media (max-width: 831px) {
       text-align: center;

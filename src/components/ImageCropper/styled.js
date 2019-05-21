@@ -23,7 +23,12 @@ CropperStyled.ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  transform: translateY(-50%);
+  @media(max-width: 831px){
+    margin-top: 96px;
+  }
+  @media(min-width: 832px){
+    transform: translateY(-50%);
+  }
 `;
 CropperStyled.CropperLightButton = styled.button`
   cursor: pointer;

@@ -409,7 +409,7 @@ class SignupMethod extends React.Component {
           <SignUpMethod.Button onClick={this.onEmailLogin} className="email-wrap">
             <SignUpMethod.SocialMediaIcon>
               <SignUpMethod.Icon><FontAwesomeIcon icon={faEnvelope} /></SignUpMethod.Icon>
-              <SignUpMethod.SocialMediaLabel className="label">Email</SignUpMethod.SocialMediaLabel>
+              <SignUpMethod.SocialMediaLabel className="label">Sign up by email</SignUpMethod.SocialMediaLabel>
             </SignUpMethod.SocialMediaIcon>
           </SignUpMethod.Button>
         </SignUpMethod.Container>

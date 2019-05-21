@@ -55,7 +55,7 @@ UploadContainer.CloseButton = styled.span`
 
 UploadContainer.Container = styled.div`
   .action-buttons {
-    top: 0px;
+    top: 9px;
   }
   @media (min-width: 832px) {
     padding: 0 20px;
@@ -67,7 +67,6 @@ UploadContainer.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 24px;
   @media(max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
@@ -226,7 +225,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 360px);
+    height: 515px;
     width: 100%;
   }
   .subCategoryHeading {
@@ -286,9 +285,10 @@ UploadContainer.SubItemWrapper = styled.ul`
     font-family: Gilroy-medium;
     font-size: 14px;
     align-items: center;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
     cursor: pointer;
+    height: 26px;
   }
 `;
 UploadContainer.Item = styled.li`
@@ -341,7 +341,7 @@ ImageUpload.CloseButton = styled.span`
 `;
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
-  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 138px')};
+  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 117px')};
   @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
@@ -450,7 +450,7 @@ ImageUpload.UploadText = styled.span`
 
 ImageUpload.CropWrapper = styled.div`
   &.cropper-Wrapper {
-    height: 631px;
+    // height: 631px;
   }
 `;
 
@@ -458,7 +458,13 @@ ImageUpload.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
+  font-family: 'Gilroy';
+  padding-top: 44px;
+  padding-bottom: 92px;
+  @media (min-width: 832px) {
+    padding-top: 36px;
+    padding-bottom: 28px;
+  }
 `;
 ImageUpload.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
@@ -576,8 +582,13 @@ ImageUpload.TakePhoto = styled.div`
 `;
 
 ImageUpload.PhotoButtonWrapper = styled.div`
-  transform: translateY(-50%);
   text-align: center;
+  @media(max-width: 831px){
+    margin-top: 96px;
+  }
+  @media(min-width: 832px){
+    transform: translateY(-50%);
+  }
 `;
 
 ImageUpload.CropperButton = styled.button`

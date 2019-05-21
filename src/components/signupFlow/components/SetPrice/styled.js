@@ -31,6 +31,7 @@ SetPriceWrapper.HeaderText = styled.div`
   text-align: center;
   color: #ff6c58;
   padding-bottom: 10px;
+  margin-top: ${props => (props.confirmation ? '52px' : '0')};
   @media(max-width:831px){
     padding-bottom: 9px;
     font-size: 28px;
@@ -56,7 +57,7 @@ SetPriceWrapper.Title = styled.div`
 `;
 SetPriceWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  padding-top: 15px;
+  padding-top: ${props => (props.confirmation ? '87px' : '15px')};
 `;
 SetPriceWrapper.Button = styled.button`
 width: 250px;
