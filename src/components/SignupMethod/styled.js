@@ -36,7 +36,7 @@ SignUpMethod.Heading = styled.div`
   line-height: 1.2;
   text-align: center;
   color: #ff6c58;
-  padding: 31px 0 43px;
+  padding: 31px 0 41px;
   max-width: 178px;
   margin: 0 auto;
   &.or-section {
@@ -47,7 +47,7 @@ SignUpMethod.Heading = styled.div`
     }
   }
   @media(min-width: 831px) {
-    padding: 00 23px;
+    padding: 0 0 21px;
     max-width: 100%;
   }
 `;
