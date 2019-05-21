@@ -31,7 +31,7 @@ RegSuccessWrapper.ButtonWrapper = styled.div`
   margin-top: 2px;
 `;
 RegSuccessWrapper.Button = styled.button`
-width: 250px;
+width: 300px;
 height: 60px;
 border-radius: 60px;
 background-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
@@ -55,7 +55,6 @@ cursor: pointer;
   border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
 }
 @media(max-width: 832px){
-  width:100%;
   margin-bottom:20px;
 }
 `;

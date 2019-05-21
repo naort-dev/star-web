@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { TextInput } from '../../../TextField'
+import DotsContainer from '../../../Dots';
 import ReferralCodeWrapper from './styled';
 
 export const ReferralCode = (props) =>(
@@ -9,6 +10,7 @@ export const ReferralCode = (props) =>(
         <ReferralCodeWrapper.OptionWrapper>
             <ReferralCodeWrapper.HeaderText>
               {props.title}
+              <DotsContainer dotsCount={3} selectedDot={3} />
             </ReferralCodeWrapper.HeaderText>
             {props.error ?
             <ReferralCodeWrapper.Description error={props.error}>
