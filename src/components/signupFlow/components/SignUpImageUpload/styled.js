@@ -555,14 +555,14 @@ ImageUpload.ButtonWrapper = styled.div`
 ImageUpload.VideoElement = styled.video`
   width: 100%;
   height: 500px;
-  background: black;
+  background: #000;
   margin: 10px 0;
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
-  background: #000;
   .videoError {
     min-height: 500px;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;

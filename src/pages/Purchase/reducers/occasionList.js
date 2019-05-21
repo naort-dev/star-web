@@ -24,6 +24,7 @@ const initalState = {
     category: 0,
     termsCheck: false,
     privateVideo: false,
+    importantInfo: '',
   },
   header: '',
 };

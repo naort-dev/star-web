@@ -27,7 +27,7 @@ class Purchase extends Component {
       termsCheck: this.props.formProps.termsCheck,
       privateVideo: this.props.formProps.privateVideo,
       closeModal: false,
-      importantInfo: '',
+      importantInfo: this.props.formProps.importantInfo,
     };
     this.starData = [
       {
@@ -254,6 +254,7 @@ class Purchase extends Component {
       category: this.state.category,
       termsCheck: this.state.termsCheck,
       privateVideo: this.state.privateVideo,
+      importantInfo: this.state.importantInfo,
     });
   };
 
@@ -330,6 +331,7 @@ class Purchase extends Component {
       category: 0,
       termsCheck: false,
       privateVideo: false,
+      importantInfo: '',
     });
   };
 

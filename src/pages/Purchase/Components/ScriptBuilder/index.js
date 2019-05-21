@@ -136,15 +136,15 @@ class ScriptBuilder extends Component {
             dangerouslySetInnerHTML={{
               __html: ScriptGenerator({
                 templateType,
-                forName: hostName,
-                fromName: userName,
+                forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
+                fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
                 relationship: isPlainObject(relationshipValue)
-                  ? relationshipValue.title
-                  : relationshipValue,
+                  ? relationshipValue.title.toLowerCase()
+                  : relationshipValue.toLowerCase(),
                 date,
-                occasion: occasion.label,
+                occasion: occasion.label.toLowerCase(),
                 someOneElse: user !== 'Myself',
-                specification,
+                specification: specification.toLowerCase(),
                 occasionKey: occasion.key,
                 responseTime: this.props.responseTime,
               }),
@@ -207,11 +207,13 @@ ScriptBuilder.propTypes = {
   loaderAction: PropTypes.func.isRequired,
   importantInfo: PropTypes.string,
   infoChange: PropTypes.func.isRequired,
+  responseTime: PropTypes.string,
 };
 
 ScriptBuilder.defaultProps = {
   submitClick: () => {},
   importantInfo: '',
+  responseTime: '',
 };
 
 export default connect(
