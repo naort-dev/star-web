@@ -20,18 +20,16 @@ const dateFormatter = (date, occasion) => {
       return `<span class="boldTxt">${occasion} yesterday</span>`;
     } else if (daysDiff === 1) {
       return `<span class="boldTxt">${occasion} tomorrow</span>`;
-    } else if (daysDiff === -2) {
+    } else if (daysDiff <= -2) {
       return `<span class="boldTxt">belated ${occasion}</span>`;
     } else if (daysDiff >= 2 && daysDiff <= 6) {
       return `<span class="boldTxt">${occasion}</span> this <span class="boldTxt">
       ${dateChk.format('dddd')}</span>`;
     } else if (daysDiff === 7) {
       return `<span class="boldTxt">${occasion} coming up</span>`;
-    } else if (daysDiff > 7 || daysDiff < -2) {
+    } else if (daysDiff > 7) {
       return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
-      ${moment(date)
-        .format('MMMM Do')
-        .toLowerCase()}</span>`;
+      ${moment(date).format('MMMM Do')}</span>`;
     }
     return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
     ${dateChk.format('MMMM Do')}</span>`;
@@ -445,14 +443,6 @@ export const ScriptGenerator = ({
       getDateSpecificText(date, days[0], fromName, someOneElse),
       '',
       getLastContent(date, days[0], fromName, relationship, someOneElse),
-    );
-  } else if (templateType === 6) {
-    htmlElm += getAnnouncementScript(
-      forName,
-      specification,
-      date,
-      occasion,
-      templateType,
     );
   } else if ([6, 7].includes(templateType)) {
     htmlElm += getAnnouncementScript(
