@@ -40,7 +40,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoading: false,
+      showLoading: true,
       timedOut: false,
     };
 
@@ -169,7 +169,8 @@ class App extends React.Component {
               {/* logged in areas */}
 
               <Route
-                path="/manage/:type"
+                exact
+                path="/manage/:type?"
                 component={protectRoute({
                   RouteComponent: ManageUser,
                 })}

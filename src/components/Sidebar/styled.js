@@ -22,11 +22,13 @@ SidebarStyled.AvatarImage = styled.div`
 `;
 
 SidebarStyled.LinkList = styled.ul`
-  padding: 10px 0;
+  padding: 28px 40px;
 `;
 
 SidebarStyled.LinkItem = styled.li`
-  padding-bottom: 30px;
+  padding: 12px 0;
+  font-family: Gilroy-Regular;
+  font-size: 18px;
   border-bottom: ${props => `1px solid ${props.theme.white}`};
 `;
 

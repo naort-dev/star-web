@@ -19,6 +19,35 @@ ManageStyled.Container = styled.div`
   max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  @media(min-width: 832px) {
+    flex-direction: row;
+  }
+`;
+
+ManageStyled.Visiblity = styled.div`
+  display: ${props => props.hidden ? 'none' : 'block'};
+  @media(min-width: 832px) {
+    display: block;
+  }
+`;
+
+ManageStyled.MobileHeading = ManageStyled.Visiblity.extend`
+  font-family: Gilroy-Light;
+  font-size: 30px;
+  color: ${props => props.theme.brownGrey};
+  padding: 27px 0;
+  margin: 0 auto;
+  @media(min-width: 832px) {
+    display: none;
+  }
+`.withComponent('span');
+
+ManageStyled.SidebarWrapper = ManageStyled.Visiblity.extend`
+  @media(min-width: 832px) {
+    display: inline-block;
+  }
 `;
 
 export default ManageStyled;
