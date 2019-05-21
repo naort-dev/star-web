@@ -41,6 +41,10 @@ const MultiSelectStyled = styled.div`
     .select__multi-value__remove {
       font-size: 16.9px;
       color: rgb(47, 131, 157);
+      cursor: pointer;
+      &:hover {
+        background: none;
+      }
     }
   }
   .select__indicator-separator {
