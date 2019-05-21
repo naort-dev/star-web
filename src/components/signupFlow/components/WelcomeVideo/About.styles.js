@@ -44,6 +44,9 @@ export const Layout = styled.section`
     line-height: 60px;
     border: 0;
     font-size: 18px;
+    &:hover {
+      box-shadow: none;
+    }
   }
   .skip {
     display: inline-block;

@@ -225,7 +225,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 360px);
+    height: 515px;
     width: 100%;
   }
   .subCategoryHeading {
@@ -285,9 +285,10 @@ UploadContainer.SubItemWrapper = styled.ul`
     font-family: Gilroy-medium;
     font-size: 14px;
     align-items: center;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
     cursor: pointer;
+    height: 26px;
   }
 `;
 UploadContainer.Item = styled.li`
