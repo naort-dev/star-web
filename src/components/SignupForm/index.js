@@ -299,6 +299,7 @@ class SignUpForm extends React.Component {
                         InputProps={{
                             classes: {
                               error:'error-field',
+                              input: 'input-label-first-name'
                             },
                           }}
                       />
@@ -317,6 +318,7 @@ class SignUpForm extends React.Component {
                         InputProps={{
                           classes: {
                             error:'error-field',
+                            input: 'input-label-last-name'
                           },
                         }}
                       />
@@ -436,7 +438,7 @@ class SignUpForm extends React.Component {
               )}
               <LoginContainer.ButtonWrapper>
                 <LoginContainer.ContinueButton
-                  className="common-button-nobr no-focus"
+                  className="common-button-nobr no-focus hover-btn"
                   type="submit"
                   onClick={this.onRegister}
                   isDisabled={!this.state.termsAndConditions.value}
