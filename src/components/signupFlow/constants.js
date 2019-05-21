@@ -23,6 +23,12 @@ export const STAR_REG_SUCCESS = {
   SKIP_VIDEO_DESCRIPTION: 'We are so glad to have you as one of our stars. Remember, your profile won’t be live on Starsona until you complete your welcome video. Come back soon to complete it it, or go back and do it now. You can always re-do it later if you want to make it better.'
 };
 
+export const STAR_GET_PHONE_NO = {
+  DESCRIPTION: `Provide your phone number so we can send you a reminder to get your welcome video done so you can start taking bookings! We 'll never share your phone number with anyone. Ever.`,
+  TITLE1: 'One last thing!',
+  IMAGE_URL: 'assets/images/art_highfive.svg'
+};
+
 export const SET_PRICE = {
   CONFIRM_PRIMARY_BUTTON: 'Yes, I’m worth it!',
   CONFIRMATION_TITLE: 'Are you sure?',
@@ -37,8 +43,8 @@ export const SET_PRICE = {
 
 
 export const convertedApplePrice = (actualPrice, inAppPriceList) => {
-  const price = iosPriceFinder(actualPrice, inAppPriceList),
-    priceText = `In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).`
+    const priceText = actualPrice < 1000 || !actualPrice ? `In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).`
+    : 'Please tell your fans that they will not be able to book you using the iOS app because Apple does not support purchases over $999.99. They will still be able to book you using their browser (mobile or desktop) or the Android app.';
   return priceText
 }
 
