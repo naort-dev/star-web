@@ -80,7 +80,7 @@ export const QuesWrapper = styled.section`
     text-align: left;
     color: #46829a;
     font-size: 18px;
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy;
     margin-bottom: 19px;
     @media (max-width: 831px) {
       text-align: center;

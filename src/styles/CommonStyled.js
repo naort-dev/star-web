@@ -57,7 +57,7 @@ export const BackArrow = styled.span`
   background-size: contain;
   position: absolute;
   left: 30px;
-  top: 30px;
+  top: 36px;
   cursor: pointer;
   ${media.webView} {
     width: 14px;
@@ -77,7 +77,7 @@ export const CloseButton = styled.span`
   height: 20px;
   position: absolute;
   right: 30px;
-  top: 30px;
+  top: 35px;
   background-size: contain;
   cursor: pointer;
   ${media.webView} {

@@ -7,7 +7,7 @@ const TermsConditionsWrapper = styled.div`
     height: calc(100% - 55px);
   }
   .terms-wrapper {
-    height: calc(100vh - 290px) !important;
+    height: calc(100vh - 293px) !important;
     max-width: 470px;
     margin: 26px auto 25px;
 
@@ -66,7 +66,7 @@ TermsConditionsWrapper.Button = styled.button`
 
 TermsConditionsWrapper.Description = styled.p`
   font-family: Gilroy-Light;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1.63;
   text-align: left;
   color: #555555;
