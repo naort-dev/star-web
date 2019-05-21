@@ -93,13 +93,16 @@ const StarProfile = (props) => {
                     userDetails={props.userDetails}
                     celebDetails={props.celebDetails}
                   />
-                  <ListingSection
-                    userDetails={props.userDetails}
-                    fetchCelebVideosList={props.fetchCelebVideosList}
-                    fetchCelebReactionsList={props.fetchCelebReactionsList}
-                    reactionsList={props.reactionsList}
-                    videosList={props.videosList}
-                  />
+                  {
+                    !profVideo &&
+                      <ListingSection
+                        userDetails={props.userDetails}
+                        fetchCelebVideosList={props.fetchCelebVideosList}
+                        fetchCelebReactionsList={props.fetchCelebReactionsList}
+                        reactionsList={props.reactionsList}
+                        videosList={props.videosList}
+                      />
+                  }
                 </React.Fragment>
             }
           {/* {
