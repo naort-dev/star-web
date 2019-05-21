@@ -81,7 +81,7 @@ class Header extends React.Component {
     const userDetails = props.userValue.settings_userDetails;
     const { showCategories } = this.state;
     return (
-      <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed}>
+      <HeaderSection innerRef={props.forwardRef} notFixed={props.notFixed} desktopSearch={this.props.desktopSearch}>
         <HeaderSection.HeaderDiv notFixed={props.notFixed} shouldAlign={props.disableLogo && props.disableSearch}>
           <HeaderSection.MobileIconWrapper>
             {
@@ -179,7 +179,7 @@ class Header extends React.Component {
           </HeaderSection.HeaderRight>
           {
             !this.props.disableSearch &&
-              <HeaderSection.SearchWrapper>
+              <HeaderSection.SearchWrapper desktopSearch={this.props.desktopSearch}>
                 <Search />
               </HeaderSection.SearchWrapper>
           }

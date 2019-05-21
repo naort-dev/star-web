@@ -1,6 +1,6 @@
 export const fanRoutes = [
-  '/user/favorites',
-  '/user/myVideos',
+  '/manage/favorites',
+  '/manage/my-videos',
   '/settings',
 ];
 export const starRoutes = [

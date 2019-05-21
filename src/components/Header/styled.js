@@ -6,7 +6,7 @@ const HeaderSection = styled.header`
   left: 0;
   right: 0;
   background: white;
-  height: 126px;
+  height: ${props => props.desktopSearch ? 'auto' : '126px'};
   z-index: 12;
   padding: ${props => !props.notFixed && '12px 16px'};
   @media(min-width: 832px) {
@@ -58,7 +58,7 @@ HeaderSection.SearchWrapper = styled.div`
   top: 60px;
   padding: 12px 16px;
   padding-top: 0;
-  display: block;
+  display: ${props => props.desktopSearch ? 'none': 'block'};
   width: 100%;
   max-width: 590px;
   margin: 0 auto;
