@@ -29,9 +29,7 @@ const dateFormatter = (date, occasion) => {
       return `<span class="boldTxt">${occasion} coming up</span>`;
     } else if (daysDiff > 7) {
       return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
-      ${moment(date)
-        .format('MMMM Do')
-        .toLowerCase()}</span>`;
+      ${moment(date).format('MMMM Do')}</span>`;
     }
     return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
     ${dateChk.format('MMMM Do')}</span>`;
