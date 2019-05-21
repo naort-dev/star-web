@@ -444,14 +444,6 @@ export const ScriptGenerator = ({
       '',
       getLastContent(date, days[0], fromName, relationship, someOneElse),
     );
-  } else if (templateType === 6) {
-    htmlElm += getAnnouncementScript(
-      forName,
-      specification,
-      date,
-      occasion,
-      templateType,
-    );
   } else if ([6, 7].includes(templateType)) {
     htmlElm += getAnnouncementScript(
       forName,
