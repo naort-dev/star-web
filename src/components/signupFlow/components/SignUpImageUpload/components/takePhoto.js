@@ -1,6 +1,7 @@
 import React from 'react';
 import EXIF from 'exif-js';
 import { ImageUpload } from '../styled';
+import Loader from '../../../../Loader';
 import { getMobileOperatingSystem } from '../../../../../utils/checkOS';
 import { detectUserMedia } from '../../../../../utils/detectCamera';
 
@@ -10,6 +11,7 @@ export default class TakePhoto extends React.Component {
     this.state = {
       recording: false,
       videoError: false,
+      imageLoading: false,
     };
     this.constraints = {
       video: true,
@@ -49,6 +51,7 @@ export default class TakePhoto extends React.Component {
     if (!allowedExtensions.exec(document.getElementById('profile').value)) {
       this.setState({ imageError: { extensionError: true } });
     } else if (file) {
+      this.setState({ imageLoading: true });
       await this.getImageData(file);
     }
   }
@@ -80,6 +83,7 @@ export default class TakePhoto extends React.Component {
     const exif = await this.getExif(file);
     this.currentExif = exif;
     reader.onload = () => {
+      this.setState({ imageLoading: false });
       this.props.onPictureCapture(reader.result, exif, extension);
     };
     if (file) {
@@ -159,38 +163,44 @@ export default class TakePhoto extends React.Component {
   }
 
   render() {
+    const { imageLoading } = this.state;
     return (
       <ImageUpload.TakePhotoWrapper>
-        <React.Fragment>
-          <ImageUpload.TakePhoto takePhoto={this.props.takePicture}>
-            {
-              !getMobileOperatingSystem() ?
-                <React.Fragment>
-                  {
-                    this.state.videoError ?
-                      <div className="videoError">Please use supported browsers to use the web camera.</div>
-                    : <ImageUpload.VideoElement webkit-playsinline autoPlay innerRef={this.videoRef} muted />
-                  }
-                </React.Fragment>
-              :
-                <input
-                  // style={inputStyles}
-                  ref={this.inputRef}
-                  accept="image/*"
-                  id="profile"
-                  capture="camera"
-                  onChange={() => this.onFileChange()}
-                  type="file"
-                />
-            }
-          </ImageUpload.TakePhoto>
-          {
-            !this.state.videoError &&
-            <ImageUpload.PhotoButtonWrapper>
-              <ImageUpload.CropperButton onClick={this.takeScreenshot}>Capture photo</ImageUpload.CropperButton>
-            </ImageUpload.PhotoButtonWrapper>
-          }
-        </React.Fragment>
+        {
+          imageLoading ?
+            <Loader />
+          :
+            <React.Fragment>
+              <ImageUpload.TakePhoto takePhoto={this.props.takePicture}>
+                {
+                  !getMobileOperatingSystem() ?
+                    <React.Fragment>
+                      {
+                        this.state.videoError ?
+                          <div className="videoError">Please use supported browsers to use the web camera.</div>
+                        : <ImageUpload.VideoElement webkit-playsinline autoPlay innerRef={this.videoRef} muted />
+                      }
+                    </React.Fragment>
+                  :
+                    <input
+                      // style={inputStyles}
+                      ref={this.inputRef}
+                      accept="image/*"
+                      id="profile"
+                      capture="camera"
+                      onChange={() => this.onFileChange()}
+                      type="file"
+                    />
+                }
+              </ImageUpload.TakePhoto>
+              {
+                !this.state.videoError &&
+                <ImageUpload.PhotoButtonWrapper>
+                  <ImageUpload.CropperButton onClick={this.takeScreenshot}>Capture photo</ImageUpload.CropperButton>
+                </ImageUpload.PhotoButtonWrapper>
+              }
+            </React.Fragment>
+        }
       </ImageUpload.TakePhotoWrapper>
     );
   }

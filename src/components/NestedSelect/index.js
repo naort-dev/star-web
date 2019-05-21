@@ -19,6 +19,10 @@ const MultiValue = prop => {
   );
 };
 
+const MultiValueRemove = prop => {
+  return <span {...prop.innerProps}><FontAwesomeIcon icon={faTimes} /></span>
+}
+
 const inputComponent = ({ inputRef, ...props }) => {
   return <div ref={inputRef} {...props} />;
 };
@@ -90,7 +94,8 @@ const NestedSelect = props => {
 
   const components = {
     Control,
-    MultiValue,
+    // MultiValue,
+    MultiValueRemove,
     Option,
     GroupHeading,
   };
