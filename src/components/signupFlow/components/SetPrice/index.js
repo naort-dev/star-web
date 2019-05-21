@@ -18,7 +18,7 @@ export default class SetPrice extends React.Component {
       isReferred: props.switched ? props.switched : false,
       confirmPrice: false,
       referralCode: { value: '', isValid: false, message: '' },
-      price: { value: '', isValid: false, message: '' },
+      price: { value: '20', isValid: false, message: '' },
       // compSwitch: props.switched ? props.switched : false,
     };
   }
@@ -130,19 +130,23 @@ export default class SetPrice extends React.Component {
   };
 
   saveFormEntries = (event, type) => {
+    console.log(event.target.value);
+    console.log('substring', event.target.value.substr(1));
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
-    if(type==='price' && event.target.value) {
+    console.log(pattern.test(commaToNumberFormatter(event.target.value.substr(1))));
+    const value = event.target.value.substr(1);
+    if(type==='price' && value) {
       this.setState({
         [type]: {
           ...this.state[type],
-          value: pattern.test(commaToNumberFormatter(event.target.value)) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value)) : this.state.price.value,
+          value: pattern.test(commaToNumberFormatter(event.target.value.substr(1))) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value.substr(1))) : this.state.price.value,
         },
       });
     } else {
     this.setState({
       [type]: {
         ...this.state[type],
-        value: event.target.value,
+        value,
       },
     });
   }
@@ -199,18 +203,17 @@ export default class SetPrice extends React.Component {
               placeholder={'Price'}
               type="text"
               name="price"
-              value={this.state.price.value}
+              value={`$${this.state.price.value}`}
               onBlur={this.checkPriceRequired}
               onChange={(event) => this.saveFormEntries(event, "price")}
-              InputProps={{
-                startAdornment: <InputAdornment classes={{root: 'adornment'}} position="start">$</InputAdornment>,
-              }}
             />
           </SetPriceWrapper.WrapsInput>
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-              Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.&nbsp;
+              { this.state.price.value && this.state.price.value < 10000 ?
+                (<React.Fragment>Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.</React.Fragment> )  : ''
+              }
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
