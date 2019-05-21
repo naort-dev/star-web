@@ -27,12 +27,14 @@ import SetPrice from './components/SetPrice'
 import {
   FAN_REG_SUCCESS,
   STAR_REG_SUCCESS,
+  STAR_GET_PHONE_NO,
   SET_PRICE
 } from './constants'
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { celebritySignupProfile } from '../../services/userRegistration'
+// import GetPhoneNumber from '../../components/GetPhoneNumber';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 
 
@@ -66,7 +68,7 @@ class SignupFlow extends React.Component {
     this.setState(state => ({
       currentStep: flag? state.currentStep - 1 : state.currentStep - 2,
       switchedSetPrice: flag, 
-      switched: true,
+      switched: this.state.audioVideoSupport ,
     }));
   };
 
@@ -84,21 +86,17 @@ class SignupFlow extends React.Component {
   getBioDetails = bioDetails => {
     this.setState({ bioDetails });
   };
-  changeSignUpRole = role => {
-    this.setState({ selectedType: role, stepCount: 0 });
-    if (role === 'star') {
-      this.setState({ stepCount: this.starRegistrationSteps });
-    } else if (role === 'group') {
-      this.setState({ stepCount: this.groupRegistrationSteps });
-    }
-  };
+ 
+  setProfileVideo = (fileName) => {
+    this.setState({ profile_video: fileName });
+  }
+
   saveData = data =>
     this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   changeStep = step => {
     this.setState({ currentStep: step, enableClose: false });
   };
-
   closeSignUp = () => {
     this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     this.props.toggleSignup(false);
@@ -129,14 +127,19 @@ class SignupFlow extends React.Component {
       this.closeSignUp();
     }
   }
+  
+  changeSignUpRole = role => {
+    this.setState({ selectedType: role, stepCount: 0 });
+    if (role === 'star') {
+      this.setState({ stepCount: this.starRegistrationSteps });
+    } else if (role === 'group') {
+      this.setState({ stepCount: this.groupRegistrationSteps });
+    }
+  };
 
   disableClose = (flag) => {
     this.setState({disableClose: flag});
   }
-  setProfileVideo = (fileName) => {
-    this.setState({ profile_video: fileName });
-  }
-
   submitCelebrityDetails(priceDetails) {
     const celebrityProfileData = {
       ...priceDetails,
@@ -151,7 +154,9 @@ class SignupFlow extends React.Component {
               .then((success) => {
                 this.setState({ loader: false });
                 if (success) {
-                  this.changeStep(this.state.currentStep + 1)
+                  // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+                  console.log('changed strp to',(this.state.currentStep + 1) );
+                  this.changeStep(this.state.currentStep + 1);
                 }
               })
               .catch(() => {
@@ -297,6 +302,14 @@ class SignupFlow extends React.Component {
             title={SET_PRICE.TITLE}
             link={SET_PRICE.LINK}
           />);
+          // case 6:
+          //   return(
+          //     <GetPhoneNumber
+          //       description={STAR_GET_PHONE_NO.DESCRIPTION}
+          //       title1={STAR_GET_PHONE_NO.TITLE1}
+          //       image_url={STAR_GET_PHONE_NO.IMAGE_URL}
+          //     />
+          //   )
           case 6:
             return (
               <RegistrationSuccess

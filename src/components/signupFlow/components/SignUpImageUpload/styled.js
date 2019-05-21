@@ -55,7 +55,7 @@ UploadContainer.CloseButton = styled.span`
 
 UploadContainer.Container = styled.div`
   .action-buttons {
-    top: 0px;
+    top: 9px;
   }
   @media (min-width: 832px) {
     padding: 0 20px;
@@ -67,7 +67,6 @@ UploadContainer.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 24px;
   @media(max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
@@ -341,7 +340,7 @@ ImageUpload.CloseButton = styled.span`
 `;
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
-  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 138px')};
+  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 117px')};
   @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
@@ -450,7 +449,7 @@ ImageUpload.UploadText = styled.span`
 
 ImageUpload.CropWrapper = styled.div`
   &.cropper-Wrapper {
-    height: 631px;
+    // height: 631px;
   }
 `;
 
@@ -458,7 +457,13 @@ ImageUpload.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
+  font-family: 'Gilroy';
+  padding-top: 44px;
+  padding-bottom: 92px;
+  @media (min-width: 832px) {
+    padding-top: 36px;
+    padding-bottom: 28px;
+  }
 `;
 ImageUpload.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
@@ -555,14 +560,14 @@ ImageUpload.ButtonWrapper = styled.div`
 ImageUpload.VideoElement = styled.video`
   width: 100%;
   height: 500px;
-  background: black;
+  background: #000;
   margin: 10px 0;
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
-  background: #000;
   .videoError {
     min-height: 500px;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -576,8 +581,13 @@ ImageUpload.TakePhoto = styled.div`
 `;
 
 ImageUpload.PhotoButtonWrapper = styled.div`
-  transform: translateY(-50%);
   text-align: center;
+  @media(max-width: 831px){
+    margin-top: 96px;
+  }
+  @media(min-width: 832px){
+    transform: translateY(-50%);
+  }
 `;
 
 ImageUpload.CropperButton = styled.button`

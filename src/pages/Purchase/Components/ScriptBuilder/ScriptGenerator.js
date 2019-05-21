@@ -15,18 +15,21 @@ const dateFormatter = (date, occasion) => {
     const dateChk = getFormattedDate(date);
     const daysDiff = dateChk.diff(curDate, 'days');
     if (daysDiff === 0) {
-      return `<span class="boldTxt">${occasion} Today</span>`;
+      return `<span class="boldTxt">${occasion} today</span>`;
     } else if (daysDiff === -1) {
-      return `<span class="boldTxt">${occasion} Yesterday</span>`;
+      return `<span class="boldTxt">${occasion} yesterday</span>`;
     } else if (daysDiff === 1) {
-      return `<span class="boldTxt">${occasion} Tomorrow</span>`;
-    } else if (daysDiff === -2) {
+      return `<span class="boldTxt">${occasion} tomorrow</span>`;
+    } else if (daysDiff <= -2) {
       return `<span class="boldTxt">belated ${occasion}</span>`;
     } else if (daysDiff >= 2 && daysDiff <= 6) {
       return `<span class="boldTxt">${occasion}</span> this <span class="boldTxt">
       ${dateChk.format('dddd')}</span>`;
-    } else if (daysDiff >= 7) {
+    } else if (daysDiff === 7) {
       return `<span class="boldTxt">${occasion} coming up</span>`;
+    } else if (daysDiff > 7) {
+      return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
+      ${moment(date).format('MMMM Do')}</span>`;
     }
     return `<span class="boldTxt">${occasion}</span> on <span class="boldTxt">
     ${dateChk.format('MMMM Do')}</span>`;
@@ -37,9 +40,9 @@ const dateFormatter = (date, occasion) => {
 const occasionChange = (templateType, occasion, occasionKey) => {
   if (templateType === 3) {
     if (occasionKey === 7) {
-      return 'congratulations for';
+      return 'congratulations';
     } else if (occasionKey === 8) {
-      return 'encouragement for';
+      return 'encouragement';
     } else if (occasionKey === 13) {
       return 'a romantic note';
     } else if (occasionKey === 16) {
@@ -61,7 +64,7 @@ const swapContent = (
       templateType,
       occasion,
       occasionKey,
-    )} </span>${content}<span class="boldTxt">${specification}</span>`;
+    )} </span> for ${content}<span class="boldTxt">${specification}</span>`;
   }
   return `<span class="boldTxt">${specification}</span>${content}<span class="boldTxt">${occasionChange(
     templateType,
@@ -152,7 +155,7 @@ const getScript = (
     ${dateFormatter(date, occasion)}${content5}.`;
   } else if (isEmpty(relationship)) {
     return `${content1} <span class="boldTxt">${forName}, ${fromName} </span>${content3}<span class="boldTxt">${specification}</span> 
-    ${dateFormatter(date, occasion)}${content5}`;
+    ${dateFormatter(date, occasion)}${content5}.`;
   } else if (isEmpty(date)) {
     return `${content1} <span class="boldTxt">${forName}, </span>${content2} <span class="boldTxt">${relationship} ${fromName}</span>${content3}${swapContent(
       specification,
@@ -163,10 +166,10 @@ const getScript = (
     )}${content5}.`;
   } else if (isEmpty(specification)) {
     return `${content1} <span class="boldTxt">${forName}, </span>${content2} <span class="boldTxt">${relationship} ${fromName}</span>${content3} 
-    ${dateFormatter(date, occasion)}${content5}`;
+    ${dateFormatter(date, occasion)}${content5}.`;
   }
   return `${content1} <span class="boldTxt">${forName}, </span>${content2} <span class="boldTxt">${relationship} ${fromName}</span>${content3}<span class="boldTxt">${specification}</span>
-  ${dateFormatter(date, occasion)}${content5}`;
+  ${dateFormatter(date, occasion)}${content5}.`;
 };
 
 const getMainText = (
@@ -195,7 +198,11 @@ const getAnnouncementScript = (
       '',
     )}.`;
   }
-  return `<span class="boldTxt">${specification}’s</span>  having a <span class="boldTxt">${occasion}</span>${dateFormatter(
+
+  return `<span class="boldTxt">${specification.charAt(0).toUpperCase() +
+    specification.slice(
+      1,
+    )}</span> is hosting a <span class="boldTxt">${occasion}</span> for <span class="boldTxt">${forName}</span>${dateFormatter(
     date,
     '',
   )}. Hope you can make it!`;
@@ -373,9 +380,11 @@ export const ScriptGenerator = ({
   } else if (templateType === 3) {
     let text1 = ' wanted me to send you ';
     let text2 = ' I wanted me to send you ';
+    let occasionText = occasion;
     if (occasionKey === 37) {
       text1 = ' wanted me to propose ';
       text2 = ' I wanted me to propose ';
+      occasionText = '';
     }
     if (isEmpty(fromName) && !isEmpty(relationship)) {
       text2 = ' wanted me to send you ';
@@ -384,7 +393,7 @@ export const ScriptGenerator = ({
       forName,
       relationship,
       fromName,
-      occasion,
+      occasionText,
       date,
       `${specification}`,
       'Hey',
@@ -434,14 +443,6 @@ export const ScriptGenerator = ({
       getDateSpecificText(date, days[0], fromName, someOneElse),
       '',
       getLastContent(date, days[0], fromName, relationship, someOneElse),
-    );
-  } else if (templateType === 6) {
-    htmlElm += getAnnouncementScript(
-      forName,
-      specification,
-      date,
-      occasion,
-      templateType,
     );
   } else if ([6, 7].includes(templateType)) {
     htmlElm += getAnnouncementScript(
