@@ -126,7 +126,7 @@ const CropperStyled = styled.div`
     width: 75%;
     margin: 15px auto;
     text-align: center;
-    display:none;
+    display: none;
   }
 
   .croppie-result {
@@ -282,13 +282,19 @@ CropperStyled.ButtonWrapper = styled.div`
   z-index: 1;
   position: relative;
   margin-top: 97px;
-  ${media.webView}{
+  ${media.webView} {
     transform: translateY(-50%);
     margin-top: 0;
   }
   .button {
     width: 250px;
     height: 60px;
+  }
+  @media (max-width: 831px) {
+    margin-top: 96px;
+  }
+  @media (min-width: 832px) {
+    transform: translateY(-50%);
   }
 `;
 CropperStyled.CropperLightButton = styled.button`

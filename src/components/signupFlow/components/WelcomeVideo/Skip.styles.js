@@ -7,21 +7,6 @@ export const Container = styled(Layout)`
   .colAlign {
     flex-direction: column;
     align-items: center;
-    .button {
-      font-size: 18px;
-      font-family: Gilroy-Semibold;
-    }
-    .button:first-child {
-      padding: 7px 55px;
-    }
-    .button:last-child {
-      padding: 7px 79px;
-    }
-    .button:hover {
-      background-color: #2f839d;
-      color: #fff;
-      box-shadow: none;
-    }
   }
   .leftArrow {
     position: absolute;
@@ -52,9 +37,6 @@ export const Container = styled(Layout)`
   }
   .whiteBtn {
     margin-top: 16px;
-    color: #2f839d;
-    background: #fff;
-    padding: 7px 80px;
   }
 `;
 

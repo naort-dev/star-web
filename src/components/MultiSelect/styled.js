@@ -20,6 +20,32 @@ const MultiSelectStyled = styled.div`
     .select__input {
       color: #615195;
     }
+    .select__multi-value {
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(47, 131, 157);
+      border-image: initial;
+      background: rgb(255, 255, 255);
+      height: 26.7px;
+      margin: 5px 5px 0 0px;
+      padding: 0px 12px;
+      border-radius: 16px;
+    }
+    .select__multi-value__label {
+      padding-left: 0px;
+      padding-right: 4px;
+      font-family: Gilroy-Regular;
+      font-size: 14px;
+      color: ${props => props.theme.greyishBrown};
+    }
+    .select__multi-value__remove {
+      font-size: 16.9px;
+      color: rgb(47, 131, 157);
+      cursor: pointer;
+      &:hover {
+        background: none;
+      }
+    }
   }
   .select__indicator-separator {
     display: none;
@@ -71,6 +97,8 @@ const MultiSelectStyled = styled.div`
   }
   .chip-delete-icon {
     font-size: 16.9px;
+    width: 20px;
+    height: 20px;
     color: ${props => props.theme.flatBlue};
     &:hover {
       color: ${props => props.theme.flatBlue};

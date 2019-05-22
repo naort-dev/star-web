@@ -55,7 +55,7 @@ UploadContainer.CloseButton = styled.span`
 
 UploadContainer.Container = styled.div`
   .action-buttons {
-    top: 0px;
+    top: 9px;
   }
   @media (min-width: 832px) {
     padding: 0 20px;
@@ -67,7 +67,6 @@ UploadContainer.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  padding-top: 24px;
   @media (max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
@@ -129,22 +128,6 @@ UploadContainer.ButtonWrapper = styled.div`
   @media (max-width: 831px) {
     margin-top: 101px;
   }
-`;
-
-UploadContainer.ContinueButton = styled.button`
-  cursor: pointer;
-  background-color: #2f839d;
-  font-family: Gilroy-Medium;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 30px;
-  width: 300px;
-  height: 60px;
-  outline: none;
 `;
 
 UploadContainer.BrowseCategories = styled.div`
@@ -226,7 +209,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   .right-section {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 360px);
+    height: 515px;
     width: 100%;
   }
   .subCategoryHeading {
@@ -286,9 +269,10 @@ UploadContainer.SubItemWrapper = styled.ul`
     font-family: Gilroy-medium;
     font-size: 14px;
     align-items: center;
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 5px;
+    margin-right: 5px;
     cursor: pointer;
+    height: 26px;
   }
 `;
 UploadContainer.Item = styled.li`
@@ -342,7 +326,7 @@ ImageUpload.CloseButton = styled.span`
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: ${props =>
-    props.imagePresent ? '51px 10px 38px' : '51px 10px 138px'};
+    props.imagePresent ? '51px 10px 38px' : '51px 10px 117px'};
   @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
@@ -457,7 +441,6 @@ ImageUpload.CropWrapper = styled.div`
     ${media.webView} {
       padding-top: 31px;
     }
-
     position: relative;
     z-index: 0;
   }
@@ -467,10 +450,12 @@ ImageUpload.Heading = styled.div`
   text-align: center;
   color: #ff6c58;
   font-size: 24px;
-  font-family: 'Gilroy-Medium';
-  padding-top: 43px;
-  ${media.webView} {
-    padding-top: 0;
+  font-family: 'Gilroy';
+  padding-top: 44px;
+  padding-bottom: 92px;
+  @media (min-width: 832px) {
+    padding-top: 36px;
+    padding-bottom: 28px;
   }
 `;
 ImageUpload.ControlWrapper = styled.div`
@@ -580,6 +565,7 @@ ImageUpload.TakePhoto = styled.div`
   overflow: hidden;
   .videoError {
     min-height: 500px;
+    background: #000;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -600,10 +586,11 @@ ImageUpload.PhotoButtonWrapper = styled.div`
     width: 250px;
     height: 60px;
   }
-  margin-top: 97px;
-  ${media.webView} {
+  @media (max-width: 831px) {
+    margin-top: 96px;
+  }
+  @media (min-width: 832px) {
     transform: translateY(-50%);
-    margin-top: 0;
   }
 `;
 

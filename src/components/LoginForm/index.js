@@ -7,6 +7,7 @@ import ActionLoader from '../ActionLoader';
 import { LoginContainer } from "./styled";
 import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { TextInput } from '../TextField';
+import PrimaryButton from '../PrimaryButton';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
 import { SignUpMethod } from '../SignupMethod/styled';
@@ -486,12 +487,15 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.ErrorMsg>
                     }
                   </LoginContainer.WrapsInput>
-                  <LoginContainer.SignIn
+                  <PrimaryButton
                     type="submit"
                     value="Log in"
+                    secondary
                     onClick={this.onLogin}
                     disabled={this.props.loading}
-                  />
+                  >
+                    Log in
+                  </PrimaryButton>
                 {this.props.statusCode === '410' ? (
                   <React.Fragment />
                 ) : (

@@ -185,7 +185,7 @@ TypeSelectorWrapper.HeaderText = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #ff6c58;
-  padding: 43px 0 55px;
+  padding: 41px 0 55px;
   @media(min-width:832px){
     font-size: 24px;
     padding: 45px 0 37px;
@@ -232,7 +232,7 @@ TypeSelectorWrapper.Button = styled.button`
   }
 `;
 TypeSelectorWrapper.Type = styled.div`
-  padding-bottom: 49px;
+  padding-bottom: 53px;
   cursor: pointer;
   transition: all .2s ease-in-out;
   &:hover { transform: scale(1.1);}
@@ -254,7 +254,7 @@ TypeSelectorWrapper.Label = styled.span`
   font-family: Gilroy-Extrabold;
   font-size: 50px;
   line-height: .89;
-  padding-top: 12px;
+  padding-top: 10px;
   letter-spacing: normal;
   text-align: center;
   color: #2f839d;

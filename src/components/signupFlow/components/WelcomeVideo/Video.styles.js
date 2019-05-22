@@ -4,7 +4,7 @@ import { media } from '../../../../styles/mediaQueries';
 export const Layout = styled.section`
   height: 100%;
   max-width: 318px;
-  padding-top: 55px;
+  padding-top: 49px;
   ${media.webView} {
     max-width: 570px;
   }
@@ -22,20 +22,6 @@ export const Layout = styled.section`
     }
     .button {
       padding: 20px 0;
-    }
-  }
-  .button {
-    height: 60px;
-    padding: 0 20px !important;
-    width: 300px;
-    line-height: 60px;
-    border: 0;
-    font-size: 18px;
-    ${media.webView} {
-      margin-left: 0;
-    }
-    &:hover {
-      box-shadow: none;
     }
   }
   .note {
@@ -96,6 +82,13 @@ export const VideoContainer = styled.section`
     left: 50%;
     bottom: 20px;
     transform: translateX(-50%);
+    height: 60px;
+    font-size: 18px;
+    line-height: 60px;
+    padding: 0;
+    @media(max-width: 831px) {
+      bottom: 25px;
+    }
   }
   .videoElm {
     width: 100%;

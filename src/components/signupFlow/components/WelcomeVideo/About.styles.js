@@ -37,14 +37,6 @@ export const Layout = styled.section`
       max-width: 410px;
     }
   }
-  .button {
-    height: 60px;
-    padding: 0 20px;
-    width: 300px;
-    line-height: 60px;
-    border: 0;
-    font-size: 18px;
-  }
   .skip {
     display: inline-block;
     width: 100%;
@@ -80,7 +72,7 @@ export const QuesWrapper = styled.section`
     text-align: left;
     color: #46829a;
     font-size: 18px;
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy;
     margin-bottom: 19px;
     @media (max-width: 831px) {
       text-align: center;

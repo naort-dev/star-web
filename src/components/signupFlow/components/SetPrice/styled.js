@@ -31,6 +31,7 @@ SetPriceWrapper.HeaderText = styled.div`
   text-align: center;
   color: #ff6c58;
   padding-bottom: 10px;
+  margin-top: ${props => (props.confirmation ? '52px' : '0')};
   @media(max-width:831px){
     padding-bottom: 9px;
     font-size: 28px;
@@ -56,37 +57,9 @@ SetPriceWrapper.Title = styled.div`
 `;
 SetPriceWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  padding-top: 15px;
+  padding-top: ${props => (props.confirmation ? '87px' : '15px')};
 `;
-SetPriceWrapper.Button = styled.button`
-width: 250px;
-height: 60px;
-border-radius: 60px;
-background-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-border-width: 2px;
-border-style: solid;
-margin: 0 10px;
-font-family: Gilroy-Bold;
-font-size: 18px;
-line-height: 1.5;
-text-align: center;
-span {
-  padding-left: 11px;
-}
-color: #ffffff;
-outline:none;
-cursor: pointer;
-&:hover {
-  background-color: #ffffff;
-  color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-  border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-}
-@media(max-width: 832px){
-  width:100%;
-  margin-bottom:20px;
-}
-`;
+
 SetPriceWrapper.WrapsInput = styled.div`
   width:100%;
   padding-bottom: 5px;

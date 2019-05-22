@@ -53,15 +53,8 @@ GroupStyled.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
-  @media(min-width:768px){
-    font-size:25px;
-  }
-  @media(min-width: 1025px){
-    font-size: 25px;
-  }
-  @media(min-width:1920px){
-    font-size: 27px;
-  }
+  padding-top: 44px;
+  padding-bottom: 92px;
 `;
 
 GroupStyled.HeadingWrapper = styled.div`

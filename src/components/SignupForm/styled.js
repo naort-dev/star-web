@@ -106,33 +106,6 @@ LoginContainer.Heading = styled.div`
   }
   
 `;
-const disabledStyles = (isDisabled) => {
-  if (isDisabled) {
-    return `
-      opacity: 0.3;
-      pointer-events: none;
-    `;
-  }
-};
-
-
-LoginContainer.ContinueButton = styled.button`
-${props => disabledStyles(props.isDisabled)};
-  cursor: pointer;
-  background-color: #2f839d;
-  font-family: Gilroy-Bold;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 30px;
-  width: 300px;
-  height: 60px;
-  outline: none;
-  margin-bottom: 10px;
-`;
 
 LoginContainer.ButtonIcon = styled.img`  
   width: 23px;
@@ -440,16 +413,34 @@ LoginContainer.WrapsInput = styled.div`
   }
   input {
     font-family: Gilroy;
-    font-size: 18px;
+    font-size: 22px;
     line-height: 1.14;
     text-align: center;
     color: #615195;
     text-align: center;
+    &.input-label-first-name {
+      &::-webkit-input-placeholder { font-size: 18px;}
+      &:-moz-placeholder { font-size: 18px;}
+      &::-moz-placeholder {  font-size: 18px;}
+      &:-ms-input-placeholder { font-size: 18px;}
+    }
+    &.input-label-last-name {
+      &::-webkit-input-placeholder { font-size: 18px;}
+      &:-moz-placeholder { font-size: 18px;}
+      &::-moz-placeholder {  font-size: 18px;}
+      &:-ms-input-placeholder { font-size: 18px;}
+    }
     &.input-label-stage-name {
-      font-size: 17px;
+      &::-webkit-input-placeholder { font-size: 17px;}
+      &:-moz-placeholder { font-size: 17px;}
+      &::-moz-placeholder {  font-size: 17px;}
+      &:-ms-input-placeholder { font-size: 17px;}
     }
     &.input-label-email {
-      font-size: 16px;
+      &::-webkit-input-placeholder { font-size: 16px;}
+      &:-moz-placeholder { font-size: 16px;}
+      &::-moz-placeholder {  font-size: 16px;}
+      &:-ms-input-placeholder { font-size: 16px;}
     }
   }
   input::-webkit-input-placeholder { color:#aaaaaa; opacity: 1; }

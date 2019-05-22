@@ -4,6 +4,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { iosPriceFinder, numberToCommaFormatter, commaToNumberFormatter } from '../../../../utils/dataformatter'
 import { TextInput } from '../../../TextField'
+import PrimaryButton from '../../../PrimaryButton';
 import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode';
 import {convertedApplePrice} from '../../constants';
@@ -18,12 +19,13 @@ export default class SetPrice extends React.Component {
       isReferred: props.switched ? props.switched : false,
       confirmPrice: false,
       referralCode: { value: '', isValid: false, message: '' },
-      price: { value: '', isValid: false, message: '' },
+      price: { value: '20', isValid: false, message: '' },
       // compSwitch: props.switched ? props.switched : false,
     };
   }
 
   onSubmit = () => {
+    console.log('iosPriceFinder(priceValue, this.props.inAppPriceList)', iosPriceFinder(priceValue, this.props.inAppPriceList));
     const priceValue = commaToNumberFormatter(this.state.price.value);
     const priceDetails = {
       rate: priceValue,
@@ -34,6 +36,7 @@ export default class SetPrice extends React.Component {
       if (parseInt(priceValue) < 500 ) {
         this.props.primaryButtonClick(priceDetails)
       } else if(this.state.confirmPrice) {
+        console.log('this.state.confirmPrice', this.state.confirmPrice);
         this.props.primaryButtonClick(priceDetails)
       } else {
         this.setState({
@@ -48,6 +51,7 @@ export default class SetPrice extends React.Component {
       this.setState({
         isReferred: false
       })
+      this.props.disableClose(false);
     }
   }
 
@@ -98,7 +102,7 @@ export default class SetPrice extends React.Component {
   };
 
   checkPriceRequired = () => {
-    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,2}(,\d{3})*)|0)?(\.\d{1,2})?$/;
+    const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
     const priceEmpty = !this.state.price.value
     if (priceEmpty) {
       const priceMsg = "Price can't be blank";
@@ -110,7 +114,10 @@ export default class SetPrice extends React.Component {
       });
       return false;
     }
+    console.log('commaToNumberFormatter(this.state.price.value)', commaToNumberFormatter(this.state.price.value));
+    console.log(this.state.price.value);
     if (!pattern.test(commaToNumberFormatter(this.state.price.value))) {
+      console.log(!pattern.test(commaToNumberFormatter(this.state.price.value)));
       this.setState({
         price: {
           ...this.state.price,
@@ -131,18 +138,19 @@ export default class SetPrice extends React.Component {
 
   saveFormEntries = (event, type) => {
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
-    if(type==='price' && event.target.value) {
+    const value = event.target.value.substr(1);
+    if(type==='price' && value !== ' ') {
       this.setState({
         [type]: {
           ...this.state[type],
-          value: pattern.test(commaToNumberFormatter(event.target.value)) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value)) : this.state.price.value,
+          value: pattern.test(commaToNumberFormatter(event.target.value.substr(1))) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value.substr(1))) : this.state.price.value,
         },
       });
     } else {
     this.setState({
       [type]: {
         ...this.state[type],
-        value: event.target.value,
+        value: type === 'price' ? value : event.target.value
       },
     });
   }
@@ -150,14 +158,19 @@ export default class SetPrice extends React.Component {
   backArrowClick = () => {
     if (this.state.isReferred) {
       this.setState({isReferred: false});
+      this.props.disableClose(false);
     } else {
       this.props.onBack(false);
     }
   };
 
   closeSetPrice = () => {
-    this.props.closeSignupFlow(this.state.isReferred)
-    this.setState({isReferred: false});
+    if (this.state.isReferred) {
+      this.setState({isReferred: false});
+      this.props.disableClose(false);
+    } else {
+      this.props.closeSignupFlow(this.state.isReferred)
+    }
   }
 
   render() {
@@ -186,7 +199,7 @@ export default class SetPrice extends React.Component {
           <SetPriceWrapper.Image className="image-wrap"
             imageUrl={props.image_url}>
           </SetPriceWrapper.Image>
-          <SetPriceWrapper.HeaderText>
+          <SetPriceWrapper.HeaderText confirmation={confirmPrice}>
             {confirmPrice ? props.confirmationTitle : props.title}
           </SetPriceWrapper.HeaderText>
           <SetPriceWrapper.Description error={this.state.price.message}>
@@ -199,18 +212,16 @@ export default class SetPrice extends React.Component {
               placeholder={'Price'}
               type="text"
               name="price"
-              value={this.state.price.value}
-              onBlur={this.checkPriceRequired}
+              value={`${this.state.price.value !== ' ' ? '$':''}${this.state.price.value}`}
               onChange={(event) => this.saveFormEntries(event, "price")}
-              InputProps={{
-                startAdornment: <InputAdornment classes={{root: 'adornment'}} position="start">$</InputAdornment>,
-              }}
             />
           </SetPriceWrapper.WrapsInput>
           {confirmPrice ? null :
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
-              Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.&nbsp;
+              { this.state.price.value && this.state.price.value > 0 && this.state.price.value < 10000 ?
+                (<React.Fragment>Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>. &nbsp;</React.Fragment> )  : ''
+              }
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
               <SetPriceWrapper.HighLight onClick={this.onRefer}>
@@ -220,10 +231,10 @@ export default class SetPrice extends React.Component {
               </SetPriceWrapper.HighLight>
             </SetPriceWrapper.Block>
           }
-          <SetPriceWrapper.ButtonWrapper>
-            <SetPriceWrapper.Button primary onClick={this.onSubmit}>
+          <SetPriceWrapper.ButtonWrapper confirmation={confirmPrice}>
+            <PrimaryButton onClick={this.onSubmit}>
               {confirmPrice ? props.confirmPrimaryButton : props.primary_button}
-            </SetPriceWrapper.Button>
+            </PrimaryButton>
           </SetPriceWrapper.ButtonWrapper>
         </SetPriceWrapper.ComponentWrapper>
       </SetPriceWrapper>

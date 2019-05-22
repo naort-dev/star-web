@@ -3,6 +3,7 @@ import validator from 'validator';
 import Api from '../../lib/api';
 import forgotPassword from '../../utils/forgotPassword';
 import Loader from '../Loader';
+import PrimaryButton from '../PrimaryButton';
 import { LoginContainer } from '../../components/LoginForm/styled';
 import { ForgotPasswordWrap } from './styled';
 import { TextInput } from '../TextField';
@@ -94,12 +95,15 @@ export default class ForgotPassword extends React.Component {
                     </LoginContainer.InputWrapper>
                     <ForgotPasswordWrap>
                       <LoginContainer.ButtonWrapper >
-                        <LoginContainer.SignIn
+                        <PrimaryButton
+                          secondary
                           onClick={this.onForgotPassword}
                           disabled={this.props.loading}
                           value="Continue"
                           type="submit"
-                        />
+                        >
+                          Continue
+                        </PrimaryButton>
                       </LoginContainer.ButtonWrapper>
                       <LoginContainer.ErrorMsg>{this.state.errorCondition ? this.state.message : null}</LoginContainer.ErrorMsg>
                     </ForgotPasswordWrap>

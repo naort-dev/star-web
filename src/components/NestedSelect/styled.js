@@ -11,6 +11,7 @@ const NestedSelectStyled = styled.div`
     right: 0;
     text-align: center;
     transform: none;
+    font-size: 13px;
     color: ${props => props.theme.brownGreyTwo} !important;
   }
   .select__menu {
@@ -19,13 +20,42 @@ const NestedSelectStyled = styled.div`
       padding-top: 0;
     }
   }
+  .select__clear-indicator {
+    cursor: pointer;
+  }
   .select__value-container {
     justify-content: center;
     font-size: 24px;
     padding: 10px 0px 10px !important;
     .select__input {
       color: #615195;
-      padding: 10px 0;
+      padding: 0px 0;
+    }
+    .select__multi-value {
+      border-width: 1px;
+      border-style: solid;
+      border-color: rgb(47, 131, 157);
+      border-image: initial;
+      background: rgb(255, 255, 255);
+      height: 26.7px;
+      margin: 5px 5px 0 0px;
+      padding: 0px 12px;
+      border-radius: 16px;
+    }
+    .select__multi-value__label {
+      padding-left: 0px;
+      padding-right: 4px;
+      font-family: Gilroy-Regular;
+      font-size: 14px;
+      color: ${props => props.theme.greyishBrown};
+    }
+    .select__multi-value__remove {
+      font-size: 16.9px;
+      color: rgb(47, 131, 157);
+      cursor: pointer
+      &:hover {
+        background: none;
+      }
     }
   }
   .select__group {
@@ -41,8 +71,12 @@ const NestedSelectStyled = styled.div`
     }
     input {
       display: none;
-      &:checked + div .select-option-item {
-        display: none;
+      &:checked + label {
+        font-family: Gilroy-Regular;
+        background: #fff;
+        & + div .select-option-item {
+          display: none;
+        }
       }
     }
     .select-option-item {

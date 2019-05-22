@@ -7,13 +7,13 @@ const TermsConditionsWrapper = styled.div`
     height: calc(100% - 55px);
   }
   .terms-wrapper {
-    height: calc(100vh - 290px) !important;
+    height: 529px !important;
     max-width: 470px;
     margin: 26px auto 25px;
 
     @media(min-width:832px){
-      height: calc(100vh - 390px) !important;
-      margin-bottom: 9px;
+      height: 439px !important;
+      margin-bottom: 22px;
       margin-top: 4px;
     }
   }
@@ -50,23 +50,9 @@ TermsConditionsWrapper.ButtonWrapper = styled.div`
   padding-bottom: 30px;
 `;
 
-TermsConditionsWrapper.Button = styled.button`
-  width: 300px;
-  height: 60px;
-  background-color: #2f839d;
-  font-family: Gilroy-Semibold;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  border-radius: 30px;
-  cursor: pointer;
-
-`;
-
 TermsConditionsWrapper.Description = styled.p`
   font-family: Gilroy-Light;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 1.63;
   text-align: left;
   color: #555555;
