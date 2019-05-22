@@ -223,7 +223,11 @@ class Purchase extends Component {
             starImage={this.getThumbnail()}
           />
           <Content className="contentPadding" step={this.state.stepCount}>
-            <Scrollbars>
+            <Scrollbars
+              renderView={props => (
+                <div {...props} className="scrollRenderView" />
+              )}
+            >
               <ModalSwitcher>{this.getBodyComponent()}</ModalSwitcher>
             </Scrollbars>
           </Content>
