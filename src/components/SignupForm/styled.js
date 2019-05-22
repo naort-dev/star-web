@@ -196,14 +196,17 @@ LoginContainer.Label = styled.div`
     line-height: 30px;
     align-items:center;
     padding-bottom:0px;
-    padding-top: 48px;
+    padding-top: 44px;
+    &.optional-text {
+      padding-top: 43px;
+    }
   }
   @media(max-width:831px){
-    margin-top: 6px;
-    margin-bottom: 7.5px;
+    margin-top: 5px;
+    margin-bottom: 5.5px;
     &.optional-text {
-      margin-top: 6px;
-      margin-bottom: 7px;
+      margin-top: 10px;
+      margin-bottom: -2px;
     }
   }
 
@@ -258,9 +261,9 @@ LoginContainer.PrivacyContent = styled.div`
   max-width: 300px;
   position: relative;
   padding-left: 38px;
-  margin: -9px auto 39px;
+  margin: 19px auto 39px;
   @media(min-width: 832px) {
-    margin: 37px auto 0;
+    margin: 33px auto 0;
     max-width: 341px;
   }
 
@@ -402,9 +405,9 @@ LoginContainer.WrapsInput = styled.div`
   width:100%;
   > div {
     width: 100%;
-    @media(max-width: 768px) {
+    @media(max-width: 832px) {
       &:first-child {
-        margin-bottom: 20px;
+        margin-bottom: 15px;
         &.no-space {
           margin-bottom: 0;
         }
@@ -534,7 +537,7 @@ LoginContainer.InputContainer = styled.div`
   }
 `;
 LoginContainer.ButtonWrapper = styled.div`
-  margin-top:5%;
+  margin-top: 17px;
 `;
 LoginContainer.SignupLine = styled.div`
   display: block;

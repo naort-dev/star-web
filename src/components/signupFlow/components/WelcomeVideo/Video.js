@@ -122,7 +122,7 @@ const Video = props => {
                   <span className="text">{renderTimeHeader()}</span>
                   <span className="time">{renderTime()}</span>
                 </TimeSpan>
-                <h1 className="heading">What you should say?</h1>
+                <h1 className="heading">What You Should Say…</h1>
                 <QuestionBuilder questionsList={questionsAbout} />
                 <FlexCenter>
                   <Button onClick={buttonClickHandler} className="button">

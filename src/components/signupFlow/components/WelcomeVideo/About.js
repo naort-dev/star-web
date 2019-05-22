@@ -27,7 +27,7 @@ const About = props => {
         <React.Fragment>
           <h1 className="head1">About your welcome video</h1>
           <p className="note">
-            This proves to us that you are who you say you are & gives fans a
+            This proves to us that you are who you say you are &amp; gives fans a
             preview of what a video will look like from you
           </p>
           <QuesWrapper>
