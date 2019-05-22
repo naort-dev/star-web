@@ -1,155 +1,87 @@
 import React from 'react';
-import Cropper, { makeAspectCrop } from 'react-image-crop';
-import 'react-image-crop/dist/ReactCrop.css';
 import CropperStyled from './styled';
+import { Croppie } from 'croppie';
+import Button from 'components/PrimaryButton';
 
 export default class ImageCropper extends React.Component {
-  state = {
-    cropValues: {
-      x: 10,
-      y: 10,
-      aspect: this.props.aspectRatio,
-    },
-    cropImage: null,
+  constructor(props) {
+    super(props);
+    this.state = { isMobile: false };
+    this.cropperRef = React.createRef();
   }
 
-  componentWillMount() {
-    this.convertBeforeCrop(this.props.cropImage);
+  componentDidMount() {
+    window.addEventListener('resize', this.resizeCapture);
+    this.initializeCropper();
+    this.resizeCapture();
   }
 
-  setCropImage = (image) => {
-    this.image = image;
-    const crop = makeAspectCrop({
-      x: 0,
-      y: 20,
-      aspect: this.props.aspectRatio,
-      width: image.width,
-    }, image.width / image.height);
-    const pixelCrop = {
-      x: Math.round(image.naturalWidth * (crop.x / 100)),
-      y: Math.round(image.naturalHeight * (crop.y / 100)),
-      width: Math.round(image.naturalWidth * (crop.width / 100)),
-      height: Math.round(image.naturalHeight * (crop.height / 100))
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.isMobile !== prevState.isMobile) {
+      this.croppieElm.destroy();
+      this.initializeCropper();
+    }
+  }
+
+  initializeCropper = () => {
+    const croppieOptions = {
+      showZoomer: false,
+      enableExif: true,
+      enableOrientation: true,
+      mouseWheelZoom: true,
+      enableResize: true,
+      viewport: {
+        type: 'circle',
+        width: this.state.isMobile ? 198 : 369,
+        height: this.state.isMobile ? 198 : 369,
+      },
+      boundary: {
+        width: '100%',
+      },
     };
-    this.setState({
-      cropValues: crop,
-    });
-    this.onCropChange(crop, pixelCrop);
-  }
+    const croppie = document.getElementById('croppie');
+    this.croppieElm = new Croppie(croppie, croppieOptions);
+    this.croppieElm.bind({ url: this.props.cropImage });
+  };
+
+  resizeCapture = () => {
+    if (
+      document.body.getBoundingClientRect().width <= 832 ||
+      window.innerWidth <= 832
+    ) {
+      this.setState({ isMobile: true });
+    } else {
+      this.setState({ isMobile: false });
+    }
+  };
 
   handleCrop = () => {
-    const canvas = document.createElement('canvas');
-    canvas.width = this.pixelCrop.width;
-    canvas.height = this.pixelCrop.height;
-    const ctx = canvas.getContext('2d');
-    ctx.drawImage(
-      this.image,
-      this.pixelCrop.x,
-      this.pixelCrop.y,
-      this.pixelCrop.width,
-      this.pixelCrop.height,
-      0,
-      0,
-      this.pixelCrop.width,
-      this.pixelCrop.height,
-    );
-    const base64Image = canvas.toDataURL('image/jpeg');
-    canvas.toBlob(file => {
-      this.props.afterCrop(file, base64Image);
+    this.croppieElm.result('blob').then(file => {
+      this.blobToBase64(file);
+    });
+  };
+
+  blobToBase64 = blob => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      this.props.afterCrop(blob, reader.result);
       this.props.closeCropper();
-    }, 'image/jpeg');
-    
-  }
-
-  onCropChange = (cropValues, pixelCrop) => {
-    this.pixelCrop = pixelCrop;
-    this.setState({ cropValues: { ...cropValues, aspect: this.props.aspectRatio } });
-  }
-
-
-  convertBeforeCrop = (imageURL) => {
-    const image = new Image();
-    image.onload = function () {
-      let imageRatio = image.width/image.height;
-      const height = image.height;
-      const width = image.width;
-      const canvas = document.createElement('canvas');
-      const ctx = canvas.getContext('2d');
-      canvas.width = width;
-      canvas.height = height;
-      switch (this.props.exifData) {
-        case 2:
-          ctx.translate(height, 0);
-          ctx.scale(-1, 1);
-          break;
-
-        case 3:
-          ctx.translate(width, height);
-          ctx.rotate(180 * Math.PI / 180);
-          break;
-
-        case 4:
-          ctx.translate(0, height);
-          ctx.scale(1, -1);
-          break;
-
-        case 5:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(90 * Math.PI / 180);
-          ctx.scale(1, -1);
-          break;
-
-        case 6:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(90 * Math.PI / 180);
-          ctx.translate(0, -height);
-          break;
-
-        case 7:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.rotate(-90 * Math.PI / 180);
-          ctx.translate(-width, height);
-          ctx.scale(1, -1);
-          break;
-
-        case 8:
-          canvas.width = height;
-          canvas.height = width;
-          ctx.translate(0, width);
-          ctx.rotate(-90 * Math.PI / 180);
-          break;
-      }
-      ctx.drawImage(
-        image,
-        0,
-        0,
-        width,
-        height,
-      );
-      const base64Image = canvas.toDataURL('image/jpeg');
-      this.setState({ cropImage: base64Image })
-    }.bind(this);
-    image.src = imageURL;
-  }
+    };
+    reader.readAsDataURL(blob);
+  };
 
   render() {
     return (
-      <CropperStyled innerRef={(node) => { this.cropperWrapper = node; }}>
-        {
-          this.state.cropImage &&
-            <Cropper
-              src={this.state.cropImage}
-              crop={this.state.cropValues}
-              keepSelection
-              onImageLoaded={this.setCropImage}
-              onChange={this.onCropChange}
-            />
-        }
+      <CropperStyled
+        innerRef={node => {
+          this.cropperWrapper = node;
+        }}
+      >
+        <div id="croppie" />
         <CropperStyled.ButtonWrapper>
-          <CropperStyled.CropperButton onClick={this.handleCrop}>I like it, continue</CropperStyled.CropperButton>
+          <Button onClick={this.handleCrop} className="button">
+            I like it, continue
+          </Button>
         </CropperStyled.ButtonWrapper>
       </CropperStyled>
     );

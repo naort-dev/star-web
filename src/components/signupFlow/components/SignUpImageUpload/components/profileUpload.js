@@ -94,8 +94,8 @@ export default class ProfileUpload extends React.Component {
     const exif = await this.getExif(file);
     this.currentExif = exif;
     reader.onload = () => {
-      this.props.onComplete(reader.result, exif, extension);
       this.setState({ cropMode: true, cropImage: reader.result, extension, imageLoading: false });
+      this.props.onComplete(reader.result, exif, extension);
     };
     if (file) {
       reader.readAsDataURL(file);

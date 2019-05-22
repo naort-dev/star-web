@@ -31,8 +31,7 @@ const ButtonStyled = styled.button`
     border-color: ${props => props.theme.greyishBrown};
   }
   @media(min-width: 375px) {
-    min-width: 300px;
-    font-size: 20px;
+    width: 300px;
   }
 `;
 
