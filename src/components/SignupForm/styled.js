@@ -106,33 +106,6 @@ LoginContainer.Heading = styled.div`
   }
   
 `;
-const disabledStyles = (isDisabled) => {
-  if (isDisabled) {
-    return `
-      opacity: 0.3;
-      pointer-events: none;
-    `;
-  }
-};
-
-
-LoginContainer.ContinueButton = styled.button`
-${props => disabledStyles(props.isDisabled)};
-  cursor: pointer;
-  background-color: #2f839d;
-  font-family: Gilroy-Bold;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 30px;
-  width: 300px;
-  height: 60px;
-  outline: none;
-  margin-bottom: 10px;
-`;
 
 LoginContainer.ButtonIcon = styled.img`  
   width: 23px;

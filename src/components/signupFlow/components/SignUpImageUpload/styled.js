@@ -130,22 +130,6 @@ UploadContainer.ButtonWrapper = styled.div`
   }
 `;
 
-UploadContainer.ContinueButton = styled.button`
-  cursor: pointer;
-  background-color: #2f839d;
-  font-family: Gilroy-Medium;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 30px;
-  width: 300px;
-  height: 60px;
-  outline: none;
-`;
-
 UploadContainer.BrowseCategories = styled.div`
   font-size: 14px;
   text-align: center;

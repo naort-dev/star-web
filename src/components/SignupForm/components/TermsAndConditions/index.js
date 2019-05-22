@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Scrollbars } from 'react-custom-scrollbars';
+import PrimaryButton from '../../../PrimaryButton';
 import TermsConditionsWrapper from './styled';
 import { TERMS } from './constants';
-import { Scrollbars } from 'react-custom-scrollbars';
 
 export const TermsAndConditions = props => (
   <TermsConditionsWrapper>
@@ -180,8 +181,9 @@ export const TermsAndConditions = props => (
     </TermsConditionsWrapper.Description>
       </Scrollbars>
       <TermsConditionsWrapper.ButtonWrapper>
-        <TermsConditionsWrapper.Button className="common-button-nobr no-focus" onClick={props.agreeTermsConditions}>{TERMS.BUTTON_LABEL}
-        </TermsConditionsWrapper.Button>
+        <PrimaryButton onClick={props.agreeTermsConditions}>
+          {TERMS.BUTTON_LABEL}
+        </PrimaryButton>
       </TermsConditionsWrapper.ButtonWrapper>
     </TermsConditionsWrapper.ComponentWrapper>
   </TermsConditionsWrapper >
