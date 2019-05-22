@@ -38,13 +38,14 @@ export const Layout = styled.section`
     display: none;
     width: 100%;
     text-align: center;
-    padding-top: 12px;
+    padding-top: 5px;
     color: #615195;
     font-size: 14px;
     cursor: pointer;
     font-family: Gilroy;
     ${media.webView} {
       display: inline-block;
+      padding-top: 15px;
     }
   }
   .skipMob {
@@ -52,6 +53,7 @@ export const Layout = styled.section`
     position: absolute;
     top: ${props => (props.error ? '532px' : '620px')};
     left: 0;
+    padding-top: 5px;
     ${media.webView} {
       display: none;
     }
