@@ -50,6 +50,7 @@ export default class SetPrice extends React.Component {
       this.setState({
         isReferred: false
       })
+      this.props.disableClose(false);
     }
   }
 
@@ -156,14 +157,19 @@ export default class SetPrice extends React.Component {
   backArrowClick = () => {
     if (this.state.isReferred) {
       this.setState({isReferred: false});
+      this.props.disableClose(false);
     } else {
       this.props.onBack(false);
     }
   };
 
   closeSetPrice = () => {
-    this.props.closeSignupFlow(this.state.isReferred)
-    this.setState({isReferred: false});
+    if (this.state.isReferred) {
+      this.setState({isReferred: false});
+      this.props.disableClose(false);
+    } else {
+      this.props.closeSignupFlow(this.state.isReferred)
+    }
   }
 
   render() {
@@ -192,7 +198,7 @@ export default class SetPrice extends React.Component {
           <SetPriceWrapper.Image className="image-wrap"
             imageUrl={props.image_url}>
           </SetPriceWrapper.Image>
-          <SetPriceWrapper.HeaderText>
+          <SetPriceWrapper.HeaderText confirmation={confirmPrice}>
             {confirmPrice ? props.confirmationTitle : props.title}
           </SetPriceWrapper.HeaderText>
           <SetPriceWrapper.Description error={this.state.price.message}>
@@ -205,7 +211,7 @@ export default class SetPrice extends React.Component {
               placeholder={'Price'}
               type="text"
               name="price"
-              value={`${this.state.price.value !== ' ' ? '$':''} ${this.state.price.value}`}
+              value={`${this.state.price.value !== ' ' ? '$':''}${this.state.price.value}`}
               onChange={(event) => this.saveFormEntries(event, "price")}
             />
           </SetPriceWrapper.WrapsInput>
@@ -213,7 +219,7 @@ export default class SetPrice extends React.Component {
             <SetPriceWrapper.Block>
               <SetPriceWrapper.Label>
               { this.state.price.value && this.state.price.value > 0 && this.state.price.value < 10000 ?
-                (<React.Fragment>Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>.</React.Fragment> )  : ''
+                (<React.Fragment>Converted Apple Price: <b>${iosPriceFinder(this.state.price.value, this.props.inAppPriceList)}</b>. &nbsp;</React.Fragment> )  : ''
               }
                 {convertedApplePrice(commaToNumberFormatter(this.state.price.value), this.props.inAppPriceList)}
               </SetPriceWrapper.Label>
@@ -224,7 +230,7 @@ export default class SetPrice extends React.Component {
               </SetPriceWrapper.HighLight>
             </SetPriceWrapper.Block>
           }
-          <SetPriceWrapper.ButtonWrapper>
+          <SetPriceWrapper.ButtonWrapper confirmation={confirmPrice}>
             <SetPriceWrapper.Button primary onClick={this.onSubmit}>
               {confirmPrice ? props.confirmPrimaryButton : props.primary_button}
             </SetPriceWrapper.Button>
