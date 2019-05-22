@@ -59,8 +59,8 @@ const handleGroupHeadClick = (id) => (event) => {
 const GroupHeading = (prop) => {
   return (
     <React.Fragment>
-      <label className='select__group-heading' htmlFor={prop.id.split('-heading')[0]} onClick={handleGroupHeadClick(prop.id.split('-heading')[0])}>{prop.children}</label>
       <input id={prop.id.split('-heading')[0]} type='checkbox' defaultChecked />
+      <label className='select__group-heading' htmlFor={prop.id.split('-heading')[0]} onClick={handleGroupHeadClick(prop.id.split('-heading')[0])}>{prop.children}</label>
     </React.Fragment>
   )
 }
