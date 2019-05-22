@@ -1,13 +1,14 @@
 import React from 'react';
-import CropperStyled from './styled';
 import { Croppie } from 'croppie';
 import Button from 'components/PrimaryButton';
+import CropperStyled from './styled';
 
 export default class ImageCropper extends React.Component {
   constructor(props) {
     super(props);
     this.state = { isMobile: false, cropImage: null };
     this.cropperRef = React.createRef();
+    this.croppieElm = null;
   }
 
   componentDidMount() {
@@ -17,7 +18,7 @@ export default class ImageCropper extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.state.isMobile !== prevState.isMobile) {
+    if (this.state.isMobile !== prevState.isMobile && this.croppieElm) {
       this.croppieElm.destroy();
       this.initializeCropper(this.state.cropImage);
     }
