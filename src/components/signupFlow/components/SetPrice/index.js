@@ -50,6 +50,7 @@ export default class SetPrice extends React.Component {
       this.setState({
         isReferred: false
       })
+      this.props.disableClose(false);
     }
   }
 
@@ -156,14 +157,19 @@ export default class SetPrice extends React.Component {
   backArrowClick = () => {
     if (this.state.isReferred) {
       this.setState({isReferred: false});
+      this.props.disableClose(false);
     } else {
       this.props.onBack(false);
     }
   };
 
   closeSetPrice = () => {
-    this.props.closeSignupFlow(this.state.isReferred)
-    this.setState({isReferred: false});
+    if (this.state.isReferred) {
+      this.setState({isReferred: false});
+      this.props.disableClose(false);
+    } else {
+      this.props.closeSignupFlow(this.state.isReferred)
+    }
   }
 
   render() {
