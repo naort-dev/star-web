@@ -38,7 +38,7 @@ export const resetProfilePhoto = () => ({
 });
 
 export const setProfilePicToState = (profilePic) => ({
-  type: SET_PROFILE_PIC_TO_STATE.reset,
+  type: SET_PROFILE_PIC_TO_STATE,
   payload: profilePic,
 });
 
