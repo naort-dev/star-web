@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from 'styles/mediaQueries';
 
 const CropperStyled = styled.div`
   display: flex;
@@ -39,13 +40,15 @@ const CropperStyled = styled.div`
     margin: 0 auto;
     z-index: 1;
     width: 100%;
-    height: 100%;
+    height: 262px;
+    ${media.webView} {
+      height: 487px;
+    }
   }
 
   .croppie-container .cr-viewport,
   .croppie-container .cr-resizer {
     position: absolute;
-    border: 2px solid #fff;
     margin: auto;
     top: 0;
     bottom: 0;
@@ -109,6 +112,7 @@ const CropperStyled = styled.div`
 
   .croppie-container .cr-vp-circle {
     border-radius: 50%;
+    border: 2px dashed #fff;
   }
 
   .croppie-container .cr-overlay {
@@ -122,6 +126,7 @@ const CropperStyled = styled.div`
     width: 75%;
     margin: 15px auto;
     text-align: center;
+    display:none;
   }
 
   .croppie-result {
@@ -274,7 +279,13 @@ CropperStyled.ButtonWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   flex-direction: row;
-  transform: translateY(-50%);
+  z-index: 1;
+  position: relative;
+  margin-top: 97px;
+  ${media.webView}{
+    transform: translateY(-50%);
+    margin-top: 0;
+  }
 `;
 CropperStyled.CropperLightButton = styled.button`
   cursor: pointer;

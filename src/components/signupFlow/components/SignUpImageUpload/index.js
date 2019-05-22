@@ -32,8 +32,6 @@ class SignUpImageUpload extends React.Component {
     isContinue: false,
   };
 
-  componentWillMount() {}
-
   onBack = () => {
     this.setState({
       cropper: false,

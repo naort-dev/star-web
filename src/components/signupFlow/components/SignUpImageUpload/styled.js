@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from 'styles/mediaQueries';
 
 const UploadContainer = styled.div`
   background-color: white;
@@ -16,7 +17,6 @@ const UploadContainer = styled.div`
 UploadContainer.Wrapper = styled.div`
   .basic-multi-select {
     label {
-      
     }
   }
 `;
@@ -68,7 +68,7 @@ UploadContainer.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 24px;
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
     &.fans-want {
@@ -126,7 +126,7 @@ UploadContainer.ButtonWrapper = styled.div`
   margin-top: 45px;
   text-align: center;
   margin-bottom: 10px;
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     margin-top: 101px;
   }
 `;
@@ -208,7 +208,7 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   top: 0;
   ${UploadContainer.Heading} {
     padding-top: 27px;
-    @media(min-width: 832px) {
+    @media (min-width: 832px) {
       padding-top: 52px;
     }
   }
@@ -219,7 +219,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   padding: 50px 40px 20px 70px;
   align-items: flex-start;
   flex-direction: column;
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     flex-direction: row;
   }
 
@@ -244,7 +244,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
 
 UploadContainer.DesktopView = styled.div`
   display: none;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: block;
   }
 `;
@@ -264,7 +264,7 @@ UploadContainer.MobileView = styled.div`
     white-space: pre-line;
     margin: 0 auto 11px;
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: none;
   }
 `;
@@ -341,16 +341,18 @@ ImageUpload.CloseButton = styled.span`
 `;
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
-  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 138px')};
+  padding: ${props =>
+    props.imagePresent ? '51px 10px 38px' : '51px 10px 138px'};
   @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
-  padding: 51px 10px 138px;
-  @media(min-width: 832px) {
-    padding: 0;
-  }
+    padding-top: 97px;
+    ${media.webView} {
+      padding-top: 31px;
+    }
+
 `;
 
 ImageUpload.ProfileInputButton = styled.div`
@@ -450,7 +452,14 @@ ImageUpload.UploadText = styled.span`
 
 ImageUpload.CropWrapper = styled.div`
   &.cropper-Wrapper {
-    height: 631px;
+    /* height: 631px; */
+    padding-top: 97px;
+    ${media.webView} {
+      padding-top: 31px;
+    }
+
+    position: relative;
+    z-index: 0;
   }
 `;
 
@@ -459,6 +468,10 @@ ImageUpload.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy-Medium';
+  padding-top: 43px;
+  ${media.webView} {
+    padding-top: 0;
+  }
 `;
 ImageUpload.ControlWrapper = styled.div`
   background-color: rgb(255, 255, 255);
@@ -561,6 +574,7 @@ ImageUpload.VideoElement = styled.video`
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
   background: #000;
+  overflow: hidden;
   .videoError {
     min-height: 500px;
     display: flex;
@@ -578,6 +592,8 @@ ImageUpload.TakePhoto = styled.div`
 ImageUpload.PhotoButtonWrapper = styled.div`
   transform: translateY(-50%);
   text-align: center;
+  position: relative;
+  z-index: 2;
 `;
 
 ImageUpload.CropperButton = styled.button`
@@ -601,7 +617,7 @@ ImageUpload.CropperButton = styled.button`
     color: #2f839d;
   }
 `;
-const ErrorMessage= styled.div`
+const ErrorMessage = styled.div`
   color: red;
   text-align: center;
 `;
