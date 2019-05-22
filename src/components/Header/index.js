@@ -6,6 +6,7 @@ import { faUserCircle } from '@fortawesome/pro-regular-svg-icons';
 import { connect } from 'react-redux';
 import HeaderSection from './styled';
 import CategorySection from './components/CategorySection';
+import SecondaryButton from '../SecondaryButton';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
 import { logOutUser } from '../../store/shared/actions/login';
@@ -154,12 +155,12 @@ class Header extends React.Component {
                   <HeaderSection.SignInButtonMobile onClick={() => this.props.toggleLogin(true)}>
                     <FontAwesomeIcon icon={faUserCircle} />
                   </HeaderSection.SignInButtonMobile>
-                  <HeaderSection.AuthButton notFixed={props.notFixed} onClick={() => this.props.toggleSignup(true)}>
+                  <SecondaryButton className='auth-button' secondary={!props.notFixed} onClick={() => this.props.toggleSignup(true)}>
                     Sign Up
-                  </HeaderSection.AuthButton>
-                  <HeaderSection.AuthButton notFixed={props.notFixed} onClick={() => this.props.toggleLogin(true)}>
+                  </SecondaryButton>
+                  <SecondaryButton className='auth-button' secondary={!props.notFixed} onClick={() => this.props.toggleLogin(true)}>
                     Log In
-                  </HeaderSection.AuthButton>
+                  </SecondaryButton>
                 </React.Fragment>
             }
           </HeaderSection.HeaderRight>

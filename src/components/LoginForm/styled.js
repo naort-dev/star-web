@@ -186,11 +186,7 @@ LoginContainer.TwitterContent = LoginContainer.SocialIcon.extend`
 `;
 
 LoginContainer.InputFieldsWrapper = styled.form`
-  
-  padding: 0px 25px;
-  @media(min-width:768px){
-    padding: 0px 0px;
-  }
+
 `;
 LoginContainer.Label = styled.div`
   display:none;

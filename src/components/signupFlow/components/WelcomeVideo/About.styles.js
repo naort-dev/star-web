@@ -37,17 +37,6 @@ export const Layout = styled.section`
       max-width: 410px;
     }
   }
-  .button {
-    height: 60px;
-    padding: 0 20px;
-    width: 300px;
-    line-height: 60px;
-    border: 0;
-    font-size: 18px;
-    &:hover {
-      box-shadow: none;
-    }
-  }
   .skip {
     display: inline-block;
     width: 100%;

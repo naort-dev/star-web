@@ -10,6 +10,7 @@ import TakePhoto from './components/takePhoto';
 import { fetchSuggestionList } from '../../../../store/shared/actions/getSuggestionsList';
 import { imageSizes } from '../../../../constants/imageSizes';
 import DotsContainer from '../../../../components/Dots';
+import PrimaryButton from '../../../../components/PrimaryButton';
 import ImageCropper from '../../../ImageCropper';
 import MultiSelect from '../../../MultiSelect';
 import NestedSelect from '../../../NestedSelect';
@@ -31,8 +32,6 @@ class SignUpImageUpload extends React.Component {
     subCategoriesArray: [],
     isContinue: false,
   };
-
-  componentWillMount() {}
 
   onBack = () => {
     this.setState({
@@ -321,13 +320,9 @@ class SignUpImageUpload extends React.Component {
               </UploadContainer.BrowseCategories>
             </UploadContainer.CategoriesWrapper>
             <UploadContainer.ButtonWrapper>
-              <UploadContainer.ContinueButton
-              className="common-button-nobr no-focus"
-                type="submit"
-                onClick={this.continueClickhandler}
-              >
+              <PrimaryButton type="submit" onClick={this.continueClickhandler}>
                 Continue
-              </UploadContainer.ContinueButton>
+              </PrimaryButton>
             </UploadContainer.ButtonWrapper>
           </React.Fragment>
         )}
