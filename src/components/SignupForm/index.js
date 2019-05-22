@@ -7,7 +7,7 @@ import ActionLoader from '../ActionLoader';
 import Checkbox from '../../components/Checkbox';
 import { TextInput } from '../TextField';
 import { TermsAndConditions } from './components/TermsAndConditions';
-import SignUpImageUpload from '../signupFlow/components/SignUpImageUpload';
+import PrimaryButton from '../PrimaryButton';
 /************************************   Actions  *************************************/
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
@@ -437,14 +437,13 @@ class SignUpForm extends React.Component {
                 </div>
               )}
               <LoginContainer.ButtonWrapper>
-                <LoginContainer.ContinueButton
-                  className="common-button-nobr no-focus hover-btn"
+                <PrimaryButton
                   type="submit"
                   onClick={this.onRegister}
                   isDisabled={!this.state.termsAndConditions.value}
                 >
                   {signUp.button_label}
-                </LoginContainer.ContinueButton>
+                </PrimaryButton>
               </LoginContainer.ButtonWrapper>
             </LoginContainer.InputContainer>
           </LoginContainer.InputFieldsWrapper>

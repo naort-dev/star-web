@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextInput } from '../../../TextField'
+import { TextInput } from '../../../TextField';
+import PrimaryButton from '../../../PrimaryButton';
 import DotsContainer from '../../../Dots';
 import ReferralCodeWrapper from './styled';
 
@@ -29,10 +30,10 @@ export const ReferralCode = (props) =>(
           </ReferralCodeWrapper.WrapsInput>
         </ReferralCodeWrapper.OptionWrapper>
         <ReferralCodeWrapper.ButtonWrapper>
-          <ReferralCodeWrapper.Button primary 
-          onClick={props.onPrimaryButtonClick}>
+          <PrimaryButton
+            onClick={props.onPrimaryButtonClick}>
             {props.primary_button}
-          </ReferralCodeWrapper.Button>
+          </PrimaryButton>
         </ReferralCodeWrapper.ButtonWrapper>
       </ReferralCodeWrapper.ComponentWrapper>
     </ReferralCodeWrapper>

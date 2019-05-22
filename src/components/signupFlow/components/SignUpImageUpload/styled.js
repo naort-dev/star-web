@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from 'styles/mediaQueries';
 
 const UploadContainer = styled.div`
   background-color: white;
@@ -16,7 +17,6 @@ const UploadContainer = styled.div`
 UploadContainer.Wrapper = styled.div`
   .basic-multi-select {
     label {
-      
     }
   }
 `;
@@ -67,7 +67,7 @@ UploadContainer.Heading = styled.div`
   color: #ff6c58;
   font-size: 24px;
   font-family: 'Gilroy';
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
     &.fans-want {
@@ -125,25 +125,9 @@ UploadContainer.ButtonWrapper = styled.div`
   margin-top: 45px;
   text-align: center;
   margin-bottom: 10px;
-  @media(max-width: 831px) {
+  @media (max-width: 831px) {
     margin-top: 101px;
   }
-`;
-
-UploadContainer.ContinueButton = styled.button`
-  cursor: pointer;
-  background-color: #2f839d;
-  font-family: Gilroy-Medium;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 30px;
-  width: 300px;
-  height: 60px;
-  outline: none;
 `;
 
 UploadContainer.BrowseCategories = styled.div`
@@ -207,7 +191,7 @@ UploadContainer.BrowseCategoryWrapper = styled.div`
   top: 0;
   ${UploadContainer.Heading} {
     padding-top: 27px;
-    @media(min-width: 832px) {
+    @media (min-width: 832px) {
       padding-top: 52px;
     }
   }
@@ -218,7 +202,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
   padding: 50px 40px 20px 70px;
   align-items: flex-start;
   flex-direction: column;
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     flex-direction: row;
   }
 
@@ -243,7 +227,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
 
 UploadContainer.DesktopView = styled.div`
   display: none;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: block;
   }
 `;
@@ -263,7 +247,7 @@ UploadContainer.MobileView = styled.div`
     white-space: pre-line;
     margin: 0 auto 11px;
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: none;
   }
 `;
@@ -341,16 +325,18 @@ ImageUpload.CloseButton = styled.span`
 `;
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
-  padding: ${props => (props.imagePresent ? '51px 10px 38px' : '51px 10px 117px')};
+  padding: ${props =>
+    props.imagePresent ? '51px 10px 38px' : '51px 10px 117px'};
   @media(min-width: 832px) {
     padding: 35px 60px 55px;
   }
 `;
 ImageUpload.TakePhotoWrapper = ImageUpload.ContentWrapper.extend`
-  padding: 51px 10px 138px;
-  @media(min-width: 832px) {
-    padding: 0;
-  }
+    padding-top: 97px;
+    ${media.webView} {
+      padding-top: 31px;
+    }
+
 `;
 
 ImageUpload.ProfileInputButton = styled.div`
@@ -450,7 +436,13 @@ ImageUpload.UploadText = styled.span`
 
 ImageUpload.CropWrapper = styled.div`
   &.cropper-Wrapper {
-    // height: 631px;
+    /* height: 631px; */
+    padding-top: 97px;
+    ${media.webView} {
+      padding-top: 31px;
+    }
+    position: relative;
+    z-index: 0;
   }
 `;
 
@@ -560,12 +552,17 @@ ImageUpload.ButtonWrapper = styled.div`
 
 ImageUpload.VideoElement = styled.video`
   width: 100%;
-  height: 500px;
-  background: #000;
+  height: 262px;
+  ${media.webView} {
+    height: 500px;
+  }
+  background: black;
   margin: 10px 0;
 `;
 ImageUpload.TakePhoto = styled.div`
   display: ${props => (props.takePhoto ? 'block' : 'none')};
+  background: #000;
+  overflow: hidden;
   .videoError {
     min-height: 500px;
     background: #000;
@@ -583,10 +580,16 @@ ImageUpload.TakePhoto = styled.div`
 
 ImageUpload.PhotoButtonWrapper = styled.div`
   text-align: center;
-  @media(max-width: 831px){
+  position: relative;
+  z-index: 2;
+  .button {
+    width: 250px;
+    height: 60px;
+  }
+  @media (max-width: 831px) {
     margin-top: 96px;
   }
-  @media(min-width: 832px){
+  @media (min-width: 832px) {
     transform: translateY(-50%);
   }
 `;
@@ -612,7 +615,7 @@ ImageUpload.CropperButton = styled.button`
     color: #2f839d;
   }
 `;
-const ErrorMessage= styled.div`
+const ErrorMessage = styled.div`
   color: red;
   text-align: center;
 `;

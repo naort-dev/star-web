@@ -32,6 +32,9 @@ HeaderSection.HeaderRight = styled.div`
   visibility: ${props => (props.visible ? 'visible' : 'hidden')};
   position: relative;
   z-index: 1;
+  .auth-button {
+    margin-left: 18px;
+  }
   @media(min-width: 832px) {
     visibility: visible;
   }

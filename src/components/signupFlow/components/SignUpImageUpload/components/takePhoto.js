@@ -58,15 +58,17 @@ export default class TakePhoto extends React.Component {
 
   getVideoStream = () => {
     if (detectUserMedia()) {
-      return navigator.mediaDevices.getUserMedia(this.constraints)
-        .then((stream) => {
+      return navigator.mediaDevices
+        .getUserMedia(this.constraints)
+        .then(stream => {
           this.videoRef.current.srcObject = stream;
           this.setState({
             stream,
-            videoError: false, 
+            videoError: false,
           });
           return stream;
-        }).catch((e) => {
+        })
+        .catch(e => {
           this.setState({
             videoError: true,
           });
@@ -75,7 +77,7 @@ export default class TakePhoto extends React.Component {
     this.setState({
       videoError: true,
     });
-  }
+  };
 
   async getImageData(file) {
     const extension = file.type.split('/')[1];
@@ -93,11 +95,11 @@ export default class TakePhoto extends React.Component {
 
   getExif = (file) => {
     return new Promise((resolve, reject) => {
-      EXIF.getData(file, function () {
-        const exif = EXIF.getTag(this, "Orientation")
+      EXIF.getData(file, function() {
+        const exif = EXIF.getTag(this, 'Orientation');
         switch (exif) {
           case 3:
-            resolve(3)
+            resolve(3);
             break;
           case 4:
             resolve(4);
@@ -119,18 +121,18 @@ export default class TakePhoto extends React.Component {
         }
       });
     });
-  }
+  };
 
-  handleDataAvailable = (event) => {
+  handleDataAvailable = event => {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
     }
-  }
+  };
 
   detectCameraMedia = async () => {
     const stream = await this.getVideoStream();
     this.setState({ recording: true });
-  }
+  };
 
   closeStream = () => {
     const { stream } = this.state;
@@ -141,7 +143,7 @@ export default class TakePhoto extends React.Component {
       });
     }
     this.setState({ stream: null });
-  }
+  };
 
   takeScreenshot = () => {
     if (getMobileOperatingSystem()) {
