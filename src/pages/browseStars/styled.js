@@ -79,12 +79,13 @@ CategoryPageStyled.FilterSection = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 11;
+  z-index: 13;
   background: #fff;
   display: block;
   @media(min-width: 832px) {
     background: transparent;
     position: static;
+    z-index: 1;
     ${props => props.fixedContent && `
       position: fixed;
       top: ${props.headerRef && props.headerRef.current ? `${props.headerRef.current.clientHeight}px` : '138px'};
