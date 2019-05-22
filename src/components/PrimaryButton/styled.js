@@ -14,7 +14,7 @@ const ButtonStyled = styled.button`
   background-color: ${props => props.secondary ? '#fff' : props.theme.flatBlue};
   font-family: Gilroy-SemiBold;
   font-size: 18px;
-  padding: 20px 30px;
+  padding: 16px 30px;
   border-radius: 30px;
   color: ${props => props.secondary ? props.theme.flatBlue : '#fff'};
   max-width: 100%;
