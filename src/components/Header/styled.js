@@ -16,11 +16,12 @@ const HeaderSection = styled.header`
 `;
 
 HeaderSection.HeaderDiv = styled.div`
-  display:flex;
+  display: flex;
   padding: ${props => (props.notFixed ? '3px 16px' : '0')};
-  justify-content: ${props => (props.shouldAlign ? 'flex-end' : 'space-between')};
+  justify-content: ${props =>
+    props.shouldAlign ? 'flex-end' : 'space-between'};
   align-items: flex-start;
-  height: 50px;  
+  height: 50px;
   flex-wrap: wrap;
   @media (min-width: 832px) {
     height: 100%;
@@ -34,20 +35,23 @@ HeaderSection.HeaderRight = styled.div`
   z-index: 1;
   .auth-button {
     margin-left: 18px;
+    @media (max-width: 831px) {
+      display: none;
+    }
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     visibility: visible;
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     order: 3;
   }
 `;
 HeaderSection.HeaderLeft = styled.div`
   display: inline-block;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     width: 50%;
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     width: auto;
     position: static;
     order: 1;
@@ -65,12 +69,12 @@ HeaderSection.SearchWrapper = styled.div`
   width: 100%;
   max-width: 590px;
   margin: 0 auto;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     height: 50px;
     position: static;
     margin-top: 15px;
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     order: 2;
     padding: 0;
     margin-top: 0;
@@ -82,7 +86,7 @@ HeaderSection.BackIcon = styled.span`
   width: 20px;
   color: ${props => props.theme.flatBlue};
   padding-right: 10px;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: none;
   }
 `;
@@ -95,7 +99,7 @@ HeaderSection.CategoryWrapper = styled.div`
   left: 0;
   right: 0;
   background: #fff;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: block;
     position: static;
   }
@@ -103,16 +107,16 @@ HeaderSection.CategoryWrapper = styled.div`
 
 HeaderSection.MobileIconWrapper = styled.div`
   padding-top: 10px;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: none;
   }
 `;
 
 HeaderSection.ImgLogo = styled.img`
-  width:  154px;
+  width: 154px;
   height: 40px;
-  @media(min-width: 1280px){
-    width:  251px;
+  @media (min-width: 1280px) {
+    width: 251px;
     height: auto;
   }
 `;
@@ -122,29 +126,32 @@ HeaderSection.MenuButton = styled.span`
   cursor: pointer;
   width: 20px;
   color: ${props => props.theme.flatBlue};
-  @media(min-width: 832px){
-    display:none;
+  @media (min-width: 832px) {
+    display: none;
   }
 `;
 
 HeaderSection.SignInButtonMobile = styled.span`
   font-size: 27.5px;
   color: ${props => props.theme.flatBlue};
-  @media(min-width: 832px){
-   display: none;
+  @media (min-width: 832px) {
+    display: none;
   }
 `;
 HeaderSection.ProfileButton = styled.button`
   display: ${props => (props.hide ? 'none' : 'inline-block')};
-  background-image: ${props => (props.profileUrl ? `url(${props.profileUrl})` : 'url(assets/images/icon_profile_40a.png)')};
-  background-repeat:no-repeat;
+  background-image: ${props =>
+    props.profileUrl
+      ? `url(${props.profileUrl})`
+      : 'url(assets/images/icon_profile_40a.png)'};
+  background-repeat: no-repeat;
   background-position: center;
-  border:none;
+  border: none;
   outline: none;
-  padding:18px;
+  padding: 18px;
   border-radius: 50%;
   background-size: cover;
-  background-color:white;
+  background-color: white;
   cursor: pointer;
 `;
 HeaderSection.ProfileDropdown = styled.ul`
@@ -168,7 +175,7 @@ HeaderSection.ProfileDropdownItem = styled.li`
     display: block;
   }
   &:hover {
-    color: #FF6C58;
+    color: #ff6c58;
   }
   &:last-child {
     border-bottom: none;
@@ -186,7 +193,7 @@ HeaderSection.InnerListItemCount = styled.span`
   padding: 0 11px;
   text-align: center;
   border-radius: 16px;
-  background-color: #FF6C58;
+  background-color: #ff6c58;
   color: #fff;
   display: inline-block;
 `;
@@ -201,24 +208,24 @@ HeaderSection.UserProfileName = HeaderSection.ProfileDropdownItem.extend`
 
 HeaderSection.MyvideoButton = styled.button`
   display: none;
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     display: inline;
     cursor: pointer;
     outline: none;
-    background-image: url( 'assets/images/icon_myVids_40a.png' );
-    background-repeat:no-repeat;
+    background-image: url('assets/images/icon_myVids_40a.png');
+    background-repeat: no-repeat;
     background-position: center;
-    border:none;
-    padding:18px;
+    border: none;
+    padding: 18px;
     background-size: 29px;
-    background-color:white;
+    background-color: white;
     margin-right: 16px;
-  } 
+  }
 `;
 
 HeaderSection.AutoSuggest = styled.div`
   height: 100%;
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     box-shadow: rgb(204, 204, 204) 0px 3px 7px 0px inset;
   }
 `;
@@ -242,54 +249,54 @@ HeaderSection.InputWrapper = styled.div`
   &::before {
     content: '';
     position: absolute;
-    background-image: url( 'assets/images/icon_search_40a.png' );
-    background-repeat:no-repeat;
+    background-image: url('assets/images/icon_search_40a.png');
+    background-repeat: no-repeat;
     background-position: center;
     left: 15px;
     top: 20%;
     width: 35px;
     height: 35px;
   }
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     width: 319px;
     height: 32px;
-    background-color: #F8F8F8;
+    background-color: #f8f8f8;
     &::before {
       width: 20px;
-      height: 23px;  
+      height: 23px;
     }
   }
-  @media(min-width: 1025px) {
+  @media (min-width: 1025px) {
     width: 100%;
   }
-  @media(min-width: 1920px) {
+  @media (min-width: 1920px) {
     height: 48px;
   }
 `;
 HeaderSection.Input = styled.input`
   padding-left: 64px;
   width: calc(100% - 28px);
-  outline:none;
+  outline: none;
   height: 100%;
   font-family: 'Avenir-Light';
   font-size: 16px;
   border: none;
   border-radius: 5px;
   background: transparent;
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     text-indent: 24px;
-  } 
-  @media(min-width : 1025px){
+  }
+  @media (min-width: 1025px) {
     text-indent: 0;
     text-align: center;
     font-size: 18px;
   }
-  @media(min-width: 1920px) {
+  @media (min-width: 1920px) {
     font-size: 20px;
   }
 `;
 HeaderSection.SignIn = styled.button`
-  background-color: #fff; 
+  background-color: #fff;
   margin-right: 5px;
   color: black;
   padding: 6px 33px;
@@ -299,17 +306,17 @@ HeaderSection.SignIn = styled.button`
   font-family: 'Avenir-Bold';
   display: inline-block;
   border: none;
-  outline:none;
+  outline: none;
   cursor: pointer;
-  @media(max-width:767px){
-    display:none;
+  @media (max-width: 767px) {
+    display: none;
   }
-  @media(min-width: 768px) {
+  @media (min-width: 768px) {
     font-size: 16px;
     padding: 6px 10px;
     padding-bottom: 10px;
   }
-  @media(min-width: 1920px) {
+  @media (min-width: 1920px) {
     font-size: 16px;
   }
 `;
@@ -317,21 +324,21 @@ HeaderSection.AuthButton = styled.button`
   padding: 0 14px;
   border-radius: 5px;
   border: ${props => `solid 1px ${props.theme.flatBlue}`};
-  background-color: ${props => (!props.notFixed ? '#fff' : props.theme.flatBlue)};
+  background-color: ${props =>
+    !props.notFixed ? '#fff' : props.theme.flatBlue};
   font-family: Gilroy;
-  outline:none;
+  outline: none;
   font-size: 16px;
   cursor: pointer;
   line-height: 36px;
   height: 36px;
   letter-spacing: normal;
   text-align: left;
-  color: ${props => (!props.notFixed ? props.theme.flatBlue : '#ffffff')};;
+  color: ${props => (!props.notFixed ? props.theme.flatBlue : '#ffffff')};
   margin-left: 18px;
-  @media(max-width: 831px){
-    display:none;
+  @media (max-width: 831px) {
+    display: none;
   }
 `;
 
 export default HeaderSection;
-

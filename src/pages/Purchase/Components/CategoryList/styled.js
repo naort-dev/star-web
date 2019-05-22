@@ -59,7 +59,6 @@ export const ImageWrapper = styled.span`
   width: 147px;
   ${media.mobileScreen} {
     width: 101px;
-
   }
 `;
 
