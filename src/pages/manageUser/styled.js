@@ -23,6 +23,7 @@ ManageStyled.Container = styled.div`
   flex-direction: column;
   @media(min-width: 832px) {
     flex-direction: row;
+    padding: 47px 0;
   }
 `;
 
@@ -47,7 +48,13 @@ ManageStyled.MobileHeading = ManageStyled.Visiblity.extend`
 ManageStyled.SidebarWrapper = ManageStyled.Visiblity.extend`
   @media(min-width: 832px) {
     display: inline-block;
+    max-width: 20%;
   }
 `;
 
+ManageStyled.RightContent = ManageStyled.Visiblity.extend`
+  @media(min-width: 832px) {
+    flex: auto;
+  }
+`
 export default ManageStyled;

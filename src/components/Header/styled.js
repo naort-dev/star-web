@@ -64,6 +64,7 @@ HeaderSection.SearchWrapper = styled.div`
   margin: 0 auto;
   @media(min-width: 832px) {
     height: 50px;
+    display: block;
     position: static;
     margin-top: 15px;
   }
@@ -162,6 +163,7 @@ HeaderSection.ProfileName = styled.span`
 HeaderSection.ProfileWrapper = styled.span`
   display: flex;
   align-items: center;
+  cursor: pointer;
 `;
 
 

@@ -1,6 +1,6 @@
 export const commonAuthRoutes = [
   '/manage',
-  'manage/profile',
+  '/manage/profile',
 ]
 
 export const fanRoutes = [

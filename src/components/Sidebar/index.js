@@ -6,28 +6,50 @@ import Tooltip from '../ToolTip';
 import { logOutUser } from '../../store/shared/actions/login';
 import { SidebarStyled } from './styled';
 
+const noImageTooltip = 'Add your picture in the profile section.'
+
 const Sidebar = (props) => {
 
   const logOut = () => {
-    this.props.history.push('/');
-    this.props.logOut();
+    props.history.push('/');
+    props.logOut();
+  }
+
+  const renderLinkItem = (link) => {
+    if (link.tooltip) {
+      return (
+        <Tooltip title={link.tooltip} key={link.selectedName}>
+          <SidebarStyled.LinkItem selected={link.url === props.location.pathname}>
+            <Link to={link.url}>{link.linkName}</Link>          
+          </SidebarStyled.LinkItem>     
+        </Tooltip>
+      )
+    }
+    return (
+      <SidebarStyled.LinkItem key={link.selectedName} selected={link.url === props.location.pathname}>
+        <Link to={link.url}>{link.linkName}</Link>          
+      </SidebarStyled.LinkItem>     
+    )
   }
 
   return (
     <SidebarStyled>
-      <SidebarStyled.AvatarImage imageUrl={props.userDetails.avatarPhoto} />
+      {
+        props.userDetails.avatarPhoto ? 
+          <SidebarStyled.AvatarImage imageUrl={props.userDetails.avatarPhoto} />
+        :
+          <Tooltip title={noImageTooltip}>
+            <SidebarStyled.AvatarImage imageUrl={props.userDetails.avatarPhoto} />
+          </Tooltip>
+      }
       <SidebarStyled.LinkList>
         {
           props.links.map(link => (
-            <SidebarStyled.LinkItem key={link.selectedName}>
-              <Tooltip title='asdasd'>
-                <Link to={link.url}>{link.linkName}</Link>
-              </Tooltip>
-            </SidebarStyled.LinkItem>            
+            renderLinkItem(link)      
           ))
         }
           <SidebarStyled.LinkItem onClick={logOut}>
-            Log Out
+            <span>Log Out</span>
           </SidebarStyled.LinkItem>
       </SidebarStyled.LinkList>
     </SidebarStyled>
@@ -37,6 +59,9 @@ const Sidebar = (props) => {
 Sidebar.propTypes = {
   userDetails: PropTypes.object.isRequired,
   links: PropTypes.array.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  logOut: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

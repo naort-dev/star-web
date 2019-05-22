@@ -8,7 +8,6 @@ import HeaderSection from './styled';
 import CategorySection from './components/CategorySection';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
 import { fetchSuggestionList, resetSearchParam } from '../../store/shared/actions/getSuggestionsList';
-import { logOutUser } from '../../store/shared/actions/login';
 import { getStarName } from '../../utils/dataToStringFormatter';
 import { toggleLogin, toggleSignup, toggleRefer } from '../../store/shared/actions/toggleModals';
 import Search from '../Search';
@@ -56,10 +55,10 @@ class Header extends React.Component {
     };
   }
 
-  logoutUser = () => {
-    this.setState({ profileDropdown: false });
-    this.props.history.push('/');
-    this.props.logOut();
+  handleProfileClick = () => {
+    if (this.props.location.pathname !== '/manage') {
+      this.props.history.push('/manage');
+    }
   }
 
   handleBackClick = () => {
@@ -112,12 +111,11 @@ class Header extends React.Component {
             {
               this.props.isLoggedIn ?
                 <React.Fragment>
-                  <HeaderSection.ProfileWrapper>
+                  <HeaderSection.ProfileWrapper onClick={this.handleProfileClick}>
                     {
                       this.state.profilePhoto ?
                         <HeaderSection.ProfileButton
                           profileUrl={this.state.profilePhoto}
-                          onClick={() => this.setState({ profileDropdown: !this.state.profileDropdown })}
                         />
                       :
                         <HeaderSection.SignInButtonMobile>
@@ -128,10 +126,10 @@ class Header extends React.Component {
                       { userDetails && getStarName(userDetails.nick_name, userDetails.first_name, userDetails.last_name) }
                     </HeaderSection.ProfileName>
                   </HeaderSection.ProfileWrapper>
-                  {
+                  {/* {
                     this.state.profileDropdown &&
                       <HeaderSection.ProfileDropdown innerRef={(node) => { this.profileDropDown = node; }}>
-                        {/* <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
+                        <HeaderSection.UserProfileName>{this.props.userValue.settings_userDetails.first_name} {this.props.userValue.settings_userDetails.last_name}</HeaderSection.UserProfileName>
                         <HeaderSection.ProfileDropdownItem>
                           <Link to="/user/favorites">
                             Favorite stars
@@ -158,10 +156,10 @@ class Header extends React.Component {
                             Settings
                           </Link>
                         </HeaderSection.ProfileDropdownItem>
-                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem> */}
+                        <HeaderSection.ProfileDropdownItem onClick={() => props.toggleRefer(true)}>Refer a Star</HeaderSection.ProfileDropdownItem>
                         <HeaderSection.ProfileDropdownItem onClick={this.logoutUser}>Logout</HeaderSection.ProfileDropdownItem>
                       </HeaderSection.ProfileDropdown>
-                  }
+                  } */}
                 </React.Fragment>
             :
                 <React.Fragment>
@@ -206,7 +204,6 @@ const mapDispatchToProps = dispatch => ({
   toggleRefer: state => dispatch(toggleRefer(state)),
   fetchSuggestionList: searchParam => dispatch(fetchSuggestionList(searchParam)),
   resetSearchParam: searchParam => dispatch(resetSearchParam(searchParam)),
-  logOut: () => dispatch(logOutUser()),
   toggleLogin: state => dispatch(toggleLogin(state)),
   toggleSignup: state => dispatch(toggleSignup(state)),
 });

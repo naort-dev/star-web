@@ -10,7 +10,6 @@ SidebarStyled.AvatarImage = styled.div`
   border: none;
   border-radius: 50%;
   display: block;
-  cursor: pointer;
   width: 170px;
   margin: 0 auto;
   height: 170px;
@@ -26,10 +25,15 @@ SidebarStyled.LinkList = styled.ul`
 `;
 
 SidebarStyled.LinkItem = styled.li`
-  padding: 12px 0;
-  font-family: Gilroy-Regular;
+  font-family: ${props => props.selected ? 'Gilroy-Medium' : 'Gilroy-Regular'};
+  color: ${props => props.selected ? props.theme.flatBlue : props.theme.brownGrey };
   font-size: 18px;
+  cursor: pointer;
   border-bottom: ${props => `1px solid ${props.theme.white}`};
+  a, span {
+    padding: 12px 0;
+    display: block;
+  }
 `;
 
 export { SidebarStyled };
