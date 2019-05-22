@@ -29,45 +29,13 @@ RegSuccessWrapper.HeaderText = styled.div`
 RegSuccessWrapper.ButtonWrapper = styled.div`
   text-align:center;
   margin-top: 2px;
+  .success-button {
+    @media(max-width: 832px){
+      margin-bottom:20px;
+    }
+  }
 `;
-RegSuccessWrapper.Button = styled.button`
-width: 300px;
-height: 60px;
-border-radius: 60px;
-background-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-border-width: 2px;
-border-style: solid;
-margin: 0 10px;
-font-family: Gilroy-Semibold;
-font-size: 18px;
-line-height: 1.5;
-text-align: center;
-span {
-  padding-left: 11px;
-}
-color: #ffffff;
-outline:none;
-cursor: pointer;
-&:hover {
-  background-color: #ffffff;
-  color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-  border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-}
-@media(max-width: 832px){
-  margin-bottom:20px;
-}
-`;
-RegSuccessWrapper.SecondaryButton = RegSuccessWrapper.Button.extend`
-background-color: ${props => (props.secondary ? '#fff' : '#ff6c58')};
-color: ${props => (props.secondary ? '#2f839d' : '#fff')};
-border-color: ${props => (props.secondary ? '#2f839d' : '#ff6c58')};
-&:hover {
-  background-color: ${props => (props.secondary ? '#2f839d' : '#fff')};
-  color: ${props => (props.secondary ? '#fff' : '#ff6c58')};
-  border-color: ${props => (props.secondary ? '#fff' : '#ff6c58')};
-}
-`;
+
 RegSuccessWrapper.Type = styled.div`
   padding-bottom: 32px;
 `;

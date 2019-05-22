@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PrimaryButton from '../../../PrimaryButton';
 import RegSuccessWrapper from './styled';
 
 const RegistrationSuccess = (props) => {
@@ -30,13 +30,14 @@ const RegistrationSuccess = (props) => {
           </RegSuccessWrapper.Type>
         </RegSuccessWrapper.OptionWrapper>
         <RegSuccessWrapper.ButtonWrapper>
-          <RegSuccessWrapper.Button primary onClick={props.primaryButtonClick}>
-            {props.primary_button}
-          </RegSuccessWrapper.Button>
+          <PrimaryButton className='success-button' onClick={props.primaryButtonClick} >
+            {props.primary_button}              
+          </PrimaryButton>
           {(props.audioVideoSupport && !props.skipVideo) ? (
-          <RegSuccessWrapper.SecondaryButton secondary={props.secondary} onClick={props.secondaryButtonClick}>
-            {props.secondary_button}
-          </RegSuccessWrapper.SecondaryButton> ) : ''
+            <PrimaryButton className='success-button' secondary={props.secondary} onClick={props.secondaryButtonClick}>
+              {props.secondary_button}             
+            </PrimaryButton>
+          ): ''
           }
         </RegSuccessWrapper.ButtonWrapper>
       </RegSuccessWrapper.ComponentWrapper>

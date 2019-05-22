@@ -67,33 +67,4 @@ ReferralCodeWrapper.ButtonWrapper = styled.div`
   margin-top: 290px;
 `;
 
-ReferralCodeWrapper.Button = styled.button`
-width: 300px;
-height: 60px;
-border-radius: 60px;
-background-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-border-width: 2px;
-border-style: solid;
-margin: 0 10px;
-font-family: Gilroy-Bold;
-font-size: 18px;
-line-height: 1.5;
-text-align: center;
-span {
-  padding-left: 11px;
-}
-color: #ffffff;
-outline:none;
-cursor: pointer;
-&:hover {
-  background-color: #ffffff;
-  color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-  border-color: ${props => (props.primary ? '#2f839d' : '#ff6c58')};
-}
-@media(max-width: 832px){
-  margin-bottom:20px;
-}
-`;
-
 export default ReferralCodeWrapper;

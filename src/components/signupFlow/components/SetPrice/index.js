@@ -4,6 +4,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { iosPriceFinder, numberToCommaFormatter, commaToNumberFormatter } from '../../../../utils/dataformatter'
 import { TextInput } from '../../../TextField'
+import PrimaryButton from '../../../PrimaryButton';
 import SetPriceWrapper from './styled';
 import { ReferralCode } from '../ReferralCode';
 import {convertedApplePrice} from '../../constants';
@@ -231,9 +232,9 @@ export default class SetPrice extends React.Component {
             </SetPriceWrapper.Block>
           }
           <SetPriceWrapper.ButtonWrapper confirmation={confirmPrice}>
-            <SetPriceWrapper.Button primary onClick={this.onSubmit}>
+            <PrimaryButton onClick={this.onSubmit}>
               {confirmPrice ? props.confirmPrimaryButton : props.primary_button}
-            </SetPriceWrapper.Button>
+            </PrimaryButton>
           </SetPriceWrapper.ButtonWrapper>
         </SetPriceWrapper.ComponentWrapper>
       </SetPriceWrapper>

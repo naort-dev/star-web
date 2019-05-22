@@ -24,21 +24,6 @@ export const Layout = styled.section`
       padding: 20px 0;
     }
   }
-  .button {
-    height: 60px;
-    padding: 0 20px !important;
-    width: 300px;
-    line-height: 60px;
-    border: 0;
-    font-size: 18px;
-    ${media.webView} {
-      margin-left: 0;
-      width: 224px;
-    }
-    &:hover {
-      box-shadow: none;
-    }
-  }
   .note {
     font-family: Gilroy-Light;
     color: #fff;

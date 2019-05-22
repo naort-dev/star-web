@@ -50,20 +50,6 @@ TermsConditionsWrapper.ButtonWrapper = styled.div`
   padding-bottom: 30px;
 `;
 
-TermsConditionsWrapper.Button = styled.button`
-  width: 300px;
-  height: 60px;
-  background-color: #2f839d;
-  font-family: Gilroy-Semibold;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  border-radius: 30px;
-  cursor: pointer;
-
-`;
-
 TermsConditionsWrapper.Description = styled.p`
   font-family: Gilroy-Light;
   font-size: 12px;
