@@ -30,8 +30,16 @@ RegSuccessWrapper.ButtonWrapper = styled.div`
   text-align:center;
   margin-top: 2px;
   .success-button {
-    @media(max-width: 832px){
+    @media(max-width: 831px){
       margin-bottom:20px;
+    }
+    @media(min-width: 832px){
+      &:first-child {
+        width: auto;
+      }
+      &:last-child {
+        margin-left: 24px;
+      }
     }
   }
 `;
@@ -67,6 +75,9 @@ RegSuccessWrapper.Description = styled.div`
   color: #555555;
   width: 100%;
   margin: 0 auto;
+  @media(min-width: 832px){
+    max-width: 450px;
+  }
 `;
 RegSuccessWrapper.HighLight = styled.div`
   padding-top: 13px;

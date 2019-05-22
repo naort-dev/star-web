@@ -76,7 +76,7 @@ export const VideoContainer = styled.section`
   }
   .retry {
     background: #fff;
-    width: 224px;
+    width: 224px !important;
     color: #2f839d;
     position: absolute;
     left: 50%;
@@ -124,9 +124,10 @@ export const QuestionContainer = styled.section`
   }
   .button {
     display: none;
+    width: auto;
     ${media.webView} {
       display: block;
-      margin-top: 39px;
+      margin-top: 34px;
       height: 60px;
       padding: 0;
     }
@@ -193,7 +194,7 @@ export const TimeSpan = styled.span`
   flex-direction: column;
   font-family: Gilroy;
   color: #555555;
-  padding-bottom: 31px;
+  padding-bottom: 38px;
   display: none;
   ${media.webView} {
     display: flex;

@@ -152,11 +152,11 @@ SetPriceWrapper.HighLight = styled.span`
   line-height: 1.79;
   text-align: center;
   color: #2f839d;
-  padding-top: 40px;
+  margin-top: 40px;
   cursor: pointer;
   display: inline-block;
   @media(max-width:831px) {
-    padding-top: 95px;
+    margin-top: 95px;
     margin-bottom: 23px;
   }
 `;

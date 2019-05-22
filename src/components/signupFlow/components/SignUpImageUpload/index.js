@@ -276,7 +276,8 @@ class SignUpImageUpload extends React.Component {
                   placeholder=""
                   onChange={this.handleMultiSelect}
                   onFocus={this.handleFocusSelect}
-                  label="Categorize yourself. This helps fans find you. (up to 3)"
+                  label={<span>Categorize yourself. <br/>
+                    This helps fans find you. (up to 3)</span>}
                 />
               </UploadContainer.BrowseCategoryContainer>
             </UploadContainer.MobileView>
@@ -308,7 +309,8 @@ class SignUpImageUpload extends React.Component {
                 placeholder=""
                 onChange={this.handleMultiSelect}
                 onFocus={this.handleFocusSelect}
-                label="Categorize yourself. This helps fans find you. (up to 3)"
+                label={<span>Categorize yourself. <br/>
+                This helps fans find you. (up to 3)</span>}
               />
               <UploadContainer.BrowseCategories>
                 Not finding one?{' '}
