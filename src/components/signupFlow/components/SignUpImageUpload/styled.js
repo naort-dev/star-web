@@ -567,7 +567,10 @@ ImageUpload.ButtonWrapper = styled.div`
 
 ImageUpload.VideoElement = styled.video`
   width: 100%;
-  height: 500px;
+  height: 262px;
+  ${media.webView} {
+    height: 500px;
+  }
   background: black;
   margin: 10px 0;
 `;
@@ -590,10 +593,18 @@ ImageUpload.TakePhoto = styled.div`
 `;
 
 ImageUpload.PhotoButtonWrapper = styled.div`
-  transform: translateY(-50%);
   text-align: center;
   position: relative;
   z-index: 2;
+  .button {
+    width: 250px;
+    height: 60px;
+  }
+  margin-top: 97px;
+  ${media.webView} {
+    transform: translateY(-50%);
+    margin-top: 0;
+  }
 `;
 
 ImageUpload.CropperButton = styled.button`

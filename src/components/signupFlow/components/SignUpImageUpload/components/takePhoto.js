@@ -1,7 +1,6 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import EXIF from 'exif-js';
-import { faUpload, faCamera } from '@fortawesome/free-solid-svg-icons';
+import Button from 'components/PrimaryButton';
 import { ImageUpload } from '../styled';
 import { detectUserMedia } from '../../../../../utils/detectCamera';
 
@@ -35,15 +34,17 @@ export default class TakePhoto extends React.Component {
   }
   getVideoStream = () => {
     if (detectUserMedia()) {
-      return navigator.mediaDevices.getUserMedia(this.constraints)
-        .then((stream) => {
+      return navigator.mediaDevices
+        .getUserMedia(this.constraints)
+        .then(stream => {
           this.videoRef.current.srcObject = stream;
           this.setState({
             stream,
-            videoError: false, 
+            videoError: false,
           });
           return stream;
-        }).catch((e) => {
+        })
+        .catch(e => {
           this.setState({
             videoError: true,
           });
@@ -52,15 +53,15 @@ export default class TakePhoto extends React.Component {
     this.setState({
       videoError: true,
     });
-  }
+  };
 
-  getExif = (file) => {
+  getExif = file => {
     return new Promise((resolve, reject) => {
-      EXIF.getData(file, function () {
-        const exif = EXIF.getTag(this, "Orientation")
+      EXIF.getData(file, function() {
+        const exif = EXIF.getTag(this, 'Orientation');
         switch (exif) {
           case 3:
-            resolve(3)
+            resolve(3);
             break;
           case 4:
             resolve(4);
@@ -82,18 +83,18 @@ export default class TakePhoto extends React.Component {
         }
       });
     });
-  }
+  };
 
-  handleDataAvailable = (event) => {
+  handleDataAvailable = event => {
     if (event.data && event.data.size > 0) {
       this.recordedBlobs.push(event.data);
     }
-  }
+  };
 
   detectCameraMedia = async () => {
     const stream = await this.getVideoStream();
     this.setState({ recording: true });
-  }
+  };
 
   closeStream = () => {
     const { stream } = this.state;
@@ -104,7 +105,7 @@ export default class TakePhoto extends React.Component {
       });
     }
     this.setState({ stream: null });
-  }
+  };
 
   takeScreenshot = () => {
     const canvas = document.createElement('canvas');
@@ -113,31 +114,39 @@ export default class TakePhoto extends React.Component {
     canvas.height = video.videoHeight;
     canvas.getContext('2d').drawImage(video, 0, 0);
     const base64Image = canvas.toDataURL('image/jpeg');
-    canvas.toBlob(async (file) => {
+    canvas.toBlob(async file => {
       const exif = await this.getExif(file);
       const extension = file.type.split('/')[1];
       this.closeStream();
       this.props.onPictureCapture(base64Image, exif, extension);
     }, 'image/jpeg');
-  }
+  };
 
   render() {
     return (
       <ImageUpload.TakePhotoWrapper>
         <React.Fragment>
           <ImageUpload.TakePhoto takePhoto={this.props.takePicture}>
-            {
-              this.state.videoError ?
-                <div className="videoError">Please use supported browsers to use the web camera.</div>
-              : <ImageUpload.VideoElement playsinline autoPlay innerRef={this.videoRef} muted />
-            }
+            {this.state.videoError ? (
+              <div className="videoError">
+                Please use supported browsers to use the web camera.
+              </div>
+            ) : (
+              <ImageUpload.VideoElement
+                playsinline
+                autoPlay
+                innerRef={this.videoRef}
+                muted
+              />
+            )}
           </ImageUpload.TakePhoto>
-          {
-            !this.state.videoError &&
+          {!this.state.videoError && (
             <ImageUpload.PhotoButtonWrapper>
-              <ImageUpload.CropperButton onClick={this.takeScreenshot}>Capture photo</ImageUpload.CropperButton>
+              <Button onClick={this.takeScreenshot} className="button">
+                Capture photo
+              </Button>
             </ImageUpload.PhotoButtonWrapper>
-          }
+          )}
         </React.Fragment>
       </ImageUpload.TakePhotoWrapper>
     );

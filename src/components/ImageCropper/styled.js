@@ -286,6 +286,10 @@ CropperStyled.ButtonWrapper = styled.div`
     transform: translateY(-50%);
     margin-top: 0;
   }
+  .button {
+    width: 250px;
+    height: 60px;
+  }
 `;
 CropperStyled.CropperLightButton = styled.button`
   cursor: pointer;
@@ -306,27 +310,6 @@ CropperStyled.CropperLightButton = styled.button`
   &:hover {
     background-color: #2f839d;
     color: #ededed;
-  }
-`;
-CropperStyled.CropperButton = styled.button`
-  cursor: pointer;
-  background-color: #2f839d;
-  font-family: Gilroy-Medium;
-  font-size: 18px;
-  line-height: 1.5;
-  text-align: center;
-  color: #ffffff;
-  padding: 15px;
-  box-sizing: border-box;
-  border-radius: 30px;
-  min-width: 250px;
-  height: 60px;
-  outline: none;
-  border: none;
-  margin: 0 17px;
-  &:hover {
-    background-color: #ededed;
-    color: #2f839d;
   }
 `;
 

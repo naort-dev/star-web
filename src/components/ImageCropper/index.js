@@ -1,6 +1,7 @@
 import React from 'react';
 import CropperStyled from './styled';
 import { Croppie } from 'croppie';
+import Button from 'components/PrimaryButton';
 
 export default class ImageCropper extends React.Component {
   constructor(props) {
@@ -78,9 +79,9 @@ export default class ImageCropper extends React.Component {
       >
         <div id="croppie" />
         <CropperStyled.ButtonWrapper>
-          <CropperStyled.CropperButton onClick={this.handleCrop}>
+          <Button onClick={this.handleCrop} className="button">
             I like it, continue
-          </CropperStyled.CropperButton>
+          </Button>
         </CropperStyled.ButtonWrapper>
       </CropperStyled>
     );
