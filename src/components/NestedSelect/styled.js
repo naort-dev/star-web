@@ -11,7 +11,7 @@ const NestedSelectStyled = styled.div`
     right: 0;
     text-align: center;
     transform: none;
-    font-size: 14px;
+    font-size: 13px;
     color: ${props => props.theme.brownGreyTwo} !important;
   }
   .select__menu {
@@ -20,13 +20,16 @@ const NestedSelectStyled = styled.div`
       padding-top: 0;
     }
   }
+  .select__clear-indicator {
+    cursor: pointer;
+  }
   .select__value-container {
     justify-content: center;
     font-size: 24px;
     padding: 10px 0px 10px !important;
     .select__input {
       color: #615195;
-      padding: 10px 0;
+      padding: 0px 0;
     }
     .select__multi-value {
       border-width: 1px;
