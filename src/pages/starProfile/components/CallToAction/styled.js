@@ -14,11 +14,12 @@ const ActionStyled = styled.div`
   justify-content: space-between;
   align-items: center;
   z-index: 3;
-  background-color: ${props => (props.available ? props.theme.orangePink: props.theme.brownGrey)};
-  @media(min-width: 375px) {
+  background-color: ${props =>
+    props.available ? props.theme.orangePink : props.theme.brownGrey};
+  @media (min-width: 375px) {
     padding: 10px 31px;
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     height: 111px;
     padding: 0 65px;
   }
@@ -30,17 +31,17 @@ ActionStyled.AvatarWrapper = styled.div`
     width: 48.6px;
     height: 48.6px;
   }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     ${StarProfileStyled.Avatar} {
       width: 80px;
-      height: 80px;      
+      height: 80px;
     }
   }
 `;
 
 ActionStyled.DescriptionWrapper = styled.div`
   width: calc(100% - 50px);
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     width: calc(100% - 80px);
   }
 `;
@@ -54,7 +55,7 @@ ActionStyled.Description = styled.span`
   strong {
     font-family: Gilroy-medium;
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
     .long-description {
       display: inline;
     }
@@ -66,7 +67,7 @@ ActionStyled.ActionContent = styled.div`
   max-width: 100%;
   width: 100%;
   align-items: center;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     max-width: ${props => (props.available ? 'calc(100% - 256px)' : '100%')};
   }
 `;
@@ -87,7 +88,7 @@ ActionStyled.ArrowWrapper = styled.div`
 
 ActionStyled.ActionSection = styled.div`
   display: none;
-  @media(min-width: 832px) {
+  @media (min-width: 832px) {
     display: flex;
     align-items: center;
     .action-button {
@@ -95,6 +96,7 @@ ActionStyled.ActionSection = styled.div`
       background-color: #fff;
       border-color: #fff;
       color: ${props => props.theme.flatBlue};
+      min-width: auto;
     }
   }
 `;

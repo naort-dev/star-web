@@ -27,11 +27,15 @@ export const DialogStyled = styled(Dialog)`
 
 export const Content = styled.section`
   position: relative;
-  padding-top: 30px;
   height: calc(100% - 157px);
   ${media.mobileScreen} {
-    padding-top: 70px;
     height: calc(100% - 200px);
+  }
+  .scrollRenderView {
+    padding-top: 30px;
+    ${media.mobileScreen} {
+      padding-top: 70px;
+    }
   }
 `;
 
@@ -55,5 +59,3 @@ export const FlexCenter = styled.section`
 export const FormContent = styled.section`
   height: calc(100% - 150px);
 `;
-
-
