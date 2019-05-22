@@ -29,7 +29,7 @@ export default class SetPrice extends React.Component {
     const priceValue = commaToNumberFormatter(this.state.price.value);
     const priceDetails = {
       rate: priceValue,
-      in_app_price: iosPriceFinder(priceValue, this.props.inAppPriceList),
+      in_app_price: iosPriceFinder(priceValue, this.props.inAppPriceList) ? iosPriceFinder(priceValue, this.props.inAppPriceList) : null,
       referral_code: this.state.referralCode.value,
     }
     if (this.checkPriceRequired()) {
@@ -138,12 +138,17 @@ export default class SetPrice extends React.Component {
 
   saveFormEntries = (event, type) => {
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
-    const value = event.target.value.substr(1);
-    if(type==='price' && value !== ' ') {
+    const dollarpattern = /^\$.*$/;
+    const value = dollarpattern.test(event.target.value) ? event.target.value.substr(1) : event.target.value;
+    console.log(dollarpattern.test(event.target.value));
+    console.log('pattern.test(commaToNumberFormatter(event.target.value.substr(1)))', pattern.test(commaToNumberFormatter(value)))
+    console.log('commaToNumberFormatter(value)', commaToNumberFormatter(value))
+    debugger
+    if(type==='price' && value !== '') {
       this.setState({
         [type]: {
           ...this.state[type],
-          value: pattern.test(commaToNumberFormatter(event.target.value.substr(1))) ? numberToCommaFormatter(commaToNumberFormatter(event.target.value.substr(1))) : this.state.price.value,
+          value: pattern.test(commaToNumberFormatter(value)) ? numberToCommaFormatter(commaToNumberFormatter(value)) : this.state.price.value,
         },
       });
     } else {
@@ -175,7 +180,8 @@ export default class SetPrice extends React.Component {
 
   render() {
     const { props } = this;
-    const { isReferred, confirmPrice } = this.state
+    const { isReferred, confirmPrice } = this.state;
+    console.log(this.state.price.value);
     return (
       <React.Fragment>
       <BackArrow className="leftArrow" onClick={this.backArrowClick} />
@@ -212,7 +218,7 @@ export default class SetPrice extends React.Component {
               placeholder={'Price'}
               type="text"
               name="price"
-              value={`${this.state.price.value !== ' ' ? '$':''}${this.state.price.value}`}
+              value={`${this.state.price.value !== '' ? '$':''}${this.state.price.value}`}
               onChange={(event) => this.saveFormEntries(event, "price")}
             />
           </SetPriceWrapper.WrapsInput>
