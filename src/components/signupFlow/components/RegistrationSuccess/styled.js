@@ -30,14 +30,6 @@ RegSuccessWrapper.ButtonWrapper = styled.div`
   text-align:center;
   margin-top: 2px;
   .success-button {
-    width: 300px;
-    height: 60px;
-    font-family: Gilroy-Semibold;
-    margin: 0 10px;
-    font-size: 18px;
-    text-align: center;
-    line-height: 1.5;
-    padding: 16px 30px;
     @media(max-width: 832px){
       margin-bottom:20px;
     }
