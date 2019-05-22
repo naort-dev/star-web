@@ -11,6 +11,7 @@ const NestedSelectStyled = styled.div`
     right: 0;
     text-align: center;
     transform: none;
+    font-size: 14px;
     color: ${props => props.theme.brownGreyTwo} !important;
   }
   .select__menu {
@@ -67,8 +68,12 @@ const NestedSelectStyled = styled.div`
     }
     input {
       display: none;
-      &:checked + div .select-option-item {
-        display: none;
+      &:checked + label {
+        font-family: Gilroy-Regular;
+        background: #fff;
+        & + div .select-option-item {
+          display: none;
+        }
       }
     }
     .select-option-item {
