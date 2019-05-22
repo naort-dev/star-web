@@ -15,7 +15,7 @@ class Header extends React.Component {
   constructor(props) {
     super(props);
     let searchText = '';
-    if (this.props.history.location.pathname === '/') {
+    if (this.props.history.location.pathname === '/browse-stars') {
       searchText = this.props.filters.searchParam || '';
     }
     this.state = {
@@ -106,8 +106,8 @@ class Header extends React.Component {
   handleSearchSubmit = (e) => {
     if (e.keyCode === 13) {
       this.props.updateSearchParam(e.target.value.trim(''));
-      if (this.props.history.location.pathname != '/') {
-        this.props.history.push('/');
+      if (this.props.history.location.pathname != '/browse-stars') {
+        this.props.history.push('/browse-stars');
       }
       this.setState({ searchText: e.target.value.trim(''), searchActive: false, showSuggestions: false });
     }
