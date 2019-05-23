@@ -12,7 +12,7 @@ const About = props => {
     <Layout>
       { !props.isDeviceSupported ? (
         <React.Fragment>
-          <Layout.MainText>
+          <Layout.MainText className='section-1'>
             Your system doesnot have video recording capability,
             but you will need to record a video to have your profile activated
           </Layout.MainText>

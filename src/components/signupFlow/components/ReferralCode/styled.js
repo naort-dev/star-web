@@ -43,10 +43,22 @@ ReferralCodeWrapper.WrapsInput = styled.div`
   padding-bottom: 10px;
   input {
     font-family: Gilroy;
-    font-size: 18px;
+    font-size: 22px;
     text-align: center;
     color: #8174aa;
     width: 265px;
+    &::-webkit-input-placeholder {
+      font-size: 18px;
+    }
+    &:-moz-input-placeholder {
+      font-size: 18px;
+    }
+    &::-moz-input-placeholder {
+      font-size: 18px;
+    }
+    &:-ms-input-placeholder {
+      font-size: 18px;
+    }
   }
   input:focus::-webkit-input-placeholder { color:transparent; }
   input:focus:-moz-placeholder { color:transparent; } /* Firefox 18- */
