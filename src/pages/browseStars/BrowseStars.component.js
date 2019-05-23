@@ -111,7 +111,6 @@ const BrowseStars = (props) => {
         celebrity_user: { rate: finalStarData && finalStarData.rate },
         celebrity_profession: finalStarData.professions.map(profession => ({ title: profession })),
         user_id : finalStarData.celebrity_id,
-        profileImage: finalStarData.avatar_photo && finalStarData.avatar_photo.medium_thumbnail_url,
         ...finalStarData,
       });
     }
