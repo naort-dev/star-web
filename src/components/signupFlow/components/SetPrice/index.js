@@ -25,7 +25,6 @@ export default class SetPrice extends React.Component {
   }
 
   onSubmit = () => {
-    console.log('iosPriceFinder(priceValue, this.props.inAppPriceList)', iosPriceFinder(priceValue, this.props.inAppPriceList));
     const priceValue = commaToNumberFormatter(this.state.price.value);
     const priceDetails = {
       rate: priceValue,
@@ -36,7 +35,6 @@ export default class SetPrice extends React.Component {
       if (parseInt(priceValue) < 500 ) {
         this.props.primaryButtonClick(priceDetails)
       } else if(this.state.confirmPrice) {
-        console.log('this.state.confirmPrice', this.state.confirmPrice);
         this.props.primaryButtonClick(priceDetails)
       } else {
         this.setState({
@@ -114,10 +112,7 @@ export default class SetPrice extends React.Component {
       });
       return false;
     }
-    console.log('commaToNumberFormatter(this.state.price.value)', commaToNumberFormatter(this.state.price.value));
-    console.log(this.state.price.value);
     if (!pattern.test(commaToNumberFormatter(this.state.price.value))) {
-      console.log(!pattern.test(commaToNumberFormatter(this.state.price.value)));
       this.setState({
         price: {
           ...this.state.price,
@@ -140,10 +135,7 @@ export default class SetPrice extends React.Component {
     const pattern = /(?=.*\d)^\$?(([1-9]\d{0,4}(,\d{3})*)|0)?(\.\d{1,2})?$/;
     const dollarpattern = /^\$.*$/;
     const value = dollarpattern.test(event.target.value) ? event.target.value.substr(1) : event.target.value;
-    console.log(dollarpattern.test(event.target.value));
-    console.log('pattern.test(commaToNumberFormatter(event.target.value.substr(1)))', pattern.test(commaToNumberFormatter(value)))
-    console.log('commaToNumberFormatter(value)', commaToNumberFormatter(value))
-    debugger
+    
     if(type==='price' && value !== '') {
       this.setState({
         [type]: {
@@ -181,7 +173,6 @@ export default class SetPrice extends React.Component {
   render() {
     const { props } = this;
     const { isReferred, confirmPrice } = this.state;
-    console.log(this.state.price.value);
     return (
       <React.Fragment>
       <BackArrow className="leftArrow" onClick={this.backArrowClick} />
