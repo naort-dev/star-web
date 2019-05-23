@@ -237,6 +237,7 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     margin-bottom: 10px;
     max-width: 270px;
     span {
+      font-family: Gilroy-Light;
       font-size: 16px;
       display: block;
     }
@@ -293,6 +294,7 @@ UploadContainer.SubItemWrapper = styled.ul`
     margin-right: 5px;
     cursor: pointer;
     height: 26px;
+    margin-bottom: 2px;
   }
 `;
 UploadContainer.Item = styled.li`
@@ -306,7 +308,7 @@ UploadContainer.Item = styled.li`
 
   &.categoryItem {
     background-color: #fff;
-    color: ${props => (props.selected ? props.theme.flatBlue : '#999')};
+    color: ${props => (props.selected ? props.theme.flatBlue : '#555')};
     font-family: ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
   }
 `;

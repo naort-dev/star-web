@@ -28,7 +28,7 @@ const MultiSelectStyled = styled.div`
       background: rgb(255, 255, 255);
       height: 26.7px;
       margin: 5px 5px 0 0px;
-      padding: 0px 12px;
+      padding: 0px 3px 0 12px;
       border-radius: 16px;
     }
     .select__multi-value__label {
@@ -42,6 +42,7 @@ const MultiSelectStyled = styled.div`
       font-size: 16.9px;
       color: rgb(47, 131, 157);
       cursor: pointer;
+      padding-left: 8px;
       &:hover {
         background: none;
       }

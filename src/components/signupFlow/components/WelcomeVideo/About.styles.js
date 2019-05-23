@@ -82,12 +82,14 @@ export const QuesWrapper = styled.section`
 `;
 Layout.MainText = styled.p`
 max-width: 430px;
-margin-top: 5vh;
+margin-top: 20px;
 font-family: Gilroy;
-//margin-bottom: 5vh;
+&.section-1 {
+  margin-top: 62px;
+}
 `;
 Layout.Suggestions = styled.section`
-  margin-top: 5vh;
-  margin-bottom: 6vh;
+  margin-top: 15px;
+  margin-bottom: 60px;
   margin-left: 1vh;
 `;
