@@ -16,9 +16,18 @@ export const TextInput = props => (
     onBlur={props.onBlur}
     label={props.label}
     classes={{ root: 'MuiFormControl' }}
-    InputLabelProps={props.InputLabelProps}
+    InputLabelProps={{
+      classes: {
+        ...props.InputLabelProps.classes,
+      },
+    }}
     onClick={props.onClick}
-    InputProps={props.InputProps}
+    InputProps={{
+      classes: {
+        underline: 'input-underline',
+        ...props.InputProps.classes,
+      },
+    }}
     // eslint-disable-next-line
     inputProps={props.nativeProps}
   />
