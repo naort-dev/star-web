@@ -92,6 +92,9 @@ const MultiSelectStyled = styled.div`
     transform: none;
     color: ${props => props.theme.brownGreyTwo} !important;
   }
+  .select__indicators {
+    display: none;
+  }
   .input-focused {
     margin-top: 32px;
   }

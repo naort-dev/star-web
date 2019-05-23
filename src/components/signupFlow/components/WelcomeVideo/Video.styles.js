@@ -38,13 +38,14 @@ export const Layout = styled.section`
     display: none;
     width: 100%;
     text-align: center;
-    padding-top: 12px;
+    padding-top: 5px;
     color: #615195;
     font-size: 14px;
     cursor: pointer;
     font-family: Gilroy;
     ${media.webView} {
       display: inline-block;
+      padding-top: 15px;
     }
   }
   .skipMob {
@@ -52,6 +53,7 @@ export const Layout = styled.section`
     position: absolute;
     top: ${props => (props.error ? '532px' : '620px')};
     left: 0;
+    padding-top: 5px;
     ${media.webView} {
       display: none;
     }
@@ -76,7 +78,7 @@ export const VideoContainer = styled.section`
   }
   .retry {
     background: #fff;
-    width: 224px;
+    width: 224px !important;
     color: #2f839d;
     position: absolute;
     left: 50%;
@@ -124,9 +126,10 @@ export const QuestionContainer = styled.section`
   }
   .button {
     display: none;
+    width: auto;
     ${media.webView} {
       display: block;
-      margin-top: 39px;
+      margin-top: 34px;
       height: 60px;
       padding: 0;
     }
@@ -193,7 +196,7 @@ export const TimeSpan = styled.span`
   flex-direction: column;
   font-family: Gilroy;
   color: #555555;
-  padding-bottom: 31px;
+  padding-bottom: 38px;
   display: none;
   ${media.webView} {
     display: flex;

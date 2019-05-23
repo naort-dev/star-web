@@ -14,8 +14,11 @@ RegSuccessWrapper.ComponentWrapper = styled.div`
 
 RegSuccessWrapper.OptionWrapper = styled.div`
   padding-bottom: 28px;
-  @media(min-width:768px){
+  @media(min-width:832px){
     padding: 0px 29px;
+  }
+  @media(max-width:831px){
+    padding-bottom: 16px;
   }
 `;
 RegSuccessWrapper.HeaderText = styled.div`
@@ -25,19 +28,44 @@ RegSuccessWrapper.HeaderText = styled.div`
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
+  @media(max-width:831px){
+    padding-top: 20px;
+  }
+  @media(min-width:832px){
+    padding-top: 33px;
+  }
 `;
 RegSuccessWrapper.ButtonWrapper = styled.div`
-  text-align:center;
-  margin-top: 2px;
+text-align: center;
+margin-top: 2px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+@media(min-width: 832px){
+  flex-direction: row;
+}
   .success-button {
-    @media(max-width: 832px){
+    @media(max-width: 831px){
       margin-bottom:20px;
+    }
+    @media(min-width: 832px){
+      &:first-child {
+        width: auto;
+      }
+      &:last-child {
+        margin-left: 24px;
+      }
     }
   }
 `;
 
 RegSuccessWrapper.Type = styled.div`
   padding-bottom: 32px;
+  margin-top: 48px;
+  @media(min-width: 832px){
+    margin-top: -7px;
+  }
 `;
 RegSuccessWrapper.Image = styled.div`
   display: block;
@@ -48,6 +76,10 @@ RegSuccessWrapper.Image = styled.div`
   background-size: contain;
   height: 274px;
   margin-bottom: 0;
+  @media(max-width: 831px){
+    background-size: 207px auto;
+    height: 210px;
+  }
 `;
 RegSuccessWrapper.Label = styled.div`
   font-family: Gilroy;
@@ -67,6 +99,15 @@ RegSuccessWrapper.Description = styled.div`
   color: #555555;
   width: 100%;
   margin: 0 auto;
+  @media(min-width: 832px){
+    max-width: 450px;
+  }
+  @media(max-width: 831px){
+    font-size: 17px;
+    color: #7c7c7c;
+    margin: 0 auto;
+    max-width: 310px;
+  }
 `;
 RegSuccessWrapper.HighLight = styled.div`
   padding-top: 13px;
@@ -77,6 +118,10 @@ RegSuccessWrapper.HighLight = styled.div`
   color: #555555;
   width: 80%;
   margin: 0 auto;
+  @media(max-width: 831px){
+    padding-top: 22px;
+    color: #7c7c7c;
+  }
 `;
 
 export default RegSuccessWrapper;

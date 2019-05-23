@@ -5,6 +5,8 @@ const NestedSelectStyled = styled.div`
     text-align: center;
     font-family: Gilroy-Regular;
     font-size: 18px;
+    white-space: pre-line;
+    line-height: 25px;
     color: ${props => props.theme.brownGreyTwo};
   }
   .input-label-shrink {
@@ -12,6 +14,7 @@ const NestedSelectStyled = styled.div`
     text-align: center;
     transform: none;
     font-size: 13px;
+    line-height: 18px;
     color: ${props => props.theme.brownGreyTwo} !important;
   }
   .select__menu {
