@@ -36,8 +36,15 @@ RegSuccessWrapper.HeaderText = styled.div`
   }
 `;
 RegSuccessWrapper.ButtonWrapper = styled.div`
-  text-align:center;
-  margin-top: 2px;
+text-align: center;
+margin-top: 2px;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+@media(min-width: 832px){
+  flex-direction: row;
+}
   .success-button {
     @media(max-width: 831px){
       margin-bottom:20px;
