@@ -9,9 +9,9 @@ export const HeaderDiv = styled.section`
   background: #ff6c58;
   padding: 12px 40px 0;
   position: relative;
-  
+
   .arrow {
-    visibility: ${(props) => !props.arrow && 'hidden'};
+    visibility: ${props => !props.arrow && 'hidden'};
   }
   :after {
     content: '';
@@ -24,6 +24,7 @@ export const HeaderDiv = styled.section`
     border-left: solid 20px transparent;
     border-right: solid 20px transparent;
     transform: translateX(-50%);
+    z-index: 1;
   }
 
   .customHead {

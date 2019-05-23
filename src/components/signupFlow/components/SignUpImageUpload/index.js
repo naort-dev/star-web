@@ -69,7 +69,7 @@ class SignUpImageUpload extends React.Component {
   };
 
   setTakePicture = () => {
-    this.setState({ takePicture: true });
+    this.setState({ takePicture: true, cropper: false });
   };
 
   getSubCategoryList = id => {
@@ -224,10 +224,12 @@ class SignUpImageUpload extends React.Component {
           <ImageUpload.Heading>Crop your photo</ImageUpload.Heading>
           <ImageUpload.CropWrapper className='cropper-Wrapper'>
             <ImageCropper
+              onTakePicture={this.setTakePicture}
+              onUploadComplete={this.setProfileImage}
               exifData={this.state.currentExif}
               aspectRatio={imageSizes.profile}
               afterCrop={this.getCroppedImage}
-              closeCropper={() => this.closeCropper()}
+              closeCropper={this.closeCropper}
               cropImage={this.state.cropImage}
             />
           </ImageUpload.CropWrapper>
@@ -276,7 +278,8 @@ class SignUpImageUpload extends React.Component {
                   placeholder=""
                   onChange={this.handleMultiSelect}
                   onFocus={this.handleFocusSelect}
-                  label="Categorize yourself. This helps fans find you. (up to 3)"
+                  label={<span>Categorize yourself. <br/>
+                    This helps fans find you. (up to 3)</span>}
                 />
               </UploadContainer.BrowseCategoryContainer>
             </UploadContainer.MobileView>
@@ -308,7 +311,8 @@ class SignUpImageUpload extends React.Component {
                 placeholder=""
                 onChange={this.handleMultiSelect}
                 onFocus={this.handleFocusSelect}
-                label="Categorize yourself. This helps fans find you. (up to 3)"
+                label={<span>Categorize yourself. <br/>
+                This helps fans find you. (up to 3)</span>}
               />
               <UploadContainer.BrowseCategories>
                 Not finding one?{' '}
