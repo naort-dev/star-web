@@ -37,13 +37,20 @@ CropperStyled.ButtonWrapper = styled.div`
   ${media.webView} {
     transform: translateY(-50%);
     margin-top: 0;
+    width: 100%;
+    padding: 0 32px;
   }
   .button {
     width: 250px;
     height: 60px;
+    order: 1;
+    @media(min-width: 832px) {
+      order: initial;
+    }
   }
   @media (max-width: 831px) {
     margin-top: 96px;
+    flex-direction: column;
   }
   @media (min-width: 832px) {
     transform: translateY(-50%);
@@ -65,9 +72,20 @@ CropperStyled.CropperLightButton = styled.button`
   height: 60px;
   outline: none;
   position: relative;
+  order: 2;
+  margin-top: 15px;
+  svg {
+    margin-right: 10px;
+  }
+  .upload-button {
+    display: none;
+  }
   &:hover {
-    background-color: #2f839d;
-    color: #ededed;
+    box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  }
+  @media(min-width: 832px) {
+    order: initial;
+    margin-top: 0;
   }
 `;
 
