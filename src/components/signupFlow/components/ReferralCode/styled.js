@@ -26,7 +26,7 @@ ReferralCodeWrapper.HeaderText = styled.div`
   line-height: 1.25;
   text-align: center;
   color: #ff6c58;
-  padding-bottom: 80px;
+  padding-bottom: 65px;
 `;
 
 ReferralCodeWrapper.Description = styled.div`
