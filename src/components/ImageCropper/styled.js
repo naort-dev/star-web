@@ -14,7 +14,7 @@ const CropperStyled = styled.div`
 `
 
 CropperStyled.CropperWrapper = styled.div`
-  max-width: calc(100% - 20px);
+  width: calc(100% - 20px);
   max-height: 500px;
   img {
     max-width: 100%;

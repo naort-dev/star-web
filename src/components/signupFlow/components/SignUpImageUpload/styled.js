@@ -572,7 +572,7 @@ ImageUpload.VideoElement = styled.video`
   width: 100%;
   height: 262px;
   ${media.webView} {
-    height: 500px;
+    height: 485px;
   }
   background: black;
   margin: 10px 0;
