@@ -155,7 +155,6 @@ class SignupFlow extends React.Component {
                 this.setState({ loader: false });
                 if (success) {
                   // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-                  console.log('changed strp to',(this.state.currentStep + 1) );
                   this.changeStep(this.state.currentStep + 1);
                 }
               })
@@ -211,6 +210,8 @@ class SignupFlow extends React.Component {
           return (
             <RegistrationSuccess
               closeSignupFlow={this.closeSignUp}
+              audioVideoSupport={this.state.audioVideoSupport}
+              skipVideo={this.state.skipVideo}
               description={FAN_REG_SUCCESS.DESCRIPTION}
               icon={FAN_REG_SUCCESS.ICON}
               image_url={FAN_REG_SUCCESS.IMAGE_URL}
