@@ -2,18 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isPlainObject } from 'lodash';
-import StarDrawer from 'components/StarDrawer';
 import Checkbox from 'components/Checkbox';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
-import {
-  Layout,
-  ScriptContainer,
-  Script,
-  FlexBoxCenter,
-  TextAreaWrapper,
-} from './styled';
-import { ScriptGenerator } from './ScriptGenerator';
+import Script from 'components/Script';
+import { Layout, FlexBoxCenter, TextAreaWrapper } from './styled';
 
 class ScriptBuilder extends Component {
   constructor(props) {
@@ -116,44 +109,18 @@ class ScriptBuilder extends Component {
     }
   };
   render() {
-    const {
-      user,
-      hostName,
-      userName,
-      relationshipValue,
-      occasion,
-      date,
-      specification,
-      templateType,
-    } = this.props.bookingData;
+    const { user, relationshipValue } = this.props.bookingData;
+    const scriptData = {
+      ...this.props.bookingData,
+      relationship: isPlainObject(relationshipValue)
+        ? relationshipValue.title
+        : relationshipValue,
+      someOneElse: user !== 'Myself',
+      responseTime: this.props.responseTime,
+    };
     return (
       <Layout>
-        <ScriptContainer>
-          <section className="startWrapper">
-            <StarDrawer starData={this.starDataSet1} />
-          </section>
-          <Script
-            dangerouslySetInnerHTML={{
-              __html: ScriptGenerator({
-                templateType,
-                forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
-                fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
-                relationship: isPlainObject(relationshipValue)
-                  ? relationshipValue.title.toLowerCase()
-                  : relationshipValue.toLowerCase(),
-                date,
-                occasion: occasion.label.toLowerCase(),
-                someOneElse: user !== 'Myself',
-                specification: specification.toLowerCase(),
-                occasionKey: occasion.key,
-                responseTime: this.props.responseTime,
-              }),
-            }}
-          />
-          <section className="startWrapper">
-            <StarDrawer starData={this.starDataSet2} />
-          </section>
-        </ScriptContainer>
+        <Script scriptData={scriptData} />
         <FlexBoxCenter>
           <p>
             Review this suggested script for the star. It will help them get the
