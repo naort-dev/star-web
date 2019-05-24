@@ -29,3 +29,30 @@ Layout.EventStep2 = styled.div`
   padding-top: 40px;
   min-height: 240px;
 `;
+
+export const TextArea = styled.div`
+  padding-left: 10px;
+  padding-right: 10px;
+  .textarea {
+    resize: none;
+    padding: 15px;
+    max-width: 425px;
+    font-family: Gilroy-Light;
+    color: #615195;
+    font-size: 22px;
+    width: 100%;
+    border-radius: 10px;
+    :focus {
+      outline: none;
+    }
+    ::placeholder {
+      font-size: 16px;
+    }
+    :-ms-input-placeholder {
+      font-size: 16px;
+    }
+    ::-ms-input-placeholder {
+      font-size: 16px;
+    }
+  }
+`;

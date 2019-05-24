@@ -197,15 +197,25 @@ const getAnnouncementScript = (
       date,
       '',
     )}.`;
+  } else if (templateType === 7) {
+    if (isEmpty(forName)) {
+      return `<span class="boldTxt">${specification.charAt(0).toUpperCase() +
+        specification.slice(
+          1,
+        )}’s</span>  having a <span class="boldTxt">${occasion}</span> ${dateFormatter(
+        date,
+        '',
+      )}.  Hope you can make it!
+      `;
+    }
+    return `<span class="boldTxt">${forName}</span> is hosting a <span class="boldTxt">${occasion}</span> for <span class="boldTxt">${specification
+      .charAt(0)
+      .toUpperCase() + specification.slice(1)}</span>${dateFormatter(
+      date,
+      '',
+    )}. Hope you can make it!`;
   }
-
-  return `<span class="boldTxt">${specification.charAt(0).toUpperCase() +
-    specification.slice(
-      1,
-    )}</span> is hosting a <span class="boldTxt">${occasion}</span> for <span class="boldTxt">${forName}</span>${dateFormatter(
-    date,
-    '',
-  )}. Hope you can make it!`;
+  return '';
 };
 
 const getStep5Script = (
