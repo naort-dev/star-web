@@ -76,7 +76,8 @@ ReferralCodeWrapper.WrapsInput = styled.div`
 
 ReferralCodeWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  margin-top: 290px;
+  margin-top: 306px;
+  margin-bottom: 20px;
 `;
 
 export default ReferralCodeWrapper;

@@ -80,6 +80,7 @@ SignUpMethod.Button = styled.button`
   }
   &.email-wrap {
     margin-top: 7px;
+    margin-bottom: 20px;
     @media(min-width: 831px) {
       margin-top: 0;
       padding-top: 3px;

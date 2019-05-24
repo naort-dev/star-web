@@ -310,7 +310,7 @@ class SignUpImageUpload extends React.Component {
             {!(this.state.selectedProfessions.length > 0 && (this.state.finalImage || this.state.cropImage)) && this.state.isContinue &&(
               <ErrorMessage>Please add a profile image and choose at least one category</ErrorMessage>
             )}
-            <UploadContainer.CategoriesWrapper>
+            <UploadContainer.CategoriesWrapper className={this.state.finalImage ? 'select-category' : 'fans-want'}>
               <MultiSelect
                 value={this.state.selectedProfessions}
                 options={subcategories}
@@ -330,7 +330,7 @@ class SignUpImageUpload extends React.Component {
                 </UploadContainer.BrowseCategoriesLink>
               </UploadContainer.BrowseCategories>
             </UploadContainer.CategoriesWrapper>
-            <UploadContainer.ButtonWrapper>
+            <UploadContainer.ButtonWrapper className="align-center">
               <PrimaryButton type="submit" onClick={this.continueClickhandler}>
                 Continue
               </PrimaryButton>
