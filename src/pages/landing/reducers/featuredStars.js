@@ -4,7 +4,7 @@ const initalState = {
   homeFeatured: {
     title: '',
     data: [],
-    homeVideos: [],
+    homeVideos: {},
   },
   loading: false,
   error: null,
