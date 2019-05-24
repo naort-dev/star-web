@@ -57,6 +57,7 @@ export default class SetPrice extends React.Component {
     this.setState({
       isReferred: true
     });
+    this.props.scrollRef.scrollTop = 0;
     this.props.disableClose(true);
   }
   

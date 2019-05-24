@@ -242,6 +242,7 @@ class SignUpForm extends React.Component {
     this.setState({
       acceptTerms: true,
     });
+    this.props.scrollRef.scrollTop = 0;
     this.props.disableClose(true);
   };
 
