@@ -255,6 +255,7 @@ class SignupFlow extends React.Component {
             <SignUpImageUpload
               {...this.props}
               changeStep={this.changeStep}
+              scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}

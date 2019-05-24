@@ -34,6 +34,7 @@ class SignUpImageUpload extends React.Component {
   };
 
   onBack = () => {
+    this.props.scrollRef.scrollTop = 0;
     this.setState({
       cropper: false,
       takePicture: false,
@@ -42,6 +43,7 @@ class SignUpImageUpload extends React.Component {
   };
 
   setProfileImage = (imageResult, exif, extension) => {
+    this.props.scrollRef.scrollTop = 0;
     this.setState({
       cropper: true,
       currentExif: exif,
@@ -69,6 +71,7 @@ class SignUpImageUpload extends React.Component {
   };
 
   setTakePicture = () => {
+    this.props.scrollRef.scrollTop = 0;
     this.setState({ takePicture: true, cropper: false });
   };
 
@@ -118,6 +121,7 @@ class SignUpImageUpload extends React.Component {
     this.props.continueClickCallback(this.state.selectedProfessions, this.state.finalImage, this.state.cropImage);
   }
   closeCropper = () => {
+    this.props.scrollRef.scrollTop = 0;
     this.setState({
       cropImage: null,
       cropper: false,
@@ -127,6 +131,7 @@ class SignUpImageUpload extends React.Component {
   };
 
   browserCategory = () => {
+    this.props.scrollRef.scrollTop = 0;
     this.setState({ showBrowseCategory: true });
   };
 
