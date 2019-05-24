@@ -21,7 +21,6 @@ import {
   toggleLogin,
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
-import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
@@ -50,6 +49,7 @@ class SignupFlow extends React.Component {
         ? props.signUpDetails.enableClose
         : false,
       profession: [],
+      scrollRef: null,
       profile_video: 'sample.mp4',
       disableClose: false,
       skipVideo: false,
@@ -95,6 +95,7 @@ class SignupFlow extends React.Component {
     this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   changeStep = step => {
+    this.state.scrollRef.scrollTop = 0;
     this.setState({ currentStep: step, enableClose: false });
   };
   closeSignUp = () => {
@@ -130,6 +131,7 @@ class SignupFlow extends React.Component {
   
   changeSignUpRole = role => {
     this.setState({ selectedType: role, stepCount: 0 });
+    this.state.scrollRef.scrollTop = 0;
     if (role === 'star') {
       this.setState({ stepCount: this.starRegistrationSteps });
     } else if (role === 'group') {
@@ -186,6 +188,11 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
+
+  setScrollRef = (scrollNode) => {
+    this.setState({ scrollRef: scrollNode })
+  }
+
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
       switch (this.state.currentStep) {
@@ -233,6 +240,7 @@ class SignupFlow extends React.Component {
               {...this.props}
               registerUser={this.props.registerUser}
               changeStep={this.changeStep}
+              scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
@@ -291,6 +299,7 @@ class SignupFlow extends React.Component {
             closeSignupFlow={this.closeSetPrice}
             disableClose={this.disableClose}
             action={SET_PRICE.ACTION}
+            scrollRef={this.state.scrollRef}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
             confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
             confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
@@ -374,6 +383,7 @@ class SignupFlow extends React.Component {
           closePopUp={this.closeSignUp}
           modalView
           smallPopup
+          setScrollRef={this.setScrollRef}
           disableClose={this.state.disableClose}
         >
           <LoginContainer>

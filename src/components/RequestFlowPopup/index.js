@@ -10,7 +10,7 @@ export default class RequestFlowPopup extends React.Component {
     this.state = {
       fullScreen: false,
     };
-    this.popupContent = null;
+    this.popupContent = React.createRef();
     this.popupWrapper = null;
   }
 
@@ -21,6 +21,15 @@ export default class RequestFlowPopup extends React.Component {
 
   componentWillUnmount() {
     window.removeEventListener('resize', this.handleResize);
+  }
+
+  onModalMount = () => {
+    if (this.props.setScrollRef) {
+      this.props.setScrollRef(this.popupContent.current);
+    }
+    if (this.props.onMounted) {
+      this.props.onMounted();
+    }
   }
 
   handleResize = () => {
@@ -52,15 +61,14 @@ export default class RequestFlowPopup extends React.Component {
         open
         disableBackdropClick={this.props.modalView}
         classes={{ paper: 'paper-root' }}
-        onRendered={this.props.onMounted && this.props.onMounted}
+        onRendered={this.onModalMount}
         onClose={this.props.closePopUp}
         aria-labelledby="responsive-dialog-title"
       >
         <PopupStyled.SmallContainer
-          // modalView={this.props.modalView}
           largePopup={this.props.largePopup}
           autoWidth={this.props.autoWidth}
-          innerRef={node => (this.popupContent = node)}
+          innerRef={this.popupContent}
         >
           {/* {!this.props.modalView && (
             <PopupStyled.SliderDotsWrapper>
