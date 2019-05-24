@@ -15,7 +15,10 @@ const CropperStyled = styled.div`
 
 CropperStyled.CropperWrapper = styled.div`
   width: calc(100% - 20px);
-  max-height: 500px;
+  height: 261.6px;
+  @media(min-width: 832px) {
+    height: 477px;
+  }
   img {
     max-width: 100%;
   }
@@ -86,13 +89,37 @@ CropperStyled.ButtonWrapper = styled.div`
   @media (min-width: 832px) {
     transform: translateY(-50%);
   }
+  .take-picture {
+    @media (min-width: 832px) {
+      font-size: 16px;
+      svg {
+        font-size: 21px;
+      }
+    }
+    svg {
+      font-size: 23px;
+    }
+  }
+  .upload-picture {
+    @media (max-width: 831px) {
+      margin-bottom: 20px;
+    }
+    @media (min-width: 832px) {
+      font-size: 16px;
+      svg {
+        font-size: 19px;
+      }
+    }
+    svg {
+      font-size: 20px;
+    }
+  }
 `;
 CropperStyled.CropperLightButton = styled.button`
   cursor: pointer;
   background-color: #ededed;
   font-family: Gilroy-Medium;
   font-size: 18px;
-  line-height: 1.5;
   text-align: center;
   color: #2f839d;
   padding: 15px;
@@ -105,6 +132,9 @@ CropperStyled.CropperLightButton = styled.button`
   position: relative;
   order: 2;
   margin-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   svg {
     margin-right: 10px;
   }

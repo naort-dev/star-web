@@ -57,7 +57,8 @@ SetPriceWrapper.Title = styled.div`
 `;
 SetPriceWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  padding-top: ${props => (props.confirmation ? '87px' : '15px')};
+  padding-top: ${props => (props.confirmation ? '87px' : '18px')};
+  margin-bottom: 20px;
 `;
 
 SetPriceWrapper.WrapsInput = styled.div`
@@ -132,7 +133,7 @@ SetPriceWrapper.Label = styled.div`
   }
 
   b {
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy-Medium;
   }
 `;
 SetPriceWrapper.Description = styled.div`

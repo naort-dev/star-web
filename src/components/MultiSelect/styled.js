@@ -9,6 +9,19 @@ const MultiSelectStyled = styled.div`
     display: flex;
     justify-content: center;
   }
+  .input-underline {
+    &:after {
+        border-color: ${props => props.theme.flatBlue};
+    }
+    &:before {
+      border-bottom: 2px solid rgba(0, 0, 0, 0.42) !important;
+    }
+    &:hover {
+        &:before {
+            border-bottom: 2px solid rgba(0, 0, 0, 0.42) !important;
+        }
+    }
+}
   .select__value-container > div[role='button'] {
     border: 1px solid #2f839d;
     background: #fff;
@@ -19,6 +32,9 @@ const MultiSelectStyled = styled.div`
     font-size: 24px;
     .select__input {
       color: #615195;
+      input {
+        font-size: 24px;
+      }
     }
     .select__multi-value {
       border-width: 1px;
@@ -27,7 +43,7 @@ const MultiSelectStyled = styled.div`
       border-image: initial;
       background: rgb(255, 255, 255);
       height: 26.7px;
-      margin: 5px 5px 0 0px;
+      margin: 0 5px 5px 0px;
       padding: 0px 3px 0 12px;
       border-radius: 16px;
     }

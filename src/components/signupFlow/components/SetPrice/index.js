@@ -229,7 +229,7 @@ export default class SetPrice extends React.Component {
               </SetPriceWrapper.HighLight>
             </SetPriceWrapper.Block>
           }
-          <SetPriceWrapper.ButtonWrapper confirmation={confirmPrice}>
+          <SetPriceWrapper.ButtonWrapper confirmation={confirmPrice} className="align-center">
             <PrimaryButton onClick={this.onSubmit}>
               {confirmPrice ? props.confirmPrimaryButton : props.primary_button}
             </PrimaryButton>
