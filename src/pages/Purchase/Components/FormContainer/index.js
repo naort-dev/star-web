@@ -122,8 +122,10 @@ function FormContainer(props) {
     };
     if (templateType === 1 || templateType === 2) {
       validateFields([hostName !== '']);
-    } else if ([3, 4, 5, 6, 7].includes(templateType)) {
+    } else if ([3, 4, 5, 6].includes(templateType)) {
       validateFields([hostName !== '', specification !== '']);
+    } else if ([7].includes(templateType)) {
+      validateFields([specification !== '']);
     }
   };
 
@@ -134,10 +136,13 @@ function FormContainer(props) {
     if (templateType === 1 || templateType === 2) {
       validateStepOne(![hostName !== ''].every(condition => condition));
       validateStepTwo(false);
-    } else if (templateType === 6 || templateType === 7) {
+    } else if (templateType === 6) {
       validateStepOne(
         ![hostName !== '', specification !== ''].every(condition => condition),
       );
+      validateStepTwo(false);
+    } else if (templateType === 7) {
+      validateStepOne(![specification !== ''].every(condition => condition));
       validateStepTwo(false);
     } else if (templateType === 3 || templateType === 4 || templateType === 5) {
       if (props.pageCount === 0) {
