@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
+import CardContent from '../../components/CardContent';
 import Sidebar from '../../components/Sidebar';
 import ManageStyled from './styled';
 
@@ -36,7 +37,7 @@ const ManageUser = (props) => {
                 <Switch>
                   <Route 
                     path='/manage/dashboard'
-                    render={() => 'dashboard'}
+                    render={() => <CardContent>Dashboard</CardContent>}
                   />
                   <Route 
                     path='/manage/bookings'
