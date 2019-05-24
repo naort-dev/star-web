@@ -7,18 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { NestedSelectStyled } from './styled';
 
-const MultiValue = prop => {
-  return (
-    <Chip
-      tabIndex={-1}
-      label={prop.children}
-      onDelete={prop.removeProps.onClick}
-      classes={{ deleteIcon: 'chip-delete-icon' }}
-      deleteIcon={<FontAwesomeIcon icon={faTimes} />}
-    />
-  );
-};
-
 const MultiValueRemove = prop => {
   return <span {...prop.innerProps}><FontAwesomeIcon icon={faTimes} /></span>
 }
@@ -92,9 +80,12 @@ const NestedSelect = props => {
     }
   };
 
+  const renderNoOptions = () => {
+    return props.noOptionsMessage;
+  }
+
   const components = {
     Control,
-    // MultiValue,
     MultiValueRemove,
     Option,
     GroupHeading,
@@ -108,6 +99,7 @@ const NestedSelect = props => {
         options={props.options}
         className="basic-multi-select"
         classNamePrefix="select"
+        noOptionsMessage={renderNoOptions}
         placeholder={props.placeholder}
         onMenuClose={updateInputValue}
         components={components}

@@ -276,6 +276,7 @@ class SignUpImageUpload extends React.Component {
                   value={this.state.selectedProfessions}
                   options={nestedProfessions}
                   placeholder=""
+                  noOptionsMessage='No categories were found.'
                   onChange={this.handleMultiSelect}
                   onFocus={this.handleFocusSelect}
                   label={<span>Categorize yourself. <br/>
@@ -311,6 +312,7 @@ class SignUpImageUpload extends React.Component {
                 placeholder=""
                 onChange={this.handleMultiSelect}
                 onFocus={this.handleFocusSelect}
+                noOptionsMessage='No categories were found. Try browsing.'
                 label={<span>Categorize yourself. <br/>
                 This helps fans find you. (up to 3)</span>}
               />
