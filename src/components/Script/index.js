@@ -61,28 +61,35 @@ const ScriptBuilder = ({ scriptData }) => {
     templateType,
     responseTime,
     someOneElse,
+    scriptText,
   } = scriptData;
   return (
     <ScriptContainer>
       <section className="starWrapper">
         <StarDrawer starData={starDataSet1} />
       </section>
-      <Script
-        dangerouslySetInnerHTML={{
-          __html: ScriptGenerator({
-            templateType,
-            forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
-            fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
-            relationship: relationship.toLowerCase(),
-            date,
-            occasion: occasion.label.toLowerCase(),
-            someOneElse,
-            specification: specification.toLowerCase(),
-            occasionKey: occasion.key,
-            responseTime,
-          }),
-        }}
-      />
+      {scriptText !== '' ? (
+        <Script>
+          <p className="script">{scriptText}</p>
+        </Script>
+      ) : (
+        <Script
+          dangerouslySetInnerHTML={{
+            __html: ScriptGenerator({
+              templateType,
+              forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
+              fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
+              relationship: relationship.toLowerCase(),
+              date,
+              occasion: occasion.label.toLowerCase(),
+              someOneElse,
+              specification: specification.toLowerCase(),
+              occasionKey: occasion.key,
+              responseTime,
+            }),
+          }}
+        />
+      )}
       <section className="starWrapper">
         <StarDrawer starData={starDataSet2} />
       </section>

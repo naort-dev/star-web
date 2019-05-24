@@ -326,6 +326,8 @@ class Purchase extends Component {
       eventName: '',
       validSelf: false,
       occasion: {},
+      scriptText: '',
+      otherSelected: false,
     });
   };
 

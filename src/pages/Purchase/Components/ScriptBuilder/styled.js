@@ -55,8 +55,6 @@ export const TextAreaWrapper = styled.section`
       outline: none;
     }
     ::placeholder {
-      color: red;
-      opacity: 1;
       color: #b7b7b7;
     }
     :-ms-input-placeholder {

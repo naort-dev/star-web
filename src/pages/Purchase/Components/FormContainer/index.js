@@ -6,7 +6,7 @@ import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
 import RequestTemplates from 'components/RequestTemplates';
 import { getMobileOperatingSystem } from 'utils/checkOS';
-import { Layout } from './styled';
+import { Layout, TextArea } from './styled';
 
 function FormContainer(props) {
   const { detailList } = { ...props };
@@ -16,9 +16,15 @@ function FormContainer(props) {
     key: item.id,
   }));
   const isMobile = getMobileOperatingSystem();
-  const [isDisabled, buttonDisabled] = useState(true);
+  const [isDisabled, buttonDisabled] = useState(
+    props.bookingData.scriptText === '',
+  );
   const [stepOne, validateStepOne] = useState(true);
   const [stepTwo, validateStepTwo] = useState(true);
+  const [otherSelected, setOtherSelected] = useState(
+    props.bookingData.otherSelected,
+  );
+  const [scriptText, updateScriptText] = useState(props.bookingData.scriptText);
 
   const updateUserToMyself = () => {
     setFormData({
@@ -61,14 +67,20 @@ function FormContainer(props) {
   );
 
   const onSelectOccasion = occasion => {
-    let type;
-    const result = props.detailList.filter(item => {
-      if (item.id === occasion.key) {
-        type = item.template_type;
-        return item;
-      }
-      return {};
-    });
+    let type = null;
+    let result = [];
+    if (occasion.key !== 18 && occasion.label !== 'Other') {
+      result = props.detailList.filter(item => {
+        if (item.id === occasion.key) {
+          type = item.template_type;
+          return item;
+        }
+        return {};
+      });
+      setOtherSelected(false);
+    } else {
+      setOtherSelected(true);
+    }
 
     const tempObj = {
       user: 'someoneElse',
@@ -88,6 +100,8 @@ function FormContainer(props) {
       occasion,
       ...tempObj,
     });
+    updateScriptText('');
+    buttonDisabled(true);
     props.updateBookingData({
       templateType: type,
       relationship: result.length ? result[0].relationships : [],
@@ -98,14 +112,16 @@ function FormContainer(props) {
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
       props.submitClick();
+    } else if (otherSelected) {
+      props.submitClick();
     } else {
       props.pageCountHandler(props.pageCount + 1);
     }
-    props.updateBookingData(FormData);
+    props.updateBookingData({ ...FormData, scriptText, otherSelected });
   };
 
   const checkButtonDisabled = () => {
-    if (FormData.user === 'someoneElse' && isMobile) {
+    if (FormData.user === 'someoneElse' && isMobile && !otherSelected) {
       if (props.pageCount === 0) {
         return stepOne;
       } else if (props.pageCount === 1) {
@@ -177,6 +193,11 @@ function FormContainer(props) {
     props.pageCount,
   ]);
 
+  const getScript = value => {
+    updateScriptText(value);
+    buttonDisabled(value === '');
+  };
+
   return (
     <Layout>
       <FlexCenter>
@@ -192,6 +213,17 @@ function FormContainer(props) {
       </FlexCenter>
       <Layout.EventStep2>
         {PageDetailsArray.length > 0 ? PageDetailsArray[props.pageCount] : null}
+        {otherSelected && (
+          <TextArea>
+            <textarea
+              rows="5"
+              value={scriptText}
+              onChange={event => getScript(event.target.value)}
+              placeholder="Enter script.."
+              className="textarea"
+            />
+          </TextArea>
+        )}
       </Layout.EventStep2>
       <FlexCenter>
         <Button
@@ -223,9 +255,7 @@ FormContainer.defaultProps = {};
 
 export default connect(
   state => ({
-    bookingData: state.occasionList.bookingData
-      ? state.occasionList.bookingData
-      : {},
+    bookingData: state.occasionList.bookingData,
     user_name: state.userDetails.settings_userDetails.stageName,
     audio: state.audioRecorder.recorded,
   }),
