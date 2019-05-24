@@ -21,9 +21,40 @@ CropperStyled.CropperWrapper = styled.div`
   }
   .cropper-view-box {
     border-radius: 50%;
+    border: 2px solid #fff;
+    border-style: dashed;
+    outline: none;
+  }
+  .cropper-face {
+    background-color: transparent;
   }
   .cropper-modal {
     background: #fff;
+  }
+  .cropper-point {
+    background-color: transparent;
+    border: 2px solid #fff;
+    width: 12.9px;
+    height: 12.9px;
+    opacity: 1;
+    &.point-n, &.point-s, &.point-w, &.point-e {
+      display: none;
+    }
+    &.point-se {
+      width: 12.9px;
+      height: 12.9px;
+    }
+    @media(min-width: 832px) {
+      width: 24px;
+      height: 24px;
+      &.point-se {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+  .cropper-line {
+    background-color: transparent;
   }
 `;
 
