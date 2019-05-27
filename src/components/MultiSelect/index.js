@@ -8,18 +8,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { MultiSelectStyled } from './styled';
 
-const MultiValue = prop => {
-  return (
-    <Chip
-      tabIndex={-1}
-      label={prop.children}
-      onDelete={prop.removeProps.onClick}
-      classes={{ deleteIcon: 'chip-delete-icon', root: 'category-pill' }}
-      deleteIcon={<FontAwesomeIcon icon={faTimes} />}
-    />
-  );
-};
-
 const MultiValueRemove = prop => {
   return <span {...prop.innerProps}><FontAwesomeIcon icon={faTimes} /></span>
 }
@@ -30,9 +18,6 @@ const inputComponent = ({ inputRef, ...props }) => {
 
 const Control = prop => {
   const textFieldProps = { ...prop.selectProps.textFieldProps };
-  // if (!props.value.length) {
-  // delete textFieldProps.InputLabelProps;
-  // }
   return (
     <TextField
       fullWidth
@@ -48,9 +33,12 @@ const Control = prop => {
           children: prop.children,
           ...prop.innerProps,
           classes: {
-            focused: 'input-form-control'
+            focused: 'input-form-control', 
           }
         },
+        classes: {
+          underline: 'input-underline', 
+        }
       }}
       {...textFieldProps}
     />
@@ -58,6 +46,7 @@ const Control = prop => {
 };
 
 const MenuList = prop => {
+  console.log(prop)
   return (
     <Scrollbars
       renderView={props => <div {...props} className="select__menu-list"/>}
@@ -105,9 +94,12 @@ const MultiSelect = props => {
     }
   };
 
+  const renderNoOptions = () => {
+    return props.noOptionsMessage;
+  }
+
   const components = {
     Control,
-    // MultiValue,
     MultiValueRemove,
     Option,
     MenuList,
@@ -118,9 +110,11 @@ const MultiSelect = props => {
         value={props.value}
         isMulti
         name="selectedProfessions"
-        options={inputValue !== '' ? props.options : []}
+        options={inputValue !== '' && inputValue.length >= 3 ? props.options : []}
         className="basic-multi-select"
+        menuIsOpen={inputValue !== '' && inputValue.length >= 3}
         classNamePrefix="select"
+        noOptionsMessage={renderNoOptions}
         placeholder={props.placeholder}
         onMenuClose={updateInputValue}
         components={components}

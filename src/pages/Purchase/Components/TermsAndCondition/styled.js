@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { FlexCenter } from 'styles/CommonStyled';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
@@ -14,11 +15,13 @@ export const Layout = styled.section`
     color: #797979;
   }
   .continue-btn {
-    margin-left: 37px;
+    ${media.webView} {
+      margin-left: 37px;
+    }
   }
 `;
 
 export const FlexBox = styled(FlexCenter)`
-  position: absolute;
-  bottom: 61px;
+  margin-top: 40px;
+  margin-bottom: 60px;
 `;

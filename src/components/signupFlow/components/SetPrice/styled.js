@@ -57,7 +57,8 @@ SetPriceWrapper.Title = styled.div`
 `;
 SetPriceWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  padding-top: ${props => (props.confirmation ? '87px' : '15px')};
+  padding-top: ${props => (props.confirmation ? '87px' : '18px')};
+  margin-bottom: 20px;
 `;
 
 SetPriceWrapper.WrapsInput = styled.div`
@@ -69,7 +70,11 @@ SetPriceWrapper.WrapsInput = styled.div`
     text-align: center;
     color: #8174aa;
     width: 400px;
-    padding: 8px 0 0;
+    padding: 1px 0 5px;
+    @media (max-width: 831px) {
+      padding: 1px 0 2px;
+      font-size: 38px;
+    }
   }
   .adornment {
     position: relative;
@@ -128,20 +133,21 @@ SetPriceWrapper.Label = styled.div`
   }
 
   b {
-    font-family: Gilroy-Semibold;
+    font-family: Gilroy-Medium;
   }
 `;
 SetPriceWrapper.Description = styled.div`
   font-family: Gilroy;
   font-size: 14px;
-  line-height: 1.57;
+  line-height: 20px;
   letter-spacing: normal;
   text-align: center;
   color: ${props => props.error ? '#f44336': '#555555'};
   margin-bottom: 13px;
   @media(max-width:831px) {
     max-width: 178px;
-    margin: 0 auto 25px;
+    margin: 0 auto 18px;
+    color: ${props => props.error ? '#f44336': '#797979'};
   }
 `;
 SetPriceWrapper.Block = styled.div ``;

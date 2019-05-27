@@ -242,6 +242,7 @@ class SignUpForm extends React.Component {
     this.setState({
       acceptTerms: true,
     });
+    this.props.scrollRef.scrollTop = 0;
     this.props.disableClose(true);
   };
 
@@ -268,7 +269,7 @@ class SignUpForm extends React.Component {
     ) : (
       <LoginContainer.SocialMediaSignup>
         {this.state.loading && <ActionLoader />}
-        <LoginContainer.Container>
+        <LoginContainer.Container className="popup-container">
           <LoginContainer.Heading>{signUp.title}</LoginContainer.Heading>
           {this.props.signupRole === 'star' && (
             <DotsContainer dotsCount={3} selectedDot={1} />
@@ -436,7 +437,7 @@ class SignUpForm extends React.Component {
                   </LoginContainer.ErrorMsg>
                 </div>
               )}
-              <LoginContainer.ButtonWrapper>
+              <LoginContainer.ButtonWrapper className="align-center">
                 <PrimaryButton
                   type="submit"
                   onClick={this.onRegister}

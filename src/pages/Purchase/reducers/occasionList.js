@@ -18,6 +18,8 @@ const initalState = {
     eventName: '',
     validSelf: false,
     occasion: {},
+    scriptText: '',
+    otherSelected: false,
   },
   formProps: {
     stepCount: 1,
