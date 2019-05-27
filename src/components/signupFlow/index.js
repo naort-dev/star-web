@@ -33,7 +33,7 @@ import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { celebritySignupProfile } from '../../services/userRegistration'
-// import GetPhoneNumber from '../../components/GetPhoneNumber';
+import GetPhoneNumber from '../../components/GetPhoneNumber';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 
 
@@ -61,7 +61,7 @@ class SignupFlow extends React.Component {
   onBack = flag => {
     this.setState(state => ({
       currentStep: state.currentStep - 1,
-      switched: flag ? flag : false,
+      switched: flag,
     }));
   };
   onSetPriceBack = flag => {
@@ -156,8 +156,8 @@ class SignupFlow extends React.Component {
               .then((success) => {
                 this.setState({ loader: false });
                 if (success) {
-                  // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-                  this.changeStep(this.state.currentStep + 1);
+                  this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+                  // this.changeStep(this.state.currentStep + 1);
                 }
               })
               .catch(() => {
@@ -188,6 +188,9 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
+  submitOTPForm = () => {
+    this.changeStep(this.state.currentStep + 1);
+  }
 
   setScrollRef = (scrollNode) => {
     this.setState({ scrollRef: scrollNode })
@@ -313,15 +316,22 @@ class SignupFlow extends React.Component {
             title={SET_PRICE.TITLE}
             link={SET_PRICE.LINK}
           />);
-          // case 6:
-          //   return(
-          //     <GetPhoneNumber
-          //       description={STAR_GET_PHONE_NO.DESCRIPTION}
-          //       title1={STAR_GET_PHONE_NO.TITLE1}
-          //       image_url={STAR_GET_PHONE_NO.IMAGE_URL}
-          //     />
-          //   )
           case 6:
+            return(
+              <GetPhoneNumber
+                description={STAR_GET_PHONE_NO.DESCRIPTION}
+                title1={STAR_GET_PHONE_NO.TITLE1}
+                image_url={STAR_GET_PHONE_NO.IMAGE_URL}
+                otptitle={STAR_GET_PHONE_NO.OTP_TITLE}
+                otp_sub_title={STAR_GET_PHONE_NO.OTP_SUBTITLE}
+                otp_receive_code={STAR_GET_PHONE_NO.OTP_RECEIVE_CODE}
+                onComplete={this.submitOTPForm}
+                onBack={this.onBack}
+                switched={this.state.switched}
+                disableClose={this.disableClose}
+              />
+            )
+          case 7:
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
