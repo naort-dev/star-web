@@ -245,9 +245,11 @@ const GetPhoneNumber = props => {
           <Content.OtpSubTitleWrapper>
             <Content.OtpSubTitle>{props.otp_receive_code}</Content.OtpSubTitle><Content.Resend onClick={() => submitNotification('reSent')}>Resend</Content.Resend>
           </Content.OtpSubTitleWrapper>
+          <Layout.ButtonWrapper className="align-center">
           <Button className="SubmitPhoneNoBtn" onClick={() => submitOTPForm()}>
             Verify
           </Button>
+          </Layout.ButtonWrapper>
         </Content>
         ) : (
           <React.Fragment>
@@ -286,9 +288,11 @@ const GetPhoneNumber = props => {
                   }
                 </div>
           </Layout.Phonenumber>
+          <Layout.ButtonWrapper className="align-center">
           <Button className="SubmitPhoneNoBtn" onClick={submitNotification}>
             Continue
           </Button>
+          </Layout.ButtonWrapper>
           <span
           className="skip"
           onClick={props.onComplete}

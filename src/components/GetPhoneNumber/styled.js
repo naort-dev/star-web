@@ -119,6 +119,9 @@ Layout.Image = styled.div`
   width: 200px;
   margin-bottom: 0;
 `;
+Layout.ButtonWrapper = styled.div`
+  
+`;
 Content.OtpSubTitle = styled.div`
   font-family: Gilroy;
   font-size: 15px;
