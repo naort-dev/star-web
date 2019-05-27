@@ -348,6 +348,7 @@ class SignupFlow extends React.Component {
                 onBack={this.onBack}
                 switched={this.state.switched}
                 disableClose={this.disableClose}
+                closePhoneNum={this.closeSetPrice}
               />
             )
           case 7:
@@ -419,7 +420,7 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
-                this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 6
+                this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 7
               ) && (
                 <BackArrow
                   className="backArrow"
