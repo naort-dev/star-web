@@ -2,6 +2,7 @@ import React from 'react';
 import EXIF from 'exif-js';
 import { ImageUpload } from '../styled';
 import Loader from '../../../../Loader';
+import PrimaryButton from '../../../../PrimaryButton';
 import { getMobileOperatingSystem } from '../../../../../utils/checkOS';
 import { detectUserMedia } from '../../../../../utils/detectCamera';
 
@@ -198,7 +199,7 @@ export default class TakePhoto extends React.Component {
               {
                 !this.state.videoError &&
                 <ImageUpload.PhotoButtonWrapper>
-                  <ImageUpload.CropperButton onClick={this.takeScreenshot}>Capture photo</ImageUpload.CropperButton>
+                  <PrimaryButton className='button' onClick={this.takeScreenshot}>Capture photo</PrimaryButton>
                 </ImageUpload.PhotoButtonWrapper>
               }
             </React.Fragment>

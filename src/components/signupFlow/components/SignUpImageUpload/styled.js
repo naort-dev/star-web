@@ -633,8 +633,7 @@ ImageUpload.PhotoButtonWrapper = styled.div`
   position: relative;
   z-index: 2;
   .button {
-    width: 250px;
-    height: 60px;
+    display: inline-block;
   }
   @media (max-width: 831px) {
     margin-top: 96px;
@@ -660,10 +659,6 @@ ImageUpload.CropperButton = styled.button`
   outline: none;
   border: none;
   margin: 0 17px;
-  &:hover {
-    background-color: #ededed;
-    color: #2f839d;
-  }
 `;
 const ErrorMessage = styled.div`
   color: red;
