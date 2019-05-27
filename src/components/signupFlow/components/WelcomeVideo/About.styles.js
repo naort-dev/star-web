@@ -13,7 +13,7 @@ export const Layout = styled.section`
     font-size: 24px;
     text-align: center;
     color: #7c7c7c;
-    padding-top: 23px;
+    padding-top: 25px;
     @media (max-width: 831px) {
       padding-top: 15px;
     }
@@ -23,9 +23,10 @@ export const Layout = styled.section`
     font-size: 14px;
     text-align: center;
     color: #7c7c7c;
-    padding-top: 9px;
+    padding-top: 8px;
     max-width: 430px;
     margin: 0 auto;
+    line-height: 19px;
     @media (max-width: 831px) {
       max-width: 315px;
       line-height: 19px;
@@ -46,6 +47,7 @@ export const Layout = styled.section`
     cursor: pointer;
     font-family: Gilroy;
     font-size: 14px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -58,7 +60,7 @@ export const QuesWrapper = styled.section`
   padding: 23px 29px 7px;
   margin-bottom: 20px;
   ${media.webView} {
-    margin-top: 19px;
+    margin-top: 17px;
     margin-bottom: 26px;
   }
   @media (max-width: 831px) {
@@ -90,6 +92,5 @@ font-family: Gilroy;
 `;
 Layout.Suggestions = styled.section`
   margin-top: 15px;
-  margin-bottom: 60px;
-  margin-left: 1vh;
+  margin-bottom: 95px;
 `;

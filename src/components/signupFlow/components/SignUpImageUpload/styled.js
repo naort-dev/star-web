@@ -68,6 +68,19 @@ UploadContainer.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 22px;
+  @media (min-width: 832px) {
+    &.fans-want {
+      & ~.upload-wrap {
+        padding-top: 58px;
+        padding-bottom: 0;
+      }
+    }
+    &.select-category {
+      & ~.upload-wrap {
+        padding-bottom: 0;
+      }
+    }
+  }
   @media (max-width: 831px) {
     padding-top: 31px;
     margin: 0 auto 9px;
@@ -84,6 +97,22 @@ UploadContainer.Heading = styled.div`
 UploadContainer.CategoriesWrapper = styled.div`
   max-width: 440px;
   margin: 0 auto;
+  position: relative;
+
+  @media (min-width: 832px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &.fans-want {
+      height: 223px;
+      padding-bottom: 2px;
+    }
+    &.select-category {
+      height: 184px;
+      padding-bottom: 38px;
+    }
+  }
 
   .select__value-container {
     padding: 7px 0px 10px !important;
@@ -139,9 +168,9 @@ UploadContainer.CategoriesWrapper = styled.div`
 `;
 
 UploadContainer.ButtonWrapper = styled.div`
-  margin-top: 45px;
+  margin-top: 0;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   @media (max-width: 831px) {
     margin-top: 101px;
   }
@@ -294,6 +323,7 @@ UploadContainer.SubItemWrapper = styled.ul`
     margin-right: 5px;
     cursor: pointer;
     height: 26px;
+    line-height: 26px;
     margin-bottom: 2px;
   }
 `;

@@ -4,7 +4,7 @@ import ButtonStyled from './styled';
 
 
 const PrimaryButton = props => (
-  <ButtonStyled {...props}>{props.children}</ButtonStyled>
+  <ButtonStyled {...props} className={`common-btn ${props.className}`}>{props.children}</ButtonStyled>
 );
 
 PrimaryButton.propTypes = {

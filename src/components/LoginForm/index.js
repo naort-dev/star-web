@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import validator from "validator";
 import ActionLoader from '../ActionLoader';
-import { LoginContainer } from "./styled";
 import { faFacebookF, faInstagram, faGoogle, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { TextInput } from '../TextField';
 import PrimaryButton from '../PrimaryButton';
 import { twitterLogin } from '../../services';
 import { ROLES } from "../../constants/usertype";
+import { LoginContainer } from './styled';
 import { SignUpMethod } from '../SignupMethod/styled';
 export default class LoginForm extends React.Component {
   constructor(props) {
@@ -399,41 +399,41 @@ export default class LoginForm extends React.Component {
           this.state.loading &&
             <ActionLoader />
         }
-        <SignUpMethod.SocialMediaSignup>
+        <LoginContainer.SocialMediaSignup>
 
-          <SignUpMethod.Container>
+          <LoginContainer.Container>
 
-            <SignUpMethod.Heading>
+            <LoginContainer.Heading>
             How do you want to log in?
-            </SignUpMethod.Heading>
-            <SignUpMethod.ButtonDiv>
-            <SignUpMethod.Button onClick={this.onFBlogin}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faFacebookF} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Facebook</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-              <SignUpMethod.Button onClick={this.onTwitterLogin}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faTwitter} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Twitter</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-              <SignUpMethod.Button onClick={this.onInstagramLogin}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faInstagram} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Instagram</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-              <SignUpMethod.Button onClick={this.onGmail}>
-                <SignUpMethod.SocialMediaIcon>
-                  <SignUpMethod.GoogleWrapper id="g-sign-in" />
-                  <SignUpMethod.Icon><FontAwesomeIcon icon={faGoogle} /></SignUpMethod.Icon>
-                  <SignUpMethod.SocialMediaLabel>Google</SignUpMethod.SocialMediaLabel>
-                </SignUpMethod.SocialMediaIcon>
-              </SignUpMethod.Button>
-            </SignUpMethod.ButtonDiv>
-            <SignUpMethod.Heading>Login with email</SignUpMethod.Heading>
+            </LoginContainer.Heading>
+            <LoginContainer.ButtonDiv>
+            <LoginContainer.Button onClick={this.onFBlogin}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faFacebookF} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Facebook</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
+              </LoginContainer.Button>
+              <LoginContainer.Button onClick={this.onTwitterLogin}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faTwitter} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Twitter</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
+              </LoginContainer.Button>
+              <LoginContainer.Button onClick={this.onInstagramLogin}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faInstagram} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Instagram</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
+              </LoginContainer.Button>
+              <LoginContainer.Button onClick={this.onGmail}>
+                <LoginContainer.SocialMediaIcon>
+                  <LoginContainer.GoogleWrapper id="g-sign-in" />
+                  <LoginContainer.Icon><FontAwesomeIcon icon={faGoogle} /></LoginContainer.Icon>
+                  <LoginContainer.SocialMediaLabel>Google</LoginContainer.SocialMediaLabel>
+                </LoginContainer.SocialMediaIcon>
+              </LoginContainer.Button>
+            </LoginContainer.ButtonDiv>
+            <LoginContainer.Heading className="email-heading">Login with email</LoginContainer.Heading>
 
             <LoginContainer.InputFieldsWrapper>
               <LoginContainer.InputContainer>
@@ -448,6 +448,7 @@ export default class LoginForm extends React.Component {
                       placeholder={'What is your email address?'}
                       onChange={this.acceptEmailHandler}
                       onBlur={this.checkEmail}
+                      className="login-text"
                     />
                     <LoginContainer.ErrorMsg>
                       {email.message}
@@ -457,7 +458,7 @@ export default class LoginForm extends React.Component {
                 {this.props.statusCode === "410" ? (
                   <LoginContainer.EmptyDiv />
                 ) : (
-                    <LoginContainer.InputWrapper>
+                    <LoginContainer.InputWrapper className="password-wrap">
                       <LoginContainer.WrapsInput>
                         <LoginContainer.PasswordWrapper>
                           <TextInput
@@ -469,6 +470,7 @@ export default class LoginForm extends React.Component {
                             placeholder="What is your password?"
                             onChange={this.acceptPasswordHandler}
                             onBlur={this.checkPassword}
+                            className="login-text"
                           />
                         </LoginContainer.PasswordWrapper>
 
@@ -478,24 +480,26 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                   )}
-                  <LoginContainer.WrapsInput>
                     { this.props.statusCode !== '410' &&
                     this.props.statusCode !== '310' &&
                     this.props.error &&
+                    <LoginContainer.WrapsInput>
                       <LoginContainer.ErrorMsg>
                         {this.props.error}
                       </LoginContainer.ErrorMsg>
+                    </LoginContainer.WrapsInput>
                     }
-                  </LoginContainer.WrapsInput>
-                  <PrimaryButton
-                    type="submit"
-                    value="Log in"
-                    secondary
-                    onClick={this.onLogin}
-                    disabled={this.props.loading}
-                  >
-                    Log in
-                  </PrimaryButton>
+                  <LoginContainer.ButtonWrapper className="align-center">
+                    <PrimaryButton
+                      type="submit"
+                      value="Log in"
+                      secondary
+                      onClick={this.onLogin}
+                      disabled={this.props.loading}
+                    >
+                      Log in
+                    </PrimaryButton>
+                  </LoginContainer.ButtonWrapper>
                 {this.props.statusCode === '410' ? (
                   <React.Fragment />
                 ) : (
@@ -512,8 +516,8 @@ export default class LoginForm extends React.Component {
                   )}
               </LoginContainer.InputContainer>
             </LoginContainer.InputFieldsWrapper>
-          </SignUpMethod.Container>
-         </SignUpMethod.SocialMediaSignup>
+          </LoginContainer.Container>
+         </LoginContainer.SocialMediaSignup>
       </React.Fragment>
     );
   }

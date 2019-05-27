@@ -255,6 +255,11 @@ injectGlobal`
     outline: none;
   }
 }
+.align-center {
+  .common-btn {
+    margin: 0 auto;
+  }
+}
 
 `
 ;

@@ -65,7 +65,7 @@ LoginContainer.LeftSection = styled.div`
 
 LoginContainer.SignupFlow = styled.div`
   height: ${props => (props.currentStep === 1 ? 'calc(100% - 60px)' : '100%')};
-  @media (min-width: 768px) {
+  @media (min-width: 832px) {
     height: 100%;
   }
 `;

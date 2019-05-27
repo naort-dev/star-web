@@ -39,7 +39,7 @@ export default class ImageCropper extends React.Component {
   initializeCropper = () => {
     this.cropper = new Cropper(this.cropImage.current, {
       aspectRatio: 1,
-      viewMode: 3,
+      viewMode: 1,
     })
   };
 
@@ -130,18 +130,18 @@ export default class ImageCropper extends React.Component {
   render() {
     return (
       <CropperStyled>
-        <CropperStyled.CropperWrapper>
+        <CropperStyled.CropperWrapper className="crop-wrap">
           <img ref={this.cropImage} alt='cropper' style={{maxwidth: '100%'}} src={this.state.cropImage} />
         </CropperStyled.CropperWrapper>
         <CropperStyled.ButtonWrapper>
-          <CropperStyled.CropperLightButton onClick={this.props.onTakePicture}>
+          <CropperStyled.CropperLightButton onClick={this.props.onTakePicture} className="take-picture">
             <FontAwesomeIcon icon={faCamera} />
             Take Picture
           </CropperStyled.CropperLightButton>
           <Button onClick={this.handleCrop} className="button">
             I like it, continue
           </Button>
-          <CropperStyled.CropperLightButton onClick={this.uploadImage}>
+          <CropperStyled.CropperLightButton onClick={this.uploadImage} className="upload-picture">
             <input className='upload-button' ref={this.inputRef} accept=".png, .jpeg, .jpg" id="profile" onChange={() => this.onFileChange()} type="file" />
             <FontAwesomeIcon icon={faUpload} />
             Upload Picture
