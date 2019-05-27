@@ -29,7 +29,7 @@ export default class SetPrice extends React.Component {
       referral_code: this.state.referralCode.value,
     }
     this.props.setSignupFlow({
-      price: priceValue,
+      price: this.state.price.value,
       referral: this.state.referralCode.value,
     })
     if (this.checkPriceRequired()) {
