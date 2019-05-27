@@ -9,18 +9,6 @@ export const Layout = styled.section`
     justify-content: center;
     padding: 0 20px;
   }
-  .mobileBtn {
-    display: none;
-    position: absolute;
-    top: 450px;
-    padding-bottom: 60px;
-    ${media.mobileScreen} {
-      display: block;
-    }
-    .button {
-      padding: 20px 0;
-    }
-  }
   .button {
     width: 242px;
   }
@@ -39,6 +27,33 @@ export const Layout = styled.section`
       font-size: 14px;
       padding-top: 20px;
     }
+  }
+  .quesHead {
+    padding-bottom: 27px;
+  }
+  .uploadLink {
+    font-family: Gilroy;
+    font-size: 14px;
+    color: #2f829c;
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    padding-top: 20px;
+  }
+  .hidden {
+    display: none;
+  }
+  .uploadBtn {
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    border: 1px solid #2f839d;
+    color: #2f839d;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 30px;
+    margin-bottom: 22px;
+    font-family: Gilroy-SemiBold;
   }
 `;
 
@@ -60,21 +75,23 @@ export const VideoContainer = styled.section`
     width: 224px;
     color: #2f839d;
     position: absolute;
-    left: 22px;
+    left: 13px;
     bottom: 20px;
   }
 `;
 
 export const QuestionContainer = styled.section`
-  padding-left: ${(props) => (props.error ? '20px' : '40px')};
+  padding-left: ${props => (props.error ? '20px' : '40px')};
   padding-top: 10px;
-  display: block;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   ${media.mobileScreen} {
     position: absolute;
-    display: ${(props) => (props.isShow ? 'block' : 'none')};
+    display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 24px;
     height: 250px;
-    top: 165px;
+    top: 235px;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
@@ -90,19 +107,24 @@ export const QuestionContainer = styled.section`
     }
   }
   .button {
-    margin-top: 40px;
     height: 60px;
     padding: 0;
     ${media.mobileScreen} {
       display: none;
     }
   }
+  .mobDisplay {
+    display: none;
+    ${media.webView} {
+      display: block;
+    }
+  }
 `;
 
 export const ShowHide = styled.span`
-  display: none;
+  display: block;
   position: absolute;
-  top: 365px;
+  top: 425px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -112,21 +134,20 @@ export const ShowHide = styled.span`
   color: #2f839d;
   font-family: Gilroy-Bold;
   cursor: pointer;
-  ${media.mobileScreen} {
-    display: block;
+  ${media.webView} {
+    display: none;
   }
   :after,
   :before {
     position: relative;
-    top: ${(props) => (props.isShow ? '-3px' : '3px')};
+    top: ${props => (props.isShow ? '-3px' : '3px')};
     content: '';
     display: inline-block;
     width: 10px;
     height: 10px;
     border-right: 1px solid #2f839d;
     border-top: 1px solid #2f839d;
-    transform: ${(props) =>
-      props.isShow ? 'rotate(135deg)' : 'rotate(315deg)'};
+    transform: ${props => (props.isShow ? 'rotate(135deg)' : 'rotate(315deg)')};
     margin-right: 28px;
     margin-left: 28px;
   }
@@ -143,5 +164,19 @@ export const PlayButton = styled.section`
   svg {
     font-size: 44px;
     color: red;
+  }
+`;
+export const WebButtons = styled.section`
+  padding-top: 37px;
+`;
+export const MobButtons = styled.section`
+  position: absolute;
+  top: 485px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 40px;
+  padding-top: 37px;
+  ${media.webView} {
+    display: none;
   }
 `;

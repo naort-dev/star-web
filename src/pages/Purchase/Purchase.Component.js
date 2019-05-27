@@ -347,6 +347,7 @@ class Purchase extends Component {
     this.props.updateMediaStore({
       videoSrc: null,
       superBuffer: null,
+      recorded: false,
     });
     this.props.pageCountHandler(0);
     this.clearBookingData();

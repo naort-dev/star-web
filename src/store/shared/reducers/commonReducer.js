@@ -14,6 +14,7 @@ const initalState = {
     message: '',
     variant: '',
   },
+  recorded: false,
 };
 
 const commonReducer = (state = { ...initalState }, action) => {
@@ -30,6 +31,7 @@ const commonReducer = (state = { ...initalState }, action) => {
         videoSrc: action.payload.videoSrc,
         file: action.payload.superBuffer,
         recordedTime: action.payload.recordedTime,
+        recorded: action.payload.recorded,
       };
 
     case Actions.PLAY_PAUSE_MEDIA:

@@ -205,6 +205,7 @@ class VideoRecorder extends Component {
       videoSrc: this.videoSrc,
       superBuffer: this.superBuffer,
       recordedTime: recordedTimeString,
+      recorded: true,
     });
     const videoElem = this.video;
     videoElem.src = this.videoSrc;
