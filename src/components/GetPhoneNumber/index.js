@@ -31,7 +31,6 @@ const GetPhoneNumber = props => {
   const phNum2 = useRef(null);
   const phNum3 = useRef(null);
   const phNum4 = useRef(null);
-
   const backArrowClick = () => {
     if (phoneNoState.otpEnterPopup) {
       setPhoneNoState({
@@ -51,7 +50,7 @@ const GetPhoneNumber = props => {
       });
       props.disableClose(false);
     } else {
-      this.props.closeSignupFlow(phoneNoState.otpEnterPopup)
+      props.closePhoneNum(phoneNoState.otpEnterPopup)
     }
   }
   const checkAllValidity = () => {
@@ -163,6 +162,7 @@ const GetPhoneNumber = props => {
               phNo4: '',
             });
             props.onComplete();
+            props.disableClose(false);
           } else if (resp.status === '400' && resp.response.data.error.code === 1006) {
             setPhoneNoState({
               ...phoneNoState,
@@ -243,7 +243,7 @@ const GetPhoneNumber = props => {
             </Content.WrapsInput> 
           </Content.OTPWrapper>
           <Content.OtpSubTitleWrapper>
-            <Content.OtpSubTitle>{props.otp_receive_code}</Content.OtpSubTitle><Content.Resend onClick={() => submitNotification('reSent')}>Resend</Content.Resend>
+            <Content.OtpSubTitle>{props.otp_receive_code}</Content.OtpSubTitle><Content.Resend onClick={() => submitNotification('reSent')}> &nbsp;Resend</Content.Resend>
           </Content.OtpSubTitleWrapper>
           <Layout.ButtonWrapper className="align-center">
           <Button className="SubmitPhoneNoBtn" onClick={() => submitOTPForm()}>
