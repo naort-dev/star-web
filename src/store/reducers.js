@@ -9,6 +9,7 @@ import celebList from '../pages/landing/reducers/celebList';
 import videosList from '../pages/landing/reducers/videosList';
 import starDetails from '../pages/starProfile/reducers'
 import professionsList from './shared/reducers/professionsList';
+import signupDetails from './shared/reducers/signupDetails';
 import groupTypes from './shared/reducers/groupTypes';
 import suggestionsList from './shared/reducers/suggestionsList';
 import followCelebrityStatus from './shared/reducers/followCelebrityStatus';
@@ -50,6 +51,7 @@ const appReducer = combineReducers({
   professionsList,
   groupTypes,
   filters,
+  signupDetails,
   videosList,
   suggestionsList,
   starDetails,
