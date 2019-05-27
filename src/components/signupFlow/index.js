@@ -111,7 +111,6 @@ class SignupFlow extends React.Component {
     this.setState({ currentStep: step, enableClose: false });
   };
   closeSignUp = () => {
-    this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     this.props.toggleSignup(false);
     if (this.state.selectedType === 'group' && this.state.currentStep === 5) {
       this.props.history.push('user/star-supporters');
@@ -277,6 +276,7 @@ class SignupFlow extends React.Component {
               changeStep={this.changeStep}
               scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
+              setSignupFlow={this.props.setSignupFlow}
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}
               continueClickCallback={this.continueClickHandler}

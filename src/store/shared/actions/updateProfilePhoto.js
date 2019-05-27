@@ -43,22 +43,13 @@ export const setProfilePicToState = (profilePic) => ({
 });
 
 export const updateProfilePhoto = obj => (dispatch, getState) => {
-  const { isLoggedIn, auth_token } = getState().session;
-  let API_URL;
-  let options;
-  if (isLoggedIn) {
-    API_URL = `${Api.updatePhoto}`;
-    options = {
-      headers: {
-        'Authorization': `token ${auth_token.authentication_token}`,
-      },
-    };
-  }
+  const API_URL = `${Api.updatePhoto}`;
   dispatch(updateProfilePhotoFetchStart());
-  return fetch.post(API_URL, obj, options).then((resp) => {
+  return fetch.post(API_URL, obj).then((resp) => {
     if (resp.data && resp.data.success) {
       dispatch(updateProfilePhotoFetchEnd());
       dispatch(updateProfilePhotoFetchSuccess(resp.data.data));
+      return resp.data.data;
     } else {
       dispatch(updateProfilePhotoFetchEnd());
       dispatch(updateProfilePhotoFetchFailed('404'));
@@ -66,5 +57,5 @@ export const updateProfilePhoto = obj => (dispatch, getState) => {
   }).catch((exception) => {
     dispatch(updateProfilePhotoFetchEnd());
     dispatch(updateProfilePhotoFetchFailed(exception));
-  });
+  })
 };

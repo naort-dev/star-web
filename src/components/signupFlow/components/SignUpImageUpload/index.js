@@ -22,7 +22,7 @@ class SignUpImageUpload extends React.Component {
     currentExif: null,
     verificationDisable: false,
     cropper: false,
-    finalImage: this.props.profilePic? this.props.profilePic : null,
+    finalImage: this.props.signupDetails.profileImage,
     finalFile: null,
     cropImage: null,
     extension: null,
@@ -62,7 +62,14 @@ class SignUpImageUpload extends React.Component {
         "avatar_photo": resp,
         "featured_image": "",
       }
-      this.props.updateProfilePhoto(fileName);
+      this.props.updateProfilePhoto(fileName)
+        .then((resp) => {
+          if (resp.avatar_photo) {
+            this.props.setSignupFlow({
+              profileImage: resp.avatar_photo.image_url,
+            })
+          }
+        });
       const fileURL = URL.createObjectURL(file);
       this.props.setProfilePicToState(fileURL);
     })

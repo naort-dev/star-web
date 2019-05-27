@@ -495,7 +495,7 @@ class SignUpForm extends React.Component {
                 <PrimaryButton
                   type="submit"
                   onClick={this.onRegister}
-                  isDisabled={!this.state.termsAndConditions.value}
+                  isDisabled={!this.state.termsAndConditions.value && this.props.signupRole === ROLE_STAR}
                 >
                   {signUp.button_label}
                 </PrimaryButton>
