@@ -29,7 +29,7 @@ export const ReferralCode = (props) =>(
             />
           </ReferralCodeWrapper.WrapsInput>
         </ReferralCodeWrapper.OptionWrapper>
-        <ReferralCodeWrapper.ButtonWrapper>
+        <ReferralCodeWrapper.ButtonWrapper className="align-center">
           <PrimaryButton
             onClick={props.onPrimaryButtonClick}>
             {props.primary_button}

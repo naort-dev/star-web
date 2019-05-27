@@ -21,7 +21,6 @@ import {
   toggleLogin,
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
-import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
@@ -34,7 +33,7 @@ import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { celebritySignupProfile } from '../../services/userRegistration'
-// import GetPhoneNumber from '../../components/GetPhoneNumber';
+import GetPhoneNumber from '../../components/GetPhoneNumber';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 
 
@@ -50,6 +49,7 @@ class SignupFlow extends React.Component {
         ? props.signUpDetails.enableClose
         : false,
       profession: [],
+      scrollRef: null,
       profile_video: 'sample.mp4',
       disableClose: false,
       skipVideo: false,
@@ -61,7 +61,7 @@ class SignupFlow extends React.Component {
   onBack = flag => {
     this.setState(state => ({
       currentStep: state.currentStep - 1,
-      switched: flag ? flag : false,
+      switched: flag,
     }));
   };
   onSetPriceBack = flag => {
@@ -95,6 +95,7 @@ class SignupFlow extends React.Component {
     this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   changeStep = step => {
+    this.state.scrollRef.scrollTop = 0;
     this.setState({ currentStep: step, enableClose: false });
   };
   closeSignUp = () => {
@@ -130,6 +131,7 @@ class SignupFlow extends React.Component {
   
   changeSignUpRole = role => {
     this.setState({ selectedType: role, stepCount: 0 });
+    this.state.scrollRef.scrollTop = 0;
     if (role === 'star') {
       this.setState({ stepCount: this.starRegistrationSteps });
     } else if (role === 'group') {
@@ -154,8 +156,8 @@ class SignupFlow extends React.Component {
               .then((success) => {
                 this.setState({ loader: false });
                 if (success) {
-                  // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-                  this.changeStep(this.state.currentStep + 1);
+                  this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+                  // this.changeStep(this.state.currentStep + 1);
                 }
               })
               .catch(() => {
@@ -186,6 +188,14 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
+  submitOTPForm = () => {
+    this.changeStep(this.state.currentStep + 1);
+  }
+
+  setScrollRef = (scrollNode) => {
+    this.setState({ scrollRef: scrollNode })
+  }
+
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
       switch (this.state.currentStep) {
@@ -233,6 +243,7 @@ class SignupFlow extends React.Component {
               {...this.props}
               registerUser={this.props.registerUser}
               changeStep={this.changeStep}
+              scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
@@ -247,6 +258,7 @@ class SignupFlow extends React.Component {
             <SignUpImageUpload
               {...this.props}
               changeStep={this.changeStep}
+              scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}
@@ -291,6 +303,7 @@ class SignupFlow extends React.Component {
             closeSignupFlow={this.closeSetPrice}
             disableClose={this.disableClose}
             action={SET_PRICE.ACTION}
+            scrollRef={this.state.scrollRef}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
             confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
             confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
@@ -303,15 +316,22 @@ class SignupFlow extends React.Component {
             title={SET_PRICE.TITLE}
             link={SET_PRICE.LINK}
           />);
-          // case 6:
-          //   return(
-          //     <GetPhoneNumber
-          //       description={STAR_GET_PHONE_NO.DESCRIPTION}
-          //       title1={STAR_GET_PHONE_NO.TITLE1}
-          //       image_url={STAR_GET_PHONE_NO.IMAGE_URL}
-          //     />
-          //   )
           case 6:
+            return(
+              <GetPhoneNumber
+                description={STAR_GET_PHONE_NO.DESCRIPTION}
+                title1={STAR_GET_PHONE_NO.TITLE1}
+                image_url={STAR_GET_PHONE_NO.IMAGE_URL}
+                otptitle={STAR_GET_PHONE_NO.OTP_TITLE}
+                otp_sub_title={STAR_GET_PHONE_NO.OTP_SUBTITLE}
+                otp_receive_code={STAR_GET_PHONE_NO.OTP_RECEIVE_CODE}
+                onComplete={this.submitOTPForm}
+                onBack={this.onBack}
+                switched={this.state.switched}
+                disableClose={this.disableClose}
+              />
+            )
+          case 7:
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
@@ -374,6 +394,7 @@ class SignupFlow extends React.Component {
           closePopUp={this.closeSignUp}
           modalView
           smallPopup
+          setScrollRef={this.setScrollRef}
           disableClose={this.state.disableClose}
         >
           <LoginContainer>

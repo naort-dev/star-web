@@ -33,9 +33,12 @@ const Control = prop => {
           children: prop.children,
           ...prop.innerProps,
           classes: {
-            focused: 'input-form-control'
+            focused: 'input-form-control', 
           }
         },
+        classes: {
+          underline: 'input-underline', 
+        }
       }}
       {...textFieldProps}
     />

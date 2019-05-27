@@ -50,6 +50,7 @@ PopupStyled.SmallContainer = PopupStyled.Container.extend`
   padding: ${props => (props.modalView ? '0' : '40px 30px')};
   width: 100%;
   background-color: #fff;
+  overflow: auto;
   @media(min-width: 832px) {
     width: 700px;
     height: 700px;

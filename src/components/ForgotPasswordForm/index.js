@@ -94,7 +94,7 @@ export default class ForgotPassword extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                     <ForgotPasswordWrap>
-                      <LoginContainer.ButtonWrapper >
+                      <LoginContainer.ButtonWrapper className="align-center">
                         <PrimaryButton
                           secondary
                           onClick={this.onForgotPassword}
