@@ -31,7 +31,7 @@ class SignUpForm extends React.Component {
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
       email: { value: props.signupDetails.email? props.signupDetails.email: '', isValid: false, message: '' },
-      termsAndConditions: { value: this.props.signupRole === ROLE_FAN, isValid: false, message: '' },
+      termsAndConditions: { value: props.signupDetails.acceptTerms, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
       acceptTerms: props.switched ? props.switched :false,
@@ -143,6 +143,7 @@ class SignUpForm extends React.Component {
               lastName: this.state.lastName.value,
               nickName: this.state.nickName.value,
               email: this.state.email.value,
+              acceptTerms: true,
             })
             this.props.changeStep(this.props.currentStep + 1);
           }

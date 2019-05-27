@@ -42,10 +42,16 @@ export default (state = { ...initialState }, action) => {
         loading: false,
         tempDetails: action.data.user,
       }
+    case REGISTER.clearErrors:
+      return {
+        ...state,
+        loading: false,
+        tempDetails: undefined,
+      }
     case LOGIN.incorrect:
       return {
         ...state,
-        incorrectError: action.error,
+        incorrectError: '',
         statusCode: action.status,
       };
 

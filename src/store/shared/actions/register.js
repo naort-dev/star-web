@@ -11,6 +11,7 @@ export const REGISTER = {
   failed: 'session/ON_LOGIN_FAILED',
   updateTempDetails: 'session/ON_TEMP_LOGIN',
   incorrect: 'session/ON_LOGIN_INCORRECT',
+  clearErrors: 'session/ON_REGISTER_CLEAR',
 };
 
 export const registerFetchStart = () => ({
@@ -36,6 +37,10 @@ export const registerFetchIncorrect = error => ({
 export const registerTempSuccess = (data) => ({
   type: REGISTER.updateTempDetails,
   data,
+});
+
+export const clearRegisterErrors = () => ({
+  type: REGISTER.clearErrors,
 });
 
 export const registerFetchFailed = error => ({

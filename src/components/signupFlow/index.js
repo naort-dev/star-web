@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { registerUser } from '../../store/shared/actions/register';
+import { registerUser, clearRegisterErrors } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import RequestFlowPopup from '../RequestFlowPopup';
@@ -64,6 +64,7 @@ class SignupFlow extends React.Component {
     if (localStorage) {
       localStorage.removeItem('tempAuthToken');
     }
+    this.props.clearRegisterErrors();
   }
 
   onBack = flag => {
@@ -470,6 +471,7 @@ const mapDispatchToProps = dispatch => ({
       registerUser(firstName, lastName, email, password, role, referral),
     ),
   socialMediaLogin: socialObject => dispatch(socialMediaLogin(socialObject)),
+  clearRegisterErrors: () => dispatch(clearRegisterErrors()),
   setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) =>
     dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
