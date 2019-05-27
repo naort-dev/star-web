@@ -480,16 +480,16 @@ export default class LoginForm extends React.Component {
                       </LoginContainer.WrapsInput>
                     </LoginContainer.InputWrapper>
                   )}
+                  <LoginContainer.ButtonWrapper className="align-center">
                     { this.props.statusCode !== '410' &&
                     this.props.statusCode !== '310' &&
                     this.props.error &&
-                    <LoginContainer.WrapsInput>
+                    <LoginContainer.WrapsInput className="error-msg">
                       <LoginContainer.ErrorMsg>
                         {this.props.error}
                       </LoginContainer.ErrorMsg>
                     </LoginContainer.WrapsInput>
                     }
-                  <LoginContainer.ButtonWrapper className="align-center">
                     <PrimaryButton
                       type="submit"
                       value="Log in"
