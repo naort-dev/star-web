@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import PrimaryButton from '../../../PrimaryButton';
+import { updateLoginStatus } from '../../../../store/shared/actions/login';
+import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
 import RegSuccessWrapper from './styled';
 
 const RegistrationSuccess = (props) => {
+
+  useEffect(() => {
+    props.updateLoginStatus(props.tempLoginDetails);
+    props.fetchUserDetails(props.tempLoginDetails.id);
+  }, [])
+
   return (
     <RegSuccessWrapper>
       <RegSuccessWrapper.ComponentWrapper>
@@ -82,4 +91,13 @@ RegistrationSuccess.defaultProps = {
   closeSignupFlow: () => { },
 };
 
-export default RegistrationSuccess;
+const mapStateToProps = state => ({
+  tempLoginDetails: state.session.tempDetails,
+})
+
+const mapDispatchToProps = dispatch => ({
+  updateLoginStatus: sessionData => dispatch(updateLoginStatus(sessionData)),
+  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(RegistrationSuccess);

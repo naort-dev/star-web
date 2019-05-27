@@ -2,7 +2,9 @@ import { clearSessionDetails } from '../../utils/clearSessionDetails';
 
 export function onRequest(config) {
   const customConfig = config;
-  const token = JSON.parse(localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')).user.authentication_token;
+  const activeToken = JSON.parse(localStorage.getItem('data')) && JSON.parse(localStorage.getItem('data')).user.authentication_token;
+  const tempToken = JSON.parse(localStorage.getItem('tempAuthToken'));
+  const token = activeToken || tempToken;
 
   if (token && !customConfig.headers.Authorization) {
     customConfig.headers.Authorization = `token ${token}`;

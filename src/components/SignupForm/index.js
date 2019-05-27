@@ -25,12 +25,12 @@ class SignUpForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstName: { value: props.socialMediaStore.first_name? props.socialMediaStore.first_name : '', isValid: false, message: '' },
-      lastName: { value: props.socialMediaStore.last_name? props.socialMediaStore.last_name : '', isValid: true, message: '' },
-      nickName: { value: props.socialMediaStore.nick_name? props.socialMediaStore.nick_name: '', isValid: true, message: '' },
+      firstName: { value: props.signupDetails.firstName? props.signupDetails.firstName : '', isValid: false, message: '' },
+      lastName: { value: props.signupDetails.lastName? props.signupDetails.lastName : '', isValid: true, message: '' },
+      nickName: { value: props.signupDetails.nickName? props.signupDetails.nickName: '', isValid: true, message: '' },
       password: { value: '', isValid: false, message: '' },
       confirmPassword: { value: '', isValid: false, message: '' },
-      email: { value: props.socialMediaStore.username? props.socialMediaStore.username: '', isValid: false, message: '' },
+      email: { value: props.signupDetails.email? props.signupDetails.email: '', isValid: false, message: '' },
       termsAndConditions: { value: this.props.signupRole === ROLE_FAN, isValid: false, message: '' },
       role: ROLES[props.signupRole],
       loading: false,
@@ -86,8 +86,7 @@ class SignUpForm extends React.Component {
         ? this.checkPassword()
         : this.checkTermsAndConditionsRequired())
     ) {
-      this.props
-        .registerUser(
+      this.props.registerUser(
           this.state.firstName.value,
           this.state.lastName.value,
           this.state.email.value,
@@ -97,6 +96,12 @@ class SignUpForm extends React.Component {
         )
         .then(response => {
           if (response !== undefined) {
+            this.props.setSignupFlow({
+              firstName: this.state.firstName.value,
+              lastName: this.state.lastName.value,
+              nickName: this.state.nickName.value,
+              email: this.state.email.value,
+            })
             this.props.changeStep(this.props.currentStep + 1);
           }
         });
@@ -461,6 +466,7 @@ class SignUpForm extends React.Component {
 
 const mapStateToProps = state => ({
   loading: state.session.loading,
+  signupDetails: state.signupDetails,
 });
 
 const mapProps = dispatch => ({

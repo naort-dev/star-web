@@ -21,6 +21,7 @@ import {
   toggleLogin,
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
+import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
@@ -58,6 +59,13 @@ class SignupFlow extends React.Component {
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
+
+  componentWillUnmount() {
+    if (localStorage) {
+      localStorage.removeItem('tempAuthToken');
+    }
+  }
+
   onBack = flag => {
     this.setState(state => ({
       currentStep: state.currentStep - 1,
@@ -96,6 +104,7 @@ class SignupFlow extends React.Component {
 
   changeStep = step => {
     this.state.scrollRef.scrollTop = 0;
+    this.props.setSignupFlow({ currentStep: step });
     this.setState({ currentStep: step, enableClose: false });
   };
   closeSignUp = () => {
@@ -131,6 +140,7 @@ class SignupFlow extends React.Component {
   
   changeSignUpRole = role => {
     this.setState({ selectedType: role, stepCount: 0 });
+    this.props.setSignupFlow({ role });
     this.state.scrollRef.scrollTop = 0;
     if (role === 'star') {
       this.setState({ stepCount: this.starRegistrationSteps });
@@ -210,7 +220,6 @@ class SignupFlow extends React.Component {
               disableClose={this.disableClose}
               socialMediaStore={this.props.socialMediaStore}
               closeSignupFlow={this.closeSignUp}
-              socialMediaStore={this.props.socialMediaStore}
             />
           );
         case 2:
@@ -240,6 +249,7 @@ class SignupFlow extends React.Component {
               {...this.props}
               registerUser={this.props.registerUser}
               changeStep={this.changeStep}
+              setSignupFlow={this.props.setSignupFlow}
               scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
@@ -389,7 +399,7 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
-                this.state.currentStep === 2 || this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 6
+                this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 6
               ) && (
                 <BackArrow
                   className="backArrow"
@@ -412,6 +422,7 @@ class SignupFlow extends React.Component {
                         {...this.props}
                         changeStep={this.changeStep}
                         currentStep={this.state.currentStep}
+                        setSignupFlow={this.props.setSignupFlow}
                         signupRole={this.state.selectedType}
                         data={this.state.socialData}
                         closeSignupFlow={this.closeSignUp}
@@ -449,6 +460,7 @@ const mapDispatchToProps = dispatch => ({
       registerUser(firstName, lastName, email, password, role, referral),
     ),
   socialMediaLogin: socialObject => dispatch(socialMediaLogin(socialObject)),
+  setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) =>
     dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
   toggleLogin: state => dispatch(toggleLogin(state)),

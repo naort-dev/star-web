@@ -1,4 +1,4 @@
-
+import isEmpty from 'lodash/isEmpty';
 import Api from '../../../lib/api';
 import {ROLES} from '../../../constants/usertype'
 import { fetch } from '../../../services/fetch';
@@ -9,6 +9,7 @@ export const REGISTER = {
   end: 'session/ON_LOGIN_END',
   success: 'session/ON_LOGIN_SUCCESS',
   failed: 'session/ON_LOGIN_FAILED',
+  updateTempDetails: 'session/ON_TEMP_LOGIN',
   incorrect: 'session/ON_LOGIN_INCORRECT',
 };
 
@@ -32,6 +33,11 @@ export const registerFetchIncorrect = error => ({
   error,
 });
 
+export const registerTempSuccess = (data) => ({
+  type: REGISTER.updateTempDetails,
+  data,
+});
+
 export const registerFetchFailed = error => ({
   type: REGISTER.failed,
   error,
@@ -46,7 +52,12 @@ export const registerUser = (
   UserRole,
   referral,
 ) => (dispatch, getState) => {
+  const { tempDetails } = getState().session;
   dispatch(registerFetchStart());
+  let method = 'post';
+  if (!isEmpty(tempDetails)) {
+    method = 'put';
+  }
   let header = {
     first_name: UserFirstName,
     last_name: UserLastName,
@@ -63,21 +74,25 @@ export const registerUser = (
       password: UserPassword
     }
   }
-  return fetch.post(Api.register, header).then((resp) => {
+  return fetch[method](Api.register, header).then((resp) => {
     if (resp.data && resp.data.success) {
       const obj = {
         ...resp.data.data,
         celebrity_details: {},
       };
-      localStorage.setItem('data', JSON.stringify(resp.data.data));
-      dispatch(registerFetchEnd());
-      dispatch(userDetailsFetchSuccess(obj));
-      dispatch(registerFetchSuccess(obj));
-
+      if (UserRole === 'R1002') {
+        const tempToken = resp.data.data.user.authentication_token;
+        localStorage.setItem('tempAuthToken', JSON.stringify(tempToken));
+        dispatch(registerTempSuccess(resp.data.data));
+      } else {
+        localStorage.setItem('data', JSON.stringify(resp.data.data));
+        dispatch(registerFetchEnd());
+        dispatch(userDetailsFetchSuccess(obj));
+        dispatch(registerFetchSuccess(obj));
+      }
       return resp
-    } else {
-      dispatch(registerFetchEnd());
-    }
+    } 
+    dispatch(registerFetchEnd());
   }).catch((exception) => {
     dispatch(registerFetchEnd());
     if (exception.response.status === 400) {
