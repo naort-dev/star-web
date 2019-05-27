@@ -39,6 +39,7 @@ export const Layout = styled.section`
     display: inline-block;
     text-align: center;
     padding-top: 20px;
+    cursor: pointer;
   }
   .hidden {
     display: none;
@@ -54,6 +55,7 @@ export const Layout = styled.section`
     border-radius: 30px;
     margin-bottom: 22px;
     font-family: Gilroy-SemiBold;
+    cursor: pointer;
   }
 `;
 
@@ -75,8 +77,9 @@ export const VideoContainer = styled.section`
     width: 224px;
     color: #2f839d;
     position: absolute;
-    left: 13px;
-    bottom: 20px;
+    transform: translateX(-50%);
+    bottom: 0;
+    left: 50%;
   }
 `;
 

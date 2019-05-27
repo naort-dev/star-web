@@ -155,25 +155,32 @@ const Question = props => {
   };
   const uploadHandler = input => {
     const file = input.target.files[0];
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    const blob = new Blob([file], { type: 'video/webm' });
-    const objectURL = window.URL.createObjectURL(blob);
-    props.updateMediaStore({
-      videoSrc: objectURL,
-      superBuffer: blob,
-      recordedTime: null,
-      recorded: false,
-    });
-    props.playPauseMedia();
-    updatedStateHandler({
-      ...stateObject,
-      buttonLabel: 'Continue',
-      showHideFlg: false,
-      error: false,
-      isStop: false,
-      continueFlg: true,
-    });
+    if (file.type.startsWith('video/')) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      const blob = new Blob([file], { type: 'video/webm' });
+      const objectURL = window.URL.createObjectURL(blob);
+      props.updateMediaStore({
+        videoSrc: objectURL,
+        superBuffer: blob,
+        recordedTime: null,
+        recorded: false,
+      });
+      updatedStateHandler({
+        ...stateObject,
+        buttonLabel: 'Continue',
+        showHideFlg: false,
+        error: false,
+        isStop: false,
+        continueFlg: true,
+      });
+    } else {
+      props.updateToast({
+        value: true,
+        message: 'Please upload video file.',
+        variant: 'error',
+      });
+    }
   };
   const getFileUpload = className => {
     return (
@@ -190,13 +197,16 @@ const Question = props => {
     );
   };
 
+  const recordMedia = () => {
+    if (props.playPauseMediaFlg) props.playPauseMedia();
+    mediaHandler('Record', false, true);
+  };
+
   const getRecordLink = () => {
     return (
-      <span
-        onClick={retryRecordHandler}
-        role="presentation"
-        className="uploadLink"
-      />
+      <span onClick={recordMedia} role="presentation" className="uploadLink">
+        Record video
+      </span>
     );
   };
   return (
@@ -216,6 +226,9 @@ const Question = props => {
               startStreamingCallback={startStreaming}
               headerUpdate={props.headerUpdate}
               starNM={props.starNM}
+              uploadHandler={uploadHandler}
+              recorded={props.recorded}
+              uploader
             />
           </VideoContainer>
           <QuestionContainer
@@ -238,9 +251,10 @@ const Question = props => {
                     buttonClickHandler,
                     stateObject.buttonLabel,
                   )}
-                  {stateObject.continueFlg && props.recorded
-                    ? getFileUpload(['uploadLink'])
-                    : getRecordLink()}
+                  {stateObject.continueFlg &&
+                    (props.recorded
+                      ? getFileUpload(['uploadLink'])
+                      : getRecordLink())}
                 </WebButtons>
               </React.Fragment>
             )}
@@ -255,9 +269,10 @@ const Question = props => {
                 buttonClickHandler,
                 stateObject.buttonLabel,
               )}
-              {stateObject.continueFlg && props.recorded
-                ? getFileUpload(['uploadLink'])
-                : getRecordLink()}
+              {stateObject.continueFlg &&
+                (props.recorded
+                  ? getFileUpload(['uploadLink'])
+                  : getRecordLink())}
             </MobButtons>
           )}
 
@@ -310,6 +325,7 @@ Question.propTypes = {
   updateToast: PropTypes.func.isRequired,
   headerUpdate: PropTypes.func.isRequired,
   recorded: PropTypes.bool,
+  playPauseMediaFlg: PropTypes.bool,
 };
 
 Question.defaultProps = {
@@ -317,6 +333,7 @@ Question.defaultProps = {
   videoSrc: '',
   videoUploaded: false,
   recorded: false,
+  playPauseMediaFlg: false,
 };
 
 function mapStateToProps(state) {
@@ -326,6 +343,7 @@ function mapStateToProps(state) {
     recorded: state.commonReducer.recorded,
     videoUploaded: state.commonReducer.videoUploaded,
     userDetails: state.starDetails.celebDetails.userDetails,
+    playPauseMediaFlg: state.commonReducer.playPauseMedia,
   };
 }
 export default connect(
