@@ -22,6 +22,7 @@ export const TextInput = props => (
       },
     }}
     onClick={props.onClick}
+    inputRef={props.inputRef}
     InputProps={{
       classes: {
         underline: 'input-underline',
@@ -45,6 +46,7 @@ TextInput.propTypes = {
   required: PropTypes.bool,
   onBlur: PropTypes.func,
   InputProps: PropTypes.object,
+  inputRef: PropTypes.object,
   onClick: PropTypes.func,
   label: PropTypes.string,
   InputLabelProps: PropTypes.object,
@@ -61,6 +63,7 @@ TextInput.defaultProps = {
   id: '',
   required: false,
   InputProps: {},
+  inputRef: {},
   onBlur: () => {},
   onChange: () => {},
   onClick: () => {},
