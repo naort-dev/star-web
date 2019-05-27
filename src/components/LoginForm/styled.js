@@ -362,8 +362,16 @@ LoginContainer.ForgotButtonSpan = styled.span`
 `;
 LoginContainer.ButtonWrapper = styled.div`
   margin-top: 45px;
+  position: relative;
   @media(max-width: 831px){
     margin-top: 35px;
+  }
+  .error-msg {
+    position: absolute;
+    width: 100%;
+    text-align: left;
+    bottom: 100%;
+    padding-bottom: 10px;
   }
 `;
 LoginContainer.CoverImage = styled.div`
