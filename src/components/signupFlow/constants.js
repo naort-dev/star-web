@@ -26,7 +26,10 @@ export const STAR_REG_SUCCESS = {
 export const STAR_GET_PHONE_NO = {
   DESCRIPTION: `Provide your phone number so we can send you a reminder to get your welcome video done so you can start taking bookings! We 'll never share your phone number with anyone. Ever.`,
   TITLE1: 'One last thing!',
-  IMAGE_URL: 'assets/images/art_highfive.svg'
+  IMAGE_URL: 'assets/images/art_highfive.svg',
+  OTP_TITLE: 'Enter the verification code',
+  OTP_SUBTITLE: `Let's make sure it's really you. A 4-digit code has been sent to the phone ending in ******`,
+  OTP_RECEIVE_CODE: `Didn't Receive a code?`
 };
 
 export const SET_PRICE = {
