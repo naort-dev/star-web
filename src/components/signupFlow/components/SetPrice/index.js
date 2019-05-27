@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InputAdornment from '@material-ui/core/InputAdornment';
 
 import { iosPriceFinder, numberToCommaFormatter, commaToNumberFormatter } from '../../../../utils/dataformatter'
 import { TextInput } from '../../../TextField'
@@ -10,7 +9,6 @@ import { ReferralCode } from '../ReferralCode';
 import {convertedApplePrice} from '../../constants';
 import { validatePromo } from '../../../../services';
 import { BackArrow, CloseButton} from '../../../../styles/CommonStyled';
-import { resolve } from 'url';
 
 export default class SetPrice extends React.Component {
   constructor(props) {
@@ -18,9 +16,8 @@ export default class SetPrice extends React.Component {
     this.state = {
       isReferred: props.switched ? props.switched : false,
       confirmPrice: false,
-      referralCode: { value: '', isValid: false, message: '' },
-      price: { value: '20', isValid: false, message: '' },
-      // compSwitch: props.switched ? props.switched : false,
+      referralCode: { value: props.signupDetails.referral, isValid: false, message: '' },
+      price: { value: props.signupDetails.price, isValid: false, message: '' },
     };
   }
 
@@ -31,6 +28,10 @@ export default class SetPrice extends React.Component {
       in_app_price: iosPriceFinder(priceValue, this.props.inAppPriceList) ? iosPriceFinder(priceValue, this.props.inAppPriceList) : null,
       referral_code: this.state.referralCode.value,
     }
+    this.props.setSignupFlow({
+      price: priceValue,
+      referral: this.state.referralCode.value,
+    })
     if (this.checkPriceRequired()) {
       if (parseInt(priceValue) < 500 ) {
         this.props.primaryButtonClick(priceDetails)

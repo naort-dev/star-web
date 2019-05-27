@@ -4,13 +4,22 @@ import { connect } from 'react-redux';
 import PrimaryButton from '../../../PrimaryButton';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
+import { clearSignupFlow } from '../../../../store/shared/actions/setSignupFlow';
 import RegSuccessWrapper from './styled';
 
 const RegistrationSuccess = (props) => {
 
   useEffect(() => {
-    props.updateLoginStatus(props.tempLoginDetails);
-    props.fetchUserDetails(props.tempLoginDetails.id);
+    if (props.signupRole !== 'fan') {
+      props.updateLoginStatus(props.tempLoginDetails);
+      props.fetchUserDetails(props.tempLoginDetails.id);
+    }
+    return () => {
+      props.clearSignupFlow();
+      if (localStorage) {
+        localStorage.removeItem('tempAuthToken');
+      }
+    }
   }, [])
 
   return (
@@ -57,6 +66,7 @@ const RegistrationSuccess = (props) => {
 RegistrationSuccess.propTypes = {
   description: PropTypes.string,
   closeSignupFlow: PropTypes.func,
+  clearSignupFlow: PropTypes.func.isRequired,
   highlight_text: PropTypes.string,
   icon: PropTypes.object,
   image_url: PropTypes.string,
@@ -98,6 +108,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   updateLoginStatus: sessionData => dispatch(updateLoginStatus(sessionData)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  clearSignupFlow: () => dispatch(clearSignupFlow()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationSuccess);

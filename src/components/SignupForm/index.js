@@ -76,17 +76,59 @@ class SignUpForm extends React.Component {
     }
   }
 
+  onSocialMediaLogin = () => {
+    const {
+      source,
+      fbId,
+      gpId,
+      instId,
+      twId,
+      role,
+    } = this.props.signupDetails;
+      const socialObject = {
+        userName: this.state.email.value,
+        firstName: this.state.firstName.value,
+        lastName: this.state.lastName.value,
+        nickName: '',
+        source,
+        profilePhoto: '',
+        role: ROLES[role],
+        fbId,
+        gpId,
+        instId,
+        twId,
+      };
+      this.props.socialMediaLogin(socialObject)
+        .then(response => {
+          if (response !== undefined) {
+            this.props.setSignupFlow({
+              firstName: socialObject.firstName,
+              lastName: socialObject.lastName,
+              nickName: socialObject.nickName,
+              email: socialObject.userName,
+              fbId: socialObject.fb_id,
+              gpId: socialObject.gp_id,
+              instId: socialObject.in_id,
+              twId: socialObject.tw_id,
+            });
+            this.props.changeStep(this.props.currentStep + 1);
+          }
+        }); 
+    }
+
   onRegister = e => {
     e.preventDefault();
     if (
       this.checkFirstRequired() &
       this.checkLastRequired() &
-      this.checkEmail() &
-      (this.props.signupRole === ROLE_FAN
-        ? this.checkPassword()
-        : this.checkTermsAndConditionsRequired())
+      this.checkEmail()
     ) {
-      this.props.registerUser(
+      if (this.props.signupDetails.role === ROLE_FAN && this.props.signupDetails.isSocial) {
+        this.onSocialMediaLogin();
+      } else if ((this.props.signupRole === ROLE_FAN
+        ? this.checkPassword()
+        : this.checkTermsAndConditionsRequired())) {
+        this.props.registerUser(
           this.state.firstName.value,
           this.state.lastName.value,
           this.state.email.value,
@@ -104,7 +146,8 @@ class SignUpForm extends React.Component {
             })
             this.props.changeStep(this.props.currentStep + 1);
           }
-        });
+        });        
+      }
     }
   };
 
@@ -359,69 +402,74 @@ class SignUpForm extends React.Component {
                   />
                 </LoginContainer.WrapsInput>
               </LoginContainer.InputWrapper>
-              <LoginContainer.Label
-                error={!!this.state[signUp.key_3_1].message}
-              >
-                {this.state[signUp.key_3_1].message
-                  ? this.state[signUp.key_3_1].message
-                  : signUp.item_3}
-              </LoginContainer.Label>
-              <LoginContainer.InputWrapper>
-                <LoginContainer.WrapsInput>
-                  <TextInput
-                    error={!!this.state[signUp.key_3_1].message}
-                    placeholder={signUp.item_3_placeholder_1}
-                    type={
-                      this.props.signupRole === ROLE_FAN ? 'password' : 'text'
-                    }
-                    name={signUp.key_3_1}
-                    fullWidth={
-                      this.props.signupRole === ROLE_STAR ? true : false
-                    }
-                    value={this.state[signUp.key_3_1].value}
-                    onBlur={this[signUp.func_name_3]}
-                    onChange={event =>
-                      this.saveFormEntries(event, signUp.key_3_1)
-                    }
-                    InputProps={{
-                      classes: {
-                        error:'error-field',
-                        input: 'input-label-email'
-                      },
-                    }}
-                  />
-                </LoginContainer.WrapsInput>
-                {this.props.signupRole === ROLE_FAN ? (
-                  <LoginContainer.WrapsInput>
-                    <TextInput
+              {
+                (this.props.signupRole === ROLE_STAR || !this.props.signupDetails.isSocial) &&
+                  <React.Fragment>
+                    <LoginContainer.Label
                       error={!!this.state[signUp.key_3_1].message}
-                      placeholder={signUp.item_3_placeholder_2}
-                      type={
-                        this.props.signupRole === ROLE_FAN ? 'password' : 'text'
-                      }
-                      name={signUp.key_3_2}
-                      value={this.state[signUp.key_3_2].value}
-                      onChange={event =>
-                        this.saveFormEntries(event, signUp.key_3_2)
-                      }
-                      InputProps={{
-                        classes: {
-                          error:'error-field',
-                        },
-                      }}
-                    />
-                  </LoginContainer.WrapsInput>
-                ) : null}
-              </LoginContainer.InputWrapper>
-              <LoginContainer.WrapsInput classname="no-space">
-                {this.props.statusCode === undefined ? (
-                  <LoginContainer.ErrorMsg>
-                    {this.props.error}
-                  </LoginContainer.ErrorMsg>
-                ) : (
-                  <LoginContainer.EmptyDiv />
-                )}
-              </LoginContainer.WrapsInput>
+                    >
+                      {this.state[signUp.key_3_1].message
+                        ? this.state[signUp.key_3_1].message
+                        : signUp.item_3}
+                    </LoginContainer.Label>
+                    <LoginContainer.InputWrapper>
+                      <LoginContainer.WrapsInput>
+                        <TextInput
+                          error={!!this.state[signUp.key_3_1].message}
+                          placeholder={signUp.item_3_placeholder_1}
+                          type={
+                            this.props.signupRole === ROLE_FAN ? 'password' : 'text'
+                          }
+                          name={signUp.key_3_1}
+                          fullWidth={
+                            this.props.signupRole === ROLE_STAR ? true : false
+                          }
+                          value={this.state[signUp.key_3_1].value}
+                          onBlur={this[signUp.func_name_3]}
+                          onChange={event =>
+                            this.saveFormEntries(event, signUp.key_3_1)
+                          }
+                          InputProps={{
+                            classes: {
+                              error:'error-field',
+                              input: 'input-label-email'
+                            },
+                          }}
+                        />
+                      </LoginContainer.WrapsInput>
+                      {this.props.signupRole === ROLE_FAN ? (
+                        <LoginContainer.WrapsInput>
+                          <TextInput
+                            error={!!this.state[signUp.key_3_1].message}
+                            placeholder={signUp.item_3_placeholder_2}
+                            type={
+                              this.props.signupRole === ROLE_FAN ? 'password' : 'text'
+                            }
+                            name={signUp.key_3_2}
+                            value={this.state[signUp.key_3_2].value}
+                            onChange={event =>
+                              this.saveFormEntries(event, signUp.key_3_2)
+                            }
+                            InputProps={{
+                              classes: {
+                                error:'error-field',
+                              },
+                            }}
+                          />
+                        </LoginContainer.WrapsInput>
+                      ) : null}
+                    </LoginContainer.InputWrapper>
+                    <LoginContainer.WrapsInput classname="no-space">
+                      {this.props.statusCode === undefined ? (
+                        <LoginContainer.ErrorMsg>
+                          {this.props.error}
+                        </LoginContainer.ErrorMsg>
+                      ) : (
+                        <LoginContainer.EmptyDiv />
+                      )}
+                    </LoginContainer.WrapsInput>
+                  </React.Fragment>
+              }
               {this.props.signupRole === ROLE_FAN ? null : (
                 <div>
                   <LoginContainer.PrivacyContent className="privacy-check">

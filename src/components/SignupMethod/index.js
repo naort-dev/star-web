@@ -223,8 +223,11 @@ class SignupMethod extends React.Component {
       this.props.setSocialMediaData(this.state.socialMedia);
       this.props.setSignupFlow({
         firstName: socialObject.firstName,
+        isSocial: true,
         lastName: socialObject.lastName,
         nickName: socialObject.nickName,
+        source: socialObject.source,
+        profilePhoto: socialObject.profilePhoto,
         email: socialObject.userName,
         fbId: socialObject.fb_id,
         gpId: socialObject.gp_id,

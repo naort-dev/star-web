@@ -81,12 +81,14 @@ class SignupFlow extends React.Component {
   };
 
   setAudioVideoSupport = support => {
+    this.props.setSignupFlow({ audioVideoSupport: support });
     this.setState({
       audioVideoSupport: support,
     });
   }
 
   setSkippedVideo = () => {
+    this.props.setSignupFlow({ welcomeVideoSkip: true });
     this.setState({
       skipVideo: true,
     });
@@ -163,16 +165,16 @@ class SignupFlow extends React.Component {
     }
     
     celebritySignupProfile(celebrityProfileData)
-              .then((success) => {
-                this.setState({ loader: false });
-                if (success) {
-                  // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-                  this.changeStep(this.state.currentStep + 1);
-                }
-              })
-              .catch(() => {
-                this.setState({ loader: false });
-              });
+      .then((success) => {
+        this.setState({ loader: false });
+        if (success) {
+          // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+          this.changeStep(this.state.currentStep + 1);
+        }
+      })
+      .catch(() => {
+        this.setState({ loader: false });
+      });
   }
 
   goToBrowseStars = () => {
@@ -184,12 +186,15 @@ class SignupFlow extends React.Component {
   };
   continueClickHandler = (professions, fileImage, cropImage) => {
     if(professions.length > 0 && (fileImage || cropImage)) {
-    this.setState(state => ({
-      currentStep: state.currentStep + 1,
-      profession: professions.map(profession => profession.id)
-    }));
-  } else {
-  }
+      this.props.setSignupFlow({ 
+        currentStep: this.state.currentStep + 1,
+        categoryList: professions,
+      })
+      this.setState(state => ({
+        currentStep: state.currentStep + 1,
+        profession: professions.map(profession => profession.id)
+      }));
+    }
   };
 
   gotToHome = () => {
@@ -227,6 +232,7 @@ class SignupFlow extends React.Component {
             <RegistrationSuccess
               closeSignupFlow={this.closeSignUp}
               audioVideoSupport={this.state.audioVideoSupport}
+              signupRole={this.state.selectedType}
               skipVideo={this.state.skipVideo}
               description={FAN_REG_SUCCESS.DESCRIPTION}
               icon={FAN_REG_SUCCESS.ICON}
@@ -306,6 +312,8 @@ class SignupFlow extends React.Component {
             onBack={this.onSetPriceBack}
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
+            setSignupFlow={this.props.setSignupFlow}
+            signupDetails={this.props.signupDetails}
             switched={this.state.switchedSetPrice}
             closeSignupFlow={this.closeSetPrice}
             disableClose={this.disableClose}
@@ -446,6 +454,7 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
+  signupDetails: state.signupDetails,
   signUpDetails: state.modals.signUpDetails,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,

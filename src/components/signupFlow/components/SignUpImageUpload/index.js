@@ -28,7 +28,7 @@ class SignUpImageUpload extends React.Component {
     extension: null,
     takePicture: false,
     selectedCategory: [],
-    selectedProfessions: [],
+    selectedProfessions: this.props.signupDetails.categoryList,
     subCategoriesArray: [],
     isContinue: false,
   };
@@ -352,6 +352,7 @@ class SignUpImageUpload extends React.Component {
 
 const mapStateToProps = state => ({
   loading: state.session.loading,
+  signupDetails: state.signupDetails,
   professionsList: state.professionsList,
 });
 
