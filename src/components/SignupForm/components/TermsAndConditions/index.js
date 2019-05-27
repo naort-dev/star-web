@@ -180,7 +180,7 @@ export const TermsAndConditions = props => (
 <p><strong>Last updated:&nbsp; January 7, 2019</strong></p>
     </TermsConditionsWrapper.Description>
       </Scrollbars>
-      <TermsConditionsWrapper.ButtonWrapper>
+      <TermsConditionsWrapper.ButtonWrapper className="align-center">
         <PrimaryButton onClick={props.agreeTermsConditions}>
           {TERMS.BUTTON_LABEL}
         </PrimaryButton>
