@@ -1,14 +1,10 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
 import Button from 'components/PrimaryButton';
-import { FlexCenter } from 'styles/CommonStyled';
 import VideoRecorder from 'components/VideoRecorder';
 import { checkMediaRecorderSupport } from 'utils/checkOS';
-import getAWSCredentials from 'utils/AWSUpload';
-import { locations } from 'constants/locations';
 import { recorder } from 'constants/videoRecorder';
 import {
   Layout,
@@ -64,51 +60,8 @@ const Question = props => {
     });
   };
 
-  const readyToPayment = () => {
-    props.loaderAction(false);
-    props.continueCallback();
-  };
-
   const uploadVideoRecorded = () => {
-    let uploadVideo = null;
-    uploadVideo = new File([props.videoFile], 'askVideo.mp4');
-    props.loaderAction(true);
-    getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
-      .then(response => {
-        if (response && response.filename) {
-          const payload = {
-            starDetail: {
-              id: props.userDetails.id,
-            },
-            question: '',
-            date: '',
-            type: 3,
-            fileName: response.filename,
-          };
-          axios
-            .post(response.url, response.formData)
-            .then(() => {
-              props.starsonaRequest(payload, true, readyToPayment);
-              props.setVideoUploadedFlag(true);
-            })
-            .catch(() => {
-              props.updateToast({
-                value: true,
-                message: 'Failed to upload video',
-                variant: 'error',
-              });
-              props.loaderAction(false);
-            });
-        }
-      })
-      .catch(err => {
-        props.updateToast({
-          value: true,
-          message: err.message,
-          variant: 'error',
-        });
-        props.loaderAction(false);
-      });
+    props.continueCallback();
   };
 
   const buttonClickHandler = () => {
@@ -233,6 +186,7 @@ const Question = props => {
           </VideoContainer>
           <QuestionContainer
             isShow={stateObject.showHideFlg || stateObject.error}
+            continueFlg={stateObject.continueFlg}
           >
             {!stateObject.error && (
               <React.Fragment>
@@ -313,14 +267,10 @@ Question.propTypes = {
   updateMediaStore: PropTypes.func.isRequired,
   playPauseMedia: PropTypes.func.isRequired,
   recordTrigger: PropTypes.func.isRequired,
-  videoFile: PropTypes.object,
   continueCallback: PropTypes.func.isRequired,
   videoSrc: PropTypes.string,
   videoUploaded: PropTypes.bool,
-  loaderAction: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
-  starsonaRequest: PropTypes.func.isRequired,
-  userDetails: PropTypes.object.isRequired,
   starNM: PropTypes.string.isRequired,
   updateToast: PropTypes.func.isRequired,
   headerUpdate: PropTypes.func.isRequired,
@@ -329,7 +279,6 @@ Question.propTypes = {
 };
 
 Question.defaultProps = {
-  videoFile: {},
   videoSrc: '',
   videoUploaded: false,
   recorded: false,
@@ -338,11 +287,9 @@ Question.defaultProps = {
 
 function mapStateToProps(state) {
   return {
-    videoFile: state.commonReducer.file,
     videoSrc: state.commonReducer.videoSrc,
     recorded: state.commonReducer.recorded,
     videoUploaded: state.commonReducer.videoUploaded,
-    userDetails: state.starDetails.celebDetails.userDetails,
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
   };
 }

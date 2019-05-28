@@ -266,7 +266,11 @@ class VideoRecorder extends Component {
   getRetryBtn = () => {
     if (this.props.uploader && !this.props.recorded) {
       return (
-        <label id="upload" htmlFor="fileUpload" className="retry uploadBtn">
+        <label
+          id="upload"
+          htmlFor="fileUpload"
+          className="retry uploadBtn uploadCustom"
+        >
           <input
             type="file"
             id="fileUpload"

@@ -105,13 +105,22 @@ function RequestTemplates(
     );
   };
 
-  const getDatePicker = (placeholder, date, onChange, fullWidth) => {
+  const getDatePicker = (
+    placeholder,
+    date,
+    onChange,
+    fullWidth,
+    minDate,
+    maxDate,
+  ) => {
     return (
       <Templates.InputWrapper fullWidth={fullWidth}>
         <div className="datepickerWrapper">
           <DatePicker
             dateFormat="MMMM Do"
             withPortal
+            minDate={minDate}
+            maxDate={maxDate}
             customInput={
               <TextInput
                 label={placeholder}
@@ -492,6 +501,9 @@ function RequestTemplates(
                 'When is the event?',
                 bookingData.date,
                 handleInputChange,
+                false,
+                new Date(),
+                null,
               )}
             </FlexBox>
           );
@@ -526,6 +538,9 @@ function RequestTemplates(
                 'When is the event?',
                 bookingData.date,
                 handleInputChange,
+                true,
+                new Date(),
+                null,
               )}
             </FlexBox>
           );
@@ -559,6 +574,9 @@ function RequestTemplates(
                 'When is the event?',
                 bookingData.date,
                 handleInputChange,
+                false,
+                new Date(),
+                null,
               )}
             </FlexBox>
           );
@@ -590,6 +608,9 @@ function RequestTemplates(
                 'When is the event?',
                 bookingData.date,
                 handleInputChange,
+                true,
+                new Date(),
+                null,
               )}
             </FlexBox>
           );

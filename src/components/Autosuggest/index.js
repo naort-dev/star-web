@@ -65,6 +65,8 @@ const AutoComplete = props => {
     const { InputProps } = inputProps;
     return (
       <TextInput
+        onChange={InputProps.onChange}
+        value={inputVal}
         label={props.placeholder}
         InputProps={{
           ...InputProps,
@@ -151,6 +153,7 @@ AutoComplete.propTypes = {
   onChange: PropTypes.func.isRequired,
   type: PropTypes.string,
   list: PropTypes.array,
+  placeholder: PropTypes.array,
 };
 
 AutoComplete.defaultProps = {
@@ -158,5 +161,6 @@ AutoComplete.defaultProps = {
   value: '',
   type: '',
   list: [],
+  placeholder: '',
 };
 export default AutoComplete;

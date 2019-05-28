@@ -32,7 +32,7 @@ const TermsAndCondition = props => {
       <FlexBox>
         <Button
           className="continue-btn"
-          onClick={props.submitClick}
+          onClick={() => props.submitClick(props.category)}
           disabled={!props.checked}
           isDisabled={!props.checked}
         >
@@ -48,6 +48,10 @@ TermsAndCondition.propTypes = {
   termsCheck: PropTypes.func.isRequired,
   checked: PropTypes.bool.isRequired,
   headerUpdate: PropTypes.func.isRequired,
+  category: PropTypes.number,
+};
+TermsAndCondition.defaultProps = {
+  category: 0,
 };
 
 export default TermsAndCondition;

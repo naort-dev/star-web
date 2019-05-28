@@ -78,8 +78,11 @@ export const VideoContainer = styled.section`
     color: #2f839d;
     position: absolute;
     transform: translateX(-50%);
-    bottom: 0;
+    bottom: 20px;
     left: 50%;
+  }
+  .uploadCustom {
+    bottom: 0;
   }
 `;
 
@@ -88,7 +91,7 @@ export const QuestionContainer = styled.section`
   padding-top: 10px;
   display: flex;
   align-items: center;
-  flex-direction: column;
+  flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
