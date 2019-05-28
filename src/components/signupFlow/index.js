@@ -54,7 +54,7 @@ class SignupFlow extends React.Component {
         : false,
       profession: [],
       scrollRef: null,
-      profile_video: 'sample.mp4',
+      profile_video: '',
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
