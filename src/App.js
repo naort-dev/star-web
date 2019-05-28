@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
+import { withCookies } from 'react-cookie';
 // import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
@@ -255,9 +256,9 @@ const mapProps = dispatch => ({
   logOut: () => dispatch(logOut()),
 });
 
-export default withRouter(
+export default withCookies(withRouter(
   connect(
     mapState,
     mapProps,
   )(App),
-);
+));
