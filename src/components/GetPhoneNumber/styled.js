@@ -110,7 +110,7 @@ Layout.Phonenumber = styled.div`
   .errorElement {
     color: red;
     margin-left: 60px;
-    margin-top: 3px;
+    margin-top: 7px;
     font-size: 12px;
   }
 `;
@@ -149,7 +149,7 @@ Content.OTPWrapper = styled.div`
   justify-content: center;
   & .errorElement {
     color: red;
-    margin-top: 2px;
+    margin-top: 7px;
     margin-bottom: 2px;
     font-size: 12px;
   }
@@ -174,7 +174,7 @@ Content.OtpSubTitleWrapper = styled.div`
 `;
 Content.Error = styled.p`
   color: red;
-  margin-top: 2px;
+  margin-top: 7px;
   margin-bottom: 2px;
   font-size: 12px;
 `;
