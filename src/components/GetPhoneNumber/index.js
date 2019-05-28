@@ -149,6 +149,7 @@ const GetPhoneNumber = props => {
       };
       validateOtp(phoneNoState.phoneNumberOriginal, phoneNoState.countryCode, accountDetails.phone)
         .then((resp) => {
+          console.log(resp);
           if (resp.success) {
             setPhoneNoState({
               ...phoneNoState,
@@ -163,12 +164,12 @@ const GetPhoneNumber = props => {
             });
             props.onComplete();
             props.disableClose(false);
-          } else if (resp.status === '400' && resp.response.data.error.code === 1006) {
+          } else if (resp.status == '400' && resp.response.data.error.code === 1006) {
             setPhoneNoState({
               ...phoneNoState,
               otpErrorMessage: resp.response.data.error.message,
             });
-          } else if (resp.status === '400' && resp.response.data.error.code === 1009) {
+          } else if (resp.status == '400' && resp.response.data.error.code === 1009) {
             setPhoneNoState({
               ...phoneNoState,
               otpErrorMessage: resp.response.data.error.message.verification_code[0],
@@ -184,6 +185,7 @@ const GetPhoneNumber = props => {
   }
 
   const phoneLast4digits = phoneNoState.phoneNumberOriginal.substring(phoneNoState.phoneNumberOriginal.length - 4);
+  console.log(phoneNoState.otpErrorMessage);
   return (
     <Layout>
       <BackArrow className="leftArrow" onClick={backArrowClick}  />
@@ -195,7 +197,7 @@ const GetPhoneNumber = props => {
           <Content.OTPWrapper>
             <Content.WrapsInput> 
               <TextInput
-                  type="text"
+                  type="number"
                   name="phNo1"
                   inputRef={phNum1}
                   value={phoneNoState.phNo1}
@@ -207,7 +209,7 @@ const GetPhoneNumber = props => {
             </Content.WrapsInput> 
             <Content.WrapsInput> 
               <TextInput
-                type="text"
+                type="number"
                 name="phNo2"
                 inputRef={phNum2}
                 value={phoneNoState.phNo2}
@@ -219,7 +221,7 @@ const GetPhoneNumber = props => {
             </Content.WrapsInput> 
             <Content.WrapsInput> 
               <TextInput
-                type="text"
+                type="number"
                 name="phNo3"
                 inputRef={phNum3}
                 value={phoneNoState.phNo3}
@@ -231,7 +233,7 @@ const GetPhoneNumber = props => {
             </Content.WrapsInput>
             <Content.WrapsInput> 
               <TextInput
-                type="text"
+                type="number"
                 name="phNo4"
                 inputRef={phNum4}
                 value={phoneNoState.phNo4}
@@ -242,6 +244,7 @@ const GetPhoneNumber = props => {
               />
             </Content.WrapsInput> 
           </Content.OTPWrapper>
+          <Content.Error>{phoneNoState.otpErrorMessage}</Content.Error>
           <Content.OtpSubTitleWrapper>
             <Content.OtpSubTitle>{props.otp_receive_code}</Content.OtpSubTitle><Content.Resend onClick={() => submitNotification('reSent')}> &nbsp;Resend</Content.Resend>
           </Content.OtpSubTitleWrapper>
