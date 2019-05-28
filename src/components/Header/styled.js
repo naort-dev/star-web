@@ -6,7 +6,7 @@ const HeaderSection = styled.header`
   left: 0;
   right: 0;
   background: white;
-  height: 126px;
+  height: ${props => props.desktopSearch ? 'auto' : '126px'};
   z-index: 12;
   padding: ${props => !props.notFixed && '12px 16px'};
   @media(min-width: 832px) {
@@ -65,12 +65,13 @@ HeaderSection.SearchWrapper = styled.div`
   top: 60px;
   padding: 12px 16px;
   padding-top: 0;
-  display: block;
+  display: ${props => props.desktopSearch ? 'none': 'block'};
   width: 100%;
   max-width: 590px;
   margin: 0 auto;
   @media (min-width: 832px) {
     height: 50px;
+    display: block;
     position: static;
     margin-top: 15px;
   }
@@ -138,6 +139,7 @@ HeaderSection.SignInButtonMobile = styled.span`
     display: none;
   }
 `;
+
 HeaderSection.ProfileButton = styled.button`
   display: ${props => (props.hide ? 'none' : 'inline-block')};
   background-image: ${props =>
@@ -154,6 +156,27 @@ HeaderSection.ProfileButton = styled.button`
   background-color: white;
   cursor: pointer;
 `;
+
+
+HeaderSection.ProfileName = styled.span`
+  display: none;
+  @media(min-width: 832px) {
+    display: block;
+    margin-left: 18px;
+    font-family: Gilroy-Medium;
+    font-size: 16px;
+    margin-top: 7px;
+    color: ${props => props.theme.flatBlue};
+  }
+`;
+
+HeaderSection.ProfileWrapper = styled.span`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+`;
+
+
 HeaderSection.ProfileDropdown = styled.ul`
   position: absolute;
   right: 0;

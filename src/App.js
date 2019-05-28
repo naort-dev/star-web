@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import 'react-smartbanner/dist/main.css';
 import PropTypes from 'prop-types';
-// import { protectRoute } from './services/protectRoute';
+import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
 import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
@@ -25,6 +25,7 @@ import { Unauthorized } from './pages/unauthorized';
 import { InstaLogin } from './pages/instalogin';
 import { TwitterLogin } from './pages/twitterLogin';
 import { GroupListing } from './pages/groupListing';
+import { ManageUser } from './pages/manageUser';
 // import { Earnings } from './pages/earnings';
 import Modals from './modals';
 import {
@@ -39,7 +40,7 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showLoading: false,
+      showLoading: true,
       timedOut: false,
     };
 
@@ -166,6 +167,14 @@ class App extends React.Component {
               <Route exact path="/video/:id" component={Landing} />
 
               {/* logged in areas */}
+
+              <Route
+                exact
+                path="/manage/:type?"
+                component={protectRoute({
+                  RouteComponent: ManageUser,
+                })}
+              />
 
               {/* <Route
                   path="/user/favorites"
