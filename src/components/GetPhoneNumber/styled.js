@@ -107,6 +107,12 @@ Layout.Phonenumber = styled.div`
     text-align: center;
     font-family: Gilroy;
   }
+  .errorElement {
+    color: red;
+    margin-left: 60px;
+    margin-top: 3px;
+    font-size: 12px;
+  }
 `;
 Layout.Image = styled.div`
   display: block;
@@ -120,7 +126,7 @@ Layout.Image = styled.div`
   margin-bottom: 0;
 `;
 Layout.ButtonWrapper = styled.div`
-  
+
 `;
 Content.OtpSubTitle = styled.div`
   font-family: Gilroy;
@@ -146,9 +152,6 @@ Content.OTPWrapper = styled.div`
     margin-top: 2px;
     margin-bottom: 2px;
     font-size: 12px;
-    &.resentConfirmation {
-      color: #333333;
-    }
   }
 `;
 
@@ -168,4 +171,10 @@ Content.OtpSubTitleWrapper = styled.div`
   margin-top: 37px;
   display: flex;
   justify-content: center;
+`;
+Content.Error = styled.p`
+  color: red;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-size: 12px;
 `;
