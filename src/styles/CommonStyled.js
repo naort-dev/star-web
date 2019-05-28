@@ -87,3 +87,12 @@ export const CloseButton = styled.span`
     top: 50px;
   }
 `;
+
+export const NotificationCount = styled.span`
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-family: Gilroy-Medium;
+  font-size: 16px;
+  background-color: ${props => props.theme.orangePink};
+`;
