@@ -51,7 +51,7 @@ export default (state = { ...initialState }, action) => {
     case LOGIN.incorrect:
       return {
         ...state,
-        incorrectError: '',
+        incorrectError: action.error,
         statusCode: action.status,
       };
 
