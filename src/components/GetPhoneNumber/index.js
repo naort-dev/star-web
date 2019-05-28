@@ -149,7 +149,6 @@ const GetPhoneNumber = props => {
       };
       validateOtp(phoneNoState.phoneNumberOriginal, phoneNoState.countryCode, accountDetails.phone)
         .then((resp) => {
-          console.log(resp);
           if (resp.success) {
             setPhoneNoState({
               ...phoneNoState,
@@ -185,7 +184,6 @@ const GetPhoneNumber = props => {
   }
 
   const phoneLast4digits = phoneNoState.phoneNumberOriginal.substring(phoneNoState.phoneNumberOriginal.length - 4);
-  console.log(phoneNoState.otpErrorMessage);
   return (
     <Layout>
       <BackArrow className="leftArrow" onClick={backArrowClick}  />
