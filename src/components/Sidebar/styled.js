@@ -14,7 +14,7 @@ SidebarStyled.AvatarImage = styled.div`
   margin: 0 auto;
   height: 170px;
   box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.15);
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/fan-profile-pic.svg)')} no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
