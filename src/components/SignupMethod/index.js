@@ -221,6 +221,19 @@ class SignupMethod extends React.Component {
         referral: this.state.referral,
       };
       this.props.setSocialMediaData(this.state.socialMedia);
+      this.props.setSignupFlow({
+        firstName: socialObject.firstName,
+        isSocial: true,
+        lastName: socialObject.lastName,
+        nickName: socialObject.nickName,
+        source: socialObject.source,
+        profilePhoto: socialObject.profilePhoto,
+        email: socialObject.userName,
+        fbId: socialObject.fb_id,
+        gpId: socialObject.gp_id,
+        instId: socialObject.in_id,
+        twId: socialObject.tw_id,
+      });
       this.props.changeStep(this.props.currentStep + 1);
       // this.props.socialMediaLogin(socialObject).then((response) => {
       //   if (response.status === 200) {
@@ -250,6 +263,17 @@ class SignupMethod extends React.Component {
   }
 
   onEmailLogin = () => {
+    this.props.setSignupFlow({
+      isSocial: false,
+      firstName: '',
+      lastName: '',
+      nickName: '',
+      email: '',
+      fbId: '',
+      gpId: '',
+      instId: '',
+      twId: '',
+    });
     this.props.changeStep(this.props.currentStep + 1)
   }
 
@@ -424,7 +448,7 @@ SignupMethod.propTypes = {
   signupRole: PropTypes.string,
   data: PropTypes.object,
   closeSignupFlow: PropTypes.func,
-
+  setSignupFlow: PropTypes.func,
 };
 
 SignupMethod.defaultProps = {
@@ -432,6 +456,7 @@ SignupMethod.defaultProps = {
   currentStep: '',
   signupRole: '',
   data: {},
+  setSignupFlow: () => {},
   closeSignupFlow: () => { },
 };
 

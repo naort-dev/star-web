@@ -46,7 +46,6 @@ const Control = prop => {
 };
 
 const MenuList = prop => {
-  console.log(prop)
   return (
     <Scrollbars
       renderView={props => <div {...props} className="select__menu-list"/>}
