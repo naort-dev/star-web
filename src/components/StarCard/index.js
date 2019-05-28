@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FlexBoxSB, Card } from 'styles/CommonStyled';
+import StarRating from '../StarRating';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faPlay,
@@ -8,7 +9,7 @@ import {
   faHeart,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { Layout,CardSummary } from './styled';
+import { Layout, SummaryItem, Label, Value } from './styled';
 
 const StarCard = props => {
   return (
@@ -25,10 +26,38 @@ const StarCard = props => {
         <span className="earningPercentage">
           Your Earnings: 75%; Starsona: 25%
         </span>
-      </Card>
-      <CardSummary>
 
-      </CardSummary>
+        <ul>
+          <SummaryItem>
+            <span>
+              <FontAwesomeIcon icon={faPlay} />
+              <Label>Videos:</Label>
+            </span>
+            <Value>234</Value>
+          </SummaryItem>
+          <SummaryItem>
+            <span>
+              <FontAwesomeIcon icon={faComment} />
+              <Label>Comments:</Label>
+            </span>
+            <Value>12</Value>
+          </SummaryItem>
+          <SummaryItem>
+            <span>
+              <FontAwesomeIcon icon={faHeart} />
+              <Label>Reaction videos:</Label>
+            </span>
+            <Value>4</Value>
+          </SummaryItem>
+          <SummaryItem>
+            <span>
+              <FontAwesomeIcon icon={faStar} />
+              <Label>Rating</Label>
+            </span>
+            <StarRating rating={4} />
+          </SummaryItem>
+        </ul>
+      </Card>
     </Layout>
   );
 };
