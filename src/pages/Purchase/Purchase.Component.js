@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { Scrollbars } from 'react-custom-scrollbars';
 import PropTypes from 'prop-types';
 import { getStarName } from 'utils/dataToStringFormatter';
+import getAWSCredentials from 'utils/AWSUpload';
+import { locations } from 'constants/locations';
 import { Content, ModalContainer } from './styled';
 import Modal from '../../components/Modal/Modal';
 import CategoryList from './Components/CategoryList';
@@ -117,13 +120,14 @@ class Purchase extends Component {
         />
       );
     } else if (this.state.stepCount === 3) {
-      if (this.state.category === 2) {
+      if (this.state.category === 2 || this.state.category === 3) {
         return (
           <TermsAndCondition
-            submitClick={this.submitClick}
+            submitClick={this.termsContinueClick}
             termsCheck={this.termsCheck}
             checked={this.state.termsCheck}
             headerUpdate={this.props.headerUpdate}
+            category={this.state.category}
           />
         );
       } else if (this.state.category === 1) {
@@ -178,18 +182,20 @@ class Purchase extends Component {
   );
 
   getCustomStep = () => {
-    if (this.state.stepCount === 3) {
-      if (this.state.category === 3) {
+    // if (this.state.stepCount === 3) {
+    //   if (this.state.category === 3) {
+    //     return this.getPaymentScreen();
+    //   }
+    // } else
+    if (this.state.stepCount === 4) {
+      if (this.state.category === 1 || this.state.category === 3) {
         return this.getPaymentScreen();
       }
-    } else if (this.state.stepCount === 4) {
-      if (this.state.category === 1) {
-        return this.getPaymentScreen();
-      } else if (this.state.category === 3) {
-        return <SuccessScreen closeHandler={this.clearStore} />;
-      }
+      // else if (this.state.category === 3) {
+      //   return <SuccessScreen closeHandler={this.clearStore} />;
+      // }
     } else if (this.state.stepCount === 5) {
-      if (this.state.category === 1) {
+      if (this.state.category === 1 || this.state.category === 3) {
         return <SuccessScreen closeHandler={this.clearStore} />;
       }
       return this.getPaymentScreen();
@@ -208,9 +214,7 @@ class Purchase extends Component {
 
   getBodyWithHeader = () => {
     if (
-      this.state.stepCount < 3 ||
-      (this.state.stepCount === 3 &&
-        (this.state.category === 2 || this.state.category === 1)) ||
+      this.state.stepCount < 4 ||
       (this.state.stepCount === 4 && this.state.category === 2)
     ) {
       return (
@@ -244,7 +248,12 @@ class Purchase extends Component {
     this.setState({
       stepCount: 2,
       category: type,
+      termsCheck: false,
+      privateVideo: false,
+      importantInfo: '',
     });
+    this.clearMediaStore();
+    this.props.setVideoUploadedFlag(false);
   };
 
   scriptSubmit = () => {
@@ -302,6 +311,56 @@ class Purchase extends Component {
     this.submitClick();
   };
 
+  termsContinueClick = category => {
+    if (category !== 3) {
+      this.submitClick();
+    } else if (category === 3) {
+      this.handleQAUpload();
+    }
+  };
+
+  handleQAUpload = () => {
+    let uploadVideo = null;
+    uploadVideo = new File([this.props.videoFile], 'askVideo.mp4');
+    this.props.loaderAction(true);
+    getAWSCredentials(locations.askAwsVideoCredentials, uploadVideo)
+      .then(response => {
+        if (response && response.filename) {
+          const payload = {
+            starDetail: {
+              id: this.props.userDetails.id,
+            },
+            question: '',
+            date: '',
+            type: 3,
+            fileName: response.filename,
+          };
+          axios
+            .post(response.url, response.formData)
+            .then(() => {
+              this.props.starsonaRequest(payload, true, this.submitClick);
+              this.props.setVideoUploadedFlag(true);
+            })
+            .catch(() => {
+              this.props.updateToast({
+                value: true,
+                message: 'Failed to upload video',
+                variant: 'error',
+              });
+              this.props.loaderAction(false);
+            });
+        }
+      })
+      .catch(err => {
+        this.props.updateToast({
+          value: true,
+          message: err.message,
+          variant: 'error',
+        });
+        this.props.loaderAction(false);
+      });
+  };
+
   continuePayment = () => {
     this.setState({
       stepCount: 3,
@@ -344,15 +403,20 @@ class Purchase extends Component {
   clearStore = () => {
     this.props.toggleRequestFlow(false);
     this.props.setVideoUploadedFlag(false);
-    this.props.updateMediaStore({
-      videoSrc: null,
-      superBuffer: null,
-    });
+    this.clearMediaStore();
     this.props.pageCountHandler(0);
     this.clearBookingData();
     this.props.clearAll();
     this.clearFormBuilderProps();
     this.props.headerUpdate('');
+  };
+
+  clearMediaStore = () => {
+    this.props.updateMediaStore({
+      videoSrc: null,
+      superBuffer: null,
+      recorded: false,
+    });
   };
 
   modalClose = () => {
@@ -364,7 +428,7 @@ class Purchase extends Component {
   };
 
   render() {
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line
     const { nick_name, first_name } = this.props.userDetails;
     return (
       <Modal open={this.state.open} onClose={this.handleClose}>
@@ -377,7 +441,7 @@ class Purchase extends Component {
           <CancelConfirm
             modalClose={this.modalClose}
             requestFLowClose={this.clearStore}
-            // eslint-disable-next-line camelcase
+            // eslint-disable-next-line
             starNM={nick_name !== '' && nick_name ? nick_name : first_name}
           />
         )}
@@ -412,10 +476,12 @@ Purchase.propTypes = {
   formProps: PropTypes.object.isRequired,
   celebDetails: PropTypes.object.isRequired,
   headerUpdate: PropTypes.func.isRequired,
+  videoFile: PropTypes.object,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
   OccasionDetails: [],
+  videoFile: {},
 };
 
 export default connect(
@@ -423,6 +489,7 @@ export default connect(
     pageCount: state.occasionList.pageCount,
     isLoggedIn: state.session.isLoggedIn,
     formProps: state.occasionList.formProps,
+    videoFile: state.commonReducer.file,
   }),
   null,
 )(Purchase);

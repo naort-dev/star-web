@@ -28,9 +28,11 @@ const SuccessScreen = props => {
             is a surprise for someone else, record their reaction to share with
             us and the Star! We all love seeing fan reactions.
           </p>
-          <Button className="browseBtn" onClick={closeRequestFlow}>
-            Browse Stars
-          </Button>
+          <div className="align-center">
+            <Button className="browseBtn" onClick={closeRequestFlow}>
+              Browse Stars
+            </Button>
+          </div>
         </Content>
       </Scrollbars>
     </Layout>

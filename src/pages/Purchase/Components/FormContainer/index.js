@@ -249,7 +249,6 @@ FormContainer.propTypes = {
   detailList: PropTypes.array.isRequired,
   submitClick: PropTypes.func.isRequired,
   updateBookingData: PropTypes.func.isRequired,
-  audio: PropTypes.object.isRequired,
 };
 FormContainer.defaultProps = {};
 
@@ -257,7 +256,6 @@ export default connect(
   state => ({
     bookingData: state.occasionList.bookingData,
     user_name: state.userDetails.settings_userDetails.stageName,
-    audio: state.audioRecorder.recorded,
   }),
   null,
 )(FormContainer);

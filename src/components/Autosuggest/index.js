@@ -65,6 +65,8 @@ const AutoComplete = props => {
     const { InputProps } = inputProps;
     return (
       <TextInput
+        onChange={InputProps.onChange}
+        value={inputVal}
         label={props.placeholder}
         InputProps={{
           ...InputProps,

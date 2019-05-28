@@ -63,6 +63,7 @@ class VideoRecorder extends Component {
         this.stopRecording();
       }
     }
+
     if (this.props.videoSrc && this.props.videoSrc !== prevProps.videoSrc) {
       this.initialLoad();
     }
@@ -205,6 +206,7 @@ class VideoRecorder extends Component {
       videoSrc: this.videoSrc,
       superBuffer: this.superBuffer,
       recordedTime: recordedTimeString,
+      recorded: true,
     });
     const videoElem = this.video;
     videoElem.src = this.videoSrc;
@@ -261,6 +263,31 @@ class VideoRecorder extends Component {
     this.props.playPauseMediaAction();
     this.setState({ mediaControls: false });
   };
+  getRetryBtn = () => {
+    if (this.props.uploader && !this.props.recorded) {
+      return (
+        <label
+          id="upload"
+          htmlFor="fileUpload"
+          className="retry uploadBtn uploadCustom"
+        >
+          <input
+            type="file"
+            id="fileUpload"
+            className="hidden"
+            accept="video/*"
+            onChange={this.props.uploadHandler}
+          />
+          Upload different video
+        </label>
+      );
+    }
+    return (
+      <Button className="retry" onClick={this.retryRecordHandler}>
+        Try Again
+      </Button>
+    );
+  };
 
   render() {
     return (
@@ -285,9 +312,7 @@ class VideoRecorder extends Component {
             <PlayButton className="playButton" onClick={this.playPauseClick}>
               <FontAwesomeIcon icon={faPlay} />
             </PlayButton>
-            <Button className="retry" onClick={this.retryRecordHandler}>
-              Try Again
-            </Button>
+            {this.getRetryBtn()}
           </React.Fragment>
         )}
       </React.Fragment>
@@ -311,6 +336,9 @@ VideoRecorder.propTypes = {
   getRecordTime: PropTypes.func,
   headerUpdate: PropTypes.func,
   starNM: PropTypes.string,
+  uploadHandler: PropTypes.func,
+  recorded: PropTypes.bool,
+  uploader: PropTypes.bool,
 };
 
 VideoRecorder.defaultProps = {
@@ -321,6 +349,9 @@ VideoRecorder.defaultProps = {
   startStreamingCallback: () => {},
   headerUpdate: () => {},
   starNM: '',
+  uploadHandler: () => {},
+  recorded: false,
+  uploader: false,
 };
 
 function mapStateToProps(state) {
