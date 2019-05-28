@@ -248,7 +248,12 @@ class Purchase extends Component {
     this.setState({
       stepCount: 2,
       category: type,
+      termsCheck: false,
+      privateVideo: false,
+      importantInfo: '',
     });
+    this.clearMediaStore();
+    this.props.setVideoUploadedFlag(false);
   };
 
   scriptSubmit = () => {
@@ -398,16 +403,20 @@ class Purchase extends Component {
   clearStore = () => {
     this.props.toggleRequestFlow(false);
     this.props.setVideoUploadedFlag(false);
-    this.props.updateMediaStore({
-      videoSrc: null,
-      superBuffer: null,
-      recorded: false,
-    });
+    this.clearMediaStore();
     this.props.pageCountHandler(0);
     this.clearBookingData();
     this.props.clearAll();
     this.clearFormBuilderProps();
     this.props.headerUpdate('');
+  };
+
+  clearMediaStore = () => {
+    this.props.updateMediaStore({
+      videoSrc: null,
+      superBuffer: null,
+      recorded: false,
+    });
   };
 
   modalClose = () => {
