@@ -46,7 +46,7 @@ export default (state = { ...initialState }, action) => {
       return {
         ...state,
         loading: false,
-        tempDetails: undefined,
+        incorrectError: '',
       }
     case LOGIN.incorrect:
       return {

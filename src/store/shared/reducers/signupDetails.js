@@ -20,6 +20,9 @@ const initialState = {
   audioVideoSupport: true,
   welcomeVideoSkip: false,
   welcomeVideo: '',
+  welcomeVideoFile: '',
+  welcomeVideoLength: '',
+  videoUploaded: false,
   price: '20',
   referral: '',
 };
