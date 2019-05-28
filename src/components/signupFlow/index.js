@@ -73,6 +73,13 @@ class SignupFlow extends React.Component {
       switched: flag,
     }));
   };
+
+  onPhoneNumBack = flag => {
+    this.setState(state => ({
+      currentStep: state.currentStep - 1,
+      phoneNumswitched: flag,
+    }));
+  };
   onSetPriceBack = flag => {
     this.setState(state => ({
       currentStep: flag? state.currentStep - 1 : state.currentStep - 2,
@@ -150,6 +157,18 @@ class SignupFlow extends React.Component {
       // this.onBack(isTermsAndCondition);
       this.setState({
         switchedSetPrice: false,
+        disableClose: false
+      });
+    } else {
+      this.closeSignUp();
+    }
+  }
+
+  closePhoneNum =(isOtpScreen) => {
+    if(isOtpScreen) {
+      // this.onBack(isTermsAndCondition);
+      this.setState({
+        phoneNumswitched: false,
         disableClose: false
       });
     } else {
@@ -364,10 +383,10 @@ class SignupFlow extends React.Component {
                 otp_sub_title={STAR_GET_PHONE_NO.OTP_SUBTITLE}
                 otp_receive_code={STAR_GET_PHONE_NO.OTP_RECEIVE_CODE}
                 onComplete={this.submitOTPForm}
-                onBack={this.onBack}
-                switched={this.state.switched}
+                onBack={this.onPhoneNumBack}
+                switched={this.state.phoneNumswitched}
                 disableClose={this.disableClose}
-                closePhoneNum={this.closeSetPrice}
+                closePhoneNum={this.closePhoneNum}
               />
             )
           case 7:
