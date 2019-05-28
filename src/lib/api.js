@@ -36,7 +36,7 @@ class Api {
   static modifySocialLinks = 'v1/user/social_links/';
   static updateGroupAccount = 'v1/user/group_account/';
   static updateNotification = 'v1/user/notification_settings/';
-  static updatePhoto = 'v1/user/profileimages/';
+  static updatePhoto = 'v2/user/profileimages/';
   static celebrityProfile = 'v2/user/celebrity_profile/';
   static getImageCredentials = imageType => `v1/user/signed_url/?extension=${imageType}&key=profile_images&file_type=image`;
   static getawsCredentials = (key, extension, fileType) => `v1/user/signed_url/?extension=${extension}&key=${key}&file_type=${fileType}`;
