@@ -36,3 +36,10 @@ export const Layout = styled.section`
     padding-top: 5px;
   }
 `;
+
+export const SummaryItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+`;
+export const Label=styled.span``
+export const Value=styled.span``

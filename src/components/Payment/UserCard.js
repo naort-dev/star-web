@@ -78,7 +78,7 @@ const UserCard = props => {
                 <span className="cardType">{props.celebDetails.charity}</span>
               </span>
             )}
-            <span className="amount">{props.celebDetails.rate}</span>
+            <span className="amount">${props.celebDetails.rate}</span>
           </FlexBoxSB>
           {props.celebDetails.charity !== '' && (
             <p className="note">
