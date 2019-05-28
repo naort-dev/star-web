@@ -220,7 +220,7 @@ class SignUpImageUpload extends React.Component {
       newOption.value = item.id;
       if (item.child) {
         newOption.options = item.child.map((childItem) => {
-          const childOption = {};
+          const childOption = {...childItem};
           childOption.label = childItem.title;
           childOption.value = childItem.id;
           return childOption;
