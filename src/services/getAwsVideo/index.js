@@ -1,8 +1,8 @@
 import Api from '../../lib/api';
 import { fetch } from '../../services/fetch';
 
-const fetchAWSVideo = (fileName) => {
-  return (fetch(`${Api.getAWSVideo}${fileName}`).then(resp => resp.data.data)
+const fetchAWSVideo = (key, fileName) => {
+  return (fetch(`${Api.getAWSVideo}${key}&file_name=${fileName}`).then(resp => resp.data.data)
   );
 };
 

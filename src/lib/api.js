@@ -31,7 +31,7 @@ class Api {
   static modifySourceList = 'v1/payments/attach_detach_source/';
   static forgotPassword = 'v1/user/forgotpassword/';
   static resetPassword = 'v1/user/resetpassword/';
-  static getAWSVideo = 'v1/user/get_signed_url/?key=stargram_videos&file_name=';
+  static getAWSVideo = 'v1/user/get_signed_url/?key=';
   static modifyUserDetails = 'v1/user/user_details';
   static modifySocialLinks = 'v1/user/social_links/';
   static updateGroupAccount = 'v1/user/group_account/';

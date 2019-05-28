@@ -34,6 +34,7 @@ import {
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
+import { awsKeys } from '../../constants';
 import fetchAWSVideo from '../../services/getAwsVideo';
 import { celebritySignupProfile } from '../../services/userRegistration'
 import GetPhoneNumber from '../../components/GetPhoneNumber';
@@ -104,7 +105,7 @@ class SignupFlow extends React.Component {
   };
  
   setProfileVideo = (fileName) => {
-    fetchAWSVideo(fileName)
+    fetchAWSVideo(awsKeys.accountVideo, fileName)
       .then((resp => {
         this.props.setSignupFlow({
           welcomeVideo: resp,
