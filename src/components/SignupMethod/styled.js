@@ -25,9 +25,6 @@ SignUpMethod.Container = styled.div`
     top: 50%;
     transform: translateY(calc(-50% + -2px));
   }
-  @media(min-width: 1025px) {
-    padding: 50px 10px 0;
-  }
 `;
 SignUpMethod.Heading = styled.div`
   line-height: 1.2;
@@ -80,6 +77,7 @@ SignUpMethod.Button = styled.button`
   }
   &.email-wrap {
     margin-top: 7px;
+    margin-bottom: 20px;
     @media(min-width: 831px) {
       margin-top: 0;
       padding-top: 3px;

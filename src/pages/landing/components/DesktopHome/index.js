@@ -106,6 +106,15 @@ class DesktopHome extends React.Component {
     window.removeEventListener('resize', this.setTrendingData);
   }
 
+  onStarClick = (celebId) => {
+    this.props.history.push(`/${celebId}`);
+  }
+
+  getAvatarContent = (index) => {
+    const featuredData = this.props.featuredStars.homeFeatured.data;
+    return featuredData[index - 1];
+  }
+
   setTrendingData = () => {
     const trendingStars = this.props.trendingStars.data;
     if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
@@ -115,18 +124,9 @@ class DesktopHome extends React.Component {
     }
   }
 
-  getAvatarContent = (index) => {
-    const featuredData = this.props.featuredStars.homeFeatured.data;
-    return featuredData[index - 1];
-  }
-
   handleCategoryChange = (category) => {
     this.props.updateCategory(category.title, category.id, category.child);
     this.props.history.push('/browse-stars');
-  }
-
-  onStarClick = (celebId) => {
-    this.props.history.push(`/${celebId}`);
   }
 
   render() {
@@ -238,7 +238,10 @@ class DesktopHome extends React.Component {
             </DesktopStyled.ColumnDivider>
           </DesktopStyled.ProcessSection>
           <DesktopStyled.RespondSection>
-            <VideoRender autoPlay videoSrc="assets/videos/landing-star-video.mp4" cover="assets/images/default-cover.jpg" />
+            <VideoRender
+              autoPlay
+              videoSrc={props.featuredStars.homeFeatured.homeVideos.star_video && props.featuredStars.homeFeatured.homeVideos.star_video.url}
+            />
             <DesktopStyled.ColumnDivider>
               <DesktopStyled.SubHeader>
                 The star delivers
@@ -256,7 +259,11 @@ class DesktopHome extends React.Component {
         <DesktopStyled.ReceiveSection>
           <DesktopStyled.FlowWrapper>
             <DesktopStyled.ReceiveContent>
-              <VideoRender autoPlay videoSrc="assets/videos/landing-fan-video.MOV" cover="assets/images/default-cover.jpg" />
+              <VideoRender
+                autoPlay
+                videoSrc={props.featuredStars.homeFeatured.homeVideos.fan_video && props.featuredStars.homeFeatured.homeVideos.fan_video.url}
+                cover="assets/images/default-cover.jpg"
+              />
               <DesktopStyled.ColumnDivider>
                 <DesktopStyled.SubHeader>
                   Watch & Share!

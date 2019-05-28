@@ -60,7 +60,12 @@ export const fetchFeaturedStars = profession => (dispatch, getState) => {
       if (profession) {
         dispatch(featuredCategorySuccess(resp.data.data.display_title, resp.data.data.celebrity_display, profession));
       } else {
-        dispatch(featuredFetchSuccess(resp.data.data.display_title, resp.data.data.celebrity_display, resp.data.data.home_page_videos));
+        const homePageVideos = resp.data.data.home_page_videos;
+        const newHomepageVideos = {}
+        for (let i=0; i < homePageVideos.length; i += 1) {
+          newHomepageVideos[homePageVideos[i].video_type] = homePageVideos[i];
+        }
+        dispatch(featuredFetchSuccess(resp.data.data.display_title, resp.data.data.celebrity_display, newHomepageVideos));
       }
     } else {
       dispatch(featuredFetchEnd());

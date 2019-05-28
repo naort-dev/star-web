@@ -144,6 +144,7 @@ QuickViewStyled.ActionSection = styled.div`
     width: auto;
     background-color: #fff;
     border-color: #fff;
+    min-width: auto;
     color: ${props => props.theme.flatBlue};
   }
 `;

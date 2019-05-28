@@ -24,38 +24,6 @@ export const Layout = styled.section`
   }
 `;
 
-export const ScriptContainer = styled(FlexCenter)`
-  max-width: 520px;
-  position: relative;
-  margin: 0 auto;
-  .startWrapper {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-  }
-`;
-
-export const Script = styled.section`
-  background: #ebf4f8;
-  text-align: center;
-  max-width: 425px;
-  padding: 18px 50px;
-  border-radius: 10px;
-  margin-left: 20px;
-  margin-right: 20px;
-  .script {
-    font-size: 23px;
-    line-height: 28px;
-    font-family: Gilroy;
-    .boldTxt {
-      font-family: Gilroy-Semibold;
-      color: #2f839d;
-    }
-  }
-`;
-
 export const FlexBoxCenter = styled(FlexCenter)`
   padding: 15px 90px;
   ${media.realMobile} {
@@ -87,8 +55,6 @@ export const TextAreaWrapper = styled.section`
       outline: none;
     }
     ::placeholder {
-      color: red;
-      opacity: 1;
       color: #b7b7b7;
     }
     :-ms-input-placeholder {

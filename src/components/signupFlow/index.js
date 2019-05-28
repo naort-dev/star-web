@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { registerUser } from '../../store/shared/actions/register';
+import { registerUser, clearRegisterErrors } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
 import RequestFlowPopup from '../RequestFlowPopup';
@@ -21,7 +21,8 @@ import {
   toggleLogin,
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
-import { TermsAndConditions } from '../SignupForm/components/TermsAndConditions';
+import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
+import { loaderAction } from '../../store/shared/actions/commonActions';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
@@ -33,8 +34,10 @@ import {
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
+import { awsKeys } from '../../constants';
+import fetchAWSVideo from '../../services/getAwsVideo';
 import { celebritySignupProfile } from '../../services/userRegistration'
-// import GetPhoneNumber from '../../components/GetPhoneNumber';
+import GetPhoneNumber from '../../components/GetPhoneNumber';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 
 
@@ -42,14 +45,15 @@ class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: props.signUpDetails.type ? props.signUpDetails.type : null,
+      selectedType: props.signupDetails.role ? props.signupDetails.role : null,
       stepCount: 0,
       socialData: {},
-      currentStep: props.signUpDetails.step ? props.signUpDetails.step : 0,
+      currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
       enableClose: props.signUpDetails.enableClose
         ? props.signUpDetails.enableClose
         : false,
       profession: [],
+      scrollRef: null,
       profile_video: 'sample.mp4',
       disableClose: false,
       skipVideo: false,
@@ -58,10 +62,15 @@ class SignupFlow extends React.Component {
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
   }
+
+  componentWillUnmount() {
+    this.props.clearRegisterErrors();
+  }
+
   onBack = flag => {
     this.setState(state => ({
       currentStep: state.currentStep - 1,
-      switched: flag ? flag : false,
+      switched: flag,
     }));
   };
   onSetPriceBack = flag => {
@@ -73,12 +82,20 @@ class SignupFlow extends React.Component {
   };
 
   setAudioVideoSupport = support => {
+    this.props.setSignupFlow({ audioVideoSupport: support });
     this.setState({
       audioVideoSupport: support,
     });
   }
 
   setSkippedVideo = () => {
+    this.props.setSignupFlow({
+      welcomeVideoSkip: true,
+      welcomeVideo: '',
+      welcomeVideoFile: '',
+      welcomeVideoLength: '',
+      videoUploaded: false,
+    });
     this.setState({
       skipVideo: true,
     });
@@ -88,6 +105,17 @@ class SignupFlow extends React.Component {
   };
  
   setProfileVideo = (fileName) => {
+    fetchAWSVideo(awsKeys.accountVideo, fileName)
+      .then((resp => {
+        this.props.setSignupFlow({
+          welcomeVideo: resp,
+          welcomeVideoFile: fileName,
+          welcomeVideoSkip: false,
+          audioVideoSupport: true,
+          videoUploaded: true,
+          welcomeVideoLength: this.props.commonReducer.recordedTime,
+        });
+      }));
     this.setState({ profile_video: fileName });
   }
 
@@ -95,10 +123,11 @@ class SignupFlow extends React.Component {
     this.setState({ socialData: { ...this.state.socialData, ...data } });
 
   changeStep = step => {
+    this.state.scrollRef.scrollTop = 0;
+    this.props.setSignupFlow({ currentStep: step });
     this.setState({ currentStep: step, enableClose: false });
   };
   closeSignUp = () => {
-    this.props.fetchUserDetails(this.props.userDetails.settings_userDetails.id);
     this.props.toggleSignup(false);
     if (this.state.selectedType === 'group' && this.state.currentStep === 5) {
       this.props.history.push('user/star-supporters');
@@ -130,6 +159,8 @@ class SignupFlow extends React.Component {
   
   changeSignUpRole = role => {
     this.setState({ selectedType: role, stepCount: 0 });
+    this.props.setSignupFlow({ role });
+    this.state.scrollRef.scrollTop = 0;
     if (role === 'star') {
       this.setState({ stepCount: this.starRegistrationSteps });
     } else if (role === 'group') {
@@ -149,18 +180,18 @@ class SignupFlow extends React.Component {
       profile_video: this.state.profile_video,
       description: '',
     }
-    
+    this.props.loaderAction(true)
     celebritySignupProfile(celebrityProfileData)
-              .then((success) => {
-                this.setState({ loader: false });
-                if (success) {
-                  // this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-                  this.changeStep(this.state.currentStep + 1);
-                }
-              })
-              .catch(() => {
-                this.setState({ loader: false });
-              });
+      .then((success) => {
+        this.props.loaderAction(false)
+        if (success) {
+          this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+          // this.changeStep(this.state.currentStep + 1);
+        }
+      })
+      .catch(() => {
+        this.props.loaderAction(false)
+      });
   }
 
   goToBrowseStars = () => {
@@ -172,12 +203,15 @@ class SignupFlow extends React.Component {
   };
   continueClickHandler = (professions, fileImage, cropImage) => {
     if(professions.length > 0 && (fileImage || cropImage)) {
-    this.setState(state => ({
-      currentStep: state.currentStep + 1,
-      profession: professions.map(profession => profession.id)
-    }));
-  } else {
-  }
+      this.props.setSignupFlow({ 
+        currentStep: this.state.currentStep + 1,
+        categoryList: professions,
+      })
+      this.setState(state => ({
+        currentStep: state.currentStep + 1,
+        profession: professions.map(profession => profession.id)
+      }));
+    }
   };
 
   gotToHome = () => {
@@ -186,6 +220,14 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
+  submitOTPForm = () => {
+    this.changeStep(this.state.currentStep + 1);
+  }
+
+  setScrollRef = (scrollNode) => {
+    this.setState({ scrollRef: scrollNode })
+  }
+
   renderSteps = () => {
     if (this.state.selectedType === 'fan') {
       switch (this.state.currentStep) {
@@ -203,7 +245,6 @@ class SignupFlow extends React.Component {
               disableClose={this.disableClose}
               socialMediaStore={this.props.socialMediaStore}
               closeSignupFlow={this.closeSignUp}
-              socialMediaStore={this.props.socialMediaStore}
             />
           );
         case 2:
@@ -211,6 +252,7 @@ class SignupFlow extends React.Component {
             <RegistrationSuccess
               closeSignupFlow={this.closeSignUp}
               audioVideoSupport={this.state.audioVideoSupport}
+              signupRole={this.state.selectedType}
               skipVideo={this.state.skipVideo}
               description={FAN_REG_SUCCESS.DESCRIPTION}
               icon={FAN_REG_SUCCESS.ICON}
@@ -233,6 +275,8 @@ class SignupFlow extends React.Component {
               {...this.props}
               registerUser={this.props.registerUser}
               changeStep={this.changeStep}
+              setSignupFlow={this.props.setSignupFlow}
+              scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
               data={this.state.socialData}
@@ -247,7 +291,9 @@ class SignupFlow extends React.Component {
             <SignUpImageUpload
               {...this.props}
               changeStep={this.changeStep}
+              scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
+              setSignupFlow={this.props.setSignupFlow}
               signupRole={this.state.selectedType}
               closeSignupFlow={this.closeSignUp}
               continueClickCallback={this.continueClickHandler}
@@ -262,6 +308,8 @@ class SignupFlow extends React.Component {
               onBack={this.onBack}
               changeStep={this.changeStep}
               currentStep={this.state.currentStep}
+              signupDetails={this.props.signupDetails}
+              setSignupFlow={this.props.setSignupFlow}
               switched={this.state.switched}
               setProfileVideo={this.setProfileVideo}
               audioVideoSupport={this.setAudioVideoSupport}
@@ -287,10 +335,13 @@ class SignupFlow extends React.Component {
             onBack={this.onSetPriceBack}
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
+            setSignupFlow={this.props.setSignupFlow}
+            signupDetails={this.props.signupDetails}
             switched={this.state.switchedSetPrice}
             closeSignupFlow={this.closeSetPrice}
             disableClose={this.disableClose}
             action={SET_PRICE.ACTION}
+            scrollRef={this.state.scrollRef}
             confirmationTitle={SET_PRICE.CONFIRMATION_TITLE}
             confirmDescription={SET_PRICE.CONFIRMATION_DESCRIPTION}
             confirmPrimaryButton={SET_PRICE.CONFIRM_PRIMARY_BUTTON}
@@ -303,15 +354,23 @@ class SignupFlow extends React.Component {
             title={SET_PRICE.TITLE}
             link={SET_PRICE.LINK}
           />);
-          // case 6:
-          //   return(
-          //     <GetPhoneNumber
-          //       description={STAR_GET_PHONE_NO.DESCRIPTION}
-          //       title1={STAR_GET_PHONE_NO.TITLE1}
-          //       image_url={STAR_GET_PHONE_NO.IMAGE_URL}
-          //     />
-          //   )
           case 6:
+            return(
+              <GetPhoneNumber
+                description={STAR_GET_PHONE_NO.DESCRIPTION}
+                title1={STAR_GET_PHONE_NO.TITLE1}
+                image_url={STAR_GET_PHONE_NO.IMAGE_URL}
+                otptitle={STAR_GET_PHONE_NO.OTP_TITLE}
+                otp_sub_title={STAR_GET_PHONE_NO.OTP_SUBTITLE}
+                otp_receive_code={STAR_GET_PHONE_NO.OTP_RECEIVE_CODE}
+                onComplete={this.submitOTPForm}
+                onBack={this.onBack}
+                switched={this.state.switched}
+                disableClose={this.disableClose}
+                closePhoneNum={this.closeSetPrice}
+              />
+            )
+          case 7:
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
@@ -374,12 +433,13 @@ class SignupFlow extends React.Component {
           closePopUp={this.closeSignUp}
           modalView
           smallPopup
+          setScrollRef={this.setScrollRef}
           disableClose={this.state.disableClose}
         >
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
-                this.state.currentStep === 2 || this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 6
+                this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 7
               ) && (
                 <BackArrow
                   className="backArrow"
@@ -402,6 +462,7 @@ class SignupFlow extends React.Component {
                         {...this.props}
                         changeStep={this.changeStep}
                         currentStep={this.state.currentStep}
+                        setSignupFlow={this.props.setSignupFlow}
                         signupRole={this.state.selectedType}
                         data={this.state.socialData}
                         closeSignupFlow={this.closeSignUp}
@@ -424,10 +485,12 @@ const mapStateToProps = state => ({
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
+  signupDetails: state.signupDetails,
   signUpDetails: state.modals.signUpDetails,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
+  commonReducer: state.commonReducer,
   inAppPriceList: state.config.data.in_app_pricing,
   profilePic: state.photoUpload.profilePic,
 });
@@ -438,7 +501,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       registerUser(firstName, lastName, email, password, role, referral),
     ),
+  loaderAction: state => dispatch(loaderAction(state)),
   socialMediaLogin: socialObject => dispatch(socialMediaLogin(socialObject)),
+  clearRegisterErrors: () => dispatch(clearRegisterErrors()),
+  setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   followCelebrity: (celebId, celebProfessions, follow, cancelUpdate) =>
     dispatch(followCelebrity(celebId, celebProfessions, follow, cancelUpdate)),
   toggleLogin: state => dispatch(toggleLogin(state)),
