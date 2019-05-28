@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
 import { ROLES } from '../../constants/usertype';
-import { protectedRoutes, fanRoutes, starRoutes, groupRoutes } from './protectedRoutes';
+import { toggleLogin } from '../../store/shared/actions/toggleModals';
+import { protectedRoutes, fanRoutes, starRoutes, groupRoutes, commonAuthRoutes } from './protectedRoutes';
 import { Page404 } from '../../pages/page404';
 
 export const protectRoute = ({
@@ -22,11 +23,11 @@ export const protectRoute = ({
     let hasRole;
     if (isProtectedRoute) {
       if (isStar) {
-        hasRole = starRoutes.includes(location.pathname);
+        hasRole = starRoutes.includes(location.pathname) || commonAuthRoutes.includes(location.pathname);
       } else if (role === ROLES.group) {
         hasRole = groupRoutes.includes(location.pathname);
       } else {
-        hasRole = fanRoutes.includes(location.pathname);
+        hasRole = fanRoutes.includes(location.pathname) || commonAuthRoutes.includes(location.pathname);
       }
     }
     // const hasRole = roles.length ? roles.includes(role) : true;
@@ -46,14 +47,16 @@ export const protectRoute = ({
         />
       );
     } else if (shouldAuthenticate) {
-      return (
-        <Redirect
-          to={{
-            pathname: '/',
-            state: { from: location },
-          }}
-        />
-      );
+      props.toggleLogin(true);
+      return null;
+      // return (
+      //   <Redirect
+      //     to={{
+      //       pathname: '/',
+      //       state: { from: location },
+      //     }}
+      //   />
+      // );
     }
     return <Page404 {...props} />;
   };
@@ -65,7 +68,12 @@ export const protectRoute = ({
     isLoggedIn: PropTypes.bool.isRequired,
     role: PropTypes.string.isRequired,
     isStar: PropTypes.bool.isRequired,
+    toggleLogin: PropTypes.func.isRequired,
   };
+
+  const mapDispatchToProps = dispatch => ({
+    toggleLogin: state => dispatch(toggleLogin(state)),
+  })
 
   const mapState = state => ({
     isLoggedIn: state.session.isLoggedIn,
@@ -73,5 +81,5 @@ export const protectRoute = ({
     role: state.userDetails.role,
   });
 
-  return connect(mapState)(ProtectedRoute);
+  return connect(mapState, mapDispatchToProps)(ProtectedRoute);
 };
