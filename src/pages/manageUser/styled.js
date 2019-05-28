@@ -23,7 +23,7 @@ ManageStyled.Container = styled.div`
   flex-direction: column;
   @media(min-width: 832px) {
     flex-direction: row;
-    padding: 47px 0;
+    padding: 47px 36px;
   }
 `;
 
@@ -55,6 +55,7 @@ ManageStyled.SidebarWrapper = ManageStyled.Visiblity.extend`
 ManageStyled.RightContent = ManageStyled.Visiblity.extend`
   @media(min-width: 832px) {
     flex: auto;
+    padding-left: 110px;
   }
 `
 export default ManageStyled;

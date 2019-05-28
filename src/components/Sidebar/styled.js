@@ -22,6 +22,9 @@ SidebarStyled.AvatarImage = styled.div`
 
 SidebarStyled.LinkList = styled.ul`
   padding: 28px 40px;
+  @media(min-width: 832px) {
+    padding: 28px 0;
+  }
 `;
 
 SidebarStyled.LinkItem = styled.li`
