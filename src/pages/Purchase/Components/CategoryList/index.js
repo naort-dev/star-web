@@ -18,6 +18,7 @@ const CategoryList = ({
   headerUpdate,
   starNM,
   isLoggedIn,
+  toggleLogin,
 }) => {
   const handleGetCategory = type => () => {
     if (getCategory) getCategory(type);
@@ -27,7 +28,7 @@ const CategoryList = ({
       headerUpdate('Announcement');
     } else if (type === 3) {
       if (!isLoggedIn) {
-        this.props.toggleLogin(true);
+        toggleLogin(true);
       }
       headerUpdate(`Ask ${starNM} something! `);
     }
@@ -71,6 +72,7 @@ CategoryList.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   starNM: PropTypes.string,
   isLoggedIn: PropTypes.bool.isRequired,
+  toggleLogin: PropTypes.func.isRequired,
 };
 
 CategoryList.defaultProps = {

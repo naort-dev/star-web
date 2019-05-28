@@ -87,3 +87,8 @@ export const CloseButton = styled.span`
     top: 50px;
   }
 `;
+
+export const Card = styled.section`
+  border-radius: 10px;
+  background-color: #ffffff;
+`;
