@@ -2,20 +2,53 @@ import styled from 'styled-components';
 
 const ListingStyled = styled.div`
   padding: 0 12px;
-  @media(min-width: 832px) {
-    padding: 0 17px;
-  }
+  max-width: 362px;
+  margin: 0 auto;
   .latest-video {
     li {
-      &:nth-child(4) {
+      &:nth-child(3) {
         padding-right: 0;
       }
     }
   }
   .latest-response {
     li {
-      &:nth-child(5) {
+      &:nth-child(3) {
         padding-right: 0;
+      }
+    }
+  }
+  @media(min-width: 832px) {
+    max-width: 100%;
+    padding: 0 17px;
+    .latest-video {
+      li {
+        &:nth-child(2) {
+          padding-right: 0;
+        }
+      }
+    }
+    .latest-response {
+      li {
+        &:nth-child(5) {
+          // padding-right: 0;
+        }
+      }
+    }
+  }
+  @media(min-width: 1280px) {
+    .latest-video {
+      li {
+        &:nth-child(4) {
+          padding-right: 0;
+        }
+      }
+    }
+    .latest-response {
+      li {
+        &:nth-child(5) {
+          padding-right: 0;
+        }
       }
     }
   }
@@ -51,7 +84,7 @@ ListingStyled.VideoItemWrapper = styled.div`
 
 ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   display: flex;
-  width: ${props => (props.visible ? '106px' : '0')};
+  width: ${props => (props.visible ? '0' : '0')};
   overflow: hidden;
   transition: all 0.3s;
   font-family: Gilroy-MediumItalic;
@@ -71,8 +104,11 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   }
   @media(min-width: 832px) {
     font-size: 19px;
-    width: ${props => (props.visible ? '312px' : '0')};
+    width: ${props => (props.visible ? '344px' : '0')};
     overflow: hidden;
+  }
+  @media(min-width: 1280px) {
+    width: ${props => (props.visible ? '312px' : '0')};
   }
 `;
 
