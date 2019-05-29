@@ -2,7 +2,6 @@ import React from 'react';
 import AvatarStyled from './styled';
 
 const AvatarContent = ({ data = {}, onStarClick }) => {
-  console.log(data);
   const avatarImage = data.avatar_photo ? data.avatar_photo.thumbnail_url : null;
 
   const onCelebrityClick = celebId => () => {
