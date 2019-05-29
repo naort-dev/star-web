@@ -100,4 +100,7 @@ export const NotificationCount = styled.span`
 export const Card = styled.section`
   border-radius: 10px;
   background-color: #ffffff;
+  &:hover {
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.14);
+  }
 `;
