@@ -4,21 +4,23 @@ const ListingStyled = styled.div`
   padding: 0 12px;
   max-width: 362px;
   margin: 0 auto;
-  .latest-video {
-    li {
-      &:nth-child(3) {
-        padding-right: 0;
+  @media (min-width: 0px) and (max-width: 831px) {
+    .latest-video {
+      li {
+        &:nth-child(3) {
+          padding-right: 0;
+        }
+      }
+    }
+    .latest-response {
+      li {
+        &:nth-child(3) {
+          padding-right: 0;
+        }
       }
     }
   }
-  .latest-response {
-    li {
-      &:nth-child(3) {
-        padding-right: 0;
-      }
-    }
-  }
-  @media(min-width: 832px) {
+  @media (min-width: 832px) and (max-width: 1279px) {
     max-width: 100%;
     padding: 0 17px;
     .latest-video {
@@ -36,7 +38,9 @@ const ListingStyled = styled.div`
       }
     }
   }
-  @media(min-width: 1280px) {
+  @media (min-width: 1280px) {
+    max-width: 100%;
+    padding: 0 17px;
     .latest-video {
       li {
         &:nth-child(4) {
