@@ -45,16 +45,16 @@ class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: props.signupDetails.role ? props.signupDetails.role : null,
+      selectedType: props.signupDetails.role && props.signupDetails.currentStep > 0 ? props.signupDetails.role : null,
       stepCount: 0,
       socialData: {},
       currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
       enableClose: props.signUpDetails.enableClose
         ? props.signUpDetails.enableClose
         : false,
-      profession: [],
+      profession: props.signupDetails.categoryList,
       scrollRef: null,
-      profile_video: 'sample.mp4',
+      profile_video: props.signupDetails.welcomeVideoFile,
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
@@ -68,21 +68,21 @@ class SignupFlow extends React.Component {
   }
 
   onBack = flag => {
+    this.changeStep(this.state.currentStep - 1);
     this.setState(state => ({
-      currentStep: state.currentStep - 1,
       switched: flag,
     }));
   };
 
   onPhoneNumBack = flag => {
+    this.changeStep(this.state.currentStep - 1);
     this.setState(state => ({
-      currentStep: state.currentStep - 1,
       phoneNumswitched: flag,
     }));
   };
   onSetPriceBack = flag => {
+    this.changeStep(flag? this.state.currentStep - 1 : this.state.currentStep - 2)
     this.setState(state => ({
-      currentStep: flag? state.currentStep - 1 : state.currentStep - 2,
       switchedSetPrice: flag, 
       switched: this.state.audioVideoSupport ,
     }));

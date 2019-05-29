@@ -20,7 +20,7 @@ const initialState = {
   audioVideoSupport: true,
   welcomeVideoSkip: false,
   welcomeVideo: '',
-  welcomeVideoFile: '',
+  welcomeVideoFile: 'sample.mp4',
   welcomeVideoLength: '',
   videoUploaded: false,
   price: '20',
