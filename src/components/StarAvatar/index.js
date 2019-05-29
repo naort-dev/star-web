@@ -21,20 +21,12 @@ const StarAvatar = ({ star, type, ...props }) => {
         minSize: 30,
         maxSize: 47,
         multiLine: true,
-      },
-      category: {
-        minSize: 15,
-        maxSize: 20,
       }
     },
     'secondary': {
       name: {
         minSize: 10,
         maxSize: 17,
-      },
-      category: {
-        minSize: 10,
-        maxSize: 13,
       }
     }
   }
@@ -43,10 +35,6 @@ const StarAvatar = ({ star, type, ...props }) => {
     fitty(`#${star.user_id}-${type}-name`, type ? autoSize[type].name : {
       minSize: 10,
       maxSize: 17,
-    });
-    fitty(`#${star.user_id}-${type}-category`, type ? autoSize[type].category : {
-      minSize: 10,
-      maxSize: 13,
     });
   }
 
@@ -104,9 +92,7 @@ const StarAvatar = ({ star, type, ...props }) => {
       </WrapperComponent>
       <AvatarContainer.Content className={type} to={`${star.user_id}`}>
         <AvatarContainer.Category title={star.celebrity_profession && starProfessionsFormater(star.celebrity_profession)}>
-          <span id={`${star.user_id}-${type}-category`}>
-            { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
-          </span>
+          { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
         <AvatarContainer.StarDescription>
           <AvatarContainer.Name title={getStarName(star.nick_name, star.first_name, star.last_name)}>
