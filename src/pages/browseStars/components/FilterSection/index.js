@@ -69,14 +69,8 @@ const FilterSection = (props) => {
   };
 
   const toggleSelectAll = () => {
-    if (props.category.subCategories.length !== selectedSubCat.length) {
-      const selectedList = props.category.subCategories;
-      props.updateSelectedSubCategory(selectedList);
-      updateSelectedSub(selectedList);
-    } else {
-      props.updateSelectedSubCategory([]);
-      updateSelectedSub([]);
-    }
+    props.updateSelectedSubCategory([]);
+    updateSelectedSub([]);
   };
 
   return (
@@ -110,9 +104,10 @@ const FilterSection = (props) => {
       <FilterStyled.Content>
         <FilterStyled.SubCategoryList>
           <FilterStyled.SubCategoryItem
+            selected={selectedSubCat.length === 0}
             onClick={toggleSelectAll}
           >
-            { props.category.subCategories.length === selectedSubCat.length ? 'Unselect All' : 'ALL' }
+            ALL
           </FilterStyled.SubCategoryItem>
           {
             props.category.subCategories.map(subCategory => (
