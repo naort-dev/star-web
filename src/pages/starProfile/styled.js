@@ -51,7 +51,7 @@ StarProfileStyled.Avatar = styled.span`
   @media(max-width: 831px) {
     width: 186.2px;
     height: 186.2px;
-    margin-top: 3px;
+    margin-top: 8px;
   }
   .avatar-play-control {
     position: absolute;
