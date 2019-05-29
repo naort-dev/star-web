@@ -39,7 +39,6 @@ import {
 import { getConfig } from './store/shared/actions/getConfig';
 import Loader from './components/Loader';
 import Toast from './components/Toast';
-import { Dashboard } from './pages/dashboard';
 
 class App extends React.Component {
   constructor(props) {
@@ -170,7 +169,6 @@ class App extends React.Component {
               <Route path="/twitter-login" component={TwitterLogin} />
               <Route exact path="/group-listing/:id" component={GroupListing} />
               <Route exact path="/video/:id" component={Landing} />
-              <Route path="/dashboard" component={Dashboard} />
 
               {/* logged in areas */}
 

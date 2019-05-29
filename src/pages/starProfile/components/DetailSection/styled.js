@@ -7,10 +7,11 @@ const DetailStyled = styled.div`
   position: relative;
   @media(min-width: 832px) {
     padding: 0 17px;
-    padding-top: 30.5px;
+    padding-top: 21.5px;
   }
   @media(min-width: 1280px) {
     justify-content: space-between;
+    padding-top: 30.5px;
   }
 `;
 
@@ -25,6 +26,11 @@ DetailStyled.StarName = styled.span`
     padding-top: 0;
     font-family: Gilroy-Regular;
     font-size: 74px;
+    height: 65px;
+    text-indent: -5px;
+  }
+  @media(max-width: 831px) {
+    padding-top: 14px;
   }
 `;
 
@@ -37,6 +43,7 @@ DetailStyled.Categories = styled.span`
     order: 1;
     font-size: 24px;
     text-align: left;
+    margin-bottom: 2px;
   }
 `;
 
@@ -89,6 +96,7 @@ DetailStyled.BackButton = styled.div`
   @media(min-width: 832px) {
     display: block;
     width: 100%;
+    padding-top: 4px;
     .back-content {
       cursor: pointer;
       padding-bottom: 10px;
@@ -97,13 +105,15 @@ DetailStyled.BackButton = styled.div`
       font-family: Gilroy-Light;
       .back-icon {
         display: inline-block;
-        padding-right: 10.8px;
-        font-size: 28px;
+        padding-right: 10.6px;
+        font-size: 34px;
       }
       .back-title {
         vertical-align: top;
-        padding-top: 1px;
+        padding-top: 5px;
         display: inline-block;
+        font-size: 24px;
+        color: #42a3c1;
       }
     }
   }
@@ -144,8 +154,11 @@ DetailStyled.StarAvatarWrapper = styled.div`
   .favorite-icon {
     cursor: pointer;
     color: ${props => props.theme.flatBlue};
-    font-size: 30px;
-    padding-top: 20px;
+    font-size: 34px;
+    padding-top: 16px;
+    @media(max-width: 831px) {
+      display: none;
+    }
   }
 `;
 
@@ -158,6 +171,7 @@ DetailStyled.StarDetailsWrapper = styled.div`
     align-items: flex-start;
     padding-left: 40px;
     width: calc(100% - 303px);
+    padding-top: 15px;
   }
 `;
 
@@ -170,7 +184,7 @@ DetailStyled.ProfileVideoSection = styled.div`
   }
   @media(min-width: 832px) {
     display: block;
-    padding-top: 40.9px;
+    padding-top: 10.9px;
     ${DetailStyled.StarName} {
       display: none;
     }
@@ -180,13 +194,14 @@ DetailStyled.ProfileVideoSection = styled.div`
     width: auto;
     padding-top: 0;
     padding-right: 40px;
+    margin-top: -18px;
   }
 `;
 
 DetailStyled.StarDetails = styled.div`
   display: flex;
-  padding-top: 17px;
-  align-items: center;
+  padding-top: 16px;
+  align-items: flex-start;
   .details-header {
     font-family: Gilroy;
     vertical-align: top;
@@ -196,6 +211,18 @@ DetailStyled.StarDetails = styled.div`
   .rating-section {
     .star-item {
       padding: 0;
+      font-size: 23px;
+      margin-right: 3px;
+      @media(max-width: 831px) {
+        font-size: 16px;
+      }
+    }
+    @media(max-width: 831px) {
+      .details-header {
+        & + div {
+          padding-top: 3px;
+        }
+      }
     }
   }
   .response-section {
@@ -221,7 +248,7 @@ DetailStyled.StarDetails = styled.div`
       padding-left: 0;
       .response-item {
         font-size: 24px;
-        padding-top: 3px;
+        padding-top: 8px;
       }
     }
   }

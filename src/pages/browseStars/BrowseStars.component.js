@@ -153,7 +153,7 @@ const BrowseStars = (props) => {
             <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad >
               <StarAvatar star={getAvatarData(2)} type="secondary" />
             </CategoryPageStyled.AvatarWrapper>
-            <CategoryPageStyled.AvatarWrapper className="secondary" >
+            <CategoryPageStyled.AvatarWrapper className="secondary top-two" >
               <StarAvatar star={getAvatarData(3)} type="secondary" />
             </CategoryPageStyled.AvatarWrapper>
             <CategoryPageStyled.AvatarWrapper className="secondary" disableIpad disableMobile>
