@@ -7,7 +7,11 @@ import PropTypes from 'prop-types';
 import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
-import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
+import {
+  fetchProfessionsList,
+  fetchAllProfessions,
+  fetchAllSubCategories,
+} from './store/shared/actions/getProfessions';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
@@ -35,6 +39,7 @@ import {
 import { getConfig } from './store/shared/actions/getConfig';
 import Loader from './components/Loader';
 import Toast from './components/Toast';
+import { Dashboard } from './pages/dashboard';
 
 class App extends React.Component {
   constructor(props) {
@@ -165,6 +170,7 @@ class App extends React.Component {
               <Route path="/twitter-login" component={TwitterLogin} />
               <Route exact path="/group-listing/:id" component={GroupListing} />
               <Route exact path="/video/:id" component={Landing} />
+              <Route path="/dashboard" component={Dashboard} />
 
               {/* logged in areas */}
 

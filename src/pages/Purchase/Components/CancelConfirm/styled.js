@@ -32,7 +32,9 @@ export const Container = styled.section`
     margin-top: 16px;
     color: #2f839d;
     background: #fff;
-    width: 431px;
+    ${media.webView} {
+      width: 431px;
+    }
   }
 `;
 

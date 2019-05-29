@@ -108,6 +108,7 @@ AvatarContainer.Category = styled.span`
   text-overflow: ellipsis;
   text-align: inherit;
   margin-bottom: 3px;
+  overflow: hidden;
   width: 100%;
   padding-top: 7px;
   @media(min-width: 832px) {

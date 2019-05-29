@@ -59,9 +59,8 @@ FilterStyled.SubCategoryList = styled.ul`
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 0 13px;
-  height: 30px;
-  line-height: 30px;
+  padding: 4px 13px;
+  min-height: 26px;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
@@ -71,12 +70,9 @@ FilterStyled.SubCategoryItem = styled.li`
   font-size: 14px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   margin-right: 10px;
   cursor: pointer;
-  @media(min-width: 832px) {
-    font-size: 16px;
-  }
 `;
 
 FilterStyled.ApplyButton = styled.span`

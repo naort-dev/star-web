@@ -109,6 +109,7 @@ const GetPhoneNumber = props => {
   }
 
   const handleFieldChange = (fieldType, fieldValue) => {
+    if (fieldValue.length === 1) {
     setPhoneNoState({
         ...phoneNoState,
         [fieldType]: fieldValue,
@@ -121,6 +122,7 @@ const GetPhoneNumber = props => {
       } else if (fieldType === 'phNo3' && fieldValue.length === 1) {
         phNum4.current.focus();
       }
+    }
   };
 
   const validateFields = () => {
