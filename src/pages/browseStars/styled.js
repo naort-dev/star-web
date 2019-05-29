@@ -50,6 +50,14 @@ CategoryPageStyled.AvatarWrapper = styled.div`
   }
   &.secondary {
     display: ${props => (props.disableMobile ? 'none' : 'block')};
+    &.top-two {
+      @media(min-width: 832px) {
+        margin-top: 24px;
+      }
+      @media(min-width: 1280px) {
+        margin-top: 0;
+      }
+    }
   }
   @media(min-width: 832px) {
     &.featured {
@@ -57,7 +65,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
       position: absolute;
       left: 33px;
       top: calc(100% - 310px);
-      padding: 0 10px;
+      padding: 0 6px;
       background: ${props => props.theme.white};
     }
     &.secondary {
@@ -124,9 +132,13 @@ CategoryPageStyled.Heading = styled.span`
   @media(min-width: 832px) {
     font-size: 56px;
     min-height: 70px;
+    max-width: 692px;
+    line-height: 57px;
+    margin: 22px auto 0px;
   }
   @media(min-width: 1280px) {
-    margin-top: 33px;
+    margin-top: 47px;
+    max-width: 100%;
   }
 `;
 
@@ -134,7 +146,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
   width: 100%;
   border-radius: 16px;
   position: relative;
-  border: ${props => `1px solid ${props.theme.brownGrey}`}
+  border: ${props => `1px solid #555`}
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -147,11 +159,11 @@ CategoryPageStyled.FeaturedSection = styled.div`
     content: ${props => `'${props.heading}'`};
     position: absolute;
     text-transform: uppercase;
-    top: -7px;
+    top: -5px;
     line-height: 21px;
     text-align: center;
     left: 50%;
-    font-family: Gilroy-Bold;
+    font-family: Gilroy-Semibold;
     font-size: 14px;
     color: ${props => props.theme.orangePink};
     transform: translateX(-50%);
@@ -161,18 +173,20 @@ CategoryPageStyled.FeaturedSection = styled.div`
   @media(min-width: 832px) {
     max-width: 832px;
     margin-bottom: 115px;
-    margin-top: 37px;
+    margin-top: 53px;
     justify-content: flex-end;
-    padding: 36px 42px 38px;
+    padding: 27px 42px 38px;
     &:after {
-      left: 198px;
+      left: 128px;
       font-size: 23px;
       background: ${props => props.theme.white};
     }
   }
   @media(min-width: 1280px) {
     max-width: 1280px;
+    padding-top: 39px;
     padding-right: 0;
+    margin-top: 33px;
   }
 `;
 
