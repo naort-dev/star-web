@@ -1,20 +1,28 @@
+export const commonAuthRoutes = [
+  '/manage',
+  '/manage/profile',
+]
+
 export const fanRoutes = [
-  '/user/favorites',
-  '/user/myVideos',
-  '/settings',
+  '/manage/refer-star',
+  '/manage/favorites',
+  '/manage/my-videos',
 ];
 export const starRoutes = [
-  ...fanRoutes,
-  '/user/bookings',
-  '/user/earnings',
-  '/user/my-groups',
+  '/manage/dashboard',
+  '/manage/promotional-tools',
+  '/manage/referral',
+  '/manage/bookings',
+  '/manage/earnings',
+  '/manage/settings',
 ];
 export const groupRoutes = [
   ...fanRoutes,
   '/user/star-supporters',
 ];
 export const protectedRoutes = [
+  ...commonAuthRoutes,
   ...fanRoutes,
   ...starRoutes,
-  ...groupRoutes,
+  // ...groupRoutes,
 ];

@@ -13,6 +13,7 @@ import { locations } from '../../../../constants/locations';
 import {
   loaderAction,
   setVideoUploadedFlag,
+  updateMediaStore,
 } from '../../../../store/shared/actions/commonActions';
 import { audioVideoSupport }from '../../../../utils/checkOS';
 
@@ -23,6 +24,11 @@ const WelcomeVideo = props => {
   const [isDeviceSupported, setDeviceSupport] = useState(false);
   useEffect(()=>{
     checkforAudioVideoSupport();
+    props.updateMediaStore({
+      videoSrc: props.signupDetails.welcomeVideo,
+      recordedTime: props.signupDetails.welcomeVideoLength,
+    })
+    props.setVideoUploadedFlag(props.signupDetails.videoUploaded);
   },[]);
   const checkforAudioVideoSupport = async () => {
     const deviceSupport = await audioVideoSupport('videoinput') ;
@@ -56,10 +62,10 @@ const WelcomeVideo = props => {
     getAWSCredentials(locations.getAwsVideoCredentials, video)
       .then(response => {
         if (response && response.filename) {
-          props.setProfileVideo(response.filename);
           axios
             .post(response.url, response.formData)
             .then(() => {
+              props.setProfileVideo(response.filename);
               props.changeStep(props.currentStep + 2);
               props.loaderAction(false);
               props.setVideoUploadedFlag(true);
@@ -122,6 +128,7 @@ function mapDispatchToProps(dispatch) {
     loaderAction: value => {
       dispatch(loaderAction(value));
     },
+    updateMediaStore: payload => dispatch(updateMediaStore(payload)),
     setVideoUploadedFlag: value => {
       dispatch(setVideoUploadedFlag(value));
     },

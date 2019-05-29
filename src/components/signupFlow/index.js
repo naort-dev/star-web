@@ -22,6 +22,7 @@ import {
   toggleSignup,
 } from '../../store/shared/actions/toggleModals';
 import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
+import { loaderAction } from '../../store/shared/actions/commonActions';
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
@@ -33,6 +34,8 @@ import {
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
+import { awsKeys } from '../../constants';
+import fetchAWSVideo from '../../services/getAwsVideo';
 import { celebritySignupProfile } from '../../services/userRegistration'
 import GetPhoneNumber from '../../components/GetPhoneNumber';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
@@ -42,16 +45,16 @@ class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedType: props.signUpDetails.type ? props.signUpDetails.type : null,
+      selectedType: props.signupDetails.role ? props.signupDetails.role : null,
       stepCount: 0,
       socialData: {},
-      currentStep: props.signUpDetails.step ? props.signUpDetails.step : 0,
+      currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
       enableClose: props.signUpDetails.enableClose
         ? props.signUpDetails.enableClose
         : false,
       profession: [],
       scrollRef: null,
-      profile_video: 'sample.mp4',
+      profile_video: '',
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
@@ -61,9 +64,6 @@ class SignupFlow extends React.Component {
   }
 
   componentWillUnmount() {
-    if (localStorage) {
-      localStorage.removeItem('tempAuthToken');
-    }
     this.props.clearRegisterErrors();
   }
 
@@ -89,7 +89,13 @@ class SignupFlow extends React.Component {
   }
 
   setSkippedVideo = () => {
-    this.props.setSignupFlow({ welcomeVideoSkip: true });
+    this.props.setSignupFlow({
+      welcomeVideoSkip: true,
+      welcomeVideo: '',
+      welcomeVideoFile: '',
+      welcomeVideoLength: '',
+      videoUploaded: false,
+    });
     this.setState({
       skipVideo: true,
     });
@@ -99,6 +105,17 @@ class SignupFlow extends React.Component {
   };
  
   setProfileVideo = (fileName) => {
+    fetchAWSVideo(awsKeys.accountVideo, fileName)
+      .then((resp => {
+        this.props.setSignupFlow({
+          welcomeVideo: resp,
+          welcomeVideoFile: fileName,
+          welcomeVideoSkip: false,
+          audioVideoSupport: true,
+          videoUploaded: true,
+          welcomeVideoLength: this.props.commonReducer.recordedTime,
+        });
+      }));
     this.setState({ profile_video: fileName });
   }
 
@@ -163,18 +180,18 @@ class SignupFlow extends React.Component {
       profile_video: this.state.profile_video,
       description: '',
     }
-    
+    this.props.loaderAction(true)
     celebritySignupProfile(celebrityProfileData)
-              .then((success) => {
-                this.setState({ loader: false });
-                if (success) {
-                  this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-                  // this.changeStep(this.state.currentStep + 1);
-                }
-              })
-              .catch(() => {
-                this.setState({ loader: false });
-              });
+      .then((success) => {
+        this.props.loaderAction(false)
+        if (success) {
+          this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+          // this.changeStep(this.state.currentStep + 1);
+        }
+      })
+      .catch(() => {
+        this.props.loaderAction(false)
+      });
   }
 
   goToBrowseStars = () => {
@@ -291,6 +308,8 @@ class SignupFlow extends React.Component {
               onBack={this.onBack}
               changeStep={this.changeStep}
               currentStep={this.state.currentStep}
+              signupDetails={this.props.signupDetails}
+              setSignupFlow={this.props.setSignupFlow}
               switched={this.state.switched}
               setProfileVideo={this.setProfileVideo}
               audioVideoSupport={this.setAudioVideoSupport}
@@ -471,6 +490,7 @@ const mapStateToProps = state => ({
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
+  commonReducer: state.commonReducer,
   inAppPriceList: state.config.data.in_app_pricing,
   profilePic: state.photoUpload.profilePic,
 });
@@ -481,6 +501,7 @@ const mapDispatchToProps = dispatch => ({
     dispatch(
       registerUser(firstName, lastName, email, password, role, referral),
     ),
+  loaderAction: state => dispatch(loaderAction(state)),
   socialMediaLogin: socialObject => dispatch(socialMediaLogin(socialObject)),
   clearRegisterErrors: () => dispatch(clearRegisterErrors()),
   setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),

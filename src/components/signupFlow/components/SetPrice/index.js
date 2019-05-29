@@ -16,7 +16,7 @@ export default class SetPrice extends React.Component {
     this.state = {
       isReferred: props.switched ? props.switched : false,
       confirmPrice: false,
-      referralCode: { value: props.signupDetails.referral, isValid: false, message: '' },
+      referralCode: { value: props.signupDetails.referral, isValid: props.signupDetails.referral ? true : false, message: '' },
       price: { value: props.signupDetails.price, isValid: false, message: '' },
     };
   }
