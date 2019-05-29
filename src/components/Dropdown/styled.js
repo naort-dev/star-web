@@ -8,18 +8,25 @@ DropdownStyled.Select = styled.div`
   position: relative;
   max-width: 100%;
   background: ${props => props.theme.white};
-  padding: 18px;
-  height: 50px;
   outline: none;
   font-family: Gilroy;
   font-size: 20px;
   display: flex;
+  flex-direction: column;
   cursor: pointer;
   align-items: center;
   @media(min-width: 1280px) {
     max-width: 640px;
     width: 100%;
   }
+`;
+
+DropdownStyled.LabelWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  max-width: 100%;
+  padding: 6px 18px;
 `;
 
 DropdownStyled.CurrentSelected = styled.span`
@@ -40,15 +47,13 @@ DropdownStyled.DropIcon = styled.span`
 `;
 
 DropdownStyled.OptionsList = styled.ul`
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: calc(100% + 1px);
   height: 346px;
   overflow: auto;
+  width: 100%;
   padding: 5px 0;
   background: ${props => props.theme.white};
   z-index: 1;
+  border-top: 1px solid #fff;
 `;
 
 DropdownStyled.Options = styled.li`

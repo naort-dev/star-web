@@ -101,10 +101,12 @@ export default class Dropdown extends React.Component {
           innerRef={this.selectRef}
           className={this.props.className && this.props.className}
         >
-          <DropdownStyled.CurrentSelected className="customPlaceholder">
-            {(selected && selected.label) || placeHolder || 'select'}
-          </DropdownStyled.CurrentSelected>
-          <DropdownStyled.DropIcon />
+          <DropdownStyled.LabelWrapper>
+            <DropdownStyled.CurrentSelected className="customPlaceholder">
+              {(selected && selected.label) || placeHolder || 'select'}
+            </DropdownStyled.CurrentSelected>
+            <DropdownStyled.DropIcon />
+          </DropdownStyled.LabelWrapper>
           {showDropList && (
             <DropdownStyled.OptionsList>
               <Scrollbars>
