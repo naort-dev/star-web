@@ -1,10 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { FlexBoxSB, Card } from 'styles/CommonStyled';
+import { Card, FlexCenter } from 'styles/CommonStyled';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faUsdCircle } from '@fortawesome/pro-solid-svg-icons';
+import Button from '../../../PrimaryButton';
 import { Layout } from './styled';
+import { HeadingBold, BoldTextM, FlexColumn, FlexBox } from '../../styled';
 
 const ActivityCard = props => {
-  return <Layout>Hi</Layout>;
+  return (
+    <Layout>
+      <h2 className="head2">Recent Activity</h2>
+      <Card className="activityCard">
+        <FlexBox>
+          <FlexColumn className="web-padding">
+            <HeadingBold>2 Open bookings</HeadingBold>
+            <BoldTextM>1 expiring soon</BoldTextM>
+          </FlexColumn>
+          <Button className="button-booking">Respond</Button>
+        </FlexBox>
+      </Card>
+
+      <Card className="activityCard">
+        <FlexBox>
+          <span className="web-icons">
+            <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />
+            <FlexColumn className="web-padding">
+              <HeadingBold>5 Activities</HeadingBold>
+              <BoldTextM>1 comment | 2 responses</BoldTextM>
+              <BoldTextM>2 ratings</BoldTextM>
+            </FlexColumn>
+          </span>
+          <Button secondary className="button-activity">
+            view
+          </Button>
+        </FlexBox>
+      </Card>
+
+      <Card className="activityCard">
+        <FlexBox>
+          <span className="web-icons">
+            <FontAwesomeIcon icon={faUsdCircle} className="icons icon-dollar" />
+            <FlexColumn className="web-padding">
+              <HeadingBold>2 Tips</HeadingBold>
+              <BoldTextM>Total: $20</BoldTextM>
+            </FlexColumn>
+          </span>
+          <Button secondary className="button-activity">
+            View
+          </Button>
+        </FlexBox>
+      </Card>
+      <FlexCenter className="button-margin">
+        <Button secondary className="button-promote">
+          Increase Earnings! Promote Now
+        </Button>
+      </FlexCenter>
+    </Layout>
+  );
 };
 
 ActivityCard.propTypes = {};
