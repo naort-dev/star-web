@@ -20,9 +20,14 @@ const StarProfileStyled = styled.div`
 `;
 
 StarProfileStyled.Container = styled.div`
-  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+  @media(min-width: 832px) {
+    max-width: 866px;
+  }
+  @media(min-width: 1280px) {
+    max-width: 1280px;
+  }
 `;
 
 StarProfileStyled.StarName = styled.span`
@@ -43,6 +48,11 @@ StarProfileStyled.Avatar = styled.span`
   background-position: center center;
   background-size: cover;
   position: relative;
+  @media(max-width: 831px) {
+    width: 186.2px;
+    height: 186.2px;
+    margin-top: 3px;
+  }
   .avatar-play-control {
     position: absolute;
     bottom: 10px;

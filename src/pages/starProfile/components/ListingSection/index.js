@@ -135,7 +135,7 @@ const ListingSection = (props) => {
             <ListingStyled.ContentHeader>
               Latest videos...
             </ListingStyled.ContentHeader>
-            <ListingStyled.Content>
+            <ListingStyled.Content className="latest-video">
               {
                 videosList.map((video, index) => {
                   return renderVideoSection(video, index)
@@ -154,11 +154,11 @@ const ListingSection = (props) => {
       }
       {
         props.reactionsList.data.length ?
-          <ListingStyled.ContentSection>
+          <ListingStyled.ContentSection className="response-wrapper">
             <ListingStyled.ContentHeader>
               Latest responses...
             </ListingStyled.ContentHeader>
-            <ListingStyled.Content>
+            <ListingStyled.Content className="latest-response">
               {
                 props.reactionsList.data.map((reaction) => {
                   return (

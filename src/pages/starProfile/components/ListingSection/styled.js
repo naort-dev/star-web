@@ -5,10 +5,24 @@ const ListingStyled = styled.div`
   @media(min-width: 832px) {
     padding: 0 17px;
   }
+  .latest-video {
+    li {
+      &:nth-child(4) {
+        padding-right: 0;
+      }
+    }
+  }
+  .latest-response {
+    li {
+      &:nth-child(5) {
+        padding-right: 0;
+      }
+    }
+  }
 `;
 
 ListingStyled.ContentHeader = styled.div`
-  font-family: Gilroy-Regular;
+  font-family: Gilroy-Light;
   font-size: 16px;
   color: ${props => props.theme.twilight};
   @media(min-width: 832px) {
@@ -26,7 +40,7 @@ ListingStyled.VideoItem = styled.div`
   width: 106px;
   height: 150px;
   @media(min-width: 832px) {
-    width: 201px;
+    width: 209px;
     height: 263px;
   }
 `;
@@ -74,6 +88,7 @@ ListingStyled.ContentItem = styled.li`
     font-size: 16px;
     font-family: Gilroy-Medium;
     color: ${props => props.theme.flatBlue};
+    margin-top: -16px;
     span {
       cursor: pointer;
     }
@@ -84,7 +99,11 @@ ListingStyled.ContentItem = styled.li`
 `;
 
 ListingStyled.ContentSection = styled.div`
-  margin-top: 20.6px;
+  margin-top: 60.6px;
+  &.response-wrapper {
+    margin-top: 40.6px;
+    margin-bottom: 40px;
+  }
 `;
 
 export default ListingStyled;
