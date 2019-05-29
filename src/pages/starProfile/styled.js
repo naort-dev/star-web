@@ -23,7 +23,7 @@ StarProfileStyled.Container = styled.div`
   margin: 0 auto;
   width: 100%;
   @media(min-width: 832px) {
-    max-width: 866px;
+    max-width: 806px;
   }
   @media(min-width: 1280px) {
     max-width: 1280px;
