@@ -11,6 +11,9 @@ export const TextInput = props => (
     value={props.value}
     fullWidth={props.fullWidth}
     onChange={props.onChange}
+    onKeyUp={props.onKeyUp}
+    onKeyDown={props.onKeyDown}
+    onKeyPress={props.onKeyPress}
     id={props.id}
     required={props.required}
     onBlur={props.onBlur}
@@ -51,6 +54,9 @@ TextInput.propTypes = {
   label: PropTypes.string,
   InputLabelProps: PropTypes.object,
   nativeProps: PropTypes.object,
+  onKeyUp: PropTypes.func,
+  onKeyDown: PropTypes.func,
+  onKeyPress: PropTypes.func,
 };
 
 TextInput.defaultProps = {
@@ -70,4 +76,7 @@ TextInput.defaultProps = {
   label: '',
   InputLabelProps: {},
   nativeProps: {},
+  onKeyUp: () => {},
+  onKeyDown: () => {},
+  onKeyPress: () => {},
 };
