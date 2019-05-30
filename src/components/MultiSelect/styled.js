@@ -29,7 +29,7 @@ const MultiSelectStyled = styled.div`
   }
   .select__value-container {
     justify-content: center;
-    font-size: 22px;
+    font-size: 24px;
     .select__input {
       color: #615195;
       input {
