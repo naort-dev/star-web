@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter, Link } from 'react-router-dom';
 import Tooltip from '../ToolTip';
+import { NotificationCount } from '../../styles/CommonStyled';
 import { logOutUser } from '../../store/shared/actions/login';
 import { SidebarStyled } from './styled';
 
@@ -20,14 +21,30 @@ const Sidebar = (props) => {
       return (
         <Tooltip title={link.tooltip} key={link.selectedName}>
           <SidebarStyled.LinkItem selected={link.url === props.location.pathname}>
-            <Link to={link.url}>{link.linkName}</Link>          
+            <Link to={link.url}>
+              {link.linkName}
+            </Link>          
           </SidebarStyled.LinkItem>     
         </Tooltip>
       )
     }
     return (
       <SidebarStyled.LinkItem key={link.selectedName} selected={link.url === props.location.pathname}>
-        <Link to={link.url}>{link.linkName}</Link>          
+        <Link to={link.url}>
+          {link.linkName}
+          {
+            link.selectedName === 'requests' && props.userDetails.unseen_bookings > 0 &&
+              <NotificationCount className='notification-count'>
+                { props.userDetails.unseen_bookings }
+              </NotificationCount>
+          }
+          {
+            link.selectedName === 'myVideos' && props.userDetails.completed_fan_unseen_count > 0 &&
+              <NotificationCount className='notification-count'>
+                { props.userDetails.completed_fan_unseen_count }
+              </NotificationCount>
+          }
+        </Link>          
       </SidebarStyled.LinkItem>     
     )
   }
@@ -49,7 +66,7 @@ const Sidebar = (props) => {
           ))
         }
           <SidebarStyled.LinkItem onClick={logOut}>
-            <span>Log Out</span>
+            <span className='log-out'>Log Out</span>
           </SidebarStyled.LinkItem>
       </SidebarStyled.LinkList>
     </SidebarStyled>

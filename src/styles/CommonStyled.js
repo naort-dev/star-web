@@ -88,9 +88,21 @@ export const CloseButton = styled.span`
   }
 `;
 
+export const NotificationCount = styled.span`
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: #fff;
+  font-family: Gilroy-Medium;
+  font-size: 16px;
+  background-color: ${props => props.theme.orangePink};
+`
+
 export const Card = styled.section`
   border-radius: 10px;
   background-color: #ffffff;
+  &:hover {
+    box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.14);
+  }
 `;
 
 export const TickText = styled.span`
