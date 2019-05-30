@@ -12,6 +12,7 @@ const TextFieldStyled = styled(TextField)`
             }
         }
         input {
+            color: #615195;
             &::-webkit-input-placeholder { color: #aaaaaa;opacity: 1 }
             &:-moz-placeholder { color: #aaaaaa;opacity: 1 }
             &::-moz-placeholder { color: #aaaaaa;opacity: 1 }

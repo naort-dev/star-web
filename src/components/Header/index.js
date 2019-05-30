@@ -119,11 +119,11 @@ class Header extends React.Component {
                           profileUrl={this.state.profilePhoto}
                         />
                       :
-                        <HeaderSection.SignInButtonMobile>
+                        <HeaderSection.SignInButtonMobile noHide>
                           <FontAwesomeIcon icon={faUserCircle} />
                         </HeaderSection.SignInButtonMobile>
                     }
-                    <HeaderSection.ProfileName>
+                    <HeaderSection.ProfileName profilePhoto={this.state.profilePhoto}>
                       { userDetails && getStarName(userDetails.nick_name, userDetails.first_name, userDetails.last_name) }
                     </HeaderSection.ProfileName>
                   </HeaderSection.ProfileWrapper>

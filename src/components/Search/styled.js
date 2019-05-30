@@ -15,6 +15,13 @@ const SearchSection = styled.div`
   @media(min-width: 1280px) {
     max-width: 640px;
   }
+  @media(max-width: 831px) {
+    height: 41px;
+    margin-top: 3px;
+    .search-icon {
+      font-size: 22px;
+    }
+  }
 `;
 
 SearchSection.ClearButton = styled.span`
@@ -180,7 +187,7 @@ SearchSection.InputWrapper = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
-  padding-left: ${props => (props.alternate ? '13px' : '20px')};
+  padding-left: ${props => (props.alternate ? '13px' : '10px')};
   border-radius: 10px;
   display: flex;
   align-items: center;
@@ -198,8 +205,8 @@ SearchSection.Input = styled.input`
   width: calc(100% - 55px);
   outline: none;
   height: 100%;
-  font-family: Gilroy;
-  font-size: 16px;
+  font-family: Gilroy-Light;
+  font-size: 18px;
   border: none;
   border-radius: 5px;
   background: transparent;
