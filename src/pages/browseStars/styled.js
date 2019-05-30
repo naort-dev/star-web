@@ -177,7 +177,8 @@ CategoryPageStyled.FeaturedSection = styled.div`
     justify-content: flex-end;
     padding: 27px 42px 38px;
     &:after {
-      left: 128px;
+      transform: translateX(0);
+      left: 18px;
       font-size: 23px;
       background: ${props => props.theme.white};
     }

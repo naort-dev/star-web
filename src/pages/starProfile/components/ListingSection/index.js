@@ -169,6 +169,7 @@ const ListingSection = (props) => {
                             variableWidth
                             variableHeight
                             noBorder
+                            type={reaction.file_type === 1 && 'image'} // for image reactions
                             videoSrc={reaction.reaction_file_url}
                             cover={reaction.reaction_thumbnail_url}
                           />
