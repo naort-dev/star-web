@@ -1,5 +1,4 @@
 import React from 'react';
-import QuickComment from '../../components/QuickComment';
 import MyVideosStyled from './styled';
 
 class MyVideos extends React.Component {
@@ -9,7 +8,6 @@ class MyVideos extends React.Component {
   render() {
     return (
       <MyVideosStyled>
-        <QuickComment />
       </MyVideosStyled>
     )
   }
