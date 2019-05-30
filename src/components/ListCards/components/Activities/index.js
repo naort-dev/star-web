@@ -15,7 +15,7 @@ const ActivityCard = props => {
       <Card className="activityCard">
         <FlexBox>
           <span className="web-icons">
-            <TickText>To Do</TickText>
+            <TickText className="tick-text">To Do</TickText>
             <FlexColumn className="todo-padding">
               <HeadingBold>2 Open bookings</HeadingBold>
               <BoldTextM>1 expiring soon</BoldTextM>

@@ -34,11 +34,17 @@ export const Layout = styled.section`
 `;
 
 export const Wrapper = styled.section`
-  display: flex;
+  ${media.webView} {
+    display: flex;
+  }
 `;
 
 export const Social = styled(Card)`
   width: 369px;
   margin-left: 27px;
   padding: 29px 49px;
+  display: none;
+  ${media.webView} {
+    display: block;
+  }
 `;

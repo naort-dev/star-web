@@ -104,8 +104,13 @@ export const Layout = styled.section`
   .btn-extra {
     display: none;
     ${media.webView} {
-      display: none;
       display: inline-block;
+    }
+  }
+  .tick-text {
+    display: none;
+    ${media.webView} {
+      display: flex;
     }
   }
 `;
