@@ -4,13 +4,14 @@ import { BackArrow } from 'styles/CommonStyled';
 import StarCard from 'components/StarCard';
 import ActivityCard from 'components/ListCards/components/Activities';
 import Promotion from 'components/PromotionCard';
+import SubHeader from 'components/SubHeader';
 import { Layout, Wrapper, Social } from './styled';
 
 const Dashboard = props => {
+  const goBack = () => {};
   return (
     <Layout>
-      <BackArrow className="arrow" />
-      <h1 className="head1">My Starsona</h1>
+      <SubHeader heading="My Starsona" onClick={goBack} />
       <Wrapper>
         <section>
           <StarCard

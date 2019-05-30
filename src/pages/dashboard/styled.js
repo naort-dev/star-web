@@ -13,20 +13,11 @@ export const Layout = styled.section`
     padding-right: 0;
   }
   .head1 {
-    color: #999999;
-    font-size: 30px;
-    font-family: Gilroy-Light;
-    text-align: center;
-    padding-top: 34px;
-    padding-bottom: 30px;
     ${media.webView} {
       text-align: left;
     }
   }
   .arrow {
-    width: 14px;
-    height: 28px;
-    top: 110px;
     ${media.webView} {
       display: none;
     }

@@ -26,8 +26,8 @@ export const Layout = styled.section`
     }
     .promo-template {
       background-image: url('assets/images/promotion.png');
-      width: 165px;
-      height: 165px;
+      width: 265px;
+      height: 265px;
       background-size: contain;
       display: inline-block;
       background-repeat: no-repeat;
