@@ -136,7 +136,7 @@ HeaderSection.SignInButtonMobile = styled.span`
   font-size: 27.5px;
   color: ${props => props.theme.flatBlue};
   @media (min-width: 832px) {
-    display: none;
+    display: ${props => (props.noHide ? 'block' : 'none')};
   }
 `;
 
@@ -165,7 +165,7 @@ HeaderSection.ProfileName = styled.span`
     margin-left: 18px;
     font-family: Gilroy-Medium;
     font-size: 16px;
-    margin-top: 7px;
+    margin-top: ${props => (props.profilePhoto ? '7px' : '0')};
     color: ${props => props.theme.flatBlue};
   }
 `;

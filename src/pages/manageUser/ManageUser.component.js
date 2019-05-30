@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { Dashboard } from '../dashboard';
+import { Bookings } from '../Bookings';
+import { MyVideos } from '../myVideos';
 import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
-import CardContent from '../../components/CardContent';
 import Sidebar from '../../components/Sidebar';
 import ManageStyled from './styled';
 
@@ -45,7 +46,7 @@ const ManageUser = props => {
           {props.isStar ? (
             <Switch>
               <Route path="/manage/dashboard" component={Dashboard} />
-              <Route path="/manage/bookings" render={() => 'bookings'} />
+              <Route path="/manage/bookings" component={Bookings} />
               <Route
                 path="/manage/promotional-tools"
                 render={() => 'promotional'}
@@ -57,7 +58,7 @@ const ManageUser = props => {
             </Switch>
           ) : (
             <Switch>
-              <Route path="/manage/my-videos" render={() => 'myvideos'} />
+              <Route path="/manage/my-videos" component={MyVideos} />
               <Route path="/manage/favorites" render={() => 'favorites'} />
               <Route path="/manage/profile" render={() => 'profile'} />
             </Switch>
