@@ -131,6 +131,7 @@ UploadContainer.CategoriesWrapper = styled.div`
     &.input-label-shrink {
       font-size: 13px !important;
       line-height: 18px;
+      color: #555 !important;
     }
     + div {
       margin-top: 33px;
@@ -181,7 +182,10 @@ UploadContainer.BrowseCategories = styled.div`
   text-align: center;
   font-family: Gilroy;
   margin-top: 10px;
-  color: #b7b7b7;
+  color:#555555;
+  @media (max-width: 831px) {
+    color: #b7b7b7;
+  }
 `;
 
 UploadContainer.BrowseCategoriesLink = styled.span`
@@ -316,7 +320,7 @@ UploadContainer.SubItemWrapper = styled.ul`
     border-radius: 15px;
     border: 1px solid #2f839d;
     display: flex;
-    font-family: Gilroy-medium;
+    font-family: Gilroy;
     font-size: 14px;
     align-items: center;
     margin-top: 5px;
@@ -325,6 +329,7 @@ UploadContainer.SubItemWrapper = styled.ul`
     height: 26px;
     line-height: 26px;
     margin-bottom: 2px;
+    color: #555;
   }
 `;
 UploadContainer.Item = styled.li`

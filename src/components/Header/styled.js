@@ -45,6 +45,9 @@ HeaderSection.HeaderRight = styled.div`
   @media (min-width: 1280px) {
     order: 3;
   }
+  @media (max-width: 831px) {
+    margin-top: 7px;
+  }
 `;
 HeaderSection.HeaderLeft = styled.div`
   display: inline-block;
@@ -83,7 +86,7 @@ HeaderSection.SearchWrapper = styled.div`
 `;
 
 HeaderSection.BackIcon = styled.span`
-  font-size: 20px;
+  font-size: 24px;
   width: 20px;
   color: ${props => props.theme.flatBlue};
   padding-right: 10px;
@@ -123,8 +126,9 @@ HeaderSection.ImgLogo = styled.img`
 `;
 
 HeaderSection.MenuButton = styled.span`
-  font-size: 20px;
+  font-size: 24px;
   cursor: pointer;
+  margin-left: 7px;
   width: 20px;
   color: ${props => props.theme.flatBlue};
   @media (min-width: 832px) {
@@ -133,7 +137,7 @@ HeaderSection.MenuButton = styled.span`
 `;
 
 HeaderSection.SignInButtonMobile = styled.span`
-  font-size: 27.5px;
+  font-size: 28px;
   color: ${props => props.theme.flatBlue};
   @media (min-width: 832px) {
     display: none;

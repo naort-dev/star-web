@@ -41,17 +41,15 @@ StarProfileStyled.Avatar = styled.span`
   border-radius: 50%;
   display: block;
   cursor: pointer;
-  width: 200px;
-  height: 200px;
+  width: 238px;
+  height: 238px;
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
   @media(max-width: 831px) {
-    width: 186.2px;
-    height: 186.2px;
-    margin-top: 8px;
+    margin-top: 6px;
   }
   .avatar-play-control {
     position: absolute;
