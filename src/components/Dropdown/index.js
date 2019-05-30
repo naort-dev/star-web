@@ -91,10 +91,11 @@ export default class Dropdown extends React.Component {
 
   render() {
     const { showDropList, list, selected } = this.state;
-    const { placeHolder } = this.props;
+    const { placeHolder, secondary } = this.props;
     return (
       <DropdownStyled className="cus-drop">
         <DropdownStyled.Select
+          secondary={secondary}
           onClick={this.toggleDropDown(!showDropList)}
           tabIndex="0"
           onKeyUp={this.handleListKeyUp}
@@ -106,7 +107,7 @@ export default class Dropdown extends React.Component {
           </DropdownStyled.CurrentSelected>
           <DropdownStyled.DropIcon />
           {showDropList && (
-            <DropdownStyled.OptionsList>
+            <DropdownStyled.OptionsList secondary={secondary}>
               <Scrollbars>
                 <DropdownStyled.Options innerRef={this.optionList}>
                   {list.map(item => (
@@ -132,13 +133,16 @@ export default class Dropdown extends React.Component {
 Dropdown.defaultProps = {
   placeHolder: 'Select',
   className: '',
+  secondary: false,
 };
 
 Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
   labelKey: PropTypes.string.isRequired,
   valueKey: PropTypes.string.isRequired,
+  selected: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   placeHolder: PropTypes.string,
   className: PropTypes.string,
+  secondary: PropTypes.bool,
 };

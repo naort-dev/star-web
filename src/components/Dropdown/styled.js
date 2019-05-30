@@ -7,7 +7,7 @@ const DropdownStyled = styled.div`
 DropdownStyled.Select = styled.div`
   position: relative;
   max-width: 100%;
-  background: ${props => props.theme.white};
+  background: ${props => props.secondary ? '#fff' : props.theme.white};
   padding: 18px;
   height: 50px;
   outline: none;
@@ -47,7 +47,7 @@ DropdownStyled.OptionsList = styled.ul`
   height: 346px;
   overflow: auto;
   padding: 5px 0;
-  background: ${props => props.theme.white};
+  background: ${props => props.secondary ? '#fff' : props.theme.white};
   z-index: 1;
 `;
 
