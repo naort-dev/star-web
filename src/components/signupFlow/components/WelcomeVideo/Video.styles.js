@@ -72,7 +72,7 @@ export const VideoContainer = styled.section`
   }
   .playButton {
     position: absolute;
-    top: 50%;
+    top: 54.8%;
     left: 50%;
     transform: translate(-50%, -50%);
   }
