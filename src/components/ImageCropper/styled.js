@@ -74,6 +74,9 @@ CropperStyled.ButtonWrapper = styled.div`
     width: 100%;
     padding: 0 32px;
   }
+  .btn-text {
+    padding-top: 4px
+  }
   .button {
     width: 250px;
     height: 60px;
