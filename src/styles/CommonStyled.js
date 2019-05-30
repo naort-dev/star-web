@@ -104,3 +104,22 @@ export const Card = styled.section`
     box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.14);
   }
 `;
+
+export const TickText = styled.span`
+  color: #fe6b57;
+  font-size: 14px;
+  font-family: Gilroy-Medium;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  :before {
+    content: '';
+    display: inline-block;
+    height: 6px;
+    width: 10px;
+    border-right: 2px solid #fe6b57;
+    border-top: 2px solid #fe6b57;
+    transform: rotate(130deg);
+    margin-bottom: 8px;
+  }
+`;

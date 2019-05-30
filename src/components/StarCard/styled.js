@@ -2,6 +2,16 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
+  width: 336px;
+  max-width: 336px;
+  margin: 0 auto;
+  ${media.webView} {
+    max-width: 567px;
+    width: 567px;
+  }
+  ${media.smallScreen} {
+    max-width: 300px;
+  }
   .headLbl {
     font-size: 26px;
     ${media.smallScreen} {
@@ -24,6 +34,9 @@ export const Layout = styled.section`
   }
   .payments {
     color: #2f839d;
+    ${media.webView} {
+      padding-left: 168px;
+    }
     &:before {
       content: attr(data-val);
     }
@@ -33,6 +46,9 @@ export const Layout = styled.section`
     ${media.smallScreen} {
       padding: 10px;
     }
+    ${media.webView} {
+      padding: 37px 30px;
+    }
   }
   .earningPercentage {
     font-family: Gilroy-Light;
@@ -41,6 +57,14 @@ export const Layout = styled.section`
     display: inline-block;
     padding-top: 5px;
     padding-bottom: 22px;
+    ${media.webView} {
+      display: none;
+    }
+  }
+  .flex-start {
+    ${media.webView} {
+      justify-content: flex-start;
+    }
   }
 `;
 
@@ -57,6 +81,10 @@ export const SummaryItem = styled.li`
     padding-left: 40px;
     ${media.smallScreen} {
       font-size: 12px;
+    }
+    ${media.webView} {
+      width: 65%;
+      padding-left: 0;
     }
   }
   .start-rate {
@@ -84,5 +112,14 @@ export const Value = styled.span`
   padding-left: 45px;
   ${media.smallScreen} {
     font-size: 12px;
+  }
+  ${media.webView} {
+    width: 65%;
+    padding-left: 0;
+  }
+`;
+export const Summary = styled.ul`
+  ${media.webView} {
+    padding-top: 25px;
   }
 `;

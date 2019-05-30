@@ -9,13 +9,13 @@ import {
   faHeart,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
-import { Layout, SummaryItem, Label, Value } from './styled';
+import { Layout, SummaryItem, Label, Value, Summary } from './styled';
 
 const StarCard = ({ data }) => {
   return (
-    <Layout>
+    <Layout className="customStar-layout">
       <Card className="cardLayout">
-        <FlexBoxSB>
+        <FlexBoxSB className="flex-start">
           <span data-val="Total earnings:" className="earnings headLbl">
             ${data.totalEarning}
           </span>
@@ -28,7 +28,7 @@ const StarCard = ({ data }) => {
           %
         </span>
 
-        <ul>
+        <Summary>
           <SummaryItem>
             <span>
               <FontAwesomeIcon icon={faPlay} />
@@ -61,7 +61,7 @@ const StarCard = ({ data }) => {
               ratingClass="start-rate"
             />
           </SummaryItem>
-        </ul>
+        </Summary>
       </Card>
     </Layout>
   );
