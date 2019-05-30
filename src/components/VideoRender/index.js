@@ -57,12 +57,17 @@ export default class VideoRender extends React.Component {
           variableHeight={props.variableHeight}
         >
           <VideoRenderDiv.Content imageUrl={this.state.coverImage}>
-            <VideoPlayer
-              renderCustomText={this.renderCustomText}
-              autoPlay={this.props.autoPlay}
-              onError={this.props.onVideoError}
-              primarySrc={props.videoSrc}
-            />
+            {
+              props.type === 'image' ?
+                <VideoRenderDiv.ReactionImage imageUrl={this.state.coverImage} />
+              :
+                <VideoPlayer
+                  renderCustomText={this.renderCustomText}
+                  autoPlay={this.props.autoPlay}
+                  onError={this.props.onVideoError}
+                  primarySrc={props.videoSrc}
+                />
+            }
           </VideoRenderDiv.Content>
         </VideoRenderDiv.Container>
       </VideoRenderDiv>
