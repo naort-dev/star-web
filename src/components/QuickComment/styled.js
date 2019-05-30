@@ -41,6 +41,20 @@ CommentStyled.OptionWrapper = styled.div`
     font-size: 12px;
     font-family: Gilroy-Regular;
   }
+  .comment-list {
+    .comment-item {
+      padding: 7px;
+      border-radius: 60px;
+      font-family: Gilroy-Medium;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      background-color: ${props => props.theme.veryLightPinkTwo};
+      color: ${props => props.theme.flatBlue};
+      margin-bottom: 10px;
+    }
+  }
   &:after {
     position: absolute;
     content: '';

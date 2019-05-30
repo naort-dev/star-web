@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBolt } from '@fortawesome/free-solid-svg-icons';
+import { commentList } from './constants';
 import CommentStyled from './styled';
 
 const QuickComment = (props) => {
@@ -38,6 +39,13 @@ const QuickComment = (props) => {
         >
           <CommentStyled.OptionWrapper>
             <span className="option-title">Post a Quick Response</span>
+            <ul className="comment-list">
+              {
+                commentList.map(comment => (
+                  <li className="comment-item">{comment}</li>
+                ))
+              }
+            </ul>
           </CommentStyled.OptionWrapper>
         </CommentStyled.Popover>
     </CommentStyled>

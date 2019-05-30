@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Confirm from './Confirm.component';
-import { updateVideosList, fetchMyVideosList } from '../requests/actions/getMyVideosList';
+import { updateVideosList, fetchMyVideosList } from '../myVideos/actions/getMyVideosList';
 import { setBookingDetails, cancelBookingDetails } from '../../store/shared/actions/storeBooking';
 import { fetchCelebDetails } from '../starProfile/actions/getCelebDetails';
 import { starsonaRequest, resetPaymentDetails, resetPaymentsError } from '../../store/shared/actions/processPayments';
