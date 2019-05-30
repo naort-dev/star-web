@@ -15,13 +15,15 @@ const ActivityCard = props => {
       <Card className="activityCard">
         <FlexBox>
           <span className="web-icons">
-            <TickText>To Do</TickText>
+            <TickText className="tick-text">To Do</TickText>
             <FlexColumn className="todo-padding">
               <HeadingBold>2 Open bookings</HeadingBold>
               <BoldTextM>1 expiring soon</BoldTextM>
             </FlexColumn>
           </span>
-          <Button className="button-booking">Respond</Button>
+          <Button className="button-booking">
+            Respond <span className="btn-extra">&nbsp;Now</span>
+          </Button>
         </FlexBox>
       </Card>
 
@@ -40,7 +42,7 @@ const ActivityCard = props => {
             </FlexColumn>
           </span>
           <Button secondary className="button-activity">
-            view
+            View <span className="btn-extra">&nbsp;Now</span>
           </Button>
         </FlexBox>
       </Card>
@@ -55,7 +57,7 @@ const ActivityCard = props => {
             </FlexColumn>
           </span>
           <Button secondary className="button-activity">
-            View
+            View <span className="btn-extra">&nbsp;Now</span>
           </Button>
         </FlexBox>
       </Card>
