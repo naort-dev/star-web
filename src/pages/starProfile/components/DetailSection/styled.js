@@ -33,7 +33,12 @@ DetailStyled.StarName = styled.span`
     text-indent: -5px;
   }
   @media(max-width: 831px) {
-    padding-top: 14px;
+    padding-top: 16px;
+    margin-bottom: -3px !important;
+    &.mob-big-name {
+      padding-top: 24px;
+      margin-bottom: 23px !important;
+    }
   }
 `;
 
@@ -154,6 +159,9 @@ DetailStyled.StarAvatarWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   z-index: 2;
+  .avatar {
+    margin-top: 0;
+  }
   .favorite-icon {
     cursor: pointer;
     color: ${props => props.theme.flatBlue};
@@ -214,7 +222,7 @@ DetailStyled.StarDetails = styled.div`
   .rating-section {
     .star-item {
       padding: 0;
-      font-size: 23px;
+      font-size: 24px;
       margin-right: 3px;
       @media(max-width: 831px) {
         font-size: 16px;
