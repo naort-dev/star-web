@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Card, FlexCenter } from 'styles/CommonStyled';
+import { Card, FlexCenter, TickText } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { faUsdCircle } from '@fortawesome/pro-solid-svg-icons';
@@ -14,10 +14,13 @@ const ActivityCard = props => {
       <h2 className="head2">Recent Activity</h2>
       <Card className="activityCard">
         <FlexBox>
-          <FlexColumn className="web-padding">
-            <HeadingBold>2 Open bookings</HeadingBold>
-            <BoldTextM>1 expiring soon</BoldTextM>
-          </FlexColumn>
+          <span className="web-icons">
+            <TickText>To Do</TickText>
+            <FlexColumn className="todo-padding">
+              <HeadingBold>2 Open bookings</HeadingBold>
+              <BoldTextM>1 expiring soon</BoldTextM>
+            </FlexColumn>
+          </span>
           <Button className="button-booking">Respond</Button>
         </FlexBox>
       </Card>
@@ -28,8 +31,12 @@ const ActivityCard = props => {
             <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />
             <FlexColumn className="web-padding">
               <HeadingBold>5 Activities</HeadingBold>
-              <BoldTextM>1 comment | 2 responses</BoldTextM>
-              <BoldTextM>2 ratings</BoldTextM>
+              <BoldTextM>
+                1 comment | 2 responses
+                <BoldTextM>
+                  <span className="bar-separator">&nbsp;|&nbsp;</span>2 ratings
+                </BoldTextM>
+              </BoldTextM>
             </FlexColumn>
           </span>
           <Button secondary className="button-activity">

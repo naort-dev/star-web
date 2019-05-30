@@ -17,7 +17,20 @@ export const Layout = styled.section`
       padding: 10px;
     }
     .web-padding {
-      padding-left: 54px;
+      ${media.webView} {
+        padding-left: 55px;
+      }
+    }
+    .todo-padding {
+      ${media.webView} {
+        padding-left: 48px;
+      }
+    }
+    .bar-separator {
+      display: none;
+      ${media.webView} {
+        display: inline-block;
+      }
     }
   }
   .button-booking {
@@ -75,10 +88,15 @@ export const Layout = styled.section`
     align-items: center;
     padding-left: 0;
     ${media.webView} {
-      padding-left: 26px;
+      padding-left: 19px;
     }
     .icons {
       font-size: 24px;
+      display: none;
+      margin-left: 4px;
+      ${media.webView} {
+        display: block;
+      }
     }
     .icon-heart {
       color: #ff3636;
