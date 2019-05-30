@@ -5,7 +5,10 @@ const DetailStyled = styled.div`
   flex-wrap: wrap;
   padding: 0 12px;
   position: relative;
+  max-width: 362px;
+  margin: 0 auto;
   @media(min-width: 832px) {
+    max-width: 100%;
     padding: 0 17px;
     padding-top: 21.5px;
   }
