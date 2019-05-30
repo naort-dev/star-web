@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { BackArrow } from 'styles/CommonStyled';
 import StarCard from 'components/StarCard';
+import ActivityCard from 'components/ListCards/components/Activities';
 import { Layout } from './styled';
 
 const Dashboard = props => {
@@ -21,7 +22,7 @@ const Dashboard = props => {
           rating: 4,
         }}
       />
-      <h2 className="head2">Recent Activity</h2>
+      <ActivityCard />
     </Layout>
   );
 };

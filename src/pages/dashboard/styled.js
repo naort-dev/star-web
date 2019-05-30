@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
@@ -18,11 +19,9 @@ export const Layout = styled.section`
   .arrow {
     width: 14px;
     height: 28px;
-  }
-  .head2 {
-    font-family: Gilroy-Bold;
-    font-size: 18px;
-    color: #5d5d5d;
-    padding-top: 30px;
+    top: 110px;
+    ${media.webView} {
+      display: none;
+    }
   }
 `;
