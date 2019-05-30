@@ -117,7 +117,7 @@ UploadContainer.CategoriesWrapper = styled.div`
   .select__value-container {
     padding: 7px 0px 10px !important;
     @media (max-width: 831px) {
-      padding: 9px 8px;
+      padding: 10px 0 !important;
     }
   }
   .basic-multi-select{
@@ -383,7 +383,7 @@ ImageUpload.CloseButton = styled.span`
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: ${props =>
-    props.imagePresent ? '51px 10px 75px' : '51px 10px 108px'};
+    props.imagePresent ? '51px 10px 59px' : '51px 10px 99px'};
   @media(min-width: 832px) {
     padding: 35px 60px 32px;
   }
