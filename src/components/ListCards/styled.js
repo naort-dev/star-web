@@ -35,3 +35,8 @@ export const LeftContent = styled.span`
   align-items: center;
   justify-content: center;
 `;
+
+export const CardContainer = styled.div`
+  padding: 9px 20.5px;
+  margin-bottom: 12px;
+`;

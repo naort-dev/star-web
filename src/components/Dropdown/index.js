@@ -13,10 +13,11 @@ export default class Dropdown extends React.Component {
           value: option[props.valueKey],
         }))
       : [];
+    const selected = list.find((option) => option.value === props.selected[props.valueKey])
     this.state = {
       showDropList: false,
       list,
-      selected: this.props.selected,
+      selected,
     };
     this.cursorPos = -1;
     this.optionList = React.createRef();
@@ -34,14 +35,15 @@ export default class Dropdown extends React.Component {
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    let { list } = prevState;
+    let { list, selected } = prevState;
     list = nextProps.options
       ? nextProps.options.map(option => ({
           label: option[nextProps.labelKey],
           value: option[nextProps.valueKey],
         }))
       : [];
-    return { list };
+    selected = list.find((option) => option.value === nextProps.selected[nextProps.valueKey])
+    return { list, selected };
   }
 
   toggleDropDown = state => () => {
@@ -89,13 +91,18 @@ export default class Dropdown extends React.Component {
     }
   };
 
+  handleScrollbarsMount = (node) => {
+    this.optionList.current = node && node.view;
+  }
+
   render() {
     const { showDropList, list, selected } = this.state;
-    const { placeHolder, secondary } = this.props;
+    const { placeHolder, secondary, rootClass } = this.props;
     return (
-      <DropdownStyled className="cus-drop">
+      <DropdownStyled className={`cus-drop ${rootClass}`}>
         <DropdownStyled.Select
           secondary={secondary}
+          showList={showDropList}
           onClick={this.toggleDropDown(!showDropList)}
           tabIndex="0"
           onKeyUp={this.handleListKeyUp}
@@ -108,19 +115,18 @@ export default class Dropdown extends React.Component {
           <DropdownStyled.DropIcon />
           {showDropList && (
             <DropdownStyled.OptionsList secondary={secondary}>
-              <Scrollbars>
-                <DropdownStyled.Options innerRef={this.optionList}>
+              <Scrollbars autoHeight autoHeightMin={0} autoHeightMax={346} ref={this.handleScrollbarsMount}>
                   {list.map(item => (
-                    <DropdownStyled.OptionItem
+                    <DropdownStyled.Options
+                      secondary={secondary}
                       tabIndex="0"
                       onClick={this.selectOption(item)}
                       onKeyUp={this.selectOption(item)}
                       key={item.value}
                     >
                       {item.label}
-                    </DropdownStyled.OptionItem>
+                    </DropdownStyled.Options>
                   ))}
-                </DropdownStyled.Options>
               </Scrollbars>
             </DropdownStyled.OptionsList>
           )}
@@ -133,16 +139,19 @@ export default class Dropdown extends React.Component {
 Dropdown.defaultProps = {
   placeHolder: 'Select',
   className: '',
+  rootClass:'drop-down',
   secondary: false,
+  selected: {},
 };
 
 Dropdown.propTypes = {
   options: PropTypes.array.isRequired,
   labelKey: PropTypes.string.isRequired,
   valueKey: PropTypes.string.isRequired,
-  selected: PropTypes.string.isRequired,
+  selected: PropTypes.object,
   onChange: PropTypes.func.isRequired,
   placeHolder: PropTypes.string,
   className: PropTypes.string,
   secondary: PropTypes.bool,
+  rootClass: PropTypes.string,
 };

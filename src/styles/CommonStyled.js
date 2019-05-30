@@ -123,3 +123,9 @@ export const TickText = styled.span`
     margin-bottom: 8px;
   }
 `;
+
+export const SectionHead = styled.span`
+  font-size: 18px;
+  font-family: Gilroy-Bold;
+  color: #5d5d5d;
+`;

@@ -11,12 +11,25 @@ const BookingsStyled = styled.div`
       display: none;
     }
   }
+  .drop-down {
+    width: 100%;
+    margin-bottom: 26.8px;
+    @media(min-width: 832px) {
+      width: 275px;
+    }
+  }
 `;
 
 BookingsStyled.Header = styled.span`
   font-family: Gilroy-Light;
   font-size: 30px;
   color: ${props => props.theme.brownGrey};
+`;
+
+BookingsStyled.SectionHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
 `;
 
 export default BookingsStyled;
