@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { element } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Card, FlexCenter, TickText } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -61,8 +61,25 @@ const ctaList = [
   },
 ];
 
+const elmStyles = [
+  {
+    flexClass: 'todo-padding',
+    btnClass: 'button-booking',
+  },
+  {
+    flexClass: 'web-padding',
+    btnClass: 'button-activity',
+  },
+];
+
+const Tick = <TickText className="tick-text">To Do</TickText>;
+const Heart = <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />;
+const Dollar = (
+  <FontAwesomeIcon icon={faUsdCircle} className="icons icon-dollar" />
+);
+
 const ActivityCard = props => {
-  const getCard = (elmProps, card) => {
+  const getCard = (elmProps, btnType, icon, card) => {
     return (
       <Card
         className="activityCard"
@@ -70,27 +87,29 @@ const ActivityCard = props => {
       >
         <FlexBox>
           <span className="web-icons">
-            {elmProps.icon}
+            {icon}
             <FlexColumn className={elmProps.flexClass}>
-              <HeadingBold>{elmProps.heading}</HeadingBold>
+              <HeadingBold>{card.heading}</HeadingBold>
               <BoldTextM>
                 {card.value_main}
-                <BoldTextM>
-                  <span className="bar-separator">&nbsp;|&nbsp;</span>
-                  {card.value_sub}
-                </BoldTextM>
+                {card.value_sub && (
+                  <BoldTextM>
+                    <span className="bar-separator">&nbsp;|&nbsp;</span>
+                    {card.value_sub}
+                  </BoldTextM>
+                )}
               </BoldTextM>
             </FlexColumn>
           </span>
           <Button
-            {...elmProps.btnType}
+            secondary={btnType}
             className={elmProps.btnClass}
             onClick={() =>
               props.buttonClick({ data: card, ...props.callBackProps })
             }
           >
-            {elmProps.btnTextPrimary}
-            <span className="btn-extra">&nbsp;{elmProps.btnTextSecondary}</span>
+            {card.btnTextPrimary}
+            <span className="btn-extra">&nbsp;{card.btnTextSecondary}</span>
           </Button>
         </FlexBox>
       </Card>
@@ -100,28 +119,19 @@ const ActivityCard = props => {
     <Layout>
       <h2 className="head2">Recent Activity</h2>
       {[1, 2, 3].map(() => {
-        return getCard(
-          {
-            btnType: '',
-            flexClass: 'todo-padding',
-            btnClass: 'button-booking',
-            btnTextPrimary: 'Respond',
-            btnTextSecondary: 'Now',
-            icon: <TickText className="tick-text">To Do</TickText>,
-            heading: '2 Open bookings',
-          },
-          {
-            heading: '2 Open bookings',
-            value_main: '1 expiring soon',
-            value_sub: '',
-          },
-        );
+        return getCard(elmStyles[0], true, Tick, {
+          heading: '2 Open bookings',
+          value_main: '1 expiring soon',
+          value_sub: '',
+          btnTextPrimary: 'Respond',
+          btnTextSecondary: 'Now',
+        });
       })}
 
       <Card className="activityCard">
         <FlexBox>
           <span className="web-icons">
-            <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />
+            {Heart}
             <FlexColumn className="web-padding">
               <HeadingBold>5 Activities</HeadingBold>
               <BoldTextM>
@@ -141,7 +151,7 @@ const ActivityCard = props => {
       <Card className="activityCard">
         <FlexBox>
           <span className="web-icons">
-            <FontAwesomeIcon icon={faUsdCircle} className="icons icon-dollar" />
+            {Dollar}
             <FlexColumn className="web-padding">
               <HeadingBold>2 Tips</HeadingBold>
               <BoldTextM>Total: $20</BoldTextM>
@@ -161,6 +171,15 @@ const ActivityCard = props => {
   );
 };
 
-ActivityCard.propTypes = {};
+ActivityCard.propTypes = {
+  buttonClick: PropTypes.func,
+  cardClick: PropTypes.func,
+  callBackProps: PropTypes.object,
+};
 
+ActivityCard.defaultProps = {
+  buttonClick: () => {},
+  cardClick: () => {},
+  callBackProps: {},
+};
 export default ActivityCard;
