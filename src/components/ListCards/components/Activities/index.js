@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes, { element } from 'prop-types';
+import PropTypes from 'prop-types';
 import { Card, FlexCenter, TickText } from 'styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
@@ -60,6 +60,18 @@ const ctaList = [
     btnTextSecondary: '',
   },
 ];
+
+const elmStyles = [
+  {
+    flexClass: 'todo-padding',
+    btnClass: 'button-booking',
+  },
+  {
+    flexClass: 'web-padding',
+    btnClass: 'button-activity',
+  },
+];
+
 const Tick = <TickText className="tick-text">To Do</TickText>;
 const Heart = <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />;
 const Dollar = (
@@ -67,7 +79,7 @@ const Dollar = (
 );
 
 const ActivityCard = props => {
-  const getCard = (elmProps, card) => {
+  const getCard = (elmProps, btnType, icon, card) => {
     return (
       <Card
         className="activityCard"
@@ -75,7 +87,7 @@ const ActivityCard = props => {
       >
         <FlexBox>
           <span className="web-icons">
-            {elmProps.icon}
+            {icon}
             <FlexColumn className={elmProps.flexClass}>
               <HeadingBold>{card.heading}</HeadingBold>
               <BoldTextM>
@@ -90,7 +102,7 @@ const ActivityCard = props => {
             </FlexColumn>
           </span>
           <Button
-            {...elmProps.btnType}
+            secondary={btnType}
             className={elmProps.btnClass}
             onClick={() =>
               props.buttonClick({ data: card, ...props.callBackProps })
@@ -107,21 +119,13 @@ const ActivityCard = props => {
     <Layout>
       <h2 className="head2">Recent Activity</h2>
       {[1, 2, 3].map(() => {
-        return getCard(
-          {
-            btnType: '',
-            flexClass: 'todo-padding',
-            btnClass: 'button-booking',
-            icon: Tick,
-          },
-          {
-            heading: '2 Open bookings',
-            value_main: '1 expiring soon',
-            value_sub: '',
-            btnTextPrimary: 'Respond',
-            btnTextSecondary: 'Now',
-          },
-        );
+        return getCard(elmStyles[0], true, Tick, {
+          heading: '2 Open bookings',
+          value_main: '1 expiring soon',
+          value_sub: '',
+          btnTextPrimary: 'Respond',
+          btnTextSecondary: 'Now',
+        });
       })}
 
       <Card className="activityCard">
@@ -167,6 +171,15 @@ const ActivityCard = props => {
   );
 };
 
-ActivityCard.propTypes = {};
+ActivityCard.propTypes = {
+  buttonClick: PropTypes.func,
+  cardClick: PropTypes.func,
+  callBackProps: PropTypes.object,
+};
 
+ActivityCard.defaultProps = {
+  buttonClick: () => {},
+  cardClick: () => {},
+  callBackProps: {},
+};
 export default ActivityCard;

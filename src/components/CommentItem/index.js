@@ -47,7 +47,7 @@ const CommentItem = (props) => {
     <CommentStyled>
       <CommentStyled.Container>
         <CommentStyled.ProfileImage />
-        <CommentStyled.Comment receive={props.receive}>
+        <CommentStyled.Comment className={props.classes.comment} receive={props.receive}>
           { renderComment() }
           <span className='comment-footer'>
             <span className='time'>7 hours</span>
@@ -62,11 +62,13 @@ const CommentItem = (props) => {
 CommentItem.defaultProps = {
   type: '',
   receive: '',
+  classes: {},
 }
 
 CommentItem.propTypes = {
   type: PropTypes.string,
   receive: PropTypes.bool,
+  classes: PropTypes.object,
 }
 
 export default CommentItem;

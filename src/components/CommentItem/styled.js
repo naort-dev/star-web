@@ -6,7 +6,7 @@ const CommentStyled = styled.div`
 
 CommentStyled.Container = styled.div`
   display: flex;
-  ${props => !props.receive && `
+  ${props => props.receive && `
     flex-direction: row-reverse;
   `}
 `;

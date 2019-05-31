@@ -7,7 +7,7 @@ const DropdownStyled = styled.div`
 DropdownStyled.Select = styled.div`
   position: relative;
   max-width: 100%;
-  background: ${props => props.theme.white};
+  background: ${props => props.secondary ? '#fff' : props.theme.white};
   padding: 18px;
   height: 50px;
   outline: none;
@@ -16,6 +16,11 @@ DropdownStyled.Select = styled.div`
   display: flex;
   cursor: pointer;
   align-items: center;
+  ${props => props.secondary && `
+    border-radius: 10px;
+    border-bottom-left-radius: ${props.showList ? '0' : '10px'};
+    border-bottom-right-radius: ${props.showList ? '0' : '10px'};
+  `}
   @media(min-width: 1280px) {
     max-width: 640px;
     width: 100%;
@@ -44,20 +49,20 @@ DropdownStyled.OptionsList = styled.ul`
   left: 0;
   right: 0;
   top: calc(100% + 1px);
-  height: 346px;
+  ${props => props.secondary && `
+    top: 100%;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+  `}
   overflow: auto;
   padding: 5px 0;
-  background: ${props => props.theme.white};
+  background: ${props => props.secondary ? '#fff' : props.theme.white};
   z-index: 1;
 `;
 
 DropdownStyled.Options = styled.li`
   font-family: Gilroy;
-`;
-
-DropdownStyled.OptionItem = styled.span`
   padding: 5px 18px
-  line-height: 2.11;
   display: block;
   text-align: left;
   display: flex;
@@ -68,8 +73,16 @@ DropdownStyled.OptionItem = styled.span`
     outline: none;
     font-family: Gilroy;
     padding: 8px 18px;
-    background: ${props => props.theme.veryLightPinkTwo};
+    ${props => props.secondary ? `
+      color: ${props.theme.flatBlue};
+    ` : `
+      background: ${props.theme.veryLightPinkTwo};
+    `}
   }
+`;
+
+DropdownStyled.OptionItem = styled.span`
+
 `;
 
 export default DropdownStyled;
