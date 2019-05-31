@@ -60,6 +60,11 @@ const ctaList = [
     btnTextSecondary: '',
   },
 ];
+const Tick = <TickText className="tick-text">To Do</TickText>;
+const Heart = <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />;
+const Dollar = (
+  <FontAwesomeIcon icon={faUsdCircle} className="icons icon-dollar" />
+);
 
 const ActivityCard = props => {
   const getCard = (elmProps, card) => {
@@ -72,13 +77,15 @@ const ActivityCard = props => {
           <span className="web-icons">
             {elmProps.icon}
             <FlexColumn className={elmProps.flexClass}>
-              <HeadingBold>{elmProps.heading}</HeadingBold>
+              <HeadingBold>{card.heading}</HeadingBold>
               <BoldTextM>
                 {card.value_main}
-                <BoldTextM>
-                  <span className="bar-separator">&nbsp;|&nbsp;</span>
-                  {card.value_sub}
-                </BoldTextM>
+                {card.value_sub && (
+                  <BoldTextM>
+                    <span className="bar-separator">&nbsp;|&nbsp;</span>
+                    {card.value_sub}
+                  </BoldTextM>
+                )}
               </BoldTextM>
             </FlexColumn>
           </span>
@@ -89,8 +96,8 @@ const ActivityCard = props => {
               props.buttonClick({ data: card, ...props.callBackProps })
             }
           >
-            {elmProps.btnTextPrimary}
-            <span className="btn-extra">&nbsp;{elmProps.btnTextSecondary}</span>
+            {card.btnTextPrimary}
+            <span className="btn-extra">&nbsp;{card.btnTextSecondary}</span>
           </Button>
         </FlexBox>
       </Card>
@@ -105,15 +112,14 @@ const ActivityCard = props => {
             btnType: '',
             flexClass: 'todo-padding',
             btnClass: 'button-booking',
-            btnTextPrimary: 'Respond',
-            btnTextSecondary: 'Now',
-            icon: <TickText className="tick-text">To Do</TickText>,
-            heading: '2 Open bookings',
+            icon: Tick,
           },
           {
             heading: '2 Open bookings',
             value_main: '1 expiring soon',
             value_sub: '',
+            btnTextPrimary: 'Respond',
+            btnTextSecondary: 'Now',
           },
         );
       })}
@@ -121,7 +127,7 @@ const ActivityCard = props => {
       <Card className="activityCard">
         <FlexBox>
           <span className="web-icons">
-            <FontAwesomeIcon icon={faHeart} className="icons icon-heart" />
+            {Heart}
             <FlexColumn className="web-padding">
               <HeadingBold>5 Activities</HeadingBold>
               <BoldTextM>
@@ -141,7 +147,7 @@ const ActivityCard = props => {
       <Card className="activityCard">
         <FlexBox>
           <span className="web-icons">
-            <FontAwesomeIcon icon={faUsdCircle} className="icons icon-dollar" />
+            {Dollar}
             <FlexColumn className="web-padding">
               <HeadingBold>2 Tips</HeadingBold>
               <BoldTextM>Total: $20</BoldTextM>

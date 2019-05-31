@@ -1,5 +1,6 @@
 export const media = {
-  largeScreen: '@media (min-width: 1200px)',
+  largeScreen: '@media (min-width: 1280px)',
+  mediumScreen: '@media (min-width: 1024px)',
   portrait: '@media screen and (orientation: portrait)',
   landscape: '@media screen and (orientation: landscape)',
   mobileScreen: '@media only screen and (max-width: 831px)',
