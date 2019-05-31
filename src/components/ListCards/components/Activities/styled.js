@@ -2,18 +2,21 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
+  width: 336px;
+  max-width: 336px;
+  margin: 0 auto;
+  ${media.webView} {
+    max-width: 567px;
+    width: 567px;
+    margin: 0;
+  }
+  ${media.smallScreen} {
+    max-width: 300px;
+  }
   .activityCard {
     padding: 22px;
     margin-bottom: 12px;
-    width: 336px;
-    max-width: 336px;
-    margin: 0 auto;
-    ${media.webView} {
-      max-width: 567px;
-      width: 567px;
-    }
     ${media.smallScreen} {
-      max-width: 300px;
       padding: 10px;
     }
     .web-padding {
@@ -75,13 +78,6 @@ export const Layout = styled.section`
     color: #5d5d5d;
     padding-top: 30px;
     padding-bottom: 21px;
-    width: 336px;
-    max-width: 336px;
-    margin: 0 auto;
-    ${media.webView} {
-      max-width: 567px;
-      width: 567px;
-    }
   }
   .web-icons {
     display: inherit;
@@ -103,6 +99,18 @@ export const Layout = styled.section`
     }
     .icon-dollar {
       color: #ff6c58;
+    }
+  }
+  .btn-extra {
+    display: none;
+    ${media.webView} {
+      display: inline-block;
+    }
+  }
+  .tick-text {
+    display: none;
+    ${media.webView} {
+      display: flex;
     }
   }
 `;

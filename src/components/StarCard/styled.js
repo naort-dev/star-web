@@ -8,6 +8,7 @@ export const Layout = styled.section`
   ${media.webView} {
     max-width: 567px;
     width: 567px;
+    margin: 0;
   }
   ${media.smallScreen} {
     max-width: 300px;

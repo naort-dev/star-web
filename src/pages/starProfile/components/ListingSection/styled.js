@@ -5,16 +5,28 @@ const ListingStyled = styled.div`
   max-width: 362px;
   margin: 0 auto;
   @media (min-width: 0px) and (max-width: 831px) {
+    .video-wrap {
+      .play-button {
+        @media (max-width: 1280px) {
+          width: 36px;
+          height: 36px;
+          font-size: 16px;
+        }
+        @media (max-width: 832px) {
+          margin-bottom: 9px;
+        }
+      }
+    }
     .latest-video {
       li {
-        &:nth-child(3) {
+        &:nth-child(3n) {
           padding-right: 0;
         }
       }
     }
     .latest-response {
       li {
-        &:nth-child(3) {
+        &:nth-child(3n) {
           padding-right: 0;
         }
       }
@@ -24,13 +36,15 @@ const ListingStyled = styled.div`
     max-width: 100%;
     padding: 0 17px;
     .latest-video {
+      margin-top: 13.6px;
       li {
-        &:nth-child(2) {
+        &:nth-child(2n) {
           padding-right: 0;
         }
       }
     }
     .latest-response {
+      margin-top: 13.6px;
       li {
         &:nth-child(5) {
           // padding-right: 0;
@@ -42,15 +56,17 @@ const ListingStyled = styled.div`
     max-width: 100%;
     padding: 0 17px;
     .latest-video {
+      margin-top: 13.6px;
       li {
-        &:nth-child(4) {
+        &:nth-child(4n) {
           padding-right: 0;
         }
       }
     }
     .latest-response {
+      margin-top: 13.6px;
       li {
-        &:nth-child(5) {
+        &:nth-child(5n) {
           padding-right: 0;
         }
       }
@@ -98,6 +114,12 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   justify-content: space-evenly;
   .comments-inner {
     padding: 0 15px;
+    @media(min-width: 832px) {
+      padding: 0 33px;
+    }
+    @media(min-width: 1280px) {
+      
+    }
   }
   .comment-item {
     padding-bottom: 10px;
@@ -143,6 +165,12 @@ ListingStyled.ContentSection = styled.div`
   &.response-wrapper {
     margin-top: 40.6px;
     margin-bottom: 40px;
+    @media(max-width: 831px) {
+      margin-top: 7.6px
+    }
+  }
+  @media(max-width: 831px) {
+    margin-top: 7.6px
   }
 `;
 
