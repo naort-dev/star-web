@@ -36,7 +36,13 @@ export const LeftContent = styled.span`
   justify-content: center;
 `;
 
-export const CardContainer = styled.div`
+export const CardContainer = FlexBox.extend`
   padding: 9px 20.5px;
   margin-bottom: 12px;
+`;
+
+export const LightHeading = styled.span`
+  font-family: Gilroy-Regular;
+  font-size: 14px;
+  color: #7e7e7e;
 `;

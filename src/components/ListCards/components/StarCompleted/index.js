@@ -1,15 +1,27 @@
 import React from 'react';
-import { Card, TickText } from 'styles/CommonStyled';
-import PrimaryButton from '../../../PrimaryButton';
-import { MediumText, HeadingBold, LeftContent } from '../../styled';
+import QuickComment from '../../../QuickComment';
+import { Card } from 'styles/CommonStyled';
+import { MediumText, HeadingBold, FlexColumn, LightHeading } from '../../styled';
 import CommentItem from '../../../CommentItem';
 import StarStyled from './styled';
 
 const StarCompleted = () => {
   return (
     <Card>
-      <StarStyled>
-        <CommentItem classes={{ comment: 'comment-section' }} receive/>
+      <StarStyled className='star-container'>
+        <FlexColumn>
+          <LightHeading>New comment about:</LightHeading>
+          <MediumText className='card-description'>
+            <HeadingBold>Birthday</HeadingBold> message <br />
+            for <HeadingBold>Sarah</HeadingBold>
+          </MediumText>
+        </FlexColumn>
+        <StarStyled.CommentContainer>
+          <CommentItem classes={{ comment: 'comment-section' }} receive/>
+          <span className='divider'>
+            <QuickComment classes={{root: 'quick-comment-root'}} />
+          </span>
+        </StarStyled.CommentContainer>
       </StarStyled>
     </Card>
   )
