@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import PromoTemplate from 'components/PromoTemplates';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faFacebookF,
@@ -17,7 +18,11 @@ const Promotion = props => {
           <span className="share-link">Share your profile</span> on your social
           media and keep those bookings coming.{' '}
         </p>
-        <span className="promo-template" />
+        <PromoTemplate
+          template={
+            '<section style="background-image:url(../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"/>'
+          }
+        />
       </section>
       <span className="share-text">Share your profile!</span>
       <section className="social-wrap">

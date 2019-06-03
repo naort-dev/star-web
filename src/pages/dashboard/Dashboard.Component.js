@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BackArrow } from 'styles/CommonStyled';
 import StarCard from 'components/StarCard';
 import ActivityCard from 'components/ListCards/components/Activities';
 import Promotion from 'components/PromotionCard';
