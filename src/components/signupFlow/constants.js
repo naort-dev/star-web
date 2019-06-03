@@ -44,6 +44,14 @@ export const SET_PRICE = {
   ACTION: 'One Last Thing!'
 };
 
+export const COMPLETE_SIGNUP = {
+  TITLE:`Let’s continue your journey`,
+  MAIN_TITLE:`Complete sign-up`,
+  DESCRIPTION:`Your registration has been started, but we need you to confirm everything we have before we finalize your registration.`,
+  IMAGE_URL:`assets/images/art_star.svg`,
+  PRIMARY_BUTTON: 'Finish sign up',
+  SECONDARY_BUTTON: 'Skip for now ',
+}
 
 export const convertedApplePrice = (actualPrice, inAppPriceList) => {
     const priceText = actualPrice < 1000 || !actualPrice ? `In the iOS app we will convert your price to the nearest supported Apple price (for example, $25 will be $24.99 in the iOS app).`

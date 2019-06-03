@@ -14,6 +14,7 @@ export default class Landing extends React.Component {
   }
 
   componentWillMount() {
+    const {cookies} = this.props;
     if (this.props.isSignup && !this.props.isLoggedIn) {
       this.props.toggleSignup(true);
     }
@@ -21,6 +22,17 @@ export default class Landing extends React.Component {
       this.props.fetchFeaturedStars();
     }
     window.addEventListener('resize', this.handleResize);
+    const signupData = cookies.get('signupDetails');
+    console.log(new Date());
+    if(signupData !== undefined) {
+      debugger
+      if(new Date(signupData.expiryDate) > new Date()) {
+      console.log(signupData);
+      this.props.setSignupFlow(signupData);
+      this.props.completedSignup(false);
+      this.props.toggleSignup(true);
+      }
+    }
   }
 
   componentDidMount() {
@@ -71,3 +83,4 @@ export default class Landing extends React.Component {
     );
   }
 }
+

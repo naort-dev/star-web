@@ -2,6 +2,7 @@ import { connect } from 'react-redux';
 import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebList';
 import { fetchFeaturedStars } from './actions/getFeaturedStars';
 import { toggleSignup } from '../../store/shared/actions/toggleModals';
+import { completedSignup } from '../../store/shared/actions/setSignupFlow'
 import { fetchVideosList } from './actions//getVideosList';
 
 import {
@@ -13,6 +14,7 @@ import {
   updateSelectedVideoType,
   updateSelectedVideoDate,
 } from './actions/updateFilters';
+import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 
 import Landing from './Landing.component';
 
@@ -27,6 +29,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   fetchCelebrityList: (offset, refresh, category) => dispatch(fetchCelebrityList(offset, refresh, category)),
   fetchVideosList: (offset, refresh) => dispatch(fetchVideosList(offset, refresh)),
   updateCategory: (label, value) => dispatch(updateCategory(label, value)),
@@ -37,6 +40,7 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedVideoType: videoType => dispatch(updateSelectedVideoType(videoType)),
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
   toggleSignup: state => dispatch(toggleSignup(state)),
+  completedSignup: value => dispatch(completedSignup(value)),
   fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
 });
 
