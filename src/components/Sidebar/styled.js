@@ -14,7 +14,7 @@ SidebarStyled.AvatarImage = styled.div`
   margin: 0 auto;
   height: 170px;
   box-shadow: 0 3px 20px 0 rgba(0, 0, 0, 0.15);
-  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
+  background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/fan-profile-pic.svg)')} no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
@@ -33,9 +33,28 @@ SidebarStyled.LinkItem = styled.li`
   font-size: 18px;
   cursor: pointer;
   border-bottom: ${props => `1px solid ${props.theme.white}`};
-  a, span {
+  a, .log-out {
     padding: 12px 0;
-    display: block;
+    display: flex;
+  }
+  a {
+    justify-content: space-between;
+    align-items: center;
+    &:hover, &:focus, &:active {
+      font-family: Gilroy-Medium;
+      color: ${props => props.theme.flatBlue};
+    }
+    .notification-count {
+      display: flex;
+      align-items: center;
+    }
+    @media(min-width: 832px) {
+      justify-content: flex-start;
+      align-items: flex-end;
+      .notification-count {
+        margin-left: 5px;
+      }
+    }
   }
 `;
 

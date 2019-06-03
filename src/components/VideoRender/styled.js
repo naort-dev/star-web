@@ -44,6 +44,7 @@ VideoRenderDiv.Content = styled.div`
   background-position: center;
   background-size:cover;
   position: relative;
+  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.16);
 `;
 
 VideoRenderDiv.ImageSection = styled.div`
@@ -95,6 +96,18 @@ VideoRenderDiv.ProfileImage = styled.span`
     height: 48px;
   }
 `;
+
+VideoRenderDiv.ReactionImage = styled.span`
+  background-image: ${props => props.imageUrl && 'url('+props.imageUrl+')'};
+  background-repeat:no-repeat;
+  background-position: center;
+  background-size:cover;
+  border-radius: 38px;
+  display: block;
+  height: 100%;
+  width: 100%;
+`;
+
 VideoRenderDiv.FavoriteButton = styled.button`
   background-image: url( 'assets/images/icon_favorite_40b.png' );
   background-repeat:no-repeat;

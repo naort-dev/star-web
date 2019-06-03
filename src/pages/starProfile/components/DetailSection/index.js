@@ -2,8 +2,10 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withTheme } from 'styled-components';
-import { faPlay, faHeart as faHeartSolid, faChevronLeft } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faPlay} from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
+import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import { pipeSeparator, getStarName } from '../../../../utils/dataToStringFormatter';
 import VideoRender from '../../../../components/VideoRender';
 import StarDrawer from '../../../../components/StarDrawer';
@@ -96,6 +98,7 @@ const DetailSection = (props) => {
           <StarProfileStyled.Avatar
             imageUrl={props.userDetails.avatar_photo && props.userDetails.avatar_photo.thumbnail_url}
             onClick={toggleProfileVideo}
+            className="avatar"
           >
             {
               props.celebDetails.profile_video &&
@@ -156,7 +159,7 @@ const DetailSection = (props) => {
       {
         props.celebDetails.profile_video &&
           <DetailStyled.ProfileVideoSection visible={props.showProfileVideo}>
-            <DetailStyled.StarName>
+            <DetailStyled.StarName className="mob-big-name">
               {
                 getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name)
               }            
@@ -165,7 +168,7 @@ const DetailSection = (props) => {
               <VideoRender
                 variableWidth
                 variableHeight
-                customText={`Watch ${getShortName()}’s Welcome Message`}
+                customText={<span>Watch {getShortName()}’s <br/> Welcome Message</span>}
                 noBorder={document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832}
                 videoSrc={props.celebDetails.profile_video}
                 cover="assets/images/default-cover.jpg"

@@ -2,13 +2,80 @@ import styled from 'styled-components';
 
 const ListingStyled = styled.div`
   padding: 0 12px;
-  @media(min-width: 832px) {
+  max-width: 362px;
+  margin: 0 auto;
+  @media (min-width: 0px) and (max-width: 831px) {
+    .video-wrap {
+      .play-button {
+        @media (max-width: 1280px) {
+          width: 36px;
+          height: 36px;
+          font-size: 16px;
+        }
+        @media (max-width: 832px) {
+          margin-bottom: 9px;
+        }
+      }
+    }
+    .latest-video {
+      li {
+        &:nth-child(3n) {
+          padding-right: 0;
+        }
+      }
+    }
+    .latest-response {
+      li {
+        &:nth-child(3n) {
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  @media (min-width: 832px) and (max-width: 1279px) {
+    max-width: 100%;
     padding: 0 17px;
+    .latest-video {
+      margin-top: 13.6px;
+      li {
+        &:nth-child(2n) {
+          padding-right: 0;
+        }
+      }
+    }
+    .latest-response {
+      margin-top: 13.6px;
+      li {
+        &:nth-child(5) {
+          // padding-right: 0;
+        }
+      }
+    }
+  }
+  @media (min-width: 1280px) {
+    max-width: 100%;
+    padding: 0 17px;
+    .latest-video {
+      margin-top: 13.6px;
+      li {
+        &:nth-child(4n) {
+          padding-right: 0;
+        }
+      }
+    }
+    .latest-response {
+      margin-top: 13.6px;
+      li {
+        &:nth-child(5n) {
+          padding-right: 0;
+        }
+      }
+    }
   }
 `;
 
 ListingStyled.ContentHeader = styled.div`
-  font-family: Gilroy-Regular;
+  font-family: Gilroy-Light;
   font-size: 16px;
   color: ${props => props.theme.twilight};
   @media(min-width: 832px) {
@@ -26,7 +93,7 @@ ListingStyled.VideoItem = styled.div`
   width: 106px;
   height: 150px;
   @media(min-width: 832px) {
-    width: 201px;
+    width: 209px;
     height: 263px;
   }
 `;
@@ -37,7 +104,7 @@ ListingStyled.VideoItemWrapper = styled.div`
 
 ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   display: flex;
-  width: ${props => (props.visible ? '106px' : '0')};
+  width: ${props => (props.visible ? '0' : '0')};
   overflow: hidden;
   transition: all 0.3s;
   font-family: Gilroy-MediumItalic;
@@ -47,6 +114,12 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   justify-content: space-evenly;
   .comments-inner {
     padding: 0 15px;
+    @media(min-width: 832px) {
+      padding: 0 33px;
+    }
+    @media(min-width: 1280px) {
+      
+    }
   }
   .comment-item {
     padding-bottom: 10px;
@@ -57,8 +130,11 @@ ListingStyled.CommentsWrapper = ListingStyled.VideoItem.extend`
   }
   @media(min-width: 832px) {
     font-size: 19px;
-    width: ${props => (props.visible ? '312px' : '0')};
+    width: ${props => (props.visible ? '344px' : '0')};
     overflow: hidden;
+  }
+  @media(min-width: 1280px) {
+    width: ${props => (props.visible ? '312px' : '0')};
   }
 `;
 
@@ -74,6 +150,7 @@ ListingStyled.ContentItem = styled.li`
     font-size: 16px;
     font-family: Gilroy-Medium;
     color: ${props => props.theme.flatBlue};
+    margin-top: -16px;
     span {
       cursor: pointer;
     }
@@ -84,7 +161,17 @@ ListingStyled.ContentItem = styled.li`
 `;
 
 ListingStyled.ContentSection = styled.div`
-  margin-top: 20.6px;
+  margin-top: 60.6px;
+  &.response-wrapper {
+    margin-top: 40.6px;
+    margin-bottom: 40px;
+    @media(max-width: 831px) {
+      margin-top: 7.6px
+    }
+  }
+  @media(max-width: 831px) {
+    margin-top: 7.6px
+  }
 `;
 
 export default ListingStyled;

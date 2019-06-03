@@ -52,13 +52,17 @@ class SignupFlow extends React.Component {
     super(props);
     const { cookies } = props;
     this.state = {
-      selectedType: props.signupDetails.role ? props.signupDetails.role : null,
+      selectedType: props.signupDetails.role && props.signupDetails.currentStep > 0 ? props.signupDetails.role : null,
       stepCount: 0,
       socialData: {},
       currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
       profession: [],
+      enableClose: props.signUpDetails.enableClose
+        ? props.signUpDetails.enableClose
+        : false,
+      profession: props.signupDetails.categoryList,
       scrollRef: null,
-      profile_video: '',
+      profile_video: props.signupDetails.welcomeVideoFile,
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
@@ -74,14 +78,21 @@ class SignupFlow extends React.Component {
   }
 
   onBack = flag => {
+    this.changeStep(this.state.currentStep - 1);
     this.setState(state => ({
-      currentStep: state.currentStep - 1,
       switched: flag,
     }));
   };
-  onSetPriceBack = flag => {
+
+  onPhoneNumBack = flag => {
+    this.changeStep(this.state.currentStep - 1);
     this.setState(state => ({
-      currentStep: flag? state.currentStep - 1 : state.currentStep - 2,
+      phoneNumswitched: flag,
+    }));
+  };
+  onSetPriceBack = flag => {
+    this.changeStep(flag? this.state.currentStep - 1 : this.state.currentStep - 2)
+    this.setState(state => ({
       switchedSetPrice: flag, 
       switched: this.state.audioVideoSupport ,
     }));
@@ -178,6 +189,19 @@ class SignupFlow extends React.Component {
     this.state.completedSignup = true;
     this.props.completedSignup(true);
   }
+
+  closePhoneNum =(isOtpScreen) => {
+    if(isOtpScreen) {
+      // this.onBack(isTermsAndCondition);
+      this.setState({
+        phoneNumswitched: false,
+        disableClose: false
+      });
+    } else {
+      this.closeSignUp();
+    }
+  }
+  
   changeSignUpRole = role => {
     this.setState({ selectedType: role, stepCount: 0 });
     this.props.setSignupFlow({ role });
@@ -420,10 +444,10 @@ class SignupFlow extends React.Component {
                 otp_sub_title={STAR_GET_PHONE_NO.OTP_SUBTITLE}
                 otp_receive_code={STAR_GET_PHONE_NO.OTP_RECEIVE_CODE}
                 onComplete={this.submitOTPForm}
-                onBack={this.onBack}
-                switched={this.state.switched}
+                onBack={this.onPhoneNumBack}
+                switched={this.state.phoneNumswitched}
                 disableClose={this.disableClose}
-                closePhoneNum={this.closeSetPrice}
+                closePhoneNum={this.closePhoneNum}
               />
             )
           case 7:
@@ -511,7 +535,7 @@ class SignupFlow extends React.Component {
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
-                this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 7
+                (this.state.currentStep === 2 && this.state.selectedType === 'fan') || this.state.currentStep === 5 || (this.state.currentStep === 1 && this.state.selectedType === 'star') || this.state.currentStep === 7
               ) && (
                 <BackArrow
                   className="backArrow"

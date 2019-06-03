@@ -247,7 +247,7 @@ class Search extends React.Component {
     return (
       <SearchSection innerRef={(node) => { this.searchRef = node; }}>
         <SearchSection.InputWrapper alternate={this.props.alternate}>
-          <FontAwesomeIcon icon={faSearch} />
+          <FontAwesomeIcon icon={faSearch} className="search-icon"/>
           <SearchSection.Input
             innerRef={this.searchInput}
             placeholder="Search for your favorite stars!"

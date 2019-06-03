@@ -165,7 +165,7 @@ export default class VideoPlayer extends React.Component {
             <BigPlayButton position="center-bottom" disabled />
           </Player>
           <VideoRenderDiv.ControlIconWrapper>
-            <VideoRenderDiv.ControlIcon>
+            <VideoRenderDiv.ControlIcon className="play-button">
               <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
             </VideoRenderDiv.ControlIcon>
             {

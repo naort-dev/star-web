@@ -6,13 +6,15 @@ import VideoRender from '../../../../components/VideoRender';
 import ListingStyled from './styled';
 
 const videoCountLimit = {
-  'mobile': 2,
+  'smallMobile': 2,
+  'mobile': 3,
   'ipad': 2,
   'desktop': 4,
 }
 
 const reactionCountLimit = {
-  'mobile': 2,
+  'smallMobile': 2,
+  'mobile': 3,
   'ipad': 3,
   'desktop': 5,
 }
@@ -22,12 +24,15 @@ const ListingSection = (props) => {
   const setInitialLimit = (type) => {
     let newVideoLimit = 2;
     let newReactionLimit = 3;
-    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
-      newVideoLimit = videoCountLimit.desktop;
-      newReactionLimit = reactionCountLimit.desktop;
+    if (document.body.getBoundingClientRect().width <= 480 || window.innerWidth <= 480) {
+      newVideoLimit = videoCountLimit.smallMobile;
+      newReactionLimit = reactionCountLimit.smallMobile;
     } else if (document.body.getBoundingClientRect().width <= 832 || window.innerWidth <= 832) {
       newVideoLimit = videoCountLimit.mobile;
       newReactionLimit = reactionCountLimit.mobile;
+    }  else if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
+      newVideoLimit = videoCountLimit.desktop;
+      newReactionLimit = reactionCountLimit.desktop;
     }
     if (type === 'video') {
       return newVideoLimit;
@@ -41,12 +46,12 @@ const ListingSection = (props) => {
   const [reactionCount, updateReactionCount] = useState(setInitialLimit('reaction'));
    
   const handleWindowResize = () => {
-    if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
-      updateVideoCount(videoCountLimit.desktop);
-      updateReactionCount(reactionCountLimit.desktop);
-      let newVideoSelection = times(videosList.length / videoCountLimit.desktop, 0);
+    if (document.body.getBoundingClientRect().width <= 480 || window.innerWidth <= 480) {
+      updateVideoCount(videoCountLimit.smallMobile);
+      updateReactionCount(reactionCountLimit.smallMobile);
+      let newVideoSelection = times(videosList.length / videoCountLimit.smallMobile, 0);
       newVideoSelection = newVideoSelection.map((selected, index) => {
-        return index * videoCountLimit.desktop;
+        return index * videoCountLimit.smallMobile;
       })
       updateSelectedVideo(newVideoSelection);
     } else if (document.body.getBoundingClientRect().width <= 832 || window.innerWidth <= 832) {
@@ -57,7 +62,15 @@ const ListingSection = (props) => {
         return index * videoCountLimit.mobile;
       })
       updateSelectedVideo(newVideoSelection);
-    }
+    } else if (document.body.getBoundingClientRect().width >= 1280 || window.innerWidth >= 1280) {
+      updateVideoCount(videoCountLimit.desktop);
+      updateReactionCount(reactionCountLimit.desktop);
+      let newVideoSelection = times(videosList.length / videoCountLimit.desktop, 0);
+      newVideoSelection = newVideoSelection.map((selected, index) => {
+        return index * videoCountLimit.desktop;
+      })
+      updateSelectedVideo(newVideoSelection);
+    } 
   }
 
   useEffect(() => {
@@ -135,7 +148,7 @@ const ListingSection = (props) => {
             <ListingStyled.ContentHeader>
               Latest videos...
             </ListingStyled.ContentHeader>
-            <ListingStyled.Content>
+            <ListingStyled.Content className="video-wrap latest-video">
               {
                 videosList.map((video, index) => {
                   return renderVideoSection(video, index)
@@ -154,11 +167,11 @@ const ListingSection = (props) => {
       }
       {
         props.reactionsList.data.length ?
-          <ListingStyled.ContentSection>
+          <ListingStyled.ContentSection className="response-wrapper">
             <ListingStyled.ContentHeader>
               Latest responses...
             </ListingStyled.ContentHeader>
-            <ListingStyled.Content>
+            <ListingStyled.Content className="video-wrap latest-response">
               {
                 props.reactionsList.data.map((reaction) => {
                   return (
@@ -169,6 +182,7 @@ const ListingSection = (props) => {
                             variableWidth
                             variableHeight
                             noBorder
+                            type={reaction.file_type === 1 && 'image'} // for image reactions
                             videoSrc={reaction.reaction_file_url}
                             cover={reaction.reaction_thumbnail_url}
                           />

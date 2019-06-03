@@ -8,7 +8,11 @@ import { withCookies } from 'react-cookie';
 import { protectRoute } from './services/protectRoute';
 import '../node_modules/video-react/dist/video-react.css';
 import { setMetaTags } from './utils/setMetaTags';
-import { fetchProfessionsList, fetchAllProfessions, fetchAllSubCategories } from './store/shared/actions/getProfessions'; 
+import {
+  fetchProfessionsList,
+  fetchAllProfessions,
+  fetchAllSubCategories,
+} from './store/shared/actions/getProfessions';
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';

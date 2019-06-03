@@ -20,9 +20,14 @@ const StarProfileStyled = styled.div`
 `;
 
 StarProfileStyled.Container = styled.div`
-  max-width: 1280px;
   margin: 0 auto;
   width: 100%;
+  @media(min-width: 832px) {
+    max-width: 806px;
+  }
+  @media(min-width: 1280px) {
+    max-width: 1280px;
+  }
 `;
 
 StarProfileStyled.StarName = styled.span`
@@ -36,13 +41,16 @@ StarProfileStyled.Avatar = styled.span`
   border-radius: 50%;
   display: block;
   cursor: pointer;
-  width: 200px;
-  height: 200px;
+  width: 238px;
+  height: 238px;
   box-shadow: 0 3px 10px 0 rgba(0, 0, 0, 0.2);
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
   position: relative;
+  @media(max-width: 831px) {
+    margin-top: 6px;
+  }
   .avatar-play-control {
     position: absolute;
     bottom: 10px;
