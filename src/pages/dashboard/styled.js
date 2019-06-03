@@ -5,7 +5,6 @@ import { Card } from 'styles/CommonStyled';
 export const Layout = styled.section`
   width: 100%;
   height: 100%;
-  background: #f6f6f6;
   padding-left: 19px;
   padding-right: 19px;
   ${media.webView} {
@@ -35,7 +34,7 @@ export const Social = styled(Card)`
   margin-left: 27px;
   padding: 29px 49px;
   display: none;
-  ${media.webView} {
+  ${media.largeScreen} {
     display: block;
   }
 `;
