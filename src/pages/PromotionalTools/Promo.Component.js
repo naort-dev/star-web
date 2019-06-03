@@ -9,7 +9,7 @@ import {
   faInstagram,
   faTwitter,
 } from '@fortawesome/free-brands-svg-icons';
-import { faAngleDown } from '@fortawesome/free-regular-svg-icons';
+import { faChevronDown } from '@fortawesome/pro-regular-svg-icons';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -78,10 +78,21 @@ const PromoTools = props => {
       <Accordion>
         <Card className="card-mob">{getNote()}</Card>
         <Card className="card-mob">
-          <ExpansionPanel defaultExpanded classes={{ root: 'collapse-root' }}>
+          <ExpansionPanel
+            defaultExpanded
+            classes={{ root: 'collapse-root', expanded: 'collapse-exp' }}
+          >
             <ExpansionPanelSummary
-              classes={{ root: 'collapse-head' }}
-              expandIcon={<FontAwesomeIcon icon={faAngleDown} />}
+              classes={{
+                root: 'collapse-head',
+                expandIcon: 'fontawesome-icons',
+              }}
+              expandIcon={
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="collapse-arrow"
+                />
+              }
             >
               Option 1
             </ExpansionPanelSummary>
@@ -96,10 +107,21 @@ const PromoTools = props => {
               </section>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <ExpansionPanel classes={{ root: 'collapse-root' }}>
+          <ExpansionPanel
+            classes={{ root: 'collapse-root', expanded: 'collapse-exp' }}
+          >
             <ExpansionPanelSummary
-              classes={{ root: 'collapse-head' }}
-              expandIcon={<FontAwesomeIcon icon={faAngleDown} />}
+              classes={{
+                root: 'collapse-head',
+                expandIcon: 'fontawesome-icons',
+              }}
+              expandIcon={
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="collapse-arrow"
+                  classes={{ root: 'fontawesome-icon' }}
+                />
+              }
             >
               Option 2
             </ExpansionPanelSummary>
@@ -114,10 +136,21 @@ const PromoTools = props => {
               </section>
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <ExpansionPanel classes={{ root: 'collapse-root' }}>
+          <ExpansionPanel
+            classes={{ root: 'collapse-root', expanded: 'collapse-exp' }}
+          >
             <ExpansionPanelSummary
-              classes={{ root: 'collapse-head' }}
-              expandIcon={<FontAwesomeIcon icon={faAngleDown} />}
+              classes={{
+                root: 'collapse-head',
+                expandIcon: 'fontawesome-icons',
+              }}
+              expandIcon={
+                <FontAwesomeIcon
+                  icon={faChevronDown}
+                  className="collapse-arrow"
+                  classes={{ root: 'fontawesome-icon' }}
+                />
+              }
             >
               Option 3
             </ExpansionPanelSummary>

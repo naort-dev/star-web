@@ -20,19 +20,29 @@ export const Layout = styled.section`
     }
   }
   .promo-head {
-    font-size: 24px;
+    font-size: 18px;
     font-family: Gilroy-Light;
     color: #999;
     padding-bottom: 17px;
+    ${media.webView} {
+      font-size: 24px;
+    }
   }
   .promo-note {
-    font-size: 16px;
+    font-size: 14px;
     font-family: Gilroy;
     color: #888;
+    ${media.webView} {
+      font-size: 16px;
+    }
   }
   .template-wrap {
-    padding-right: 36px;
-    padding-top: 31px;
+    padding-right: 0;
+    padding-top: 0;
+    ${media.webView} {
+      padding-right: 36px;
+      padding-top: 31px;
+    }
   }
   .share-text {
     font-family: Gilroy_Light;
@@ -71,10 +81,19 @@ export const Accordion = styled.section`
     display: none;
   }
   .card-mob {
-    padding: 22px 18px;
+    padding: 10px 18px;
     margin-bottom: 17px;
     .collapse-root {
       box-shadow: none;
+      .collapse-arrow {
+        color: #999;
+      }
+      .fontawesome-icons {
+        right: -8px;
+      }
+    }
+    .collapse-exp {
+      margin: 0;
     }
   }
   .collapse-details {
@@ -83,6 +102,14 @@ export const Accordion = styled.section`
   .collapse-head {
     font-size: 20px;
     color: #999;
-    font-display: Gilroy-Light;
+    font-family: Gilroy-Light;
+    min-height: 0 !important;
+    padding: 0 24px 0 6px;
+    div:first-of-type {
+      margin: 12px 0 !important;
+    }
+  }
+  .template-card {
+    padding-bottom: 35px;
   }
 `;
