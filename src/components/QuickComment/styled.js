@@ -19,8 +19,24 @@ CommentStyled.CommentIcon = styled.span`
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: rotateZ(32deg);
   cursor: pointer;
+  position: relative;
+  svg {
+    transform: rotateZ(32deg);
+  }
+  .quick-arrow {
+    position: absolute;
+    display: ${props => props.showList ? 'block' : 'none'};
+    content: '';
+    top: -5px;
+    left: -3px;
+    width: 0;
+    height: 0;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 15px solid #fff;
+    z-index: 9999;
+  }
 `;
 
 CommentStyled.Popover = styled(Popover)`
@@ -37,6 +53,7 @@ CommentStyled.OptionWrapper = styled.div`
   border-radius: 10px;
   background: #fff;
   box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);
+  bottom: 3px;
   .option-title {
     font-size: 12px;
     font-family: Gilroy-Regular;
@@ -54,17 +71,6 @@ CommentStyled.OptionWrapper = styled.div`
       color: ${props => props.theme.flatBlue};
       margin-bottom: 10px;
     }
-  }
-  &:after {
-    position: absolute;
-    content: '';
-    top: -15px;
-    left: calc(50% - 10px);
-    width: 0;
-    height: 0;
-    border-left: 15px solid transparent;
-    border-right: 15px solid transparent;
-    border-bottom: 15px solid #fff;
   }
 `;
 
