@@ -18,6 +18,9 @@ const BookingsStyled = styled.div`
       width: 275px;
     }
   }
+  @media(min-width: 832px) {
+    padding: 0;
+  }
 `;
 
 BookingsStyled.Header = styled.span`

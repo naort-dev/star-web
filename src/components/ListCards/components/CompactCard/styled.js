@@ -3,8 +3,11 @@ import { Card } from 'styles/CommonStyled';
 
 const CompactStyled = Card.extend`
   padding: 18px 15.6px;
-  ${props => props.selected && `
+  cursor: pointer;
+  ${props => props.selected ? `
     border-left: 8.6px solid ${props.theme.orangePink};
+  ` : `
+    background: #fcfcfc;
   `}
   margin-bottom: 18px;
   display: flex;

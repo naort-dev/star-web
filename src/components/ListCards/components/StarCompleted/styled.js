@@ -46,6 +46,7 @@ const StarStyled = CardContainer.extend`
   @media(min-width: 832px) {
     flex-direction: row;
     align-items: center;
+    padding-top: 18px;
     .description-wrapper {
       padding-left: 19.3px;
       .heading {
