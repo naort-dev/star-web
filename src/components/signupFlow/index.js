@@ -215,6 +215,10 @@ class SignupFlow extends React.Component {
   disableClose = (flag) => {
     this.setState({disableClose: flag});
   }
+
+  signupMethodBack = () => {
+    this.setState({selectedType: null});
+  }
   submitCelebrityDetails(priceDetails) {
     const celebrityProfileData = {
       ...priceDetails,
@@ -223,18 +227,18 @@ class SignupFlow extends React.Component {
       availability: true,
       profile_video: this.state.profile_video,
       description: '',
+      recordable: this.state.audioVideoSupport,
     }
     this.props.loaderAction(true)
     celebritySignupProfile(celebrityProfileData)
       .then((success) => {
-        debugger
         this.props.loaderAction(false)
         if (success) {
           this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-          const { cookies } = this.props;
-          const signupData = cookies.get('signupDetails');
-          cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
-          this.props.completedSignup(true);
+          // const { cookies } = this.props;
+          // const signupData = cookies.get('signupDetails');
+          // cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
+          // this.props.completedSignup(true);
           // this.changeStep(this.state.currentStep + 1);
         }
       })
@@ -450,6 +454,7 @@ class SignupFlow extends React.Component {
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
+                cookies={this.props.cookies}
                 audioVideoSupport={this.state.audioVideoSupport}
                 skipVideo={this.state.skipVideo}
                 description={STAR_REG_SUCCESS.DESCRIPTION}
@@ -551,6 +556,7 @@ class SignupFlow extends React.Component {
                       <SignupMethod
                         {...this.props}
                         changeStep={this.changeStep}
+                        onBack={this.signupMethodBack}
                         currentStep={this.state.currentStep}
                         setSignupFlow={this.props.setSignupFlow}
                         signupRole={this.state.selectedType}

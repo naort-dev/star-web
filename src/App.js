@@ -104,6 +104,8 @@ class App extends React.Component {
         this.props.setSignupFlow(signupData);
         this.props.completedSignup(false);
         this.props.toggleSignup(true);
+        } else if (localStorage) {
+            localStorage.removeItem('tempAuthToken');
         }
       }
     }

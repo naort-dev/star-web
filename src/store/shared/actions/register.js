@@ -57,7 +57,10 @@ export const registerUser = (
   UserRole,
   referral,
 ) => (dispatch, getState) => {
-  const { tempDetails } = getState().session;
+  let tempDetails;
+  if(localStorage) {
+    tempDetails = localStorage.getItem('tempAuthToken');
+  }
   dispatch(registerFetchStart());
   let method = 'post';
   if (!isEmpty(tempDetails)) {
