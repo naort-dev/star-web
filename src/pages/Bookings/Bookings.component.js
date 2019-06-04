@@ -21,14 +21,15 @@ const Bookings = (props) => {
     const queryString = parseQueryString(props.location.search);
     const newDropValue = options.find(option => option.id === queryString.type);
     if (newDropValue) {
-      setDropValue(newDropValue)
+      setDropValue(newDropValue);
+      props.fetchBookingsList(0, true, newDropValue.id);
     } else {
       setDropValue({
         title: 'All',
         id: 'all',
       })
+      props.fetchBookingsList(0, true, celebOpenStatusList);
     }
-    props.fetchBookingsList(0, true, newDropValue ? newDropValue.id : 'all');
   }, [])
 
   const handleCategoryChange = (option) => {
@@ -41,7 +42,6 @@ const Bookings = (props) => {
   const onBackClick = () => {
     props.history.goBack();
   }
-
   return (
     <BookingsStyled>
       <BackArrow className="arrow" onClick={onBackClick} />
@@ -59,11 +59,17 @@ const Bookings = (props) => {
               onChange={handleCategoryChange}
               placeHolder="Select a booking type"
             />
-            <BookingsStyled.SectionHeader>
-              <SectionHead>Open Bookings</SectionHead>
-            </BookingsStyled.SectionHeader>
-            <GeneralList />
-            <GeneralList />
+            {
+              props.bookingsList.data.length > 0 &&
+                <BookingsStyled.SectionHeader>
+                  <SectionHead>Open Bookings</SectionHead>
+                </BookingsStyled.SectionHeader>
+            }
+            {
+              props.bookingsList.data.map((bookItem) => (
+                <GeneralList data={bookItem} />
+              ))
+            }
             <BookingsStyled.SectionHeader>
               <SectionHead>Latest Activity</SectionHead>
             </BookingsStyled.SectionHeader>
@@ -86,6 +92,7 @@ const Bookings = (props) => {
 Bookings.propTypes = {
   history: PropTypes.object.isRequired,
   location: PropTypes.object.isRequired,
+  bookingsList: PropTypes.object.isRequired,
   fetchBookingsList: PropTypes.func.isRequired,
 }
 

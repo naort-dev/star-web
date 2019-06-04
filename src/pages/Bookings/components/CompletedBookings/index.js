@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import Dropdown from '../../../../components/Dropdown';
 import { CompletedCard } from '../../../../components/ListCards';
 import { options, filterOptions, SortBy } from '../../constants';
@@ -44,10 +45,24 @@ const CompletedBookings = (props) => {
         />
       </CompletedStyled.FilterSection>
       <CompletedStyled.ListSection>
-        <CompletedCard />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} />
       </CompletedStyled.ListSection>
     </CompletedStyled>
   )
+}
+
+CompletedBookings.propTypes = {
+  dropValue: PropTypes.object.isRequired,
+  handleCategoryChange: PropTypes.func.isRequired,
 }
 
 export default CompletedBookings;
