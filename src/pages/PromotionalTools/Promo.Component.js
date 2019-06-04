@@ -13,8 +13,16 @@ import { faChevronDown } from '@fortawesome/pro-regular-svg-icons';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-
 import { Layout, TemplateList, Accordion } from './styled';
+
+let template1 =
+  '<span class="img-back" style="background-image:url(.../../assets/images/profilebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(@@prof-pic@@);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 65px;"></span><span class="user-name" style="position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;bottom: 80px;font-size: 18px;color: #ff6c58;font-family: Gilroy;">@@user-name@@</span>';
+let template2 =
+  '<span class="img-back" style="background-image:url(.../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(@@prof-pic@@);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 43px; border-radius: 50%;"></span>';
+let template3 =
+  '<span class="img-back" style="background-image:url(.../../assets/images/crowdbackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(@@prof-pic@@);width: 102px;height: 102px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 76px; top: 120px; border-radius: 50%;"></span> <span class="user-name" style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 70px;font-size: 21px;color: #555;font-family: Gilroy-Semibold; text-transform: uppercase;">@@user-name@@</span><span style="position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 98px;font-size: 15px;color: #555;font-family: Gilroy-Semibold;">IS ON STARSONA!</span>';
+const profilePic = '../../assets/images/default-cover.jpg';
+const userName = 'NAME NAME';
 
 const PromoTools = props => {
   const goBack = () => {};
@@ -42,37 +50,31 @@ const PromoTools = props => {
       </React.Fragment>
     );
   };
-  
+
+  template1 = template1.replace('@@prof-pic@@', profilePic);
+  template2 = template2.replace('@@prof-pic@@', profilePic);
+  template3 = template3.replace('@@prof-pic@@', profilePic);
+  template1 = template1.replace('@@user-name@@', userName);
+  template2 = template2.replace('@@user-name@@', userName);
+  template3 = template3.replace('@@user-name@@', userName);
   return (
     <Layout>
       <SubHeader heading="Promote Myself" onClick={goBack} />
       <Card className="card-layout">
         {getNote()}
         <TemplateList>
-          <section className="template-wrap">
-            <PromoTemplate
-              template={
-                '<span style="background-image:url(.../../assets/images/profilebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 65px;"></span><span style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;bottom: 80px;font-size: 18px;color: #ff6c58;font-family: Gilroy;">Name Name</span>'
-              }
-            />
+          <li className="template-wrap">
+            <PromoTemplate template={template1} />
             {getSocial()}
-          </section>
-          <section className="template-wrap">
-            <PromoTemplate
-              template={
-                '<span style="background-image:url(.../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 43px; border-radius: 50%;"></span>'
-              }
-            />
+          </li>
+          <li className="template-wrap">
+            <PromoTemplate template={template2} />
             {getSocial()}
-          </section>
-          <section className="template-wrap">
-            <PromoTemplate
-              template={
-                '<span style="background-image:url(.../../assets/images/crowdbackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 102px;height: 102px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 76px; top: 120px; border-radius: 50%;"></span> <span style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 70px;font-size: 21px;color: #555;font-family: Gilroy-Semibold; text-transform: uppercase;">Name Name</span><span style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 98px;font-size: 15px;color: #555;font-family: Gilroy-Semibold;">IS ON STARSONA!</span>'
-              }
-            />
+          </li>
+          <li className="template-wrap">
+            <PromoTemplate template={template3} />
             {getSocial()}
-          </section>
+          </li>
         </TemplateList>
       </Card>
 
@@ -99,11 +101,7 @@ const PromoTools = props => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails classes={{ root: 'collapse-details' }}>
               <section className="template-wrap">
-                <PromoTemplate
-                  template={
-                    '<span style="background-image:url(.../../assets/images/profilebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 65px;"></span><span style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;bottom: 80px;font-size: 18px;color: #ff6c58;font-family: Gilroy;">Name Name</span>'
-                  }
-                />
+                <PromoTemplate template={template1} />
                 {getSocial()}
               </section>
             </ExpansionPanelDetails>
@@ -128,11 +126,7 @@ const PromoTools = props => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails classes={{ root: 'collapse-details' }}>
               <section className="template-wrap">
-                <PromoTemplate
-                  template={
-                    '<span style="background-image:url(.../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 43px; border-radius: 50%;"></span>'
-                  }
-                />
+                <PromoTemplate template={template2} />
                 {getSocial()}
               </section>
             </ExpansionPanelDetails>
@@ -157,11 +151,7 @@ const PromoTools = props => {
             </ExpansionPanelSummary>
             <ExpansionPanelDetails classes={{ root: 'collapse-details' }}>
               <section className="template-wrap">
-                <PromoTemplate
-                  template={
-                    '<span style="background-image:url(.../../assets/images/crowdbackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 20px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 102px;height: 102px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 76px; top: 120px; border-radius: 50%;"></span> <span style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 70px;font-size: 21px;color: #555;font-family: Gilroy-Semibold; text-transform: uppercase;">Name Name</span><span style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 98px;font-size: 15px;color: #555;font-family: Gilroy-Semibold;">IS ON STARSONA!</span>'
-                  }
-                />
+                <PromoTemplate template={template3} />
                 {getSocial()}
               </section>
             </ExpansionPanelDetails>

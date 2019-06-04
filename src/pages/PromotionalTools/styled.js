@@ -65,7 +65,7 @@ export const Layout = styled.section`
   }
 `;
 
-export const TemplateList = styled.section`
+export const TemplateList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   padding-left: 17px;
