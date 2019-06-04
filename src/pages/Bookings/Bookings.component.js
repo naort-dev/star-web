@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import propTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { BackArrow, SectionHead } from 'styles/CommonStyled';
 import Dropdown from '../../components/Dropdown';
 import OpenBookings from './components/OpenBookings';
+import CompletedBookings from './components/CompletedBookings';
 import { options } from './constants';
 import { GeneralList, StarCompleted } from '../../components/ListCards';
+import { celebOpenStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import BookingsStyled from './styled';
 
@@ -26,10 +28,14 @@ const Bookings = (props) => {
         id: 'all',
       })
     }
+    props.fetchBookingsList(0, true, newDropValue ? newDropValue.id : 'all');
   }, [])
 
   const handleCategoryChange = (option) => {
     setDropValue(option)
+    if (option.id === 'open') {
+      props.fetchBookingsList(0, true, celebOpenStatusList); 
+    }
   }
 
   const onBackClick = () => {
@@ -70,13 +76,17 @@ const Bookings = (props) => {
       {
         dropValue.id === 'open' && <OpenBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
       }
+      {
+        dropValue.id === 'completed' && <CompletedBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
+      }
     </BookingsStyled>
   )
 }
 
 Bookings.propTypes = {
-  history: propTypes.object.isRequired,
-  location: propTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired,
+  fetchBookingsList: PropTypes.func.isRequired,
 }
 
 export default Bookings;

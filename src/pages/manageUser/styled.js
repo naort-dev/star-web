@@ -24,6 +24,7 @@ ManageStyled.Container = styled.div`
   @media(min-width: 832px) {
     flex-direction: row;
     padding: 47px 36px;
+    padding-right: 10px;
   }
 `;
 

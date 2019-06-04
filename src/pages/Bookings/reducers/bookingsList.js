@@ -1,4 +1,4 @@
-import { MY_VIDEOS_LIST } from '../actions/getMyVideosList';
+import { BOOKINGS_LIST } from '../actions/getBookingsList';
 
 const initalState = {
   data: [],
@@ -6,13 +6,12 @@ const initalState = {
   offset: -1,
   count: 0,
   limit: 10,
-  role: 'fan_id',
   status: 'all',
 };
 
 export default (state = { ...initalState }, action) => {
   switch (action.type) {
-    case MY_VIDEOS_LIST.start:
+    case BOOKINGS_LIST.start:
       return {
         ...state,
         loading: true,
@@ -20,13 +19,13 @@ export default (state = { ...initalState }, action) => {
         token: action.token,
       };
 
-    case MY_VIDEOS_LIST.end:
+    case BOOKINGS_LIST.end:
       return {
         ...state,
         loading: false,
       };
 
-    case MY_VIDEOS_LIST.success:
+    case BOOKINGS_LIST.success:
       return {
         ...state,
         loading: false,
@@ -34,22 +33,21 @@ export default (state = { ...initalState }, action) => {
         data: action.list,
         count: action.count,
         status: action.videoStatus,
-        role: action.role,
       };
 
-    case MY_VIDEOS_LIST.failed:
+    case BOOKINGS_LIST.failed:
       return {
         ...state,
         error: action.error,
       };
 
-    case MY_VIDEOS_LIST.updateList:
+    case BOOKINGS_LIST.updateList:
       return {
         ...state,
         data: action.data,
       };
 
-    case MY_VIDEOS_LIST.reset:
+    case BOOKINGS_LIST.reset:
       return initalState;
 
     default:
