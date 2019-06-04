@@ -3,6 +3,7 @@ import propTypes from 'prop-types';
 import { BackArrow, SectionHead } from 'styles/CommonStyled';
 import Dropdown from '../../components/Dropdown';
 import OpenBookings from './components/OpenBookings';
+import CompletedBookings from './components/CompletedBookings';
 import { options } from './constants';
 import { GeneralList, StarCompleted } from '../../components/ListCards';
 import { parseQueryString } from '../../utils/dataformatter';
@@ -69,6 +70,9 @@ const Bookings = (props) => {
       }
       {
         dropValue.id === 'open' && <OpenBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
+      }
+      {
+        dropValue.id === 'completed' && <CompletedBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
       }
     </BookingsStyled>
   )
