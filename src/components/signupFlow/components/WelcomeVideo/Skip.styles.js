@@ -26,7 +26,7 @@ export const Container = styled(Layout)`
     line-height: 26px;
   }
   .heading {
-    font-size: 34px;
+    font-size: 24px;
     font-family: Gilroy;
     padding-top: 38px;
     @media (max-width: 831px) {
