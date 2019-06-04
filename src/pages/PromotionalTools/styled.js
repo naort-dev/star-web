@@ -71,6 +71,7 @@ export const TemplateList = styled.section`
   padding-left: 17px;
   .template-card {
     padding-bottom: 30px;
+    position: relative;
   }
 `;
 
@@ -111,5 +112,6 @@ export const Accordion = styled.section`
   }
   .template-card {
     padding-bottom: 35px;
+    position: relative;
   }
 `;
