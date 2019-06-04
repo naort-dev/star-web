@@ -57,9 +57,9 @@ class SignupFlow extends React.Component {
       socialData: {},
       currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
       profession: [],
-      enableClose: props.signUpDetails.enableClose
-        ? props.signUpDetails.enableClose
-        : false,
+      // enableClose: props.signUpDetails.enableClose
+      //   ? props.signUpDetails.enableClose
+      //   : false,
       profession: props.signupDetails.categoryList,
       scrollRef: null,
       profile_video: props.signupDetails.welcomeVideoFile,
@@ -140,7 +140,6 @@ class SignupFlow extends React.Component {
                       ...videoDetails,
                       }
         cookies.set(this.state.name, signupData, { path: '/', expires: new Date(signupData.expiryDate), sameSite: 'Strict' });
-        console.log(cookies.get('signupDetails'))
       }));
     this.setState({ profile_video: fileName });
   }
@@ -217,7 +216,6 @@ class SignupFlow extends React.Component {
     this.setState({disableClose: flag});
   }
   submitCelebrityDetails(priceDetails) {
-    console.log(this.props.signupDetails.categoryList);
     const celebrityProfileData = {
       ...priceDetails,
       weekly_limits: 5,
@@ -266,11 +264,9 @@ class SignupFlow extends React.Component {
       }));
     }
     const signupData = cookies.get('signupDetails');
-    signupData.categoryList = this.state.profession;
+    signupData.categoryList = professions;
     signupData.currentStep = this.state.currentStep + 1;
     signupData.profileImage = this.props.signupDetails.profileImage;
-    console.log(signupData.expiryDate)
-    console.log(typeof signupData.expiryDate)
     cookies.set(this.state.name, signupData, { path: '/', expires: new Date(signupData.expiryDate), sameSite: 'Strict' });
 
   };
@@ -506,8 +502,6 @@ class SignupFlow extends React.Component {
   };
 
   render() {
-    console.log('this.props.completedSignup', this.props.signupDetails.completedSignup);
-    console.log('this.state.completedSignup', this.state.completedSignup);
     return (
       <div>
         <RequestFlowPopup

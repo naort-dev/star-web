@@ -16,6 +16,8 @@ import {
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
+import { setSignupFlow, completedSignup } from './store/shared/actions/setSignupFlow';
+import { toggleSignup } from './store/shared/actions/toggleModals';
 import { ComponentLoading } from './components/ComponentLoading';
 import { BrowseStars } from './pages/browseStars';
 import { Landing } from './pages/landing';
@@ -59,6 +61,7 @@ class App extends React.Component {
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
+                                                                                                                                                                                                                                                     
     window.addEventListener('storage', () => {
       if (
         localStorage &&
@@ -94,6 +97,15 @@ class App extends React.Component {
       (!nextProps.isLoggedIn || nextProps.userDataLoaded)
     ) {
       this.setState({ showLoading: false });
+      const {cookies} = this.props;  
+      const signupData = cookies.get('signupDetails');
+      if(signupData !== undefined && this.props.signupDetails.completedSignup === undefined) {
+        if(new Date(signupData.expiryDate) > new Date()) {
+        this.props.setSignupFlow(signupData);
+        this.props.completedSignup(false);
+        this.props.toggleSignup(true);
+        }
+      }
     }
   }
 
@@ -254,6 +266,7 @@ const mapState = state => ({
   userDataLoaded: state.userDetails.userDataLoaded,
   isLoggedIn: state.session.isLoggedIn,
   loader: state.commonReducer.loader,
+  signupDetails: state.signupDetails,
 });
 
 const mapProps = dispatch => ({
@@ -268,6 +281,9 @@ const mapProps = dispatch => ({
   updateUserRole: (isStar, role) => dispatch(updateUserRole(isStar, role)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   logOut: () => dispatch(logOut()),
+  setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
+  toggleSignup: state => dispatch(toggleSignup(state)),
+  completedSignup: value => dispatch(completedSignup(value)),
 });
 
 export default withCookies(withRouter(
