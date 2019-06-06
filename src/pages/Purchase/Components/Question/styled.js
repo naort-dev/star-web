@@ -57,6 +57,9 @@ export const Layout = styled.section`
     font-family: Gilroy-SemiBold;
     cursor: pointer;
   }
+  .videoInputCapture {
+    display: none;
+  }
 `;
 
 export const VideoContainer = styled.section`
@@ -123,6 +126,15 @@ export const QuestionContainer = styled.section`
     display: none;
     ${media.webView} {
       display: block;
+    }
+  }
+  .noSupportBtn {
+    position: absolute;
+    left: 0;
+    top: 285px;
+    ${media.webView} {
+      position: static;
+      margin-top: 40px;
     }
   }
 `;
