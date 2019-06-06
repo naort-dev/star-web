@@ -84,7 +84,7 @@ const StarAvatar = ({ star, type, ...props }) => {
   return (
     <AvatarContainer className={type}>
       <WrapperComponent imageUrl={profileImage} onClick={toggleQuickViewModal}>
-        <AvatarContainer.ControlWrapper>
+        <AvatarContainer.ControlWrapper className="play-button">
           <AvatarContainer.ControlButton>
             <FontAwesomeIcon icon={faPlay} />
           </AvatarContainer.ControlButton>
@@ -95,7 +95,7 @@ const StarAvatar = ({ star, type, ...props }) => {
           { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
         <AvatarContainer.StarDescription>
-          <AvatarContainer.Name title={getStarName(star.nick_name, star.first_name, star.last_name)}>
+          <AvatarContainer.Name title={getStarName(star.nick_name, star.first_name, star.last_name)} className="name">
             <span id={`${star.user_id}-${type}-name`}>
               {
                 getStarName(star.nick_name, star.first_name, star.last_name)
