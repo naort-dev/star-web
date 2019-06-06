@@ -1,6 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { withCookies, Cookies } from 'react-cookie';
 import { connect } from 'react-redux';
+import { instanceOf } from 'prop-types';
 import { registerUser, clearRegisterErrors } from '../../store/shared/actions/register';
 import { socialMediaLogin } from '../../store/shared/actions/socialMediaLogin';
 import { followCelebrity } from '../../store/shared/actions/followCelebrity';
@@ -23,13 +25,15 @@ import {
 } from '../../store/shared/actions/toggleModals';
 import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 import { loaderAction } from '../../store/shared/actions/commonActions';
+import { completedSignup } from '../../store/shared/actions/setSignupFlow'
 import { updateCategory } from '../../pages/landing/actions/updateFilters'
 import SetPrice from './components/SetPrice'
 import {
   FAN_REG_SUCCESS,
   STAR_REG_SUCCESS,
   STAR_GET_PHONE_NO,
-  SET_PRICE
+  SET_PRICE,
+  COMPLETE_SIGNUP,
 } from './constants'
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
@@ -38,26 +42,32 @@ import { awsKeys } from '../../constants';
 import fetchAWSVideo from '../../services/getAwsVideo';
 import { celebritySignupProfile } from '../../services/userRegistration'
 import GetPhoneNumber from '../../components/GetPhoneNumber';
+import CompleteSignup from '../../components/CompleteSignup'
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
+import { sign } from 'crypto';
 
 
 class SignupFlow extends React.Component {
   constructor(props) {
     super(props);
+    const { cookies } = props;
     this.state = {
       selectedType: props.signupDetails.role && props.signupDetails.currentStep > 0 ? props.signupDetails.role : null,
       stepCount: 0,
       socialData: {},
       currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
-      enableClose: props.signUpDetails.enableClose
-        ? props.signUpDetails.enableClose
-        : false,
+      profession: [],
+      // enableClose: props.signUpDetails.enableClose
+      //   ? props.signUpDetails.enableClose
+      //   : false,
       profession: props.signupDetails.categoryList,
       scrollRef: null,
       profile_video: props.signupDetails.welcomeVideoFile,
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
+      name: cookies.get('name') || 'signupDetails',
+      completedSignup: this.props.signupDetails.completedSignup!== undefined ? this.props.signupDetails.completedSignup : true,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -114,14 +124,22 @@ class SignupFlow extends React.Component {
   setProfileVideo = (fileName) => {
     fetchAWSVideo(awsKeys.accountVideo, fileName)
       .then((resp => {
-        this.props.setSignupFlow({
+        const { cookies } = this.props;
+        const videoDetails = {
           welcomeVideo: resp,
           welcomeVideoFile: fileName,
           welcomeVideoSkip: false,
           audioVideoSupport: true,
           videoUploaded: true,
           welcomeVideoLength: this.props.commonReducer.recordedTime,
-        });
+        };
+        this.props.setSignupFlow(videoDetails);
+        let signupData = cookies.get('signupDetails');
+        signupData.currentStep = this.state.currentStep + 1;
+        signupData = {...signupData,
+                      ...videoDetails,
+                      }
+        cookies.set(this.state.name, signupData, { path: '/', expires: new Date(signupData.expiryDate), sameSite: 'Strict' });
       }));
     this.setState({ profile_video: fileName });
   }
@@ -132,10 +150,13 @@ class SignupFlow extends React.Component {
   changeStep = step => {
     this.state.scrollRef.scrollTop = 0;
     this.props.setSignupFlow({ currentStep: step });
-    this.setState({ currentStep: step, enableClose: false });
+    this.setState({ currentStep: step});
   };
   closeSignUp = () => {
     this.props.toggleSignup(false);
+    this.props.completedSignup(false);
+
+    this.state.selectedType === 'star' && this.state.currentStep === 7 ? this.props.completedSignup(true) : this.props.completedSignup(false);
     if (this.state.selectedType === 'group' && this.state.currentStep === 5) {
       this.props.history.push('user/star-supporters');
     }
@@ -162,6 +183,10 @@ class SignupFlow extends React.Component {
     } else {
       this.closeSignUp();
     }
+  }
+  continueSignUp = () => {
+    this.state.completedSignup = true;
+    this.props.completedSignup(true);
   }
 
   closePhoneNum =(isOtpScreen) => {
@@ -190,14 +215,19 @@ class SignupFlow extends React.Component {
   disableClose = (flag) => {
     this.setState({disableClose: flag});
   }
+
+  signupMethodBack = () => {
+    this.setState({selectedType: null});
+  }
   submitCelebrityDetails(priceDetails) {
     const celebrityProfileData = {
       ...priceDetails,
       weekly_limits: 5,
-      profession: this.state.profession,
+      profession: this.props.signupDetails.categoryList.map(profession => profession.id),
       availability: true,
       profile_video: this.state.profile_video,
       description: '',
+      recordable: this.state.audioVideoSupport,
     }
     this.props.loaderAction(true)
     celebritySignupProfile(celebrityProfileData)
@@ -205,10 +235,15 @@ class SignupFlow extends React.Component {
         this.props.loaderAction(false)
         if (success) {
           this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
+          // const { cookies } = this.props;
+          // const signupData = cookies.get('signupDetails');
+          // cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
+          // this.props.completedSignup(true);
           // this.changeStep(this.state.currentStep + 1);
         }
       })
-      .catch(() => {
+        .catch((error) => {
+        console.log(error);
         this.props.loaderAction(false)
       });
   }
@@ -221,6 +256,7 @@ class SignupFlow extends React.Component {
     this.closeSignUp();
   };
   continueClickHandler = (professions, fileImage, cropImage) => {
+    const { cookies } = this.props;
     if(professions.length > 0 && (fileImage || cropImage)) {
       this.props.setSignupFlow({ 
         currentStep: this.state.currentStep + 1,
@@ -231,8 +267,33 @@ class SignupFlow extends React.Component {
         profession: professions.map(profession => profession.id)
       }));
     }
+    const signupData = cookies.get('signupDetails');
+    signupData.categoryList = professions;
+    signupData.currentStep = this.state.currentStep + 1;
+    signupData.profileImage = this.props.signupDetails.profileImage;
+    cookies.set(this.state.name, signupData, { path: '/', expires: new Date(signupData.expiryDate), sameSite: 'Strict' });
+
   };
 
+  handleSignupFlow = (signupDetails) => {
+    const { cookies } = this.props;
+    const expiryDate =  new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const signupData = signupDetails;
+    signupData.expiryDate = expiryDate;
+    signupData.role = this.props.signupDetails.role;
+    this.props.setSignupFlow(signupDetails);
+    cookies.set(this.state.name, signupData, { path: '/', expires: expiryDate , sameSite: 'Strict' });
+  }
+
+  handleSetPriceFlow = (signupDetails) => {
+    const { cookies } = this.props;
+    this.props.setSignupFlow(signupDetails)
+    let signupData = cookies.get('signupDetails');
+    signupData.price = signupDetails.price;
+    signupData.referral = signupDetails.referral;
+    signupData.currentStep = this.state.currentStep + 1;
+    cookies.set(this.state.name, signupData, { path: '/', expires: new Date(signupData.expiryDate), sameSite: 'Strict' });
+  }
   gotToHome = () => {
     if (this.props.location.pathname !== '/') {
       this.props.history.push('/');
@@ -294,7 +355,7 @@ class SignupFlow extends React.Component {
               {...this.props}
               registerUser={this.props.registerUser}
               changeStep={this.changeStep}
-              setSignupFlow={this.props.setSignupFlow}
+              setSignupFlow={this.handleSignupFlow}
               scrollRef={this.state.scrollRef}
               currentStep={this.state.currentStep}
               signupRole={this.state.selectedType}
@@ -354,7 +415,7 @@ class SignupFlow extends React.Component {
             onBack={this.onSetPriceBack}
             changeStep={this.changeStep}
             currentStep={this.state.currentStep}
-            setSignupFlow={this.props.setSignupFlow}
+            setSignupFlow={this.handleSetPriceFlow}
             signupDetails={this.props.signupDetails}
             switched={this.state.switchedSetPrice}
             closeSignupFlow={this.closeSetPrice}
@@ -393,6 +454,7 @@ class SignupFlow extends React.Component {
             return (
               <RegistrationSuccess
                 closeSignupFlow={this.closeSignUp}
+                cookies={this.props.cookies}
                 audioVideoSupport={this.state.audioVideoSupport}
                 skipVideo={this.state.skipVideo}
                 description={STAR_REG_SUCCESS.DESCRIPTION}
@@ -455,6 +517,20 @@ class SignupFlow extends React.Component {
           setScrollRef={this.setScrollRef}
           disableClose={this.state.disableClose}
         >
+        {
+          !this.state.completedSignup ?
+          (
+           <CompleteSignup
+           title={COMPLETE_SIGNUP.TITLE}
+           image_url={COMPLETE_SIGNUP.IMAGE_URL}
+           main_title={COMPLETE_SIGNUP.MAIN_TITLE}
+           description={COMPLETE_SIGNUP.DESCRIPTION}
+           primary_button={COMPLETE_SIGNUP.PRIMARY_BUTTON}
+           secondary_button={COMPLETE_SIGNUP.SECONDARY_BUTTON}
+           primaryButtonClick={this.continueSignUp}
+           secondaryButtonClick={this.closeSignUp}
+           />
+          ) : (
           <LoginContainer>
             {this.state.currentStep > 0 &&
               !(
@@ -480,6 +556,7 @@ class SignupFlow extends React.Component {
                       <SignupMethod
                         {...this.props}
                         changeStep={this.changeStep}
+                        onBack={this.signupMethodBack}
                         currentStep={this.state.currentStep}
                         setSignupFlow={this.props.setSignupFlow}
                         signupRole={this.state.selectedType}
@@ -493,25 +570,27 @@ class SignupFlow extends React.Component {
                 )}
             </LoginContainer.LeftSection>
           </LoginContainer>
+        )
+        }
         </RequestFlowPopup>
       </div>
     );
   }
 }
-const mapStateToProps = state => ({
+const mapStateToProps = (state , ownProps)=> ({
   isLoggedIn: state.session.isLoggedIn,
   userDetails: state.userDetails,
   loading: state.session.loading,
   error: state.session.incorrectError,
   statusCode: state.session.statusCode,
   signupDetails: state.signupDetails,
-  signUpDetails: state.modals.signUpDetails,
   redirectUrls: state.redirectReferrer,
   followCelebData: state.followCelebrityStatus,
   socialMediaStore: state.socialMediaData,
   commonReducer: state.commonReducer,
   inAppPriceList: state.config.data.in_app_pricing,
   profilePic: state.photoUpload.profilePic,
+  cookies: ownProps.cookies,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -534,11 +613,16 @@ const mapDispatchToProps = dispatch => ({
   updateProfilePhoto: obj => dispatch(updateProfilePhoto(obj)),
   setProfilePhoto: () => dispatch(resetProfilePhoto()),
   setProfilePicToState: (obj) => dispatch(setProfilePicToState(obj)),
+  completedSignup: value => dispatch(completedSignup(value)),
 });
 
-export default withRouter(
+SignupFlow.propTypes = {
+  cookies: instanceOf(Cookies).isRequired
+};
+
+export default withCookies(withRouter(
   connect(
     mapStateToProps,
     mapDispatchToProps,
   )(SignupFlow),
-);
+));

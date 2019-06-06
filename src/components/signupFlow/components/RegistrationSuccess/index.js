@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import PrimaryButton from '../../../PrimaryButton';
 import { updateLoginStatus } from '../../../../store/shared/actions/login';
 import { fetchUserDetails } from '../../../../store/shared/actions/getUserDetails';
-import { clearSignupFlow } from '../../../../store/shared/actions/setSignupFlow';
+import { clearSignupFlow, completedSignup } from '../../../../store/shared/actions/setSignupFlow';
 import RegSuccessWrapper from './styled';
 
 const RegistrationSuccess = (props) => {
@@ -13,11 +13,13 @@ const RegistrationSuccess = (props) => {
     if (props.signupRole !== 'fan') {
       props.updateLoginStatus(props.tempLoginDetails);
       props.fetchUserDetails(props.tempLoginDetails.id);
-    }
-    return () => {
       props.clearSignupFlow();
       if (localStorage) {
         localStorage.removeItem('tempAuthToken');
+      }
+      if(props.cookies !== undefined) {
+        const { cookies } = props;
+      cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
       }
     }
   }, [])
@@ -109,6 +111,7 @@ const mapDispatchToProps = dispatch => ({
   updateLoginStatus: sessionData => dispatch(updateLoginStatus(sessionData)),
   fetchUserDetails: id => dispatch(fetchUserDetails(id)),
   clearSignupFlow: () => dispatch(clearSignupFlow()),
+  completedSignup: value => dispatch(completedSignup(value)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegistrationSuccess);

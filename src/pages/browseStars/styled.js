@@ -64,9 +64,17 @@ CategoryPageStyled.AvatarWrapper = styled.div`
       display: block;
       position: absolute;
       left: 33px;
-      top: calc(100% - 310px);
+      top: calc(100% - 327px);
       padding: 0 6px;
       background: ${props => props.theme.white};
+
+      .name {
+        line-height: 53px;
+        margin-bottom: 11px;
+      }
+      .play-button {
+        bottom: 16px;
+      }
     }
     &.secondary {
       display: ${props => (props.disableIpad ? 'none' : 'block')};
@@ -76,6 +84,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
     &.secondary {
       display: block;
       padding-right: 61px;
+      margin-bottom: -17px;
     }
   }
 `;
@@ -172,10 +181,11 @@ CategoryPageStyled.FeaturedSection = styled.div`
   }
   @media(min-width: 832px) {
     max-width: 832px;
-    margin-bottom: 115px;
-    margin-top: 53px;
+    margin-bottom: 88px;
+    margin-top: 38px;
     justify-content: flex-end;
     padding: 27px 42px 38px;
+    height: 357px;
     &:after {
       transform: translateX(0);
       left: 18px;
@@ -185,7 +195,9 @@ CategoryPageStyled.FeaturedSection = styled.div`
   }
   @media(min-width: 1280px) {
     max-width: 1280px;
-    padding-top: 39px;
+    margin-bottom: 85px;
+    padding-top: 46px;
+    padding-bottom: 57px;
     padding-right: 0;
     margin-top: 33px;
   }

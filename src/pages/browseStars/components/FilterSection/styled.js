@@ -56,11 +56,14 @@ FilterStyled.SubCategoryList = styled.ul`
   margin-top: 21px;
   padding: 0 40px;
   margin-bottom: 13px;
+  @media(min-width: 832px) {
+    margin-bottom: 33px;
+  }
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 4px 13px;
-  min-height: 26px;
+  padding: 0 13px;
+  height: 30px;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
@@ -70,7 +73,7 @@ FilterStyled.SubCategoryItem = styled.li`
   font-size: 14px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   margin-right: 10px;
   cursor: pointer;
 `;

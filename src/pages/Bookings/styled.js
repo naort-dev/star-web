@@ -6,7 +6,7 @@ const BookingsStyled = styled.div`
   .arrow {
     width: 14px;
     height: 28px;
-    top: 110px;
+    top: 97px;
     ${media.webView} {
       display: none;
     }
@@ -18,12 +18,21 @@ const BookingsStyled = styled.div`
       width: 275px;
     }
   }
+  @media(min-width: 832px) {
+    padding: 0;
+  }
 `;
 
 BookingsStyled.Header = styled.span`
   font-family: Gilroy-Light;
   font-size: 30px;
   color: ${props => props.theme.brownGrey};
+  text-align: center;
+  display: block;
+  margin-bottom: 15px;
+  @media(min-width: 832px) {
+    text-align: left;
+  }
 `;
 
 BookingsStyled.SectionHeader = styled.div`

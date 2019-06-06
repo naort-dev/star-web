@@ -38,6 +38,12 @@ export default (state = { ...initialState }, action) => {
     case SET_SIGNUP.clearSignupFlow:
       return initialState;
 
+      case SET_SIGNUP.completedSignupFlow:
+      return {
+        ...state,
+        completedSignup: action.iscompleted,
+      };
+
     default:
       return state;
   }
