@@ -174,7 +174,7 @@ const Promotion = props => {
         appId: env('fbId'),
         cookie: true,
         xfbml: true,
-        version: 'v3.0',
+        version: 'v3.1',
       });
     };
   }, []);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
@@ -30,6 +30,7 @@ const Question = props => {
       question: `Ask the question you want ${props.starNM} to answer`,
     },
   ];
+  const videoRecordInput = useRef(null);
 
   const [stateObject, updatedStateHandler] = useState({
     showHideFlg: false,
@@ -64,9 +65,19 @@ const Question = props => {
     props.continueCallback();
   };
 
+  const isIOSDevice = () => {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+      return true;
+    }
+  };
+
   const buttonClickHandler = () => {
     if (stateObject.buttonLabel === 'Record') {
       mediaHandler('Record', false, false);
+      if (isIOSDevice()) {
+        videoRecordInput.current.click();
+      }
     } else if (stateObject.buttonLabel === 'Stop') {
       mediaHandler('Continue', true, true);
       props.headerUpdate('Check to make sure I’ve got everything right.');
@@ -164,7 +175,7 @@ const Question = props => {
   };
   return (
     <Layout>
-      {checkMediaRecorderSupport() && (
+      {(isIOSDevice() || checkMediaRecorderSupport()) && (
         <React.Fragment>
           <VideoContainer>
             <VideoRecorder
@@ -246,7 +257,9 @@ const Question = props => {
         </React.Fragment>
       )}
 
-      {(!checkMediaRecorderSupport() || stateObject.error) && (
+      {(!checkMediaRecorderSupport() ||
+        stateObject.error ||
+        !isIOSDevice()) && (
         <QuestionContainer isShow error>
           <p className="note">
             Your system does not have video recording capability, but you will
@@ -257,8 +270,17 @@ const Question = props => {
             <br /> Record with our App
             <br /> Use our iOS or Android app to book the star.
           </p>
+          {getFileUpload(['uploadBtn noSupportBtn'])}
         </QuestionContainer>
       )}
+
+      <input
+        ref={videoRecordInput}
+        type="file"
+        accept="video/*;capture=camcorder"
+        className="videoInputCapture"
+        onChange={uploadHandler}
+      />
     </Layout>
   );
 };
