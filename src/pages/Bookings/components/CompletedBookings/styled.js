@@ -24,6 +24,9 @@ CompletedStyled.FilterSection = styled.div`
 CompletedStyled.ListSection = styled.div`
   display: flex;
   flex-direction: column;
+  .list-item {
+    margin-bottom: 20px;
+  }
   @media(min-width: 832px) {
     flex-direction: row;
     flex-wrap: wrap;

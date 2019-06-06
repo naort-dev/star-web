@@ -45,6 +45,12 @@ const CompletedBookings = (props) => {
         />
       </CompletedStyled.FilterSection>
       <CompletedStyled.ListSection>
+        {
+          props.bookingsList.data.map((bookItem) => (
+            <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+          ))
+        }
+        {/* <CompletedCard classes={{root: 'list-item'}} />
         <CompletedCard classes={{root: 'list-item'}} />
         <CompletedCard classes={{root: 'list-item'}} />
         <CompletedCard classes={{root: 'list-item'}} />
@@ -52,9 +58,7 @@ const CompletedBookings = (props) => {
         <CompletedCard classes={{root: 'list-item'}} />
         <CompletedCard classes={{root: 'list-item'}} />
         <CompletedCard classes={{root: 'list-item'}} />
-        <CompletedCard classes={{root: 'list-item'}} />
-        <CompletedCard classes={{root: 'list-item'}} />
-        <CompletedCard classes={{root: 'list-item'}} />
+        <CompletedCard classes={{root: 'list-item'}} /> */}
       </CompletedStyled.ListSection>
     </CompletedStyled>
   )
@@ -63,6 +67,7 @@ const CompletedBookings = (props) => {
 CompletedBookings.propTypes = {
   dropValue: PropTypes.object.isRequired,
   handleCategoryChange: PropTypes.func.isRequired,
+  bookingsList: PropTypes.object.isRequired,
 }
 
 export default CompletedBookings;
