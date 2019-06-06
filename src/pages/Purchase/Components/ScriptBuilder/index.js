@@ -5,12 +5,14 @@ import { isPlainObject } from 'lodash';
 import Checkbox from 'components/Checkbox';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
+import { ScriptGenerator } from 'components/ScriptGenerator';
 import Script from 'components/Script';
 import { Layout, FlexBoxCenter, TextAreaWrapper } from './styled';
 
 class ScriptBuilder extends Component {
   constructor(props) {
     super(props);
+    this.state = { script: '' };
     this.starDataSet1 = [
       {
         size: '28px',
@@ -61,6 +63,33 @@ class ScriptBuilder extends Component {
 
   componentDidMount() {
     this.props.headerUpdate('Ok…how does this suggested script sound?');
+    const {
+      hostName,
+      userName,
+      occasion,
+      date,
+      specification,
+      templateType,
+      user,
+      relationshipValue,
+    } = this.props.bookingData;
+    const relationship = isPlainObject(relationshipValue)
+      ? relationshipValue.title
+      : relationshipValue;
+
+    const script = ScriptGenerator({
+      templateType,
+      forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
+      fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
+      relationship: relationship.toLowerCase(),
+      date,
+      occasion: occasion.label.toLowerCase(),
+      someOneElse: user !== 'Myself',
+      specification: specification.toLowerCase(),
+      occasionKey: occasion.key,
+      responseTime: this.props.responseTime,
+    });
+    this.setState({ script });
   }
   getAudioFile = key => {
     if (this.props.audio[key] !== null) {
@@ -99,6 +128,7 @@ class ScriptBuilder extends Component {
         stargramfrom: this.props.bookingData.userName,
         date: this.props.bookingData.date,
         importantinfo: this.props.importantInfo,
+        booking_statement: this.state.script,
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(
@@ -109,18 +139,12 @@ class ScriptBuilder extends Component {
     }
   };
   render() {
-    const { user, relationshipValue } = this.props.bookingData;
-    const scriptData = {
-      ...this.props.bookingData,
-      relationship: isPlainObject(relationshipValue)
-        ? relationshipValue.title
-        : relationshipValue,
-      someOneElse: user !== 'Myself',
-      responseTime: this.props.responseTime,
-    };
     return (
       <Layout>
-        <Script scriptData={scriptData} />
+        <Script
+          scriptText={this.props.bookingData.scriptText}
+          script={this.state.script}
+        />
         <FlexBoxCenter>
           <p>
             Review this suggested script for the star. It will help them get the
