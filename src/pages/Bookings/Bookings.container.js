@@ -4,7 +4,7 @@ import Bookings from './Bookings.component';
 
 
 const mapStateToProps = state => ({
-
+  bookingsList: state.bookingsList,
 });
 
 const mapDispatchToProps = dispatch => ({
