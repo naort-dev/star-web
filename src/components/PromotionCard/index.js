@@ -10,6 +10,14 @@ import {
 import { Layout } from './styled';
 
 const Promotion = props => {
+
+  const getTemplate = profile => {
+    let temp = profile.template;
+    temp = temp.replace('@@prof-pic@@', profile.profilePic);
+    temp = temp.replace('@@user-name@@', profile.name);
+    return temp;
+  };
+
   return (
     <Layout>
       <section className="header-sec">
