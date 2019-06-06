@@ -79,11 +79,12 @@ const Dollar = (
 );
 
 const ActivityCard = props => {
-  const getCard = (elmProps, btnType, icon, card) => {
+  const getCard = (elmProps, btnType, icon, card, index) => {
     return (
       <Card
         className="activityCard"
         onClick={() => props.cardClick({ data: card, ...props.callBackProps })}
+        key={index}
       >
         <FlexBox>
           <span className="web-icons">
@@ -118,14 +119,20 @@ const ActivityCard = props => {
   return (
     <Layout>
       <h2 className="head2">Recent Activity</h2>
-      {[1, 2, 3].map(() => {
-        return getCard(elmStyles[0], true, Tick, {
-          heading: '2 Open bookings',
-          value_main: '1 expiring soon',
-          value_sub: '',
-          btnTextPrimary: 'Respond',
-          btnTextSecondary: 'Now',
-        });
+      {[1, 2, 3].map((val, index) => {
+        return getCard(
+          elmStyles[0],
+          true,
+          Tick,
+          {
+            heading: '2 Open bookings',
+            value_main: '1 expiring soon',
+            value_sub: '',
+            btnTextPrimary: 'Respond',
+            btnTextSecondary: 'Now',
+          },
+          index,
+        );
       })}
 
       <Card className="activityCard">

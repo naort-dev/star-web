@@ -86,7 +86,6 @@ const PromoTools = props => {
           })}
         </TemplateList>
       </Card>
-
       <Accordion>
         <Card className="card-mob">{getNote()}</Card>
         <Card className="card-mob">

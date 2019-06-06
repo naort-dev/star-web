@@ -287,6 +287,7 @@ export const starsonaRequest = (
       : '',
     event_title: bookingData.eventdetailName,
     event_guest_honor: bookingData.hostName,
+    booking_statement: bookingData.booking_statement,
   };
   const formData = new FormData();
   formData.append('celebrity', bookingData.starDetail.id);
