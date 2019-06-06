@@ -8,6 +8,7 @@ import { fanInnerLinks, starInnerLinks } from '../../constants';
 import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import ManageStyled from './styled';
+import { PromoTool } from '../PromotionalTools';
 
 const ManageUser = props => {
   const [redirect, toggleRedirect] = useState(false);
@@ -47,10 +48,7 @@ const ManageUser = props => {
             <Switch>
               <Route path="/manage/dashboard" component={Dashboard} />
               <Route path="/manage/bookings" component={Bookings} />
-              <Route
-                path="/manage/promotional-tools"
-                render={() => 'promotional'}
-              />
+              <Route path="/manage/promotional-tools" component={PromoTool} />
               <Route path="/manage/profile" render={() => 'profile'} />
               <Route path="/manage/earnings" render={() => 'earnings'} />
               <Route path="/manage/settings" render={() => 'settings'} />
