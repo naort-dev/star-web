@@ -68,7 +68,7 @@ const postImageToFacebook = (
   imageData,
   message,
 ) => {
-  console.log('ttttttttttttttt--');
+  debugger
   // this is the multipart/form-data boundary we'll use
   const boundary = '----ThisIsTheBoundary1234567890';
   // let's encode our image file, which is contained in the var
@@ -104,6 +104,16 @@ const postImageToFacebook = (
 };
 
 const postCanvasToFacebook = () => {
+  if (XMLHttpRequest.prototype.sendAsBinary === undefined) {
+    XMLHttpRequest.prototype.sendAsBinary = function(string) {
+      const bytes = Array.prototype.map.call(string, function(c) {
+        return c.charCodeAt(0) & 0xff;
+      });
+      this.send(new Uint8Array(bytes).buffer);
+    };
+  }
+
+  debugger
   const ctx = document.createElement('canvas');
   const data = ctx.toDataURL('image/png');
   const encodedPng = data.substring(data.indexOf(',') + 1, data.length);
@@ -149,15 +159,6 @@ const postCanvasToFacebook = () => {
 
 const Promotion = props => {
   useEffect(() => {
-    if (XMLHttpRequest.prototype.sendAsBinary === undefined) {
-      XMLHttpRequest.prototype.sendAsBinary = function(string) {
-        const bytes = Array.prototype.map.call(string, function(c) {
-          return c.charCodeAt(0) & 0xff;
-        });
-        this.send(new Uint8Array(bytes).buffer);
-      };
-    }
-
     (function(d, s, id) {
       var js,
         fjs = d.getElementsByTagName(s)[0];
@@ -170,7 +171,7 @@ const Promotion = props => {
 
     window.fbAsyncInit = function() {
       FB.init({
-        appId: "2234028813504480",
+        appId: env('fbId'),
         cookie: true,
         xfbml: true,
         version: 'v3.0',
