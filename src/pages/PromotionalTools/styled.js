@@ -61,6 +61,7 @@ export const Layout = styled.section`
     margin: 0 auto;
     .social-icon {
       color: #2f839d;
+      cursor: pointer;
     }
   }
 `;

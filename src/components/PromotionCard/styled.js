@@ -43,6 +43,7 @@ export const Layout = styled.section`
       align-items: center;
       .social-icon {
         color: #2f839d;
+        cursor: pointer;
       }
       .social-name {
         font-family: Gilroy;
