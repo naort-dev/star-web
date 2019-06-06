@@ -9,6 +9,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
 import ActionLoader from '../ActionLoader';
 
 import { SignUpMethod } from './styled';
+import { BackArrow } from '../../styles/CommonStyled';
 import { twitterLogin } from '../../services';
 import { updateLoginStatus } from '../../store/shared/actions/login';
 import { fetchUserDetails } from '../../store/shared/actions/getUserDetails';
@@ -400,6 +401,7 @@ class SignupMethod extends React.Component {
         this.state.loading &&
           <ActionLoader />
       }
+        <BackArrow className="leftArrow" onClick={this.props.onBack} />
         <SignUpMethod.Container>
           <SignUpMethod.Heading>How do you want to create your account?</SignUpMethod.Heading>
           <SignUpMethod.ButtonDiv>

@@ -56,7 +56,7 @@ ManageStyled.SidebarWrapper = ManageStyled.Visiblity.extend`
 ManageStyled.RightContent = ManageStyled.Visiblity.extend`
   @media(min-width: 832px) {
     flex: auto;
-    padding-left: 110px;
+    padding-left: 50px;
   }
 `
 export default ManageStyled;

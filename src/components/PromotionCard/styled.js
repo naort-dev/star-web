@@ -24,14 +24,6 @@ export const Layout = styled.section`
       text-decoration: underline;
       cursor: pointer;
     }
-    .promo-template {
-      background-image: url('assets/images/promotion.png');
-      width: 265px;
-      height: 265px;
-      background-size: contain;
-      display: inline-block;
-      background-repeat: no-repeat;
-    }
   }
   .share-text {
     font-family: Gilroy;
@@ -51,6 +43,7 @@ export const Layout = styled.section`
       align-items: center;
       .social-icon {
         color: #2f839d;
+        cursor: pointer;
       }
       .social-name {
         font-family: Gilroy;
