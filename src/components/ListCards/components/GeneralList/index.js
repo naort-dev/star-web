@@ -1,10 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Card, TickText } from 'styles/CommonStyled';
 import PrimaryButton from '../../../PrimaryButton';
+import { requestTypes } from '../../../../constants/requestTypes';
 import { MediumText, HeadingBold, LeftContent } from '../../styled';
 import GeneralStyled from './styled';
 
-const GeneralList = () => {
+const GeneralList = (props) => {
+
+  const renderDescription = () => {
+    if (requestTypes[props.data.request_type] === 'Q&A') {
+      return (
+        <MediumText>
+          <HeadingBold>Question</HeadingBold><HeadingBold>{props.data.fan}</HeadingBold>
+        </MediumText>
+      )
+    }
+    return (
+      <MediumText>
+        <HeadingBold>{props.data.occasion}</HeadingBold> message <br />
+        for <HeadingBold>{props.data.fan}</HeadingBold>
+      </MediumText>
+    )
+  }
+
   return (
     <Card>
       <GeneralStyled>
@@ -13,10 +32,7 @@ const GeneralList = () => {
             <TickText>To Do</TickText>
           </LeftContent>
           <GeneralStyled.Description>
-            <MediumText>
-              <HeadingBold>Birthday</HeadingBold> message <br />
-              for <HeadingBold>Sarah</HeadingBold>
-            </MediumText>
+            { renderDescription() }
           </GeneralStyled.Description>
         </GeneralStyled.Section>
         <GeneralStyled.Section>
@@ -28,6 +44,10 @@ const GeneralList = () => {
       </GeneralStyled>
     </Card>
   )
+}
+
+GeneralList.propTypes = {
+  data: PropTypes.object.isRequired,
 }
 
 export { GeneralList };

@@ -227,7 +227,7 @@ class SignupFlow extends React.Component {
       availability: true,
       profile_video: this.state.profile_video,
       description: '',
-      recordable: this.state.audioVideoSupport,
+      recordable: this.state.audioVideoSupport.toString(),
     }
     this.props.loaderAction(true)
     celebritySignupProfile(celebrityProfileData)
@@ -235,11 +235,6 @@ class SignupFlow extends React.Component {
         this.props.loaderAction(false)
         if (success) {
           this.changeStep(this.state.skipVideo ? this.state.currentStep + 1  : this.state.currentStep + 2)
-          // const { cookies } = this.props;
-          // const signupData = cookies.get('signupDetails');
-          // cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
-          // this.props.completedSignup(true);
-          // this.changeStep(this.state.currentStep + 1);
         }
       })
         .catch((error) => {
