@@ -35,7 +35,7 @@ CompletedStyled.ProfilePic = styled.span`
 CompletedStyled.DetailsWrapper = styled.div`
   padding-left: 16.7px;
   flex: 1;
-  margin-bottom: 34px;
+  margin-bottom: 84.9px;
   .details-header {
     display: flex;
     justify-content: space-between;
