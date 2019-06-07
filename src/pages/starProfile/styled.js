@@ -26,7 +26,7 @@ StarProfileStyled.Container = styled.div`
     max-width: 806px;
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
   }
 `;
 

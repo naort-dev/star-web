@@ -36,18 +36,28 @@ const ListingStyled = styled.div`
     max-width: 100%;
     padding: 0 17px;
     .latest-video {
-      margin-top: 13.6px;
+      margin-top: 12.6px;
       li {
-        &:nth-child(2n) {
-          padding-right: 0;
+        margin-right: calc((100% - (209px * 3))/2);
+        padding-right: 0;
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+        &.show-more {
+          margin-right: 0;
         }
       }
     }
     .latest-response {
-      margin-top: 13.6px;
+      margin-top: 12.6px;
       li {
-        &:nth-child(5) {
-          // padding-right: 0;
+        margin-right: calc((100% - (209px * 3))/2);
+        padding-right: 0;
+        &:nth-child(3n) {
+          margin-right: 0;
+        }
+        &.show-more {
+          margin-right: 0;
         }
       }
     }
@@ -58,16 +68,26 @@ const ListingStyled = styled.div`
     .latest-video {
       margin-top: 13.6px;
       li {
-        &:nth-child(4n) {
-          padding-right: 0;
+        margin-right: calc((100% - (209px * 5))/4);
+        padding-right: 0;
+        &:nth-child(5n) {
+          margin-right: 0;
+        }
+        &.show-more {
+          margin-right: 0;
         }
       }
     }
     .latest-response {
       margin-top: 13.6px;
       li {
+        margin-right: calc((100% - (209px * 5))/4);
+        padding-right: 0;
         &:nth-child(5n) {
-          padding-right: 0;
+          margin-right: 0;
+        }
+        &.show-more {
+          margin-right: 0;
         }
       }
     }
@@ -161,7 +181,7 @@ ListingStyled.ContentItem = styled.li`
 `;
 
 ListingStyled.ContentSection = styled.div`
-  margin-top: 60.6px;
+  margin-top: 7.6px
   &.response-wrapper {
     margin-top: 40.6px;
     margin-bottom: 40px;
@@ -169,8 +189,11 @@ ListingStyled.ContentSection = styled.div`
       margin-top: 7.6px
     }
   }
-  @media(max-width: 831px) {
-    margin-top: 7.6px
+  @media(min-width: 832px) {
+    margin-top: 56px;
+  }
+  @media(min-width: 1280px) {
+    margin-top: 49px;
   }
 `;
 

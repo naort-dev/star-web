@@ -18,6 +18,14 @@ FilterStyled.Header = styled.div`
   @media(min-width: 832px) {
     display: none;
   }
+  .filter-header {
+    div:last-child {
+      margin-top: -3px;
+    }
+    .filter-logo {
+      margin-top: -10px;
+    }
+  }
 `;
 
 FilterStyled.CloseButton = styled.span`
@@ -32,6 +40,9 @@ FilterStyled.Heading = styled.span`
   color: ${props => props.theme.twilight};
   display: ${props => (props.mobileOnly ? 'block' : 'none')};
   text-transform:  ${props => (props.mobileOnly ? 'uppercase' : 'none')};;
+  &.filter-heading {
+    color: #2f839d;
+  }
   @media(min-width: 832px) {
     display: ${props => (props.mobileOnly ? 'none' : 'block')};
     font-size: 30px;
@@ -40,12 +51,15 @@ FilterStyled.Heading = styled.span`
 `;
 
 FilterStyled.Content = styled.div`
-  padding: 0 16px;
+  padding: 0;
   height: calc(100vh - 100px);
   overflow: auto;
   @media(min-width: 832px) {
     height: auto;
     overflow: initial;
+  }
+  @media(max-width: 832px) {
+    padding: 0 0 25px;
   }
 `;
 
@@ -54,49 +68,59 @@ FilterStyled.SubCategoryList = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 21px;
-  padding: 0 40px;
+  padding: 0 115px;
   margin-bottom: 13px;
   @media(min-width: 832px) {
-    margin-bottom: 33px;
+    margin-bottom: 0;
+  }
+  @media(max-width: 832px) {
+    padding: 0 25px;
   }
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 0 13px;
-  height: 30px;
+  padding: 4px 20px 3px;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
   color: ${props => (props.selected ? '#fff' : props.theme.greyishBrown)}
   display: flex;
   font-family: Gilroy-medium;
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 20px;
   justify-content: center;
   align-items: center;
-  margin-bottom: 15px;
-  margin-right: 10px;
+  margin-bottom: 5px;
+  margin-right: 5px;
   cursor: pointer;
 `;
 
 FilterStyled.ApplyButton = styled.span`
   .controlButton {
     width: 233px;
+    min-width: 233px;
   }
   text-align: center;
-  margin: 20px 0;
+  margin: 45px auto;
+
   @media(min-width: 832px) {
     display: none;
   }
 `;
 
 FilterStyled.SecondaryFilterWrapper = styled.div`
-  margin: 0 40px;
-  margin-top: 20px;
+  margin: 20px 40px 0;
   display: flex;
   flex-direction: column;
   border-top: ${props => `1px solid ${props.theme.brownGrey}`};
   @media(min-width: 832px) {
     flex-direction: row;
+    max-width: 832px;
+    margin: 20px auto 0;
+  }
+  @media(min-width: 1280px) {
+    max-width: 1246px;
+    margin: 20px auto 0;
   }
 `;
 

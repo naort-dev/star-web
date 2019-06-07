@@ -195,7 +195,7 @@ DetailStyled.ProfileVideoSection = styled.div`
   }
   @media(min-width: 832px) {
     display: block;
-    padding-top: 10.9px;
+    padding-top: 31.9px;
     ${DetailStyled.StarName} {
       display: none;
     }
@@ -222,7 +222,7 @@ DetailStyled.StarDetails = styled.div`
   .rating-section {
     .star-item {
       padding: 0;
-      font-size: 24px;
+      font-size: 32px;
       margin-right: 3px;
       @media(max-width: 831px) {
         font-size: 16px;
@@ -251,6 +251,8 @@ DetailStyled.StarDetails = styled.div`
     justify-content: space-between;
     .details-header {
       font-size: 16px;
+      margin-bottom: 5px;
+      display: block;
     }
     .rating-section {
       font-size: 19px;
@@ -259,7 +261,6 @@ DetailStyled.StarDetails = styled.div`
       padding-left: 0;
       .response-item {
         font-size: 24px;
-        padding-top: 8px;
       }
     }
   }

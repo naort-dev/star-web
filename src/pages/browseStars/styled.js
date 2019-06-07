@@ -91,7 +91,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
 
 CategoryPageStyled.FilterSection = styled.div`
   position: fixed;
-  padding-top: 20px;
+  padding-top: 26px;
   top: 0;
   bottom: 0;
   left: 0;
@@ -112,7 +112,7 @@ CategoryPageStyled.FilterSection = styled.div`
     display: block;
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
     margin: 0 auto;
   }
 `;
@@ -123,7 +123,7 @@ CategoryPageStyled.StarWrapper = styled.div`
   right: 0;
   left: 0;
   bottom: 0;
-  z-index: 2;
+  z-index: 1;
   display: none;
   @media(min-width: 832px) {
     display: block;
@@ -140,14 +140,15 @@ CategoryPageStyled.Heading = styled.span`
   min-height: 32px;
   @media(min-width: 832px) {
     font-size: 56px;
-    min-height: 70px;
+    min-height: 56px;
     max-width: 692px;
-    line-height: 57px;
+    line-height: 56px;
     margin: 22px auto 0px;
   }
   @media(min-width: 1280px) {
-    margin-top: 47px;
+    padding-top: 35px;
     max-width: 100%;
+    letter-spacing: -1px;
   }
 `;
 
@@ -194,7 +195,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     }
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
     margin-bottom: 85px;
     padding-top: 46px;
     padding-bottom: 57px;
@@ -239,11 +240,22 @@ CategoryPageStyled.MainContent = styled.div`
       padding-top: ${props.padding}px;
     `}
   }
+  &.fixed-filter {
+    .subcategory-list {
+      margin-top: 0;
+    }
+  }
 `;
 
 CategoryPageStyled.ListingWrapper = styled.div`
-  max-width: 1280px;
+  max-width: 375px;
   margin: 0 auto;
+  @media(min-width: 832px) {
+    max-width: 832px;
+  }
+  @media(min-width: 1280px) {
+    max-width: 1246px;
+  }
 `;
 
 CategoryPageStyled.Footer = styled.div`
