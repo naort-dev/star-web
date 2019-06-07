@@ -16,8 +16,16 @@ CompletedStyled.FilterSection = styled.div`
   .drop-down {
     margin-bottom: 13px!important;
   }
+  .search-root {
+    height: 50px;
+    border-radius: 10px;
+    .search-input-container {
+      background: #fff;
+    }
+  }
   @media(min-width: 832px) {
     flex-direction: row;
+    justify-content: space-between;
     .drop-down {
       margin-right: 16.4px;
       &.filter, &.sort-by {

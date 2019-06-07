@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { celebCompletedStatusList } from '../../../../constants/requestStatusList';
 import { fetchBookingsList } from '../../actions/getBookingsList';
 import Dropdown from '../../../../components/Dropdown';
+import Search from '../../../../components/Search';
 import Loader from '../../../../components/Loader';
 import Pagination from '../../../../components/Pagination';
 import { CompletedCard } from '../../../../components/ListCards';
@@ -51,6 +52,13 @@ const CompletedBookings = (props) => {
           valueKey="id"
           onChange={setSortVal}
           placeHolder="Sort by"
+        />
+        <Search
+          classes={{
+            root: 'search-root',
+            inputRoot: 'search-input-container',
+          }}
+          placeholder='Search by keyword'
         />
       </CompletedStyled.FilterSection>
       <Pagination
