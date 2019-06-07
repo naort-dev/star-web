@@ -68,7 +68,6 @@ const postImageToFacebook = (
   imageData,
   message,
 ) => {
-  debugger;
   // this is the multipart/form-data boundary we'll use
   const boundary = '----ThisIsTheBoundary1234567890';
   // let's encode our image file, which is contained in the var
@@ -113,7 +112,6 @@ const postCanvasToFacebook = () => {
     };
   }
 
-  debugger;
   const ctx = document.createElement('canvas');
   const data = ctx.toDataURL('image/png');
   const encodedPng = data.substring(data.indexOf(',') + 1, data.length);
