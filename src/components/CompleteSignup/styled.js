@@ -62,6 +62,10 @@ Content.MainTitle = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: ${props => `${props.theme.flatBlue}`};
+  @media (max-width: 831px) {
+    padding: 10px;
+line-height: 1;
+  }
 `;
 
 export const Container = styled.div`
