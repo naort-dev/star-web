@@ -146,8 +146,9 @@ CategoryPageStyled.Heading = styled.span`
     margin: 22px auto 0px;
   }
   @media(min-width: 1280px) {
-    margin-top: 47px;
+    padding-top: 35px;
     max-width: 100%;
+    letter-spacing: -1px;
   }
 `;
 

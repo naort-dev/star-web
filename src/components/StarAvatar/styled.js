@@ -113,7 +113,7 @@ AvatarContainer.Category = styled.span`
   padding-top: 7px;
   @media(min-width: 832px) {
     color: #555;
-    font-size: 13px;
+    font-size: 15px;
     text-align: left;
   }
 `;
@@ -133,6 +133,10 @@ AvatarContainer.Name = styled.span`
     font-size: 17px;
     width: calc(100% - 50px);
     text-align: left;
+  }
+
+  span {
+    font-family: Gilroy-Medium;
   }
 `;
 
@@ -182,7 +186,7 @@ AvatarContainer.Content = styled(Link)`
     &.featured {
       border: none;
       ${AvatarContainer.Category} {
-        font-size: 20px;
+        font-size: 15px;
         line-height: 28px;
         color: #555;
       }

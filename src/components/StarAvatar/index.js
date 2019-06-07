@@ -19,7 +19,7 @@ const StarAvatar = ({ star, type, ...props }) => {
     'featured': {
       name: {
         minSize: 30,
-        maxSize: 47,
+        maxSize: 42,
         multiLine: true,
       }
     },
@@ -91,7 +91,7 @@ const StarAvatar = ({ star, type, ...props }) => {
         </AvatarContainer.ControlWrapper>
       </WrapperComponent>
       <AvatarContainer.Content className={type} to={`${star.user_id}`}>
-        <AvatarContainer.Category title={star.celebrity_profession && starProfessionsFormater(star.celebrity_profession)}>
+        <AvatarContainer.Category title={star.celebrity_profession && starProfessionsFormater(star.celebrity_profession)} className="profession">
           { star.celebrity_profession && starProfessionsFormater(star.celebrity_profession) }
         </AvatarContainer.Category>
         <AvatarContainer.StarDescription>
