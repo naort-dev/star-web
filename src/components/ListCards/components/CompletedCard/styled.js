@@ -5,6 +5,20 @@ import { HeadingBold } from '../../styled';
 const CompletedStyled = Card.extend`
   display: inline-block;
   position: relative;
+  .favorite-icon {
+    display: none;
+  }
+  @media(min-width: 832px) {
+    .favorite-icon {
+      display: block;
+      color: #fff;
+      font-size: 28px;
+      position: absolute;
+      top: 20.2px;
+      right: 18.3px;
+      cursor: pointer;
+    }
+  }
 `;
 
 CompletedStyled.Container = styled.div`
