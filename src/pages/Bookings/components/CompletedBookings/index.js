@@ -62,7 +62,8 @@ const CompletedBookings = (props) => {
         />
       </CompletedStyled.FilterSection>
       <Pagination
-        classes={{root: 'pagination-wrapper'}}
+        classes={{root: 'pagination-wrapper top'}}
+        offset={props.bookingsList.offset}
         count={props.bookingsList.count}
         limit={props.bookingsList.limit}
         dataLoading={props.bookingsList.loading}
@@ -78,6 +79,17 @@ const CompletedBookings = (props) => {
           ))
         }
       </CompletedStyled.ListSection>
+      {
+        props.bookingsList.data.length > 0 && props.bookingsList.count > props.bookingsList.offset &&
+          <Pagination
+            classes={{root: 'pagination-wrapper bottom'}}
+            offset={props.bookingsList.offset}
+            count={props.bookingsList.count}
+            limit={props.bookingsList.limit}
+            dataLoading={props.bookingsList.loading}
+            onChange={fetchList}
+          />
+      }
     </CompletedStyled>
   )
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -9,7 +9,7 @@ import PaginationStyled from './styled';
 
 const Pagination = (props) => {
 
-  const [pageLimit, updatePageLimits] = useState({ low: 1, high: props.limit });
+  const [pageLimit, updatePageLimits] = useState({ low: props.offset + 1, high: props.offset + props.limit });
 
   const updateOffsets = type => () => {
     if (props.dataLoading) {
@@ -18,21 +18,22 @@ const Pagination = (props) => {
     if (type === 'next') {
       const low = pageLimit.low + props.limit;
       const high = props.limit + pageLimit.high >= props.count ? props.count : props.limit + pageLimit.high;
-      props.onChange(low, high);
-      updatePageLimits({
-        low,
-        high,
-      })
+      props.onChange(low - 1, high);
     } else {
       const low = pageLimit.low - props.limit;
       const high = pageLimit.high - props.limit;
-      props.onChange(low, high);
-      updatePageLimits({
-        low,
-        high,
-      })
+      props.onChange(low - 1, high);
     }
   }
+
+  useEffect(() => {
+    const low = props.offset + 1;
+    const high = props.offset + props.limit;
+    updatePageLimits({
+      low,
+      high: high >= props.count ? props.count : high,
+    })
+  }, [props.offset])
 
   return (
     <PaginationStyled className={props.classes.root}>
@@ -51,6 +52,7 @@ const Pagination = (props) => {
 
 Pagination.defaultProps = {
   dataLoading: false,
+  offset: 0,
 }
 
 Pagination.propTypes = {
@@ -59,6 +61,7 @@ Pagination.propTypes = {
   onChange: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
   dataLoading: PropTypes.bool,
+  offset: PropTypes.number,
 }
 
 export default Pagination;

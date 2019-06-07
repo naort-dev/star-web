@@ -1,11 +1,20 @@
 import styled from 'styled-components'
 
 const CompletedStyled = styled.div`
+  .pagination-wrapper {
+    margin: 13px 0;
+  }
   @media(min-width: 832px) {
     .pagination-wrapper {
+      margin: 0;
       position: absolute;
       right: 0;
-      top: 0;
+      &.top {
+        top: 0;
+      }
+      &.bottom {
+        bottom: 0;
+      }
     }
   }
 `;
@@ -44,6 +53,7 @@ CompletedStyled.ListSection = styled.div`
   @media(min-width: 832px) {
     flex-direction: row;
     flex-wrap: wrap;
+    padding-bottom: 16px;
     .list-item {
       width: calc((100% - 40px)/2);
       margin-right: 20px;

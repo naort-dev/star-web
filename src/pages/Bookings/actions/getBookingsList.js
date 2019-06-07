@@ -70,14 +70,12 @@ export const fetchBookingsList = (offset, refresh, requestStatus) => (dispatch, 
       dispatch(bookingsListFetchEnd());
       let list = getState().bookingsList.data;
       const { count } = resp.data.data;
-      let newOffset = offset;
       if (refresh) {
         list = resp.data.data.request_list;
-        newOffset = 0;
       } else {
         list = [...list, ...resp.data.data.request_list];
       }
-      dispatch(bookingsListFetchSuccess(list, newOffset, count, videoStatus));
+      dispatch(bookingsListFetchSuccess(list, offset, count, videoStatus));
     } else {
       dispatch(bookingsListFetchEnd());
     }
