@@ -4,40 +4,46 @@ const ListingStyled = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  
+  margin-left: -35px;
   height: 100%;
-  max-width: 834px;
   padding-top: 30px;
+
+  @media(min-width: 832px) and (max-width: 870px) {
+    //width: calc(100% + 120px);
+    margin-left: -100px;
+  }
+
+  @media(min-width: 870px) {
+    //width: calc(100% + 104px);
+    margin-left: -110px;
+  }
+
   @media(min-width: 1280px) {
-    max-width: 100%;
+    width: calc(100% + 55px);
     padding-top: 30px;
+    margin-left: -55px;
   }
 `;
 
 ListingStyled.Content = styled.li`
   display: flex;
-  justify-content: center;
-  padding-right: 10px;
   padding-bottom: 35px;
-  width: 40%;
-  @media(min-width: 375px) {
-    width: 33.3%;
-    &:nth-of-type(3n+1) {
-      justify-content: flex-start;
-    }
-    &:nth-of-type(3n) {
-      justify-content: flex-end;
-    }
+  flex: 1 1 0;
+  padding-left: 36px;
+  justify-content: center;
+  
+
+  @media(min-width: 870px) {
+    padding-left: 112px;
   }
+
+  @media(min-width: 832px) and (max-width: 870px) {
+    padding-left: 100px;
+  }
+  
   @media(min-width: 1280px) {
-    width: 20%;
-    justify-content: center;
-    &:nth-of-type(3n+1) {
-      justify-content: center;
-    }
-    &:nth-of-type(3n) {
-      justify-content: center;
-    }
+    padding-left: 60px;
   }
 `;
 

@@ -76,11 +76,11 @@ const FilterSection = (props) => {
   return (
     <FilterStyled>
       <FilterStyled.Header>
-        <HeaderSection.HeaderDiv>
+        <HeaderSection.HeaderDiv className="filter-header">
           <HeaderSection.BackIcon onClick={props.onClose}>
             <FontAwesomeIcon icon={faChevronLeft} />
           </HeaderSection.BackIcon>
-          <HeaderSection.HeaderLeft>
+          <HeaderSection.HeaderLeft className="filter-logo">
             <Link to='/'>
               <HeaderSection.ImgLogo
                 src="assets/images/logo_starsona.svg"
@@ -95,14 +95,12 @@ const FilterSection = (props) => {
           </HeaderSection.HeaderRight>
         </HeaderSection.HeaderDiv>
       </FilterStyled.Header>
-      <FilterStyled.Heading mobileOnly>
+      <FilterStyled.Heading mobileOnly className="filter-heading">
         Filter
       </FilterStyled.Heading>
-      <FilterStyled.Heading>
-        Select your { props.category.label.toLowerCase() } category
-      </FilterStyled.Heading>
+      
       <FilterStyled.Content>
-        <FilterStyled.SubCategoryList>
+        <FilterStyled.SubCategoryList className="subcategory-list">
           <FilterStyled.SubCategoryItem
             selected={selectedSubCat.length === 0}
             onClick={toggleSelectAll}

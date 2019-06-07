@@ -14,7 +14,7 @@ const CategoryStyled = styled.ul`
     justify-content: center;
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
     padding-bottom: 20px;
   }
 `;

@@ -16,7 +16,7 @@ const ManageStyled = styled.div`
 `;
 
 ManageStyled.Container = styled.div`
-  max-width: 1280px;
+  max-width: 1246px;
   margin: 0 auto;
   width: 100%;
   display: flex;

@@ -6,6 +6,10 @@ const RangeStyled = styled.div`
   align-items: center;
   .rc-slider {
     height: 27px;
+
+    @media(max-width: 832px) {
+      flex: 0 0 calc(100% - 108px);
+    }
     .rc-slider-rail, .rc-slider-track {
       background: ${props => props.theme.veryLightPinkTwo}
       height: 20px;
@@ -82,6 +86,9 @@ RangeStyled.Label = styled.span`
   font-size: 14px;
   padding-right: ${props => props.left && '23px'};
   padding-left: ${props => !props.left && '23px'};
+  @media(max-width: 832px) {
+    flex: 0 0 45px;
+  } 
 `;
 
 export default RangeStyled;
