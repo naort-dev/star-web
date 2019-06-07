@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { celebCompletedStatusList } from '../../../../constants/requestStatusList';
+import { fetchBookingsList } from '../../actions/getBookingsList';
 import Dropdown from '../../../../components/Dropdown';
+import Loader from '../../../../components/Loader';
+import Pagination from '../../../../components/Pagination';
 import { CompletedCard } from '../../../../components/ListCards';
 import { options, filterOptions, SortBy } from '../../constants';
 import CompletedStyled from './styled';
@@ -8,6 +14,10 @@ const CompletedBookings = (props) => {
 
   const [filterVal, setFilterVal] = useState({});
   const [sortVal, setSortVal] = useState({});
+
+  const fetchList = (low, high) => {
+    props.fetchBookingsList(low, true, celebCompletedStatusList)
+  }
 
   return (
     <CompletedStyled>
@@ -43,11 +53,36 @@ const CompletedBookings = (props) => {
           placeHolder="Sort by"
         />
       </CompletedStyled.FilterSection>
+      <Pagination
+        classes={{root: 'pagination-wrapper'}}
+        count={props.bookingsList.count}
+        limit={props.bookingsList.limit}
+        dataLoading={props.bookingsList.loading}
+        onChange={fetchList}
+      />
+      {
+        props.bookingsList.loading && <Loader />
+      }
       <CompletedStyled.ListSection>
-        <CompletedCard />
+        {
+          props.bookingsList.data.map((bookItem) => (
+            <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+          ))
+        }
       </CompletedStyled.ListSection>
     </CompletedStyled>
   )
 }
 
-export default CompletedBookings;
+CompletedBookings.propTypes = {
+  dropValue: PropTypes.object.isRequired,
+  handleCategoryChange: PropTypes.func.isRequired,
+  bookingsList: PropTypes.object.isRequired,
+  fetchBookingsList: PropTypes.func.isRequired,
+}
+
+const mapDispatchToProps = dispatch => ({
+  fetchBookingsList: (offset, refresh, requestStatus) => dispatch(fetchBookingsList(offset, refresh, requestStatus)),
+})
+
+export default connect(null, mapDispatchToProps)(CompletedBookings);

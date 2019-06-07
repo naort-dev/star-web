@@ -2,9 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import StarDrawer from 'components/StarDrawer';
 import { ScriptContainer, Script } from './styled';
-import { ScriptGenerator } from '../ScriptGenerator';
 
-const ScriptBuilder = ({ scriptData }) => {
+const ScriptBuilder = ({ scriptText, script }) => {
   const starDataSet1 = [
     {
       size: '28px',
@@ -51,18 +50,6 @@ const ScriptBuilder = ({ scriptData }) => {
       color: '#46829a',
     },
   ];
-  const {
-    hostName,
-    userName,
-    relationship,
-    occasion,
-    date,
-    specification,
-    templateType,
-    responseTime,
-    someOneElse,
-    scriptText,
-  } = scriptData;
   return (
     <ScriptContainer>
       <section className="starWrapper">
@@ -75,18 +62,7 @@ const ScriptBuilder = ({ scriptData }) => {
       ) : (
         <Script
           dangerouslySetInnerHTML={{
-            __html: ScriptGenerator({
-              templateType,
-              forName: hostName.charAt(0).toUpperCase() + hostName.slice(1),
-              fromName: userName.charAt(0).toUpperCase() + userName.slice(1),
-              relationship: relationship.toLowerCase(),
-              date,
-              occasion: occasion.label.toLowerCase(),
-              someOneElse,
-              specification: specification.toLowerCase(),
-              occasionKey: occasion.key,
-              responseTime,
-            }),
+            __html: script,
           }}
         />
       )}
@@ -98,9 +74,13 @@ const ScriptBuilder = ({ scriptData }) => {
 };
 
 ScriptBuilder.propTypes = {
-  scriptData: PropTypes.object.isRequired,
+  scriptText: PropTypes.string,
+  script: PropTypes.string,
 };
 
-ScriptBuilder.defaultProps = {};
+ScriptBuilder.defaultProps = {
+  scriptText: '',
+  script: '',
+};
 
 export default ScriptBuilder;

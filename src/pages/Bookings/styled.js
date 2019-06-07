@@ -3,6 +3,7 @@ import { media } from 'styles/mediaQueries';
 
 const BookingsStyled = styled.div`
   padding: 20.7px 17.7px;
+  position: relative;
   .arrow {
     width: 14px;
     height: 28px;
