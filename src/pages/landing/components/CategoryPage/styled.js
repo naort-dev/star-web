@@ -77,7 +77,7 @@ CategoryPageStyled.FilterSection = styled.div`
     display: block;
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
     margin: 0 auto;
   }
 `;
@@ -151,7 +151,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     }
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
     padding-right: 0;
   }
 `;
@@ -181,7 +181,7 @@ CategoryPageStyled.FeaturedWrapper = styled.div`
 `;
 
 CategoryPageStyled.ListingWrapper = styled.div`
-  max-width: 1280px;
+  max-width: 1246px;
   height: 500px;
   margin: 0 auto;
 `;

@@ -5,6 +5,20 @@ import { HeadingBold } from '../../styled';
 const CompletedStyled = Card.extend`
   display: inline-block;
   position: relative;
+  .favorite-icon {
+    display: none;
+  }
+  @media(min-width: 832px) {
+    .favorite-icon {
+      display: block;
+      color: #fff;
+      font-size: 28px;
+      position: absolute;
+      top: 20.2px;
+      right: 18.3px;
+      cursor: pointer;
+    }
+  }
 `;
 
 CompletedStyled.Container = styled.div`
@@ -29,13 +43,15 @@ CompletedStyled.ProfilePic = styled.span`
   @media(min-width: 832px) {
     width: 100%;
     height: 220px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `;
 
 CompletedStyled.DetailsWrapper = styled.div`
   padding-left: 16.7px;
   flex: 1;
-  margin-bottom: 34px;
+  margin-bottom: 84.9px;
   .details-header {
     display: flex;
     justify-content: space-between;

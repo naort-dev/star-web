@@ -14,7 +14,7 @@ const CategoryStyled = styled.ul`
     justify-content: center;
   }
   @media(min-width: 1280px) {
-    max-width: 1280px;
+    max-width: 1246px;
     padding-bottom: 20px;
   }
 `;
@@ -38,6 +38,9 @@ CategoryStyled.Item = styled.li`
     padding: 0;
     margin-left: 32px;
     border-left: 0 none;
+    &:first-child {
+      margin-left: 0;
+    }
     &:hover {
       border-left: 0 none;
       padding-left: 0;
@@ -48,7 +51,7 @@ CategoryStyled.Item = styled.li`
     }
     .category-label {
       font-family: ${props => (props.selected ? 'Gilroy-Bold' : 'Gilroy-Medium')};
-      font-size: ${props => (props.selected ? '20px' : '18px')};
+      font-size: ${props => (props.selected ? '20px' : '16px')};
       position: absolute;
       left: 50%;
       transform: translateX(-50%);

@@ -57,7 +57,7 @@ AvatarContainer.Avatar = styled.span`
   display: block;
   width: 100px;
   height: 100px;
-  box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.16);
+  box-shadow: 1px 0px 7px 0 rgba(0,0,0,0.16);
   background: ${props => (props.imageUrl ? `url(${props.imageUrl})` : 'url(assets/images/default-cover.jpg)')} no-repeat;
   background-position: center center;
   background-size: cover;
@@ -80,7 +80,7 @@ AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
     width: 300px;
     height: 300px;
     order: 2;
-    margin-top: -22px;
+    margin-top: -17px;
   }
 `;
 
@@ -112,7 +112,8 @@ AvatarContainer.Category = styled.span`
   width: 100%;
   padding-top: 7px;
   @media(min-width: 832px) {
-    font-size: 13px;
+    color: #555;
+    font-size: 15px;
     text-align: left;
   }
 `;
@@ -132,6 +133,10 @@ AvatarContainer.Name = styled.span`
     font-size: 17px;
     width: calc(100% - 50px);
     text-align: left;
+  }
+
+  span {
+    font-family: Gilroy-Medium;
   }
 `;
 
@@ -181,7 +186,9 @@ AvatarContainer.Content = styled(Link)`
     &.featured {
       border: none;
       ${AvatarContainer.Category} {
-        font-size: 20px;
+        font-size: 15px;
+        line-height: 28px;
+        color: #555;
       }
       ${AvatarContainer.Name} {
         font-size: 47px;

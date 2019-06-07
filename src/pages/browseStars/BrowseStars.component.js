@@ -161,7 +161,7 @@ const BrowseStars = (props) => {
             </CategoryPageStyled.AvatarWrapper>
           </CategoryPageStyled.FeaturedSection>
         </CategoryPageStyled.FeaturedWrapper>
-        <CategoryPageStyled.MainContent fixedContent={fixedContent} padding={listHeight} innerRef={mainRef}>
+        <CategoryPageStyled.MainContent className={fixedContent && 'fixed-filter'} fixedContent={fixedContent} padding={listHeight} innerRef={mainRef}>
           {
             props.category.label !== 'Featured' && showFilter &&
               <CategoryPageStyled.FilterSection headerRef={headerRef} fixedContent={fixedContent} innerRef={filterRef}>
