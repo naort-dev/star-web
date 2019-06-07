@@ -17,7 +17,7 @@ const CompletedBookings = (props) => {
   const [sortVal, setSortVal] = useState({});
 
   const fetchList = (low, high) => {
-    props.fetchBookingsList(low, true, celebCompletedStatusList)
+    props.fetchBookingsList(low, false, celebCompletedStatusList)
   }
 
   return (
@@ -61,26 +61,32 @@ const CompletedBookings = (props) => {
           placeholder='Search by keyword'
         />
       </CompletedStyled.FilterSection>
-      <Pagination
-        classes={{root: 'pagination-wrapper top'}}
-        offset={props.bookingsList.offset}
-        count={props.bookingsList.count}
-        limit={props.bookingsList.limit}
-        dataLoading={props.bookingsList.loading}
-        onChange={fetchList}
-      />
+      {
+        props.bookingsList.data.length > 0 &&
+          <Pagination
+            classes={{root: 'pagination-wrapper top'}}
+            offset={props.bookingsList.offset}
+            count={props.bookingsList.count}
+            limit={props.bookingsList.limit}
+            dataLoading={props.bookingsList.loading}
+            onChange={fetchList}
+          />
+      }
       {
         props.bookingsList.loading && <Loader />
       }
-      <CompletedStyled.ListSection>
-        {
-          props.bookingsList.data.map((bookItem) => (
-            <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
-          ))
-        }
-      </CompletedStyled.ListSection>
       {
-        props.bookingsList.data.length > 0 && props.bookingsList.count > props.bookingsList.offset &&
+        !props.bookingsList.loading &&
+          <CompletedStyled.ListSection>
+            {
+              props.bookingsList.data.map((bookItem) => (
+                <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+              ))
+            }
+          </CompletedStyled.ListSection>
+      }
+      {
+        !props.bookingsList.loading && props.bookingsList.count > props.bookingsList.offset &&
           <Pagination
             classes={{root: 'pagination-wrapper bottom'}}
             offset={props.bookingsList.offset}

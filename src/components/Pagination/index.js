@@ -33,7 +33,7 @@ const Pagination = (props) => {
       low,
       high: high >= props.count ? props.count : high,
     })
-  }, [props.offset])
+  }, [props.offset, props.count])
 
   return (
     <PaginationStyled className={props.classes.root}>
