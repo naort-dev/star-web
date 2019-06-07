@@ -12,6 +12,9 @@ const Pagination = (props) => {
   const [pageLimit, updatePageLimits] = useState({ low: 1, high: props.limit });
 
   const updateOffsets = type => () => {
+    if (props.dataLoading) {
+      return;
+    } 
     if (type === 'next') {
       const low = pageLimit.low + props.limit;
       const high = props.limit + pageLimit.high >= props.count ? props.count : props.limit + pageLimit.high;
@@ -46,11 +49,16 @@ const Pagination = (props) => {
   )
 }
 
+Pagination.defaultProps = {
+  dataLoading: false,
+}
+
 Pagination.propTypes = {
   count: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  dataLoading: PropTypes.bool,
 }
 
 export default Pagination;
