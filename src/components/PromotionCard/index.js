@@ -68,7 +68,6 @@ const postImageToFacebook = (
   imageData,
   message,
 ) => {
-  debugger
   // this is the multipart/form-data boundary we'll use
   const boundary = '----ThisIsTheBoundary1234567890';
   // let's encode our image file, which is contained in the var
@@ -113,7 +112,6 @@ const postCanvasToFacebook = () => {
     };
   }
 
-  debugger
   const ctx = document.createElement('canvas');
   const data = ctx.toDataURL('image/png');
   const encodedPng = data.substring(data.indexOf(',') + 1, data.length);
@@ -196,7 +194,7 @@ const Promotion = props => {
         </p>
         <PromoTemplate
           template={
-            '<section style="background-image:url(../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"/>'
+            '<span class="img-back" style="background-image:url(.../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(../../assets/images/default-cover.jpg);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 43px; border-radius: 50%;"></span>'
           }
         />
       </section>

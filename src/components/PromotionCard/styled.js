@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Layout = styled.section`
   text-align: center;
   .header-sec {
-    width: 243px;
+    width: 265px;
     margin: 0 auto;
     padding-bottom: 20px;
     .promotion-head {
@@ -23,6 +23,9 @@ export const Layout = styled.section`
     .share-link {
       text-decoration: underline;
       cursor: pointer;
+    }
+    .template-card {
+      position: relative;
     }
   }
   .share-text {
