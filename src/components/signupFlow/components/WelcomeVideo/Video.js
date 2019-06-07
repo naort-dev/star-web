@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
-import axios from 'axios';
 import PropTypes from 'prop-types';
+import QuestionBuilder from 'components/QuestionBuilder';
+import Button from 'components/PrimaryButton';
+import { FlexCenter } from 'styles/CommonStyled';
+import VideoRecorder from 'components/VideoRecorder';
+import { checkMediaRecorderSupport, isIOSDevice } from 'utils/checkOS';
 import {
   Layout,
   VideoContainer,
@@ -10,17 +14,12 @@ import {
   TimeSpan,
   FlexBox,
 } from './Video.styles';
-import QuestionBuilder from '../../../../components/QuestionBuilder';
-import Button from '../../../../components/PrimaryButton';
-import { FlexCenter } from '../../../../styles/CommonStyled';
-import VideoRecorder from '../../../../components/VideoRecorder';
-import { checkMediaRecorderSupport } from '../../../../utils/checkOS';
+
 import { questionsAbout } from './dataModals';
 import {
   recordTrigger,
   updateMediaStore,
   playPauseMedia,
-  setVideoUploadedFlag,
 } from '../../../../store/shared/actions/commonActions';
 import { recorder } from '../../../../constants/videoRecorder';
 
@@ -32,6 +31,8 @@ const Video = props => {
   const [error, errorHandler] = useState(false);
   const [isStop, stopHandler] = useState(false);
   const [recordingTime, setRecordingTime] = useState('01:00');
+
+  const videoRecordInput = useRef(null);
 
   const mediaHandler = btnLabel => {
     props.recordTrigger();
@@ -48,11 +49,15 @@ const Video = props => {
 
   const buttonClickHandler = () => {
     if (buttonLabel === 'Start Recording') {
-      mediaHandler('Start Recording', false);
-      stopHandler(false);
+      if (isIOSDevice()) {
+        videoRecordInput.current.click();
+      } else {
+        stopHandler(false);
+        mediaHandler('Start Recording');
+      }
     } else if (buttonLabel === 'Stop') {
       setRecordingTime('01:00');
-      mediaHandler('Save & Continue', true);
+      mediaHandler('Save & Continue');
       stopHandler(true);
     } else if (buttonLabel === 'Save & Continue') {
       if (props.videoUploaded) {
@@ -65,11 +70,14 @@ const Video = props => {
     }
   };
   const stopRecordHandler = () => {
-    mediaHandler('Save & Continue', true);
+    mediaHandler('Save & Continue');
   };
 
   const retryRecordHandler = () => {
     showHideScript(false);
+    if (isIOSDevice()) {
+      videoRecordInput.current.click();
+    }
   };
   const errorHandlerCallback = () => {
     errorHandler(true);
@@ -97,9 +105,35 @@ const Video = props => {
     setRecordingTime(recordingTime);
   };
 
+  const uploadHandler = (input, isIOS) => {
+    const file = input.target.files[0];
+    if (file.type.startsWith('video/')) {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      const blob = new Blob([file], { type: 'video/webm' });
+      const objectURL = window.URL.createObjectURL(file);
+      props.updateMediaStore({
+        videoSrc: objectURL,
+        superBuffer: blob,
+        recordedTime: null,
+        recorded: Boolean(isIOS),
+      });
+      setRecordingTime('NA');
+      changeButtonLabel('Save & Continue');
+      showHideScript(false);
+      props.setVideoUploadedFlag(false);
+    } else {
+      props.updateToast({
+        value: true,
+        message: 'Please upload video file.',
+        variant: 'error',
+      });
+    }
+  };
+
   return (
     <Layout>
-      {checkMediaRecorderSupport() && (
+      {(isIOSDevice() || checkMediaRecorderSupport()) && (
         <FlexBox>
           <VideoContainer>
             <VideoRecorder
@@ -118,10 +152,12 @@ const Video = props => {
           <QuestionContainer isShow={showHideFlg && !error}>
             {!error && (
               <React.Fragment>
-                <TimeSpan>
-                  <span className="text">{renderTimeHeader()}</span>
-                  <span className="time">{renderTime()}</span>
-                </TimeSpan>
+                {!isIOSDevice() && (
+                  <TimeSpan>
+                    <span className="text">{renderTimeHeader()}</span>
+                    <span className="time">{renderTime()}</span>
+                  </TimeSpan>
+                )}
                 <h1 className="heading">What You Should Say…</h1>
                 <QuestionBuilder questionsList={questionsAbout} />
                 <FlexCenter>
@@ -140,19 +176,20 @@ const Video = props => {
             </span>
           </QuestionContainer>
 
-{(!checkMediaRecorderSupport() || error) && (
-  <QuestionContainer isShow error>
-    <p className="note">
-      Your system does not have video recording capability, but you will
-      need to record a video to ask a question to the Star. <br />
-      <br />
-      You can:
-      <br />
-      <br /> Record with our App
-      <br /> Use our iOS or Android app to book the star.
-    </p>
-  </QuestionContainer>
-)}
+          {!isIOSDevice() && (!checkMediaRecorderSupport() || error) && (
+            <QuestionContainer isShow error>
+              <p className="note">
+                Your system does not have video recording capability, but you
+                will need to record a video to ask a question to the Star.{' '}
+                <br />
+                <br />
+                You can:
+                <br />
+                <br /> Record with our App
+                <br /> Use our iOS or Android app to book the star.
+              </p>
+            </QuestionContainer>
+          )}
           {!error && (
             <FlexCenter className="mobileBtn">
               <Button onClick={buttonClickHandler} className="button">
@@ -172,11 +209,19 @@ const Video = props => {
               onClick={() => showHideScript(!showHideFlg)}
               isShow={showHideFlg}
             >
-              {showHideFlg? "Hide Script": "Show Script"}
+              {showHideFlg ? 'Hide Script' : 'Show Script'}
             </ShowHide>
           )}
         </FlexBox>
       )}
+
+      <input
+        ref={videoRecordInput}
+        type="file"
+        accept="video/*;capture=camcorder"
+        className="videoInputCapture"
+        onChange={event => uploadHandler(event, true)}
+      />
     </Layout>
   );
 };
@@ -191,6 +236,7 @@ Video.propTypes = {
   setVideoUploadedFlag: PropTypes.func,
   uploadVideo: PropTypes.func,
   videoFile: PropTypes.object,
+  updateToast: PropTypes.func.isRequired,
 };
 
 Video.defaultProps = {

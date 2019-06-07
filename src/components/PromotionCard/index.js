@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import PromoTemplate from 'components/PromoTemplates';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -61,45 +62,55 @@ const Base64Binary = {
   },
 };
 
-const postImageToFacebook = (
-  authToken,
-  filename,
-  mimeType,
-  imageData,
-  message,
-) => {
-  // this is the multipart/form-data boundary we'll use
-  const boundary = '----ThisIsTheBoundary1234567890';
-  // let's encode our image file, which is contained in the var
-  let formData = '--' + boundary + '\r\n';
-  formData +=
-    'Content-Disposition: form-data; name="source"; filename="' +
-    filename +
-    '"\r\n';
-  formData += 'Content-Type: ' + mimeType + '\r\n\r\n';
-  for (var i = 0; i < imageData.length; ++i) {
-    formData += String.fromCharCode(imageData[i] & 0xff);
-  }
-  formData += '\r\n';
-  formData += '--' + boundary + '\r\n';
-  formData += 'Content-Disposition: form-data; name="message"\r\n\r\n';
-  formData += message + '\r\n';
-  formData += '--' + boundary + '--\r\n';
+const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
+  console.log('postimage--------');
+  var fd = new FormData();
+  fd.append('access_token', token);
+  fd.append('source', imageData);
+  fd.append('no_story', true);
 
-  const xhr = new XMLHttpRequest();
-  xhr.open(
-    'POST',
-    'https://graph.facebook.com/me/photos?access_token=' + authToken,
-    true,
-  );
-  xhr.onload = xhr.onerror = function() {
-    console.log(xhr.responseText);
-  };
-  xhr.setRequestHeader(
-    'Content-Type',
-    'multipart/form-data; boundary=' + boundary,
-  );
-  xhr.sendAsBinary(formData);
+  // Upload image to facebook without story(post to feed)
+  axios({
+    method: 'post',
+    url: `https://graph.facebook.com/me/photos?access_token=${token}`,
+    data: fd,
+  })
+    .then(function(data) {
+      console.log('axios post--------');
+      FB.api('/' + data.id + '?fields=images', function(response) {
+        console.log('fb api--------');
+        if (response && !response.error) {
+          //console.log(response.images[0].source);
+
+          // Create facebook post using image
+          FB.api(
+            '/me/feed',
+            'POST',
+            {
+              message: '',
+              picture: response.images[0].source,
+              link: window.location.href,
+              name: 'starsona',
+              description: message,
+              privacy: {
+                value: 'SELF',
+              },
+            },
+            function(response) {
+              if (response && !response.error) {
+                /* handle the result */
+                console.log('Posted story to facebook');
+                console.log(response);
+              }
+            },
+          );
+        }
+      });
+    })
+    .catch(function(response) {
+      //handle error
+      console.log(response);
+    });
 };
 
 const postCanvasToFacebook = () => {
@@ -117,6 +128,7 @@ const postCanvasToFacebook = () => {
   const encodedPng = data.substring(data.indexOf(',') + 1, data.length);
   const decodedPng = Base64Binary.decode(encodedPng);
   FB.getLoginStatus(function(response) {
+    console.log('getlogin--------');
     if (response.status === 'connected') {
       postImageToFacebook(
         response.authResponse.accessToken,
