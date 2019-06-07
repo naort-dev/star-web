@@ -64,6 +64,11 @@ const Bookings = (props) => {
   const onBackClick = () => {
     props.history.goBack();
   }
+
+  const onOpenClick = bookingId => () => {
+    props.history.push(`/manage/bookings?type=open&selected=${bookingId}`)
+  }
+
   return (
     <BookingsStyled>
       <BackArrow className="arrow" onClick={onBackClick} />
@@ -92,7 +97,12 @@ const Bookings = (props) => {
             }
             {
               props.bookingsList.data.map((bookItem) => (
-                <GeneralList data={bookItem} />
+                <GeneralList
+                  expiration={props.config.request_expiration_days}
+                  onPrimaryClick={onOpenClick(bookItem.booking_id)}
+                  key={bookItem.booking_id}
+                  data={bookItem}
+                />
               ))
             }
             <BookingsStyled.SectionHeader>
@@ -119,6 +129,7 @@ Bookings.propTypes = {
   location: PropTypes.object.isRequired,
   bookingsList: PropTypes.object.isRequired,
   fetchBookingsList: PropTypes.func.isRequired,
+  config: PropTypes.object.isRequired,
 }
 
 export default Bookings;

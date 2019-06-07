@@ -5,6 +5,7 @@ import Bookings from './Bookings.component';
 
 const mapStateToProps = state => ({
   bookingsList: state.bookingsList,
+  config: state.config.data,
 });
 
 const mapDispatchToProps = dispatch => ({
