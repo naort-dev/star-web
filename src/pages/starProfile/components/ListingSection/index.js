@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { times } from 'lodash';
+import Loader from '../../../../components/Loader';
 import VideoRender from '../../../../components/VideoRender';
 
 import ListingStyled from './styled';
@@ -9,7 +10,7 @@ const videoCountLimit = {
   'smallMobile': 2,
   'mobile': 3,
   'ipad': 2,
-  'desktop': 4,
+  'desktop': 5,
 }
 
 const reactionCountLimit = {
@@ -126,7 +127,7 @@ const ListingSection = (props) => {
             />
           </ListingStyled.VideoItem>
         </ListingStyled.VideoItemWrapper>
-        <ListingStyled.CommentsWrapper visible={selectedVideo.indexOf(index) >= 0}>
+        {/* <ListingStyled.CommentsWrapper visible={selectedVideo.indexOf(index) >= 0}>
           <span className='comments-inner'>
             {
               video.comments.length ?
@@ -136,7 +137,7 @@ const ListingSection = (props) => {
               : <span className="comment-item empty-comment">No comments yet</span>
             }
           </span>
-        </ListingStyled.CommentsWrapper>
+        </ListingStyled.CommentsWrapper> */}
       </ListingStyled.ContentItem>
     )
   }
@@ -161,6 +162,7 @@ const ListingSection = (props) => {
                   </ListingStyled.ContentItem>
                 : null
               }
+              { props.videosList.loading && <Loader /> }
             </ListingStyled.Content>
           </ListingStyled.ContentSection>
         : null
@@ -199,6 +201,7 @@ const ListingSection = (props) => {
                   </ListingStyled.ContentItem>
                 : null
               }
+              { props.reactionsList.loading && <Loader /> }
             </ListingStyled.Content>
           </ListingStyled.ContentSection>
         : null
