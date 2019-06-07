@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { withTheme } from 'styled-components';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
-import { faPlay} from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartSolid, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/pro-light-svg-icons';
+import fitty from 'fitty';
 import { faChevronLeft } from '@fortawesome/pro-regular-svg-icons';
 import { pipeSeparator, getStarName } from '../../../../utils/dataToStringFormatter';
 import VideoRender from '../../../../components/VideoRender';
@@ -34,6 +34,14 @@ const DetailSection = (props) => {
     rotation: '15deg',
     color: lightOrange,
   }];
+
+  const autoFitText = () => {
+    fitty('#star-name', {
+      minSize: 33,
+      maxSize: 74,
+      multiLine: true,
+    })
+  }
 
   const toggleProfileVideo = () => {
     if ((document.body.getBoundingClientRect().width < 832 || window.innerWidth < 832) && props.celebDetails.profile_video) {
@@ -72,6 +80,7 @@ const DetailSection = (props) => {
     } else {
       toggleShowMore(false)
     }
+    autoFitText();
   }, [props.celebDetails.description]);
 
   useEffect(() => {
@@ -114,7 +123,7 @@ const DetailSection = (props) => {
           </span>
         </DetailStyled.StarAvatarWrapper>
         <DetailStyled.StarDetailsWrapper>
-          <DetailStyled.StarName>
+          <DetailStyled.StarName id='star-name'>
             {
               getStarName(props.userDetails.nick_name, props.userDetails.first_name, props.userDetails.last_name)
             }            

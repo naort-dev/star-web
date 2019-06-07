@@ -6,7 +6,7 @@ import './styles.scss';
 const SubHeader = props => {
   return (
     <React.Fragment>
-      <BackArrow className="arrow" onClick={props.onClick} />
+      <BackArrow className="arrow-head" onClick={props.onClick} />
       <h1 className="head1">{props.heading}</h1>
     </React.Fragment>
   );
