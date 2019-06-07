@@ -49,14 +49,15 @@ const Video = props => {
 
   const buttonClickHandler = () => {
     if (buttonLabel === 'Start Recording') {
-      mediaHandler('Start Recording', false);
-      stopHandler(false);
       if (isIOSDevice()) {
         videoRecordInput.current.click();
+      } else {
+        stopHandler(false);
+        mediaHandler('Start Recording');
       }
     } else if (buttonLabel === 'Stop') {
       setRecordingTime('01:00');
-      mediaHandler('Save & Continue', true);
+      mediaHandler('Save & Continue');
       stopHandler(true);
     } else if (buttonLabel === 'Save & Continue') {
       if (props.videoUploaded) {
@@ -69,11 +70,14 @@ const Video = props => {
     }
   };
   const stopRecordHandler = () => {
-    mediaHandler('Save & Continue', true);
+    mediaHandler('Save & Continue');
   };
 
   const retryRecordHandler = () => {
     showHideScript(false);
+    if (isIOSDevice()) {
+      videoRecordInput.current.click();
+    }
   };
   const errorHandlerCallback = () => {
     errorHandler(true);
@@ -107,7 +111,7 @@ const Video = props => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       const blob = new Blob([file], { type: 'video/webm' });
-      const objectURL = window.URL.createObjectURL(blob);
+      const objectURL = window.URL.createObjectURL(file);
       props.updateMediaStore({
         videoSrc: objectURL,
         superBuffer: blob,
@@ -115,8 +119,9 @@ const Video = props => {
         recorded: Boolean(isIOS),
       });
       setRecordingTime('NA');
-      mediaHandler('Save & Continue', true);
-      stopHandler(true);
+      changeButtonLabel('Save & Continue');
+      showHideScript(false);
+      props.setVideoUploadedFlag(false);
     } else {
       props.updateToast({
         value: true,
@@ -147,10 +152,12 @@ const Video = props => {
           <QuestionContainer isShow={showHideFlg && !error}>
             {!error && (
               <React.Fragment>
-                <TimeSpan>
-                  <span className="text">{renderTimeHeader()}</span>
-                  <span className="time">{renderTime()}</span>
-                </TimeSpan>
+                {!isIOSDevice() && (
+                  <TimeSpan>
+                    <span className="text">{renderTimeHeader()}</span>
+                    <span className="time">{renderTime()}</span>
+                  </TimeSpan>
+                )}
                 <h1 className="heading">What You Should Say…</h1>
                 <QuestionBuilder questionsList={questionsAbout} />
                 <FlexCenter>

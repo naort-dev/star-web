@@ -16,7 +16,7 @@ import {
   updateMediaStore,
   updateToast,
 } from '../../../../store/shared/actions/commonActions';
-import { audioVideoSupport } from '../../../../utils/checkOS';
+import { audioVideoSupport, isIOSDevice } from '../../../../utils/checkOS';
 
 const WelcomeVideo = props => {
   const [compSwitch, compSwitchHandler] = useState(
@@ -41,7 +41,7 @@ const WelcomeVideo = props => {
     }
   };
   const continueCallback = () => {
-    if (!isDeviceSupported) {
+    if (!isIOSDevice() && !isDeviceSupported) {
       props.changeStep(props.currentStep + 2);
     } else {
       compSwitchHandler(true);

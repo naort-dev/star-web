@@ -75,9 +75,10 @@ const Question = props => {
 
   const buttonClickHandler = () => {
     if (stateObject.buttonLabel === 'Record') {
-      mediaHandler('Record', false, false);
       if (isIOSDevice()) {
         videoRecordInput.current.click();
+      } else {
+        mediaHandler('Record', false, false);
       }
     } else if (stateObject.buttonLabel === 'Stop') {
       mediaHandler('Continue', true, true);
@@ -127,7 +128,7 @@ const Question = props => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       const blob = new Blob([file], { type: 'video/webm' });
-      const objectURL = window.URL.createObjectURL(blob);
+      const objectURL = window.URL.createObjectURL(file);
       props.updateMediaStore({
         videoSrc: objectURL,
         superBuffer: blob,
@@ -221,7 +222,7 @@ const Question = props => {
                     stateObject.buttonLabel,
                   )}
                   {stateObject.continueFlg &&
-                    (props.recorded
+                    (props.recorded || isIOSDevice()
                       ? getFileUpload(['uploadLink'])
                       : getRecordLink())}
                 </WebButtons>
@@ -239,7 +240,7 @@ const Question = props => {
                 stateObject.buttonLabel,
               )}
               {stateObject.continueFlg &&
-                (props.recorded
+                (props.recorded || isIOSDevice()
                   ? getFileUpload(['uploadLink'])
                   : getRecordLink())}
             </MobButtons>
