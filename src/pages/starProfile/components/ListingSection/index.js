@@ -9,7 +9,7 @@ import ListingStyled from './styled';
 const videoCountLimit = {
   'smallMobile': 2,
   'mobile': 3,
-  'ipad': 2,
+  'ipad': 3,
   'desktop': 5,
 }
 

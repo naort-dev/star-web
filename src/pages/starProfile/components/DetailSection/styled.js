@@ -195,7 +195,7 @@ DetailStyled.ProfileVideoSection = styled.div`
   }
   @media(min-width: 832px) {
     display: block;
-    padding-top: 10.9px;
+    padding-top: 31.9px;
     ${DetailStyled.StarName} {
       display: none;
     }
