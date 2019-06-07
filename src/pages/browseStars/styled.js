@@ -91,7 +91,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
 
 CategoryPageStyled.FilterSection = styled.div`
   position: fixed;
-  padding-top: 20px;
+  padding-top: 26px;
   top: 0;
   bottom: 0;
   left: 0;
