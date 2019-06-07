@@ -8,7 +8,7 @@ export const PageWrapper = styled.div`
 
 export const PageContainer= styled.div`
   width: 100%;
-  max-width: 1280px;
+  max-width: 1246px;
   margin: 0px auto;
   margin-top: 143px;
   section {
