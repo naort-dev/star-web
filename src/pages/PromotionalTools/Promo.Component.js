@@ -18,21 +18,24 @@ import { Layout, TemplateList, Accordion } from './styled';
 const templates = [
   {
     profilePic: '../../assets/images/default-cover.jpg',
+    bagImg: '.../../assets/images/profilebackground.svg',
     name: 'NAME NAME',
     template:
-      '<span class="img-back" style="background-image:url(.../../assets/images/profilebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 15px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(@@prof-pic@@);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 65px;"></span><span class="user-name" style="position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;bottom: 80px;font-size: 18px;color: #ff6c58;font-family: Gilroy;">@@user-name@@</span>',
+      '<span class="img-back" style="background-image:url(@@bag-img@@); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; border-radius: 15px; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span class="prof-img" style="background-image:url(@@prof-pic@@);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 65px;"></span><span class="user-name" style="position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;bottom: 80px;font-size: 18px;color: #ff6c58;font-family: Gilroy;">@@user-name@@</span>',
   },
   {
     profilePic: '../../assets/images/default-cover.jpg',
+    bagImg: '.../../assets/images/bluebackground.svg',
     name: 'NAME NAME',
     template:
-      '<span class="img-back" style="background-image:url(.../../assets/images/bluebackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(@@prof-pic@@);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 43px; border-radius: 50%;"></span>',
+      '<span class="img-back" style="background-image:url(@@bag-img@@); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span class="prof-img" style="background-image:url(@@prof-pic@@);width: 118px;height: 118px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 74px; top: 43px; border-radius: 50%;"></span>',
   },
   {
     profilePic: '../../assets/images/default-cover.jpg',
+    bagImg: '.../../assets/images/crowdbackground.svg',
     name: 'NAME NAME',
     template:
-      '<span class="img-back" style="background-image:url(.../../assets/images/crowdbackground.svg); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span style="background-image:url(@@prof-pic@@);width: 102px;height: 102px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 76px; top: 120px; border-radius: 50%;"></span> <span class="user-name" style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 70px;font-size: 21px;color: #555;font-family: Gilroy-Semibold; text-transform: uppercase;">@@user-name@@</span><span style="position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 98px;font-size: 15px;color: #555;font-family: Gilroy-Semibold;">IS ON STARSONA!</span>',
+      '<span class="img-back" style="background-image:url(@@bag-img@@); width: 265px; height: 265px; background-size: contain; display: inline-block; background-repeat: no-repeat; box-shadow: 0 3px 16px 0 rgba(0, 0, 0, 0.16);"></span><span class="prof-img" style="background-image:url(@@prof-pic@@);width: 102px;height: 102px;background-size: contain;display: inline-block;background-repeat: no-repeat; position: absolute;left: 76px; top: 120px; border-radius: 50%;"></span> <span class="user-name" style=" position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 70px;font-size: 21px;color: #555;font-family: Gilroy-Semibold; text-transform: uppercase;">@@user-name@@</span><span style="position: absolute;left: 0;text-align: center;display: inline-block;width: 100%;top: 98px;font-size: 15px;color: #555;font-family: Gilroy-Semibold;">IS ON STARSONA!</span>',
   },
 ];
 
@@ -65,6 +68,7 @@ const PromoTools = props => {
 
   const getTemplate = profile => {
     let temp = profile.template;
+    temp = temp.replace('@@bag-img@@', profile.bagImg);
     temp = temp.replace('@@prof-pic@@', profile.profilePic);
     temp = temp.replace('@@user-name@@', profile.name);
     return temp;

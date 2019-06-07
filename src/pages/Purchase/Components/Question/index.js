@@ -70,6 +70,7 @@ const Question = props => {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
       return true;
     }
+    return false;
   };
 
   const buttonClickHandler = () => {
@@ -260,28 +261,27 @@ const Question = props => {
         </React.Fragment>
       )}
 
-      {!isIOSDevice() && (!checkMediaRecorderSupport() ||
-        stateObject.error) && (
-          <QuestionContainer isShow error>
-            <p className="note">
-              Your system does not have video recording capability, but you will
+      {!isIOSDevice() && (!checkMediaRecorderSupport() || stateObject.error) && (
+        <QuestionContainer isShow error>
+          <p className="note">
+            Your system does not have video recording capability, but you will
             need to record a video to ask a question to the Star. <br />
-              <br />
-              You can:
             <br />
-              <br /> Record with our App
+            You can:
+            <br />
+            <br /> Record with our App
             <br /> Use our iOS or Android app to book the star.
           </p>
-            {getFileUpload(['uploadBtn noSupportBtn'])}
-          </QuestionContainer>
-        )}
+          {getFileUpload(['uploadBtn noSupportBtn'])}
+        </QuestionContainer>
+      )}
 
       <input
         ref={videoRecordInput}
         type="file"
         accept="video/*;capture=camcorder"
         className="videoInputCapture"
-        onChange={(event) => uploadHandler(event, true)}
+        onChange={event => uploadHandler(event, true)}
       />
     </Layout>
   );

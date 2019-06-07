@@ -14,34 +14,34 @@ import {
   loaderAction,
   setVideoUploadedFlag,
   updateMediaStore,
+  updateToast,
 } from '../../../../store/shared/actions/commonActions';
-import { audioVideoSupport }from '../../../../utils/checkOS';
+import { audioVideoSupport } from '../../../../utils/checkOS';
 
 const WelcomeVideo = props => {
   const [compSwitch, compSwitchHandler] = useState(
     props.switched ? props.switched : false,
   );
   const [isDeviceSupported, setDeviceSupport] = useState(false);
-  useEffect(()=>{
+  useEffect(() => {
     checkforAudioVideoSupport();
     props.updateMediaStore({
       videoSrc: props.signupDetails.welcomeVideo,
       recordedTime: props.signupDetails.welcomeVideoLength,
-    })
+    });
     props.setVideoUploadedFlag(props.signupDetails.videoUploaded);
-  },[]);
+  }, []);
   const checkforAudioVideoSupport = async () => {
-    const deviceSupport = await audioVideoSupport('videoinput') ;
-    if(deviceSupport){
+    const deviceSupport = await audioVideoSupport('videoinput');
+    if (deviceSupport) {
       setDeviceSupport(true);
       props.audioVideoSupport(true);
     } else {
       props.audioVideoSupport(false);
     }
-    
-  }
+  };
   const continueCallback = () => {
-    if(!isDeviceSupported) {
+    if (!isDeviceSupported) {
       props.changeStep(props.currentStep + 2);
     } else {
       compSwitchHandler(true);
@@ -95,12 +95,13 @@ const WelcomeVideo = props => {
               uploadVideo={uploadVideo}
               loaderAction={props.loaderAction}
               setVideoUploadedFlag={props.setVideoUploadedFlag}
+              updateToast={props.updateToast}
             />
           ) : (
             <About
               continueCallback={continueCallback}
               skipCallback={props.skipCallback}
-              isDeviceSupported = {isDeviceSupported}
+              isDeviceSupported={isDeviceSupported}
             />
           )}
         </Scrollbars>
@@ -116,6 +117,7 @@ WelcomeVideo.propTypes = {
   setProfileVideo: PropTypes.func.isRequired,
   setVideoUploadedFlag: PropTypes.func.isRequired,
   switched: PropTypes.bool,
+  updateToast: PropTypes.func.isRequired,
 };
 
 WelcomeVideo.defaultProps = {
@@ -132,6 +134,7 @@ function mapDispatchToProps(dispatch) {
     setVideoUploadedFlag: value => {
       dispatch(setVideoUploadedFlag(value));
     },
+    updateToast: toastObj => dispatch(updateToast(toastObj)),
   };
 }
 

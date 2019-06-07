@@ -12,6 +12,14 @@ export const getMobileOperatingSystem = () => {
   return false;
 };
 
+export const isIOSDevice = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+  if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+    return true;
+  }
+  return false;
+};
+
 export const checkMediaRecorderSupport = () => {
   const { navigator } = window;
   if (
