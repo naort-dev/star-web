@@ -208,6 +208,7 @@ function FormContainer(props) {
           valueKey="key"
           placeHolder="What is the occasion?"
           className="custom"
+          classes={{ scrollbar: 'scroll-wrap' }}
           onChange={occasion => onSelectOccasion(occasion)}
         />
       </FlexCenter>
