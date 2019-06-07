@@ -13,6 +13,9 @@ PaginationStyled.Details = styled.div`
   span {
     color: #b1b1b1;
   }
+  @media(min-width: 832px) {
+    margin-right: 31px;
+  }
 `;
 
 PaginationStyled.ArrowWrapper = styled.button`
@@ -31,6 +34,15 @@ PaginationStyled.ArrowWrapper = styled.button`
     ${props => props.disabled && `
       opacity: 0.24;
     `}
+  }
+  @media(min-width: 832px) {
+    &.left-arrow {
+      order: 2;
+      margin-right: 14px;
+    }
+    &.right-arrow {
+      order: 3;
+    }
   }
 `;
 

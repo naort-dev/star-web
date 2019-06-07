@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { celebCompletedStatusList } from '../../../../constants/requestStatusList';
 import { fetchBookingsList } from '../../actions/getBookingsList';
 import Dropdown from '../../../../components/Dropdown';
+import Loader from '../../../../components/Loader';
 import Pagination from '../../../../components/Pagination';
 import { CompletedCard } from '../../../../components/ListCards';
 import { options, filterOptions, SortBy } from '../../constants';
@@ -59,6 +60,9 @@ const CompletedBookings = (props) => {
         dataLoading={props.bookingsList.loading}
         onChange={fetchList}
       />
+      {
+        props.bookingsList.loading && <Loader />
+      }
       <CompletedStyled.ListSection>
         {
           props.bookingsList.data.map((bookItem) => (

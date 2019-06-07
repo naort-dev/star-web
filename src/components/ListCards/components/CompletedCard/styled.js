@@ -29,6 +29,8 @@ CompletedStyled.ProfilePic = styled.span`
   @media(min-width: 832px) {
     width: 100%;
     height: 220px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `;
 

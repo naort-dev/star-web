@@ -32,14 +32,14 @@ const Pagination = (props) => {
   }
 
   return (
-    <PaginationStyled>
-      <PaginationStyled.ArrowWrapper disabled={pageLimit.low === 1} onClick={updateOffsets('prev')}>
+    <PaginationStyled className={props.classes.root}>
+      <PaginationStyled.ArrowWrapper className='left-arrow' disabled={pageLimit.low === 1} onClick={updateOffsets('prev')}>
         <FontAwesomeIcon icon={faChevronLeft} />
       </PaginationStyled.ArrowWrapper>
       <PaginationStyled.Details>
         {pageLimit.low} - {pageLimit.high} <span>of</span> {props.count}
       </PaginationStyled.Details>
-      <PaginationStyled.ArrowWrapper disabled={pageLimit.high === props.count} onClick={updateOffsets('next')}>
+      <PaginationStyled.ArrowWrapper className='right-arrow' disabled={pageLimit.high === props.count} onClick={updateOffsets('next')}>
         <FontAwesomeIcon icon={faChevronRight} />
       </PaginationStyled.ArrowWrapper>
     </PaginationStyled>
@@ -50,6 +50,7 @@ Pagination.propTypes = {
   count: PropTypes.number.isRequired,
   limit: PropTypes.number.isRequired,
   onChange: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 }
 
 export default Pagination;
