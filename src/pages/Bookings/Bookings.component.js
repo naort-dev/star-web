@@ -5,6 +5,7 @@ import Dropdown from '../../components/Dropdown';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
 import { options } from './constants';
+import Loader from '../../components/Loader';
 import { GeneralList, StarCompleted } from '../../components/ListCards';
 import { celebOpenStatusList, celebCompletedStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
@@ -80,6 +81,9 @@ const Bookings = (props) => {
               onChange={handleCategoryChange}
               placeHolder="Select a booking type"
             />
+            {
+              props.bookingsList.loading && <Loader />
+            }
             {
               props.bookingsList.data.length > 0 &&
                 <BookingsStyled.SectionHeader>

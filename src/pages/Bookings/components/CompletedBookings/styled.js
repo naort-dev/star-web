@@ -1,7 +1,13 @@
 import styled from 'styled-components'
 
 const CompletedStyled = styled.div`
-
+  @media(min-width: 832px) {
+    .pagination-wrapper {
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  }
 `;
 
 CompletedStyled.FilterSection = styled.div`

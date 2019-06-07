@@ -6,6 +6,7 @@ import {
   faComment,
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartLight } from '@fortawesome/pro-light-svg-icons';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { HeadingBold } from '../../styled';
 import StarRating from '../../../StarRating';
@@ -46,6 +47,9 @@ const CompletedCard = (props) => {
   }
   return (
     <CompletedStyled className={props.classes.root}>
+      <span className='favorite-icon'>
+        <FontAwesomeIcon icon={faHeartLight} />
+      </span>
       <CompletedStyled.Container>
         <CompletedStyled.ProfilePic />
         <CompletedStyled.DetailsWrapper>
