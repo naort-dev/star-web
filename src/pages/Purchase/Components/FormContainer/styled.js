@@ -24,6 +24,9 @@ export const Layout = styled.section`
   .cus-drop {
     width: 100%;
   }
+  .scroll-wrap {
+    height: 220px !important;
+  }
 `;
 Layout.EventStep2 = styled.div`
   padding-top: 40px;

@@ -54,7 +54,6 @@ DropdownStyled.OptionsList = styled.ul`
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
   `}
-  overflow: auto;
   padding: 5px 0;
   background: ${props => props.secondary ? '#fff' : props.theme.white};
   z-index: 1;
