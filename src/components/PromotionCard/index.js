@@ -82,43 +82,43 @@ const postCanvasToFacebook = () => {
   const data = ctx.toDataURL('image/png');
   const decodedPng = dataURItoBlob(data);
   FB.getLoginStatus(function(response) {
-    alert(response.authResponse.accessToken);
+    // alert(response.authResponse.accessToken);
     console.log(response);
-    if (response.status === 'connected') {
-      postImageToFacebook(
-        response.authResponse.accessToken,
-        'sample',
-        'image/png',
-        decodedPng,
-        'sample',
-      );
-    } else if (response.status === 'not_authorized') {
-      FB.login(
-        function(response) {
-          postImageToFacebook(
-            response.authResponse.accessToken,
-            'sample',
-            'image/png',
-            decodedPng,
-            'sample',
-          );
-        },
-        { scope: 'publish_actions' },
-      );
-    } else {
-      FB.login(
-        function(response) {
-          postImageToFacebook(
-            response.authResponse.accessToken,
-            'sample',
-            'image/png',
-            decodedPng,
-            'sample',
-          );
-        },
-        { scope: 'publish_actions' },
-      );
-    }
+    // if (response.status === 'connected') {
+    //   postImageToFacebook(
+    //     response.authResponse.accessToken,
+    //     'sample',
+    //     'image/png',
+    //     decodedPng,
+    //     'sample',
+    //   );
+    // } else if (response.status === 'not_authorized') {
+    //   FB.login(
+    //     function(response) {
+    //       postImageToFacebook(
+    //         response.authResponse.accessToken,
+    //         'sample',
+    //         'image/png',
+    //         decodedPng,
+    //         'sample',
+    //       );
+    //     },
+    //     { scope: 'publish_actions' },
+    //   );
+    // } else {
+    //   FB.login(
+    //     function(response) {
+    //       postImageToFacebook(
+    //         response.authResponse.accessToken,
+    //         'sample',
+    //         'image/png',
+    //         decodedPng,
+    //         'sample',
+    //       );
+    //     },
+    //     { scope: 'publish_actions' },
+    //   );
+    // }
   });
 };
 
