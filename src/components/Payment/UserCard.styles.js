@@ -80,7 +80,7 @@ export const BottomSection = styled.section`
   padding: 20px;
   background-color: #efefef;
   ${media.webView} {
-    padding: 20px 20px 5px;
+    padding: 14px 20px 5px;
   }
   .labelHead {
     font-family: Gilroy;
