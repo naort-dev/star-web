@@ -122,7 +122,7 @@ const postCanvasToFacebook = () => {
       this.send(new Uint8Array(bytes).buffer);
     };
   }
-
+  console.log('post-Canvas--------');
   const ctx = document.createElement('canvas');
   const data = ctx.toDataURL('image/png');
   const encodedPng = data.substring(data.indexOf(',') + 1, data.length);
