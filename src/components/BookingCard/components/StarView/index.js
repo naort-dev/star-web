@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { CloseButton } from 'styles/CommonStyled';
 import { requestTypes } from '../../../../constants/requestTypes';
+import CommentBox from '../../../CommentBox';
 import VideoRender from '../../../VideoRender';
 import PrimaryButton from '../../../PrimaryButton';
 import BookingStyled from '../../styled';
@@ -79,6 +80,7 @@ const StarView = (props) => {
                 <BookingStyled.Description>{ bookingData.order_details.amount} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
               </span>
           </StarViewStyled.DetailWrapper>
+          <CommentBox />
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
     </StarViewStyled>
