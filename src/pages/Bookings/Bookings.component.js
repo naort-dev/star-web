@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { BackArrow, SectionHead } from 'styles/CommonStyled';
 import Dropdown from '../../components/Dropdown';
@@ -9,6 +10,7 @@ import Loader from '../../components/Loader';
 import { GeneralList, StarCompleted } from '../../components/ListCards';
 import { celebOpenStatusList, celebCompletedStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
+import { EmptyText } from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
 
 const Bookings = (props) => {
@@ -50,7 +52,12 @@ const Bookings = (props) => {
       })
       fetchList('open');
     }
+    // props.toggleBookingModal(true, {test: 'adasdasd'}, true)
   }, [])
+
+  const setRequestType = (option) => () => {
+    setDropValue(option)
+  }
 
   const handleCategoryChange = (option) => {
     setDropValue(option)
@@ -86,14 +93,24 @@ const Bookings = (props) => {
               onChange={handleCategoryChange}
               placeHolder="Select a booking type"
             />
+            <BookingsStyled.SectionHeader>
+              <SectionHead>Open Bookings</SectionHead>
+              {
+                props.bookingsList.data.length > 0 &&
+                  <span className='info-text' onClick={setRequestType({title: 'Open Bookings', id: 'open'})}>
+                    View all <strong>{props.bookingsList.count}</strong> open bookings
+                  </span>
+              }
+            </BookingsStyled.SectionHeader>
             {
               props.bookingsList.loading && <Loader />
             }
             {
-              props.bookingsList.data.length > 0 &&
-                <BookingsStyled.SectionHeader>
-                  <SectionHead>Open Bookings</SectionHead>
-                </BookingsStyled.SectionHeader>
+              !props.bookingsList.loading && props.bookingsList.data.length === 0 &&
+                <EmptyText>
+                  You currently do not have any recent activity.
+                  Visit &nbsp; <Link to='/manage/promotional-tools'>Promote Yourself</Link> &nbsp; to get those fans booking.
+                </EmptyText>
             }
             {
               props.bookingsList.data.map((bookItem) => (
