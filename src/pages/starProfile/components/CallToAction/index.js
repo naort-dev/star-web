@@ -23,7 +23,7 @@ const CallToAction = (props) => {
   const autoFitText = () => {
     fitty('#action-description', {
       minSize: 16,
-      maxSize: 37,
+      maxSize: 34,
     })
   }
 

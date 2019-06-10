@@ -48,7 +48,7 @@ ActionStyled.DescriptionWrapper = styled.div`
 
 ActionStyled.Description = styled.span`
   font-family: Gilroy-Light;
-  line-height: 24px;
+  padding-top: 4px;
   .long-description {
     display: none;
   }
