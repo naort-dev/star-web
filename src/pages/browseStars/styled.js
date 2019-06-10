@@ -108,12 +108,17 @@ CategoryPageStyled.FilterSection = styled.div`
       top: ${props.headerRef && props.headerRef.current ? `${props.headerRef.current.clientHeight}px` : '138px'};
       bottom: initial;
       background: ${props.theme.white};
+      max-width: 100%;
+      box-shadow: 0 8px 6px -6px #00000029;
     `}
     display: block;
   }
   @media(min-width: 1280px) {
     max-width: 1246px;
     margin: 0 auto;
+    ${props => props.fixedContent && `
+      max-width: 100%;
+    `}
   }
 `;
 
@@ -146,7 +151,7 @@ CategoryPageStyled.Heading = styled.span`
     margin: 22px auto 0px;
   }
   @media(min-width: 1280px) {
-    padding-top: 35px;
+    margin-top: 30px;
     max-width: 100%;
     letter-spacing: -1px;
   }
@@ -197,7 +202,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
   @media(min-width: 1280px) {
     max-width: 1246px;
     margin-bottom: 85px;
-    padding-top: 46px;
+    padding-top: 45px;
     padding-bottom: 57px;
     padding-right: 0;
     margin-top: 33px;
@@ -240,9 +245,18 @@ CategoryPageStyled.MainContent = styled.div`
       padding-top: ${props.padding}px;
     `}
   }
+  .subcategory-list {
+    margin-top: 0;
+  }
   &.fixed-filter {
     .subcategory-list {
-      margin-top: 0;
+      margin-top: -16px;
+      margin-bottom: 5px;
+      padding: 0;
+
+      & + div {
+        margin-top: 0;
+      }
     }
   }
 `;
