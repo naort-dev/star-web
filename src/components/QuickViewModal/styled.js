@@ -53,7 +53,7 @@ QuickViewStyled.Avatar = styled.span`
 `;
 
 QuickViewStyled.HeartIcon = QuickViewStyled.Row.extend`
-  font-size: 30px;
+  font-size: 24px;
   color: ${props => props.theme.flatBlue};
   display: block;
   svg {
@@ -84,7 +84,7 @@ QuickViewStyled.SubDescription = styled.span`
 `;
 
 QuickViewStyled.Description = styled.span`
-  font-size: 30px;
+  font-size: 24px;
   font-family: Gilroy-Light;
   padding-left: 19.3px;
   strong {
@@ -119,7 +119,7 @@ QuickViewStyled.ActionBar = styled.div`
 
 QuickViewStyled.ActionContent = styled.div`
   display: flex;
-  max-width: ${props => (props.available ? 'calc(100% - 256px)' : '100%')};
+  max-width: ${props => (props.available ? 'calc(100% - 305px)' : '100%')};
   align-items: center;
 `;
 
