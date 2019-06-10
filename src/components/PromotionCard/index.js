@@ -83,7 +83,7 @@ const postCanvasToFacebook = () => {
   const decodedPng = dataURItoBlob(data);
   FB.getLoginStatus(function(response) {
     alert(response.authResponse.accessToken);
-    console(response);
+    console.log(response);
     if (response.status === 'connected') {
       postImageToFacebook(
         response.authResponse.accessToken,
