@@ -41,7 +41,7 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
         if (response && !response.error) {
           // Create facebook post using image
           FB.api(
-            '/100003160755777/feed',
+            `/${token.authResponse.userID}/feed`,
             'POST',
             {
               message: '',
@@ -97,7 +97,7 @@ const postCanvasToFacebook = () => {
       FB.login(
         function(response) {
           postImageToFacebook(
-            response.,
+            response,
             'sample',
             'image/png',
             decodedPng,
