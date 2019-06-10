@@ -96,6 +96,7 @@ const postCanvasToFacebook = () => {
     } else if (response.status === 'not_authorized') {
       FB.login(
         function(response) {
+          console.log(response);
           postImageToFacebook(
             response,
             'sample',
@@ -109,6 +110,7 @@ const postCanvasToFacebook = () => {
     } else {
       FB.login(
         function(response) {
+          console.log(response);
           postImageToFacebook(
             response,
             'sample',
