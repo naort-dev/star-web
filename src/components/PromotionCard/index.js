@@ -35,7 +35,7 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
   })
     .then(function(data) {
       console.log('axios post--------');
-      FB.api('/' + data.id + '/photos', function(response) {
+      FB.api('/' + data.id + '?fields=photos', function(response) {
         console.log('fb api--------');
         if (response && !response.error) {
           //console.log(response.images[0].source);
