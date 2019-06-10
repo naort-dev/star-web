@@ -11,6 +11,12 @@ const FilterStyled = styled.div`
     align-items: center;
     background: transparent;
   }
+  .fixed-filter & {
+    @media(min-width: 832px) {
+      max-width: 1246px;
+      margin: 0 auto;
+    }
+  }
 `;
 
 FilterStyled.Header = styled.div`
