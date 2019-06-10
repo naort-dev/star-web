@@ -4,6 +4,7 @@ import moment from 'moment';
 import { CloseButton } from 'styles/CommonStyled';
 import { requestTypes } from '../../../../constants/requestTypes';
 import CommentBox from '../../../CommentBox';
+import QuickComment from '../../../QuickComment';
 import VideoRender from '../../../VideoRender';
 import PrimaryButton from '../../../PrimaryButton';
 import BookingStyled from '../../styled';
@@ -11,6 +12,7 @@ import StarViewStyled from './styled';
 
 const StarView = (props) => {
   const { bookingData } = props;
+  console.log(bookingData);
   const video = bookingData.request_video.find(videoItem => videoItem.video_status === 1) // get completed video
 
   const renderHeading = () => {
@@ -77,10 +79,16 @@ const StarView = (props) => {
           <StarViewStyled.DetailWrapper>
               <span>
                 <BookingStyled.title className='title'>Paid:</BookingStyled.title>
-                <BookingStyled.Description>{ bookingData.order_details.amount} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                <BookingStyled.Description>${ bookingData.order_details.amount} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
               </span>
           </StarViewStyled.DetailWrapper>
-          <CommentBox />
+          <BookingStyled.CommentList>
+            asdasd
+          </BookingStyled.CommentList>
+          <StarViewStyled.CommentWrapper>
+            <CommentBox classes={{root: 'comment-box'}} />
+            <QuickComment classes={{root: 'quick-comment'}} />
+          </StarViewStyled.CommentWrapper>
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
     </StarViewStyled>

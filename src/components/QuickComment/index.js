@@ -31,7 +31,7 @@ const QuickComment = (props) => {
   }
 
   return (
-    <CommentStyled className={props.classes.root}>
+    <CommentStyled showList={showList} className={props.classes.root}>
       <CommentStyled.CommentIcon showList={showList} innerRef={anchorEl} onClick={openList}>
         <FontAwesomeIcon icon={faBolt} />
         <span className='quick-arrow' />

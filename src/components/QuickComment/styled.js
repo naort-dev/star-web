@@ -5,6 +5,9 @@ const CommentStyled = styled.span`
   width: 40px;
   height: 40px;
   display: inline-block;
+  ${props => props.showList && `
+    border: none !important;
+  `}
 `;
 
 CommentStyled.CommentIcon = styled.span`
