@@ -40,6 +40,15 @@ BookingsStyled.SectionHeader = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 10px 0;
+  .info-text {
+    color: ${props => props.theme.flatBlue};
+    font-family: Gilroy-Medium;
+    font-size: 18px;
+    cursor: pointer;
+    strong {
+      font-family: Gilroy-Bold;
+    }
+  }
 `;
 
 export default BookingsStyled;

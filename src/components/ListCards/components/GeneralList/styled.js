@@ -48,16 +48,34 @@ GeneralStyled.Details = styled.span`
   font-size: 14px;
   color: #b4b4b4
   .time {
-    color: #6a6a6a;
+    color: ${props => props.theme.brown};
     margin-right: 5px;
+    .time-head {
+      display: none;
+      @media(min-width: 832px) {
+        display: inline;
+      }
+    }
+    &.expiring {
+      color: #cc0000;
+    }
   }
   .action {
     color: ${props => props.theme.flatBlue};
     margin-left: 5px;
     cursor: pointer;
+    &:before {
+      content: 'Make Video';
+      display: block;
+    }
   }
   @media(min-width: 832px) {
     margin-right: 21.3px;
+    .action {
+      &:before {
+        content: 'View Details';
+      }
+    }
   }
 `;
 export default GeneralStyled;
