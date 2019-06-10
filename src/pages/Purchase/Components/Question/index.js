@@ -57,7 +57,7 @@ const Question = props => {
   const startStreaming = () => {
     updatedStateHandler({
       ...stateObject,
-      buttonLabel: 'Stop',
+      buttonLabel: 'Stop Recording',
     });
   };
 
@@ -80,7 +80,7 @@ const Question = props => {
       } else {
         mediaHandler('Record', false, false);
       }
-    } else if (stateObject.buttonLabel === 'Stop') {
+    } else if (stateObject.buttonLabel === 'Stop Recording') {
       mediaHandler('Continue', true, true);
       props.headerUpdate('Check to make sure I’ve got everything right.');
     } else if (stateObject.buttonLabel === 'Continue') {
@@ -153,7 +153,12 @@ const Question = props => {
   };
   const getFileUpload = className => {
     return (
-      <label id="upload" htmlFor="fileUpload" className={[className].join(' ')}>
+      <label
+        id="upload"
+        htmlFor="fileUpload"
+        className={`${[className].join(' ')} ${props.shouldRecord &&
+          'disabled-btn'}`}
+      >
         <input
           type="file"
           id="fileUpload"
@@ -301,6 +306,7 @@ Question.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   recorded: PropTypes.bool,
   playPauseMediaFlg: PropTypes.bool,
+  shouldRecord: PropTypes.bool.isRequired,
 };
 
 Question.defaultProps = {
@@ -316,6 +322,7 @@ function mapStateToProps(state) {
     recorded: state.commonReducer.recorded,
     videoUploaded: state.commonReducer.videoUploaded,
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
+    shouldRecord: state.commonReducer.shouldRecord,
   };
 }
 export default connect(
