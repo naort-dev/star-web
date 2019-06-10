@@ -10,7 +10,11 @@ const initialState = {
   requestFlow: false,
   signUpDetails: null,
   requestFlowDetails: null,
-  requestPopup: false,
+  bookingModal: {
+    active: false,
+    data: null,
+    starMode: false,
+  },
   popUp: false,
 };
 
@@ -71,10 +75,15 @@ export default (state = { ...initialState }, action) => {
         requestFlowDetails: null,
       };
 
-    case TOGGLE_MODALS.toggleRequestPopup:
+    case TOGGLE_MODALS.toggleBookingModal:
       return {
         ...state,
-        requestPopup: action.state,
+        bookingModal: {
+          ...state.bookingModal,
+          active: action.state,
+          data: action.bookingData,
+          starMode: action.starMode,
+        },
       };
 
     case TOGGLE_MODALS.togglePopup:

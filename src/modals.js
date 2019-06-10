@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import LoginFlow from './components/loginFlow';
 import QuickViewModal from './components/QuickViewModal';
 import SignupFlow from './components/signupFlow';
-import { Requestvideo } from './pages/requestvideo';
+import BookingCard from './components/BookingCard';
 import Purchase from './pages/Purchase/Purchase.Container';
 
 const Modals = (props) => {
@@ -16,6 +16,8 @@ const Modals = (props) => {
     return <Purchase />;
   } else if (props.quickViewModal.active) {
     return <QuickViewModal />;
+  } else if (props.bookingModal.active) {
+    return <BookingCard />
   }
   return null;
 };
@@ -25,6 +27,7 @@ Modals.propTypes = {
   signUpModal: PropTypes.bool.isRequired,
   requestFlow: PropTypes.bool.isRequired,
   quickViewModal: PropTypes.object.isRequired,
+  bookingModal: PropTypes.object.isRequired,
 };
 
 
@@ -33,6 +36,7 @@ const mapState = state => ({
   signUpModal: state.modals.signUpModal,
   requestFlow: state.modals.requestFlow,
   quickViewModal: state.modals.quickViewModal,
+  bookingModal: state.modals.bookingModal,
 });
 
 export default connect(mapState)(Modals);

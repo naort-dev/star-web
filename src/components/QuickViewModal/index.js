@@ -30,13 +30,13 @@ const QuickViewModal = (props) => {
 
   const autoFitText = () => {
     fitty('#star-name', {
-      minSize: 50,
+      minSize: 46,
       maxSize: 74,
       multiLine: true,
     })
     fitty('#star-categories', {
       minSize: 15,
-      maxSize: 24,
+      maxSize: 18,
     })
   }
 
@@ -182,7 +182,7 @@ const QuickViewModal = (props) => {
                   props.celebDetails.availability ? 
                     <React.Fragment>
                       Book a shoutout 
-                      from <strong>{getShortName()}</strong> for <strong>${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
+                      from <strong>{getShortName()}</strong> for <strong> <br/> ${ props.celebDetails.rate && parseInt(props.celebDetails.rate, 0)}</strong> 
                     </React.Fragment>
                   :
                     <React.Fragment>

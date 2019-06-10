@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { requestTypes, requestTypeTitle } from '../constants/requestTypes';
 
 export const starProfessionsFormater = (list, type) => {
@@ -63,4 +64,14 @@ export const shareTitleGenerator = (bookingType, fullName) => {
     title = `${fullName} answers my fan question!`;
   }
   return title;
+}
+
+export const getTime = (time) => {
+  moment.relativeTimeThreshold('ss', 3);
+  moment.relativeTimeThreshold('s', 60);
+  moment.relativeTimeThreshold('m', 60);
+  moment.relativeTimeThreshold('h', 24);
+  moment.relativeTimeThreshold('d', 25);
+  const timeObject = moment.utc(time);
+  return timeObject.fromNow();
 }
