@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -244,13 +245,14 @@ class Search extends React.Component {
   }
 
   render() {
+    const { props } = this;
     return (
-      <SearchSection innerRef={(node) => { this.searchRef = node; }}>
-        <SearchSection.InputWrapper alternate={this.props.alternate}>
+      <SearchSection className={props.classes.root} innerRef={(node) => { this.searchRef = node; }}>
+        <SearchSection.InputWrapper className={props.classes.inputRoot} alternate={this.props.alternate}>
           <FontAwesomeIcon icon={faSearch} className="search-icon"/>
           <SearchSection.Input
             innerRef={this.searchInput}
-            placeholder="Search for your favorite stars!"
+            placeholder={props.placeholder ? props.placeholder : "Search for your favorite stars!"}
             value={this.state.searchText}
             onClick={this.showSuggestions}
             onChange={this.handleSearchChange}
@@ -278,6 +280,20 @@ class Search extends React.Component {
       </SearchSection>
     );
   }
+}
+
+Search.defaultProps = {
+  classes: {},
+  alternate: false,
+  placeholder: undefined,
+}
+
+Search.propTypes = {
+  suggestionsList: PropTypes.object.isRequired,
+  alternate: PropTypes.bool,
+  classes: PropTypes.object,
+  placeholder: PropTypes.string,
+  professionsList: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({

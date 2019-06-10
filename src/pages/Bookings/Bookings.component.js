@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { BackArrow, SectionHead } from 'styles/CommonStyled';
-import Dropdown from '../../components/Dropdown';
+import { BackArrow } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
+import AllBookings from './components/AllBookings';
 import { options } from './constants';
-import Loader from '../../components/Loader';
-import { GeneralList, StarCompleted } from '../../components/ListCards';
 import { celebOpenStatusList, celebCompletedStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
+import {  } from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
 
 const Bookings = (props) => {
@@ -50,7 +49,12 @@ const Bookings = (props) => {
       })
       fetchList('open');
     }
+    // props.toggleBookingModal(true, {test: 'adasdasd'}, true)
   }, [])
+
+  const setRequestType = (option) => () => {
+    setDropValue(option)
+  }
 
   const handleCategoryChange = (option) => {
     setDropValue(option)
@@ -64,45 +68,25 @@ const Bookings = (props) => {
   const onBackClick = () => {
     props.history.goBack();
   }
+
+  const onOpenClick = bookingId => () => {
+    props.history.push(`/manage/bookings?type=open&selected=${bookingId}`)
+  }
+
   return (
     <BookingsStyled>
       <BackArrow className="arrow" onClick={onBackClick} />
       <BookingsStyled.Header>My Bookings</BookingsStyled.Header>
       {
-        dropValue.id === 'all' &&
-          <React.Fragment>
-            <Dropdown
-              rootClass='drop-down'
-              secondary
-              selected={dropValue}
-              options={options}
-              labelKey="title"
-              valueKey="id"
-              onChange={handleCategoryChange}
-              placeHolder="Select a booking type"
-            />
-            {
-              props.bookingsList.loading && <Loader />
-            }
-            {
-              props.bookingsList.data.length > 0 &&
-                <BookingsStyled.SectionHeader>
-                  <SectionHead>Open Bookings</SectionHead>
-                </BookingsStyled.SectionHeader>
-            }
-            {
-              props.bookingsList.data.map((bookItem) => (
-                <GeneralList data={bookItem} />
-              ))
-            }
-            <BookingsStyled.SectionHeader>
-              <SectionHead>Latest Activity</SectionHead>
-            </BookingsStyled.SectionHeader>
-            <StarCompleted type='comment' />
-            <StarCompleted type='reaction' />
-            <StarCompleted type='tip' />
-            <StarCompleted type='rating' />
-          </React.Fragment>
+        dropValue.id === 'all'&&
+          <AllBookings
+            bookingsList={props.bookingsList}
+            dropValue={dropValue}
+            config={props.config}
+            handleCategoryChange={handleCategoryChange}
+            onOpenClick={onOpenClick}
+            setRequestType={setRequestType}
+          />
       }
       {
         dropValue.id === 'open' && <OpenBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
@@ -119,6 +103,7 @@ Bookings.propTypes = {
   location: PropTypes.object.isRequired,
   bookingsList: PropTypes.object.isRequired,
   fetchBookingsList: PropTypes.func.isRequired,
+  config: PropTypes.object.isRequired,
 }
 
 export default Bookings;
