@@ -30,6 +30,7 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
   axios({
     method: 'post',
     url: `https://graph.facebook.com/me/photos?access_token=${token}`,
+    config: { headers: { 'Content-Type': 'multipart/form-data' } },
     data: fd,
   })
     .then(function(data) {
