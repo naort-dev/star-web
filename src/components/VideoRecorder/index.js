@@ -308,7 +308,7 @@ class VideoRecorder extends Component {
         {this.state.mediaControls && (
           <React.Fragment>
             <PlayButton className="playButton" onClick={this.playPauseClick}>
-              <FontAwesomeIcon icon={faPlay} />
+              <FontAwesomeIcon icon={faPlay} className="button-play" />
             </PlayButton>
             {this.getRetryBtn()}
           </React.Fragment>

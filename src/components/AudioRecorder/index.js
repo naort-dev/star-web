@@ -82,20 +82,21 @@ export default class AudioRecorder extends React.Component {
     if (checkMediaRecorderSupport()) {
       return (
         <React.Fragment>
-          {this.state.start && <Ripple onClick={this.handleRecorder} />}
+          {/* {this.state.start && <Ripple onClick={this.handleRecorder} />} */}
           {this.state.active && this.ReactMic && (
             <div style={{ display: 'none' }}>
               <this.ReactMic
                 record={this.state.start}
                 onStop={this.saveRecording}
-                className="dfsdfsd"
                 strokeColor="white"
                 backgroundColor="#2e819b"
                 save={this.state.stop && this.state.status === 'completed'}
               />
             </div>
           )}
-          <AudioRecorderDiv.ControlWrapper>
+          <AudioRecorderDiv.ControlWrapper
+            className={this.state.start && 'recording'}
+          >
             {(audio[target] && audio[target].recordedBlob) ||
             (audio[target] && audio[target].recordedUrl) ? (
               <React.Fragment>
@@ -131,23 +132,41 @@ export default class AudioRecorder extends React.Component {
                 </AudioRecorderDiv.CloseButton>
               </React.Fragment>
             ) : (
-              <div
-                onClick={this.handleRecorder}
-                type="button"
-                role="presentation"
-              >
-                <AudioRecorderDiv.Icon icon={faMicrophone} />
-              </div>
+              <React.Fragment>
+                {this.state.start ? (
+                  <span
+                    className="voice-progress"
+                    onClick={this.handleRecorder}
+                    role="presentation"
+                  ></span>
+                ) : (
+                  <div
+                    onClick={this.handleRecorder}
+                    type="button"
+                    role="presentation"
+                  >
+                    <AudioRecorderDiv.Icon icon={faMicrophone} />
+                  </div>
+                )}
+              </React.Fragment>
             )}
 
-            {!(audio[target] && audio[target].recordedUrl) && (
-              <span
-                className="recText"
-                onClick={this.handleRecorder}
-                role="presentation"
+            {!this.state.start &&
+              !(audio[target] && audio[target].recordedUrl) && (
+                <span
+                  className="recText"
+                  onClick={this.handleRecorder}
+                  role="presentation"
+                >
+                  Pronounce Name
+                </span>
+              )}
+            {this.state.start && (
+              <AudioRecorderDiv.PauseButton
+                onClick={() => this.handleRecorder()}
               >
-                Pronounce Name
-              </span>
+                Stop
+              </AudioRecorderDiv.PauseButton>
             )}
           </AudioRecorderDiv.ControlWrapper>
         </React.Fragment>
@@ -159,6 +178,7 @@ export default class AudioRecorder extends React.Component {
 
   render() {
     const target = this.user;
+
     return (
       <AudioRecorderDiv
         recorded={

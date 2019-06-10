@@ -4,23 +4,15 @@ const ListingStyled = styled.ul`
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  
-  margin-left: -35px;
+  margin-left: -20px;
   height: 100%;
   padding-top: 30px;
 
-  @media(min-width: 832px) and (max-width: 870px) {
-    //width: calc(100% + 120px);
-    margin-left: -100px;
-  }
-
-  @media(min-width: 870px) {
-    //width: calc(100% + 104px);
-    margin-left: -110px;
+  @media(min-width: 832px){
+    margin-left: -59px;
   }
 
   @media(min-width: 1280px) {
-    width: calc(100% + 55px);
     padding-top: 30px;
     margin-left: -55px;
   }
@@ -29,21 +21,19 @@ const ListingStyled = styled.ul`
 ListingStyled.Content = styled.li`
   display: flex;
   padding-bottom: 35px;
-  flex: 1 1 0;
-  padding-left: 36px;
+  flex: 1 0 calc(33.33% - 20px);
+  margin-left: 20px;
   justify-content: center;
   
 
-  @media(min-width: 870px) {
-    padding-left: 112px;
-  }
-
-  @media(min-width: 832px) and (max-width: 870px) {
-    padding-left: 100px;
+  @media(min-width: 832px) {
+    flex: 1 0 calc(33.33% - 59px);
+    margin-left: 59px;
   }
   
   @media(min-width: 1280px) {
-    padding-left: 60px;
+    flex: 1 0 calc(20% - 55px);
+    margin-left: 55px;
   }
 `;
 
