@@ -88,7 +88,13 @@ const Bookings = (props) => {
           />
       }
       {
-        dropValue.id === 'open' && <OpenBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
+        dropValue.id === 'open' &&
+          <OpenBookings
+            bookingsList={props.bookingsList}
+            config={props.config}
+            dropValue={dropValue}
+            handleCategoryChange={handleCategoryChange}
+          />
       }
       {
         dropValue.id === 'completed' &&

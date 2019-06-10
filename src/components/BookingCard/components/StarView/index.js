@@ -12,7 +12,6 @@ import StarViewStyled from './styled';
 
 const StarView = (props) => {
   const { bookingData } = props;
-  console.log(bookingData);
   const video = bookingData.request_video.find(videoItem => videoItem.video_status === 1) // get completed video
 
   const renderHeading = () => {
@@ -83,7 +82,7 @@ const StarView = (props) => {
               </span>
           </StarViewStyled.DetailWrapper>
           <BookingStyled.CommentList>
-            asdasd
+            Comments come here... pending
           </BookingStyled.CommentList>
           <StarViewStyled.CommentWrapper>
             <CommentBox classes={{root: 'comment-box'}} />

@@ -28,8 +28,11 @@ const OpenBookings = (props) => {
           onChange={props.handleCategoryChange}
           placeHolder="Select a booking type"
         />
-        <CompactCard selected />
-        <CompactCard />
+        {
+          props.bookingsList.data.map(bookItem => (
+            <CompactCard expiration={props.config.request_expiration_days} bookData={bookItem} selected />
+          ))
+        }
       </OpenStyled.LeftSection>
       <OpenStyled.RightSection>
         <RespondAction
