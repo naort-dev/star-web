@@ -34,9 +34,9 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
     data: fd,
   })
     .then(function(data) {
-      console.log('axios post--------');
-      FB.api('/' + data.id + '?fields=photos', function(response) {
-        console.log('fb api--------');
+      alert('axios post--------');
+      FB.api('/' + data.id + '?fields=images', function(response) {
+        alert('fb api--------');
         if (response && !response.error) {
           //console.log(response.images[0].source);
 
@@ -66,8 +66,8 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
       });
     })
     .catch(function(response) {
-      //handle error
-      console.log(response);
+      //handle erro
+      alert('error');
     });
 };
 
@@ -80,12 +80,11 @@ const postCanvasToFacebook = () => {
       this.send(new Uint8Array(bytes).buffer);
     };
   }
-  console.log('post-Canvas--------');
   const ctx = document.createElement('canvas');
   const data = ctx.toDataURL('image/png');
   const decodedPng = dataURItoBlob(data);
   FB.getLoginStatus(function(response) {
-    console.log('getlogin--------');
+    alert('getlogin---------');
     if (response.status === 'connected') {
       postImageToFacebook(
         response.authResponse.accessToken,
