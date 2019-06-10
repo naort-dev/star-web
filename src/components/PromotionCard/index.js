@@ -21,15 +21,16 @@ function dataURItoBlob(dataURI) {
 }
 
 const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
+
   var fd = new FormData();
-  fd.append('access_token', token);
+  fd.append('access_token', token.authResponse.accessToken);
   fd.append('source', imageData);
   fd.append('no_story', true);
 
   // Upload image to facebook without story(post to feed)
   axios({
     method: 'post',
-    url: `https://graph.facebook.com/100003160755777/photos?access_token=${token}`,
+    url: `https://graph.facebook.com/${token.authResponse.userID}/photos?access_token=${token.authResponse.accessToken}`,
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
     data: fd,
   })
@@ -84,41 +85,41 @@ const postCanvasToFacebook = () => {
   FB.getLoginStatus(function(response) {
     // alert(response.authResponse.accessToken);
     console.log(response);
-    // if (response.status === 'connected') {
-    //   postImageToFacebook(
-    //     response.authResponse.accessToken,
-    //     'sample',
-    //     'image/png',
-    //     decodedPng,
-    //     'sample',
-    //   );
-    // } else if (response.status === 'not_authorized') {
-    //   FB.login(
-    //     function(response) {
-    //       postImageToFacebook(
-    //         response.authResponse.accessToken,
-    //         'sample',
-    //         'image/png',
-    //         decodedPng,
-    //         'sample',
-    //       );
-    //     },
-    //     { scope: 'publish_actions' },
-    //   );
-    // } else {
-    //   FB.login(
-    //     function(response) {
-    //       postImageToFacebook(
-    //         response.authResponse.accessToken,
-    //         'sample',
-    //         'image/png',
-    //         decodedPng,
-    //         'sample',
-    //       );
-    //     },
-    //     { scope: 'publish_actions' },
-    //   );
-    // }
+    if (response.status === 'connected') {
+      postImageToFacebook(
+        response,
+        'sample',
+        'image/png',
+        decodedPng,
+        'sample',
+      );
+    } else if (response.status === 'not_authorized') {
+      FB.login(
+        function(response) {
+          postImageToFacebook(
+            response.,
+            'sample',
+            'image/png',
+            decodedPng,
+            'sample',
+          );
+        },
+        { scope: 'publish_actions' },
+      );
+    } else {
+      FB.login(
+        function(response) {
+          postImageToFacebook(
+            response,
+            'sample',
+            'image/png',
+            decodedPng,
+            'sample',
+          );
+        },
+        { scope: 'publish_actions' },
+      );
+    }
   });
 };
 
