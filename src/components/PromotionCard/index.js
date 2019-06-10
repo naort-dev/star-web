@@ -21,7 +21,6 @@ function dataURItoBlob(dataURI) {
 }
 
 const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
-  console.log('postimage--------');
   var fd = new FormData();
   fd.append('access_token', token);
   fd.append('source', imageData);
@@ -38,8 +37,6 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
       FB.api('/' + data.id + '?fields=images', function(response) {
         alert('fb api--------');
         if (response && !response.error) {
-          //console.log(response.images[0].source);
-
           // Create facebook post using image
           FB.api(
             '/me/feed',
@@ -85,6 +82,7 @@ const postCanvasToFacebook = () => {
   const decodedPng = dataURItoBlob(data);
   FB.getLoginStatus(function(response) {
     alert(response.authResponse.accessToken);
+    console(response);
     if (response.status === 'connected') {
       postImageToFacebook(
         response.authResponse.accessToken,
