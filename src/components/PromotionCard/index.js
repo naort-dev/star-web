@@ -21,7 +21,6 @@ function dataURItoBlob(dataURI) {
 }
 
 const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
-
   var fd = new FormData();
   fd.append('access_token', token.authResponse.accessToken);
   fd.append('source', imageData);
@@ -34,36 +33,39 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
     data: fd,
   })
-    .then(function(data) {
-      alert('axios post--------');
-      FB.api('/' + data.id + '?fields=images', function(response) {
-        alert('fb api--------');
-        if (response && !response.error) {
-          // Create facebook post using image
-          FB.api(
-            `/${token.authResponse.userID}/feed`,
-            'POST',
-            {
-              message: '',
-              picture: response.images[0].source,
-              link: window.location.href,
-              name: 'starsona',
-              description: message,
-              privacy: {
-                value: 'SELF',
+    .then(
+      function(data) {
+        alert('axios post--------');
+        FB.api('/' + data.id + '?fields=images', function(response) {
+          alert('fb api--------');
+          if (response && !response.error) {
+            // Create facebook post using image
+            FB.api(
+              `/${token.authResponse.userID}/feed`,
+              'POST',
+              {
+                message: '',
+                picture: response.images[0].source,
+                link: window.location.href,
+                name: 'starsona',
+                description: message,
+                privacy: {
+                  value: 'SELF',
+                },
               },
-            },
-            function(response) {
-              if (response && !response.error) {
-                /* handle the result */
-                console.log('Posted story to facebook');
-                console.log(response);
-              }
-            },
-          );
-        }
-      });
-    })
+              function(response) {
+                if (response && !response.error) {
+                  /* handle the result */
+                  console.log('Posted story to facebook');
+                  console.log(response);
+                }
+              },
+            );
+          }
+        });
+      },
+      { scope: 'publish_actions' },
+    )
     .catch(function(response) {
       //handle erro
       alert('error');
