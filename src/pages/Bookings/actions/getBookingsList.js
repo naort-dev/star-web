@@ -63,7 +63,7 @@ export const fetchBookingsList = (offset, refresh, requestStatus) => (dispatch, 
     getState().bookingsList.token.cancel('Operation canceled due to new request.');
   }
   dispatch(bookingsListFetchStart(refresh, source));
-  return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=star_id`, {
+  return fetch.get(`${Api.getUserVideos}?status=${videoStatus}&limit=${limit}&offset=${offset}&role=celebrity_id`, {
     cancelToken: source.token,
   }).then((resp) => {
     if (resp.data && resp.data.success) {

@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { BackArrow, SectionHead } from 'styles/CommonStyled';
-import Dropdown from '../../components/Dropdown';
+import { BackArrow } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
+import AllBookings from './components/AllBookings';
 import { options } from './constants';
-import Loader from '../../components/Loader';
-import { GeneralList, StarCompleted } from '../../components/ListCards';
 import { celebOpenStatusList, celebCompletedStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
-import { EmptyText } from '../../styles/CommonStyled';
+import {  } from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
 
 const Bookings = (props) => {
@@ -81,55 +78,15 @@ const Bookings = (props) => {
       <BackArrow className="arrow" onClick={onBackClick} />
       <BookingsStyled.Header>My Bookings</BookingsStyled.Header>
       {
-        dropValue.id === 'all' &&
-          <React.Fragment>
-            <Dropdown
-              rootClass='drop-down'
-              secondary
-              selected={dropValue}
-              options={options}
-              labelKey="title"
-              valueKey="id"
-              onChange={handleCategoryChange}
-              placeHolder="Select a booking type"
-            />
-            <BookingsStyled.SectionHeader>
-              <SectionHead>Open Bookings</SectionHead>
-              {
-                props.bookingsList.data.length > 0 &&
-                  <span className='info-text' onClick={setRequestType({title: 'Open Bookings', id: 'open'})}>
-                    View all <strong>{props.bookingsList.count}</strong> open bookings
-                  </span>
-              }
-            </BookingsStyled.SectionHeader>
-            {
-              props.bookingsList.loading && <Loader />
-            }
-            {
-              !props.bookingsList.loading && props.bookingsList.data.length === 0 &&
-                <EmptyText>
-                  You currently do not have any recent activity.
-                  Visit &nbsp; <Link to='/manage/promotional-tools'>Promote Yourself</Link> &nbsp; to get those fans booking.
-                </EmptyText>
-            }
-            {
-              props.bookingsList.data.map((bookItem) => (
-                <GeneralList
-                  expiration={props.config.request_expiration_days}
-                  onPrimaryClick={onOpenClick(bookItem.booking_id)}
-                  key={bookItem.booking_id}
-                  data={bookItem}
-                />
-              ))
-            }
-            <BookingsStyled.SectionHeader>
-              <SectionHead>Latest Activity</SectionHead>
-            </BookingsStyled.SectionHeader>
-            <StarCompleted type='comment' />
-            <StarCompleted type='reaction' />
-            <StarCompleted type='tip' />
-            <StarCompleted type='rating' />
-          </React.Fragment>
+        dropValue.id === 'all'&&
+          <AllBookings
+            bookingsList={props.bookingsList}
+            dropValue={dropValue}
+            config={props.config}
+            handleCategoryChange={handleCategoryChange}
+            onOpenClick={onOpenClick}
+            setRequestType={setRequestType}
+          />
       }
       {
         dropValue.id === 'open' && <OpenBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
