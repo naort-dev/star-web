@@ -46,7 +46,7 @@ const CompletedCard = (props) => {
     )
   }
   return (
-    <CompletedStyled className={props.classes.root}>
+    <CompletedStyled className={props.classes.root} onClick={props.onClick}>
       <span className='favorite-icon'>
         <FontAwesomeIcon icon={faHeartLight} />
       </span>
@@ -89,11 +89,13 @@ const CompletedCard = (props) => {
 
 CompletedCard.defaultProps = {
   data: {},
+  onClick: () => {},
 }
 
 CompletedCard.propTypes = {
   classes: PropTypes.object.isRequired,
   data: PropTypes.object,
+  onClick: PropTypes.func,
 }
 
 export { CompletedCard };

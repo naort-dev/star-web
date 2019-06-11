@@ -20,6 +20,10 @@ const CompletedBookings = (props) => {
     props.fetchBookingsList(low, false, celebCompletedStatusList)
   }
 
+  const onCompletedClick = (requestData) => () => {
+    props.toggleBookingModal(true, requestData, true);
+  }
+
   return (
     <CompletedStyled>
       <CompletedStyled.FilterSection>
@@ -80,7 +84,7 @@ const CompletedBookings = (props) => {
           <CompletedStyled.ListSection>
             {
               props.bookingsList.data.map((bookItem) => (
-                <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+                <CompletedCard onClick={onCompletedClick(bookItem)} key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
               ))
             }
           </CompletedStyled.ListSection>
@@ -105,6 +109,7 @@ CompletedBookings.propTypes = {
   handleCategoryChange: PropTypes.func.isRequired,
   bookingsList: PropTypes.object.isRequired,
   fetchBookingsList: PropTypes.func.isRequired,
+  toggleBookingModal: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { BackArrow } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
@@ -10,92 +10,119 @@ import { parseQueryString } from '../../utils/dataformatter';
 import {  } from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
 
-const Bookings = (props) => {
+class Bookings extends React.Component {
+  constructor(props) {
+    super(props);
+    let dropValue;
+    const queryString = parseQueryString(this.props.location.search);
+    const newDropValue = options.find(option => option.id === queryString.type);
+    if (newDropValue && newDropValue.id !== 'all') {
+      dropValue = newDropValue
+      this.fetchList(newDropValue.id);
+    } else {
+      dropValue = {
+        title: 'All',
+        id: 'all',
+      }
+      this.fetchList('open');
+    }
+    this.state = {
+      dropValue,
+      selected: '',
+    }
+  }
 
-  const [dropValue , setDropValue] = useState({
-    title: 'All',
-    id: 'all',
-  });
+  onBackClick = () => {
+    this.props.history.goBack();
+  }
 
-  const fetchList = (type) => {
+  onOpenClick = bookingId => () => {
+    this.setState({
+      dropValue: {
+        title: 'Open',
+        id: 'open',
+      },
+      selected: bookingId,
+    })
+  }
+
+  setRequestType = (dropValue) => () => {
+    this.setState({ dropValue })
+  }
+  
+  setRequest = (bookId) => {
+    this.setState({ selected: bookId })
+  }
+
+  fetchList = (type) => {
     switch (type) {
       case 'all':
-        props.fetchBookingsList(0, true, 'all');
+        this.props.fetchBookingsList(0, true, 'all');
         break;
       case 'open':
-        props.fetchBookingsList(0, true, celebOpenStatusList);
+        this.props.fetchBookingsList(0, true, celebOpenStatusList);
         break;
       case 'completed':
-        props.fetchBookingsList(0, true, celebCompletedStatusList);
+        this.props.fetchBookingsList(0, true, celebCompletedStatusList);
         break;
       case 'cancelled':
-        props.fetchBookingsList(0, true, [6]);
+        this.props.fetchBookingsList(0, true, [6]);
         break;
       default:
         return null;
     }
   }
 
-  useEffect(() => {
-    const queryString = parseQueryString(props.location.search);
-    const newDropValue = options.find(option => option.id === queryString.type);
-    if (newDropValue && newDropValue.id !== 'all') {
-      setDropValue(newDropValue);
-      fetchList(newDropValue.id);
-    } else {
-      setDropValue({
-        title: 'All',
-        id: 'all',
-      })
-      fetchList('open');
-    }
-    // props.toggleBookingModal(true, {test: 'adasdasd'}, true)
-  }, [])
-
-  const setRequestType = (option) => () => {
-    setDropValue(option)
-  }
-
-  const handleCategoryChange = (option) => {
-    setDropValue(option)
+  handleCategoryChange = (option) => {
+    this.setState({ dropValue: option })
     if (option.id === 'all') {
-      fetchList('open'); 
+      this.fetchList('open'); 
     } else {
-      fetchList(option.id); 
+      this.fetchList(option.id); 
     }
   }
 
-  const onBackClick = () => {
-    props.history.goBack();
+  render() {
+    const { dropValue, selected } = this.state;
+    const { props } = this;
+    return (
+      <BookingsStyled>
+        <BackArrow className="arrow" onClick={this.onBackClick} />
+        <BookingsStyled.Header>My Bookings</BookingsStyled.Header>
+        {
+          dropValue.id === 'all'&&
+            <AllBookings
+              bookingsList={props.bookingsList}
+              dropValue={dropValue}
+              config={props.config}
+              handleCategoryChange={this.handleCategoryChange}
+              onOpenClick={this.onOpenClick}
+              setRequestType={this.setRequestType}
+            />
+        }
+        {
+          dropValue.id === 'open' &&
+            <OpenBookings
+              bookingsList={props.bookingsList}
+              config={props.config}
+              dropValue={dropValue}
+              selected={selected}
+              updateSelected={this.setRequest}
+              handleCategoryChange={this.handleCategoryChange}
+            />
+        }
+        {
+          dropValue.id === 'completed' &&
+            <CompletedBookings
+              bookingsList={props.bookingsList}
+              dropValue={dropValue}
+              toggleBookingModal={props.toggleBookingModal}
+              handleCategoryChange={this.handleCategoryChange}
+            />
+        }
+      </BookingsStyled>
+    )
   }
-
-  const onOpenClick = bookingId => () => {
-    props.history.push(`/manage/bookings?type=open&selected=${bookingId}`)
-  }
-
-  return (
-    <BookingsStyled>
-      <BackArrow className="arrow" onClick={onBackClick} />
-      <BookingsStyled.Header>My Bookings</BookingsStyled.Header>
-      {
-        dropValue.id === 'all'&&
-          <AllBookings
-            bookingsList={props.bookingsList}
-            dropValue={dropValue}
-            config={props.config}
-            handleCategoryChange={handleCategoryChange}
-            onOpenClick={onOpenClick}
-            setRequestType={setRequestType}
-          />
-      }
-      {
-        dropValue.id === 'open' && <OpenBookings dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
-      }
-      {
-        dropValue.id === 'completed' && <CompletedBookings bookingsList={props.bookingsList} dropValue={dropValue} handleCategoryChange={handleCategoryChange} />
-      }
-    </BookingsStyled>
-  )
 }
 
 Bookings.propTypes = {
@@ -104,6 +131,7 @@ Bookings.propTypes = {
   bookingsList: PropTypes.object.isRequired,
   fetchBookingsList: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
+  toggleBookingModal: PropTypes.func.isRequired,
 }
 
 export default Bookings;
