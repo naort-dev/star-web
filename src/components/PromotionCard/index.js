@@ -21,53 +21,55 @@ function dataURItoBlob(dataURI) {
 }
 
 const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
-  console.log('postimage--------');
   var fd = new FormData();
-  fd.append('access_token', token);
+  fd.append('access_token', token.authResponse.accessToken);
   fd.append('source', imageData);
   fd.append('no_story', true);
+  fd.append('published', false);
 
   // Upload image to facebook without story(post to feed)
   axios({
     method: 'post',
-    url: `https://graph.facebook.com/me/photos?access_token=${token}`,
+    url: `https://graph.facebook.com/${token.authResponse.userID}/photos`,
+    config: { headers: { 'Content-Type': 'multipart/form-data' } },
     data: fd,
   })
-    .then(function(data) {
-      console.log('axios post--------');
-      FB.api('/' + data.id + '?fields=images', function(response) {
-        console.log('fb api--------');
-        if (response && !response.error) {
-          //console.log(response.images[0].source);
-
-          // Create facebook post using image
-          FB.api(
-            '/me/feed',
-            'POST',
-            {
-              message: '',
-              picture: response.images[0].source,
-              link: window.location.href,
-              name: 'starsona',
-              description: message,
-              privacy: {
-                value: 'SELF',
+    .then(
+      function(data) {
+        alert('axios post--------');
+        FB.api('/' + data.id + '?fields=images', function(response) {
+          alert('fb api--------');
+          if (response && !response.error) {
+            // Create facebook post using image
+            FB.api(
+              `/${token.authResponse.userID}/feed`,
+              'POST',
+              {
+                message: '',
+                picture: response.images[0].source,
+                link: window.location.href,
+                name: 'starsona',
+                description: message,
+                privacy: {
+                  value: 'SELF',
+                },
               },
-            },
-            function(response) {
-              if (response && !response.error) {
-                /* handle the result */
-                console.log('Posted story to facebook');
-                console.log(response);
-              }
-            },
-          );
-        }
-      });
-    })
+              function(response) {
+                if (response && !response.error) {
+                  /* handle the result */
+                  console.log('Posted story to facebook');
+                  console.log(response);
+                }
+              },
+            );
+          }
+        });
+      },
+      { scope: 'publish_actions' },
+    )
     .catch(function(response) {
-      //handle error
-      console.log(response);
+      //handle erro
+      alert('error');
     });
 };
 
@@ -80,15 +82,15 @@ const postCanvasToFacebook = () => {
       this.send(new Uint8Array(bytes).buffer);
     };
   }
-  console.log('post-Canvas--------');
   const ctx = document.createElement('canvas');
   const data = ctx.toDataURL('image/png');
   const decodedPng = dataURItoBlob(data);
   FB.getLoginStatus(function(response) {
-    console.log('getlogin--------');
+    // alert(response.authResponse.accessToken);
+    console.log(response);
     if (response.status === 'connected') {
       postImageToFacebook(
-        response.authResponse.accessToken,
+        response,
         'sample',
         'image/png',
         decodedPng,
@@ -97,8 +99,9 @@ const postCanvasToFacebook = () => {
     } else if (response.status === 'not_authorized') {
       FB.login(
         function(response) {
+          console.log(response);
           postImageToFacebook(
-            response.authResponse.accessToken,
+            response,
             'sample',
             'image/png',
             decodedPng,
@@ -110,8 +113,9 @@ const postCanvasToFacebook = () => {
     } else {
       FB.login(
         function(response) {
+          console.log(response);
           postImageToFacebook(
-            response.authResponse.accessToken,
+            response,
             'sample',
             'image/png',
             decodedPng,
@@ -141,7 +145,7 @@ const Promotion = props => {
         appId: env('fbId'),
         cookie: true,
         xfbml: true,
-        version: 'v3.1',
+        version: 'v3.3',
       });
     };
   }, []);
