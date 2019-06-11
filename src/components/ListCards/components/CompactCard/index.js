@@ -45,7 +45,7 @@ const CompactCard = (props) => {
   };
 
   return (
-    <CompactStyled selected={props.selected}>
+    <CompactStyled selected={props.selected} onClick={props.onClick}>
       {renderTitle()}
       <CompactStyled.UserName>{bookData.fan}</CompactStyled.UserName>
       <CompactStyled.DetailsWrapper>
@@ -59,7 +59,8 @@ const CompactCard = (props) => {
 CompactCard.propTypes = {
   bookdata: PropTypes.object.isRequired,
   selected: PropTypes.bool.isRequired,
-  expiration: PropTypes.string.isRequired
+  expiration: PropTypes.string.isRequired,
+  onClick: PropTypes.func.isRequired,
 }
 
 export { CompactCard };
