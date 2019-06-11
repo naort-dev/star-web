@@ -2,17 +2,31 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import RequestFlowPopup from '../RequestFlowPopup';
+import StarView from './components/StarView';
 import { toggleBookingModal } from '../../store/shared/actions/toggleModals';
 import BookingStyled from './styled';
 
 const BookingCard = (props) => {
+
+  const closeModal = () => {
+    props.toggleBookingModal(false)
+  }
+
+  const { starMode, active, data: bookingData } = props.bookingModal;
+
   return (
     <RequestFlowPopup
       disableClose
-      closePopUp={() => props.toggleBookingModal(false)}
+      closePopUp={closeModal}
     >
       <BookingStyled>
-        asdasdasd
+        {
+          starMode &&
+            <StarView
+              bookingData={bookingData}
+              closeModal={closeModal}
+            />
+        }
       </BookingStyled>
     </RequestFlowPopup>
   )
@@ -20,10 +34,11 @@ const BookingCard = (props) => {
 
 BookingCard.propTypes = {
   toggleBookingModal: PropTypes.func.isRequired,
+  bookingModal: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
-  bookingModal: state.bookingModal,
+  bookingModal: state.modals.bookingModal,
 })
 
 const mapDispatchToProps = dispatch => ({
