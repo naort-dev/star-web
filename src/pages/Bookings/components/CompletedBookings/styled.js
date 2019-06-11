@@ -22,6 +22,7 @@ const CompletedStyled = styled.div`
 CompletedStyled.FilterSection = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
   .drop-down {
     margin-bottom: 13px!important;
   }

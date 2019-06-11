@@ -6,7 +6,7 @@ import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
 import CancelledBookings from './components/CancelledBookings';
 import { options } from './constants';
-import { celebOpenStatusList, celebCompletedStatusList } from '../../constants/requestStatusList';
+import { celebOpenStatusList, celebCompletedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import {  } from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
@@ -67,7 +67,7 @@ class Bookings extends React.Component {
         this.props.fetchBookingsList(0, true, celebCompletedStatusList);
         break;
       case 'cancelled':
-        this.props.fetchBookingsList(0, true, [5]);
+        this.props.fetchBookingsList(0, true, celebCancelledStatusList);
         break;
       default:
         return null;
