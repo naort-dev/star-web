@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { EmptyText } from 'styles/CommonStyled'
 import { options } from '../../constants';
 import { celebCancelledStatusList } from '../../../../constants/requestStatusList';
 import { fetchBookingsList } from '../../actions/getBookingsList';
@@ -49,6 +51,13 @@ const CancelledBookings = (props) => {
           />
       }
       {
+        !props.bookingsList.loading && props.bookingsList.data.length === 0 &&
+          <EmptyText>
+            You currently do not have any cancelled bookings.<br />
+            Note: This is a great thing!
+          </EmptyText>
+      }
+      {
         props.bookingsList.loading && <Loader />
       }
       {
@@ -75,6 +84,14 @@ const CancelledBookings = (props) => {
       }
     </CancelledStyled>
   )
+}
+
+CancelledBookings.propTypes = {
+  bookingsList: PropTypes.object.isRequired,
+  handleCategoryChange: PropTypes.func.isRequired,
+  dropValue: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
+  fetchBookingsList: PropTypes.func.isRequired,
 }
 
 const mapDispatchToProps = dispatch => ({
