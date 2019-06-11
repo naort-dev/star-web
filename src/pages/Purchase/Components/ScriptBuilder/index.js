@@ -140,7 +140,7 @@ class ScriptBuilder extends Component {
   };
   render() {
     return (
-      <Layout>
+      <Layout className="content-wrapper">
         <Script
           scriptText={this.props.bookingData.scriptText}
           script={this.state.script}
@@ -174,8 +174,8 @@ class ScriptBuilder extends Component {
             checked={this.props.checked}
           />
         </FlexBoxCenter>
-        <FlexCenter>
-          <Button onClick={this.submitClick}>Continue</Button>
+        <FlexCenter className="button-wrapper">
+          <Button onClick={this.submitClick} className="continue-button">Continue</Button>
         </FlexCenter>
       </Layout>
     );

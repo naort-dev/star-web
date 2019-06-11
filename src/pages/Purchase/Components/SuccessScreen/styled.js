@@ -32,9 +32,14 @@ export const Layout = styled.section`
     display: inline-block;
     ${media.webView} {
       margin-top: 39px;
-      height: calc(100% - 49px) !important;
+      height: calc(100% - 39px) !important;
     }
   }
+  &.content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
 `;
 export const Content = styled.section`
   max-width: 319px;
@@ -42,7 +47,7 @@ export const Content = styled.section`
   margin: 0 auto;
   text-align: center;
   font-family: Gilroy;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   ${media.webView} {
     max-width: 400px;
   }
@@ -70,7 +75,7 @@ export const Content = styled.section`
     color: #4b4b4b;
     font-size: 16px;
     line-height: 24px;
-    padding-bottom: 24px;
+    padding-bottom: 70px;
   }
   .browseBtn {
     width: 300px;

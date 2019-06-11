@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 100%;
+  height: 97%;
   max-width: 318px;
   margin: 0 auto;
   ${media.webView} {
@@ -20,6 +20,7 @@ export const Layout = styled.section`
   }
   .continue-button {
     height: 60px;
+    margin-bottom: 30px;
   }
   .cus-drop {
     width: 100%;
@@ -27,10 +28,28 @@ export const Layout = styled.section`
   .scroll-wrap {
     height: 220px !important;
   }
+
+  &.content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.content-wrapper > *:not(.button-wrapper) {
+    flex: 0;
+  }
+
+  &.content-wrapper > .button-wrapper {
+    flex: 1;
+  }
+
+
+  &.content-wrapper > .button-wrapper .continue-button {
+    align-self: flex-end
+  }
 `;
 Layout.EventStep2 = styled.div`
   padding-top: 40px;
-  min-height: 240px;
+  //min-height: 362px;
   .label {
     font-size: 18px;
   }

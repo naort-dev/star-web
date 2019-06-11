@@ -3,8 +3,9 @@ import { FlexCenter } from 'styles/CommonStyled';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 100%;
-  padding: 10px 90px;
+  height: 97%;
+  padding: 0;
+  margin: 0 auto;
   ${media.realMobile} {
     padding: 10px 0;
   }
@@ -22,17 +23,42 @@ export const Layout = styled.section`
   }
   button {
     margin-top: 5px;
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
   .script {
     color:#2f839d;
+  }
+
+  &.content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.content-wrapper > *:not(.button-wrapper) {
+    flex: 0;
+  }
+
+  &.content-wrapper > .button-wrapper {
+    flex: 1;
+  }
+
+
+  &.content-wrapper > .button-wrapper .continue-button {
+    align-self: flex-end
   }
 `;
 
 export const FlexBoxCenter = styled(FlexCenter)`
   padding: 15px 90px;
   ${media.realMobile} {
-    padding: 10px 30px;
+    padding: 10px 0;
+    max-width: 425px;
+    margin: 0 auto;
+
+    p {
+      text-align: left;
+      max-width: 100%;
+    }
   }
   &.private-checkbox label {
     font-family: Gilroy;
@@ -53,7 +79,7 @@ export const TextAreaWrapper = styled.section`
   }
   textarea {
     width: 100%;
-    height: 100% !important;
+    height: 90px !important;
     border-radius: 10px;
     border: solid 1px #e0e0e0;
     resize: none;

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 415px;
+  height: 503px;
   padding: 0 80px;
   display: flex;
   align-items: center;

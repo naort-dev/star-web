@@ -35,6 +35,7 @@ export const HeaderDiv = styled.section`
 
   &.headerGlobal {
     height: 157px;
+    margin-bottom: 40px;
   }
 `;
 

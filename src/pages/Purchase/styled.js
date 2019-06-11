@@ -27,7 +27,7 @@ export const DialogStyled = styled(Dialog)`
 
 export const Content = styled.section`
   position: relative;
-  height: calc(100% - 157px);
+  height: calc(100% - 197px);
   ${media.mobileScreen} {
     height: calc(100% - 200px);
   }
@@ -36,10 +36,6 @@ export const Content = styled.section`
     ${media.mobileScreen} {
       padding-top: 70px;
     }
-  }
-
-  &.contentPadding {
-    padding-top: 30px;
   }
 `;
 
