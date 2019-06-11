@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { options } from '../../constants';
 import { fetchBookingsList } from '../../actions/getBookingsList';
 import { GeneralList } from '../../../../components/ListCards';
+import Search from '../../../../components/Search';
 import Pagination from '../../../../components/Pagination';
 import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
@@ -16,16 +17,25 @@ const CancelledBookings = (props) => {
 
   return (
     <CancelledStyled>
-      <Dropdown
-        rootClass='drop-down'
-        secondary
-        selected={props.dropValue}
-        options={options}
-        labelKey="title"
-        valueKey="id"
-        onChange={props.handleCategoryChange}
-        placeHolder="Select a booking type"
-      />
+      <CancelledStyled.FilterSection>
+        <Dropdown
+          rootClass='drop-down'
+          secondary
+          selected={props.dropValue}
+          options={options}
+          labelKey="title"
+          valueKey="id"
+          onChange={props.handleCategoryChange}
+          placeHolder="Select a booking type"
+        />
+        <Search
+          classes={{
+            root: 'search-root',
+            inputRoot: 'search-input-container',
+          }}
+          placeholder='Search by keyword'
+        />
+      </CancelledStyled.FilterSection>
       {
         props.bookingsList.data.length > 0 &&
           <Pagination
