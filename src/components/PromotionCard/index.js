@@ -29,7 +29,7 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
   // Upload image to facebook without story(post to feed)
   axios({
     method: 'post',
-    url: `https://graph.facebook.com/${token.authResponse.userID}/photos?access_token=${token.authResponse.accessToken}`,
+    url: `https://graph.facebook.com/${token.authResponse.userID}/photos`,
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
     data: fd,
   })
