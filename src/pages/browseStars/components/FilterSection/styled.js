@@ -74,10 +74,10 @@ FilterStyled.SubCategoryList = styled.ul`
   flex-wrap: wrap;
   justify-content: center;
   margin-top: 21px;
-  padding: 0 115px;
+  padding: 0;
   margin-bottom: 13px;
   @media(min-width: 832px) {
-    margin-bottom: 0;
+    margin-bottom: 5px;
   }
   @media(max-width: 832px) {
     padding: 0 25px;
@@ -85,7 +85,7 @@ FilterStyled.SubCategoryList = styled.ul`
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 4px 20px 3px;
+  padding: 4px 15px 3px;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};
@@ -122,11 +122,11 @@ FilterStyled.SecondaryFilterWrapper = styled.div`
   @media(min-width: 832px) {
     flex-direction: row;
     max-width: 832px;
-    margin: 20px auto 0;
+    margin: 0 auto;
   }
   @media(min-width: 1280px) {
     max-width: 1246px;
-    margin: 20px auto 0;
+    margin: 0 auto;
   }
 `;
 
