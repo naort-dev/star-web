@@ -34,39 +34,36 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
     config: { headers: { 'Content-Type': 'multipart/form-data' } },
     data: fd,
   })
-    .then(
-      function(data) {
-        alert('axios post--------');
-        FB.api('/' + data.id + '?fields=images', function(response) {
-          alert('fb api--------');
-          if (response && !response.error) {
-            // Create facebook post using image
-            FB.api(
-              `/${token.authResponse.userID}/feed`,
-              'POST',
-              {
-                message: '',
-                picture: response.images[0].source,
-                link: window.location.href,
-                name: 'starsona',
-                description: message,
-                privacy: {
-                  value: 'SELF',
-                },
+    .then(function(data) {
+      alert('axios post--------');
+      FB.api('/' + data.id + '?fields=images', function(response) {
+        alert('fb api--------');
+        if (response && !response.error) {
+          // Create facebook post using image
+          FB.api(
+            `/${token.authResponse.userID}/feed`,
+            'POST',
+            {
+              message: '',
+              picture: response.images[0].source,
+              link: window.location.href,
+              name: 'starsona',
+              description: message,
+              privacy: {
+                value: 'SELF',
               },
-              function(response) {
-                if (response && !response.error) {
-                  /* handle the result */
-                  console.log('Posted story to facebook');
-                  console.log(response);
-                }
-              },
-            );
-          }
-        });
-      },
-      { scope: 'publish_actions' },
-    )
+            },
+            function(response) {
+              if (response && !response.error) {
+                /* handle the result */
+                console.log('Posted story to facebook');
+                console.log(response);
+              }
+            },
+          );
+        }
+      });
+    })
     .catch(function(response) {
       //handle erro
       alert('error');
@@ -97,33 +94,27 @@ const postCanvasToFacebook = () => {
         'sample',
       );
     } else if (response.status === 'not_authorized') {
-      FB.login(
-        function(response) {
-          console.log(response);
-          postImageToFacebook(
-            response,
-            'sample',
-            'image/png',
-            decodedPng,
-            'sample',
-          );
-        },
-        { scope: 'publish_actions' },
-      );
+      FB.login(function(response) {
+        console.log(response);
+        postImageToFacebook(
+          response,
+          'sample',
+          'image/png',
+          decodedPng,
+          'sample',
+        );
+      });
     } else {
-      FB.login(
-        function(response) {
-          console.log(response);
-          postImageToFacebook(
-            response,
-            'sample',
-            'image/png',
-            decodedPng,
-            'sample',
-          );
-        },
-        { scope: 'publish_actions' },
-      );
+      FB.login(function(response) {
+        console.log(response);
+        postImageToFacebook(
+          response,
+          'sample',
+          'image/png',
+          decodedPng,
+          'sample',
+        );
+      });
     }
   });
 };
