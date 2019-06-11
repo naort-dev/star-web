@@ -26,7 +26,7 @@ import {
 import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 import { loaderAction } from '../../store/shared/actions/commonActions';
 import { completedSignup } from '../../store/shared/actions/setSignupFlow'
-import { updateCategory } from '../../pages/landing/actions/updateFilters'
+import { updateCategory } from '../../pages/landing/actions/updateFilters';
 import SetPrice from './components/SetPrice'
 import {
   FAN_REG_SUCCESS,
@@ -34,15 +34,19 @@ import {
   STAR_GET_PHONE_NO,
   SET_PRICE,
   COMPLETE_SIGNUP,
+  CONFIRM_PASSWORD,
 } from './constants'
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { awsKeys } from '../../constants';
 import fetchAWSVideo from '../../services/getAwsVideo';
-import { celebritySignupProfile } from '../../services/userRegistration'
+import { celebritySignupProfile } from '../../services/userRegistration';
+import resetPassword from "../../utils/resetPassword";
+import Api from "../../lib/api";
 import GetPhoneNumber from '../../components/GetPhoneNumber';
-import CompleteSignup from '../../components/CompleteSignup'
+import CompleteSignup from '../../components/CompleteSignup';
+import ConfirmPassword from '../../components/ConfirmPassword';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 import { sign } from 'crypto';
 
@@ -56,18 +60,18 @@ class SignupFlow extends React.Component {
       stepCount: 0,
       socialData: {},
       currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
-      profession: [],
       // enableClose: props.signUpDetails.enableClose
       //   ? props.signUpDetails.enableClose
       //   : false,
-      profession: props.signupDetails.categoryList,
+      profession: props.signupDetails.categoryList ? props.signupDetails.categoryList : [],
       scrollRef: null,
-      profile_video: props.signupDetails.welcomeVideoFile,
+      profile_video: props.signupDetails.welcomeVideoFile ? props.signupDetails.welcomeVideoFile : '',
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
       name: cookies.get('name') || 'signupDetails',
       completedSignup: this.props.signupDetails.completedSignup!== undefined ? this.props.signupDetails.completedSignup : true,
+      isDemoUser: this.props.signupDetails.isDemoUser !== undefined? this.props.signupDetails.isDemoUser : false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -163,7 +167,6 @@ class SignupFlow extends React.Component {
   }
   closeSignUpForm =(isTermsAndCondition) => {
     if(isTermsAndCondition) {
-      // this.onBack(isTermsAndCondition);
       this.setState({
         switched: false,
         disableClose: false
@@ -175,7 +178,6 @@ class SignupFlow extends React.Component {
 
   closeSetPrice =(isReferred) => {
     if(isReferred) {
-      // this.onBack(isTermsAndCondition);
       this.setState({
         switchedSetPrice: false,
         disableClose: false
@@ -191,7 +193,6 @@ class SignupFlow extends React.Component {
 
   closePhoneNum =(isOtpScreen) => {
     if(isOtpScreen) {
-      // this.onBack(isTermsAndCondition);
       this.setState({
         phoneNumswitched: false,
         disableClose: false
@@ -295,6 +296,24 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
+  onResetPassword = (password, resetId, userId) => {
+    resetPassword(Api.resetPassword, {
+      password: password,
+      reset_id: resetId,
+    })
+      .then((response) => {
+        if (response.status === 200) {
+          if (localStorage) {
+            localStorage.setItem('tempAuthToken', JSON.stringify(response.data.details.authentication_token));
+          }
+          this.props.fetchUserDetails(userId);
+        }
+      })
+      .catch((exception) => {
+        console.log('errorMsg:', exception.response.data.error.message);
+      })
+  }
+
   submitOTPForm = () => {
     this.changeStep(this.state.currentStep + 1);
   }
@@ -513,6 +532,18 @@ class SignupFlow extends React.Component {
           disableClose={this.state.disableClose}
         >
         {
+          this.state.isDemoUser ? 
+          <ConfirmPassword
+            onResetPassword={this.onResetPassword}
+            title1={CONFIRM_PASSWORD.TITLE1}
+            input_txt_1 ={CONFIRM_PASSWORD.FIRST_INPUT_TEXT}
+            input_txt_2={CONFIRM_PASSWORD.SECOND_INPUT_TEXT}
+            sub_title={CONFIRM_PASSWORD.SUB_TITLE}
+            button_txt={CONFIRM_PASSWORD.BUTTON_TEXT}
+          />
+          : (
+            <React.Fragment>
+        {
           !this.state.completedSignup ?
           (
            <CompleteSignup
@@ -567,6 +598,9 @@ class SignupFlow extends React.Component {
           </LoginContainer>
         )
         }
+        </React.Fragment>
+          )
+      }
         </RequestFlowPopup>
       </div>
     );

@@ -3,6 +3,7 @@ import { fetchCelebrityList, updateCelebrityFollow } from './actions/getCelebLis
 import { fetchFeaturedStars } from './actions/getFeaturedStars';
 import { toggleSignup } from '../../store/shared/actions/toggleModals';
 import { fetchVideosList } from './actions//getVideosList';
+import { setDemoUser } from '../../store/shared/actions/setSignupFlow';
 
 import {
   updateCategory,
@@ -38,6 +39,7 @@ const mapDispatchToProps = dispatch => ({
   updateSelectedVideoDate: timeSpan => dispatch(updateSelectedVideoDate(timeSpan)),
   toggleSignup: state => dispatch(toggleSignup(state)),
   fetchFeaturedStars: () => dispatch(fetchFeaturedStars()),
+  setDemoUser: (value) => dispatch(setDemoUser(value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

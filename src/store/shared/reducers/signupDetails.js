@@ -38,11 +38,18 @@ export default (state = { ...initialState }, action) => {
     case SET_SIGNUP.clearSignupFlow:
       return initialState;
 
-      case SET_SIGNUP.completedSignupFlow:
-      return {
-        ...state,
-        completedSignup: action.iscompleted,
-      };
+    case SET_SIGNUP.completedSignupFlow:
+    return {
+      ...state,
+      completedSignup: action.iscompleted,
+    };
+
+    case SET_SIGNUP.setDemoUserFlow:
+    console.log(action.isDemoUser)
+    return {
+      ...state,
+      isDemoUser: action.isDemoUser,
+    };
 
     default:
       return state;
