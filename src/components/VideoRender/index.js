@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import { requestTypeTitle } from '../../constants/requestTypes';
@@ -52,6 +53,7 @@ export default class VideoRender extends React.Component {
     return (
       <VideoRenderDiv variableWidth={props.variableWidth} variableHeight={props.variableHeight} onClick={props.enableVideoPopup}>
         <VideoRenderDiv.Container
+          className={props.classes.container}
           noBorder={props.noBorder}
           variableWidth={props.variableWidth}
           variableHeight={props.variableHeight}
@@ -75,3 +77,10 @@ export default class VideoRender extends React.Component {
   }
 }
 
+VideoRender.defaultProps = {
+  classes: {},
+}
+
+VideoRender.propTypes = {
+  classes: PropTypes.object,
+}

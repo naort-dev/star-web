@@ -10,6 +10,12 @@ const OpenStyled = styled.div`
   }
 `;
 
+OpenStyled.BookingList = styled.div`
+  @media(min-width: 832px) {
+    height: calc(100vh - 431px);
+  }
+`;
+
 OpenStyled.LeftSection = styled.div`
   @media(min-width: 832px) {
     max-width: 273.6px;
@@ -19,7 +25,7 @@ OpenStyled.LeftSection = styled.div`
 OpenStyled.RightSection = Card.extend`
   flex: 1;
   padding: 10px;
-  padding-top: 41.8px;
+  padding-top: 40.8px;
   @media(min-width: 832px) {
     margin-left: 24.7px;
     display: flex;

@@ -251,7 +251,7 @@ CategoryPageStyled.MainContent = styled.div`
     .subcategory-list {
       margin-top: -16px;
       margin-bottom: 5px;
-      padding: 0;
+      padding: 0 16px;
 
       & + div {
         margin-top: 0;

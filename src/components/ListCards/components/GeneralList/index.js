@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/pro-light-svg-icons';
 import { Card, TickText } from 'styles/CommonStyled';
 import PrimaryButton from '../../../PrimaryButton';
 import { requestTypes } from '../../../../constants/requestTypes';
@@ -54,27 +56,55 @@ const GeneralList = (props) => {
       <GeneralStyled>
         <GeneralStyled.Section>
           <LeftContent className='left-content'>
-            <TickText>To Do</TickText>
+            <TickText className={!props.isOpen && 'close-icon'}>
+              {
+                props.isOpen ?
+                  'To Do'
+                :
+                  <React.Fragment>
+                    <FontAwesomeIcon icon={faTimes} />
+                    Cancelled
+                  </React.Fragment>
+                }
+            </TickText>
           </LeftContent>
           <GeneralStyled.Description>
             { renderDescription() }
           </GeneralStyled.Description>
         </GeneralStyled.Section>
         <GeneralStyled.Section>
-          <GeneralStyled.Details>
-            {renderTime(props.data.created_date)} | <span className='action' onClick={props.onPrimaryClick} />
+          <GeneralStyled.Details isOpen={props.isOpen}>
+            {
+              props.isOpen ?
+                <React.Fragment>
+                  {renderTime(props.data.created_date)} | <span className='action' onClick={props.onPrimaryClick} />
+                </React.Fragment>
+              :
+              <span className='time comment'>
+                { props.data.comment }
+              </span>
+            }
           </GeneralStyled.Details>
-          <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>Respond Now</PrimaryButton>
+          {
+            props.isOpen ?
+              <PrimaryButton className="action-button" onClick={props.onPrimaryClick}>Respond Now</PrimaryButton>
+            : <span className='view-action' onClick={props.onPrimaryClick}>View Details</span>
+          }
         </GeneralStyled.Section>
       </GeneralStyled>
     </Card>
   )
 }
 
+GeneralList.defaultProps = {
+  isOpen: true,
+}
+
 GeneralList.propTypes = {
   data: PropTypes.object.isRequired,
   onPrimaryClick: PropTypes.func.isRequired,
   expiration: PropTypes.string.isRequired,
+  isOpen: PropTypes.bool,
 }
 
 export { GeneralList };
