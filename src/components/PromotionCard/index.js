@@ -66,7 +66,7 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
     })
     .catch(function(response) {
       //handle erro
-      alert('error');
+      console.log(response);
     });
 };
 
