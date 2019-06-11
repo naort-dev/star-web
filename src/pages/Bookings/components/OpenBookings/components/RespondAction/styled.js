@@ -16,6 +16,7 @@ export const Container = styled.section`
 export const Layout = styled.section`
   height: 100%;
   display: flex;
+  max-width: 600px;
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
@@ -50,7 +51,6 @@ export const Layout = styled.section`
     display: inline-block;
     text-align: center;
     padding-top: 20px;
-    cursor: pointer;
   }
   .hidden {
     display: none;
@@ -61,12 +61,22 @@ export const Layout = styled.section`
     text-align: center;
     border: 1px solid #2f839d;
     color: #2f839d;
-    height: 60px;
-    line-height: 60px;
+    height: 40px;
+    line-height: 40px;
     border-radius: 30px;
     margin-bottom: 10px;
     font-family: Gilroy-SemiBold;
+    font-size: 14px;
     cursor: pointer;
+    :hover,
+    :focus {
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+    &:active {
+      color: #fff;
+      background-color: ${props => props.theme.greyishBrown};
+      border-color: ${props => props.theme.greyishBrown};
+    }
   }
 `;
 
@@ -130,6 +140,7 @@ export const QuestionContainer = styled.section`
     width: 200px;
     min-width: auto;
     margin-bottom: 10px;
+    font-size: 14px;
     ${media.mobileScreen} {
       display: none;
     }
@@ -139,6 +150,15 @@ export const QuestionContainer = styled.section`
     ${media.webView} {
       display: block;
     }
+  }
+  .bold-text,
+  .boldTxt {
+    font-family: Gilroy-Semibold;
+    font-size: 16px;
+    color: #2f2f2f;
+  }
+  .question {
+    font-size: 16px;
   }
 `;
 

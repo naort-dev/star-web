@@ -30,6 +30,7 @@ OpenStyled.RightSection = Card.extend`
     margin-left: 24.7px;
     display: flex;
     justify-content: center;
+    max-width: 700px;
   }
 `;
 

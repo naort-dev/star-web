@@ -108,6 +108,7 @@ function FormContainer(props) {
       ...tempObj,
     });
     props.pageCountHandler(0);
+    props.clearAudio();
   };
   const nextButtonClick = () => {
     if (props.pageCount === PageDetailsArray.length - 1) {
@@ -250,6 +251,7 @@ FormContainer.propTypes = {
   detailList: PropTypes.array.isRequired,
   submitClick: PropTypes.func.isRequired,
   updateBookingData: PropTypes.func.isRequired,
+  clearAudio: PropTypes.func.isRequired,
 };
 FormContainer.defaultProps = {};
 
