@@ -25,6 +25,7 @@ const postImageToFacebook = (token, filename, mimeType, imageData, message) => {
   fd.append('access_token', token.authResponse.accessToken);
   fd.append('source', imageData);
   fd.append('no_story', true);
+  fd.append('published', false);
 
   // Upload image to facebook without story(post to feed)
   axios({
