@@ -4,6 +4,7 @@ import { BackArrow } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
+import CancelledBookings from './components/CancelledBookings';
 import { options } from './constants';
 import { celebOpenStatusList, celebCompletedStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
@@ -66,7 +67,7 @@ class Bookings extends React.Component {
         this.props.fetchBookingsList(0, true, celebCompletedStatusList);
         break;
       case 'cancelled':
-        this.props.fetchBookingsList(0, true, [6]);
+        this.props.fetchBookingsList(0, true, [5]);
         break;
       default:
         return null;
@@ -117,6 +118,15 @@ class Bookings extends React.Component {
               bookingsList={props.bookingsList}
               dropValue={dropValue}
               toggleBookingModal={props.toggleBookingModal}
+              handleCategoryChange={this.handleCategoryChange}
+            />
+        }
+        {
+          dropValue.id === 'cancelled' &&
+            <CancelledBookings
+              bookingsList={props.bookingsList}
+              config={props.config}
+              dropValue={dropValue}
               handleCategoryChange={this.handleCategoryChange}
             />
         }

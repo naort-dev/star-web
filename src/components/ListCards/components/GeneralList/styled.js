@@ -21,6 +21,21 @@ const GeneralStyled = styled.div`
 GeneralStyled.Section = styled.div`
   display: flex;
   align-items: center;
+  .close-icon {
+    &:before {
+      content: '';
+      display: none;
+      border: none;
+    }
+    svg {
+      font-size: 22px;
+    }
+  }
+  .view-action {
+    color: ${props => props.theme.flatBlue};
+    font-family: Gilroy-Medium;
+    font-size: 14px;
+  }
   .action-button {
     display: none;
     @media(min-width: 832px) {
