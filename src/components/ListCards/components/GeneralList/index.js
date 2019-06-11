@@ -73,14 +73,14 @@ const GeneralList = (props) => {
           </GeneralStyled.Description>
         </GeneralStyled.Section>
         <GeneralStyled.Section>
-          <GeneralStyled.Details>
+          <GeneralStyled.Details isOpen={props.isOpen}>
             {
               props.isOpen ?
                 <React.Fragment>
                   {renderTime(props.data.created_date)} | <span className='action' onClick={props.onPrimaryClick} />
                 </React.Fragment>
               :
-              <span className='time'>
+              <span className='time comment'>
                 { props.data.comment }
               </span>
             }

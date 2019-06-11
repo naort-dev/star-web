@@ -35,6 +35,7 @@ GeneralStyled.Section = styled.div`
     color: ${props => props.theme.flatBlue};
     font-family: Gilroy-Medium;
     font-size: 14px;
+    cursor: pointer;
   }
   .action-button {
     display: none;
@@ -61,7 +62,10 @@ GeneralStyled.Details = styled.span`
   margin-top: 8px;
   font-family: Gilroy-Medium;
   font-size: 14px;
-  color: #b4b4b4
+  color: #b4b4b4;
+  ${props => !props.isOpen && `
+    margin: 0;
+  `}
   .time {
     color: ${props => props.theme.brown};
     margin-right: 5px;
@@ -90,6 +94,9 @@ GeneralStyled.Details = styled.span`
       &:before {
         content: 'View Details';
       }
+    }
+    .comment {
+      margin-right: 39px;
     }
   }
 `;
