@@ -167,7 +167,7 @@ class ScriptBuilder extends Component {
             placeholder="Add any additional information that might be helpful to the star as nice to haver. It could be a funny quirk, why you’re such a big fan, a favorite movie/song or play they did…."
           />
         </TextAreaWrapper>
-        <FlexBoxCenter>
+        <FlexBoxCenter className="private-checkbox">
           <Checkbox
             placeholder=" Make my video private"
             onChange={this.handleCheck}

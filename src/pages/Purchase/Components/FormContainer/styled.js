@@ -31,6 +31,9 @@ export const Layout = styled.section`
 Layout.EventStep2 = styled.div`
   padding-top: 40px;
   min-height: 240px;
+  .label {
+    font-size: 18px;
+  }
 `;
 
 export const TextArea = styled.div`

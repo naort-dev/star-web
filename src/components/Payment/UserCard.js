@@ -73,7 +73,7 @@ const UserCard = props => {
         <BottomSection>
           <FlexBoxSB className={props.celebDetails.charity === '' && 'center'}>
             {props.celebDetails.charity !== '' && (
-              <span className="colDir alignPad">
+              <span className="colDir">
                 <span className="labelHead">All proceeds go to:</span>
                 <span className="cardType">{props.celebDetails.charity}</span>
               </span>

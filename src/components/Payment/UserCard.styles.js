@@ -80,7 +80,7 @@ export const BottomSection = styled.section`
   padding: 20px;
   background-color: #efefef;
   ${media.webView} {
-    padding: 20px 20px 5px;
+    padding: 10px 20px;
   }
   .labelHead {
     font-family: Gilroy;
@@ -104,7 +104,8 @@ export const BottomSection = styled.section`
     ${media.webView} {
       width: 100%;
       padding-top: 5px;
-      padding-left: 10px;
+      padding-left: 0;
+      text-align: left;
     }
   }
   .cardType {

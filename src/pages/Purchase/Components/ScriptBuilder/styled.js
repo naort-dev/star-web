@@ -12,6 +12,8 @@ export const Layout = styled.section`
     font-size: 12px;
     text-align: center;
     max-width: 344px;
+    font-family: Gilroy;
+    color: #4b4b4b;
     .bluetext {
       color: #2f839d;
       font-weight: 700;
@@ -22,12 +24,18 @@ export const Layout = styled.section`
     margin-top: 5px;
     margin-bottom: 40px;
   }
+  .script {
+    color:#2f839d;
+  }
 `;
 
 export const FlexBoxCenter = styled(FlexCenter)`
   padding: 15px 90px;
   ${media.realMobile} {
     padding: 10px 30px;
+  }
+  &.private-checkbox label {
+    font-family: Gilroy;
   }
 `;
 
@@ -47,10 +55,14 @@ export const TextAreaWrapper = styled.section`
     width: 100%;
     height: 100% !important;
     border-radius: 10px;
+    border: solid 1px #e0e0e0;
     resize: none;
     padding: 15px;
     max-width: 425px;
-    font-family: Gilroy-Light;
+    font-family: Gilroy;
+    font-size: 14px;
+    color: #b7b7b7;
+    line-height: 18px;
     :focus {
       outline: none;
     }

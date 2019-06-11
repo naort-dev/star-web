@@ -32,10 +32,14 @@ export const Content = styled.section`
     height: calc(100% - 200px);
   }
   .scrollRenderView {
-    padding-top: 30px;
+    overflow: auto !important;
     ${media.mobileScreen} {
       padding-top: 70px;
     }
+  }
+
+  &.contentPadding {
+    padding-top: 30px;
   }
 `;
 

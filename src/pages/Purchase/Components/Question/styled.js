@@ -2,9 +2,10 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 100%;
-  padding: 20px 80px;
+  height: 415px;
+  padding: 0 80px;
   display: flex;
+  align-items: center;
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
@@ -84,7 +85,6 @@ export const VideoContainer = styled.section`
   height: 415px;
   border-radius: 23px;
   background-color: #e3e3e3;
-  margin-bottom: 60px;
   position: relative;
   .playButton {
     position: absolute;
@@ -108,7 +108,6 @@ export const VideoContainer = styled.section`
 
 export const QuestionContainer = styled.section`
   padding-left: ${props => (props.error ? '20px' : '40px')};
-  padding-top: 10px;
   display: flex;
   align-items: center;
   flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};

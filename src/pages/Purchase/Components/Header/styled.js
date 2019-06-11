@@ -16,7 +16,7 @@ export const HeaderDiv = styled.section`
   :after {
     content: '';
     position: absolute;
-    top: 100%;
+    top: 99%;
     left: 50%;
     width: 0;
     height: 0;
@@ -31,6 +31,10 @@ export const HeaderDiv = styled.section`
     font-family: Gilroy;
     font-size: 24px;
     color: #ff6c58;
+  }
+
+  &.headerGlobal {
+    height: 157px;
   }
 `;
 
