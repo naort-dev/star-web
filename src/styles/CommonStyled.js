@@ -129,3 +129,11 @@ export const SectionHead = styled.span`
   font-family: Gilroy-Bold;
   color: #5d5d5d;
 `;
+
+export const EmptyText = styled.span`
+  display: flex;
+  font-family: Gilroy-Medium;
+  font-size: 18px;
+  align-items: center;
+  justify-content: center;
+`;

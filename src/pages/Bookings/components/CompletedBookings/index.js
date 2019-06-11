@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { celebCompletedStatusList } from '../../../../constants/requestStatusList';
 import { fetchBookingsList } from '../../actions/getBookingsList';
 import Dropdown from '../../../../components/Dropdown';
+import Search from '../../../../components/Search';
 import Loader from '../../../../components/Loader';
 import Pagination from '../../../../components/Pagination';
 import { CompletedCard } from '../../../../components/ListCards';
@@ -16,7 +17,7 @@ const CompletedBookings = (props) => {
   const [sortVal, setSortVal] = useState({});
 
   const fetchList = (low, high) => {
-    props.fetchBookingsList(low, true, celebCompletedStatusList)
+    props.fetchBookingsList(low, false, celebCompletedStatusList)
   }
 
   return (
@@ -52,24 +53,49 @@ const CompletedBookings = (props) => {
           onChange={setSortVal}
           placeHolder="Sort by"
         />
+        <Search
+          classes={{
+            root: 'search-root',
+            inputRoot: 'search-input-container',
+          }}
+          placeholder='Search by keyword'
+        />
       </CompletedStyled.FilterSection>
-      <Pagination
-        classes={{root: 'pagination-wrapper'}}
-        count={props.bookingsList.count}
-        limit={props.bookingsList.limit}
-        dataLoading={props.bookingsList.loading}
-        onChange={fetchList}
-      />
+      {
+        props.bookingsList.data.length > 0 &&
+          <Pagination
+            classes={{root: 'pagination-wrapper top'}}
+            offset={props.bookingsList.offset}
+            count={props.bookingsList.count}
+            limit={props.bookingsList.limit}
+            dataLoading={props.bookingsList.loading}
+            onChange={fetchList}
+          />
+      }
       {
         props.bookingsList.loading && <Loader />
       }
-      <CompletedStyled.ListSection>
-        {
-          props.bookingsList.data.map((bookItem) => (
-            <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
-          ))
-        }
-      </CompletedStyled.ListSection>
+      {
+        !props.bookingsList.loading &&
+          <CompletedStyled.ListSection>
+            {
+              props.bookingsList.data.map((bookItem) => (
+                <CompletedCard key={bookItem.id} data={bookItem} classes={{root: 'list-item'}} />
+              ))
+            }
+          </CompletedStyled.ListSection>
+      }
+      {
+        !props.bookingsList.loading && props.bookingsList.count > props.bookingsList.offset &&
+          <Pagination
+            classes={{root: 'pagination-wrapper bottom'}}
+            offset={props.bookingsList.offset}
+            count={props.bookingsList.count}
+            limit={props.bookingsList.limit}
+            dataLoading={props.bookingsList.loading}
+            onChange={fetchList}
+          />
+      }
     </CompletedStyled>
   )
 }

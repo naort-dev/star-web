@@ -492,7 +492,7 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps(
                   "Who's hosting the event?",
-                  false,
+                  true,
                   false,
                   'hostName',
                 ),
@@ -525,7 +525,7 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps(
                   "Who's hosting the event?",
-                  false,
+                  true,
                   false,
                   'hostName',
                 ),
@@ -565,7 +565,7 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps(
                   "Who's hosting the event?",
-                  false,
+                  true,
                   false,
                   'hostName',
                 ),
@@ -595,7 +595,7 @@ function RequestTemplates(
               {getTextInput(
                 getFiledProps(
                   "Who's hosting the event?",
-                  false,
+                  true,
                   false,
                   'hostName',
                 ),

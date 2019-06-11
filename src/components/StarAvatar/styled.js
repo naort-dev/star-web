@@ -77,8 +77,8 @@ AvatarContainer.BigAvatar = AvatarContainer.Avatar.extend`
     font-size: 25px;
   }
   @media(min-width: 832px) {
-    width: 300px;
-    height: 300px;
+    width: 275px;
+    height: 275px;
     order: 2;
     margin-top: -17px;
   }

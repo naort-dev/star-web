@@ -64,12 +64,12 @@ CategoryPageStyled.AvatarWrapper = styled.div`
       display: block;
       position: absolute;
       left: 33px;
-      top: calc(100% - 327px);
+      top: calc(100% - 345px);
       padding: 0 6px;
       background: ${props => props.theme.white};
 
       .name {
-        line-height: 53px;
+        line-height: 42px;
         margin-bottom: 11px;
       }
       .play-button {
@@ -144,14 +144,13 @@ CategoryPageStyled.Heading = styled.span`
   color: ${props => props.theme.twilight};
   min-height: 32px;
   @media(min-width: 832px) {
-    font-size: 56px;
-    min-height: 56px;
+    font-size: 50px;
     max-width: 692px;
-    line-height: 56px;
+    line-height: 50px;
     margin: 22px auto 0px;
   }
   @media(min-width: 1280px) {
-    margin-top: 30px;
+    margin-top: 20px;
     max-width: 100%;
     letter-spacing: -1px;
   }
@@ -174,7 +173,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     content: ${props => `'${props.heading}'`};
     position: absolute;
     text-transform: uppercase;
-    top: -5px;
+    top: -7px;
     line-height: 21px;
     text-align: center;
     left: 50%;
@@ -195,17 +194,17 @@ CategoryPageStyled.FeaturedSection = styled.div`
     &:after {
       transform: translateX(0);
       left: 18px;
-      font-size: 23px;
+      font-size: 20px;
       background: ${props => props.theme.white};
     }
   }
   @media(min-width: 1280px) {
     max-width: 1246px;
-    margin-bottom: 85px;
+    margin-bottom: 30px;
     padding-top: 45px;
     padding-bottom: 57px;
     padding-right: 0;
-    margin-top: 33px;
+    margin-top: 20px;
   }
 `;
 

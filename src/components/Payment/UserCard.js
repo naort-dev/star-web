@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Elements } from 'react-stripe-elements';
+import { isEmpty } from 'lodash';
 import {
   UserCardWrapper,
   TopSection,
@@ -56,9 +57,7 @@ const UserCard = props => {
               </span>
               <span className="colDir alignTop">
                 <span className="nameSpan">
-                  {`${props.userDetails.first_name} ${
-                    props.userDetails.last_name
-                  }`}
+                  {`${props.userDetails.first_name} ${props.userDetails.last_name}`}
                 </span>
                 <span className="bookingType">{props.type}</span>
               </span>
@@ -71,7 +70,9 @@ const UserCard = props => {
           </FlexBoxSB>
         </TopSection>
         <BottomSection>
-          <FlexBoxSB className={props.celebDetails.charity === '' && 'center'}>
+          <FlexBoxSB
+            className={isEmpty(props.celebDetails.charity) && 'center'}
+          >
             {props.celebDetails.charity !== '' && (
               <span className="colDir">
                 <span className="labelHead">All proceeds go to:</span>
@@ -80,11 +81,9 @@ const UserCard = props => {
             )}
             <span className="amount">${props.celebDetails.rate}</span>
           </FlexBoxSB>
-          {props.celebDetails.charity !== '' && (
-            <p className="note">
-              Your card will be charged when the video has been delivered.
-            </p>
-          )}
+          <p className="note">
+            Your card will be charged when the video has been delivered.
+          </p>
         </BottomSection>
       </UserCardWrapper>
       {isNewCard || Object.keys(props.CardList).length === 0 ? (
