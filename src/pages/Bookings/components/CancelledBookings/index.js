@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { options } from '../../constants';
+import { celebCancelledStatusList } from '../../../../constants/requestStatusList';
 import { fetchBookingsList } from '../../actions/getBookingsList';
 import { GeneralList } from '../../../../components/ListCards';
 import Search from '../../../../components/Search';
@@ -12,7 +13,7 @@ import CancelledStyled from './styled';
 const CancelledBookings = (props) => {
   
   const fetchList = (low, high) => {
-    props.fetchBookingsList(low, false, [5])
+    props.fetchBookingsList(low, false, celebCancelledStatusList)
   }
 
   return (
