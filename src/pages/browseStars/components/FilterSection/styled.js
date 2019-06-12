@@ -60,6 +60,7 @@ FilterStyled.Content = styled.div`
   padding: 0;
   height: calc(100vh - 100px);
   overflow: auto;
+  width: 100%;
   @media(min-width: 832px) {
     height: auto;
     overflow: initial;

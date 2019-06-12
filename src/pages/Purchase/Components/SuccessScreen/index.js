@@ -13,7 +13,7 @@ const SuccessScreen = props => {
   };
 
   return (
-    <Layout>
+    <Layout className="content-wrapper">
       <CloseButton onClick={props.closeHandler} className="closeBtn" />
       <Scrollbars className="successScroll">
         <FlexCenter>

@@ -4,11 +4,9 @@ import { BackArrow } from 'styles/CommonStyled';
 import OpenBookings from './components/OpenBookings';
 import CompletedBookings from './components/CompletedBookings';
 import AllBookings from './components/AllBookings';
+import CancelledBookings from './components/CancelledBookings';
 import { options } from './constants';
-import {
-  celebOpenStatusList,
-  celebCompletedStatusList,
-} from '../../constants/requestStatusList';
+import { celebOpenStatusList, celebCompletedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
 import {} from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
@@ -69,7 +67,7 @@ class Bookings extends React.Component {
         this.props.fetchBookingsList(0, true, celebCompletedStatusList);
         break;
       case 'cancelled':
-        this.props.fetchBookingsList(0, true, [6]);
+        this.props.fetchBookingsList(0, true, celebCancelledStatusList);
         break;
       default:
         return null;
@@ -93,34 +91,46 @@ class Bookings extends React.Component {
       <BookingsStyled>
         <BackArrow className="arrow" onClick={this.onBackClick} />
         <BookingsStyled.Header>My Bookings</BookingsStyled.Header>
-        {dropValue.id === 'all' && (
-          <AllBookings
-            bookingsList={props.bookingsList}
-            dropValue={dropValue}
-            config={props.config}
-            handleCategoryChange={this.handleCategoryChange}
-            onOpenClick={this.onOpenClick}
-            setRequestType={this.setRequestType}
-          />
-        )}
-        {dropValue.id === 'open' && (
-          <OpenBookings
-            bookingsList={props.bookingsList}
-            config={props.config}
-            dropValue={dropValue}
-            selected={selected}
-            updateSelected={this.setRequest}
-            handleCategoryChange={this.handleCategoryChange}
-          />
-        )}
-        {dropValue.id === 'completed' && (
-          <CompletedBookings
-            bookingsList={props.bookingsList}
-            dropValue={dropValue}
-            toggleBookingModal={props.toggleBookingModal}
-            handleCategoryChange={this.handleCategoryChange}
-          />
-        )}
+        {
+          dropValue.id === 'all'&&
+            <AllBookings
+              bookingsList={props.bookingsList}
+              dropValue={dropValue}
+              config={props.config}
+              handleCategoryChange={this.handleCategoryChange}
+              onOpenClick={this.onOpenClick}
+              setRequestType={this.setRequestType}
+            />
+        }
+        {
+          dropValue.id === 'open' &&
+            <OpenBookings
+              bookingsList={props.bookingsList}
+              config={props.config}
+              dropValue={dropValue}
+              selected={selected}
+              updateSelected={this.setRequest}
+              handleCategoryChange={this.handleCategoryChange}
+            />
+        }
+        {
+          dropValue.id === 'completed' &&
+            <CompletedBookings
+              bookingsList={props.bookingsList}
+              dropValue={dropValue}
+              toggleBookingModal={props.toggleBookingModal}
+              handleCategoryChange={this.handleCategoryChange}
+            />
+        }
+        {
+          dropValue.id === 'cancelled' &&
+            <CancelledBookings
+              bookingsList={props.bookingsList}
+              config={props.config}
+              dropValue={dropValue}
+              handleCategoryChange={this.handleCategoryChange}
+            />
+        }
       </BookingsStyled>
     );
   }

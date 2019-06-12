@@ -200,7 +200,7 @@ function FormContainer(props) {
   };
 
   return (
-    <Layout>
+    <Layout className="content-wrapper">
       <FlexCenter>
         <Dropdown
           options={optionsList}
@@ -227,7 +227,7 @@ function FormContainer(props) {
           </TextArea>
         )}
       </Layout.EventStep2>
-      <FlexCenter>
+      <FlexCenter className="button-wrapper">
         <Button
           className="continue-button"
           onClick={() => nextButtonClick()}

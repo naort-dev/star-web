@@ -25,6 +25,7 @@ export const Container = styled.section`
     font-family: Gilroy;
     max-width: 332px;
     color: #ff6c58;
+    text-align: center;
   }
   .whiteBtn {
     font-size: 18px;

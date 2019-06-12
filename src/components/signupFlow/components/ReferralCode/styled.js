@@ -27,7 +27,6 @@ ReferralCodeWrapper.HeaderText = styled.div`
   text-align: center;
   color: #ff6c58;
   padding-bottom: 65px;
-  max-width: 140px;
   margin: 0 auto;
 
   .dots-container {
@@ -82,7 +81,7 @@ ReferralCodeWrapper.WrapsInput = styled.div`
 
 ReferralCodeWrapper.ButtonWrapper = styled.div`
   text-align:center;
-  margin-top: 386px;
+  margin-top: 309px;
   margin-bottom: 20px;
 `;
 

@@ -15,6 +15,7 @@ export const Layout = styled.section`
   }
   ${media.mobileScreen} {
     padding: 0 20px;
+    max-width: 380px;
     .icon {
       &.image-1 {
         width: 84px;
@@ -32,7 +33,7 @@ export const Layout = styled.section`
 `;
 
 export const ContentWrapper = styled.section`
-  padding-bottom: 46px;
+  padding-bottom: 35px;
   cursor: pointer;
   ${media.mobileScreen} {
     padding-bottom: 38px;
@@ -40,7 +41,7 @@ export const ContentWrapper = styled.section`
 `;
 
 export const HeaderText = styled.h3`
-  font-family: Gilroy-Medium;
+  font-family: Gilroy-SemiBold;
   font-size: 20px;
   color: #2f839d;
 `;
@@ -52,7 +53,7 @@ export const Paragraph = styled.p`
   max-width: 337px;
   ${media.mobileScreen} {
     font-size: 12px;
-    max-width: 221px;
+    max-width: inherit;
   }
 `;
 export const ImageWrapper = styled.span`
