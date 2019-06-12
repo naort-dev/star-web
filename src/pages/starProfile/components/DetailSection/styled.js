@@ -205,7 +205,7 @@ DetailStyled.ProfileVideoSection = styled.div`
     width: auto;
     padding-top: 0;
     padding-right: 40px;
-    margin-top: -18px;
+    margin-top: -39px;
   }
 `;
 

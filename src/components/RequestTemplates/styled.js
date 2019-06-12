@@ -44,6 +44,7 @@ Templates.InputWrapper = styled.div`
     transform: translate(0, 1.5px) scale(0.7);
     transform-origin: 0 0;
     width: 142.857143%;
+    color: #555;
   }
   .react-datepicker__input-container {
     width: 100%;

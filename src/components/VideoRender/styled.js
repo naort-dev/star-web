@@ -44,7 +44,6 @@ VideoRenderDiv.Content = styled.div`
   background-position: center;
   background-size:cover;
   position: relative;
-  box-shadow: 0 8px 15px 0 rgba(0, 0, 0, 0.16);
 `;
 
 VideoRenderDiv.ImageSection = styled.div`

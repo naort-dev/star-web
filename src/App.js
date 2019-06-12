@@ -16,7 +16,7 @@ import {
 import { fetchGroupTypes } from './store/shared/actions/getGroupTypes';
 import { fetchGroupTypesListing } from './store/shared/actions/groupTypeListing';
 import { updateLoginStatus, logOut } from './store/shared/actions/login';
-import { setSignupFlow, completedSignup } from './store/shared/actions/setSignupFlow';
+import { setSignupFlow, completedSignup, clearSignupFlow } from './store/shared/actions/setSignupFlow';
 import { toggleSignup } from './store/shared/actions/toggleModals';
 import { ComponentLoading } from './components/ComponentLoading';
 import { BrowseStars } from './pages/browseStars';
@@ -89,6 +89,14 @@ class App extends React.Component {
     if (this.props.isLoggedIn !== nextProps.isLoggedIn) {
       this.props.fetchProfessionsList();
       this.props.fetchAllProfessions();
+      this.props.clearSignupFlow();
+      if (localStorage) {
+        localStorage.removeItem('tempAuthToken');
+      }
+      if (this.props.cookies !== undefined) {
+        const { cookies } = this.props;
+        cookies.set('signupDetails', '', { path: '/', expires: new Date(Date.now() + 1000) });
+      }
     }
     if (
       !nextProps.configLoading &&
@@ -284,6 +292,7 @@ const mapProps = dispatch => ({
   logOut: () => dispatch(logOut()),
   setSignupFlow: signupDetails => dispatch(setSignupFlow(signupDetails)),
   toggleSignup: state => dispatch(toggleSignup(state)),
+  clearSignupFlow: () => dispatch(clearSignupFlow()),
   completedSignup: value => dispatch(completedSignup(value)),
 });
 

@@ -57,7 +57,7 @@ const Question = props => {
   const startStreaming = () => {
     updatedStateHandler({
       ...stateObject,
-      buttonLabel: 'Stop',
+      buttonLabel: 'Stop Recording',
     });
   };
 
@@ -70,15 +70,17 @@ const Question = props => {
     if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
       return true;
     }
+    return false;
   };
 
   const buttonClickHandler = () => {
     if (stateObject.buttonLabel === 'Record') {
-      mediaHandler('Record', false, false);
       if (isIOSDevice()) {
         videoRecordInput.current.click();
+      } else {
+        mediaHandler('Record', false, false);
       }
-    } else if (stateObject.buttonLabel === 'Stop') {
+    } else if (stateObject.buttonLabel === 'Stop Recording') {
       mediaHandler('Continue', true, true);
       props.headerUpdate('Check to make sure I’ve got everything right.');
     } else if (stateObject.buttonLabel === 'Continue') {
@@ -126,7 +128,7 @@ const Question = props => {
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       const blob = new Blob([file], { type: 'video/webm' });
-      const objectURL = window.URL.createObjectURL(blob);
+      const objectURL = window.URL.createObjectURL(file);
       props.updateMediaStore({
         videoSrc: objectURL,
         superBuffer: blob,
@@ -151,7 +153,12 @@ const Question = props => {
   };
   const getFileUpload = className => {
     return (
-      <label id="upload" htmlFor="fileUpload" className={[className].join(' ')}>
+      <label
+        id="upload"
+        htmlFor="fileUpload"
+        className={`${[className].join(' ')} ${props.shouldRecord &&
+          'disabled-btn'}`}
+      >
         <input
           type="file"
           id="fileUpload"
@@ -220,7 +227,7 @@ const Question = props => {
                     stateObject.buttonLabel,
                   )}
                   {stateObject.continueFlg &&
-                    (props.recorded
+                    (props.recorded || isIOSDevice()
                       ? getFileUpload(['uploadLink'])
                       : getRecordLink())}
                 </WebButtons>
@@ -238,7 +245,7 @@ const Question = props => {
                 stateObject.buttonLabel,
               )}
               {stateObject.continueFlg &&
-                (props.recorded
+                (props.recorded || isIOSDevice()
                   ? getFileUpload(['uploadLink'])
                   : getRecordLink())}
             </MobButtons>
@@ -260,28 +267,27 @@ const Question = props => {
         </React.Fragment>
       )}
 
-      {!isIOSDevice() && (!checkMediaRecorderSupport() ||
-        stateObject.error) && (
-          <QuestionContainer isShow error>
-            <p className="note">
-              Your system does not have video recording capability, but you will
+      {!isIOSDevice() && (!checkMediaRecorderSupport() || stateObject.error) && (
+        <QuestionContainer isShow error>
+          <p className="note">
+            Your system does not have video recording capability, but you will
             need to record a video to ask a question to the Star. <br />
-              <br />
-              You can:
             <br />
-              <br /> Record with our App
+            You can:
+            <br />
+            <br /> Record with our App
             <br /> Use our iOS or Android app to book the star.
           </p>
-            {getFileUpload(['uploadBtn noSupportBtn'])}
-          </QuestionContainer>
-        )}
+          {getFileUpload(['uploadBtn noSupportBtn'])}
+        </QuestionContainer>
+      )}
 
       <input
         ref={videoRecordInput}
         type="file"
         accept="video/*;capture=camcorder"
         className="videoInputCapture"
-        onChange={(event) => uploadHandler(event, true)}
+        onChange={event => uploadHandler(event, true)}
       />
     </Layout>
   );
@@ -300,6 +306,7 @@ Question.propTypes = {
   headerUpdate: PropTypes.func.isRequired,
   recorded: PropTypes.bool,
   playPauseMediaFlg: PropTypes.bool,
+  shouldRecord: PropTypes.bool.isRequired,
 };
 
 Question.defaultProps = {
@@ -315,6 +322,7 @@ function mapStateToProps(state) {
     recorded: state.commonReducer.recorded,
     videoUploaded: state.commonReducer.videoUploaded,
     playPauseMediaFlg: state.commonReducer.playPauseMedia,
+    shouldRecord: state.commonReducer.shouldRecord,
   };
 }
 export default connect(

@@ -21,6 +21,22 @@ const GeneralStyled = styled.div`
 GeneralStyled.Section = styled.div`
   display: flex;
   align-items: center;
+  .close-icon {
+    &:before {
+      content: '';
+      display: none;
+      border: none;
+    }
+    svg {
+      font-size: 22px;
+    }
+  }
+  .view-action {
+    color: ${props => props.theme.flatBlue};
+    font-family: Gilroy-Medium;
+    font-size: 14px;
+    cursor: pointer;
+  }
   .action-button {
     display: none;
     @media(min-width: 832px) {
@@ -46,18 +62,42 @@ GeneralStyled.Details = styled.span`
   margin-top: 8px;
   font-family: Gilroy-Medium;
   font-size: 14px;
-  color: #b4b4b4
+  color: #b4b4b4;
+  ${props => !props.isOpen && `
+    margin: 0;
+  `}
   .time {
-    color: #6a6a6a;
+    color: ${props => props.theme.brown};
     margin-right: 5px;
+    .time-head {
+      display: none;
+      @media(min-width: 832px) {
+        display: inline;
+      }
+    }
+    &.expiring {
+      color: #cc0000;
+    }
   }
   .action {
     color: ${props => props.theme.flatBlue};
     margin-left: 5px;
     cursor: pointer;
+    &:before {
+      content: 'Make Video';
+      display: block;
+    }
   }
   @media(min-width: 832px) {
     margin-right: 21.3px;
+    .action {
+      &:before {
+        content: 'View Details';
+      }
+    }
+    .comment {
+      margin-right: 39px;
+    }
   }
 `;
 export default GeneralStyled;

@@ -300,7 +300,7 @@ export const starsonaRequest = (
   if (bookingData.from_audio_file) {
     formData.append('from_audio_file', bookingData.from_audio_file);
   }
-  if (bookingData.from_audio_file) {
+  if (bookingData.to_audio_file) {
     formData.append('to_audio_file', bookingData.to_audio_file);
   }
   if (bookingData.remove_audios) {

@@ -5,7 +5,7 @@ export const TOGGLE_MODALS = {
   setRequestFlow: 'setRequestFlow/TOGGLE_MODAL',
   toggleRequestFlow: 'toggleRequestFlow/TOGGLE_MODAL',
   resetRequestFlow: 'resetRequestFlow/TOGGLE_MODAL',
-  toggleRequestPopup: 'toggleRequestPopup/TOGGLE_MODAL',
+  toggleBookingModal: 'toggleBookingModal/TOGGLE_MODAL',
   togglePopup: 'togglePopup/TOGGLE_MODAL',
 };
 
@@ -49,7 +49,9 @@ export const togglePopup = state => ({
   state,
 });
 
-export const toggleRequestPopup = state => ({
-  type: TOGGLE_MODALS.toggleRequestPopup,
+export const toggleBookingModal = (state, bookingData, starMode) => ({
+  type: TOGGLE_MODALS.toggleBookingModal,
   state,
+  bookingData,
+  starMode,
 });

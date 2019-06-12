@@ -277,6 +277,7 @@ class SignupFlow extends React.Component {
     const signupData = signupDetails;
     signupData.expiryDate = expiryDate;
     signupData.role = this.props.signupDetails.role;
+    signupData.currentStep = this.state.currentStep + 1;
     this.props.setSignupFlow(signupDetails);
     cookies.set(this.state.name, signupData, { path: '/', expires: expiryDate , sameSite: 'Strict' });
   }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { checkMediaRecorderSupport } from '../../utils/checkOS';
+import { checkMediaRecorderSupport, isIOSDevice } from '../../utils/checkOS';
 import { Progress } from './styled';
 import { PlayButton } from '../../styles/CommonStyled';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -30,6 +30,7 @@ class VideoRecorder extends Component {
         minutes: 0,
         seconds: 0,
       },
+      isIOSDevice: isIOSDevice(),
     };
   }
 
@@ -54,12 +55,6 @@ class VideoRecorder extends Component {
         !this.isStoped &&
         this.props.forceStop
       ) {
-        this.setState({
-          recordingTime: {
-            minutes: 0,
-            seconds: 0,
-          },
-        });
         this.stopRecording();
       }
     }
@@ -259,10 +254,13 @@ class VideoRecorder extends Component {
     if (this.props.headerUpdate) {
       this.props.headerUpdate(`Ask ${this.props.starNM} something!`);
     }
-    this.props.recordTrigger();
-    this.props.playPauseMediaAction();
+    if (!this.state.isIOSDevice) {
+      this.props.recordTrigger();
+      this.props.playPauseMediaAction();
+    }
     this.setState({ mediaControls: false });
   };
+
   getRetryBtn = () => {
     if (this.props.uploader && !this.props.recorded) {
       return (
@@ -310,7 +308,7 @@ class VideoRecorder extends Component {
         {this.state.mediaControls && (
           <React.Fragment>
             <PlayButton className="playButton" onClick={this.playPauseClick}>
-              <FontAwesomeIcon icon={faPlay} />
+              <FontAwesomeIcon icon={faPlay} className="button-play" />
             </PlayButton>
             {this.getRetryBtn()}
           </React.Fragment>

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { Scrollbars } from 'react-custom-scrollbars';
 import {
   recordTrigger,
   updateMediaStore,
@@ -8,6 +10,7 @@ import {
   setVideoUploadedFlag,
   updateToast,
 } from 'store/shared/actions/commonActions';
+import Loader from '../../../../components/Loader';
 import Dropdown from '../../../../components/Dropdown';
 import { CompactCard } from '../../../../components/ListCards';
 import RespondAction from './components/RespondAction';
@@ -15,6 +18,11 @@ import { options } from '../../constants';
 import OpenStyled from './styled';
 
 const OpenBookings = (props) => {
+
+  const updateSelected = bookingId => () => {
+    props.updateSelected(bookingId);
+  }
+
   return (
     <OpenStyled>
       <OpenStyled.LeftSection>
@@ -28,8 +36,21 @@ const OpenBookings = (props) => {
           onChange={props.handleCategoryChange}
           placeHolder="Select a booking type"
         />
-        <CompactCard selected />
-        <CompactCard />
+        <OpenStyled.BookingList>
+          <Scrollbars autoHide>
+            {
+              props.bookingsList.data.map(bookItem => (
+                <CompactCard
+                  key={bookItem.booking_id}
+                  expiration={props.config.request_expiration_days}
+                  bookData={bookItem}
+                  onClick={updateSelected(bookItem.booking_id)}
+                  selected={props.selected === bookItem.booking_id}
+                />
+              ))
+            }
+          </Scrollbars>
+        </OpenStyled.BookingList>
       </OpenStyled.LeftSection>
       <OpenStyled.RightSection>
         <RespondAction
@@ -53,6 +74,14 @@ const OpenBookings = (props) => {
     </OpenStyled>
   )
 }
+
+OpenBookings.propTypes = {
+  bookingsList: PropTypes.object.isRequired,
+  handleCategoryChange: PropTypes.func.isRequired,
+  dropValue: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
+}
+
 
 function mapDispatchToProps(dispatch) {
   return {

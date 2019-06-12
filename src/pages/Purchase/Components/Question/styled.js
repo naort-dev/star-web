@@ -56,9 +56,26 @@ export const Layout = styled.section`
     margin-bottom: 22px;
     font-family: Gilroy-SemiBold;
     cursor: pointer;
+    :hover,
+    :focus {
+      box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.15);
+    }
+    &:active {
+      color: #fff;
+      background-color: ${props => props.theme.greyishBrown};
+      border-color: ${props => props.theme.greyishBrown};
+    }
   }
   .videoInputCapture {
     display: none;
+  }
+  .button-play {
+    font-size: 44px;
+    color: #ff6c58;
+  }
+  .disabled-btn {
+    opacity: 0.3;
+    pointer-events: none;
   }
 `;
 
@@ -179,10 +196,6 @@ export const PlayButton = styled.section`
   border-radius: 50%;
   background: #fff;
   align-items: center;
-  svg {
-    font-size: 44px;
-    color: red;
-  }
 `;
 export const WebButtons = styled.section`
   padding-top: 37px;

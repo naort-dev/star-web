@@ -58,6 +58,9 @@ export const Layout = styled.section`
       display: none;
     }
   }
+  .videoInputCapture {
+    display: none;
+  }
 `;
 
 export const VideoContainer = styled.section`
