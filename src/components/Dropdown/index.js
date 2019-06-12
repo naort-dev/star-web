@@ -9,9 +9,9 @@ export default class Dropdown extends React.Component {
     super(props);
     const list = props.options
       ? props.options.map(option => ({
-          label: option[props.labelKey],
-          value: option[props.valueKey],
-        }))
+        label: option[props.labelKey],
+        value: option[props.valueKey],
+      }))
       : [];
     const selected = list.find(
       option => option.value === props.selected[props.valueKey],
@@ -40,9 +40,9 @@ export default class Dropdown extends React.Component {
     let { list, selected } = prevState;
     list = nextProps.options
       ? nextProps.options.map(option => ({
-          label: option[nextProps.labelKey],
-          value: option[nextProps.valueKey],
-        }))
+        label: option[nextProps.labelKey],
+        value: option[nextProps.valueKey],
+      }))
       : [];
     selected = list.find(
       option => option.value === nextProps.selected[nextProps.valueKey],
@@ -125,6 +125,9 @@ export default class Dropdown extends React.Component {
                 autoHeightMin={0}
                 autoHeightMax={346}
                 ref={this.handleScrollbarsMount}
+                renderView={props => (
+                  <div {...props} className="drop-custom-scroll" />
+                )}
               >
                 {list.map(item => (
                   <DropdownStyled.Options

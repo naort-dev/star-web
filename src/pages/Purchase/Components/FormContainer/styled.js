@@ -51,6 +51,11 @@ export const Layout = styled.section`
   &.content-wrapper > .button-wrapper .continue-button {
     align-self: flex-end
   }
+  
+  .drop-custom-scroll {
+    max-height: 250px !important;
+    overflow: auto !important;
+  }
 `;
 Layout.EventStep2 = styled.div`
   padding-top: 40px;
