@@ -63,7 +63,7 @@ export const Content = styled.section`
   .orderSuccess {
     color: #ff6c58;
     font-size: 40px;
-    line-height: 30px;
+    line-height: 39px;
     width: 220px;
     margin: 0 auto;
     padding-bottom: 24px;

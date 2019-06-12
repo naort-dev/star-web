@@ -37,7 +37,7 @@ export const Layout = styled.section`
       max-width: 100%;
       width: calc(100% - 15px);
       padding: 0 30px;
-      margin: 0;
+      margin: 0 0 15px;
       & > section:nth-child(2) {
         width: 100%;
         max-width: 100%;
@@ -67,9 +67,10 @@ export const Layout = styled.section`
 export const FlexBoxCenter = styled(FlexCenter)`
   padding: 15px 90px;
   ${media.realMobile} {
-    padding: 10px 0;
-    max-width: 425px;
-    margin: 0 auto;
+    max-width: 100%;
+    width: calc(100% - 15px);
+    padding: 0 30px;
+    margin: 0;
 
     p {
       text-align: left;
