@@ -93,7 +93,6 @@ LoginContainer.Heading = styled.div`
     padding-top: 19px;
   }
   @media(max-width:831px){
-    max-width: 144px;
     font-size: 24px;
     margin: 31px auto 11px;
     line-height: 28px
@@ -254,7 +253,6 @@ LoginContainer.PrivacyContent = styled.div`
   text-align: left;
   max-width: 300px;
   position: relative;
-  padding-left: 38px;
   margin: 19px auto 39px;
   @media(min-width: 832px) {
     margin: 33px auto 0;

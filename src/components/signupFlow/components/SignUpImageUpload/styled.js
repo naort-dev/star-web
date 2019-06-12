@@ -107,17 +107,18 @@ UploadContainer.CategoriesWrapper = styled.div`
     &.fans-want {
       height: 223px;
       padding-bottom: 2px;
+      padding-top: 15px;
     }
     &.select-category {
       height: 184px;
-      padding-bottom: 38px;
+      padding-bottom: 20px;
     }
   }
 
   .select__value-container {
-    padding: 7px 0px 10px !important;
+    padding: 7px 0px 0 !important;
     @media (max-width: 831px) {
-      padding: 10px 0 !important;
+      padding: 10px 0 0 !important;
     }
   }
   .basic-multi-select{
@@ -128,6 +129,7 @@ UploadContainer.CategoriesWrapper = styled.div`
     font-size: 18px !important;
     white-space: pre-line;
     line-height: 25px;
+    top: -5px;
     &.input-label-shrink {
       font-size: 13px !important;
       line-height: 18px;
@@ -339,7 +341,7 @@ UploadContainer.Item = styled.li`
   padding: 0 0 28px;
   background-color: ${props =>
     props.selected ? props.theme.flatBlue : '#fff'};
-  color: ${props => (props.selected ? '#fff' : '#999')};
+  color: ${props => (props.selected ? '#fff' : '#555')} !important;
 
   &.categoryItem {
     background-color: #fff;
@@ -577,7 +579,7 @@ ImageUpload.CropperLightButton = styled.button`
   background-color: #ededed;
   font-family: Gilroy-Medium;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 41px;
   text-align: center;
   color: #2f839d;
   box-sizing: border-box;
@@ -594,6 +596,15 @@ ImageUpload.CropperLightButton = styled.button`
   }
   & > svg {
     margin-right: 5px;
+  }
+  .icon {
+    font-size: 19px;
+    &.take-picture {
+      margin-bottom: -3px;
+    }
+    &.upload-picture {
+      margin-bottom: -2px;
+    }
   }
 `;
 
