@@ -117,6 +117,7 @@ class Purchase extends Component {
           pageCountHandler={this.props.pageCountHandler}
           pageCount={this.props.pageCount}
           updateBookingData={this.props.updateBookingData}
+          clearAudio={this.props.clearAll}
         />
       );
     } else if (this.state.stepCount === 3) {

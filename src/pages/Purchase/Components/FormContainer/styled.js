@@ -26,7 +26,7 @@ export const Layout = styled.section`
     width: 100%;
   }
   .scroll-wrap {
-    height: 220px !important;
+    height: 260px !important;
   }
 
   &.content-wrapper {
@@ -40,21 +40,26 @@ export const Layout = styled.section`
   }
 
   &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0;
+    flex: 0 0 auto;
   }
 
   &.content-wrapper > .button-wrapper {
-    flex: 1;
+    flex: 1 0 auto;
   }
 
 
   &.content-wrapper > .button-wrapper .continue-button {
     align-self: flex-end
   }
+  
+  .drop-custom-scroll {
+    max-height: 250px !important;
+    overflow: auto !important;
+  }
 `;
 Layout.EventStep2 = styled.div`
   padding-top: 40px;
-  //min-height: 362px;
+  min-height: 165px;
   .label {
     font-size: 18px;
   }

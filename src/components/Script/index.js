@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import dompurify from 'dompurify';
 import StarDrawer from 'components/StarDrawer';
 import { ScriptContainer, Script } from './styled';
 
@@ -62,7 +63,7 @@ const ScriptBuilder = ({ scriptText, script }) => {
       ) : (
         <Script
           dangerouslySetInnerHTML={{
-            __html: script,
+            __html: dompurify.sanitize(script),
           }}
         />
       )}

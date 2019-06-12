@@ -8,7 +8,7 @@ import CancelledBookings from './components/CancelledBookings';
 import { options } from './constants';
 import { celebOpenStatusList, celebCompletedStatusList, celebCancelledStatusList } from '../../constants/requestStatusList';
 import { parseQueryString } from '../../utils/dataformatter';
-import {  } from '../../styles/CommonStyled';
+import {} from '../../styles/CommonStyled';
 import BookingsStyled from './styled';
 
 class Bookings extends React.Component {
@@ -18,24 +18,24 @@ class Bookings extends React.Component {
     const queryString = parseQueryString(this.props.location.search);
     const newDropValue = options.find(option => option.id === queryString.type);
     if (newDropValue && newDropValue.id !== 'all') {
-      dropValue = newDropValue
+      dropValue = newDropValue;
       this.fetchList(newDropValue.id);
     } else {
       dropValue = {
         title: 'All',
         id: 'all',
-      }
+      };
       this.fetchList('open');
     }
     this.state = {
       dropValue,
       selected: '',
-    }
+    };
   }
 
   onBackClick = () => {
     this.props.history.goBack();
-  }
+  };
 
   onOpenClick = bookingId => () => {
     this.setState({
@@ -44,18 +44,18 @@ class Bookings extends React.Component {
         id: 'open',
       },
       selected: bookingId,
-    })
-  }
+    });
+  };
 
-  setRequestType = (dropValue) => () => {
-    this.setState({ dropValue })
-  }
-  
-  setRequest = (bookId) => {
-    this.setState({ selected: bookId })
-  }
+  setRequestType = dropValue => () => {
+    this.setState({ dropValue });
+  };
 
-  fetchList = (type) => {
+  setRequest = bookId => {
+    this.setState({ selected: bookId });
+  };
+
+  fetchList = type => {
     switch (type) {
       case 'all':
         this.props.fetchBookingsList(0, true, 'all');
@@ -72,16 +72,17 @@ class Bookings extends React.Component {
       default:
         return null;
     }
-  }
+    return null;
+  };
 
-  handleCategoryChange = (option) => {
-    this.setState({ dropValue: option })
+  handleCategoryChange = option => {
+    this.setState({ dropValue: option });
     if (option.id === 'all') {
-      this.fetchList('open'); 
+      this.fetchList('open');
     } else {
-      this.fetchList(option.id); 
+      this.fetchList(option.id);
     }
-  }
+  };
 
   render() {
     const { dropValue, selected } = this.state;
@@ -131,7 +132,7 @@ class Bookings extends React.Component {
             />
         }
       </BookingsStyled>
-    )
+    );
   }
 }
 
@@ -142,6 +143,6 @@ Bookings.propTypes = {
   fetchBookingsList: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   toggleBookingModal: PropTypes.func.isRequired,
-}
+};
 
 export default Bookings;

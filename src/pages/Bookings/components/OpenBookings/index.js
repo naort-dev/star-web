@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import {
@@ -17,17 +18,32 @@ import RespondAction from './components/RespondAction';
 import { options } from '../../constants';
 import OpenStyled from './styled';
 
-const OpenBookings = (props) => {
+const OpenBookings = props => {
+  const updateSelected = booking => () => {
+    props.updateSelected(booking.booking_id);
+  };
+  const [selectedBooking, updateSelectedBooking] = useState({});
 
-  const updateSelected = bookingId => () => {
-    props.updateSelected(bookingId);
-  }
+  useEffect(() => {
+    if (!isEmpty(props.bookingsList.data)) {
+      if (!isEmpty(props.selected)) {
+        updateSelectedBooking(
+          props.bookingsList.data.find(
+            bookItem => bookItem.booking_id === props.selected,
+          ),
+        );
+      } else {
+        props.updateSelected(props.bookingsList.data[0].booking_id);
+        updateSelectedBooking(props.bookingsList.data[0]);
+      }
+    }
+  }, [props.selected, props.bookingsList.data]);
 
   return (
     <OpenStyled>
       <OpenStyled.LeftSection>
         <Dropdown
-          rootClass='drop-down'
+          rootClass="drop-down"
           secondary
           selected={props.dropValue}
           options={options}
@@ -38,50 +54,52 @@ const OpenBookings = (props) => {
         />
         <OpenStyled.BookingList>
           <Scrollbars autoHide>
-            {
-              props.bookingsList.data.map(bookItem => (
-                <CompactCard
-                  key={bookItem.booking_id}
-                  expiration={props.config.request_expiration_days}
-                  bookData={bookItem}
-                  onClick={updateSelected(bookItem.booking_id)}
-                  selected={props.selected === bookItem.booking_id}
-                />
-              ))
-            }
+            {props.bookingsList.data.map(bookItem => (
+              <CompactCard
+                key={bookItem.booking_id}
+                expiration={props.config.request_expiration_days}
+                bookData={bookItem}
+                onClick={updateSelected(bookItem)}
+                selected={props.selected === bookItem.booking_id}
+              />
+            ))}
           </Scrollbars>
         </OpenStyled.BookingList>
       </OpenStyled.LeftSection>
-      <OpenStyled.RightSection>
-        <RespondAction
-          recordTrigger={props.recordTrigger}
-          updateMediaStore={props.updateMediaStore}
-          playPauseMedia={props.playPauseMedia}
-          // continueCallback={continuePayment}
-          loaderAction={props.loaderAction}
-          setVideoUploadedFlag={props.setVideoUploadedFlag}
-          // starsonaRequest={props.starsonaRequest}
-          // starNM={
-          //   props.userDetails.nick_name !== '' &&
-          //   props.userDetails.nick_name
-          //     ? props.userDetails.nick_name
-          //     : props.userDetails.first_name
-          // }
-          updateToast={props.updateToast}
-          headerUpdate={props.headerUpdate}
-        />
-      </OpenStyled.RightSection>
+      {!isEmpty(selectedBooking) && (
+        <OpenStyled.RightSection>
+          <RespondAction
+            recordTrigger={props.recordTrigger}
+            updateMediaStore={props.updateMediaStore}
+            playPauseMedia={props.playPauseMedia}
+            // continueCallback={continuePayment}
+            loaderAction={props.loaderAction}
+            setVideoUploadedFlag={props.setVideoUploadedFlag}
+            // starsonaRequest={props.starsonaRequest}
+            // starNM={
+            //   props.userDetails.nick_name !== '' &&
+            //   props.userDetails.nick_name
+            //     ? props.userDetails.nick_name
+            //     : props.userDetails.first_name
+            // }
+            updateToast={props.updateToast}
+            headerUpdate={props.headerUpdate}
+            bookedItem={selectedBooking}
+          />
+        </OpenStyled.RightSection>
+      )}
+
+      {isEmpty(selectedBooking) && <Loader />}
     </OpenStyled>
-  )
-}
+  );
+};
 
 OpenBookings.propTypes = {
   bookingsList: PropTypes.object.isRequired,
   handleCategoryChange: PropTypes.func.isRequired,
   dropValue: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
-}
-
+};
 
 function mapDispatchToProps(dispatch) {
   return {
@@ -107,4 +125,3 @@ export default connect(
   null,
   mapDispatchToProps,
 )(OpenBookings);
-

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
+import dompurify from 'dompurify';
 import { Layout } from './styled';
 
 const PromoTemplate = props => {
@@ -7,7 +8,7 @@ const PromoTemplate = props => {
     <Layout
       className="template-card"
       dangerouslySetInnerHTML={{
-        __html: props.template,
+        __html: dompurify.sanitize(props.template),
       }}
     />
   );
