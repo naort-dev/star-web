@@ -27,15 +27,12 @@ export const DialogStyled = styled(Dialog)`
 
 export const Content = styled.section`
   position: relative;
-  height: calc(100% - 157px);
+  height: calc(100% - 197px);
   ${media.mobileScreen} {
     height: calc(100% - 200px);
   }
   .scrollRenderView {
-    padding-top: 30px;
-    ${media.mobileScreen} {
-      padding-top: 70px;
-    }
+    overflow: auto !important;
   }
 `;
 

@@ -33,7 +33,7 @@ export const Layout = styled.section`
 export const UserCardWrapper = styled.section`
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 33px;
+  margin-bottom: 50px;
 `;
 
 export const TopSection = styled.section`
@@ -58,6 +58,10 @@ export const TopSection = styled.section`
     color: #2f839d;
     cursor: pointer;
   }
+  .profile-wrapper {
+    align-items: center;
+  } 
+
   .profileIcon {
     width: 60px;
     height: 60px;
@@ -80,7 +84,7 @@ export const BottomSection = styled.section`
   padding: 20px;
   background-color: #efefef;
   ${media.webView} {
-    padding: 14px 20px 5px;
+    padding: 10px 20px;
   }
   .labelHead {
     font-family: Gilroy;
@@ -89,7 +93,7 @@ export const BottomSection = styled.section`
     width: 100%;
   }
   .amount {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-SemiBold;
     font-size: 24px;
     color: #525252;
   }
@@ -104,7 +108,8 @@ export const BottomSection = styled.section`
     ${media.webView} {
       width: 100%;
       padding-top: 5px;
-      padding-left: 10px;
+      padding-left: 0;
+      text-align: left;
     }
   }
   .cardType {

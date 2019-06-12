@@ -46,8 +46,8 @@ const UserCard = props => {
     <Layout>
       <UserCardWrapper>
         <TopSection>
-          <FlexBoxSB>
-            <FlexBoxSB>
+          <FlexBoxSB className="profile-wrapper">
+            <FlexBoxSB className="profile-wrapper">
               <span className="profileIcon">
                 <img
                   src={getThumbnail()}
@@ -74,7 +74,7 @@ const UserCard = props => {
             className={isEmpty(props.celebDetails.charity) && 'center'}
           >
             {props.celebDetails.charity !== '' && (
-              <span className="colDir alignPad">
+              <span className="colDir">
                 <span className="labelHead">All proceeds go to:</span>
                 <span className="cardType">{props.celebDetails.charity}</span>
               </span>

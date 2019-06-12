@@ -4,8 +4,8 @@ import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
   width: 100%;
-  height: 100%;
-  max-width: 330px;
+  height: 97%;
+  max-width: 500px;
   margin: 0 auto;
   padding-top: 10px;
   .termsWrapper {
@@ -17,7 +17,30 @@ export const Layout = styled.section`
   .continue-btn {
     ${media.webView} {
       margin-left: 37px;
+      height: 60px;
+      margin-bottom: 75px;
+      align-self: flex-end;
     }
+  }
+  &.content-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &.content-wrapper > *:not(.button-wrapper) {
+    flex: 0;
+    width: 100%;
+  }
+
+  &.content-wrapper > .button-wrapper {
+    flex: 1;
+    display: flex;
+    margin: 0;
+  }
+
+
+  &.content-wrapper > .button-wrapper .continue-button {
+    align-self: flex-end
   }
 `;
 

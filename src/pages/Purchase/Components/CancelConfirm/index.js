@@ -19,7 +19,7 @@ const CancelConfirm = props => {
               I’ll come back later
             </Button>
             <Button className="whiteBtn" onClick={props.modalClose}>
-              {`I need ${props.starNM} in my life, continue my booking`}
+              {`I need ${props.starNM} in my life,`}<br /> continue my booking
             </Button>
           </FlexCenter>
         </FlexCenter>
