@@ -19,6 +19,11 @@ Templates.InputWrapper = styled.div`
     width: ${props => (props.fullWidth ? '100%' : '48%')};
     padding-bottom: 30px;
   }
+  .content-wrapper & {
+    @media (max-width: 832px) {
+      width: 100%;
+    }
+  }
   .select-material {
     width: 100%;
     text-align: center;
