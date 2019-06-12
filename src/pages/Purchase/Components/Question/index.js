@@ -157,6 +157,7 @@ const Question = props => {
         id="upload"
         htmlFor="fileUpload"
         className={`${[className].join(' ')} ${props.shouldRecord &&
+          !stateObject.error &&
           'disabled-btn'}`}
       >
         <input
