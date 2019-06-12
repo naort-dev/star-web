@@ -26,7 +26,7 @@ export const Layout = styled.section`
     width: 100%;
   }
   .scroll-wrap {
-    height: 220px !important;
+    height: 260px !important;
   }
 
   &.content-wrapper {
@@ -40,11 +40,11 @@ export const Layout = styled.section`
   }
 
   &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0;
+    flex: 0 0 auto;
   }
 
   &.content-wrapper > .button-wrapper {
-    flex: 1;
+    flex: 1 0 auto;
   }
 
 

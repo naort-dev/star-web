@@ -28,12 +28,12 @@ export const Layout = styled.section`
   }
 
   &.content-wrapper > *:not(.button-wrapper) {
-    flex: 0;
+    flex: 0 0 auto;
     width: 100%;
   }
 
   &.content-wrapper > .button-wrapper {
-    flex: 1;
+    flex: 1 0 auto;
     display: flex;
     margin: 0;
   }
