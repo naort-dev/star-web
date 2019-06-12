@@ -54,7 +54,7 @@ export const Layout = styled.section`
 `;
 Layout.EventStep2 = styled.div`
   padding-top: 40px;
-  //min-height: 362px;
+  min-height: 165px;
   .label {
     font-size: 18px;
   }

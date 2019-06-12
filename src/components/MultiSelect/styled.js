@@ -34,6 +34,11 @@ const MultiSelectStyled = styled.div`
       color: #615195;
       input {
         font-size: 24px;
+        .fans-want &,
+        .select-category & {
+          font-size: 18px !important;
+          line-height: 18px !important;
+        }
       }
     }
     .select__multi-value {
@@ -46,6 +51,13 @@ const MultiSelectStyled = styled.div`
       margin: 0 5px 5px 0px;
       padding: 0px 3px 0 12px;
       border-radius: 16px;
+
+      .fans-want &,
+      .select-category & {
+        margin: 0 5px 10px 0px;
+        padding: 0px 3px 0 15px;
+        border-radius: 15px;
+      }
     }
     .select__multi-value__label {
       padding-left: 0px;
@@ -61,6 +73,12 @@ const MultiSelectStyled = styled.div`
       padding-left: 8px;
       &:hover {
         background: none;
+      }
+      .fans-want &,
+      .select-category & {
+        font-size: 16px;
+        line-height: 16px;
+        align-items: center;
       }
     }
   }
