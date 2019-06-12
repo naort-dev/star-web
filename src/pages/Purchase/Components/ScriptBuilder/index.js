@@ -129,9 +129,15 @@ class ScriptBuilder extends Component {
         date: this.props.bookingData.date,
         importantinfo: this.props.importantInfo,
         booking_statement: this.state.script,
-        event_guest_honor: this.props.bookingData.specification,
+        event_guest_honor:
+          this.props.bookingData.templateType === 7
+            ? this.props.bookingData.specification
+            : '',
         from_where: this.props.bookingData.specification,
-        event_title: this.props.bookingData.specification,
+        event_title:
+          this.props.bookingData.templateType === 6
+            ? this.props.bookingData.specification
+            : '',
         someone_else: this.props.bookingData.user !== 'Myself',
       };
       this.props.loaderAction(true);
@@ -145,7 +151,7 @@ class ScriptBuilder extends Component {
   render() {
     return (
       <Layout className="content-wrapper">
-        <Script 
+        <Script
           scriptText={this.props.bookingData.scriptText}
           script={this.state.script}
         />
@@ -179,7 +185,9 @@ class ScriptBuilder extends Component {
           />
         </FlexBoxCenter>
         <FlexCenter className="button-wrapper">
-          <Button onClick={this.submitClick} className="continue-button">Continue</Button>
+          <Button onClick={this.submitClick} className="continue-button">
+            Continue
+          </Button>
         </FlexCenter>
       </Layout>
     );
