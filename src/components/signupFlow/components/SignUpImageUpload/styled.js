@@ -68,6 +68,7 @@ UploadContainer.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 22px;
+  
   @media (min-width: 832px) {
     &.fans-want {
       & ~.upload-wrap {
@@ -187,6 +188,12 @@ UploadContainer.BrowseCategories = styled.div`
   color:#555555;
   @media (max-width: 831px) {
     color: #b7b7b7;
+  }
+  .select__multi-value__label {
+    font-family: Gilroy-Medium;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 5px 5px 5px 0;
   }
 `;
 
