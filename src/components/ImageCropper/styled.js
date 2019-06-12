@@ -17,7 +17,7 @@ CropperStyled.CropperWrapper = styled.div`
   width: calc(100% - 20px);
   height: 261.6px;
   @media(min-width: 832px) {
-    height: 477px;
+    height: 486px;
   }
   img {
     max-width: 100%;

@@ -222,12 +222,12 @@ export default class ProfileUpload extends React.Component {
                 </ImageUpload.ProfileImageWrapper>
                 <ImageUpload.ButtonWrapper>
                   <ImageUpload.CropperLightButton onClick={this.props.onTakePicture}>
-                    <FontAwesomeIcon icon={faCamera} />
+                    <FontAwesomeIcon icon={faCamera} className="icon take-picture"/>
                     Take picture
                   </ImageUpload.CropperLightButton>
                   <ImageUpload.CropperLightButton>
                     <ImageUpload.UploadInput accept=".png, .jpeg, .jpg" id="profileUpload" onChange={() => this.onUploadFileChange()} type="file" />
-                    <FontAwesomeIcon icon={faUpload} />
+                    <FontAwesomeIcon icon={faUpload} className="icon upload-picture"/>
                     Upload picture
                   </ImageUpload.CropperLightButton>
                 </ImageUpload.ButtonWrapper>
