@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
 export const Layout = styled.section`
-  height: 503px;
+  height: 426px;
   padding: 0 80px;
   display: flex;
   align-items: center;
@@ -82,9 +82,10 @@ export const Layout = styled.section`
 
 export const VideoContainer = styled.section`
   width: 269px;
-  height: 415px;
+  height: 426px;
   border-radius: 23px;
   background-color: #e3e3e3;
+  align-self: flex-start;
   position: relative;
   .playButton {
     position: absolute;

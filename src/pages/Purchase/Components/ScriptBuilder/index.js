@@ -141,7 +141,7 @@ class ScriptBuilder extends Component {
   render() {
     return (
       <Layout className="content-wrapper">
-        <Script
+        <Script 
           scriptText={this.props.bookingData.scriptText}
           script={this.state.script}
         />

@@ -15,6 +15,7 @@ export const Layout = styled.section`
   }
   ${media.mobileScreen} {
     padding: 0 20px;
+    max-width: 380px;
     .icon {
       &.image-1 {
         width: 84px;

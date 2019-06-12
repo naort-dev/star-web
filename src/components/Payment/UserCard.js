@@ -46,8 +46,8 @@ const UserCard = props => {
     <Layout>
       <UserCardWrapper>
         <TopSection>
-          <FlexBoxSB>
-            <FlexBoxSB>
+          <FlexBoxSB className="profile-wrapper">
+            <FlexBoxSB className="profile-wrapper">
               <span className="profileIcon">
                 <img
                   src={getThumbnail()}

@@ -33,9 +33,6 @@ export const Content = styled.section`
   }
   .scrollRenderView {
     overflow: auto !important;
-    ${media.mobileScreen} {
-      padding-top: 70px;
-    }
   }
 `;
 

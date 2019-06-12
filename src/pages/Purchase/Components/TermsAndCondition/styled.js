@@ -5,7 +5,7 @@ import { media } from 'styles/mediaQueries';
 export const Layout = styled.section`
   width: 100%;
   height: 97%;
-  max-width: 330px;
+  max-width: 500px;
   margin: 0 auto;
   padding-top: 10px;
   .termsWrapper {
@@ -18,7 +18,7 @@ export const Layout = styled.section`
     ${media.webView} {
       margin-left: 37px;
       height: 60px;
-      margin-bottom: 30px;
+      margin-bottom: 75px;
       align-self: flex-end;
     }
   }

@@ -23,7 +23,7 @@ export const Layout = styled.section`
   }
   button {
     margin-top: 5px;
-    margin-bottom: 30px;
+    margin-bottom: 75px;
   }
   .script {
     color:#2f839d;
@@ -32,6 +32,22 @@ export const Layout = styled.section`
   &.content-wrapper {
     display: flex;
     flex-direction: column;
+
+    & > section:first-child {
+      max-width: 100%;
+      width: calc(100% - 15px);
+      padding: 0 30px;
+      margin: 0;
+      & > section:nth-child(2) {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+
+        p {
+          max-width: 100%;
+        }
+      }
+    }
   }
 
   &.content-wrapper > *:not(.button-wrapper) {

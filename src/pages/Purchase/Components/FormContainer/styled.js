@@ -20,7 +20,7 @@ export const Layout = styled.section`
   }
   .continue-button {
     height: 60px;
-    margin-bottom: 30px;
+    margin-bottom: 75px;
   }
   .cus-drop {
     width: 100%;
@@ -32,6 +32,11 @@ export const Layout = styled.section`
   &.content-wrapper {
     display: flex;
     flex-direction: column;
+
+    .react-datepicker__day--keyboard-selected,
+    .react-datepicker__day--keyboard-selected:hover {
+      background-color: #FF6C58;
+    }
   }
 
   &.content-wrapper > *:not(.button-wrapper) {

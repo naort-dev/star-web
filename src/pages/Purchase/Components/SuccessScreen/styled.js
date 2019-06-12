@@ -49,7 +49,8 @@ export const Content = styled.section`
   font-family: Gilroy;
   padding-bottom: 30px;
   ${media.webView} {
-    max-width: 400px;
+    max-width: 100%;
+    padding: 0 75px;;
   }
   .highFive {
     color: #ff6c58;
@@ -75,7 +76,7 @@ export const Content = styled.section`
     color: #4b4b4b;
     font-size: 16px;
     line-height: 24px;
-    padding-bottom: 70px;
+    padding-bottom: 48px;
   }
   .browseBtn {
     width: 300px;
