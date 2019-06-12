@@ -126,6 +126,7 @@ function RequestTemplates(
                 label={placeholder}
                 InputProps={{ classes: { input: 'input-field' } }}
                 InputLabelProps={{ classes: { root: 'float-label' } }}
+                nativeProps={{ readOnly: true }}
               />
             }
             customInputRef="dt"

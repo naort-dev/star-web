@@ -7,6 +7,7 @@ import {
   loaderAction,
   setVideoUploadedFlag,
   updateToast,
+  audioRecordHandler,
 } from '../../store/shared/actions/commonActions';
 import {
   resetRecording,
@@ -85,6 +86,9 @@ function mapDispatchToProps(dispatch) {
     },
     headerUpdate: header => {
       dispatch(headerUpdate(header));
+    },
+    audioRecordHandler: audioFlags => {
+      dispatch(audioRecordHandler(audioFlags));
     },
   };
 }
