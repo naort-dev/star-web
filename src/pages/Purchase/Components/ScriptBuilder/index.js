@@ -129,6 +129,10 @@ class ScriptBuilder extends Component {
         date: this.props.bookingData.date,
         importantinfo: this.props.importantInfo,
         booking_statement: this.state.script,
+        event_guest_honor: this.props.bookingData.specification,
+        from_where: this.props.bookingData.specification,
+        event_title: this.props.bookingData.specification,
+        someone_else: this.props.bookingData.user !== 'Myself',
       };
       this.props.loaderAction(true);
       this.props.starsonaRequest(

@@ -21,19 +21,19 @@ import OpenStyled from './styled';
 const OpenBookings = props => {
   const updateSelected = booking => () => {
     props.updateSelected(booking.booking_id);
-    setSelectedBookingId(booking.booking_id);
   };
   const [selectedBooking, updateSelectedBooking] = useState({});
-  const [selected, setSelectedBookingId] = useState('');
 
   useEffect(() => {
     if (!isEmpty(props.bookingsList.data)) {
       if (!isEmpty(props.selected)) {
         updateSelectedBooking(
-          props.bookingsList.data.find(x => x.booking_id === props.selected),
+          props.bookingsList.data.find(
+            bookItem => bookItem.booking_id === props.selected,
+          ),
         );
       } else {
-        setSelectedBookingId(props.bookingsList.data[0].booking_id);
+        props.updateSelected(props.bookingsList.data[0].booking_id);
         updateSelectedBooking(props.bookingsList.data[0]);
       }
     }
@@ -60,7 +60,7 @@ const OpenBookings = props => {
                 expiration={props.config.request_expiration_days}
                 bookData={bookItem}
                 onClick={updateSelected(bookItem)}
-                selected={selected === bookItem.booking_id}
+                selected={props.selected === bookItem.booking_id}
               />
             ))}
           </Scrollbars>

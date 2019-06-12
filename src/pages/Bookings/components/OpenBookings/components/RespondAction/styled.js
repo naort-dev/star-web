@@ -1,22 +1,10 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
 
-export const Container = styled.section`
-  .heading {
-    font-family: Gilroy-Regular;
-    color: ${props => props.theme.orangePink};
-    font-size: 24px;
-    width: 310px;
-    margin: 0 auto;
-    text-align: center;
-    margin-bottom: 44.7px;
-  }
-`;
-
 export const Layout = styled.section`
   height: 100%;
   display: flex;
-  max-width: 600px;
+  justify-content: center;
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
@@ -25,7 +13,7 @@ export const Layout = styled.section`
     height: 40px;
   }
   .videoElm {
-    width: 269px;
+    width: 319px;
     border-radius: 23px;
     height: 100%;
     object-fit: cover;
@@ -41,7 +29,10 @@ export const Layout = styled.section`
     }
   }
   .quesHead {
-    padding-bottom: 27px;
+    padding-bottom: 20px;
+    font-family: Gilroy-Semibold;
+    font-size: 14px;
+    color: #7c7c7c;
   }
   .uploadLink {
     font-family: Gilroy;
@@ -78,11 +69,34 @@ export const Layout = styled.section`
       border-color: ${props => props.theme.greyishBrown};
     }
   }
+  .videoInputCapture {
+    display: none;
+  }
+  .video-option {
+    justify-content: center;
+    display: flex;
+    padding-bottom: 11px;
+    li {
+      display: inline-block;
+      font-family: Gilroy-Light;
+      font-size: 16px;
+      color: #cccccc;
+    }
+    li + li:before {
+      content: '|';
+      padding-left: 15px;
+      padding-right: 15px;
+      color: #2f2f2f;
+    }
+  }
+  .questionWrapper {
+    padding-bottom: 30px;
+  }
 `;
 
 export const VideoContainer = styled.section`
-  width: 269px;
-  height: 415px;
+  width: 319px;
+  height: 493px;
   border-radius: 23px;
   background-color: #e3e3e3;
   margin-bottom: 60px;
@@ -108,8 +122,8 @@ export const VideoContainer = styled.section`
 `;
 
 export const QuestionContainer = styled.section`
-  padding-left: ${props => (props.error ? '20px' : '40px')};
-  padding-top: 10px;
+  padding-left: ${props => (props.error ? '20px' : '34px')};
+  ${props => props.isQA && `padding-top: 28px;`}
   display: flex;
   align-items: center;
   flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
@@ -160,6 +174,12 @@ export const QuestionContainer = styled.section`
   .question {
     font-size: 16px;
   }
+  .agreement-note {
+    font-family: Gilroy-Light;
+    font-size: 12px;
+    color: #3b3b3b;
+    max-width: 215px;
+  }
 `;
 
 export const ShowHide = styled.span`
@@ -208,7 +228,7 @@ export const PlayButton = styled.section`
   }
 `;
 export const WebButtons = styled.section`
-  padding-top: 37px;
+  padding-top: 50px;
 `;
 export const MobButtons = styled.section`
   position: absolute;

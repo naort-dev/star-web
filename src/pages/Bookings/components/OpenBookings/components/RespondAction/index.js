@@ -7,7 +7,6 @@ import VideoRecorder from 'components/VideoRecorder';
 import { checkMediaRecorderSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import {
-  Container,
   Layout,
   VideoContainer,
   QuestionContainer,
@@ -17,7 +16,7 @@ import {
 } from './styled';
 
 const Question = props => {
-  let questions = [
+  const questions = [
     {
       key: 'que1',
       question: 'Introduce yourself ',
@@ -191,10 +190,23 @@ const Question = props => {
     );
   };
 
+  const getQuestionList = () => {
+    if (props.bookedItem.request_type === 3) {
+      return stateObject.qusList;
+    }
+    return questions;
+  };
+  const getHeader = () => {
+    if(props.bookedItem.request_type === 1){
+      return `Record a ${props.bookedItem.occasion} shoutout for Sarah from Lisa` 
+    }
+    return 'Record a Birthday shoutout for Sarah from Lisa';
+  };
+
   const onNext = () => {};
 
   useEffect(() => {
-    console.log(props.bookedItem)
+    console.log(props.bookedItem);
     const qusList = [
       {
         key: 'que2',
@@ -214,41 +226,55 @@ const Question = props => {
   }, [props.bookedItem]);
 
   return (
-    <Container>
-      <h4 className="heading">
-        Record a Birthday shoutout for Sarah from Lisa
-      </h4>
+    <React.Fragment>
+      <h4 className="heading-video">{getHeader()}</h4>
       <Layout>
         {(isIOSDevice() || checkMediaRecorderSupport()) && (
           <React.Fragment>
-            <VideoContainer>
-              <VideoRecorder
-                updateMediaStore={props.updateMediaStore}
-                duration={recorder.askTimeOut}
-                stopRecordHandler={stopRecordHandler}
-                playPauseMediaAction={props.playPauseMedia}
-                retryRecordHandler={retryRecordHandler}
-                recordTrigger={props.recordTrigger}
-                errorHandler={errorHandlerCallback}
-                forceStop={stateObject.isStop}
-                startStreamingCallback={startStreaming}
-                headerUpdate={props.headerUpdate}
-                starNM={props.starNM}
-                uploadHandler={uploadHandler}
-                recorded={props.recorded}
-                uploader
-              />
-            </VideoContainer>
+            <section>
+              {props.bookedItem.request_type === 3 && (
+                <ul className="video-option">
+                  <li>QUESTION</li>
+                  <li>ANSWER</li>
+                </ul>
+              )}
+              <VideoContainer>
+                <VideoRecorder
+                  updateMediaStore={props.updateMediaStore}
+                  duration={recorder.askTimeOut}
+                  stopRecordHandler={stopRecordHandler}
+                  playPauseMediaAction={props.playPauseMedia}
+                  retryRecordHandler={retryRecordHandler}
+                  recordTrigger={props.recordTrigger}
+                  errorHandler={errorHandlerCallback}
+                  forceStop={stateObject.isStop}
+                  startStreamingCallback={startStreaming}
+                  headerUpdate={props.headerUpdate}
+                  starNM={props.starNM}
+                  uploadHandler={uploadHandler}
+                  recorded={props.recorded}
+                  uploader
+                />
+              </VideoContainer>
+            </section>
             <QuestionContainer
               isShow={stateObject.showHideFlg || stateObject.error}
               continueFlg={stateObject.continueFlg}
+              isQA={props.bookedItem.request_type === 3}
             >
               {!stateObject.error && (
                 <React.Fragment>
                   {!stateObject.continueFlg && (
                     <div>
                       <h1 className="quesHead">What you should say?</h1>
-                      <QuestionBuilder questionsList={stateObject.qusList} />
+                      <QuestionBuilder questionsList={getQuestionList()} />
+                      {props.bookedItem.request_type === 3 && (
+                        <p className="agreement-note">
+                          Please note, the fan has signed an additional
+                          agreement that you are not liable for any answer you
+                          may give.
+                        </p>
+                      )}
                     </div>
                   )}
                   <WebButtons>
@@ -326,7 +352,7 @@ const Question = props => {
           onChange={event => uploadHandler(event, true)}
         />
       </Layout>
-    </Container>
+    </React.Fragment>
   );
 };
 
@@ -344,6 +370,7 @@ Question.propTypes = {
   recorded: PropTypes.bool,
   playPauseMediaFlg: PropTypes.bool,
   shouldRecord: PropTypes.bool.isRequired,
+  bookedItem: PropTypes.object.isRequired,
 };
 
 Question.defaultProps = {
