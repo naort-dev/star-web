@@ -30,8 +30,8 @@ const CompletedCard = (props) => {
     }
     return (
       <React.Fragment>
-        <HeadingBold>Birthday Announcement</HeadingBold>&nbsp;
-          shoutout for&nbsp; 
+        <HeadingBold>Birthday</HeadingBold>&nbsp;
+          {requestTypes[props.data.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <HeadingBold>
             { props.data.request_details && props.data.request_details.stargramto !== 'Myself' ? props.data.request_details.stargramto : props.data.fan }
           </HeadingBold>
@@ -45,6 +45,38 @@ const CompletedCard = (props) => {
       </React.Fragment>
     )
   }
+
+  // const renderDescription = () => {
+  //   if (requestTypes[props.data.request_type] === 'Q&A') {
+  //     return (
+  //       <React.Fragment>
+  //           <HeadingBold>Question</HeadingBold>&nbsp;
+  //           from&nbsp;
+  //           <HeadingBold>
+  //             {
+  //               props.data.fan
+  //             }
+  //           </HeadingBold>
+  //       </React.Fragment>
+  //     )
+  //   }
+  //   return (
+  //     <React.Fragment>
+  //       <HeadingBold>Birthday Announcement</HeadingBold>&nbsp;
+  //         shoutout for&nbsp; 
+  //         <HeadingBold>
+  //           { props.data.request_details && props.data.request_details.stargramto !== 'Myself' ? props.data.request_details.stargramto : props.data.fan }
+  //         </HeadingBold>
+  //         {
+  //           props.data.request_details && props.data.request_details.stargramto !== 'Myself' ?
+  //             <React.Fragment>
+  //               &nbsp;from <HeadingBold>{props.data.request_details.stargramto}</HeadingBold>
+  //             </React.Fragment>
+  //           : null
+  //         }
+  //     </React.Fragment>
+  //   )
+  // }
   return (
     <CompletedStyled className={props.classes.root} onClick={props.onClick}>
       <span className='favorite-icon'>
