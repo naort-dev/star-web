@@ -104,7 +104,7 @@ const CompletedCard = (props) => {
                 <FontAwesomeIcon className='comment-icon' icon={faComment} />
               </span>
               <span className='icon tip'>
-                $
+                $ 20
               </span>
               <span className='icon reaction'>
                 <span className='reaction-icon'>

@@ -93,9 +93,8 @@ CompletedStyled.DetailsWrapper = styled.div`
         }
       }
       &.tip {
-        width: 23.3px;
-        height: 23.3px;
-        border-radius: 50%;
+        padding: 5px 9.5px;
+        border-radius: 10px;
         font-family: Gilroy-Medium;
         font-size: 14px;
         display: flex;
