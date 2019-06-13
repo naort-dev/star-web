@@ -185,13 +185,12 @@ TypeSelectorWrapper.HeaderText = styled.div`
   letter-spacing: normal;
   text-align: center;
   color: #ff6c58;
-  padding: 41px 0 55px;
+  padding: 41px 0 35px;
   @media(min-width:832px){
     font-size: 24px;
     padding: 45px 0 37px;
   }
   @media(max-width:831px){
-    max-width: 176px;
     margin: 0 auto;
   }
 `;
