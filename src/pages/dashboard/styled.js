@@ -11,6 +11,9 @@ export const Layout = styled.section`
     padding-left: 0;
     padding-right: 0;
   }
+  @media(max-width: 831px) {
+    padding-top: 30px;
+  }
   .head1 {
     ${media.webView} {
       text-align: left;
@@ -19,6 +22,27 @@ export const Layout = styled.section`
   .arrow {
     ${media.webView} {
       display: none;
+    }
+  }
+  .head1 {
+    padding-top: 9px;
+    padding-bottom: 32px;
+    ${media.webView} {
+      padding-top: 9px;
+      padding-bottom: 32px;
+    }
+    @media(max-width: 831px) {
+      padding-bottom: 22px;
+    }
+  }
+  .middle-section {
+    width: 336px;
+    margin: 0 auto;
+    @media(min-width: 832px) {
+      width: 522px;
+    }
+    @media(min-width: 1280px) {
+      width: 567px;
     }
   }
 `;
@@ -32,7 +56,7 @@ export const Wrapper = styled.section`
 export const Social = styled(Card)`
   width: 369px;
   margin-left: 27px;
-  padding: 29px 49px;
+  padding: 24px 49px 29px;
   display: none;
   ${media.largeScreen} {
     display: block;

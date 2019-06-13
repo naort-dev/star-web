@@ -16,14 +16,18 @@ const ManageStyled = styled.div`
 `;
 
 ManageStyled.Container = styled.div`
-  max-width: 1246px;
   margin: 0 auto;
   width: 100%;
   display: flex;
   flex-direction: column;
   @media(min-width: 832px) {
     flex-direction: row;
-    padding: 47px 36px;
+    padding: 47px 10px 50px;
+    max-width: 732px;
+  }
+  @media(min-width: 1280px) {
+    max-width: 1246px;
+    padding: 47px 36px 50px;
     padding-right: 10px;
   }
 `;

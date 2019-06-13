@@ -50,10 +50,10 @@ const StarCard = ({ data }) => {
             </span>
             <Value>{data.reactionVideos}</Value>
           </SummaryItem>
-          <SummaryItem>
+          <SummaryItem className="rating-wrap">
             <span>
               <FontAwesomeIcon icon={faStar} />
-              <Label>Rating</Label>
+              <Label className="rating-label">Rating</Label>
             </span>
             <StarRating
               rating={data.rating}
