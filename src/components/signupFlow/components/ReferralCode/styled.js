@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { media } from "styles/mediaQueries"
 
 const ReferralCodeWrapper = styled.div`
   text-align: center;
@@ -28,7 +29,9 @@ ReferralCodeWrapper.HeaderText = styled.div`
   color: #ff6c58;
   padding-bottom: 65px;
   margin: 0 auto;
-
+  ${media.mobileScreen} {
+    padding-bottom: 30px;
+  }
   .dots-container {
     margin-top: 11px;
   }

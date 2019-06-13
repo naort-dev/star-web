@@ -19,6 +19,12 @@ UploadContainer.Wrapper = styled.div`
     label {
     }
   }
+
+  .error-msg {
+    @media (min-width: 832px) {
+     // margin-bottom: -20px;
+    }
+  }
 `;
 
 UploadContainer.CropperContainer = styled.div`
@@ -68,17 +74,20 @@ UploadContainer.Heading = styled.div`
   font-size: 24px;
   font-family: 'Gilroy';
   padding-top: 22px;
+
   
   @media (min-width: 832px) {
     &.fans-want {
       & ~.upload-wrap {
         padding-top: 58px;
         padding-bottom: 0;
+        margin-bottom: 15px
       }
     }
     &.select-category {
       & ~.upload-wrap {
         padding-bottom: 0;
+        margin-bottom: 15px
       }
     }
   }
@@ -104,15 +113,14 @@ UploadContainer.CategoriesWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin: 0 auto 40px;
 
     &.fans-want {
-      height: 223px;
       padding-bottom: 2px;
       padding-top: 15px;
     }
     &.select-category {
-      height: 184px;
-      padding-bottom: 20px;
+      padding-bottom: 0;
     }
   }
 
@@ -135,9 +143,13 @@ UploadContainer.CategoriesWrapper = styled.div`
       font-size: 13px !important;
       line-height: 18px;
       color: #555 !important;
+      margin-top: 15px;
     }
     + div {
-      margin-top: 33px;
+      margin-top: 43px;
+      @media (min-width: 832px) {
+        margin-top: 33px;
+      }
     }
   }
   .select__clear-indicator {
@@ -176,7 +188,7 @@ UploadContainer.ButtonWrapper = styled.div`
   text-align: center;
   margin-bottom: 20px;
   @media (max-width: 831px) {
-    margin-top: 101px;
+    margin-top: 30px;
   }
 `;
 
@@ -273,14 +285,14 @@ UploadContainer.BrowseCategoryContainer = styled.div`
     width: 100%;
   }
   .subCategoryHeading {
-    font-family: Gilroy-Medium;
+    font-family: Gilroy-SemiBold;
     font-size: 19px;
     line-height: 23px;
     margin-bottom: 10px;
     max-width: 270px;
     span {
       font-family: Gilroy-Light;
-      font-size: 16px;
+      font-size: 14px;
       display: block;
     }
   }
@@ -300,6 +312,13 @@ UploadContainer.MobileView = styled.div`
   ${UploadContainer.BrowseCategoryContainer} {
     padding: 4px 20px 10px;
     display: block;
+    ${media.mobileView} {
+      padding: 30px 20px 10px;
+    }
+
+    &.mobile-select-category .select__indicators {
+      display: none;
+    }
   }
   ${UploadContainer.Heading} {
     padding-top: 70px;
@@ -310,6 +329,7 @@ UploadContainer.MobileView = styled.div`
   .select-input {
     margin-top: 33px;
   }
+
   @media (min-width: 832px) {
     display: none;
   }
@@ -325,19 +345,17 @@ UploadContainer.SubItemWrapper = styled.ul`
   overflow-y: auto;
   overflow-x: visible;
   li {
-    padding: 6px 13px;
+    padding: 1px 15px 0;
     border-radius: 15px;
     border: 1px solid #2f839d;
     display: flex;
-    font-family: Gilroy;
-    font-size: 14px;
+    font-family: Gilroy-Medium;
+    font-size: 12px;
     align-items: center;
-    margin-top: 5px;
     margin-right: 5px;
     cursor: pointer;
-    height: 26px;
-    line-height: 26px;
-    margin-bottom: 2px;
+    line-height: 20px;
+    margin-bottom: 5px;
     color: #555;
   }
 `;
@@ -352,7 +370,7 @@ UploadContainer.Item = styled.li`
 
   &.categoryItem {
     background-color: #fff;
-    color: ${props => (props.selected ? props.theme.flatBlue : '#555')};
+    color: ${props => (props.selected ? props.theme.flatBlue : '#555')} !important;
     font-family: ${props => (props.selected ? 'Gilroy-Medium' : 'Gilroy')};
   }
 `;
@@ -392,7 +410,7 @@ ImageUpload.CloseButton = styled.span`
 
 ImageUpload.DetailsWrapper = ImageUpload.ContentWrapper.extend`
   padding: ${props =>
-    props.imagePresent ? '51px 10px 59px' : '51px 10px 99px'};
+    props.imagePresent ? '30px 10px 0' : '30px 10px 10px'};
   @media(min-width: 832px) {
     padding: 35px 60px 32px;
   }
@@ -411,6 +429,9 @@ ImageUpload.ProfileInputButton = styled.div`
   align-items: center;
   justify-content: center;
   padding-bottom: 18px;
+  ${media.mobileView} {
+    padding-bottom: 0;
+  }
 `;
 
 ImageUpload.UploadedImage = styled.div`
@@ -418,7 +439,7 @@ ImageUpload.UploadedImage = styled.div`
   height: calc(100% - 150px);
   align-items: center;
   justify-content: center;
-  padding-bottom: 18px;
+  padding-bottom: 20px;
   flex-direction: column;
 `;
 
@@ -503,7 +524,7 @@ ImageUpload.UploadText = styled.span`
 ImageUpload.CropWrapper = styled.div`
   &.cropper-Wrapper {
     /* height: 631px; */
-    padding-top: 94px;
+    padding-top: 30px;
     ${media.webView} {
       padding-top: 27px;
     }
