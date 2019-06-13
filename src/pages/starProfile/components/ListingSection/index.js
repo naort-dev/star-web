@@ -25,7 +25,7 @@ const ListingSection = (props) => {
   const setInitialLimit = (type) => {
     let newVideoLimit = 2;
     let newReactionLimit = 3;
-    if (document.body.getBoundingClientRect().width <= 480 || window.innerWidth <= 480) {
+    if (document.body.getBoundingClientRect().width <= 374 || window.innerWidth <= 374) {
       newVideoLimit = videoCountLimit.smallMobile;
       newReactionLimit = reactionCountLimit.smallMobile;
     } else if (document.body.getBoundingClientRect().width <= 832 || window.innerWidth <= 832) {
