@@ -33,14 +33,15 @@ SignUpMethod.Heading = styled.div`
   line-height: 1.2;
   text-align: center;
   color: #ff6c58;
-  padding: 31px 0 41px;
-  max-width: 178px;
+  padding: 30px 20px 35px;
   margin: 0 auto;
   &.or-section {
     padding-bottom: 0;
-    margin-bottom: 13px;
+    margin-bottom: 20px;
+    padding-top: 0;
     @media(min-width:832px){
       padding-top: 29px;
+      margin-bottom: 13px;
     }
   }
   @media(min-width: 831px) {
@@ -86,10 +87,10 @@ SignUpMethod.Button = styled.button`
       }
     }
   }
-  // @media(max-width: 831px) {
-  //   padding: 80px 0 23px;
-  //   max-width: 100%;
-  // }
+  @media(max-width: 831px) {
+    padding: 0 17px 5px;
+    margin-bottom: 20px;
+  }
 `;
 
 SignUpMethod.Icon = styled.div`
