@@ -19,6 +19,9 @@ const BookingCard = (props) => {
   }
 
   const setDetails = (state) => () => {
+    // if (state) {
+    //   document.getElementsByClassName('paper-root')[0].setAttribute('style', 'transition: 1s ease; transform: rotateY(180deg);');
+    // }
     toggleDetails(state);
   }
 
