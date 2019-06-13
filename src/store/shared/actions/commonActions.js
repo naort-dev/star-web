@@ -12,6 +12,7 @@ export const Actions = {
   UPDATE_CUSTOMER_ID: 'UPDATE_CUSTOMER_ID',
   SET_VIDEO_UPLOADED_FLG: 'SET_VIDEO_UPLOADED_FLG',
   SET_TOAST: 'SET_TOAST',
+  AUDIO_RECORD_HANDLER: 'AUDIO_RECORD_HANDLER',
 };
 
 export const recordTrigger = () => ({
@@ -45,4 +46,9 @@ export const setVideoUploadedFlag = value => ({
 export const updateToast = toastObj => ({
   type: Actions.SET_TOAST,
   toastObj,
+});
+
+export const audioRecordHandler = audioFlags => ({
+  type: Actions.AUDIO_RECORD_HANDLER,
+  audioFlags,
 });

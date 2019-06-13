@@ -20,12 +20,15 @@ AudioRecorderDiv.Icon = styled(FontAwesomeIcon)`
   flex: 1;
   font-size: 18px;
   color: #2f839d;
+  ${props => props.recording && `pointer-events:none; color: #c0bfbf;`}
 `;
 
 AudioRecorderDiv.Rerecord = styled.div`
   height: 20px;
   font-family: Gilroy-Semibold;
   font-size: 14px;
+  cursor: pointer;
+  ${props => props.recording && `pointer-events:none; color: #c0bfbf;`}
 `;
 
 AudioRecorderDiv.TextButton = styled.button`
@@ -75,6 +78,7 @@ AudioRecorderDiv.CloseButton = styled.div`
   height: 20px;
   font-family: Gilroy-Semibold;
   font-size: 14px;
+  cursor: pointer;
 `;
 
 AudioRecorderDiv.Audio = styled.audio`
@@ -87,6 +91,9 @@ AudioRecorderDiv.Audio = styled.audio`
 AudioRecorderDiv.ControlWrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  .recText {
+    ${props => props.recording && `pointer-events:none; color: #c0bfbf;`}
+  }
 `;
 
 AudioRecorderDiv.PlayButton = styled.div`
@@ -94,6 +101,8 @@ AudioRecorderDiv.PlayButton = styled.div`
   font-family: Gilroy-Semibold;
   font-size: 14px;
   color: #2f829c;
+  cursor: pointer;
+  ${props => props.playing && `pointer-events:none;color: #c0bfbf;`}
 `;
 
 AudioRecorderDiv.PauseButton = styled.div`
@@ -101,6 +110,7 @@ AudioRecorderDiv.PauseButton = styled.div`
   font-family: Gilroy-Semibold;
   font-size: 14px;
   color: #2f829c;
+  cursor: pointer;
 `;
 
 export { AudioRecorderDiv };
