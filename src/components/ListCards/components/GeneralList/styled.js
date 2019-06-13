@@ -40,6 +40,7 @@ GeneralStyled.Section = styled.div`
   .view-action {
     display: none;
     @media(min-width: 832px) {
+      display: block;
       color: ${props => props.theme.flatBlue};
       font-family: Gilroy-Medium;
       font-size: 14px;
