@@ -30,15 +30,6 @@ OpenStyled.RightSection = Card.extend`
     margin-left: 24.7px;
     max-width: 700px;
   }
-  .heading-video {
-    font-family: Gilroy-Regular;
-    color: ${props => props.theme.orangePink};
-    font-size: 24px;
-    width: 310px;
-    margin: 0 auto;
-    text-align: center;
-    margin-bottom: 44.7px;
-  }
 `;
 
 export default OpenStyled;

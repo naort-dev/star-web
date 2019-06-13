@@ -1,11 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
 import QuestionBuilder from 'components/QuestionBuilder';
 import Button from 'components/PrimaryButton';
 import VideoRecorder from 'components/VideoRecorder';
+import ToolTip from 'components/ToolTip';
 import { checkMediaRecorderSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
+import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
 import {
   Layout,
   VideoContainer,
@@ -13,6 +16,8 @@ import {
   ShowHide,
   WebButtons,
   MobButtons,
+  Header,
+  Speaker,
 } from './styled';
 
 const Question = props => {
@@ -37,6 +42,8 @@ const Question = props => {
   ];
   const videoRecordInput = useRef(null);
 
+  const audio = new Audio();
+
   const [stateObject, updatedStateHandler] = useState({
     showHideFlg: false,
     buttonLabel: props.videoSrc ? 'Continue' : 'Record',
@@ -45,6 +52,8 @@ const Question = props => {
     continueFlg: !!props.videoSrc,
     qusList: [],
   });
+
+  const [playing, setPlaying] = useState(false);
 
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
     props.recordTrigger();
@@ -97,6 +106,7 @@ const Question = props => {
       }
     }
   };
+
   const stopRecordHandler = () => {
     mediaHandler('Continue', true, true);
     props.headerUpdate('Check to make sure I’ve got everything right.');
@@ -111,12 +121,14 @@ const Question = props => {
       videoRecordInput.current.click();
     }
   };
+
   const errorHandlerCallback = () => {
     updatedStateHandler({
       ...stateObject,
       error: true,
     });
   };
+
   const getButton = (secondary, className, clickHandler, btnLabel) => {
     return (
       <Button
@@ -128,6 +140,7 @@ const Question = props => {
       </Button>
     );
   };
+
   const uploadHandler = (input, isIOS) => {
     const file = input.target.files[0];
     if (file.type.startsWith('video/')) {
@@ -157,6 +170,7 @@ const Question = props => {
       });
     }
   };
+
   const getFileUpload = className => {
     return (
       <label
@@ -196,11 +210,65 @@ const Question = props => {
     }
     return questions;
   };
-  const getHeader = () => {
-    if(props.bookedItem.request_type === 1){
-      return `Record a ${props.bookedItem.occasion} shoutout for Sarah from Lisa` 
+
+  const playAudio = audioFile => () => {
+    if (playing) {
+      setPlaying(false);
+      audio.pause();
+    } else {
+      audio.src = audioFile;
+      audio.play();
+      setPlaying(true);
     }
-    return 'Record a Birthday shoutout for Sarah from Lisa';
+  };
+
+  const getHeader = () => {
+    const getToolTip = audioFile => {
+      if (!isEmpty(audioFile))
+        return (
+          <ToolTip title="Click to hear how to pronounce  the name.">
+            <Speaker icon={faMicrophone} onClick={playAudio(audioFile)} />
+          </ToolTip>
+        );
+      return null;
+    };
+    const getFrom = (stargramfrom, audioFile) => {
+      if (!isEmpty(stargramfrom))
+        return (
+          <React.Fragment>
+            from <span className="bold-head-name">{stargramfrom}</span>
+            {getToolTip(audioFile)}
+          </React.Fragment>
+        );
+      return null;
+    };
+    const { stargramfrom, stargramto } = props.bookedItem.request_details;
+    const { to_audio_file, from_audio_file } = props.bookedItem;
+    if (props.bookedItem.request_type === 1) {
+      return (
+        <React.Fragment>
+          Record a {props.bookedItem.occasion} shoutout for{' '}
+          <span className="bold-head-name">{stargramto} </span>
+          {getToolTip(to_audio_file)}
+          {getFrom(stargramfrom, from_audio_file)}
+        </React.Fragment>
+      );
+    } else if (props.bookedItem.request_type === 2) {
+      return (
+        <React.Fragment>
+          Record a {props.bookedItem.occasion} announcement for{' '}
+          <span className="bold-head-name">{stargramto} </span>
+          {getToolTip(to_audio_file)}
+          {getFrom(stargramfrom, from_audio_file)}
+        </React.Fragment>
+      );
+    }
+    return (
+      <React.Fragment>
+        Record an answer for{' '}
+        <span className="bold-head-name">{props.bookedItem.fan}</span>
+      </React.Fragment>
+    );
   };
 
   const onNext = () => {};
@@ -225,9 +293,17 @@ const Question = props => {
     });
   }, [props.bookedItem]);
 
+  const onAudioEnded = () => {
+    setPlaying(false);
+  };
+
+  useEffect(() => {
+    audio.addEventListener('ended', onAudioEnded);
+  }, []);
+
   return (
     <React.Fragment>
-      <h4 className="heading-video">{getHeader()}</h4>
+      <Header>{getHeader()}</Header>
       <Layout>
         {(isIOSDevice() || checkMediaRecorderSupport()) && (
           <React.Fragment>
@@ -364,9 +440,8 @@ Question.propTypes = {
   videoSrc: PropTypes.string,
   videoUploaded: PropTypes.bool,
   setVideoUploadedFlag: PropTypes.func.isRequired,
-  starNM: PropTypes.string.isRequired,
   updateToast: PropTypes.func.isRequired,
-  headerUpdate: PropTypes.func.isRequired,
+  headerUpdate: PropTypes.func,
   recorded: PropTypes.bool,
   playPauseMediaFlg: PropTypes.bool,
   shouldRecord: PropTypes.bool.isRequired,
@@ -378,6 +453,7 @@ Question.defaultProps = {
   videoUploaded: false,
   recorded: false,
   playPauseMediaFlg: false,
+  headerUpdate: () => {},
 };
 
 function mapStateToProps(state) {

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { media } from 'styles/mediaQueries';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 export const Layout = styled.section`
   height: 100%;
@@ -240,4 +241,23 @@ export const MobButtons = styled.section`
   ${media.webView} {
     display: none;
   }
+`;
+export const Header = styled.h4`
+  font-family: Gilroy-Regular;
+  color: ${props => props.theme.orangePink};
+  font-size: 24px;
+  width: 310px;
+  margin: 0 auto;
+  text-align: center;
+  margin-bottom: 44.7px;
+  .bold-head-name {
+    font-family: Gilroy-Bold;
+  }
+`;
+export const Speaker = styled(FontAwesomeIcon)`
+  font-size: 18px;
+  color: #2f839d;
+  margin-left: 2px;
+  margin-right: 2px;
+  ${props => props.recording && `pointer-events:none; color: #c0bfbf;`}
 `;

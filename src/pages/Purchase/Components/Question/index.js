@@ -302,7 +302,7 @@ Question.propTypes = {
   videoSrc: PropTypes.string,
   videoUploaded: PropTypes.bool,
   setVideoUploadedFlag: PropTypes.func.isRequired,
-  starNM: PropTypes.string.isRequired,
+  starNM: PropTypes.string,
   updateToast: PropTypes.func.isRequired,
   headerUpdate: PropTypes.func.isRequired,
   recorded: PropTypes.bool,
@@ -315,6 +315,7 @@ Question.defaultProps = {
   videoUploaded: false,
   recorded: false,
   playPauseMediaFlg: false,
+  starNM: '',
 };
 
 function mapStateToProps(state) {
