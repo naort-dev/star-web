@@ -30,6 +30,8 @@ CategoryPageStyled.FilterList = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${props => props.theme.greyishBrown};
+  text-transform: capitalize;
+  padding-right: 30px;
 `;
 
 CategoryPageStyled.Filter = styled.span`
@@ -137,7 +139,7 @@ CategoryPageStyled.StarWrapper = styled.div`
 
 CategoryPageStyled.Heading = styled.span`
   display: block;
-  margin-top: 24px;
+  margin-top: 0;
   font-family: Gilroy-Medium;
   font-size: 26px;
   text-align: center;
@@ -163,8 +165,8 @@ CategoryPageStyled.FeaturedSection = styled.div`
   border: ${props => `1px solid #555`}
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 23px;
+  justify-content: space-around;
+  padding: 20px 23px 8px;
   max-width: 375px;
   margin: 0 auto;
   margin-top: 24px;
@@ -183,6 +185,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     transform: translateX(-50%);
     background: #fff;
     padding: 0 20px;
+    white-space: nowrap;
   }
   @media(min-width: 832px) {
     max-width: 832px;
@@ -211,8 +214,8 @@ CategoryPageStyled.FeaturedSection = styled.div`
 CategoryPageStyled.Toolbar = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 12px 16px;
+  align-items: center;
+  padding: 0 16px;
   position: fixed;
   left: 0;
   right: 0;
