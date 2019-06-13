@@ -12,13 +12,15 @@ export const Layout = styled.section`
       text-align: center;
       font-family: Gilroy;
       line-height: 38px;
+      margin-bottom: 4px;
     }
     .note-sec {
       font-size: 12px;
       color: #888;
       font-family: Gilroy-Light;
       text-align: center;
-      padding-bottom: 30px;
+      padding-bottom: 35px;
+      line-height: 16px;
     }
     .share-link {
       text-decoration: underline;
@@ -26,16 +28,17 @@ export const Layout = styled.section`
     }
     .template-card {
       position: relative;
+      margin-bottom: 13px;
     }
   }
   .share-text {
-    font-family: Gilroy;
+    font-family: Gilroy-Light;
     font-size: 20px;
     color: #999;
   }
   .social-wrap {
-    font-size: 55px;
-    padding-top: 18px;
+    font-size: 59px;
+    padding-top: 15px;
     display: flex;
     justify-content: space-between;
     width: 245px;
@@ -44,6 +47,12 @@ export const Layout = styled.section`
       display: flex;
       flex-direction: column;
       align-items: center;
+      &.twitter {
+        font-size: 61px;
+        .social-name {
+          padding-top: 11px;
+        }
+      }
       .social-icon {
         color: #2f839d;
         cursor: pointer;
@@ -52,7 +61,7 @@ export const Layout = styled.section`
         font-family: Gilroy;
         font-size: 14px;
         color: #2f839d;
-        padding-top: 16px;
+        padding-top: 13px;
       }
     }
   }
