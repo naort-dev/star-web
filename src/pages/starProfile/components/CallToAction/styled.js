@@ -28,6 +28,7 @@ const ActionStyled = styled.div`
 ActionStyled.AvatarWrapper = styled.div`
   padding-right: 19.3px;
   ${StarProfileStyled.Avatar} {
+    margin-top: 0;
     width: 48.6px;
     height: 48.6px;
   }
