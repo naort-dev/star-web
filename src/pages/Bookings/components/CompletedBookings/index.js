@@ -21,7 +21,7 @@ const CompletedBookings = (props) => {
   }
 
   const onCompletedClick = (requestData) => () => {
-    props.toggleBookingModal(true, requestData, true);
+    props.toggleBookingModal(true, {...requestData, id: requestData.booking_id}, true);
   }
 
   return (

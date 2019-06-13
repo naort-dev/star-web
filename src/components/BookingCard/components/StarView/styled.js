@@ -13,6 +13,9 @@ StarViewStyled.HeaderText = styled.h5`
   strong {
     font-family: Gilroy-Medium;
   }
+  @media(min-width: 832px) {
+    color: ${props => props.theme.flatBlue};
+  }
 `;
 
 StarViewStyled.VideoWrapper = styled.div`
@@ -33,13 +36,6 @@ StarViewStyled.DetailWrapper = styled.div`
   margin-bottom: 20px;
   .title {
     display: block;
-  }
-  .action-btn {
-    min-width: auto;
-    min-height: auto;
-    font-size: 14px;
-    width: 130px;
-    height: 40px;
   }
 `;
 

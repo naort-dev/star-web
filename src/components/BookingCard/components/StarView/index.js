@@ -6,7 +6,7 @@ import { requestTypes } from '../../../../constants/requestTypes';
 import CommentBox from '../../../CommentBox';
 import QuickComment from '../../../QuickComment';
 import VideoRender from '../../../VideoRender';
-import PrimaryButton from '../../../PrimaryButton';
+import Share from '../../../Share';
 import BookingStyled from '../../styled';
 import StarViewStyled from './styled';
 
@@ -66,6 +66,7 @@ const StarView = (props) => {
               cover={video.s3_thumbnail_url}
             />
           </StarViewStyled.VideoWrapper>
+          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
         </BookingStyled.LeftSection>
         <BookingStyled.RightSection>
           <StarViewStyled.DetailWrapper>
@@ -73,7 +74,10 @@ const StarView = (props) => {
               <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
               <BookingStyled.Description>{ moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
             </span>
-            <PrimaryButton className='action-btn'>Share This</PrimaryButton>
+            <Share
+              className='action-btn'
+              shareUrl={video.video_url}
+            />
           </StarViewStyled.DetailWrapper>
           <StarViewStyled.DetailWrapper>
               <span>
@@ -88,6 +92,7 @@ const StarView = (props) => {
             <CommentBox classes={{root: 'comment-box'}} />
             <QuickComment classes={{root: 'quick-comment'}} />
           </StarViewStyled.CommentWrapper>
+          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
     </StarViewStyled>
@@ -97,6 +102,7 @@ const StarView = (props) => {
 StarView.propTypes = {
   closeModal: PropTypes.func.isRequired,
   bookingData: PropTypes.object.isRequired,
+  toggleDetails: PropTypes.func.isRequired,
 }
 
 export default StarView;
