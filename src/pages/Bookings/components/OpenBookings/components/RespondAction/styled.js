@@ -6,6 +6,7 @@ export const Layout = styled.section`
   height: 100%;
   display: flex;
   justify-content: center;
+  position: relative;
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
@@ -43,6 +44,10 @@ export const Layout = styled.section`
     display: inline-block;
     text-align: center;
     padding-top: 20px;
+    display: block;
+    ${media.largeScreen} {
+      display: none;
+    }
   }
   .hidden {
     display: none;
@@ -51,7 +56,9 @@ export const Layout = styled.section`
     width: 100%;
     display: inline-block;
     text-align: center;
-    border: 1px solid #2f839d;
+    ${media.largeScreen} {
+      border: 1px solid #2f839d;
+    }
     color: #2f839d;
     height: 40px;
     line-height: 40px;
@@ -92,6 +99,15 @@ export const Layout = styled.section`
   }
   .questionWrapper {
     padding-bottom: 30px;
+    :last-of-type {
+      padding-bottom: 9px;
+    }
+  }
+  .next-btn {
+    display: none;
+    ${media.largeScreen} {
+      display: block;
+    }
   }
 `;
 
@@ -132,12 +148,11 @@ export const QuestionContainer = styled.section`
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 24px;
-    height: 250px;
-    top: 235px;
+    top: 233px;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
-    width: 269px;
+    width: 319px;
     transform: translateX(-50%);
   }
   h1 {
@@ -170,7 +185,10 @@ export const QuestionContainer = styled.section`
   .boldTxt {
     font-family: Gilroy-Semibold;
     font-size: 16px;
-    color: #2f2f2f;
+    color: #fff;
+    ${media.largeScreen} {
+      color: #2f2f2f;
+    }
   }
   .question {
     font-size: 16px;
@@ -180,13 +198,14 @@ export const QuestionContainer = styled.section`
     font-size: 12px;
     color: #3b3b3b;
     max-width: 215px;
+    padding-left: 29px;
   }
 `;
 
 export const ShowHide = styled.span`
   display: block;
   position: absolute;
-  top: 425px;
+  top: 440px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -233,7 +252,7 @@ export const WebButtons = styled.section`
 `;
 export const MobButtons = styled.section`
   position: absolute;
-  top: 485px;
+  top: 490px;
   display: flex;
   flex-direction: column;
   padding-bottom: 40px;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { isEmpty, cloneDeep } from 'lodash';
 import PropTypes from 'prop-types';
 import { Scrollbars } from 'react-custom-scrollbars';
 import {
@@ -18,11 +18,74 @@ import RespondAction from './components/RespondAction';
 import { options } from '../../constants';
 import OpenStyled from './styled';
 
+const buttonLabel = {
+  primary: {
+    continue: 'Continue',
+    stop: 'Stop recording',
+    record: 'Start recording',
+  },
+  upload: { label: 'Upload video' },
+  next: { label: 'Next' },
+};
+
 const OpenBookings = props => {
+  const clearVideo = () => {
+    this.props.updateMediaStore({
+      videoSrc: null,
+      superBuffer: null,
+      recordedTime: null,
+      recorded: false,
+    });
+  };
   const updateSelected = booking => () => {
     props.updateSelected(booking.booking_id);
+    updateCardClicked(true);
+    clearVideo();
   };
+
   const [selectedBooking, updateSelectedBooking] = useState({});
+  const [cardClicked, updateCardClicked] = useState(false);
+  const [initialSelected, setInitialSelected] = useState(false);
+
+  const getButtonLabels = () => {
+    if (selectedBooking.request_type === 3) {
+      const tmp = cloneDeep(buttonLabel);
+      tmp.primary.record = 'Start recording answer';
+      tmp.upload.label = 'Upload video answer';
+      return tmp;
+    }
+    return buttonLabel;
+  };
+
+  const nextClick = () => {
+    const selectedIndex = props.bookingsList.data.findIndex(
+      booking => booking.booking_id === props.selected,
+    );
+    if (props.bookingsList.data.length > selectedIndex) {
+      props.updateSelected(
+        props.bookingsList.data[selectedIndex + 1].booking_id,
+      );
+      updateSelectedBooking(props.bookingsList.data[selectedIndex + 1]);
+      clearVideo();
+    }
+  };
+
+  const backArrowHandler = () => {
+    updateCardClicked(false);
+    setInitialSelected(true);
+  };
+
+  const closeHandler = () => {
+    updateCardClicked(false);
+    setInitialSelected(true);
+  };
+
+  useEffect(() => {
+    if (!isEmpty(props.selected)) {
+      setInitialSelected(true);
+      updateCardClicked(true);
+    }
+  }, []);
 
   useEffect(() => {
     if (!isEmpty(props.bookingsList.data)) {
@@ -61,30 +124,27 @@ const OpenBookings = props => {
                 bookData={bookItem}
                 onClick={updateSelected(bookItem)}
                 selected={props.selected === bookItem.booking_id}
+                initialSelected={initialSelected}
               />
             ))}
           </Scrollbars>
         </OpenStyled.BookingList>
       </OpenStyled.LeftSection>
       {!isEmpty(selectedBooking) && (
-        <OpenStyled.RightSection>
+        <OpenStyled.RightSection clicked={cardClicked}>
           <RespondAction
             recordTrigger={props.recordTrigger}
             updateMediaStore={props.updateMediaStore}
             playPauseMedia={props.playPauseMedia}
-            // continueCallback={continuePayment}
             loaderAction={props.loaderAction}
             setVideoUploadedFlag={props.setVideoUploadedFlag}
-            // starsonaRequest={props.starsonaRequest}
-            // starNM={
-            //   props.userDetails.nick_name !== '' &&
-            //   props.userDetails.nick_name
-            //     ? props.userDetails.nick_name
-            //     : props.userDetails.first_name
-            // }
             updateToast={props.updateToast}
             headerUpdate={props.headerUpdate}
             bookedItem={selectedBooking}
+            buttonLabel={getButtonLabels()}
+            nextClick={nextClick}
+            backArrowHandler={backArrowHandler}
+            closeHandler={closeHandler}
           />
         </OpenStyled.RightSection>
       )}

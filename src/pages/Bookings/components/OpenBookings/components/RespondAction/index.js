@@ -9,6 +9,7 @@ import ToolTip from 'components/ToolTip';
 import { checkMediaRecorderSupport } from 'utils/checkOS';
 import { recorder } from 'constants/videoRecorder';
 import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
+import { BackArrow, CloseButton } from 'styles/CommonStyled';
 import {
   Layout,
   VideoContainer,
@@ -41,18 +42,17 @@ const Question = props => {
     },
   ];
   const videoRecordInput = useRef(null);
-
   const audio = new Audio();
-
   const [stateObject, updatedStateHandler] = useState({
     showHideFlg: false,
-    buttonLabel: props.videoSrc ? 'Continue' : 'Record',
+    buttonLabel: props.videoSrc
+      ? props.buttonLabel.primary.continue
+      : props.buttonLabel.primary.record,
     error: false,
     isStop: false,
     continueFlg: !!props.videoSrc,
     qusList: [],
   });
-
   const [playing, setPlaying] = useState(false);
 
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
@@ -72,7 +72,7 @@ const Question = props => {
   const startStreaming = () => {
     updatedStateHandler({
       ...stateObject,
-      buttonLabel: 'Stop Recording',
+      buttonLabel: props.buttonLabel.primary.stop,
     });
   };
 
@@ -89,16 +89,16 @@ const Question = props => {
   };
 
   const buttonClickHandler = () => {
-    if (stateObject.buttonLabel === 'Record') {
+    if (stateObject.buttonLabel === props.buttonLabel.primary.record) {
       if (isIOSDevice()) {
         videoRecordInput.current.click();
       } else {
-        mediaHandler('Record', false, false);
+        mediaHandler(props.buttonLabel.primary.record, false, false);
       }
-    } else if (stateObject.buttonLabel === 'Stop Recording') {
-      mediaHandler('Continue', true, true);
+    } else if (stateObject.buttonLabel === props.buttonLabel.primary.stop) {
+      mediaHandler(props.buttonLabel.primary.continue, true, true);
       props.headerUpdate('Check to make sure I’ve got everything right.');
-    } else if (stateObject.buttonLabel === 'Continue') {
+    } else if (stateObject.buttonLabel === props.buttonLabel.primary.continue) {
       if (props.videoUploaded) {
         props.continueCallback();
       } else {
@@ -108,7 +108,7 @@ const Question = props => {
   };
 
   const stopRecordHandler = () => {
-    mediaHandler('Continue', true, true);
+    mediaHandler(props.buttonLabel.primary.continue, true, true);
     props.headerUpdate('Check to make sure I’ve got everything right.');
   };
 
@@ -156,7 +156,7 @@ const Question = props => {
       });
       updatedStateHandler({
         ...stateObject,
-        buttonLabel: 'Continue',
+        buttonLabel: props.buttonLabel.primary.continue,
         showHideFlg: false,
         error: false,
         isStop: false,
@@ -186,14 +186,14 @@ const Question = props => {
           accept="video/*"
           onChange={uploadHandler}
         />
-        Upload video
+        {props.buttonLabel.upload.label}
       </label>
     );
   };
 
   const recordMedia = () => {
     if (props.playPauseMediaFlg) props.playPauseMedia();
-    mediaHandler('Record', false, true);
+    mediaHandler(props.buttonLabel.primary.record, false, true);
   };
 
   const getRecordLink = () => {
@@ -206,9 +206,9 @@ const Question = props => {
 
   const getQuestionList = () => {
     if (props.bookedItem.request_type === 3) {
-      return stateObject.qusList;
+      return questions;
     }
-    return questions;
+    return stateObject.qusList;
   };
 
   const playAudio = audioFile => () => {
@@ -242,26 +242,26 @@ const Question = props => {
         );
       return null;
     };
-    const { stargramfrom, stargramto } = props.bookedItem.request_details;
-    const { to_audio_file, from_audio_file } = props.bookedItem;
+
+    const getHeaderText = occasion => {
+      // eslint-disable-next-line
+      const { to_audio_file, from_audio_file } = props.bookedItem;
+      const { stargramfrom, stargramto } = props.bookedItem.request_details;
+      return (
+        <React.Fragment>
+          Record a{' '}
+          <span className="bold-head-name">{props.bookedItem.occasion}</span>{' '}
+          {occasion} for <span className="bold-head-name">{stargramto} </span>
+          {getToolTip(to_audio_file)}
+          {getFrom(stargramfrom, from_audio_file)}
+        </React.Fragment>
+      );
+    };
+
     if (props.bookedItem.request_type === 1) {
-      return (
-        <React.Fragment>
-          Record a {props.bookedItem.occasion} shoutout for{' '}
-          <span className="bold-head-name">{stargramto} </span>
-          {getToolTip(to_audio_file)}
-          {getFrom(stargramfrom, from_audio_file)}
-        </React.Fragment>
-      );
+      return getHeaderText('shoutout');
     } else if (props.bookedItem.request_type === 2) {
-      return (
-        <React.Fragment>
-          Record a {props.bookedItem.occasion} announcement for{' '}
-          <span className="bold-head-name">{stargramto} </span>
-          {getToolTip(to_audio_file)}
-          {getFrom(stargramfrom, from_audio_file)}
-        </React.Fragment>
-      );
+      return getHeaderText('announcement');
     }
     return (
       <React.Fragment>
@@ -271,7 +271,9 @@ const Question = props => {
     );
   };
 
-  const onNext = () => {};
+  const onAudioEnded = () => {
+    setPlaying(false);
+  };
 
   useEffect(() => {
     console.log(props.bookedItem);
@@ -289,13 +291,12 @@ const Question = props => {
     ];
     updatedStateHandler({
       ...stateObject,
-      qusList: [questions[0], ...qusList],
+      buttonLabel: props.videoSrc
+        ? props.buttonLabel.primary.continue
+        : props.buttonLabel.primary.record,
+      qusList: [...[questions[0]], ...qusList],
     });
-  }, [props.bookedItem]);
-
-  const onAudioEnded = () => {
-    setPlaying(false);
-  };
+  }, [props.bookedItem, props.buttonLabel]);
 
   useEffect(() => {
     audio.addEventListener('ended', onAudioEnded);
@@ -303,6 +304,8 @@ const Question = props => {
 
   return (
     <React.Fragment>
+      <BackArrow className="arrow-btn" onClick={props.backArrowHandler} />
+      <CloseButton className="close-btn" onClick={props.closeHandler} />
       <Header>{getHeader()}</Header>
       <Layout>
         {(isIOSDevice() || checkMediaRecorderSupport()) && (
@@ -326,7 +329,6 @@ const Question = props => {
                   forceStop={stateObject.isStop}
                   startStreamingCallback={startStreaming}
                   headerUpdate={props.headerUpdate}
-                  starNM={props.starNM}
                   uploadHandler={uploadHandler}
                   recorded={props.recorded}
                   uploader
@@ -342,7 +344,7 @@ const Question = props => {
                 <React.Fragment>
                   {!stateObject.continueFlg && (
                     <div>
-                      <h1 className="quesHead">What you should say?</h1>
+                      <h1 className="quesHead">What you should say...</h1>
                       <QuestionBuilder questionsList={getQuestionList()} />
                       {props.bookedItem.request_type === 3 && (
                         <p className="agreement-note">
@@ -362,11 +364,16 @@ const Question = props => {
                     )}
                     {!stateObject.continueFlg &&
                       getFileUpload(['uploadBtn mobDisplay'])}
-                    {getButton(true, '', onNext, 'Next')}
-                    {/* {stateObject.continueFlg &&
+                    {getButton(
+                      true,
+                      'next-btn',
+                      props.nextClick,
+                      props.buttonLabel.next.label,
+                    )}
+                    {stateObject.continueFlg &&
                       (props.recorded || isIOSDevice()
                         ? getFileUpload(['uploadLink'])
-                        : getRecordLink())} */}
+                        : getRecordLink())}
                   </WebButtons>
                 </React.Fragment>
               )}
@@ -381,27 +388,33 @@ const Question = props => {
                   stateObject.buttonLabel,
                 )}
                 {!stateObject.continueFlg && getFileUpload(['uploadBtn'])}
-                {getButton(true, '', onNext, 'Next')}
-                {/* {stateObject.continueFlg &&
+                {getButton(
+                  true,
+                  'next-btn',
+                  props.nextClick,
+                  props.buttonLabel.next.label,
+                )}
+                {stateObject.continueFlg &&
                   (props.recorded || isIOSDevice()
                     ? getFileUpload(['uploadLink'])
-                    : getRecordLink())} */}
+                    : getRecordLink())}
               </MobButtons>
             )}
 
-            {stateObject.buttonLabel === 'Record' && !stateObject.error && (
-              <ShowHide
-                onClick={() =>
-                  updatedStateHandler({
-                    ...stateObject,
-                    showHideFlg: !stateObject.showHideFlg,
-                  })
-                }
-                isShow={stateObject.showHideFlg}
-              >
-                {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
-              </ShowHide>
-            )}
+            {stateObject.buttonLabel === props.buttonLabel.primary.record &&
+              !stateObject.error && (
+                <ShowHide
+                  onClick={() =>
+                    updatedStateHandler({
+                      ...stateObject,
+                      showHideFlg: !stateObject.showHideFlg,
+                    })
+                  }
+                  isShow={stateObject.showHideFlg}
+                >
+                  {stateObject.showHideFlg ? 'Hide Script' : 'Show Script'}
+                </ShowHide>
+              )}
           </React.Fragment>
         )}
 
@@ -446,6 +459,10 @@ Question.propTypes = {
   playPauseMediaFlg: PropTypes.bool,
   shouldRecord: PropTypes.bool.isRequired,
   bookedItem: PropTypes.object.isRequired,
+  buttonLabel: PropTypes.object.isRequired,
+  nextClick: PropTypes.object.isRequired,
+  backArrowHandler: PropTypes.func.isRequired,
+  closeHandler: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {

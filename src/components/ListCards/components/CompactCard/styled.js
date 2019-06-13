@@ -4,11 +4,17 @@ import { Card } from 'styles/CommonStyled';
 const CompactStyled = Card.extend`
   padding: 18px 15.6px;
   cursor: pointer;
-  ${props => props.selected ? `
+  ${props =>
+    props.selected
+      ? `
     border-left: 8.6px solid ${props.theme.orangePink};
-  ` : `
+  `
+      : `
     background: #fcfcfc;
   `}
+  @media (max-width: 1279px) {
+    ${props => !props.initialSelected && `border-left: 0;`}
+  }
   margin-bottom: 18px;
   display: flex;
   flex-direction: column;

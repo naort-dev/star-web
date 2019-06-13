@@ -37,6 +37,7 @@ const CompactCard = props => {
       selected={props.selected}
       onClick={props.onClick}
       key={props.key}
+      initialSelected={props.initialSelected}
     >
       {renderTitle()}
       <CompactStyled.UserName>{bookData.fan}</CompactStyled.UserName>
@@ -53,6 +54,7 @@ CompactCard.propTypes = {
   selected: PropTypes.bool.isRequired,
   expiration: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
+  initialSelected: PropTypes.bool.isRequired,
 };
 
 export { CompactCard };
