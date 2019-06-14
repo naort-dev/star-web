@@ -136,7 +136,7 @@ const OpenBookings = props => {
     return () => {
       clearVideo();
     };
-  });
+  }, []);
 
   return (
     <OpenStyled clicked={cardClicked}>
