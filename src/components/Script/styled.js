@@ -12,6 +12,11 @@ export const ScriptContainer = styled(FlexCenter)`
     right: 0;
     bottom: 0;
     top: 0;
+
+    .content-wrapper &{
+      top: -7px;
+      right: 9px;
+    }
   }
 `;
 

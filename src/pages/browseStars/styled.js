@@ -1,9 +1,14 @@
 import styled from 'styled-components';
 
 const CategoryPageStyled = styled.div`
-  margin-top: 185px;
-  height: calc(100vh - 185px);
-  @media(min-width: 832px) {
+  margin-top: 160px;
+  height: calc(100vh - 160px);
+  
+  @media(min-width: 832px) and (max-width: 1280px) {
+    margin-top: 235px;
+    height: calc(100vh - 235px);
+  }
+  @media(min-width: 1281px) {
     margin-top: 260px;
     height: auto;
   }
@@ -30,6 +35,8 @@ CategoryPageStyled.FilterList = styled.span`
   white-space: nowrap;
   text-overflow: ellipsis;
   color: ${props => props.theme.greyishBrown};
+  text-transform: capitalize;
+  padding-right: 30px;
 `;
 
 CategoryPageStyled.Filter = styled.span`
@@ -66,7 +73,7 @@ CategoryPageStyled.AvatarWrapper = styled.div`
       left: 33px;
       top: calc(100% - 345px);
       padding: 0 6px;
-      background: ${props => props.theme.white};
+      //background: ${props => props.theme.white};
 
       .name {
         line-height: 42px;
@@ -137,7 +144,7 @@ CategoryPageStyled.StarWrapper = styled.div`
 
 CategoryPageStyled.Heading = styled.span`
   display: block;
-  margin-top: 24px;
+  margin-top: 0;
   font-family: Gilroy-Medium;
   font-size: 26px;
   text-align: center;
@@ -163,12 +170,27 @@ CategoryPageStyled.FeaturedSection = styled.div`
   border: ${props => `1px solid #555`}
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 20px 23px;
+  justify-content: space-around;
+  padding: 20px 23px 8px;
   max-width: 375px;
   margin: 0 auto;
   margin-top: 24px;
   z-index: 1;
+
+
+
+  &:before {
+    @media(min-width: 832px) {
+      content: '';
+      position: absolute;
+      height:10px;
+      bottom:-5px;
+      left: 63px;
+      background:${props => props.theme.white};
+      width: 225px;
+    }
+  }
+
   &:after {
     content: ${props => `'${props.heading}'`};
     position: absolute;
@@ -183,6 +205,7 @@ CategoryPageStyled.FeaturedSection = styled.div`
     transform: translateX(-50%);
     background: #fff;
     padding: 0 20px;
+    white-space: nowrap;
   }
   @media(min-width: 832px) {
     max-width: 832px;
@@ -206,13 +229,18 @@ CategoryPageStyled.FeaturedSection = styled.div`
     padding-right: 0;
     margin-top: 20px;
   }
+
+  @media (min-width: 832px) and (max-width: 1280px) {
+    margin-bottom: 30px;
+    padding-bottom: 57px;
+  }
 `;
 
 CategoryPageStyled.Toolbar = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
-  padding: 12px 16px;
+  align-items: center;
+  padding: 0 16px;
   position: fixed;
   left: 0;
   right: 0;

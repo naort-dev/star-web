@@ -24,8 +24,8 @@ export const Layout = styled.section`
     font-family: Gilroy;
   }
   .button {
-    margin-bottom: 40px;
-    margin-top: 40px;
+    margin-bottom: 15px;
+    margin-top: 15px;
     height: 60px;
   }
 `;
@@ -33,7 +33,7 @@ export const Layout = styled.section`
 export const UserCardWrapper = styled.section`
   border-radius: 10px;
   overflow: hidden;
-  margin-bottom: 50px;
+  margin-bottom: 20px;
 `;
 
 export const TopSection = styled.section`
@@ -81,7 +81,7 @@ export const TopSection = styled.section`
   }
 `;
 export const BottomSection = styled.section`
-  padding: 20px;
+  padding: 10px;
   background-color: #efefef;
   ${media.webView} {
     padding: 10px 20px;
@@ -101,7 +101,7 @@ export const BottomSection = styled.section`
     font-family: Gilroy-MediumItalic;
     font-size: 12px;
     color: #555555;
-    padding-top: 20px;
+    padding-top: 10px;
     text-align: center;
     width: 188px;
     margin: 0 auto;
@@ -109,7 +109,6 @@ export const BottomSection = styled.section`
       width: 100%;
       padding-top: 5px;
       padding-left: 0;
-      text-align: left;
     }
   }
   .cardType {

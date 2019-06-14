@@ -14,7 +14,7 @@ const About = props => {
       {!isIOSDevice() && !props.isDeviceSupported ? (
         <React.Fragment>
           <Layout.MainText className="section-1">
-            Your system doesnot have video recording capability, but you will
+            Your system does not have video recording capability, but you will
             need to record a video to have your profile activated
           </Layout.MainText>
           <Layout.MainText>You Can:</Layout.MainText>

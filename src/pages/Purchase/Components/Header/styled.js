@@ -46,10 +46,14 @@ export const HeaderDiv = styled.section`
 export const HeaderText = styled.section`
   color: #fff;
   text-align: center;
-  font-family: Gilroy-Bold;
+  font-family: Gilroy;
   font-size: 18px;
   font-weight: 600;
   padding-top: 17px;
+
+  ${media.mobileScreen} {
+    font-family: Gilroy-Medium;
+  }
 `;
 
 export const ProfileIcon = styled.section`

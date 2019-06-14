@@ -48,6 +48,9 @@ FilterStyled.Heading = styled.span`
   text-transform:  ${props => (props.mobileOnly ? 'uppercase' : 'none')};;
   &.filter-heading {
     color: #2f839d;
+    @media(max-width: 832px) {
+      margin-bottom: 20px;
+    }
   }
   @media(min-width: 832px) {
     display: ${props => (props.mobileOnly ? 'none' : 'block')};
@@ -86,7 +89,7 @@ FilterStyled.SubCategoryList = styled.ul`
 `;
 
 FilterStyled.SubCategoryItem = styled.li`
-  padding: 4px 15px 3px;
+  padding: 1px 15px 0;
   border-radius: 15px;
   border: ${props => `1px solid ${props.theme.flatBlue}`};
   background-color: ${props => (props.selected ? props.theme.flatBlue : '#fff')};

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -7,12 +7,16 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLight } from '@fortawesome/pro-light-svg-icons';
+import { numberToCommaFormatter } from '../../../../utils/dataformatter';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { HeadingBold } from '../../styled';
+import ToolTip from '../../../ToolTip';
 import StarRating from '../../../StarRating';
 import CompletedStyled from './styled';
 
 const CompletedCard = (props) => {
+
+  const [requestVideo, setRequestVideo] = useState({});
 
   const renderDescription = () => {
     if (requestTypes[props.data.request_type] === 'Q&A') {
@@ -46,44 +50,19 @@ const CompletedCard = (props) => {
     )
   }
 
-  // const renderDescription = () => {
-  //   if (requestTypes[props.data.request_type] === 'Q&A') {
-  //     return (
-  //       <React.Fragment>
-  //           <HeadingBold>Question</HeadingBold>&nbsp;
-  //           from&nbsp;
-  //           <HeadingBold>
-  //             {
-  //               props.data.fan
-  //             }
-  //           </HeadingBold>
-  //       </React.Fragment>
-  //     )
-  //   }
-  //   return (
-  //     <React.Fragment>
-  //       <HeadingBold>Birthday Announcement</HeadingBold>&nbsp;
-  //         shoutout for&nbsp; 
-  //         <HeadingBold>
-  //           { props.data.request_details && props.data.request_details.stargramto !== 'Myself' ? props.data.request_details.stargramto : props.data.fan }
-  //         </HeadingBold>
-  //         {
-  //           props.data.request_details && props.data.request_details.stargramto !== 'Myself' ?
-  //             <React.Fragment>
-  //               &nbsp;from <HeadingBold>{props.data.request_details.stargramto}</HeadingBold>
-  //             </React.Fragment>
-  //           : null
-  //         }
-  //     </React.Fragment>
-  //   )
-  // }
+  useEffect(() => {
+    if (props.data.booking_id) {
+      setRequestVideo(props.data.request_video.find(videoItem => videoItem.video_status === 1)) // get completed video
+    }
+  }, [props.data.booking_id])
+
   return (
     <CompletedStyled className={props.classes.root} onClick={props.onClick}>
       <span className='favorite-icon'>
         <FontAwesomeIcon icon={faHeartLight} />
       </span>
       <CompletedStyled.Container>
-        <CompletedStyled.ProfilePic />
+        <CompletedStyled.ProfilePic imageUrl={requestVideo.s3_thumbnail_url} />
         <CompletedStyled.DetailsWrapper>
           <div className='details-header'>
             <span className='date'>
@@ -100,18 +79,24 @@ const CompletedCard = (props) => {
             }
           </span>
           <div className='action-section'>
-              <span className='icon comment'>
+            <ToolTip title={`This video has ${props.data.comments} comments.`}>
+              <CompletedStyled.IconWrapper className='comment' visible={props.data.comments > 0}>
                 <FontAwesomeIcon className='comment-icon' icon={faComment} />
-              </span>
-              <span className='icon tip'>
-                $ 20
-              </span>
-              <span className='icon reaction'>
+              </CompletedStyled.IconWrapper>
+            </ToolTip>
+            <ToolTip title={`This booking has $${numberToCommaFormatter(props.data.tip_amount)} in tips.`}>            
+              <CompletedStyled.IconWrapper className='tip' visible={props.data.tip_amount > 0} >
+                $ TIP
+              </CompletedStyled.IconWrapper>
+            </ToolTip>
+            <ToolTip title={`This video has ${props.data.reaction_count} reaction videos.`}>
+              <CompletedStyled.IconWrapper className='reaction' visible={props.data.reaction_count > 0}>
                 <span className='reaction-icon'>
                   <FontAwesomeIcon icon={faHeart} />
                 </span>
                 Reaction
-              </span>
+              </CompletedStyled.IconWrapper>
+            </ToolTip>
           </div>
         </CompletedStyled.DetailsWrapper>
       </CompletedStyled.Container>

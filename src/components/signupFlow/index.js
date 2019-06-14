@@ -12,7 +12,7 @@ import SignupMethod from '../SignupMethod';
 import SignUpImageUpload from './components/SignUpImageUpload';
 import RegistrationSuccess from './components/RegistrationSuccess';
 import { LoginContainer } from './styled';
-import { GroupRegistration } from '../UserRegistration';
+// import { GroupRegistration } from '../UserRegistration';
 import { LoginTypeSelector } from '../../components/LoginTypeSelector';
 import {
   setSocialMediaData,
@@ -25,8 +25,9 @@ import {
 } from '../../store/shared/actions/toggleModals';
 import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 import { loaderAction } from '../../store/shared/actions/commonActions';
+import { setDemoUser } from '../../store/shared/actions/setSignupFlow';
 import { completedSignup } from '../../store/shared/actions/setSignupFlow'
-import { updateCategory } from '../../pages/landing/actions/updateFilters'
+import { updateCategory } from '../../pages/landing/actions/updateFilters';
 import SetPrice from './components/SetPrice'
 import {
   FAN_REG_SUCCESS,
@@ -34,15 +35,20 @@ import {
   STAR_GET_PHONE_NO,
   SET_PRICE,
   COMPLETE_SIGNUP,
+  CONFIRM_PASSWORD,
 } from './constants'
 import { BackArrow } from '../../styles/CommonStyled';
 import WelcomeVideo from './components/WelcomeVideo';
 import Skip from './components/WelcomeVideo/Skip';
 import { awsKeys } from '../../constants';
 import fetchAWSVideo from '../../services/getAwsVideo';
-import { celebritySignupProfile } from '../../services/userRegistration'
+import { celebritySignupProfile } from '../../services/userRegistration';
+import resetPassword from "../../utils/resetPassword";
+import { parseQueryString } from '../../utils/dataformatter';
+import Api from "../../lib/api";
 import GetPhoneNumber from '../../components/GetPhoneNumber';
-import CompleteSignup from '../../components/CompleteSignup'
+import CompleteSignup from '../../components/CompleteSignup';
+import ConfirmPassword from '../../components/ConfirmPassword';
 import { updateProfilePhoto, resetProfilePhoto, setProfilePicToState } from '../../store/shared/actions/updateProfilePhoto';
 import { sign } from 'crypto';
 
@@ -56,18 +62,18 @@ class SignupFlow extends React.Component {
       stepCount: 0,
       socialData: {},
       currentStep: props.signupDetails.currentStep ? props.signupDetails.currentStep : 0,
-      profession: [],
       // enableClose: props.signUpDetails.enableClose
       //   ? props.signUpDetails.enableClose
       //   : false,
-      profession: props.signupDetails.categoryList,
+      profession: props.signupDetails.categoryList ? props.signupDetails.categoryList : [],
       scrollRef: null,
-      profile_video: props.signupDetails.welcomeVideoFile,
+      profile_video: props.signupDetails.welcomeVideoFile ? props.signupDetails.welcomeVideoFile : '',
       disableClose: false,
       skipVideo: false,
       audioVideoSupport:true,
       name: cookies.get('name') || 'signupDetails',
       completedSignup: this.props.signupDetails.completedSignup!== undefined ? this.props.signupDetails.completedSignup : true,
+      isDemoUser: this.props.signupDetails.isDemoUser !== undefined? this.props.signupDetails.isDemoUser : false,
     };
     this.starRegistrationSteps = 6;
     this.groupRegistrationSteps = 5;
@@ -163,7 +169,6 @@ class SignupFlow extends React.Component {
   }
   closeSignUpForm =(isTermsAndCondition) => {
     if(isTermsAndCondition) {
-      // this.onBack(isTermsAndCondition);
       this.setState({
         switched: false,
         disableClose: false
@@ -175,7 +180,6 @@ class SignupFlow extends React.Component {
 
   closeSetPrice =(isReferred) => {
     if(isReferred) {
-      // this.onBack(isTermsAndCondition);
       this.setState({
         switchedSetPrice: false,
         disableClose: false
@@ -185,13 +189,26 @@ class SignupFlow extends React.Component {
     }
   }
   continueSignUp = () => {
-    this.state.completedSignup = true;
+    const queryString = this.props.location ? parseQueryString(this.props.location.search): '';
+    if(queryString.demo_user) {
+      this.setState({
+        currentStep: queryString.demo_user ? 1 : this.state.currentstep,
+        completedSignup: true,
+        selectedType:'star'
+      });
+    } else {
+      this.setState({
+        completedSignup: true,
+      });
+    }
+    
+    // this.state.completedSignup = true;
     this.props.completedSignup(true);
+    // console.log(this.state.currentStep);
   }
 
   closePhoneNum =(isOtpScreen) => {
     if(isOtpScreen) {
-      // this.onBack(isTermsAndCondition);
       this.setState({
         phoneNumswitched: false,
         disableClose: false
@@ -296,6 +313,62 @@ class SignupFlow extends React.Component {
     }
     this.closeSignUp();
   };
+  onResetPassword = (password, resetId, userId) => {
+    resetPassword(Api.resetPassword, {
+      password,
+      reset_id: resetId,
+    })
+      .then(async(response) => {
+        if (response.status === 200) {
+          if (localStorage) {
+            localStorage.setItem('tempAuthToken', JSON.stringify(response.data.data.details.authentication_token));
+          }
+          const userDetailsResponse= await this.props.fetchUserDetails(userId, response.data.data.details.authentication_token);
+          if(userDetailsResponse) {
+            const userData = this.props.userDetails.settings_userDetails;
+            const celebrityData = this.props.userDetails.settings_celebrityDetails;
+            let professions = celebrityData.profession_details;
+            professions = professions.map((profession, index) => {
+              const item = profession;
+              item.label=celebrityData.profession_details[index].title;
+              item.value=celebrityData.profession_details[index].id;
+              return item;
+            });
+            const signupData = {
+              role: this.props.userDetails.role === 'R1002' ? 'star' : '',
+              currentStep: 1,
+              acceptTerms: true,
+              isSocial: false,
+              source: '',
+              firstName: userData.first_name,
+              lastName: userData.last_name,
+              nickName: userData.nick_name,
+              email: userData.email,
+              profileImage: userData.avatar_photo.thumbnail_url,
+              categoryList: professions,
+              welcomeVideoSkip: false,
+              welcomeVideo: celebrityData.profile_video,
+              welcomeVideoFile: '',
+              welcomeVideoLength: celebrityData.duration ? celebrityData.duration : '',
+              videoUploaded: celebrityData.has_profile_video,
+              price: celebrityData.rate,
+              referral: '',
+            };
+            this.props.setSignupFlow(signupData);
+            this.props.setDemoUser(false);
+            this.props.completedSignup(false);
+            this.setState({
+              isDemoUser: false,
+              completedSignup: false,
+            });
+          }
+        }
+      })
+      .catch(async (exception) => {
+        console.log('errorMsg:', exception);
+    });
+}
+
   submitOTPForm = () => {
     this.changeStep(this.state.currentStep + 1);
   }
@@ -484,17 +557,17 @@ class SignupFlow extends React.Component {
               data={this.state.socialData}
             />
           );
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-          return (
-            <GroupRegistration
-              currentStep={this.state.currentStep}
-              closeSignupFlow={() => this.closeSignUp()}
-              changeStep={this.changeStep}
-            />
-          );
+        // case 2:
+        // case 3:
+        // case 4:
+        // case 5:
+        //   return (
+        //     <GroupRegistration
+        //       currentStep={this.state.currentStep}
+        //       closeSignupFlow={() => this.closeSignUp()}
+        //       changeStep={this.changeStep}
+        //     />
+        //   );
         default:
           return null;
       }
@@ -513,6 +586,18 @@ class SignupFlow extends React.Component {
           setScrollRef={this.setScrollRef}
           disableClose={this.state.disableClose}
         >
+        {
+          this.state.isDemoUser ? 
+          <ConfirmPassword
+            onResetPassword={this.onResetPassword}
+            title1={CONFIRM_PASSWORD.TITLE1}
+            input_txt_1 ={CONFIRM_PASSWORD.FIRST_INPUT_TEXT}
+            input_txt_2={CONFIRM_PASSWORD.SECOND_INPUT_TEXT}
+            sub_title={CONFIRM_PASSWORD.SUB_TITLE}
+            button_txt={CONFIRM_PASSWORD.BUTTON_TEXT}
+          />
+          : (
+            <React.Fragment>
         {
           !this.state.completedSignup ?
           (
@@ -568,6 +653,9 @@ class SignupFlow extends React.Component {
           </LoginContainer>
         )
         }
+        </React.Fragment>
+          )
+      }
         </RequestFlowPopup>
       </div>
     );
@@ -590,7 +678,7 @@ const mapStateToProps = (state , ownProps)=> ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  fetchUserDetails: (id, authToken) => dispatch(fetchUserDetails(id, authToken)),
   registerUser: (firstName, lastName, email, password, role, referral) =>
     dispatch(
       registerUser(firstName, lastName, email, password, role, referral),
@@ -610,6 +698,7 @@ const mapDispatchToProps = dispatch => ({
   setProfilePhoto: () => dispatch(resetProfilePhoto()),
   setProfilePicToState: (obj) => dispatch(setProfilePicToState(obj)),
   completedSignup: value => dispatch(completedSignup(value)),
+  setDemoUser: (value) => dispatch(setDemoUser(value)),
 });
 
 SignupFlow.propTypes = {

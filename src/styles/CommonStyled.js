@@ -112,6 +112,7 @@ export const TickText = styled.span`
   display: flex;
   flex-direction: column;
   align-items: center;
+  white-space: nowrap;
   :before {
     content: '';
     display: inline-block;

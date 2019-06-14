@@ -29,6 +29,10 @@
               "transform": "lodash/${member}",
               "preventFullImport": true
           },
+          "@material-ui/core": {
+            "transform": "@material-ui/core/${member}",
+            "preventFullImport": true
+        },
           "@fortawesome/free-solid-svg-icons": {
             "transform": "@fortawesome/free-solid-svg-icons/${member}",
             "skipDefaultConversion": true,

@@ -11,6 +11,7 @@ const initialState = {
   signUpDetails: null,
   requestFlowDetails: null,
   bookingModal: {
+    requestId: null,
     active: false,
     data: null,
     starMode: false,
@@ -81,7 +82,7 @@ export default (state = { ...initialState }, action) => {
         bookingModal: {
           ...state.bookingModal,
           active: action.state,
-          data: action.bookingData,
+          requestId: action.bookingData && action.bookingData.id,
           starMode: action.starMode,
         },
       };

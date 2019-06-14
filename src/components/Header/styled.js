@@ -27,6 +27,11 @@ HeaderSection.HeaderDiv = styled.div`
     height: 100%;
     padding: ${props => (props.notFixed ? '20px 30px 0px' : '25px 36px')};
   }
+
+  @media (min-width: 832px) and (max-width: 1280px) {
+    padding: 25px 36px 10px;
+  }
+
 `;
 HeaderSection.HeaderRight = styled.div`
   display: inline-block;

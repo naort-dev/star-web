@@ -283,7 +283,7 @@ class SignUpImageUpload extends React.Component {
                 : 'Browse categories'}
               </UploadContainer.Heading>
               <DotsContainer dotsCount={3} selectedDot={2} />
-              <UploadContainer.BrowseCategoryContainer>
+              <UploadContainer.BrowseCategoryContainer className="mobile-select-category">
                 <NestedSelect
                   value={this.state.selectedProfessions}
                   options={nestedProfessions}
@@ -315,7 +315,7 @@ class SignUpImageUpload extends React.Component {
               updateProfilePhoto={this.props.updateProfilePhoto}
             />
             {!(this.state.selectedProfessions.length > 0 && (this.state.finalImage || this.state.cropImage)) && this.state.isContinue &&(
-              <ErrorMessage>Please add a profile image and choose at least one category</ErrorMessage>
+              <ErrorMessage className="error-msg">Please add a profile image and choose at least one category</ErrorMessage>
             )}
             <UploadContainer.CategoriesWrapper className={this.state.finalImage ? 'select-category' : 'fans-want'}>
               <MultiSelect

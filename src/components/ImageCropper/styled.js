@@ -86,7 +86,7 @@ CropperStyled.ButtonWrapper = styled.div`
     }
   }
   @media (max-width: 831px) {
-    margin-top: 96px;
+    margin-top: 30px;
     flex-direction: column;
   }
   @media (min-width: 832px) {

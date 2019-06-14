@@ -65,7 +65,6 @@ class App extends React.Component {
     this.props.getConfig();
     this.props.fetchGroupTypes();
     this.props.fetchGroupTypesListing();
-
     window.addEventListener('storage', () => {
       if (
         localStorage &&
@@ -256,11 +255,7 @@ class App extends React.Component {
               <Route path="/unauthorized" component={Unauthorized} />
               <Route path="/not-found" component={Page404} />
               {/* <Route exact path="/" component={Landing} /> */}
-              <Route
-                exact
-                path="/"
-                render={() => <Landing cookies={this.props.cookies} />}
-              />
+              <Route exact path="/" render={(props) => (<Landing {...props} cookies={this.props.cookies}/>)} />
               <Route exact path="/:id" component={StarProfile} />
               {/* <Route exact path="/group-profile/:id" component={Landing} /> */}
               <Route component={Page404} />

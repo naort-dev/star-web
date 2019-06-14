@@ -48,6 +48,49 @@ CompletedStyled.ProfilePic = styled.span`
   }
 `;
 
+CompletedStyled.IconWrapper = styled.span`
+  color: ${props => props.theme.orangePink}
+  display: block;
+  visibility: ${props => (props.visible ? 'initial' : 'hidden')};
+  margin-right: 10px;
+  cursor: pointer;
+  &.comment {
+    .comment-icon {
+      transform: rotateY(180deg);
+      font-size: 26px;
+    }
+  }
+  &.tip {
+    padding: 5px 9.5px;
+    border-radius: 10px;
+    font-family: Gilroy-Medium;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: ${props => props.theme.orangePink};
+    color: #fff;
+  }
+  &.reaction {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Gilroy-Bold;
+    font-size: 10px;
+    background-color: ${props => props.theme.orangePink};
+    color: #fff;
+    border-radius: 60px;
+    padding: 7px;
+    .reaction-icon {
+      margin-right: 6.5px;
+      display: block;
+    }
+  }
+  @media(min-width: 832px) {
+    margin-right: 0;
+  }
+`;
+
 CompletedStyled.DetailsWrapper = styled.div`
   padding-left: 16.7px;
   flex: 1;
@@ -81,44 +124,6 @@ CompletedStyled.DetailsWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    .icon {
-      color: ${props => props.theme.orangePink}
-      display: block;
-      margin-right: 10px;
-      cursor: pointer;
-      &.comment {
-        .comment-icon {
-          transform: rotateY(180deg);
-          font-size: 26px;
-        }
-      }
-      &.tip {
-        padding: 5px 9.5px;
-        border-radius: 10px;
-        font-family: Gilroy-Medium;
-        font-size: 14px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: ${props => props.theme.orangePink};
-        color: #fff;
-      }
-      &.reaction {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: Gilroy-Bold;
-        font-size: 10px;
-        background-color: ${props => props.theme.orangePink};
-        color: #fff;
-        border-radius: 60px;
-        padding: 7px;
-        .reaction-icon {
-          margin-right: 6.5px;
-          display: block;
-        }
-      }
-    }
   }
   @media(min-width: 832px) {
     margin-bottom: 71.2px;
@@ -126,9 +131,6 @@ CompletedStyled.DetailsWrapper = styled.div`
     .action-section {
       left: 10px;
       right: 10px;
-      .icon {
-        margin-right: 0;
-      }
     }
   }
 `;
