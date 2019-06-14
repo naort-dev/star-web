@@ -90,7 +90,7 @@ const OrderDetails = (props) => {
             <span className='detail-value'>{bookingData.order_details.order}</span>
           </li>
         </OrderStyled.DetailList>
-        <PrimaryButton onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
+        <PrimaryButton className="star-action-btn" onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
       </OrderStyled.Details>
     </OrderStyled>
   )

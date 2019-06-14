@@ -21,6 +21,7 @@ BookingStyled.Wrapper = styled.div`
 `;
 
 BookingStyled.Heading = styled.span`
+  display: block;
   font-family: Gilroy-Regular;
   font-size: 24px;
   display: block;
@@ -60,9 +61,12 @@ BookingStyled.OrderText = styled.span`
   font-size: 14px;
   color: ${props => props.theme.flatBlue};
   cursor: pointer;
-  display: block;
   margin-top: 20px;
   text-align: center;
+  display: ${props => (props.starMode ? 'none' : 'block')};
+  @media(min-width: 832px) {
+    display: block;
+  }
 `;
 
 BookingStyled.HeaderText = styled.h5`
@@ -113,7 +117,7 @@ BookingStyled.LeftSection = styled.div`
 BookingStyled.RightSection = styled.div`
   padding-top: 27.9px;
   ${BookingStyled.OrderText} {
-    display: block;
+    display: ${props => (props.starMode ? 'none' : 'block')};
   }
   @media(min-width: 832px) {
     flex: 1;

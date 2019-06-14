@@ -73,9 +73,6 @@ const BookingCard = (props) => {
   return (
     <RequestFlowPopup
       disableClose
-      paperProps={{
-        id: 'booking-modal',
-      }}
       closePopUp={closeModal}
     >
       {

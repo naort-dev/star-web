@@ -82,8 +82,14 @@ OrderStyled.Details = styled.div`
   flex-direction: column;
   align-items: center;
   padding: 0 44px;
+  .star-action-btn {
+    display: none;
+  }
   @media(mn-width: 832px) {
     padding: 0 85px;
+    .star-action-btn {
+      display: block;
+    }
   }
 `;
 

@@ -31,7 +31,7 @@ const StarView = (props) => {
           </StarViewStyled.VideoWrapper>
           <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
         </BookingStyled.LeftSection>
-        <BookingStyled.RightSection>
+        <BookingStyled.RightSection starMode>
           <StarViewStyled.DetailWrapper>
             <span>
               <BookingStyled.title className='title'>Recorded:</BookingStyled.title>
@@ -55,7 +55,7 @@ const StarView = (props) => {
             <CommentBox classes={{root: 'comment-box'}} />
             <QuickComment classes={{root: 'quick-comment'}} />
           </StarViewStyled.CommentWrapper>
-          <BookingStyled.OrderText onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
+          <BookingStyled.OrderText starMode onClick={props.toggleDetails(true)}>Order Details</BookingStyled.OrderText>
         </BookingStyled.RightSection>
       </BookingStyled.Layout>
     </StarViewStyled>
