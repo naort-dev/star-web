@@ -3,7 +3,12 @@ import styled from 'styled-components';
 const CategoryPageStyled = styled.div`
   margin-top: 160px;
   height: calc(100vh - 160px);
-  @media(min-width: 832px) {
+  
+  @media(min-width: 832px) and (max-width: 1280px) {
+    margin-top: 235px;
+    height: calc(100vh - 235px);
+  }
+  @media(min-width: 1281px) {
     margin-top: 260px;
     height: auto;
   }

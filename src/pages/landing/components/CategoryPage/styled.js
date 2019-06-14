@@ -4,7 +4,11 @@ const CategoryPageStyled = styled.div`
   margin-top: 120px;
   height: calc(100vh - 120px);
   overflow: hidden;
-  @media(min-width: 832px) {
+  @media(min-width: 832px) and (max-width: 1280px) {
+    margin-top: 235px;
+    height: calc(100vh - 235px);
+  }
+  @media(min-width: 1280px) {
     margin-top: 260px;
     height: calc(100vh - 260px);
   }
