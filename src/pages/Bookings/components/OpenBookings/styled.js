@@ -47,6 +47,7 @@ OpenStyled.BookingList = styled.div`
 OpenStyled.LeftSection = styled.div`
   @media (min-width: 832px) {
     max-width: 273.6px;
+    ${props => props.fullWidth && `max-width:100%; width: 100%;`}
   }
 `;
 
@@ -79,6 +80,7 @@ OpenStyled.RightSection = Card.extend`
     display: block;
     width: 700px;
     margin-left: 24.7px;
+    min-height: 700px;
   }
   .arrow-btn {
     top: 36px !important;

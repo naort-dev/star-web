@@ -1,6 +1,8 @@
+import { updateToast } from 'store/shared/actions/commonActions';
 import Api from '../../../lib/api';
 import { fetch } from '../../../services/fetch';
 import { fetchUserDetails } from '../../../store/shared/actions/getUserDetails';
+
 
 export const REQUESTS = {
   start: 'requests/START',
@@ -89,6 +91,11 @@ export const responseVideo = (requestId, fileName, callBack) => (
       }
     })
     .catch(exception => {
+      updateToast({
+        value: true,
+        message: exception.message,
+        variant: 'error',
+      });
       dispatch(requestFetchEnd());
       dispatch(requestFetchFailed(exception));
     });

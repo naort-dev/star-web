@@ -36,7 +36,7 @@ const CompactCard = props => {
     <CompactStyled
       selected={props.selected}
       onClick={props.onClick}
-      key={props.key}
+      key={props.keyValue}
       initialSelected={props.initialSelected}
     >
       {renderTitle()}

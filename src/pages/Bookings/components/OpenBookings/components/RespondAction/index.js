@@ -13,6 +13,7 @@ import { faMicrophone } from '@fortawesome/pro-solid-svg-icons';
 import { BackArrow, CloseButton } from 'styles/CommonStyled';
 import getAWSCredentials from 'utils/AWSUpload';
 import { locations } from 'constants/locations';
+import VideoRender from 'components/VideoRender';
 import {
   Layout,
   VideoContainer,
@@ -23,6 +24,7 @@ import {
   Header,
   Speaker,
 } from './styled';
+import SuccessScreen from './Success';
 
 const Question = props => {
   const questions = [
@@ -57,7 +59,7 @@ const Question = props => {
     qusList: [],
   });
   const [playing, setPlaying] = useState(false);
-  const [uploadSuccessFlg, setUploadSuccess] = useState(false);
+  const [isQuestion, updateIsQuestion] = useState(true);
 
   const mediaHandler = (btnLabel, isStop, continueFlg) => {
     props.recordTrigger();
@@ -81,7 +83,7 @@ const Question = props => {
 
   const uploadSuccess = () => {
     props.loaderAction(false);
-    setUploadSuccess(true);
+    props.uploadSuccess();
   };
 
   const uploadVideoRecorded = () => {
@@ -131,6 +133,9 @@ const Question = props => {
   const buttonClickHandler = () => {
     if (stateObject.buttonLabel === props.buttonLabel.primary.record) {
       if (props.playPauseMediaFlg) props.playPauseMedia();
+      if (props.bookedItem.request_type === 3) {
+        updateIsQuestion(false);
+      }
       if (isIOSDevice()) {
         videoRecordInput.current.click();
       } else {
@@ -155,6 +160,9 @@ const Question = props => {
     if (isIOSDevice()) {
       videoRecordInput.current.click();
     }
+    if (props.bookedItem.request_type === 3) {
+      updateIsQuestion(false);
+    }
   };
 
   const errorHandlerCallback = () => {
@@ -176,10 +184,13 @@ const Question = props => {
     );
   };
 
-  const uploadHandler = (input, isIOS) => {
+  const uploadHandler = isIOS => input => {
     const file = input.target.files[0];
     if (file.type.startsWith('video/')) {
       if (props.playPauseMediaFlg) props.playPauseMedia();
+      if (props.bookedItem.request_type === 3) {
+        updateIsQuestion(false);
+      }
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       const blob = new Blob([file], { type: 'video/webm' });
@@ -220,7 +231,7 @@ const Question = props => {
           id="fileUpload"
           className="hidden"
           accept="video/*"
-          onChange={uploadHandler}
+          onChange={uploadHandler()}
         />
         {props.buttonLabel.upload.label}
       </label>
@@ -321,6 +332,19 @@ const Question = props => {
     return getRecordLink(className);
   };
 
+  const closeSuccess = () => {
+    props.nextRequestHandler();
+  };
+
+  const nextRequest = () => {
+    props.nextRequestHandler();
+  };
+
+  const nextClick = () => {
+    updateIsQuestion(false);
+    props.nextClick();
+  };
+
   useEffect(() => {
     console.log(props.bookedItem);
     const qusList = [
@@ -350,7 +374,7 @@ const Question = props => {
 
   return (
     <React.Fragment>
-      {!uploadSuccessFlg ? (
+      {!props.uploadSuccessFlg ? (
         <React.Fragment>
           <BackArrow className="arrow-btn" onClick={props.backArrowHandler} />
           <CloseButton className="close-btn" onClick={props.closeHandler} />
@@ -361,25 +385,51 @@ const Question = props => {
                 <section>
                   {props.bookedItem.request_type === 3 && (
                     <ul className="video-option">
-                      <li>QUESTION</li>
-                      <li>ANSWER</li>
+                      <li
+                        className={isQuestion ? 'ques-item' : ''}
+                        onClick={() => updateIsQuestion(true)}
+                        role="presentation"
+                      >
+                        QUESTION
+                      </li>
+                      <li
+                        className={!isQuestion ? 'ans-item' : ''}
+                        onClick={() => updateIsQuestion(false)}
+                        role="presentation"
+                      >
+                        ANSWER
+                      </li>
                     </ul>
                   )}
                   <VideoContainer>
-                    <VideoRecorder
-                      updateMediaStore={props.updateMediaStore}
-                      duration={recorder.askTimeOut}
-                      stopRecordHandler={stopRecordHandler}
-                      playPauseMediaAction={props.playPauseMedia}
-                      retryRecordHandler={retryRecordHandler}
-                      recordTrigger={props.recordTrigger}
-                      errorHandler={errorHandlerCallback}
-                      forceStop={stateObject.isStop}
-                      startStreamingCallback={startStreaming}
-                      uploadHandler={uploadHandler}
-                      recorded={props.recorded}
-                      uploader
-                    />
+                    {props.bookedItem.request_type === 3 && isQuestion ? (
+                      <VideoRender
+                        variableWidth
+                        variableHeight
+                        videoSrc={
+                          props.bookedItem.request_video[0].s3_video_url
+                        }
+                        coverImage={
+                          props.bookedItem.request_video[0].s3_thumbnail_url
+                        }
+                        classes={{ container: 'player-container' }}
+                      ></VideoRender>
+                    ) : (
+                      <VideoRecorder
+                        updateMediaStore={props.updateMediaStore}
+                        duration={recorder.askTimeOut}
+                        stopRecordHandler={stopRecordHandler}
+                        playPauseMediaAction={props.playPauseMedia}
+                        retryRecordHandler={retryRecordHandler}
+                        recordTrigger={props.recordTrigger}
+                        errorHandler={errorHandlerCallback}
+                        forceStop={stateObject.isStop}
+                        startStreamingCallback={startStreaming}
+                        uploadHandler={uploadHandler}
+                        recorded={props.recorded}
+                        uploader
+                      />
+                    )}
                   </VideoContainer>
                 </section>
                 <QuestionContainer
@@ -413,7 +463,7 @@ const Question = props => {
                         {getButton(
                           true,
                           'next-btn',
-                          props.nextClick,
+                          nextClick,
                           props.buttonLabel.next.label,
                         )}
                         {stateObject.continueFlg && getLinkButtons('')}
@@ -436,7 +486,7 @@ const Question = props => {
                     {getButton(
                       true,
                       'next-btn',
-                      props.nextClick,
+                      nextClick,
                       props.buttonLabel.next.label,
                     )}
                     {stateObject.continueFlg && getLinkButtons()}
@@ -482,12 +532,16 @@ const Question = props => {
               type="file"
               accept="video/*;capture=camcorder"
               className="videoInputCapture"
-              onChange={event => uploadHandler(event, true)}
+              onChange={uploadHandler(true)}
             />
           </Layout>
         </React.Fragment>
       ) : (
-        <div>success</div>
+        <SuccessScreen
+          closeHandler={closeSuccess}
+          nextRequest={nextRequest}
+          bookItem={props.bookedItem}
+        />
       )}
     </React.Fragment>
   );
@@ -505,13 +559,16 @@ Question.propTypes = {
   shouldRecord: PropTypes.bool.isRequired,
   bookedItem: PropTypes.object.isRequired,
   buttonLabel: PropTypes.object.isRequired,
-  nextClick: PropTypes.object.isRequired,
+  nextClick: PropTypes.func.isRequired,
   backArrowHandler: PropTypes.func.isRequired,
   closeHandler: PropTypes.func.isRequired,
   loaderAction: PropTypes.func.isRequired,
   responseVideo: PropTypes.func.isRequired,
   requestId: PropTypes.string,
   videoFile: PropTypes.object,
+  uploadSuccess: PropTypes.func.isRequired,
+  uploadSuccessFlg: PropTypes.bool,
+  nextRequestHandler: PropTypes.func.isRequired,
 };
 
 Question.defaultProps = {
@@ -521,6 +578,7 @@ Question.defaultProps = {
   playPauseMediaFlg: false,
   requestId: '',
   videoFile: {},
+  uploadSuccessFlg: false,
 };
 
 function mapStateToProps(state) {

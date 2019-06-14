@@ -123,7 +123,7 @@ const Question = props => {
       </Button>
     );
   };
-  const uploadHandler = (input, isIOS) => {
+  const uploadHandler = isIOS => input => {
     const file = input.target.files[0];
     if (file.type.startsWith('video/')) {
       if (props.playPauseMediaFlg) props.playPauseMedia();
@@ -167,7 +167,7 @@ const Question = props => {
           id="fileUpload"
           className="hidden"
           accept="video/*"
-          onChange={uploadHandler}
+          onChange={uploadHandler()}
         />
         Upload video
       </label>
@@ -290,7 +290,7 @@ const Question = props => {
         type="file"
         accept="video/*;capture=camcorder"
         className="videoInputCapture"
-        onChange={event => uploadHandler(event, true)}
+        onChange={uploadHandler(true)}
       />
     </Layout>
   );

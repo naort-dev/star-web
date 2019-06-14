@@ -49,7 +49,6 @@ export const Layout = styled.section`
       display: none;
     }
   }
-
   .web-link {
     display: none;
     padding-top: 0;
@@ -57,7 +56,6 @@ export const Layout = styled.section`
       display: block;
     }
   }
-
   .hidden {
     display: none;
   }
@@ -65,7 +63,7 @@ export const Layout = styled.section`
     width: 100%;
     display: inline-block;
     text-align: center;
-    ${media.largeScreen} {
+    ${media.webView} {
       border: 1px solid #2f839d;
     }
     color: #2f839d;
@@ -98,6 +96,7 @@ export const Layout = styled.section`
       font-family: Gilroy-Light;
       font-size: 16px;
       color: #cccccc;
+      cursor: pointer;
     }
     li + li:before {
       content: '|';
@@ -117,6 +116,35 @@ export const Layout = styled.section`
     ${media.largeScreen} {
       display: block;
     }
+  }
+  .ques-item {
+    color: #2f2f2f !important;
+    font-family: Gilroy-Semibold !important;
+  }
+  .ans-item {
+    color: #2f2f2f !important;
+    font-family: Gilroy-Semibold !important;
+  }
+  .player-container {
+    border-radius: 0;
+    padding: 0;
+    box-shadow: none;
+    .player-icon-wrap {
+      top: 50%;
+      transform: translateY(-50%);
+      bottom: unset;
+    }
+    .play-button {
+      width: 108px;
+      height: 108px;
+      svg {
+        font-size: 44px;
+      }
+    }
+  }
+  .disabled-btn {
+    opacity: 0.3;
+    pointer-events: none;
   }
 `;
 

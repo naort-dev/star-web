@@ -118,6 +118,7 @@ class Purchase extends Component {
           pageCount={this.props.pageCount}
           updateBookingData={this.props.updateBookingData}
           clearAudio={this.props.clearAll}
+          audioRecordHandler={this.props.audioRecordHandler}
         />
       );
     } else if (this.state.stepCount === 3) {
@@ -410,6 +411,7 @@ class Purchase extends Component {
     this.props.clearAll();
     this.clearFormBuilderProps();
     this.props.headerUpdate('');
+    this.props.audioRecordHandler({ recording: false, playing: false });
   };
 
   clearMediaStore = () => {
@@ -418,6 +420,7 @@ class Purchase extends Component {
       superBuffer: null,
       recorded: false,
     });
+    this.props.audioRecordHandler({ recording: false, playing: false });
   };
 
   modalClose = () => {
@@ -478,6 +481,7 @@ Purchase.propTypes = {
   celebDetails: PropTypes.object.isRequired,
   headerUpdate: PropTypes.func.isRequired,
   videoFile: PropTypes.object,
+  audioRecordHandler: PropTypes.func.isRequired,
 };
 Purchase.defaultProps = {
   fetchOccasionlist: () => {},
