@@ -7,8 +7,10 @@ import {
   faHeart,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as faHeartLight } from '@fortawesome/pro-light-svg-icons';
+import { numberToCommaFormatter } from '../../../../utils/dataformatter';
 import { requestTypes } from '../../../../constants/requestTypes';
 import { HeadingBold } from '../../styled';
+import ToolTip from '../../../ToolTip';
 import StarRating from '../../../StarRating';
 import CompletedStyled from './styled';
 
@@ -77,18 +79,24 @@ const CompletedCard = (props) => {
             }
           </span>
           <div className='action-section'>
-              <span className='icon comment'>
+            <ToolTip title={`This video has ${props.data.comments} comments.`}>
+              <CompletedStyled.IconWrapper className='comment' visible={props.data.comments > 0}>
                 <FontAwesomeIcon className='comment-icon' icon={faComment} />
-              </span>
-              <span className='icon tip'>
-                $ 20
-              </span>
-              <span className='icon reaction'>
+              </CompletedStyled.IconWrapper>
+            </ToolTip>
+            <ToolTip title={`This booking has $${numberToCommaFormatter(props.data.tip_amount)} in tips.`}>            
+              <CompletedStyled.IconWrapper className='tip' visible={props.data.tip_amount > 0} >
+                $ TIP
+              </CompletedStyled.IconWrapper>
+            </ToolTip>
+            <ToolTip title={`This video has ${props.data.reaction_count} reaction videos.`}>
+              <CompletedStyled.IconWrapper className='reaction' visible={props.data.reaction_count > 0}>
                 <span className='reaction-icon'>
                   <FontAwesomeIcon icon={faHeart} />
                 </span>
                 Reaction
-              </span>
+              </CompletedStyled.IconWrapper>
+            </ToolTip>
           </div>
         </CompletedStyled.DetailsWrapper>
       </CompletedStyled.Container>
