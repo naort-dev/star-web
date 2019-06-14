@@ -23,7 +23,7 @@ export default class Landing extends React.Component {
     }
     window.addEventListener('resize', this.handleResize);
     const queryString = this.props.location ? parseQueryString(this.props.location.search): ''; 
-    if (queryString.demoUser === 'true' && !this.props.isLoggedIn) {
+    if (queryString.demo_user === 'true' && !this.props.isLoggedIn) {
       this.props.setDemoUser(true);
       this.props.toggleSignup(true);
     }

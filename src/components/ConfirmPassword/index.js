@@ -80,7 +80,7 @@ const ConfirmPassword = props => {
     if (checkPassword()) {
       if ( !passwordDetails.password.isValid && passwordDetails.confirmPassword.isValid && window.location.search) {
         const queryString = window.location ? parseQueryString(window.location.search): ''; 
-        props.onResetPassword(passwordDetails.password.value, queryString.resetId, queryString.userId);
+        props.onResetPassword(passwordDetails.password.value, queryString.reset_id, queryString.user_id);
       } else {
         checkPassword();
       }

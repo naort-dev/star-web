@@ -190,11 +190,18 @@ class SignupFlow extends React.Component {
   }
   continueSignUp = () => {
     const queryString = this.props.location ? parseQueryString(this.props.location.search): '';
-    this.setState({
-      currentStep: queryString.demoUser ? 1 : this.state.currentstep,
-      completedSignup: true,
-      selectedType:'star'
-    });
+    if(queryString.demo_user) {
+      this.setState({
+        currentStep: queryString.demo_user ? 1 : this.state.currentstep,
+        completedSignup: true,
+        selectedType:'star'
+      });
+    } else {
+      this.setState({
+        completedSignup: true,
+      });
+    }
+    
     // this.state.completedSignup = true;
     this.props.completedSignup(true);
     // console.log(this.state.currentStep);
@@ -308,7 +315,7 @@ class SignupFlow extends React.Component {
   };
   onResetPassword = (password, resetId, userId) => {
     resetPassword(Api.resetPassword, {
-      password: password,
+      password,
       reset_id: resetId,
     })
       .then(async(response) => {
@@ -319,6 +326,14 @@ class SignupFlow extends React.Component {
           const userDetailsResponse= await this.props.fetchUserDetails(userId, response.data.data.details.authentication_token);
           if(userDetailsResponse) {
             const userData = this.props.userDetails.settings_userDetails;
+            const celebrityData = this.props.userDetails.settings_celebrityDetails;
+            let professions = celebrityData.profession_details;
+            professions = professions.map((profession, index) => {
+              const item = profession;
+              item.label=celebrityData.profession_details[index].title;
+              item.value=celebrityData.profession_details[index].id;
+              return item;
+            });
             const signupData = {
               role: this.props.userDetails.role === 'R1002' ? 'star' : '',
               currentStep: 1,
@@ -330,13 +345,13 @@ class SignupFlow extends React.Component {
               nickName: userData.nick_name,
               email: userData.email,
               profileImage: userData.avatar_photo.thumbnail_url,
-              categoryList: this.props.userDetails.settings_celebrityDetails.profession_details,
+              categoryList: professions,
               welcomeVideoSkip: false,
-              welcomeVideo: this.props.userDetails.settings_celebrityDetails.profile_video,
+              welcomeVideo: celebrityData.profile_video,
               welcomeVideoFile: '',
-              welcomeVideoLength: '',
-              videoUploaded: this.props.userDetails.settings_celebrityDetails.has_profile_video,
-              price: this.props.userDetails.settings_celebrityDetails.rate,
+              welcomeVideoLength: celebrityData.duration ? celebrityData.duration : '',
+              videoUploaded: celebrityData.has_profile_video,
+              price: celebrityData.rate,
               referral: '',
             };
             this.props.setSignupFlow(signupData);
