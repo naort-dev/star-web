@@ -107,6 +107,7 @@ ListingStyled.Content = styled.ul`
   margin-top: 11.6px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 `;
 
 ListingStyled.VideoItem = styled.div`
