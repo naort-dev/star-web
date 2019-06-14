@@ -146,6 +146,15 @@ export const Layout = styled.section`
     opacity: 0.3;
     pointer-events: none;
   }
+  .noSupportBtn {
+    position: absolute;
+    left: 0;
+    top: 285px;
+    ${media.webView} {
+      position: static;
+      margin-top: 40px;
+    }
+  }
 `;
 
 export const VideoContainer = styled.section`
