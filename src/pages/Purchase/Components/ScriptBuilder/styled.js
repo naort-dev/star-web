@@ -35,13 +35,14 @@ export const Layout = styled.section`
 
     & > section:first-child {
       max-width: 100%;
-      width: calc(100% - 15px);
-      padding: 0 30px;
+      width: 100%;
+      padding: 0 20px;
       margin: 0 0 15px;
       & > section:nth-child(2) {
         width: 100%;
         max-width: 100%;
         margin: 0;
+        padding: 18px 15px;
 
         p {
           max-width: 100%;
@@ -96,7 +97,6 @@ export const TextAreaWrapper = styled.section`
   }
   textarea {
     width: 100%;
-    height: 90px !important;
     border-radius: 10px;
     border: solid 1px #e0e0e0;
     resize: none;
@@ -106,6 +106,9 @@ export const TextAreaWrapper = styled.section`
     font-size: 14px;
     color: #b7b7b7;
     line-height: 18px;
+    @media (max-width: 831px) {
+      padding: 10px;
+    }
     :focus {
       outline: none;
     }

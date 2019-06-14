@@ -48,6 +48,9 @@ FilterStyled.Heading = styled.span`
   text-transform:  ${props => (props.mobileOnly ? 'uppercase' : 'none')};;
   &.filter-heading {
     color: #2f839d;
+    @media(max-width: 832px) {
+      margin-bottom: 20px;
+    }
   }
   @media(min-width: 832px) {
     display: ${props => (props.mobileOnly ? 'none' : 'block')};

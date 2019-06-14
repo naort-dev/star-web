@@ -9,6 +9,7 @@ export const Layout = styled.section`
   ${media.mobileScreen} {
     justify-content: center;
     padding: 0 20px;
+    position: relative;
   }
   .button {
     width: 242px;
@@ -54,7 +55,7 @@ export const Layout = styled.section`
     height: 60px;
     line-height: 60px;
     border-radius: 30px;
-    margin-bottom: 22px;
+    margin-bottom: 15px;
     font-family: Gilroy-SemiBold;
     cursor: pointer;
     :hover,
@@ -115,9 +116,9 @@ export const QuestionContainer = styled.section`
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
-    padding-left: 24px;
-    height: 250px;
-    top: 235px;
+    padding-left: 20px;
+    padding-top: 20px;
+    bottom: 0;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
@@ -159,7 +160,7 @@ export const QuestionContainer = styled.section`
 export const ShowHide = styled.span`
   display: block;
   position: absolute;
-  top: 425px;
+  bottom: 15px;
   width: 224px;
   text-align: center;
   height: 30px;
@@ -202,7 +203,7 @@ export const WebButtons = styled.section`
 `;
 export const MobButtons = styled.section`
   position: absolute;
-  top: 485px;
+  top: 415px;
   display: flex;
   flex-direction: column;
   padding-bottom: 40px;

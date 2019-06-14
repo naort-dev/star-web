@@ -3,8 +3,9 @@ import styled from 'styled-components';
 export const Ul = styled.ul`
   padding-top: 10px;
   .selected {
-    border: 2px solid green;
-    color: green;
+    //border: 2px solid green;
+    color: #fff;
+    background: #2f839d;
   }
 `;
 
@@ -23,6 +24,7 @@ export const Li = styled.li`
   margin-bottom: 16px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 
   .brand:after {
     content: '';
@@ -38,6 +40,6 @@ export const Li = styled.li`
   .closeBtn {
     position: absolute;
     right: 17px;
-    color: red !important;
+    color: #2f839d !important;
   }
 `;

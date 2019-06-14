@@ -14,6 +14,7 @@ const StarDrawer = (props) => {
             width={star.size}
             x={star.horizontal}
             y={star.vertical}
+            visibility="visible"
           >
             <g
               style={{ transform: `rotate(${star.rotation})` }}
