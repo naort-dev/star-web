@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import QuestionBuilder from 'components/QuestionBuilder';
 import Button from 'components/PrimaryButton';
 import { FlexCenter } from 'styles/CommonStyled';
@@ -86,10 +87,11 @@ const Video = props => {
   const renderTimeHeader = () => {
     if (props.recordState) {
       return 'Remaining Time';
-    } else if (props.videoSrc) {
+    } else if (props.videoSrc && props.recordedTime) {
       return 'Welcome Video Length';
-    }
+    } else if(isEmpty(props.recordedTime) && isEmpty(props.videoSrc)) {
     return 'Maximum Time';
+    }
   };
 
   const renderTime = () => {

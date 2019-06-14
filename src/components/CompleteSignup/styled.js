@@ -63,8 +63,8 @@ Content.MainTitle = styled.div`
   text-align: center;
   color: ${props => `${props.theme.flatBlue}`};
   @media (max-width: 831px) {
-    padding: 10px;
-line-height: 1;
+  padding: 10px;
+  line-height: 1;
   }
 `;
 

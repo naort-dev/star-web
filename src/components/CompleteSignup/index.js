@@ -31,7 +31,6 @@ const CompleteSignup = props => {
 };
 
 CompleteSignup.propTypes = {
-  onBack: PropTypes.func.isRequired,
   switched: PropTypes.bool,
 };
 
