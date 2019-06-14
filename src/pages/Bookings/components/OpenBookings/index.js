@@ -95,15 +95,9 @@ const OpenBookings = props => {
 
   const nextRequestHandler = () => {
     nextClick();
-    const selectedIndex = props.bookingsList.data.findIndex(
-      booking => booking.booking_id === props.selected,
+    const temp = props.bookingsList.data.filter(
+      item => item.booking_id !== props.selected,
     );
-    let temp = [];
-    if (props.bookingsList.data.length > selectedIndex + 1) {
-      temp = props.bookingsList.data.splice(selectedIndex, 1);
-    } else {
-      temp = props.bookingsList.pop();
-    }
     props.updateBookingList(temp);
     clearVideo();
     setUploadSuccess(false);
@@ -130,6 +124,7 @@ const OpenBookings = props => {
         updateSelectedBooking(props.bookingsList.data[0]);
       }
     }
+    clearVideo();
   }, [props.selected, props.bookingsList.data]);
 
   useEffect(() => {
