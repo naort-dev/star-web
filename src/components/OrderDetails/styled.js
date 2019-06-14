@@ -24,13 +24,15 @@ OrderStyled.Heading = styled.span`
   display: block;
   text-align: center;
   color: ${props => props.theme.flatBlue};
-  margin-top: 30px;
+  margin: 30px 0;
 `;
 
 OrderStyled.DetailList = styled.ul`
   display: table;
+  padding: 20px 0;
   .detail-item {
     display: table-row;
+    padding: 10px 0;
     .detail-title {
       font-family: Gilroy-Regular;
       font-size: 14px;
@@ -43,6 +45,32 @@ OrderStyled.DetailList = styled.ul`
       color: #565657;
       display: table-cell;
       padding-left: 10px;
+    }
+  }
+`;
+
+OrderStyled.ScriptWrapper = styled.div`
+  display: block;
+  max-width: 520px;
+  margin: 0 auto;
+  .additional-info {
+    display: table;
+    padding-left: 11px;
+    padding-top: 13px;
+    font-family: Gilroy-Regular;
+    font-size: 14px;
+    color: ${props => props.theme.greyishBrown};
+    @media(min-width: 832px) {
+      padding-left: 43px;
+    }
+    .info-item {
+      display: table-cell;
+      &.title {
+        white-space: nowrap;
+      }
+      &.value {
+        padding-left: 10px;
+      }
     }
   }
 `;

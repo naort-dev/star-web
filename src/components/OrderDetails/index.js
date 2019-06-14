@@ -1,6 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
+import PrimaryButton from '../PrimaryButton';
 import { requestTypes } from '../../constants/requestTypes';
 import OrderStyled from './styled';
 
@@ -49,10 +51,20 @@ const OrderDetails = (props) => {
       <OrderStyled.Heading>
         Order Details
       </OrderStyled.Heading>
-      {
-        bookingData.request_details.booking_statement &&
-          <Script script={bookingData.request_details.booking_statement} />
-      }
+      <OrderStyled.ScriptWrapper>
+        {
+          bookingData.request_details.booking_statement &&
+            <Script script={bookingData.request_details.booking_statement} />
+        }
+        <span className='additional-info'>
+          <span className='info-item title'>Additional information:</span>
+          <span className='info-item value'>
+            {
+              bookingData.request_details.important_info || 'None'
+            }
+          </span>
+        </span>
+      </OrderStyled.ScriptWrapper>
       <OrderStyled.Details>
         <OrderStyled.DetailList>
           <li className='detail-item'>
@@ -68,9 +80,16 @@ const OrderDetails = (props) => {
             <span className='detail-value'>March 22, 2019</span>
           </li>
         </OrderStyled.DetailList>
+        <PrimaryButton onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
       </OrderStyled.Details>
     </OrderStyled>
   )
+}
+
+OrderDetails.propTypes = {
+  bookingData: PropTypes.object.isRequired,
+  closeModal: PropTypes.func.isRequired,
+  onPrimaryClick: PropTypes.func.isRequired,
 }
 
 export default OrderDetails;

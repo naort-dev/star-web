@@ -20,7 +20,7 @@ const BookingCard = (props) => {
 
   const setDetails = (state) => () => {
     // if (state) {
-    //   document.getElementsByClassName('paper-root')[0].setAttribute('style', 'transition: 1s ease; transform: rotateY(180deg);');
+    //   document.getElementById('booking-modal').setAttribute('style', 'transition: 1s ease; transform: rotateY(180deg);');
     // }
     toggleDetails(state);
   }
@@ -41,6 +41,9 @@ const BookingCard = (props) => {
   return (
     <RequestFlowPopup
       disableClose
+      paperProps={{
+        id: 'booking-modal',
+      }}
       closePopUp={closeModal}
     >
       {
@@ -60,6 +63,7 @@ const BookingCard = (props) => {
               showDetails &&
                 <OrderDetails
                   closeModal={closeModal}
+                  onPrimaryClick={setDetails(false)}
                   bookingData={requestData}
                 />
             }
