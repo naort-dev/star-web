@@ -84,12 +84,12 @@ OrderStyled.Details = styled.div`
   padding: 0 44px;
   .star-action-btn {
     display: none;
+    @media(min-width: 832px) {
+      display: block;
+    }
   }
   @media(mn-width: 832px) {
     padding: 0 85px;
-    .star-action-btn {
-      display: block;
-    }
   }
 `;
 

@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const BookingStyled = styled.div`
   @media(min-width: 832px) {
-    transition: transform 1s;
+    transition: transform 0.5s ease;
     transform-style: preserve-3d;
     height: 100%;
     ${props => props.showDetails && `
