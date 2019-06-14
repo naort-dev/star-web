@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { CloseButton } from 'styles/CommonStyled';
-import { requestTypes } from '../../../../constants/requestTypes';
+import { numberToCommaFormatter } from '../../../../utils/dataformatter';
 import CommentBox from '../../../CommentBox';
 import QuickComment from '../../../QuickComment';
 import VideoRender from '../../../VideoRender';
@@ -14,44 +13,8 @@ const StarView = (props) => {
   const { bookingData } = props;
   const video = bookingData.request_video.find(videoItem => videoItem.video_status === 1) // get completed video
 
-  const renderHeading = () => {
-    if (requestTypes[bookingData.request_type] === 'Q&A') {
-      return (
-        <React.Fragment>
-            <strong>Question</strong>&nbsp;
-            from&nbsp;
-            <strong>
-              {
-                bookingData.fan
-              }
-            </strong>
-        </React.Fragment>
-      )
-    }
-    return (
-      <React.Fragment>
-        <strong>Birthday</strong>&nbsp;
-          {requestTypes[bookingData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
-          <strong>
-            { bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ? bookingData.request_details.stargramto : bookingData.fan }
-          </strong>
-          {
-            bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ?
-              <React.Fragment>
-                &nbsp;from <strong>{bookingData.request_details.stargramto}</strong>
-              </React.Fragment>
-            : null
-          }
-      </React.Fragment>
-    )
-  }
-
   return (
     <StarViewStyled>
-      <CloseButton onClick={props.closeModal} />
-      <BookingStyled.HeaderText>
-        {renderHeading()}
-      </BookingStyled.HeaderText>
       <BookingStyled.Layout>
         <BookingStyled.LeftSection>
           <StarViewStyled.VideoWrapper>
@@ -82,7 +45,7 @@ const StarView = (props) => {
           <StarViewStyled.DetailWrapper>
               <span>
                 <BookingStyled.title className='title'>Paid:</BookingStyled.title>
-                <BookingStyled.Description>${ bookingData.order_details.amount} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
+                <BookingStyled.Description>${ numberToCommaFormatter(bookingData.order_details.amount)} on {moment.utc(bookingData.created_date).format('MMM Do, YYYY') }</BookingStyled.Description>
               </span>
           </StarViewStyled.DetailWrapper>
           <BookingStyled.CommentList>

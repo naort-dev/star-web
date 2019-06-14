@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { CloseButton } from 'styles/CommonStyled';
 import Script from '../Script';
@@ -26,7 +27,7 @@ const OrderDetails = (props) => {
     }
     return (
       <React.Fragment>
-        <strong>Birthday</strong>&nbsp;
+        <strong>{bookingData.occasion}</strong>&nbsp;
           {requestTypes[bookingData.request_type] === 'Shout-out' ? 'shoutout' : 'announcement'} for&nbsp; 
           <strong>
             { bookingData.request_details && bookingData.request_details.stargramto !== 'Myself' ? bookingData.request_details.stargramto : bookingData.fan }
@@ -44,13 +45,18 @@ const OrderDetails = (props) => {
 
   return (
     <OrderStyled>
-      <CloseButton onClick={props.closeModal} />
-      <OrderStyled.HeaderText>
-        {renderHeading()}
-      </OrderStyled.HeaderText>
-      <OrderStyled.Heading>
-        Order Details
-      </OrderStyled.Heading>
+      {
+        !props.disableHeader &&
+          <React.Fragment>
+            <CloseButton onClick={props.closeModal} />
+            <OrderStyled.HeaderText>
+              {renderHeading()}
+            </OrderStyled.HeaderText>
+            <OrderStyled.Heading>
+              Order Details
+            </OrderStyled.Heading>
+          </React.Fragment>
+      }
       <OrderStyled.ScriptWrapper>
         {
           bookingData.request_details.booking_statement &&
@@ -69,15 +75,19 @@ const OrderDetails = (props) => {
         <OrderStyled.DetailList>
           <li className='detail-item'>
             <span className='detail-title'>Purchased:</span>
-            <span className='detail-value'>March 22, 2019</span>
+            <span className='detail-value'>{moment.utc(bookingData.created_date).format('MMM Do YYYY')}</span>
           </li>
           <li className='detail-item'>
             <span className='detail-title'>Paid:</span>
-            <span className='detail-value'>$150.00</span>
+            <span className='detail-value'>${bookingData.order_details.amount}</span>
           </li>
           <li className='detail-item'>
             <span className='detail-title'>Recorded:</span>
             <span className='detail-value'>March 22, 2019</span>
+          </li>
+          <li className='detail-item'>
+            <span className='detail-title'>Order #:</span>
+            <span className='detail-value'>{bookingData.order_details.order}</span>
           </li>
         </OrderStyled.DetailList>
         <PrimaryButton onClick={props.onPrimaryClick}>Back to Video</PrimaryButton>
@@ -86,10 +96,15 @@ const OrderDetails = (props) => {
   )
 }
 
+OrderDetails.defaultProps = {
+  disableHeader: true,
+}
+
 OrderDetails.propTypes = {
   bookingData: PropTypes.object.isRequired,
   closeModal: PropTypes.func.isRequired,
   onPrimaryClick: PropTypes.func.isRequired,
+  disableHeader: PropTypes.bool,
 }
 
 export default OrderDetails;

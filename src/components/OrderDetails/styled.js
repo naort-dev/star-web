@@ -36,6 +36,7 @@ OrderStyled.DetailList = styled.ul`
     .detail-title {
       font-family: Gilroy-Regular;
       font-size: 14px;
+      padding-bottom: 10px;
       display: table-cell;
       color: #b7b7b7;
     }
@@ -45,6 +46,7 @@ OrderStyled.DetailList = styled.ul`
       color: #565657;
       display: table-cell;
       padding-left: 10px;
+      padding-bottom: 10px;
     }
   }
 `;
