@@ -45,7 +45,6 @@ export default (state = { ...initialState }, action) => {
     };
 
     case SET_SIGNUP.setDemoUserFlow:
-    console.log(action.isDemoUser)
     return {
       ...state,
       isDemoUser: action.isDemoUser,

@@ -25,6 +25,7 @@ import {
 } from '../../store/shared/actions/toggleModals';
 import { setSignupFlow } from '../../store/shared/actions/setSignupFlow';
 import { loaderAction } from '../../store/shared/actions/commonActions';
+import { setDemoUser } from '../../store/shared/actions/setSignupFlow';
 import { completedSignup } from '../../store/shared/actions/setSignupFlow'
 import { updateCategory } from '../../pages/landing/actions/updateFilters';
 import SetPrice from './components/SetPrice'
@@ -43,6 +44,7 @@ import { awsKeys } from '../../constants';
 import fetchAWSVideo from '../../services/getAwsVideo';
 import { celebritySignupProfile } from '../../services/userRegistration';
 import resetPassword from "../../utils/resetPassword";
+import { parseQueryString } from '../../utils/dataformatter';
 import Api from "../../lib/api";
 import GetPhoneNumber from '../../components/GetPhoneNumber';
 import CompleteSignup from '../../components/CompleteSignup';
@@ -187,8 +189,15 @@ class SignupFlow extends React.Component {
     }
   }
   continueSignUp = () => {
-    this.state.completedSignup = true;
+    const queryString = this.props.location ? parseQueryString(this.props.location.search): '';
+    this.setState({
+      currentStep: queryString.demoUser ? 1 : this.state.currentstep,
+      completedSignup: true,
+      selectedType:'star'
+    });
+    // this.state.completedSignup = true;
     this.props.completedSignup(true);
+    // console.log(this.state.currentStep);
   }
 
   closePhoneNum =(isOtpScreen) => {
@@ -302,18 +311,48 @@ class SignupFlow extends React.Component {
       password: password,
       reset_id: resetId,
     })
-      .then((response) => {
+      .then(async(response) => {
         if (response.status === 200) {
           if (localStorage) {
-            localStorage.setItem('tempAuthToken', JSON.stringify(response.data.details.authentication_token));
+            localStorage.setItem('tempAuthToken', JSON.stringify(response.data.data.details.authentication_token));
           }
-          this.props.fetchUserDetails(userId);
+          const userDetailsResponse= await this.props.fetchUserDetails(userId, response.data.data.details.authentication_token);
+          if(userDetailsResponse) {
+            const userData = this.props.userDetails.settings_userDetails;
+            const signupData = {
+              role: this.props.userDetails.role === 'R1002' ? 'star' : '',
+              currentStep: 1,
+              acceptTerms: true,
+              isSocial: false,
+              source: '',
+              firstName: userData.first_name,
+              lastName: userData.last_name,
+              nickName: userData.nick_name,
+              email: userData.email,
+              profileImage: userData.avatar_photo.thumbnail_url,
+              categoryList: this.props.userDetails.settings_celebrityDetails.profession_details,
+              welcomeVideoSkip: false,
+              welcomeVideo: this.props.userDetails.settings_celebrityDetails.profile_video,
+              welcomeVideoFile: '',
+              welcomeVideoLength: '',
+              videoUploaded: this.props.userDetails.settings_celebrityDetails.has_profile_video,
+              price: this.props.userDetails.settings_celebrityDetails.rate,
+              referral: '',
+            };
+            this.props.setSignupFlow(signupData);
+            this.props.setDemoUser(false);
+            this.props.completedSignup(false);
+            this.setState({
+              isDemoUser: false,
+              completedSignup: false,
+            });
+          }
         }
       })
-      .catch((exception) => {
-        console.log('errorMsg:', exception.response.data.error.message);
-      })
-  }
+      .catch(async (exception) => {
+        console.log('errorMsg:', exception);
+    });
+}
 
   submitOTPForm = () => {
     this.changeStep(this.state.currentStep + 1);
@@ -624,7 +663,7 @@ const mapStateToProps = (state , ownProps)=> ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchUserDetails: id => dispatch(fetchUserDetails(id)),
+  fetchUserDetails: (id, authToken) => dispatch(fetchUserDetails(id, authToken)),
   registerUser: (firstName, lastName, email, password, role, referral) =>
     dispatch(
       registerUser(firstName, lastName, email, password, role, referral),
@@ -644,6 +683,7 @@ const mapDispatchToProps = dispatch => ({
   setProfilePhoto: () => dispatch(resetProfilePhoto()),
   setProfilePicToState: (obj) => dispatch(setProfilePicToState(obj)),
   completedSignup: value => dispatch(completedSignup(value)),
+  setDemoUser: (value) => dispatch(setDemoUser(value)),
 });
 
 SignupFlow.propTypes = {
