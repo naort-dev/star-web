@@ -4,17 +4,6 @@ const StarViewStyled = styled.div`
 
 `;
 
-StarViewStyled.HeaderText = styled.h5`
-  font-family: Gilroy-Regular;
-  font-size: 24px;
-  color: ${props => props.theme.orangePink};
-  padding-right: 24px;
-  text-align: center;
-  strong {
-    font-family: Gilroy-Medium;
-  }
-`;
-
 StarViewStyled.VideoWrapper = styled.div`
   width: 195.7px;
   height: 301.9px;
@@ -33,13 +22,6 @@ StarViewStyled.DetailWrapper = styled.div`
   margin-bottom: 20px;
   .title {
     display: block;
-  }
-  .action-btn {
-    min-width: auto;
-    min-height: auto;
-    font-size: 14px;
-    width: 130px;
-    height: 40px;
   }
 `;
 

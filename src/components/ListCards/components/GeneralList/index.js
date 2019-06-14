@@ -68,6 +68,9 @@ const GeneralList = (props) => {
                 }
             </TickText>
           </LeftContent>
+          {
+            !props.isOpen && <span className="cancel-heading">Cancelled</span>
+          }
           <GeneralStyled.Description>
             { renderDescription() }
           </GeneralStyled.Description>
