@@ -20,7 +20,13 @@ const GeneralStyled = styled.div`
 
 GeneralStyled.Section = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  .cancel-heading {
+    display: block;
+    color: #fe6b57;
+    font-size: 14px;
+    font-family: Gilroy-Medium;
+  }
   .close-icon {
     &:before {
       content: '';
@@ -32,10 +38,14 @@ GeneralStyled.Section = styled.div`
     }
   }
   .view-action {
-    color: ${props => props.theme.flatBlue};
-    font-family: Gilroy-Medium;
-    font-size: 14px;
-    cursor: pointer;
+    display: none;
+    @media(min-width: 832px) {
+      display: block;
+      color: ${props => props.theme.flatBlue};
+      font-family: Gilroy-Medium;
+      font-size: 14px;
+      cursor: pointer;
+    }
   }
   .action-button {
     display: none;
@@ -48,6 +58,13 @@ GeneralStyled.Section = styled.div`
       padding: 5px 10px;
       min-height: auto;
       height: 40px;
+    }
+  }
+  @media(min-width: 832px) {
+    align-items: center;
+    flex-direction: row;
+    .cancel-heading {
+      display: none;
     }
   }
 `;
@@ -63,9 +80,6 @@ GeneralStyled.Details = styled.span`
   font-family: Gilroy-Medium;
   font-size: 14px;
   color: #b4b4b4;
-  ${props => !props.isOpen && `
-    margin: 0;
-  `}
   .time {
     color: ${props => props.theme.brown};
     margin-right: 5px;
@@ -89,6 +103,9 @@ GeneralStyled.Details = styled.span`
     }
   }
   @media(min-width: 832px) {
+    ${props => !props.isOpen && `
+      margin: 0;
+    `}
     margin-right: 21.3px;
     .action {
       &:before {

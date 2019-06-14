@@ -61,16 +61,16 @@ const parseUserDetails = (userData) => {
   return finalUserData;
 };
 
-export const fetchUserDetails = id => (dispatch, getState) => {
+export const fetchUserDetails = (id, authToken )=> (dispatch, getState) => {
   const { isLoggedIn, auth_token } = getState().session;
   const { userDataLoaded } = getState().userDetails;
   let API_URL;
   let options;
-  if (isLoggedIn) {
+  if (isLoggedIn || authToken) {
     API_URL = `${Api.authGetCelebDetails}${id}/`;
     options = {
       headers: {
-        'Authorization': `token ${auth_token.authentication_token}`,
+        'Authorization': `token ${authToken ? authToken : auth_token.authentication_token}`,
       },
     };
   }

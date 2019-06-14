@@ -12,7 +12,7 @@ const Dashboard = props => {
     <Layout>
       <SubHeader heading="My Starsona" onClick={goBack} />
       <Wrapper>
-        <section>
+        <section className="middle-section">
           <StarCard
             data={{
               totalEarning: 4251.2,

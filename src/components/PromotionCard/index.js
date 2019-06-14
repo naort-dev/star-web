@@ -181,7 +181,7 @@ const Promotion = props => {
           />
           <span className="social-name">Facebook</span>
         </span>
-        <span className="icon-wrap">
+        <span className="icon-wrap twitter">
           <FontAwesomeIcon icon={faTwitter} className="social-icon" />
           <span className="social-name">Twitter</span>
         </span>
