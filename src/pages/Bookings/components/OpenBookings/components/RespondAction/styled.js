@@ -45,10 +45,19 @@ export const Layout = styled.section`
     text-align: center;
     padding-top: 20px;
     display: block;
-    ${media.largeScreen} {
+    ${media.webView} {
       display: none;
     }
   }
+
+  .web-link {
+    display: none;
+    padding-top: 0;
+    ${media.webView} {
+      display: block;
+    }
+  }
+
   .hidden {
     display: none;
   }
@@ -143,12 +152,14 @@ export const QuestionContainer = styled.section`
   ${props => props.isQA && `padding-top: 28px;`}
   display: flex;
   align-items: center;
-  flex-direction: ${props => (props.continueFlg ? 'inherit' : 'column')};
+  flex-direction: column;
   ${media.mobileScreen} {
     position: absolute;
     display: ${props => (props.isShow ? 'block' : 'none')};
     padding-left: 24px;
-    top: 233px;
+    padding-top: 30px;
+    padding-bottom: 25px;
+    bottom: 58px;
     border-radius: 23px;
     background: rgba(0, 0, 0, 0.47);
     left: 50%;
@@ -186,7 +197,7 @@ export const QuestionContainer = styled.section`
     font-family: Gilroy-Semibold;
     font-size: 16px;
     color: #fff;
-    ${media.largeScreen} {
+    ${media.webView} {
       color: #2f2f2f;
     }
   }

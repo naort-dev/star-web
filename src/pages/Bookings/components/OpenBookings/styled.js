@@ -9,13 +9,38 @@ const OpenStyled = styled.div`
     flex-direction: row;
     min-height: calc(100vh - 353px);
   }
+  .video-loader {
+    position: absolute;
+  }
+  .overlay-custom {
+    display: none;
+  }
+  ${props =>
+    props.clicked &&
+    `@media (min-width: 832px) and (max-width: 1279px) {
+        .overlay-custom {
+            display: block;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            background: #010101;
+            z-index: 101;
+            opacity: .5;
+        }
+      }       
+  `}
 `;
 
 OpenStyled.BookingList = styled.div`
   height: 100vh;
-  @media (min-width: 832px) {
+  @media (min-width: 1280px) {
     height: calc(100% - 290px);
     max-height: 700px;
+  }
+  @media (min-width: 832px) and (max-width: 1279px) {
+    height: calc(100% - 100px);
   }
 `;
 
@@ -32,18 +57,28 @@ OpenStyled.RightSection = Card.extend`
     position: fixed;
     top: 0;
     width: 100%;
+    height: 100%;
     left: 0;
     z-index: 15555555;
     display: none;
     ${props => props.clicked && `display: block;`}
     overflow: scroll;
   }
-  @media (min-width: 832px) {
-    margin-left: 24.7px;
+  @media (min-width: 832px) and (max-width: 1279px) {
     width: 700px;
+    height: 700px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 50%;
+    transform: translateY(-50%);
   }
   ${media.largeScreen} {
     display: block;
+    width: 700px;
+    margin-left: 24.7px;
   }
   .arrow-btn {
     top: 36px !important;

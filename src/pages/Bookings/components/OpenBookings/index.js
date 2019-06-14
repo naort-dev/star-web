@@ -17,6 +17,7 @@ import { CompactCard } from '../../../../components/ListCards';
 import RespondAction from './components/RespondAction';
 import { options } from '../../constants';
 import OpenStyled from './styled';
+import { responseVideo } from '../../actions/handleRequests';
 
 const buttonLabel = {
   primary: {
@@ -30,7 +31,7 @@ const buttonLabel = {
 
 const OpenBookings = props => {
   const clearVideo = () => {
-    this.props.updateMediaStore({
+    props.updateMediaStore({
       videoSrc: null,
       superBuffer: null,
       recordedTime: null,
@@ -80,6 +81,8 @@ const OpenBookings = props => {
     setInitialSelected(true);
   };
 
+  const continueUpload = () => {};
+
   useEffect(() => {
     if (!isEmpty(props.selected)) {
       setInitialSelected(true);
@@ -102,8 +105,14 @@ const OpenBookings = props => {
     }
   }, [props.selected, props.bookingsList.data]);
 
+  useEffect(() => {
+    return () => {
+      clearVideo();
+    };
+  });
+
   return (
-    <OpenStyled>
+    <OpenStyled clicked={cardClicked}>
       <OpenStyled.LeftSection>
         <Dropdown
           rootClass="drop-down"
@@ -139,17 +148,20 @@ const OpenBookings = props => {
             loaderAction={props.loaderAction}
             setVideoUploadedFlag={props.setVideoUploadedFlag}
             updateToast={props.updateToast}
-            headerUpdate={props.headerUpdate}
             bookedItem={selectedBooking}
             buttonLabel={getButtonLabels()}
             nextClick={nextClick}
             backArrowHandler={backArrowHandler}
             closeHandler={closeHandler}
+            continueCallback={continueUpload}
+            responseVideo={props.responseVideo}
+            requestId={props.selected}
           />
         </OpenStyled.RightSection>
       )}
 
-      {isEmpty(selectedBooking) && <Loader />}
+      {isEmpty(selectedBooking) && <Loader class="video-loader" />}
+      <div className="overlay-custom" />
     </OpenStyled>
   );
 };
@@ -159,6 +171,13 @@ OpenBookings.propTypes = {
   handleCategoryChange: PropTypes.func.isRequired,
   dropValue: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  responseVideo: PropTypes.func.isRequired,
+  recordTrigger: PropTypes.func.isRequired,
+  updateMediaStore: PropTypes.func.isRequired,
+  playPauseMedia: PropTypes.func.isRequired,
+  loaderAction: PropTypes.func.isRequired,
+  setVideoUploadedFlag: PropTypes.func.isRequired,
+  updateToast: PropTypes.func.isRequired,
 };
 
 function mapDispatchToProps(dispatch) {
@@ -179,6 +198,8 @@ function mapDispatchToProps(dispatch) {
       dispatch(setVideoUploadedFlag(value));
     },
     updateToast: toastObj => dispatch(updateToast(toastObj)),
+    responseVideo: (requestId, fileName, callBack) =>
+      dispatch(responseVideo(requestId, fileName, callBack)),
   };
 }
 export default connect(

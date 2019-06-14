@@ -75,6 +75,7 @@ const Question = props => {
 
   const buttonClickHandler = () => {
     if (stateObject.buttonLabel === 'Record') {
+      if (props.playPauseMediaFlg) props.playPauseMedia();
       if (isIOSDevice()) {
         videoRecordInput.current.click();
       } else {
@@ -125,6 +126,7 @@ const Question = props => {
   const uploadHandler = (input, isIOS) => {
     const file = input.target.files[0];
     if (file.type.startsWith('video/')) {
+      if (props.playPauseMediaFlg) props.playPauseMedia();
       const fileReader = new FileReader();
       fileReader.readAsDataURL(file);
       const blob = new Blob([file], { type: 'video/webm' });
