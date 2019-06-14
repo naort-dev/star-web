@@ -7,6 +7,7 @@ const ListingStyled = styled.ul`
   margin-left: -20px;
   height: 100%;
   padding-top: 30px;
+  justify-content: center;
 
   @media(min-width: 832px){
     margin-left: -59px;
