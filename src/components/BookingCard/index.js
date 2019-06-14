@@ -58,7 +58,10 @@ const BookingCard = (props) => {
             }
             {
               showDetails &&
-                <OrderDetails />
+                <OrderDetails
+                  closeModal={closeModal}
+                  bookingData={requestData}
+                />
             }
           </BookingStyled>
       }

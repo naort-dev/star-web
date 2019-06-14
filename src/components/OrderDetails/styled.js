@@ -1,7 +1,60 @@
 import styled from 'styled-components';
 
 const OrderStyled = styled.div`
-  
+
+`;
+
+OrderStyled.HeaderText = styled.h5`
+  font-family: Gilroy-Regular;
+  font-size: 24px;
+  color: ${props => props.theme.orangePink};
+  padding-right: 24px;
+  text-align: center;
+  strong {
+    font-family: Gilroy-Medium;
+  }
+  @media(min-width: 832px) {
+    color: ${props => props.theme.flatBlue};
+  }
+`;
+
+OrderStyled.Heading = styled.span`
+  font-family: Gilroy-Regular;
+  font-size: 24px;
+  display: block;
+  text-align: center;
+  color: ${props => props.theme.flatBlue};
+  margin-top: 30px;
+`;
+
+OrderStyled.DetailList = styled.ul`
+  display: table;
+  .detail-item {
+    display: table-row;
+    .detail-title {
+      font-family: Gilroy-Regular;
+      font-size: 14px;
+      display: table-cell;
+      color: #b7b7b7;
+    }
+    .detail-value {
+      font-family: Gilroy-Medium;
+      font-size: 14px;
+      color: #565657;
+      display: table-cell;
+      padding-left: 10px;
+    }
+  }
+`;
+
+OrderStyled.Details = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 44px;
+  @media(mn-width: 832px) {
+    padding: 0 85px;
+  }
 `;
 
 export default OrderStyled;

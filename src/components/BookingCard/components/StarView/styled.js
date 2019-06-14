@@ -4,20 +4,6 @@ const StarViewStyled = styled.div`
 
 `;
 
-StarViewStyled.HeaderText = styled.h5`
-  font-family: Gilroy-Regular;
-  font-size: 24px;
-  color: ${props => props.theme.orangePink};
-  padding-right: 24px;
-  text-align: center;
-  strong {
-    font-family: Gilroy-Medium;
-  }
-  @media(min-width: 832px) {
-    color: ${props => props.theme.flatBlue};
-  }
-`;
-
 StarViewStyled.VideoWrapper = styled.div`
   width: 195.7px;
   height: 301.9px;

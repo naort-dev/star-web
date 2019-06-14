@@ -49,9 +49,9 @@ const StarView = (props) => {
   return (
     <StarViewStyled>
       <CloseButton onClick={props.closeModal} />
-      <StarViewStyled.HeaderText>
+      <BookingStyled.HeaderText>
         {renderHeading()}
-      </StarViewStyled.HeaderText>
+      </BookingStyled.HeaderText>
       <BookingStyled.Layout>
         <BookingStyled.LeftSection>
           <StarViewStyled.VideoWrapper>
